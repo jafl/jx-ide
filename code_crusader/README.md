@@ -1,8 +1,19 @@
 # Code Crusader
 
-IDE
+Code Crusader is a graphical development environment for UNIX.  The [on-line help](http://codecrusader.sourceforge.net/help.html) explains all the features of the program.
 
-## Installing
+Since we use Code Crusader for all our development, we guarantee that it will continue to improve.  We have a very long list of features that we intend to implement, so please tell us what features you need, so we will know which ones on our list to implement first.
+
+### Building from source
+
+1. Install the [JX Application Framework](https://github.com/jafl/jx_application_framework),  and set the `JX_ROOT` environment variable to point to its `include` directory.
+1. `makemake`
+1. `make`
+
+
+## Installing a binary
+
+http://sourceforge.net/p/codecrusader/
 
 The easiest way to install from the binary package is to run `sudo ./install`.
 
@@ -14,21 +25,11 @@ The macros files can be loaded into Code Crusader by using the "Macros..." item 
 
 The CPM_rules files can be loaded into Code Crusader by using the "Clean paragraph margin rules..." item on the Preferences menu in any Editor window.
 
-
-## Requirements
+### Requirements
 
 On MacOS, this program requires XQuartz, the X11 server.  Before running this program, you must first start XQuartz.
 
 You also need to `brew install ace icu4c pcre gd editorconfig aspell`.
-
-
-## Notes
-
-Code Crusader is a graphical development environment for UNIX.  The on-line help explains all the features of the program.
-
-Since we use Code Crusader for all our development, we guarantee that it will continue to improve.  We have a very long list of features that we intend to implement, so please tell us what features you need, so we will know which ones on our list to implement first.
-
-http://sourceforge.net/p/codecrusader/
 
 
 ## FAQ
