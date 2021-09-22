@@ -1,6 +1,9 @@
 Makefile
 *.o
 *.bak
-*/strings/version
+*Y.hpp
+*Y.cpp
 */code/*StringData.h
+*/strings/version
 */strings/*_menu_strings
+*/.jcc
