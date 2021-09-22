@@ -1,0 +1,7 @@
+jcc
+*Scanner.h
+
+test/test_*
+test/.timestamps
+!test/test_*.cpp
+!test/test_*.txt
