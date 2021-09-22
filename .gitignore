@@ -2,3 +2,5 @@ Makefile
 *.o
 *.bak
 */strings/version
+*/code/*StringData.h
+*/strings/*_menu_strings
