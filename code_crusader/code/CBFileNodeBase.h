@@ -55,13 +55,6 @@ protected:
 private:
 
 	JString	itsFileName;	// can be relative
-
-private:
-
-	// not allowed
-
-	CBFileNodeBase(const CBFileNodeBase& source);
-	CBFileNodeBase& operator=(const CBFileNodeBase& source);
 };
 
 

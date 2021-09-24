@@ -76,13 +76,6 @@ protected:
 private:
 
 	GFGPrefsDialog*	itsDialog;
-
-private:
-
-	// not allowed
-
-	GFGPrefsManager(const GFGPrefsManager& source);
-	const GFGPrefsManager& operator=(const GFGPrefsManager& source);
 };
 
 #endif

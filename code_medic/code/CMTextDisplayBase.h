@@ -40,11 +40,6 @@ public:
 private:
 
 	void	CMTextDisplayBaseX(JXMenuBar* menuBar, JXScrollbarSet* scrollbarSet);
-
-	// not allowed
-
-	CMTextDisplayBase(const CMTextDisplayBase& source);
-	const CMTextDisplayBase& operator=(const CMTextDisplayBase& source);
 };
 
 #endif

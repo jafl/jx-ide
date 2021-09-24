@@ -207,11 +207,6 @@ private:
 	void	HandlePrefsMenu(const JIndex index);
 
 	void	HandleHelpMenu(const JIndex index);
-
-	// not allowed
-
-	CMCommandDirector(const CMCommandDirector& source);
-	const CMCommandDirector& operator=(const CMCommandDirector& source);
 };
 
 

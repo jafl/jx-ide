@@ -118,11 +118,6 @@ private:
 
 	void	UpdateBaseMenu(JXTextMenu* menu);
 	void	HandleBaseMenu(const JIndex item);
-
-	// not allowed
-
-	CMVarTreeWidget(const CMVarTreeWidget& source);
-	const CMVarTreeWidget& operator=(const CMVarTreeWidget& source);
 };
 
 #endif

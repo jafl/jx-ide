@@ -46,11 +46,6 @@ private:
 
 	static CBClass* StreamInPHPClass(std::istream& input, const JFileVersion vers,
 									 CBTree* tree);
-
-	// not allowed
-
-	CBPHPTree(const CBPHPTree& source);
-	CBPHPTree& operator=(const CBPHPTree& source);
 };
 
 #endif

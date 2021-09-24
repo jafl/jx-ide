@@ -27,13 +27,6 @@ protected:
 private:
 
 	CMStackWidget*	itsWidget;
-
-private:
-
-	// not allowed
-
-	LLDBGetFrame(const LLDBGetFrame& source);
-	const LLDBGetFrame& operator=(const LLDBGetFrame& source);
 };
 
 #endif

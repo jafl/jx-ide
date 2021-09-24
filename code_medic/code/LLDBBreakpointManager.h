@@ -19,13 +19,6 @@ public:
 	LLDBBreakpointManager(LLDBLink* link);
 
 	virtual	~LLDBBreakpointManager();
-
-private:
-
-	// not allowed
-
-	LLDBBreakpointManager(const LLDBBreakpointManager& source);
-	const LLDBBreakpointManager& operator=(const LLDBBreakpointManager& source);
 };
 
 #endif

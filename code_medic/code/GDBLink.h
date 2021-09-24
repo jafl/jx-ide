@@ -223,11 +223,6 @@ private:
 	void	ProgramFinished1();
 
 	void	PrivateSendProgramStopped(const CMLocation& location);
-
-	// not allowed
-
-	GDBLink(const GDBLink& source);
-	const GDBLink& operator=(const GDBLink& source);
 };
 
 #endif

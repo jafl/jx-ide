@@ -24,7 +24,7 @@ public:
 
 	virtual	~CMVarNode();
 
-	bool		ValueIsValid() const;
+	bool			ValueIsValid() const;
 	virtual JString	GetFullName(bool* isPointer = nullptr) const = 0;
 	const JString&	GetValue() const;
 	void			SetValue(const JString& value);
@@ -37,7 +37,7 @@ public:
 	void	SetBase(const JSize base);
 
 	bool	IsPointer() const;
-	void		MakePointer(const bool pointer, const bool adjustOpenable = true);
+	void	MakePointer(const bool pointer, const bool adjustOpenable = true);
 
 	virtual bool	OKToOpen() const override;
 
@@ -49,8 +49,8 @@ public:
 
 	CMVarNode*			GetVarParent();
 	const CMVarNode*	GetVarParent() const;
-	bool			GetVarParent(CMVarNode** parent);
-	bool			GetVarParent(const CMVarNode** parent) const;
+	bool				GetVarParent(CMVarNode** parent);
+	bool				GetVarParent(const CMVarNode** parent) const;
 
 	CMVarNode*			GetVarChild(const JIndex index);
 	const CMVarNode*	GetVarChild(const JIndex index) const;
@@ -75,17 +75,17 @@ protected:
 private:
 
 	const bool		itsShouldListenToLinkFlag;
-	CMVarCommand*		itsValueCommand;
-	JString				itsValue;
+	CMVarCommand*	itsValueCommand;
+	JString			itsValue;
 	bool			itsIsPointerFlag;
 	bool			itsValidFlag;
 	bool			itsNewValueFlag;
-	CMVarCommand*		itsContentCommand;
+	CMVarCommand*	itsContentCommand;
 
 	// used for base conversion
 
 	JSize		itsBase;		// 0 => default, 1 => ASCII
-	bool	itsCanConvertBaseFlag;
+	bool		itsCanConvertBaseFlag;
 	JString*	itsOrigValue;
 
 	// optimized updating
@@ -106,11 +106,6 @@ private:
 	void	ConvertToBase();
 
 	bool	SameElements(const CMVarNode* node) const;
-
-	// not allowed
-
-	CMVarNode(const CMVarNode& source);
-	const CMVarNode& operator=(const CMVarNode& source);
 };
 
 

@@ -51,11 +51,6 @@ private:
 
 	void	CBLibraryNodeX();
 	void	UpdateSubprojectConfig();
-
-	// not allowed
-
-	CBLibraryNode(const CBLibraryNode& source);
-	CBLibraryNode& operator=(const CBLibraryNode& source);
 };
 
 #endif

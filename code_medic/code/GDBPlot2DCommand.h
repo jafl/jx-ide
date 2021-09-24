@@ -24,13 +24,6 @@ public:
 protected:
 
 	virtual void	HandleSuccess(const JString& data) override;
-
-private:
-
-	// not allowed
-
-	GDBPlot2DCommand(const GDBPlot2DCommand& source);
-	const GDBPlot2DCommand& operator=(const GDBPlot2DCommand& source);
 };
 
 #endif

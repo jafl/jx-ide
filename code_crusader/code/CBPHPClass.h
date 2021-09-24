@@ -35,13 +35,6 @@ protected:
 private:
 
 	bool	itsIsFinalFlag;
-
-private:
-
-	// not allowed
-
-	CBPHPClass(const CBPHPClass& source);
-	CBPHPClass& operator=(const CBPHPClass& source);
 };
 
 #endif

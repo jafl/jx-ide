@@ -19,13 +19,6 @@ public:
 	virtual ~CMRunProgramTask();
 
 	virtual void	Perform(const Time delta, Time* maxSleepTime);
-
-private:
-
-	// not allowed
-
-	CMRunProgramTask(const CMRunProgramTask& source);
-	const CMRunProgramTask& operator=(const CMRunProgramTask& source);
 };
 
 #endif

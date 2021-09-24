@@ -25,13 +25,6 @@ protected:
 private:
 
 	JString	itsExpr;
-
-private:
-
-	// not allowed
-
-	LLDBVarCommand(const LLDBVarCommand& source);
-	const LLDBVarCommand& operator=(const LLDBVarCommand& source);
 };
 
 #endif

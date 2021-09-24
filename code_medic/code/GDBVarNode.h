@@ -21,13 +21,6 @@ public:
 	virtual	~GDBVarNode();
 
 	virtual JString	GetFullName(bool* isPointer = nullptr) const override;
-
-private:
-
-	// not allowed
-
-	GDBVarNode(const GDBVarNode& source);
-	const GDBVarNode& operator=(const GDBVarNode& source);
 };
 
 #endif

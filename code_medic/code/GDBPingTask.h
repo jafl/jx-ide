@@ -19,13 +19,6 @@ public:
 	virtual ~GDBPingTask();
 
 	virtual void	Perform(const Time delta, Time* maxSleepTime) override;
-
-private:
-
-	// not allowed
-
-	GDBPingTask(const GDBPingTask& source);
-	const GDBPingTask& operator=(const GDBPingTask& source);
 };
 
 #endif

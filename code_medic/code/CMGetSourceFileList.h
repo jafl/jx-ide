@@ -30,15 +30,7 @@ protected:
 private:
 
 	CMFileListDir*	itsFileList;			// not owned
-	bool		itsNeedRedoOnFirstStop;
-
-private:
-
-	// not allowed
-
-	CMGetSourceFileList(const CMGetSourceFileList& source);
-	const CMGetSourceFileList& operator=(const CMGetSourceFileList& source);
-
+	bool			itsNeedRedoOnFirstStop;
 };
 
 

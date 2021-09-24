@@ -1,0 +1,7 @@
+path_classifiers:
+  library:
+    - misc
+  test:
+    - code_crusader/test
+    - code_crusader/test-manual
+    - code_medic/test

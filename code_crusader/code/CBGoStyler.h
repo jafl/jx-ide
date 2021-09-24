@@ -34,13 +34,6 @@ protected:
 private:
 
 	static CBGoStyler*	itsSelf;
-
-private:
-
-	// not allowed
-
-	CBGoStyler(const CBGoStyler& source);
-	const CBGoStyler& operator=(const CBGoStyler& source);
 };
 
 #endif

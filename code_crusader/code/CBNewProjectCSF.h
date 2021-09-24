@@ -42,13 +42,6 @@ private:
 	CBNewProjectSaveFileDialog*		itsSaveDialog;
 	JString							itsProjectTemplate;
 	CBBuildManager::MakefileMethod	itsMakefileMethod;
-
-private:
-
-	// not allowed
-
-	CBNewProjectCSF(const CBNewProjectCSF& source);
-	const CBNewProjectCSF& operator=(const CBNewProjectCSF& source);
 };
 
 

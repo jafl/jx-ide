@@ -54,11 +54,6 @@ private:
 
 	static JCharacterRange	MatchAt(const Token& token, JStringIterator& iter,
 									const JRegex& pattern);
-
-	// not allowed
-
-	CBHTMLStyler(const CBHTMLStyler& source);
-	const CBHTMLStyler& operator=(const CBHTMLStyler& source);
 };
 
 #endif

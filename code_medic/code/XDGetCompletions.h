@@ -34,11 +34,6 @@ private:
 private:
 
 	static JString	BuildCommand(const JString& prefix);
-
-	// not allowed
-
-	XDGetCompletions(const XDGetCompletions& source);
-	const XDGetCompletions& operator=(const XDGetCompletions& source);
 };
 
 #endif

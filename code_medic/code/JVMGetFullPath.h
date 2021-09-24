@@ -21,13 +21,6 @@ public:
 protected:
 
 	virtual void	HandleSuccess(const JString& data) override;
-
-private:
-
-	// not allowed
-
-	JVMGetFullPath(const JVMGetFullPath& source);
-	const JVMGetFullPath& operator=(const JVMGetFullPath& source);
 };
 
 #endif

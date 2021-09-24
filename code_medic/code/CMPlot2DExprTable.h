@@ -58,13 +58,6 @@ protected:
 							   const HSizingOption hSizing, const VSizingOption vSizing,
 							   const JCoordinate x, const JCoordinate y,
 							   const JCoordinate w, const JCoordinate h) override;
-
-private:
-
-	// not allowed
-
-	CMPlot2DExprTable(const CMPlot2DExprTable& source);
-	const CMPlot2DExprTable& operator=(const CMPlot2DExprTable& source);
 };
 
 #endif

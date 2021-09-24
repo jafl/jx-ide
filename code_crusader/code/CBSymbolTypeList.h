@@ -40,7 +40,7 @@ private:
 	{
 		CBSymbolList::Type	type;
 		CBLanguage			lang;
-		bool			visible;	// not used
+		bool				visible;	// not used
 		JFontStyle			style;
 		JXImage*			icon;		// can be nullptr; not owned
 
@@ -100,8 +100,8 @@ private:
 
 	// not allowed
 
-	CBSymbolTypeList(const CBSymbolTypeList& source);
-	const CBSymbolTypeList& operator=(const CBSymbolTypeList& source);
+	CBSymbolTypeList(const CBSymbolTypeList&) = delete;
+	CBSymbolTypeList& operator=(const CBSymbolTypeList&) = delete;
 
 public:
 

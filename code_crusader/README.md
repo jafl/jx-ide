@@ -4,7 +4,8 @@ Code Crusader is a graphical development environment for UNIX.  The [on-line hel
 
 Since we use Code Crusader for all our development, we guarantee that it will continue to improve.  We have a very long list of features that we intend to implement, so please tell us what features you need, so we will know which ones on our list to implement first.
 
-### Building from source
+
+## Building from source
 
 1. Install the [JX Application Framework](https://github.com/jafl/jx_application_framework),  and set the `JX_ROOT` environment variable to point to its `include` directory.
 1. `makemake`
@@ -28,8 +29,6 @@ The CPM_rules files can be loaded into Code Crusader by using the "Clean paragra
 ### Requirements
 
 On MacOS, this program requires XQuartz, the X11 server.  Before running this program, you must first start XQuartz.
-
-You also need to `brew install ace icu4c pcre gd editorconfig aspell`.
 
 
 ## FAQ

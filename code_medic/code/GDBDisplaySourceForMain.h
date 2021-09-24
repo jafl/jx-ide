@@ -26,15 +26,7 @@ protected:
 private:
 
 	bool	itsHasCoreFlag;
-	JIndex		itsNextCmdIndex;
-
-private:
-
-	// not allowed
-
-	GDBDisplaySourceForMain(const GDBDisplaySourceForMain& source);
-	const GDBDisplaySourceForMain& operator=(const GDBDisplaySourceForMain& source);
-
+	JIndex	itsNextCmdIndex;
 };
 
 #endif

@@ -314,8 +314,8 @@ private:
 
 	// not allowed
 
-	CBCtagsUser(const CBCtagsUser& source);
-	const CBCtagsUser& operator=(const CBCtagsUser& source);
+	CBCtagsUser(const CBCtagsUser&) = delete;
+	CBCtagsUser& operator=(const CBCtagsUser&) = delete;
 };
 
 

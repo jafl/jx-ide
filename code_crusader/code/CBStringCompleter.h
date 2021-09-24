@@ -64,8 +64,8 @@ private:
 
 	// not allowed
 
-	CBStringCompleter(const CBStringCompleter& source);
-	const CBStringCompleter& operator=(const CBStringCompleter& source);
+	CBStringCompleter(const CBStringCompleter&) = delete;
+	CBStringCompleter& operator=(const CBStringCompleter&) = delete;
 };
 
 #endif

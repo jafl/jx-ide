@@ -23,14 +23,6 @@ public:
 protected:
 
 	virtual void	HandleSuccess(const JString& data) override;
-
-private:
-
-	// not allowed
-
-	LLDBGetAssembly(const LLDBGetAssembly& source);
-	const LLDBGetAssembly& operator=(const LLDBGetAssembly& source);
-
 };
 
 #endif

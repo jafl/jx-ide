@@ -23,13 +23,6 @@ public:
 protected:
 
 	CMLocation	GetLocation() const;
-
-private:
-
-	// not allowed
-
-	GDBGetStopLocation(const GDBGetStopLocation& source);
-	const GDBGetStopLocation& operator=(const GDBGetStopLocation& source);
 };
 
 #endif

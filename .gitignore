@@ -7,3 +7,4 @@ Makefile
 */strings/version
 */strings/*_menu_strings
 */.jcc
+Brewfile.lock.json

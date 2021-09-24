@@ -33,14 +33,6 @@ private:
 
 	JTreeNode*		itsRoot;
 	JVMThreadNode*	itsParent;	// can be nullptr
-
-private:
-
-	// not allowed
-
-	JVMGetThreadGroups(const JVMGetThreadGroups& source);
-	const JVMGetThreadGroups& operator=(const JVMGetThreadGroups& source);
-
 };
 
 #endif

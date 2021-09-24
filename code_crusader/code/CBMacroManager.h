@@ -71,7 +71,7 @@ private:
 
 	// not allowed
 
-	const CBMacroManager& operator=(const CBMacroManager& source);
+	CBMacroManager& operator=(const CBMacroManager&) = delete;
 };
 
 

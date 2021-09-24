@@ -38,13 +38,6 @@ protected:
 private:
 
 	static CBPerlStyler*	itsSelf;
-
-private:
-
-	// not allowed
-
-	CBPerlStyler(const CBPerlStyler& source);
-	const CBPerlStyler& operator=(const CBPerlStyler& source);
 };
 
 #endif

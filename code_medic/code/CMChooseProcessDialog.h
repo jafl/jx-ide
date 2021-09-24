@@ -32,8 +32,8 @@ protected:
 private:
 
 	CMProcessText*	itsText;
-	const bool	itsAttachToSelectionFlag;
-	const bool	itsStopProgramFlag;
+	const bool		itsAttachToSelectionFlag;
+	const bool		itsStopProgramFlag;
 
 // begin JXLayout
 
@@ -44,11 +44,6 @@ private:
 private:
 
 	void	BuildWindow();
-
-	// not allowed
-
-	CMChooseProcessDialog(const CMChooseProcessDialog& source);
-	const CMChooseProcessDialog& operator=(const CMChooseProcessDialog& source);
 };
 
 #endif

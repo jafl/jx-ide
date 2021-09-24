@@ -31,11 +31,6 @@ private:
 private:
 
 	void	CleanVarString(JString* s);
-
-	// not allowed
-
-	GDBGetLocalVars(const GDBGetLocalVars& source);
-	const GDBGetLocalVars& operator=(const GDBGetLocalVars& source);
 };
 
 #endif

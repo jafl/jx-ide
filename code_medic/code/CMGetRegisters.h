@@ -29,13 +29,6 @@ protected:
 private:
 
 	CMRegistersDir*	itsDir;
-
-private:
-
-	// not allowed
-
-	CMGetRegisters(const CMGetRegisters& source);
-	const CMGetRegisters& operator=(const CMGetRegisters& source);
 };
 
 

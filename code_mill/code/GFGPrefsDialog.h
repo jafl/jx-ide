@@ -55,11 +55,6 @@ private:
 						const JString& constructor,
 						const JString& destructor,
 						const JString& function);
-
-	// not allowed
-
-	GFGPrefsDialog(const GFGPrefsDialog& source);
-	const GFGPrefsDialog& operator=(const GFGPrefsDialog& source);
 };
 
 #endif

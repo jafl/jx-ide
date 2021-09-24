@@ -179,19 +179,19 @@ private:
 
 	LLDBBreakpointManager*	itsBPMgr;
 
-	JString		itsPrompt;			// to allow GetPrompt() to return JString&
-	JString		itsCoreName;
+	JString	itsPrompt;			// to allow GetPrompt() to return JString&
+	JString	itsCoreName;
 	bool	itsIsAttachedFlag;	// debugging pre-existing process
 
 private:
 
 	bool	StartDebugger(const bool restart);
-	void		InitFlags();
-	void		StopDebugger();
+	void	InitFlags();
+	void	StopDebugger();
 
-	void		ProgramStarted(const pid_t pid);
+	void	ProgramStarted(const pid_t pid);
 	bool	ProgramStopped(JString* msg = nullptr);
-	void		ProgramFinished1();
+	void	ProgramFinished1();
 
 	void	DetachOrKill(const bool destroyTarget);
 
@@ -202,11 +202,6 @@ private:
 	static j_lldb_cookie_fn_return	ReceiveLLDBMessageLine(void* baton, const char* line, j_lldb_cookie_size count);
 	static j_lldb_cookie_fn_return	ReceiveLLDBErrorLine(void* baton, const char* line, j_lldb_cookie_size count);
 	static void						LogLLDBMessage(const JUtf8Byte* msg, void* baton);
-
-	// not allowed
-
-	LLDBLink(const LLDBLink& source);
-	const LLDBLink& operator=(const LLDBLink& source);
 };
 
 

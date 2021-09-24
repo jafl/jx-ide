@@ -26,13 +26,6 @@ public:
 private:
 
 	JString	itsValue;
-
-private:
-
-	// not allowed
-
-	CMStackArgNode(const CMStackArgNode& source);
-	const CMStackArgNode& operator=(const CMStackArgNode& source);
 };
 
 

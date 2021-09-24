@@ -32,13 +32,6 @@ protected:
 private:
 
 	static CBPythonStyler*	itsSelf;
-
-private:
-
-	// not allowed
-
-	CBPythonStyler(const CBPythonStyler& source);
-	const CBPythonStyler& operator=(const CBPythonStyler& source);
 };
 
 #endif

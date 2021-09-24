@@ -27,14 +27,6 @@ protected:
 private:
 
 	JXInputField*	itsArgInput;
-
-private:
-
-	// not allowed
-
-	LLDBGetInitArgs(const LLDBGetInitArgs& source);
-	const LLDBGetInitArgs& operator=(const LLDBGetInitArgs& source);
-
 };
 
 #endif

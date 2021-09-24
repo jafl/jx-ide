@@ -27,14 +27,6 @@ protected:
 private:
 
 	JXInputField*	itsArgInput;
-
-private:
-
-	// not allowed
-
-	GDBGetInitArgs(const GDBGetInitArgs& source);
-	const GDBGetInitArgs& operator=(const GDBGetInitArgs& source);
-
 };
 
 #endif

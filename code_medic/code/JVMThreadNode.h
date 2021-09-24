@@ -46,12 +46,6 @@ protected:
 private:
 
 	const Type	itsType;
-
-private:
-
-	// not allowed
-
-	const JVMThreadNode& operator=(const JVMThreadNode& source);
 };
 
 

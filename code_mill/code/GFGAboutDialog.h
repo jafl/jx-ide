@@ -38,11 +38,6 @@ private:
 private:
 
 	void	BuildWindow(const JString& prevVersStr);
-
-	// not allowed
-
-	GFGAboutDialog(const GFGAboutDialog& source);
-	const GFGAboutDialog& operator=(const GFGAboutDialog& source);
 };
 
 #endif

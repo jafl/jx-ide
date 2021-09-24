@@ -25,13 +25,6 @@ public:
 	virtual JString	GetFullName(bool* isPointer = nullptr) const override;
 
 	static CMVarNode*	BuildTree(lldb::SBFrame& frame, lldb::SBValue& value);
-
-private:
-
-	// not allowed
-
-	LLDBVarNode(const LLDBVarNode& source);
-	const LLDBVarNode& operator=(const LLDBVarNode& source);
 };
 
 #endif

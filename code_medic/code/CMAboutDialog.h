@@ -40,11 +40,6 @@ private:
 private:
 
 	void	BuildWindow(const JString& prevVersStr);
-
-	// not allowed
-
-	CMAboutDialog(const CMAboutDialog& source);
-	const CMAboutDialog& operator=(const CMAboutDialog& source);
 };
 
 #endif

@@ -21,14 +21,6 @@ public:
 protected:
 
 	virtual void	HandleSuccess(const JString& data) override;
-
-private:
-
-	// not allowed
-
-	LLDBGetBreakpoints(const LLDBGetBreakpoints& source);
-	const LLDBGetBreakpoints& operator=(const LLDBGetBreakpoints& source);
-
 };
 
 #endif

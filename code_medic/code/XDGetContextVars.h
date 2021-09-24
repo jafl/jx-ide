@@ -30,13 +30,6 @@ protected:
 private:
 
 	CMVarNode*	itsRootNode;	// not owned
-
-private:
-
-	// not allowed
-
-	XDGetContextVars(const XDGetContextVars& source);
-	const XDGetContextVars& operator=(const XDGetContextVars& source);
 };
 
 #endif

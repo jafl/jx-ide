@@ -37,20 +37,20 @@ public:
 	CBProjectNode*		GetProjectRoot() const;
 
 	bool	BuildMakeFiles(JString* text,
-							   JPtrArray<JTreeNode>* invalidList,
-							   JPtrArray<JString>* libFileList,
-							   JPtrArray<JString>* libProjPathList) const;
+						   JPtrArray<JTreeNode>* invalidList,
+						   JPtrArray<JString>* libFileList,
+						   JPtrArray<JString>* libProjPathList) const;
 	bool	BuildCMakeData(JString* src, JString* hdr,
-							   JPtrArray<JTreeNode>* invalidList) const;
+						   JPtrArray<JTreeNode>* invalidList) const;
 	bool	BuildQMakeData(JString* src, JString* hdr,
-							   JPtrArray<JTreeNode>* invalidList) const;
-	void		ParseFiles(CBFileListTable* parser,
-						   const JPtrArray<JString>& allSuffixList,
-						   CBSymbolList* symbolList,
-						   CBCTree* cTree, CBDTree* dTree, CBGoTree* goTree,
-						   CBJavaTree* javaTree, CBPHPTree* phpTree,
-						   JProgressDisplay& pg) const;
-	void		Print(JString* text) const;
+						   JPtrArray<JTreeNode>* invalidList) const;
+	void	ParseFiles(CBFileListTable* parser,
+					   const JPtrArray<JString>& allSuffixList,
+					   CBSymbolList* symbolList,
+					   CBCTree* cTree, CBDTree* dTree, CBGoTree* goTree,
+					   CBJavaTree* javaTree, CBPHPTree* phpTree,
+					   JProgressDisplay& pg) const;
+	void	Print(JString* text) const;
 
 	void	StreamOut(std::ostream& output) const;
 
@@ -60,13 +60,6 @@ public:
 private:
 
 	CBProjectDocument*	itsDoc;
-
-private:
-
-	// not allowed
-
-	CBProjectTree(const CBProjectTree& source);
-	CBProjectTree& operator=(const CBProjectTree& source);
 };
 
 

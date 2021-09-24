@@ -36,21 +36,21 @@ public:
 							  CBLanguage* lang, Type* type,
 							  bool* fullyQualifiedFileScope = nullptr) const;
 	const JString&	GetFile(const JIndex symbolIndex, JIndex* lineIndex) const;
-	bool		GetSignature(const JIndex symbolIndex,
+	bool			GetSignature(const JIndex symbolIndex,
 								 const JString** signature) const;
 
 	bool	IsUniqueClassName(const JString& name, CBLanguage* lang) const;
 	bool	FindSymbol(const JString& name, const JFAID_t contextFileID,
-						   const JString& contextNamespace, const CBLanguage contextLang,
-						   JPtrArray<JString>* cContextNamespaceList,
-						   JPtrArray<JString>* dContextNamespaceList,
-						   JPtrArray<JString>* goContextNamespaceList,
-						   JPtrArray<JString>* javaContextNamespaceList,
-						   JPtrArray<JString>* phpContextNamespaceList,
-						   const bool findDeclaration, const bool findDefinition,
-						   JArray<JIndex>* matchList) const;
+					   const JString& contextNamespace, const CBLanguage contextLang,
+					   JPtrArray<JString>* cContextNamespaceList,
+					   JPtrArray<JString>* dContextNamespaceList,
+					   JPtrArray<JString>* goContextNamespaceList,
+					   JPtrArray<JString>* javaContextNamespaceList,
+					   JPtrArray<JString>* phpContextNamespaceList,
+					   const bool findDeclaration, const bool findDefinition,
+					   JArray<JIndex>* matchList) const;
 	bool	ClosestMatch(const JString& prefixStr,
-							 JArray<JIndex>& visibleList, JIndex* index) const;
+						 JArray<JIndex>& visibleList, JIndex* index) const;
 
 	void	ReadSetup(std::istream& projInput, const JFileVersion projVers,
 					  std::istream* symInput, const JFileVersion symVers);
@@ -62,15 +62,15 @@ public:
 
 	// called by CBSymbolDirector
 
-	void		FileTypesChanged(const CBPrefsManager::FileTypesChanged& info);
-	void		PrepareForUpdate(const bool reparseAll, JProgressDisplay& pg);
+	void	FileTypesChanged(const CBPrefsManager::FileTypesChanged& info);
+	void	PrepareForUpdate(const bool reparseAll, JProgressDisplay& pg);
 	bool	UpdateFinished(const JArray<JFAID_t>& deadFileList, JProgressDisplay& pg);
 
 	// called by CBFileListTable
 
 	bool	NeedsReparseAll() const;
-	void		FileChanged(const JString& fileName,
-							const CBTextFileType fileType, const JFAID_t id);
+	void	FileChanged(const JString& fileName,
+						const CBTextFileType fileType, const JFAID_t id);
 
 protected:
 
@@ -127,27 +127,27 @@ private:
 						   const JString& fileName, const JFAID_t fileID);
 
 	bool	ConvertToFullNames(JArray<JIndex>* noContextList,
-								   JArray<JIndex>* contextList,
-								   const JString& contextNamespace1,
-								   const JString& contextNamespace2,
-								   const CBLanguage contextLang,
-								   const JPtrArray<JString>& cContextNamespace,
-								   const JPtrArray<JString>& dContextNamespace,
-								   const JPtrArray<JString>& goContextNamespace,
-								   const JPtrArray<JString>& javaContextNamespaceList,
-								   const JPtrArray<JString>& phpContextNamespaceList) const;
-	void		PrepareContextNamespace(const JString& contextNamespace, const CBLanguage lang,
-										JString* ns1, JString* ns2) const;
-	void		PrepareCContextNamespaceList(JPtrArray<JString>* contextNamespace) const;
-	void		PrepareDContextNamespaceList(JPtrArray<JString>* contextNamespace) const;
-	void		PrepareGoContextNamespaceList(JPtrArray<JString>* contextNamespace) const;
-	void		PrepareJavaContextNamespaceList(JPtrArray<JString>* contextNamespace) const;
-	void		PreparePHPContextNamespaceList(JPtrArray<JString>* contextNamespace) const;
-	void		PrepareContextNamespaceList(JPtrArray<JString>* contextNamespace,
-											const JUtf8Byte* namespaceOp) const;
+							   JArray<JIndex>* contextList,
+							   const JString& contextNamespace1,
+							   const JString& contextNamespace2,
+							   const CBLanguage contextLang,
+							   const JPtrArray<JString>& cContextNamespace,
+							   const JPtrArray<JString>& dContextNamespace,
+							   const JPtrArray<JString>& goContextNamespace,
+							   const JPtrArray<JString>& javaContextNamespaceList,
+							   const JPtrArray<JString>& phpContextNamespaceList) const;
+	void	PrepareContextNamespace(const JString& contextNamespace, const CBLanguage lang,
+									JString* ns1, JString* ns2) const;
+	void	PrepareCContextNamespaceList(JPtrArray<JString>* contextNamespace) const;
+	void	PrepareDContextNamespaceList(JPtrArray<JString>* contextNamespace) const;
+	void	PrepareGoContextNamespaceList(JPtrArray<JString>* contextNamespace) const;
+	void	PrepareJavaContextNamespaceList(JPtrArray<JString>* contextNamespace) const;
+	void	PreparePHPContextNamespaceList(JPtrArray<JString>* contextNamespace) const;
+	void	PrepareContextNamespaceList(JPtrArray<JString>* contextNamespace,
+										const JUtf8Byte* namespaceOp) const;
 	bool	InContext(const JString& fullName,
-						  const JPtrArray<JString>& contextNamespace,
-						  const JString::Case caseSensitive) const;
+					  const JPtrArray<JString>& contextNamespace,
+					  const JString::Case caseSensitive) const;
 
 	static JListT::CompareResult
 	CompareSymbols(const SymbolInfo& s1, const SymbolInfo& s2);
@@ -157,8 +157,8 @@ private:
 
 	// not allowed
 
-	CBSymbolList(const CBSymbolList& source);
-	const CBSymbolList& operator=(const CBSymbolList& source);
+	CBSymbolList(const CBSymbolList&) = delete;
+	CBSymbolList& operator=(const CBSymbolList&) = delete;
 
 public:
 

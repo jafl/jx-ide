@@ -35,13 +35,6 @@ protected:
 private:
 
 	static CBDStyler*	itsSelf;
-
-private:
-
-	// not allowed
-
-	CBDStyler(const CBDStyler& source);
-	const CBDStyler& operator=(const CBDStyler& source);
 };
 
 #endif

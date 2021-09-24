@@ -23,14 +23,6 @@ public:
 protected:
 
 	virtual void	HandleSuccess(const JString& data) override;
-
-private:
-
-	// not allowed
-
-	XDGetInitArgs(const XDGetInitArgs& source);
-	const XDGetInitArgs& operator=(const XDGetInitArgs& source);
-
 };
 
 #endif

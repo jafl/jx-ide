@@ -26,13 +26,6 @@ public:
 private:
 
 	CMVarNode*	itsNode;		// we don't own this
-
-private:
-
-	// not allowed
-
-	CMInitVarNodeTask(const CMInitVarNodeTask& source);
-	const CMInitVarNodeTask& operator=(const CMInitVarNodeTask& source);
 };
 
 #endif

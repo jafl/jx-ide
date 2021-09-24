@@ -44,11 +44,6 @@ private:
 private:
 
 	bool	SlurpPPComment(JStyledText::TextRange* totalRange);
-
-	// not allowed
-
-	CBCStyler(const CBCStyler& source);
-	const CBCStyler& operator=(const CBCStyler& source);
 };
 
 #endif

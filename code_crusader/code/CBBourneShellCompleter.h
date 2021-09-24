@@ -29,13 +29,6 @@ protected:
 private:
 
 	static CBBourneShellCompleter*	itsSelf;
-
-private:
-
-	// not allowed
-
-	CBBourneShellCompleter(const CBBourneShellCompleter& source);
-	const CBBourneShellCompleter& operator=(const CBBourneShellCompleter& source);
 };
 
 #endif

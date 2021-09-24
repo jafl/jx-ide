@@ -66,11 +66,6 @@ private:
 	void	HandleActionMenu(const JIndex index);
 
 	void	HandleHelpMenu(const JIndex index);
-
-	// not allowed
-
-	CMBreakpointsDir(const CMBreakpointsDir& source);
-	const CMBreakpointsDir& operator=(const CMBreakpointsDir& source);
 };
 
 

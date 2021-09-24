@@ -75,11 +75,6 @@ private:
 	static JListT::CompareResult
 		CompareBreakpointLocations(CMBreakpoint* const & bp1,
 								   CMBreakpoint* const & bp2);
-
-	// not allowed
-
-	CMBreakpointTable(const CMBreakpointTable& source);
-	const CMBreakpointTable& operator=(const CMBreakpointTable& source);
 };
 
 #endif

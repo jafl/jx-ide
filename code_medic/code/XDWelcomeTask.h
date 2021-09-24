@@ -23,15 +23,8 @@ public:
 
 private:
 
-	JString		itsMessage;
+	JString	itsMessage;
 	bool	itsErrorFlag;
-
-private:
-
-	// not allowed
-
-	XDWelcomeTask(const XDWelcomeTask& source);
-	const XDWelcomeTask& operator=(const XDWelcomeTask& source);
 };
 
 #endif

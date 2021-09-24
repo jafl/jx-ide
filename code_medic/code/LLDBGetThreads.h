@@ -27,13 +27,6 @@ protected:
 private:
 
 	JTree*	itsTree;	// not owned
-
-private:
-
-	// not allowed
-
-	LLDBGetThreads(const LLDBGetThreads& source);
-	const LLDBGetThreads& operator=(const LLDBGetThreads& source);
 };
 
 #endif

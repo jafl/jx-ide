@@ -59,8 +59,8 @@ private:
 	JPtrArray<JString>*		itsAncestors;
 	JPtrArray<JString>*		itsAncestorFiles;
 
-	JString 	itsFileName;
-	JString		itsClassName;
+	JString itsFileName;
+	JString	itsClassName;
 
 private:
 
@@ -68,9 +68,8 @@ private:
 
 	// not allowed
 
-	GFGClass(const GFGClass& source);
-	const GFGClass& operator=(const GFGClass& source);
-
+	GFGClass(const GFGClass&) = delete;
+	GFGClass& operator=(const GFGClass&) = delete;
 };
 
 

@@ -44,35 +44,35 @@ public:
 								   const int keySym, const JXKeyModifiers& modifiers) override;
 	virtual void	HandleShortcut(const int key, const JXKeyModifiers& modifiers) override;
 
-	JSize		GetTabCharCount() const;
-	void		SetTabCharCount(const JSize charCount);
+	JSize	GetTabCharCount() const;
+	void	SetTabCharCount(const JSize charCount);
 
-	void		SetFont(const JString& name, const JSize size,
-						const JSize tabCharCount);
-	void		SetFont(const JString& name, const JSize size,
-						const JSize tabCharCount, const bool breakCROnly);
-	void		SetWritable(const bool writable);
+	void	SetFont(const JString& name, const JSize size,
+					const JSize tabCharCount);
+	void	SetFont(const JString& name, const JSize size,
+					const JSize tabCharCount, const bool breakCROnly);
+	void	SetWritable(const bool writable);
 
 	JCoordinate	CalcTabWidth(const JFont& font, const JSize tabCharCount) const;
 
 	bool	WillBalanceWhileTyping() const;
-	void		ShouldBalanceWhileTyping(const bool balance);
+	void	ShouldBalanceWhileTyping(const bool balance);
 
 	bool	WillScrollToBalance() const;
-	void		ShouldScrollToBalance(const bool scroll);
+	void	ShouldScrollToBalance(const bool scroll);
 
 	bool	WillBeepWhenTypeUnbalanced() const;
-	void		ShouldBeepWhenTypeUnbalanced(const bool beep);
+	void	ShouldBeepWhenTypeUnbalanced(const bool beep);
 
 	bool	TabIsSmart() const;
-	void		TabShouldBeSmart(const bool smart);
+	void	TabShouldBeSmart(const bool smart);
 
 	bool	CBAllowsDragAndDrop() const;
-	void		CBShouldAllowDragAndDrop(const bool allow);
+	void	CBShouldAllowDragAndDrop(const bool allow);
 
 	bool	GetRightMarginWidth(JSize* width) const;
-	void		SetRightMarginWidth(const bool show, const JSize width);
-	void		SetRightMarginColor(const JColorID color);
+	void	SetRightMarginWidth(const bool show, const JSize width);
+	void	SetRightMarginColor(const JColorID color);
 
 	const JString&	GetScriptPath() const;
 	void			SetScriptPath(const JString& path);
@@ -210,11 +210,6 @@ private:
 	void	HandleContextMenu(const JIndex index);
 
 	void	SelectWordIfNoSelection();
-
-	// not allowed
-
-	CBTextEditor(const CBTextEditor& source);
-	const CBTextEditor& operator=(const CBTextEditor& source);
 };
 
 

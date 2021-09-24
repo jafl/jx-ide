@@ -34,11 +34,6 @@ private:
 private:
 
 	static JString	BuildCommand(const JString& prefix);
-
-	// not allowed
-
-	GDBGetCompletions(const GDBGetCompletions& source);
-	const GDBGetCompletions& operator=(const GDBGetCompletions& source);
 };
 
 #endif

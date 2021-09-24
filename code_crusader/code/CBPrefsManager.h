@@ -373,11 +373,6 @@ private:
 	static JListT::CompareResult
 		CompareCRMNames(const CRMRuleListInfo& i1, const CRMRuleListInfo& i2);
 
-	// not allowed
-
-	CBPrefsManager(const CBPrefsManager& source);
-	CBPrefsManager& operator=(const CBPrefsManager& source);
-
 public:
 
 	// JBroadcaster messages

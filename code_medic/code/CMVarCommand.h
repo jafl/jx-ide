@@ -33,13 +33,6 @@ private:
 
 	JString	itsData;
 
-private:
-
-	// not allowed
-
-	CMVarCommand(const CMVarCommand& source);
-	const CMVarCommand& operator=(const CMVarCommand& source);
-
 public:
 
 	// JBroadcaster messages

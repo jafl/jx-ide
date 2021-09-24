@@ -221,8 +221,8 @@ private:
 
 	// not allowed
 
-	CBClass(const CBClass& source);
-	CBClass& operator=(const CBClass& source);
+	CBClass(const CBClass&) = delete;
+	CBClass& operator=(const CBClass&) = delete;
 };
 
 std::istream& operator>>(std::istream& input, CBClass::DeclareType& type);

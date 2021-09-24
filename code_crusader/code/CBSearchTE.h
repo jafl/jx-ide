@@ -40,22 +40,22 @@ public:
 
 protected:
 
-	virtual void		TERefresh() override;
-	virtual void		TERefreshRect(const JRect& rect) override;
-	virtual void		TERedraw() override;
-	virtual void		TESetGUIBounds(const JCoordinate w, const JCoordinate h,
-									   const JCoordinate changeY) override;
+	virtual void	TERefresh() override;
+	virtual void	TERefreshRect(const JRect& rect) override;
+	virtual void	TERedraw() override;
+	virtual void	TESetGUIBounds(const JCoordinate w, const JCoordinate h,
+								   const JCoordinate changeY) override;
 	virtual bool	TEWidthIsBeyondDisplayCapacity(const JSize width) const override;
 	virtual bool	TEScrollToRect(const JRect& rect,
-									   const bool centerInDisplay) override;
+								   const bool centerInDisplay) override;
 	virtual bool	TEScrollForDrag(const JPoint& pt) override;
 	virtual bool	TEScrollForDND(const JPoint& pt) override;
-	virtual void		TESetVertScrollStep(const JCoordinate vStep) override;
-	virtual void		TEUpdateClipboard(const JString& text, const JRunArray<JFont>& style) const override;
+	virtual void	TESetVertScrollStep(const JCoordinate vStep) override;
+	virtual void	TEUpdateClipboard(const JString& text, const JRunArray<JFont>& style) const override;
 	virtual bool	TEGetClipboard(JString* text, JRunArray<JFont>* style) const override;
 	virtual bool	TEBeginDND() override;
-	virtual void		TEPasteDropData() override;
-	virtual void		TECaretShouldBlink(const bool blink) override;
+	virtual void	TEPasteDropData() override;
+	virtual void	TECaretShouldBlink(const bool blink) override;
 
 private:
 
@@ -68,8 +68,7 @@ private:
 
 	// not allowed
 
-	CBSearchTE(const CBSearchTE& source);
-	const CBSearchTE& operator=(const CBSearchTE& source);
+	CBSearchTE(const CBSearchTE&) = delete;
 };
 
 #endif

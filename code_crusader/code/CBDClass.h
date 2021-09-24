@@ -34,13 +34,6 @@ protected:
 private:
 
 	bool	itsIsFinalFlag;
-
-private:
-
-	// not allowed
-
-	CBDClass(const CBDClass& source);
-	CBDClass& operator=(const CBDClass& source);
 };
 
 #endif

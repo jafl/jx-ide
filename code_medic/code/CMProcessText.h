@@ -34,13 +34,6 @@ protected:
 private:
 
 	CMChooseProcessDialog*	itsDir;
-
-private:
-
-	// not allowed
-
-	CMProcessText(const CMProcessText& source);
-	const CMProcessText& operator=(const CMProcessText& source);
 };
 
 #endif

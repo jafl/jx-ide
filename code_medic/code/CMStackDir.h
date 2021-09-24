@@ -55,11 +55,6 @@ private:
 	void	HandleFileMenu(const JIndex index);
 
 	void	HandleHelpMenu(const JIndex index);
-
-	// not allowed
-
-	CMStackDir(const CMStackDir& source);
-	const CMStackDir& operator=(const CMStackDir& source);
 };
 
 

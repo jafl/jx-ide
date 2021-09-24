@@ -27,13 +27,6 @@ protected:
 private:
 
 	CMVarNode*	itsRootNode;
-
-private:
-
-	// not allowed
-
-	XDVarCommand(const XDVarCommand& source);
-	const XDVarCommand& operator=(const XDVarCommand& source);
 };
 
 #endif

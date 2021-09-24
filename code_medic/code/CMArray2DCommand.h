@@ -45,8 +45,8 @@ protected:
 
 	virtual void	HandleFailure();
 
-	void		HandleFailure(const JIndex startIndex, const JString& value);
-	JPoint		GetCell(const JIndex i) const;
+	void	HandleFailure(const JIndex startIndex, const JString& value);
+	JPoint	GetCell(const JIndex i) const;
 	bool	ItsIndexValid() const;
 
 private:
@@ -57,13 +57,6 @@ private:
 	UpdateType			itsType;
 	JIndex				itsIndex;		// row or column to update
 	JInteger			itsArrayIndex;	// i or j value being updated
-
-private:
-
-	// not allowed
-
-	CMArray2DCommand(const CMArray2DCommand& source);
-	const CMArray2DCommand& operator=(const CMArray2DCommand& source);
 };
 
 

@@ -21,13 +21,6 @@ public:
 protected:
 
 	virtual void	HandleSuccess(const JString& data) override;
-
-private:
-
-	// not allowed
-
-	GDBGetStopLocationForAsm(const GDBGetStopLocationForAsm& source);
-	const GDBGetStopLocationForAsm& operator=(const GDBGetStopLocationForAsm& source);
 };
 
 #endif

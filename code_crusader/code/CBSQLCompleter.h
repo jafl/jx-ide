@@ -30,13 +30,6 @@ protected:
 private:
 
 	static CBSQLCompleter*	itsSelf;
-
-private:
-
-	// not allowed
-
-	CBSQLCompleter(const CBSQLCompleter& source);
-	const CBSQLCompleter& operator=(const CBSQLCompleter& source);
 };
 
 #endif

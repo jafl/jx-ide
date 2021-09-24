@@ -21,13 +21,6 @@ public:
 protected:
 
 	virtual void	HandleSuccess(const JString& data) override;
-
-private:
-
-	// not allowed
-
-	GDBAnalyzeCore(const GDBAnalyzeCore& source);
-	const GDBAnalyzeCore& operator=(const GDBAnalyzeCore& source);
 };
 
 #endif

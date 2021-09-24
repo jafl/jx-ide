@@ -31,13 +31,6 @@ protected:
 private:
 
 	static CBDCompleter*	itsSelf;
-
-private:
-
-	// not allowed
-
-	CBDCompleter(const CBDCompleter& source);
-	const CBDCompleter& operator=(const CBDCompleter& source);
 };
 
 #endif

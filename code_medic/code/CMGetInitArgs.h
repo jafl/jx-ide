@@ -17,14 +17,6 @@ public:
 	CMGetInitArgs(const JString& cmd);
 
 	virtual	~CMGetInitArgs();
-
-private:
-
-	// not allowed
-
-	CMGetInitArgs(const CMGetInitArgs& source);
-	const CMGetInitArgs& operator=(const CMGetInitArgs& source);
-
 };
 
 #endif

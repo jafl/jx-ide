@@ -4,13 +4,13 @@ jx_browser_data 89
 T
 1 "var parsing"
 T
-2 "GDBVarTreeScanner.l"
-F
-"./code/GDBVarTreeScanner.l"
-T
 2 "GDBVarTreeParserY.y"
 F
 "./code/GDBVarTreeParserY.y"
+T
+2 "GDBVarTreeScanner.l"
+F
+"./code/GDBVarTreeScanner.l"
 T
 2 "GDBVarTreeParser.cpp"
 F
@@ -937,15 +937,13 @@ F
 "${LIB_DEPS}"
 "make -k all"
 # search paths
-T "../../libj2dplot/code" T
-T "../../libjcore/code/" T
-T "../../libjexpr/code" T
-T "../../libjx/code/" T
-T "../../libjx/image/" T
+T "../../JX/include/j2dplot" T
+T "../../JX/include/jcore" T
+T "../../JX/include/jexpr" T
+T "../../JX/include/jx/" T
 T "./code/" T
 T "./JCC" T
 T "./lldb-include/" T
-T "./strings/" T
 F
 # C preprocessor
 T "CBCFlexLexer" "yyFlexLexer"

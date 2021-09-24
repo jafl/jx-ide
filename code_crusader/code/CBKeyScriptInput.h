@@ -42,13 +42,6 @@ protected:
 							JStyledText::TextRange* redrawRange,
 							const bool deletion) override;
 	};
-
-private:
-
-	// not allowed
-
-	CBKeyScriptInput(const CBKeyScriptInput& source);
-	const CBKeyScriptInput& operator=(const CBKeyScriptInput& source);
 };
 
 #endif

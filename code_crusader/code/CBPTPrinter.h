@@ -51,13 +51,6 @@ private:
 	JString		itsHeaderName;
 
 	CBPTPrintSetupDialog*	itsCBPrintSetupDialog;
-
-private:
-
-	// not allowed
-
-	CBPTPrinter(const CBPTPrinter& source);
-	const CBPTPrinter& operator=(const CBPTPrinter& source);
 };
 
 

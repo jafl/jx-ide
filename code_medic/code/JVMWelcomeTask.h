@@ -25,13 +25,6 @@ private:
 
 	JString		itsMessage;
 	bool	itsErrorFlag;
-
-private:
-
-	// not allowed
-
-	JVMWelcomeTask(const JVMWelcomeTask& source);
-	const JVMWelcomeTask& operator=(const JVMWelcomeTask& source);
 };
 
 #endif

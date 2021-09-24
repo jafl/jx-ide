@@ -19,7 +19,7 @@ public:
 
 	virtual	~CMThreadNode();
 
-	JUInt64		GetID() const;
+	JUInt64	GetID() const;
 	bool	GetFile(JString* fileName, JIndex* lineIndex) const;
 
 	void	AppendThread(JTreeNode* node);
@@ -29,13 +29,6 @@ private:
 	JUInt64	itsID;
 	JString	itsFileName;	// relative path
 	JIndex	itsLineIndex;
-
-private:
-
-	// not allowed
-
-	CMThreadNode(const CMThreadNode& source);
-	const CMThreadNode& operator=(const CMThreadNode& source);
 };
 
 

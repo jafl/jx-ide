@@ -27,13 +27,6 @@ protected:
 private:
 
 	CMStackWidget*	itsWidget;
-
-private:
-
-	// not allowed
-
-	JVMGetFrame(const JVMGetFrame& source);
-	const JVMGetFrame& operator=(const JVMGetFrame& source);
 };
 
 #endif

@@ -20,13 +20,6 @@ public:
 	JVMBreakpointManager(JVMLink* link);
 
 	virtual	~JVMBreakpointManager();
-
-private:
-
-	// not allowed
-
-	JVMBreakpointManager(const JVMBreakpointManager& source);
-	const JVMBreakpointManager& operator=(const JVMBreakpointManager& source);
 };
 
 #endif

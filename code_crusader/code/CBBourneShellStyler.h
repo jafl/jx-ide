@@ -37,11 +37,6 @@ private:
 
 	void	ExtendCheckRangeForString(const JStyledText::TextRange& tokenRange);
 	void	StyleEmbeddedVariables(const Token& token);
-
-	// not allowed
-
-	CBBourneShellStyler(const CBBourneShellStyler& source);
-	const CBBourneShellStyler& operator=(const CBBourneShellStyler& source);
 };
 
 #endif

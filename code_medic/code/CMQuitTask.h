@@ -19,13 +19,6 @@ public:
 	virtual ~CMQuitTask();
 
 	virtual void	Perform(const Time delta, Time* maxSleepTime);
-
-private:
-
-	// not allowed
-
-	CMQuitTask(const CMQuitTask& source);
-	const CMQuitTask& operator=(const CMQuitTask& source);
 };
 
 #endif

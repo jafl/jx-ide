@@ -24,9 +24,9 @@ public:
 	virtual	~CMRegistersDir();
 
 	virtual void			Activate() override;
-	virtual bool		Deactivate() override;
+	virtual bool			Deactivate() override;
 	virtual const JString&	GetName() const override;
-	virtual bool		GetMenuIcon(const JXImage** icon) const override;
+	virtual bool			GetMenuIcon(const JXImage** icon) const override;
 
 	void	Update(const JString& data);
 
@@ -61,11 +61,6 @@ private:
 	void	HandleFileMenu(const JIndex index);
 
 	void	HandleHelpMenu(const JIndex index);
-
-	// not allowed
-
-	CMRegistersDir(const CMRegistersDir& source);
-	const CMRegistersDir& operator=(const CMRegistersDir& source);
 };
 
 #endif

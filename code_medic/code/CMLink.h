@@ -254,8 +254,8 @@ private:
 
 	// not allowed
 
-	CMLink(const CMLink& source);
-	const CMLink& operator=(const CMLink& source);
+	CMLink(const CMLink&) = delete;
+	CMLink& operator=(const CMLink&) = delete;
 
 public:
 

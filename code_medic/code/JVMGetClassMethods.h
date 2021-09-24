@@ -27,14 +27,6 @@ protected:
 private:
 
 	const JUInt64	itsID;
-
-private:
-
-	// not allowed
-
-	JVMGetClassMethods(const JVMGetClassMethods& source);
-	const JVMGetClassMethods& operator=(const JVMGetClassMethods& source);
-
 };
 
 #endif

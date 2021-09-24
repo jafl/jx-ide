@@ -38,13 +38,6 @@ private:
 	JIndex			itsSrcRowIndex;
 
 	Atom	itsCBCommandXAtom;
-
-private:
-
-	// not allowed
-
-	CBCommandSelection(const CBCommandSelection& source);
-	const CBCommandSelection& operator=(const CBCommandSelection& source);
 };
 
 #endif

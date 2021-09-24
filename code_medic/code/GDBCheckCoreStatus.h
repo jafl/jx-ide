@@ -21,13 +21,6 @@ public:
 protected:
 
 	virtual void	HandleSuccess(const JString& data) override;
-
-private:
-
-	// not allowed
-
-	GDBCheckCoreStatus(const GDBCheckCoreStatus& source);
-	const GDBCheckCoreStatus& operator=(const GDBCheckCoreStatus& source);
 };
 
 #endif

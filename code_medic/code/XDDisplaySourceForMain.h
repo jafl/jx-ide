@@ -21,14 +21,6 @@ public:
 protected:
 
 	virtual void	HandleSuccess(const JString& data) override;
-
-private:
-
-	// not allowed
-
-	XDDisplaySourceForMain(const XDDisplaySourceForMain& source);
-	const XDDisplaySourceForMain& operator=(const XDDisplaySourceForMain& source);
-
 };
 
 #endif

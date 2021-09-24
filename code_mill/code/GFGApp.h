@@ -23,8 +23,8 @@ public:
 	static const JUtf8Byte*	GetAppSignature();
 	static void				InitStrings();
 
-	bool		IsDeletingTemplate() const;
-	void			ShouldBeDeletingTemplate(const bool delTemplate);
+	bool	IsDeletingTemplate() const;
+	void	ShouldBeDeletingTemplate(const bool delTemplate);
 
 protected:
 
@@ -33,13 +33,6 @@ protected:
 private:
 
 	bool	itsDeletingTemplate;
-
-private:
-
-	// not allowed
-
-	GFGApp(const GFGApp& source);
-	const GFGApp& operator=(const GFGApp& source);
 };
 
 #endif

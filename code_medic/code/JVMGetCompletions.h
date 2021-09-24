@@ -24,13 +24,6 @@ public:
 protected:
 
 	virtual void	HandleSuccess(const JString& data) override;
-
-private:
-
-	// not allowed
-
-	JVMGetCompletions(const JVMGetCompletions& source);
-	const JVMGetCompletions& operator=(const JVMGetCompletions& source);
 };
 
 #endif

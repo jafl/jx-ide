@@ -31,13 +31,6 @@ protected:
 private:
 
 	static CBCCompleter*	itsSelf;
-
-private:
-
-	// not allowed
-
-	CBCCompleter(const CBCCompleter& source);
-	const CBCCompleter& operator=(const CBCCompleter& source);
 };
 
 #endif

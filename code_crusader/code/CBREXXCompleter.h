@@ -29,13 +29,6 @@ protected:
 private:
 
 	static CBREXXCompleter*	itsSelf;
-
-private:
-
-	// not allowed
-
-	CBREXXCompleter(const CBREXXCompleter& source);
-	const CBREXXCompleter& operator=(const CBREXXCompleter& source);
 };
 
 #endif

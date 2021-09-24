@@ -21,13 +21,6 @@ public:
 protected:
 
 	virtual void	HandleSuccess(const JString& data) override;
-
-private:
-
-	// not allowed
-
-	XDGetStack(const XDGetStack& source);
-	const XDGetStack& operator=(const XDGetStack& source);
 };
 
 #endif

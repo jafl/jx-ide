@@ -405,8 +405,8 @@ private:
 	JString	itsJVMProcessArgs;
 
 	bool	itsInitFinishedFlag;		// debugger has been fully initialized
-	JString		itsProgramConfigFileName;	// .medic config file
-	JString		itsMainClassName;			// can be empty
+	JString	itsProgramConfigFileName;	// .medic config file
+	JString	itsMainClassName;			// can be empty
 	bool	itsProgramIsStoppedFlag;	// the JVM is stopped
 
 	const JVMSocket::MessageReady*	itsLatestMsg;
@@ -435,12 +435,12 @@ private:
 private:
 
 	bool	StartDebugger();
-	void		InitFlags();
-	void		ReceiveMessageFromJVM(const JVMSocket::MessageReady& info);
-	void		DispatchEventsFromJVM(const unsigned char* data, const JSize length);
-	void		ReadFromProcess();
-	void		StopDebugger();
-	void		DeleteProcessLink();
+	void	InitFlags();
+	void	ReceiveMessageFromJVM(const JVMSocket::MessageReady& info);
+	void	DispatchEventsFromJVM(const unsigned char* data, const JSize length);
+	void	ReadFromProcess();
+	void	StopDebugger();
+	void	DeleteProcessLink();
 
 	void	DetachOrKill();
 
@@ -455,11 +455,6 @@ private:
 	static JListT::CompareResult	CompareClassIDs(const ClassInfo& c1, const ClassInfo& c2);
 	static JListT::CompareResult	CompareClassNames(const ClassInfo& c1, const ClassInfo& c2);
 	static JListT::CompareResult	CompareMethodIDs(const MethodInfo& m1, const MethodInfo& m2);
-
-	// not allowed
-
-	JVMLink(const JVMLink& source);
-	const JVMLink& operator=(const JVMLink& source);
 
 public:
 

@@ -36,13 +36,6 @@ private:
 
 	bool	itsIsPublicFlag;
 	bool	itsIsFinalFlag;
-
-private:
-
-	// not allowed
-
-	CBJavaClass(const CBJavaClass& source);
-	CBJavaClass& operator=(const CBJavaClass& source);
 };
 
 #endif

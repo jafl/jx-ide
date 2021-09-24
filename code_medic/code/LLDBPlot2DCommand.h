@@ -28,13 +28,6 @@ protected:
 private:
 
 	JIndex	itsCurveIndex;
-
-private:
-
-	// not allowed
-
-	LLDBPlot2DCommand(const LLDBPlot2DCommand& source);
-	const LLDBPlot2DCommand& operator=(const LLDBPlot2DCommand& source);
 };
 
 #endif

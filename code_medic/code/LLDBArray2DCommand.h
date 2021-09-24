@@ -22,13 +22,6 @@ public:
 protected:
 
 	virtual void	HandleSuccess(const JString& data) override;
-
-private:
-
-	// not allowed
-
-	LLDBArray2DCommand(const LLDBArray2DCommand& source);
-	const LLDBArray2DCommand& operator=(const LLDBArray2DCommand& source);
 };
 
 #endif

@@ -29,13 +29,6 @@ protected:
 private:
 
 	static CBPythonCompleter*	itsSelf;
-
-private:
-
-	// not allowed
-
-	CBPythonCompleter(const CBPythonCompleter& source);
-	const CBPythonCompleter& operator=(const CBPythonCompleter& source);
 };
 
 #endif

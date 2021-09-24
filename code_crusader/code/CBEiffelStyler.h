@@ -32,13 +32,6 @@ protected:
 private:
 
 	static CBEiffelStyler*	itsSelf;
-
-private:
-
-	// not allowed
-
-	CBEiffelStyler(const CBEiffelStyler& source);
-	const CBEiffelStyler& operator=(const CBEiffelStyler& source);
 };
 
 #endif

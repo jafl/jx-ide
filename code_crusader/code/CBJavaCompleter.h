@@ -29,13 +29,6 @@ protected:
 private:
 
 	static CBJavaCompleter*	itsSelf;
-
-private:
-
-	// not allowed
-
-	CBJavaCompleter(const CBJavaCompleter& source);
-	const CBJavaCompleter& operator=(const CBJavaCompleter& source);
 };
 
 #endif

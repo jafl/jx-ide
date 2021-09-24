@@ -42,7 +42,7 @@ private:
 
 	// not allowed
 
-	const CBCharActionManager& operator=(const CBCharActionManager& source);
+	CBCharActionManager& operator=(const CBCharActionManager&) = delete;
 };
 
 

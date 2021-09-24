@@ -31,13 +31,6 @@ protected:
 private:
 
 	static CBBisonCompleter*	itsSelf;
-
-private:
-
-	// not allowed
-
-	CBBisonCompleter(const CBBisonCompleter& source);
-	const CBBisonCompleter& operator=(const CBBisonCompleter& source);
 };
 
 #endif

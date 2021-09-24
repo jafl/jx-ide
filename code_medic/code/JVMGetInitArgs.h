@@ -23,14 +23,6 @@ public:
 protected:
 
 	virtual void	HandleSuccess(const JString& data) override;
-
-private:
-
-	// not allowed
-
-	JVMGetInitArgs(const JVMGetInitArgs& source);
-	const JVMGetInitArgs& operator=(const JVMGetInitArgs& source);
-
 };
 
 #endif

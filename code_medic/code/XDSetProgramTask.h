@@ -19,13 +19,6 @@ public:
 	virtual ~XDSetProgramTask();
 
 	virtual void	Perform() override;
-
-private:
-
-	// not allowed
-
-	XDSetProgramTask(const XDSetProgramTask& source);
-	const XDSetProgramTask& operator=(const XDSetProgramTask& source);
 };
 
 #endif

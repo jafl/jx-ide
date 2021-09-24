@@ -19,14 +19,7 @@ public:
 	virtual ~CMDockManager();
 
 	virtual	bool	CanDockAll() const;
-	virtual void		DockAll();
-
-private:
-
-	// not allowed
-
-	CMDockManager(const CMDockManager& source);
-	const CMDockManager& operator=(const CMDockManager& source);
+	virtual void	DockAll();
 };
 
 #endif

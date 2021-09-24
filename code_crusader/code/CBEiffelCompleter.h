@@ -30,13 +30,6 @@ protected:
 private:
 
 	static CBEiffelCompleter*	itsSelf;
-
-private:
-
-	// not allowed
-
-	CBEiffelCompleter(const CBEiffelCompleter& source);
-	const CBEiffelCompleter& operator=(const CBEiffelCompleter& source);
 };
 
 #endif

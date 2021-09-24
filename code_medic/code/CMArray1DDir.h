@@ -53,7 +53,7 @@ private:
 	JIntRange			itsDisplayRange;
 	JIntRange			itsRequestRange;
 	JTreeNode*			itsCurrentNode;		// owned by itsTree
-	bool			itsWaitingForReloadFlag;
+	bool				itsWaitingForReloadFlag;
 
 	JXTextMenu*			itsFileMenu;
 	JXTextMenu*			itsActionMenu;
@@ -85,11 +85,6 @@ private:
 	void	CreateNextNode();
 	JString	GetExpression(const JInteger i) const;
 	void	CreateNodesFinished();
-
-	// not allowed
-
-	CMArray1DDir(const CMArray1DDir& source);
-	const CMArray1DDir& operator=(const CMArray1DDir& source);
 };
 
 #endif

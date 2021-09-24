@@ -29,12 +29,6 @@ protected:
 private:
 
 	void	ScanDirectory(const JString& path);
-
-	// not allowed
-
-	JVMGetSourceFileList(const JVMGetSourceFileList& source);
-	const JVMGetSourceFileList& operator=(const JVMGetSourceFileList& source);
-
 };
 
 #endif

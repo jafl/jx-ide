@@ -21,13 +21,6 @@ public:
 protected:
 
 	virtual void	HandleSuccess(const JString& data) override;
-
-private:
-
-	// not allowed
-
-	LLDBGetFullPath(const LLDBGetFullPath& source);
-	const LLDBGetFullPath& operator=(const LLDBGetFullPath& source);
 };
 
 #endif

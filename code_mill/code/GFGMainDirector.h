@@ -17,7 +17,6 @@ class JXInputField;
 class JXPathInput;
 class JXTextButton;
 class JXStaticText;
-class JXTextMenu;
 class JXToolBar;
 
 class GFGClass;
@@ -42,10 +41,6 @@ protected:
 
 private:
 
-	JXTextMenu*	itsFileMenu;
-	JXTextMenu*	itsPrefsMenu;
-	JXTextMenu*	itsHelpMenu;
-
 	GFGClass*			itsClass;
 	GFGFunctionTable*	itsTable;
 
@@ -66,13 +61,8 @@ private:
 
 private:
 
-	void 		BuildWindow(const JString& outputPath);
+	void 	BuildWindow(const JString& outputPath);
 	bool 	Write();
-
-	// not allowed
-
-	GFGMainDirector(const GFGMainDirector& source);
-	const GFGMainDirector& operator=(const GFGMainDirector& source);
 };
 
 #endif

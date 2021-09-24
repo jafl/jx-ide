@@ -19,13 +19,6 @@ public:
 	virtual ~CBSearchColorManager();
 
 	virtual bool	GetColorID(const JString& name, JColorID* id) override;
-
-private:
-
-	// not allowed
-
-	CBSearchColorManager(const CBSearchColorManager& source);
-	const CBSearchColorManager& operator=(const CBSearchColorManager& source);
 };
 
 #endif

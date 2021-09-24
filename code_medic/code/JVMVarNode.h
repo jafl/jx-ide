@@ -22,13 +22,6 @@ public:
 	virtual	~JVMVarNode();
 
 	virtual JString	GetFullName(bool* isPointer = nullptr) const override;
-
-private:
-
-	// not allowed
-
-	JVMVarNode(const JVMVarNode& source);
-	const JVMVarNode& operator=(const JVMVarNode& source);
 };
 
 #endif

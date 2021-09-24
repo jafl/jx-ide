@@ -66,8 +66,8 @@ private:
 
 	// not allowed
 
-	CBCPreprocessor(const CBCPreprocessor& source);
-	const CBCPreprocessor& operator=(const CBCPreprocessor& source);
+	CBCPreprocessor(const CBCPreprocessor&) = delete;
+	CBCPreprocessor& operator=(const CBCPreprocessor&) = delete;
 };
 
 

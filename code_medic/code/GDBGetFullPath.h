@@ -25,11 +25,6 @@ protected:
 private:
 
 	static JString	BuildCommand(const JString& fileName);
-
-	// not allowed
-
-	GDBGetFullPath(const GDBGetFullPath& source);
-	const GDBGetFullPath& operator=(const GDBGetFullPath& source);
 };
 
 #endif

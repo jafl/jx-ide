@@ -22,13 +22,6 @@ public:
 protected:
 
 	virtual void	HandleSuccess(const JString& data) override;
-
-private:
-
-	// not allowed
-
-	JVMArray2DCommand(const JVMArray2DCommand& source);
-	const JVMArray2DCommand& operator=(const JVMArray2DCommand& source);
 };
 
 #endif

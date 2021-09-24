@@ -31,10 +31,10 @@ public:
 
 	virtual	~CMStackWidget();
 
-	void		Update();
-	void		SelectFrame(const JUInt64 id);
+	void	Update();
+	void	SelectFrame(const JUInt64 id);
 	bool	GetStackFrame(const JUInt64 id, const CMStackFrameNode** frame);
-	void		SwitchToFrame(const JUInt64 id);
+	void	SwitchToFrame(const JUInt64 id);
 
 	virtual void	HandleKeyPress(const JUtf8Character& c, const int keySym,
 								   const JXKeyModifiers& modifiers) override;
@@ -68,24 +68,19 @@ private:
 	JTree*				itsTree;
 	CMGetStack*			itsGetStackCmd;
 	CMGetFrame*			itsGetFrameCmd;
-	bool			itsNeedsUpdateFlag;
-	bool			itsSmartFrameSelectFlag;
-	bool			itsIsWaitingForReloadFlag;
-	bool			itsChangingFrameFlag;
-	bool			itsSelectingFrameFlag;
+	bool				itsNeedsUpdateFlag;
+	bool				itsSmartFrameSelectFlag;
+	bool				itsIsWaitingForReloadFlag;
+	bool				itsChangingFrameFlag;
+	bool				itsSelectingFrameFlag;
 
 private:
 
 	bool	SelectNextFrame(const JInteger delta);
 
-	void		FlushOldData();
+	void	FlushOldData();
 	bool	ShouldRebuild() const;
-	void		Rebuild();
-
-	// not allowed
-
-	CMStackWidget(const CMStackWidget& source);
-	const CMStackWidget& operator=(const CMStackWidget& source);
+	void	Rebuild();
 };
 
 #endif

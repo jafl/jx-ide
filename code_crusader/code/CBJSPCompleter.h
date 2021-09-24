@@ -31,13 +31,6 @@ protected:
 private:
 
 	static CBJSPCompleter*	itsSelf;
-
-private:
-
-	// not allowed
-
-	CBJSPCompleter(const CBJSPCompleter& source);
-	const CBJSPCompleter& operator=(const CBJSPCompleter& source);
 };
 
 #endif

@@ -25,13 +25,6 @@ public:
 private:
 
 	CBTextDocument*	itsDoc;		// not owned
-
-private:
-
-	// not allowed
-
-	CBDSSFinishSaveTask(const CBDSSFinishSaveTask& source);
-	const CBDSSFinishSaveTask& operator=(const CBDSSFinishSaveTask& source);
 };
 
 #endif

@@ -33,11 +33,6 @@ private:
 private:
 
 	bool	UpdateNodeName();
-
-	// not allowed
-
-	JVMStackFrameNode(const JVMStackFrameNode& source);
-	const JVMStackFrameNode& operator=(const JVMStackFrameNode& source);
 };
 
 #endif

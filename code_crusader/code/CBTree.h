@@ -283,8 +283,8 @@ private:
 
 	// not allowed
 
-	CBTree(const CBTree& source);
-	CBTree& operator=(const CBTree& source);
+	CBTree(const CBTree&) = delete;
+	CBTree& operator=(const CBTree&) = delete;
 
 public:
 

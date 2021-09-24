@@ -25,13 +25,6 @@ public:
 	virtual	~CMCommandOutputDisplay();
 
 	void	PlaceCursorAtEnd();
-
-private:
-
-	// not allowed
-
-	CMCommandOutputDisplay(const CMCommandOutputDisplay& source);
-	const CMCommandOutputDisplay& operator=(const CMCommandOutputDisplay& source);
 };
 
 #endif

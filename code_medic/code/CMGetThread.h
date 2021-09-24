@@ -29,13 +29,6 @@ protected:
 private:
 
 	CMThreadsWidget*	itsWidget;		// not owned
-
-private:
-
-	// not allowed
-
-	CMGetThread(const CMGetThread& source);
-	const CMGetThread& operator=(const CMGetThread& source);
 };
 
 

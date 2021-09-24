@@ -19,13 +19,6 @@ public:
 	XDBreakpointManager(XDLink* link);
 
 	virtual	~XDBreakpointManager();
-
-private:
-
-	// not allowed
-
-	XDBreakpointManager(const XDBreakpointManager& source);
-	const XDBreakpointManager& operator=(const XDBreakpointManager& source);
 };
 
 #endif

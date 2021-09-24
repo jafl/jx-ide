@@ -36,11 +36,6 @@ private:
 private:
 
 	void	ExtendCheckRangeForString(const JStyledText::TextRange& tokenRange);
-
-	// not allowed
-
-	CBINIStyler(const CBINIStyler& source);
-	const CBINIStyler& operator=(const CBINIStyler& source);
 };
 
 #endif

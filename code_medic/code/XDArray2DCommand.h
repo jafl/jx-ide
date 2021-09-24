@@ -22,13 +22,6 @@ public:
 protected:
 
 	virtual void	HandleSuccess(const JString& data) override;
-
-private:
-
-	// not allowed
-
-	XDArray2DCommand(const XDArray2DCommand& source);
-	const XDArray2DCommand& operator=(const XDArray2DCommand& source);
 };
 
 #endif

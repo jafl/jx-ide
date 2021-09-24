@@ -50,11 +50,11 @@ private:
 	JXColHeaderWidget*			itsColHeader;
 	JStringTableData*			itsExprData;
 	CMPlot2DExprTable*			itsExprTable;
-	bool					itsShouldUpdateFlag;
+	bool						itsShouldUpdateFlag;
 	JPtrArray<CMPlot2DCommand>*	itsUpdateCmdList;
 	JPtrArray<JArray<JFloat> >*	itsXData;
 	JPtrArray<JArray<JFloat> >*	itsYData;
-	bool					itsWaitingForReloadFlag;
+	bool						itsWaitingForReloadFlag;
 
 	JXTextMenu*	itsFileMenu;
 	JXTextMenu*	itsActionMenu;
@@ -91,11 +91,6 @@ private:
 
 	void	DuplicateSelectedPlots();
 	void	RemoveSelectedPlots();
-
-	// not allowed
-
-	CMPlot2DDir(const CMPlot2DDir& source);
-	const CMPlot2DDir& operator=(const CMPlot2DDir& source);
 };
 
 #endif

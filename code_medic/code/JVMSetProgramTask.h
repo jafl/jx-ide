@@ -19,13 +19,6 @@ public:
 	virtual ~JVMSetProgramTask();
 
 	virtual void	Perform() override;
-
-private:
-
-	// not allowed
-
-	JVMSetProgramTask(const JVMSetProgramTask& source);
-	const JVMSetProgramTask& operator=(const JVMSetProgramTask& source);
 };
 
 #endif

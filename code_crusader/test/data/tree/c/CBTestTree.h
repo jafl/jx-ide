@@ -60,11 +60,6 @@ private:
 
 	static CBClass* StreamInCClass(std::istream& input, const JFileVersion vers,
 								   CBTree* tree);
-
-	// not allowed
-
-	CBTestTree(const CBTestTree& source);
-	CBTestTree& operator=(const CBTestTree& source);
 };
 
 

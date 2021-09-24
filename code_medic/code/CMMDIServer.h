@@ -32,13 +32,6 @@ protected:
 private:
 
 	bool	itsFirstTimeFlag;
-
-private:
-
-	// not allowed
-
-	CMMDIServer(const CMMDIServer& source);
-	const CMMDIServer& operator=(const CMMDIServer& source);
 };
 
 #endif

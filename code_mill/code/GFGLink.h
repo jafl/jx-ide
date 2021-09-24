@@ -33,10 +33,6 @@ public:
 	
 private:
 
-	typedef JMessageProtocol<ACE_LSOCK_STREAM>	ProcessLink;
-
-	ProcessLink*	itsLink;
-
 	JProcess*		itsCTagsProcess;			// can be nullptr
 
 	JOutPipeStream*	itsOutputLink;				// nullptr if process not started
@@ -54,8 +50,8 @@ private:
 
 	// not allowed
 
-	GFGLink(const GFGLink& source);
-	const GFGLink& operator=(const GFGLink& source);
+	GFGLink(const GFGLink&) = delete;
+	GFGLink& operator=(const GFGLink&) = delete;
 
 public:
 

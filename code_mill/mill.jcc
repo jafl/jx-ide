@@ -1,4 +1,4 @@
-jx_browser_data 88
+jx_browser_data 89
 # project tree
 0 "root"
 T
@@ -108,10 +108,8 @@ F
 "${LIB_DEPS}"
 "make -k all"
 # search paths
-T "../../libjcore/code" T
-T "../../libjtoolbar/code" T
-T "../../libjtree/code" T
-T "../../libjx/code" T
+T "../../JX/include/jcore" T
+T "../../JX/include/jx" T
 T "./code" T
 F
 # C preprocessor

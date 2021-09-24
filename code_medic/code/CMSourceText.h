@@ -91,14 +91,8 @@ private:
 
 private:
 
-	void		UpdateCustomSearchMenuItems();
+	void	UpdateCustomSearchMenuItems();
 	bool	HandleCustomSearchMenuItems(const JIndex index);
-
-	// not allowed
-
-	CMSourceText(const CMSourceText& source);
-	const CMSourceText& operator=(const CMSourceText& source);
-
 };
 
 #endif

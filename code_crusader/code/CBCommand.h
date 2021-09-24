@@ -104,8 +104,8 @@ private:
 
 	// not allowed
 
-	CBCommand(const CBCommand& source);
-	const CBCommand& operator=(const CBCommand& source);
+	CBCommand(const CBCommand&) = delete;
+	CBCommand& operator=(const CBCommand&) = delete;
 
 public:
 

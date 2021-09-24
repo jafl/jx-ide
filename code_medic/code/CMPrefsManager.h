@@ -211,11 +211,6 @@ private:
 	void	ReadColors();
 	void	WriteColors();
 
-	// not allowed
-
-	CMPrefsManager(const CMPrefsManager& source);
-	const CMPrefsManager& operator=(const CMPrefsManager& source);
-
 public:
 
 	static const JUtf8Byte* kFileTypesChanged;

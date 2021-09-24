@@ -36,11 +36,6 @@ private:
 
 	static JListT::CompareResult
 		CompareThreadIndices(JString* const & l1, JString* const & l2);
-
-	// not allowed
-
-	GDBGetThreads(const GDBGetThreads& source);
-	const GDBGetThreads& operator=(const GDBGetThreads& source);
 };
 
 #endif

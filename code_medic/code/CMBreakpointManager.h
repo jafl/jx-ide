@@ -58,16 +58,16 @@ private:
 	CMGetBreakpoints*			itsCmd;
 	JPtrArray<CMBreakpoint>*	itsBPList;
 	JPtrArray<CMBreakpoint>*	itsSavedBPList;		// nullptr unless waiting to restore
-	bool					itsRestoreBreakpointsFlag;
-	bool					itsUpdateWhenStopFlag;
+	bool						itsRestoreBreakpointsFlag;
+	bool						itsUpdateWhenStopFlag;
 	JPtrArray<CMBreakpoint>*	itsOtherList;		// display only
 
 private:
 
 	// not allowed
 
-	CMBreakpointManager(const CMBreakpointManager& source);
-	const CMBreakpointManager& operator=(const CMBreakpointManager& source);
+	CMBreakpointManager(const CMBreakpointManager&) = delete;
+	CMBreakpointManager& operator=(const CMBreakpointManager&) = delete;
 
 public:
 

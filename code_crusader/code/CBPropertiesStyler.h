@@ -32,13 +32,6 @@ protected:
 private:
 
 	static CBPropertiesStyler*	itsSelf;
-
-private:
-
-	// not allowed
-
-	CBPropertiesStyler(const CBPropertiesStyler& source);
-	const CBPropertiesStyler& operator=(const CBPropertiesStyler& source);
 };
 
 #endif

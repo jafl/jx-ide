@@ -24,13 +24,6 @@ public:
 private:
 
 	JString	itsFileName;
-
-private:
-
-	// not allowed
-
-	LLDBSymbolsLoadedTask(const LLDBSymbolsLoadedTask& source);
-	const LLDBSymbolsLoadedTask& operator=(const LLDBSymbolsLoadedTask& source);
 };
 
 #endif

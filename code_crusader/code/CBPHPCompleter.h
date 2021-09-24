@@ -31,13 +31,6 @@ protected:
 private:
 
 	static CBPHPCompleter*	itsSelf;
-
-private:
-
-	// not allowed
-
-	CBPHPCompleter(const CBPHPCompleter& source);
-	const CBPHPCompleter& operator=(const CBPHPCompleter& source);
 };
 
 #endif

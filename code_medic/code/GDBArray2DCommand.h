@@ -25,13 +25,6 @@ public:
 protected:
 
 	virtual void	HandleSuccess(const JString& data) override;
-
-private:
-
-	// not allowed
-
-	GDBArray2DCommand(const GDBArray2DCommand& source);
-	const GDBArray2DCommand& operator=(const GDBArray2DCommand& source);
 };
 
 #endif

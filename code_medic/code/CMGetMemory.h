@@ -29,13 +29,6 @@ protected:
 private:
 
 	CMMemoryDir*	itsDir;
-
-private:
-
-	// not allowed
-
-	CMGetMemory(const CMGetMemory& source);
-	const CMGetMemory& operator=(const CMGetMemory& source);
 };
 
 

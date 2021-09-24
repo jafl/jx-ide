@@ -29,13 +29,6 @@ protected:
 private:
 
 	static CBGoCompleter*	itsSelf;
-
-private:
-
-	// not allowed
-
-	CBGoCompleter(const CBGoCompleter& source);
-	const CBGoCompleter& operator=(const CBGoCompleter& source);
 };
 
 #endif

@@ -124,11 +124,6 @@ private:
 	void	HandlePrefsMenu(const JIndex index);
 
 	void	HandleHelpMenu(const JIndex index);
-
-	// not allowed
-
-	CMSourceDirector(const CMSourceDirector& source);
-	const CMSourceDirector& operator=(const CMSourceDirector& source);
 };
 
 

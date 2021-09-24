@@ -75,8 +75,8 @@ private:
 
 	// not allowed
 
-	CMPipe(const CMPipe& source);
-	CMPipe& operator=(const CMPipe& source);
+	CMPipe(const CMPipe&) = delete;
+	CMPipe& operator=(const CMPipe&) = delete;
 };
 
 #include "CMPipe.tmpl"

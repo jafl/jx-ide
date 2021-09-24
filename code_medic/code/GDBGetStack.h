@@ -27,13 +27,6 @@ protected:
 private:
 
 	GDBGetStackArguments*	itsArgsCmd;
-
-private:
-
-	// not allowed
-
-	GDBGetStack(const GDBGetStack& source);
-	const GDBGetStack& operator=(const GDBGetStack& source);
 };
 
 #endif

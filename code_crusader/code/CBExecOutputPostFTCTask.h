@@ -26,13 +26,6 @@ public:
 private:
 
 	CBExecOutputDocument*	itsDoc;		// not owned
-
-private:
-
-	// not allowed
-
-	CBExecOutputPostFTCTask(const CBExecOutputPostFTCTask& source);
-	const CBExecOutputPostFTCTask& operator=(const CBExecOutputPostFTCTask& source);
 };
 
 #endif

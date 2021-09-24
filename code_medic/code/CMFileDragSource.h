@@ -40,13 +40,6 @@ protected:
 private:
 
 	CMSourceDirector*	itsDoc;		// owns us
-
-private:
-
-	// not allowed
-
-	CMFileDragSource(const CMFileDragSource& source);
-	const CMFileDragSource& operator=(const CMFileDragSource& source);
 };
 
 #endif

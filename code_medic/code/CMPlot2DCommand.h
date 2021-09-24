@@ -33,13 +33,6 @@ private:
 	CMPlot2DDir*	itsDirector;
 	JArray<JFloat>*	itsX;
 	JArray<JFloat>*	itsY;
-
-private:
-
-	// not allowed
-
-	CMPlot2DCommand(const CMPlot2DCommand& source);
-	const CMPlot2DCommand& operator=(const CMPlot2DCommand& source);
 };
 
 

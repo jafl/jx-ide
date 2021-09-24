@@ -29,13 +29,6 @@ protected:
 private:
 
 	static CBRubyCompleter*	itsSelf;
-
-private:
-
-	// not allowed
-
-	CBRubyCompleter(const CBRubyCompleter& source);
-	const CBRubyCompleter& operator=(const CBRubyCompleter& source);
 };
 
 #endif

@@ -83,11 +83,6 @@ private:
 						const JPtrArray<JString>& goSuffixes);
 
 	void	ChooseDebugger(const JString& name, JXInputField* input);
-
-	// not allowed
-
-	CMEditPrefsDialog(const CMEditPrefsDialog& source);
-	const CMEditPrefsDialog& operator=(const CMEditPrefsDialog& source);
 };
 
 #endif

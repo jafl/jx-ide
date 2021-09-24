@@ -23,13 +23,6 @@ public:
 protected:
 
 	virtual void	HandleSuccess(const JString& data) override;
-
-private:
-
-	// not allowed
-
-	JVMGetStack(const JVMGetStack& source);
-	const JVMGetStack& operator=(const JVMGetStack& source);
 };
 
 #endif

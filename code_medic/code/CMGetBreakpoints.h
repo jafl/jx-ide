@@ -17,13 +17,6 @@ public:
 	CMGetBreakpoints(const JString& cmd);
 
 	virtual	~CMGetBreakpoints();
-
-private:
-
-	// not allowed
-
-	CMGetBreakpoints(const CMGetBreakpoints& source);
-	const CMGetBreakpoints& operator=(const CMGetBreakpoints& source);
 };
 
 #endif

@@ -45,11 +45,6 @@ private:
 private:
 
 	void	BuildWindow();
-
-	// not allowed
-
-	CMDebugDir(const CMDebugDir& source);
-	const CMDebugDir& operator=(const CMDebugDir& source);
 };
 
 #endif

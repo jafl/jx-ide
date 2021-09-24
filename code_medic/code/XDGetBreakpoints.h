@@ -21,14 +21,6 @@ public:
 protected:
 
 	virtual void	HandleSuccess(const JString& data) override;
-
-private:
-
-	// not allowed
-
-	XDGetBreakpoints(const XDGetBreakpoints& source);
-	const XDGetBreakpoints& operator=(const XDGetBreakpoints& source);
-
 };
 
 #endif

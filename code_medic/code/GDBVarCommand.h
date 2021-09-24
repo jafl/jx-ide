@@ -21,13 +21,6 @@ public:
 protected:
 
 	virtual void	HandleSuccess(const JString& data) override;
-
-private:
-
-	// not allowed
-
-	GDBVarCommand(const GDBVarCommand& source);
-	const GDBVarCommand& operator=(const GDBVarCommand& source);
 };
 
 #endif

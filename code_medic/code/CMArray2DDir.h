@@ -123,11 +123,6 @@ private:
 	void	BeginRowUpdate(const JIntRange& r);
 	void	BeginColUpdate(const JIntRange& r);
 	void	BeginUpdate(JArray<JIntRange>* list, const JIntRange& range);
-
-	// not allowed
-
-	CMArray2DDir(const CMArray2DDir& source);
-	const CMArray2DDir& operator=(const CMArray2DDir& source);
 };
 
 

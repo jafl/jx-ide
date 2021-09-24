@@ -166,14 +166,14 @@ private:
 	XDSocket*				itsLink;		// nullptr if not connected to debugger
 	XDBreakpointManager*	itsBPMgr;
 
-	JString		itsIDEKey;
-	JString		itsScriptURI;
-	JIndex		itsStackFrameIndex;
+	JString	itsIDEKey;
+	JString	itsScriptURI;
+	JIndex	itsStackFrameIndex;
 	bool	itsInitFinishedFlag;		// debugger has been fully initialized
 	bool	itsProgramIsStoppedFlag;	// the process is stopped
 	bool	itsDebuggerBusyFlag;		// debugger is busy
-	JString		itsProgramConfigFileName;	// .medic config file
-	JString		itsProgramName;				// can be empty
+	JString	itsProgramConfigFileName;	// .medic config file
+	JString	itsProgramName;				// can be empty
 
 	xmlNode*	itsParsedDataRoot;
 
@@ -182,16 +182,11 @@ private:
 private:
 
 	bool	StartDebugger();
-	void		InitFlags();
-	void		StopDebugger();
-	void		ReceiveMessageFromDebugger();
+	void	InitFlags();
+	void	StopDebugger();
+	void	ReceiveMessageFromDebugger();
 
 	void	SendProgramStopped(const CMLocation& location);
-
-	// not allowed
-
-	XDLink(const XDLink& source);
-	const XDLink& operator=(const XDLink& source);
 };
 
 

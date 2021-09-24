@@ -36,16 +36,9 @@ protected:
 private:
 
 	CBListChooseFileDialog*	itsChooseDialog;
-	bool				itsReplaceExistingFlag;
+	bool					itsReplaceExistingFlag;
 	JString					itsReplaceListStr;
 	JString					itsAppendToListStr;
-
-private:
-
-	// not allowed
-
-	CBListCSF(const CBListCSF& source);
-	const CBListCSF& operator=(const CBListCSF& source);
 };
 
 

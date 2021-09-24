@@ -82,11 +82,6 @@ private:
 	void	SaveOpenNodes();
 	void	SaveOpenNodes1(JTreeNode* root);
 	void	RestoreOpenNodes(JTreeNode* root);
-
-	// not allowed
-
-	CMThreadsWidget(const CMThreadsWidget& source);
-	const CMThreadsWidget& operator=(const CMThreadsWidget& source);
 };
 
 #endif

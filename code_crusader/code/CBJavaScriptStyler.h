@@ -36,11 +36,6 @@ private:
 private:
 
 	void	StyleEmbeddedVariables(const Token& token);
-
-	// not allowed
-
-	CBJavaScriptStyler(const CBJavaScriptStyler& source);
-	const CBJavaScriptStyler& operator=(const CBJavaScriptStyler& source);
 };
 
 #endif

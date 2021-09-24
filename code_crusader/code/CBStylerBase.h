@@ -90,11 +90,6 @@ private:
 	static JListT::CompareResult
 		CompareWords(const WordStyle& w1, const WordStyle& w2);
 
-	// not allowed
-
-	CBStylerBase(const CBStylerBase& source);
-	const CBStylerBase& operator=(const CBStylerBase& source);
-
 public:
 
 	// JBroadcaster messages

@@ -29,13 +29,6 @@ protected:
 private:
 
 	static CBPascalCompleter*	itsSelf;
-
-private:
-
-	// not allowed
-
-	CBPascalCompleter(const CBPascalCompleter& source);
-	const CBPascalCompleter& operator=(const CBPascalCompleter& source);
 };
 
 #endif

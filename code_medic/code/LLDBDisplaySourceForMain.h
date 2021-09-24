@@ -22,14 +22,6 @@ protected:
 
 	virtual void	HandleSuccess(const JString& data) override;
 	virtual void	Receive(JBroadcaster* sender, const Message& message) override;
-
-private:
-
-	// not allowed
-
-	LLDBDisplaySourceForMain(const LLDBDisplaySourceForMain& source);
-	const LLDBDisplaySourceForMain& operator=(const LLDBDisplaySourceForMain& source);
-
 };
 
 #endif

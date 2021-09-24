@@ -37,11 +37,6 @@ private:
 
 	void	ExtendCheckRangeForString(const JStyledText::TextRange& tokenRange);
 	void	StyleEmbeddedVariables(const Token& token);
-
-	// not allowed
-
-	CBRubyStyler(const CBRubyStyler& source);
-	const CBRubyStyler& operator=(const CBRubyStyler& source);
 };
 
 #endif

@@ -17,13 +17,6 @@ public:
 	CMGetLocalVars(const JString& cmd);
 
 	virtual	~CMGetLocalVars();
-
-private:
-
-	// not allowed
-
-	CMGetLocalVars(const CMGetLocalVars& source);
-	const CMGetLocalVars& operator=(const CMGetLocalVars& source);
 };
 
 #endif

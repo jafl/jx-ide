@@ -32,13 +32,6 @@ protected:
 private:
 
 	static CBJavaScriptCompleter*	itsSelf;
-
-private:
-
-	// not allowed
-
-	CBJavaScriptCompleter(const CBJavaScriptCompleter& source);
-	const CBJavaScriptCompleter& operator=(const CBJavaScriptCompleter& source);
 };
 
 #endif

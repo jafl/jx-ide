@@ -26,14 +26,6 @@ public:
 private:
 
 	CMSourceDirector*	itsSourceDir;		// not owned
-
-private:
-
-	// not allowed
-
-	CMDisplaySourceForMain(const CMDisplaySourceForMain& source);
-	const CMDisplaySourceForMain& operator=(const CMDisplaySourceForMain& source);
-
 };
 
 

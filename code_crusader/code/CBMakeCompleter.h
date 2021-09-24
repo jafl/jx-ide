@@ -29,13 +29,6 @@ protected:
 private:
 
 	static CBMakeCompleter*	itsSelf;
-
-private:
-
-	// not allowed
-
-	CBMakeCompleter(const CBMakeCompleter& source);
-	const CBMakeCompleter& operator=(const CBMakeCompleter& source);
 };
 
 #endif

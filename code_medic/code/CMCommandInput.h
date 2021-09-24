@@ -29,13 +29,6 @@ protected:
 	virtual void	HandleFocusEvent() override;
 	virtual void	HandleUnfocusEvent() override;
 
-private:
-
-	// not allowed
-
-	CMCommandInput(const CMCommandInput& source);
-	const CMCommandInput& operator=(const CMCommandInput& source);
-
 public:
 
 	// JBroadcaster messages

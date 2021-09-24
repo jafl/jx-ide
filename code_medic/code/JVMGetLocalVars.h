@@ -27,13 +27,6 @@ protected:
 private:
 
 	CMVarNode*	itsRootNode;	// not owned
-
-private:
-
-	// not allowed
-
-	JVMGetLocalVars(const JVMGetLocalVars& source);
-	const JVMGetLocalVars& operator=(const JVMGetLocalVars& source);
 };
 
 #endif

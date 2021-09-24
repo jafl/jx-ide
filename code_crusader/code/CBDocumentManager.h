@@ -213,11 +213,6 @@ private:
 									   const CBTextFileType outputType,
 									   JXFileDocument** doc) const;
 
-	// not allowed
-
-	CBDocumentManager(const CBDocumentManager& source);
-	const CBDocumentManager& operator=(const CBDocumentManager& source);
-
 private:
 
 	// JBroadcaster message base class

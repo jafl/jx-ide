@@ -23,14 +23,6 @@ public:
 protected:
 
 	virtual void	HandleSuccess(const JString& data) override;
-
-private:
-
-	// not allowed
-
-	GDBGetSourceFileList(const GDBGetSourceFileList& source);
-	const GDBGetSourceFileList& operator=(const GDBGetSourceFileList& source);
-
 };
 
 #endif

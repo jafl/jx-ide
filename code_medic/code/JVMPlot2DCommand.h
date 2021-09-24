@@ -21,13 +21,6 @@ public:
 protected:
 
 	virtual void	HandleSuccess(const JString& data) override;
-
-private:
-
-	// not allowed
-
-	JVMPlot2DCommand(const JVMPlot2DCommand& source);
-	const JVMPlot2DCommand& operator=(const JVMPlot2DCommand& source);
 };
 
 #endif

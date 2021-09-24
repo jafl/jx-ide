@@ -21,13 +21,6 @@ public:
 protected:
 
 	virtual void	HandleSuccess(const JString& data) override;
-
-private:
-
-	// not allowed
-
-	JVMVarCommand(const JVMVarCommand& source);
-	const JVMVarCommand& operator=(const JVMVarCommand& source);
 };
 
 #endif

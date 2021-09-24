@@ -41,13 +41,6 @@ protected:
 										   const JSize totalLength,
 										   const JString& fullName) const override;
 	};
-
-private:
-
-	// not allowed
-
-	CMDebuggerProgramInput(const CMDebuggerProgramInput& source);
-	const CMDebuggerProgramInput& operator=(const CMDebuggerProgramInput& source);
 };
 
 #endif

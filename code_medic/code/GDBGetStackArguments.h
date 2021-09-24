@@ -27,13 +27,6 @@ protected:
 private:
 
 	JTree*	itsTree;		// not owned
-
-private:
-
-	// not allowed
-
-	GDBGetStackArguments(const GDBGetStackArguments& source);
-	const GDBGetStackArguments& operator=(const GDBGetStackArguments& source);
 };
 
 #endif

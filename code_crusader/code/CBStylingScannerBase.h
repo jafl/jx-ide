@@ -86,8 +86,8 @@ private:
 
 	// not allowed
 
-	CBStylingScannerBase(const CBStylingScannerBase& source);
-	const CBStylingScannerBase& operator=(const CBStylingScannerBase& source);
+	CBStylingScannerBase(const CBStylingScannerBase&) = delete;
+	CBStylingScannerBase& operator=(const CBStylingScannerBase&) = delete;
 };
 
 

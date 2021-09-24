@@ -1,0 +1,95 @@
+#!/bin/bash
+
+set -e;
+
+#
+# main script
+#
+
+SYS=`uname -o || uname -s`;		# Darwin doesn't support -o
+
+if [[ $UID != 0 ]]; then
+	SUDO="sudo";
+fi
+
+if [[ $SYS == Darwin ]]; then
+
+	if ! command -v brew; then
+		/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)";
+	else
+		brew update;
+	fi
+
+	brew bundle;
+
+	ln -sf ../misc/lldb-include code_medic;
+
+elif command -v apt-get; then
+
+	# debian
+
+	LLDB_VERS=11
+
+	if [[ -z $LGTM_SRC ]]; then
+		$SUDO apt update;
+		$SUDO apt -y install libeditorconfig-dev \
+			llvm liblldb-$LLDB_VERS-dev \
+			aspell;
+	fi
+
+	configure_linux;
+
+	ln -sf /usr/lib/llvm-$LLDB_VERS/include code_medic/lldb-include;
+
+elif command -v dnf; then
+
+	# redhat
+
+	$SUDO dnf -y install editorconfig-devel \
+		lldb-devel llvm-devel \
+		aspell aspell-en;
+
+elif command -v yum; then
+
+	# redhat
+
+	$SUDO yum -y install editorconfig-devel \
+		lldb-devel llvm-devel \
+		aspell aspell-en;
+
+elif command -v zypper; then
+
+	# openSUSE
+
+	$SUDO zypper -in install editorconfig-devel \
+		llvm-devel \
+		aspell aspell-en;
+
+	# lldb-devel is missing
+	ln -sf ../misc/lldb-include code_medic;
+
+elif [[ $SYS == Cygwin ]]; then
+
+	ARCH=`uname -i`;
+	if [[ $ARCH == x86_64 ]]; then
+		SETUP=setup-x86_64.exe;
+		echo "Unsupported architecture '$ARCH'.  Please file an issue on github.";
+		exit 1;
+	elif [[ ${ARCH:0:1} == i ]]; then
+		SETUP=setup-x86.exe;
+		SYS_CONFIG=sys/Linux-Intel-cygwin32;
+		ACE_CONFIG=config-cygwin32.h;
+		ACE_MAKE_CONFIG=platform_cygwin32.GNU;
+	else
+		echo "Unknown architecture '$ARCH'.  Please file an issue on github.";
+		exit 1;
+	fi
+
+	$SETUP -q -P aspell,aspell-en;
+
+else
+
+	echo "Unrecognized system!  Please file an issue on github.";
+	exit 1;
+
+fi

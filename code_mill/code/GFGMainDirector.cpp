@@ -29,7 +29,6 @@
 #include <JXScrollbarSet.h>
 #include <JXStaticText.h>
 #include <JXTextButton.h>
-#include <JXTextMenu.h>
 #include <JXToolBar.h>
 #include <JXWindow.h>
 

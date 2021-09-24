@@ -29,13 +29,6 @@ protected:
 private:
 
 	static CBPerlCompleter*	itsSelf;
-
-private:
-
-	// not allowed
-
-	CBPerlCompleter(const CBPerlCompleter& source);
-	const CBPerlCompleter& operator=(const CBPerlCompleter& source);
 };
 
 #endif

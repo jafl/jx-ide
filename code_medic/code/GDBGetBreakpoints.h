@@ -34,12 +34,6 @@ private:
 	bool	ParseCommon(JStringPtrMap<JString>& map, JIndex* bpIndex,
 							CMBreakpoint::Action* action, bool* enabled,
 							JSize* ignoreCount);
-
-	// not allowed
-
-	GDBGetBreakpoints(const GDBGetBreakpoints& source);
-	const GDBGetBreakpoints& operator=(const GDBGetBreakpoints& source);
-
 };
 
 #endif

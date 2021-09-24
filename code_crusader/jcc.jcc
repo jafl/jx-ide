@@ -955,35 +955,11 @@ F
 "${LIB_DEPS}"
 "make -k all"
 # search paths
-T "../../libjcore/code" T
-T "../../libjfs/code" T
-T "../../libjx/code" T
-T "../../misc/ctags" T
+T "../../JX/include/jcore" T
+T "../../JX/include/jfs" T
+T "../../JX/include/jx" T
 T "./code" T
 T "./test" T
 F
 # C preprocessor
-T "CBBourneShellFlexLexer" "yyFlexLexer"
-T "CBCFlexLexer" "yyFlexLexer"
-T "CBCSharpFlexLexer" "yyFlexLexer"
-T "CBCShellFlexLexer" "yyFlexLexer"
-T "CBCTreeFlexLexer" "yyFlexLexer"
-T "CBDFlexLexer" "yyFlexLexer"
-T "CBDTreeFlexLexer" "yyFlexLexer"
-T "CBEiffelFlexLexer" "yyFlexLexer"
-T "CBGoFlexLexer" "yyFlexLexer"
-T "CBGoTreeFlexLexer" "yyFlexLexer"
-T "CBHTMLFlexLexer" "yyFlexLexer"
-T "CBINIFlexLexer" "yyFlexLexer"
-T "CBJavaFlexLexer" "yyFlexLexer"
-T "CBJavaScriptFlexLexer" "yyFlexLexer"
-T "CBJavaTreeFlexLexer" "yyFlexLexer"
-T "CBPerlFlexLexer" "yyFlexLexer"
-T "CBPHPTreeFlexLexer" "yyFlexLexer"
-T "CBPropertiesFlexLexer" "yyFlexLexer"
-T "CBPythonFlexLexer" "yyFlexLexer"
-T "CBRubyFlexLexer" "yyFlexLexer"
-T "CBSQLFlexLexer" "yyFlexLexer"
-T "CBTCLFlexLexer" "yyFlexLexer"
-T "JHTMLFlexLexer" "yyFlexLexer"
 F

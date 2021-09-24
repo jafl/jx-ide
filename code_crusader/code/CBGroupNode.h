@@ -24,13 +24,6 @@ public:
 	virtual void	ShowFileLocation() const;
 	virtual void	ViewPlainDiffs(const bool silent) const;
 	virtual void	ViewVCSDiffs(const bool silent) const;
-
-private:
-
-	// not allowed
-
-	CBGroupNode(const CBGroupNode& source);
-	CBGroupNode& operator=(const CBGroupNode& source);
 };
 
 #endif

@@ -31,11 +31,6 @@ private:
 private:
 
 	void	CleanVarString(JString* s);
-
-	// not allowed
-
-	LLDBGetLocalVars(const LLDBGetLocalVars& source);
-	const LLDBGetLocalVars& operator=(const LLDBGetLocalVars& source);
 };
 
 #endif

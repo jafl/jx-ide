@@ -26,7 +26,7 @@ public:
 
 	virtual void			Activate() override;
 	virtual const JString&	GetName() const override;
-	virtual bool		GetMenuIcon(const JXImage** icon) const override;
+	virtual bool			GetMenuIcon(const JXImage** icon) const override;
 
 protected:
 
@@ -55,11 +55,6 @@ private:
 	void	HandleFileMenu(const JIndex index);
 
 	void	HandleHelpMenu(const JIndex index);
-
-	// not allowed
-
-	CMThreadsDir(const CMThreadsDir& source);
-	const CMThreadsDir& operator=(const CMThreadsDir& source);
 };
 
 #endif

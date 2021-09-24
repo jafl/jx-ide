@@ -34,13 +34,6 @@ protected:
 private:
 
 	static CBJavaStyler*	itsSelf;
-
-private:
-
-	// not allowed
-
-	CBJavaStyler(const CBJavaStyler& source);
-	const CBJavaStyler& operator=(const CBJavaStyler& source);
 };
 
 #endif

@@ -21,13 +21,6 @@ public:
 protected:
 
 	virtual void	HandleSuccess(const JString& data) override;
-
-private:
-
-	// not allowed
-
-	GDBGetProgramName(const GDBGetProgramName& source);
-	const GDBGetProgramName& operator=(const GDBGetProgramName& source);
 };
 
 #endif

@@ -98,11 +98,6 @@ private:
 	void	HandleActionMenu(const JIndex index);
 
 	void	HandleHelpMenu(const JIndex index);
-
-	// not allowed
-
-	CMMemoryDir(const CMMemoryDir& source);
-	const CMMemoryDir& operator=(const CMMemoryDir& source);
 };
 
 

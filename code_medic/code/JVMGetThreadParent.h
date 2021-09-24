@@ -32,14 +32,6 @@ private:
 
 	JVMThreadNode*	itsNode;
 	const bool	itsCheckOnlyFlag;
-
-private:
-
-	// not allowed
-
-	JVMGetThreadParent(const JVMGetThreadParent& source);
-	const JVMGetThreadParent& operator=(const JVMGetThreadParent& source);
-
 };
 
 #endif

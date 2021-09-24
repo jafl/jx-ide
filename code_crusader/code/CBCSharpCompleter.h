@@ -29,13 +29,6 @@ protected:
 private:
 
 	static CBCSharpCompleter*	itsSelf;
-
-private:
-
-	// not allowed
-
-	CBCSharpCompleter(const CBCSharpCompleter& source);
-	const CBCSharpCompleter& operator=(const CBCSharpCompleter& source);
 };
 
 #endif

@@ -26,13 +26,6 @@ public:
 protected:
 
 	virtual CBClass*	NewGhost(const JString& name, CBTree* tree) override;
-
-private:
-
-	// not allowed
-
-	CBCClass(const CBCClass& source);
-	CBCClass& operator=(const CBCClass& source);
 };
 
 #endif

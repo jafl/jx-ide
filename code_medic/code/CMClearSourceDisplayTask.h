@@ -25,13 +25,6 @@ public:
 private:
 
 	CMSourceDirector*	itsDirector;	// not owned
-
-private:
-
-	// not allowed
-
-	CMClearSourceDisplayTask(const CMClearSourceDisplayTask& source);
-	const CMClearSourceDisplayTask& operator=(const CMClearSourceDisplayTask& source);
 };
 
 #endif

@@ -32,13 +32,6 @@ private:
 
 	JTree*			itsTree;	// not owned
 	CMStackWidget*	itsWidget;	// not owned
-
-private:
-
-	// not allowed
-
-	CMGetStack(const CMGetStack& source);
-	const CMGetStack& operator=(const CMGetStack& source);
 };
 
 

@@ -17,13 +17,6 @@ public:
 	CMGetCompletions(const JString& cmd);
 
 	virtual	~CMGetCompletions();
-
-private:
-
-	// not allowed
-
-	CMGetCompletions(const CMGetCompletions& source);
-	const CMGetCompletions& operator=(const CMGetCompletions& source);
 };
 
 #endif

@@ -23,15 +23,8 @@ public:
 
 private:
 
-	JString		itsMessage;
+	JString	itsMessage;
 	bool	itsRestartFlag;
-
-private:
-
-	// not allowed
-
-	LLDBWelcomeTask(const LLDBWelcomeTask& source);
-	const LLDBWelcomeTask& operator=(const LLDBWelcomeTask& source);
 };
 
 #endif

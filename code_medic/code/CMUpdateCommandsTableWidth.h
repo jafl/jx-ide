@@ -27,13 +27,6 @@ public:
 private:
 
 	CMEditCommandsTable*	itsTable;		// we don't own this
-
-private:
-
-	// not allowed
-
-	CMUpdateCommandsTableWidth(const CMUpdateCommandsTableWidth& source);
-	const CMUpdateCommandsTableWidth& operator=(const CMUpdateCommandsTableWidth& source);
 };
 
 #endif

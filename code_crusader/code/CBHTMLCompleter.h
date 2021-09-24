@@ -31,13 +31,6 @@ protected:
 private:
 
 	static CBHTMLCompleter*	itsSelf;
-
-private:
-
-	// not allowed
-
-	CBHTMLCompleter(const CBHTMLCompleter& source);
-	const CBHTMLCompleter& operator=(const CBHTMLCompleter& source);
 };
 
 #endif

@@ -32,13 +32,6 @@ protected:
 private:
 
 	static CBSQLStyler*	itsSelf;
-
-private:
-
-	// not allowed
-
-	CBSQLStyler(const CBSQLStyler& source);
-	const CBSQLStyler& operator=(const CBSQLStyler& source);
 };
 
 #endif

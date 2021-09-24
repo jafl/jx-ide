@@ -87,11 +87,6 @@ private:
 
 	JString	PrepareForChoose(const JString& origName);
 	void	CalcPathType(const JString& path, PathType* type) const;
-
-	// not allowed
-
-	CBRelPathCSF(const CBRelPathCSF& source);
-	const CBRelPathCSF& operator=(const CBRelPathCSF& source);
 };
 
 

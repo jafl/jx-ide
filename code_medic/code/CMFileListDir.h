@@ -68,11 +68,6 @@ private:
 	void	HandleActionsMenu(const JIndex index);
 
 	void	HandleHelpMenu(const JIndex index);
-
-	// not allowed
-
-	CMFileListDir(const CMFileListDir& source);
-	const CMFileListDir& operator=(const CMFileListDir& source);
 };
 
 #endif

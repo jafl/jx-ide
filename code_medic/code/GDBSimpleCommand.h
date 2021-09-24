@@ -21,13 +21,6 @@ public:
 protected:
 
 	virtual void	HandleSuccess(const JString& data) override;
-
-private:
-
-	// not allowed
-
-	GDBSimpleCommand(const GDBSimpleCommand& source);
-	const GDBSimpleCommand& operator=(const GDBSimpleCommand& source);
 };
 
 #endif

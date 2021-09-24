@@ -33,32 +33,32 @@ public:
 	virtual ~CBProjectNode();
 
 	CBProjectNodeType	GetType() const;
-	virtual bool	IncludedInMakefile() const;
-	virtual bool	IncludedInCMakeData() const;
-	virtual bool	IncludedInQMakeData() const;
+	virtual bool		IncludedInMakefile() const;
+	virtual bool		IncludedInCMakeData() const;
+	virtual bool		IncludedInQMakeData() const;
 
 	CBProjectDocument*	GetProjectDoc() const;
 
-	virtual void		OpenFile() const;
-	virtual void		OpenComplementFile() const;
+	virtual void	OpenFile() const;
+	virtual void	OpenComplementFile() const;
 	virtual bool	GetFullName(JString* fullName) const;
-	virtual void		ShowFileLocation() const;
-	virtual void		ViewPlainDiffs(const bool silent) const;
-	virtual void		ViewVCSDiffs(const bool silent) const;
+	virtual void	ShowFileLocation() const;
+	virtual void	ViewPlainDiffs(const bool silent) const;
+	virtual void	ViewVCSDiffs(const bool silent) const;
 
 	bool	Includes(const JString& fullName) const;
 	bool	FindFile(const JString& fullName,
 						 const CBProjectNode** node) const;
 	bool	FindFile(const JString& fullName, CBProjectNode** node);
 
-	virtual void		BuildMakeFiles(JString* text,
-									   JPtrArray<JTreeNode>* invalidList,
-									   JPtrArray<JString>* libFileList,
-									   JPtrArray<JString>* libProjPathList) const;
-	virtual void		BuildCMakeData(JString* src, JString* hdr,
-									   JPtrArray<JTreeNode>* invalidList) const;
-	virtual void		BuildQMakeData(JString* src, JString* hdr,
-									   JPtrArray<JTreeNode>* invalidList) const;
+	virtual void	BuildMakeFiles(JString* text,
+								   JPtrArray<JTreeNode>* invalidList,
+								   JPtrArray<JString>* libFileList,
+								   JPtrArray<JString>* libProjPathList) const;
+	virtual void	BuildCMakeData(JString* src, JString* hdr,
+								   JPtrArray<JTreeNode>* invalidList) const;
+	virtual void	BuildQMakeData(JString* src, JString* hdr,
+								   JPtrArray<JTreeNode>* invalidList) const;
 
 	virtual bool	ParseFiles(CBFileListTable* parser,
 								   const JPtrArray<JString>& allSuffixList,
@@ -66,7 +66,7 @@ public:
 								   CBCTree* cTree, CBDTree* dTree, CBGoTree* goTree,
 								   CBJavaTree* javaTree, CBPHPTree* phpTree,
 								   JProgressDisplay& pg) const;
-	virtual void		Print(JString* text) const;
+	virtual void	Print(JString* text) const;
 
 	virtual void	FileRenamed(const JString& origFullName, const JString& newFullName);
 
@@ -83,8 +83,8 @@ public:
 
 	CBProjectNode*			GetProjectParent();
 	const CBProjectNode*	GetProjectParent() const;
-	bool				GetProjectParent(CBProjectNode** parent);
-	bool				GetProjectParent(const CBProjectNode** parent) const;
+	bool					GetProjectParent(CBProjectNode** parent);
+	bool					GetProjectParent(const CBProjectNode** parent) const;
 
 	CBProjectNode*			GetProjectChild(const JIndex index);
 	const CBProjectNode*	GetProjectChild(const JIndex index) const;
@@ -101,13 +101,6 @@ protected:
 private:
 
 	const CBProjectNodeType	itsType;
-
-private:
-
-	// not allowed
-
-	CBProjectNode(const CBProjectNode& source);
-	CBProjectNode& operator=(const CBProjectNode& source);
 };
 
 

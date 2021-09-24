@@ -28,13 +28,6 @@ private:
 	const JString	itsFileName;
 	const JIndex	itsLineIndex;
 
-private:
-
-	// not allowed
-
-	CMGetFullPath(const CMGetFullPath& source);
-	const CMGetFullPath& operator=(const CMGetFullPath& source);
-
 public:
 
 	// JBroadcaster messages

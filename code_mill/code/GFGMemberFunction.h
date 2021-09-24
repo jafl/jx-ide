@@ -22,13 +22,13 @@ public:
 	const JString&	GetFnName() const;
 	void			SetFnName(const JString& str);
 
-	bool		IsProtected() const;
+	bool			IsProtected() const;
 	void			ShouldBeProtected(const bool protect);
 
-	bool		IsRequired() const;
+	bool			IsRequired() const;
 	void			ShouldBeRequired(const bool require);
 
-	bool		IsUsed() const;
+	bool			IsUsed() const;
 	void			ShouldBeUsed(const bool use);
 
 	const JString&	GetInterface() const;
@@ -37,7 +37,7 @@ public:
 	const JString&	GetReturnType() const;
 	void			SetReturnType(const JString& type);
 
-	bool		IsConst() const;
+	bool			IsConst() const;
 	void			ShouldBeConst(const bool isConst);
 
 	JSize			GetArgCount() const;
@@ -52,12 +52,12 @@ protected:
 
 private:
 
-	JString		itsFnName;
+	JString	itsFnName;
 	bool	itsIsProtected;
 	bool	itsIsRequired;	// if base class has pure virtual function
 	bool	itsIsUsed;
-	JString		itsInterface;
-	JString		itsReturnType;
+	JString	itsInterface;
+	JString	itsReturnType;
 	bool	itsIsConst;
 	
 	JPtrArray<JString>*	itsArgs;
@@ -67,9 +67,8 @@ private:
 
 	// not allowed
 
-	GFGMemberFunction(const GFGMemberFunction& source);
-	const GFGMemberFunction& operator=(const GFGMemberFunction& source);
-
+	GFGMemberFunction(const GFGMemberFunction&) = delete;
+	GFGMemberFunction& operator=(const GFGMemberFunction&) = delete;
 };
 
 

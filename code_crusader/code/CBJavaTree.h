@@ -46,11 +46,6 @@ private:
 
 	static CBClass* StreamInJavaClass(std::istream& input, const JFileVersion vers,
 									  CBTree* tree);
-
-	// not allowed
-
-	CBJavaTree(const CBJavaTree& source);
-	CBJavaTree& operator=(const CBJavaTree& source);
 };
 
 #endif

@@ -33,11 +33,6 @@ private:
 private:
 
 	void	CopyTree(JVMThreadNode* src, JTreeNode* dest);
-
-	// not allowed
-
-	JVMGetThreads(const JVMGetThreads& source);
-	const JVMGetThreads& operator=(const JVMGetThreads& source);
 };
 
 #endif

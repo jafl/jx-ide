@@ -20,7 +20,7 @@ public:
 
 	virtual	~CMStackFrameNode();
 
-	JUInt64		GetID() const;
+	JUInt64	GetID() const;
 	bool	GetFile(JString* fileName, JIndex* lineIndex) const;
 
 	void	AppendArg(JTreeNode* node);
@@ -30,13 +30,6 @@ private:
 	JUInt64	itsID;
 	JString	itsFileName;	// relative path
 	JIndex	itsLineIndex;
-
-private:
-
-	// not allowed
-
-	CMStackFrameNode(const CMStackFrameNode& source);
-	const CMStackFrameNode& operator=(const CMStackFrameNode& source);
 };
 
 

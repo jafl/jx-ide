@@ -1,0 +1,2 @@
+brew "editorconfig"
+brew "aspell"

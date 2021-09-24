@@ -26,13 +26,6 @@ public:
 private:
 
 	CMCommand*	itsCmd;
-
-private:
-
-	// not allowed
-
-	LLDBRunBackgroundCommandTask(const LLDBRunBackgroundCommandTask& source);
-	const LLDBRunBackgroundCommandTask& operator=(const LLDBRunBackgroundCommandTask& source);
 };
 
 #endif

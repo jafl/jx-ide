@@ -29,13 +29,6 @@ protected:
 private:
 
 	static CBLuaCompleter*	itsSelf;
-
-private:
-
-	// not allowed
-
-	CBLuaCompleter(const CBLuaCompleter& source);
-	const CBLuaCompleter& operator=(const CBLuaCompleter& source);
 };
 
 #endif

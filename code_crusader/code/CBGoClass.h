@@ -35,13 +35,6 @@ protected:
 private:
 
 	bool	itsIsPublicFlag;
-
-private:
-
-	// not allowed
-
-	CBGoClass(const CBGoClass& source);
-	CBGoClass& operator=(const CBGoClass& source);
 };
 
 #endif

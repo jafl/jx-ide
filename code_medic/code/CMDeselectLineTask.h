@@ -25,13 +25,6 @@ public:
 private:
 
 	CMLineIndexTable*	itsTable;
-
-private:
-
-	// not allowed
-
-	CMDeselectLineTask(const CMDeselectLineTask& source);
-	const CMDeselectLineTask& operator=(const CMDeselectLineTask& source);
 };
 
 #endif

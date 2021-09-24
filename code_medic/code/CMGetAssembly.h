@@ -29,13 +29,6 @@ protected:
 private:
 
 	CMSourceDirector*	itsDir;
-
-private:
-
-	// not allowed
-
-	CMGetAssembly(const CMGetAssembly& source);
-	const CMGetAssembly& operator=(const CMGetAssembly& source);
 };
 
 

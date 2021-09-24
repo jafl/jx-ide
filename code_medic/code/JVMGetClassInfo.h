@@ -27,14 +27,6 @@ protected:
 private:
 
 	const JUInt64	itsID;
-
-private:
-
-	// not allowed
-
-	JVMGetClassInfo(const JVMGetClassInfo& source);
-	const JVMGetClassInfo& operator=(const JVMGetClassInfo& source);
-
 };
 
 #endif

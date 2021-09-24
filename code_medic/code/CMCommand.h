@@ -78,8 +78,8 @@ private:
 
 	// not allowed
 
-	CMCommand(const CMCommand& source);
-	const CMCommand& operator=(const CMCommand& source);
+	CMCommand(const CMCommand&) = delete;
+	CMCommand& operator=(const CMCommand&) = delete;
 };
 
 

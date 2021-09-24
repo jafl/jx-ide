@@ -27,13 +27,6 @@ protected:
 private:
 
 	CMStackWidget*	itsWidget;
-
-private:
-
-	// not allowed
-
-	XDGetFrame(const XDGetFrame& source);
-	const XDGetFrame& operator=(const XDGetFrame& source);
 };
 
 #endif

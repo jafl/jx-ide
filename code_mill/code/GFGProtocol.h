@@ -66,7 +66,7 @@ private:
 	JCharacter*	itsBuffer;				// buffer to receive raw bytes
 	JSize		itsBufferSize;
 
-	bool	itsInHandleInputFlag;	// true => stack passes through handle_input()
+	bool		itsInHandleInputFlag;	// true => stack passes through handle_input()
 
 private:
 
@@ -74,8 +74,8 @@ private:
 
 	// not allowed
 
-	GFGProtocol(const GFGProtocol& source);
-	GFGProtocol& operator=(const GFGProtocol& source);
+	GFGProtocol(const GFGProtocol&) = delete;
+	GFGProtocol& operator=(const GFGProtocol&) = delete;
 };
 
 #include <GFGProtocol.tmpl>

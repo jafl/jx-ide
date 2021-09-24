@@ -46,11 +46,6 @@ private:
 
 	static CBClass* StreamInGoClass(std::istream& input, const JFileVersion vers,
 									CBTree* tree);
-
-	// not allowed
-
-	CBGoTree(const CBGoTree& source);
-	CBGoTree& operator=(const CBGoTree& source);
 };
 
 #endif

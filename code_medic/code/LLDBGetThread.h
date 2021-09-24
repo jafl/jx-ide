@@ -21,13 +21,6 @@ public:
 protected:
 
 	virtual void	HandleSuccess(const JString& data) override;
-
-private:
-
-	// not allowed
-
-	LLDBGetThread(const LLDBGetThread& source);
-	const LLDBGetThread& operator=(const LLDBGetThread& source);
 };
 
 #endif

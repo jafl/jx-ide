@@ -31,14 +31,7 @@ public:
 protected:
 
 	virtual bool	HandleCustomEvent();
-	virtual void		CleanUpBeforeSuddenDeath(const JXDocumentManager::SafetySaveReason reason);
-
-private:
-
-	// not allowed
-
-	CMApp(const CMApp& source);
-	const CMApp& operator=(const CMApp& source);
+	virtual void	CleanUpBeforeSuddenDeath(const JXDocumentManager::SafetySaveReason reason);
 };
 
 #endif

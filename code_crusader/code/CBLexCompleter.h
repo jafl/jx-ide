@@ -31,13 +31,6 @@ protected:
 private:
 
 	static CBLexCompleter*	itsSelf;
-
-private:
-
-	// not allowed
-
-	CBLexCompleter(const CBLexCompleter& source);
-	const CBLexCompleter& operator=(const CBLexCompleter& source);
 };
 
 #endif

@@ -27,13 +27,6 @@ protected:
 private:
 
 	CMStackWidget*	itsWidget;
-
-private:
-
-	// not allowed
-
-	GDBGetFrame(const GDBGetFrame& source);
-	const GDBGetFrame& operator=(const GDBGetFrame& source);
 };
 
 #endif

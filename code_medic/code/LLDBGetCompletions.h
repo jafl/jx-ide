@@ -30,13 +30,6 @@ private:
 	JString					itsPrefix;
 	CMCommandInput*			itsInput;
 	CMCommandOutputDisplay*	itsHistory;
-
-private:
-
-	// not allowed
-
-	LLDBGetCompletions(const LLDBGetCompletions& source);
-	const LLDBGetCompletions& operator=(const LLDBGetCompletions& source);
 };
 
 #endif

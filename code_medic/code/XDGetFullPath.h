@@ -21,13 +21,6 @@ public:
 protected:
 
 	virtual void	HandleSuccess(const JString& data) override;
-
-private:
-
-	// not allowed
-
-	XDGetFullPath(const XDGetFullPath& source);
-	const XDGetFullPath& operator=(const XDGetFullPath& source);
 };
 
 #endif

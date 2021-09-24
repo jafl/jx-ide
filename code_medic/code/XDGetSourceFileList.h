@@ -29,12 +29,6 @@ protected:
 private:
 
 	void	ScanDirectory(const JString& path);
-
-	// not allowed
-
-	XDGetSourceFileList(const XDGetSourceFileList& source);
-	const XDGetSourceFileList& operator=(const XDGetSourceFileList& source);
-
 };
 
 #endif

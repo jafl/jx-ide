@@ -27,13 +27,6 @@ protected:
 private:
 
 	CMVarNode*	itsRootNode;	// not owned
-
-private:
-
-	// not allowed
-
-	XDGetLocalVars(const XDGetLocalVars& source);
-	const XDGetLocalVars& operator=(const XDGetLocalVars& source);
 };
 
 #endif

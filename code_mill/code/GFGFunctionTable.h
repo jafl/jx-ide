@@ -57,18 +57,13 @@ protected:
 
 private:
 
-	GFGClass*		itsList;	// we don't own this.
+	GFGClass*	itsList;	// we don't own this.
 	bool		itsNeedsAdjustment;
 
 private:
 
 	void	GFGFunctionTableX();
 	void	AdjustColumnWidths();
-
-	// not allowed
-
-	GFGFunctionTable(const GFGFunctionTable& source);
-	const GFGFunctionTable& operator=(const GFGFunctionTable& source);
-
 };
 #endif
+

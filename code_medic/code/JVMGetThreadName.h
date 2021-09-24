@@ -31,14 +31,6 @@ protected:
 private:
 
 	JVMThreadNode*	itsNode;
-
-private:
-
-	// not allowed
-
-	JVMGetThreadName(const JVMGetThreadName& source);
-	const JVMGetThreadName& operator=(const JVMGetThreadName& source);
-
 };
 
 #endif

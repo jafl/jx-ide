@@ -21,13 +21,6 @@ public:
 protected:
 
 	virtual void	HandleSuccess(const JString& data) override;
-
-private:
-
-	// not allowed
-
-	XDGetThread(const XDGetThread& source);
-	const XDGetThread& operator=(const XDGetThread& source);
 };
 
 #endif

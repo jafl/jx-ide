@@ -53,11 +53,6 @@ private:
 private:
 
 	void	BuildWindow();
-
-	// not allowed
-
-	CMEditCommandsDialog(const CMEditCommandsDialog& source);
-	const CMEditCommandsDialog& operator=(const CMEditCommandsDialog& source);
 };
 
 

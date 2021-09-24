@@ -21,13 +21,6 @@ public:
 protected:
 
 	virtual void	HandleSuccess(const JString& data) override;
-
-private:
-
-	// not allowed
-
-	XDPlot2DCommand(const XDPlot2DCommand& source);
-	const XDPlot2DCommand& operator=(const XDPlot2DCommand& source);
 };
 
 #endif

@@ -17,13 +17,6 @@ public:
 	CMGetFrame(const JString& cmd);
 
 	virtual	~CMGetFrame();
-
-private:
-
-	// not allowed
-
-	CMGetFrame(const CMGetFrame& source);
-	const CMGetFrame& operator=(const CMGetFrame& source);
 };
 
 #endif

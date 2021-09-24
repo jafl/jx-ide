@@ -50,8 +50,8 @@ private:
 
 	// not allowed
 
-	GDBVarTreeParser(const GDBVarTreeParser& source);
-	const GDBVarTreeParser& operator=(const GDBVarTreeParser& source);
+	GDBVarTreeParser(const GDBVarTreeParser&) = delete;
+	GDBVarTreeParser& operator=(const GDBVarTreeParser&) = delete;
 };
 
 

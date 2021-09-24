@@ -19,13 +19,6 @@ public:
 	GDBBreakpointManager(GDBLink* link);
 
 	virtual	~GDBBreakpointManager();
-
-private:
-
-	// not allowed
-
-	GDBBreakpointManager(const GDBBreakpointManager& source);
-	const GDBBreakpointManager& operator=(const GDBBreakpointManager& source);
 };
 
 #endif

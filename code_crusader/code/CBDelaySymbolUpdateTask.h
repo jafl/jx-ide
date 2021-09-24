@@ -25,13 +25,6 @@ public:
 private:
 
 	CBProjectDocument*	itsProjDoc;
-
-private:
-
-	// not allowed
-
-	CBDelaySymbolUpdateTask(const CBDelaySymbolUpdateTask& source);
-	const CBDelaySymbolUpdateTask& operator=(const CBDelaySymbolUpdateTask& source);
 };
 
 #endif

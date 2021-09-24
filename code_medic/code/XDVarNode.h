@@ -30,13 +30,6 @@ protected:
 private:
 
 	JString	itsFullName;
-
-private:
-
-	// not allowed
-
-	XDVarNode(const XDVarNode& source);
-	const XDVarNode& operator=(const XDVarNode& source);
 };
 
 #endif

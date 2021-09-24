@@ -44,11 +44,6 @@ private:
 						  CBCTree* cTree, CBDTree* dTree, CBGoTree* goTree,
 						  CBJavaTree* javaTree, CBPHPTree* phpTree,
 						  JProgressDisplay& pg) const;
-
-	// not allowed
-
-	CBFileNode(const CBFileNode& source);
-	CBFileNode& operator=(const CBFileNode& source);
 };
 
 #endif

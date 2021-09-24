@@ -25,13 +25,6 @@ public:
 private:
 
 	XDSocket*	itsSocket;
-
-private:
-
-	// not allowed
-
-	XDCloseSocketTask(const XDCloseSocketTask& source);
-	const XDCloseSocketTask& operator=(const XDCloseSocketTask& source);
 };
 
 #endif

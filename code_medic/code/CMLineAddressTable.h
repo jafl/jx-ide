@@ -22,8 +22,8 @@ public:
 
 	virtual ~CMLineAddressTable();
 
-	void		SetLineNumbers(JPtrArray<JString>* list);
-	void		ClearLineNumbers();
+	void	SetLineNumbers(JPtrArray<JString>* list);
+	void	ClearLineNumbers();
 	bool	FindAddressLineNumber(const JString& address, JIndex* index) const;
 
 protected:
@@ -32,8 +32,8 @@ protected:
 	virtual JString		GetLineText(const JIndex lineIndex) const;
 	virtual JString		GetLongestLineText(const JIndex lineCount) const;
 	virtual JIndex		GetBreakpointLineIndex(const JIndex bpIndex, const CMBreakpoint* bp) const;
-	virtual bool	GetFirstBreakpointOnLine(const JIndex lineIndex, JIndex* bpIndex) const;
-	virtual bool	BreakpointsOnSameLine(const CMBreakpoint* bp1, const CMBreakpoint* bp2) const;
+	virtual bool		GetFirstBreakpointOnLine(const JIndex lineIndex, JIndex* bpIndex) const;
+	virtual bool		BreakpointsOnSameLine(const CMBreakpoint* bp1, const CMBreakpoint* bp2) const;
 	virtual void		GetBreakpoints(JPtrArray<CMBreakpoint>* list);
 	virtual void		SetBreakpoint(const JIndex lineIndex, const bool temporary);
 	virtual void		RemoveAllBreakpointsOnLine(const JIndex lineIndex);
@@ -52,11 +52,6 @@ private:
 
 	static JListT::CompareResult
 		CompareBreakpointAddresses(CMBreakpoint* const & bp1, CMBreakpoint* const & bp2);
-
-	// not allowed
-
-	CMLineAddressTable(const CMLineAddressTable& source);
-	const CMLineAddressTable& operator=(const CMLineAddressTable& source);
 };
 
 #endif

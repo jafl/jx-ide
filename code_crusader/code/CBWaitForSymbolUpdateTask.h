@@ -28,14 +28,7 @@ public:
 private:
 
 	JProcess*	itsProcess;
-	bool	itsKeepWaitingFlag;
-
-private:
-
-	// not allowed
-
-	CBWaitForSymbolUpdateTask(const CBWaitForSymbolUpdateTask& source);
-	const CBWaitForSymbolUpdateTask& operator=(const CBWaitForSymbolUpdateTask& source);
+	bool		itsKeepWaitingFlag;
 };
 
 

@@ -24,9 +24,9 @@ void	CBMParseEditorOptions(const JString& fullName, const JString& text,
 							  bool* setTabWidth, JSize* tabWidth,
 							  bool* setTabMode, bool* tabInsertsSpaces,
 							  bool* setAutoIndent, bool* autoIndent);
-void		CBMScrollForDefinition(JXTEBase* te, const CBLanguage lang);
-void		CBMSelectLines(JTextEditor* te, const JIndexRange& lineRange);
-void		CBMBalanceFromSelection(JXTEBase* te, const CBLanguage lang);
+void	CBMScrollForDefinition(JXTEBase* te, const CBLanguage lang);
+void	CBMSelectLines(JTextEditor* te, const JIndexRange& lineRange);
+void	CBMBalanceFromSelection(JXTEBase* te, const CBLanguage lang);
 bool	CBMIsCharacterInWord(const JUtf8Character& c);
 
 	// for use by dialogs

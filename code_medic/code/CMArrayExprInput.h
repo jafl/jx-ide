@@ -26,13 +26,6 @@ public:
 	virtual void	HandleKeyPress(const JUtf8Character& c, const int keySym,
 								   const JXKeyModifiers& modifiers) override;
 
-private:
-
-	// not allowed
-
-	CMArrayExprInput(const CMArrayExprInput& source);
-	const CMArrayExprInput& operator=(const CMArrayExprInput& source);
-
 public:
 
 	// JBroadcaster messages

@@ -29,13 +29,6 @@ protected:
 private:
 
 	static CBTCLCompleter*	itsSelf;
-
-private:
-
-	// not allowed
-
-	CBTCLCompleter(const CBTCLCompleter& source);
-	const CBTCLCompleter& operator=(const CBTCLCompleter& source);
 };
 
 #endif

@@ -30,13 +30,6 @@ protected:
 private:
 
 	static CBFortranCompleter*	itsSelf;
-
-private:
-
-	// not allowed
-
-	CBFortranCompleter(const CBFortranCompleter& source);
-	const CBFortranCompleter& operator=(const CBFortranCompleter& source);
 };
 
 #endif

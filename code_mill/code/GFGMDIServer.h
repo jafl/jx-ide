@@ -24,13 +24,6 @@ protected:
 
 	virtual void	HandleMDIRequest(const JString& dir,
 									 const JPtrArray<JString>& argList) override;
-
-private:
-
-	// not allowed
-
-	GFGMDIServer(const GFGMDIServer& source);
-	const GFGMDIServer& operator=(const GFGMDIServer& source);
 };
 
 #endif

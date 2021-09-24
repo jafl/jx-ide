@@ -21,14 +21,6 @@ public:
 protected:
 
 	virtual void	HandleSuccess(const JString& data) override;
-
-private:
-
-	// not allowed
-
-	JVMDisplaySourceForMain(const JVMDisplaySourceForMain& source);
-	const JVMDisplaySourceForMain& operator=(const JVMDisplaySourceForMain& source);
-
 };
 
 #endif

@@ -82,7 +82,7 @@ private:
 
 	JXTextMenu*			itsLineMenu;
 	JIndex				itsLineMenuLineIndex;
-	bool			itsIsFullLineMenuFlag;
+	bool				itsIsFullLineMenuFlag;
 	JIndexRange			itsLineMenuBPRange;
 	CMDeselectLineTask*	itsDeselectTask;
 
@@ -91,7 +91,7 @@ private:
 	void	AdjustToText();
 	void	UpdateBreakpoints();
 
-	void		DrawBreakpoints(JPainter& p, const JPoint& cell, const JRect& rect);
+	void	DrawBreakpoints(JPainter& p, const JPoint& cell, const JRect& rect);
 	bool	FindNextBreakpoint(const JIndex rowIndex, bool* multiple = nullptr);
 	bool	HasMultipleBreakpointsOnLine(const JIndex bpIndex) const;
 
@@ -105,11 +105,6 @@ private:
 						 const JIndex firstBPIndex = 0);
 	void	UpdateLineMenu();
 	void	HandleLineMenu(const JIndex index);
-
-	// not allowed
-
-	CMLineIndexTable(const CMLineIndexTable& source);
-	const CMLineIndexTable& operator=(const CMLineIndexTable& source);
 };
 
 
