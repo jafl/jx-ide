@@ -12,16 +12,16 @@
 #include <GFGClass.h>
 #include "gfgGlobals.h"
 
-#include <JOutPipeStream.h>
-#include <JProcess.h>
-#include <JRegex.h>
-#include <JStringIterator.h>
-#include <JStringMatch.h>
+#include <jx-af/jcore/JOutPipeStream.h>
+#include <jx-af/jcore/JProcess.h>
+#include <jx-af/jcore/JRegex.h>
+#include <jx-af/jcore/JStringIterator.h>
+#include <jx-af/jcore/JStringMatch.h>
 
-#include <jDirUtil.h>
-#include <jStreamUtil.h>
-#include <jTime.h>
-#include <jAssert.h>
+#include <jx-af/jcore/jDirUtil.h>
+#include <jx-af/jcore/jStreamUtil.h>
+#include <jx-af/jcore/jTime.h>
+#include <jx-af/jcore/jAssert.h>
 
 const JString kCTagsCmd("ctags --filter=yes --filter-terminator=\a -n --fields=kzafimns --format=2 --c-types=p");
 const JUtf8Byte kDelimiter = '\a';
@@ -68,12 +68,12 @@ GFGLink::ParseClass
 {
 	bool ok	= true;
 	if (itsCTagsProcess == nullptr)
-		{
+	{
 		ok = StartCTags();
-		}
+	}
 
 	if (ok)
-		{
+	{
 		itsClassList	= list;
 		itsCurrentClass	= classname;
 		itsCurrentFile	= filename;
@@ -88,18 +88,18 @@ GFGLink::ParseClass
 		JString result = JReadUntil(itsInputFD, kDelimiter, &found);
 
 		if (found)
-			{
+		{
 			JPtrArray<JString> lines(JPtrArrayT::kDeleteAll);
 			result.Split("\n", &lines);
 
 			for (const auto* line : lines)
-				{
+			{
 				ParseLine(*line);
-				}
+			}
 
 			Broadcast(FileParsed());
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -143,33 +143,33 @@ GFGLink::ParseLine
 
 	bool required = false;
 	if (data.Contains("implementation:pure virtual"))
-		{
+	{
 		required = true;
-		}
+	}
 	else if (!data.Contains("implementation:virtual"))
-		{
+	{
 		return;
-		}
+	}
 
 	JStringIterator iter(data);
 	if (!iter.Next(linePattern))
-		{
+	{
 		return;
-		}
+	}
 
 	const JStringMatch& m = iter.GetLastMatch();
 	if (m.GetSubstring(3) != itsCurrentClass)
-		{
+	{
 		return;
-		}
+	}
 
 	iter.Invalidate();
 
 	JString name = m.GetSubstring(1);
 	if (name.BeginsWith("~"))
-		{
+	{
 		return;
-		}
+	}
 
 	auto* fn = jnew GFGMemberFunction;
 	assert( fn != nullptr );
@@ -181,9 +181,9 @@ GFGLink::ParseLine
 	m.GetSubstring(2).ConvertToUInt(&line);
 
 	if (m.GetSubstring(4) == "protected")
-		{
+	{
 		fn->ShouldBeProtected(true);
-		}
+	}
 
 	ParseInterface(fn, line);
 
@@ -193,9 +193,9 @@ GFGLink::ParseLine
 	bool found;
 	const JIndex i = itsClassList->SearchSorted1(fn, JListT::kAnyMatch, &found);
 	if (found)
-		{
+	{
 		itsClassList->DeleteElement(i);
-		}
+	}
 	itsClassList->InsertAtIndex(i, fn);
 }
 
@@ -215,34 +215,34 @@ GFGLink::ParseInterface
 {
 	std::ifstream is(itsCurrentFile.GetBytes());
 	if (!is.good())
-		{
+	{
 		return;
-		}
+	}
 
 	// skip to the function's line
 
 	for (JIndex i=1; i<line; i++)
-		{
+	{
 		JIgnoreLine(is);
-		}
+	}
 
 	JSize p1 = JTellg(is);
 
 	is >> std::ws;
 	JString str = JReadUntilws(is);
 	if (str != "virtual")
-		{
+	{
 		return;
-		}
+	}
 
 	is >> std::ws;
 
 	// return type
 	str	= JReadUntilws(is);
 	if (str	== "const")
-		{
+	{
 		str	+= " " + JReadUntilws(is);
-		}
+	}
 	fn->SetReturnType(str);
 
 	is >> std::ws;
@@ -251,32 +251,32 @@ GFGLink::ParseInterface
 	str	= JReadUntil(is, '(');
 	str.TrimWhitespace();
 	if (str != fn->GetFnName())
-		{
+	{
 		return;
-		}
+	}
 
 	// get arguments
 	JUtf8Byte delim;
 	do
-		{
+	{
 		if (!JReadUntil(is, 2, ",)", &str, &delim))
-			{
+		{
 			return;
-			}
+		}
 
 		JStringIterator iter(&str);
 		while (iter.Next(commentPattern))
-			{
+		{
 			iter.RemoveLastMatch();
-			}
+		}
 		iter.Invalidate();
 
 		str.TrimWhitespace();
 		if (!str.IsEmpty())
-			{
+		{
 			fn->AddArg(str);
-			}
 		}
+	}
 		while (delim == ',');
 
 	is >> std::ws;
@@ -284,9 +284,9 @@ GFGLink::ParseInterface
 	// is it const;
 	str = JReadUntil(is, ';');
 	if (str.Contains("const"))
-		{
+	{
 		fn->ShouldBeConst(true);
-		}
+	}
 
 	JSize p2 = JTellg(is);
 	JSeekg(is, p1);
@@ -314,7 +314,7 @@ GFGLink::StartCTags()
 										kJCreatePipe, &fromFD,
 										kJAttachToFromFD, nullptr);
 	if (err.OK())
-		{
+	{
 		itsOutputLink = jnew JOutPipeStream(toFD, true);
 		assert( itsOutputLink != nullptr );
 
@@ -324,10 +324,10 @@ GFGLink::StartCTags()
 		ListenTo(itsCTagsProcess);
 
 		return true;
-		}
+	}
 	else
-		{
+	{
 		JGetStringManager()->ReportError("UnableToStartCTags::GFGLink", err);
 		return false;
-		}
+	}
 }

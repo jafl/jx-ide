@@ -8,7 +8,7 @@
 #ifndef _H_CBCommandPathInput
 #define _H_CBCommandPathInput
 
-#include <JXPathInput.h>
+#include <jx-af/jx/JXPathInput.h>
 
 class CBCommandPathInput : public JXPathInput
 {

@@ -10,8 +10,8 @@
 #ifndef _H_CBEditMacroDialog
 #define _H_CBEditMacroDialog
 
-#include <JXDialogDirector.h>
-#include <JPrefObject.h>
+#include <jx-af/jx/JXDialogDirector.h>
+#include <jx-af/jcore/JPrefObject.h>
 #include "CBPrefsManager.h"		// need definition of MacroSetInfo
 
 class JXTextButton;

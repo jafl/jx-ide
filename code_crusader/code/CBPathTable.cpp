@@ -10,23 +10,23 @@
 #include "CBPathTable.h"
 #include "CBDirList.h"
 #include "CBRelPathCSF.h"
-#include <JXDisplay.h>
-#include <JXTextButton.h>
-#include <JXPathInput.h>
-#include <JXSelectionManager.h>
-#include <JXDNDManager.h>
-#include <JXColorManager.h>
-#include <JXImage.h>
-#include <JXImageCache.h>
-#include <jXUtil.h>
-#include <jXConstants.h>
-#include <JStringTableData.h>
-#include <JPainter.h>
-#include <JFontManager.h>
-#include <JString.h>
-#include <jDirUtil.h>
-#include <jGlobals.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXDisplay.h>
+#include <jx-af/jx/JXTextButton.h>
+#include <jx-af/jx/JXPathInput.h>
+#include <jx-af/jx/JXSelectionManager.h>
+#include <jx-af/jx/JXDNDManager.h>
+#include <jx-af/jx/JXColorManager.h>
+#include <jx-af/jx/JXImage.h>
+#include <jx-af/jx/JXImageCache.h>
+#include <jx-af/jx/jXUtil.h>
+#include <jx-af/jx/jXConstants.h>
+#include <jx-af/jcore/JStringTableData.h>
+#include <jx-af/jcore/JPainter.h>
+#include <jx-af/jcore/JFontManager.h>
+#include <jx-af/jcore/JString.h>
+#include <jx-af/jcore/jDirUtil.h>
+#include <jx-af/jcore/jGlobals.h>
+#include <jx-af/jcore/jAssert.h>
 
 #include <jx_folder_small.xpm>
 
@@ -90,15 +90,15 @@ CBPathTable::CBPathTable
 	itsData->AppendRows(rowCount);
 
 	for (JIndex i=1; i<=rowCount; i++)
-		{
+	{
 		bool recurse;
 		const JString& path = pathList.GetPath(i, &recurse);
 		if (recurse)
-			{
+		{
 			itsData->SetString(i,kRecurseColumn, kFlagOnStr);
-			}
-		itsData->SetString(i,kTextColumn, path);
 		}
+		itsData->SetString(i,kTextColumn, path);
+	}
 
 	SetTableData(itsData);
 
@@ -138,27 +138,27 @@ CBPathTable::AddDirectories
 
 	const JSize count = list.GetElementCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		const JString* name = list.GetElement(i);
 		if (JDirectoryExists(*name))
-			{
+		{
 			itsData->AppendRows(1);
 			const JSize rowCount = GetRowCount();
 			itsData->SetString(rowCount, kRecurseColumn, kFlagOnStr);
 			itsData->SetString(rowCount, kTextColumn,    *name);
 
 			if (firstNewRow == 0)
-				{
+			{
 				firstNewRow = rowCount;
-				}
 			}
 		}
+	}
 
 	if (firstNewRow != 0)
-		{
+	{
 		ScrollTo((GetBounds()).bottomLeft());
 		BeginEditing(JPoint(kTextColumn, firstNewRow));
-		}
+	}
 }
 
 /******************************************************************************
@@ -178,13 +178,13 @@ CBPathTable::GetPathList
 
 	const JSize rowCount = GetRowCount();
 	for (JIndex i=1; i<=rowCount; i++)
-		{
+	{
 		const JString& dirName = itsData->GetString(i,kTextColumn);
 		if (!dirName.IsEmpty())
-			{
+		{
 			pathList->AddPath(dirName, !(itsData->GetString(i,kRecurseColumn)).IsEmpty());
-			}
 		}
+	}
 
 	pathList->SetBasePath(itsBasePath);
 }
@@ -204,23 +204,23 @@ CBPathTable::TableDrawCell
 {
 	JPoint editCell;
 	if (GetEditedCell(&editCell) && cell == editCell)
-		{
+	{
 		return;
-		}
+	}
 	else if (cell.x == kRecurseColumn)
-		{
+	{
 		const JString& str = itsData->GetString(cell);
 
 		JRect r = rect;
 		r.left += kHMarginWidth;
 		p.String(r, str, JPainter::kHAlignCenter, JPainter::kVAlignCenter);
-		}
+	}
 	else if (cell.x == kIconColumn)
-		{
+	{
 		p.Image(*itsFolderIcon, itsFolderIcon->GetBounds(), rect);
-		}
+	}
 	else if (cell.x == kTextColumn)
-		{
+	{
 		const JString& str = itsData->GetString(cell);
 
 		JFont f = JXFSInputBase::GetFont();
@@ -230,7 +230,7 @@ CBPathTable::TableDrawCell
 		JRect r = rect;
 		r.left += kHMarginWidth;
 		p.String(r, str, JPainter::kHAlignLeft, JPainter::kVAlignCenter);
-		}
+	}
 }
 
 /******************************************************************************
@@ -250,30 +250,30 @@ CBPathTable::HandleMouseDown
 {
 	JPoint cell;
 	if (button != kJXLeftButton)
-		{
+	{
 		ScrollForWheel(button, modifiers);
-		}
+	}
 	else if (!GetCell(pt, &cell))
-		{
+	{
 		EndEditing();
-		}
+	}
 	else if (cell.x == kRecurseColumn)
-		{
+	{
 		const JString& flag = itsData->GetString(cell);
 		if (flag.IsEmpty())
-			{
-			itsData->SetString(cell, kFlagOnStr);
-			}
-		else
-			{
-			itsData->SetString(cell, kFlagOffStr);
-			}
-		}
-	else
 		{
+			itsData->SetString(cell, kFlagOnStr);
+		}
+		else
+		{
+			itsData->SetString(cell, kFlagOffStr);
+		}
+	}
+	else
+	{
 		cell.x = kTextColumn;
 		BeginEditing(cell);
-		}
+	}
 }
 
 /******************************************************************************
@@ -337,14 +337,14 @@ CBPathTable::ExtractInputData
 	assert( itsPathInput != nullptr && cell.x == kTextColumn );
 
 	if (itsPathInput->InputValid())
-		{
+	{
 		itsData->SetString(cell, itsPathInput->GetText()->GetText());
 		return true;
-		}
+	}
 	else
-		{
+	{
 		return false;
-		}
+	}
 }
 
 /******************************************************************************
@@ -356,10 +356,10 @@ void
 CBPathTable::PrepareDeleteXInputField()
 {
 	if (itsPathInput != nullptr)
-		{
+	{
 		itsPathInput = nullptr;
 		UpdateButtons();
-		}
+	}
 }
 
 /******************************************************************************
@@ -375,31 +375,31 @@ CBPathTable::Receive
 	)
 {
 	if (sender == itsAddPathButton && message.Is(JXButton::kPushed))
-		{
+	{
 		if (EndEditing())
-			{
+		{
 			itsData->AppendRows(1);
 			itsData->SetString(GetRowCount(), kRecurseColumn, kFlagOnStr);
 			BeginEditing(JPoint(kTextColumn, itsData->GetRowCount()));
-			}
 		}
+	}
 	else if (sender == itsRemovePathButton && message.Is(JXButton::kPushed))
-		{
+	{
 		JPoint editCell;
 		if (GetEditedCell(&editCell))
-			{
+		{
 			CancelEditing();
 			itsData->RemoveRow(editCell.y);
-			}
 		}
+	}
 	else if (sender == itsChoosePathButton && message.Is(JXButton::kPushed))
-		{
+	{
 		ChoosePath();
-		}
+	}
 	else
-		{
+	{
 		JXEditTable::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -412,14 +412,14 @@ CBPathTable::ChoosePath()
 {
 	JPoint cell;
 	if (itsPathInput != nullptr && GetEditedCell(&cell))
-		{
+	{
 		JString path      = itsPathInput->GetText()->GetText();
 		const bool ok = itsCSF->ChooseRelRPath(JString::empty, JString::empty, path, &path);	// kills itsPathInput
 		if (BeginEditing(cell) && ok && itsPathInput != nullptr)
-			{
+		{
 			itsPathInput->GetText()->SetText(path);
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -431,15 +431,15 @@ void
 CBPathTable::UpdateButtons()
 {
 	if (itsPathInput != nullptr)
-		{
+	{
 		itsRemovePathButton->Activate();
 		itsChoosePathButton->Activate();
-		}
+	}
 	else
-		{
+	{
 		itsRemovePathButton->Deactivate();
 		itsChoosePathButton->Deactivate();
-		}
+	}
 }
 
 /******************************************************************************
@@ -481,14 +481,14 @@ CBPathTable::WillAcceptDrop
 
 	const JSize typeCount = typeList.GetElementCount();
 	for (JIndex i=1; i<=typeCount; i++)
-		{
+	{
 		const Atom a = typeList.GetElement(i);
 		if (a == urlXAtom)
-			{
+		{
 			*action = GetDNDManager()->GetDNDActionPrivateXAtom();
 			return true;
-			}
 		}
+	}
 
 	return false;
 }
@@ -522,16 +522,16 @@ CBPathTable::HandleDNDDrop
 	if (selMgr->GetData(GetDNDManager()->GetDNDSelectionName(),
 						time, selMgr->GetURLXAtom(),
 						&returnType, &data, &dataLength, &delMethod))
-		{
+	{
 		if (returnType == selMgr->GetURLXAtom())
-			{
+		{
 			JPtrArray<JString> fileNameList(JPtrArrayT::kDeleteAll),
 							   urlList(JPtrArrayT::kDeleteAll);
 			JXUnpackFileNames((char*) data, dataLength, &fileNameList, &urlList);
 			AddDirectories(fileNameList);
 			JXReportUnreachableHosts(urlList);
-			}
+		}
 
 		selMgr->DeleteData(&data, delMethod);
-		}
+	}
 }

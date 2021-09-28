@@ -11,11 +11,11 @@
  ******************************************************************************/
 
 #include "CBSearchPathHistoryMenu.h"
-#include <JXDisplay.h>
-#include <JXImage.h>
-#include <JXImageCache.h>
-#include <jDirUtil.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXDisplay.h>
+#include <jx-af/jx/JXImage.h>
+#include <jx-af/jx/JXImageCache.h>
+#include <jx-af/jcore/jDirUtil.h>
+#include <jx-af/jcore/jAssert.h>
 
 #include <jx_folder_small.xpm>
 
@@ -128,11 +128,11 @@ CBSearchPathHistoryMenu::AddPath
 	)
 {
 	if (!fullName.IsEmpty())
-		{
+	{
 		const JString path = JConvertToHomeDirShortcut(fullName);
 
 		AddItem(path, recurse ? kRecurseFlag : JString::empty);
-		}
+	}
 }
 
 /******************************************************************************
@@ -160,12 +160,12 @@ CBSearchPathHistoryMenu::RemoveInvalidPaths()
 	const JSize count       = GetItemCount();
 	const JIndex firstIndex = GetFirstIndex();
 	for (JIndex i=count; i>=firstIndex; i--)
-		{
+	{
 		const JString& dirName = JXTextMenu::GetItemText(i);
 		if (JIsAbsolutePath(dirName) &&
 			!JConvertToAbsolutePath(dirName, JString::empty, &fullName))
-			{
+		{
 			RemoveItem(i);
-			}
 		}
+	}
 }

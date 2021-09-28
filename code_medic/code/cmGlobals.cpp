@@ -8,21 +8,21 @@
 #include "cmGlobals.h"
 #include "CMDockManager.h"
 #include "CBFnMenuUpdater.h"
-#include "GDBLink.h"
-#include "LLDBLink.h"
-#include "JVMLink.h"
-#include "XDLink.h"
+#include "gdb/GDBLink.h"
+#include "lldb/LLDBLink.h"
+#include "jvm/JVMLink.h"
+#include "xdebug/XDLink.h"
 #include "CMCommandDirector.h"
-#include <JXWDManager.h>
-#include <JXPSPrinter.h>
-#include <JX2DPlotEPSPrinter.h>
-#include <JXPTPrinter.h>
-#include <JXDisplay.h>
-#include <JXImageCache.h>
-#include <JXImage.h>
-#include <jFileUtil.h>
-#include <jDirUtil.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXWDManager.h>
+#include <jx-af/jx/JXPSPrinter.h>
+#include <jx-af/j2dplot/JX2DPlotEPSPrinter.h>
+#include <jx-af/jx/JXPTPrinter.h>
+#include <jx-af/jx/JXDisplay.h>
+#include <jx-af/jx/JXImageCache.h>
+#include <jx-af/jx/JXImage.h>
+#include <jx-af/jcore/jFileUtil.h>
+#include <jx-af/jcore/jDirUtil.h>
+#include <jx-af/jcore/jAssert.h>
 
 static CMApp*				theApplication		= nullptr;		// owned by JX
 static bool					theShutdownFlag     = false;
@@ -95,15 +95,15 @@ CMCreateGlobals
 
 	JString oldPrefsFile, newPrefsFile;
 	if (JGetPrefsDirectory(&oldPrefsFile))
-		{
+	{
 		oldPrefsFile = JCombinePathAndName(oldPrefsFile, JString(".gMedic.pref", JString::kNoCopy));
 		if (JFileExists(oldPrefsFile) &&
 			(JPrefsFile::GetFullName(app->GetSignature(), &newPrefsFile)).OK() &&
 			!JFileExists(newPrefsFile))
-			{
+		{
 			JRenameFile(oldPrefsFile, newPrefsFile);
-			}
 		}
+	}
 
 	bool isNew;
 	thePrefsManager = jnew CMPrefsManager(&isNew);
@@ -214,9 +214,9 @@ CMCleanUpBeforeSuddenDeath
 	)
 {
 	if (reason != JXDocumentManager::kAssertFired)
-		{
+	{
 		CBShutdownStylers();
-		}
+	}
 
 	// must be last to save everything
 
@@ -236,21 +236,21 @@ CMStartDebugger()
 
 	CMPrefsManager::DebuggerType type = CMGetPrefsManager()->GetDebuggerType();
 	if (type == CMPrefsManager::kGDBType)
-		{
+	{
 		theLink = jnew GDBLink;
-		}
+	}
 	else if (type == CMPrefsManager::kLLDBType)
-		{
+	{
 		theLink = jnew LLDBLink;
-		}
+	}
 	else if (type == CMPrefsManager::kJavaType)
-		{
+	{
 		theLink = jnew JVMLink;
-		}
+	}
 	else if (type == CMPrefsManager::kXdebugType)
-		{
+	{
 		theLink = jnew XDLink;
-		}
+	}
 	assert (theLink != nullptr);
 
 	// original must be deleted *last* so listeners can call CMGetLink() to
@@ -259,9 +259,9 @@ CMStartDebugger()
 	jdelete origLink;
 
 	if (theCmdDir != nullptr)
-		{
+	{
 		theCmdDir->InitializeCommandOutput();
-		}
+	}
 }
 
 /******************************************************************************
@@ -504,10 +504,10 @@ JString
 CMGetVersionStr()
 {
 	const JUtf8Byte* map[] =
-		{
+	{
 		"version",   JGetString("VERSION").GetBytes(),
 		"copyright", JGetString("COPYRIGHT").GetBytes()
-		};
+	};
 	return JGetString("CMDescription", map, sizeof(map));
 }
 

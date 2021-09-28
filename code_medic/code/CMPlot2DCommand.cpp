@@ -8,7 +8,7 @@
  ******************************************************************************/
 
 #include "CMPlot2DCommand.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -56,17 +56,17 @@ CMPlot2DCommand::UpdateRange
 	const JSize newCount = max - min + 1;
 
 	if (newCount < oldCount)
-		{
+	{
 		const JSize delta = oldCount - newCount;
 		itsX->RemoveNextElements(oldCount - delta + 1, delta);
 		itsY->RemoveNextElements(oldCount - delta + 1, delta);
-		}
+	}
 	else if (oldCount < newCount)
-		{
+	{
 		for (JIndex i=oldCount+1; i<=newCount; i++)
-			{
+		{
 			itsX->AppendElement(0);
 			itsY->AppendElement(0);
-			}
 		}
+	}
 }

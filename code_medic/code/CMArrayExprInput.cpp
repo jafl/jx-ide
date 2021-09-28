@@ -9,8 +9,8 @@
 
 #include "CMArrayExprInput.h"
 #include "CMTextDisplayBase.h"
-#include <jASCIIConstants.h>
-#include <jAssert.h>
+#include <jx-af/jcore/jASCIIConstants.h>
+#include <jx-af/jcore/jAssert.h>
 
 // JBroadcaster message types
 
@@ -61,11 +61,11 @@ CMArrayExprInput::HandleKeyPress
 	)
 {
 	if (c == kJReturnKey)
-		{
+	{
 		Broadcast(ReturnKeyPressed());
-		}
+	}
 	else
-		{
+	{
 		JXInputField::HandleKeyPress(c, keySym, modifiers);
-		}
+	}
 }

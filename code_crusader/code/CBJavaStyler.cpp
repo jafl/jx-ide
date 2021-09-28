@@ -12,10 +12,10 @@
 
 #include "CBJavaStyler.h"
 #include "cbmUtil.h"
-#include <JXDialogDirector.h>
-#include <JColorManager.h>
-#include <jGlobals.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXDialogDirector.h>
+#include <jx-af/jcore/JColorManager.h>
+#include <jx-af/jcore/jGlobals.h>
+#include <jx-af/jcore/jAssert.h>
 
 CBJavaStyler* CBJavaStyler::itsSelf = nullptr;
 
@@ -66,14 +66,14 @@ CBStylerBase*
 CBJavaStyler::Instance()
 {
 	if (itsSelf == nullptr && !recursiveInstance)
-		{
+	{
 		recursiveInstance = true;
 
 		itsSelf = jnew CBJavaStyler;
 		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
-		}
+	}
 
 	return itsSelf;
 }
@@ -102,9 +102,9 @@ CBJavaStyler::CBJavaStyler()
 {
 	JFontStyle blankStyle;
 	for (JIndex i=1; i<=kTypeCount; i++)
-		{
+	{
 		SetTypeStyle(i, blankStyle);
-		}
+	}
 
 	const JColorID red = JColorManager::GetRedColor();
 
@@ -123,9 +123,9 @@ CBJavaStyler::CBJavaStyler()
 	SetWordStyle(JString("goto", JString::kNoCopy), JFontStyle(true, false, 0, false, red));
 
 	for (const auto* kw : kUnusedKeyword)
-		{
+	{
 		SetWordStyle(JString(kw, JString::kNoCopy), JFontStyle(red));
-		}
+	}
 
 	JPrefObject::ReadPrefs();
 }
@@ -161,12 +161,12 @@ CBJavaStyler::Scan
 	Token token;
 	JFontStyle style;
 	do
-		{
+	{
 		token = NextToken();
 		if (token.type == kEOF)
-			{
+		{
 			break;
-			}
+		}
 
 		// save token starts
 
@@ -174,41 +174,41 @@ CBJavaStyler::Scan
 			token.type == kReservedKeyword ||
 			token.type == kBuiltInDataType ||
 			token.type == kString)
-			{
+		{
 			SaveTokenStart(token.range.GetFirst());
-			}
+		}
 
 		// set the style
 
 		const JIndex typeIndex = token.type - kWhitespace;
 		if (token.type == kWhitespace)
-			{
+		{
 			style = GetDefaultFont().GetStyle();
-			}
+		}
 		else if (token.type == kComment ||
 				 token.type == kString)
-			{
+		{
 			style = GetTypeStyle(typeIndex);
-			}
+		}
 		else if (token.type < kWhitespace)
-			{
+		{
 			style = GetTypeStyle(kError - kWhitespace);
-			}
+		}
 		else
-			{
+		{
 			if (token.type == kDocCommentHTMLTag ||
 				token.type == kDocCommentSpecialTag)
-				{
+			{
 				if (!(token.docCommentRange).IsEmpty())
-					{
+				{
 					SetStyle(token.docCommentRange.charRange, GetTypeStyle(kComment - kWhitespace));
-					}
-				ExtendCheckRange(token.range.charRange.last+1);
 				}
+				ExtendCheckRange(token.range.charRange.last+1);
+			}
 
 			style = GetStyle(typeIndex, JString(text.GetRawBytes(), token.range.byteRange, JString::kNoCopy));
-			}
 		}
+	}
 		while (SetStyle(token.range.charRange, style));
 }
 
@@ -225,9 +225,9 @@ CBJavaStyler::UpgradeTypeList
 	)
 {
 	if (vers < 1)
-		{
+	{
 		typeStyles->InsertElementAtIndex(4, JFontStyle(JColorManager::GetBlueColor()));
-		}
+	}
 
 	// set new values after all new slots have been created
 }
@@ -251,15 +251,15 @@ CBJavaStyler::Receive
 #if defined CODE_CRUSADER && ! defined CODE_CRUSADER_UNIT_TEST
 
 	if (message.Is(JXDialogDirector::kDeactivated))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const JXDialogDirector::Deactivated*>(&message);
 		assert( info != nullptr );
 		if (info->Successful())
-			{
+		{
 			CBMWriteSharedPrefs(true);
-			}
 		}
+	}
 
 #endif
 }

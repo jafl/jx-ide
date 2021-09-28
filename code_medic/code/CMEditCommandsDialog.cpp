@@ -11,12 +11,12 @@
 #include <CMEditCommandsTable.h>
 #include <CMPrefsManager.h>
 #include <cmGlobals.h>
-#include <JXTextButton.h>
-#include <JXStaticText.h>
-#include <JXScrollbarSet.h>
-#include <JXWindow.h>
-#include <JFontManager.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXTextButton.h>
+#include <jx-af/jx/JXStaticText.h>
+#include <jx-af/jx/JXScrollbarSet.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jcore/JFontManager.h>
+#include <jx-af/jcore/jAssert.h>
 
 const JFileVersion kCurrentSetupVersion = 0;
 
@@ -140,18 +140,18 @@ CMEditCommandsDialog::Receive
 	)
 {
 	if (sender == itsNewButton && message.Is(JXButton::kPushed))
-		{
+	{
 		itsCommands->Append(JString::empty);
 		itsWidget->NewStringAppended();
-		}
+	}
 	if (sender == itsRemoveButton && message.Is(JXButton::kPushed))
-		{
+	{
 		itsWidget->RemoveCurrent();
-		}
+	}
 	else
-		{
+	{
 		JXDialogDirector::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -206,14 +206,14 @@ bool
 CMEditCommandsDialog::OKToDeactivate()
 {
 	if (Cancelled())
-		{
+	{
 		return true;
-		}
+	}
 
 	if (!itsWidget->EndEditing())
-		{
+	{
 		return false;
-		}
+	}
 
 	CMGetPrefsManager()->SetCmdList(*itsCommands);
 	return true;
@@ -233,11 +233,11 @@ CMEditCommandsDialog::ReadPrefs
 	JFileVersion vers;
 	input >> vers;
 	if (vers <= kCurrentSetupVersion)
-		{
+	{
 		JXWindow* window = GetWindow();
 		window->ReadGeometry(input);
 		window->Deiconify();
-		}
+	}
 }
 
 /******************************************************************************

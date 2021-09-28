@@ -11,17 +11,17 @@
 #include "CBProjectDocument.h"
 #include "CBMDIServer.h"
 #include "cbGlobals.h"
-#include <JXFileDocument.h>
-#include <JXWindow.h>
-#include <JXTextButton.h>
-#include <JXStaticText.h>
-#include <JXRadioGroup.h>
-#include <JXTextRadioButton.h>
-#include <JXTextCheckbox.h>
-#include <JXAtLeastOneCBGroup.h>
-#include <JXMenu.h>
-#include <JFontManager.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXFileDocument.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXTextButton.h>
+#include <jx-af/jx/JXStaticText.h>
+#include <jx-af/jx/JXRadioGroup.h>
+#include <jx-af/jx/JXTextRadioButton.h>
+#include <jx-af/jx/JXTextCheckbox.h>
+#include <jx-af/jx/JXAtLeastOneCBGroup.h>
+#include <jx-af/jx/JXMenu.h>
+#include <jx-af/jcore/JFontManager.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -183,10 +183,10 @@ CBEditMiscPrefsDialog::BuildWindow()
 			 reopenLast = true,  chooseFile = false;
 	CBMDIServer* mdi;
 	if (CBGetMDIServer(&mdi))
-		{
+	{
 		mdi->GetStartupOptions(&newEditor, &newProject,
 							   &reopenLast, &chooseFile);
-		}
+	}
 
 	itsNewEditorCB->SetState(newEditor);
 	itsNewProjectCB->SetState(newProject);
@@ -214,20 +214,20 @@ CBEditMiscPrefsDialog::Receive
 	)
 {
 	if (sender == this && message.Is(JXDialogDirector::kDeactivated))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const JXDialogDirector::Deactivated*>(&message);
 		assert( info != nullptr );
 		if (info->Successful())
-			{
+		{
 			UpdateSettings();
-			}
 		}
+	}
 
 	else
-		{
+	{
 		JXDialogDirector::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -253,10 +253,10 @@ CBEditMiscPrefsDialog::UpdateSettings()
 
 	CBMDIServer* mdi;
 	if (CBGetMDIServer(&mdi))
-		{
+	{
 		mdi->SetStartupOptions(itsNewEditorCB->IsChecked(),
 							   itsNewProjectCB->IsChecked(),
 							   itsReopenLastCB->IsChecked(),
 							   itsChooseFileCB->IsChecked());
-		}
+	}
 }

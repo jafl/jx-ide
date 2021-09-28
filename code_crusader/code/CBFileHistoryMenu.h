@@ -10,7 +10,7 @@
 #ifndef _H_CBFileHistoryMenu
 #define _H_CBFileHistoryMenu
 
-#include <JXFileHistoryMenu.h>
+#include <jx-af/jx/JXFileHistoryMenu.h>
 #include "CBDocumentManager.h"	// need definition of FileHistoryType
 
 class CBFileHistoryMenu : public JXFileHistoryMenu

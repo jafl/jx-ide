@@ -8,8 +8,8 @@
 #ifndef _H_CMEditPrefsDialog
 #define _H_CMEditPrefsDialog
 
-#include <JXDialogDirector.h>
-#include <JPtrArray-JString.h>
+#include <jx-af/jx/JXDialogDirector.h>
+#include <jx-af/jcore/JPtrArray-JString.h>
 
 class JXInputField;
 class JXTextButton;

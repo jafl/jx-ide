@@ -8,10 +8,10 @@
  ******************************************************************************/
 
 #include "CBSampleText.h"
-#include <JXWindowPainter.h>
-#include <JXColorManager.h>
-#include <JFontManager.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXWindowPainter.h>
+#include <jx-af/jx/JXColorManager.h>
+#include <jx-af/jcore/JFontManager.h>
+#include <jx-af/jcore/jAssert.h>
 
 static const JString kSampleText("I program therefore I am.", JString::kNoCopy);
 static const JSize kRightMarginWidth = kSampleText.GetCharacterCount();
@@ -62,7 +62,7 @@ CBSampleText::Draw
 	)
 {
 	if (itsDrawRightMarginFlag)
-		{
+	{
 		const JCoordinate x =
 			TEGetLeftMarginWidth() +
 			(kRightMarginWidth *
@@ -73,7 +73,7 @@ CBSampleText::Draw
 		p.SetPenColor(itsRightMarginColor);
 		p.Line(x, rect.top, x, rect.bottom);
 		p.SetPenColor(saveColor);
-		}
+	}
 
 	JXInputField::Draw(p, rect);
 }

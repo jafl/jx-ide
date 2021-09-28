@@ -7,10 +7,10 @@
 
  *****************************************************************************/
 
-#include <JTestManager.h>
+#include <jx-af/jcore/JTestManager.h>
 #include "CBBourneShellStyler.h"
 #include "cbTestUtil.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 int main()
 {

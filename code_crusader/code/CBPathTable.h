@@ -8,7 +8,7 @@
 #ifndef _H_CBPathTable
 #define _H_CBPathTable
 
-#include <JXEditTable.h>
+#include <jx-af/jx/JXEditTable.h>
 
 class JString;
 class JStringTableData;

@@ -12,7 +12,7 @@
 #include "CBJavaScriptCompleter.h"
 #include "CBJavaScriptStyler.h"
 #include "CBHTMLStyler.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 CBPHPCompleter* CBPHPCompleter::itsSelf = nullptr;
 
@@ -55,14 +55,14 @@ CBStringCompleter*
 CBPHPCompleter::Instance()
 {
 	if (itsSelf == nullptr && !recursiveInstance)
-		{
+	{
 		recursiveInstance = true;
 
 		itsSelf = jnew CBPHPCompleter;
 		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
-		}
+	}
 
 	return itsSelf;
 }
@@ -136,13 +136,13 @@ CBPHPCompleter::Receive
 	if ((sender == CBHTMLStyler::Instance() ||
 		 sender == CBJavaScriptStyler::Instance()) &&
 		message.Is(CBStylerBase::kWordListChanged))
-		{
+	{
 		UpdateWordList();
-		}
+	}
 	else
-		{
+	{
 		CBStringCompleter::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -160,9 +160,9 @@ CBPHPCompleter::UpdateWordList()
 	const JUtf8Byte** htmlWordList;
 	JSize count = CBHTMLCompleter::GetDefaultWordList(&htmlWordList);
 	for (JUnsignedOffset i=0; i<count; i++)
-		{
+	{
 		Add(JString(htmlWordList[i], JString::kNoCopy));
-		}
+	}
 
 	CopyWordsFromStyler(CBHTMLStyler::Instance());
 
@@ -171,9 +171,9 @@ CBPHPCompleter::UpdateWordList()
 	const JUtf8Byte** jsWordList;
 	count = CBJavaScriptCompleter::GetDefaultWordList(&jsWordList);
 	for (JUnsignedOffset i=0; i<count; i++)
-		{
+	{
 		Add(JString(jsWordList[i], JString::kNoCopy));
-		}
+	}
 
 	CopyWordsFromStyler(CBJavaScriptStyler::Instance());
 	CopySymbolsForLanguage(kCBJavaScriptLang);

@@ -13,7 +13,7 @@
  ******************************************************************************/
 
 #include "CMPipe.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -106,11 +106,11 @@ CMPipe<ACE_PEER_STREAM_2>::Write
 
 	JSize count = 1;
 	if (data.GetLastCharacter() != '\n')
-		{
+	{
 		count              = 2;
 		buffer[1].iov_base = const_cast<JUtf8Byte*>("\n");
 		buffer[1].iov_len  = 1;
-		}
+	}
 
 	ACE::writev_n(ACE_Svc_Handler<ACE_PEER_STREAM_2,ACE_SYNCH>::get_handle(), buffer, count);
 }
@@ -133,9 +133,9 @@ CMPipe<ACE_PEER_STREAM_2>::handle_input
 	// protect against recursive calls
 
 	if (itsInHandleInputFlag)
-		{
+	{
 		return 0;
-		}
+	}
 	itsInHandleInputFlag = true;
 
 	// read newly received data
@@ -143,14 +143,14 @@ CMPipe<ACE_PEER_STREAM_2>::handle_input
 	const ssize_t count =
 		(ACE_Svc_Handler<ACE_PEER_STREAM_2,ACE_SYNCH>::peer()).recv(itsRecvBuffer, itsRecvBufferSize);
 	if (count > 0)
-		{
+	{
 		itsByteBuffer.Append(itsRecvBuffer, count);
 		itsRecvData += itsByteBuffer.ExtractCharacters();
 		if (!itsRecvData.IsEmpty())
-		{
+	{
 			Broadcast(CMPipeT::ReadReady());
-		}
-		}
+	}
+	}
 
 	itsInHandleInputFlag = false;
 	return 0;

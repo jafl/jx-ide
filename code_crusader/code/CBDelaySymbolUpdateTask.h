@@ -8,7 +8,7 @@
 #ifndef _H_CBDelaySymbolUpdateTask
 #define _H_CBDelaySymbolUpdateTask
 
-#include <JXIdleTask.h>
+#include <jx-af/jx/JXIdleTask.h>
 
 class CBProjectDocument;
 

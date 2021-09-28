@@ -10,7 +10,7 @@
 #ifndef _H_CMArrayIndexInput
 #define _H_CMArrayIndexInput
 
-#include <JXIntegerInput.h>
+#include <jx-af/jx/JXIntegerInput.h>
 
 class CMArrayIndexInput : public JXIntegerInput
 {

@@ -10,14 +10,14 @@
 #include "CBEditFileTypesDialog.h"
 #include "CBFileTypeTable.h"
 #include "cbGlobals.h"
-#include <JXWindow.h>
-#include <JXTextButton.h>
-#include <JXTextCheckbox.h>
-#include <JXScrollbarSet.h>
-#include <JXColHeaderWidget.h>
-#include <JXHelpManager.h>
-#include <JString.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXTextButton.h>
+#include <jx-af/jx/JXTextCheckbox.h>
+#include <jx-af/jx/JXScrollbarSet.h>
+#include <jx-af/jx/JXColHeaderWidget.h>
+#include <jx-af/jx/JXHelpManager.h>
+#include <jx-af/jcore/JString.h>
+#include <jx-af/jcore/jAssert.h>
 
 // setup information
 
@@ -193,13 +193,13 @@ CBEditFileTypesDialog::Receive
 	)
 {
 	if (sender == itsHelpButton && message.Is(JXButton::kPushed))
-		{
+	{
 		(JXGetHelpManager())->ShowSection("CBFileTypeHelp");
-		}
+	}
 	else
-		{
+	{
 		JXDialogDirector::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -216,9 +216,9 @@ CBEditFileTypesDialog::ReadPrefs
 	JFileVersion vers;
 	input >> vers;
 	if (vers > kCurrentSetupVersion)
-		{
+	{
 		return;
-		}
+	}
 
 	JXWindow* window = GetWindow();
 	window->ReadGeometry(input);

@@ -8,8 +8,8 @@
 #ifndef _H_CBWaitForSymbolUpdateTask
 #define _H_CBWaitForSymbolUpdateTask
 
-#include <JXUrgentTask.h>
-#include <JBroadcaster.h>
+#include <jx-af/jx/JXUrgentTask.h>
+#include <jx-af/jcore/JBroadcaster.h>
 
 class JProcess;
 

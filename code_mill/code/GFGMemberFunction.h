@@ -10,7 +10,7 @@
 #ifndef _H_GFGMemberFunction
 #define _H_GFGMemberFunction
 
-#include <JPtrArray-JString.h>
+#include <jx-af/jcore/JPtrArray-JString.h>
 
 class GFGMemberFunction
 {

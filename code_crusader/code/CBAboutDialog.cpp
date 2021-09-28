@@ -10,12 +10,12 @@
 #include "CBAboutDialog.h"
 #include "CBAboutDialogIconTask.h"
 #include "cbGlobals.h"
-#include <JXWindow.h>
-#include <JXTextButton.h>
-#include <JXStaticText.h>
-#include <JXImageWidget.h>
-#include <JXHelpManager.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXTextButton.h>
+#include <jx-af/jx/JXStaticText.h>
+#include <jx-af/jx/JXImageWidget.h>
+#include <jx-af/jx/JXHelpManager.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -108,16 +108,16 @@ CBAboutDialog::BuildWindow
 
 	JString text = CBGetVersionStr();
 	if (!prevVersStr.IsEmpty())
-		{
+	{
 		const JUtf8Byte* map[] =
-			{
+		{
 			"vers", prevVersStr.GetBytes()
-			};
+		};
 		text += JGetString("UpgradeNotice::CBAboutDialog");
 		JGetStringManager()->Replace(&text, map, sizeof(map));
 		itsHelpButton->SetLabel(JGetString("ChangeButtonLabel::CBAboutDialog"));
 		itsIsUpgradeFlag = true;
-		}
+	}
 	textWidget->GetText()->SetText(text);
 
 	// Code Crusader icon
@@ -135,9 +135,9 @@ CBAboutDialog::BuildWindow
 	const JSize bdh = textWidget->GetBoundsHeight();
 	const JSize aph = textWidget->GetApertureHeight();
 	if (bdh > aph)
-		{
+	{
 		window->AdjustSize(0, bdh - aph);	// safe to calculate once bdh > aph
-		}
+	}
 }
 
 /******************************************************************************
@@ -155,26 +155,26 @@ CBAboutDialog::Receive
 	)
 {
 	if (sender == itsHelpButton && message.Is(JXButton::kPushed))
-		{
+	{
 		if (itsIsUpgradeFlag)
-			{
+		{
 			(JXGetHelpManager())->ShowChangeLog();
-			}
-		else
-			{
-			(JXGetHelpManager())->ShowTOC();
-			}
-		EndDialog(true);
 		}
+		else
+		{
+			(JXGetHelpManager())->ShowTOC();
+		}
+		EndDialog(true);
+	}
 
 	else if (sender == itsCreditsButton && message.Is(JXButton::kPushed))
-		{
+	{
 		(JXGetHelpManager())->ShowCredits();
 		EndDialog(true);
-		}
+	}
 
 	else
-		{
+	{
 		JXDialogDirector::Receive(sender, message);
-		}
+	}
 }

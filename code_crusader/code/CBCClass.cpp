@@ -12,7 +12,7 @@
 #include "CBTextDocument.h"
 #include "CBTextEditor.h"
 #include "cbGlobals.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 static const JUtf8Byte* kNamespaceOperator = "::";
 
@@ -68,14 +68,14 @@ CBCClass::ViewSource()
 
 	JString headerName;
 	if (!GetFileName(&headerName))
-		{
+	{
 		JGetUserNotification()->ReportError(JGetString("NoGhostFile::CBTreeWidget"));
-		}
+	}
 	else
-		{
+	{
 		docMgr->OpenComplementFile(headerName, kCBCHeaderFT,
 								   GetTree()->GetProjectDoc());
-		}
+	}
 
 #endif
 }
@@ -93,13 +93,13 @@ CBCClass::ViewHeader()
 
 	JString headerName;
 	if (GetFileName(&headerName))
-		{
+	{
 		CBGetDocumentManager()->OpenTextDocument(headerName);
-		}
+	}
 	else
-		{
+	{
 		JGetUserNotification()->ReportError(JGetString("NoGhostFile::CBTreeWidget"));
-		}
+	}
 
 #endif
 }

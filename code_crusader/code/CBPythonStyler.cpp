@@ -12,9 +12,9 @@
 
 #include "CBPythonStyler.h"
 #include "CBPrefsManager.h"
-#include <JColorManager.h>
-#include <jGlobals.h>
-#include <jAssert.h>
+#include <jx-af/jcore/JColorManager.h>
+#include <jx-af/jcore/jGlobals.h>
+#include <jx-af/jcore/jAssert.h>
 
 CBPythonStyler* CBPythonStyler::itsSelf = nullptr;
 
@@ -54,14 +54,14 @@ CBStylerBase*
 CBPythonStyler::Instance()
 {
 	if (itsSelf == nullptr && !recursiveInstance)
-		{
+	{
 		recursiveInstance = true;
 
 		itsSelf = jnew CBPythonStyler;
 		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
-		}
+	}
 
 	return itsSelf;
 }
@@ -90,9 +90,9 @@ CBPythonStyler::CBPythonStyler()
 {
 	JFontStyle blankStyle;
 	for (JIndex i=1; i<=kTypeCount; i++)
-		{
+	{
 		SetTypeStyle(i, blankStyle);
-		}
+	}
 
 	SetTypeStyle(kReservedKeyword - kWhitespace, JFontStyle(JColorManager::GetDarkGreenColor()));
 	SetTypeStyle(kString          - kWhitespace, JFontStyle(JColorManager::GetDarkRedColor()));
@@ -133,12 +133,12 @@ CBPythonStyler::Scan
 	Token token;
 	JFontStyle style;
 	do
-		{
+	{
 		token = NextToken();
 		if (token.type == kEOF)
-			{
+		{
 			break;
-			}
+		}
 
 		// save token starts
 
@@ -146,38 +146,38 @@ CBPythonStyler::Scan
 			token.type == kReservedKeyword ||
 			token.type == kString          ||
 			token.type == kComment)
-			{
+		{
 			SaveTokenStart(token.range.GetFirst());
-			}
+		}
 
 		// set the style
 
 		const JIndex typeIndex = token.type - kWhitespace;
 		if (token.type == kWhitespace)
-			{
+		{
 			style = GetDefaultFont().GetStyle();
-			}
+		}
 		else if (token.type == kComment ||
 				 token.type == kString)
-			{
+		{
 			style = GetTypeStyle(typeIndex);
-			}
+		}
 		else if (token.type < kWhitespace)
-			{
+		{
 			style = GetTypeStyle(kError - kWhitespace);
-			}
+		}
 		else if (token.type > kError)	// misc
-			{
+		{
 			if (!GetWordStyle(JString(text.GetRawBytes(), token.range.byteRange, JString::kNoCopy), &style))
-				{
-				style = GetDefaultFont().GetStyle();
-				}
-			}
-		else
 			{
-			style = GetStyle(typeIndex, JString(text.GetRawBytes(), token.range.byteRange, JString::kNoCopy));
+				style = GetDefaultFont().GetStyle();
 			}
 		}
+		else
+		{
+			style = GetStyle(typeIndex, JString(text.GetRawBytes(), token.range.byteRange, JString::kNoCopy));
+		}
+	}
 		while (SetStyle(token.range.charRange, style));
 }
 

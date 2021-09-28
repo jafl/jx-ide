@@ -9,20 +9,20 @@
 
 #include "CBFileTypeTable.h"
 #include "cbGlobals.h"
-#include <JXTextButton.h>
-#include <JXTextMenu.h>
-#include <JXInputField.h>
-#include <JXColHeaderWidget.h>
-#include <JXGetNewDirDialog.h>
-#include <JDirInfo.h>
-#include <JTableSelection.h>
-#include <JPainter.h>
-#include <JFontManager.h>
-#include <JStringIterator.h>
-#include <JRegex.h>
-#include <jStreamUtil.h>
-#include <jDirUtil.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXTextButton.h>
+#include <jx-af/jx/JXTextMenu.h>
+#include <jx-af/jx/JXInputField.h>
+#include <jx-af/jx/JXColHeaderWidget.h>
+#include <jx-af/jx/JXGetNewDirDialog.h>
+#include <jx-af/jcore/JDirInfo.h>
+#include <jx-af/jcore/JTableSelection.h>
+#include <jx-af/jcore/JPainter.h>
+#include <jx-af/jcore/JFontManager.h>
+#include <jx-af/jcore/JStringIterator.h>
+#include <jx-af/jcore/JRegex.h>
+#include <jx-af/jcore/jStreamUtil.h>
+#include <jx-af/jcore/jDirUtil.h>
+#include <jx-af/jcore/jAssert.h>
 
 const JCoordinate kHMarginWidth = 3;
 const JCoordinate kVMarginWidth = 1;
@@ -419,9 +419,9 @@ CBFileTypeTable::CBFileTypeTable
 	itsFileTypeList->Sort();
 
 	for (JIndex i=1; i<=kColCount; i++)
-		{
+	{
 		AppendCols(1, kInitColWidth[i-1]);
-		}
+	}
 
 	AppendRows(itsFileTypeList->GetElementCount());
 
@@ -456,10 +456,10 @@ CBFileTypeTable::CleanOutFileTypeList
 {
 	const JSize count = fileTypeList->GetElementCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		CBPrefsManager::FileTypeInfo info = fileTypeList->GetElement(i);
 		info.Free();
-		}
+	}
 }
 
 /******************************************************************************
@@ -495,7 +495,7 @@ CBFileTypeTable::FinishFileTypeListCopy
 {
 	const JSize count = fileTypeList->GetElementCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		CBPrefsManager::FileTypeInfo info = fileTypeList->GetElement(i);
 
 		info.suffix = jnew JString(*(info.suffix));
@@ -505,16 +505,16 @@ CBFileTypeTable::FinishFileTypeListCopy
 		assert( info.complSuffix != nullptr );
 
 		if (info.scriptPath != nullptr)
-			{
+		{
 			info.scriptPath = jnew JString(*(info.scriptPath));
 			assert( info.scriptPath != nullptr );
-			}
+		}
 
 		if (info.editCmd != nullptr)
-			{
+		{
 			info.editCmd = jnew JString(*(info.editCmd));
 			assert( info.editCmd != nullptr );
-			}
+		}
 
 		// create regex when it is not our own private list
 
@@ -522,14 +522,14 @@ CBFileTypeTable::FinishFileTypeListCopy
 		info.contentRegex = nullptr;
 
 		if (fileTypeList != itsFileTypeList)
-			{
+		{
 			info.CreateRegex();
-			}
+		}
 
 		(info.literalRange).SetToNothing();		// assume text changed
 
 		fileTypeList->SetElement(i, info);
-		}
+	}
 }
 
 /******************************************************************************
@@ -547,15 +547,15 @@ CBFileTypeTable::TableDrawCell
 {
 	JPoint editCell;
 	if (GetEditedCell(&editCell) && cell == editCell)
-		{
+	{
 		return;
-		}
+	}
 
 	HilightIfSelected(p, cell, rect);
 
 	const CBPrefsManager::FileTypeInfo info = itsFileTypeList->GetElement(cell.y);
 	if (cell.x == kSuffixColumn)
-		{
+	{
 		p.SetFont(itsFont);
 
 		JRect r = rect;
@@ -563,45 +563,45 @@ CBFileTypeTable::TableDrawCell
 		p.String(r, *(info.suffix), JPainter::kHAlignLeft, JPainter::kVAlignCenter);
 
 		p.SetFont(JFontManager::GetDefaultFont());
-		}
+	}
 	else if (cell.x == kTypeColumn)
-		{
+	{
 		const JString& str = itsTypeMenu->GetItemText(kFileTypeToMenuIndex[ info.type ]);
 		p.String(rect, str, JPainter::kHAlignCenter, JPainter::kVAlignCenter);
-		}
+	}
 	else if (cell.x == kMacroColumn &&
 			 info.type != kCBBinaryFT && info.type != kCBExternalFT)
-		{
+	{
 		const JString& str = itsMacroMenu->GetItemText(MacroIDToMenuIndex(info.macroID));
 		p.String(rect, str, JPainter::kHAlignCenter, JPainter::kVAlignCenter);
-		}
+	}
 	else if (cell.x == kScriptColumn &&
 			 info.type != kCBBinaryFT && info.type != kCBExternalFT)
-		{
+	{
 		if (info.scriptPath == nullptr)
-			{
+		{
 			p.String(rect, JGetString("NoScript::CBFileTypeTable"), JPainter::kHAlignCenter, JPainter::kVAlignCenter);
-			}
-		else
-			{
-			p.String(rect, *(info.scriptPath), JPainter::kHAlignCenter, JPainter::kVAlignCenter);
-			}
 		}
+		else
+		{
+			p.String(rect, *(info.scriptPath), JPainter::kHAlignCenter, JPainter::kVAlignCenter);
+		}
+	}
 	else if (cell.x == kCRMColumn &&
 			 info.type != kCBBinaryFT && info.type != kCBExternalFT)
-		{
+	{
 		const JString& str = itsCRMMenu->GetItemText(CRMIDToMenuIndex(info.crmID));
 		p.String(rect, str, JPainter::kHAlignCenter, JPainter::kVAlignCenter);
-		}
+	}
 	else if (cell.x == kWrapColumn &&
 			 info.type != kCBBinaryFT && info.type != kCBExternalFT)
-		{
+	{
 		p.String(rect,
 			JGetString(info.wordWrap ? "WordWrapOn::CBFileTypeTable" : "WordWrapOff::CBFileTypeTable"),
 			JPainter::kHAlignCenter, JPainter::kVAlignCenter);
-		}
+	}
 	else if (cell.x == kEditCmdColumn && info.editCmd != nullptr)
-		{
+	{
 		p.SetFont(itsFont);
 
 		JRect r = rect;
@@ -609,7 +609,7 @@ CBFileTypeTable::TableDrawCell
 		p.String(r, *(info.editCmd), JPainter::kHAlignLeft, JPainter::kVAlignCenter);
 
 		p.SetFont(JFontManager::GetDefaultFont());
-		}
+	}
 }
 
 /******************************************************************************
@@ -632,66 +632,66 @@ CBFileTypeTable::HandleMouseDown
 
 	JPoint cell;
 	if (button == kJXLeftButton && GetCell(pt, &cell))
-		{
+	{
 		s.SelectCell(cell);
 		TableScrollToCell(cell);
 
 		CBPrefsManager::FileTypeInfo info = itsFileTypeList->GetElement(cell.y);
 
 		if (cell.x == kSuffixColumn)
-			{
+		{
 			BeginEditing(cell);
-			}
+		}
 		else if (cell.x == kTypeColumn)
-			{
+		{
 			itsTypeMenu->PopUp(this, pt, buttonStates, modifiers);
-			}
+		}
 		else if (cell.x == kMacroColumn &&
 				 info.type != kCBBinaryFT && info.type != kCBExternalFT)
-			{
+		{
 			itsMacroMenu->PopUp(this, pt, buttonStates, modifiers);
-			}
+		}
 		else if (cell.x == kScriptColumn &&
 				 info.type != kCBBinaryFT && info.type != kCBExternalFT)
-			{
+		{
 			itsScriptMenu->PopUp(this, pt, buttonStates, modifiers);
-			}
+		}
 		else if (cell.x == kCRMColumn &&
 				 info.type != kCBBinaryFT && info.type != kCBExternalFT)
-			{
+		{
 			itsCRMMenu->PopUp(this, pt, buttonStates, modifiers);
-			}
+		}
 		else if (cell.x == kWrapColumn &&
 				 info.type != kCBBinaryFT && info.type != kCBExternalFT)
-			{
+		{
 			info.wordWrap = !info.wordWrap;
 			if (modifiers.meta())
-				{
+			{
 				const bool wrap = info.wordWrap;
 				const JSize count   = itsFileTypeList->GetElementCount();
 				for (JIndex i=1; i<=count; i++)
-					{
+				{
 					info          = itsFileTypeList->GetElement(i);
 					info.wordWrap = wrap;
 					itsFileTypeList->SetElement(i, info);
-					}
-				TableRefreshCol(kWrapColumn);
 				}
+				TableRefreshCol(kWrapColumn);
+			}
 			else
-				{
+			{
 				itsFileTypeList->SetElement(cell.y, info);
 				TableRefreshCell(cell);
-				}
 			}
+		}
 		else if (cell.x == kEditCmdColumn && info.type == kCBExternalFT)
-			{
-			BeginEditing(cell);
-			}
-		}
-	else
 		{
-		ScrollForWheel(button, modifiers);
+			BeginEditing(cell);
 		}
+	}
+	else
+	{
+		ScrollForWheel(button, modifiers);
+	}
 }
 
 /******************************************************************************
@@ -737,15 +737,15 @@ CBFileTypeTable::CreateXInputField
 
 	const CBPrefsManager::FileTypeInfo info = itsFileTypeList->GetElement(cell.y);
 	if (cell.x == kSuffixColumn)
-		{
+	{
 		itsTextInput->GetText()->SetText(*info.suffix);
 		itsTextInput->SetIsRequired();
-		}
+	}
 	else if (cell.x == kEditCmdColumn)
-		{
+	{
 		assert( info.editCmd != nullptr );
 		itsTextInput->GetText()->SetText(*info.editCmd);
-		}
+	}
 	itsTextInput->SetFont(itsFont);
 	return itsTextInput;
 }
@@ -768,32 +768,32 @@ CBFileTypeTable::ExtractInputData
 
 	bool ok = itsTextInput->InputValid();
 	if (ok && cell.x == kSuffixColumn)
-		{
+	{
 		const bool isRegex = text.GetFirstCharacter() == kCBContentRegexMarker;
 		if (isRegex && text.GetCharacterCount() == 1)
-			{
+		{
 			ok = false;
 			JGetUserNotification()->ReportError(
 				JGetString("EmptyInput::CBFileTypeTable"));
-			}
+		}
 		else if (isRegex)
-			{
+		{
 			const JError err = itsTestRegex->SetPattern(text);
 			err.ReportIfError();
 			ok = err.OK();
-			}
+		}
 
 		if (ok)
-			{
-			*info.suffix = text;
-			}
-		}
-	else if (ok && cell.x == kEditCmdColumn)
 		{
+			*info.suffix = text;
+		}
+	}
+	else if (ok && cell.x == kEditCmdColumn)
+	{
 		assert( info.editCmd != nullptr );
 		*info.editCmd = text;
 		info.editCmd->TrimWhitespace();
-		}
+	}
 
 	return ok;
 }
@@ -822,87 +822,87 @@ CBFileTypeTable::Receive
 	)
 {
 	if (sender == itsAddTypeButton && message.Is(JXButton::kPushed))
-		{
+	{
 		AddType();
-		}
+	}
 	else if (sender == itsRemoveTypeButton && message.Is(JXButton::kPushed))
-		{
+	{
 		RemoveType();
-		}
+	}
 	else if (sender == itsDuplicateTypeButton && message.Is(JXButton::kPushed))
-		{
+	{
 		DuplicateType();
-		}
+	}
 
 	else if (sender == itsTypeMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		UpdateTypeMenu();
-		}
+	}
 	else if (sender == itsTypeMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleTypeMenu(selection->GetIndex());
-		}
+	}
 
 	else if (sender == itsMacroMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		UpdateMacroMenu();
-		}
+	}
 	else if (sender == itsMacroMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleMacroMenu(selection->GetIndex());
-		}
+	}
 
 	else if (sender == itsScriptMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		UpdateScriptMenu();
-		}
+	}
 	else if (sender == itsScriptMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleScriptMenu(selection->GetIndex());
-		}
+	}
 
 	else if (sender == itsCRMMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		UpdateCRMMenu();
-		}
+	}
 	else if (sender == itsCRMMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleCRMMenu(selection->GetIndex());
-		}
+	}
 
 	else if (sender == itsNewDirDialog && message.Is(JXDialogDirector::kDeactivated))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const JXDialogDirector::Deactivated*>(&message);
 		assert( info != nullptr );
 		if (info->Successful())
-			{
+		{
 			CreateNewScriptDirectory();
-			}
-		itsNewDirDialog = nullptr;
 		}
+		itsNewDirDialog = nullptr;
+	}
 
 	else
-		{
+	{
 		if (sender == &(GetTableSelection()))
-			{
+		{
 			UpdateButtons();
-			}
+		}
 
 		JXEditTable::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -914,7 +914,7 @@ void
 CBFileTypeTable::AddType()
 {
 	if (EndEditing())
-		{
+	{
 		CBPrefsManager::FileTypeInfo info(jnew JString, nullptr, nullptr, kCBUnknownFT,
 										  kCBEmptyMacroID, kCBEmptyCRMRuleListID,
 										  true, nullptr, true, jnew JString, nullptr);
@@ -922,7 +922,7 @@ CBFileTypeTable::AddType()
 		itsFileTypeList->AppendElement(info);
 		AppendRows(1);
 		BeginEditing(JPoint(kSuffixColumn, itsFileTypeList->GetElementCount()));
-		}
+	}
 }
 
 /******************************************************************************
@@ -935,7 +935,7 @@ CBFileTypeTable::RemoveType()
 {
 	JPoint cell;
 	if ((GetTableSelection()).GetFirstSelectedCell(&cell))
-		{
+	{
 		CancelEditing();
 
 		CBPrefsManager::FileTypeInfo info = itsFileTypeList->GetElement(cell.y);
@@ -943,7 +943,7 @@ CBFileTypeTable::RemoveType()
 
 		itsFileTypeList->RemoveElement(cell.y);
 		RemoveRow(cell.y);
-		}
+	}
 }
 
 /******************************************************************************
@@ -956,7 +956,7 @@ CBFileTypeTable::DuplicateType()
 {
 	JPoint cell;
 	if ((GetTableSelection()).GetFirstSelectedCell(&cell) && EndEditing())
-		{
+	{
 		CBPrefsManager::FileTypeInfo info = itsFileTypeList->GetElement(cell.y);
 
 		info.suffix = jnew JString(*(info.suffix));
@@ -969,21 +969,21 @@ CBFileTypeTable::DuplicateType()
 		assert( info.complSuffix != nullptr );
 
 		if (info.scriptPath != nullptr)
-			{
+		{
 			info.scriptPath = jnew JString(*(info.scriptPath));
 			assert( info.scriptPath != nullptr );
-			}
+		}
 
 		if (info.editCmd != nullptr)
-			{
+		{
 			info.editCmd = jnew JString(*(info.editCmd));
 			assert( info.editCmd != nullptr );
-			}
+		}
 
 		itsFileTypeList->AppendElement(info);
 		AppendRows(1);
 		BeginEditing(JPoint(kSuffixColumn, itsFileTypeList->GetElementCount()));
-		}
+	}
 }
 
 /******************************************************************************
@@ -1021,19 +1021,19 @@ CBFileTypeTable::HandleTypeMenu
 
 	CBPrefsManager::FileTypeInfo info = itsFileTypeList->GetElement(cell.y);
 	if (newType != info.type)
-		{
+	{
 		info.type = newType;
 		if (info.type == kCBExternalFT)
-			{
+		{
 			info.editCmd = jnew JString;
 			assert( info.editCmd != nullptr );
 			BeginEditing(JPoint(kEditCmdColumn, cell.y));
-			}
+		}
 		else
-			{
+		{
 			jdelete info.editCmd;
 			info.editCmd = nullptr;
-			}
+		}
 		itsFileTypeList->SetElement(cell.y, info);
 
 		TableRefreshRow(cell.y);
@@ -1041,10 +1041,10 @@ CBFileTypeTable::HandleTypeMenu
 		// info.editCmd must not be nullptr
 
 		if (info.type == kCBExternalFT)
-			{
+		{
 			BeginEditing(JPoint(kEditCmdColumn, cell.y));
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -1063,9 +1063,9 @@ CBFileTypeTable::UpdateScriptMenu()
 	const CBPrefsManager::FileTypeInfo info = itsFileTypeList->GetElement(cell.y);
 
 	if (info.scriptPath == nullptr)
-		{
+	{
 		itsScriptMenu->CheckItem(kNoScriptPathCmd);
-		}
+	}
 
 	JPtrArray<JString> menuText(JPtrArrayT::kDeleteAll);
 	menuText.SetCompareFunction(JCompareStringsCaseInsensitive);
@@ -1073,14 +1073,14 @@ CBFileTypeTable::UpdateScriptMenu()
 
 	JString sysDir, userDir;
 	if (CBPrefsManager::GetScriptPaths(&sysDir, &userDir))
-		{
+	{
 		BuildScriptMenuItems(sysDir,  false, &menuText);
 		BuildScriptMenuItems(userDir, true,  &menuText);
 
 		const JSize count = menuText.GetElementCount();
 		JString itemText, nmShortcut;
 		for (JIndex i=1; i<=count; i++)
-			{
+		{
 			// We have to extract user/sys here because otherwise we would
 			// have to keep extra state while building the sorted list.
 
@@ -1105,11 +1105,11 @@ CBFileTypeTable::UpdateScriptMenu()
 			if (info.scriptPath != nullptr && *info.scriptPath == itemText &&
 				(( info.isUserScript && nmShortcut == JGetString("UserScriptMarker::CBFileTypeTable")) ||
 				 (!info.isUserScript && nmShortcut == JGetString("SysScriptMarker::CBFileTypeTable"))))
-				{
+			{
 				itsScriptMenu->CheckItem(itsScriptMenu->GetItemCount());
-				}
 			}
 		}
+	}
 
 	itsScriptMenu->ShowSeparatorAfter(itsScriptMenu->GetItemCount());
 	itsScriptMenu->AppendMenuItems(kScriptMenuEndStr);
@@ -1133,27 +1133,27 @@ CBFileTypeTable::BuildScriptMenuItems
 {
 	JDirInfo* info = nullptr;
 	if (JDirInfo::Create(path, &info))
-		{
+	{
 		info->ShowFiles(false);
 
 		const JSize count = info->GetEntryCount();
 		for (JIndex i=1; i<=count; i++)
-			{
+		{
 			auto* s = jnew JString(info->GetEntry(i).GetName());
 			assert( s != nullptr );
 
 			if (isUserPath)
-				{
+			{
 				*s += JGetString("UserScriptMarker::CBFileTypeTable");
-				}
+			}
 			else
-				{
+			{
 				*s += JGetString("SysScriptMarker::CBFileTypeTable");
-				}
+			}
 
 			menuText->InsertSorted(s);
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -1175,31 +1175,31 @@ CBFileTypeTable::HandleScriptMenu
 
 	const JSize itemCount = itsScriptMenu->GetItemCount();
 	if (index == kNoScriptPathCmd)
-		{
+	{
 		jdelete info.scriptPath;
 		info.scriptPath = nullptr;
-		}
+	}
 	else if (index == itemCount - kNewScriptPathCmd)
-		{
+	{
 		GetNewScriptDirectory();
-		}
+	}
 	else
-		{
+	{
 		if (info.scriptPath == nullptr)
-			{
+		{
 			info.scriptPath = jnew JString(itsScriptMenu->GetItemText(index));
 			assert( info.scriptPath != nullptr );
-			}
+		}
 		else
-			{
+		{
 			*(info.scriptPath) = itsScriptMenu->GetItemText(index);
-			}
+		}
 
 		JString nmShortcut;
 		const bool ok = itsScriptMenu->GetItemNMShortcut(index, &nmShortcut);
 		assert( ok );
 		info.isUserScript = nmShortcut == JGetString("UserScriptMarker::CBFileTypeTable");
-		}
+	}
 
 	itsFileTypeList->SetElement(cell.y, info);
 	TableRefreshRow(cell.y);
@@ -1217,15 +1217,15 @@ CBFileTypeTable::GetNewScriptDirectory()
 
 	JString sysDir, userDir;
 	if (!CBPrefsManager::GetScriptPaths(&sysDir, &userDir))
-		{
+	{
 		JGetUserNotification()->ReportError(JGetString("NewDirNoHome::CBFileTypeTable"));
 		return;
-		}
+	}
 
 	if (!CreateDirectory(userDir))
-		{
+	{
 		return;
-		}
+	}
 
 	itsNewDirDialog =
 		jnew JXGetNewDirDialog(JXGetApplication(), JGetString("NewDirTitle::CBFileTypeTable"),
@@ -1257,14 +1257,14 @@ CBFileTypeTable::CreateNewScriptDirectory()
 	JString path, name;
 	JSplitPathAndName(fullName, &path, &name);
 	if (info.scriptPath == nullptr)
-		{
+	{
 		info.scriptPath = jnew JString(name);
 		assert( info.scriptPath != nullptr );
-		}
+	}
 	else
-		{
+	{
 		*(info.scriptPath) = name;
-		}
+	}
 
 	info.isUserScript = true;
 
@@ -1286,15 +1286,15 @@ CBFileTypeTable::CreateDirectory
 {
 	const JError err = JCreateDirectory(path);
 	if (!err.OK())
-		{
+	{
 		const JUtf8Byte* map[] =
-			{
+		{
 			"dir", path.GetBytes(),
 			"err", err.GetMessage().GetBytes()
-			};
+		};
 		const JString msg = JGetString("UnableToCreateDir::CBFileTypeTable", map, sizeof(map));
 		JGetUserNotification()->ReportError(msg);
-		}
+	}
 	return err.OK();
 }
 
@@ -1357,15 +1357,15 @@ void
 CBFileTypeTable::UpdateButtons()
 {
 	if ((GetTableSelection()).HasSelection())
-		{
+	{
 		itsRemoveTypeButton->Activate();
 		itsDuplicateTypeButton->Activate();
-		}
+	}
 	else
-		{
+	{
 		itsRemoveTypeButton->Deactivate();
 		itsDuplicateTypeButton->Deactivate();
-		}
+	}
 }
 
 /******************************************************************************
@@ -1382,7 +1382,7 @@ CBFileTypeTable::ReadGeometry
 	JFileVersion vers;
 	input >> vers;
 	if (vers <= kCurrentGeometryDataVersion)
-		{
+	{
 		JCoordinate w;
 		input >> w;
 		SetColWidth(kSuffixColumn, w);
@@ -1391,23 +1391,23 @@ CBFileTypeTable::ReadGeometry
 		input >> w;
 		SetColWidth(kMacroColumn, w);
 		if (vers >= 3)
-			{
+		{
 			input >> w;
 			SetColWidth(kScriptColumn, w);
-			}
+		}
 		if (vers >= 1)
-			{
+		{
 			input >> w;
 			SetColWidth(kCRMColumn, w);
-			}
+		}
 		input >> w;
 		SetColWidth(kWrapColumn, w);
 		if (vers >= 2)
-			{
+		{
 			input >> w;
 			SetColWidth(kEditCmdColumn, w);
-			}
 		}
+	}
 
 	JIgnoreUntil(input, kGeometryDataEndDelimiter);
 }

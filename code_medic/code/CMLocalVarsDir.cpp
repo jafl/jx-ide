@@ -15,20 +15,20 @@
 #include "cmGlobals.h"
 #include "cmActionDefs.h"
 
-#include <JXDisplay.h>
-#include <JXWindow.h>
-#include <JXTextMenu.h>
-#include <JXMenuBar.h>
-#include <JXScrollbarSet.h>
-#include <JXInputField.h>
-#include <JXTextButton.h>
-#include <JXHelpManager.h>
-#include <JXWDMenu.h>
-#include <JXImage.h>
+#include <jx-af/jx/JXDisplay.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXTextMenu.h>
+#include <jx-af/jx/JXMenuBar.h>
+#include <jx-af/jx/JXScrollbarSet.h>
+#include <jx-af/jx/JXInputField.h>
+#include <jx-af/jx/JXTextButton.h>
+#include <jx-af/jx/JXHelpManager.h>
+#include <jx-af/jx/JXWDMenu.h>
+#include <jx-af/jx/JXImage.h>
 
-#include <JTree.h>
-#include <JNamedTreeList.h>
-#include <jAssert.h>
+#include <jx-af/jcore/JTree.h>
+#include <jx-af/jcore/JNamedTreeList.h>
+#include <jx-af/jcore/jAssert.h>
 
 // File menu
 
@@ -292,80 +292,80 @@ CMLocalVarsDir::Receive
 		 message.Is(CMLink::kFrameChanged)   ||
 		 message.Is(CMLink::kCoreLoaded)     ||
 		 message.Is(CMLink::kAttachedToProcess)))
-		{
+	{
 		Rebuild();
-		}
+	}
 	else if (sender == itsLink && message.Is(CMLink::kProgramStopped))
-		{
+	{
 		const auto& info =
 			dynamic_cast<const CMLink::ProgramStopped&>(message);
 
 		const CMLocation* loc;
 		if (info.GetLocation(&loc) && !(loc->GetFileName()).IsEmpty())
-			{
+		{
 			Rebuild();
-			}
 		}
+	}
 	else if (sender == itsLink &&
 			 (message.Is(CMLink::kProgramFinished) ||
 			  message.Is(CMLink::kCoreCleared)     ||
 			  message.Is(CMLink::kDetachedFromProcess)))
-		{
+	{
 		// can't listen for CMLink::kProgramRunning because this happens
 		// every time the user executes another line of code
 
 		FlushOldData();
-		}
+	}
 
 	else if (sender == itsLink && message.Is(CMLink::kSymbolsLoaded))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const CMLink::SymbolsLoaded*>(&message);
 		assert( info != nullptr );
 		UpdateWindowTitle(info->GetProgramName());
-		}
+	}
 
 	else if (sender == itsFileMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		UpdateFileMenu();
-		}
+	}
 	else if (sender == itsFileMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		 const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleFileMenu(selection->GetIndex());
-		}
+	}
 
 	else if (sender == itsActionMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		UpdateActionMenu();
-		}
+	}
 	else if (sender == itsActionMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleActionMenu(selection->GetIndex());
-		}
+	}
 
 	else if (sender == itsHelpMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleHelpMenu(selection->GetIndex());
-		}
+	}
 
 	else if (sender == GetWindow() && message.Is(JXWindow::kDeiconified))
-		{
+	{
 		Update();
-		}
+	}
 
 	else
-		{
+	{
 		JXWindowDirector::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -380,7 +380,7 @@ CMLocalVarsDir::ReceiveGoingAway
 	)
 {
 	if (sender == itsLink && !CMIsShuttingDown())
-		{
+	{
 		itsLink = CMGetLink();
 		ListenTo(itsLink);
 
@@ -394,11 +394,11 @@ CMLocalVarsDir::ReceiveGoingAway
 		itsGetLocalsCmd = itsLink->CreateGetLocalVars(root);
 
 		itsNeedsUpdateFlag = false;
-		}
+	}
 	else
-		{
+	{
 		JXWindowDirector::ReceiveGoingAway(sender);
-		}
+	}
 }
 
 /******************************************************************************
@@ -411,9 +411,9 @@ CMLocalVarsDir::Update()
 {
 	if ((itsLink->HasCore() || itsLink->ProgramIsStopped()) &&
 		itsNeedsUpdateFlag)
-		{
+	{
 		Rebuild();
-		}
+	}
 }
 
 /******************************************************************************
@@ -425,18 +425,18 @@ void
 CMLocalVarsDir::Rebuild()
 {
 	if (IsActive() && !GetWindow()->IsIconified())
-		{
+	{
 		itsNeedsUpdateFlag = false;	// can't call FlushOldData() since must *update* tree
 		itsGetLocalsCmd->Send();
 
 		auto* root = dynamic_cast<CMVarNode*>(itsTree->GetRoot());
 		assert( root != nullptr );
 		root->SetValid(false);
-		}
+	}
 	else
-		{
+	{
 		itsNeedsUpdateFlag = true;
-		}
+	}
 }
 
 /******************************************************************************
@@ -474,18 +474,18 @@ CMLocalVarsDir::HandleFileMenu
 	)
 {
 	if (index == kOpenCmd)
-		{
+	{
 		itsCommandDir->OpenSourceFiles();
-		}
+	}
 
 	else if (index == kCloseWindowCmd)
-		{
+	{
 		Deactivate();
-		}
+	}
 	else if (index == kQuitCmd)
-		{
+	{
 		JXGetApplication()->Quit();
-		}
+	}
 }
 
 /******************************************************************************
@@ -497,23 +497,23 @@ void
 CMLocalVarsDir::UpdateActionMenu()
 {
 	if (itsWidget->HasSelection())
-		{
+	{
 		itsActionMenu->EnableItem(kDisplayAsCStringCmd);
 		itsActionMenu->EnableItem(kDisplay1DArrayCmd);
 		itsActionMenu->EnableItem(kPlot1DArrayCmd);
 		itsActionMenu->EnableItem(kDisplay2DArrayCmd);
 		itsActionMenu->EnableItem(kWatchVarCmd);
 		itsActionMenu->EnableItem(kWatchLocCmd);
-		}
+	}
 
 	if (itsLink->GetFeature(CMLink::kExamineMemory))
-		{
+	{
 		itsActionMenu->EnableItem(kExamineMemCmd);
-		}
+	}
 	if (itsLink->GetFeature(CMLink::kDisassembleMemory))
-		{
+	{
 		itsActionMenu->EnableItem(kDisassembleMemCmd);
-		}
+	}
 }
 
 /******************************************************************************
@@ -528,40 +528,40 @@ CMLocalVarsDir::HandleActionMenu
 	)
 {
 	if (index == kDisplayAsCStringCmd)
-		{
+	{
 		itsWidget->DisplayAsCString();
-		}
+	}
 
 	else if (index == kDisplay1DArrayCmd)
-		{
+	{
 		itsWidget->Display1DArray();
-		}
+	}
 	else if (index == kPlot1DArrayCmd)
-		{
+	{
 		itsWidget->Plot1DArray();
-		}
+	}
 	else if (index == kDisplay2DArrayCmd)
-		{
+	{
 		itsWidget->Display2DArray();
-		}
+	}
 
 	else if (index == kWatchVarCmd)
-		{
+	{
 		itsWidget->WatchExpression();
-		}
+	}
 	else if (index == kWatchLocCmd)
-		{
+	{
 		itsWidget->WatchLocation();
-		}
+	}
 
 	else if (index == kExamineMemCmd)
-		{
+	{
 		itsWidget->ExamineMemory(CMMemoryDir::kHexByte);
-		}
+	}
 	else if (index == kDisassembleMemCmd)
-		{
+	{
 		itsWidget->ExamineMemory(CMMemoryDir::kAsm);
-		}
+	}
 }
 
 /******************************************************************************
@@ -576,27 +576,27 @@ CMLocalVarsDir::HandleHelpMenu
 	)
 {
 	if (index == kAboutCmd)
-		{
+	{
 		(CMGetApplication())->DisplayAbout();
-		}
+	}
 	else if (index == kTOCCmd)
-		{
+	{
 		JXGetHelpManager()->ShowTOC();
-		}
+	}
 	else if (index == kOverviewCmd)
-		{
+	{
 		JXGetHelpManager()->ShowSection("CMOverviewHelp");
-		}
+	}
 	else if (index == kThisWindowCmd)
-		{
+	{
 		JXGetHelpManager()->ShowSection("CMVarTreeHelp-Local");
-		}
+	}
 	else if (index == kChangesCmd)
-		{
+	{
 		JXGetHelpManager()->ShowChangeLog();
-		}
+	}
 	else if (index == kCreditsCmd)
-		{
+	{
 		JXGetHelpManager()->ShowCredits();
-		}
+	}
 }

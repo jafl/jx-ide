@@ -9,17 +9,17 @@
 
 #include "CBFindFileDialog.h"
 #include "cbGlobals.h"
-#include <JXWindow.h>
-#include <JXTextButton.h>
-#include <JXTextCheckbox.h>
-#include <JXInputField.h>
-#include <JXStringHistoryMenu.h>
-#include <JXStaticText.h>
-#include <JXDocumentMenu.h>
-#include <JXChooseSaveFile.h>
-#include <JString.h>
-#include <jFileUtil.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXTextButton.h>
+#include <jx-af/jx/JXTextCheckbox.h>
+#include <jx-af/jx/JXInputField.h>
+#include <jx-af/jx/JXStringHistoryMenu.h>
+#include <jx-af/jx/JXStaticText.h>
+#include <jx-af/jx/JXDocumentMenu.h>
+#include <jx-af/jx/JXChooseSaveFile.h>
+#include <jx-af/jcore/JString.h>
+#include <jx-af/jcore/jFileUtil.h>
+#include <jx-af/jcore/jAssert.h>
 
 const JSize kHistoryLength = 20;
 
@@ -67,10 +67,10 @@ CBFindFileDialog::Activate()
 	JXWindowDirector::Activate();
 
 	if (IsActive())
-		{
+	{
 		itsFileName->Focus();
 		itsFileName->SelectAll();
-		}
+	}
 }
 
 /******************************************************************************
@@ -162,13 +162,13 @@ void
 CBFindFileDialog::UpdateDisplay()
 {
 	if (itsFileName->GetText()->IsEmpty())
-		{
+	{
 		itsFindButton->Deactivate();
-		}
+	}
 	else
-		{
+	{
 		itsFindButton->Activate();
-		}
+	}
 }
 
 /******************************************************************************
@@ -184,34 +184,34 @@ CBFindFileDialog::Receive
 	)
 {
 	if (sender == itsFindButton && message.Is(JXButton::kPushed))
-		{
+	{
 		if (FindFile() && !itsStayOpenCB->IsChecked())
-			{
-			Deactivate();
-			}
-		}
-	else if (sender == itsCloseButton && message.Is(JXButton::kPushed))
 		{
-		Deactivate();
+			Deactivate();
 		}
+	}
+	else if (sender == itsCloseButton && message.Is(JXButton::kPushed))
+	{
+		Deactivate();
+	}
 
 	else if (sender == itsFileHistoryMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		itsFileHistoryMenu->UpdateInputField(message, itsFileName);
 		itsFileName->Focus();
-		}
+	}
 
 	else if (sender == itsFileName &&
 			 (message.Is(JStyledText::kTextSet) ||
 			  message.Is(JStyledText::kTextChanged)))
-		{
+	{
 		UpdateDisplay();
-		}
+	}
 
 	else
-		{
+	{
 		JXWindowDirector::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -233,14 +233,14 @@ CBFindFileDialog::FindFile()
 		CBGetApplication()->FindAndViewFile(
 			fileName, lineRange,
 			itsIgnoreCaseCB->IsChecked() ? JString::kIgnoreCase : JString::kCompareCase))
-		{
+	{
 		itsFileHistoryMenu->AddString(fileName);
 		return true;
-		}
+	}
 	else
-		{
+	{
 		return false;
-		}
+	}
 }
 
 /******************************************************************************
@@ -257,9 +257,9 @@ CBFindFileDialog::ReadPrefs
 	JFileVersion vers;
 	input >> vers;
 	if (vers > kCurrentSetupVersion)
-		{
+	{
 		return;
-		}
+	}
 
 	JXWindow* window = GetWindow();
 	window->ReadGeometry(input);
@@ -272,11 +272,11 @@ CBFindFileDialog::ReadPrefs
 	itsIgnoreCaseCB->SetState(ignoreCase);
 
 	if (vers >= 1)
-		{
+	{
 		bool stayOpen;
 		input >> JBoolFromString(stayOpen);
 		itsStayOpenCB->SetState(stayOpen);
-		}
+	}
 }
 
 /******************************************************************************

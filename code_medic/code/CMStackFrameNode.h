@@ -8,7 +8,7 @@
 #ifndef _H_CMStackFrameNode
 #define _H_CMStackFrameNode
 
-#include <JNamedTreeNode.h>
+#include <jx-af/jcore/JNamedTreeNode.h>
 
 class CMStackFrameNode : public JNamedTreeNode
 {

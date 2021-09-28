@@ -8,8 +8,8 @@
 #ifndef _H_CMMemoryDir
 #define _H_CMMemoryDir
 
-#include <JXWindowDirector.h>
-#include <JString.h>
+#include <jx-af/jx/JXWindowDirector.h>
+#include <jx-af/jcore/JString.h>
 
 class JXTextButton;
 class JXTextMenu;

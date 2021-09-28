@@ -10,14 +10,14 @@
 #include "CBEditProjPrefsDialog.h"
 #include "CBProjectDocument.h"
 #include "cbGlobals.h"
-#include <JXWindow.h>
-#include <JXTextButton.h>
-#include <JXTextCheckbox.h>
-#include <JXRadioGroup.h>
-#include <JXTextRadioButton.h>
-#include <JXStaticText.h>
-#include <JXHelpManager.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXTextButton.h>
+#include <jx-af/jx/JXTextCheckbox.h>
+#include <jx-af/jx/JXRadioGroup.h>
+#include <jx-af/jx/JXTextRadioButton.h>
+#include <jx-af/jx/JXStaticText.h>
+#include <jx-af/jx/JXHelpManager.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -156,25 +156,25 @@ CBEditProjPrefsDialog::Receive
 	)
 {
 	if (sender == this && message.Is(JXDialogDirector::kDeactivated))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const JXDialogDirector::Deactivated*>(&message);
 		assert( info != nullptr );
 		if (info->Successful())
-			{
+		{
 			UpdateSettings();
-			}
 		}
+	}
 
 	else if (sender == itsHelpButton && message.Is(JXButton::kPushed))
-		{
+	{
 		(JXGetHelpManager())->ShowSection("CBProjectHelp-Prefs");
-		}
+	}
 
 	else
-		{
+	{
 		JXDialogDirector::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -199,9 +199,9 @@ CBEditProjPrefsDialog::UpdateSettings()
 	const JSize docCount = docList->GetElementCount();
 
 	for (JIndex i=1; i<=docCount; i++)
-		{
+	{
 		(docList->GetElement(i))->
 			SetProjectPrefs(reopenTextFiles, doubleSpaceCompile,
 							rebuildMakefileDaily, dropFileAction);
-		}
+	}
 }

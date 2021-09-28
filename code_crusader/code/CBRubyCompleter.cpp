@@ -10,7 +10,7 @@
  ******************************************************************************/
 
 #include "CBRubyCompleter.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 CBRubyCompleter* CBRubyCompleter::itsSelf = nullptr;
 
@@ -64,14 +64,14 @@ CBStringCompleter*
 CBRubyCompleter::Instance()
 {
 	if (itsSelf == nullptr && !recursiveInstance)
-		{
+	{
 		recursiveInstance = true;
 
 		itsSelf = jnew CBRubyCompleter;
 		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
-		}
+	}
 
 	return itsSelf;
 }

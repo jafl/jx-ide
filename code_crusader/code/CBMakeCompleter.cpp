@@ -8,7 +8,7 @@
  ******************************************************************************/
 
 #include "CBMakeCompleter.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 CBMakeCompleter* CBMakeCompleter::itsSelf = nullptr;
 
@@ -43,14 +43,14 @@ CBStringCompleter*
 CBMakeCompleter::Instance()
 {
 	if (itsSelf == nullptr && !recursiveInstance)
-		{
+	{
 		recursiveInstance = true;
 
 		itsSelf = jnew CBMakeCompleter;
 		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
-		}
+	}
 
 	return itsSelf;
 }

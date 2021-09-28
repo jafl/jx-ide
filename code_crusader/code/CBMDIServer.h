@@ -10,8 +10,8 @@
 #ifndef _H_CBMDIServer
 #define _H_CBMDIServer
 
-#include <JXMDIServer.h>
-#include <JPrefObject.h>
+#include <jx-af/jx/JXMDIServer.h>
+#include <jx-af/jcore/JPrefObject.h>
 
 class CBMDIServer : public JXMDIServer, public JPrefObject
 {

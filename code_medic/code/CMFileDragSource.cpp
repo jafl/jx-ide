@@ -11,14 +11,15 @@
 
 #include "CMFileDragSource.h"
 #include "CMSourceDirector.h"
-#include <JXFileSelection.h>
-#include <JXDNDManager.h>
-#include <JXSelectionManager.h>
-#include <JXWebBrowser.h>
-#include <JXImage.h>
-#include <JXImageCache.h>
-#include <jXGlobals.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXFileSelection.h>
+#include <jx-af/jx/JXDNDManager.h>
+#include <jx-af/jx/JXSelectionManager.h>
+#include <jx-af/jx/JXWebBrowser.h>
+#include <jx-af/jx/JXDisplay.h>
+#include <jx-af/jx/JXImage.h>
+#include <jx-af/jx/JXImageCache.h>
+#include <jx-af/jx/jXGlobals.h>
+#include <jx-af/jcore/jAssert.h>
 
 #include <jx_plain_file_small.xpm>
 
@@ -70,13 +71,13 @@ CMFileDragSource::AdjustCursor
 {
 	const JString* fileName;
 	if (!itsDoc->GetFileName(&fileName))
-		{
+	{
 		DisplayCursor(kJXInactiveCursor);
-		}
+	}
 	else
-		{
+	{
 		JXImageWidget::AdjustCursor(pt, modifiers);
-		}
+	}
 }
 
 /******************************************************************************
@@ -97,11 +98,11 @@ CMFileDragSource::HandleMouseDown
 	const JString* fileName;
 	const bool hasFile = itsDoc->GetFileName(&fileName);
 	if (hasFile && clickCount == 2)
-		{
+	{
 		(JXGetWebBrowser())->ShowFileLocation(*fileName);
-		}
+	}
 	else if (hasFile)
-		{
+	{
 		JPtrArray<JString> list(JPtrArrayT::kForgetAll);
 		list.Append(const_cast<JString*>(fileName));
 
@@ -109,7 +110,7 @@ CMFileDragSource::HandleMouseDown
 		assert( data != nullptr );
 
 		BeginDND(pt, buttonStates, modifiers, data);
-		}
+	}
 }
 
 /******************************************************************************

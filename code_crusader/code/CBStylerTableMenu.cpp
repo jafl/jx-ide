@@ -11,9 +11,9 @@
  ******************************************************************************/
 
 #include "CBStylerTableMenu.h"
-#include <JXStyleTable.h>
-#include <JTableSelection.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXStyleTable.h>
+#include <jx-af/jcore/JTableSelection.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -37,9 +37,9 @@ CBStylerTableMenu::CBStylerTableMenu
 
 	const JSize count = GetItemCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		SetItemNMShortcut(i, JString::empty);
-		}
+	}
 
 	SetUpdateAction(kDisableNone);
 
@@ -84,11 +84,11 @@ CBStylerTableMenu::HandleMenuItem
 	const JFontStyle origStyle = GetFontStyleForMenuUpdate();
 	JPoint cell;
 	while (iter.Next(&cell))
-		{
+	{
 		JFontStyle style = itsTable->GetCellStyle(cell);
 		UpdateStyle(index, origStyle, &style);
 		itsTable->SetCellStyle(cell, style);
-		}
+	}
 }
 
 /******************************************************************************
@@ -105,45 +105,45 @@ CBStylerTableMenu::UpdateStyle
 	)
 {
 	if (index == kPlainStyleCmd)
-		{
+	{
 		*style = JFontStyle();
-		}
+	}
 
 	else if (index == kBoldStyleCmd)
-		{
+	{
 		style->bold = !origStyle.bold;
-		}
+	}
 
 	else if (index == kItalicStyleCmd)
-		{
+	{
 		style->italic = !origStyle.italic;
-		}
+	}
 
 	else if (index == kUnderlineStyleCmd && origStyle.underlineCount != 1)
-		{
+	{
 		style->underlineCount = 1;
-		}
+	}
 	else if (index == kUnderlineStyleCmd)
-		{
+	{
 		style->underlineCount = 0;
-		}
+	}
 
 	else if (index == kDblUnderlineStyleCmd && origStyle.underlineCount != 2)
-		{
+	{
 		style->underlineCount = 2;
-		}
+	}
 	else if (index == kDblUnderlineStyleCmd)
-		{
+	{
 		style->underlineCount = 0;
-		}
+	}
 
 	else if (index == kStrikeStyleCmd)
-		{
+	{
 		style->strike = !origStyle.strike;
-		}
+	}
 
 	else if (index >= kFirstColorCmd)
-		{
+	{
 		style->color = GetSelectedColor();
-		}
+	}
 }

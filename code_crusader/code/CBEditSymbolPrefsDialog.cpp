@@ -11,12 +11,12 @@
 #include "CBProjectDocument.h"
 #include "CBSymbolDirector.h"
 #include "cbGlobals.h"
-#include <JXWindow.h>
-#include <JXTextButton.h>
-#include <JXTextCheckbox.h>
-#include <JXStaticText.h>
-#include <JXHelpManager.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXTextButton.h>
+#include <jx-af/jx/JXTextCheckbox.h>
+#include <jx-af/jx/JXStaticText.h>
+#include <jx-af/jx/JXHelpManager.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -104,25 +104,25 @@ CBEditSymbolPrefsDialog::Receive
 	)
 {
 	if (sender == this && message.Is(JXDialogDirector::kDeactivated))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const JXDialogDirector::Deactivated*>(&message);
 		assert( info != nullptr );
 		if (info->Successful())
-			{
+		{
 			UpdateSettings();
-			}
 		}
+	}
 
 	else if (sender == itsHelpButton && message.Is(JXButton::kPushed))
-		{
+	{
 		(JXGetHelpManager())->ShowSection("CBSymbolHelp-Prefs");
-		}
+	}
 
 	else
-		{
+	{
 		JXDialogDirector::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -144,13 +144,13 @@ CBEditSymbolPrefsDialog::UpdateSettings()
 //									false, false);
 
 	for (JIndex i=1; i<=docCount; i++)
-		{
+	{
 		((docList->GetElement(i))->GetSymbolDirector())->
 			SetPrefs(itsRaiseTreeOnRightClickCB->IsChecked(),
 					 i==1);
 
 //		pg->IncrementProgress();
-		}
+	}
 
 //	pg->ProcessFinished();
 //	jdelete pg;

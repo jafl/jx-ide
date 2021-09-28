@@ -12,7 +12,7 @@
 #include "CBStylerTableInput.h"
 #include "CBStylerTable.h"
 #include "cbmUtil.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -42,9 +42,9 @@ CBStylerTableInput::CBStylerTableInput
 	SetSelectionOutlineColor(prefsMgr->GetColor(CBMPrefsManager::kSelLineColorIndex));
 
 	GetText()->SetCharacterInWordFunction([this] (const JUtf8Character& c)
-	{
+{
 		return CBMIsCharacterInWord(c) || CBIsCharacterInWord(this->itsFileType, c);
-	});
+});
 }
 
 /******************************************************************************
@@ -73,15 +73,15 @@ CBStylerTableInput::HandleMouseDown
 {
 	if ((button == kJXLeftButton && modifiers.meta()) ||
 		button == kJXRightButton)
-		{
+	{
 		JPoint cell;
 		const bool ok = itsStylerTable->GetEditedCell(&cell);
 		assert( ok );
 		itsStylerTable->DisplayFontMenu(cell, this, pt, buttonStates, modifiers);
-		}
+	}
 	else
-		{
+	{
 		JXInputField::HandleMouseDown(pt, button, clickCount,
 									  buttonStates, modifiers);
-		}
+	}
 }

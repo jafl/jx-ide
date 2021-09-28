@@ -8,11 +8,11 @@
 #ifndef _H_CMArray2DDir
 #define _H_CMArray2DDir
 
-#include <JXWindowDirector.h>
+#include <jx-af/jx/JXWindowDirector.h>
 #include "CMMemoryDir.h"	// need defn of DisplayType
-#include <JString.h>
-#include <JRange.h>
-#include <JPoint.h>
+#include <jx-af/jcore/JString.h>
+#include <jx-af/jcore/JRange.h>
+#include <jx-af/jcore/JPoint.h>
 
 class JStringTableData;
 class JXTextButton;

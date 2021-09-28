@@ -8,10 +8,10 @@
 #ifndef _H_CBCommandManager
 #define _H_CBCommandManager
 
-#include <JPrefObject.h>
-#include <JString.h>
-#include <JStack.h>
-#include <JPtrQueue.h>
+#include <jx-af/jcore/JPrefObject.h>
+#include <jx-af/jcore/JString.h>
+#include <jx-af/jcore/JStack.h>
+#include <jx-af/jcore/JPtrQueue.h>
 
 class JProcess;
 class JXTextMenu;

@@ -8,7 +8,7 @@
 #ifndef _H_CMArray2DTable
 #define _H_CMArray2DTable
 
-#include <JXStringTable.h>
+#include <jx-af/jx/JXStringTable.h>
 
 class JXMenuBar;
 class JXTextMenu;

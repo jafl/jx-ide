@@ -10,10 +10,10 @@
 #ifndef _H_CBSymbolDirector
 #define _H_CBSymbolDirector
 
-#include <JXWindowDirector.h>
-#include <JPrefObject.h>
+#include <jx-af/jx/JXWindowDirector.h>
+#include <jx-af/jcore/JPrefObject.h>
 #include "CBPrefsManager.h"		// need definition of FileTypesChanged
-#include <JXButtonStates.h>
+#include <jx-af/jx/JXButtonStates.h>
 
 class JProgressDisplay;
 class JXTextMenu;

@@ -11,7 +11,7 @@
 #define _H_GFGClass
 
 // Superclass Header
-#include <JPtrArray.h>
+#include <jx-af/jcore/JPtrArray.h>
 
 #include <GFGMemberFunction.h>
 

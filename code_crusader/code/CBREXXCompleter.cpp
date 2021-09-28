@@ -10,7 +10,7 @@
  ******************************************************************************/
 
 #include "CBREXXCompleter.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 CBREXXCompleter* CBREXXCompleter::itsSelf = nullptr;
 
@@ -55,14 +55,14 @@ CBStringCompleter*
 CBREXXCompleter::Instance()
 {
 	if (itsSelf == nullptr && !recursiveInstance)
-		{
+	{
 		recursiveInstance = true;
 
 		itsSelf = jnew CBREXXCompleter;
 		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
-		}
+	}
 
 	return itsSelf;
 }

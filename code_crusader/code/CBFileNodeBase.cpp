@@ -14,10 +14,10 @@
 #include "CBLibraryNode.h"
 #include "CBRelPathCSF.h"
 #include "cbGlobals.h"
-#include <JXWebBrowser.h>
-#include <jFileUtil.h>
-#include <jDirUtil.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXWebBrowser.h>
+#include <jx-af/jcore/jFileUtil.h>
+#include <jx-af/jcore/jDirUtil.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -89,7 +89,7 @@ CBFileNodeBase::SetFileName
 	)
 {
 	if (fileName != itsFileName)
-		{
+	{
 		itsFileName = fileName;
 
 		JString path, name;
@@ -99,10 +99,10 @@ CBFileNodeBase::SetFileName
 
 		JTree* tree;
 		if (!nameChanged && GetTree(&tree))
-			{
+		{
 			tree->BroadcastChange(this);
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -160,15 +160,15 @@ CBFileNodeBase::FindFile1
 	JString name;
 	if (GetFullName(&name) &&
 		JSameDirEntry(name, fullName))
-		{
+	{
 		*node = this;
 		return true;
-		}
+	}
 	else
-		{
+	{
 		*node = nullptr;
 		return false;
-		}
+	}
 }
 
 /******************************************************************************
@@ -202,10 +202,10 @@ CBFileNodeBase::BuildMakeFiles
 	const
 {
 	if (IncludedInMakefile())
-		{
+	{
 		JString fullName;
 		if (invalidList == nullptr || GetFullName(&fullName))
-			{
+		{
 			JString root, suffix;
 			JSplitRootAndSuffix(itsFileName, &root, &suffix);
 			*text += ".";
@@ -213,12 +213,12 @@ CBFileNodeBase::BuildMakeFiles
 			*text += " ";
 			*text += root;
 			*text += "\n";
-			}
-		else
-			{
-			invalidList->Append(const_cast<CBFileNodeBase*>(this));
-			}
 		}
+		else
+		{
+			invalidList->Append(const_cast<CBFileNodeBase*>(this));
+		}
+	}
 
 	CBProjectNode::BuildMakeFiles(text, invalidList, libFileList, libProjPathList);
 }
@@ -253,13 +253,13 @@ CBFileNodeBase::BuildCMakeData
 	const
 {
 	if (IncludedInCMakeData())
-		{
+	{
 		JString fullName;
 		if (GetFullName(&fullName))
-			{
+		{
 			const CBTextFileType type = CBGetPrefsManager()->GetFileType(itsFileName);
 			if (CBIncludeInCMakeSource(type))
-				{
+			{
 				src->Append(" ");
 				*src += itsFileName;
 
@@ -268,7 +268,7 @@ CBFileNodeBase::BuildCMakeData
 						GetComplementFile(fullName, type, &complName,
 										  GetProjectDoc(), false) &&
 					!(GetProjectTree()->GetProjectRoot())->Includes(complName))
-					{
+				{
 					const CBRelPathCSF::PathType pathType =
 						CBRelPathCSF::CalcPathType(itsFileName);
 					complName = CBRelPathCSF::ConvertToRelativePath(
@@ -276,19 +276,19 @@ CBFileNodeBase::BuildCMakeData
 
 					hdr->Append(" ");
 					*hdr += complName;
-					}
 				}
+			}
 			else if (CBIncludeInCMakeHeader(type))
-				{
+			{
 				hdr->Append(" ");
 				*hdr += itsFileName;
-				}
-			}
-		else
-			{
-			invalidList->Append(const_cast<CBFileNodeBase*>(this));
 			}
 		}
+		else
+		{
+			invalidList->Append(const_cast<CBFileNodeBase*>(this));
+		}
+	}
 
 	CBProjectNode::BuildCMakeData(src, hdr, invalidList);
 }
@@ -323,13 +323,13 @@ CBFileNodeBase::BuildQMakeData
 	const
 {
 	if (IncludedInQMakeData())
-		{
+	{
 		JString fullName;
 		if (GetFullName(&fullName))
-			{
+		{
 			const CBTextFileType type = CBGetPrefsManager()->GetFileType(itsFileName);
 			if (CBIncludeInQMakeSource(type))
-				{
+			{
 				src->Append(" ");
 				*src += itsFileName;
 
@@ -338,7 +338,7 @@ CBFileNodeBase::BuildQMakeData
 						GetComplementFile(fullName, type, &complName,
 										  GetProjectDoc(), false) &&
 					!(GetProjectTree()->GetProjectRoot())->Includes(complName))
-					{
+				{
 					const CBRelPathCSF::PathType pathType =
 						CBRelPathCSF::CalcPathType(itsFileName);
 					complName = CBRelPathCSF::ConvertToRelativePath(
@@ -346,19 +346,19 @@ CBFileNodeBase::BuildQMakeData
 
 					hdr->Append(" ");
 					*hdr += complName;
-					}
 				}
+			}
 			else if (CBIncludeInQMakeHeader(type))
-				{
+			{
 				hdr->Append(" ");
 				*hdr += itsFileName;
-				}
-			}
-		else
-			{
-			invalidList->Append(const_cast<CBFileNodeBase*>(this));
 			}
 		}
+		else
+		{
+			invalidList->Append(const_cast<CBFileNodeBase*>(this));
+		}
+	}
 
 	CBProjectNode::BuildQMakeData(src, hdr, invalidList);
 }
@@ -396,22 +396,22 @@ CBFileNodeBase::FileRenamed
 {
 	const CBRelPathCSF::PathType type = CBRelPathCSF::CalcPathType(itsFileName);
 	if (type == CBRelPathCSF::kAbsolutePath && itsFileName == origFullName)
-		{
+	{
 		SetFileName(newFullName);
-		}
+	}
 	else if (type == CBRelPathCSF::kHomeRelative)
-		{
+	{
 		JString s;
 		const bool ok = JExpandHomeDirShortcut(itsFileName, &s);
 		assert( ok );
 		if (s == origFullName)
-			{
+		{
 			s = CBRelPathCSF::ConvertToRelativePath(newFullName, JString::empty, type);
 			SetFileName(s);
-			}
 		}
+	}
 	else
-		{
+	{
 		assert( type == CBRelPathCSF::kProjectRelative );
 
 		const auto* projTree = dynamic_cast<const CBProjectTree*>(GetTree());
@@ -420,11 +420,11 @@ CBFileNodeBase::FileRenamed
 		const JString& basePath = (projTree->GetProjectDoc())->GetFilePath();
 		JString s               = JConvertToRelativePath(origFullName, basePath);
 		if (itsFileName == s)
-			{
+		{
 			s = CBRelPathCSF::ConvertToRelativePath(newFullName, basePath, type);
 			SetFileName(s);
-			}
 		}
+	}
 
 	CBProjectNode::FileRenamed(origFullName, newFullName);
 }
@@ -440,13 +440,13 @@ CBFileNodeBase::ShowFileLocation()
 {
 	JString fullName;
 	if (GetFullName(&fullName))
-		{
+	{
 		(JXGetWebBrowser())->ShowFileLocation(fullName);
-		}
+	}
 	else
-		{
+	{
 		ReportNotFound();
-		}
+	}
 }
 
 /******************************************************************************
@@ -459,9 +459,9 @@ CBFileNodeBase::ReportNotFound()
 	const
 {
 	const JUtf8Byte* map[] =
-		{
+	{
 		"name", itsFileName.GetBytes()
-		};
+	};
 	const JString msg = JGetString("FileNotFound::CBFileNodeBase", map, sizeof(map));
 	JGetUserNotification()->ReportError(msg);
 }
@@ -484,13 +484,13 @@ CBFileNodeBase::New
 
 	const CBTextFileType type = CBGetPrefsManager()->GetFileType(fileName);
 	if (CBIsLibrary(type))
-		{
+	{
 		node = jnew CBLibraryNode(tree, fileName);
-		}
+	}
 	else
-		{
+	{
 		node = jnew CBFileNode(tree, fileName);
-		}
+	}
 	assert( node != nullptr );
 
 	return node;

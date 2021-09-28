@@ -12,11 +12,11 @@
 #include "CMInitVarNodeTask.h"
 #include "cmGlobals.h"
 #include "cbmUtil.h"
-#include <JTree.h>
-#include <JStringIterator.h>
-#include <JRegex.h>
-#include <JColorManager.h>
-#include <jAssert.h>
+#include <jx-af/jcore/JTree.h>
+#include <jx-af/jcore/JStringIterator.h>
+#include <jx-af/jcore/JRegex.h>
+#include <jx-af/jcore/JColorManager.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -35,9 +35,9 @@ CMVarNode::CMVarNode				// root node
 	itsValidFlag = true;
 
 	if (itsShouldListenToLinkFlag)
-		{
+	{
 		ListenTo(CMGetLink());
-		}
+	}
 }
 
 CMVarNode::CMVarNode
@@ -54,15 +54,15 @@ CMVarNode::CMVarNode
 	VarTreeNodeX();
 
 	if (parent != nullptr)
-		{
+	{
 		parent->Append(this);
 		if (parent->IsRoot() && !name.IsEmpty())
-			{
+		{
 			auto* task = jnew CMInitVarNodeTask(this);
 			assert( task != nullptr );
 			task->Go();
-			}
 		}
+	}
 }
 
 // private
@@ -113,16 +113,16 @@ CMVarNode::SetValue
 
 	itsValue.TrimWhitespace();
 	if (itsOrigValue != nullptr)
-		{
+	{
 		itsOrigValue->Clear();
-		}
+	}
 	ConvertToBase();
 
 	JTree* tree;
 	if (!itsCanConvertBaseFlag && GetTree(&tree))
-		{
+	{
 		tree->BroadcastChange(this);
-		}
+	}
 }
 
 /******************************************************************************
@@ -140,17 +140,17 @@ struct CMSpecialCharInfo
 
 static const CMSpecialCharInfo kSpecialCharInfo[] =
 {
-	{ '\a', "\\a"  },
-	{ '\b', "\\b"  },
-	{ '\f', "\\f"  },
-	{ '\n', "\\n"  },
-	{ '\r', "\\r"  },
-	{ '\t', "\\t"  },
-	{ '\v', "\\v"  },
-	{ '\\', "\\\\" },
-	{ '\'', "\\'"  },
-	{ '"',  "\\\"" },
-	{ '\0', "\\0"  }
+{ '\a', "\\a"  },
+{ '\b', "\\b"  },
+{ '\f', "\\f"  },
+{ '\n', "\\n"  },
+{ '\r', "\\r"  },
+{ '\t', "\\t"  },
+{ '\v', "\\v"  },
+{ '\\', "\\\\" },
+{ '\'', "\\'"  },
+{ '"',  "\\\"" },
+{ '\0', "\\0"  }
 };
 
 const JSize kSpecialCharCount = sizeof(kSpecialCharInfo) / sizeof(CMSpecialCharInfo);
@@ -160,44 +160,44 @@ CMVarNode::ConvertToBase()
 {
 	itsCanConvertBaseFlag = false;
 	if (itsOrigValue != nullptr && !itsOrigValue->IsEmpty())
-		{
+	{
 		JTree* tree;
 		if (itsValue != *itsOrigValue && GetTree(&tree))
-			{
+		{
 			tree->BroadcastChange(this);
-			}
-		itsValue = *itsOrigValue;
 		}
+		itsValue = *itsOrigValue;
+	}
 
 	if (itsBase == 0 || itsIsPointerFlag)
-		{
+	{
 		return;		// avoid JRegex match
-		}
+	}
 
 	const JStringMatch m = valuePattern.Match(itsValue, JRegex::kIncludeSubmatches);
 	if (!m.IsEmpty())
-		{
+	{
 		JString vStr = m.GetSubstring(1);
 
 		JUInt v;
 		if (vStr.GetFirstCharacter() == '-')
-			{
+		{
 			JInteger v1;
 			itsCanConvertBaseFlag = itsBase != 1 &&
 				vStr.ConvertToInteger(&v1, 10);
 			if (itsCanConvertBaseFlag)
-				{
-				v = (JUInt) v1;
-				}
-			}
-		else
 			{
+				v = (JUInt) v1;
+			}
+		}
+		else
+		{
 			itsCanConvertBaseFlag = vStr.ConvertToUInt(&v, vStr.GetFirstCharacter() == '0' ? 8 : 10) &&
 				(itsBase != 1 || v <= 255);
-			}
+		}
 
 		if (itsCanConvertBaseFlag)
-			{
+		{
 			// save value for when base reset to "default"
 
 			itsOrigValue = jnew JString(itsValue);
@@ -206,7 +206,7 @@ CMVarNode::ConvertToBase()
 			// replace only the value, preserving whatever else is there
 
 			if (itsBase == 1)
-				{
+			{
 				assert( 0 <= v && v <= 255 );
 
 				vStr  = JString(v, JString::kBase16, true);
@@ -214,28 +214,28 @@ CMVarNode::ConvertToBase()
 
 				bool found = false;
 				for (JUnsignedOffset i=0; i<kSpecialCharCount; i++)
-					{
+				{
 					if (JUtf8Character(v) == kSpecialCharInfo[i].c)
-						{
+					{
 						vStr += kSpecialCharInfo[i].s;
 						found = true;
-						}
 					}
+				}
 				if (!found)
-					{
+				{
 					vStr.Append(JUtf8Character(v));
-					}
+				}
 
 				vStr.Append("'");
-				}
+			}
 			else
-				{
+			{
 				vStr = JString(v, (JString::Base) itsBase, true);
 				if (itsBase == 8)
-					{
+				{
 					vStr.Prepend("0");
-					}
 				}
+			}
 
 			const JCharacterRange r = m.GetCharacterRange(1);
 			JStringIterator iter(&itsValue, kJIteratorStartBefore, r.first);
@@ -247,11 +247,11 @@ CMVarNode::ConvertToBase()
 
 			JTree* tree;
 			if (GetTree(&tree))
-				{
+			{
 				tree->BroadcastChange(this);
-				}
 			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -266,26 +266,26 @@ CMVarNode::SetValid
 	)
 {
 	if (valid != itsValidFlag)
-		{
+	{
 		itsValidFlag = valid;
 
 		JTree* tree;
 		if (GetTree(&tree))
-			{
+		{
 			tree->BroadcastChange(this);
-			}
 		}
+	}
 
 	// pointer values update their own contents
 
 	if (!valid || !itsIsPointerFlag)
-		{
+	{
 		const JSize count = GetChildCount();
 		for (JIndex i=1; i<=count; i++)
-			{
+		{
 			(GetVarChild(i))->SetValid(valid);
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -297,17 +297,17 @@ JFontStyle
 CMVarNode::GetFontStyle()
 {
 	if (!itsValidFlag)
-		{
+	{
 		return JFontStyle(JColorManager::GetGrayColor(50));
-		}
+	}
 	else if (itsNewValueFlag)
-		{
+	{
 		return JFontStyle(JColorManager::GetBlueColor());
-		}
+	}
 	else
-		{
+	{
 		return JFontStyle();
-		}
+	}
 }
 
 // static
@@ -320,17 +320,17 @@ CMVarNode::GetFontStyle
 	)
 {
 	if (!isValid)
-		{
+	{
 		return JFontStyle(JColorManager::GetGrayColor(50));
-		}
+	}
 	else if (isNew)
-		{
+	{
 		return JFontStyle(JColorManager::GetBlueColor());
-		}
+	}
 	else
-		{
+	{
 		return JFontStyle();
-		}
+	}
 }
 
 /******************************************************************************
@@ -345,9 +345,9 @@ CMVarNode::OKToOpen()
 	const
 {
 	if (itsIsPointerFlag && !HasChildren())
-		{
+	{
 		const_cast<CMVarNode*>(this)->UpdateContent();
-		}
+	}
 
 	return JNamedTreeNode::OKToOpen();
 }
@@ -365,38 +365,38 @@ CMVarNode::Receive
 	)
 {
 	if (sender == CMGetLink() && ShouldUpdate(message))
-		{
+	{
 		// root node only
 
 		if (itsShouldUpdateFlag)
-			{
+		{
 			UpdateChildren();
-			}
-		else
-			{
-			itsNeedsUpdateFlag = true;
-			}
 		}
+		else
+		{
+			itsNeedsUpdateFlag = true;
+		}
+	}
 
 	else if (sender == itsValueCommand &&
 			 message.Is(CMVarCommand::kValueUpdated))
-		{
+	{
 		const auto& info =
 			dynamic_cast<const CMVarCommand::ValueMessage&>(message);
 
 		SetValid(true);
 		Update(info.GetRootNode());
-		}
+	}
 	else if (sender == itsValueCommand &&
 			 message.Is(CMVarCommand::kValueFailed))
-		{
+	{
 		SetValue(itsValueCommand->GetData());
 		MakePointer(false);
-		}
+	}
 
 	else if (sender == itsContentCommand &&
 			 message.Is(CMVarCommand::kValueUpdated))
-		{
+	{
 		const auto& info =
 			dynamic_cast<const CMVarCommand::ValueMessage&>(message);
 
@@ -405,39 +405,39 @@ CMVarNode::Receive
 		// value or pointer
 
 		if (!root->HasChildren())
-			{
+		{
 			DeleteAllChildren();
 			CMVarNode* child = CMGetLink()->CreateVarNode(this, root->GetName(),
 															root->GetFullName(),
 															root->GetValue());
 			assert( child != nullptr );
 			child->MakePointer(root->itsIsPointerFlag);
-			}
+		}
 
 		// struct or static array
 
 		else if (SameElements(root))
-			{
+		{
 			MergeChildren(root);
-			}
-		else
-			{
-			StealChildren(root);
-			}
 		}
+		else
+		{
+			StealChildren(root);
+		}
+	}
 	else if (sender == itsContentCommand &&
 			 message.Is(CMVarCommand::kValueFailed))
-		{
+	{
 		DeleteAllChildren();
 		CMVarNode* child = CMGetLink()->CreateVarNode(this, JString::empty, JString::empty, itsContentCommand->GetData());
 		assert( child != nullptr );
 		child->SetValid(false);
-		}
+	}
 
 	else
-		{
+	{
 		JNamedTreeNode::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -452,9 +452,9 @@ CMVarNode::ReceiveGoingAway
 	)
 {
 	if (itsShouldListenToLinkFlag && !CMIsShuttingDown())
-		{
+	{
 		ListenTo(CMGetLink());
-		}
+	}
 
 	JNamedTreeNode::ReceiveGoingAway(sender);
 }
@@ -471,15 +471,15 @@ CMVarNode::ShouldUpdate
 	)
 {
 	if (message.Is(CMLink::kProgramStopped))
-		{
+	{
 		const auto& info =
 			dynamic_cast<const CMLink::ProgramStopped&>(message);
 
 		const CMLocation* loc;
 		return info.GetLocation(&loc) && !(loc->GetFileName()).IsEmpty();
-		}
+	}
 	else
-		{
+	{
 		return message.Is(CMLink::kValueChanged)      ||
 					message.Is(CMLink::kThreadChanged)     ||
 					message.Is(CMLink::kFrameChanged)      ||
@@ -487,7 +487,7 @@ CMVarNode::ShouldUpdate
 					message.Is(CMLink::kCoreCleared)       ||
 					message.Is(CMLink::kAttachedToProcess) ||
 					message.Is(CMLink::kDetachedFromProcess);
-		}
+	}
 }
 
 /******************************************************************************
@@ -499,20 +499,20 @@ void
 CMVarNode::NameChanged()
 {
 	if (!HasTree() || GetDepth() != 1)
-		{
+	{
 		// parser may be busy; don't interfere
 		return;
-		}
+	}
 
 	const JString& name = GetName();
 
 	JString n = name;
 	TrimExpression(&n);
 	if (n != name)
-		{
+	{
 		SetName(n);
 		return;		// calls us again
-		}
+	}
 
 	UpdateValue();
 }
@@ -532,13 +532,13 @@ CMVarNode::TrimExpression
 	while (!s->IsEmpty() &&
 		   s->GetFirstCharacter() == '(' &&
 		   s->GetLastCharacter()  == ')')
-		{
+	{
 		JStringIterator iter(s, kJIteratorStartAfter, 1);
 		JUtf8Character c;
 		if (!CBMBalanceForward(kCBCLang, &iter, &c) || !iter.AtEnd())
-			{
+		{
 			break;
-			}
+		}
 
 		iter.MoveTo(kJIteratorStartAtBeginning, 0);
 		iter.RemoveNext();
@@ -546,7 +546,7 @@ CMVarNode::TrimExpression
 		iter.RemovePrev();
 
 		s->TrimWhitespace();
-		}
+	}
 }
 
 /******************************************************************************
@@ -562,9 +562,9 @@ CMVarNode::ShouldUpdate
 {
 	itsShouldUpdateFlag = update;
 	if (itsShouldUpdateFlag && itsNeedsUpdateFlag)
-		{
+	{
 		UpdateChildren();
-		}
+	}
 }
 
 /******************************************************************************
@@ -577,9 +577,9 @@ CMVarNode::UpdateChildren()
 {
 	const JSize count = GetChildCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		(GetVarChild(i))->UpdateValue();
-		}
+	}
 
 	itsNeedsUpdateFlag = false;
 }
@@ -595,7 +595,7 @@ void
 CMVarNode::UpdateValue()
 {
 	if (HasTree() && GetDepth() == 1 && !(GetName()).IsEmpty())
-		{
+	{
 		jdelete itsValueCommand;
 
 		const JString expr = GetFullName();
@@ -604,11 +604,11 @@ CMVarNode::UpdateValue()
 
 		SetValid(false);
 		itsValueCommand->CMCommand::Send();
-		}
+	}
 	else
-		{
+	{
 		SetValue(JString::empty);
-		}
+	}
 }
 
 /******************************************************************************
@@ -663,26 +663,26 @@ CMVarNode::Update
 	// value or pointer
 
 	if (!node->HasChildren())
-		{
+	{
 		MakePointer(node->itsIsPointerFlag);
 		if (itsIsPointerFlag && HasChildren())
-			{
+		{
 			UpdateContent();
-			}
 		}
+	}
 
 	// struct or static array
 
 	else if (SameElements(node))
-		{
+	{
 		MakePointer(node->itsIsPointerFlag, false);
 		MergeChildren(node);
-		}
+	}
 	else
-		{
+	{
 		MakePointer(node->itsIsPointerFlag, false);
 		StealChildren(node);
-		}
+	}
 }
 
 /******************************************************************************
@@ -703,19 +703,19 @@ CMVarNode::SameElements
 	bool sameElements = false;
 
 	if (node->GetChildCount() == GetChildCount())
-		{
+	{
 		sameElements = true;
 
 		const JSize count = GetChildCount();
 		for (JIndex i=1; i<=count; i++)
-			{
+		{
 			if ((GetVarChild(i))->GetName() != (node->GetVarChild(i))->GetName())
-				{
+			{
 				sameElements = false;
 				break;
-				}
 			}
 		}
+	}
 
 	return sameElements;
 }
@@ -735,9 +735,9 @@ CMVarNode::MakePointer
 	itsIsPointerFlag = pointer;
 
 	if (adjustOpenable)
-		{
+	{
 		ShouldBeOpenable(itsIsPointerFlag);
-		}
+	}
 }
 
 /******************************************************************************
@@ -774,9 +774,9 @@ CMVarNode::StealChildren
 
 	const JSize count = node->GetChildCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		Append(node->GetChild(1));
-		}
+	}
 }
 
 /******************************************************************************
@@ -794,9 +794,9 @@ CMVarNode::MergeChildren
 	assert( count == node->GetChildCount() );
 
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		(GetVarChild(i))->Update(node->GetVarChild(i));
-		}
+	}
 }
 
 /******************************************************************************
@@ -814,9 +814,9 @@ CMVarNode::GetLastChild
 
 	const JSize count = GetChildCount();
 	if (count > 0)
-		{
+	{
 		GetVarChild(count)->GetLastChild(child);
-		}
+	}
 }
 
 /******************************************************************************
@@ -851,16 +851,16 @@ CMVarNode::GetVarParent
 {
 	JTreeNode* p;
 	if (GetParent(&p))
-		{
+	{
 		*parent = dynamic_cast<CMVarNode*>(p);
 		assert( *parent != nullptr );
 		return true;
-		}
+	}
 	else
-		{
+	{
 		*parent = nullptr;
 		return false;
-		}
+	}
 }
 
 bool
@@ -872,16 +872,16 @@ CMVarNode::GetVarParent
 {
 	const JTreeNode* p;
 	if (GetParent(&p))
-		{
+	{
 		*parent = dynamic_cast<const CMVarNode*>(p);
 		assert( *parent != nullptr );
 		return true;
-		}
+	}
 	else
-		{
+	{
 		*parent = nullptr;
 		return false;
-		}
+	}
 }
 
 /******************************************************************************
@@ -926,55 +926,55 @@ CMVarNode::GetFullNameForCFamilyLanguage
 {
 	JString str;
 	if (IsRoot())
-		{
+	{
 		return str;
-		}
+	}
 
 	const CMVarNode* parent = GetVarParent();
 	const JString& name     = GetName();
 	if (parent->IsRoot())
-		{
+	{
 		str = "(" + name + ")";
-		}
+	}
 	else if (name.IsEmpty())
-		{
+	{
 		JIndex i;
 		const bool found = parent->FindChild(this, &i);
 		assert( found );
 		str = parent->GetFullName(isPointer);
 		if (!str.BeginsWith("(") || !str.EndsWith(")"))
-			{
+		{
 			str.Prepend("(");
 			str.Append(")");
-			}
+		}
 		str += "[" + JString((JUInt64) i-1) + "]";
-		}
+	}
 	else if (name.BeginsWith("<"))
-		{
+	{
 		if (isPointer != nullptr)
-			{
+		{
 			*isPointer = parent->IsPointer();
-			}
+		}
 		str = parent->GetFullName(isPointer);
-		}
+	}
 	else if (name.BeginsWith("["))
-		{
+	{
 		str = parent->GetFullName(isPointer) + name;
-		}
+	}
 	else if (name.BeginsWith("*"))
-		{
+	{
 		str = parent->GetPathForCFamilyLanguage() + "(" + name + ")";
-		}
+	}
 	else
-		{
+	{
 		str = name;
 		if (str.BeginsWith("static "))
-			{
+		{
 			JStringIterator iter(&str);
 			iter.RemoveNext(7);
-			}
-		str.Prepend(parent->GetPathForCFamilyLanguage());
 		}
+		str.Prepend(parent->GetPathForCFamilyLanguage());
+	}
 
 	return str;
 }
@@ -990,9 +990,9 @@ CMVarNode::GetPathForCFamilyLanguage()
 {
 	JString str;
 	if (IsRoot())
-		{
+	{
 		return str;
-		}
+	}
 
 	bool isPointer = IsPointer();
 	str  = GetFullName(&isPointer);

@@ -8,7 +8,7 @@
  ******************************************************************************/
 
 #include "CMCommandOutputDisplay.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -51,11 +51,11 @@ void
 CMCommandOutputDisplay::PlaceCursorAtEnd()
 {
 	if (!GetText()->IsEmpty())
-		{
+	{
 		SetCaretLocation(GetText()->GetText().GetCharacterCount()+1);
 		if (GetText()->GetText().GetLastCharacter() != '\n')
-			{
+		{
 			Paste(JString::newline);
-			}
 		}
+	}
 }

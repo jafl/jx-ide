@@ -10,10 +10,10 @@
 #include "CMGetSourceFileList.h"
 #include "CMFileListDir.h"
 #include "cmGlobals.h"
-#include <JXFileListTable.h>
-#include <jFileUtil.h>
-#include <jStreamUtil.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXFileListTable.h>
+#include <jx-af/jcore/jFileUtil.h>
+#include <jx-af/jcore/jStreamUtil.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -57,41 +57,41 @@ CMGetSourceFileList::Receive
 	CMLink* link = CMGetLink();
 
 	if (sender == link && message.Is(CMLink::kPrepareToLoadSymbols))
-		{
+	{
 		(itsFileList->GetTable())->RemoveAllFiles();
-		}
+	}
 	else if (sender == link && message.Is(CMLink::kSymbolsLoaded))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const CMLink::SymbolsLoaded*>(&message);
 		assert( info != nullptr );
 		if (info->Successful())
-			{
+		{
 			CMCommand::Send();
 			itsNeedRedoOnFirstStop = true;
-			}
 		}
+	}
 	else if (sender == link && message.Is(CMLink::kSymbolsReloaded))
-		{
+	{
 		CMCommand::Send();
-		}
+	}
 	else if (sender == link && message.Is(CMLink::kProgramFirstStop))
-		{
+	{
 		if (itsNeedRedoOnFirstStop)
-			{
+		{
 			CMCommand::Send();
 			itsNeedRedoOnFirstStop = false;
-			}
 		}
+	}
 	else if (sender == link &&
 			 (message.Is(CMLink::kCoreLoaded) ||
 			  message.Is(CMLink::kAttachedToProcess)))
-		{
+	{
 		CMCommand::Send();
-		}
+	}
 
 	else
-		{
+	{
 		JBroadcaster::Receive(sender, message);
-		}
+	}
 }

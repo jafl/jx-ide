@@ -8,9 +8,9 @@
 #ifndef _H_CMPipe
 #define _H_CMPipe
 
-#include <JBroadcaster.h>
-#include <JString.h>
-#include <JUtf8ByteBuffer.h>
+#include <jx-af/jcore/JBroadcaster.h>
+#include <jx-af/jcore/JString.h>
+#include <jx-af/jcore/JUtf8ByteBuffer.h>
 #include <ace/Svc_Handler.h>
 #include <ace/Synch_Traits.h>
 

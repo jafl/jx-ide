@@ -8,7 +8,7 @@
 #ifndef _H_CBProjectNode
 #define _H_CBProjectNode
 
-#include <JNamedTreeNode.h>
+#include <jx-af/jcore/JNamedTreeNode.h>
 #include "CBProjectNodeType.h"
 
 class JProgressDisplay;

@@ -8,7 +8,7 @@
  ******************************************************************************/
 
 #include "CBPascalCompleter.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 CBPascalCompleter* CBPascalCompleter::itsSelf = nullptr;
 
@@ -54,14 +54,14 @@ CBStringCompleter*
 CBPascalCompleter::Instance()
 {
 	if (itsSelf == nullptr && !recursiveInstance)
-		{
+	{
 		recursiveInstance = true;
 
 		itsSelf = jnew CBPascalCompleter;
 		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
-		}
+	}
 
 	return itsSelf;
 }

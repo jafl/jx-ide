@@ -7,11 +7,11 @@
 
  *****************************************************************************/
 
-#include <JTestManager.h>
+#include <jx-af/jcore/JTestManager.h>
 #include "CBPerlStyler.h"
 #include "cbTestUtil.h"
-#include <JColorManager.h>
-#include <jAssert.h>
+#include <jx-af/jcore/JColorManager.h>
+#include <jx-af/jcore/jAssert.h>
 
 class TestPerlStyler : public CBPerlStyler
 {

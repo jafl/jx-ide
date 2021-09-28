@@ -8,7 +8,7 @@
 #ifndef _H_CBFileNameDisplay
 #define _H_CBFileNameDisplay
 
-#include <JXFileInput.h>
+#include <jx-af/jx/JXFileInput.h>
 
 class CBTextDocument;
 class CBFileDragSource;

@@ -14,12 +14,12 @@
 #include "CBCTreeDirector.h"
 #include "CBCTreeScanner.h"
 #include "CBCPreprocessor.h"
-#include <JStringIterator.h>
-#include <jStreamUtil.h>
-#include <jFStreamUtil.h>
-#include <jFileUtil.h>
+#include <jx-af/jcore/JStringIterator.h>
+#include <jx-af/jcore/jStreamUtil.h>
+#include <jx-af/jcore/jFStreamUtil.h>
+#include <jx-af/jcore/jFileUtil.h>
 #include <fstream>
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 static const JUtf8Byte* kCtagsArgs =
 	"--format=2 --excmd=number --sort=no --c-kinds=f";
@@ -65,14 +65,14 @@ CBCTree::CBCTree
 	CBCTreeX();
 
 	if (projVers >= 28)
-		{
+	{
 		itsCPP->ReadSetup(projInput, projVers);
-		}
+	}
 
 	if (projVers < 88 && !IsEmpty())		// new parser
-		{
+	{
 		NextUpdateMustReparseAll();
-		}
+	}
 }
 
 #endif
@@ -172,10 +172,10 @@ CBCTree::ParseFile
 	)
 {
 	if (itsClassNameLexer == nullptr)
-		{
+	{
 		itsClassNameLexer = jnew CB::Tree::C::Scanner;
 		assert( itsClassNameLexer != nullptr );
-		}
+	}
 
 	// Read in the entire file and apply preprocessor.
 
@@ -184,18 +184,18 @@ CBCTree::ParseFile
 	JString buffer;
 	JReadFile(fileName, &buffer);
 	if (itsCPP->Preprocess(&buffer))
-		{
+	{
 		JString newFileName;
 		if (!JCreateTempFile(&newFileName).OK())
-			{
+		{
 			return;
-			}
+		}
 
 		fileName = newFileName;
 
 		std::ofstream output(fileName.GetBytes());
 		buffer.Print(output);
-		}
+	}
 
 	// extract info about classes
 
@@ -209,63 +209,63 @@ CBCTree::ParseFile
 
 	if (itsClassNameLexer->CreateClasses(id, this, &classList) &&
 		ProcessFile(fileName, kCBCHeaderFT, &data, &lang))
-		{
+	{
 		// check for pure virtual via ctags
 
 		icharbufstream input(data.GetBytes(), data.GetByteCount());
 
 		input >> std::ws;
 		while (input.peek() == '!')
-			{
+		{
 			JIgnoreLine(input);
 			input >> std::ws;
-			}
+		}
 
 		JString name;
 		JStringPtrMap<JString> flags(JPtrArrayT::kDeleteAll);
 		while (true)
-			{
+		{
 			input >> std::ws;
 			name = JReadUntil(input, '\t');			// function name
 			if (input.eof() || input.fail())
-				{
+			{
 				break;
-				}
+			}
 
 			ReadExtensionFlags(input, &flags);		// skips file name and line number
 
 			JString* impl;
 			if (!flags.GetElement("implementation", &impl) || *impl != "abstract")
-				{
+			{
 				continue;
-				}
+			}
 
 			JStringIterator iter(&name, kJIteratorStartAtEnd);
 			if (iter.Prev("::"))
-				{
+			{
 				iter.RemoveAllNext();
 				iter.Invalidate();
-				}
+			}
 			else
-				{
+			{
 				continue;
-				}
+			}
 
 			for (auto* c : classList)
-				{
+			{
 				if (name == c->GetFullName())
-					{
+				{
 					c->SetAbstract();
 					break;
-					}
 				}
 			}
 		}
+	}
 
 	if (fileName != origFileName)
-		{
+	{
 		JRemoveFile(fileName);
-		}
+	}
 }
 
 /******************************************************************************

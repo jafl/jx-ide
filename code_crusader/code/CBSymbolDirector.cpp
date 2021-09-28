@@ -37,16 +37,16 @@
 #include "CBDocumentMenu.h"
 #include "cbActionDefs.h"
 #include "cbGlobals.h"
-#include <JXDisplay.h>
-#include <JXWindow.h>
-#include <JXMenuBar.h>
-#include <JXTextMenu.h>
-#include <JXToolBar.h>
-#include <JXScrollbarSet.h>
-#include <JXImage.h>
-#include <jDirUtil.h>
-#include <jFileUtil.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXDisplay.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXMenuBar.h>
+#include <jx-af/jx/JXTextMenu.h>
+#include <jx-af/jx/JXToolBar.h>
+#include <jx-af/jx/JXScrollbarSet.h>
+#include <jx-af/jx/JXImage.h>
+#include <jx-af/jcore/jDirUtil.h>
+#include <jx-af/jcore/jFileUtil.h>
+#include <jx-af/jcore/jAssert.h>
 
 // setup information
 
@@ -169,7 +169,7 @@ CBSymbolDirector::CBSymbolDirector
 
 	const bool useProjData = setInput == nullptr || setVers < 71;
 	if (!useProjData)
-		{
+	{
 		GetWindow()->ReadGeometry(*setInput);
 
 		// put SR windows on top of main window
@@ -177,41 +177,41 @@ CBSymbolDirector::CBSymbolDirector
 		bool active;
 		*setInput >> JBoolFromString(active);
 		if (active && !subProject)
-			{
+		{
 			Activate();
-			}
-
-		// read and create CBSymbolSRDirectors here
 		}
 
+		// read and create CBSymbolSRDirectors here
+	}
+
 	if (projVers >= 41)
-		{
+	{
 		if (projVers < 71 && useProjData)
-			{
+		{
 			GetWindow()->ReadGeometry(projInput);
-			}
+		}
 		else if (projVers < 71)
-			{
+		{
 			JXWindow::SkipGeometry(projInput);
-			}
+		}
 
 		if (45 <= projVers && projVers < 74)
-			{
+		{
 			CBSymbolTypeList::SkipSetup(projInput, projVers);
-			}
+		}
 
 		itsSymbolList->ReadSetup(projInput, projVers, symInput, symVers);
 
 		bool active = false;
 		if (47 <= projVers && projVers < 71)
-			{
+		{
 			projInput >> JBoolFromString(active);
-			}
-		if (useProjData && active && !subProject)
-			{
-			Activate();
-			}
 		}
+		if (useProjData && active && !subProject)
+		{
+			Activate();
+		}
+	}
 }
 
 // private
@@ -281,11 +281,11 @@ CBSymbolDirector::StreamOut
 	const
 {
 	if (setOutput != nullptr)
-		{
+	{
 		*setOutput << ' ';
 		GetWindow()->WriteGeometry(*setOutput);
 		*setOutput << ' ' << JBoolToString(IsActive()) << ' ';
-		}
+	}
 
 	itsSymbolList->WriteSetup(projOutput, symOutput);
 }
@@ -304,9 +304,9 @@ CBSymbolDirector::ReadPrefs
 	JFileVersion vers;
 	input >> vers;
 	if (vers > kCurrentPrefsVersion)
-		{
+	{
 		return;
-		}
+	}
 
 	input >> JBoolFromString(itsRaiseTreeOnRightClickFlag);
 }
@@ -337,9 +337,9 @@ CBSymbolDirector::CloseSymbolBrowsers()
 {
 	const JSize count = itsSRList->GetElementCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		itsSRList->GetLastElement()->Close();
-		}
+	}
 }
 
 /*****************************************************************************
@@ -399,10 +399,10 @@ CBSymbolDirector::ListUpdateFinished
 {
 	const bool ok = itsSymbolList->UpdateFinished(deadFileList, pg);
 	if (ok && !CBInUpdateThread())
-		{
+	{
 		CloseSymbolBrowsers();
 //		UpdateSymbolBrowsers();
-		}
+	}
 	return ok;
 }
 
@@ -438,7 +438,7 @@ CBSymbolDirector::FindSymbol
 	JPtrArray<JString> javaContextNamespaceList(JPtrArrayT::kDeleteAll);
 	JPtrArray<JString> phpContextNamespaceList(JPtrArrayT::kDeleteAll);
 	if (!fileName.IsEmpty())
-		{
+	{
 		itsProjDoc->GetAllFileList()->GetFileID(fileName, &contextFileID);
 
 		JString path, name1, className, suffix;
@@ -447,33 +447,33 @@ CBSymbolDirector::FindSymbol
 
 		const CBClass* theClass;
 		if (cTree->IsUniqueClassName(className, &theClass))
-			{
+		{
 			BuildAncestorList(*theClass, &cContextNamespaceList);
-			}
+		}
 		if (dTree->IsUniqueClassName(className, &theClass))
-			{
+		{
 			BuildAncestorList(*theClass, &dContextNamespaceList);
-			}
+		}
 		if (goTree->IsUniqueClassName(className, &theClass))
-			{
+		{
 			BuildAncestorList(*theClass, &goContextNamespaceList);
-			}
+		}
 		if (javaTree->IsUniqueClassName(className, &theClass))
-			{
+		{
 			BuildAncestorList(*theClass, &javaContextNamespaceList);
-			}
+		}
 		if (phpTree->IsUniqueClassName(className, &theClass))
-			{
+		{
 			BuildAncestorList(*theClass, &phpContextNamespaceList);
-			}
+		}
 		if (cContextNamespaceList.IsEmpty()    &&
 			javaContextNamespaceList.IsEmpty() &&
 			phpContextNamespaceList.IsEmpty()  &&
 			itsSymbolList->IsUniqueClassName(className, &contextLang))
-			{
+		{
 			contextNamespace = className;
-			}
 		}
+	}
 
 	JArray<JIndex> symbolList;
 	const bool foundSymbol =
@@ -510,7 +510,7 @@ CBSymbolDirector::FindSymbol
 	const bool pf = treeWidget->FindFunction(name, true, button, raiseTree, false, raiseTree, false);
 
 	if (symbolList.GetElementCount() == 1 && button != kJXRightButton)
-		{
+	{
 		const JIndex symbolIndex = symbolList.GetFirstElement();
 
 		CBLanguage lang;
@@ -524,13 +524,13 @@ CBSymbolDirector::FindSymbol
 		CBTextDocument* doc = nullptr;
 		if (CBGetDocumentManager()->OpenTextDocument(fileName1, lineIndex, &doc) &&
 			CBSymbolList::ShouldSmartScroll(type))
-			{
-			(doc->GetTextEditor())->ScrollForDefinition(lang);
-			}
-		return true;
-		}
-	else if (foundSymbol)
 		{
+			(doc->GetTextEditor())->ScrollForDefinition(lang);
+		}
+		return true;
+	}
+	else if (foundSymbol)
+	{
 		auto* dir =
 			jnew CBSymbolSRDirector(this, itsProjDoc, itsSymbolList,
 									symbolList, name);
@@ -538,11 +538,11 @@ CBSymbolDirector::FindSymbol
 		dir->Activate();
 		itsSRList->Append(dir);
 		return true;
-		}
+	}
 	else
-		{
+	{
 		return cc || cf || dc || df || gc || gf || jc || jf || pc || pf;
-		}
+	}
 }
 
 /******************************************************************************
@@ -562,13 +562,13 @@ CBSymbolDirector::BuildAncestorList
 
 	const JSize count = theClass.GetParentCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		const CBClass* p;
 		if (theClass.GetParent(i, &p))
-			{
+		{
 			BuildAncestorList(*p, list);
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -640,10 +640,10 @@ CBSymbolDirector::BuildWindow
 	JPoint desktopLoc;
 	JCoordinate w,h;
 	if (CBGetPrefsManager()->GetWindowSize(kCBSymbolWindSizeID, &desktopLoc, &w, &h))
-		{
+	{
 		window->Place(desktopLoc.x, desktopLoc.y);
 		window->SetSize(w,h);
-		}
+	}
 
 	itsFileMenu = menuBar->AppendTextMenu(JGetString("FileMenuTitle::JXGlobal"));
 	itsFileMenu->SetMenuItems(kFileMenuStr, "CBSymbolDirector");
@@ -708,14 +708,14 @@ CBSymbolDirector::BuildWindow
 
 	itsToolBar->LoadPrefs();
 	if (itsToolBar->IsEmpty())
-		{
+	{
 		itsToolBar->AppendButton(itsFileMenu, kNewTextEditorCmd);
 		itsToolBar->AppendButton(itsFileMenu, kOpenSomethingCmd);
 		itsToolBar->NewGroup();
 		itsToolBar->AppendButton(itsSymbolMenu, kEditSearchPathsCmd);
 
 		CBGetApplication()->AppendHelpMenuToToolBar(itsToolBar, itsHelpMenu);
-		}
+	}
 }
 
 /******************************************************************************
@@ -743,75 +743,75 @@ CBSymbolDirector::Receive
 	)
 {
 	if (sender == itsFileMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		UpdateFileMenu();
-		}
+	}
 	else if (sender == itsFileMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleFileMenu(selection->GetIndex());
-		}
+	}
 
 	else if (sender == itsSymbolMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		UpdateSymbolMenu();
-		}
+	}
 	else if (sender == itsSymbolMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleSymbolMenu(selection->GetIndex());
-		}
+	}
 
 	else if (sender == itsProjectMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		UpdateProjectMenu();
-		}
+	}
 	else if (sender == itsProjectMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleProjectMenu(selection->GetIndex());
-		}
+	}
 
 	else if (sender == itsPrefsMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		UpdatePrefsMenu();
-		}
+	}
 	else if (sender == itsPrefsMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandlePrefsMenu(selection->GetIndex());
-		}
+	}
 
 	else if (sender == itsHelpMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		CBGetApplication()->UpdateHelpMenu(itsHelpMenu);
-		}
+	}
 	else if (sender == itsHelpMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		CBGetApplication()->HandleHelpMenu(itsHelpMenu, "CBSymbolHelp",
 											 selection->GetIndex());
-		}
+	}
 
 	else if (sender == itsProjDoc && message.Is(JXFileDocument::kNameChanged))
-		{
+	{
 		AdjustWindowTitle();
-		}
+	}
 
 	else
-		{
+	{
 		JXWindowDirector::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -839,34 +839,34 @@ CBSymbolDirector::HandleFileMenu
 	CBGetDocumentManager()->SetActiveProjectDocument(itsProjDoc);
 
 	if (index == kNewTextEditorCmd)
-		{
+	{
 		CBGetDocumentManager()->NewTextDocument();
-		}
+	}
 	else if (index == kNewTextTemplateCmd)
-		{
+	{
 		CBGetDocumentManager()->NewTextDocumentFromTemplate();
-		}
+	}
 	else if (index == kNewProjectCmd)
-		{
+	{
 		CBGetDocumentManager()->NewProjectDocument();
-		}
+	}
 	else if (index == kNewShellCmd)
-		{
+	{
 		CBGetDocumentManager()->NewShellDocument();
-		}
+	}
 	else if (index == kOpenSomethingCmd)
-		{
+	{
 		CBGetDocumentManager()->OpenSomething();
-		}
+	}
 
 	else if (index == kCloseCmd)
-		{
+	{
 		GetWindow()->Close();
-		}
+	}
 	else if (index == kQuitCmd)
-		{
+	{
 		JXGetApplication()->Quit();
-		}
+	}
 }
 
 /******************************************************************************
@@ -881,21 +881,21 @@ CBSymbolDirector::UpdateSymbolMenu()
 	itsSymbolMenu->EnableItem(kUpdateCurrentCmd);
 
 	if (!itsSymbolList->IsEmpty())
-		{
+	{
 //		itsSymbolMenu->EnableItem(kFindSymbolCmd);
-		}
+	}
 
 	if (itsSymbolTable->HasSelection())
-		{
+	{
 		itsSymbolMenu->EnableItem(kOpenFileCmd);
 		itsSymbolMenu->EnableItem(kCopySelNamesCmd);
 		itsSymbolMenu->EnableItem(kFindSelectedSymbolCmd);
-		}
+	}
 
 	if (HasSymbolBrowsers())
-		{
+	{
 		itsSymbolMenu->EnableItem(kCloseAllSymSRCmd);
-		}
+	}
 }
 
 /******************************************************************************
@@ -912,34 +912,34 @@ CBSymbolDirector::HandleSymbolMenu
 	CBGetDocumentManager()->SetActiveProjectDocument(itsProjDoc);
 
 	if (index == kEditSearchPathsCmd)
-		{
+	{
 		itsProjDoc->EditSearchPaths(this);
-		}
+	}
 	else if (index == kUpdateCurrentCmd)
-		{
+	{
 		itsProjDoc->UpdateSymbolDatabase();
-		}
+	}
 
 	else if (index == kOpenFileCmd)
-		{
+	{
 		itsSymbolTable->DisplaySelectedSymbols();
-		}
+	}
 	else if (index == kCopySelNamesCmd)
-		{
+	{
 		itsSymbolTable->CopySelectedSymbolNames();
-		}
+	}
 
 //	else if (index == kFindSymbolCmd)
 //		{
 //		}
 	else if (index == kFindSelectedSymbolCmd)
-		{
+	{
 		itsSymbolTable->FindSelectedSymbols(kJXRightButton);
-		}
+	}
 	else if (index == kCloseAllSymSRCmd)
-		{
+	{
 		CloseSymbolBrowsers();
-		}
+	}
 }
 
 /******************************************************************************
@@ -981,55 +981,55 @@ CBSymbolDirector::HandleProjectMenu
 	CBGetDocumentManager()->SetActiveProjectDocument(itsProjDoc);
 
 	if (index == kShowCTreeCmd)
-		{
+	{
 		itsProjDoc->GetCTreeDirector()->Activate();
-		}
+	}
 	else if (index == kShowDTreeCmd)
-		{
+	{
 		itsProjDoc->GetDTreeDirector()->Activate();
-		}
+	}
 	else if (index == kShowGoTreeCmd)
-		{
+	{
 		itsProjDoc->GetGoTreeDirector()->Activate();
-		}
+	}
 	else if (index == kShowJavaTreeCmd)
-		{
+	{
 		itsProjDoc->GetJavaTreeDirector()->Activate();
-		}
+	}
 	else if (index == kShowPHPTreeCmd)
-		{
+	{
 		itsProjDoc->GetPHPTreeDirector()->Activate();
-		}
+	}
 	else if (index == kViewManPageCmd)
-		{
+	{
 		CBGetViewManPageDialog()->Activate();
-		}
+	}
 
 	else if (index == kShowFileListCmd)
-		{
+	{
 		itsProjDoc->GetFileListDirector()->Activate();
-		}
+	}
 	else if (index == kFindFileCmd)
-		{
+	{
 		CBGetFindFileDialog()->Activate();
-		}
+	}
 	else if (index == kSearchFilesCmd)
-		{
+	{
 		CBGetSearchTextDialog()->Activate();
-		}
+	}
 	else if (index == kDiffFilesCmd)
-		{
+	{
 		CBGetDiffFileDialog()->Activate();
-		}
+	}
 
 	else if (index == kSaveAllTextCmd)
-		{
+	{
 		CBGetDocumentManager()->SaveTextDocuments(true);
-		}
+	}
 	else if (index == kCloseAllTextCmd)
-		{
+	{
 		CBGetDocumentManager()->CloseTextDocuments();
-		}
+	}
 }
 
 /******************************************************************************
@@ -1054,30 +1054,30 @@ CBSymbolDirector::HandlePrefsMenu
 	)
 {
 	if (index == kSymbolPrefsCmd)
-		{
+	{
 		EditPrefs();
-		}
+	}
 	else if (index == kToolBarPrefsCmd)
-		{
+	{
 		itsToolBar->Edit();
-		}
+	}
 	else if (index == kEditFileTypesCmd)
-		{
+	{
 		CBGetPrefsManager()->EditFileTypes();
-		}
+	}
 	else if (index == kChooseExtEditorsCmd)
-		{
+	{
 		CBGetDocumentManager()->ChooseEditors();
-		}
+	}
 	else if (index == kMiscPrefsCmd)
-		{
+	{
 		CBGetApplication()->EditMiscPrefs();
-		}
+	}
 
 	else if (index == kSaveWindSizeCmd)
-		{
+	{
 		CBGetPrefsManager()->SaveWindowSize(kCBSymbolWindSizeID, GetWindow());
-		}
+	}
 }
 
 /******************************************************************************
@@ -1109,9 +1109,9 @@ CBSymbolDirector::SetPrefs
 	itsRaiseTreeOnRightClickFlag = raiseTreeOnRightClick;
 
 	if (writePrefs)
-		{
+	{
 		JPrefObject::WritePrefs();
-		}
+	}
 }
 
 /******************************************************************************
@@ -1127,15 +1127,15 @@ CBSymbolDirector::ReceiveWithFeedback
 	)
 {
 	if (sender == itsCmdMenu && message->Is(CBCommandMenu::kGetTargetInfo))
-		{
+	{
 		auto* info =
 			dynamic_cast<CBCommandMenu::GetTargetInfo*>(message);
 		assert( info != nullptr );
 		itsSymbolTable->GetFileNamesForSelection(info->GetFileList(),
 												 info->GetLineIndexList());
-		}
+	}
 	else
-		{
+	{
 		JXWindowDirector::ReceiveWithFeedback(sender, message);
-		}
+	}
 }

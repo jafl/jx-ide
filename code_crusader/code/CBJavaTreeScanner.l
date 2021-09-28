@@ -6,10 +6,10 @@ This scanner reads a Java file and builds a CBJavaClass.
 */
 
 #include "CBJavaClass.h"
-#include <JPtrArray.h>
-#include <JStringIterator.h>
-#include <JFAID.h>
-#include <jAssert.h>
+#include <jx-af/jcore/JPtrArray.h>
+#include <jx-af/jcore/JStringIterator.h>
+#include <jx-af/jcore/JFAID.h>
+#include <jx-af/jcore/jAssert.h>
 }
 
 %option namespace="CB::Tree::Java" lexer="Scanner"

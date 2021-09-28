@@ -10,20 +10,20 @@
 #include "CBDiffDocument.h"
 #include "CBDiffEditor.h"
 #include "cbGlobals.h"
-#include <JXWindow.h>
-#include <JXMenuBar.h>
-#include <JXTextMenu.h>
-#include <JXTextButton.h>
-#include <JXScrollbarSet.h>
-#include <JStringIterator.h>
-#include <JProcess.h>
-#include <jFStreamUtil.h>
-#include <jStreamUtil.h>
-#include <jFileUtil.h>
-#include <jDirUtil.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXMenuBar.h>
+#include <jx-af/jx/JXTextMenu.h>
+#include <jx-af/jx/JXTextButton.h>
+#include <jx-af/jx/JXScrollbarSet.h>
+#include <jx-af/jcore/JStringIterator.h>
+#include <jx-af/jcore/JProcess.h>
+#include <jx-af/jcore/jFStreamUtil.h>
+#include <jx-af/jcore/jStreamUtil.h>
+#include <jx-af/jcore/jFileUtil.h>
+#include <jx-af/jcore/jDirUtil.h>
 #include <fcntl.h>
 #include <stdio.h>
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 const JSize kMenuButtonWidth = 70;
 
@@ -75,9 +75,9 @@ CBDiffDocument::CreatePlain
 	int tempFileFD, errFileFD;
 	JError err = CreateOutputFiles(&tempFileName, &tempFileFD, &errFileName, &errFileFD);
 	if (!err.OK())
-		{
+	{
 		return DiffFailed(err);
-		}
+	}
 
 	// start diff
 
@@ -87,16 +87,16 @@ CBDiffDocument::CreatePlain
 						   kJAttachToFD, &tempFileFD,
 						   kJAttachToFD, &errFileFD);
 	if (err.OK())
-		{
+	{
 		// let diff chug along while we load the contents of file 1
 
 		CBDiffDocument* doc = origDoc;
 		if (doc == nullptr)
-			{
+		{
 			doc = jnew CBDiffDocument(kPlainType, fullName, JString::empty, cmd, defStyle,
 									 name1, removeStyle, name2, insertStyle);
 			assert( doc != nullptr );
-			}
+		}
 		doc->Init(fullName);
 
 		// wait for diff to finish
@@ -105,7 +105,7 @@ CBDiffDocument::CreatePlain
 		p->WaitUntilFinished();
 		if (p->SuccessfulFinish() ||
 			(p->GetReturnValue(&result) && result == 1))
-			{
+		{
 			// read the output of diff
 
 			close(tempFileFD);
@@ -116,53 +116,53 @@ CBDiffDocument::CreatePlain
 
 			std::ifstream input(tempFileName.GetBytes());
 			if (length > 0 && !isdigit(input.peek()))
-				{
+			{
 				if (origDoc == nullptr)
-					{
+				{
 					doc->Close();
-					}
+				}
 				JString msg;
 				JReadAll(input, &msg);
 				if (!silent)
-					{
-					JGetUserNotification()->DisplayMessage(msg);
-					}
-				}
-			else if (length > 0)
 				{
+					JGetUserNotification()->DisplayMessage(msg);
+				}
+			}
+			else if (length > 0)
+			{
 				doc->ReadDiff(input);
 				input.close();
 
 				doc->Activate();
-				}
+			}
 			else
-				{
+			{
 				if (origDoc == nullptr)
-					{
+				{
 					doc->Close();
-					}
+				}
 				if (!silent)
-					{
+				{
 					JGetUserNotification()->DisplayMessage(JGetString("NoDiff::CBDiffDocument"));
-					}
 				}
 			}
+		}
 		else
-			{
+		{
 			if (origDoc == nullptr)
-				{
+			{
 				doc->Close();
-				}
+			}
 			close(errFileFD);
 			err = DiffFailed(errFileName, true);
-			}
+		}
 
 		jdelete p;
-		}
+	}
 	else
-		{
+	{
 		err = DiffFailed(err);
-		}
+	}
 
 	// clean up
 
@@ -210,9 +210,9 @@ CBDiffDocument::CreateCVS
 	int tempFileFD, errFileFD;
 	JError err = CreateOutputFiles(&tempFileName, &tempFileFD, &errFileName, &errFileFD);
 	if (!err.OK())
-		{
+	{
 		return DiffFailed(err);
-		}
+	}
 
 	// start diff
 
@@ -222,7 +222,7 @@ CBDiffDocument::CreateCVS
 						   kJAttachToFD, &tempFileFD,
 						   kJAttachToFD, &errFileFD);
 	if (err.OK())
-		{
+	{
 		// let diff chug along while we load the contents of file 1
 
 		JString s = JCombinePathAndName(diskPath, JString("CVS", JString::kNoCopy));
@@ -255,27 +255,27 @@ CBDiffDocument::CreateCVS
 							   kJIgnoreConnection, nullptr,
 							   kJCreatePipe, &errFD);
 		if (err.OK())
-			{
+		{
 			JString errOutput;
 			JReadAll(errFD, &errOutput);
 
 			p1->WaitUntilFinished();
 			if (!p1->SuccessfulFinish())
-				{
+			{
 				err = DiffFailed(errOutput, false);
-				}
 			}
+		}
 		jdelete p1;
 
 		const JString startFullName = JCombinePathAndName(tempPath, fileName);
 
 		CBDiffDocument* doc = origDoc;
 		if (doc == nullptr)
-			{
+		{
 			doc = jnew CBDiffDocument(kCVSType, fullName, getCmd, diffCmd, defStyle,
 									 name1, removeStyle, name2, insertStyle);
 			assert( doc != nullptr );
-			}
+		}
 		doc->Init(startFullName);
 
 		JKillDirectory(tempPath);
@@ -287,7 +287,7 @@ CBDiffDocument::CreateCVS
 		if (err.OK() &&		// could be set by checkout process
 			(p->SuccessfulFinish() ||
 			 (p->GetReturnValue(&result) && result == 1)))
-			{
+		{
 			// read the output of diff
 
 			close(tempFileFD);
@@ -297,82 +297,82 @@ CBDiffDocument::CreateCVS
 			assert_ok( err1 );
 
 			if (length == 0)
-				{
+			{
 				if (origDoc == nullptr)
-					{
+				{
 					doc->Close();
-					}
+				}
 
 				if ((JGetFileLength(errFileName, &length)).OK() && length > 0)
-					{
+				{
 					close(errFileFD);
 					err = DiffFailed(errFileName, true);
-					}
-				else if (!silent)
-					{
-					JGetUserNotification()->DisplayMessage(JGetString("NoDiff::CBDiffDocument"));
-					}
 				}
-			else
+				else if (!silent)
 				{
+					JGetUserNotification()->DisplayMessage(JGetString("NoDiff::CBDiffDocument"));
+				}
+			}
+			else
+			{
 				// skip lines until starts with digit
 
 				std::ifstream input1(tempFileName.GetBytes());
 
 				JString header;
 				while (!input1.eof() && !isdigit(input1.peek()))
-					{
+				{
 					header += JReadLine(input1);
 					header += "\n";
-					}
+				}
 
 				JString text;
 				JReadAll(input1, &text);
 				input1.close();
 
 				if (text.GetCharacterCount() > 0 && !text.GetFirstCharacter().IsDigit())
-					{
+				{
 					if (origDoc == nullptr)
-						{
+					{
 						doc->Close();
-						}
+					}
 					JString msg = header + text;
 					if (!silent)
-						{
-						JGetUserNotification()->DisplayMessage(msg);
-						}
-					}
-				else if (text.GetCharacterCount() > 0)
 					{
+						JGetUserNotification()->DisplayMessage(msg);
+					}
+				}
+				else if (text.GetCharacterCount() > 0)
+				{
 					icharbufstream input2(text.GetBytes(), text.GetByteCount());
 					doc->ReadDiff(input2);
 					doc->Activate();
-					}
+				}
 				else if (!silent)
-					{
+				{
 					JGetUserNotification()->DisplayMessage(JGetString("NoDiff::CBDiffDocument"));
-					}
 				}
 			}
+		}
 		else
-			{
+		{
 			if (origDoc == nullptr)
-				{
+			{
 				doc->Close();
-				}
+			}
 			close(errFileFD);
 			if (err.OK())	// could be set by checkout process
-				{
+			{
 				err = DiffFailed(errFileName, true);
-				}
 			}
+		}
 
 		jdelete p;
-		}
+	}
 	else
-		{
+	{
 		err = DiffFailed(err);
-		}
+	}
 
 	// clean up
 
@@ -415,9 +415,9 @@ CBDiffDocument::CreateSVN
 	int tempFileFD, errFileFD;
 	JError err = CreateOutputFiles(&tempFileName, &tempFileFD, &errFileName, &errFileFD);
 	if (!err.OK())
-		{
+	{
 		return DiffFailed(err);
-		}
+	}
 
 	// start diff
 
@@ -427,7 +427,7 @@ CBDiffDocument::CreateSVN
 						   kJAttachToFD, &tempFileFD,
 						   kJAttachToFD, &errFileFD);
 	if (err.OK())
-		{
+	{
 		// let diff chug along while we load the contents of file 1
 
 		JString startFullName;
@@ -435,16 +435,16 @@ CBDiffDocument::CreateSVN
 
 		CBDiffDocument* doc = origDoc;
 		if (doc == nullptr)
-			{
+		{
 			doc = jnew CBDiffDocument(kSVNType, fullName, getCmd, diffCmd, defStyle,
 									  name1, removeStyle, name2, insertStyle);
 			assert( doc != nullptr );
-			}
+		}
 		if (!startFullName.IsEmpty())
-			{
+		{
 			doc->Init(startFullName);
 			remove(startFullName.GetBytes());
-			}
+		}
 
 		// wait for diff to finish
 
@@ -453,7 +453,7 @@ CBDiffDocument::CreateSVN
 		if (err.OK() &&		// could be set by checkout process
 			(p->SuccessfulFinish() ||
 			 (p->GetReturnValue(&result) && result == 1)))
-			{
+		{
 			// read the output of diff
 
 			close(tempFileFD);
@@ -463,82 +463,82 @@ CBDiffDocument::CreateSVN
 			assert_ok( err1 );
 
 			if (length == 0)
-				{
+			{
 				if (origDoc == nullptr)
-					{
+				{
 					doc->Close();
-					}
+				}
 
 				if ((JGetFileLength(errFileName, &length)).OK() && length > 0)
-					{
+				{
 					close(errFileFD);
 					err = DiffFailed(errFileName, true);
-					}
-				else if (!silent)
-					{
-					JGetUserNotification()->DisplayMessage(JGetString("NoDiff::CBDiffDocument"));
-					}
 				}
-			else
+				else if (!silent)
 				{
+					JGetUserNotification()->DisplayMessage(JGetString("NoDiff::CBDiffDocument"));
+				}
+			}
+			else
+			{
 				// skip lines until starts with digit
 
 				std::ifstream input1(tempFileName.GetBytes());
 
 				JString header;
 				while (!input1.eof() && !isdigit(input1.peek()))
-					{
+				{
 					header += JReadLine(input1);
 					header += "\n";
-					}
+				}
 
 				JString text;
 				JReadAll(input1, &text);
 				input1.close();
 
 				if (text.GetCharacterCount() > 0 && !text.GetFirstCharacter().IsDigit())
-					{
+				{
 					if (origDoc == nullptr)
-						{
+					{
 						doc->Close();
-						}
+					}
 					JString msg = header + text;
 					if (!silent)
-						{
-						JGetUserNotification()->DisplayMessage(msg);
-						}
-					}
-				else if (text.GetCharacterCount() > 0)
 					{
+						JGetUserNotification()->DisplayMessage(msg);
+					}
+				}
+				else if (text.GetCharacterCount() > 0)
+				{
 					icharbufstream input2(text.GetBytes(), text.GetByteCount());
 					doc->ReadDiff(input2);
 					doc->Activate();
-					}
+				}
 				else if (!silent)
-					{
+				{
 					JGetUserNotification()->DisplayMessage(JGetString("NoDiff::CBDiffDocument"));
-					}
 				}
 			}
+		}
 		else
-			{
+		{
 			if (origDoc == nullptr)
-				{
+			{
 				doc->Close();
-				}
+			}
 			close(errFileFD);
 			if (err.OK())	// could be set by checkout process
-				{
+			{
 				err = DiffFailed(errFileName, true);
-				}
 			}
+		}
 
 		jdelete p;
-		}
+	}
 	else
-		{
+	{
 		err = DiffFailed(err);
-		}
+	}
 
 	// clean up
 
@@ -584,28 +584,28 @@ CBDiffDocument::CreateGit
 	JString f1, f2;
 	JError err = FillOutputFile(path, get1Cmd, &f1);
 	if (!err.OK())
-		{
+	{
 		return err;
-		}
+	}
 
 	bool removeF2 = false;
 	if (strncmp(get2Cmd.GetBytes(), "file:", 5) == 0)
-		{
+	{
 		f2.Set(get2Cmd.GetBytes() + 5);
-		}
+	}
 	else
-		{
+	{
 		err = FillOutputFile(path, get2Cmd, &f2);
 		if (!err.OK())
-			{
+		{
 			return err;
-			}
-		removeF2 = true;
 		}
+		removeF2 = true;
+	}
 
 	CBDiffDocument* doc = origDoc;
 	if (doc == nullptr)
-		{
+	{
 		JString getCmd = get1Cmd;
 		getCmd        += kGitCmdSeparator;
 		getCmd        += get2Cmd;
@@ -613,7 +613,7 @@ CBDiffDocument::CreateGit
 		doc = jnew CBDiffDocument(kGitType, fullName, getCmd, diffCmd, defStyle,
 								 name1, removeStyle, name2, insertStyle);
 		assert( doc != nullptr );
-		}
+	}
 
 	JString cmd = diffCmd;
 	cmd        += JPrepArgForExec(f1);
@@ -623,18 +623,18 @@ CBDiffDocument::CreateGit
 	err = CBDiffDocument::CreatePlain(f1, cmd, defStyle, name1, removeStyle,
 									  name2, insertStyle, silent, doc);
 	if ((!err.OK() && origDoc == nullptr) || !doc->IsActive())
-		{
+	{
 		doc->Close();
-		}
+	}
 
 	// clean up
 
 	remove(f1.GetBytes());
 
 	if (removeF2)
-		{
+	{
 		remove(f2.GetBytes());
-		}
+	}
 
 	return err;
 }
@@ -664,13 +664,13 @@ CBDiffDocument::DiffFailed::DiffFailed
 {
 	JString msg;
 	if (isFileName)
-		{
+	{
 		JReadFile(s, &msg);
-		}
+	}
 	else
-		{
+	{
 		msg = s;
-		}
+	}
 	SetMessage(msg);
 }
 
@@ -681,9 +681,9 @@ CBDiffDocument::DiffFailed::SetMessage
 	)
 {
 	const JUtf8Byte* map[] =
-		{
+	{
 		"err", msg.GetBytes()
-		};
+	};
 	JError::SetMessage(map, sizeof(map));
 }
 
@@ -703,9 +703,9 @@ CBDiffDocument::CreateOutputFiles
 {
 	JError err = JCreateTempFile(tempFileName);
 	if (!err.OK())
-		{
+	{
 		return err;
-		}
+	}
 	*tempFileFD = open(tempFileName->GetBytes(), O_WRONLY | O_CREAT | O_TRUNC
 					   #ifdef _J_UNIX
 					   , S_IRUSR | S_IWUSR
@@ -714,11 +714,11 @@ CBDiffDocument::CreateOutputFiles
 
 	err = JCreateTempFile(errFileName);
 	if (!err.OK())
-		{
+	{
 		close(*tempFileFD);
 		remove(tempFileName->GetBytes());
 		return err;
-		}
+	}
 	*errFileFD = open(errFileName->GetBytes(), O_WRONLY | O_CREAT | O_TRUNC
 					  #ifdef _J_UNIX
 					  , S_IRUSR | S_IWUSR
@@ -745,48 +745,48 @@ CBDiffDocument::FillOutputFile
 	int tempFileFD, errFileFD;
 	JError err = CreateOutputFiles(&tempFileName, &tempFileFD, &errFileName, &errFileFD);
 	if (err.OK())
-		{
+	{
 		JProcess* p;
 
 		if (!path.IsEmpty())
-			{
+		{
 			err = JProcess::Create(&p, path, cmd,
 								   kJIgnoreConnection, nullptr,
 								   kJAttachToFD, &tempFileFD,
 								   kJAttachToFD, &errFileFD);
-			}
+		}
 		else
-			{
+		{
 			err = JProcess::Create(&p, cmd,
 								   kJIgnoreConnection, nullptr,
 								   kJAttachToFD, &tempFileFD,
 								   kJAttachToFD, &errFileFD);
-			}
+		}
 
 		if (err.OK())
-			{
+		{
 			p->WaitUntilFinished();
 			if (!p->SuccessfulFinish())
-				{
+			{
 				err = DiffFailed(errFileName, true);
-				}
 			}
+		}
 		jdelete p;
 
 		close(tempFileFD);
 		close(errFileFD);
 		remove(errFileName.GetBytes());
-		}
+	}
 
 	if (err.OK())
-		{
+	{
 		*resultFullName = tempFileName;
-		}
+	}
 	else
-		{
+	{
 		resultFullName->Clear();
 		remove(tempFileName.GetBytes());
-		}
+	}
 	return err;
 }
 
@@ -892,10 +892,10 @@ CBDiffDocument::Init
 	// (must be before reading text to avoid styling based on content)
 
 	const JUtf8Byte* map[] =
-		{
+	{
 		"name1", itsName1.GetBytes(),
 		"name2", itsName2.GetBytes()
-		};
+	};
 	const JString windowTitle = JGetString("WindowTitle::CBDiffDocument", map, sizeof(map));
 	FileChanged(windowTitle, false);
 
@@ -906,13 +906,13 @@ CBDiffDocument::Init
 	// start with default style
 
 	if (!itsDiffEditor->GetText()->IsEmpty())
-		{
+	{
 		itsDiffEditor->GetText()->SetFontStyle(
 			JStyledText::TextRange(
 				JStyledText::TextIndex(1,1),
 				itsDiffEditor->GetText()->GetBeyondEnd()),
 			itsDefaultStyle, true);
-		}
+	}
 	itsDiffEditor->GetText()->SetDefaultFontStyle(itsDefaultStyle);
 
 	DataReverted();
@@ -945,13 +945,13 @@ CBDiffDocument::ReadDiff
 
 	JXFileDocument* doc;
 	if (CBGetDocumentManager()->FileDocumentIsOpen(itsFullName, &doc))
-		{
+	{
 		auto* textDoc = dynamic_cast<CBTextDocument*>(doc);
 		if (textDoc != nullptr)
-			{
+		{
 			itsDiffEditor->SetBreakCROnly(textDoc->GetTextEditor()->WillBreakCROnly());
-			}
 		}
+	}
 
 	itsDiffEditor->ShowFirstDiff();
 }
@@ -969,40 +969,40 @@ CBDiffDocument::Receive
 	)
 {
 	if (sender == itsDiffMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		UpdateDiffMenu();
-		}
+	}
 	else if (sender == itsDiffMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleDiffMenu(selection->GetIndex());
-		}
+	}
 
 	else if (sender == itsDiffButton && message.Is(JXButton::kPushed))
-		{
+	{
 		JError err = JNoError();
 		if (itsType == kPlainType)
-			{
+		{
 			err = CreatePlain(itsFullName, itsDiffCmd, itsDefaultStyle,
 							  itsName1, itsRemoveStyle, itsName2, itsInsertStyle,
 							  false, this);
-			}
+		}
 		else if (itsType == kCVSType)
-			{
+		{
 			err = CreateCVS(itsFullName, itsGetCmd, itsDiffCmd, itsDefaultStyle, 
 							itsName1, itsRemoveStyle, itsName2, itsInsertStyle,
 							false, this);
-			}
+		}
 		else if (itsType == kSVNType)
-			{
+		{
 			err = CreateSVN(itsFullName, itsGetCmd, itsDiffCmd, itsDefaultStyle, 
 							itsName1, itsRemoveStyle, itsName2, itsInsertStyle,
 							false, this);
-			}
+		}
 		else
-			{
+		{
 			assert( itsType == kGitType );
 
 			JPtrArray<JString> s(JPtrArrayT::kDeleteAll);
@@ -1013,14 +1013,14 @@ CBDiffDocument::Receive
 							itsDiffCmd, itsDefaultStyle, 
 							itsName1, itsRemoveStyle, itsName2, itsInsertStyle,
 							false, this);
-			}
-		err.ReportIfError();
 		}
+		err.ReportIfError();
+	}
 
 	else
-		{
+	{
 		CBTextDocument::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -1045,16 +1045,16 @@ CBDiffDocument::HandleDiffMenu
 	)
 {
 	if (index == kFirstDiffCmd)
-		{
+	{
 		itsDiffEditor->ShowFirstDiff();
-		}
+	}
 
 	else if (index == kPrevDiffCmd)
-		{
+	{
 		itsDiffEditor->ShowPrevDiff();
-		}
+	}
 	else if (index == kNextDiffCmd)
-		{
+	{
 		itsDiffEditor->ShowNextDiff();
-		}
+	}
 }

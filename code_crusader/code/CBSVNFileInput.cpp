@@ -10,9 +10,9 @@
  ******************************************************************************/
 
 #include "CBSVNFileInput.h"
-#include <JColorManager.h>
-#include <jWebUtil.h>
-#include <jAssert.h>
+#include <jx-af/jcore/JColorManager.h>
+#include <jx-af/jcore/jWebUtil.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -61,7 +61,7 @@ CBSVNFileInput::StyledText::AdjustStylesBeforeBroadcast
 	)
 {
 	if (JIsURL(text))
-		{
+	{
 		const JSize totalLength = text.GetCharacterCount();
 		JFont f                 = styles->GetFirstElement();
 		styles->RemoveAll();
@@ -71,10 +71,10 @@ CBSVNFileInput::StyledText::AdjustStylesBeforeBroadcast
 		*recalcRange = *redrawRange = JStyledText::TextRange(
 			JCharacterRange(1, totalLength),
 			JUtf8ByteRange(1, text.GetByteCount()));
-		}
+	}
 	else
-		{
+	{
 		return JXFileInput::StyledText::AdjustStylesBeforeBroadcast(
 			text, styles, recalcRange, redrawRange, deletion);
-		}
+	}
 }

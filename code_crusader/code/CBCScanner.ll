@@ -6,7 +6,7 @@ This scanner reads a C/C++ file and returns CB::Text::C::Scanner::Tokens.
 */
 
 #include "CBStylingScannerBase.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 }
 
 %option namespace="CB::Text::C" lexer="Scanner"

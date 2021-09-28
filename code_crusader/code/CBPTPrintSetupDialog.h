@@ -8,7 +8,7 @@
 #ifndef _H_CBPTPrintSetupDialog
 #define _H_CBPTPrintSetupDialog
 
-#include <JXPTPrintSetupDialog.h>
+#include <jx-af/jx/JXPTPrintSetupDialog.h>
 
 class CBPTPrintSetupDialog : public JXPTPrintSetupDialog
 {

@@ -8,9 +8,9 @@
 #ifndef _H_CBPTPrinter
 #define _H_CBPTPrinter
 
-#include <JXPTPrinter.h>
-#include <JPrefObject.h>
-#include <JString.h>
+#include <jx-af/jx/JXPTPrinter.h>
+#include <jx-af/jcore/JPrefObject.h>
+#include <jx-af/jcore/JString.h>
 
 class CBPTPrintSetupDialog;
 

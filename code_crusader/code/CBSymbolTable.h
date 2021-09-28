@@ -10,7 +10,7 @@
 #ifndef _H_CBSymbolTable
 #define _H_CBSymbolTable
 
-#include <JXTable.h>
+#include <jx-af/jx/JXTable.h>
 
 class JError;
 class JString;

@@ -8,8 +8,8 @@
 #ifndef _H_CMCommandDirector
 #define _H_CMCommandDirector
 
-#include <JXWindowDirector.h>
-#include <JPtrArray-JString.h>
+#include <jx-af/jx/JXWindowDirector.h>
+#include <jx-af/jcore/JPtrArray-JString.h>
 
 class JXMenuBar;
 class JXTextMenu;

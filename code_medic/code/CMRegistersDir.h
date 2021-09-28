@@ -8,7 +8,7 @@
 #ifndef _H_CMRegistersDir
 #define _H_CMRegistersDir
 
-#include <JXWindowDirector.h>
+#include <jx-af/jx/JXWindowDirector.h>
 
 class JXTextMenu;
 class JXStaticText;

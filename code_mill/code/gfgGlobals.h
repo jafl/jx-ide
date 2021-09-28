@@ -8,13 +8,13 @@
 #ifndef _H_gfgGlobals
 #define _H_gfgGlobals
 
-#include <jXGlobals.h>
+#include <jx-af/jx/jXGlobals.h>
 
 // we include these for convenience
 
 #include "GFGApp.h"
 #include "GFGPrefsManager.h"
-#include <JXDocumentManager.h>
+#include <jx-af/jx/JXDocumentManager.h>
 
 class GFGMDIServer;
 

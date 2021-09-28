@@ -10,14 +10,14 @@
 #include "CMDockManager.h"
 #include "CMCommandDirector.h"
 #include "cmGlobals.h"
-#include <JXDockDirector.h>
-#include <JXWindow.h>
-#include <JXHorizDockPartition.h>
-#include <JXVertDockPartition.h>
-#include <JXDockWidget.h>
-#include <JXImage.h>
+#include <jx-af/jx/JXDockDirector.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXHorizDockPartition.h>
+#include <jx-af/jx/JXVertDockPartition.h>
+#include <jx-af/jx/JXDockWidget.h>
+#include <jx-af/jx/JXImage.h>
 #include "medic_command_window.xpm"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -67,9 +67,9 @@ void
 CMDockManager::DockAll()
 {
 	if (!GetDockList()->IsEmpty())
-		{
+	{
 		return;
-		}
+	}
 
 	JXDockDirector* dir = CreateDock(true);
 

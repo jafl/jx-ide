@@ -13,12 +13,12 @@
 #include "CBFileListTable.h"
 #include "CBDiffFileDialog.h"
 #include "cbGlobals.h"
-#include <JXWebBrowser.h>
-#include <JProgressDisplay.h>
-#include <jFStreamUtil.h>
-#include <jFileUtil.h>
-#include <jVCSUtil.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXWebBrowser.h>
+#include <jx-af/jcore/JProgressDisplay.h>
+#include <jx-af/jcore/jFStreamUtil.h>
+#include <jx-af/jcore/jFileUtil.h>
+#include <jx-af/jcore/jVCSUtil.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -66,13 +66,13 @@ CBFileNode::OpenFile()
 {
 	JString fullName;
 	if (GetFullName(&fullName))
-		{
+	{
 		CBGetDocumentManager()->OpenSomething(fullName);
-		}
+	}
 	else
-		{
+	{
 		ReportNotFound();
-		}
+	}
 }
 
 /******************************************************************************
@@ -97,21 +97,21 @@ CBFileNode::ParseFiles
 {
 	JString fullName, trueName;
 	if (GetFullName(&fullName) && JGetTrueName(fullName, &trueName))
-		{
+	{
 		if (!ParseFile(trueName, parser, allSuffixList, symbolList, cTree, dTree, goTree, javaTree, phpTree, pg))
-			{
+		{
 			return false;
-			}
+		}
 
 		const CBTextFileType type = CBGetPrefsManager()->GetFileType(trueName);
 		if (CBGetDocumentManager()->GetComplementFile(trueName, type, &fullName,
 														GetProjectDoc(), false) &&
 			JGetTrueName(fullName, &trueName) &&
 			!ParseFile(trueName, parser, allSuffixList, symbolList, cTree, dTree, goTree, javaTree, phpTree, pg))
-			{
+		{
 			return false;
-			}
 		}
+	}
 	return CBFileNodeBase::ParseFiles(parser, allSuffixList, symbolList, cTree, dTree, goTree, javaTree, phpTree, pg);
 }
 
@@ -154,26 +154,26 @@ CBFileNode::OpenComplementFile()
 {
 	JString fullName;
 	if (GetFullName(&fullName))
-		{
+	{
 		const CBTextFileType type = CBGetPrefsManager()->GetFileType(fullName);
 		if (type == kCBHTMLFT || type == kCBXMLFT)
-			{
+		{
 			JXGetWebBrowser()->ShowFileContent(fullName);
-			}
-		else
-			{
-			CBGetDocumentManager()->OpenComplementFile(fullName, type);
-			}
 		}
+		else
+		{
+			CBGetDocumentManager()->OpenComplementFile(fullName, type);
+		}
+	}
 	else
-		{
+	{
 		const JUtf8Byte* map[] =
-		{
+	{
 			"name", GetFileName().GetBytes()
-		};
+	};
 		const JString msg = JGetString("ComplFileNotFound::CBFileNode", map, sizeof(map));
 		JGetUserNotification()->ReportError(msg);
-		}
+	}
 }
 
 /******************************************************************************
@@ -190,13 +190,13 @@ CBFileNode::ViewPlainDiffs
 {
 	JString fullName;
 	if (GetFullName(&fullName))
-		{
+	{
 		CBGetDiffFileDialog()->ViewDiffs(true, fullName, silent);
-		}
+	}
 	else
-		{
+	{
 		ReportNotFound();
-		}
+	}
 }
 
 /******************************************************************************
@@ -213,13 +213,13 @@ CBFileNode::ViewVCSDiffs
 {
 	JString fullName;
 	if (GetFullName(&fullName))
-		{
+	{
 		(CBGetDiffFileDialog())->ViewVCSDiffs(fullName, silent);
-		}
+	}
 	else
-		{
+	{
 		ReportNotFound();
-		}
+	}
 }
 
 /******************************************************************************
@@ -242,7 +242,7 @@ CBFileNode::CreateFilesForTemplate
 	bool exists;
 	input >> JBoolFromString(exists);
 	if (exists)
-		{
+	{
 		JString relName, data;
 		input >> relName >> data;
 
@@ -256,50 +256,50 @@ CBFileNode::CreateFilesForTemplate
 		path = JCombinePathAndName(basePath, path);
 
 		if (!JDirectoryExists(path))
-			{
+		{
 			const JError err = JCreateDirectory(path);
 			if (!err.OK())
-				{
+			{
 				const JUtf8Byte* map[] =
-				{
+			{
 					"name", relName.GetBytes(),
 					"err",  err.GetMessage().GetBytes()
-				};
+			};
 				const JString msg = JGetString("CreateFileFailedWithError::CBFileNode", map, sizeof(map));
 				JGetUserNotification()->ReportError(msg);
 				return;
-				}
 			}
+		}
 
 		const JString fullName = JCombinePathAndName(path, name);
 		if (JFileExists(fullName))
-			{
+		{
 			const JUtf8Byte* map[] =
-			{
+		{
 				"name", fullName.GetBytes()
-			};
+		};
 			const JString msg = JGetString("WarnReplaceFile::CBFileNode", map, sizeof(map));
 			if (!JGetUserNotification()->AskUserNo(msg))
-				{
+			{
 				return;
-				}
 			}
+		}
 
 		std::ofstream output(fullName.GetBytes());
 		if (output.good())
-			{
+		{
 			data.Print(output);
-			}
+		}
 		else
-			{
+		{
 			const JUtf8Byte* map[] =
-			{
+		{
 				"name", relName.GetBytes()
-			};
+		};
 			const JString msg = JGetString("CreateFileFailed::CBFileNode", map, sizeof(map));
 			JGetUserNotification()->ReportError(msg);
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -325,13 +325,13 @@ CBFileNode::SaveFilesInTemplate
 	const JString& relName = GetFileName();
 	JString fullName;
 	if (relName.BeginsWith(kPathPrefix) && GetFullName(&fullName))
-		{
+	{
 		JString data;
 		JReadFile(fullName, &data);
 		output << JBoolToString(true) << ' ' << relName << ' ' << data;
-		}
+	}
 	else
-		{
+	{
 		output << JBoolToString(false);
-		}
+	}
 }

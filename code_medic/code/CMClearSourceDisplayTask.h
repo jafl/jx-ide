@@ -8,7 +8,7 @@
 #ifndef _H_CMClearSourceDisplayTask
 #define _H_CMClearSourceDisplayTask
 
-#include <JXUrgentTask.h>
+#include <jx-af/jx/JXUrgentTask.h>
 
 class CMSourceDirector;
 

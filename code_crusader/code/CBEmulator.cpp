@@ -8,7 +8,7 @@
 #include "CBEmulator.h"
 #include "CBVIKeyHandler.h"
 #include "CBTextEditor.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  CBInstallEmulator
@@ -26,10 +26,10 @@ CBInstallEmulator
 	*handler = nullptr;
 
 	if (type == kCBVIEmulator)
-		{
+	{
 		*handler = jnew CBVIKeyHandler(editor);
 		assert( *handler != nullptr );
-		}
+	}
 
 	editor->SetKeyHandler(*handler);
 	return *handler != nullptr;

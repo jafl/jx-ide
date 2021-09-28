@@ -10,11 +10,11 @@
 #include "CMArray2DCommand.h"
 #include "CMArray2DDir.h"
 #include "CMVarNode.h"
-#include <JXStringTable.h>
-#include <JXColorManager.h>
-#include <JStringTableData.h>
-#include <JStyleTableData.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXStringTable.h>
+#include <jx-af/jx/JXColorManager.h>
+#include <jx-af/jcore/JStringTableData.h>
+#include <jx-af/jcore/JStyleTableData.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -89,10 +89,10 @@ CMArray2DCommand::HandleFailure
 	const JIndex max =
 		(itsType == kRow ? itsData->GetColCount() : itsData->GetRowCount());
 	if (max == 0 || !ItsIndexValid())
-		{
+	{
 		itsDirector->UpdateNext();
 		return;
-		}
+	}
 
 	// ugly, but much faster
 	auto* styleData =
@@ -100,45 +100,45 @@ CMArray2DCommand::HandleFailure
 	const JFontStyle style = CMVarNode::GetFontStyle(false, false);
 
 	if (startIndex == 1)
-		{
+	{
 		JString s(value);
 
 		JPtrArray<JString> data(JPtrArrayT::kForgetAll, max);
 		for (JIndex i=1; i<=max; i++)
-			{
+		{
 			data.Append(&s);
-			}
+		}
 
 		if (itsType == kRow)
-			{
+		{
 			itsData->SetRow(itsIndex, data);
 			styleData->SetRow(itsIndex, style);
-			}
+		}
 		else
-			{
+		{
 			itsData->SetCol(itsIndex, data);
 			styleData->SetCol(itsIndex, style);
-			}
 		}
+	}
 	else
-		{
+	{
 		for (JIndex i=startIndex; i<=max; i++)
-			{
+		{
 			itsData->SetString(GetCell(i), value);
-			}
+		}
 
 		if (!value.IsEmpty())
-			{
+		{
 			if (itsType == kRow)
-				{
+			{
 				styleData->SetPartialRow(itsIndex, startIndex, max, style);
-				}
+			}
 			else
-				{
+			{
 				styleData->SetPartialCol(itsIndex, startIndex, max, style);
-				}
 			}
 		}
+	}
 
 	itsDirector->UpdateNext();
 }
@@ -157,13 +157,13 @@ CMArray2DCommand::GetCell
 {
 	JPoint cell;
 	if (itsType == kRow)
-		{
+	{
 		cell.Set(i, itsIndex);
-		}
+	}
 	else
-		{
+	{
 		cell.Set(itsIndex, i);
-		}
+	}
 	return cell;
 }
 
@@ -177,13 +177,13 @@ CMArray2DCommand::ItsIndexValid()
 	const
 {
 	if (itsType == kRow)
-		{
+	{
 		return itsData->RowIndexValid(itsIndex) &&
 					itsDirector->ArrayRowIndexValid(itsArrayIndex);
-		}
+	}
 	else
-		{
+	{
 		return itsData->ColIndexValid(itsIndex) &&
 					itsDirector->ArrayColIndexValid(itsArrayIndex);
-		}
+	}
 }

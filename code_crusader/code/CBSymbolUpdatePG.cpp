@@ -9,7 +9,7 @@
 
 #include "CBSymbolUpdatePG.h"
 #include "CBProjectDocument.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -60,15 +60,15 @@ CBSymbolUpdatePG::ProcessBeginning
 									   allowCancel, allowBackground);
 
 	if (processType == kVariableLengthProcess)
-		{
+	{
 		itsLink << CBProjectDocument::kVariableLengthStart;
-		}
+	}
 	else
-		{
+	{
 		assert( processType == kFixedLengthProcess );
 		itsLink << CBProjectDocument::kFixedLengthStart;
 		itsLink << ' ' << stepCount;
-		}
+	}
 
 	itsLink << ' ' << JString(message) << std::endl;
 }
@@ -92,9 +92,9 @@ CBSymbolUpdatePG::IncrementProgress
 	const JSize stepCount = GetCurrentStepCount();
 
 	if (stepCount % itsScaleFactor == 0)
-		{
+	{
 		itsLink << CBProjectDocument::kProgressIncrement << ' ' << itsScaleFactor << std::endl;
-		}
+	}
 
 	return ProcessContinuing();
 }
@@ -144,13 +144,13 @@ void
 CBSymbolUpdatePG::ProcessFinished()
 {
 	if (GetCurrentProcessType() == kFixedLengthProcess)
-		{
+	{
 		const JSize delta = GetCurrentStepCount() % itsScaleFactor;
 		if (delta > 0)
-			{
+		{
 			itsLink << CBProjectDocument::kProgressIncrement << ' ' << delta << std::endl;
-			}
 		}
+	}
 
 	JProgressDisplay::ProcessFinished();
 }

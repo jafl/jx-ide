@@ -8,8 +8,8 @@
 #ifndef _H_CBDirList
 #define _H_CBDirList
 
-#include <JContainer.h>
-#include <JPtrArray-JString.h>
+#include <jx-af/jcore/JContainer.h>
+#include <jx-af/jcore/JPtrArray-JString.h>
 
 struct CBDirInfo
 {

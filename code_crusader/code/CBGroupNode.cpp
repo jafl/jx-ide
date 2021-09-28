@@ -9,8 +9,8 @@
 
 #include "CBGroupNode.h"
 #include "CBProjectTree.h"
-#include <jGlobals.h>
-#include <jAssert.h>
+#include <jx-af/jcore/jGlobals.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -29,9 +29,9 @@ CBGroupNode::CBGroupNode
 	CBProjectNode(tree, kCBGroupNT, JGetString("NewGroupName::CBGroupNode"), true)
 {
 	if (tree != nullptr && append)
-		{
+	{
 		(tree->GetRoot())->Append(this);
-		}
+	}
 }
 
 CBGroupNode::CBGroupNode
@@ -84,9 +84,9 @@ CBGroupNode::ShowFileLocation()
 {
 	const JSize count = GetChildCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		(GetProjectChild(i))->ShowFileLocation();
-		}
+	}
 }
 
 /******************************************************************************
@@ -104,9 +104,9 @@ CBGroupNode::ViewPlainDiffs
 	const JSize count     = GetChildCount();
 	const bool silent = origSilent || count > 1;
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		(GetProjectChild(i))->ViewPlainDiffs(silent);
-		}
+	}
 }
 
 /******************************************************************************
@@ -124,7 +124,7 @@ CBGroupNode::ViewVCSDiffs
 	const JSize count     = GetChildCount();
 	const bool silent = origSilent || count > 1;
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		(GetProjectChild(i))->ViewVCSDiffs(silent);
-		}
+	}
 }

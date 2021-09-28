@@ -8,7 +8,7 @@
 #ifndef _H_CBListChooseSaveFile
 #define _H_CBListChooseSaveFile
 
-#include <JXChooseSaveFile.h>
+#include <jx-af/jx/JXChooseSaveFile.h>
 
 class CBListChooseFileDialog;
 

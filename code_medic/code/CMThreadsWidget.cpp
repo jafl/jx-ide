@@ -14,16 +14,16 @@
 #include "CMGetThreads.h"
 #include "CMGetThread.h"
 #include "cmGlobals.h"
-#include <JXWindow.h>
-#include <JXDeleteObjectTask.h>
-#include <JTree.h>
-#include <JNamedTreeList.h>
-#include <JTableSelection.h>
-#include <JPainter.h>
-#include <JFontManager.h>
-#include <JListUtil.h>
-#include <jASCIIConstants.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXDeleteObjectTask.h>
+#include <jx-af/jcore/JTree.h>
+#include <jx-af/jcore/JNamedTreeList.h>
+#include <jx-af/jcore/JTableSelection.h>
+#include <jx-af/jcore/JPainter.h>
+#include <jx-af/jcore/JFontManager.h>
+#include <jx-af/jcore/JListUtil.h>
+#include <jx-af/jcore/jASCIIConstants.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -118,30 +118,30 @@ CMThreadsWidget::SelectThread1
 
 	const JSize count = root->GetChildCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		const auto* node =
 			dynamic_cast<const CMThreadNode*>(root->GetChild(i));
 		assert( node != nullptr );
 
 		if (node->GetID() == id)
-			{
+		{
 			JIndex j;
 			const bool found = list->FindNode(node, &j);
 			if (found)
-				{
+			{
 				itsSelectingThreadFlag = true;
 				SelectSingleCell(JPoint(GetNodeColIndex(), j));
 				itsSelectingThreadFlag = false;
-				}
+			}
 
 			return true;
-			}
+		}
 
 		if (SelectThread1(node, id))
-			{
+		{
 			return true;
-			}
 		}
+	}
 
 	return false;
 }
@@ -159,13 +159,13 @@ CMThreadsWidget::AdjustCursor
 	)
 {
 	if (itsIsWaitingForReloadFlag)
-		{
+	{
 		DisplayCursor(kJXBusyCursor);
-		}
+	}
 	else
-		{
+	{
 		JXNamedTreeListWidget::AdjustCursor(pt, modifiers);
-		}
+	}
 }
 
 /******************************************************************************
@@ -188,14 +188,14 @@ CMThreadsWidget::HandleMouseDown
 	JPoint cell;
 	if (ScrollForWheel(button, modifiers) ||
 		!GetCell(pt, &cell))
-		{
+	{
 		return;
-		}
+	}
 
 	if (JIndex(cell.x) != GetToggleOpenColIndex())
-		{
+	{
 		if (modifiers.meta())
-			{
+		{
 			const JTreeNode* node = GetTreeList()->GetNode(cell.y);
 			const auto* threadNode =
 				dynamic_cast<const CMThreadNode*>(node);
@@ -204,25 +204,25 @@ CMThreadsWidget::HandleMouseDown
 			JString fileName;
 			JIndex lineIndex;
 			if (threadNode->GetFile(&fileName, &lineIndex))
-				{
-				itsCommandDir->OpenSourceFile(fileName, lineIndex);
-				}
-			else
-				{
-				JGetUserNotification()->ReportError(JGetString("NoSourceFile::CMThreadsWidget"));
-				}
-			}
-		else
 			{
-			SelectSingleCell(JPoint(GetNodeColIndex(), cell.y));
+				itsCommandDir->OpenSourceFile(fileName, lineIndex);
+			}
+			else
+			{
+				JGetUserNotification()->ReportError(JGetString("NoSourceFile::CMThreadsWidget"));
 			}
 		}
-	else
+		else
 		{
+			SelectSingleCell(JPoint(GetNodeColIndex(), cell.y));
+		}
+	}
+	else
+	{
 		itsSelectingThreadFlag = true;		// ignore selection changes during open/close
 		JXNamedTreeListWidget::HandleMouseDown(pt, button, clickCount, buttonStates, modifiers);
 		itsSelectingThreadFlag = false;
-		}
+	}
 }
 
 /******************************************************************************
@@ -258,30 +258,30 @@ CMThreadsWidget::HandleKeyPress
 	)
 {
 	if (c == kJUpArrow)
-		{
+	{
 		if (!SelectNextThread(-1) && GetRowCount() > 0)
-			{
+		{
 			SelectSingleCell(JPoint(GetNodeColIndex(), GetRowCount()));
-			}
-		ClearIncrementalSearchBuffer();
 		}
+		ClearIncrementalSearchBuffer();
+	}
 	else if (c == kJDownArrow)
-		{
+	{
 		if (!SelectNextThread(+1) && GetRowCount() > 0)
-			{
-			SelectSingleCell(JPoint(GetNodeColIndex(), 1));
-			}
-		ClearIncrementalSearchBuffer();
-		}
-	else
 		{
+			SelectSingleCell(JPoint(GetNodeColIndex(), 1));
+		}
+		ClearIncrementalSearchBuffer();
+	}
+	else
+	{
 		if (c == kJLeftArrow || c == kJRightArrow)
-			{
+		{
 			itsSelectingThreadFlag = true;		// ignore selection changes during open/close
-			}
+		}
 		JXNamedTreeListWidget::HandleKeyPress(c, keySym, modifiers);
 		itsSelectingThreadFlag = false;
-		}
+	}
 }
 
 /******************************************************************************
@@ -299,19 +299,19 @@ CMThreadsWidget::SelectNextThread
 
 	JPoint cell;
 	if (s.GetFirstSelectedCell(&cell))
-		{
+	{
 		cell.y += delta;
 		if (RowIndexValid(cell.y))
-			{
+		{
 			SelectSingleCell(cell);
-			}
+		}
 
 		return true;
-		}
+	}
 	else
-		{
+	{
 		return false;
-		}
+	}
 }
 
 /******************************************************************************
@@ -327,49 +327,49 @@ CMThreadsWidget::Receive
 	)
 {
 	if (sender == itsLink && message.Is(CMLink::kThreadChanged))
-		{
+	{
 		if (ShouldRebuild())
-			{
+		{
 			itsIsWaitingForReloadFlag = true;
 			itsGetCurrentThreadCmd->Send();
-			}
-		else
-			{
-			itsNeedsUpdateFlag = true;
-			}
 		}
-	else if (sender == itsLink && message.Is(CMLink::kThreadListChanged))
+		else
 		{
+			itsNeedsUpdateFlag = true;
+		}
+	}
+	else if (sender == itsLink && message.Is(CMLink::kThreadListChanged))
+	{
 		itsFlushWhenRunFlag = false;
 		if (!itsIsWaitingForReloadFlag)
-			{
+		{
 			SaveOpenNodes();
 			Rebuild();
-			}
 		}
+	}
 
 	else if (sender == itsLink &&
 			 ((message.Is(CMLink::kProgramRunning) && itsFlushWhenRunFlag) ||
 			  message.Is(CMLink::kProgramFinished) ||
 			  message.Is(CMLink::kDetachedFromProcess)))
-		{
+	{
 		itsIsWaitingForReloadFlag = false;
 		FlushOldData();
-		}
+	}
 	else if (sender == itsLink && message.Is(CMLink::kCoreCleared))
-		{
+	{
 		// When the user has set a breakpoint at the same location as the
 		// tbreak for obtaining the PID, then we will only get ProgramStopped
 		// before CoreCleared.  We must not discard our data in this case.
 
 		if (!itsLink->IsDebugging())
-			{
+		{
 			FlushOldData();
-			}
 		}
+	}
 
 	else if (sender == itsLink && message.Is(CMLink::kProgramStopped))
-		{
+	{
 		// This is triggered when gdb prints file:line info.
 		// (It would be nice to avoid this if only the frame changed,
 		//  but we can't merely set a flag when we get kFrameChanged
@@ -379,22 +379,22 @@ CMThreadsWidget::Receive
 		itsChangingThreadFlag      = false;
 
 		if (!wasChanging)
-			{
-			Rebuild();
-			}
-		}
-	else if (sender == itsLink && message.Is(CMLink::kFrameChanged))
 		{
+			Rebuild();
+		}
+	}
+	else if (sender == itsLink && message.Is(CMLink::kFrameChanged))
+	{
 		// We don't need to rebuild our list when we get the next
 		// ProgramStopped message.
 
 		itsChangingThreadFlag = true;
-		}
+	}
 
 	else if (sender == itsLink &&
 			 (message.Is(CMLink::kCoreLoaded) ||
 			  message.Is(CMLink::kAttachedToProcess)))
-		{
+	{
 		itsNeedsUpdateFlag = true;
 
 //		We can't do this because gdb often reports threads when a core file
@@ -403,22 +403,22 @@ CMThreadsWidget::Receive
 //		CMCheckForThreads* cmd = jnew CMCheckForThreads(itsThreadDir);
 //		assert( cmd != nullptr );
 //		cmd->Send();
-		}
+	}
 
 	else if (sender == GetWindow() && message.Is(JXWindow::kDeiconified))
-		{
+	{
 		Update();
-		}
+	}
 
 	else
-		{
+	{
 		JTableSelection& s = GetTableSelection();
 
 		JPoint cell;
 		if (!itsSelectingThreadFlag &&
 			sender == &s && message.Is(JTableData::kRectChanged) &&
 			s.GetFirstSelectedCell(&cell))
-			{
+		{
 			const JTreeNode* node = GetTreeList()->GetNode(cell.y);
 			const auto* threadNode =
 				dynamic_cast<const CMThreadNode*>(node);
@@ -426,10 +426,10 @@ CMThreadsWidget::Receive
 
 			itsChangingThreadFlag = true;
 			itsLink->SwitchToThread(threadNode->GetID());
-			}
+		}
 
 		JXNamedTreeListWidget::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -444,7 +444,7 @@ CMThreadsWidget::ReceiveGoingAway
 	)
 {
 	if (sender == itsLink && !CMIsShuttingDown())
-		{
+	{
 		itsLink = CMGetLink();
 		ListenTo(itsLink);
 
@@ -459,11 +459,11 @@ CMThreadsWidget::ReceiveGoingAway
 
 		jdelete itsOpenIDList;
 		itsOpenIDList = nullptr;
-		}
+	}
 	else
-		{
+	{
 		JXNamedTreeListWidget::ReceiveGoingAway(sender);
-		}
+	}
 }
 
 /******************************************************************************
@@ -476,9 +476,9 @@ CMThreadsWidget::Update()
 {
 	if ((itsLink->HasCore() || itsLink->ProgramIsStopped()) &&
 		itsNeedsUpdateFlag)
-		{
+	{
 		Rebuild();
-		}
+	}
 }
 
 /******************************************************************************
@@ -502,16 +502,16 @@ void
 CMThreadsWidget::Rebuild()
 {
 	if (ShouldRebuild())
-		{
+	{
 		itsIsWaitingForReloadFlag = true;
 		itsNeedsUpdateFlag        = false;
 		FlushOldData();
 		itsGetThreadsCmd->Send();
-		}
+	}
 	else
-		{
+	{
 		itsNeedsUpdateFlag = true;
-		}
+	}
 }
 
 /******************************************************************************
@@ -539,15 +539,15 @@ void
 CMThreadsWidget::SaveOpenNodes()
 {
 	if (itsOpenIDList == nullptr)
-		{
+	{
 		itsOpenIDList = jnew JArray<JUInt64>();
 		assert( itsOpenIDList != nullptr );
 		itsOpenIDList->SetCompareFunction(JCompareUInt64);
-		}
+	}
 	else
-		{
+	{
 		itsOpenIDList->RemoveAll();
-		}
+	}
 
 	itsDisplayState = SaveDisplayState();
 	SaveOpenNodes1(itsTree->GetRoot());
@@ -568,17 +568,17 @@ CMThreadsWidget::SaveOpenNodes1
 
 	const JSize count = root->GetChildCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		JTreeNode* child = root->GetChild(i);
 		if (list->IsOpen(child))
-			{
+		{
 			auto* threadNode = dynamic_cast<CMThreadNode*>(child);
 			assert( threadNode != nullptr );
 			itsOpenIDList->InsertSorted(threadNode->GetID());
-			}
+		}
 
 		SaveOpenNodes1(child);
-		}
+	}
 }
 
 /******************************************************************************
@@ -596,16 +596,16 @@ CMThreadsWidget::RestoreOpenNodes
 
 	const JSize count = root->GetChildCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		auto* child = dynamic_cast<CMThreadNode*>(root->GetChild(i));
 		JIndex j;
 		if (itsOpenIDList->SearchSorted(child->GetID(), JListT::kAnyMatch, &j))
-			{
+		{
 			list->Open(child);
-			}
+		}
 
 		RestoreOpenNodes(child);
-		}
+	}
 }
 
 /******************************************************************************
@@ -620,21 +620,21 @@ CMThreadsWidget::FinishedLoading
 	)
 {
 	if (!itsIsWaitingForReloadFlag)		// program exited
-		{
+	{
 		FlushOldData();
 		return;
-		}
+	}
 
 	if (itsOpenIDList != nullptr)
-		{
+	{
 		RestoreOpenNodes(itsTree->GetRoot());
 		RestoreDisplayState(itsDisplayState);
-		}
+	}
 
 	if (currentID > 0)
-		{
+	{
 		SelectThread(currentID);
-		}
+	}
 
 	itsIsWaitingForReloadFlag = false;
 }

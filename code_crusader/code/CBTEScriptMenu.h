@@ -8,7 +8,7 @@
 #ifndef _H_CBTEScriptMenu
 #define _H_CBTEScriptMenu
 
-#include <JXFSDirMenu.h>
+#include <jx-af/jfs/JXFSDirMenu.h>
 
 class CBTextEditor;
 

@@ -9,17 +9,17 @@
 
 #include "CBProjectConfigDialog.h"
 #include "cbmUtil.h"
-#include <JXWindow.h>
-#include <JXTextButton.h>
-#include <JXStaticText.h>
-#include <JXRadioGroup.h>
-#include <JXTextRadioButton.h>
-#include <JXInputField.h>
-#include <JXChooseSaveFile.h>
-#include <JXHelpManager.h>
-#include <jXGlobals.h>
-#include <JFontManager.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXTextButton.h>
+#include <jx-af/jx/JXStaticText.h>
+#include <jx-af/jx/JXRadioGroup.h>
+#include <jx-af/jx/JXTextRadioButton.h>
+#include <jx-af/jx/JXInputField.h>
+#include <jx-af/jx/JXChooseSaveFile.h>
+#include <jx-af/jx/JXHelpManager.h>
+#include <jx-af/jx/jXGlobals.h>
+#include <jx-af/jcore/JFontManager.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -228,17 +228,17 @@ CBProjectConfigDialog::Receive
 	)
 {
 	if (sender == itsMethodRG && message.Is(JXRadioGroup::kSelectionChanged))
-		{
+	{
 		UpdateDisplay();
-		}
+	}
 	else if (sender == itsHelpButton && message.Is(JXButton::kPushed))
-		{
+	{
 		(JXGetHelpManager())->ShowSection("CBProjectHelp-Config");
-		}
+	}
 	else
-		{
+	{
 		JXDialogDirector::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -254,37 +254,37 @@ CBProjectConfigDialog::UpdateDisplay()
 
 	JString newCmd;
 	if (CBBuildManager::UpdateMakeDependCmd(itsCurrentMethod, method, &newCmd))
-		{
+	{
 		itsUpdateMakefileCmd->GetText()->SetText(newCmd);
-		}
+	}
 	itsCurrentMethod = method;
 
 	if (method == CBBuildManager::kManual)
-		{
+	{
 		itsTargetName->Deactivate();
 		itsTargetName->SetIsRequired(false);
 		itsDepListExpr->Deactivate();
 		itsUpdateMakefileCmd->Focus();
-		}
+	}
 	else if (method == CBBuildManager::kCMake)
-		{
+	{
 		itsTargetName->Activate();
 		itsTargetName->SetIsRequired(true);
 		itsTargetName->Focus();
 		itsDepListExpr->Activate();
-		}
+	}
 	else if (method == CBBuildManager::kQMake)
-		{
+	{
 		itsTargetName->Activate();
 		itsTargetName->SetIsRequired(true);
 		itsTargetName->Focus();
 		itsDepListExpr->Deactivate();
-		}
+	}
 	else
-		{
+	{
 		itsTargetName->Activate();
 		itsTargetName->SetIsRequired(true);
 		itsTargetName->Focus();
 		itsDepListExpr->Activate();
-		}
+	}
 }

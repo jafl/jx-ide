@@ -9,11 +9,11 @@
 
 #include "CBCRMRuleListTable.h"
 #include "CBCRMRuleTable.h"
-#include <JXTextButton.h>
-#include <JXInputField.h>
-#include <JStringTableData.h>
-#include <JTableSelection.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXTextButton.h>
+#include <jx-af/jx/JXInputField.h>
+#include <jx-af/jcore/JStringTableData.h>
+#include <jx-af/jcore/JTableSelection.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -66,22 +66,22 @@ CBCRMRuleListTable::CBCRMRuleListTable
 
 	JIndex i = 0;
 	for (const auto& info : *itsCRMList)
-		{
+	{
 		i++;
 		data->SetString(i,1, *info.name);
-		}
+	}
 
 	JTableSelection& s = GetTableSelection();
 	ListenTo(&s);
 
 	if (data->RowIndexValid(initialSelection))
-		{
+	{
 		s.SelectCell(initialSelection,1);
-		}
+	}
 	else if (data->GetRowCount() > 0)
-		{
+	{
 		s.SelectCell(1,1);
-		}
+	}
 }
 
 JListT::CompareResult
@@ -102,17 +102,17 @@ CBCRMRuleListTable::CompareNames
 CBCRMRuleListTable::~CBCRMRuleListTable()
 {
 	if (itsOwnsCRMListFlag)
-		{
+	{
 		const JSize count = itsCRMList->GetElementCount();
 		for (JIndex i=1; i<=count; i++)
-			{
+		{
 			CBPrefsManager::CRMRuleListInfo info = itsCRMList->GetElement(i);
 			jdelete info.name;
 			(info.list)->DeleteAll();
 			jdelete info.list;
-			}
-		jdelete itsCRMList;
 		}
+		jdelete itsCRMList;
+	}
 
 	jdelete GetStringData();
 }
@@ -131,15 +131,15 @@ CBCRMRuleListTable::GetCurrentCRMRuleSetName
 {
 	if (itsCRMIndex > 0 &&
 		const_cast<CBCRMRuleListTable*>(this)->EndEditing())
-		{
+	{
 		*name = GetStringData()->GetString(itsCRMIndex, 1);
 		return true;
-		}
+	}
 	else
-		{
+	{
 		name->Clear();
 		return false;
-		}
+	}
 }
 
 /******************************************************************************
@@ -165,16 +165,16 @@ CBCRMRuleListTable::GetCRMRuleLists
 	JStringTableData* data = GetStringData();
 	const JSize count      = data->GetRowCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		CBPrefsManager::CRMRuleListInfo info = itsCRMList->GetElement(i);
 		*(info.name) = data->GetString(i,1);
-		}
+	}
 
 	if (itsCRMIndex > 0)
-		{
+	{
 		CBPrefsManager::CRMRuleListInfo info = itsCRMList->GetElement(itsCRMIndex);
 		itsRuleTable->GetData(info.list);
-		}
+	}
 
 	*firstNewID = itsFirstNewID;
 	*lastNewID  = itsLastNewID;
@@ -200,13 +200,13 @@ CBCRMRuleListTable::HandleMouseDown
 {
 	JPoint cell;
 	if (button == kJXLeftButton && GetCell(pt, &cell))
-		{
+	{
 		BeginEditing(cell);
-		}
+	}
 	else
-		{
+	{
 		ScrollForWheel(button, modifiers);
-		}
+	}
 }
 
 /******************************************************************************
@@ -222,23 +222,23 @@ CBCRMRuleListTable::Receive
 	)
 {
 	if (sender == itsAddRowButton && message.Is(JXButton::kPushed))
-		{
+	{
 		AddRow();
-		}
+	}
 	else if (sender == itsRemoveRowButton && message.Is(JXButton::kPushed))
-		{
+	{
 		RemoveRow();
-		}
+	}
 
 	else
-		{
+	{
 		if (sender == &(GetTableSelection()))
-			{
+		{
 			SwitchDisplay();
-			}
+		}
 
 		JXStringTable::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -250,7 +250,7 @@ void
 CBCRMRuleListTable::AddRow()
 {
 	if (EndEditing() && itsRuleTable->EndEditing())
-		{
+	{
 		itsLastNewID++;
 		CBPrefsManager::CRMRuleListInfo info(itsLastNewID, jnew JString("New"),
 											 jnew JStyledText::CRMRuleList);
@@ -264,7 +264,7 @@ CBCRMRuleListTable::AddRow()
 		const JPoint newCell(1, GetRowCount());
 		data->SetString(newCell, *info.name);
 		BeginEditing(newCell);
-		}
+	}
 }
 
 /******************************************************************************
@@ -286,11 +286,11 @@ CBCRMRuleListTable::RemoveRow()
 	jdelete info.list;
 
 	if (itsFirstNewID <= info.id && info.id == itsLastNewID)
-		{
+	{
 		itsLastNewID--;
-		}
+	}
 	else if (itsFirstNewID <= info.id && info.id < itsLastNewID)
-		{
+	{
 		JIndex index;
 		const bool found =
 			CBPrefsManager::FindCRMRuleListID(*itsCRMList, itsLastNewID, &index);
@@ -301,7 +301,7 @@ CBCRMRuleListTable::RemoveRow()
 		itsCRMList->SetElement(index, info2);
 
 		itsLastNewID--;
-		}
+	}
 
 	// itsCRMIndex must be 0 when SwitchDisplay() is called
 
@@ -320,27 +320,27 @@ void
 CBCRMRuleListTable::SwitchDisplay()
 {
 	if (itsCRMIndex > 0)
-		{
+	{
 		const CBPrefsManager::CRMRuleListInfo info = itsCRMList->GetElement(itsCRMIndex);
 		itsRuleTable->GetData(info.list);
-		}
+	}
 
 	JPoint cell;
 	if ((GetTableSelection()).GetFirstSelectedCell(&cell))
-		{
+	{
 		itsCRMIndex = cell.y;
 
 		const CBPrefsManager::CRMRuleListInfo info = itsCRMList->GetElement(itsCRMIndex);
 		itsRuleTable->SetData(*(info.list));
 
 		itsRemoveRowButton->Activate();
-		}
+	}
 	else
-		{
+	{
 		itsCRMIndex = 0;
 		itsRuleTable->ClearData();
 		itsRemoveRowButton->Deactivate();
-		}
+	}
 }
 
 /******************************************************************************

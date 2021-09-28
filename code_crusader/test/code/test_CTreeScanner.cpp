@@ -7,11 +7,11 @@
 
  *****************************************************************************/
 
-#include <JTestManager.h>
+#include <jx-af/jcore/JTestManager.h>
 #include "CBCTree.h"
 #include "CBClass.h"
 #include "CBCPreprocessor.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 int main()
 {

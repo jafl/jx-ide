@@ -20,12 +20,12 @@
 #include "cmGlobals.h"
 #include "cmActionDefs.h"
 
-#include <JXApplication.h>
-#include <JXDisplay.h>
-#include <JXMenuBar.h>
-#include <JXTextMenu.h>
-#include <jASCIIConstants.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXApplication.h>
+#include <jx-af/jx/JXDisplay.h>
+#include <jx-af/jx/JXMenuBar.h>
+#include <jx-af/jx/JXTextMenu.h>
+#include <jx-af/jcore/jASCIIConstants.h>
+#include <jx-af/jcore/jAssert.h>
 
 // Search menu
 
@@ -109,13 +109,13 @@ CMSourceText::HandleKeyPress
 	if (c.IsPrint() ||
 		c == kJDeleteKey || c == kJForwardDeleteKey ||
 		c == kJReturnKey || c == kJTabKey)
-		{
+	{
 		itsCmdDir->TransferKeyPressToInput(c, keySym, modifiers);
-		}
+	}
 	else
-		{
+	{
 		CMTextDisplayBase::HandleKeyPress(c, keySym, modifiers);
-		}
+	}
 }
 
 /******************************************************************************
@@ -132,22 +132,22 @@ CMSourceText::SetFileType
 	CBGetStyler(CBGetLanguage(type), &itsStyler);
 
 	if (GetText()->GetText().IsEmpty())
-		{
+	{
 		return;
-		}
+	}
 
 	if (itsStyler != nullptr)
-		{
+	{
 		GetText()->RestyleAll();
-		}
+	}
 	else
-		{
+	{
 		JFont font = GetText()->GetFont(1);
 		font.ClearStyle();
 		SelectAll();
 		SetCurrentFont(font);
 		SetCaretLocation(1);
-		}
+	}
 }
 
 /******************************************************************************
@@ -171,15 +171,15 @@ CMSourceText::StyledText::AdjustStylesBeforeBroadcast
 	)
 {
 	if (itsOwner->itsStyler != nullptr)
-		{
+	{
 		itsOwner->itsStyler->UpdateStyles(this, text, styles,
 										  recalcRange, redrawRange,
 										  deletion, itsTokenStartList);
-		}
+	}
 	else
-		{
+	{
 		itsTokenStartList->RemoveAll();
-		}
+	}
 }
 
 /******************************************************************************
@@ -197,17 +197,17 @@ CMSourceText::BoundsResized
 	CMTextDisplayBase::BoundsResized(dw,dh);
 
 	if (!WillBreakCROnly() && HasSelection())
-		{
+	{
 		TEScrollToSelection(true);
-		}
+	}
 	else if (!WillBreakCROnly())
-		{
+	{
 		const JCoordinate line = itsSrcDir->GetCurrentExecLine();
 		if (line > 0)
-			{
+		{
 			GoToLine(line);
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -227,9 +227,9 @@ CMSourceText::HandleMouseDown
 {
 	JXMouseButton b = button;
 	if (button == kJXMiddleButton && clickCount == 2)
-		{
+	{
 		b = kJXLeftButton;
-		}
+	}
 	itsLastClickCount = clickCount;
 
 	CMTextDisplayBase::HandleMouseDown(pt, b, clickCount, buttonStates, modifiers);
@@ -251,13 +251,13 @@ CMSourceText::HandleMouseUp
 {
 	CMTextDisplayBase::HandleMouseUp(pt, button, buttonStates, modifiers);
 	if (button == kJXMiddleButton && itsLastClickCount == 2)
-		{
+	{
 		JString text;
 		if (GetSelection(&text) && !text.Contains("\n"))
-			{
+		{
 			itsCmdDir->DisplayExpression(text);
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -277,19 +277,19 @@ CMSourceText::Receive
 	assert( ok );
 
 	if (sender == searchMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		UpdateCustomSearchMenuItems();
-		}
+	}
 	else if (sender == searchMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		if (HandleCustomSearchMenuItems(selection->GetIndex()))
-			{
+		{
 			return;
-			}
 		}
+	}
 
 	CMTextDisplayBase::Receive(sender, message);
 }
@@ -309,14 +309,14 @@ CMSourceText::UpdateCustomSearchMenuItems()
 	searchMenu->EnableItem(itsFirstSearchMenuItem + kGoToLineCmd);
 
 	if (!GetText()->IsEmpty())
-		{
+	{
 		searchMenu->EnableItem(itsFirstSearchMenuItem + kBalanceCmd);
 
 		if (itsSrcDir->IsMainSourceWindow())
-			{
+		{
 			searchMenu->EnableItem(itsFirstSearchMenuItem + kGoToCurrentLineCmd);
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -334,28 +334,28 @@ CMSourceText::HandleCustomSearchMenuItems
 	Focus();
 
 	if (index == kBalanceCmd)
-		{
+	{
 		CBMBalanceFromSelection(this, kCBCLang);
 		return true;
-		}
+	}
 
 	else if (index == kGoToLineCmd)
-		{
+	{
 		AskForLine();
 		return true;
-		}
+	}
 	else if (index == kGoToCurrentLineCmd)
-		{
+	{
 		const JCoordinate line = itsSrcDir->GetCurrentExecLine();
 		if (line > 0)
-			{
+		{
 			GoToLine(line);
-			}
-		return true;
 		}
+		return true;
+	}
 
 	else
-		{
+	{
 		return false;
-		}
+	}
 }

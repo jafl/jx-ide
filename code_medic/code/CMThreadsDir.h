@@ -8,7 +8,7 @@
 #ifndef _H_CMThreadsDir
 #define _H_CMThreadsDir
 
-#include <JXWindowDirector.h>
+#include <jx-af/jx/JXWindowDirector.h>
 
 class JXTextButton;
 class JXTextMenu;

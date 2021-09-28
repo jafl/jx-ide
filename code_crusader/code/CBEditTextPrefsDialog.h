@@ -10,7 +10,7 @@
 #ifndef _H_CBEditTextPrefsDialog
 #define _H_CBEditTextPrefsDialog
 
-#include <JXDialogDirector.h>
+#include <jx-af/jx/JXDialogDirector.h>
 #include "CBPrefsManager.h"		// need definition of kColorCount
 
 class CBTextDocument;

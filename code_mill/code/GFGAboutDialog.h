@@ -8,7 +8,7 @@
 #ifndef _H_GFGAboutDialog
 #define _H_GFGAboutDialog
 
-#include <JXDialogDirector.h>
+#include <jx-af/jx/JXDialogDirector.h>
 
 class JXTextButton;
 

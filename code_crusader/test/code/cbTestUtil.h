@@ -7,7 +7,7 @@
 
  *****************************************************************************/
 
-#include <jFileUtil.h>
+#include <jx-af/jcore/jFileUtil.h>
 #include <sstream>
 
 inline void

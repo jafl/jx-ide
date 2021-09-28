@@ -8,7 +8,7 @@
 #ifndef _H_CBRPChooseFileDialog
 #define _H_CBRPChooseFileDialog
 
-#include <JXChooseFileDialog.h>
+#include <jx-af/jx/JXChooseFileDialog.h>
 #include "CBRelPathCSF.h"		// need definition of PathType
 
 class JXRadioGroup;

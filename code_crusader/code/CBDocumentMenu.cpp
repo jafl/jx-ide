@@ -15,8 +15,8 @@
 #include "CBSearchDocument.h"
 #include "CBCompileDocument.h"
 #include "cbGlobals.h"
-#include <JXDisplay.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXDisplay.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -75,41 +75,41 @@ CBDocumentMenu::Receive
 {
 	if (sender == this && message.Is(JXMenu::kItemSelected) &&
 		(GetDisplay()->GetLatestKeyModifiers()).GetState(JXMenu::AdjustNMShortcutModifier(kJXMetaKeyIndex)))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		if (selection->IsFromShortcut())
-			{
+		{
 			JXDocumentMenu::Receive(sender, message);
-			}
+		}
 		else
-			{
+		{
 			JXDocument* doc;
 			CBDocumentManager* docMgr = CBGetDocumentManager();
 			if (docMgr->GetDocument(selection->GetIndex(), &doc))
-				{
+			{
 				auto* projDoc    = dynamic_cast<CBProjectDocument*>(doc);
 				auto* searchDoc   = dynamic_cast<CBSearchDocument*>(doc);
 				auto* compileDoc = dynamic_cast<CBCompileDocument*>(doc);
 				if (projDoc != nullptr)
-					{
+				{
 					docMgr->SetActiveProjectDocument(projDoc);
-					}
+				}
 				else if (searchDoc != nullptr)
-					{
+				{
 					docMgr->SetActiveListDocument(searchDoc);
-					}
+				}
 				else if (compileDoc != nullptr)
-					{
+				{
 					docMgr->SetActiveListDocument(compileDoc);
-					}
 				}
 			}
 		}
+	}
 
 	else
-		{
+	{
 		JXDocumentMenu::Receive(sender, message);
-		}
+	}
 }

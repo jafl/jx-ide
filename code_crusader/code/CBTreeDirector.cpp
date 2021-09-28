@@ -25,17 +25,17 @@
 #include "CBDocumentMenu.h"
 #include "cbActionDefs.h"
 #include "cbGlobals.h"
-#include <JXApplication.h>
-#include <JXDisplay.h>
-#include <JXWindow.h>
-#include <JXScrollbarSet.h>
-#include <JXMenuBar.h>
-#include <JXToolBar.h>
-#include <JXPSPrinter.h>
-#include <JXEPSPrinter.h>
-#include <JXGetStringDialog.h>
-#include <JXImage.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXApplication.h>
+#include <jx-af/jx/JXDisplay.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXScrollbarSet.h>
+#include <jx-af/jx/JXMenuBar.h>
+#include <jx-af/jx/JXToolBar.h>
+#include <jx-af/jx/JXPSPrinter.h>
+#include <jx-af/jx/JXEPSPrinter.h>
+#include <jx-af/jx/JXGetStringDialog.h>
+#include <jx-af/jx/JXImage.h>
+#include <jx-af/jcore/jAssert.h>
 
 // setup information
 
@@ -159,14 +159,14 @@ static void skipFnListDirector
 	JString className;
 	bool showInheritedFns;
 	for (JIndex i=1; i<=fnListCount; i++)
-		{
+	{
 		JXWindow::SkipGeometry(input);
 		input >> className >> JBoolFromString(showInheritedFns);
 		if (vers >= 24)
-			{
+		{
 			JXScrollableWidget::SkipScrollSetup(input);
-			}
 		}
+	}
 }
 
 CBTreeDirector::CBTreeDirector
@@ -211,17 +211,17 @@ CBTreeDirector::CBTreeDirector
 /* settings file */
 
 	if (!useSetProjData)
-		{
+	{
 		GetWindow()->ReadGeometry(*setInput);
-		}
+	}
 	if (24 <= projVers && projVers < 71 && useSetProjData)
-		{
+	{
 		GetWindow()->ReadGeometry(projInput);
-		}
+	}
 	else if (24 <= projVers && projVers < 71)
-		{
+	{
 		JXWindow::SkipGeometry(projInput);
-		}
+	}
 
 	itsTreeWidget =
 		jnew CBTreeWidget(this, itsTree, scrollbarSet,
@@ -232,60 +232,60 @@ CBTreeDirector::CBTreeDirector
 	itsTreeWidget->FitToEnclosure();
 
 	if (projVers < 71)
-		{
+	{
 		itsTreeWidget->ReadSetup(projInput, projVers);
-		}
+	}
 	if (!useSetProjData)	// overwrite
-		{
+	{
 		itsTreeWidget->ReadSetup(*setInput, setVers);
-		}
+	}
 
 	JPrefObject::ReadPrefs();		// set tree parameters before updating
 
 	if (readCompileRunDialogs)
-		{
+	{
 		supervisor->ConvertCompileRunDialogs(projInput, projVers);
-		}
+	}
 
 	if (17 <= projVers && projVers < 71)
-		{
+	{
 		itsPSPrinter->ReadXPSSetup(projInput);
 		itsEPSPrinter->ReadXEPSSetup(projInput);
 		itsFnListPrinter->ReadXPSSetup(projInput);
-		}
+	}
 	if (!useSetProjData)	// overwrite
-		{
+	{
 		itsPSPrinter->ReadXPSSetup(*setInput);
 		itsEPSPrinter->ReadXEPSSetup(*setInput);
 		itsFnListPrinter->ReadXPSSetup(*setInput);
-		}
+	}
 
 	// put fn list windows on top of tree window
 
 	bool active = false;
 	if (31 <= projVers && projVers < 71)
-		{
+	{
 		projInput >> JBoolFromString(active);
-		}
+	}
 	if (!useSetProjData)	// overwrite
-		{
+	{
 		*setInput >> JBoolFromString(active);
-		}
+	}
 	if (active && !subProject)
-		{
+	{
 		Activate();
-		}
+	}
 
 /* symbol file */
 
 	if (17 <= projVers && projVers < 71)
-		{
+	{
 		skipFnListDirector(projInput, projVers);
-		}
+	}
 	else if (symInput != nullptr && 71 <= symVers && symVers < 88)
-		{
+	{
 		skipFnListDirector(*symInput, symVers);
-		}
+	}
 }
 
 // private
@@ -377,7 +377,7 @@ CBTreeDirector::StreamOut
 /* settings file */
 
 	if (setOutput != nullptr)
-		{
+	{
 		*setOutput << ' ';
 		GetWindow()->WriteGeometry(*setOutput);
 
@@ -396,7 +396,7 @@ CBTreeDirector::StreamOut
 		*setOutput << ' ' << JBoolToString(IsActive());
 
 		*setOutput << ' ';
-		}
+	}
 }
 
 /******************************************************************************
@@ -474,14 +474,14 @@ CBTreeDirector::ViewFunctionList
 /*
 	const JSize count = itsFnBrowsers->GetElementCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		CBFnListDirector* dir = itsFnBrowsers->GetElement(i);
 		if (dir->IsShowingClass(theClass))
-			{
+		{
 			dir->Activate();
 			return;
-			}
 		}
+	}
 
 	CBFnListDirector* dir = jnew CBFnListDirector(this, itsFnListPrinter,
 												 theClass, itsTreeWidget,
@@ -552,10 +552,10 @@ CBTreeDirector::BuildWindow
 	JPoint desktopLoc;
 	JCoordinate w,h;
 	if (CBGetPrefsManager()->GetWindowSize(kCBTreeWindSizeID, &desktopLoc, &w, &h))
-		{
+	{
 		window->Place(desktopLoc.x, desktopLoc.y);
 		window->SetSize(w,h);
-		}
+	}
 
 	itsFileMenu = menuBar->AppendTextMenu(JGetString("FileMenuTitle::JXGlobal"));
 	itsFileMenu->SetMenuItems(kFileMenuStr, "CBTreeDirector");
@@ -617,7 +617,7 @@ CBTreeDirector::BuildWindow
 
 	itsToolBar->LoadPrefs();
 	if (itsToolBar->IsEmpty())
-		{
+	{
 		itsToolBar->AppendButton(itsFileMenu, kNewTextEditorCmd);
 		itsToolBar->AppendButton(itsFileMenu, kOpenSomethingCmd);
 		itsToolBar->NewGroup();
@@ -627,7 +627,7 @@ CBTreeDirector::BuildWindow
 		initToolBarFn(itsToolBar, itsTreeMenu);
 
 		CBGetApplication()->AppendHelpMenuToToolBar(itsToolBar, itsHelpMenu);
-		}
+	}
 
 	return scrollbarSet;
 }
@@ -657,112 +657,112 @@ CBTreeDirector::Receive
 	)
 {
 	if (sender == itsFileMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		UpdateFileMenu();
-		}
+	}
 	else if (sender == itsFileMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleFileMenu(selection->GetIndex());
-		}
+	}
 
 	else if (sender == itsTreeMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		UpdateTreeMenu();
-		}
+	}
 	else if (sender == itsTreeMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleTreeMenu(selection->GetIndex());
-		}
+	}
 
 	else if (sender == itsProjectMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		UpdateProjectMenu();
-		}
+	}
 	else if (sender == itsProjectMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleProjectMenu(selection->GetIndex());
-		}
+	}
 
 	else if (sender == itsPrefsMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		UpdatePrefsMenu();
-		}
+	}
 	else if (sender == itsPrefsMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandlePrefsMenu(selection->GetIndex());
-		}
+	}
 
 	else if (sender == itsHelpMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		CBGetApplication()->UpdateHelpMenu(itsHelpMenu);
-		}
+	}
 	else if (sender == itsHelpMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		CBGetApplication()->HandleHelpMenu(itsHelpMenu, itsWindowHelpName,
 											 selection->GetIndex());
-		}
+	}
 
 	else if (sender == itsFindFnDialog && message.Is(JXDialogDirector::kDeactivated))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const JXDialogDirector::Deactivated*>(&message);
 		assert( info != nullptr );
 		if (info->Successful())
-			{
+		{
 			itsTreeWidget->FindFunction(itsFindFnDialog->GetString(), true,
 										kJXLeftButton);
-			}
-		itsFindFnDialog = nullptr;
 		}
+		itsFindFnDialog = nullptr;
+	}
 
 	else if (sender == itsPSPrinter &&
 			 message.Is(JPrinter::kPrintSetupFinished))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const JPrinter::PrintSetupFinished*>(&message);
 		assert( info != nullptr );
 		if (info->Successful())
-			{
+		{
 			itsTreeWidget->Print(*itsPSPrinter);
-			}
 		}
+	}
 
 	else if (sender == itsEPSPrinter &&
 			 message.Is(JPrinter::kPrintSetupFinished))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const JPrinter::PrintSetupFinished*>(&message);
 		assert( info != nullptr );
 		if (info->Successful())
-			{
+		{
 			itsTreeWidget->Print(*itsEPSPrinter);
-			}
 		}
+	}
 
 	else if (sender == itsProjDoc && message.Is(JXFileDocument::kNameChanged))
-		{
+	{
 		AdjustWindowTitle();
-		}
+	}
 
 	else
-		{
+	{
 		JXWindowDirector::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -794,47 +794,47 @@ CBTreeDirector::HandleFileMenu
 	CBGetDocumentManager()->SetActiveProjectDocument(itsProjDoc);
 
 	if (index == kNewTextEditorCmd)
-		{
+	{
 		CBGetDocumentManager()->NewTextDocument();
-		}
+	}
 	else if (index == kNewTextTemplateCmd)
-		{
+	{
 		CBGetDocumentManager()->NewTextDocumentFromTemplate();
-		}
+	}
 	else if (index == kNewProjectCmd)
-		{
+	{
 		CBGetDocumentManager()->NewProjectDocument();
-		}
+	}
 	else if (index == kNewShellCmd)
-		{
+	{
 		CBGetDocumentManager()->NewShellDocument();
-		}
+	}
 	else if (index == kOpenSomethingCmd)
-		{
+	{
 		CBGetDocumentManager()->OpenSomething();
-		}
+	}
 
 	else if (index == kPSPageSetupCmd)
-		{
+	{
 		itsPSPrinter->BeginUserPageSetup();
-		}
+	}
 	else if (index == kPrintPSCmd)
-		{
+	{
 		itsPSPrinter->BeginUserPrintSetup();
-		}
+	}
 	else if (index == kPrintEPSCmd)
-		{
+	{
 		itsEPSPrinter->BeginUserPrintSetup();
-		}
+	}
 
 	else if (index == kCloseCmd)
-		{
+	{
 		GetWindow()->Close();
-		}
+	}
 	else if (index == kQuitCmd)
-		{
+	{
 		JXGetApplication()->Quit();
-		}
+	}
 }
 
 /******************************************************************************
@@ -865,39 +865,39 @@ CBTreeDirector::HandleProjectMenu
 	CBGetDocumentManager()->SetActiveProjectDocument(itsProjDoc);
 
 	if (index == kShowSymbolBrowserCmd)
-		{
+	{
 		(itsProjDoc->GetSymbolDirector())->Activate();
-		}
+	}
 	else if (index == kViewManPageCmd)
-		{
+	{
 		(CBGetViewManPageDialog())->Activate();
-		}
+	}
 
 	else if (index == kShowFileListCmd)
-		{
+	{
 		(itsProjDoc->GetFileListDirector())->Activate();
-		}
+	}
 	else if (index == kFindFileCmd)
-		{
+	{
 		(CBGetFindFileDialog())->Activate();
-		}
+	}
 	else if (index == kSearchFilesCmd)
-		{
+	{
 		(CBGetSearchTextDialog())->Activate();
-		}
+	}
 	else if (index == kDiffFilesCmd)
-		{
+	{
 		(CBGetDiffFileDialog())->Activate();
-		}
+	}
 
 	else if (index == kSaveAllTextCmd)
-		{
+	{
 		CBGetDocumentManager()->SaveTextDocuments(true);
-		}
+	}
 	else if (index == kCloseAllTextCmd)
-		{
+	{
 		CBGetDocumentManager()->CloseTextDocuments();
-		}
+	}
 }
 
 /******************************************************************************
@@ -922,30 +922,30 @@ CBTreeDirector::HandlePrefsMenu
 	)
 {
 	if (index == kTreePrefsCmd)
-		{
+	{
 		EditTreePrefs();
-		}
+	}
 	else if (index == kToolBarPrefsCmd)
-		{
+	{
 		itsToolBar->Edit();
-		}
+	}
 	else if (index == kEditFileTypesCmd)
-		{
+	{
 		CBGetPrefsManager()->EditFileTypes();
-		}
+	}
 	else if (index == kChooseExtEditorsCmd)
-		{
+	{
 		CBGetDocumentManager()->ChooseEditors();
-		}
+	}
 	else if (index == kMiscPrefsCmd)
-		{
+	{
 		CBGetApplication()->EditMiscPrefs();
-		}
+	}
 
 	else if (index == kSaveWindSizeCmd)
-		{
+	{
 		CBGetPrefsManager()->SaveWindowSize(kCBTreeWindSizeID, GetWindow());
-		}
+	}
 }
 
 /******************************************************************************
@@ -1003,28 +1003,28 @@ CBTreeDirector::ReadPrefs
 	JFileVersion vers;
 	input >> vers;
 	if (vers > kCurrentPrefsVersion)
-		{
+	{
 		return;
-		}
+	}
 
 	JSize fontSize;
 	input >> fontSize >> JBoolFromString(itsShowInheritedFnsFlag);
 	itsTree->SetFontSize(fontSize);
 
 	if (vers >= 1)
-		{
+	{
 		bool autoMinMILinks, drawMILinksOnTop;
 		input >> JBoolFromString(autoMinMILinks) >> JBoolFromString(drawMILinksOnTop);
 		itsTree->ShouldAutoMinimizeMILinks(autoMinMILinks);
 		itsTree->ShouldDrawMILinksOnTop(drawMILinksOnTop);
-		}
+	}
 
 	if (vers >= 2)
-		{
+	{
 		bool raiseWhenSingleMatch;
 		input >> JBoolFromString(raiseWhenSingleMatch);
 		itsTreeWidget->ShouldRaiseWindowWhenSingleMatch(raiseWhenSingleMatch);
-		}
+	}
 }
 
 /******************************************************************************
@@ -1061,20 +1061,20 @@ CBTreeDirector::ReceiveWithFeedback
 	)
 {
 	if (sender == itsCmdMenu && message->Is(CBCommandMenu::kGetTargetInfo))
-		{
+	{
 		auto* info =
 			dynamic_cast<CBCommandMenu::GetTargetInfo*>(message);
 		assert( info != nullptr );
 
 		JPtrArray<CBClass> classList(JPtrArrayT::kForgetAll);
 		if (itsTree->GetSelectedClasses(&classList))
-			{
+		{
 			const JSize count = classList.GetElementCount();
 			JString fullName;
 			for (JIndex i=1; i<=count; i++)
-				{
+			{
 				if ((classList.GetElement(i))->GetFileName(&fullName))
-					{
+				{
 					// since cmd-; works fine with .h file, no real value
 					// to using source file instead of header file
 
@@ -1082,19 +1082,19 @@ CBTreeDirector::ReceiveWithFeedback
 					if (0 && CBGetDocumentManager()->GetComplementFile(
 							fullName, CBGetPrefsManager()->GetFileType(fullName),
 							&complName, GetProjectDoc(), true))
-						{
+					{
 						info->AddFile(complName);
-						}
+					}
 					else
-						{
+					{
 						info->AddFile(fullName);
-						}
 					}
 				}
 			}
 		}
+	}
 	else
-		{
+	{
 		JXWindowDirector::ReceiveWithFeedback(sender, message);
-		}
+	}
 }

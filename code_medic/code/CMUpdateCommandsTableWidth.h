@@ -10,7 +10,7 @@
 #ifndef _H_CMUpdateCommandsTableWidth
 #define _H_CMUpdateCommandsTableWidth
 
-#include <JXUrgentTask.h>
+#include <jx-af/jx/JXUrgentTask.h>
 
 class CMEditCommandsTable;
 

@@ -7,14 +7,14 @@ This scanner reads a D file and creates CBClass instances.
 */
 
 #include "CBDClass.h"
-#include <JString.h>
-#include <JStringIterator.h>
-#include <JRegex.h>
-#include <JStringPtrMap.h>
-#include <JStack.h>
-#include <jFileUtil.h>
-#include <JFAID.h>
-#include <jAssert.h>
+#include <jx-af/jcore/JString.h>
+#include <jx-af/jcore/JStringIterator.h>
+#include <jx-af/jcore/JRegex.h>
+#include <jx-af/jcore/JStringPtrMap.h>
+#include <jx-af/jcore/JStack.h>
+#include <jx-af/jcore/jFileUtil.h>
+#include <jx-af/jcore/JFAID.h>
+#include <jx-af/jcore/jAssert.h>
 }
 
 %option namespace="CB::Tree::D" lexer="Scanner"

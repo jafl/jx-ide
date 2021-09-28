@@ -104,7 +104,7 @@ CBPrefsManager::CreateAndReadData
 	listStream >> count;
 
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		DataType info;
 
 		info.name = jnew JString;
@@ -121,7 +121,7 @@ CBPrefsManager::CreateAndReadData
 		info.CreateAndRead(input, vers);
 
 		(**list).AppendElement(info);
-		}
+	}
 
 	RemoveData(MainDataID);		// delete it since it might be an old version (see below)
 }
@@ -141,7 +141,7 @@ CBPrefsManager::WriteData
 {
 	std::string listData;
 	if (GetData(MainDataID, &listData))		// if it exists, it's our current version (see above)
-		{
+	{
 		std::istringstream listStream(listData);
 
 		JSize count;
@@ -150,11 +150,11 @@ CBPrefsManager::WriteData
 		JIndex id;
 		JString name;
 		for (JIndex i=1; i<=count; i++)
-			{
+		{
 			listStream >> id >> name;
 			RemoveData(id);
-			}
 		}
+	}
 
 	std::ostringstream listStream;
 
@@ -162,14 +162,14 @@ CBPrefsManager::WriteData
 	listStream << count;
 
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		DataType info = list.GetElement(i);
 		listStream << ' ' << info.id << ' ' << *info.name;
 
 		std::ostringstream data;
 		info.Write(data);
 		SetData(info.id, data);
-		}
+	}
 
 	SetData(MainDataID, listStream);
 }
@@ -193,7 +193,7 @@ CBPrefsManager::EditDataFn
 
 	const JSize count = ListVar->GetElementCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		const DataType origInfo = ListVar->GetElement(i);
 
 		DataType newInfo(origInfo.id, jnew JString(*origInfo.name), CopyConstr);
@@ -201,15 +201,15 @@ CBPrefsManager::EditDataFn
 		list->AppendElement(newInfo);
 
 		if (origInfo.id >= firstUnusedID)
-			{
+		{
 			firstUnusedID = origInfo.id + 1;
-			}
+		}
 
 		if (origInfo.EditDataSel == initialSelection)
-			{
+		{
 			initialIndex = i;
-			}
 		}
+	}
 
 	DialogVar = jnew DialogClass(list, initialIndex, firstUnusedID);
 	assert( DialogVar != nullptr );
@@ -240,24 +240,24 @@ JIndex i,j;
 	// throw out old objects and update file type->data links
 
 	for (i=1; i<=origCount; i++)
-		{
+	{
 		DataType info = ListVar->GetElement(i);
 		jdelete info.name;
 		Destr;
 
 		if (!FindIDFn(*newList, info.id, &j))
-			{
+		{
 			for (j=1; j<=ftCount; j++)
-				{
+			{
 				FileTypeInfo ftInfo = itsFileTypeList->GetElement(j);
 				if (ftInfo.FTStructIDVar == info.id)
-					{
+				{
 					ftInfo.FTStructIDVar = EmptyDataID;
 					itsFileTypeList->SetElement(j, ftInfo);
-					}
 				}
 			}
 		}
+	}
 
 	// replace list with the new one
 
@@ -268,30 +268,30 @@ JIndex i,j;
 	// compact to fill in unused id's
 
 	for (JIndex id=lastNewID; id>=firstNewID; id--)
-		{
+	{
 		JIndex index;
 		const bool found = FindIDFn(*ListVar, id, &index);
 		assert( found );
 
 		bool foundEmptySlot = false;
 		for (i=FirstDataID; i<firstNewID; i++)
-			{
+		{
 			if (!FindIDFn(*ListVar, i, &j))
-				{
+			{
 				DataType info = ListVar->GetElement(index);
 				info.id       = i;
 				ListVar->SetElement(index, info);
 
 				foundEmptySlot = true;
 				break;
-				}
-			}
-
-		if (!foundEmptySlot)
-			{
-			break;
 			}
 		}
+
+		if (!foundEmptySlot)
+		{
+			break;
+		}
+	}
 
 	// update open text documents in case a data set was deleted
 

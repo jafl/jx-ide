@@ -12,9 +12,9 @@
 #include "CBProjectDocument.h"
 #include "cbActionDefs.h"
 #include "cbGlobals.h"
-#include <JXTextMenu.h>
-#include <JXToolBar.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXTextMenu.h>
+#include <jx-af/jx/JXToolBar.h>
+#include <jx-af/jcore/jAssert.h>
 
 #include "jcc_d_tree_window.xpm"
 
@@ -117,34 +117,34 @@ CBDTreeDirector::UpdateTreeMenu()
 	treeMenu->EnableItem(kUpdateCurrentCmd);
 
 	if (!itsDTree->IsEmpty())
-		{
+	{
 		treeMenu->EnableItem(kFindFnCmd);
 		treeMenu->EnableItem(kTreeExpandAllCmd);
 
 		if (itsDTree->NeedsMinimizeMILinks())
-			{
+		{
 			treeMenu->EnableItem(kForceMinMILinksCmd);
-			}
 		}
+	}
 
 	bool hasSelection, canCollapse, canExpand;
 	itsDTree->GetMenuInfo(&hasSelection, &canCollapse, &canExpand);
 	if (hasSelection)
-		{
+	{
 		treeMenu->EnableItem(kTreeOpenSourceCmd);
 		treeMenu->EnableItem(kTreeOpenFnListCmd);
 		treeMenu->EnableItem(kTreeSelParentsCmd);
 		treeMenu->EnableItem(kTreeSelDescendantsCmd);
 		treeMenu->EnableItem(kCopySelNamesCmd);
-		}
+	}
 	if (canCollapse)
-		{
+	{
 		treeMenu->EnableItem(kTreeCollapseCmd);
-		}
+	}
 	if (canExpand)
-		{
+	{
 		treeMenu->EnableItem(kTreeExpandCmd);
-		}
+	}
 }
 
 /******************************************************************************
@@ -161,57 +161,57 @@ CBDTreeDirector::HandleTreeMenu
 	CBGetDocumentManager()->SetActiveProjectDocument(GetProjectDoc());
 
 	if (index == kEditSearchPathsCmd)
-		{
+	{
 		GetProjectDoc()->EditSearchPaths(this);
-		}
+	}
 	else if (index == kUpdateCurrentCmd)
-		{
+	{
 		GetProjectDoc()->UpdateSymbolDatabase();
-		}
+	}
 	else if (index == kForceMinMILinksCmd)
-		{
+	{
 		itsDTree->ForceMinimizeMILinks();
-		}
+	}
 
 	else if (index == kTreeOpenSourceCmd)
-		{
+	{
 		itsDTree->ViewSelectedSources();
-		}
+	}
 	else if (index == kTreeOpenFnListCmd)
-		{
+	{
 		itsDTree->ViewSelectedFunctionLists();
-		}
+	}
 
 	else if (index == kTreeCollapseCmd)
-		{
+	{
 		itsDTree->CollapseExpandSelectedClasses(true);
-		}
+	}
 	else if (index == kTreeExpandCmd)
-		{
+	{
 		itsDTree->CollapseExpandSelectedClasses(false);
-		}
+	}
 	else if (index == kTreeExpandAllCmd)
-		{
+	{
 		itsDTree->ExpandAllClasses();
-		}
+	}
 
 	else if (index == kTreeSelParentsCmd)
-		{
+	{
 		itsDTree->SelectParents();
-		}
+	}
 	else if (index == kTreeSelDescendantsCmd)
-		{
+	{
 		itsDTree->SelectDescendants();
-		}
+	}
 	else if (index == kCopySelNamesCmd)
-		{
+	{
 		itsDTree->CopySelectedClassNames();
-		}
+	}
 
 	else if (index == kFindFnCmd)
-		{
+	{
 		AskForFunctionToFind();
-		}
+	}
 }
 
 /******************************************************************************

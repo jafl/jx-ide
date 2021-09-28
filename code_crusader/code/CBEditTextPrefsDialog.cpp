@@ -16,22 +16,23 @@
 #include "CBEmulator.h"
 #include "cbmUtil.h"
 #include "cbGlobals.h"
-#include <JXWindow.h>
-#include <JXTextMenu.h>
-#include <JXTextButton.h>
-#include <JXTextCheckbox.h>
-#include <JXIntegerInput.h>
-#include <JXCharInput.h>
-#include <JXStaticText.h>
-#include <JXRadioGroup.h>
-#include <JXTextRadioButton.h>
-#include <JXChooseMonoFont.h>
-#include <JXScrollbar.h>
-#include <JXChooseColorDialog.h>
-#include <JXColorManager.h>
-#include <JXHelpManager.h>
-#include <JFontManager.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXDisplay.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXTextMenu.h>
+#include <jx-af/jx/JXTextButton.h>
+#include <jx-af/jx/JXTextCheckbox.h>
+#include <jx-af/jx/JXIntegerInput.h>
+#include <jx-af/jx/JXCharInput.h>
+#include <jx-af/jx/JXStaticText.h>
+#include <jx-af/jx/JXRadioGroup.h>
+#include <jx-af/jx/JXTextRadioButton.h>
+#include <jx-af/jx/JXChooseMonoFont.h>
+#include <jx-af/jx/JXScrollbar.h>
+#include <jx-af/jx/JXChooseColorDialog.h>
+#include <jx-af/jx/JXColorManager.h>
+#include <jx-af/jx/JXHelpManager.h>
+#include <jx-af/jcore/JFontManager.h>
+#include <jx-af/jcore/jAssert.h>
 
 // emulators
 
@@ -435,10 +436,10 @@ CBEditTextPrefsDialog::BuildWindow
 
 	CBPrefsManager* prefsMgr = CBGetPrefsManager();
 	for (JUnsignedOffset i=0; i<CBPrefsManager::kColorCount; i++)
-		{
+	{
 		itsColor[i] = prefsMgr->GetColor(i+1);
 		ListenTo(itsColorButton[i]);
-		}
+	}
 
 	ListenTo(itsDefColorsButton);
 	ListenTo(itsInvColorsButton);
@@ -461,75 +462,75 @@ CBEditTextPrefsDialog::Receive
 	)
 {
 	if (sender == this && message.Is(JXDialogDirector::kDeactivated))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const JXDialogDirector::Deactivated*>(&message);
 		assert( info != nullptr );
 		if (info->Successful())
-			{
+		{
 			UpdateSettings();
-			}
 		}
+	}
 
 	else if (sender == itsHelpButton && message.Is(JXButton::kPushed))
-		{
+	{
 		JXGetHelpManager()->ShowSection("CBEditorHelp-Prefs");
-		}
+	}
 
 	else if ((sender == itsCreateBackupCB || sender == itsBalanceWhileTypingCB) &&
 			 message.Is(JXCheckbox::kPushed))
-		{
+	{
 		UpdateDisplay();
-		}
+	}
 
 	else if (sender == itsFontMenu && message.Is(JXChooseMonoFont::kFontChanged))
-		{
+	{
 		UpdateSampleText();
-		}
+	}
 	else if (sender == itsRightMarginCB && message.Is(JXCheckbox::kPushed))
-		{
+	{
 		UpdateSampleText();
-		}
+	}
 
 	else if (message.Is(JXButton::kPushed) && HandleColorButton(sender))
-		{
+	{
 		// function did all the work
-		}
+	}
 
 	else if (sender == itsChooseColorDialog &&
 			 message.Is(JXDialogDirector::kDeactivated))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const JXDialogDirector::Deactivated*>(&message);
 		assert( info != nullptr );
 		if (info->Successful())
-			{
+		{
 			ChangeColor(itsChooseColorIndex, itsChooseColorDialog->GetColor());
-			}
-		itsChooseColorDialog = nullptr;
 		}
+		itsChooseColorDialog = nullptr;
+	}
 
 	else if (sender == itsDefColorsButton && message.Is(JXButton::kPushed))
-		{
+	{
 		SetDefaultColors();
-		}
+	}
 	else if (sender == itsInvColorsButton && message.Is(JXButton::kPushed))
-		{
+	{
 		SetReverseVideoColors();
-		}
+	}
 
 	else if (sender == itsEmulatorMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( info != nullptr );
 		itsEmulatorIndex = info->GetIndex();
-		}
+	}
 
 	else
-		{
+	{
 		JXDialogDirector::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -552,11 +553,11 @@ CBEditTextPrefsDialog::UpdateSettings()
 
 	JFloat vScrollScale = 1.0;
 	if (fontChanged)
-		{
+	{
 		const JFloat h1 = te->GetText()->GetDefaultFont().GetLineHeight(fontMgr);
 		const JFloat h2 = JFontManager::GetFont(fontName, fontSize).GetLineHeight(fontMgr);
 		vScrollScale    = h2 / h1;
-		}
+	}
 
 	JInteger tabCharCount;
 	bool ok = itsTabCharCountInput->GetValue(&tabCharCount);
@@ -583,9 +584,9 @@ CBEditTextPrefsDialog::UpdateSettings()
 
 	prefsMgr->SetDefaultFont(fontName, fontSize);
 	for (JIndex j=1; j<=CBPrefsManager::kColorCount; j++)
-		{
+	{
 		prefsMgr->SetColor(j, itsColor[j-1]);
-		}
+	}
 
 	JPtrArray<CBTextDocument>* docList = CBGetDocumentManager()->GetTextDocList();
 	const JSize docCount = docList->GetElementCount();
@@ -594,7 +595,7 @@ CBEditTextPrefsDialog::UpdateSettings()
 	pg->FixedLengthProcessBeginning(docCount, JGetString("UpdatingPrefs::CBEditTextPrefsDialog"), false, false);
 
 	for (JIndex i=1; i<=docCount; i++)
-		{
+	{
 		CBTextDocument* doc = docList->GetElement(i);
 
 		doc->ShouldMakeBackupFile(itsCreateBackupCB->IsChecked());
@@ -605,10 +606,10 @@ CBEditTextPrefsDialog::UpdateSettings()
 		te = doc->GetTextEditor();
 
 		if (itsEmulatorIndex != itsOrigEmulatorIndex)
-			{
+		{
 			JTEKeyHandler* handler;
 			CBInstallEmulator(kMenuIndexToEmulator[ itsEmulatorIndex-1 ], te, &handler);
-			}
+		}
 
 		te->GetText()->ShouldAutoIndent(itsAutoIndentCB->IsChecked());
 		te->CBShouldAllowDragAndDrop(itsUseDNDCB->IsChecked());
@@ -622,18 +623,18 @@ CBEditTextPrefsDialog::UpdateSettings()
 		te->GetText()->TabShouldInsertSpaces(itsTabToSpacesCB->IsChecked());
 
 		if (fontChanged)
-			{
+		{
 			JXScrollbar *hScrollbar, *vScrollbar;
 			const bool ok = te->GetScrollbars(&hScrollbar, &vScrollbar);
 			assert( ok );
 			vScrollbar->PrepareForScaledMaxValue(vScrollScale);
 
 			te->SetFont(fontName, fontSize, tabCharCount);
-			}
+		}
 		else
-			{
+		{
 			te->SetTabCharCount(tabCharCount);
-			}
+		}
 
 		te->GetText()->SetCRMLineWidth(crmLineWidth);
 		te->GetText()->SetUndoDepth(undoDepth);
@@ -648,20 +649,20 @@ CBEditTextPrefsDialog::UpdateSettings()
 		te->SetRightMarginColor(itsColor [ CBPrefsManager::kRightMarginColorIndex-1 ]);
 
 		if (textColorChanged)
-			{
+		{
 			te->RecalcStyles();
-			}
+		}
 
 		// force update of insertion font
 
 		JIndex caretIndex;
 		if (te->GetCaretLocation(&caretIndex))
-			{
+		{
 			te->SetCaretLocation(caretIndex);
-			}
+		}
 
 		pg->IncrementProgress();
-		}
+	}
 
 	CBFnMenuUpdater* updater = CBGetFnMenuUpdater();
 	updater->ShouldSortFnNames(itsSortFnMenuCB->IsChecked());
@@ -681,9 +682,9 @@ CBEditTextPrefsDialog::UpdateSettings()
 	itsDoc->JPrefObject::WritePrefs();
 
 	if (itsEmulatorIndex != itsOrigEmulatorIndex)
-		{
+	{
 		prefsMgr->SetEmulator(kMenuIndexToEmulator[ itsEmulatorIndex-1 ]);
-		}
+	}
 
 	CBMWriteSharedPrefs(true);
 
@@ -706,18 +707,18 @@ CBEditTextPrefsDialog::HandleColorButton
 {
 	itsChooseColorIndex = 0;
 	for (JUnsignedOffset i=0; i<CBPrefsManager::kColorCount; i++)
-		{
+	{
 		if (sender == itsColorButton[i])
-			{
+		{
 			itsChooseColorIndex = i+1;
 			break;
-			}
 		}
+	}
 
 	if (itsChooseColorIndex == 0)
-		{
+	{
 		return false;
-		}
+	}
 
 	assert( itsChooseColorDialog == nullptr );
 
@@ -816,22 +817,22 @@ void
 CBEditTextPrefsDialog::UpdateDisplay()
 {
 	if (itsCreateBackupCB->IsChecked())
-		{
+	{
 		itsOnlyBackupIfNoneCB->Activate();
-		}
+	}
 	else
-		{
+	{
 		itsOnlyBackupIfNoneCB->Deactivate();
-		}
+	}
 
 	if (itsBalanceWhileTypingCB->IsChecked())
-		{
+	{
 		itsScrollToBalanceCB->Activate();
 		itsBeepWhenTypeUnbalancedCB->Activate();
-		}
+	}
 	else
-		{
+	{
 		itsScrollToBalanceCB->Deactivate();
 		itsBeepWhenTypeUnbalancedCB->Deactivate();
-		}
+	}
 }

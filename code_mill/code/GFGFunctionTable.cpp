@@ -15,16 +15,16 @@
 
 #include <gfgGlobals.h>
 
-#include <JXColHeaderWidget.h>
-#include <JXColorManager.h>
+#include <jx-af/jx/JXColHeaderWidget.h>
+#include <jx-af/jx/JXColorManager.h>
 
-#include <JFontManager.h>
-#include <JPainter.h>
-#include <JSimpleProcess.h>
-#include <JTableSelection.h>
+#include <jx-af/jcore/JFontManager.h>
+#include <jx-af/jcore/JPainter.h>
+#include <jx-af/jcore/JSimpleProcess.h>
+#include <jx-af/jcore/JTableSelection.h>
 
 #include <signal.h>
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 const JCoordinate kDefColWidth   = 100;
 const JCoordinate kUsedColWidth  = 60;
@@ -123,18 +123,18 @@ GFGFunctionTable::Receive
 	)
 {
 	if (sender == itsList && message.Is(JListT::kElementsInserted))
-		{
+	{
 		const JSize delta = itsList->GetElementCount() - GetRowCount();
 		if (delta != 0)
-			{
+		{
 			AppendCols(delta);
 			itsNeedsAdjustment	= true;
-			}
 		}
+	}
 	else
-		{
+	{
 		JXTable::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -153,17 +153,17 @@ GFGFunctionTable::HandleMouseDown
 	)
 {
 	if (ScrollForWheel(button, modifiers))
-		{
+	{
 		return;
-		}
+	}
 
 	JPoint cell;
 	if (GetCell(pt, &cell))
-		{
+	{
 		GFGMemberFunction* fn	= itsList->GetElement(cell.y);
 		fn->ShouldBeUsed(!fn->IsUsed());
 		TableRefresh();
-		}
+	}
 }
 
 /******************************************************************************
@@ -182,62 +182,62 @@ GFGFunctionTable::TableDrawCell
 	AdjustColumnWidths();
 	
 	if (JRound(cell.y/2)*2 != cell.y)
-		{
+	{
 		p.SetPenColor(JColorManager::GetGrayColor(95));
 		p.SetFilling(true);
 		p.Rect(rect);
 		p.SetFilling(false);
-		}
+	}
 
 	const GFGMemberFunction* fn	= itsList->GetElement(cell.y);
 
 	if (cell.x == kFUsed)
-		{
+	{
 		if (fn->IsUsed())
-			{
+		{
 			JRect r(rect.ycenter(), rect.xcenter(), rect.ycenter(), rect.xcenter());
 			r.Expand(kBulletRadius, kBulletRadius);
 			p.SetPenColor(JColorManager::GetBlackColor());
 			p.SetFilling(true);
 			p.Ellipse(r);
-			}
-		return;
 		}
+		return;
+	}
 
 	JFontStyle style;
 	JPainter::HAlignment halign	= JPainter::kHAlignLeft;
 
 	if (fn->IsRequired())
-		{
+	{
 		style.italic = true;
-		}
+	}
 
 	if (fn->IsProtected())
-		{
+	{
 		style.color = JColorManager::GetBrownColor();
-		}
+	}
 
 	JString str;
 	if (cell.x == kFReturnType)
-		{
+	{
 		str	= fn->GetReturnType();
-		}
+	}
 	else if (cell.x == kFFunctionName)
-		{
+	{
 		str	= fn->GetFnName();
-		}
+	}
 	else if (cell.x == kFConst)
-		{
+	{
 		if (fn->IsConst())
-			{
+		{
 			str	= "const";
 			halign	= JPainter::kHAlignCenter;
-			}
 		}
+	}
 	else if (cell.x == kFArgs)
-		{
+	{
 		str = fn->GetArgString();
-		}
+	}
 
 	JRect r = rect;
 	r.left  += kHMarginWidth;
@@ -263,13 +263,13 @@ GFGFunctionTable::HandleKeyPress
 	)
 {
 	if (c == ' ')
-		{
+	{
 		GetTableSelection().ClearSelection();
-		}
+	}
 	else
-		{
+	{
 		JXTable::HandleKeyPress(c, keySym, modifiers);
-		}
+	}
 }
 
 /******************************************************************************
@@ -281,9 +281,9 @@ void
 GFGFunctionTable::AdjustColumnWidths()
 {
 	if (!itsNeedsAdjustment)
-		{
+	{
 		return;
-		}
+	}
 	itsNeedsAdjustment = false;
 
 	JFontManager* fontMgr = GetFontManager();
@@ -291,27 +291,27 @@ GFGFunctionTable::AdjustColumnWidths()
 
 	const JSize count	= itsList->GetElementCount();
 	for (JIndex i = 1; i <= count; i++)
-		{
+	{
 		const GFGMemberFunction* fn	= itsList->GetElement(i);
 		JSize width	= font.GetStringWidth(fontMgr, fn->GetReturnType());
 		JCoordinate adjWidth = width + 2 * kHMarginWidth;
 		if (adjWidth > GetColWidth(kFReturnType))
-			{
+		{
 			SetColWidth(kFReturnType, adjWidth);
-			}
+		}
 			
 		width    = font.GetStringWidth(fontMgr, fn->GetFnName());
 		adjWidth = width + 2 * kHMarginWidth;
 		if (adjWidth > GetColWidth(kFFunctionName))
-			{
+		{
 			SetColWidth(kFFunctionName, adjWidth);
-			}
+		}
 
 		width    = font.GetStringWidth(fontMgr, fn->GetArgString());
 		adjWidth = width + 2 * kHMarginWidth;
 		if (adjWidth > GetColWidth(kFArgs))
-			{
+		{
 			SetColWidth(kFArgs, adjWidth);
-			}
 		}
+	}
 }

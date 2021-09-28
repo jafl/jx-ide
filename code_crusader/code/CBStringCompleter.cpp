@@ -13,10 +13,10 @@
 #include "CBSymbolDirector.h"
 #include "CBSymbolList.h"
 #include "cbGlobals.h"
-#include <JXStringCompletionMenu.h>
-#include <JTextEditor.h>
-#include <JStringIterator.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXStringCompletionMenu.h>
+#include <jx-af/jcore/JTextEditor.h>
+#include <jx-af/jcore/JStringIterator.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -47,16 +47,16 @@ CBStringCompleter::CBStringCompleter
 	assert( itsOwnedList != nullptr );
 
 	if (itsLanguage != kCBOtherLang)
-		{
+	{
 		ListenTo(CBGetDocumentManager());
-		}
+	}
 
 	CBGetStyler(lang, &itsStyler);
 	UpdateWordList();			// lgtm[cpp/virtual-call-in-constructor]
 	if (itsStyler != nullptr)
-		{
+	{
 		ListenTo(itsStyler);
-		}
+	}
 
 	// We are constructed at a random point in time, so we have to
 	// ListenTo() all pre-existing project documents.
@@ -65,9 +65,9 @@ CBStringCompleter::CBStringCompleter
 		CBGetDocumentManager()->GetProjectDocList();
 
 	for (auto* doc : *docList)
-		{
+	{
 		ListenTo(doc->GetSymbolDirector()->GetSymbolList());
-		}
+	}
 }
 
 /******************************************************************************
@@ -92,9 +92,9 @@ CBStringCompleter::Reset()
 	RemoveAll();
 
 	for (JUnsignedOffset i=0; i<itsPredefKeywordCount; i++)
-		{
+	{
 		Add(JString(itsPrefefKeywordList[i], JString::kNoCopy));
-		}
+	}
 }
 
 /******************************************************************************
@@ -111,13 +111,13 @@ CBStringCompleter::Add
 	auto* s = jnew JString(str);
 	assert( s != nullptr );
 	if (itsStringList->InsertSorted(s, false))
-		{
+	{
 		itsOwnedList->Append(s);
-		}
+	}
 	else
-		{
+	{
 		jdelete s;
-		}
+	}
 }
 
 // private
@@ -174,9 +174,9 @@ CBStringCompleter::Complete
 
 	JIndex caretIndex;
 	if (!te->GetCaretLocation(&caretIndex))
-		{
+	{
 		return false;
-		}
+	}
 
 	const JString& text = te->GetText()->GetText();
 
@@ -184,15 +184,15 @@ CBStringCompleter::Complete
 	iter.BeginMatch();
 	JUtf8Character c;
 	while (iter.Prev(&c, kJIteratorStay) && IsWordCharacter(c, includeNS))
-		{
+	{
 		iter.SkipPrev();
-		}
+	}
 
 	if ((iter.AtEnd() && caretIndex > text.GetCharacterCount()) ||
 		iter.GetNextCharacterIndex() == caretIndex)
-		{
+	{
 		return false;
-		}
+	}
 
 	const JStringMatch m    = iter.FinishMatch();	// must exist after invalidating iterator
 	const JSize matchLength = m.GetCharacterRange().GetCount();
@@ -203,21 +203,21 @@ CBStringCompleter::Complete
 	const JSize matchCount = Complete(m.GetString(), &s, menu);
 	if (matchCount > 0 &&
 		s.GetCharacterCount() > matchLength)
-		{
+	{
 		te->Paste(JString(s.GetBytes() + m.GetUtf8ByteRange().GetCount(), JString::kNoCopy));
 		menu->ClearRequestCount();
 		return true;
-		}
+	}
 	else if (matchCount > 1)
-		{
+	{
 		menu->CompletionRequested(matchLength);
 		return true;
-		}
+	}
 	else if (matchCount == 0 && includeNS)
-		{
+	{
 		// try once more without namespace
 		return Complete(te, false, menu);
-		}
+	}
 
 	return false;
 }
@@ -255,10 +255,10 @@ CBStringCompleter::Complete
 
 	const JSize stringCount = itsStringList->GetElementCount();
 	if (startIndex > stringCount)
-		{
+	{
 		maxPrefix->Clear();
 		return 0;
-		}
+	}
 
 	JPtrArray<JString> matchList(JPtrArrayT::kForgetAll, 100);
 	*maxPrefix = *(itsStringList->GetElement(startIndex));
@@ -266,57 +266,57 @@ CBStringCompleter::Complete
 	JSize matchCount   = 0;
 	bool addString = true;
 	for (JIndex i=startIndex; i<=stringCount; i++)
-		{
+	{
 		const JString* s = itsStringList->GetElement(i);
 		if (!s->BeginsWith(prefix, itsCaseSensitiveFlag))
-			{
+		{
 			break;
-			}
+		}
 
 		if (matchCount > 0)
-			{
+		{
 			const JSize matchLength  = JString::CalcCharacterMatchLength(*maxPrefix, *s, itsCaseSensitiveFlag);
 			const JSize prefixLength = maxPrefix->GetCharacterCount();
 			if (matchLength < prefixLength)
-				{
+			{
 				JStringIterator iter(maxPrefix, kJIteratorStartAtEnd);
 				iter.RemovePrev(prefixLength - matchLength);
-				}
-			}
-
-		matchCount++;
-		if (itsCaseSensitiveFlag)
-			{
-			matchList.Append(const_cast<JString*>(s));
-			}
-		else if (addString)
-			{
-			JString s1 = *s;
-			MatchCase(prefix, &s1);
-			addString = menu->AddString(s1);	// must process all to get maxPrefix
 			}
 		}
 
-	if (itsCaseSensitiveFlag && matchCount > 0)
+		matchCount++;
+		if (itsCaseSensitiveFlag)
 		{
+			matchList.Append(const_cast<JString*>(s));
+		}
+		else if (addString)
+		{
+			JString s1 = *s;
+			MatchCase(prefix, &s1);
+			addString = menu->AddString(s1);	// must process all to get maxPrefix
+		}
+	}
+
+	if (itsCaseSensitiveFlag && matchCount > 0)
+	{
 		matchList.SetSortOrder(JListT::kSortAscending);
 		matchList.SetCompareFunction(JCompareStringsCaseInsensitive);
 		matchList.Sort();
 
 		assert( matchCount == matchList.GetElementCount() );
 		for (JIndex i=1; i<=matchCount; i++)
-			{
+		{
 			if (!menu->AddString(*(matchList.GetElement(i))))
-				{
+			{
 				matchCount = i-1;
 				break;
-				}
 			}
 		}
+	}
 	else if (!itsCaseSensitiveFlag)
-		{
+	{
 		MatchCase(prefix, maxPrefix);
-		}
+	}
 
 	return matchCount;
 }
@@ -357,32 +357,32 @@ CBStringCompleter::Receive
 {
 	if (sender == CBGetDocumentManager() &&
 		message.Is(CBDocumentManager::kProjectDocumentCreated))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const CBDocumentManager::ProjectDocumentCreated*>(&message);
 		UpdateWordList();
 		ListenTo(((info->GetProjectDocument())->GetSymbolDirector())->GetSymbolList());
-		}
+	}
 	else if (sender == CBGetDocumentManager() &&
 			 message.Is(CBDocumentManager::kProjectDocumentDeleted))
-		{
+	{
 		UpdateWordList();
-		}
+	}
 
 	else if (message.Is(CBSymbolList::kChanged))
-		{
+	{
 		UpdateWordList();
-		}
+	}
 
 	else if (sender == itsStyler && message.Is(CBStylerBase::kWordListChanged))
-		{
+	{
 		UpdateWordList();
-		}
+	}
 
 	else
-		{
+	{
 		JBroadcaster::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -400,16 +400,16 @@ CBStringCompleter::UpdateWordList()
 	// add words from styler's override list
 
 	if (itsStyler != nullptr)
-		{
+	{
 		CopyWordsFromStyler(itsStyler);
-		}
+	}
 
 	// add symbols from source code
 
 	if (itsLanguage != kCBOtherLang)
-		{
+	{
 		CopySymbolsForLanguage(itsLanguage);
-		}
+	}
 }
 
 /******************************************************************************
@@ -425,9 +425,9 @@ CBStringCompleter::CopyWordsFromStyler
 {
 	JStringMapCursor<JFontStyle> cursor(&styler->GetWordList());
 	while (cursor.Next())
-		{
+	{
 		Add(cursor.GetKey());
-		}
+	}
 }
 
 /******************************************************************************
@@ -445,21 +445,21 @@ CBStringCompleter::CopySymbolsForLanguage
 		CBGetDocumentManager()->GetProjectDocList();
 
 	for (auto* doc : *docList)
-		{
+	{
 		const CBSymbolList* symbolList = doc->GetSymbolDirector()->GetSymbolList();
 
 		const JSize symbolCount = symbolList->GetElementCount();
 		for (JIndex j=1; j<=symbolCount; j++)
-			{
+		{
 			CBLanguage l;
 			CBSymbolList::Type type;
 			bool fullyQualifiedFileScope;
 			const JString& symbolName =
 				symbolList->GetSymbol(j, &l, &type, &fullyQualifiedFileScope);
 			if (l == lang && !fullyQualifiedFileScope)
-				{
+			{
 				Add(const_cast<JString*>(&symbolName));
-				}
 			}
 		}
+	}
 }

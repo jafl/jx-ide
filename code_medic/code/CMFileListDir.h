@@ -8,8 +8,8 @@
 #ifndef _H_CMFileListDir
 #define _H_CMFileListDir
 
-#include <JXWindowDirector.h>
-#include <JPrefObject.h>
+#include <jx-af/jx/JXWindowDirector.h>
+#include <jx-af/jcore/JPrefObject.h>
 
 class JXTextMenu;
 class JXTextButton;

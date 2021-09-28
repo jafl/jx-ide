@@ -8,20 +8,20 @@
  ******************************************************************************/
 
 #include "CBRPChoosePathDialog.h"
-#include <JXWindow.h>
-#include <JXStaticText.h>
-#include <JXPathInput.h>
-#include <JXNewDirButton.h>
-#include <JXTextButton.h>
-#include <JXTextCheckbox.h>
-#include <JXRadioGroup.h>
-#include <JXTextRadioButton.h>
-#include <JXPathHistoryMenu.h>
-#include <JXCurrentPathMenu.h>
-#include <JXScrollbarSet.h>
-#include <jDirUtil.h>
-#include <jGlobals.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXStaticText.h>
+#include <jx-af/jx/JXPathInput.h>
+#include <jx-af/jx/JXNewDirButton.h>
+#include <jx-af/jx/JXTextButton.h>
+#include <jx-af/jx/JXTextCheckbox.h>
+#include <jx-af/jx/JXRadioGroup.h>
+#include <jx-af/jx/JXTextRadioButton.h>
+#include <jx-af/jx/JXPathHistoryMenu.h>
+#include <jx-af/jx/JXCurrentPathMenu.h>
+#include <jx-af/jx/JXScrollbarSet.h>
+#include <jx-af/jcore/jDirUtil.h>
+#include <jx-af/jcore/jGlobals.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor function (static)
@@ -222,7 +222,7 @@ CBRPChoosePathDialog::BuildWindow
 
 	JString homeDir;
 	if (!JGetHomeDirectory(&homeDir))
-		{
+	{
 		homeDirRB->Deactivate();
-		}
+	}
 }

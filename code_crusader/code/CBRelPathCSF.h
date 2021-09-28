@@ -8,7 +8,7 @@
 #ifndef _H_CBRelPathCSF
 #define _H_CBRelPathCSF
 
-#include <JXChooseSaveFile.h>
+#include <jx-af/jx/JXChooseSaveFile.h>
 
 class CBProjectDocument;
 class CBRPChooseFileDialog;

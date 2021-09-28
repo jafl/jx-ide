@@ -10,9 +10,9 @@
 #include "CMCommandInput.h"
 #include "CMTextDisplayBase.h"
 #include "cbmUtil.h"
-#include <JXStyledText.h>
-#include <jASCIIConstants.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXStyledText.h>
+#include <jx-af/jcore/jASCIIConstants.h>
+#include <jx-af/jcore/jAssert.h>
 
 // JBroadcaster message types
 
@@ -99,65 +99,65 @@ CMCommandInput::HandleKeyPress
 	const bool controlOn = modifiers.control();
 
 	if (controlOn && c == JXCtrl('A'))
-		{
+	{
 		GoToBeginningOfLine();
-		}
+	}
 	else if (controlOn && c == JXCtrl('E'))
-		{
+	{
 		GoToEndOfLine();
-		}
+	}
 
 	else if (controlOn && c == JXCtrl('B'))
-		{
+	{
 		JXKeyModifiers newModifiers(GetDisplay());
 		JXTEBase::HandleKeyPress(JUtf8Character(kJLeftArrow), 0, newModifiers);
-		}
+	}
 	else if (controlOn && c == JXCtrl('F'))
-		{
+	{
 		JXKeyModifiers newModifiers(GetDisplay());
 		JXTEBase::HandleKeyPress(JUtf8Character(kJRightArrow), 0, newModifiers);
-		}
+	}
 
 	else if (controlOn && c == JXCtrl('D'))
-		{
+	{
 		JXKeyModifiers newModifiers(GetDisplay());
 		JXTEBase::HandleKeyPress(JUtf8Character(modifiers.shift() ? kJDeleteKey : kJForwardDeleteKey), 0, newModifiers);
-		}
+	}
 
 	else if (controlOn && c == JXCtrl('U'))
-		{
+	{
 		GetText()->SetText(JString::empty);
-		}
+	}
 
 	else if (controlOn && c == JXCtrl('K'))
-		{
+	{
 		const JCharacterRange r(GetInsertionIndex().charIndex, GetText()->GetText().GetCharacterCount());
 		if (!HasSelection() && !r.IsEmpty())
-			{
+		{
 			SetSelection(r);
-			}
-		Cut();
 		}
+		Cut();
+	}
 
 	else if (c == kJReturnKey)
-		{
+	{
 		Broadcast(ReturnKeyPressed());
-		}
+	}
 	else if (c == kJTabKey && !GetText()->GetText().IsEmpty())
-		{
+	{
 		Broadcast(TabKeyPressed());
-		}
+	}
 	else if (allOff && c == kJUpArrow)
-		{
+	{
 		Broadcast(UpArrowKeyPressed());
-		}
+	}
 	else if (allOff && c == kJDownArrow)
-		{
+	{
 		Broadcast(DownArrowKeyPressed());
-		}
+	}
 
 	else
-		{
+	{
 		JXTEBase::HandleKeyPress(c, keySym, modifiers);
-		}
+	}
 }

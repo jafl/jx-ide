@@ -18,20 +18,20 @@
 #include "CBTextEditor.h"
 #include "cbGlobals.h"
 
-#include <JXDisplay.h>
-#include <JXWindow.h>
-#include <JXImage.h>
-#include <JXColorManager.h>
-#include <JXSelectionManager.h>
-#include <JXTextSelection.h>
+#include <jx-af/jx/JXDisplay.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXImage.h>
+#include <jx-af/jx/JXColorManager.h>
+#include <jx-af/jx/JXSelectionManager.h>
+#include <jx-af/jx/JXTextSelection.h>
 
-#include <JPainter.h>
-#include <JTableSelection.h>
-#include <JFontManager.h>
-#include <JRegex.h>
-#include <JSubstitute.h>
-#include <jASCIIConstants.h>
-#include <jAssert.h>
+#include <jx-af/jcore/JPainter.h>
+#include <jx-af/jcore/JTableSelection.h>
+#include <jx-af/jcore/JFontManager.h>
+#include <jx-af/jcore/JRegex.h>
+#include <jx-af/jcore/JSubstitute.h>
+#include <jx-af/jcore/jASCIIConstants.h>
+#include <jx-af/jcore/jAssert.h>
 
 const JCoordinate kIconWidth    = 20;
 const JCoordinate kTextPadding  = 5;
@@ -149,13 +149,13 @@ CBSymbolTable::DisplaySelectedSymbols()
 
 	const JTableSelection& s = GetTableSelection();
 	if (s.HasSelection())
-		{
+	{
 		JString missingFiles;
 
 		JTableSelectionIterator iter(&s);
 		JPoint cell;
 		while (iter.Next(&cell))
-			{
+		{
 			const JIndex symbolIndex = CellToSymbolIndex(cell);
 			JIndex lineIndex;
 			const JString& fileName =
@@ -163,33 +163,33 @@ CBSymbolTable::DisplaySelectedSymbols()
 
 			CBTextDocument* doc;
 			if (CBGetDocumentManager()->OpenTextDocument(fileName, lineIndex, &doc))
-				{
+			{
 				CBLanguage lang;
 				CBSymbolList::Type type;
 				itsSymbolList->GetSymbol(symbolIndex, &lang, &type);
 
 				if (CBSymbolList::ShouldSmartScroll(type))
-					{
-					(doc->GetTextEditor())->ScrollForDefinition(lang);
-					}
-				}
-			else
 				{
+					(doc->GetTextEditor())->ScrollForDefinition(lang);
+				}
+			}
+			else
+			{
 				missingFiles += fileName;
 				missingFiles += "\n";
-				}
-			}
-
-		if (!missingFiles.IsEmpty())
-			{
-			const JUtf8Byte* map[] =
-				{
-				"list", missingFiles.GetBytes()
-				};
-			const JString msg = JGetString("MissingFiles::CBSymbolTable", map, sizeof(map));
-			JGetUserNotification()->ReportError(msg);
 			}
 		}
+
+		if (!missingFiles.IsEmpty())
+		{
+			const JUtf8Byte* map[] =
+			{
+				"list", missingFiles.GetBytes()
+			};
+			const JString msg = JGetString("MissingFiles::CBSymbolTable", map, sizeof(map));
+			JGetUserNotification()->ReportError(msg);
+		}
+	}
 }
 
 /******************************************************************************
@@ -208,17 +208,17 @@ CBSymbolTable::FindSelectedSymbols
 
 	const JTableSelection& s = GetTableSelection();
 	if (s.HasSelection())
-		{
+	{
 		JTableSelectionIterator iter(&s);
 		JPoint cell;
 		while (iter.Next(&cell))
-			{
+		{
 			CBLanguage lang;
 			CBSymbolList::Type type;
 			const JString& name = itsSymbolList->GetSymbol(CellToSymbolIndex(cell), &lang, &type);
 			itsSymbolDirector->FindSymbol(name, JString::empty, button);
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -234,7 +234,7 @@ CBSymbolTable::CopySelectedSymbolNames()
 
 	const JTableSelection& s = GetTableSelection();
 	if (s.HasSelection())
-		{
+	{
 		JPtrArray<JString> list(JPtrArrayT::kForgetAll);
 
 		CBLanguage lang;
@@ -243,16 +243,16 @@ CBSymbolTable::CopySelectedSymbolNames()
 		JTableSelectionIterator iter(&s);
 		JPoint cell;
 		while (iter.Next(&cell))
-			{
+		{
 			const JString& name = itsSymbolList->GetSymbol(CellToSymbolIndex(cell), &lang, &type);
 			list.Append(const_cast<JString*>(&name));
-			}
+		}
 
 		auto* data = jnew JXTextSelection(GetDisplay(), list);
 		assert( data != nullptr );
 
 		GetSelectionManager()->SetData(kJXClipboardName, data);
-		}
+	}
 }
 
 /******************************************************************************
@@ -272,11 +272,11 @@ CBSymbolTable::GetFileNamesForSelection
 
 	const JTableSelection& s = GetTableSelection();
 	if (s.HasSelection())
-		{
+	{
 		JTableSelectionIterator iter(&s);
 		JPoint cell;
 		while (iter.Next(&cell))
-			{
+		{
 			const JIndex symbolIndex = CellToSymbolIndex(cell);
 			JIndex lineIndex;
 			const JString& fileName =
@@ -284,8 +284,8 @@ CBSymbolTable::GetFileNamesForSelection
 
 			fileNameList->Append(fileName);
 			lineIndexList->AppendElement(lineIndex);
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -329,21 +329,21 @@ CBSymbolTable::SetNameFilter
 
 	JError result = JNoError();
 	if (isRegex)
-		{
+	{
 		itsNameFilter = jnew JRegex;
 		assert( itsNameFilter != nullptr );
 		result = itsNameFilter->SetPattern(filterStr);
 		if (!result.OK())
-			{
+		{
 			jdelete itsNameFilter;
 			itsNameFilter = nullptr;
-			}
 		}
+	}
 	else
-		{
+	{
 		itsNameLiteral = jnew JString(filterStr);
 		assert( itsNameLiteral != nullptr );
-		}
+	}
 
 	itsVisibleListLockedFlag = false;
 
@@ -396,9 +396,9 @@ CBSymbolTable::TableDrawCell
 	itsSymbolList->GetSignature(symbolIndex, &signature);
 
 	if (CalcColWidths(symbolName, signature))
-		{
+	{
 		AdjustColWidths();
-		}
+	}
 
 	const JXImage* icon     = nullptr;
 	const JFontStyle& style = (CBGetSymbolTypeList())->GetStyle(type, &icon);
@@ -406,11 +406,11 @@ CBSymbolTable::TableDrawCell
 	// draw icon
 
 	if (icon != nullptr)
-		{
+	{
 		JRect r = rect;
 		r.right = r.left + kIconWidth;
 		p.Image(*icon, icon->GetBounds(), r);
-		}
+	}
 
 	// draw name
 
@@ -421,10 +421,10 @@ CBSymbolTable::TableDrawCell
 	p.String(r, symbolName, JPainter::kHAlignLeft, JPainter::kVAlignCenter);
 
 	if (signature != nullptr)
-		{
+	{
 		r.left += JFontManager::GetDefaultFont().GetStringWidth(GetFontManager(), symbolName);
 		p.String(r, *signature, JPainter::kHAlignLeft, JPainter::kVAlignCenter);
-		}
+	}
 }
 
 /******************************************************************************
@@ -446,37 +446,37 @@ CBSymbolTable::HandleMouseDown
 
 	JPoint cell;
 	if (ScrollForWheel(button, modifiers))
-		{
+	{
 		return;
-		}
+	}
 	else if (!GetCell(pt, &cell))
-		{
+	{
 		(GetTableSelection()).ClearSelection();
-		}
+	}
 	else if (button == kJXLeftButton &&
 			 clickCount == 2 &&
 			 !modifiers.shift() && modifiers.meta() && modifiers.control())
-		{
+	{
 		SelectSingleCell(cell, false);
 		DisplaySelectedSymbols();
 		GetWindow()->Close();
 		return;
-		}
+	}
 	else if (clickCount == 2 && modifiers.meta())
-		{
+	{
 		SelectSingleCell(cell, false);
 		FindSelectedSymbols(button);
-		}
+	}
 	else if (button == kJXLeftButton &&
 			 clickCount == 2 &&
 			 !modifiers.shift() && !modifiers.control())
-		{
+	{
 		DisplaySelectedSymbols();
-		}
+	}
 	else
-		{
+	{
 		BeginSelectionDrag(cell, button, modifiers);
-		}
+	}
 }
 
 /******************************************************************************
@@ -542,55 +542,55 @@ CBSymbolTable::HandleKeyPress
 	const bool hadSelection = s.GetFirstSelectedCell(&topSelCell);
 
 	if (c == ' ')
-		{
+	{
 		ClearSelection();
-		}
+	}
 
 	else if (c == kJReturnKey)
-		{
+	{
 		DisplaySelectedSymbols();
 		if (modifiers.meta() && modifiers.control())
-			{
+		{
 			GetWindow()->Close();
 			return;
-			}
 		}
+	}
 
 	else if (c == kJUpArrow || c == kJDownArrow)
-		{
+	{
 		itsKeyBuffer.Clear();
 		if (!hadSelection && c == kJUpArrow && GetRowCount() > 0)
-			{
+		{
 			SelectSingleEntry(GetRowCount());
-			}
-		else
-			{
-			HandleSelectionKeyPress(c, modifiers);
-			}
 		}
+		else
+		{
+			HandleSelectionKeyPress(c, modifiers);
+		}
+	}
 
 	else if ((c == 'c' || c == 'C') && modifiers.meta() && !modifiers.shift())
-		{
+	{
 		CopySelectedSymbolNames();
-		}
+	}
 
 	else if (c.IsPrint() && !modifiers.control() && !modifiers.meta())
-		{
+	{
 		itsKeyBuffer.Append(c);
 
 		JIndex index;
 		if (itsSymbolList->ClosestMatch(itsKeyBuffer, *itsVisibleList, &index))
-			{
+		{
 			JString saveBuffer = itsKeyBuffer;
 			SelectSingleEntry(index);
 			itsKeyBuffer = saveBuffer;
-			}
 		}
+	}
 
 	else
-		{
+	{
 		JXTable::HandleKeyPress(c, keySym, modifiers);
-		}
+	}
 }
 
 /******************************************************************************
@@ -606,25 +606,25 @@ CBSymbolTable::Receive
 	)
 {
 	if (sender == itsSymbolList && message.Is(CBSymbolList::kChanged))
-		{
+	{
 		RebuildTable();
-		}
+	}
 
 	else if (sender == CBGetSymbolTypeList() &&
 			 message.Is(CBSymbolTypeList::kVisibilityChanged))
-		{
+	{
 		RebuildTable();
-		}
+	}
 	else if (sender == CBGetSymbolTypeList() &&
 			 message.Is(CBSymbolTypeList::kStyleChanged))
-		{
+	{
 		Refresh();
-		}
+	}
 
 	else
-		{
+	{
 		JXTable::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -644,10 +644,10 @@ CBSymbolTable::RebuildTable()
 	itsMaxStringWidth = 0;
 
 	if (itsVisibleListLockedFlag)
-		{
+	{
 		const JSize count = itsVisibleList->GetElementCount();
 		for (JIndex i=1; i<=count; i++)
-			{
+		{
 			const JIndex j = itsVisibleList->GetElement(i);
 
 			const JString* signature;
@@ -656,15 +656,15 @@ CBSymbolTable::RebuildTable()
 			CBLanguage lang;
 			CBSymbolList::Type type;
 			CalcColWidths(itsSymbolList->GetSymbol(j, &lang, &type), signature);
-			}
 		}
+	}
 	else if (itsNameFilter != nullptr || itsNameLiteral != nullptr)
-		{
+	{
 		itsVisibleList->RemoveAll();
 
 		const JSize symbolCount = itsSymbolList->GetElementCount();
 		for (JIndex i=1; i<=symbolCount; i++)
-			{
+		{
 			CBLanguage lang;
 			CBSymbolList::Type type;
 			const JString& symbolName = itsSymbolList->GetSymbol(i, &lang, &type);
@@ -677,35 +677,35 @@ CBSymbolTable::RebuildTable()
 				((itsNameFilter  != nullptr && itsNameFilter->Match(symbolName)) ||
 				 (itsNameLiteral != nullptr && symbolName.Contains(*itsNameLiteral)))
 				)
-				{
+			{
 				itsVisibleList->AppendElement(i);
 				CalcColWidths(symbolName, signature);
-				}
 			}
 		}
+	}
 	else	// optimize because scanning 1e5 symbols takes a while!
-		{
+	{
 		const JSize symbolCount = itsSymbolList->GetElementCount();
 		if (itsVisibleList->GetElementCount() > symbolCount)
-			{
+		{
 			itsVisibleList->RemoveNextElements(
 				symbolCount+1, itsVisibleList->GetElementCount() - symbolCount);
-			}
-		while (itsVisibleList->GetElementCount() < symbolCount)
-			{
-			itsVisibleList->AppendElement(itsVisibleList->GetElementCount()+1);
-			}
 		}
+		while (itsVisibleList->GetElementCount() < symbolCount)
+		{
+			itsVisibleList->AppendElement(itsVisibleList->GetElementCount()+1);
+		}
+	}
 
 	const JSize rowCount = itsVisibleList->GetElementCount();
 	if (GetRowCount() < rowCount)
-		{
+	{
 		AppendRows(rowCount - GetRowCount());
-		}
+	}
 	else if (GetRowCount() > rowCount)
-		{
+	{
 		RemoveNextRows(rowCount+1, GetRowCount() - rowCount);
-		}
+	}
 
 	AdjustColWidths();
 	ScrollTo(scrollPt);
@@ -727,19 +727,19 @@ CBSymbolTable::CalcColWidths
 	JSize w = JFontManager::GetDefaultFont().GetStringWidth(GetFontManager(), symbolName);
 
 	if (signature != nullptr)
-		{
+	{
 		w += JFontManager::GetDefaultFont().GetStringWidth(GetFontManager(), *signature);
-		}
+	}
 
 	if (w > itsMaxStringWidth)
-		{
+	{
 		itsMaxStringWidth = w;
 		return true;
-		}
+	}
 	else
-		{
+	{
 		return false;
-		}
+	}
 }
 
 /******************************************************************************

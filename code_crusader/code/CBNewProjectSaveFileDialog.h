@@ -8,7 +8,7 @@
 #ifndef _H_CBNewProjectSaveFileDialog
 #define _H_CBNewProjectSaveFileDialog
 
-#include <JXSaveFileDialog.h>
+#include <jx-af/jx/JXSaveFileDialog.h>
 #include "CBBuildManager.h"		// need defn of MakefileMethod
 
 class JXRadioGroup;

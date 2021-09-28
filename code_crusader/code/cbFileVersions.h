@@ -10,7 +10,7 @@
 #ifndef _H_cbFileVersions
 #define _H_cbFileVersions
 
-#include <jTypes.h>
+#include <jx-af/jcore/jTypes.h>
 
 const JFileVersion kCurrentPrefsFileVersion = 68;
 

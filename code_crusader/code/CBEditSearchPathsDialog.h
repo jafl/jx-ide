@@ -10,8 +10,8 @@
 #ifndef _H_CBEditSearchPathsDialog
 #define _H_CBEditSearchPathsDialog
 
-#include <JXDialogDirector.h>
-#include <JPrefObject.h>
+#include <jx-af/jx/JXDialogDirector.h>
+#include <jx-af/jcore/JPrefObject.h>
 
 class JString;
 class JXTextButton;

@@ -10,7 +10,7 @@
 #ifndef _H_CBProjectDocument
 #define _H_CBProjectDocument
 
-#include <JXFileDocument.h>
+#include <jx-af/jx/JXFileDocument.h>
 #include "CBDirList.h"
 #include "CBTextFileType.h"
 #include "CBProjectTable.h"			// need defn of DropFileAction

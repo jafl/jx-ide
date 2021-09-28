@@ -13,7 +13,7 @@
 #include "CBDClass.h"
 #include "CBDTreeDirector.h"
 #include "CBDTreeScanner.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -136,10 +136,10 @@ CBDTree::ParseFile
 	)
 {
 	if (itsClassNameLexer == nullptr)
-		{
+	{
 		itsClassNameLexer = jnew CB::Tree::D::Scanner;
 		assert( itsClassNameLexer != nullptr );
-		}
+	}
 
 	// extract info about classes
 

@@ -10,7 +10,7 @@
 #ifndef _H_CBKeyScriptTableBase
 #define _H_CBKeyScriptTableBase
 
-#include <JXStringTable.h>
+#include <jx-af/jx/JXStringTable.h>
 
 class JXTextButton;
 class CBEditMacroDialog;

@@ -10,17 +10,17 @@
 #include "CBViewManPageDialog.h"
 #include "CBManPageDocument.h"
 #include "cbGlobals.h"
-#include <JXWindow.h>
-#include <JXHelpManager.h>
-#include <JXTextButton.h>
-#include <JXCharInput.h>
-#include <JXStaticText.h>
-#include <JXTextCheckbox.h>
-#include <JXStringHistoryMenu.h>
-#include <JXDocumentMenu.h>
-#include <JXChooseSaveFile.h>
-#include <JStringIterator.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXHelpManager.h>
+#include <jx-af/jx/JXTextButton.h>
+#include <jx-af/jx/JXCharInput.h>
+#include <jx-af/jx/JXStaticText.h>
+#include <jx-af/jx/JXTextCheckbox.h>
+#include <jx-af/jx/JXStringHistoryMenu.h>
+#include <jx-af/jx/JXDocumentMenu.h>
+#include <jx-af/jx/JXChooseSaveFile.h>
+#include <jx-af/jcore/JStringIterator.h>
+#include <jx-af/jcore/jAssert.h>
 
 const JSize kHistoryLength = 20;
 
@@ -68,10 +68,10 @@ CBViewManPageDialog::Activate()
 	JXWindowDirector::Activate();
 
 	if (IsActive())
-		{
+	{
 		itsFnName->Focus();
 		itsFnName->SelectAll();
-		}
+	}
 }
 
 /******************************************************************************
@@ -181,13 +181,13 @@ void
 CBViewManPageDialog::UpdateDisplay()
 {
 	if (itsFnName->GetText()->IsEmpty())
-		{
+	{
 		itsViewButton->Deactivate();
-		}
+	}
 	else
-		{
+	{
 		itsViewButton->Activate();
-		}
+	}
 }
 
 /******************************************************************************
@@ -203,39 +203,39 @@ CBViewManPageDialog::Receive
 	)
 {
 	if (sender == itsViewButton && message.Is(JXButton::kPushed))
-		{
+	{
 		ViewManPage();
 		if (!itsStayOpenCB->IsChecked())
-			{
+		{
 			Deactivate();
-			}
 		}
+	}
 	else if (sender == itsCloseButton && message.Is(JXButton::kPushed))
-		{
+	{
 		Deactivate();
-		}
+	}
 	else if (sender == itsHelpButton && message.Is(JXButton::kPushed))
-		{
+	{
 		(JXGetHelpManager())->ShowSection("CBManPageHelp");
-		}
+	}
 
 	else if (sender == itsFnHistoryMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		SetFunction(itsFnHistoryMenu->GetItemText(message));
 		itsFnName->Focus();
-		}
+	}
 
 	else if (sender == itsFnName &&
 			 (message.Is(JStyledText::kTextSet) ||
 			  message.Is(JStyledText::kTextChanged)))
-		{
+	{
 		UpdateDisplay();
-		}
+	}
 
 	else
-		{
+	{
 		JXWindowDirector::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -249,16 +249,16 @@ CBViewManPageDialog::ViewManPage()
 	itsFnName->GetText()->DeactivateCurrentUndo();
 
 	if (itsFnName->InputValid() && itsManIndex->InputValid())
-		{
+	{
 		JString manIndex;
 		if (!itsManIndex->GetText()->IsEmpty())
-			{
+		{
 			manIndex = itsManIndex->GetText()->GetText();
-			}
+		}
 
 		CBManPageDocument::Create(nullptr, itsFnName->GetText()->GetText(), manIndex,
 								  itsAproposCheckbox->IsChecked());
-		}
+	}
 }
 
 /******************************************************************************
@@ -279,15 +279,15 @@ CBViewManPageDialog::AddToHistory
 {
 	JString historyStr = pageName;
 	if (apropos)
-		{
+	{
 		historyStr += " (*)";
-		}
+	}
 	else if (!pageIndex.IsEmpty())
-		{
+	{
 		historyStr += " (";
 		historyStr += pageIndex;
 		historyStr += ")";
-		}
+	}
 
 	itsFnHistoryMenu->AddString(historyStr);
 }
@@ -307,23 +307,23 @@ CBViewManPageDialog::SetFunction
 
 	JUtf8Character manIndex;
 	if (fnName.GetLastCharacter() == ')')
-		{
+	{
 		JStringIterator iter(&fnName, kJIteratorStartAtEnd);
 		iter.SkipPrev();
 		iter.Prev(&manIndex);
 		iter.SkipPrev(2);
 		iter.RemoveAllNext();
-		}
+	}
 
 	if (manIndex == '*')
-		{
+	{
 		manIndex = ' ';
 		itsAproposCheckbox->SetState(true);
-		}
+	}
 	else
-		{
+	{
 		itsAproposCheckbox->SetState(false);
-		}
+	}
 
 	itsFnName->GetText()->SetText(fnName);
 	itsManIndex->GetText()->SetText(JString(manIndex));
@@ -343,9 +343,9 @@ CBViewManPageDialog::ReadPrefs
 	JFileVersion vers;
 	input >> vers;
 	if (vers > kCurrentSetupVersion)
-		{
+	{
 		return;
-		}
+	}
 
 	JXWindow* window = GetWindow();
 	window->ReadGeometry(input);
@@ -354,11 +354,11 @@ CBViewManPageDialog::ReadPrefs
 	itsFnHistoryMenu->ReadSetup(input);
 
 	if (vers >= 1)
-		{
+	{
 		bool stayOpen;
 		input >> JBoolFromString(stayOpen);
 		itsStayOpenCB->SetState(stayOpen);
-		}
+	}
 }
 
 /******************************************************************************

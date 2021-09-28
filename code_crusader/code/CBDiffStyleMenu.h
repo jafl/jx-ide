@@ -10,7 +10,7 @@
 #ifndef _H_CBDiffStyleMenu
 #define _H_CBDiffStyleMenu
 
-#include <JXStyleMenu.h>
+#include <jx-af/jx/JXStyleMenu.h>
 
 class CBDiffStyleMenu : public JXStyleMenu
 {

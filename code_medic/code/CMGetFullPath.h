@@ -9,7 +9,7 @@
 #define _H_CMGetFullPath
 
 #include "CMCommand.h"
-#include <JBroadcaster.h>
+#include <jx-af/jcore/JBroadcaster.h>
 
 class CMGetFullPath : public CMCommand, virtual public JBroadcaster
 {

@@ -8,7 +8,7 @@
 #ifndef _H_CBSymbolUpdatePG
 #define _H_CBSymbolUpdatePG
 
-#include <JProgressDisplay.h>
+#include <jx-af/jcore/JProgressDisplay.h>
 
 class CBSymbolUpdatePG : public JProgressDisplay
 {

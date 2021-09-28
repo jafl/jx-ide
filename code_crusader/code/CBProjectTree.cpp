@@ -9,7 +9,7 @@
 
 #include "CBProjectTree.h"
 #include "CBProjectNode.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor

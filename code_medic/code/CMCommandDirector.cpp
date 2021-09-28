@@ -38,31 +38,31 @@
 #include "cmFileVersions.h"
 #include "cmActionDefs.h"
 
-#include <JXDisplay.h>
-#include <JXWindow.h>
-#include <JXMenuBar.h>
-#include <JXTextMenu.h>
-#include <JXTextButton.h>
-#include <JXInputField.h>
-#include <JXToolBar.h>
-#include <JXScrollbarSet.h>
-#include <JXDownRect.h>
-#include <JXStaticText.h>
-#include <JXDockWidget.h>
-#include <JXStringHistoryMenu.h>
-#include <JXHelpManager.h>
-#include <JXWDManager.h>
-#include <JXWDMenu.h>
-#include <JXChooseSaveFile.h>
-#include <JXImage.h>
-#include <JXColorManager.h>
-#include <JXMacWinPrefsDialog.h>
+#include <jx-af/jx/JXDisplay.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXMenuBar.h>
+#include <jx-af/jx/JXTextMenu.h>
+#include <jx-af/jx/JXTextButton.h>
+#include <jx-af/jx/JXInputField.h>
+#include <jx-af/jx/JXToolBar.h>
+#include <jx-af/jx/JXScrollbarSet.h>
+#include <jx-af/jx/JXDownRect.h>
+#include <jx-af/jx/JXStaticText.h>
+#include <jx-af/jx/JXDockWidget.h>
+#include <jx-af/jx/JXStringHistoryMenu.h>
+#include <jx-af/jx/JXHelpManager.h>
+#include <jx-af/jx/JXWDManager.h>
+#include <jx-af/jx/JXWDMenu.h>
+#include <jx-af/jx/JXChooseSaveFile.h>
+#include <jx-af/jx/JXImage.h>
+#include <jx-af/jx/JXColorManager.h>
+#include <jx-af/jx/JXMacWinPrefsDialog.h>
 
-#include <JStringIterator.h>
-#include <JFontManager.h>
-#include <jFileUtil.h>
-#include <jDirUtil.h>
-#include <jAssert.h>
+#include <jx-af/jcore/JStringIterator.h>
+#include <jx-af/jcore/JFontManager.h>
+#include <jx-af/jcore/jFileUtil.h>
+#include <jx-af/jcore/jDirUtil.h>
+#include <jx-af/jcore/jAssert.h>
 
 const JSize kCmdHistoryLength = 100;
 
@@ -356,39 +356,39 @@ CMCommandDirector::CloseDynamicDirectors()
 {
 	JSize count = itsSourceDirs->GetElementCount();
 	for (JIndex i=count; i>=1; i--)
-		{
+	{
 		(itsSourceDirs->GetElement(i))->Close();
-		}
+	}
 
 	count = itsAsmDirs->GetElementCount();
 	for (JIndex i=count; i>=1; i--)
-		{
+	{
 		(itsAsmDirs->GetElement(i))->Close();
-		}
+	}
 
 	count = itsArray1DDirs->GetElementCount();
 	for (JIndex i=count; i>=1; i--)
-		{
+	{
 		(itsArray1DDirs->GetElement(i))->Close();
-		}
+	}
 
 	count = itsArray2DDirs->GetElementCount();
 	for (JIndex i=count; i>=1; i--)
-		{
+	{
 		(itsArray2DDirs->GetElement(i))->Close();
-		}
+	}
 
 	count = itsPlot2DDirs->GetElementCount();
 	for (JIndex i=count; i>=1; i--)
-		{
+	{
 		(itsPlot2DDirs->GetElement(i))->Close();
-		}
+	}
 
 	count = itsMemoryDirs->GetElementCount();
 	for (JIndex i=count; i>=1; i--)
-		{
+	{
 		(itsMemoryDirs->GetElement(i))->Close();
-		}
+	}
 }
 
 /******************************************************************************
@@ -405,9 +405,9 @@ CMCommandDirector::TransferKeyPressToInput
 	)
 {
 	if (itsCommandInput->Focus())
-		{
+	{
 		itsCommandInput->HandleKeyPress(c, keySym, modifiers);
-		}
+	}
 }
 
 /******************************************************************************
@@ -421,9 +421,9 @@ CMCommandDirector::InitializeCommandOutput()
 	itsCommandOutput->GetText()->SetText(JString::empty);
 
 	const JUtf8Byte* map[] =
-		{
+	{
 		"vers", CMGetVersionNumberStr().GetBytes()
-		};
+	};
 	const JString welcome = JGetString("Welcome::CMCommandDirector", map, sizeof(map));
 	itsCommandOutput->GetText()->SetText(welcome);
 	itsCommandOutput->SetCaretLocation(welcome.GetCharacterCount()+1);
@@ -611,15 +611,15 @@ CMCommandDirector::DockAll
 
 	JSize count = itsSourceDirs->GetElementCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		srcDock->Dock(itsSourceDirs->GetElement(i));
-		}
+	}
 
 	count = itsAsmDirs->GetElementCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		srcDock->Dock(itsAsmDirs->GetElement(i));
-		}
+	}
 
 	infoDock->Dock(itsThreadsDir);
 	infoDock->Dock(itsStackDir);
@@ -632,27 +632,27 @@ CMCommandDirector::DockAll
 
 	count = itsArray1DDirs->GetElementCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		dataDock->Dock(itsArray1DDirs->GetElement(i));
-		}
+	}
 
 	count = itsArray2DDirs->GetElementCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		dataDock->Dock(itsArray2DDirs->GetElement(i));
-		}
+	}
 
 	count = itsPlot2DDirs->GetElementCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		dataDock->Dock(itsPlot2DDirs->GetElement(i));
-		}
+	}
 
 	count = itsMemoryDirs->GetElementCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		dataDock->Dock(itsMemoryDirs->GetElement(i));
-		}
+	}
 }
 
 /******************************************************************************
@@ -671,13 +671,13 @@ CMCommandDirector::UpdateWindowTitle
 	GetWindow()->SetTitle(title);
 
 	if (!programName.IsEmpty())
-		{
+	{
 		itsProgramButton->SetLabel(programName);
-		}
+	}
 	else
-		{
+	{
 		itsProgramButton->SetLabel(JGetString("NoBinaryButtonLabel::CMCommandDirector"));
-		}
+	}
 }
 
 /******************************************************************************
@@ -797,11 +797,11 @@ CMCommandDirector::AddDebugMenuItemsToToolBar
 	toolBar->AppendButton(debugMenu, kContCmd);
 
 	if (includeStepAsm)
-		{
+	{
 		toolBar->NewGroup();
 		toolBar->AppendButton(debugMenu, kNextAsmCmd);
 		toolBar->AppendButton(debugMenu, kStepAsmCmd);
-		}
+	}
 }
 
 /******************************************************************************
@@ -817,19 +817,19 @@ CMCommandDirector::AdjustDebugMenu
 {
 	const JSize itemCount = menu->GetItemCount();
 	for (JIndex i=itemCount; i>=kFirstCustomDebugCmd; i--)
-		{
+	{
 		menu->RemoveItem(i);
-		}
+	}
 
 	JPtrArray<JString> cmds(JPtrArrayT::kDeleteAll);
 	CMGetPrefsManager()->GetCmdList(&cmds);
 
 	const JSize count = cmds.GetElementCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		const JString* cmd = cmds.GetElement(i);
 		menu->AppendItem(*cmd, JXMenu::kPlainType, JString::empty, JString::empty, *cmd);
-		}
+	}
 }
 
 /******************************************************************************
@@ -860,14 +860,14 @@ CMCommandDirector::CreateWindowsMenuAndToolBar
 
 	toolBar->LoadPrefs();
 	if (toolBar->IsEmpty())
-		{
+	{
 		AddDebugMenuItemsToToolBar(toolBar, debugMenu, includeStepAsm);
 		toolBar->NewGroup();
 		AddWindowsMenuItemsToToolBar(toolBar, wdMenu, includeCmdLine, includeCurrSrc);
 		toolBar->NewGroup();
 		toolBar->AppendButton(helpMenu, tocCmd);
 		toolBar->AppendButton(helpMenu, thisWindowCmd);
-		}
+	}
 }
 
 /******************************************************************************
@@ -885,13 +885,13 @@ CMCommandDirector::AddWindowsMenuItemsToToolBar
 	)
 {
 	if (includeCmdLine)
-		{
+	{
 		toolBar->AppendButton(windowsMenu, JString(kCMShowCommandLineAction, JString::kNoCopy));
-		}
+	}
 	if (includeCurrSrc)
-		{
+	{
 		toolBar->AppendButton(windowsMenu, JString(kCMShowCurrentSourceAction, JString::kNoCopy));
-		}
+	}
 	toolBar->AppendButton(windowsMenu, JString(kCMShowStackTraceAction, JString::kNoCopy));
 	toolBar->AppendButton(windowsMenu, JString(kCMShowBreakpointsAction, JString::kNoCopy));
 	toolBar->AppendButton(windowsMenu, JString(kCMShowVariablesAction, JString::kNoCopy));
@@ -914,7 +914,7 @@ CMCommandDirector::Receive
 	// CMLink
 
 	if (sender == itsLink && message.Is(CMLink::kUserOutput))
-		{
+	{
 		const auto* output =
 			dynamic_cast<const CMLink::UserOutput*>(&message);
 		assert(output != nullptr);
@@ -927,21 +927,21 @@ CMCommandDirector::Receive
 		itsCommandOutput->SetCurrentFont(font);
 		itsCommandOutput->Paste(output->GetText());
 		itsCommandOutput->GetText()->ClearUndo();
-		}
+	}
 
 	else if (sender == itsLink && message.Is(CMLink::kDebuggerBusy))
-		{
+	{
 		itsFakePrompt->SetFontStyle(
 			CMGetPrefsManager()->GetColor(CMPrefsManager::kRightMarginColorIndex));
-		}
+	}
 	else if (sender == itsLink && message.Is(CMLink::kDebuggerReadyForInput))
-		{
+	{
 		itsFakePrompt->GetText()->SetText(itsLink->GetPrompt());
 		itsFakePrompt->SetFontStyle(
 			CMGetPrefsManager()->GetColor(CMPrefsManager::kTextColorIndex));
-		}
+	}
 	else if (sender == itsLink && message.Is(CMLink::kDebuggerDefiningScript))
-		{
+	{
 		itsFakePrompt->GetText()->SetText(itsLink->GetScriptPrompt());
 		itsFakePrompt->SetFontStyle(
 			CMGetPrefsManager()->GetColor(CMPrefsManager::kTextColorIndex));
@@ -949,178 +949,178 @@ CMCommandDirector::Receive
 		// defined after stack window is opened
 //		Activate();
 //		GetWindow()->RequestFocus();
-		}
+	}
 
 	else if (sender == itsLink && message.Is(CMLink::kProgramFinished))
-		{
+	{
 		GetDisplay()->Beep();
-		}
+	}
 
 	else if (sender == itsLink && message.Is(CMLink::kSymbolsLoaded))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const CMLink::SymbolsLoaded*>(&message);
 		assert( info != nullptr );
 		UpdateWindowTitle(info->GetProgramName());
 
 		if (itsWaitingToRunFlag)
-			{
+		{
 			auto* task = jnew CMRunProgramTask();
 			assert( task != nullptr );
 			task->Start();
 			itsWaitingToRunFlag = false;
-			}
 		}
+	}
 
 	else if (sender == itsLink && message.Is(CMLink::kDebuggerStarted))
-		{
+	{
 		if (itsGetArgsCmd != nullptr)
-			{
+		{
 			itsGetArgsCmd->Send();
 			itsGetArgsCmd = nullptr;	// one shot
-			}
 		}
+	}
 
 	else if (sender == itsLink && message.Is(CMLink::kProgramStopped))
-		{
+	{
 		itsCommandInput->Focus();
 
 		bool active = false;
 		if (itsCurrentSourceDir->IsActive())
-			{
+		{
 			(itsCurrentSourceDir->GetWindow())->Raise(false);
 			active = true;
-			}
+		}
 		if (itsCurrentAsmDir->IsActive() &&
 			(!itsCurrentAsmDir->GetWindow()->IsDocked() ||
 			 !itsCurrentSourceDir->IsActive()))
-			{
+		{
 			(itsCurrentAsmDir->GetWindow())->Raise(false);
 			active = true;
-			}
-		if (!active)
-			{
-			itsCurrentSourceDir->Activate();
-			}
 		}
+		if (!active)
+		{
+			itsCurrentSourceDir->Activate();
+		}
+	}
 
 	// CMCommandInput
 
 	else if (sender == itsCommandInput && message.Is(CMCommandInput::kReturnKeyPressed))
-		{
+	{
 		HandleUserInput();
-		}
+	}
 	else if (sender == itsCommandInput && message.Is(CMCommandInput::kTabKeyPressed))
-		{
+	{
 		HandleCompletionRequest();
-		}
+	}
 	else if (sender == itsCommandInput &&
 			 (message.Is(JXWidget::kGotFocus) ||
 			  message.Is(JXWidget::kLostFocus)))
-		{
+	{
 		itsDownRect->SetBackColor(itsCommandInput->GetCurrBackColor());
 		itsFakePrompt->SetBackColor(itsCommandInput->GetCurrBackColor());
-		}
+	}
 	else if (sender == itsCommandInput && message.Is(CMCommandInput::kUpArrowKeyPressed))
-		{
+	{
 		ShowHistoryCommand(+1);
-		}
+	}
 	else if (sender == itsCommandInput && message.Is(CMCommandInput::kDownArrowKeyPressed))
-		{
+	{
 		ShowHistoryCommand(-1);
-		}
+	}
 
 	// menus
 
 	else if (sender == itsFileMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		UpdateFileMenu();
-		}
+	}
 	else if (sender == itsFileMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleFileMenu(selection->GetIndex());
-		}
+	}
 
 	else if (sender == itsDebugMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		UpdateDebugMenu(itsDebugMenu, itsCommandOutput, itsCommandInput);
-		}
+	}
 	else if (sender == itsDebugMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleDebugMenu(itsDebugMenu, selection->GetIndex(), itsCommandOutput, itsCommandInput);
-		}
+	}
 
 	else if (sender == CMGetPrefsManager() && message.Is(CMPrefsManager::kCustomCommandsChanged))
-		{
+	{
 		AdjustDebugMenu(itsDebugMenu);
-		}
+	}
 
 	else if (sender == itsPrefsMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		UpdatePrefsMenu();
-		}
+	}
 	else if (sender == itsPrefsMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandlePrefsMenu(selection->GetIndex());
-		}
+	}
 
 	else if (sender == itsHelpMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleHelpMenu(selection->GetIndex());
-		}
+	}
 
 	else if (sender == itsHistoryMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const JString& str = itsHistoryMenu->GetItemText(message);
 		itsCommandInput->GetText()->SetText(str);
 		itsCommandInput->GoToEndOfLine();
-		}
+	}
 
 	// misc
 
 	else if (sender == itsProgramButton && message.Is(JXButton::kPushed))
-		{
+	{
 		ChangeProgram();
-		}
+	}
 
 	else if (message.Is(CMGetFullPath::kFileFound))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const CMGetFullPath::FileFound*>(&message);
 		assert( info != nullptr );
 		OpenSourceFile(info->GetFullName(), info->GetLineIndex());
-		}
+	}
 	else if (message.Is(CMGetFullPath::kFileNotFound))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const CMGetFullPath::FileNotFound*>(&message);
 		assert( info != nullptr );
 		ReportUnreadableSourceFile(info->GetFileName());
-		}
+	}
 	else if (message.Is(CMGetFullPath::kNewCommand))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const CMGetFullPath::NewCommand*>(&message);
 		assert( info != nullptr );
 		ListenTo(info->GetNewCommand());
-		}
+	}
 
 	else
-		{
+	{
 		JXWindowDirector::Receive(sender,message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -1135,7 +1135,7 @@ CMCommandDirector::ReceiveGoingAway
 	)
 {
 	if (sender == itsLink && !CMIsShuttingDown())
-		{
+	{
 		itsLink = CMGetLink();
 		ListenTo(itsLink);
 
@@ -1151,11 +1151,11 @@ CMCommandDirector::ReceiveGoingAway
 
 		jdelete itsGetArgsCmd;
 		itsGetArgsCmd = itsLink->CreateGetInitArgs(itsArgInput);
-		}
+	}
 	else
-		{
+	{
 		JXWindowDirector::ReceiveGoingAway(sender);
-		}
+	}
 }
 
 /******************************************************************************
@@ -1171,24 +1171,24 @@ CMCommandDirector::HandleUserInput()
 
 	if ((!itsLink->IsDebugging() || itsLink->ProgramIsStopped()) &&
 		!itsLink->IsDefiningScript())
-		{
+	{
 		itsCommandOutput->PlaceCursorAtEnd();
 		itsCommandOutput->SetCurrentFontStyle(itsCommandOutput->GetText()->GetDefaultFont().GetStyle());
 		itsCommandOutput->Paste("\n" + itsLink->GetPrompt() + " ");
-		}
+	}
 	else
-		{
+	{
 		itsCommandOutput->GoToEndOfLine();
-		}
+	}
 	itsCommandOutput->SetCurrentFontStyle(itsCommandOutput->GetText()->GetDefaultFont().GetStyle());
 	itsCommandOutput->Paste(input);
 
 	itsCommandOutput->Paste(JString::newline);
 	input.TrimWhitespace();
 	if (!input.IsEmpty())
-		{
+	{
 		itsHistoryMenu->AddString(input);
-		}
+	}
 	itsLink->SendRaw(input);
 
 	itsCommandInput->GetText()->SetText(JString::empty);
@@ -1206,15 +1206,15 @@ CMCommandDirector::HandleCompletionRequest()
 	if (!input.EndsWith(" ") &&
 		!input.EndsWith("\t") &&
 		!input.EndsWith(":"))
-		{
+	{
 		CMGetCompletions* cmd =
 			itsLink->CreateGetCompletions(itsCommandInput, itsCommandOutput);
 		cmd->Send();
-		}
+	}
 	else
-		{
+	{
 		GetDisplay()->Beep();
-		}
+	}
 }
 
 /******************************************************************************
@@ -1229,24 +1229,24 @@ CMCommandDirector::ShowHistoryCommand
 	)
 {
 	if (itsHistoryIndex == 0)
-		{
+	{
 		itsCurrentCommand = itsCommandInput->GetText()->GetText();
-		}
+	}
 
 	const JIndex menuIndex = itsHistoryMenu->GetItemCount() - itsHistoryIndex + 1;
 
 	const JInteger i = JInteger(menuIndex) - delta;
 	if (0 < i && i <= (JInteger) itsHistoryMenu->GetItemCount())
-		{
+	{
 		itsHistoryIndex     += delta;
 		const JString& input = itsHistoryMenu->JXTextMenu::GetItemText(i);
 		itsCommandInput->GetText()->SetText(input);
-		}
+	}
 	else if (i > (JInteger) itsHistoryMenu->GetItemCount())
-		{
+	{
 		itsHistoryIndex = 0;
 		itsCommandInput->GetText()->SetText(itsCurrentCommand);
-		}
+	}
 
 	itsCommandInput->GoToEndOfLine();
 }
@@ -1275,45 +1275,45 @@ CMCommandDirector::HandleFileMenu
 	)
 {
 	if (index == kOpenCmd)
-		{
+	{
 		OpenSourceFiles();
-		}
+	}
 
 	else if (index == kLoadConfigCmd)
-		{
+	{
 		LoadConfig();
-		}
+	}
 	else if (index == kSaveConfigCmd)
-		{
+	{
 		SaveConfig();
-		}
+	}
 
 	else if (index == kSaveCmd)
-		{
+	{
 		SaveInCurrentFile();
-		}
+	}
 	else if (index == kSaveAsCmd)
-		{
+	{
 		SaveInNewFile();
-		}
+	}
 
 	else if (index == kPageSetupCmd)
-		{
+	{
 		itsCommandOutput->HandlePTPageSetup();
-		}
+	}
 	else if (index == kPrintCmd)
-		{
+	{
 		itsCommandOutput->PrintPT();
-		}
+	}
 
 	else if (index == kCloseCmd)
-		{
+	{
 		Deactivate();
-		}
+	}
 	else if (index == kQuitCmd)
-		{
+	{
 		JXGetApplication()->Quit();
-		}
+	}
 }
 
 /******************************************************************************
@@ -1326,13 +1326,13 @@ CMCommandDirector::OpenSourceFiles()
 {
 	JPtrArray<JString> list(JPtrArrayT::kDeleteAll);
 	if (JGetChooseSaveFile()->ChooseFiles(JGetString("ChooseSourcePrompt::CMCommandDirector"), JString::empty, &list))
-		{
+	{
 		const JSize count = list.GetElementCount();
 		for (JIndex i=1; i<=count; i++)
-			{
+		{
 			OpenSourceFile(*(list.GetElement(i)));
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -1350,54 +1350,54 @@ CMCommandDirector::OpenSourceFile
 {
 	JString fullName;
 	if (JIsRelativePath(fileName) && askDebuggerWhenRelPath)
-		{
+	{
 		bool exists;
 		JString fullName;
 		const bool known = itsLink->FindFile(fileName, &exists, &fullName);
 		if (known && exists)
-			{
+		{
 			OpenSourceFile(fullName, lineIndex);
-			}
+		}
 		else if (known)
-			{
+		{
 			ReportUnreadableSourceFile(fileName);
-			}
+		}
 		else
-			{
+		{
 			CMGetFullPath* cmd	= itsLink->CreateGetFullPath(fileName, lineIndex);
 			ListenTo(cmd);
-			}
 		}
+	}
 	else if (JConvertToAbsolutePath(fileName, JString::empty, &fullName))
-		{
+	{
 		const JSize count = itsSourceDirs->GetElementCount();
 		for (JIndex i=1; i<=count; i++)
-			{
+		{
 			CMSourceDirector* dir = itsSourceDirs->GetElement(i);
 			const JString* f;
 			if (dir->GetFileName(&f) && JSameDirEntry(fullName, *f))
-				{
+			{
 				dir->Activate();
 				if (lineIndex > 0)
-					{
+				{
 					dir->DisplayLine(lineIndex);
-					}
-				return;
 				}
+				return;
 			}
+		}
 
 		CMSourceDirector* dir = CMSourceDirector::Create(this, fullName, CMSourceDirector::kSourceType);
 		itsSourceDirs->Append(dir);
 		dir->Activate();
 		if (lineIndex > 0)
-			{
-			dir->DisplayLine(lineIndex);
-			}
-		}
-	else
 		{
-		ReportUnreadableSourceFile(fileName);
+			dir->DisplayLine(lineIndex);
 		}
+	}
+	else
+	{
+		ReportUnreadableSourceFile(fileName);
+	}
 }
 
 /******************************************************************************
@@ -1417,39 +1417,39 @@ CMCommandDirector::DisassembleFunction
 	JString fn = origFn;
 	JStringIterator iter(&fn);
 	if (iter.Next("("))
-		{
+	{
 		iter.SkipPrev();
 		iter.RemoveAllNext();
-		}
+	}
 	iter.Invalidate();
 
 	const JSize count = itsAsmDirs->GetElementCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		dir = itsAsmDirs->GetElement(i);
 		const JString* f;
 		if (dir->GetFunctionName(&f) && fn == *f)
-			{
+		{
 			dir->Activate();
 			break;
-			}
-		dir = nullptr;		// trigger Create()
 		}
+		dir = nullptr;		// trigger Create()
+	}
 
 	if (dir == nullptr)
-		{
+	{
 		dir = CMSourceDirector::Create(this, addr.IsEmpty() ? fn : JString::empty, CMSourceDirector::kAsmType);
 		itsAsmDirs->Append(dir);
 		dir->Activate();
-		}
+	}
 
 	if (!addr.IsEmpty())
-		{
+	{
 		CMLocation loc;
 		loc.SetFunctionName(fn);
 		loc.SetMemoryAddress(addr);
 		dir->DisplayDisassembly(loc);
-		}
+	}
 }
 
 /******************************************************************************
@@ -1465,9 +1465,9 @@ CMCommandDirector::ReportUnreadableSourceFile
 	const
 {
 	const JUtf8Byte* map[] =
-		{
+	{
 		"name", fileName.GetBytes()
-		};
+	};
 	const JString err = JGetString("CannotOpenFile::CMCommandDirector", map, sizeof(map));
 	JGetUserNotification()->ReportError(err);
 }
@@ -1482,13 +1482,13 @@ CMCommandDirector::LoadConfig()
 {
 	JString fullName;
 	if (JGetChooseSaveFile()->ChooseFile(JString("ChooseConfigPrompt::CMCommandDirector"), JString::empty, &fullName))
-		{
+	{
 		std::ifstream input(fullName.GetBytes());
 
 		JFileVersion vers;
 		input >> vers;
 		if (vers <= kCurrentConfigVersion)
-			{
+		{
 			(itsLink->GetBreakpointManager())->ReadSetup(input, vers);
 			itsVarTreeDir->ReadSetup(input, vers);
 
@@ -1496,51 +1496,51 @@ CMCommandDirector::LoadConfig()
 			input >> count;
 
 			for (JIndex i=1; i<=count; i++)
-				{
+			{
 				auto* dir = jnew CMArray1DDir(input, vers, this);
 				assert( dir != nullptr );
 				// adds itself to list automatically
 				dir->Activate();
-				}
+			}
 
 			input >> count;
 
 			for (JIndex i=1; i<=count; i++)
-				{
+			{
 				auto* dir = jnew CMArray2DDir(input, vers, this);
 				assert( dir != nullptr );
 				// adds itself to list automatically
 				dir->Activate();
-				}
+			}
 
 			input >> count;
 
 			for (JIndex i=1; i<=count; i++)
-				{
+			{
 				auto* dir = jnew CMPlot2DDir(input, vers, this);
 				assert( dir != nullptr );
 				// adds itself to list automatically
 				dir->Activate();
-				}
+			}
 
 			if (vers >= 3)
-				{
+			{
 				input >> count;
 
 				for (JIndex i=1; i<=count; i++)
-					{
+				{
 					auto* dir = jnew CMMemoryDir(input, vers, this);
 					assert( dir != nullptr );
 					// adds itself to list automatically
 					dir->Activate();
-					}
 				}
 			}
-		else
-			{
-			JGetUserNotification()->DisplayMessage(JGetString("ConfigTooNew::CMCommandDirector"));
-			}
 		}
+		else
+		{
+			JGetUserNotification()->DisplayMessage(JGetString("ConfigTooNew::CMCommandDirector"));
+		}
+	}
 }
 
 /******************************************************************************
@@ -1553,17 +1553,17 @@ CMCommandDirector::SaveConfig()
 {
 	JString fullName, path, origName;
 	if (itsLink->GetProgram(&fullName))
-		{
+	{
 		JSplitPathAndName(fullName, &path, &origName);
 		origName += "_debug_config";
-		}
+	}
 	else
-		{
+	{
 		origName = "debug_config";
-		}
+	}
 
 	if (JGetChooseSaveFile()->SaveFile(JGetString("SaveFilePrompt::CMCommandDirector"), JString::empty, origName, &fullName))
-		{
+	{
 		std::ofstream output(fullName.GetBytes());
 
 		output << kCurrentConfigVersion;
@@ -1574,34 +1574,34 @@ CMCommandDirector::SaveConfig()
 		output << ' ' << count;
 
 		for (JIndex i=1; i<=count; i++)
-			{
+		{
 			(itsArray1DDirs->GetElement(i))->StreamOut(output);
-			}
+		}
 
 		count = itsArray2DDirs->GetElementCount();
 		output << ' ' << count;
 
 		for (JIndex i=1; i<=count; i++)
-			{
+		{
 			(itsArray2DDirs->GetElement(i))->StreamOut(output);
-			}
+		}
 
 		count = itsPlot2DDirs->GetElementCount();
 		output << ' ' << count;
 
 		for (JIndex i=1; i<=count; i++)
-			{
+		{
 			(itsPlot2DDirs->GetElement(i))->StreamOut(output);
-			}
+		}
 
 		count = itsMemoryDirs->GetElementCount();
 		output << ' ' << count;
 
 		for (JIndex i=1; i<=count; i++)
-			{
+		{
 			(itsMemoryDirs->GetElement(i))->StreamOut(output);
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -1613,13 +1613,13 @@ void
 CMCommandDirector::SaveInCurrentFile()
 {
 	if (itsCurrentHistoryFile.IsEmpty())
-		{
+	{
 		SaveInNewFile();
-		}
+	}
 	else
-		{
+	{
 		itsCommandOutput->GetText()->WritePlainText(itsCurrentHistoryFile, JStyledText::kUNIXText);
-		}
+	}
 }
 
 /******************************************************************************
@@ -1631,9 +1631,9 @@ void
 CMCommandDirector::SaveInNewFile()
 {
 	if (JGetChooseSaveFile()->SaveFile(JGetString("SaveFilePrompt::CMCommandDirector"), JString::empty, JString::empty,  &itsCurrentHistoryFile))
-		{
+	{
 		SaveInCurrentFile();
-		}
+	}
 }
 
 /******************************************************************************
@@ -1655,62 +1655,62 @@ CMCommandDirector::UpdateDebugMenu
 	)
 {
 	if (itsLink->GetFeature(CMLink::kSetArgs))
-		{
+	{
 		menu->EnableItem(kSetArgsCmd);
-		}
+	}
 
 	if (itsLink->DebuggerHasStarted())
-		{
+	{
 		const bool canSetProgram = itsLink->GetFeature(CMLink::kSetProgram);
 		if (canSetProgram)
-			{
+		{
 			menu->EnableItem(kSelectBinCmd);
-			}
+		}
 
 		if (itsLink->GetFeature(CMLink::kSetCore))
-			{
+		{
 			menu->EnableItem(kSelectCoreCmd);
-			}
+		}
 		if (itsLink->GetFeature(CMLink::kSetProcess))
-			{
+		{
 			menu->EnableItem(kSelectProcessCmd);
-			}
+		}
 
 		menu->EnableItem(kRestartDebuggerCmd);
 		if (itsLink->GetFeature(CMLink::kRunProgram))
-			{
+		{
 			menu->EnableItem(kRunCmd);
-			}
+		}
 
 		const JSize count = menu->GetItemCount();
 		for (JIndex i=kFirstCustomDebugCmd; i<=count; i++)
-			{
+		{
 			menu->EnableItem(i);
-			}
+		}
 
 		menu->EnableItem(kRemoveAllBreakpointsCmd);
 		if (itsLink->HasProgram())
-			{
+		{
 			if (canSetProgram)
-				{
+			{
 				menu->EnableItem(kReloadBinCmd);
-				}
+			}
 			if (itsLink->GetFeature(CMLink::kExamineMemory))
-				{
+			{
 				menu->EnableItem(kExamineMemCmd);
-				}
+			}
 			if (itsLink->GetFeature(CMLink::kDisassembleMemory))
-				{
+			{
 				menu->EnableItem(kDisassembleMemCmd);
-				}
+			}
 
 			if (itsLink->HasLoadedSymbols())
-				{
+			{
 				JString text;
 				if (((te1 != nullptr && te1->GetSelection(&text)) ||
 					 (te2 != nullptr && te2->GetSelection(&text))) &&
 					 !text.Contains("\n"))
-					{
+				{
 					menu->EnableItem(kDisplayVarCmd);
 					menu->EnableItem(kDisplay1DArrayCmd);
 					menu->EnableItem(kPlot1DArrayCmd);
@@ -1719,45 +1719,45 @@ CMCommandDirector::UpdateDebugMenu
 					menu->EnableItem(kWatchLocCmd);
 
 					if (itsLink->GetFeature(CMLink::kDisassembleMemory))
-						{
+					{
 						menu->EnableItem(kDisassembleFnCmd);
-						}
 					}
+				}
 
 				if (itsLink->IsDebugging())
-					{
+				{
 					if (itsLink->GetFeature(CMLink::kStopProgram))
-						{
+					{
 						menu->EnableItem(kKillCmd);
-						}
+					}
 
 					if (itsLink->ProgramIsStopped())
-						{
+					{
 						menu->EnableItem(kNextCmd);
 						menu->EnableItem(kStepCmd);
 						menu->EnableItem(kFinishCmd);
 						menu->EnableItem(kContCmd);
 
 						if (itsLink->GetFeature(CMLink::kDisassembleMemory))
-							{
+						{
 							menu->EnableItem(kNextAsmCmd);
 							menu->EnableItem(kStepAsmCmd);
-							}
+						}
 
 						const bool bkwd = itsLink->GetFeature(CMLink::kExecuteBackwards);
 						menu->SetItemEnable(kPrevCmd, bkwd);
 						menu->SetItemEnable(kReverseStepCmd, bkwd);
 						menu->SetItemEnable(kReverseFinishCmd, bkwd);
 						menu->SetItemEnable(kReverseContCmd, bkwd);
-						}
+					}
 					else if (itsLink->GetFeature(CMLink::kStopProgram))
-						{
+					{
 						menu->EnableItem(kStopCmd);
-						}
 					}
 				}
 			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -1780,212 +1780,212 @@ CMCommandDirector::HandleDebugMenu
 	)
 {
 	if (index == kSelectBinCmd)
-		{
+	{
 		ChangeProgram();
-		}
+	}
 	else if (index == kReloadBinCmd)
-		{
+	{
 		ReloadProgram();
-		}
+	}
 	else if (index == kSelectCoreCmd)
-		{
+	{
 		ChooseCoreFile();
-		}
+	}
 	else if (index == kSelectProcessCmd)
-		{
+	{
 		ChooseProcess();
-		}
+	}
 	else if (index == kSetArgsCmd)
-		{
+	{
 		Activate();
 		GetWindow()->RequestFocus();
 		if (itsArgInput->Focus())
-			{
+		{
 			itsArgInput->SelectAll();
-			}
 		}
+	}
 
 	else if (index == kRestartDebuggerCmd)
-		{
+	{
 		itsLink->RestartDebugger();
-		}
+	}
 
 	else if (index == kDisplayVarCmd)
-		{
+	{
 		JString text;
 		if ((te1 != nullptr && te1->GetSelection(&text) && !text.Contains("\n")) ||
 			(te2 != nullptr && te2->GetSelection(&text) && !text.Contains("\n")))
-			{
+		{
 			DisplayExpression(text);
-			}
 		}
+	}
 	else if (index == kDisplay1DArrayCmd)
-		{
+	{
 		JString text;
 		if ((te1 != nullptr && te1->GetSelection(&text) && !text.Contains("\n")) ||
 			(te2 != nullptr && te2->GetSelection(&text) && !text.Contains("\n")))
-			{
+		{
 			Display1DArray(text);
-			}
 		}
+	}
 	else if (index == kPlot1DArrayCmd)
-		{
+	{
 		JString text;
 		if ((te1 != nullptr && te1->GetSelection(&text) && !text.Contains("\n")) ||
 			(te2 != nullptr && te2->GetSelection(&text) && !text.Contains("\n")))
-			{
+		{
 			Plot1DArray(text);
-			}
 		}
+	}
 	else if (index == kDisplay2DArrayCmd)
-		{
+	{
 		JString text;
 		if ((te1 != nullptr && te1->GetSelection(&text) && !text.Contains("\n")) ||
 			(te2 != nullptr && te2->GetSelection(&text) && !text.Contains("\n")))
-			{
+		{
 			Display2DArray(text);
-			}
 		}
+	}
 
 	else if (index == kWatchVarCmd)
-		{
+	{
 		JString text;
 		if ((te1 != nullptr && te1->GetSelection(&text) && !text.Contains("\n")) ||
 			(te2 != nullptr && te2->GetSelection(&text) && !text.Contains("\n")))
-			{
+		{
 			CMGetLink()->WatchExpression(text);
-			}
 		}
+	}
 	else if (index == kWatchLocCmd)
-		{
+	{
 		JString text;
 		if ((te1 != nullptr && te1->GetSelection(&text) && !text.Contains("\n")) ||
 			(te2 != nullptr && te2->GetSelection(&text) && !text.Contains("\n")))
-			{
+		{
 			CMGetLink()->WatchLocation(text);
-			}
 		}
+	}
 
 	else if (index == kExamineMemCmd)
-		{
+	{
 		JString s1, s2;
 		if ((te1 != nullptr && te1->GetSelection(&s1) && !s1.Contains("\n")) ||
 			(te2 != nullptr && te2->GetSelection(&s1) && !s1.Contains("\n")))
-			{
+		{
 			s2 = s1;
-			}
+		}
 
 		auto* dir = jnew CMMemoryDir(this, s2);
 		assert(dir != nullptr);
 		dir->Activate();
-		}
+	}
 	else if (index == kDisassembleMemCmd)
-		{
+	{
 		JString s1, s2;
 		if ((te1 != nullptr && te1->GetSelection(&s1) && !s1.Contains("\n")) ||
 			(te2 != nullptr && te2->GetSelection(&s1) && !s1.Contains("\n")))
-			{
+		{
 			s2 = s1;
-			}
+		}
 
 		auto* dir = jnew CMMemoryDir(this, s2);
 		assert(dir != nullptr);
 		dir->SetDisplayType(CMMemoryDir::kAsm);
 		dir->Activate();
-		}
+	}
 	else if (index == kDisassembleFnCmd)
-		{
+	{
 		JString fn;
 		if ((te1 != nullptr && te1->GetSelection(&fn) && !fn.Contains("\n")) ||
 			(te2 != nullptr && te2->GetSelection(&fn) && !fn.Contains("\n")))
-			{
+		{
 			DisassembleFunction(fn);
-			}
 		}
+	}
 
 	else if (index == kRunCmd)
-		{
+	{
 		RunProgram();
-		}
+	}
 	else if (index == kStopCmd)
-		{
+	{
 		itsLink->StopProgram();
-		}
+	}
 	else if (index == kKillCmd)
-		{
+	{
 		itsLink->KillProgram();
-		}
+	}
 
 	else if (index == kNextCmd)
-		{
+	{
 		itsLink->StepOver();
-		}
+	}
 	else if (index == kStepCmd)
-		{
+	{
 		itsLink->StepInto();
-		}
+	}
 	else if (index == kFinishCmd)
-		{
+	{
 		itsLink->StepOut();
-		}
+	}
 	else if (index == kContCmd)
-		{
+	{
 		itsLink->Continue();
-		}
+	}
 
 	else if (index == kNextAsmCmd)
-		{
+	{
 		itsLink->StepOverAssembly();
-		}
+	}
 	else if (index == kStepAsmCmd)
-		{
+	{
 		itsLink->StepIntoAssembly();
-		}
+	}
 
 	else if (index == kPrevCmd)
-		{
+	{
 		itsLink->BackupOver();
-		}
+	}
 	else if (index == kReverseStepCmd)
-		{
+	{
 		itsLink->BackupInto();
-		}
+	}
 	else if (index == kReverseFinishCmd)
-		{
+	{
 		itsLink->BackupOut();
-		}
+	}
 	else if (index == kReverseContCmd)
-		{
+	{
 		itsLink->BackupContinue();
-		}
+	}
 
 	else if (index == kRemoveAllBreakpointsCmd)
-		{
+	{
 		itsLink->RemoveAllBreakpoints();
-		}
+	}
 
 	else if (index >= kFirstCustomDebugCmd)
-		{
+	{
 		JString s = menu->GetItemText(index);
 
 		JString text;
 		if ((te1 != nullptr && te1->GetSelection(&text) && !text.Contains("\n")) ||
 			(te2 != nullptr && te2->GetSelection(&text) && !text.Contains("\n")))
-			{
+		{
 			JStringIterator iter(&s);
 			while (iter.Next("##"))
-				{
-				iter.ReplaceLastMatch(text);
-				}
-			}
-		else if (s.Contains("##"))
 			{
+				iter.ReplaceLastMatch(text);
+			}
+		}
+		else if (s.Contains("##"))
+		{
 			JGetUserNotification()->ReportError(JGetString("NoSelection::CMCommandDirector"));
 			return;
-			}
+		}
 
 		itsLink->SendRaw(s);
-		}
+	}
 }
 
 /******************************************************************************
@@ -1997,23 +1997,23 @@ void
 CMCommandDirector::RunProgram()
 {
 	if (!itsLink->HasProgram())
-		{
+	{
 		ChangeProgram();
 		if (itsLink->HasProgram())
-			{
-			itsWaitingToRunFlag = true;
-			}
-		}
-	else if (CMGetLink()->HasPendingCommands())
 		{
+			itsWaitingToRunFlag = true;
+		}
+	}
+	else if (CMGetLink()->HasPendingCommands())
+	{
 		auto* task = jnew CMRunProgramTask();
 		assert( task != nullptr );
 		task->Start();
-		}
+	}
 	else if (itsLink->OKToDetachOrKill())
-		{
+	{
 		itsLink->RunProgram(itsArgInput->GetText()->GetText());
-		}
+	}
 }
 
 /******************************************************************************
@@ -2028,10 +2028,10 @@ CMCommandDirector::ChangeProgram()
 	const JString instr = itsLink->GetChooseProgramInstructions();
 	if (itsLink->OKToDetachOrKill() &&
 		JGetChooseSaveFile()->ChooseFile(JGetString("ChooseBinaryPrompt::CMCommandDirector"), instr, &fullName))
-		{
+	{
 		CMMDIServer::UpdateDebuggerType(fullName);
 		itsLink->SetProgram(fullName);
-		}
+	}
 }
 
 /******************************************************************************
@@ -2043,9 +2043,9 @@ void
 CMCommandDirector::ReloadProgram()
 {
 	if (itsLink->OKToDetachOrKill())
-		{
+	{
 		itsLink->ReloadProgram();
-		}
+	}
 }
 
 /******************************************************************************
@@ -2066,9 +2066,9 @@ CMCommandDirector::ChooseCoreFile()
 
 	if (itsLink->OKToDetachOrKill() &&
 		JGetChooseSaveFile()->ChooseFile(JGetString("ChooseCorePrompt::CMCommandDirector"), JString::empty, origPath, &coreName))
-		{
+	{
 		itsLink->SetCore(coreName);
-		}
+	}
 }
 
 /******************************************************************************
@@ -2080,11 +2080,11 @@ void
 CMCommandDirector::ChooseProcess()
 {
 	if (itsLink->OKToDetachOrKill())
-		{
+	{
 		auto* dialog = jnew CMChooseProcessDialog(this);
 		assert( dialog != nullptr );
 		dialog->BeginDialog();
-		}
+	}
 }
 
 /******************************************************************************
@@ -2176,40 +2176,40 @@ CMCommandDirector::HandlePrefsMenu
 	)
 {
 	if (index == kUseGDBCmd)
-		{
+	{
 		CMGetPrefsManager()->SetDebuggerType(CMPrefsManager::kGDBType);
-		}
+	}
 	else if (index == kUseLLDBCmd)
-		{
+	{
 		CMGetPrefsManager()->SetDebuggerType(CMPrefsManager::kLLDBType);
-		}
+	}
 	else if (index == kUseJavaCmd)
-		{
+	{
 		CMGetPrefsManager()->SetDebuggerType(CMPrefsManager::kJavaType);
-		}
+	}
 	else if (index == kUseXdebugCmd)
-		{
+	{
 		CMGetPrefsManager()->SetDebuggerType(CMPrefsManager::kXdebugType);
-		}
+	}
 
 	else if (index == kEditPrefsCmd)
-		{
+	{
 		CMGetPrefsManager()->EditPrefs();
-		}
+	}
 	else if (index == kEditToolBarCmd)
-		{
+	{
 		itsToolBar->Edit();
-		}
+	}
 	else if (index == kEditCmdsCmd)
-		{
+	{
 		auto* dlog = jnew CMEditCommandsDialog;
 		assert( dlog != nullptr );
 		dlog->BeginDialog();
-		}
+	}
 	else if (index == kEditMacWinPrefsCmd)
-		{
+	{
 		JXMacWinPrefsDialog::EditPrefs();
-		}
+	}
 }
 
 /******************************************************************************
@@ -2224,27 +2224,27 @@ CMCommandDirector::HandleHelpMenu
 	)
 {
 	if (index == kAboutCmd)
-		{
+	{
 		(CMGetApplication())->DisplayAbout();
-		}
+	}
 	else if (index == kTOCCmd)
-		{
+	{
 		JXGetHelpManager()->ShowTOC();
-		}
+	}
 	else if (index == kOverviewCmd)
-		{
+	{
 		JXGetHelpManager()->ShowSection("CMOverviewHelp");
-		}
+	}
 	else if (index == kThisWindowCmd)
-		{
+	{
 		JXGetHelpManager()->ShowSection("CMCommandDirHelp");
-		}
+	}
 	else if (index == kChangesCmd)
-		{
+	{
 		JXGetHelpManager()->ShowChangeLog();
-		}
+	}
 	else if (index == kCreditsCmd)
-		{
+	{
 		JXGetHelpManager()->ShowCredits();
-		}
+	}
 }

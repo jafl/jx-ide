@@ -8,7 +8,7 @@
 #ifndef _H_CMChooseProcessDialog
 #define _H_CMChooseProcessDialog
 
-#include <JXDialogDirector.h>
+#include <jx-af/jx/JXDialogDirector.h>
 
 class JXIntegerInput;
 class CMProcessText;

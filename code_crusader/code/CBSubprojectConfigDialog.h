@@ -8,7 +8,7 @@
 #ifndef _H_CBSubprojectConfigDialog
 #define _H_CBSubprojectConfigDialog
 
-#include <JXDialogDirector.h>
+#include <jx-af/jx/JXDialogDirector.h>
 
 class JString;
 class JXTextButton;

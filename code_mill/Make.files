@@ -4,7 +4,7 @@
 
 @code_mill
 
-.cpp ./code/forge
+.cpp ./code/main
 .cpp ./code/GFGApp
 .cpp ./code/gfgGlobals
 .cpp ./code/GFGPrefsManager

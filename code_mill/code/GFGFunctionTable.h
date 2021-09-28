@@ -11,7 +11,7 @@
 #define _H_GFGFunctionTable
 
 // Superclass Header
-#include <JXTable.h>
+#include <jx-af/jx/JXTable.h>
 
 class GFGClass;
 

@@ -9,10 +9,10 @@
 #define _H_CBShellDocument
 
 #include "CBTextDocument.h"
-#include <JProcess.h>
+#include <jx-af/jcore/JProcess.h>
 #include <ace/LSOCK_Stream.h>
 #include <ace/UNIX_Addr.h>
-#include <JAsynchDataReceiver.h>
+#include <jx-af/jcore/JAsynchDataReceiver.h>
 
 class JOutPipeStream;
 class CBShellEditor;

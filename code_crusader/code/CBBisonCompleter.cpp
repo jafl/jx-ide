@@ -10,7 +10,7 @@
 #include "CBBisonCompleter.h"
 #include "CBCCompleter.h"
 #include "CBCStyler.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 CBBisonCompleter* CBBisonCompleter::itsSelf = nullptr;
 
@@ -31,14 +31,14 @@ CBStringCompleter*
 CBBisonCompleter::Instance()
 {
 	if (itsSelf == nullptr && !recursiveInstance)
-		{
+	{
 		recursiveInstance = true;
 
 		itsSelf = jnew CBBisonCompleter;
 		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
-		}
+	}
 
 	return itsSelf;
 }
@@ -109,13 +109,13 @@ CBBisonCompleter::Receive
 	)
 {
 	if (sender == CBCStyler::Instance() && message.Is(CBStylerBase::kWordListChanged))
-		{
+	{
 		UpdateWordList();
-		}
+	}
 	else
-		{
+	{
 		CBStringCompleter::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -133,9 +133,9 @@ CBBisonCompleter::UpdateWordList()
 	const JUtf8Byte** cWordList;
 	const JSize count = CBCCompleter::GetDefaultWordList(&cWordList);
 	for (JUnsignedOffset i=0; i<count; i++)
-		{
+	{
 		Add(JString(cWordList[i], JString::kNoCopy));
-		}
+	}
 
 	CopySymbolsForLanguage(kCBCLang);
 	CopyWordsFromStyler(CBCStyler::Instance());

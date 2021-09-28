@@ -12,19 +12,20 @@
 #include "CBCmdLineInput.h"
 #include "CBExecOutputPostFTCTask.h"
 #include "cbGlobals.h"
-#include <JXWindow.h>
-#include <JXMenuBar.h>
-#include <JXTextButton.h>
-#include <JXStaticText.h>
-#include <JXScrollbarSet.h>
-#include <JOutPipeStream.h>
-#include <JStringIterator.h>
-#include <jTextUtil.h>
-#include <jDirUtil.h>
-#include <jSignal.h>
-#include <jTime.h>
-#include <jASCIIConstants.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXDisplay.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXMenuBar.h>
+#include <jx-af/jx/JXTextButton.h>
+#include <jx-af/jx/JXStaticText.h>
+#include <jx-af/jx/JXScrollbarSet.h>
+#include <jx-af/jcore/JOutPipeStream.h>
+#include <jx-af/jcore/JStringIterator.h>
+#include <jx-af/jcore/jTextUtil.h>
+#include <jx-af/jcore/jDirUtil.h>
+#include <jx-af/jcore/jSignal.h>
+#include <jx-af/jcore/jTime.h>
+#include <jx-af/jcore/jASCIIConstants.h>
+#include <jx-af/jcore/jAssert.h>
 
 const JSize kMenuButtonWidth = 60;
 
@@ -78,7 +79,7 @@ CBExecOutputDocument::CBExecOutputDocument
 	itsPauseButton->SetHint(JGetString("PauseButtonHint::CBExecOutputDocument"));
 
 	if (allowStop)
-		{
+	{
 		itsStopButton =
 			jnew JXTextButton(JGetString("StopLabel::CBExecOutputDocument"), window,
 							  JXWidget::kFixedRight, JXWidget::kFixedTop,
@@ -87,11 +88,11 @@ CBExecOutputDocument::CBExecOutputDocument
 		ListenTo(itsStopButton);
 		itsStopButton->SetShortcuts(JString("^C#.", JString::kNoCopy));
 		itsStopButton->SetHint(JGetString("StopButtonHint::CBExecOutputDocument"));
-		}
+	}
 	else
-		{
+	{
 		itsStopButton = nullptr;
-		}
+	}
 
 	itsKillButton =
 		jnew JXTextButton(JGetString("KillLabel::CBExecOutputDocument"), window,
@@ -101,10 +102,10 @@ CBExecOutputDocument::CBExecOutputDocument
 	ListenTo(itsKillButton);
 
 	if (!allowStop)
-		{
+	{
 		itsKillButton->SetShortcuts(JString("^C#.", JString::kNoCopy));
 		itsKillButton->SetHint(JGetString("StopButtonHint::CBExecOutputDocument"));
-		}
+	}
 
 	menuBar->AdjustSize(-x, 0);
 
@@ -218,10 +219,10 @@ CBExecOutputDocument::PlaceCmdLineWidgets()
 
 	JCoordinate cmdInputWidth = fileRect.width() - promptWidth - eofWidth;
 	if (cmdInputWidth < kMinCmdInputWidth)
-		{
+	{
 		window->AdjustSize(kMinCmdInputWidth - cmdInputWidth, 0);
 		cmdInputWidth = kMinCmdInputWidth;
-		}
+	}
 	itsCmdInput->SetSize(cmdInputWidth, fileRect.height());
 
 	const JPoint p = window->GetMinSize();
@@ -244,9 +245,9 @@ CBExecOutputDocument::Activate()
 	CBTextDocument::Activate();
 
 	if (IsActive() && itsFocusToCmdFlag)
-		{
+	{
 		itsCmdInput->Focus();
-		}
+	}
 }
 
 /******************************************************************************
@@ -258,15 +259,15 @@ bool
 CBExecOutputDocument::OKToClose()
 {
 	if (itsUseCount > 0 || itsRecordLink != nullptr || itsDataLink != nullptr)
-		{
+	{
 		Activate();
 		JGetUserNotification()->ReportError(itsDontCloseMsg);
 		return false;
-		}
+	}
 	else
-		{
+	{
 		return CBTextDocument::OKToClose();
-		}
+	}
 }
 
 /******************************************************************************
@@ -289,9 +290,9 @@ CBExecOutputDocument::DecrementUseCount()
 	itsUseCount--;
 
 	if (itsUseCount == 0)
-		{
+	{
 		itsClearWhenStartFlag = !ProcessRunning();
-		}
+	}
 }
 
 /******************************************************************************
@@ -321,53 +322,53 @@ CBExecOutputDocument::SetConnection
 	ListenTo(itsProcess);
 
 	if (NeedsFormattedData())
-		{
+	{
 		itsRecordLink = new RecordLink(inFD);
 		assert( itsRecordLink != nullptr );
 		itsRecordLink->SetWantsBlankMessages();
 		ListenTo(itsRecordLink);
-		}
+	}
 	else
-		{
+	{
 		itsDataLink = new DataLink(inFD);
 		assert( itsDataLink != nullptr );
 		ListenTo(itsDataLink);
-		}
+	}
 
 	if (outFD != ACE_INVALID_HANDLE)
-		{
+	{
 		itsCmdStream = jnew JOutPipeStream(outFD, true);
 		assert( itsCmdStream != nullptr );
-		}
+	}
 
 	CBTextEditor* te = GetTextEditor();
 	if (itsClearWhenStartFlag)
-		{
+	{
 		te->GetText()->SetText(JString::empty);
-		}
+	}
 	else if (!te->GetText()->IsEmpty())
-		{
+	{
 		const JString& text = te->GetText()->GetText();
 		JStringIterator iter(text, kJIteratorStartAtEnd);
 		JUtf8Character c;
 		while (iter.Prev(&c, kJIteratorStay) && c == '\n')
-			{
+		{
 			iter.SkipPrev();
-			}
+		}
 
 		if (!iter.AtEnd())
-			{
+		{
 			te->SetSelection(JCharacterRange(
 				iter.GetNextCharacterIndex(), text.GetCharacterCount()));
-			}
+		}
 		iter.Invalidate();
 
 		te->Paste(JString("\n\n----------\n\n", JString::kNoCopy));
 		te->GetText()->ClearUndo();
-		}
+	}
 
 	if (!execCmd.IsEmpty())
-		{
+	{
 		const JString timeStamp = JGetTimeStamp();
 
 		te->Paste(timeStamp);
@@ -377,16 +378,16 @@ CBExecOutputDocument::SetConnection
 		te->Paste(execCmd);
 
 		if (showPID)
-			{
+		{
 			te->Paste(JString::newline);
 			te->Paste(JGetString("ProcessID::CBExecOutputDocument"));
 			te->Paste(JString((JUInt64) p->GetPID()));
-			}
+		}
 
 		te->Paste(JString::newline);
 		te->Paste(JString::newline);
 		te->GetText()->ClearUndo();
-		}
+	}
 
 	itsPath              = execDir;
 	itsReceivedDataFlag  = false;
@@ -411,7 +412,7 @@ CBExecOutputDocument::SendText
 	)
 {
 	if (ProcessRunning() && itsCmdStream != nullptr)
-		{
+	{
 		text.Print(*itsCmdStream);
 		itsCmdStream->flush();
 
@@ -421,12 +422,12 @@ CBExecOutputDocument::SendText
 		if (text.GetFirstCharacter() != '\0' && text.GetFirstCharacter() != '\n' &&
 			itsRecordLink != nullptr &&
 			itsRecordLink->PeekPartialMessage(&itsLastPrompt))
-			{
+		{
 			te->Paste(itsLastPrompt);
-			}
+		}
 
 		te->Paste(text);
-		}
+	}
 }
 
 /******************************************************************************
@@ -442,16 +443,16 @@ CBExecOutputDocument::Receive
 	)
 {
 	if (sender == itsRecordLink && message.Is(JMessageProtocolT::kMessageReady))
-		{
+	{
 		ReceiveRecord();
-		}
+	}
 	else if (sender == itsDataLink && message.Is(JAsynchDataReceiverT::kDataReady))
-		{
+	{
 		ReceiveData(message);
-		}
+	}
 
 	else if (sender == itsProcess && message.Is(JProcess::kFinished))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const JProcess::Finished*>(&message);
 		assert( info != nullptr );
@@ -465,39 +466,39 @@ CBExecOutputDocument::Receive
 		itsClearWhenStartFlag = itsUseCount == 0 && !msg.SomebodyIsWaiting();
 
 		if (itsUseCount == 0 && !stayOpen && !ProcessRunning())
-			{
+		{
 			Close();
-			}
 		}
+	}
 
 	else if (sender == itsPauseButton && message.Is(JXButton::kPushed))
-		{
+	{
 		ToggleProcessRunning();
-		}
+	}
 	else if (sender == itsStopButton && message.Is(JXButton::kPushed))
-		{
+	{
 		StopProcess();
-		}
+	}
 	else if (sender == itsKillButton && message.Is(JXButton::kPushed))
-		{
+	{
 		KillProcess();
-		}
+	}
 
 	else if (sender == itsEOFButton && message.Is(JXButton::kPushed))
-		{
+	{
 		if (!itsCmdInput->GetText()->IsEmpty())
-			{
+		{
 			itsCmdInput->HandleKeyPress(
 				JUtf8Character(kJReturnKey), 0, JXKeyModifiers(GetDisplay()));
-			}
+		}
 		CloseOutFD();
 		UpdateButtons();
-		}
+	}
 
 	else
-		{
+	{
 		CBTextDocument::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -517,10 +518,10 @@ CBExecOutputDocument::ReceiveRecord()
 	// remove text that has already been printed
 
 	if (!itsLastPrompt.IsEmpty() && text.BeginsWith(itsLastPrompt))
-		{
+	{
 		JStringIterator iter(&text, kJIteratorStartAfter, itsLastPrompt.GetCharacterCount());
 		iter.RemoveAllPrev();
-		}
+	}
 	itsLastPrompt.Clear();
 
 	const JXTEBase::DisplayState state = GetTextEditor()->SaveDisplayState();
@@ -529,13 +530,13 @@ CBExecOutputDocument::ReceiveRecord()
 	GetTextEditor()->GetText()->ClearUndo();
 
 	if (!itsReceivedDataFlag)
-		{
+	{
 		itsReceivedDataFlag = true;
 		if (!IsActive())
-			{
+		{
 			Activate();
-			}
 		}
+	}
 
 	GetTextEditor()->RestoreDisplayState(state);
 }
@@ -582,13 +583,13 @@ CBExecOutputDocument::ReceiveData
 	te->GetText()->ClearUndo();
 
 	if (!itsReceivedDataFlag)
-		{
+	{
 		itsReceivedDataFlag = true;
 		if (!IsActive())
-			{
+		{
 			Activate();
-			}
 		}
+	}
 
 	te->RestoreDisplayState(state);
 }
@@ -602,26 +603,26 @@ void
 CBExecOutputDocument::ToggleProcessRunning()
 {
 	if (!ProcessRunning())
-		{
+	{
 		return;
-		}
+	}
 
 	if (!itsProcessPausedFlag)
-		{
+	{
 		if (itsProcess->SendSignalToGroup(SIGSTOP) == kJNoError)
-			{
+		{
 			itsProcessPausedFlag = true;
 			UpdateButtons();
-			}
 		}
+	}
 	else
-		{
+	{
 		if (itsProcess->SendSignalToGroup(SIGCONT) == kJNoError)
-			{
+		{
 			itsProcessPausedFlag = false;
 			UpdateButtons();
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -633,9 +634,9 @@ void
 CBExecOutputDocument::StopProcess()
 {
 	if (ProcessRunning())
-		{
+	{
 		itsProcess->Quit();
-		}
+	}
 }
 
 /******************************************************************************
@@ -647,9 +648,9 @@ void
 CBExecOutputDocument::KillProcess()
 {
 	if (ProcessRunning())
-		{
+	{
 		itsProcess->Kill();
-		}
+	}
 }
 
 /******************************************************************************
@@ -663,10 +664,10 @@ void
 CBExecOutputDocument::CloseOutFD()
 {
 	if (itsCmdStream != nullptr)
-		{
+	{
 		jdelete itsCmdStream;
 		itsCmdStream = nullptr;
-		}
+	}
 }
 
 /******************************************************************************
@@ -687,10 +688,10 @@ CBExecOutputDocument::ProcessFinished
 	// we know we have read everything.
 
 	do
-		{
+	{
 		itsReceivedDataFlag = false;
 		JXApplication::CheckACEReactor();
-		}
+	}
 		while (itsReceivedDataFlag);
 
 	const pid_t pid = itsProcess->GetPID();
@@ -719,15 +720,15 @@ CBExecOutputDocument::ProcessFinished
 
 	if (info.Successful() ||
 		(reason == kJChildSignalled && result == SIGKILL))
-		{
+	{
 		DataReverted();
 		te->GetText()->ClearUndo();
 		if (!IsActive())
-			{
+		{
 			stayOpen = false;
-			}
+		}
 		else
-			{
+		{
 			const JString reasonStr = JPrintChildExitReason(reason, result);
 
 			te->Paste(JString::newline);
@@ -736,10 +737,10 @@ CBExecOutputDocument::ProcessFinished
 
 			DataReverted();
 			te->GetText()->ClearUndo();
-			}
 		}
+	}
 	else
-		{
+	{
 		const JString reasonStr = JPrintChildExitReason(reason, result);
 
 		te->Paste(JString::newline);
@@ -747,7 +748,7 @@ CBExecOutputDocument::ProcessFinished
 		te->Paste(JString::newline);
 
 		if (reason != kJChildFinished)
-			{
+		{
 			#ifdef _J_OSX
 			const JString path("/cores/", JString::kNoCopy);
 			#else
@@ -757,37 +758,37 @@ CBExecOutputDocument::ProcessFinished
 			const JString coreName = "core." + JString((JUInt64) pid);
 			const JString coreFull = JCombinePathAndName(path, coreName);
 			if (JFileExists(coreFull))
-				{
+			{
 				te->Paste(JGetString("CoreLocation::CBExecOutputDocument"));
 				te->SetCurrentFontBold(true);
 				te->Paste(coreFull);
 				te->SetCurrentFontBold(false);
-				}
+			}
 			else
-				{
+			{
 				const JUtf8Byte* map[] =
-					{
+				{
 					"name", coreName.GetBytes()
-					};
+				};
 				const JString msg = JGetString("CoreName::CBExecOutputDocument", map, sizeof(map));
 				te->Paste(msg);
-				}
-			te->Paste(JString::newline);
 			}
+			te->Paste(JString::newline);
+		}
 
 		DataReverted();
 		te->GetText()->ClearUndo();
 		if (!IsActive() || GetWindow()->IsIconified())	// don't raise if active
-			{
+		{
 			Activate();
-			}
-		GetDisplay()->Beep();
 		}
+		GetDisplay()->Beep();
+	}
 
 	if (state.hadSelection)
-		{
+	{
 		te->RestoreDisplayState(state);
-		}
+	}
 
 	return stayOpen;
 }
@@ -801,58 +802,58 @@ void
 CBExecOutputDocument::UpdateButtons()
 {
 	if (ProcessRunning())
-		{
+	{
 		itsPauseButton->Activate();
 		itsKillButton->Activate();
 		if (itsStopButton != nullptr)
-			{
+		{
 			itsStopButton->Activate();
-			}
+		}
 		itsCmdPrompt->Show();
 		itsCmdInput->Show();
 		itsEOFButton->Show();
 		SetFileDisplayVisible(false);
 
 		if (itsProcessPausedFlag)
-			{
+		{
 			itsPauseButton->SetLabel(JGetString("ResumeLabel::CBExecOutputDocument"));
-			}
+		}
 		else
-			{
+		{
 			itsPauseButton->SetLabel(JGetString("PauseLabel::CBExecOutputDocument"));
-			}
+		}
 
 		if (!itsProcessPausedFlag && itsCmdStream != nullptr)
-			{
+		{
 			itsCmdInput->Activate();
 			itsEOFButton->Activate();
 			if (itsFocusToCmdFlag)
-				{
-				itsCmdInput->Focus();
-				}
-			}
-		else if (itsCmdStream == nullptr)
 			{
+				itsCmdInput->Focus();
+			}
+		}
+		else if (itsCmdStream == nullptr)
+		{
 			itsCmdPrompt->Hide();
 			itsCmdInput->Hide();
 			itsEOFButton->Hide();
 			GetTextEditor()->Focus();
-			}
+		}
 		else
-			{
+		{
 			itsCmdInput->Deactivate();
 			itsEOFButton->Deactivate();
 			GetTextEditor()->Focus();
-			}
 		}
+	}
 	else
-		{
+	{
 		itsPauseButton->Deactivate();
 		itsKillButton->Deactivate();
 		if (itsStopButton != nullptr)
-			{
+		{
 			itsStopButton->Deactivate();
-			}
+		}
 		itsCmdPrompt->Hide();
 		itsCmdInput->Hide();
 		itsEOFButton->Hide();
@@ -860,7 +861,7 @@ CBExecOutputDocument::UpdateButtons()
 		GetTextEditor()->Focus();
 
 		itsPauseButton->SetLabel(JGetString("PauseLabel::CBExecOutputDocument"));
-		}
+	}
 }
 
 /******************************************************************************
@@ -904,19 +905,19 @@ CBExecOutputDocument::ConvertSelectionToFullPath
 	const
 {
 	if (JIsAbsolutePath(*fileName))
-		{
+	{
 		return;
-		}
+	}
 
 	const JString testName = JCombinePathAndName(itsPath, *fileName);
 	if (JFileExists(testName))
-		{
+	{
 		*fileName = testName;
-		}
+	}
 	else
-		{
+	{
 		CBTextDocument::ConvertSelectionToFullPath(fileName);
-		}
+	}
 }
 
 /******************************************************************************

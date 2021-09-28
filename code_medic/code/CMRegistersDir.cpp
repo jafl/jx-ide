@@ -14,20 +14,20 @@
 #include "cmGlobals.h"
 #include "cmActionDefs.h"
 
-#include <JXDisplay.h>
-#include <JXWindow.h>
-#include <JXTextMenu.h>
-#include <JXMenuBar.h>
-#include <JXTextButton.h>
-#include <JXStaticText.h>
-#include <JXScrollbarSet.h>
-#include <JXHelpManager.h>
-#include <JXWDManager.h>
-#include <JXWDMenu.h>
-#include <JXImage.h>
-#include <JXFontManager.h>
+#include <jx-af/jx/JXDisplay.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXTextMenu.h>
+#include <jx-af/jx/JXMenuBar.h>
+#include <jx-af/jx/JXTextButton.h>
+#include <jx-af/jx/JXStaticText.h>
+#include <jx-af/jx/JXScrollbarSet.h>
+#include <jx-af/jx/JXHelpManager.h>
+#include <jx-af/jx/JXWDManager.h>
+#include <jx-af/jx/JXWDMenu.h>
+#include <jx-af/jx/JXImage.h>
+#include <jx-af/jx/JXFontManager.h>
 
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 // File menu
 
@@ -262,49 +262,49 @@ CMRegistersDir::Receive
 		(message.Is(CMLink::kProgramFinished) ||
 		 message.Is(CMLink::kCoreCleared)     ||
 		 message.Is(CMLink::kDetachedFromProcess)))
-		{
+	{
 		Update(JString::empty);
-		}
+	}
 	else if (sender == CMGetLink() &&
 			 (message.Is(CMLink::kProgramStopped) ||
 			  CMVarNode::ShouldUpdate(message)))
-		{
+	{
 		itsNeedsUpdateFlag = true;
 		Update();
-		}
+	}
 
 	else if (sender == CMGetLink() && message.Is(CMLink::kSymbolsLoaded))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const CMLink::SymbolsLoaded*>(&message);
 		assert( info != nullptr );
 		UpdateWindowTitle(info->GetProgramName());
-		}
+	}
 
 	else if (sender == itsFileMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		UpdateFileMenu();
-		}
+	}
 	else if (sender == itsFileMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleFileMenu(selection->GetIndex());
-		}
+	}
 
 	else if (sender == itsHelpMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleHelpMenu(selection->GetIndex());
-		}
+	}
 
 	else
-		{
+	{
 		JXWindowDirector::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -319,14 +319,14 @@ CMRegistersDir::ReceiveGoingAway
 	)
 {
 	if (!CMIsShuttingDown())
-		{
+	{
 		ListenTo(CMGetLink());
 
 		Update(JString::empty);
 
 		jdelete itsCmd;
 		itsCmd = CMGetLink()->CreateGetRegisters(this);
-		}
+	}
 
 	JXWindowDirector::ReceiveGoingAway(sender);
 }
@@ -340,14 +340,14 @@ void
 CMRegistersDir::Update()
 {
 	if (itsShouldUpdateFlag && itsNeedsUpdateFlag)
-		{
+	{
 		itsNeedsUpdateFlag = false;
 
 		if (itsCmd != nullptr)
-			{
+		{
 			itsCmd->CMCommand::Send();
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -389,18 +389,18 @@ CMRegistersDir::HandleFileMenu
 	)
 {
 	if (index == kOpenCmd)
-		{
+	{
 		itsCommandDir->OpenSourceFiles();
-		}
+	}
 
 	else if (index == kCloseWindowCmd)
-		{
+	{
 		Deactivate();
-		}
+	}
 	else if (index == kQuitCmd)
-		{
+	{
 		JXGetApplication()->Quit();
-		}
+	}
 }
 
 /******************************************************************************
@@ -415,29 +415,29 @@ CMRegistersDir::HandleHelpMenu
 	)
 {
 	if (index == kAboutCmd)
-		{
+	{
 		(CMGetApplication())->DisplayAbout();
-		}
+	}
 
 	else if (index == kTOCCmd)
-		{
+	{
 		JXGetHelpManager()->ShowTOC();
-		}
+	}
 	else if (index == kOverviewCmd)
-		{
+	{
 		JXGetHelpManager()->ShowSection("CMOverviewHelp");
-		}
+	}
 	else if (index == kThisWindowCmd)
-		{
+	{
 		JXGetHelpManager()->ShowSection("CMVarTreeHelp-Registers");
-		}
+	}
 
 	else if (index == kChangesCmd)
-		{
+	{
 		JXGetHelpManager()->ShowChangeLog();
-		}
+	}
 	else if (index == kCreditsCmd)
-		{
+	{
 		JXGetHelpManager()->ShowCredits();
-		}
+	}
 }

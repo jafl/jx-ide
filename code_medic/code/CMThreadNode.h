@@ -8,7 +8,7 @@
 #ifndef _H_CMThreadNode
 #define _H_CMThreadNode
 
-#include <JNamedTreeNode.h>
+#include <jx-af/jcore/JNamedTreeNode.h>
 
 class CMThreadNode : public JNamedTreeNode
 {

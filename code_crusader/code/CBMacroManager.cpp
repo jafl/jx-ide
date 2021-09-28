@@ -19,12 +19,12 @@
 #include "CBTextDocument.h"
 #include "CBTextEditor.h"
 #include "cbmUtil.h"
-#include <JStringIterator.h>
-#include <JColorManager.h>
-#include <jFileUtil.h>
-#include <jProcessUtil.h>
-#include <jASCIIConstants.h>
-#include <jAssert.h>
+#include <jx-af/jcore/JStringIterator.h>
+#include <jx-af/jcore/JColorManager.h>
+#include <jx-af/jcore/jFileUtil.h>
+#include <jx-af/jcore/jProcessUtil.h>
+#include <jx-af/jcore/jASCIIConstants.h>
+#include <jx-af/jcore/jAssert.h>
 
 static CBMacroSubstitute theSubst;
 
@@ -69,14 +69,14 @@ CBMacroManager::CBMacroManager
 
 	const JSize count = (source.itsMacroList)->GetElementCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		const MacroInfo oldInfo = (source.itsMacroList)->GetElement(i);
 
 		MacroInfo newInfo(jnew JString(*(oldInfo.macro)),
 						  jnew JString(*(oldInfo.script)));
 		assert( newInfo.macro != nullptr && newInfo.script != nullptr );
 		itsMacroList->AppendElement(newInfo);
-		}
+	}
 }
 
 /******************************************************************************
@@ -105,26 +105,26 @@ CBMacroManager::Perform
 	)
 {
 	if (caretIndex.charIndex <= 1)
-		{
+	{
 		return false;
-		}
+	}
 
 	const JStyledText* st = doc->GetTextEditor()->GetText();
 	const JUtf8Byte* text = st->GetText().GetBytes();
 
 	const JSize macroCount = itsMacroList->GetElementCount();
 	for (JIndex i=1; i<=macroCount; i++)
-		{
+	{
 		const MacroInfo info = itsMacroList->GetElement(i);
 		if (info.macro->GetCharacterCount() <= caretIndex.charIndex-1)
-			{
+		{
 			const JStyledText::TextIndex j =
 				st->AdjustTextIndex(caretIndex, -(JInteger)info.macro->GetCharacterCount());
 
 			if (info.macro->GetByteCount() == caretIndex.byteIndex - j.byteIndex &&
 				JString::CompareMaxNBytes(text + j.byteIndex-1, info.macro->GetBytes(),
 										  info.macro->GetByteCount()) == 0)
-				{
+			{
 				JStringIterator iter(st->GetText());
 				iter.UnsafeMoveTo(kJIteratorStartBefore, j.charIndex, j.byteIndex);
 
@@ -132,14 +132,14 @@ CBMacroManager::Perform
 				if (iter.AtBeginning() ||
 					(iter.Next(&c, kJIteratorStay) && !CBMIsCharacterInWord(c)) ||
 					(iter.Prev(&c, kJIteratorStay) && !CBMIsCharacterInWord(c)))
-					{
+				{
 					iter.Invalidate();
 					Perform(*info.script, doc);
 					return true;
-					}
 				}
 			}
 		}
+	}
 
 	return false;
 }
@@ -166,10 +166,10 @@ CBMacroManager::Perform
 
 	JString root, suffix;
 	if (JSplitRootAndSuffix(doc->GetFileName(), &root, &suffix))
-		{
+	{
 		root = JPrepArgForExec(root);
 		suffix.Prepend(".");
-		}
+	}
 
 	const JIndex charIndex = te->GetInsertionCharIndex();
 	const JIndex lineIndex = te->GetLineForChar(charIndex);
@@ -179,12 +179,12 @@ CBMacroManager::Perform
 
 	JString lineStr;
 	if (charIndex > lineStart)
-		{
+	{
 		JStringIterator iter(te->GetText()->GetText(), kJIteratorStartBefore, lineStart);
 		iter.BeginMatch();
 		iter.MoveTo(kJIteratorStartAfter, charIndex);
 		lineStr = JPrepArgForExec(iter.FinishMatch().GetString());
-		}
+	}
 
 	theSubst.UndefineAllVariables();
 	theSubst.DefineVariable("f", fullName);
@@ -203,9 +203,9 @@ CBMacroManager::Perform
 	JStringIterator iter(s);
 	JUtf8Character c;
 	while (iter.Next(&c))
-		{
+	{
 		te->JXTEBase::HandleKeyPress(c, 0, modifiers);
-		}
+	}
 }
 
 /******************************************************************************
@@ -238,27 +238,27 @@ CBMacroManager::HighlightErrors
 	JRunArrayIterator<JFont> fiter(styles);
 	JUtf8Character c;
 	while (siter.Next(&c))
-		{
+	{
 		if (c == '\\')
-			{
+		{
 			siter.SkipNext();
 			fiter.SkipNext(2);
-			}
+		}
 		else if (c == '$' && siter.AtEnd())
-			{
+		{
 			fiter.SetPrev(red, kJIteratorStay);
-			}
+		}
 		else if (c == '$' && siter.Next(&c, kJIteratorStay) && c == '(')
-			{
+		{
 			siter.SkipNext();
 			const bool ok = CBMBalanceForward(kCBCLang, &siter, &c);
 			fiter.SetNext(ok ? blue : red, siter.GetPrevCharacterIndex() - fiter.GetNextElementIndex() + 1);
-			}
-		else
-			{
-			fiter.SkipNext();
-			}
 		}
+		else
+		{
+			fiter.SkipNext();
+		}
+	}
 }
 
 /******************************************************************************
@@ -309,9 +309,9 @@ CBMacroManager::ReadSetup
 	JFileVersion vers;
 	input >> vers;
 	if (vers > kCurrentSetupVersion)
-		{
+	{
 		return;
-		}
+	}
 
 	itsMacroList->DeleteAll();
 
@@ -319,19 +319,19 @@ CBMacroManager::ReadSetup
 	input >> count;
 
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		MacroInfo info(jnew JString, jnew JString);
 		assert( info.macro != nullptr && info.script != nullptr );
 		input >> *(info.macro) >> *(info.script);
 		itsMacroList->AppendElement(info);
-		}
+	}
 
 	if (vers == 0)
-		{
+	{
 		JString geom;
 		JCoordinate width;
 		input >> geom >> width;
-		}
+	}
 }
 
 /******************************************************************************
@@ -352,10 +352,10 @@ CBMacroManager::WriteSetup
 	output << ' ' << count;
 
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		const MacroInfo info = itsMacroList->GetElement(i);
 		output << ' ' << *(info.macro) << ' ' << *(info.script);
-		}
+	}
 
 	output << ' ';
 }
@@ -375,10 +375,10 @@ CBMacroList::DeleteAll()
 {
 	const JSize count = GetElementCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		CBMacroManager::MacroInfo info = GetElement(i);
 		jdelete info.macro;
 		jdelete info.script;
-		}
+	}
 	RemoveAll();
 }

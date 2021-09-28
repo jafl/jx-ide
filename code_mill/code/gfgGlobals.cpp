@@ -11,7 +11,7 @@
 #include "GFGApp.h"
 #include "GFGPrefsManager.h"
 #include "GFGMDIServer.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 static GFGApp*			theApplication  = nullptr;		// owns itself
 static GFGPrefsManager*	thePrefsManager = nullptr;
@@ -78,9 +78,9 @@ GFGCleanUpBeforeSuddenDeath
 	)
 {
 	if (reason != JXDocumentManager::kAssertFired)
-		{
+	{
 //		theMDIServer->JPrefObject::WritePrefs();
-		}
+	}
 
 	// must be last to save everything
 
@@ -143,9 +143,9 @@ JString
 GFGGetVersionStr()
 {
 	const JUtf8Byte* map[] =
-		{
+	{
 		"version",   JGetString("VERSION").GetBytes(),
 		"copyright", JGetString("COPYRIGHT").GetBytes()
-		};
+	};
 	return JGetString("Description::gfgGlobals", map, sizeof(map));
 }

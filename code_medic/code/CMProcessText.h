@@ -8,7 +8,7 @@
 #ifndef _H_CMProcessText
 #define _H_CMProcessText
 
-#include <JXStaticText.h>
+#include <jx-af/jx/JXStaticText.h>
 
 class CMChooseProcessDialog;
 

@@ -11,9 +11,9 @@
 
 #include "CBProjectFileInput.h"
 #include "CBProjectDocument.h"
-#include <JColorManager.h>
-#include <JStringIterator.h>
-#include <jAssert.h>
+#include <jx-af/jcore/JColorManager.h>
+#include <jx-af/jcore/JStringIterator.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -62,24 +62,24 @@ CBProjectFileInput::StyledText::ComputeErrorLength
 	const
 {
 	if (fullName.IsEmpty())
-		{
+	{
 		return totalLength;
-		}
+	}
 
 	if (CBProjectDocument::CanReadFile(fullName) != JXFileDocument::kFileReadable)
-		{
+	{
 		JStringIterator iter(fullName, kJIteratorStartAtEnd);
 		if (iter.Prev(ACE_DIRECTORY_SEPARATOR_STR))
-			{
-			return fullName.GetCharacterCount() - iter.GetNextCharacterIndex();
-			}
-		else
-			{
-			return totalLength;
-			}
-		}
-	else
 		{
-		return JXFileInput::StyledText::ComputeErrorLength(field, totalLength, fullName);
+			return fullName.GetCharacterCount() - iter.GetNextCharacterIndex();
 		}
+		else
+		{
+			return totalLength;
+		}
+	}
+	else
+	{
+		return JXFileInput::StyledText::ComputeErrorLength(field, totalLength, fullName);
+	}
 }

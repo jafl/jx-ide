@@ -12,10 +12,10 @@
 
 #include "CBGoStyler.h"
 #include "cbmUtil.h"
-#include <JXDialogDirector.h>
-#include <JColorManager.h>
-#include <jGlobals.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXDialogDirector.h>
+#include <jx-af/jcore/JColorManager.h>
+#include <jx-af/jcore/jGlobals.h>
+#include <jx-af/jcore/jAssert.h>
 
 CBGoStyler* CBGoStyler::itsSelf = nullptr;
 
@@ -63,14 +63,14 @@ CBStylerBase*
 CBGoStyler::Instance()
 {
 	if (itsSelf == nullptr && !recursiveInstance)
-		{
+	{
 		recursiveInstance = true;
 
 		itsSelf = jnew CBGoStyler;
 		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
-		}
+	}
 
 	return itsSelf;
 }
@@ -99,9 +99,9 @@ CBGoStyler::CBGoStyler()
 {
 	JFontStyle blankStyle;
 	for (JIndex i=1; i<=kTypeCount; i++)
-		{
+	{
 		SetTypeStyle(i, blankStyle);
-		}
+	}
 
 	const JColorID red = JColorManager::GetRedColor();
 
@@ -153,12 +153,12 @@ CBGoStyler::Scan
 	Token token;
 	JFontStyle style;
 	do
-		{
+	{
 		token = NextToken();
 		if (token.type == kEOF)
-			{
+		{
 			break;
-			}
+		}
 
 		// save token starts
 
@@ -168,32 +168,32 @@ CBGoStyler::Scan
 			token.type == kBuiltInFunction ||
 			token.type == kString          ||
 			token.type == kRawString)
-			{
+		{
 			SaveTokenStart(token.range.GetFirst());
-			}
+		}
 
 		// set the style
 
 		const JIndex typeIndex = token.type - kWhitespace;
 		if (token.type == kWhitespace)
-			{
+		{
 			style = GetDefaultFont().GetStyle();
-			}
+		}
 		else if (token.type == kComment ||
 				 token.type == kString  ||
 				 token.type == kRawString)
-			{
+		{
 			style = GetTypeStyle(typeIndex);
-			}
-		else if (token.type < kWhitespace)
-			{
-			style = GetTypeStyle(kError - kWhitespace);
-			}
-		else
-			{
-			style = GetStyle(typeIndex, JString(text.GetRawBytes(), token.range.byteRange, JString::kNoCopy));
-			}
 		}
+		else if (token.type < kWhitespace)
+		{
+			style = GetTypeStyle(kError - kWhitespace);
+		}
+		else
+		{
+			style = GetStyle(typeIndex, JString(text.GetRawBytes(), token.range.byteRange, JString::kNoCopy));
+		}
+	}
 		while (SetStyle(token.range.charRange, style));
 }
 
@@ -231,15 +231,15 @@ CBGoStyler::Receive
 #if defined CODE_CRUSADER && !defined CODE_CRUSADER_UNIT_TEST
 
 	if (message.Is(JXDialogDirector::kDeactivated))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const JXDialogDirector::Deactivated*>(&message);
 		assert( info != nullptr );
 		if (info->Successful())
-			{
+		{
 			CBMWriteSharedPrefs(true);
-			}
 		}
+	}
 
 #endif
 }

@@ -43,28 +43,28 @@
 #include "cbmUtil.h"
 #include "cbActionDefs.h"
 
-#include <JXDisplay.h>
-#include <JXWindowDirector.h>
-#include <JXWindow.h>
-#include <JXMenuBar.h>
-#include <JXTextMenu.h>
-#include <JXScrollbarSet.h>
-#include <JXScrollbar.h>
-#include <JXWebBrowser.h>
-#include <JXSharedPrefsManager.h>
-#include <JXStringCompletionMenu.h>
-#include <JXWindowPainter.h>
-#include <JXFontManager.h>
-#include <JXColorManager.h>
+#include <jx-af/jx/JXDisplay.h>
+#include <jx-af/jx/JXWindowDirector.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXMenuBar.h>
+#include <jx-af/jx/JXTextMenu.h>
+#include <jx-af/jx/JXScrollbarSet.h>
+#include <jx-af/jx/JXScrollbar.h>
+#include <jx-af/jx/JXWebBrowser.h>
+#include <jx-af/jx/JXSharedPrefsManager.h>
+#include <jx-af/jx/JXStringCompletionMenu.h>
+#include <jx-af/jx/JXWindowPainter.h>
+#include <jx-af/jx/JXFontManager.h>
+#include <jx-af/jx/JXColorManager.h>
 
-#include <JRegex.h>
-#include <JStringIterator.h>
-#include <JStack.h>
-#include <jStreamUtil.h>
-#include <jFileUtil.h>
-#include <jASCIIConstants.h>
+#include <jx-af/jcore/JRegex.h>
+#include <jx-af/jcore/JStringIterator.h>
+#include <jx-af/jcore/JStack.h>
+#include <jx-af/jcore/jStreamUtil.h>
+#include <jx-af/jcore/jFileUtil.h>
+#include <jx-af/jcore/jASCIIConstants.h>
 #include <X11/keysym.h>
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 const JSize kDefTabCharCount          = 4;
 const JFloat kBalanceWhileTypingDelay = 0.5;
@@ -275,10 +275,10 @@ CBTextEditor::CBTextEditor
 	itsColInput->ShareEditMenu(this);
 
 	GetText()->SetCharacterInWordFunction([this] (const JUtf8Character& c)
-		{
+	{
 		return CBMIsCharacterInWord(c) ||
 					CBIsCharacterInWord(this->itsDoc->GetFileType(), c);
-		});
+	});
 
 	JTEKeyHandler* handler;
 	CBInstallEmulator(CBGetPrefsManager()->GetEmulator(), this, &handler);
@@ -308,13 +308,13 @@ CBTextEditor::ReadSetup
 	input >> vers;
 
 	if (vers <= kCurrentSetupVersion)
-		{
+	{
 		if (vers == 0)
-			{
+		{
 			JIgnoreUntil(input, '\1');
 			input >> vers;
 			assert( vers == 0 );
-			}
+		}
 
 		JSize tabCharCount;
 		bool autoIndent;
@@ -323,25 +323,25 @@ CBTextEditor::ReadSetup
 		GetText()->ShouldAutoIndent(autoIndent);
 
 		if (vers >= 2)
-			{
+		{
 			bool allowDND, moveFrontOfText;
 			JSize undoDepth;
 			input >> JBoolFromString(allowDND) >> JBoolFromString(moveFrontOfText) >> undoDepth;
 
 			if (vers == 2)
-				{
+			{
 				// It actually read first digit of font name,
 				// so we reset it.
 				undoDepth = 100;
-				}
+			}
 
 			CBShouldAllowDragAndDrop(allowDND);
 			ShouldMoveToFrontOfText(moveFrontOfText);
 			GetText()->SetUndoDepth(undoDepth);
-			}
+		}
 
 		if (vers >= 4)
-			{
+		{
 			JSize lineWidth;
 			input >> lineWidth;
 			GetText()->SetCRMLineWidth(lineWidth);
@@ -349,42 +349,42 @@ CBTextEditor::ReadSetup
 			input >> JBoolFromString(itsBalanceWhileTypingFlag);
 			input >> JBoolFromString(itsScrollToBalanceFlag);
 			input >> JBoolFromString(itsBeepWhenTypeUnbalancedFlag);
-			}
+		}
 
 		if (vers == 5)
-			{
+		{
 			bool newLineAfterSemiFlag;
 			input >> JBoolFromString(newLineAfterSemiFlag);
-			}
+		}
 
 		if (vers >= 7)
-			{
+		{
 			input >> JBoolFromString(itsSmartTabFlag);
-			}
+		}
 
 		if (8 <= vers && vers < 10)
-			{
+		{
 			long mod;
 			input >> mod;
 
 			if ((JXGetSharedPrefsManager())->WasNew())
-				{
+			{
 				SetPartialWordModifier((PartialWordModifier) mod);
-				}
 			}
+		}
 
 		if (vers >= 9)
-			{
+		{
 			bool tabToSpaces;
 			input >> JBoolFromString(tabToSpaces);
 			GetText()->TabShouldInsertSpaces(tabToSpaces);
-			}
+		}
 
 		if (vers >= 11)
-			{
+		{
 			input >> JBoolFromString(itsDrawRightMarginFlag) >> itsRightMarginWidth;
-			}
 		}
+	}
 
 	JIgnoreUntil(input, kSetupDataEndDelimiter);
 }
@@ -431,40 +431,40 @@ CBTextEditor::Receive
 	)
 {
 	if (sender == itsDoc && message.Is(JXFileDocument::kNameChanged))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const JXFileDocument::NameChanged*>(&message);
 		assert( info != nullptr );
 		UpdateWritable(info->GetFullName());
-		}
+	}
 
 	else if (sender == itsContextMenu && message.Is(JXTextMenu::kNeedsUpdate))
-		{
+	{
 		UpdateContextMenu();
-		}
+	}
 	else if (sender == itsContextMenu && message.Is(JXTextMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleContextMenu(selection->GetIndex());
-		}
+	}
 
 	else if (message.Is(JXFSDirMenu::kFileSelected))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const JXFSDirMenu::FileSelected*>(&message);
 		assert( info != nullptr );
 		bool onDisk;
 		const JString fullName = itsDoc->GetFullName(&onDisk);
 		if (onDisk)
-			{
+		{
 			(CBGetRunTEScriptDialog())->RunSimpleScript(info->GetFileName(), this, fullName);
-			}
 		}
+	}
 
 	else
-		{
+	{
 		JXTextMenu* editMenu;
 		bool ok = GetEditMenu(&editMenu);
 		assert( ok );
@@ -474,51 +474,51 @@ CBTextEditor::Receive
 		assert( ok );
 
 		if (sender == editMenu && message.Is(JXMenu::kNeedsUpdate))
-			{
+		{
 			UpdateCustomEditMenuItems();
-			}
+		}
 		else if (sender == editMenu && message.Is(JXMenu::kItemSelected))
-			{
+		{
 			const auto* selection =
 				dynamic_cast<const JXMenu::ItemSelected*>(&message);
 			assert( selection != nullptr );
 			if (HandleCustomEditMenuItems(selection->GetIndex()))
-				{
+			{
 				return;
-				}
 			}
+		}
 
 		else if (sender == searchMenu && message.Is(JXMenu::kNeedsUpdate))
-			{
+		{
 			UpdateCustomSearchMenuItems();
-			}
+		}
 		else if (sender == searchMenu && message.Is(JXMenu::kItemSelected))
-			{
+		{
 			const auto* selection =
 				dynamic_cast<const JXMenu::ItemSelected*>(&message);
 			assert( selection != nullptr );
 			if (HandleCustomSearchMenuItems(selection->GetIndex()))
-				{
+			{
 				return;
-				}
 			}
+		}
 
 		else if (sender == this &&
 				 (message.Is(JStyledText::kTextSet) ||
 				  message.Is(JStyledText::kTextChanged)))
-			{
+		{
 			if (itsFnMenu != nullptr)
-				{
-				itsFnMenu->TextChanged(itsDoc->GetFileType(), JString::empty);
-				}
-			}
-		else if (sender == this && message.Is(kTypeChanged))
 			{
-			UpdateTabHandling();
+				itsFnMenu->TextChanged(itsDoc->GetFileType(), JString::empty);
 			}
+		}
+		else if (sender == this && message.Is(kTypeChanged))
+		{
+			UpdateTabHandling();
+		}
 
 		JXTEBase::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -534,10 +534,10 @@ CBTextEditor::UpdateCustomEditMenuItems()
 	assert( ok );
 
 	if (GetType() == kFullEditor)
-		{
+	{
 		editMenu->EnableItem(itsExecScriptCmdIndex);
 		editMenu->EnableItem(itsExecScriptCmdIndex+1);	// script menu
-		}
+	}
 
 	editMenu->SetItemText(itsExecScriptCmdIndex,
 		JGetString(HasSelection() ? "RunScriptOnSelection::CBTextEditor" : "RunScript::CBTextEditor"));
@@ -559,14 +559,14 @@ CBTextEditor::HandleCustomEditMenuItems
 	CBGetDocumentManager()->SetActiveTextDocument(itsDoc);
 
 	if (index == itsExecScriptCmdIndex)
-		{
+	{
 		(CBGetRunTEScriptDialog())->Activate();
 		return true;
-		}
+	}
 	else
-		{
+	{
 		return false;
-		}
+	}
 }
 
 /******************************************************************************
@@ -588,39 +588,39 @@ CBTextEditor::UpdateCustomSearchMenuItems()
 	searchMenu->EnableItem(itsFirstSearchMenuItem + kViewManPageCmd);
 
 	if (!GetText()->IsEmpty())
-		{
+	{
 		searchMenu->EnableItem(itsFirstSearchMenuItem + kBalanceCmd);
-		}
+	}
 
 	if (HasSelection())
-		{
+	{
 		searchMenu->EnableItem(itsFirstSearchMenuItem + kOpenSelectionAsFileCmd);
 		searchMenu->EnableItem(itsFirstSearchMenuItem + kFindSelectionAsSymbolCmd);
 		searchMenu->EnableItem(itsFirstSearchMenuItem + kFindSelectionAsSymbolNoContextCmd);
 		searchMenu->EnableItem(itsFirstSearchMenuItem + kFindSelectionInManPageCmd);
-		}
+	}
 
 	CBProjectDocument* projDoc;
 	if (CBGetDocumentManager()->GetActiveProjectDocument(&projDoc))
-		{
+	{
 		const JUtf8Byte* map[] =
-			{
+		{
 			"p", projDoc->GetName().GetBytes()
-			};
+		};
 		searchMenu->SetItemText(itsFirstSearchMenuItem + kFindSelectionAsSymbolCmd,
 			JGetString("FindSymbolGlobal::CBTextEditor", map, sizeof(map)));
-		}
+	}
 	else
-		{
+	{
 		searchMenu->SetItemText(itsFirstSearchMenuItem + kFindSelectionAsSymbolCmd, JGetString("FindSymbol::CBTextEditor"));
-		}
+	}
 
 	CBExecOutputDocument* listDoc;
 	if (CBGetDocumentManager()->GetActiveListDocument(&listDoc))
-		{
+	{
 		searchMenu->EnableItem(itsFirstSearchMenuItem + kOpenPrevListItemCmd);
 		searchMenu->EnableItem(itsFirstSearchMenuItem + kOpenNextListItemCmd);
-		}
+	}
 }
 
 /******************************************************************************
@@ -636,88 +636,88 @@ CBTextEditor::HandleCustomSearchMenuItems
 {
 	const JInteger index = JInteger(origIndex) - JInteger(itsFirstSearchMenuItem);
 	if (index != kGoToLineCmd && index != kGoToColCmd)
-		{
+	{
 		Focus();
-		}
+	}
 	CBGetDocumentManager()->SetActiveTextDocument(itsDoc);
 
 	if (index == kBalanceCmd)
-		{
+	{
 		CBMBalanceFromSelection(this, CBGetLanguage(itsDoc->GetFileType()));
 		return true;
-		}
+	}
 
 	else if (index == kGoToLineCmd)
-		{
+	{
 		itsLineInput->Focus();
 		return true;
-		}
+	}
 	else if (index == kGoToColCmd)
-		{
+	{
 		itsColInput->Focus();
 		return true;
-		}
+	}
 	else if (index == kPlaceBookmarkCmd)
-		{
+	{
 		PlaceBookmark();
 		return true;
-		}
+	}
 
 	else if (index == kOpenSelectionAsFileCmd)
-		{
+	{
 		OpenSelection();
 		return true;
-		}
+	}
 	else if (index == kFindSourceFileCmd)
-		{
+	{
 		CBGetFindFileDialog()->Activate();
 		return true;
-		}
+	}
 
 	else if (index == kFindSelectionAsSymbolCmd)
-		{
+	{
 		FindSelectedSymbol(kJXLeftButton, true);
 		return true;
-		}
+	}
 	else if (index == kFindSelectionAsSymbolNoContextCmd)
-		{
+	{
 		FindSelectedSymbol(kJXLeftButton, false);
 		return true;
-		}
+	}
 	else if (index == kFindSelectionInManPageCmd)
-		{
+	{
 		DisplayManPage();
 		return true;
-		}
+	}
 	else if (index == kViewManPageCmd)
-		{
+	{
 		CBGetViewManPageDialog()->Activate();
 		return true;
-		}
+	}
 
 	else if (index == kOpenPrevListItemCmd)
-		{
+	{
 		CBExecOutputDocument* listDoc;
 		if (CBGetDocumentManager()->GetActiveListDocument(&listDoc))
-			{
+		{
 			listDoc->OpenPrevListItem();
-			}
-		return true;
 		}
+		return true;
+	}
 	else if (index == kOpenNextListItemCmd)
-		{
+	{
 		CBExecOutputDocument* listDoc;
 		if (CBGetDocumentManager()->GetActiveListDocument(&listDoc))
-			{
+		{
 			listDoc->OpenNextListItem();
-			}
-		return true;
 		}
+		return true;
+	}
 
 	else
-		{
+	{
 		return false;
-		}
+	}
 }
 
 /******************************************************************************
@@ -761,108 +761,108 @@ CBTextEditor::HandleContextMenu
 	CBGetDocumentManager()->SetActiveTextDocument(itsDoc);
 
 	if (index == kContextCutCmd)
-		{
+	{
 		Cut();
-		}
+	}
 	else if (index == kContextCopyCmd)
-		{
+	{
 		Copy();
-		}
+	}
 	else if (index == kContextPasteCmd)
-		{
+	{
 		Paste();
-		}
+	}
 
 	else if (index == kContextCompleteCmd)
-		{
+	{
 		JStyledText::TextRange r;
 		if (GetSelection(&r))
-			{
+		{
 			SetCaretLocation(r.GetAfter());
-			}
+		}
 
 		CBStringCompleter* completer = nullptr;
 		if (itsDoc->GetStringCompleter(&completer))
-			{
+		{
 			itsCompletionMenu->ClearRequestCount();
 			itsCompletionMenu->CompletionRequested(1);
 			completer->Complete(this, itsCompletionMenu);
-			}
 		}
+	}
 	else if (index == kContextMacroCmd)
-		{
+	{
 		JStyledText::TextRange r;
 		if (GetSelection(&r))
-			{
+		{
 			SetCaretLocation(r.GetAfter());
-			}
+		}
 
 		CBMacroManager* macroMgr = nullptr;
 		if (itsDoc->GetMacroManager(&macroMgr))
-			{
+		{
 			macroMgr->Perform(GetInsertionIndex(), itsDoc);
-			}
 		}
+	}
 
 	else if (index == kContextShiftLeftCmd)
-		{
+	{
 		TabSelectionLeft();
-		}
+	}
 	else if (index == kContextShiftRightCmd)
-		{
+	{
 		TabSelectionRight();
-		}
+	}
 
 	else if (index == kContextFindSelBackCmd)
-		{
+	{
 		SelectWordIfNoSelection();
 		SearchSelectionBackward();
-		}
+	}
 	else if (index == kContextFindSelFwdCmd)
-		{
+	{
 		SelectWordIfNoSelection();
 		SearchSelectionForward();
-		}
+	}
 
 	else if (index == kContextFindSymbolCmd)
-		{
+	{
 		SelectWordIfNoSelection();
 		FindSelectedSymbol(kJXLeftButton, true);
-		}
+	}
 	else if (index == kContextFindSymbolNoContextCmd)
-		{
+	{
 		SelectWordIfNoSelection();
 		FindSelectedSymbol(kJXLeftButton, false);
-		}
+	}
 	else if (index == kContextFindSymbolManPageCmd)
-		{
+	{
 		SelectWordIfNoSelection();
 		DisplayManPage();
-		}
+	}
 
 	else if (index == kContextOpenSelAsFileCmd)
-		{
+	{
 		SelectWordIfNoSelection();
 		OpenSelection();
-		}
+	}
 	else if (index == kShowInFileMgrCmd)
-		{
+	{
 		bool onDisk;
 		const JString fullName = itsDoc->GetFullName(&onDisk);
 		if (onDisk)
-			{
+		{
 			(JXGetWebBrowser())->ShowFileLocation(fullName);
-			}
 		}
+	}
 
 	else if (index == kContextBalanceCmd)
-		{
+	{
 		CBMBalanceFromSelection(this, CBGetLanguage(itsDoc->GetFileType()));
-		}
+	}
 	else if (index == kContextPlaceBookmarkCmd)
-		{
+	{
 		PlaceBookmark();
-		}
+	}
 }
 
 /******************************************************************************
@@ -874,11 +874,11 @@ void
 CBTextEditor::SelectWordIfNoSelection()
 {
 	if (!HasSelection())
-		{
+	{
 		JStyledText::TextRange r;
 		TEGetDoubleClickSelection(GetInsertionIndex(), false, false, &r);
 		SetSelection(r);
-		}
+	}
 }
 
 /******************************************************************************
@@ -894,7 +894,7 @@ CBTextEditor::Draw
 	)
 {
 	if (itsDrawRightMarginFlag && CBDrawRightMargin(itsDoc->GetFileType()))
-		{
+	{
 		const JCoordinate x =
 			TEGetLeftMarginWidth() +
 			(itsRightMarginWidth * GetText()->GetDefaultFont().GetCharWidth(GetFontManager(), JUtf8Character(' ')));
@@ -903,7 +903,7 @@ CBTextEditor::Draw
 		p.SetPenColor(itsRightMarginColor);
 		p.Line(x, rect.top, x, rect.bottom);
 		p.SetPenColor(saveColor);
-		}
+	}
 
 	JXTEBase::Draw(p, rect);
 }
@@ -926,13 +926,13 @@ CBTextEditor::AdjustCursor
 		modifiers.meta() ? !itsAllowDNDFlag : itsAllowDNDFlag;
 	ShouldAllowDragAndDrop(selectionSpecial);
 	if (selectionSpecial && PointInSelection(pt))
-		{
+	{
 		DisplayCursor(kJXDefaultCursor);
-		}
+	}
 	else
-		{
+	{
 		JXTEBase::AdjustCursor(pt, modifiers);
-		}
+	}
 }
 
 /******************************************************************************
@@ -952,9 +952,9 @@ CBTextEditor::HandleMouseDown
 {
 	CBGetDocumentManager()->SetActiveTextDocument(itsDoc);
 	if (itsCompletionMenu != nullptr)
-		{
+	{
 		itsCompletionMenu->ClearRequestCount();
-		}
+	}
 	itsColInput->ShouldOptimizeUpdate(true);
 
 	const bool selectionSpecial =
@@ -966,25 +966,25 @@ CBTextEditor::HandleMouseDown
 
 	if (selectionSpecial &&
 		button == kJXRightButton && clickCount == 1)
-		{
+	{
 		if (!PointInSelection(pt))
-			{
+		{
 			JXKeyModifiers emptyMod(GetDisplay());
 			JXTEBase::HandleMouseDown(pt, kJXLeftButton, 1, buttonStates, emptyMod);
-			}
+		}
 		CreateContextMenu();
 		itsContextMenu->PopUp(this, pt, buttonStates, modifiers);
-		}
+	}
 	else if (button <= kJXRightButton &&
 			 (modifiers.meta() || modifiers.control()))
-		{
+	{
 		JXKeyModifiers emptyMod(GetDisplay());
 		JXTEBase::HandleMouseDown(pt, kJXLeftButton, clickCount, buttonStates, emptyMod);
-		}
+	}
 	else
-		{
+	{
 		JXTEBase::HandleMouseDown(pt, button, clickCount, buttonStates, modifiers);
-		}
+	}
 }
 
 /******************************************************************************
@@ -1003,21 +1003,21 @@ CBTextEditor::HandleMouseUp
 {
 	JXTEBase::HandleMouseUp(pt, button, buttonStates, modifiers);
 	if (buttonStates.AllOff())
-		{
+	{
 		itsColInput->ShouldOptimizeUpdate(false);
-		}
+	}
 
 	if (button <= kJXRightButton && itsLastClickCount == 2 &&
 		itsLastModifiers.meta() && !itsLastModifiers.control())
-		{
+	{
 		FindSelectedSymbol(button, !itsLastModifiers.shift());
-		}
+	}
 	else if (button == kJXLeftButton && itsLastClickCount == 2 &&
 			 !itsLastModifiers.meta() && itsLastModifiers.control() &&
 			 !itsLastModifiers.shift())
-		{
+	{
 		OpenSelection();
-		}
+	}
 }
 
 /******************************************************************************
@@ -1037,7 +1037,7 @@ void
 CBTextEditor::CreateContextMenu()
 {
 	if (itsContextMenu == nullptr)
-		{
+	{
 		itsContextMenu = jnew JXTextMenu(JString::empty, this, kFixedLeft, kFixedTop, 0,0, 10,10);
 		assert( itsContextMenu != nullptr );
 		itsContextMenu->SetMenuItems(kContextMenuStr, "CBTextEditor");
@@ -1055,7 +1055,7 @@ CBTextEditor::CreateContextMenu()
 		itsContextMenu->SetItemImage(kContextFindSelBackCmd, jx_find_selection_backwards);
 		itsContextMenu->SetItemImage(kContextFindSelFwdCmd,  jx_find_selection_forward);
 		itsContextMenu->SetItemImage(kContextBalanceCmd,     jcc_balance_braces);
-		}
+	}
 }
 
 /******************************************************************************
@@ -1115,104 +1115,104 @@ CBTextEditor::HandleKeyPress
 	const Type type = GetType();
 
 	if (c == '\t' && controlOn && !metaOn && !shiftOn)
-		{
+	{
 		// We have to do this here because JXWindow can only be persuaded
 		// to send it to the widget with focus, not as a shortcut.
 
 		itsDoc->HandleActionButton();
-		}
+	}
 
 	else if (keySym == XK_F12)
-		{
+	{
 		if (!HasSelection())
-			{
+		{
 			JStyledText::TextRange r;
 			TEGetDoubleClickSelection(GetInsertionIndex(), false, false, &r);
 			SetSelection(r);
-			}
-		FindSelectedSymbol(shiftOn ? kJXMiddleButton : kJXLeftButton, true);
 		}
+		FindSelectedSymbol(shiftOn ? kJXMiddleButton : kJXLeftButton, true);
+	}
 
 	else if (controlOn && (c == kJUpArrow || c == kJDownArrow) && !metaOn)
-		{
+	{
 		MoveCaretToEdge(c);
-		}
+	}
 
 	else if (type == kFullEditor &&
 			 itsSmartTabFlag && c == '\t' && !shiftOn && !metaOn && !controlOn &&
 			 GetCaretLocation(&caretIndex) &&
 			 itsDoc->GetMacroManager(&macroMgr) &&
 			 macroMgr->Perform(caretIndex.location, itsDoc))
-		{
+	{
 		// Perform() does the work
-		}
+	}
 
 	else if (type == kFullEditor &&
 			 c == ' ' && controlOn && !shiftOn && !metaOn &&
 			 GetCaretLocation(&caretIndex) &&
 			 itsDoc->GetMacroManager(&macroMgr))
-		{
+	{
 		macroMgr->Perform(caretIndex.location, itsDoc);	// prevent other Ctrl-space behavior
-		}
+	}
 
 	else if (type == kFullEditor &&
 			 itsSmartTabFlag && c == '\t' && !shiftOn && !metaOn && !controlOn &&
 			 itsDoc->GetStringCompleter(&completer) &&
 			 completer->Complete(this, itsCompletionMenu))
-		{
+	{
 		// Complete() does the work
 		clearRequestCount = false;
-		}
+	}
 
 	else if (type == kFullEditor &&
 			 c == ' ' && controlOn && !metaOn &&		// Ctrl-space & Ctrl-Shift-space
 			 itsDoc->GetStringCompleter(&completer))
-		{
+	{
 		completer->Complete(this, itsCompletionMenu);	// prevent other Ctrl-space behavior
 		clearRequestCount = false;
-		}
+	}
 
 	else
-		{
+	{
 		const JStyledText::CRMRuleList* ruleList = nullptr;
 		if ((c == '\r' || c == '\n') && shiftOn &&
 			GetText()->GetCRMRuleList(&ruleList))
-			{
+		{
 			GetText()->ClearCRMRuleList();
-			}
+		}
 
 		if (!(shiftOn && (c == kJUpArrow   || c == kJDownArrow ||
 						  c == kJLeftArrow || c == kJRightArrow)))
-			{
+		{
 			itsColInput->ShouldOptimizeUpdate(true);
-			}
+		}
 		JXTEBase::HandleKeyPress(c, keySym, modifiers);
 		itsColInput->ShouldOptimizeUpdate(false);
 
 		if (ruleList != nullptr)
-			{
+		{
 			GetText()->SetCRMRuleList(const_cast<JStyledText::CRMRuleList*>(ruleList), false);
-			}
+		}
 
 		if (itsBalanceWhileTypingFlag &&
 			!metaOn && !controlOn &&
 			CBMIsCloseGroup(CBGetLanguage(itsDoc->GetFileType()), c) &&
 			!HasSelection())
-			{
+		{
 			ShowBalancingOpenGroup();
-			}
+		}
 
 		CBCharActionManager* mgr;
 		if (!metaOn && !controlOn && itsDoc->GetCharActionManager(&mgr))
-			{
+		{
 			mgr->Perform(c, itsDoc);
-			}
 		}
+	}
 
 	if (clearRequestCount && itsCompletionMenu != nullptr)
-		{
+	{
 		itsCompletionMenu->ClearRequestCount();
-		}
+	}
 }
 
 /******************************************************************************
@@ -1229,9 +1229,9 @@ CBTextEditor::HandleShortcut
 {
 	CBGetDocumentManager()->SetActiveTextDocument(itsDoc);
 	if (itsCompletionMenu != nullptr)
-		{
+	{
 		itsCompletionMenu->ClearRequestCount();
-		}
+	}
 	JXTEBase::HandleShortcut(key, modifiers);
 }
 
@@ -1247,9 +1247,9 @@ CBTextEditor::FileTypeChanged
 	)
 {
 	if (CBGetFnMenuUpdater()->CanCreateMenu(type))
-		{
+	{
 		if (itsFnMenu == nullptr)
-			{
+		{
 			JXMenuBar* menuBar = itsDoc->GetMenuBar();
 
 			itsFnMenu = jnew CBFunctionMenu(itsDoc, type, this, menuBar,
@@ -1261,29 +1261,29 @@ CBTextEditor::FileTypeChanged
 			assert( ok );
 
 			menuBar->InsertMenuAfter(searchMenu, itsFnMenu);
-			}
-		else
-			{
-			itsFnMenu->TextChanged(type, JString::empty);
-			}
 		}
-	else
+		else
 		{
+			itsFnMenu->TextChanged(type, JString::empty);
+		}
+	}
+	else
+	{
 		jdelete itsFnMenu;
 		itsFnMenu = nullptr;
-		}
+	}
 
 	CBStringCompleter* completer = nullptr;
 	if (itsDoc->GetStringCompleter(&completer))
-		{
+	{
 		itsCompletionMenu = jnew JXStringCompletionMenu(this, true);
 		assert( itsCompletionMenu != nullptr );
-		}
+	}
 	else
-		{
+	{
 		jdelete itsCompletionMenu;
 		itsCompletionMenu = nullptr;
-		}
+	}
 }
 
 /******************************************************************************
@@ -1349,21 +1349,21 @@ CBTextEditor::FindSelectedSymbol
 	bool onDisk;
 	JString fullName = itsDoc->GetFullName(&onDisk);
 	if (!onDisk || !useContext)
-		{
+	{
 		fullName.Clear();
-		}
+	}
 
 	if (!GetSelection(&str) || str.Contains("\n") || str.GetCharacterCount() < 2)
-		{
+	{
 		return;
-		}
+	}
 
 	if (!CBGetDocumentManager()->GetActiveProjectDocument(&projDoc) ||
 		!projDoc->GetSymbolDirector()->FindSymbol(str, fullName, button))
-		{
+	{
 		// If we can't find it anywhere else, check the man pages.
 		DisplayManPage();
-		}
+	}
 }
 
 /******************************************************************************
@@ -1383,14 +1383,14 @@ CBTextEditor::DisplayManPage()
 {
 	JStyledText::TextRange sel;
 	if (GetSelection(&sel))
-		{
+	{
 		const JString& text  = GetText()->GetText();
 		const JStringMatch m = manRegex.Match(JString(text.GetBytes() + sel.byteRange.first-1, JString::kNoCopy), JRegex::kIncludeSubmatches);
 		if (!m.IsEmpty())
-			{
+		{
 			CBManPageDocument::Create(nullptr, m.GetSubstring(1), m.GetSubstring(2));
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -1409,16 +1409,16 @@ CBTextEditor::OpenSelection()
 
 	JStyledText::TextRange sel;
 	if (!GetSelection(&sel))
-		{
+	{
 		return;
-		}
+	}
 
 	JStringIterator* iter = GetText()->GetConstIterator(kJIteratorStartAtBeginning, JStyledText::TextIndex(1,1));
 
 	JString str;
 	JIndex lineIndex;
 	if (!IsNonstdError(&str, &sel, &lineIndex))
-		{
+	{
 		lineIndex = 0;
 		JUtf8Character c;
 
@@ -1429,15 +1429,15 @@ CBTextEditor::OpenSelection()
 
 		iter->UnsafeMoveTo(kJIteratorStartBefore, start.charIndex, start.byteIndex);
 		if (!iter->AtBeginning())
-			{
+		{
 			while (iter->Prev(&c))
-				{
+			{
 				// catch "#include </usr/junk.h>", "#include <../junk.h>"
 
 				while ((c == ACE_DIRECTORY_SEPARATOR_CHAR || c == '.') && !iter->AtBeginning())
-					{
+				{
 					iter->Prev(&c);
-					}
+				}
 
 				// stop correctly for
 				// <a href=mailto:jafl>
@@ -1446,13 +1446,13 @@ CBTextEditor::OpenSelection()
 
 				if (c.IsSpace() || c == '"' || c == '\'' || c == '<' || c == '>' ||
 					c == '=' || c == '(' || c == '[' || c == '{')
-					{
+				{
 					break;
-					}
 				}
+			}
 
 			iter->SkipNext();
-			}
+		}
 
 		start =
 			JStyledText::TextIndex(
@@ -1461,13 +1461,13 @@ CBTextEditor::OpenSelection()
 
 		iter->UnsafeMoveTo(kJIteratorStartAfter, end.charIndex, end.byteIndex);
 		while (iter->Next(&c))
-			{
+		{
 			// catch "http://junk/>"
 
 			while (c == ACE_DIRECTORY_SEPARATOR_CHAR && !iter->AtEnd())
-				{
+			{
 				iter->Next(&c);
-				}
+			}
 
 			// don't include line number for file:line
 			// stop correctly for
@@ -1476,18 +1476,18 @@ CBTextEditor::OpenSelection()
 
 			if (c.IsSpace() || c == '"' || c == '\'' || c == '>' || c == '<' ||
 				c == ')' || c == ']' || c == '}')
-				{
+			{
 				break;
-				}
+			}
 			else if (c == ':' && iter->Next(&c, kJIteratorStay) && c.IsDigit())
-				{
+			{
 				lineIndex = GetLineIndex(
 					JStyledText::TextIndex(
 						iter->GetNextCharacterIndex(),
 						iter->GetNextByteIndex()));
 				break;
-				}
 			}
+		}
 
 		iter->SkipPrev();
 
@@ -1502,7 +1502,7 @@ CBTextEditor::OpenSelection()
 		iter->BeginMatch();
 		iter->UnsafeMoveTo(kJIteratorStartAfter, sel.charRange.last, sel.byteRange.last);
 		str = iter->FinishMatch().GetString();
-		}
+	}
 
 	GetText()->DisposeConstIterator(iter);
 	iter = nullptr;
@@ -1511,19 +1511,19 @@ CBTextEditor::OpenSelection()
 	GetWindow()->Update();				// show selection while we work
 
 	if (str.Contains("\n"))
-		{
+	{
 		return;
-		}
+	}
 
 	if (urlPrefixRegex.Match(str))
-		{
+	{
 		JXGetWebBrowser()->ShowURL(str);
-		}
+	}
 	else
-		{
+	{
 		itsDoc->ConvertSelectionToFullPath(&str);
 		CBGetApplication()->FindAndViewFile(str, JIndexRange(lineIndex, lineIndex));
-		}
+	}
 }
 
 /******************************************************************************
@@ -1547,13 +1547,13 @@ CBTextEditor::GetLineIndex
 	iter->BeginMatch();
 
 	while (iter->Next(&c))
-		{
+	{
 		if (!c.IsDigit())
-			{
+		{
 			iter->SkipPrev();
 			break;
-			}
 		}
+	}
 
 	const JString str = iter->FinishMatch().GetString();
 	GetText().DisposeConstIterator(iter);
@@ -1561,13 +1561,13 @@ CBTextEditor::GetLineIndex
 
 	JIndex lineIndex;
 	if (str.ConvertToUInt(&lineIndex))
-		{
+	{
 		return lineIndex;
-		}
+	}
 	else
-		{
+	{
 		return 0;
-		}
+	}
 }
 
 /******************************************************************************
@@ -1602,7 +1602,7 @@ cbExtractFileAndLine
 	const JStringMatch match = pattern.Match(line, JRegex::kIncludeSubmatches);
 	if (!match.IsEmpty() &&
 		match.GetCharacterRange(fileSubindex).Contains(caretIndex.charIndex - startIndex.charIndex + 1))
-		{
+	{
 		*fileName = match.GetSubstring(1);
 
 		*fileNameRange =
@@ -1616,11 +1616,11 @@ cbExtractFileAndLine
 		assert( ok );
 
 		return true;
-		}
+	}
 	else
-		{
+	{
 		return false;
-		}
+	}
 }
 
 bool
@@ -1688,11 +1688,11 @@ CBTextEditor::SetTabCharCount
 	)
 {
 	if (charCount != itsTabCharCount)
-		{
+	{
 		PrivateSetTabCharCount(charCount);
 		SetDefaultTabWidth(
 			CalcTabWidth(GetText()->GetDefaultFont(), charCount));
-		}
+	}
 }
 
 /******************************************************************************
@@ -1731,16 +1731,16 @@ CBTextEditor::StyledText::AdjustStylesBeforeBroadcast
 	CBStylerBase* styler = nullptr;
 	if (text.GetCharacterCount() < CBDocumentManager::kMinWarnFileSize &&
 		itsDoc->GetStyler(&styler))
-		{
+	{
 		styles->SetBlockSize(2048);
 		styler->UpdateStyles(this, text, styles,
 							 recalcRange, redrawRange,
 							 deletion, itsTokenStartList);
-		}
+	}
 	else
-		{
+	{
 		itsTokenStartList->RemoveAll();
-		}
+	}
 }
 
 /******************************************************************************
@@ -1755,24 +1755,24 @@ CBTextEditor::RecalcStyles()
 {
 	const JSize length = GetText()->GetText().GetCharacterCount();
 	if (length == 0)
-		{
+	{
 		return;
-		}
+	}
 
 	CBStylerBase* styler;
 	if (length < CBDocumentManager::kMinWarnFileSize &&
 		itsDoc->GetStyler(&styler))
-		{
+	{
 		const JIndex saved = GetLineForChar(GetInsertionCharIndex());
 		GetText()->RestyleAll();
 		GoToLine(saved);
-		}
+	}
 	else
-		{
+	{
 		JFont font = GetText()->GetFont(1);
 		font.ClearStyle();
 		GetText()->SetFont(GetText()->SelectAll(), font, false);
-		}
+	}
 }
 
 /******************************************************************************
@@ -1792,30 +1792,30 @@ CBTextEditor::ShowBalancingOpenGroup()
 	JUtf8Character openChar, closeChar;
 	if (!iter->Prev(&closeChar) ||	// paranoia: must be the case unless something fails
 		!CBMIsCloseGroup(lang, closeChar))
-		{
+	{
 		return;
-		}
+	}
 
 	if (CBMBalanceBackward(lang, iter, &openChar) &&
 		CBMIsMatchingPair(lang, openChar, closeChar))
-		{
+	{
 		const JPoint savePt = GetAperture().topLeft();
 
 		const JStyledText::TextIndex i(iter->GetNextCharacterIndex(), iter->GetNextByteIndex());
 		SetSelection(JStyledText::TextRange(i, GetText()->AdjustTextIndex(i, +1)));
 
 		if (!TEScrollToSelection(false) || itsScrollToBalanceFlag)
-			{
+		{
 			GetWindow()->Update();
 			JWait(kBalanceWhileTypingDelay);
-			}
+		}
 
 		ScrollTo(savePt);
-		}
+	}
 	else if (itsBeepWhenTypeUnbalancedFlag)
-		{
+	{
 		GetDisplay()->Beep();
-		}
+	}
 
 	SetCaretLocation(origCaretIndex);
 	GetText()->DisposeConstIterator(iter);
@@ -1852,10 +1852,10 @@ CBTextEditor::SetFontBeforePrintPS
 	JSize size;
 	CBGetPrefsManager()->GetDefaultFont(&fontName, &size);
 	if (fontName != "Courier")
-		{
+	{
 		itsSavedBreakCROnlyFlag = WillBreakCROnly();
 		SetFont(JString("Courier", JString::kNoCopy), fontSize, itsTabCharCount, false);
-		}
+	}
 }
 
 void
@@ -1865,9 +1865,9 @@ CBTextEditor::ResetFontAfterPrintPS()
 	JSize fontSize;
 	CBGetPrefsManager()->GetDefaultFont(&fontName, &fontSize);
 	if (fontName != "Courier")
-		{
+	{
 		SetFont(fontName, fontSize, itsTabCharCount, itsSavedBreakCROnlyFlag);
-		}
+	}
 }
 
 /******************************************************************************
@@ -1893,7 +1893,7 @@ CBTextEditor::DrawPrintHeader
 	)
 {
 	if ((CBGetPTTextPrinter())->WillPrintHeader())
-		{
+	{
 		JRect pageRect = p.GetPageRect();
 		p.String(pageRect, (CBGetPSTextPrinter())->GetHeaderName());
 
@@ -1904,5 +1904,5 @@ CBTextEditor::DrawPrintHeader
 		JString pageStr(p.GetPageIndex(), 0);
 		pageStr.Prepend("Page ");
 		p.String(pageRect, pageStr, JPainter::kHAlignRight);
-		}
+	}
 }

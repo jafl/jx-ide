@@ -11,7 +11,7 @@
 
 #include "CMAdjustLineTableToTextTask.h"
 #include "CMLineIndexTable.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor

@@ -8,7 +8,7 @@
 #ifndef _H_CBProjectFileInput
 #define _H_CBProjectFileInput
 
-#include <JXFileInput.h>
+#include <jx-af/jx/JXFileInput.h>
 
 class CBProjectFileInput : public JXFileInput
 {

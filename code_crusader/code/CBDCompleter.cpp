@@ -8,7 +8,7 @@
  ******************************************************************************/
 
 #include "CBDCompleter.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 CBDCompleter* CBDCompleter::itsSelf = nullptr;
 
@@ -49,14 +49,14 @@ CBStringCompleter*
 CBDCompleter::Instance()
 {
 	if (itsSelf == nullptr && !recursiveInstance)
-		{
+	{
 		recursiveInstance = true;
 
 		itsSelf = jnew CBDCompleter;
 		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
-		}
+	}
 
 	return itsSelf;
 }

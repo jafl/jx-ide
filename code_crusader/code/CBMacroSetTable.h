@@ -10,7 +10,7 @@
 #ifndef _H_CBMacroSetTable
 #define _H_CBMacroSetTable
 
-#include <JXStringTable.h>
+#include <jx-af/jx/JXStringTable.h>
 #include "CBPrefsManager.h"		// need definition of MacroSetInfo
 
 class JXTextButton;

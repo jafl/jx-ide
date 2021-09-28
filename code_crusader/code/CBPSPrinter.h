@@ -8,9 +8,9 @@
 #ifndef _H_CBPSPrinter
 #define _H_CBPSPrinter
 
-#include <JXPSPrinter.h>
-#include <JPrefObject.h>
-#include <JString.h>
+#include <jx-af/jx/JXPSPrinter.h>
+#include <jx-af/jcore/JPrefObject.h>
+#include <jx-af/jcore/JString.h>
 
 class CBTextEditor;
 class CBPSPrintSetupDialog;

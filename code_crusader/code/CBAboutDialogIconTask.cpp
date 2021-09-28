@@ -8,11 +8,11 @@
  ******************************************************************************/
 
 #include "CBAboutDialogIconTask.h"
-#include <JXDisplay.h>
-#include <JXImageWidget.h>
-#include <JXImage.h>
-#include <JXImageCache.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXDisplay.h>
+#include <jx-af/jx/JXImageWidget.h>
+#include <jx-af/jx/JXImage.h>
+#include <jx-af/jx/JXImageCache.h>
+#include <jx-af/jcore/jAssert.h>
 
 #include "jcc_about_0.xpm"
 #include "jcc_about_1.xpm"
@@ -48,9 +48,9 @@ CBAboutDialogIconTask::CBAboutDialogIconTask
 
 	JXImageCache* cache = widget->GetDisplay()->GetImageCache();
 	for (JIndex i=1; i<=kAboutIconCount; i++)
-		{
+	{
 		itsImageList->Append(cache->GetImage(kAboutIcon[i-1]));
-		}
+	}
 }
 
 /******************************************************************************
@@ -88,14 +88,14 @@ CBAboutDialogIconTask::GetFrameTime
 	)
 {
 	if (frameIndex == 1)
-		{
+	{
 		*tmin = kMinPausePeriod;
 		*tmax = kMaxPausePeriod;
-		}
+	}
 	else
-		{
+	{
 		*tmin = *tmax = kAnimationPeriod;
-		}
+	}
 }
 
 /******************************************************************************

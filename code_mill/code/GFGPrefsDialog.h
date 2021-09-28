@@ -8,8 +8,8 @@
 #ifndef _H_GFGPrefsDialog
 #define _H_GFGPrefsDialog
 
-#include <JXDialogDirector.h>
-#include <JString.h>
+#include <jx-af/jx/JXDialogDirector.h>
+#include <jx-af/jcore/JString.h>
 
 class JXInputField;
 class JXTextButton;

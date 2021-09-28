@@ -8,7 +8,7 @@
 #ifndef _H_CMCommandInput
 #define _H_CMCommandInput
 
-#include <JXTEBase.h>
+#include <jx-af/jx/JXTEBase.h>
 
 class CMCommandInput : public JXTEBase
 {

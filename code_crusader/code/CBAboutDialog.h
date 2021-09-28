@@ -10,7 +10,7 @@
 #ifndef _H_CBAboutDialog
 #define _H_CBAboutDialog
 
-#include <JXDialogDirector.h>
+#include <jx-af/jx/JXDialogDirector.h>
 
 class JXTextButton;
 class CBAboutDialogIconTask;

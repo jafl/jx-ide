@@ -8,10 +8,10 @@
 #ifndef _H_GFGMainDirector
 #define _H_GFGMainDirector
 
-#include <JXWindowDirector.h>
-#include <JPrefObject.h>
+#include <jx-af/jx/JXWindowDirector.h>
+#include <jx-af/jcore/JPrefObject.h>
 
-#include <JPtrArray-JString.h>
+#include <jx-af/jcore/JPtrArray-JString.h>
 
 class JXInputField;
 class JXPathInput;

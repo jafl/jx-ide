@@ -9,7 +9,7 @@
 
 #include "CMProcessText.h"
 #include "CMChooseProcessDialog.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -62,12 +62,12 @@ CMProcessText::HandleMouseDown
 	JXStaticText::HandleMouseDown(pt, button, clickCount, buttonStates, modifiers);
 	JString text;
 	if (clickCount == 2 && GetSelection(&text))
-		{
+	{
 		JInteger value;
 		if (text.ConvertToInteger(&value))
-			{
+		{
 			itsDir->SetProcessID(value);
 			itsDir->EndDialog(true);
-			}
 		}
+	}
 }

@@ -8,7 +8,7 @@
 #ifndef _H_CBProjectNodeType
 #define _H_CBProjectNodeType
 
-#include <jTypes.h>
+#include <jx-af/jcore/jTypes.h>
 
 // Do not change the file type values once they are assigned because
 // they are stored in the prefs file.

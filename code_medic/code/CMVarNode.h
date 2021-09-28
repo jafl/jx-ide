@@ -8,8 +8,8 @@
 #ifndef _H_CMVarNode
 #define _H_CMVarNode
 
-#include <JNamedTreeNode.h>
-#include <JFontStyle.h>
+#include <jx-af/jcore/JNamedTreeNode.h>
+#include <jx-af/jcore/JFontStyle.h>
 
 class CMVarCommand;
 

@@ -10,7 +10,7 @@
 #ifndef _H_CBEditProjPrefsDialog
 #define _H_CBEditProjPrefsDialog
 
-#include <JXDialogDirector.h>
+#include <jx-af/jx/JXDialogDirector.h>
 #include "CBProjectTable.h"		// need definition of DropFileAction
 
 class JXTextButton;

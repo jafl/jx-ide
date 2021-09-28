@@ -14,6 +14,7 @@ set print asm-demangle on
 set print demangle on
 set print sevenbit-strings off
 set print union on
+set print static-members off
 
 define hook-quit
 echo \\032\\032:Medic debugger quit:

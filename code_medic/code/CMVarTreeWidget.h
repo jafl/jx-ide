@@ -8,7 +8,7 @@
 #ifndef _H_CMVarTreeWidget
 #define _H_CMVarTreeWidget
 
-#include <JXNamedTreeListWidget.h>
+#include <jx-af/jx/JXNamedTreeListWidget.h>
 #include "CMMemoryDir.h"	// need defn of DisplayType
 
 class JTree;

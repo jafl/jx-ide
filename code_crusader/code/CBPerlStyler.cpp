@@ -12,11 +12,11 @@
 
 #include "CBPerlStyler.h"
 #include "cbmUtil.h"
-#include <JRegex.h>
-#include <JStringIterator.h>
-#include <JColorManager.h>
-#include <jGlobals.h>
-#include <jAssert.h>
+#include <jx-af/jcore/JRegex.h>
+#include <jx-af/jcore/JStringIterator.h>
+#include <jx-af/jcore/JColorManager.h>
+#include <jx-af/jcore/jGlobals.h>
+#include <jx-af/jcore/jAssert.h>
 
 CBPerlStyler* CBPerlStyler::itsSelf = nullptr;
 
@@ -82,14 +82,14 @@ CBStylerBase*
 CBPerlStyler::Instance()
 {
 	if (itsSelf == nullptr && !recursiveInstance)
-		{
+	{
 		recursiveInstance = true;
 
 		itsSelf = jnew CBPerlStyler;
 		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
-		}
+	}
 
 	return itsSelf;
 }
@@ -118,9 +118,9 @@ CBPerlStyler::CBPerlStyler()
 {
 	JFontStyle blankStyle;
 	for (JIndex i=1; i<=kTypeCount; i++)
-		{
+	{
 		SetTypeStyle(i, blankStyle);
-		}
+	}
 
 	SetTypeStyle(kPrototypeArgList   - kWhitespace, JFontStyle(true, false, 0, false));
 	SetTypeStyle(kReservedKeyword    - kWhitespace, JFontStyle(JColorManager::GetDarkGreenColor()));
@@ -177,12 +177,12 @@ CBPerlStyler::Scan
 	Token token;
 	JFontStyle style;
 	do
-		{
+	{
 		token = NextToken();
 		if (token.type == kEOF)
-			{
+		{
 			break;
-			}
+		}
 
 		// save token starts -- must set itsProbableOperatorFlag
 
@@ -194,17 +194,17 @@ CBPerlStyler::Scan
 			token.type == kSingleQuoteString ||
 			token.type == kDoubleQuoteString ||
 			token.type == kExecString)
-			{
+		{
 			SaveTokenStart(token.range.GetFirst());
-			}
+		}
 
 		// set the style
 
 		const JIndex typeIndex = token.type - kWhitespace;
 		if (token.type == kWhitespace)
-			{
+		{
 			style = GetDefaultFont().GetStyle();
-			}
+		}
 		else if (token.type == kSingleQuoteString  ||
 				 token.type == kDoubleQuoteString  ||
 				 token.type == kHereDocString      ||
@@ -219,29 +219,29 @@ CBPerlStyler::Scan
 				 token.type == kComment            ||
 				 token.type == kPOD                ||
 				 token.type == kModuleData)
-			{
+		{
 			style = GetTypeStyle(typeIndex);
-			}
+		}
 		else if (token.type == kPPDirective)
-			{
+		{
 			style = GetStyle(typeIndex, GetPPCommand(text));
-			}
+		}
 		else if (token.type < kWhitespace)
-			{
+		{
 			style = GetTypeStyle(kError - kWhitespace);
-			}
+		}
 		else if (token.type > kError)	// misc
-			{
+		{
 			if (!GetWordStyle(JString(text.GetRawBytes(), token.range.byteRange, JString::kNoCopy), &style))
-				{
-				style = GetDefaultFont().GetStyle();
-				}
-			}
-		else
 			{
-			style = GetStyle(typeIndex, JString(text.GetRawBytes(), token.range.byteRange, JString::kNoCopy));
+				style = GetDefaultFont().GetStyle();
 			}
 		}
+		else
+		{
+			style = GetStyle(typeIndex, JString(text.GetRawBytes(), token.range.byteRange, JString::kNoCopy));
+		}
+	}
 		while (SetStyle(token.range.charRange, style));
 }
 
@@ -278,22 +278,22 @@ CBPerlStyler::PreexpandCheckRange
 	assert( ok );
 
 	if (!c.IsSpace())
-		{
+	{
 		iter.SkipNext();
-		}
+	}
 
 	bool foundSpace = false;
 	while (iter.Next(&c, kJIteratorStay) && c.IsSpace())
-		{
+	{
 		iter.SkipNext();
 		foundSpace = true;
-		}
+	}
 
 	if (foundSpace)
-		{
+	{
 		checkRange->charRange.last = iter.GetPrevCharacterIndex();
 		checkRange->byteRange.last = iter.GetPrevByteIndex();
-		}
+	}
 }
 
 /******************************************************************************
@@ -309,19 +309,19 @@ CBPerlStyler::UpgradeTypeList
 	)
 {
 	if (vers < 1)
-		{
+	{
 		typeStyles->InsertElementAtIndex(5, JFontStyle(true, false, 0, false));
-		}
+	}
 
 	if (vers < 2)
-		{
+	{
 		typeStyles->InsertElementAtIndex(6, typeStyles->GetElement(1));
-		}
+	}
 
 	if (vers < 3)
-		{
+	{
 		typeStyles->InsertElementAtIndex(27, JFontStyle(JColorManager::GetDarkGreenColor()));
-		}
+	}
 
 	// set new values after all new slots have been created
 }

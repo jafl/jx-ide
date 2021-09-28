@@ -8,8 +8,8 @@
 #ifndef _H_CBCommandTable
 #define _H_CBCommandTable
 
-#include <JXEditTable.h>
-#include <JFont.h>
+#include <jx-af/jx/JXEditTable.h>
+#include <jx-af/jcore/JFont.h>
 #include "CBCommandManager.h"	// need defn of CmdInfo
 
 class JXTextButton;

@@ -15,12 +15,12 @@
 #include "CBSearchTextDialog.h"
 #include "cbmUtil.h"
 #include "cbGlobals.h"
-#include <JXColorManager.h>
-#include <JStringIterator.h>
-#include <jFileUtil.h>
-#include <jFStreamUtil.h>
+#include <jx-af/jx/JXColorManager.h>
+#include <jx-af/jcore/JStringIterator.h>
+#include <jx-af/jcore/jFileUtil.h>
+#include <jx-af/jcore/jFStreamUtil.h>
 #include <stdio.h>
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 const JSize kMaxQuoteCharCount = 500;
 
@@ -102,7 +102,7 @@ CBSearchTE::SearchFiles
 	assert( count == nameList.GetElementCount() );
 
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		const JString* file = fileList.GetElement(i);
 		const JString* name = nameList.GetElement(i);
 		SearchFile(*file, *name, onlyListFiles, listFilesWithoutMatch,
@@ -116,10 +116,10 @@ CBSearchTE::SearchFiles
 		// toss temp files once we are done
 
 		if (*file != *name)
-			{
+		{
 			JRemoveFile(*file);
-			}
 		}
+	}
 
 	output << kDisconnect;
 	output.flush();
@@ -144,17 +144,17 @@ CBSearchTE::SearchFile
 	)
 {
 	if (!JFileExists(fileName))
-		{
+	{
 		output << kError << "Not found:  ";
 		fileName.Print(output);
 		output << kRecordTerminator;
-		}
+	}
 	else if (!JFileReadable(fileName))
-		{
+	{
 		output << kError << "Not readable:  ";
 		fileName.Print(output);
 		output << kRecordTerminator;
-		}
+	}
 
 	const bool ignore = JUtf8Character::IgnoreBadUtf8();
 	JUtf8Character::SetIgnoreBadUtf8(true);
@@ -162,7 +162,7 @@ CBSearchTE::SearchFile
 	JStyledText::PlainTextFormat format;
 	if (IsKnownBinaryFile(printName) ||
 		!GetText()->ReadPlainText(fileName, &format, false))
-		{
+	{
 		// don't search binary files (cleaning is too slow and pointless)
 
 		output << kError;
@@ -172,7 +172,7 @@ CBSearchTE::SearchFile
 
 		JUtf8Character::SetIgnoreBadUtf8(ignore);
 		return;
-		}
+	}
 
 	JUtf8Character::SetIgnoreBadUtf8(ignore);
 
@@ -181,24 +181,24 @@ CBSearchTE::SearchFile
 	bool prevQuoteTruncated = false;
 
 	while (true)
-		{
+	{
 		bool wrapped;
 		const JStringMatch m = SearchForward(searchRegex, entireWord, false, &wrapped);
 		if (m.IsEmpty())
-			{
+		{
 			break;
-			}
+		}
 
 		foundMatch = true;
 		if (onlyListFiles || listFilesWithoutMatch)
-			{
+		{
 			if (!listFilesWithoutMatch)
-				{
+			{
 				output << printName;
 				output << kRecordTerminator;
-				}
-			break;
 			}
+			break;
+		}
 
 		JStringIterator iter(GetText()->GetText());
 
@@ -207,13 +207,13 @@ CBSearchTE::SearchFile
 
 		JStyledText::TextRange matchRange = origMatchRange;
 		if (matchRange.charRange.GetCount() > kMaxQuoteCharCount)
-			{
+		{
 			matchRange.charRange.last = matchRange.charRange.first + kMaxQuoteCharCount - 1;
 
 			iter.UnsafeMoveTo(kJIteratorStartBefore, matchRange.charRange.first, matchRange.byteRange.first);
 			iter.MoveTo(kJIteratorStartAfter, matchRange.charRange.last);
 			matchRange.byteRange.last = iter.GetPrevByteIndex();
-			}
+		}
 
 		const JStyledText::TextRange origQuoteRange(
 			GetText()->GetParagraphStart(matchRange.GetFirst()),
@@ -221,11 +221,11 @@ CBSearchTE::SearchFile
 
 		JStyledText::TextRange quoteRange = origQuoteRange;
 		if (prevQuoteRange.charRange.Contains(matchRange.charRange))
-			{
+		{
 			quoteRange = prevQuoteRange;
-			}
+		}
 		else if (quoteRange.charRange.GetCount() > kMaxQuoteCharCount)
-			{
+		{
 			const JSize extraCount =
 				(kMaxQuoteCharCount - matchRange.charRange.GetCount())/2;
 
@@ -233,39 +233,39 @@ CBSearchTE::SearchFile
 									matchRange.charRange.first - extraCount : 1;
 
 			if (quoteRange.charRange.first < first)
-				{
+			{
 				iter.UnsafeMoveTo(kJIteratorStartBefore, quoteRange.charRange.first, quoteRange.byteRange.first);
 				iter.MoveTo(kJIteratorStartBefore, first);
 				quoteRange.charRange.first = first;
 				quoteRange.byteRange.first = iter.GetNextByteIndex();
-				}
+			}
 
 			const JIndex last = matchRange.charRange.last + extraCount;
 			if (last < quoteRange.charRange.last)
-				{
+			{
 				iter.UnsafeMoveTo(kJIteratorStartAfter, quoteRange.charRange.last, quoteRange.byteRange.last);
 				iter.MoveTo(kJIteratorStartAfter, last);
 				quoteRange.charRange.last = last;
 				quoteRange.byteRange.last = iter.GetPrevByteIndex();
-				}
 			}
+		}
 
 		matchRange.charRange -= quoteRange.charRange.first-1;
 		matchRange.byteRange -= quoteRange.byteRange.first-1;
 
 		if (quoteRange.charRange == prevQuoteRange.charRange)
-			{
+		{
 			if (prevQuoteTruncated)
-				{
+			{
 				matchRange.charRange += 3;
 				matchRange.byteRange += 3;
-				}
+			}
 			output << kRepeatMatchLine;
 			output << ' ' << matchRange.charRange;
 			output << ' ' << matchRange.byteRange;
-			}
+		}
 		else
-			{
+		{
 			prevQuoteTruncated = false;
 
 			iter.UnsafeMoveTo(kJIteratorStartBefore, quoteRange.charRange.first, quoteRange.byteRange.first);
@@ -274,21 +274,21 @@ CBSearchTE::SearchFile
 			JString quoteText = iter.FinishMatch().GetString();
 
 			if (quoteRange.charRange.first != origQuoteRange.charRange.first)
-				{
+			{
 				quoteText.Prepend("...");
 				matchRange.charRange += 3;
 				matchRange.byteRange += 3;
 				prevQuoteTruncated = true;
-				}
+			}
 			if (quoteRange.charRange.last != origQuoteRange.charRange.last)
-				{
+			{
 				quoteText.Append("...");
-				}
+			}
 			if (matchRange.charRange.GetCount() != origMatchRange.charRange.GetCount())
-				{
+			{
 				matchRange.charRange.last += 3;	// underline ellipsis
 				matchRange.byteRange.last += 3;
-				}
+			}
 
 			output << kNewMatchLine;
 			output << ' ' << printName;
@@ -296,17 +296,17 @@ CBSearchTE::SearchFile
 			output << ' ' << quoteText;
 			output << ' ' << matchRange.charRange;
 			output << ' ' << matchRange.byteRange;
-			}
+		}
 		output << kRecordTerminator;
 
 		prevQuoteRange = quoteRange;
-		}
+	}
 
 	if (listFilesWithoutMatch && !foundMatch)
-		{
+	{
 		output << printName;
 		output << kRecordTerminator;
-		}
+	}
 }
 
 /******************************************************************************
@@ -330,17 +330,17 @@ CBSearchTE::IsKnownBinaryFile
 	const
 {
 	if (CBGetPrefsManager()->GetFileType(fileName) == kCBBinaryFT)
-		{
+	{
 		return true;
-		}
+	}
 
 	for (JUnsignedOffset i=0; i<kSuffixCount; i++)
-		{
+	{
 		if (fileName.EndsWith(kSuffix[i]))
-			{
+		{
 			return true;
-			}
 		}
+	}
 
 	return false;
 }
@@ -363,15 +363,15 @@ CBSearchTE::ReplaceAllForward()
 	if (JXGetSearchTextDialog()->GetSearchParameters(
 			&searchRegex, &entireWord, &wrapSearch,
 			&replaceStr, &interpolator, &preserveCase))
-		{
+	{
 		return JTextEditor::ReplaceAll(
 					*searchRegex, entireWord,
 					replaceStr, interpolator, preserveCase, false);
-		}
+	}
 	else
-		{
+	{
 		return false;
-		}
+	}
 }
 
 /******************************************************************************

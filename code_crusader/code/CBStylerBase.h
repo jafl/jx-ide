@@ -8,9 +8,9 @@
 #ifndef _H_CBStylerBase
 #define _H_CBStylerBase
 
-#include <JSTStyler.h>
-#include <JPrefObject.h>
-#include <JStringMap.h>
+#include <jx-af/jcore/JSTStyler.h>
+#include <jx-af/jcore/JPrefObject.h>
+#include <jx-af/jcore/JStringMap.h>
 #include "CBTextFileType.h"
 
 class CBEditStylerDialog;

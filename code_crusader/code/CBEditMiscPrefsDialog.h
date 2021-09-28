@@ -10,7 +10,7 @@
 #ifndef _H_CBEditMiscPrefsDialog
 #define _H_CBEditMiscPrefsDialog
 
-#include <JXDialogDirector.h>
+#include <jx-af/jx/JXDialogDirector.h>
 
 class JXRadioGroup;
 class JXTextCheckbox;

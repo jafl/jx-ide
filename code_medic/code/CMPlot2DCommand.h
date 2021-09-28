@@ -9,7 +9,7 @@
 #define _H_CMPlot2DCommand
 
 #include "CMCommand.h"
-#include <JArray.h>
+#include <jx-af/jcore/JArray.h>
 
 class CMPlot2DDir;
 

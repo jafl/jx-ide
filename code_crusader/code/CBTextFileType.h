@@ -8,7 +8,7 @@
 #ifndef _H_CBTextFileType
 #define _H_CBTextFileType
 
-#include <JString.h>
+#include <jx-af/jcore/JString.h>
 
 class CBStylerBase;
 class CBStringCompleter;

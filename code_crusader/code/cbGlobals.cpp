@@ -20,11 +20,11 @@
 #include "CBSymbolTypeList.h"
 #include "CBPTPrinter.h"
 #include "CBPSPrinter.h"
-#include <JXDisplay.h>
-#include <JXWindow.h>
-#include <JXImageCache.h>
-#include <JXImage.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXDisplay.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXImageCache.h>
+#include <jx-af/jx/JXImage.h>
+#include <jx-af/jcore/jAssert.h>
 
 static CBApp*				theApplication       = nullptr;	// owns itself
 static CBDocumentManager*	theDocManager        = nullptr;	// owned by JX
@@ -86,9 +86,9 @@ CBCreateGlobals
 	)
 {
 	if (JAssertBase::GetAction() == JAssertBase::kAskUser)
-		{
+	{
 		JAssertBase::SetAction(JAssertBase::kAbort);
-		}
+	}
 
 	theApplication = app;
 
@@ -106,14 +106,14 @@ CBCreateGlobals
 	assert( theDocManager != nullptr );
 
 	if (useMDI)
-		{
+	{
 		auto* dockManager = jnew CBDockManager();
 		assert( dockManager != nullptr );
 		dockManager->JPrefObject::ReadPrefs();
 
 		theMDIServer = jnew CBMDIServer;
 		assert( theMDIServer != nullptr );
-		}
+	}
 
 	theSearchTextDialog = CBSearchTextDialog::Create();
 	assert( theSearchTextDialog != nullptr );
@@ -175,14 +175,14 @@ CBDeleteGlobals()
 
 	JXDockManager* dockMgr;
 	if (JXGetDockManager(&dockMgr))
-		{
+	{
 		dockMgr->JPrefObject::WritePrefs();
-		}
+	}
 
 	if (theMDIServer != nullptr)
-		{
+	{
 		theMDIServer->JPrefObject::WritePrefs();
-		}
+	}
 
 	CBDeleteIcons();
 
@@ -248,7 +248,7 @@ CBCleanUpBeforeSuddenDeath
 	)
 {
 	if (reason != JXDocumentManager::kAssertFired)
-		{
+	{
 		theSearchTextDialog->JPrefObject::WritePrefs();
 		theRunTEScriptDialog->JPrefObject::WritePrefs();
 		theViewManPageDialog->JPrefObject::WritePrefs();
@@ -258,13 +258,13 @@ CBCleanUpBeforeSuddenDeath
 		theDocManager->JPrefObject::WritePrefs();
 
 		if (theMDIServer != nullptr)
-			{
+		{
 			theMDIServer->JPrefObject::WritePrefs();
-			}
+		}
 
 		CBShutdownCompleters();
 		CBShutdownStylers();
-		}
+	}
 
 	// must be last to save everything
 
@@ -549,10 +549,10 @@ JString
 CBGetVersionStr()
 {
 	const JUtf8Byte* map[] =
-		{
+	{
 		"version",   JGetString("VERSION").GetBytes(),
 		"copyright", JGetString("COPYRIGHT").GetBytes()
-		};
+	};
 	return JGetString("Description::cbGlobals", map, sizeof(map));
 }
 

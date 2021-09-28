@@ -28,17 +28,17 @@
 #include "CBFileHistoryMenu.h"
 #include "cbActionDefs.h"
 #include "cbGlobals.h"
-#include <JXDisplay.h>
-#include <JXWindow.h>
-#include <JXMenuBar.h>
-#include <JXTextMenu.h>
-#include <JXFileListSet.h>
-#include <JXToolBar.h>
-#include <JXScrollbarSet.h>
-#include <JXWebBrowser.h>
-#include <JXImage.h>
-#include <JString.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXDisplay.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXMenuBar.h>
+#include <jx-af/jx/JXTextMenu.h>
+#include <jx-af/jx/JXFileListSet.h>
+#include <jx-af/jx/JXToolBar.h>
+#include <jx-af/jx/JXScrollbarSet.h>
+#include <jx-af/jx/JXWebBrowser.h>
+#include <jx-af/jx/JXImage.h>
+#include <jx-af/jcore/JString.h>
+#include <jx-af/jcore/jAssert.h>
 
 // File menu
 
@@ -151,48 +151,48 @@ CBFileListDirector::CBFileListDirector
 	CBFileListDirectorX(supervisor);
 
 	if (projVers >= 20)
-		{
+	{
 		const bool useProjData = setInput == nullptr || setVers < 71;
 		if (projVers < 71)
-			{
+		{
 			if (useProjData)
-				{
+			{
 				GetWindow()->ReadGeometry(projInput);
-				}
+			}
 			else
-				{
+			{
 				JXWindow::SkipGeometry(projInput);
-				}
+			}
 
 			bool active = false;
 			if (projVers >= 50)
-				{
+			{
 				projInput >> JBoolFromString(active);
-				}
+			}
 			if (useProjData && active && !subProject)
-				{
+			{
 				Activate();
-				}
-
-			itsFLSet->ReadSetup(projInput);		// no way to skip
 			}
 
+			itsFLSet->ReadSetup(projInput);		// no way to skip
+		}
+
 		if (!useProjData)
-			{
+		{
 			GetWindow()->ReadGeometry(*setInput);
 
 			bool active;
 			*setInput >> JBoolFromString(active);
 			if (active && !subProject)
-				{
+			{
 				Activate();
-				}
-
-			itsFLSet->ReadSetup(*setInput);
 			}
 
-		itsFLTable->ReadSetup(projInput, projVers, symInput, symVers);
+			itsFLSet->ReadSetup(*setInput);
 		}
+
+		itsFLTable->ReadSetup(projInput, projVers, symInput, symVers);
+	}
 }
 
 // private
@@ -233,14 +233,14 @@ CBFileListDirector::StreamOut
 	const
 {
 	if (setOutput != nullptr)
-		{
+	{
 		*setOutput << ' ';
 		GetWindow()->WriteGeometry(*setOutput);
 		*setOutput << ' ' << JBoolToString(IsActive());
 		*setOutput << ' ';
 		itsFLSet->WriteSetup(*setOutput);
 		*setOutput << ' ';
-		}
+	}
 
 	itsFLTable->WriteSetup(projOutput, symOutput);
 }
@@ -301,10 +301,10 @@ CBFileListDirector::BuildWindow()
 	JPoint desktopLoc;
 	JCoordinate w,h;
 	if (CBGetPrefsManager()->GetWindowSize(kCBFileListWindSizeID, &desktopLoc, &w, &h))
-		{
+	{
 		window->Place(desktopLoc.x, desktopLoc.y);
 		window->SetSize(w,h);
-		}
+	}
 
 	itsFLSet =
 		jnew JXFileListSet(itsToolBar->GetWidgetEnclosure(),
@@ -389,7 +389,7 @@ CBFileListDirector::BuildWindow()
 
 	itsToolBar->LoadPrefs();
 	if (itsToolBar->IsEmpty())
-		{
+	{
 		itsToolBar->AppendButton(itsFileMenu, kNewTextEditorCmd);
 		itsToolBar->AppendButton(itsFileMenu, kOpenSomethingCmd);
 		itsToolBar->NewGroup();
@@ -399,7 +399,7 @@ CBFileListDirector::BuildWindow()
 		itsToolBar->AppendButton(itsProjectMenu, kSearchFilesCmd);
 
 		CBGetApplication()->AppendHelpMenuToToolBar(itsToolBar, itsHelpMenu);
-		}
+	}
 }
 
 /******************************************************************************
@@ -427,80 +427,80 @@ CBFileListDirector::Receive
 	)
 {
 	if (sender == itsFLTable && message.Is(JXFileListTable::kProcessSelection))
-		{
+	{
 		OpenSelectedFiles();
-		}
+	}
 
 	else if (sender == itsFileMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		UpdateFileMenu();
-		}
+	}
 	else if (sender == itsFileMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleFileMenu(selection->GetIndex());
-		}
+	}
 
 	else if (sender == itsListMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		UpdateListMenu();
-		}
+	}
 	else if (sender == itsListMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleListMenu(selection->GetIndex());
-		}
+	}
 
 	else if (sender == itsProjectMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		UpdateProjectMenu();
-		}
+	}
 	else if (sender == itsProjectMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleProjectMenu(selection->GetIndex());
-		}
+	}
 
 	else if (sender == itsPrefsMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		UpdatePrefsMenu();
-		}
+	}
 	else if (sender == itsPrefsMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandlePrefsMenu(selection->GetIndex());
-		}
+	}
 
 	else if (sender == itsHelpMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		CBGetApplication()->UpdateHelpMenu(itsHelpMenu);
-		}
+	}
 	else if (sender == itsHelpMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		CBGetApplication()->HandleHelpMenu(itsHelpMenu, "CBFileListHelp",
 											 selection->GetIndex());
-		}
+	}
 
 	else if (sender == itsProjDoc && message.Is(JXFileDocument::kNameChanged))
-		{
+	{
 		AdjustWindowTitle();
-		}
+	}
 
 	else
-		{
+	{
 		JXWindowDirector::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -514,9 +514,9 @@ CBFileListDirector::OpenSelectedFiles()
 {
 	JPtrArray<JString> fileList(JPtrArrayT::kDeleteAll);
 	if (itsFLTable->GetSelection(&fileList))
-		{
+	{
 		CBGetDocumentManager()->OpenSomething(fileList);
-		}
+	}
 }
 
 /******************************************************************************
@@ -544,34 +544,34 @@ CBFileListDirector::HandleFileMenu
 	CBGetDocumentManager()->SetActiveProjectDocument(itsProjDoc);
 
 	if (index == kNewTextEditorCmd)
-		{
+	{
 		CBGetDocumentManager()->NewTextDocument();
-		}
+	}
 	else if (index == kNewTextTemplateCmd)
-		{
+	{
 		CBGetDocumentManager()->NewTextDocumentFromTemplate();
-		}
+	}
 	else if (index == kNewProjectCmd)
-		{
+	{
 		CBGetDocumentManager()->NewProjectDocument();
-		}
+	}
 	else if (index == kNewShellCmd)
-		{
+	{
 		CBGetDocumentManager()->NewShellDocument();
-		}
+	}
 	else if (index == kOpenSomethingCmd)
-		{
+	{
 		CBGetDocumentManager()->OpenSomething();
-		}
+	}
 
 	else if (index == kCloseCmd)
-		{
+	{
 		GetWindow()->Close();
-		}
+	}
 	else if (index == kQuitCmd)
-		{
+	{
 		JXGetApplication()->Quit();
-		}
+	}
 }
 
 /******************************************************************************
@@ -589,13 +589,13 @@ CBFileListDirector::UpdateListMenu()
 
 	const JXFileListSet::FilterType type = itsFLSet->GetFilterType();
 	if (type == JXFileListSet::kWildcardFilter)
-		{
+	{
 		itsListMenu->CheckItem(kUseWildcardCmd);
-		}
+	}
 	else if (type == JXFileListSet::kRegexFilter)
-		{
+	{
 		itsListMenu->CheckItem(kUseRegexCmd);
-		}
+	}
 }
 
 /******************************************************************************
@@ -610,26 +610,26 @@ CBFileListDirector::HandleListMenu
 	)
 {
 	if (index == kOpenSelectionCmd)
-		{
+	{
 		OpenSelectedFiles();
-		}
+	}
 	else if (index == kShowLocationCmd)
-		{
+	{
 		itsFLTable->ShowSelectedFileLocations();
-		}
+	}
 	else if (index == kUpdateCmd)
-		{
+	{
 		itsProjDoc->UpdateSymbolDatabase();
-		}
+	}
 
 	else if (index == kUseWildcardCmd)
-		{
+	{
 		itsFLSet->ToggleWildcardFilter();
-		}
+	}
 	else if (index == kUseRegexCmd)
-		{
+	{
 		itsFLSet->ToggleRegexFilter();
-		}
+	}
 }
 
 /******************************************************************************
@@ -671,55 +671,55 @@ CBFileListDirector::HandleProjectMenu
 	CBGetDocumentManager()->SetActiveProjectDocument(itsProjDoc);
 
 	if (index == kShowSymbolBrowserCmd)
-		{
+	{
 		itsProjDoc->GetSymbolDirector()->Activate();
-		}
+	}
 	else if (index == kShowCTreeCmd)
-		{
+	{
 		itsProjDoc->GetCTreeDirector()->Activate();
-		}
+	}
 	else if (index == kShowDTreeCmd)
-		{
+	{
 		itsProjDoc->GetDTreeDirector()->Activate();
-		}
+	}
 	else if (index == kShowGoTreeCmd)
-		{
+	{
 		itsProjDoc->GetGoTreeDirector()->Activate();
-		}
+	}
 	else if (index == kShowJavaTreeCmd)
-		{
+	{
 		itsProjDoc->GetJavaTreeDirector()->Activate();
-		}
+	}
 	else if (index == kShowPHPTreeCmd)
-		{
+	{
 		itsProjDoc->GetPHPTreeDirector()->Activate();
-		}
+	}
 	else if (index == kViewManPageCmd)
-		{
+	{
 		CBGetViewManPageDialog()->Activate();
-		}
+	}
 
 	else if (index == kFindFileCmd)
-		{
+	{
 		CBGetFindFileDialog()->Activate();
-		}
+	}
 	else if (index == kSearchFilesCmd)
-		{
+	{
 		CBGetSearchTextDialog()->Activate();
-		}
+	}
 	else if (index == kDiffFilesCmd)
-		{
+	{
 		CBGetDiffFileDialog()->Activate();
-		}
+	}
 
 	else if (index == kSaveAllTextCmd)
-		{
+	{
 		CBGetDocumentManager()->SaveTextDocuments(true);
-		}
+	}
 	else if (index == kCloseAllTextCmd)
-		{
+	{
 		CBGetDocumentManager()->CloseTextDocuments();
-		}
+	}
 }
 
 /******************************************************************************
@@ -744,30 +744,30 @@ CBFileListDirector::HandlePrefsMenu
 	)
 {
 	if (index == kToolBarPrefsCmd)
-		{
+	{
 		itsToolBar->Edit();
-		}
+	}
 	else if (index == kEditFileTypesCmd)
-		{
+	{
 		CBGetPrefsManager()->EditFileTypes();
-		}
+	}
 	else if (index == kChooseExtEditorsCmd)
-		{
+	{
 		CBGetDocumentManager()->ChooseEditors();
-		}
+	}
 	else if (index == kShowLocationPrefsCmd)
-		{
+	{
 		(JXGetWebBrowser())->EditPrefs();
-		}
+	}
 	else if (index == kMiscPrefsCmd)
-		{
+	{
 		CBGetApplication()->EditMiscPrefs();
-		}
+	}
 
 	else if (index == kSaveWindSizeCmd)
-		{
+	{
 		CBGetPrefsManager()->SaveWindowSize(kCBFileListWindSizeID, GetWindow());
-		}
+	}
 }
 
 /******************************************************************************
@@ -783,14 +783,14 @@ CBFileListDirector::ReceiveWithFeedback
 	)
 {
 	if (sender == itsCmdMenu && message->Is(CBCommandMenu::kGetTargetInfo))
-		{
+	{
 		auto* info =
 			dynamic_cast<CBCommandMenu::GetTargetInfo*>(message);
 		assert( info != nullptr );
 		itsFLTable->GetSelection(info->GetFileList());
-		}
+	}
 	else
-		{
+	{
 		JXWindowDirector::ReceiveWithFeedback(sender, message);
-		}
+	}
 }

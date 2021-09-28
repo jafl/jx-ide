@@ -11,15 +11,15 @@
 #include "CBTextEditor.h"
 #include "CBCommandMenu.h"
 #include "cbGlobals.h"
-#include <JXDisplay.h>
-#include <JXWindow.h>
-#include <JXMenuBar.h>
-#include <JXTextMenu.h>
-#include <JRegex.h>
-#include <JStringIterator.h>
-#include <JStack.h>
-#include <jFileUtil.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXDisplay.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXMenuBar.h>
+#include <jx-af/jx/JXTextMenu.h>
+#include <jx-af/jcore/JRegex.h>
+#include <jx-af/jcore/JStringIterator.h>
+#include <jx-af/jcore/JStack.h>
+#include <jx-af/jcore/jFileUtil.h>
+#include <jx-af/jcore/jAssert.h>
 
 static const JRegex dirMarkerPattern = "((Entering)|(Leaving)) directory `";
 static const JRegex endMarkerPattern = "['`]";
@@ -119,29 +119,29 @@ CBCompileDocument::SetConnection
 	itsPrevLine.Clear();
 
 	if (ShouldClearWhenStart())
-		{
+	{
 		itsHasErrorsFlag = false;
-		}
+	}
 	if (!itsHasErrorsFlag)
-		{
+	{
 		itsErrorMenu->Deactivate();
-		}
+	}
 
 	CBExecOutputDocument::SetConnection(p, inFD, outFD, windowTitle,
 										dontCloseMsg, execDir, execCmd, false);
 
 	if (!execCmd.IsEmpty())
-		{
+	{
 		CBTextEditor* te = GetTextEditor();
 
 		const JUtf8Byte* map[] =
-			{
+		{
 			"d", execDir.GetBytes()
-			};
+		};
 		te->Paste(JGetString("ChangeDirectory::CBCompileDocument", map, sizeof(map)));
 		te->Paste(JString("\n\n", JString::kNoCopy));
 		te->GetText()->ClearUndo();
-		}
+	}
 }
 
 /******************************************************************************
@@ -158,14 +158,14 @@ CBCompileDocument::ProcessFinished
 	)
 {
 	if (!CBExecOutputDocument::ProcessFinished(info))
-		{
+	{
 		return false;
-		}
+	}
 
 	if (!GetTextEditor()->HasSelection())
-		{
+	{
 		ShowFirstError();
-		}
+	}
 
 	return true;
 }
@@ -268,28 +268,28 @@ CBCompileDocument::AppendText
 	if (!isJavacError && !isGCCError && !gccPrevLineMatch.IsEmpty() &&
 		text.BeginsWith(gccMultilinePrefix) &&
 		text.GetByteCount() > kGCCMultilinePrefixLength)
-		{
+	{
 		JString s = text;
 		JStringIterator iter(&s, kJIteratorStartAfterByte, kGCCMultilinePrefixLength);
 		JUtf8Character c;
 		if (iter.Next(&c, kJIteratorStay) && !c.IsSpace())
-			{
+		{
 			iter.RemoveAllPrev();
 			iter.Invalidate();
 
 			te->SetCaretLocation(te->GetText()->GetText().GetCharacterCount() - (theDoubleSpaceFlag ? 1 : 0));
 			te->Paste(s);
 			return;
-			}
 		}
+	}
 
 	const JStyledText::TextIndex startIndex = te->GetText()->GetBeyondEnd();
 
 	CBExecOutputDocument::AppendText(text);
 	if (theDoubleSpaceFlag)
-		{
+	{
 		te->Paste(JString::newline);
-		}
+	}
 
 	itsPrevLine = text;
 
@@ -297,51 +297,51 @@ CBCompileDocument::AppendText
 
 	JStyledText::TextRange boldRange(startIndex, JStyledText::TextCount());
 	if (isJavacError)
-		{
+	{
 		const JStringMatch javacMatch = javacErrorRegex.Match(text, JRegex::kIncludeSubmatches);
 		if (!javacMatch.IsEmpty())
-			{
+		{
 			boldRange = cbComputeErrorRangeFromFirstSubmatch(startIndex, javacMatch);
-			}
 		}
+	}
 	else if (isGCCError)
-		{
+	{
 		cbSetErrorRangeFromMatchStart(gccMatch, &boldRange);
-		}
+	}
 	else if (isFlexError)
-		{
+	{
 		cbSetErrorRangeFromMatchStart(flexMatch, &boldRange);
-		}
+	}
 	else if (isBisonError)
-		{
+	{
 		cbSetErrorRangeFromMatchStart(bisonMatch, &boldRange);
-		}
+	}
 	else if (isMakeError)
-		{
+	{
 		boldRange.SetCount(
 			JStyledText::TextCount(
 				text.GetCharacterCount(),
 				text.GetByteCount()));
-		}
+	}
 	else if (isAbsoftError)
-		{
+	{
 		boldRange = cbComputeErrorRangeFromFirstSubmatch(startIndex, absoftMatch);
-		}
+	}
 	else if (isMaven2Error)
-		{
+	{
 		boldRange = cbComputeErrorRangeFromFirstSubmatch(startIndex, maven2Match);
-		}
+	}
 	else if (isMaven3Error)
-		{
+	{
 		boldRange = cbComputeErrorRangeFromFirstSubmatch(startIndex, maven3Match);
-		}
+	}
 
 	if (!boldRange.IsEmpty())
-		{
+	{
 		te->GetText()->SetFontBold(boldRange, true, true);
 
 		if (!itsHasErrorsFlag)
-			{
+		{
 			itsHasErrorsFlag = true;
 			itsErrorMenu->Activate();
 
@@ -356,8 +356,8 @@ CBCompileDocument::AppendText
 			iter.Invalidate();
 
 			window->SetTitle(windowTitle);
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -373,17 +373,17 @@ CBCompileDocument::OpenPrevListItem()
 	CBTextEditor* te = GetTextEditor();
 	JString s;
 	while (ShowPrevError())
-		{
+	{
 		const bool ok = te->GetSelection(&s);
 		assert( ok );
 		if (makeErrorRegex.Match(s))
-			{
+		{
 			continue;
-			}
+		}
 
 		te->OpenSelection();
 		break;
-		}
+	}
 }
 
 /******************************************************************************
@@ -399,17 +399,17 @@ CBCompileDocument::OpenNextListItem()
 	CBTextEditor* te = GetTextEditor();
 	JString s;
 	while (ShowNextError())
-		{
+	{
 		const bool ok = te->GetSelection(&s);
 		assert( ok );
 		if (makeErrorRegex.Match(s))
-			{
+		{
 			continue;
-			}
+		}
 
 		te->OpenSelection();
 		break;
-		}
+	}
 }
 
 /******************************************************************************
@@ -430,9 +430,9 @@ CBCompileDocument::ConvertSelectionToFullPath
 	CBGetDocumentManager()->SetActiveListDocument(const_cast<CBCompileDocument*>(this));
 
 	if (JIsAbsolutePath(*fileName))
-		{
+	{
 		return;
-		}
+	}
 
 	CBTextEditor* te       = GetTextEditor();
 	const JIndex caretChar = te->GetInsertionCharIndex();
@@ -443,35 +443,35 @@ CBCompileDocument::ConvertSelectionToFullPath
 	JIndex i;
 	while (iter.Next(dirMarkerPattern) &&
 		   iter.GetNextCharacterIndex(&i) && i < caretChar)
-		{
+	{
 		const JStringMatch& m = iter.GetLastMatch();
 		if (!m.GetCharacterRange(2).IsEmpty())					// Entering
-			{
+		{
 			dirStack.Push(i);
-			}
+		}
 		else													// Leaving
-			{
+		{
 			assert( !m.GetCharacterRange(3).IsEmpty() );
 			dirStack.Pop(&i);
-			}
 		}
+	}
 
 	if (dirStack.Peek(&i))
-		{
+	{
 		iter.MoveTo(kJIteratorStartBefore, i);
 		iter.BeginMatch();
 		JUtf8Character c;
 		if (iter.Next(&c) && c != '`' && c != '\'' && iter.Next(endMarkerPattern))
-			{
+		{
 			const JStringMatch& m  = iter.FinishMatch();
 			const JString testName = JCombinePathAndName(m.GetString(), *fileName);
 			if (JFileExists(testName))
-				{
+			{
 				*fileName = testName;
 				return;
-				}
 			}
 		}
+	}
 
 	iter.Invalidate();
 
@@ -491,21 +491,21 @@ CBCompileDocument::Receive
 	)
 {
 	if (sender == itsErrorMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		UpdateErrorMenu();
-		}
+	}
 	else if (sender == itsErrorMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleErrorMenu(selection->GetIndex());
-		}
+	}
 
 	else
-		{
+	{
 		CBExecOutputDocument::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -533,23 +533,23 @@ CBCompileDocument::HandleErrorMenu
 	CBGetDocumentManager()->SetActiveListDocument(this);
 
 	if (index == kFirstErrorCmd)
-		{
+	{
 		ShowFirstError();
-		}
+	}
 
 	else if (index == kPrevErrorCmd)
-		{
+	{
 		ShowPrevError();
-		}
+	}
 	else if (index == kNextErrorCmd)
-		{
+	{
 		ShowNextError();
-		}
+	}
 
 	else if (index == kOpenFileCmd)
-		{
+	{
 		GetTextEditor()->OpenSelection();
-		}
+	}
 }
 
 /******************************************************************************
@@ -561,10 +561,10 @@ void
 CBCompileDocument::ShowFirstError()
 {
 	if (itsHasErrorsFlag)
-		{
+	{
 		GetTextEditor()->SetCaretLocation(1);
 		ShowNextError();
-		}
+	}
 }
 
 /******************************************************************************
@@ -589,15 +589,15 @@ CBCompileDocument::ShowPrevError()
 
 	bool wrapped;
 	if (te->JTextEditor::SearchBackward(jMatchErrorStyle, false, &wrapped))
-		{
+	{
 		te->TEScrollToSelection(true);
 		return true;
-		}
+	}
 	else
-		{
+	{
 		GetDisplay()->Beep();
 		return false;
-		}
+	}
 }
 
 /******************************************************************************
@@ -613,13 +613,13 @@ CBCompileDocument::ShowNextError()
 
 	bool wrapped;
 	if (te->JTextEditor::SearchForward(jMatchErrorStyle, false, &wrapped))
-		{
+	{
 		te->TEScrollToSelection(true);
 		return true;
-		}
+	}
 	else
-		{
+	{
 		GetDisplay()->Beep();
 		return false;
-		}
+	}
 }

@@ -8,7 +8,7 @@
 #ifndef _H_CBFnMenuUpdater
 #define _H_CBFnMenuUpdater
 
-#include <JPrefObject.h>
+#include <jx-af/jcore/JPrefObject.h>
 #include "CBCtagsUser.h"
 
 class JXTextMenu;

@@ -6,9 +6,9 @@
  ******************************************************************************/
 
 #include "CBDirList.h"
-#include <jDirUtil.h>
-#include <jStreamUtil.h>
-#include <jAssert.h>
+#include <jx-af/jcore/jDirUtil.h>
+#include <jx-af/jcore/jStreamUtil.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -77,9 +77,9 @@ CBDirList::operator=
 	)
 {
 	if (this == &source)
-		{
+	{
 		return *this;
-		}
+	}
 
 	JContainer::operator=(source);
 
@@ -104,10 +104,10 @@ CBDirList::CopyPaths
 
 	const JSize count = (source.itsDirList)->GetElementCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		const CBDirInfo info = (source.itsDirList)->GetElement(i);
 		AddPath(*(info.path), info.recurse);
-		}
+	}
 }
 
 /******************************************************************************
@@ -215,28 +215,28 @@ CBDirList::Contains
 	const
 {
 	if (p.IsEmpty())
-		{
+	{
 		return false;
-		}
+	}
 
 	JString path = p, name;
 	if (path.GetLastCharacter() != ACE_DIRECTORY_SEPARATOR_CHAR)
-		{
+	{
 		JSplitPathAndName(p, &path, &name);
-		}
+	}
 
 	const JSize count = GetElementCount();
 	JString truePath;
 	bool recurse;
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		if (GetTruePath(i, &truePath, &recurse) &&
 			(( recurse && path.BeginsWith(truePath)) ||
 			 (!recurse && path == truePath)))
-			{
+		{
 			return true;
-			}
 		}
+	}
 
 	return false;
 }
@@ -256,35 +256,35 @@ CBDirList::ReadDirectories
 	itsDirList->DeleteAll();
 
 	if (vers >= 71)
-		{
+	{
 		input >> std::ws;
 		JIgnoreLine(input);
-		}
+	}
 
 	if (vers <= 71)
-		{
+	{
 		JSize dirCount;
 		input >> dirCount;
 
 		for (JIndex i=1; i<=dirCount; i++)
-			{
-			ReadDirectory(input, vers);
-			}
-		}
-	else
 		{
+			ReadDirectory(input, vers);
+		}
+	}
+	else
+	{
 		while (true)
-			{
+		{
 			bool keepGoing;
 			input >> JBoolFromString(keepGoing);
 			if (!keepGoing)
-				{
+			{
 				break;
-				}
+			}
 
 			ReadDirectory(input, vers);
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -304,9 +304,9 @@ CBDirList::ReadDirectory
 
 	input >> path;
 	if (vers >= 21)
-		{
+	{
 		input >> JBoolFromString(recurse);
-		}
+	}
 	AddPath(path, recurse);
 }
 
@@ -326,14 +326,14 @@ CBDirList::WriteDirectories
 
 	const JSize dirCount = GetElementCount();
 	for (JIndex i=1; i<=dirCount; i++)
-		{
+	{
 		output << JBoolToString(true);
 
 		const CBDirInfo info = itsDirList->GetElement(i);
 		output << ' ' << *(info.path);
 		output << ' ' << JBoolToString(info.recurse);
 		output << '\n';
-		}
+	}
 
 	output << JBoolToString(false) << '\n';
 }
@@ -353,26 +353,26 @@ operator==
 	)
 {
 	if (l1.GetBasePath() != l2.GetBasePath())
-		{
+	{
 		return false;
-		}
+	}
 
 	bool sameDirs = false;
 	const JSize count = l1.GetElementCount();
 	if (count == l2.GetElementCount())
-		{
+	{
 		sameDirs = true;
 		for (JIndex i=1; i<=count; i++)
-			{
+		{
 			bool r1, r2;
 			if (l1.GetPath(i, &r1) != l2.GetPath(i, &r2) ||
 				r1 != r2)
-				{
+			{
 				sameDirs = false;
 				break;
-				}
 			}
 		}
+	}
 
 	return sameDirs;
 }
@@ -387,9 +387,9 @@ CBDirInfoList::DeleteAll()
 {
 	const JSize count = GetElementCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		jdelete (GetElement(i)).path;
-		}
+	}
 	RemoveAll();
 }
 
@@ -423,15 +423,15 @@ CBDirInfo::CompareProjIndex
 	)
 {
 	if (i1.projIndex < i2.projIndex)
-		{
+	{
 		return JListT::kFirstLessSecond;
-		}
+	}
 	else if (i1.projIndex > i2.projIndex)
-		{
+	{
 		return JListT::kFirstGreaterSecond;
-		}
+	}
 	else
-		{
+	{
 		return ComparePathNames(i1, i2);
-		}
+	}
 }

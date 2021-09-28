@@ -10,9 +10,9 @@
 #include "CBPTPrinter.h"
 #include "CBPTPrintSetupDialog.h"
 #include "cbGlobals.h"
-#include <jStreamUtil.h>
-#include <jTime.h>
-#include <jAssert.h>
+#include <jx-af/jcore/jStreamUtil.h>
+#include <jx-af/jcore/jTime.h>
+#include <jx-af/jcore/jAssert.h>
 
 const JSize kPrintHeaderLineCount = 4;
 
@@ -91,17 +91,17 @@ CBPTPrinter::EndUserPrintSetup
 
 	const bool ok = JXPTPrinter::EndUserPrintSetup(message, changed);
 	if (ok)
-		{
+	{
 		*changed = *changed ||
 			itsCBPrintSetupDialog->ShouldPrintHeader() != itsPrintHeaderFlag;
 
 		itsPrintHeaderFlag = itsCBPrintSetupDialog->ShouldPrintHeader();
 		if (GetPageHeight() <= GetHeaderLineCount())
-			{
+		{
 			SetPageHeight(GetHeaderLineCount() + 1);
 			*changed = true;
-			}
 		}
+	}
 
 	itsCBPrintSetupDialog = nullptr;
 	return ok;
@@ -130,7 +130,7 @@ CBPTPrinter::PrintHeader
 	)
 {
 	if (itsPrintHeaderFlag)
-		{
+	{
 		const JString dateStr = JGetTimeStamp();
 
 		JString pageStr(pageIndex, 0);
@@ -143,12 +143,12 @@ CBPTPrinter::PrintHeader
 		const JInteger spaceCount =
 			GetPageWidth() - dateStr.GetCharacterCount() - pageStr.GetCharacterCount();
 		for (JInteger i=1; i<=spaceCount; i++)
-			{
+		{
 			output << ' ';
-			}
+		}
 		pageStr.Print(output);
 		output << "\n\n\n";
-		}
+	}
 }
 
 /******************************************************************************
@@ -165,7 +165,7 @@ CBPTPrinter::ReadPrefs
 	JFileVersion vers;
 	input >> vers;
 	if (vers == 0)
-		{
+	{
 		JString printCmd;
 		JSize pageHeight;
 		input >> printCmd >> pageHeight;
@@ -173,12 +173,12 @@ CBPTPrinter::ReadPrefs
 
 		SetPrintCmd(printCmd);
 		SetPageHeight(pageHeight);
-		}
+	}
 	else if (vers <= kCurrentSetupVersion)
-		{
+	{
 		input >> JBoolFromString(itsPrintHeaderFlag);
 		JXPTPrinter::ReadXPTSetup(input);
-		}
+	}
 }
 
 /******************************************************************************

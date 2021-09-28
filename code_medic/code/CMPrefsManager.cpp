@@ -18,21 +18,21 @@
 #include "CBFnMenuUpdater.h"
 #include "cbmUtil.h"
 
-#include <JXWindow.h>
-#include <JXStringHistoryMenu.h>
-#include <JXPSPrinter.h>
-#include <JX2DPlotEPSPrinter.h>
-#include <JXPTPrinter.h>
-#include <JXDisplay.h>
-#include <JXColorManager.h>
-#include <JXFontManager.h>
-#include <JXChooseSaveFile.h>
-#include <JXSearchTextDialog.h>
-#include <JXWebBrowser.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXStringHistoryMenu.h>
+#include <jx-af/jx/JXPSPrinter.h>
+#include <jx-af/j2dplot/JX2DPlotEPSPrinter.h>
+#include <jx-af/jx/JXPTPrinter.h>
+#include <jx-af/jx/JXDisplay.h>
+#include <jx-af/jx/JXColorManager.h>
+#include <jx-af/jx/JXFontManager.h>
+#include <jx-af/jx/JXChooseSaveFile.h>
+#include <jx-af/jx/JXSearchTextDialog.h>
+#include <jx-af/jx/JXWebBrowser.h>
 
-#include <JStringIterator.h>
-#include <jDirUtil.h>
-#include <jAssert.h>
+#include <jx-af/jcore/JStringIterator.h>
+#include <jx-af/jcore/jDirUtil.h>
+#include <jx-af/jcore/jAssert.h>
 
 // from CBPrefsManager
 const JFileVersion kCurrentTextColorVers = 0;
@@ -105,13 +105,13 @@ CMPrefsManager::GetMedicVersionStr()
 {
 	std::string data;
 	if (GetData(kCMProgramVersionID, &data))
-		{
+	{
 		return JString(data);
-		}
+	}
 	else
-		{
+	{
 		return JString("< 0.5.0");		// didn't exist before this version
-		}
+	}
 }
 
 /******************************************************************************
@@ -128,15 +128,15 @@ CMPrefsManager::GetExpirationTimeStamp
 {
 	std::string data;
 	if (GetData(kCMExpireTimeStampID, &data))
-		{
+	{
 		std::istringstream input(data);
 		input >> *t;
 		return !input.fail();
-		}
+	}
 	else
-		{
+	{
 		return false;
-		}
+	}
 }
 
 /******************************************************************************
@@ -253,20 +253,20 @@ CMPrefsManager::Receive
 	)
 {
 	if (sender == itsEditPrefsDialog && message.Is(JXDialogDirector::kDeactivated))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const JXDialogDirector::Deactivated*>(&message);
 		assert( info != nullptr );
 		if (info->Successful())
-			{
-			UpdatePrefs(itsEditPrefsDialog);
-			}
-		itsEditPrefsDialog = nullptr;
-		}
-	else
 		{
-		JXPrefsManager::Receive(sender, message);
+			UpdatePrefs(itsEditPrefsDialog);
 		}
+		itsEditPrefsDialog = nullptr;
+	}
+	else
+	{
+		JXPrefsManager::Receive(sender, message);
+	}
 }
 
 /******************************************************************************
@@ -282,7 +282,7 @@ CMPrefsManager::UpgradeData
 	)
 {
 	if (isNew)
-		{
+	{
 		std::ostringstream cSourceSuffixData;
 		cSourceSuffixData << 7;
 		cSourceSuffixData << ' ' << JString(".c")   << ' ' << JString(".cc");
@@ -305,60 +305,60 @@ CMPrefsManager::UpgradeData
 		std::ostringstream gdbCmdData;
 		gdbCmdData << JString("gdb");
 		SetData(kGDBCommandID, gdbCmdData);
-		}
+	}
 	else
-		{
+	{
 		JString cmd = GetGDBCommand();
 		if (cmd.EndsWith(" -f"))
-			{
+		{
 			JStringIterator iter(&cmd, kJIteratorStartAtEnd);
 			iter.RemovePrev(3);
 			iter.Invalidate();
 
 			cmd.TrimWhitespace();	// invalidates iter
 			SetGDBCommand(cmd);
-			}
 		}
+	}
 
 	JXDisplay* display = JXGetApplication()->GetDisplay(1);
 	if (currentVersion < 2)
-		{
+	{
 		SetDefaultFont(JFontManager::GetDefaultMonospaceFontName(),
 					   JFontManager::GetDefaultMonospaceFontSize());
-		}
+	}
 	else
-		{
+	{
 		JString name;
 		JSize size;
 		GetDefaultFont(&name, &size);
 		if (name == "6x13")
-			{
+		{
 			SetDefaultFont(JFontManager::GetDefaultMonospaceFontName(),
 						   JFontManager::GetDefaultMonospaceFontSize());
-			}
 		}
+	}
 
 	if (currentVersion < 3)
-		{
+	{
 		RemoveData(33);
-		}
+	}
 
 	if (!isNew && currentVersion < 4)
-		{
+	{
 		JString editFileCmd, editFileLineCmd;
 		GetEditFileCmds(&editFileCmd, &editFileLineCmd);
 		JXWebBrowser::ConvertVarNames(&editFileCmd, "fl");
 		JXWebBrowser::ConvertVarNames(&editFileLineCmd, "fl");
 		SetEditFileCmds(editFileCmd, editFileLineCmd);
-		}
+	}
 
 	if (currentVersion < 5)
-		{
+	{
 		RemoveData(34);
-		}
+	}
 
 	if (currentVersion < 6)
-		{
+	{
 		std::ostringstream javaSuffixData;
 		javaSuffixData << 1;
 		javaSuffixData << ' ' << JString(".java");
@@ -373,21 +373,21 @@ CMPrefsManager::UpgradeData
 		fortranSuffixData << ' ' << JString(".f90") << ' ' << JString(".F90");
 		fortranSuffixData << ' ' << JString(".f95") << ' ' << JString(".F95");
 		SetData(kFortranSuffixID, fortranSuffixData);
-		}
+	}
 
 	if (currentVersion < 7)
-		{
+	{
 		std::string data;
 		if (GetData(kFileListSetupID, &data))
-			{
+		{
 			std::ostringstream newData;
 			newData << 0 << ' ' << data.c_str();
 			SetData(kFileListSetupID, newData);
-			}
 		}
+	}
 
 	if (currentVersion < 8)
-		{
+	{
 		std::ostringstream data;
 #ifdef _J_OSX
 		data << (long) kLLDBType;
@@ -395,25 +395,25 @@ CMPrefsManager::UpgradeData
 		data << (long) kGDBType;
 #endif
 		SetData(kDebuggerTypeID, data);
-		}
+	}
 
 	if (currentVersion < 9)
-		{
+	{
 		RemoveData(kJVMCommandID);
 
 		std::ostringstream jvmCmdData;
 		jvmCmdData << JString("java");
 		SetData(kJVMCommandID, jvmCmdData);
-		}
+	}
 
 	if (currentVersion < 10)
-		{
+	{
 		std::ostringstream phpSuffixData;
 		phpSuffixData << 2;
 		phpSuffixData << ' ' << JString(".php");
 		phpSuffixData << ' ' << JString(".inc");
 		SetData(kPHPSuffixID, phpSuffixData);
-		}
+	}
 }
 
 /******************************************************************************
@@ -443,7 +443,7 @@ CMPrefsManager::SetDebuggerType
 	)
 {
 	if (type != GetDebuggerType())
-		{
+	{
 		std::ostringstream data;
 		data << (long) type;
 
@@ -451,11 +451,11 @@ CMPrefsManager::SetDebuggerType
 
 		CMStartDebugger();
 		return true;
-		}
+	}
 	else
-		{
+	{
 		return false;
-		}
+	}
 }
 
 /******************************************************************************
@@ -533,17 +533,17 @@ CMPrefsManager::GetStackLineMax()
 {
 	std::string data;
 	if (GetData(kStackLineMaxID, &data))
-		{
+	{
 		std::istringstream dataStream(data);
 
 		JSize max;
 		dataStream >> max;
 		return max;
-		}
+	}
 	else
-		{
+	{
 		return kStackLineMaxDefault;
-		}
+	}
 }
 
 void
@@ -571,11 +571,11 @@ struct SuffixTypeMap
 
 static const SuffixTypeMap kSuffixTypeMap[] =
 {
-	{ kCSourceSuffixID, kCBCSourceFT    },
-	{ kCHeaderSuffixID, kCBCHeaderFT    },
-	{ kJavaSuffixID,    kCBJavaSourceFT },
-	{ kFortranSuffixID, kCBFortranFT    },
-	{ kPHPSuffixID,     kCBPHPFT        }
+{ kCSourceSuffixID, kCBCSourceFT    },
+{ kCHeaderSuffixID, kCBCHeaderFT    },
+{ kJavaSuffixID,    kCBJavaSourceFT },
+{ kFortranSuffixID, kCBFortranFT    },
+{ kPHPSuffixID,     kCBPHPFT        }
 };
 
 const JSize kSuffixTypeMapCount = sizeof(kSuffixTypeMap) / sizeof(SuffixTypeMap);
@@ -589,19 +589,19 @@ CMPrefsManager::GetFileType
 {
 	JPtrArray<JString> suffixList(JPtrArrayT::kDeleteAll);
 	for (JUnsignedOffset i=0; i<kSuffixTypeMapCount; i++)
-		{
+	{
 		if (GetSuffixes(kSuffixTypeMap[i].id, &suffixList))
-			{
+		{
 			const JSize count = suffixList.GetElementCount();
 			for (JIndex j=1; j<=count; j++)
-				{
+			{
 				if (fileName.EndsWith(*(suffixList.GetElement(j))))
-					{
+				{
 					return kSuffixTypeMap[i].type;
-					}
 				}
 			}
 		}
+	}
 
 	return kCBUnknownFT;
 }
@@ -622,12 +622,12 @@ CMPrefsManager::GetSuffixes
 	suffixList->DeleteAll();
 
 	if (IDValid(id))
-		{
+	{
 		std::string data;
 		GetData(id, &data);
 		std::istringstream dataStream(data);
 		dataStream >> *suffixList;
-		}
+	}
 
 	return !suffixList->IsEmpty();
 }
@@ -692,10 +692,10 @@ CMPrefsManager::GetCmdList
 {
 	std::string data;
 	if (GetData(kCmdListID, &data))
-		{
+	{
 		std::istringstream dataStream(data);
 		dataStream >> *cmdList;
-		}
+	}
 }
 
 void
@@ -724,10 +724,10 @@ CMPrefsManager::ReadPrinterSetup
 {
 	std::string data;
 	if (GetData(kPSPrinterSetupID, &data))
-		{
+	{
 		std::istringstream dataStream(data);
 		printer->ReadXPSSetup(dataStream);
-		}
+	}
 }
 
 void
@@ -749,10 +749,10 @@ CMPrefsManager::ReadPrinterSetup
 {
 	std::string data;
 	if (GetData(kPlotEPSPrinterSetupID, &data))
-		{
+	{
 		std::istringstream dataStream(data);
 		printer->ReadX2DEPSSetup(dataStream);
-		}
+	}
 }
 
 void
@@ -774,10 +774,10 @@ CMPrefsManager::ReadPrinterSetup
 {
 	std::string data;
 	if (GetData(kPTPrinterSetupID, &data))
-		{
+	{
 		std::istringstream dataStream(data);
 		printer->ReadXPTSetup(dataStream);
-		}
+	}
 }
 
 void
@@ -804,10 +804,10 @@ CMPrefsManager::ReadHistoryMenuSetup
 {
 	std::string data;
 	if (GetData(kHistoryMenuID, &data))
-		{
+	{
 		std::istringstream dataStream(data);
 		menu->ReadSetup(dataStream);
-		}
+	}
 }
 
 void
@@ -837,11 +837,11 @@ CMPrefsManager::GetWindowSize
 {
 	std::string data;
 	if (GetData(id, &data))
-		{
+	{
 		std::istringstream dataStream(data);
 		window->ReadGeometry(dataStream, skipDocking);
 		window->Deiconify();	// never iconic since never initially visible
-		}
+	}
 }
 
 void
@@ -900,16 +900,16 @@ CMPrefsManager::GetTabCharCount()
 {
 	std::string data;
 	if (GetData(kCBTabCharCountID, &data))
-		{
+	{
 		JSize count;
 		std::istringstream dataStream(data);
 		dataStream >> count;
 		return count;
-		}
+	}
 	else
-		{
+	{
 		return 4;
-		}
+	}
 }
 
 void
@@ -949,7 +949,7 @@ CMPrefsManager::ReadColors()
 	std::string data;
 	const bool hasColors = GetData(kCBTextColorID, &data);
 	if (hasColors)
-		{
+	{
 		std::istringstream dataStream(data);
 
 		JFileVersion vers;
@@ -957,10 +957,10 @@ CMPrefsManager::ReadColors()
 		assert( vers <= kCurrentTextColorVers );
 
 		for (JUnsignedOffset i=0; i<kColorCount; i++)
-			{
+		{
 			dataStream >> color[i];
-			}
 		}
+	}
 
 	SetColorList(hasColors, color);
 }
@@ -974,41 +974,41 @@ CMPrefsManager::SetColorList
 {
 	bool ok[ kColorCount ];
 	if (hasColors)
-		{
+	{
 		for (JUnsignedOffset i=0; i<kColorCount; i++)
-			{
+		{
 			itsColor[i] = JColorManager::GetColorID(colorList[i]);
 			ok[i]       = true;
-			}
 		}
+	}
 	else
-		{
+	{
 		for (JUnsignedOffset i=0; i<kColorCount; i++)
-			{
+		{
 			ok[i] = false;
-			}
 		}
+	}
 
 	// set unallocated colors to the default values
 
 	const JColorID defaultColor[] =
-		{
+	{
 		JColorManager::GetBlackColor(),
 		JColorManager::GetWhiteColor(),
 		JColorManager::GetRedColor(),
 		JColorManager::GetDefaultSelectionColor(),
 		JColorManager::GetBlueColor(),
 		JColorManager::GetGrayColor(70)
-		};
+	};
 	assert( sizeof(defaultColor)/sizeof(JColorID) == kColorCount );
 
 	for (JUnsignedOffset i=0; i<kColorCount; i++)
-		{
+	{
 		if (!ok[i])
-			{
+		{
 			itsColor[i] = defaultColor[i];
-			}
 		}
+	}
 }
 
 void
@@ -1018,9 +1018,9 @@ CMPrefsManager::WriteColors()
 	data << kCurrentTextColorVers;
 
 	for (JUnsignedOffset i=0; i<kColorCount; i++)
-		{
+	{
 		data << ' ' << JColorManager::GetRGB(itsColor[i]);
-		}
+	}
 
 	SetData(kCBTextColorID, data);
 }
@@ -1035,10 +1035,10 @@ CMPrefsManager::LoadSearchPrefs()
 {
 	std::string data;
 	if (GetData(kSearchTextDialogPrefsID, &data))
-		{
+	{
 		std::istringstream dataStream(data);
 		JXGetSearchTextDialog()->ReadSetup(dataStream);
-		}
+	}
 }
 
 void
@@ -1074,7 +1074,7 @@ CMPrefsManager::SyncWithCodeCrusader()
 						   &cSourceSuffixes, &cHeaderSuffixes,
 						   &fortranSuffixList, &javaSuffixList,
 						   &phpSuffixList, &dSuffixList, &goSuffixList))
-		{
+	{
 		SetDefaultFont(fontName, size);
 		SetTabCharCount(tabCharCount);
 		SetColorList(true, colorList);
@@ -1082,25 +1082,25 @@ CMPrefsManager::SyncWithCodeCrusader()
 		SetSuffixes(kCHeaderSuffixID, cHeaderSuffixes);
 
 		if (!fortranSuffixList.IsEmpty())
-			{
+		{
 			SetSuffixes(kFortranSuffixID, fortranSuffixList);
-			}
+		}
 		if (!javaSuffixList.IsEmpty())
-			{
+		{
 			SetSuffixes(kJavaSuffixID, javaSuffixList);
-			}
+		}
 		if (!phpSuffixList.IsEmpty())
-			{
+		{
 			SetSuffixes(kPHPSuffixID, phpSuffixList);
-			}
+		}
 		if (!dSuffixList.IsEmpty())
-			{
+		{
 			SetSuffixes(kDSuffixID, dSuffixList);
-			}
+		}
 		if (!goSuffixList.IsEmpty())
-			{
+		{
 			SetSuffixes(kGoSuffixID, goSuffixList);
-			}
+		}
 
 		CBFnMenuUpdater* updater = CMGetFnMenuUpdater();
 		updater->ShouldSortFnNames(sort);
@@ -1108,5 +1108,5 @@ CMPrefsManager::SyncWithCodeCrusader()
 		updater->ShouldPackFnNames(pack);
 
 		JXGetSearchTextDialog()->SetFont(JFontManager::GetFont(fontName, size));
-		}
+	}
 }

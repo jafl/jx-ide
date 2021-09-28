@@ -12,11 +12,11 @@
 
 #include "CBRubyStyler.h"
 #include "cbmUtil.h"
-#include <JRegex.h>
-#include <JStringIterator.h>
-#include <JColorManager.h>
-#include <jGlobals.h>
-#include <jAssert.h>
+#include <jx-af/jcore/JRegex.h>
+#include <jx-af/jcore/JStringIterator.h>
+#include <jx-af/jcore/JColorManager.h>
+#include <jx-af/jcore/jGlobals.h>
+#include <jx-af/jcore/jAssert.h>
 
 CBRubyStyler* CBRubyStyler::itsSelf = nullptr;
 
@@ -68,14 +68,14 @@ CBStylerBase*
 CBRubyStyler::Instance()
 {
 	if (itsSelf == nullptr && !recursiveInstance)
-		{
+	{
 		recursiveInstance = true;
 
 		itsSelf = jnew CBRubyStyler;
 		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
-		}
+	}
 
 	return itsSelf;
 }
@@ -104,9 +104,9 @@ CBRubyStyler::CBRubyStyler()
 {
 	JFontStyle blankStyle;
 	for (JIndex i=1; i<=kTypeCount; i++)
-		{
+	{
 		SetTypeStyle(i, blankStyle);
-		}
+	}
 
 	SetTypeStyle(kReservedKeyword    - kWhitespace, JFontStyle(JColorManager::GetDarkGreenColor()));
 
@@ -158,12 +158,12 @@ CBRubyStyler::Scan
 	Token token;
 	JFontStyle style;
 	do
-		{
+	{
 		token = NextToken();
 		if (token.type == kEOF)
-			{
+		{
 			break;
-			}
+		}
 
 		// save token starts -- must set itsProbableOperatorFlag
 
@@ -175,25 +175,25 @@ CBRubyStyler::Scan
 			token.type == kSingleQuoteString ||
 			token.type == kDoubleQuoteString ||
 			token.type == kExecString)
-			{
+		{
 			SaveTokenStart(token.range.GetFirst());
-			}
+		}
 
 		// handle special cases
 
 		if (token.type == kDoubleQuoteString ||
 			token.type == kExecString)
-			{
+		{
 			ExtendCheckRangeForString(token.range);
-			}
+		}
 
 		// set the style
 
 		const JIndex typeIndex = token.type - kWhitespace;
 		if (token.type == kWhitespace)
-			{
+		{
 			style = GetDefaultFont().GetStyle();
-			}
+		}
 		else if (token.type == kSingleQuoteString  ||
 				 token.type == kDoubleQuoteString  ||
 				 token.type == kHereDocString      ||
@@ -201,33 +201,33 @@ CBRubyStyler::Scan
 				 token.type == kRegex              ||
 				 token.type == kComment            ||
 				 token.type == kEmbeddedDoc)
-			{
+		{
 			style = GetTypeStyle(typeIndex);
-			}
+		}
 		else if (token.type < kWhitespace)
-			{
+		{
 			style = GetTypeStyle(kError - kWhitespace);
-			}
+		}
 		else if (token.type > kError)	// misc
-			{
+		{
 			if (!GetWordStyle(JString(text.GetRawBytes(), token.range.byteRange, JString::kNoCopy), &style))
-				{
-				style = GetDefaultFont().GetStyle();
-				}
-			}
-		else
 			{
-			style = GetStyle(typeIndex, JString(text.GetRawBytes(), token.range.byteRange, JString::kNoCopy));
+				style = GetDefaultFont().GetStyle();
 			}
+		}
+		else
+		{
+			style = GetStyle(typeIndex, JString(text.GetRawBytes(), token.range.byteRange, JString::kNoCopy));
+		}
 
 		keepGoing = SetStyle(token.range.charRange, style);
 
 		if (token.type == kDoubleQuoteString ||
 			token.type == kExecString)
-			{
+		{
 			StyleEmbeddedVariables(token);
-			}
 		}
+	}
 		while (keepGoing);
 }
 
@@ -281,9 +281,9 @@ CBRubyStyler::UpgradeTypeList
 	)
 {
 	if (vers < 1)
-		{
+	{
 		typeStyles->InsertElementAtIndex(12, typeStyles->GetElement(9));
-		}
+	}
 
 	// set new values after all new slots have been created
 }

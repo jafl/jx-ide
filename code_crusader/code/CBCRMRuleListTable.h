@@ -10,7 +10,7 @@
 #ifndef _H_CBCRMRuleListTable
 #define _H_CBCRMRuleListTable
 
-#include <JXStringTable.h>
+#include <jx-af/jx/JXStringTable.h>
 #include "CBPrefsManager.h"		// need definition of CRMRuleListInfo
 
 class JXTextButton;

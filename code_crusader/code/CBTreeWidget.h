@@ -10,7 +10,7 @@
 #ifndef _H_CBTreeWidget
 #define _H_CBTreeWidget
 
-#include <JXScrollableWidget.h>
+#include <jx-af/jx/JXScrollableWidget.h>
 
 class JString;
 class JXDirector;

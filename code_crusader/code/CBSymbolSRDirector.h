@@ -8,7 +8,7 @@
 #ifndef _H_CBSymbolSRDirector
 #define _H_CBSymbolSRDirector
 
-#include <JXWindowDirector.h>
+#include <jx-af/jx/JXWindowDirector.h>
 
 class JError;
 class JXTextButton;

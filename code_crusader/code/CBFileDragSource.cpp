@@ -12,18 +12,16 @@
 #include "CBFileDragSource.h"
 #include "CBTextDocument.h"
 #include "CBDSSFinishSaveTask.h"
-#include <JXFileSelection.h>
-#include <JXDSSSelection.h>
-#include <JXDirectSaveSource.h>
-#include <JXDNDManager.h>
-#include <JXSelectionManager.h>
-#include <JXInputField.h>
-#include <JXWebBrowser.h>
-#include <JXImage.h>
-#include <JXImageCache.h>
-#include <jXGlobals.h>
-#include <jDirUtil.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXFileSelection.h>
+#include <jx-af/jx/JXDSSSelection.h>
+#include <jx-af/jx/JXDirectSaveSource.h>
+#include <jx-af/jx/JXInputField.h>
+#include <jx-af/jx/JXWebBrowser.h>
+#include <jx-af/jx/JXImageCache.h>
+#include <jx-af/jx/JXDisplay.h>
+#include <jx-af/jx/jXGlobals.h>
+#include <jx-af/jcore/jDirUtil.h>
+#include <jx-af/jcore/jAssert.h>
 
 #include <jx_plain_file_small.xpm>
 
@@ -76,27 +74,27 @@ CBFileDragSource::AdjustCursor
 	if ((itsNameInput == nullptr && !itsDoc->ExistsOnDisk()) ||
 		(itsNameInput != nullptr &&
 		 itsNameInput->GetText()->GetText().EndsWith(ACE_DIRECTORY_SEPARATOR_STR)))
-		{
+	{
 		DisplayCursor(kJXInactiveCursor);
 		SetHint(JGetString("kFileSelected::JXFSDirMenu"));
-		}
+	}
 	else
-		{
+	{
 		if (itsNameInput != nullptr && itsNameInput->GetText()->IsEmpty())
-			{
+		{
 			SetHint(JGetString("HowToXDS2HintID::CBFileDragSource"));
-			}
+		}
 		else if (itsNameInput != nullptr)
-			{
+		{
 			SetHint(JGetString("XDSHint::CBFileDragSource"));
-			}
+		}
 		else
-			{
+		{
 			SetHint(JGetString("XDNDHint::CBFileDragSource"));
-			}
+		}
 
 		JXImageWidget::AdjustCursor(pt, modifiers);
-		}
+	}
 }
 
 /******************************************************************************
@@ -117,11 +115,11 @@ CBFileDragSource::HandleMouseDown
 	bool onDisk;
 	JString fileName = itsDoc->GetFullName(&onDisk);
 	if (clickCount == 2 && onDisk)
-		{
-		(JXGetWebBrowser())->ShowFileLocation(fileName);
-		}
+	{
+		JXGetWebBrowser()->ShowFileLocation(fileName);
+	}
 	else if (itsNameInput == nullptr && onDisk)
-		{
+	{
 		JPtrArray<JString> list(JPtrArrayT::kForgetAll);
 		list.Append(&fileName);
 
@@ -129,10 +127,10 @@ CBFileDragSource::HandleMouseDown
 		assert( data != nullptr );
 
 		BeginDND(pt, buttonStates, modifiers, data);
-		}
+	}
 	else if (itsNameInput != nullptr &&
 			 !itsNameInput->GetText()->GetText().EndsWith(ACE_DIRECTORY_SEPARATOR_STR))
-		{
+	{
 		auto* task = jnew CBDSSFinishSaveTask(itsDoc);
 		assert( task != nullptr );
 
@@ -140,7 +138,7 @@ CBFileDragSource::HandleMouseDown
 		assert( data != nullptr );
 
 		BeginDND(pt, buttonStates, modifiers, data);
-		}
+	}
 }
 
 /******************************************************************************
@@ -157,7 +155,7 @@ CBFileDragSource::DNDInit
 	)
 {
 	if (itsNameInput != nullptr && !itsNameInput->GetText()->IsEmpty())
-		{
+	{
 		JString fullName = itsNameInput->GetText()->GetText();
 		JStripTrailingDirSeparator(&fullName);		// paranoia -- checked earlier
 
@@ -165,7 +163,7 @@ CBFileDragSource::DNDInit
 		JSplitPathAndName(fullName, &path, &name);
 
 		JXDirectSaveSource::Init(GetWindow(), name);
-		}
+	}
 }
 
 /******************************************************************************
@@ -182,13 +180,13 @@ CBFileDragSource::GetDNDAction
 	)
 {
 	if (itsNameInput != nullptr)
-		{
+	{
 		return GetDNDManager()->GetDNDActionDirectSaveXAtom();
-		}
+	}
 	else
-		{
+	{
 		return GetDNDManager()->GetDNDActionCopyXAtom();
-		}
+	}
 }
 
 /******************************************************************************

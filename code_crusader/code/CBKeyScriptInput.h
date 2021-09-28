@@ -10,7 +10,7 @@
 #ifndef _H_CBKeyScriptInput
 #define _H_CBKeyScriptInput
 
-#include <JXInputField.h>
+#include <jx-af/jx/JXInputField.h>
 
 class CBKeyScriptInput : public JXInputField
 {

@@ -8,7 +8,7 @@
 #ifndef _H_CMPlot2DExprTable
 #define _H_CMPlot2DExprTable
 
-#include <JXStringTable.h>
+#include <jx-af/jx/JXStringTable.h>
 
 class JXMenuBar;
 class JXColHeaderWidget;

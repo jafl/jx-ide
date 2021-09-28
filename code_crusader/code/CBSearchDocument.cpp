@@ -12,21 +12,21 @@
 #include "CBSearchTE.h"
 #include "CBSearchTextDialog.h"
 #include "cbGlobals.h"
-#include <JXDisplay.h>
-#include <JXWindow.h>
-#include <JXProgressIndicator.h>
-#include <JXMenuBar.h>
-#include <JXTextMenu.h>
-#include <JXColorManager.h>
-#include <JThisProcess.h>
-#include <JOutPipeStream.h>
-#include <JMemoryManager.h>
-#include <jFileUtil.h>
-#include <jStreamUtil.h>
-#include <jSysUtil.h>
+#include <jx-af/jx/JXDisplay.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXProgressIndicator.h>
+#include <jx-af/jx/JXMenuBar.h>
+#include <jx-af/jx/JXTextMenu.h>
+#include <jx-af/jx/JXColorManager.h>
+#include <jx-af/jcore/JThisProcess.h>
+#include <jx-af/jcore/JOutPipeStream.h>
+#include <jx-af/jcore/JMemoryManager.h>
+#include <jx-af/jcore/jFileUtil.h>
+#include <jx-af/jcore/jStreamUtil.h>
+#include <jx-af/jcore/jSysUtil.h>
 #include <sstream>
 #include <stdlib.h>
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 const JCoordinate kIndicatorHeight = 10;
 
@@ -68,21 +68,21 @@ CBSearchDocument::Create
 	int fd[2];
 	JError err = JCreatePipe(fd);
 	if (!err.OK())
-		{
+	{
 		return err;
-		}
+	}
 
 	pid_t pid;
 	err = JThisProcess::Fork(&pid);
 	if (!err.OK())
-		{
+	{
 		return err;
-		}
+	}
 
 	// child
 
 	else if (pid == 0)
-		{
+	{
 		close(fd[0]);
 		JMemoryManager::Instance()->SetPrintExitStats(false);
 
@@ -97,21 +97,21 @@ CBSearchDocument::Create
 					   output);
 		output.close();
 		exit(0);
-		}
+	}
 
 	// parent
 
 	else
-		{
+	{
 		close(fd[1]);
 
 		auto* process = jnew JProcess(pid);
 		assert( process != nullptr );
 
 		const JUtf8Byte* map[] =
-			{
+		{
 			"s", CBGetSearchTextDialog()->GetSearchText().GetBytes()
-			};
+		};
 		const JString windowTitle = JGetString("SearchTitle::CBSearchDocument", map, sizeof(map));
 
 		auto* doc =
@@ -125,7 +125,7 @@ CBSearchDocument::Create
 		const bool ok = doc->GetRecordLink(&link);
 		assert( ok );
 		CBSearchTE::SetProtocol(link);
-		}
+	}
 
 	return JNoError();
 }
@@ -152,21 +152,21 @@ CBSearchDocument::Create
 	int fd[2];
 	JError err = JCreatePipe(fd);
 	if (!err.OK())
-		{
+	{
 		return err;
-		}
+	}
 
 	pid_t pid;
 	err = JThisProcess::Fork(&pid);
 	if (!err.OK())
-		{
+	{
 		return err;
-		}
+	}
 
 	// child
 
 	else if (pid == 0)
-		{
+	{
 		close(fd[0]);
 
 		// get rid of JXCreatePG, since we must not use X connection
@@ -178,22 +178,22 @@ CBSearchDocument::Create
 		te.SearchFiles(fileList, nameList, true, false, output);
 		output.close();
 		exit(0);
-		}
+	}
 
 	// parent
 
 	else
-		{
+	{
 		close(fd[1]);
 
 		auto* process = jnew JProcess(pid);
 		assert( process != nullptr );
 
 		const JUtf8Byte* map[] =
-			{
+		{
 			"s", CBGetSearchTextDialog()->GetSearchText().GetBytes(),
 			"r", replaceStr.GetBytes()
-			};
+		};
 		const JString windowTitle = JGetString("ReplaceTitle::CBSearchDocument", map, sizeof(map));
 
 		auto* doc =
@@ -208,7 +208,7 @@ CBSearchDocument::Create
 		const bool ok = doc->GetRecordLink(&link);
 		assert( ok );
 		CBSearchTE::SetProtocol(link);
-		}
+	}
 
 	return JNoError();
 }
@@ -266,10 +266,10 @@ CBSearchDocument::CBSearchDocument
 	CBGetDocumentManager()->SetActiveListDocument(this);
 
 	if (itsIsReplaceFlag)
-		{
+	{
 		itsReplaceTE = jnew CBSearchTE;
 		assert( itsReplaceTE != nullptr );
-		}
+	}
 }
 
 /******************************************************************************
@@ -324,17 +324,17 @@ CBSearchDocument::ProcessFinished
 	)
 {
 	if (!CBExecOutputDocument::ProcessFinished(info))
-		{
+	{
 		return false;
-		}
+	}
 
 	if (itsIsReplaceFlag)
-		{
+	{
 		jdelete itsReplaceTE;
 		itsReplaceTE = nullptr;
 
 		JXGetApplication()->Resume();
-		}
+	}
 
 	jdelete itsIndicator;
 	itsIndicator = nullptr;
@@ -342,15 +342,15 @@ CBSearchDocument::ProcessFinished
 	SetFileDisplayVisible(true);
 
 	if (!itsFoundFlag)
-		{
+	{
 		CBExecOutputDocument::AppendText(JGetString("NoMatches::CBSearchDocument"));
 		DataReverted();
 		GetTextEditor()->GetText()->ClearUndo();
-		}
+	}
 	else if (!GetTextEditor()->HasSelection())
-		{
+	{
 		ShowFirstMatch();
-		}
+	}
 
 	return true;
 }
@@ -369,14 +369,14 @@ CBSearchDocument::AppendText
 	)
 {
 	if (text.IsEmpty())
-		{
+	{
 		return;
-		}
+	}
 	else if (text.GetFirstCharacter() == CBSearchTE::kIncrementProgress)
-		{
+	{
 		itsIndicator->IncrementValue();
 		return;
-		}
+	}
 
 	CBTextEditor* te = GetTextEditor();
 
@@ -387,7 +387,7 @@ CBSearchDocument::AppendText
 	JStyledText* st = te->GetText();
 
 	if (text.GetFirstCharacter() == CBSearchTE::kError)
-		{
+	{
 		input.ignore();
 		JString msg;
 		JReadAll(input, &msg);
@@ -399,25 +399,25 @@ CBSearchDocument::AppendText
 						 GetErrorStyle(), true);
 
 		te->Paste(itsOnlyListFilesFlag ? JString::newline : kDoubleNewline);
-		}
+	}
 	else if (itsOnlyListFilesFlag)
-		{
+	{
 		JString fileName;
 		input >> fileName;
 		CBExecOutputDocument::AppendText(fileName);
 
 		if (itsIsReplaceFlag)
-			{
-			ReplaceAll(fileName);
-			}
-		}
-	else
 		{
+			ReplaceAll(fileName);
+		}
+	}
+	else
+	{
 		JUtf8Byte mode;
 		input.get(mode);
 
 		if (mode == CBSearchTE::kNewMatchLine)
-			{
+		{
 			JString fileName;
 			JUInt64 lineIndex;
 			JString text1;
@@ -458,9 +458,9 @@ CBSearchDocument::AppendText
 			// save text range in case of multiple matches
 
 			itsPrevQuoteIndex = start;
-			}
+		}
 		else
-			{
+		{
 			assert( mode == CBSearchTE::kRepeatMatchLine &&
 					itsPrevQuoteIndex.charIndex > 1 );
 
@@ -474,10 +474,10 @@ CBSearchDocument::AppendText
 			matchByteRange += itsPrevQuoteIndex.byteIndex - 1;
 			st->SetFontStyle(JStyledText::TextRange(matchCharRange, matchByteRange),
 							 GetMatchStyle(), true);
-			}
+		}
 
 		itsMatchMenu->Activate();
-		}
+	}
 }
 
 /******************************************************************************
@@ -495,26 +495,26 @@ CBSearchDocument::ReplaceAll
 
 	JXFileDocument* doc;
 	if (CBGetDocumentManager()->FileDocumentIsOpen(fileName, &doc))
-		{
+	{
 		auto* textDoc = dynamic_cast<CBTextDocument*>(doc);
 		if (textDoc != nullptr)
-			{
+		{
 			(textDoc->GetWindow())->Update();
 
 			CBTextEditor* te = textDoc->GetTextEditor();
 			te->SetCaretLocation(1);
 			te->ReplaceAll(false);
-			}
 		}
+	}
 	else if (JFileReadable(fileName) &&
 			 itsReplaceTE->GetText()->ReadPlainText(fileName, &format, false))
-		{
+	{
 		itsReplaceTE->SetCaretLocation(1);
 		if (itsReplaceTE->ReplaceAllForward())
-			{
+		{
 			itsReplaceTE->GetText()->WritePlainText(fileName, format);
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -528,9 +528,9 @@ void
 CBSearchDocument::OpenPrevListItem()
 {
 	if (ShowPrevMatch())
-		{
+	{
 		GetTextEditor()->OpenSelection();
-		}
+	}
 }
 
 /******************************************************************************
@@ -544,9 +544,9 @@ void
 CBSearchDocument::OpenNextListItem()
 {
 	if (ShowNextMatch())
-		{
+	{
 		GetTextEditor()->OpenSelection();
-		}
+	}
 }
 
 /******************************************************************************
@@ -582,21 +582,21 @@ CBSearchDocument::Receive
 	)
 {
 	if (sender == itsMatchMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		UpdateMatchMenu();
-		}
+	}
 	else if (sender == itsMatchMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleMatchMenu(selection->GetIndex());
-		}
+	}
 
 	else
-		{
+	{
 		CBExecOutputDocument::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -624,23 +624,23 @@ CBSearchDocument::HandleMatchMenu
 	CBGetDocumentManager()->SetActiveListDocument(this);
 
 	if (index == kFirstMatchCmd)
-		{
+	{
 		ShowFirstMatch();
-		}
+	}
 
 	else if (index == kPrevMatchCmd)
-		{
+	{
 		ShowPrevMatch();
-		}
+	}
 	else if (index == kNextMatchCmd)
-		{
+	{
 		ShowNextMatch();
-		}
+	}
 
 	else if (index == kOpenFileCmd)
-		{
+	{
 		GetTextEditor()->OpenSelection();
-		}
+	}
 }
 
 /******************************************************************************
@@ -678,15 +678,15 @@ CBSearchDocument::ShowPrevMatch()
 
 	bool wrapped;
 	if (te->JTextEditor::SearchBackward(jMatchFileName, false, &wrapped))
-		{
+	{
 		te->TEScrollToSelection(true);
 		return true;
-		}
+	}
 	else
-		{
+	{
 		GetDisplay()->Beep();
 		return false;
-		}
+	}
 }
 
 /******************************************************************************
@@ -702,15 +702,15 @@ CBSearchDocument::ShowNextMatch()
 
 	bool wrapped;
 	if (te->JTextEditor::SearchForward(jMatchFileName, false, &wrapped))
-		{
+	{
 		te->TEScrollToSelection(true);
 		return true;
-		}
+	}
 	else
-		{
+	{
 		GetDisplay()->Beep();
 		return false;
-		}
+	}
 }
 
 /******************************************************************************

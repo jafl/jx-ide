@@ -13,20 +13,20 @@
 #include "cbmUtil.h"
 #include "cmGlobals.h"
 #include "cmActionDefs.h"
-#include <JXWindow.h>
-#include <JXMenuBar.h>
-#include <JXTextMenu.h>
-#include <JXInputField.h>
-#include <JXSelectionManager.h>
-#include <JXTextSelection.h>
-#include <JXColorManager.h>
-#include <JTree.h>
-#include <JNamedTreeList.h>
-#include <JTableSelection.h>
-#include <JPainter.h>
-#include <JFontManager.h>
-#include <jASCIIConstants.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXMenuBar.h>
+#include <jx-af/jx/JXTextMenu.h>
+#include <jx-af/jx/JXInputField.h>
+#include <jx-af/jx/JXSelectionManager.h>
+#include <jx-af/jx/JXTextSelection.h>
+#include <jx-af/jx/JXColorManager.h>
+#include <jx-af/jcore/JTree.h>
+#include <jx-af/jcore/JNamedTreeList.h>
+#include <jx-af/jcore/JTableSelection.h>
+#include <jx-af/jcore/JPainter.h>
+#include <jx-af/jcore/JFontManager.h>
+#include <jx-af/jcore/jASCIIConstants.h>
+#include <jx-af/jcore/jAssert.h>
 
 const JIndex kValueColIndex = 3;
 const JCoordinate kHMargin  = 5;
@@ -133,9 +133,9 @@ CMVarTreeWidget::CMVarTreeWidget
 	ListenTo(&GetTableSelection());
 
 	if (mainDisplay)
-		{
+	{
 		ListenTo(GetWindow());
-		}
+	}
 }
 
 /******************************************************************************
@@ -164,9 +164,9 @@ CMVarTreeWidget::NewExpression
 								   expr, expr, JString::empty);
 	assert( node != nullptr );
 	if (expr.IsEmpty())
-		{
+	{
 		node->SetName(JString::empty);		// compensate for ctor using " " instead of ""
-		}
+	}
 
 	JIndex i;
 	const bool found = GetNamedTreeList()->FindNode(node, &i);
@@ -210,10 +210,10 @@ CMVarTreeWidget::ShowNode
 {
 	JIndex i;
 	if (GetTreeList()->FindNode(node, &i))
-		{
+	{
 		SelectSingleCell(JPoint(GetNodeColIndex(), i));
 		ClearIncrementalSearchBuffer();
-		}
+	}
 }
 
 /******************************************************************************
@@ -228,14 +228,14 @@ CMVarTreeWidget::WatchExpression()
 	JPoint cell;
 	JString expr;
 	while (iter.Next(&cell))
-		{
+	{
 		auto* node =
 			dynamic_cast<CMVarNode*>(GetTreeList()->GetNode(cell.y));
 		assert( node != nullptr );
 
 		expr = node->GetFullName();
 		CMGetLink()->WatchExpression(expr);
-		}
+	}
 
 	ClearIncrementalSearchBuffer();
 }
@@ -252,14 +252,14 @@ CMVarTreeWidget::WatchLocation()
 	JPoint cell;
 	JString expr;
 	while (iter.Next(&cell))
-		{
+	{
 		auto* node =
 			dynamic_cast<CMVarNode*>(GetTreeList()->GetNode(cell.y));
 		assert( node != nullptr );
 
 		expr = node->GetFullName();
 		CMGetLink()->WatchLocation(expr);
-		}
+	}
 
 	ClearIncrementalSearchBuffer();
 }
@@ -278,7 +278,7 @@ CMVarTreeWidget::DisplayAsCString()
 	JPoint cell;
 	JString expr;
 	while (iter.Next(&cell))
-		{
+	{
 		auto* node =
 			dynamic_cast<CMVarNode*>(GetTreeList()->GetNode(cell.y));
 		assert( node != nullptr );
@@ -287,15 +287,15 @@ CMVarTreeWidget::DisplayAsCString()
 		expr.Prepend("(char*)(");
 		expr.Append(")");
 		exprList.Append(expr);
-		}
+	}
 
 	// DisplayExpression() messes with selection
 
 	const JSize count = exprList.GetElementCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		itsDir->DisplayExpression(*(exprList.GetElement(i)));
-		}
+	}
 
 	ClearIncrementalSearchBuffer();
 }
@@ -312,14 +312,14 @@ CMVarTreeWidget::Display1DArray()
 	JPoint cell;
 	JString expr;
 	while (iter.Next(&cell))
-		{
+	{
 		auto* node =
 			dynamic_cast<CMVarNode*>(GetTreeList()->GetNode(cell.y));
 		assert( node != nullptr );
 
 		expr = node->GetFullName();
 		itsDir->Display1DArray(expr);
-		}
+	}
 
 	ClearIncrementalSearchBuffer();
 }
@@ -336,14 +336,14 @@ CMVarTreeWidget::Plot1DArray()
 	JPoint cell;
 	JString expr;
 	while (iter.Next(&cell))
-		{
+	{
 		auto* node =
 			dynamic_cast<CMVarNode*>(GetTreeList()->GetNode(cell.y));
 		assert( node != nullptr );
 
 		expr = node->GetFullName();
 		itsDir->Plot1DArray(expr);
-		}
+	}
 
 	ClearIncrementalSearchBuffer();
 }
@@ -360,14 +360,14 @@ CMVarTreeWidget::Display2DArray()
 	JPoint cell;
 	JString expr;
 	while (iter.Next(&cell))
-		{
+	{
 		auto* node =
 			dynamic_cast<CMVarNode*>(GetTreeList()->GetNode(cell.y));
 		assert( node != nullptr );
 
 		expr = node->GetFullName();
 		itsDir->Display2DArray(expr);
-		}
+	}
 
 	ClearIncrementalSearchBuffer();
 }
@@ -388,7 +388,7 @@ CMVarTreeWidget::ExamineMemory
 	JString expr;
 	CMMemoryDir* dir = nullptr;
 	while (iter.Next(&cell))
-		{
+	{
 		auto* node =
 			dynamic_cast<CMVarNode*>(GetTreeList()->GetNode(cell.y));
 		assert( node != nullptr );
@@ -399,15 +399,15 @@ CMVarTreeWidget::ExamineMemory
 		assert(dir != nullptr);
 		dir->SetDisplayType(type);
 		dir->Activate();
-		}
+	}
 
 	if (dir == nullptr)
-		{
+	{
 		dir = jnew CMMemoryDir(itsDir, JString::empty);
 		assert(dir != nullptr);
 		dir->SetDisplayType(type);
 		dir->Activate();
-		}
+	}
 
 	ClearIncrementalSearchBuffer();
 }
@@ -435,12 +435,12 @@ CMVarTreeWidget::ReadSetup
 	JString expr;
 	JSize base;
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		input >> expr >> base;
 
 		CMVarNode* node = DisplayExpression(expr);
 		node->SetBase(base);
-		}
+	}
 }
 
 /******************************************************************************
@@ -462,11 +462,11 @@ CMVarTreeWidget::WriteSetup
 	output << ' ' << count;
 
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		CMVarNode* node = root->GetVarChild(i);
 		output << ' ' << node->GetName();
 		output << ' ' << node->GetBase();
-		}
+	}
 }
 
 /******************************************************************************
@@ -492,13 +492,13 @@ CMVarTreeWidget::RemoveSelection()
 	JTableSelectionIterator iter(&(GetTableSelection()));
 	JPoint cell;
 	while (iter.Next(&cell))
-		{
+	{
 		JTreeNode* node = GetTreeList()->GetNode(cell.y);
 		if (node->GetDepth() == 1)
-			{
+		{
 			jdelete node;
-			}
 		}
+	}
 
 	ClearIncrementalSearchBuffer();
 }
@@ -543,7 +543,7 @@ CMVarTreeWidget::TableDrawCell
 	)
 {
 	if (JIndex(cell.x) == kValueColIndex)
-		{
+	{
 		const JPoint fakeCell(GetNodeColIndex(), cell.y);
 		HilightIfSelected(p, fakeCell, rect);
 
@@ -555,11 +555,11 @@ CMVarTreeWidget::TableDrawCell
 		font.SetStyle(node->GetFontStyle());
 		p.SetFont(font);
 		p.String(rect, node->GetValue(), JPainter::kHAlignLeft, JPainter::kVAlignCenter);
-		}
+	}
 	else
-		{
+	{
 		JXNamedTreeListWidget::TableDrawCell(p, cell, rect);
-		}
+	}
 }
 
 /******************************************************************************
@@ -575,17 +575,17 @@ CMVarTreeWidget::GetMinCellWidth
 	const
 {
 	if (JIndex(cell.x) > GetNodeColIndex())
-		{
+	{
 		const auto* node =
 			dynamic_cast<const CMVarNode*>(GetTreeList()->GetNode(cell.y));
 		assert( node != nullptr );
 
 		return kHMargin + GetFont().GetStringWidth(GetFontManager(), node->GetValue());
-		}
+	}
 	else
-		{
+	{
 		return JXNamedTreeListWidget::GetMinCellWidth(cell);
-		}
+	}
 }
 
 /******************************************************************************
@@ -608,61 +608,61 @@ CMVarTreeWidget::HandleMouseDown
 
 	JPoint cell;
 	if (ScrollForWheel(button, modifiers))
-		{
+	{
 		// work has been done
-		}
+	}
 	else if (!GetCell(pt, &cell))
-		{
+	{
 		(GetTableSelection()).ClearSelection();
-		}
+	}
 	else if (JIndex(cell.x) == GetToggleOpenColIndex())
-		{
+	{
 		itsDragType = kOpenNodeDrag;
 		JXNamedTreeListWidget::HandleMouseDown(pt, button, clickCount,
 											   buttonStates, modifiers);
-		}
+	}
 	else if (button == kJXRightButton)
-		{
+	{
 		JTableSelection& s = GetTableSelection();
 		JPoint fakeCell(GetNodeColIndex(), cell.y);
 		if (!s.HasSelection() || !s.IsSelected(fakeCell))
-			{
-			SelectSingleCell(fakeCell);
-			}
-		itsBasePopupMenu->PopUp(this, pt, buttonStates, modifiers);
-		}
-	else if (clickCount == 1)
 		{
+			SelectSingleCell(fakeCell);
+		}
+		itsBasePopupMenu->PopUp(this, pt, buttonStates, modifiers);
+	}
+	else if (clickCount == 1)
+	{
 		itsDragType = kSelectDrag;
 		cell.x      = GetNodeColIndex();
 		BeginSelectionDrag(cell, button, modifiers);
-		}
+	}
 	else if (clickCount == 2 && JIndex(cell.x) == GetNodeColIndex())
-		{
+	{
 		const JTreeNode* node = GetTreeList()->GetNode(cell.y);
 		if (itsIsMainDisplayFlag && node->GetDepth() == 1)
-			{
+		{
 			BeginEditing(cell);
-			}
+		}
 		else
-			{
+		{
 			const auto* varNode = dynamic_cast<const CMVarNode*>(node);
 			assert( varNode != nullptr );
 			const JString expr = varNode->GetFullName();
 			if (itsIsMainDisplayFlag)
-				{
+			{
 				NewExpression(expr);	// avoid Activate()
-				}
+			}
 			else
-				{
+			{
 				itsDir->DisplayExpression(expr);
-				}
 			}
 		}
+	}
 	else if (clickCount == 2 && JIndex(cell.x) == kValueColIndex)
-		{
+	{
 		BeginEditing(cell);
-		}
+	}
 }
 
 /******************************************************************************
@@ -679,11 +679,11 @@ CMVarTreeWidget::HandleMouseDrag
 	)
 {
 	if (itsDragType == kOpenNodeDrag)
-		{
+	{
 		JXNamedTreeListWidget::HandleMouseDrag(pt, buttonStates, modifiers);
-		}
+	}
 	else if (IsDraggingSelection())
-		{
+	{
 		ScrollForDrag(pt);
 
 		JPoint cell;
@@ -692,7 +692,7 @@ CMVarTreeWidget::HandleMouseDrag
 
 		cell.x = GetNodeColIndex();
 		JTable::ContinueSelectionDrag(cell);
-		}
+	}
 }
 
 /******************************************************************************
@@ -710,13 +710,13 @@ CMVarTreeWidget::HandleMouseUp
 	)
 {
 	if (itsDragType == kOpenNodeDrag)
-		{
+	{
 		JXNamedTreeListWidget::HandleMouseUp(pt, button, buttonStates, modifiers);
-		}
+	}
 	else if (IsDraggingSelection())
-		{
+	{
 		FinishSelectionDrag();
-		}
+	}
 
 	itsDragType = kInvalidDrag;
 }
@@ -735,55 +735,55 @@ CMVarTreeWidget::HandleKeyPress
 	)
 {
 	if (c == kJReturnKey)
-		{
+	{
 		EndEditing();
-		}
+	}
 
 	else if (c == kJForwardDeleteKey || c == kJDeleteKey)
-		{
+	{
 		if (itsIsMainDisplayFlag)
-			{
+		{
 			RemoveSelection();
-			}
 		}
+	}
 
 	else if (c == kJEscapeKey)
-		{
+	{
 		JPoint cell;
 		if (GetEditedCell(&cell))
-			{
+		{
 			CancelEditing();
 			JTreeNode* node = GetTreeList()->GetNode(cell.y);
 			if (itsEditingNewNodeFlag &&
 				JIndex(cell.x) == GetNodeColIndex() && node->GetDepth() == 1)
-				{
+			{
 				jdelete node;
-				}
 			}
 		}
+	}
 
 	else if ((c == kJUpArrow || c == kJDownArrow) && !IsEditing())
-		{
+	{
 		const bool hasSelection = HasSelection();
 		if (!hasSelection && c == kJUpArrow && GetRowCount() > 0)
-			{
+		{
 			SelectSingleCell(JPoint(GetNodeColIndex(), GetRowCount()));
-			}
-		else if (!hasSelection && c == kJDownArrow && GetRowCount() > 0)
-			{
-			SelectSingleCell(JPoint(GetNodeColIndex(), 1));
-			}
-		else
-			{
-			HandleSelectionKeyPress(c, modifiers);
-			}
-		ClearIncrementalSearchBuffer();
 		}
+		else if (!hasSelection && c == kJDownArrow && GetRowCount() > 0)
+		{
+			SelectSingleCell(JPoint(GetNodeColIndex(), 1));
+		}
+		else
+		{
+			HandleSelectionKeyPress(c, modifiers);
+		}
+		ClearIncrementalSearchBuffer();
+	}
 
 	else
-		{
+	{
 		JXNamedTreeListWidget::HandleKeyPress(c, keySym, modifiers);
-		}
+	}
 }
 
 /******************************************************************************
@@ -806,12 +806,12 @@ CMVarTreeWidget::CreateXInputField
 
 	JXInputField* input = JXNamedTreeListWidget::CreateXInputField(cell, x,y, w,h);
 	if (JIndex(cell.x) == kValueColIndex)
-		{
+	{
 		auto* node =
 			dynamic_cast<CMVarNode*>(GetTreeList()->GetNode(cell.y));
 		assert( node != nullptr );
 		input->GetText()->SetText(node->GetValue());
-		}
+	}
 
 	itsOrigEditValue = input->GetText()->GetText();
 
@@ -842,22 +842,22 @@ CMVarTreeWidget::ExtractInputData
 
 	if (JIndex(cell.x) == GetNodeColIndex() &&
 		JXNamedTreeListWidget::ExtractInputData(cell))
-		{
+	{
 		return true;
-		}
+	}
 	else if (JIndex(cell.x) == kValueColIndex && !text.IsEmpty())
-		{
+	{
 		if (text != itsOrigEditValue)
-			{
+		{
 			const JString name = node->GetFullName();
 			CMGetLink()->SetValue(name, text);
-			}
+		}
 		return true;
-		}
+	}
 	else
-		{
+	{
 		return false;
-		}
+	}
 }
 
 /******************************************************************************
@@ -873,9 +873,9 @@ CMVarTreeWidget::Receive
 	)
 {
 	if (sender == CMGetLink() && message.Is(CMLink::kProgramFinished))
-		{
+	{
 		FlushOldData();
-		}
+	}
 	else if (sender == CMGetLink() &&
 			 (message.Is(CMLink::kProgramRunning)       ||
 			  message.Is(CMLink::kFrameChanged)         ||
@@ -886,73 +886,73 @@ CMVarTreeWidget::Receive
 			  message.Is(CMLink::kAttachedToProcess)    ||
 			  message.Is(CMLink::kDetachedFromProcess)  ||
 			  (message.Is(CMLink::kValueChanged) && !IsEditing())))
-		{
+	{
 		CancelEditing();
-		}
+	}
 
 	else if (sender == CMGetLink() && message.Is(CMLink::kDebuggerRestarted))
-		{
+	{
 		itsWaitingForReloadFlag = true;
 		CancelEditing();
-		}
+	}
 	else if (sender == CMGetLink() && message.Is(CMLink::kDebuggerStarted))
-		{
+	{
 		if (!itsWaitingForReloadFlag)
-			{
+		{
 			(itsTree->GetRoot())->DeleteAllChildren();
-			}
-		itsWaitingForReloadFlag = false;
 		}
+		itsWaitingForReloadFlag = false;
+	}
 
 	else if (sender == itsEditMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		if (HasFocus())
-			{
+		{
 			UpdateEditMenu();
-			}
 		}
+	}
 	else if (sender == itsEditMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		if (HasFocus())
-			{
+		{
 			const auto* selection =
 				dynamic_cast<const JXMenu::ItemSelected*>(&message);
 			assert( selection != nullptr );
 			HandleEditMenu(selection->GetIndex());
-			}
 		}
+	}
 
 	else if (sender == itsBaseMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		UpdateBaseMenu(itsBaseMenu);
-		}
+	}
 	else if (sender == itsBasePopupMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		UpdateBaseMenu(itsBasePopupMenu);
-		}
+	}
 	else if ((sender == itsBaseMenu || sender == itsBasePopupMenu) &&
 			 message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleBaseMenu(selection->GetIndex());
-		}
+	}
 
 	else if (sender == GetWindow() && message.Is(JXWindow::kIconified))
-		{
+	{
 		ShouldUpdate(false);
-		}
+	}
 	else if (sender == GetWindow() && message.Is(JXWindow::kDeiconified))
-		{
+	{
 		ShouldUpdate(true);
-		}
+	}
 
 	else
-		{
+	{
 		JTableSelection& s = GetTableSelection();
 		if (sender == &s && message.Is(JTableData::kRectChanged))
-			{
+		{
 			// refresh value column to show fake selection
 
 			const auto* selection =
@@ -961,10 +961,10 @@ CMVarTreeWidget::Receive
 			JRect r = selection->GetRect();
 			r.right = kValueColIndex;
 			TableRefreshCellRect(r);
-			}
+		}
 
 		JXNamedTreeListWidget::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -979,9 +979,9 @@ CMVarTreeWidget::ReceiveGoingAway
 	)
 {
 	if (!CMIsShuttingDown())
-		{
+	{
 		ListenTo(CMGetLink());
-		}
+	}
 
 	JXNamedTreeListWidget::ReceiveGoingAway(sender);
 }
@@ -1013,12 +1013,12 @@ CMVarTreeWidget::FlushOldData()
 	JTreeNode* root   = itsTree->GetRoot();
 	const JSize count = root->GetChildCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		auto* child = dynamic_cast<CMVarNode*>(root->GetChild(i));
 		assert( child != nullptr );
 		child->DeleteAllChildren();
 		child->SetValue(JString::empty);
-		}
+	}
 }
 
 /******************************************************************************
@@ -1033,19 +1033,19 @@ CMVarTreeWidget::UpdateEditMenu()
 
 	JIndex index;
 	if (te->EditMenuCmdToIndex(JTextEditor::kSelectAllCmd, &index))
-		{
+	{
 		itsEditMenu->EnableItem(index);
-		}
+	}
 
 	if ((GetTableSelection()).HasSelection() &&
 		te->EditMenuCmdToIndex(JTextEditor::kCopyCmd, &index))
-		{
+	{
 		assert( itsCopyPathCmdIndex == index+1 );
 
 		itsEditMenu->EnableItem(index);
 		itsEditMenu->EnableItem(itsCopyPathCmdIndex);
 		itsEditMenu->EnableItem(itsCopyValueCmdIndex);
-		}
+	}
 }
 
 /******************************************************************************
@@ -1063,28 +1063,28 @@ CMVarTreeWidget::HandleEditMenu
 
 	JTextEditor::CmdIndex cmd;
 	if (!GetEditMenuHandler()->EditMenuIndexToCmd(index, &cmd))
-		{
+	{
 		cmd = JTextEditor::kSeparatorCmd;
-		}
+	}
 
 	if (cmd == JTextEditor::kCopyCmd)
-		{
+	{
 		CopySelectedItems(false, false);
-		}
+	}
 	else if (index == itsCopyPathCmdIndex)
-		{
+	{
 		CopySelectedItems(true, false);
-		}
+	}
 	else if (index == itsCopyValueCmdIndex)
-		{
+	{
 		CopySelectedItems(false, true);
-		}
+	}
 	else if (cmd == JTextEditor::kSelectAllCmd)
-		{
+	{
 		JTableSelection& s = GetTableSelection();
 		s.ClearSelection();
 		s.SelectCol(GetNodeColIndex());
-		}
+	}
 }
 
 /******************************************************************************
@@ -1102,35 +1102,35 @@ CMVarTreeWidget::CopySelectedItems
 {
 	const JTableSelection& s = GetTableSelection();
 	if (s.HasSelection())
-		{
+	{
 		JPtrArray<JString> list(JPtrArrayT::kDeleteAll);
 
 		JTableSelectionIterator iter(&s);
 		JPoint cell;
 		while (iter.Next(&cell))
-			{
+		{
 			const auto* node =
 				dynamic_cast<const CMVarNode*>(GetTreeList()->GetNode(cell.y));
 			assert( node != nullptr );
 			if (copyValue)
-				{
+			{
 				list.Append(node->GetValue());
-				}
-			else if (useFullName)
-				{
-				list.Append(node->GetFullName());
-				}
-			else
-				{
-				list.Append(node->GetName());
-				}
 			}
+			else if (useFullName)
+			{
+				list.Append(node->GetFullName());
+			}
+			else
+			{
+				list.Append(node->GetName());
+			}
+		}
 
 		auto* data = jnew JXTextSelection(GetDisplay(), list);
 		assert( data != nullptr );
 
 		GetSelectionManager()->SetData(kJXClipboardName, data);
-		}
+	}
 }
 
 /******************************************************************************
@@ -1149,37 +1149,37 @@ CMVarTreeWidget::UpdateBaseMenu
 	JTableSelectionIterator iter(&(GetTableSelection()));
 	JPoint cell;
 	while (iter.Next(&cell))
-		{
+	{
 		const auto* node =
 			dynamic_cast<const CMVarNode*>(GetTreeList()->GetNode(cell.y));
 		assert( node != nullptr );
 		const JInteger b = node->GetBase();
 
 		if (base >= 0 && b != base)
-			{
+		{
 			menu->EnableAll();
 			return;
-			}
-		base = b;
 		}
+		base = b;
+	}
 
 	if (base < 0)
-		{
+	{
 		menu->DisableAll();
-		}
+	}
 	else
-		{
+	{
 		menu->EnableAll();
 
 		for (JUnsignedOffset i=0; i<kBaseCount; i++)
-			{
+		{
 			if (JSize(base) == kMenuIndexToBase[i])
-				{
+			{
 				menu->CheckItem(i+1);
 				break;
-				}
 			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -1201,10 +1201,10 @@ CMVarTreeWidget::HandleBaseMenu
 	JTableSelectionIterator iter(&(GetTableSelection()));
 	JPoint cell;
 	while (iter.Next(&cell))
-		{
+	{
 		auto* node =
 			dynamic_cast<CMVarNode*>(GetTreeList()->GetNode(cell.y));
 		assert( node != nullptr );
 		node->SetBase(base);
-		}
+	}
 }

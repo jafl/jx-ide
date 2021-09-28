@@ -11,7 +11,7 @@
 #include "GFGAboutDialog.h"
 #include "gfgStringData.h"
 #include "gfgGlobals.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 static const JUtf8Byte* kAppSignature = "forge";
 
@@ -34,21 +34,21 @@ GFGApp::GFGApp
 	*displayAbout = GFGCreateGlobals(this);
 
 	if (!*displayAbout)
-		{
+	{
 		*prevVersStr = GFGGetPrefsManager()->GetPrevVersionStr();
 		if (*prevVersStr == GFGGetVersionNumberStr())
-			{
-			prevVersStr->Clear();
-			}
-		else
-			{
-			*displayAbout = true;
-			}
-		}
-	else
 		{
-		prevVersStr->Clear();
+			prevVersStr->Clear();
 		}
+		else
+		{
+			*displayAbout = true;
+		}
+	}
+	else
+	{
+		prevVersStr->Clear();
+	}
 }
 
 /******************************************************************************
@@ -95,9 +95,9 @@ GFGApp::CleanUpBeforeSuddenDeath
 	JXApplication::CleanUpBeforeSuddenDeath(reason);
 
 	if (reason != JXDocumentManager::kAssertFired)
-		{
+	{
 //		JPrefObject::WritePrefs();
-		}
+	}
 
 	GFGCleanUpBeforeSuddenDeath(reason);		// must be last call
 }

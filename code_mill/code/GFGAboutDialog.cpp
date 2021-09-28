@@ -9,13 +9,13 @@
 
 #include "GFGAboutDialog.h"
 #include "gfgGlobals.h"
-#include <JXWindow.h>
-#include <JXTextButton.h>
-#include <JXStaticText.h>
-#include <JXImageWidget.h>
-#include <JXImage.h>
-#include <JXHelpManager.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXTextButton.h>
+#include <jx-af/jx/JXStaticText.h>
+#include <jx-af/jx/JXImageWidget.h>
+#include <jx-af/jx/JXImage.h>
+#include <jx-af/jx/JXHelpManager.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -103,24 +103,24 @@ GFGAboutDialog::BuildWindow
 
 	JString text = GFGGetVersionStr();
 	if (!prevVersStr.IsEmpty())
-		{
+	{
 		const JUtf8Byte* map[] =
-			{
+		{
 			"vers", prevVersStr.GetBytes()
-			};
+		};
 		text += JGetString("UpgradeNotice::GFGAboutDialog");
 		JGetStringManager()->Replace(&text, map, sizeof(map));
 		itsHelpButton->SetLabel(JGetString("ChangeButtonLabel::GFGAboutDialog"));
 		itsIsUpgradeFlag = true;
-		}
+	}
 	textWidget->GetText()->SetText(text);
 
 	const JSize bdh = textWidget->GetBoundsHeight();
 	const JSize aph = textWidget->GetApertureHeight();
 	if (bdh > aph)
-		{
+	{
 		window->AdjustSize(0, bdh - aph);	// safe to calculate once bdh > aph
-		}
+	}
 }
 
 /******************************************************************************
@@ -138,26 +138,26 @@ GFGAboutDialog::Receive
 	)
 {
 	if (sender == itsHelpButton && message.Is(JXButton::kPushed))
-		{
+	{
 		if (itsIsUpgradeFlag)
-			{
+		{
 			(JXGetHelpManager())->ShowChangeLog();
-			}
-		else
-			{
-			(JXGetHelpManager())->ShowSection("GFGOverviewHelp");
-			}
-		EndDialog(true);
 		}
+		else
+		{
+			(JXGetHelpManager())->ShowSection("GFGOverviewHelp");
+		}
+		EndDialog(true);
+	}
 
 	else if (sender == itsCreditsButton && message.Is(JXButton::kPushed))
-		{
+	{
 		(JXGetHelpManager())->ShowCredits();
 		EndDialog(true);
-		}
+	}
 
 	else
-		{
+	{
 		JXDialogDirector::Receive(sender, message);
-		}
+	}
 }

@@ -16,21 +16,21 @@
 #include "cmGlobals.h"
 #include "cmActionDefs.h"
 
-#include <JXDisplay.h>
-#include <JXWindow.h>
-#include <JXTextMenu.h>
-#include <JXMenuBar.h>
-#include <JXTextButton.h>
-#include <JXStaticText.h>
-#include <JXScrollbarSet.h>
-#include <JXHelpManager.h>
-#include <JXWDManager.h>
-#include <JXWDMenu.h>
-#include <JXImage.h>
-#include <JXCloseDirectorTask.h>
-#include <JXFontManager.h>
+#include <jx-af/jx/JXDisplay.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXTextMenu.h>
+#include <jx-af/jx/JXMenuBar.h>
+#include <jx-af/jx/JXTextButton.h>
+#include <jx-af/jx/JXStaticText.h>
+#include <jx-af/jx/JXScrollbarSet.h>
+#include <jx-af/jx/JXHelpManager.h>
+#include <jx-af/jx/JXWDManager.h>
+#include <jx-af/jx/JXWDMenu.h>
+#include <jx-af/jx/JXImage.h>
+#include <jx-af/jx/JXCloseDirectorTask.h>
+#include <jx-af/jx/JXFontManager.h>
 
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 // File menu
 
@@ -379,23 +379,23 @@ CMMemoryDir::Receive
 	if (sender == itsExprInput &&
 		(message.Is(JXWidget::kLostFocus) ||
 		 message.Is(CMArrayExprInput::kReturnKeyPressed)))
-		{
+	{
 		if (itsExprInput->GetText()->GetText() != itsExpr)
-			{
+		{
 			itsExpr = itsExprInput->GetText()->GetText();
 			UpdateWindowTitle();
 			itsNeedsUpdateFlag = true;
 			Update();
-			}
 		}
+	}
 	else if (sender == itsDisplayTypeMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 
 		if (selection->GetIndex() != (JIndex) itsDisplayType)
-			{
+		{
 			itsDisplayType = (DisplayType) selection->GetIndex();
 
 			// update all other values, too, since menu selection doesn't trigger input fields
@@ -404,84 +404,84 @@ CMMemoryDir::Receive
 
 			JInteger value;
 			if (itsItemCountInput->GetValue(&value))
-				{
+			{
 				itsItemCount = value;
-				}
+			}
 
 			itsNeedsUpdateFlag = true;
 			Update();
-			}
 		}
+	}
 	else if (sender == itsItemCountInput &&
 			 (message.Is(JXWidget::kLostFocus) ||
 			  message.Is(CMArrayIndexInput::kReturnKeyPressed)))
-		{
+	{
 		JInteger value;
 		if (itsItemCountInput->GetValue(&value) && JSize(value) != itsItemCount)
-			{
+		{
 			itsItemCount       = value;
 			itsNeedsUpdateFlag = true;
 			Update();
-			}
 		}
+	}
 
 	else if (sender == itsLink && message.Is(CMLink::kDebuggerRestarted))
-		{
+	{
 		itsWaitingForReloadFlag = true;
-		}
+	}
 	else if (sender == itsLink && message.Is(CMLink::kDebuggerStarted))
-		{
+	{
 		if (!itsWaitingForReloadFlag)
-			{
+		{
 			JXCloseDirectorTask::Close(this);	// close after bcast is finished
-			}
-		itsWaitingForReloadFlag = false;
 		}
+		itsWaitingForReloadFlag = false;
+	}
 	else if (sender == itsLink &&
 			 (message.Is(CMLink::kProgramFinished) ||
 			  message.Is(CMLink::kCoreCleared)     ||
 			  message.Is(CMLink::kDetachedFromProcess)))
-		{
+	{
 		Update(JString::empty);
-		}
+	}
 	else if (sender == itsLink && CMVarNode::ShouldUpdate(message))
-		{
+	{
 		itsNeedsUpdateFlag = true;
 		Update();
-		}
+	}
 
 	else if (sender == itsFileMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleFileMenu(selection->GetIndex());
-		}
+	}
 
 	else if (sender == itsActionMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		UpdateActionMenu();
-		}
+	}
 	else if (sender == itsActionMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleActionMenu(selection->GetIndex());
-		}
+	}
 
 	else if (sender == itsHelpMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleHelpMenu(selection->GetIndex());
-		}
+	}
 
 	else
-		{
+	{
 		JXWindowDirector::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -496,13 +496,13 @@ CMMemoryDir::ReceiveGoingAway
 	)
 {
 	if (sender == itsLink && !CMIsShuttingDown())
-		{
+	{
 		JXCloseDirectorTask::Close(this);
-		}
+	}
 	else
-		{
+	{
 		JXWindowDirector::ReceiveGoingAway(sender);
-		}
+	}
 }
 
 /******************************************************************************
@@ -514,18 +514,18 @@ void
 CMMemoryDir::UpdateDisplayTypeMenu()
 {
 	if (!itsLink->GetFeature(CMLink::kExamineMemory))
-		{
+	{
 		itsDisplayTypeMenu->DisableItem(kHexByte);
 		itsDisplayTypeMenu->DisableItem(kHexShort);
 		itsDisplayTypeMenu->DisableItem(kHexWord);
 		itsDisplayTypeMenu->DisableItem(kHexLong);
 		itsDisplayTypeMenu->DisableItem(kChar);
-		}
+	}
 
 	if (!itsLink->GetFeature(CMLink::kDisassembleMemory))
-		{
+	{
 		itsDisplayTypeMenu->DisableItem(kAsm);
-		}
+	}
 }
 
 /******************************************************************************
@@ -540,10 +540,10 @@ CMMemoryDir::SetDisplayType
 	)
 {
 	if (itsDisplayTypeMenu->IsEnabled(type))
-		{
+	{
 		itsDisplayType = type;
 		itsDisplayTypeMenu->SetPopupChoice(type);
-		}
+	}
 }
 
 /******************************************************************************
@@ -555,14 +555,14 @@ void
 CMMemoryDir::Update()
 {
 	if (itsShouldUpdateFlag && itsNeedsUpdateFlag)
-		{
+	{
 		itsNeedsUpdateFlag = false;
 
 		if (itsCmd != nullptr)
-			{
+		{
 			itsCmd->CMCommand::Send();
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -591,18 +591,18 @@ CMMemoryDir::HandleFileMenu
 	)
 {
 	if (index == kOpenCmd)
-		{
+	{
 		itsCommandDir->OpenSourceFiles();
-		}
+	}
 
 	else if (index == kCloseWindowCmd)
-		{
+	{
 		Close();
-		}
+	}
 	else if (index == kQuitCmd)
-		{
+	{
 		JXGetApplication()->Quit();
-		}
+	}
 }
 
 /******************************************************************************
@@ -628,9 +628,9 @@ CMMemoryDir::HandleActionMenu
 	)
 {
 	if (index == kSavePrefsCmd)
-		{
+	{
 		CMGetPrefsManager()->SaveWindowSize(kMemoryWindSizeID, GetWindow());
-		}
+	}
 }
 
 /******************************************************************************
@@ -645,29 +645,29 @@ CMMemoryDir::HandleHelpMenu
 	)
 {
 	if (index == kAboutCmd)
-		{
+	{
 		(CMGetApplication())->DisplayAbout();
-		}
+	}
 
 	else if (index == kTOCCmd)
-		{
+	{
 		JXGetHelpManager()->ShowTOC();
-		}
+	}
 	else if (index == kOverviewCmd)
-		{
+	{
 		JXGetHelpManager()->ShowSection("CMOverviewHelp");
-		}
+	}
 	else if (index == kThisWindowCmd)
-		{
+	{
 		JXGetHelpManager()->ShowSection("CMVarTreeHelp-Memory");
-		}
+	}
 
 	else if (index == kChangesCmd)
-		{
+	{
 		JXGetHelpManager()->ShowChangeLog();
-		}
+	}
 	else if (index == kCreditsCmd)
-		{
+	{
 		JXGetHelpManager()->ShowCredits();
-		}
+	}
 }

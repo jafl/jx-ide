@@ -12,11 +12,11 @@
 #include "CBCharActionTable.h"
 #include "CBMacroManager.h"
 #include "CBMacroTable.h"
-#include <JXTextButton.h>
-#include <JXInputField.h>
-#include <JStringTableData.h>
-#include <JTableSelection.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXTextButton.h>
+#include <jx-af/jx/JXInputField.h>
+#include <jx-af/jcore/JStringTableData.h>
+#include <jx-af/jcore/JTableSelection.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -68,22 +68,22 @@ CBMacroSetTable::CBMacroSetTable
 	const JSize count = itsMacroList->GetElementCount();
 	data->AppendRows(count);
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		const CBPrefsManager::MacroSetInfo info = itsMacroList->GetElement(i);
 		data->SetString(i,1, *(info.name));
-		}
+	}
 
 	JTableSelection& s = GetTableSelection();
 	ListenTo(&s);
 
 	if (data->RowIndexValid(initialSelection))
-		{
+	{
 		s.SelectCell(initialSelection,1);
-		}
+	}
 	else if (data->GetRowCount() > 0)
-		{
+	{
 		s.SelectCell(1,1);
-		}
+	}
 }
 
 /******************************************************************************
@@ -94,17 +94,17 @@ CBMacroSetTable::CBMacroSetTable
 CBMacroSetTable::~CBMacroSetTable()
 {
 	if (itsOwnsMacroListFlag)
-		{
+	{
 		const JSize count = itsMacroList->GetElementCount();
 		for (JIndex i=1; i<=count; i++)
-			{
+		{
 			CBPrefsManager::MacroSetInfo info = itsMacroList->GetElement(i);
 			jdelete info.name;
 			jdelete info.action;
 			jdelete info.macro;
-			}
-		jdelete itsMacroList;
 		}
+		jdelete itsMacroList;
+	}
 
 	jdelete GetStringData();
 }
@@ -139,15 +139,15 @@ CBMacroSetTable::GetCurrentMacroSetName
 {
 	if (itsMacroIndex > 0 &&
 		const_cast<CBMacroSetTable*>(this)->EndEditing())
-		{
+	{
 		*name = GetStringData()->GetString(itsMacroIndex, 1);
 		return true;
-		}
+	}
 	else
-		{
+	{
 		name->Clear();
 		return false;
-		}
+	}
 }
 
 /******************************************************************************
@@ -174,17 +174,17 @@ CBMacroSetTable::GetMacroList
 	JStringTableData* data = GetStringData();
 	const JSize count      = data->GetRowCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		CBPrefsManager::MacroSetInfo info = itsMacroList->GetElement(i);
 		*(info.name) = data->GetString(i,1);
-		}
+	}
 
 	if (itsMacroIndex > 0)
-		{
+	{
 		CBPrefsManager::MacroSetInfo info = itsMacroList->GetElement(itsMacroIndex);
 		itsActionTable->GetData(info.action);
 		itsMacroTable->GetData(info.macro);
-		}
+	}
 
 	*firstNewID = itsFirstNewID;
 	*lastNewID  = itsLastNewID;
@@ -210,13 +210,13 @@ CBMacroSetTable::HandleMouseDown
 {
 	JPoint cell;
 	if (button == kJXLeftButton && GetCell(pt, &cell))
-		{
+	{
 		BeginEditing(cell);
-		}
+	}
 	else
-		{
+	{
 		ScrollForWheel(button, modifiers);
-		}
+	}
 }
 
 /******************************************************************************
@@ -232,23 +232,23 @@ CBMacroSetTable::Receive
 	)
 {
 	if (sender == itsAddRowButton && message.Is(JXButton::kPushed))
-		{
+	{
 		AddRow();
-		}
+	}
 	else if (sender == itsRemoveRowButton && message.Is(JXButton::kPushed))
-		{
+	{
 		RemoveRow();
-		}
+	}
 
 	else
-		{
+	{
 		if (sender == &(GetTableSelection()))
-			{
+		{
 			SwitchDisplay();
-			}
+		}
 
 		JXStringTable::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -260,7 +260,7 @@ void
 CBMacroSetTable::AddRow()
 {
 	if (ContentsValid())
-		{
+	{
 		itsLastNewID++;
 		CBPrefsManager::MacroSetInfo info(itsLastNewID, jnew JString("New"),
 										  jnew CBCharActionManager,
@@ -276,7 +276,7 @@ CBMacroSetTable::AddRow()
 		const JPoint newCell(1, GetRowCount());
 		data->SetString(newCell, *(info.name));
 		BeginEditing(newCell);
-		}
+	}
 }
 
 /******************************************************************************
@@ -299,11 +299,11 @@ CBMacroSetTable::RemoveRow()
 	jdelete info.macro;
 
 	if (itsFirstNewID <= info.id && info.id == itsLastNewID)
-		{
+	{
 		itsLastNewID--;
-		}
+	}
 	else if (itsFirstNewID <= info.id && info.id < itsLastNewID)
-		{
+	{
 		JIndex index;
 		const bool found =
 			CBPrefsManager::FindMacroID(*itsMacroList, itsLastNewID, &index);
@@ -314,7 +314,7 @@ CBMacroSetTable::RemoveRow()
 		itsMacroList->SetElement(index, info2);
 
 		itsLastNewID--;
-		}
+	}
 
 	// itsMacroIndex must be 0 when SwitchDisplay() is called
 
@@ -335,15 +335,15 @@ void
 CBMacroSetTable::SwitchDisplay()
 {
 	if (itsMacroIndex > 0)
-		{
+	{
 		const CBPrefsManager::MacroSetInfo info = itsMacroList->GetElement(itsMacroIndex);
 		itsActionTable->GetData(info.action);
 		itsMacroTable->GetData(info.macro);
-		}
+	}
 
 	JPoint cell;
 	if ((GetTableSelection()).GetFirstSelectedCell(&cell))
-		{
+	{
 		itsMacroIndex = cell.y;
 
 		const CBPrefsManager::MacroSetInfo info = itsMacroList->GetElement(itsMacroIndex);
@@ -351,16 +351,16 @@ CBMacroSetTable::SwitchDisplay()
 		itsMacroTable->SetData(*(info.macro));
 
 		itsRemoveRowButton->Activate();
-		}
+	}
 	else
-		{
+	{
 		itsMacroIndex = 0;
 
 		itsActionTable->ClearData();
 		itsMacroTable->ClearData();
 
 		itsRemoveRowButton->Deactivate();
-		}
+	}
 }
 
 /******************************************************************************

@@ -17,28 +17,28 @@
 #include "cmGlobals.h"
 #include "cmActionDefs.h"
 
-#include <JXDisplay.h>
-#include <JXWindow.h>
-#include <JXTextMenu.h>
-#include <JXMenuBar.h>
-#include <JXTextButton.h>
-#include <JXStaticText.h>
-#include <JXScrollbarSet.h>
-#include <JXRowHeaderWidget.h>
-#include <JXColHeaderWidget.h>
-#include <JXHelpManager.h>
-#include <JXWDManager.h>
-#include <JXWDMenu.h>
-#include <JXImage.h>
-#include <JXFontManager.h>
-#include <JXColorManager.h>
-#include <JXCloseDirectorTask.h>
-#include <JXPSPrinter.h>
+#include <jx-af/jx/JXDisplay.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXTextMenu.h>
+#include <jx-af/jx/JXMenuBar.h>
+#include <jx-af/jx/JXTextButton.h>
+#include <jx-af/jx/JXStaticText.h>
+#include <jx-af/jx/JXScrollbarSet.h>
+#include <jx-af/jx/JXRowHeaderWidget.h>
+#include <jx-af/jx/JXColHeaderWidget.h>
+#include <jx-af/jx/JXHelpManager.h>
+#include <jx-af/jx/JXWDManager.h>
+#include <jx-af/jx/JXWDMenu.h>
+#include <jx-af/jx/JXImage.h>
+#include <jx-af/jx/JXFontManager.h>
+#include <jx-af/jx/JXColorManager.h>
+#include <jx-af/jx/JXCloseDirectorTask.h>
+#include <jx-af/jx/JXPSPrinter.h>
 
-#include <JStringTableData.h>
-#include <JTableSelection.h>
-#include <JRegex.h>
-#include <jAssert.h>
+#include <jx-af/jcore/JStringTableData.h>
+#include <jx-af/jcore/JTableSelection.h>
+#include <jx-af/jcore/JRegex.h>
+#include <jx-af/jcore/jAssert.h>
 
 const JCoordinate kDefaultColWidth = 50;
 const JCoordinate kMinColWidth     = 10;
@@ -356,16 +356,16 @@ CMArray2DDir::BuildWindow()
 	const JStringMatch m1 = rowIndexLabel->GetText()->SearchForward(
 			JStyledText::TextIndex(1,1), JRegex("\\$i"), false, false, &wrapped);
 	if (!m1.IsEmpty())
-		{
+	{
 		rowIndexLabel->GetText()->SetFont(JStyledText::TextRange(m1), font, true);
-		}
+	}
 
 	const JStringMatch m2 = colIndexLabel->GetText()->SearchForward(
 			JStyledText::TextIndex(1,1), JRegex("\\$j"), false, false, &wrapped);
 	if (!m2.IsEmpty())
-		{
+	{
 		colIndexLabel->GetText()->SetFont(JStyledText::TextRange(m2), font, true);
-		}
+	}
 
 	JXContainer* encl = scrollbarSet->GetScrollEnclosure();
 
@@ -504,121 +504,121 @@ CMArray2DDir::Receive
 	if (sender == itsExprInput &&
 		(message.Is(JXWidget::kLostFocus) ||
 		 message.Is(CMArrayExprInput::kReturnKeyPressed)))
-		{
+	{
 		if (itsExprInput->GetText()->GetText() != itsExpr)
-			{
+		{
 			itsExpr = itsExprInput->GetText()->GetText();
 			UpdateWindowTitle();
 			UpdateAll();
-			}
 		}
+	}
 
 	else if (sender == itsRowStartIndex &&
 			 (message.Is(JXWidget::kLostFocus) ||
 			  message.Is(CMArrayIndexInput::kReturnKeyPressed)))
-		{
+	{
 		JInteger value;
 		if (itsRowStartIndex->GetValue(&value) && value != itsRowRequestRange.first)
-			{
+		{
 			itsRowRequestRange.first = value;
 			FitToRanges();
-			}
 		}
+	}
 	else if (sender == itsRowEndIndex &&
 			 (message.Is(JXWidget::kLostFocus) ||
 			  message.Is(CMArrayIndexInput::kReturnKeyPressed)))
-		{
+	{
 		JInteger value;
 		if (itsRowEndIndex->GetValue(&value) && value != itsRowRequestRange.last)
-			{
+		{
 			itsRowRequestRange.last = value;
 			FitToRanges();
-			}
 		}
+	}
 	else if (sender == itsColStartIndex &&
 			 (message.Is(JXWidget::kLostFocus) ||
 			  message.Is(CMArrayIndexInput::kReturnKeyPressed)))
-		{
+	{
 		JInteger value;
 		if (itsColStartIndex->GetValue(&value) && value != itsColRequestRange.first)
-			{
+		{
 			itsColRequestRange.first = value;
 			FitToRanges();
-			}
 		}
+	}
 	else if (sender == itsColEndIndex &&
 			 (message.Is(JXWidget::kLostFocus) ||
 			  message.Is(CMArrayIndexInput::kReturnKeyPressed)))
-		{
+	{
 		JInteger value;
 		if (itsColEndIndex->GetValue(&value) && value != itsColRequestRange.last)
-			{
+		{
 			itsColRequestRange.last = value;
 			FitToRanges();
-			}
 		}
+	}
 
 	else if (sender == itsLink && CMVarNode::ShouldUpdate(message))
-		{
+	{
 		UpdateAll();
-		}
+	}
 
 	else if (sender == itsLink && message.Is(CMLink::kDebuggerRestarted))
-		{
+	{
 		itsWaitingForReloadFlag = true;
-		}
+	}
 	else if (sender == itsLink && message.Is(CMLink::kDebuggerStarted))
-		{
+	{
 		if (!itsWaitingForReloadFlag)
-			{
+		{
 			JXCloseDirectorTask::Close(this);	// close after bcast is finished
-			}
-		itsWaitingForReloadFlag = false;
 		}
+		itsWaitingForReloadFlag = false;
+	}
 
 	else if (sender == itsFileMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		UpdateFileMenu();
-		}
+	}
 	else if (sender == itsFileMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleFileMenu(selection->GetIndex());
-		}
+	}
 
 	else if (sender == itsActionMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		UpdateActionMenu();
-		}
+	}
 	else if (sender == itsActionMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleActionMenu(selection->GetIndex());
-		}
+	}
 
 	else if (sender == itsHelpMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleHelpMenu(selection->GetIndex());
-		}
+	}
 
 	else if (sender == GetWindow() && message.Is(JXWindow::kIconified))
-		{
+	{
 		ShouldUpdate(false);
-		}
+	}
 	else if (sender == GetWindow() && message.Is(JXWindow::kDeiconified))
-		{
+	{
 		ShouldUpdate(true);
-		}
+	}
 
 	else if (sender == itsRowHeader && message.Is(JXRowHeaderWidget::kNeedsToBeWidened))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const JXRowHeaderWidget::NeedsToBeWidened*>(&message);
 		assert( info != nullptr );
@@ -629,24 +629,24 @@ CMArray2DDir::Receive
 		itsColHeader->AdjustSize(-dw,0);
 		itsTable->Move(dw,0);
 		itsTable->AdjustSize(-dw,0);
-		}
+	}
 
 	else if (sender == CMGetPSPrinter() &&
 			 message.Is(JPrinter::kPrintSetupFinished))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const JPrinter::PrintSetupFinished*>(&message);
 		assert( info != nullptr );
 		if (info->Successful())
-			{
+		{
 			itsTable->Print(*(CMGetPSPrinter()));
-			}
 		}
+	}
 
 	else
-		{
+	{
 		JXWindowDirector::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -661,13 +661,13 @@ CMArray2DDir::ReceiveGoingAway
 	)
 {
 	if (sender == itsLink && !CMIsShuttingDown())
-		{
+	{
 		JXCloseDirectorTask::Close(this);
-		}
+	}
 	else
-		{
+	{
 		JXWindowDirector::ReceiveGoingAway(sender);
-		}
+	}
 }
 
 /******************************************************************************
@@ -682,14 +682,14 @@ CMArray2DDir::FitToRanges()
 
 	JIntRange overlap;
 	if (JIntersection(itsRowDisplayRange, itsRowRequestRange, &overlap))
-		{
+	{
 		if (itsRowDisplayRange.first < itsRowRequestRange.first)
-			{
+		{
 			itsData->RemoveNextRows(1, itsRowRequestRange.first - itsRowDisplayRange.first);
 			itsRowDisplayRange.first = itsRowRequestRange.first;
-			}
+		}
 		else if (itsRowRequestRange.first < itsRowDisplayRange.first)
-			{
+		{
 			const JIntRange newRange(itsRowRequestRange.first, itsRowDisplayRange.first-1);
 
 			itsData->PrependRows(itsRowDisplayRange.first - itsRowRequestRange.first);
@@ -697,16 +697,16 @@ CMArray2DDir::FitToRanges()
 
 			SetRowTitles(newRange);
 			BeginRowUpdate(newRange);
-			}
+		}
 
 		if (itsRowRequestRange.last < itsRowDisplayRange.last)
-			{
+		{
 			itsData->RemoveNextRows(itsRowRequestRange.last+1 + 1-itsRowDisplayRange.first,
 									itsRowDisplayRange.last - itsRowRequestRange.last);
 			itsRowDisplayRange.last = itsRowRequestRange.last;
-			}
+		}
 		else if (itsRowDisplayRange.last < itsRowRequestRange.last)
-			{
+		{
 			const JIntRange newRange(itsRowDisplayRange.last+1, itsRowRequestRange.last);
 
 			itsData->AppendRows(itsRowRequestRange.last - itsRowDisplayRange.last);
@@ -714,26 +714,26 @@ CMArray2DDir::FitToRanges()
 
 			SetRowTitles(newRange);
 			BeginRowUpdate(newRange);
-			}
 		}
+	}
 	else
-		{
+	{
 		itsData->RemoveAllRows();
 		itsData->AppendRows(itsRowRequestRange.GetCount());
 		itsRowDisplayRange = itsRowRequestRange;
 		SetRowTitles(itsRowRequestRange);
 		UpdateAll();
-		}
+	}
 
 	if (JIntersection(itsColDisplayRange, itsColRequestRange, &overlap))
-		{
+	{
 		if (itsColDisplayRange.first < itsColRequestRange.first)
-			{
+		{
 			itsData->RemoveNextCols(1, itsColRequestRange.first - itsColDisplayRange.first);
 			itsColDisplayRange.first = itsColRequestRange.first;
-			}
+		}
 		else if (itsColRequestRange.first < itsColDisplayRange.first)
-			{
+		{
 			const JIntRange newRange(itsColRequestRange.first, itsColDisplayRange.first-1);
 
 			itsData->PrependCols(itsColDisplayRange.first - itsColRequestRange.first);
@@ -741,16 +741,16 @@ CMArray2DDir::FitToRanges()
 
 			SetColTitles(newRange);
 			BeginColUpdate(newRange);
-			}
+		}
 
 		if (itsColRequestRange.last < itsColDisplayRange.last)
-			{
+		{
 			itsData->RemoveNextCols(itsColRequestRange.last+1 + 1-itsColDisplayRange.first,
 									itsColDisplayRange.last - itsColRequestRange.last);
 			itsColDisplayRange.last = itsColRequestRange.last;
-			}
+		}
 		else if (itsColDisplayRange.last < itsColRequestRange.last)
-			{
+		{
 			const JIntRange newRange(itsColDisplayRange.last+1, itsColRequestRange.last);
 
 			itsData->AppendCols(itsColRequestRange.last - itsColDisplayRange.last);
@@ -758,16 +758,16 @@ CMArray2DDir::FitToRanges()
 
 			SetColTitles(newRange);
 			BeginColUpdate(newRange);
-			}
 		}
+	}
 	else
-		{
+	{
 		itsData->RemoveAllCols();
 		itsData->AppendCols(itsColRequestRange.GetCount());
 		itsColDisplayRange = itsColRequestRange;
 		SetColTitles(itsColRequestRange);
 		UpdateAll();
-		}
+	}
 }
 
 /******************************************************************************
@@ -782,10 +782,10 @@ CMArray2DDir::SetRowTitles
 	)
 {
 	for (JInteger i=r.first; i<=r.last; i++)
-		{
+	{
 		const JString s(i, 0);
 		itsRowHeader->SetRowTitle(i - itsRowDisplayRange.first + 1, s);
-		}
+	}
 }
 
 /******************************************************************************
@@ -800,10 +800,10 @@ CMArray2DDir::SetColTitles
 	)
 {
 	for (JInteger i=r.first; i<=r.last; i++)
-		{
+	{
 		const JString s(i, 0);
 		itsColHeader->SetColTitle(i - itsColDisplayRange.first + 1, s);
-		}
+	}
 }
 
 /******************************************************************************
@@ -819,9 +819,9 @@ CMArray2DDir::ShouldUpdate
 {
 	itsShouldUpdateFlag = update;
 	if (itsShouldUpdateFlag)
-		{
+	{
 		UpdateNext();
-		}
+	}
 }
 
 /******************************************************************************
@@ -833,13 +833,13 @@ void
 CMArray2DDir::UpdateAll()
 {
 	if (itsData->GetColCount() <= itsData->GetRowCount())
-		{
+	{
 		BeginRowUpdate(itsRowDisplayRange);
-		}
+	}
 	else
-		{
+	{
 		BeginColUpdate(itsColDisplayRange);
-		}
+	}
 
 	itsTable->SetAllCellStyles(
 		CMVarNode::GetFontStyle(false, false));
@@ -860,23 +860,23 @@ CMArray2DDir::BeginUpdate
 	const JSize count = list->GetElementCount();
 	JIntRange overlap;
 	for (JIndex i=count; i>=1; i--)
-		{
+	{
 		JIntRange r = list->GetElement(i);
 		if (r.Contains(range))
-			{
+		{
 			return;
-			}
+		}
 		else if (range.Contains(r))
-			{
+		{
 			list->RemoveElement(i);
-			}
+		}
 		else if (JIntersection(range, r, &overlap))
-			{
+		{
 			r = JCovering(range, r);
 			list->SetElement(i, r);
 			return;
-			}
 		}
+	}
 
 	list->AppendElement(range);
 	UpdateNext();
@@ -892,30 +892,30 @@ CMArray2DDir::UpdateNext()
 {
 	if (itsTable->GetRowCount() == 0 ||
 		itsTable->GetColCount() == 0)
-		{
+	{
 		itsRowUpdateList->RemoveAll();
 		itsColUpdateList->RemoveAll();
 		return;
-		}
+	}
 
 	if (!itsShouldUpdateFlag ||
 		itsUpdateCmd->GetState() != CMCommand::kUnassigned)
-		{
+	{
 		return;
-		}
+	}
 
 	CMArray2DCommand::UpdateType type;
 	JIndex index;
 	JInteger arrayIndex;
 	if (!itsRowUpdateList->IsEmpty())
-		{
+	{
 		JIntRange r = itsRowUpdateList->GetFirstElement();
 		if (!JIntersection(itsRowDisplayRange, r, &r))
-			{
+		{
 			itsRowUpdateList->RemoveElement(1);
 			UpdateNext();
 			return;
-			}
+		}
 
 		type       = CMArray2DCommand::kRow;
 		index      = r.first - itsRowDisplayRange.first + 1;
@@ -923,23 +923,23 @@ CMArray2DDir::UpdateNext()
 
 		r.first++;
 		if (r.IsEmpty())
-			{
-			itsRowUpdateList->RemoveElement(1);
-			}
-		else
-			{
-			itsRowUpdateList->SetElement(1, r);
-			}
-		}
-	else if (!itsColUpdateList->IsEmpty())
 		{
+			itsRowUpdateList->RemoveElement(1);
+		}
+		else
+		{
+			itsRowUpdateList->SetElement(1, r);
+		}
+	}
+	else if (!itsColUpdateList->IsEmpty())
+	{
 		JIntRange r = itsColUpdateList->GetFirstElement();
 		if (!JIntersection(itsColDisplayRange, r, &r))
-			{
+		{
 			itsColUpdateList->RemoveElement(1);
 			UpdateNext();
 			return;
-			}
+		}
 
 		type       = CMArray2DCommand::kCol;
 		index      = r.first - itsColDisplayRange.first + 1;
@@ -947,18 +947,18 @@ CMArray2DDir::UpdateNext()
 
 		r.first++;
 		if (r.IsEmpty())
-			{
-			itsColUpdateList->RemoveElement(1);
-			}
-		else
-			{
-			itsColUpdateList->SetElement(1, r);
-			}
-		}
-	else
 		{
-		return;
+			itsColUpdateList->RemoveElement(1);
 		}
+		else
+		{
+			itsColUpdateList->SetElement(1, r);
+		}
+	}
+	else
+	{
+		return;
+	}
 
 	itsTable->CancelEditing();
 	itsUpdateCmd->PrepareToSend(type, index, arrayIndex);
@@ -1006,29 +1006,29 @@ CMArray2DDir::HandleFileMenu
 	)
 {
 	if (index == kOpenCmd)
-		{
+	{
 		itsCommandDir->OpenSourceFiles();
-		}
+	}
 
 	else if (index == kPageSetupCmd)
-		{
+	{
 		(CMGetPSPrinter())->BeginUserPageSetup();
-		}
+	}
 	else if (index == kPrintCmd && itsTable->EndEditing())
-		{
+	{
 		JXPSPrinter* p = CMGetPSPrinter();
 		p->BeginUserPrintSetup();
 		ListenTo(p);
-		}
+	}
 
 	else if (index == kCloseWindowCmd)
-		{
+	{
 		Close();
-		}
+	}
 	else if (index == kQuitCmd)
-		{
+	{
 		JXGetApplication()->Quit();
-		}
+	}
 }
 
 /******************************************************************************
@@ -1040,22 +1040,22 @@ void
 CMArray2DDir::UpdateActionMenu()
 {
 	if ((itsTable->GetTableSelection()).HasSelection())
-		{
+	{
 		itsActionMenu->EnableItem(kDisplay1DArrayCmd);
 		itsActionMenu->EnableItem(kPlot1DArrayCmd);
 		itsActionMenu->EnableItem(kDisplay2DArrayCmd);
 		itsActionMenu->EnableItem(kWatchVarCmd);
 		itsActionMenu->EnableItem(kWatchLocCmd);
-		}
+	}
 
 	if (itsLink->GetFeature(CMLink::kExamineMemory))
-		{
+	{
 		itsActionMenu->EnableItem(kExamineMemCmd);
-		}
+	}
 	if (itsLink->GetFeature(CMLink::kDisassembleMemory))
-		{
+	{
 		itsActionMenu->EnableItem(kDisassembleMemCmd);
-		}
+	}
 
 	itsActionMenu->EnableItem(kSavePrefsCmd);
 }
@@ -1072,40 +1072,40 @@ CMArray2DDir::HandleActionMenu
 	)
 {
 	if (index == kDisplay1DArrayCmd)
-		{
+	{
 		Display1DArray();
-		}
+	}
 	else if (index == kPlot1DArrayCmd)
-		{
+	{
 		Plot1DArray();
-		}
+	}
 	else if (index == kDisplay2DArrayCmd)
-		{
+	{
 		Display2DArray();
-		}
+	}
 
 	else if (index == kWatchVarCmd)
-		{
+	{
 		WatchExpression();
-		}
+	}
 	else if (index == kWatchLocCmd)
-		{
+	{
 		WatchLocation();
-		}
+	}
 
 	else if (index == kExamineMemCmd)
-		{
+	{
 		ExamineMemory(CMMemoryDir::kHexByte);
-		}
+	}
 	else if (index == kDisassembleMemCmd)
-		{
+	{
 		ExamineMemory(CMMemoryDir::kAsm);
-		}
+	}
 
 	else if (index == kSavePrefsCmd)
-		{
+	{
 		CMGetPrefsManager()->SaveWindowSize(kArray2DWindSizeID, GetWindow());
-		}
+	}
 }
 
 /******************************************************************************
@@ -1120,10 +1120,10 @@ CMArray2DDir::Display1DArray()
 	JPoint cell;
 	JString expr;
 	while (iter.Next(&cell))
-		{
+	{
 		expr = GetExpression(cell);
 		itsCommandDir->Display1DArray(expr);
-		}
+	}
 }
 
 /******************************************************************************
@@ -1138,10 +1138,10 @@ CMArray2DDir::Plot1DArray()
 	JPoint cell;
 	JString expr;
 	while (iter.Next(&cell))
-		{
+	{
 		expr = GetExpression(cell);
 		itsCommandDir->Plot1DArray(expr);
-		}
+	}
 }
 
 /******************************************************************************
@@ -1156,10 +1156,10 @@ CMArray2DDir::Display2DArray()
 	JPoint cell;
 	JString expr;
 	while (iter.Next(&cell))
-		{
+	{
 		expr = GetExpression(cell);
 		itsCommandDir->Display2DArray(expr);
-		}
+	}
 }
 
 /******************************************************************************
@@ -1174,10 +1174,10 @@ CMArray2DDir::WatchExpression()
 	JPoint cell;
 	JString expr;
 	while (iter.Next(&cell))
-		{
+	{
 		expr = GetExpression(cell);
 		CMGetLink()->WatchExpression(expr);
-		}
+	}
 }
 
 /******************************************************************************
@@ -1192,10 +1192,10 @@ CMArray2DDir::WatchLocation()
 	JPoint cell;
 	JString expr;
 	while (iter.Next(&cell))
-		{
+	{
 		expr = GetExpression(cell);
 		CMGetLink()->WatchLocation(expr);
-		}
+	}
 }
 
 /******************************************************************************
@@ -1214,22 +1214,22 @@ CMArray2DDir::ExamineMemory
 	JString expr;
 	CMMemoryDir* dir = nullptr;
 	while (iter.Next(&cell))
-		{
+	{
 		expr = GetExpression(cell);
 
 		dir = jnew CMMemoryDir(itsCommandDir, expr);
 		assert(dir != nullptr);
 		dir->SetDisplayType(type);
 		dir->Activate();
-		}
+	}
 
 	if (dir == nullptr)
-		{
+	{
 		dir = jnew CMMemoryDir(itsCommandDir, JString::empty);
 		assert(dir != nullptr);
 		dir->SetDisplayType(type);
 		dir->Activate();
-		}
+	}
 }
 
 /******************************************************************************
@@ -1244,29 +1244,29 @@ CMArray2DDir::HandleHelpMenu
 	)
 {
 	if (index == kAboutCmd)
-		{
+	{
 		(CMGetApplication())->DisplayAbout();
-		}
+	}
 
 	else if (index == kTOCCmd)
-		{
+	{
 		JXGetHelpManager()->ShowTOC();
-		}
+	}
 	else if (index == kOverviewCmd)
-		{
+	{
 		JXGetHelpManager()->ShowSection("CMOverviewHelp");
-		}
+	}
 	else if (index == kThisWindowCmd)
-		{
+	{
 		JXGetHelpManager()->ShowSection("CMVarTreeHelp-Array2D");
-		}
+	}
 
 	else if (index == kChangesCmd)
-		{
+	{
 		JXGetHelpManager()->ShowChangeLog();
-		}
+	}
 	else if (index == kCreditsCmd)
-		{
+	{
 		JXGetHelpManager()->ShowCredits();
-		}
+	}
 }

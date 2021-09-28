@@ -15,26 +15,26 @@
 #include "cmGlobals.h"
 #include "cmActionDefs.h"
 
-#include <JXDisplay.h>
-#include <JXWindow.h>
-#include <JXTextMenu.h>
-#include <JXMenuBar.h>
-#include <JXTextButton.h>
-#include <JXStaticText.h>
-#include <JXScrollbarSet.h>
-#include <JXColHeaderWidget.h>
-#include <JX2DPlotWidget.h>
-#include <JXHelpManager.h>
-#include <JXWDManager.h>
-#include <JXWDMenu.h>
-#include <JXImage.h>
-#include <JXColorManager.h>
-#include <JXCloseDirectorTask.h>
-#include <JXPSPrinter.h>
+#include <jx-af/jx/JXDisplay.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXTextMenu.h>
+#include <jx-af/jx/JXMenuBar.h>
+#include <jx-af/jx/JXTextButton.h>
+#include <jx-af/jx/JXStaticText.h>
+#include <jx-af/jx/JXScrollbarSet.h>
+#include <jx-af/jx/JXColHeaderWidget.h>
+#include <jx-af/j2dplot/JX2DPlotWidget.h>
+#include <jx-af/jx/JXHelpManager.h>
+#include <jx-af/jx/JXWDManager.h>
+#include <jx-af/jx/JXWDMenu.h>
+#include <jx-af/jx/JXImage.h>
+#include <jx-af/jx/JXColorManager.h>
+#include <jx-af/jx/JXCloseDirectorTask.h>
+#include <jx-af/jx/JXPSPrinter.h>
 
-#include <JStringTableData.h>
-#include <JTableSelection.h>
-#include <jAssert.h>
+#include <jx-af/jcore/JStringTableData.h>
+#include <jx-af/jcore/JTableSelection.h>
+#include <jx-af/jcore/jAssert.h>
 
 // File menu
 
@@ -132,22 +132,22 @@ CMPlot2DDir::CMPlot2DDir
 
 	JString s;
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		for (JIndex j=1; j<=CMPlot2DExprTable::kColCount; j++)
-			{
+		{
 			input >> s;
 			itsExprData->SetString(i, j, s);
-			}
 		}
+	}
 
 	CMPlot2DDirX2();
 
 	for (JIndex i=1; i<=CMPlot2DExprTable::kColCount; i++)
-		{
+	{
 		JCoordinate w;
 		input >> w;
 		itsColHeader->SetColWidth(i, w);
-		}
+	}
 
 	itsPlotWidget->PWXReadSetup(input);
 	GetWindow()->ReadGeometry(input);
@@ -227,19 +227,19 @@ CMPlot2DDir::StreamOut
 	output << ' ' << count;
 
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		for (JIndex j=1; j<=CMPlot2DExprTable::kColCount; j++)
-			{
+		{
 			output << ' ' << itsExprData->GetString(i, j);
-			}
 		}
+	}
 
 	// after CMPlot2DDirX2()
 
 	for (JIndex i=1; i<=CMPlot2DExprTable::kColCount; i++)
-		{
+	{
 		output << ' ' << itsColHeader->GetColWidth(i);
-		}
+	}
 
 	itsPlotWidget->PWXWriteSetup(output);
 	GetWindow()->WriteGeometry(output);	// must be last
@@ -441,54 +441,54 @@ CMPlot2DDir::Receive
 	)
 {
 	if (sender == itsLink && CMVarNode::ShouldUpdate(message))
-		{
+	{
 		UpdateAll();
-		}
+	}
 
 	else if (sender == itsExprData && message.Is(JTableData::kRowsInserted))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const JTableData::RowsInserted*>(&message);
 		assert( info != nullptr );
 		Update(info->GetFirstIndex(), info->GetLastIndex());	// only append
-		}
+	}
 	else if (sender == itsExprData && message.Is(JTableData::kRowDuplicated))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const JTableData::RowDuplicated*>(&message);
 		assert( info != nullptr );
 		Update(info->GetNewIndex(), info->GetNewIndex());
-		}
+	}
 	else if (sender == itsExprData && message.Is(JTableData::kRowsRemoved))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const JTableData::RowsRemoved*>(&message);
 		assert( info != nullptr );
 
 		StopListening(itsPlotWidget);
 		for (JIndex i=info->GetLastIndex(); i>=info->GetFirstIndex(); i--)
-			{
+		{
 			itsUpdateCmdList->DeleteElement(i);
 			itsPlotWidget->RemoveCurve(i);
-			}
-		ListenTo(itsPlotWidget);
 		}
+		ListenTo(itsPlotWidget);
+	}
 	else if (sender == itsExprData && message.Is(JTableData::kRectChanged))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const JTableData::RectChanged*>(&message);
 		assert( info != nullptr );
 		const JRect& r = info->GetRect();
 		Update(r.top, r.bottom-1);
-		}
+	}
 
 	else if (sender == &(itsExprTable->GetTableSelection()))
-		{
+	{
 		UpdateButtons();
-		}
+	}
 
 	else if (sender == itsPlotWidget && message.Is(J2DPlotWidget::kCurveRemoved))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const J2DPlotWidget::CurveRemoved*>(&message);
 		assert( info != nullptr );
@@ -498,91 +498,91 @@ CMPlot2DDir::Receive
 		itsUpdateCmdList->DeleteElement(index);
 		itsExprData->RemoveRow(index);
 		ListenTo(itsExprData);
-		}
+	}
 	else if (sender == itsPlotWidget && message.Is(J2DPlotWidget::kTitleChanged))
-		{
+	{
 		UpdateWindowTitle();
-		}
+	}
 
 	else if (sender == itsAddPlotButton && message.Is(JXButton::kPushed))
-		{
+	{
 		if (itsExprTable->EndEditing())
-			{
+		{
 			JPtrArray<JString> data(JPtrArrayT::kDeleteAll);
 			data.Append(JString("$i", JString::kNoCopy));
 			data.Append(JString("$i", JString::kNoCopy));
 			data.Append(JString("0", JString::kNoCopy));
 			data.Append(JString("10", JString::kNoCopy));
 			itsExprData->AppendRows(1, &data);
-			}
 		}
+	}
 	else if (sender == itsDuplicatePlotButton && message.Is(JXButton::kPushed))
-		{
+	{
 		DuplicateSelectedPlots();
-		}
+	}
 	else if (sender == itsRemovePlotButton && message.Is(JXButton::kPushed))
-		{
+	{
 		RemoveSelectedPlots();
-		}
+	}
 
 	else if (sender == itsLink && message.Is(CMLink::kDebuggerRestarted))
-		{
+	{
 		itsWaitingForReloadFlag = true;
-		}
+	}
 	else if (sender == itsLink && message.Is(CMLink::kDebuggerStarted))
-		{
+	{
 		if (!itsWaitingForReloadFlag)
-			{
+		{
 			JXCloseDirectorTask::Close(this);	// close after bcast is finished
-			}
-		itsWaitingForReloadFlag = false;
 		}
+		itsWaitingForReloadFlag = false;
+	}
 
 	else if (sender == itsFileMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		UpdateFileMenu();
-		}
+	}
 	else if (sender == itsFileMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleFileMenu(selection->GetIndex());
-		}
+	}
 
 	else if (sender == itsActionMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		UpdateActionMenu();
-		}
+	}
 	else if (sender == itsActionMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleActionMenu(selection->GetIndex());
-		}
+	}
 
 	else if (sender == itsHelpMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleHelpMenu(selection->GetIndex());
-		}
+	}
 
 	else if (sender == GetWindow() && message.Is(JXWindow::kIconified))
-		{
+	{
 		ShouldUpdate(false);
-		}
+	}
 	else if (sender == GetWindow() && message.Is(JXWindow::kDeiconified))
-		{
+	{
 		ShouldUpdate(true);
-		}
+	}
 
 	else
-		{
+	{
 		JXWindowDirector::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -597,13 +597,13 @@ CMPlot2DDir::ReceiveGoingAway
 	)
 {
 	if (sender == itsLink && !CMIsShuttingDown())
-		{
+	{
 		JXCloseDirectorTask::Close(this);
-		}
+	}
 	else
-		{
+	{
 		JXWindowDirector::ReceiveGoingAway(sender);
-		}
+	}
 }
 
 /******************************************************************************
@@ -619,9 +619,9 @@ CMPlot2DDir::ShouldUpdate
 {
 	itsShouldUpdateFlag = update;
 	if (itsShouldUpdateFlag)
-		{
+	{
 		UpdateAll();
-		}
+	}
 }
 
 /******************************************************************************
@@ -651,20 +651,20 @@ CMPlot2DDir::Update
 
 	const JSize count = itsExprData->GetRowCount();
 	while (itsUpdateCmdList->GetElementCount() > count)
-		{
+	{
 		itsUpdateCmdList->DeleteElement(itsUpdateCmdList->GetElementCount());
-		}
+	}
 
 	JString curveName;
 	for (JIndex i=first; i<=last; i++)
-		{
+	{
 		CMPlot2DCommand* cmd;
 		if (itsUpdateCmdList->IndexValid(i))
-			{
+		{
 			cmd = itsUpdateCmdList->GetElement(i);
-			}
+		}
 		else
-			{
+		{
 			auto* x = jnew JArray<JFloat>(100);
 			assert( x != nullptr );
 			itsXData->Append(x);
@@ -679,7 +679,7 @@ CMPlot2DDir::Update
 
 			cmd = itsLink->CreatePlot2DCommand(this, x, y);
 			itsUpdateCmdList->Append(cmd);
-			}
+		}
 
 		curveName  = itsExprData->GetString(i, CMPlot2DExprTable::kXExprColIndex);
 		curveName += " ; ";
@@ -694,7 +694,7 @@ CMPlot2DDir::Update
 
 		cmd->UpdateRange(i, min, max);
 		cmd->Send();
-		}
+	}
 }
 
 /******************************************************************************
@@ -740,9 +740,9 @@ void
 CMPlot2DDir::DuplicateSelectedPlots()
 {
 	if (!itsExprTable->EndEditing())
-		{
+	{
 		return;
-		}
+	}
 
 	JPtrArray<JString> rowData(JPtrArrayT::kDeleteAll);
 
@@ -750,10 +750,10 @@ CMPlot2DDir::DuplicateSelectedPlots()
 	JPoint cell;
 	JString expr;
 	while (iter.Next(&cell))
-		{
+	{
 		itsExprData->GetRow(cell.y, &rowData);
 		itsExprData->AppendRows(1, &rowData);
-		}
+	}
 }
 
 /******************************************************************************
@@ -770,9 +770,9 @@ CMPlot2DDir::RemoveSelectedPlots()
 	JPoint cell;
 	JString expr;
 	while (iter.Next(&cell))
-		{
+	{
 		itsExprData->RemoveRow(cell.y);
-		}
+	}
 }
 
 /******************************************************************************
@@ -799,31 +799,31 @@ CMPlot2DDir::HandleFileMenu
 	)
 {
 	if (index == kOpenCmd)
-		{
+	{
 		itsCommandDir->OpenSourceFiles();
-		}
+	}
 
 	else if (index == kPSPageSetupCmd)
-		{
+	{
 		(CMGetPSPrinter())->BeginUserPageSetup();
-		}
+	}
 	else if (index == kPrintPSCmd && itsExprTable->EndEditing())
-		{
+	{
 		itsPlotWidget->PrintPS();
-		}
+	}
 	else if (index == kPrintEPSCmd && itsExprTable->EndEditing())
-		{
+	{
 		itsPlotWidget->PrintPlotEPS();
-		}
+	}
 
 	else if (index == kCloseWindowCmd)
-		{
+	{
 		Close();
-		}
+	}
 	else if (index == kQuitCmd)
-		{
+	{
 		JXGetApplication()->Quit();
-		}
+	}
 }
 
 /******************************************************************************
@@ -848,9 +848,9 @@ CMPlot2DDir::HandleActionMenu
 	)
 {
 	if (index == kSavePrefsCmd)
-		{
+	{
 		CMGetPrefsManager()->SaveWindowSize(kPlot2DWindSizeID, GetWindow());
-		}
+	}
 }
 
 /******************************************************************************
@@ -865,29 +865,29 @@ CMPlot2DDir::HandleHelpMenu
 	)
 {
 	if (index == kAboutCmd)
-		{
+	{
 		(CMGetApplication())->DisplayAbout();
-		}
+	}
 
 	else if (index == kTOCCmd)
-		{
+	{
 		JXGetHelpManager()->ShowTOC();
-		}
+	}
 	else if (index == kOverviewCmd)
-		{
+	{
 		JXGetHelpManager()->ShowSection("CMOverviewHelp");
-		}
+	}
 	else if (index == kThisWindowCmd)
-		{
+	{
 		JXGetHelpManager()->ShowSection("CM2DPlotHelp");
-		}
+	}
 
 	else if (index == kChangesCmd)
-		{
+	{
 		JXGetHelpManager()->ShowChangeLog();
-		}
+	}
 	else if (index == kCreditsCmd)
-		{
+	{
 		JXGetHelpManager()->ShowCredits();
-		}
+	}
 }

@@ -13,16 +13,16 @@
 #include "CMCommandDirector.h"
 #include "cmGlobals.h"
 #include "cmActionDefs.h"
-#include <JXDisplay.h>
-#include <JXWindow.h>
-#include <JXTextMenu.h>
-#include <JXMenuBar.h>
-#include <JXScrollbarSet.h>
-#include <JXColHeaderWidget.h>
-#include <JXHelpManager.h>
-#include <JXWDMenu.h>
-#include <JXImage.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXDisplay.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXTextMenu.h>
+#include <jx-af/jx/JXMenuBar.h>
+#include <jx-af/jx/JXScrollbarSet.h>
+#include <jx-af/jx/JXColHeaderWidget.h>
+#include <jx-af/jx/JXHelpManager.h>
+#include <jx-af/jx/JXWDMenu.h>
+#include <jx-af/jx/JXImage.h>
+#include <jx-af/jcore/jAssert.h>
 
 // File menu
 
@@ -259,56 +259,56 @@ CMBreakpointsDir::Receive
 	)
 {
 	if (sender == itsFileMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		UpdateFileMenu();
-		}
+	}
 	else if (sender == itsFileMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		 const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleFileMenu(selection->GetIndex());
-		}
+	}
 
 	else if (sender == itsActionMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		UpdateActionMenu();
-		}
+	}
 	else if (sender == itsActionMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleActionMenu(selection->GetIndex());
-		}
+	}
 
 	else if (sender == itsHelpMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleHelpMenu(selection->GetIndex());
-		}
+	}
 
 	else if (sender == CMGetLink() && message.Is(CMLink::kSymbolsLoaded))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const CMLink::SymbolsLoaded*>(&message);
 		assert( info != nullptr );
 		UpdateWindowTitle(info->GetProgramName());
-		}
+	}
 
 	else if (CMGetLink() != nullptr &&
 			 sender == CMGetLink()->GetBreakpointManager() &&
 			 message.Is(CMBreakpointManager::kBreakpointsChanged))
-		{
+	{
 		itsTable->Update();
-		}
+	}
 
 	else
-		{
+	{
 		JXWindowDirector::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -323,10 +323,10 @@ CMBreakpointsDir::ReceiveGoingAway
 	)
 {
 	if (!CMIsShuttingDown())
-		{
+	{
 		ListenTo(CMGetLink());
 		ListenTo(CMGetLink()->GetBreakpointManager());
-		}
+	}
 
 	JXWindowDirector::ReceiveGoingAway(sender);
 }
@@ -354,18 +354,18 @@ CMBreakpointsDir::HandleFileMenu
 	)
 {
 	if (index == kOpenCmd)
-		{
+	{
 		itsCommandDir->OpenSourceFiles();
-		}
+	}
 
 	else if (index == kCloseWindowCmd)
-		{
+	{
 		Deactivate();
-		}
+	}
 	else if (index == kQuitCmd)
-		{
+	{
 		JXGetApplication()->Quit();
-		}
+	}
 }
 
 /******************************************************************************
@@ -378,11 +378,11 @@ CMBreakpointsDir::UpdateActionMenu()
 {
 	CMLink* link = CMGetLink();
 	if (link != nullptr)
-		{
+	{
 		itsActionMenu->EnableItem(kEnableAllBreakpointsCmd);
 		itsActionMenu->EnableItem(kDisableAllBreakpointsCmd);
 		itsActionMenu->EnableItem(kRemoveAllBreakpointsCmd);
-		}
+	}
 }
 
 /******************************************************************************
@@ -397,18 +397,18 @@ CMBreakpointsDir::HandleActionMenu
 	)
 {
 	if (index == kEnableAllBreakpointsCmd)
-		{
+	{
 		CMGetLink()->GetBreakpointManager()->EnableAll();
-		}
+	}
 	else if (index == kDisableAllBreakpointsCmd)
-		{
+	{
 		CMGetLink()->GetBreakpointManager()->DisableAll();
-		}
+	}
 
 	else if (index == kRemoveAllBreakpointsCmd)
-		{
+	{
 		CMGetLink()->RemoveAllBreakpoints();
-		}
+	}
 }
 
 /******************************************************************************
@@ -423,27 +423,27 @@ CMBreakpointsDir::HandleHelpMenu
 	)
 {
 	if (index == kAboutCmd)
-		{
+	{
 		(CMGetApplication())->DisplayAbout();
-		}
+	}
 	else if (index == kTOCCmd)
-		{
+	{
 		JXGetHelpManager()->ShowTOC();
-		}
+	}
 	else if (index == kOverviewCmd)
-		{
+	{
 		JXGetHelpManager()->ShowSection("CMOverviewHelp");
-		}
+	}
 	else if (index == kThisWindowCmd)
-		{
+	{
 		JXGetHelpManager()->ShowSection("CMBreakpointsHelp");
-		}
+	}
 	else if (index == kChangesCmd)
-		{
+	{
 		JXGetHelpManager()->ShowChangeLog();
-		}
+	}
 	else if (index == kCreditsCmd)
-		{
+	{
 		JXGetHelpManager()->ShowCredits();
-		}
+	}
 }

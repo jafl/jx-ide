@@ -8,7 +8,7 @@
 #ifndef _H_CBSearchFontManager
 #define _H_CBSearchFontManager
 
-#include <JFontManager.h>
+#include <jx-af/jcore/JFontManager.h>
 
 class CBSearchFontManager : public JFontManager
 {

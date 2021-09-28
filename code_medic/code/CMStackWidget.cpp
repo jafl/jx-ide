@@ -15,14 +15,14 @@
 #include "CMGetStack.h"
 #include "CMGetFrame.h"
 #include "cmGlobals.h"
-#include <JXWindow.h>
-#include <JTree.h>
-#include <JNamedTreeList.h>
-#include <JTableSelection.h>
-#include <JPainter.h>
-#include <JFontManager.h>
-#include <jASCIIConstants.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jcore/JTree.h>
+#include <jx-af/jcore/JNamedTreeList.h>
+#include <jx-af/jcore/JTableSelection.h>
+#include <jx-af/jcore/JPainter.h>
+#include <jx-af/jcore/JFontManager.h>
+#include <jx-af/jcore/jASCIIConstants.h>
+#include <jx-af/jcore/jAssert.h>
 
 const JIndex kArgValueColIndex = 3;
 const JSize kIndentWidth       = 4;	// characters: "xx:"
@@ -107,17 +107,17 @@ CMStackWidget::GetStackFrame
 	const JTreeNode* root = itsTree->GetRoot();
 	const JSize count     = root->GetChildCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		const auto* node =
 			dynamic_cast<const CMStackFrameNode*>(root->GetChild(i));
 		assert( node != nullptr );
 
 		if (node->GetID() == id)
-			{
+		{
 			*frame = node;
 			return true;
-			}
 		}
+	}
 
 	*frame = nullptr;
 	return false;
@@ -139,13 +139,13 @@ CMStackWidget::SelectFrame
 
 	const JSize count = root->GetChildCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		const auto* node =
 			dynamic_cast<const CMStackFrameNode*>(root->GetChild(i));
 		assert( node != nullptr );
 
 		if (node->GetID() == id)
-			{
+		{
 			JIndex j;
 			const bool found = list->FindNode(node, &j);
 			assert( found );
@@ -155,8 +155,8 @@ CMStackWidget::SelectFrame
 			itsSelectingFrameFlag = false;
 
 			break;
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -174,17 +174,17 @@ CMStackWidget::TableDrawCell
 {
 	if (JIndex(cell.x) == GetToggleOpenColIndex() ||
 		JIndex(cell.x) == GetNodeColIndex())
-		{
+	{
 		JXNamedTreeListWidget::TableDrawCell(p,cell,rect);
-		}
+	}
 	else if (JIndex(cell.x) == kArgValueColIndex)
-		{
+	{
 		const JPoint fakeCell(GetNodeColIndex(), cell.y);
 		HilightIfSelected(p, fakeCell, rect);
 
 		const JTreeNode* node = GetTreeList()->GetNode(cell.y);
 		if (node->GetDepth() > 1)
-			{
+		{
 			JFont font = GetFont();
 			font.SetStyle(GetCellStyle(cell));
 			p.SetFont(font);
@@ -193,8 +193,8 @@ CMStackWidget::TableDrawCell
 				dynamic_cast<const CMStackArgNode*>(node);
 			assert( argNode != nullptr );
 			p.String(rect, argNode->GetValue(), JPainter::kHAlignLeft, JPainter::kVAlignCenter);
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -210,25 +210,25 @@ CMStackWidget::GetMinCellWidth
 	const
 {
 	if (JIndex(cell.x) > GetNodeColIndex())
-		{
+	{
 		const JTreeNode* node = GetTreeList()->GetNode(cell.y);
 		if (node->GetDepth() > 1)
-			{
+		{
 			const auto* argNode =
 				dynamic_cast<const CMStackArgNode*>(node);
 			assert( argNode != nullptr );
 
 			return GetFont().GetStringWidth(GetFontManager(), argNode->GetValue());
-			}
+		}
 		else
-			{
-			return 0;
-			}
-		}
-	else
 		{
-		return JXNamedTreeListWidget::GetMinCellWidth(cell);
+			return 0;
 		}
+	}
+	else
+	{
+		return JXNamedTreeListWidget::GetMinCellWidth(cell);
+	}
 }
 
 /******************************************************************************
@@ -244,13 +244,13 @@ CMStackWidget::AdjustCursor
 	)
 {
 	if (itsIsWaitingForReloadFlag)
-		{
+	{
 		DisplayCursor(kJXBusyCursor);
-		}
+	}
 	else
-		{
+	{
 		JXNamedTreeListWidget::AdjustCursor(pt, modifiers);
-		}
+	}
 }
 
 /******************************************************************************
@@ -273,19 +273,19 @@ CMStackWidget::HandleMouseDown
 	JPoint cell;
 	if (ScrollForWheel(button, modifiers) ||
 		!GetCell(pt, &cell))
-		{
+	{
 		return;
-		}
+	}
 
 	if (JIndex(cell.x) != GetToggleOpenColIndex())
-		{
+	{
 		if (modifiers.meta())
-			{
+		{
 			const JTreeNode* node = GetTreeList()->GetNode(cell.y);
 			while (node->GetDepth() > 1)
-				{
+			{
 				node = node->GetParent();
-				}
+			}
 
 			const auto* stackNode =
 				dynamic_cast<const CMStackFrameNode*>(node);
@@ -294,25 +294,25 @@ CMStackWidget::HandleMouseDown
 			JString fileName;
 			JIndex lineIndex;
 			if (stackNode->GetFile(&fileName, &lineIndex))
-				{
-				itsCommandDir->OpenSourceFile(fileName, lineIndex);
-				}
-			else
-				{
-				JGetUserNotification()->ReportError(JGetString("NoSourceFile::CMStackWidget"));
-				}
-			}
-		else
 			{
-			SelectSingleCell(JPoint(GetNodeColIndex(), cell.y));
+				itsCommandDir->OpenSourceFile(fileName, lineIndex);
+			}
+			else
+			{
+				JGetUserNotification()->ReportError(JGetString("NoSourceFile::CMStackWidget"));
 			}
 		}
-	else
+		else
 		{
+			SelectSingleCell(JPoint(GetNodeColIndex(), cell.y));
+		}
+	}
+	else
+	{
 		itsSelectingFrameFlag = true;		// ignore selection changes during open/close
 		JXNamedTreeListWidget::HandleMouseDown(pt, button, clickCount, buttonStates, modifiers);
 		itsSelectingFrameFlag = false;
-		}
+	}
 }
 
 /******************************************************************************
@@ -348,30 +348,30 @@ CMStackWidget::HandleKeyPress
 	)
 {
 	if (c == kJUpArrow)
-		{
+	{
 		if (!SelectNextFrame(-1) && GetRowCount() > 0)
-			{
+		{
 			SelectSingleCell(JPoint(GetNodeColIndex(), GetRowCount()));
-			}
-		ClearIncrementalSearchBuffer();
 		}
+		ClearIncrementalSearchBuffer();
+	}
 	else if (c == kJDownArrow)
-		{
+	{
 		if (!SelectNextFrame(+1) && GetRowCount() > 0)
-			{
-			SelectSingleCell(JPoint(GetNodeColIndex(), 1));
-			}
-		ClearIncrementalSearchBuffer();
-		}
-	else
 		{
+			SelectSingleCell(JPoint(GetNodeColIndex(), 1));
+		}
+		ClearIncrementalSearchBuffer();
+	}
+	else
+	{
 		if (c == kJLeftArrow || c == kJRightArrow)
-			{
+		{
 			itsSelectingFrameFlag = true;		// ignore selection changes during open/close
-			}
+		}
 		JXNamedTreeListWidget::HandleKeyPress(c, keySym, modifiers);
 		itsSelectingFrameFlag = false;
-		}
+	}
 }
 
 /******************************************************************************
@@ -390,7 +390,7 @@ CMStackWidget::SelectNextFrame
 
 	JPoint cell;
 	if (s.GetFirstSelectedCell(&cell))
-		{
+	{
 		const JTreeNode* node   = treeList->GetNode(cell.y);
 		const JTreeNode* parent = node->GetParent();
 
@@ -400,20 +400,20 @@ CMStackWidget::SelectNextFrame
 
 		i += delta;
 		if (parent->ChildIndexValid(i))
-			{
+		{
 			node  = parent->GetChild(i);
 			found = treeList->FindNode(node, &i);
 			assert( found );
 
 			SelectSingleCell(JPoint(GetNodeColIndex(), i));
-			}
+		}
 
 		return true;
-		}
+	}
 	else
-		{
+	{
 		return false;
-		}
+	}
 }
 
 /******************************************************************************
@@ -429,42 +429,42 @@ CMStackWidget::Receive
 	)
 {
 	if (sender == itsLink && message.Is(CMLink::kFrameChanged))
-		{
+	{
 		if (ShouldRebuild())
-			{
-			itsGetFrameCmd->Send();
-			}
-		else
-			{
-			itsNeedsUpdateFlag = true;
-			}
-		}
-	else if (sender == itsLink && message.Is(CMLink::kThreadChanged))
 		{
-		Rebuild();
+			itsGetFrameCmd->Send();
 		}
+		else
+		{
+			itsNeedsUpdateFlag = true;
+		}
+	}
+	else if (sender == itsLink && message.Is(CMLink::kThreadChanged))
+	{
+		Rebuild();
+	}
 
 	else if (sender == itsLink &&
 			 (message.Is(CMLink::kProgramRunning)  ||
 			  message.Is(CMLink::kProgramFinished) ||
 			  message.Is(CMLink::kDetachedFromProcess)))
-		{
+	{
 		itsIsWaitingForReloadFlag = false;
 		FlushOldData();
-		}
+	}
 	else if (sender == itsLink && message.Is(CMLink::kCoreCleared))
-		{
+	{
 		// When the user has set a breakpoint at the same location as the
 		// tbreak for obtaining the PID, then we will only get ProgramStopped
 		// before CoreCleared.  We must not discard our data in this case.
 
 		if (!itsLink->IsDebugging())
-			{
-			FlushOldData();
-			}
-		}
-	else if (sender == itsLink && message.Is(CMLink::kProgramStopped))
 		{
+			FlushOldData();
+		}
+	}
+	else if (sender == itsLink && message.Is(CMLink::kProgramStopped))
+	{
 		// This is triggered when gdb prints file:line info.
 
 		const bool wasChanging = itsChangingFrameFlag;
@@ -472,52 +472,52 @@ CMStackWidget::Receive
 
 		if (!wasChanging &&
 			itsGetFrameCmd->GetState() == CMCommand::kUnassigned)
-			{
+		{
 			itsSmartFrameSelectFlag = true;
 			Rebuild();
-			}
 		}
+	}
 
 	else if (sender == itsLink &&
 			 (message.Is(CMLink::kCoreLoaded) ||
 			  message.Is(CMLink::kAttachedToProcess)))
-		{
+	{
 		itsNeedsUpdateFlag      = true;
 		itsSmartFrameSelectFlag = true;
 		itsStackDir->Activate();
-		}
+	}
 
 	else if (sender == GetWindow() && message.Is(JXWindow::kDeiconified))
-		{
+	{
 		Update();
-		}
+	}
 
 	else
-		{
+	{
 		JTableSelection& s = GetTableSelection();
 
 		JPoint cell;
 		if (!itsSelectingFrameFlag &&
 			sender == &s && message.Is(JTableData::kRectChanged) &&
 			s.GetFirstSelectedCell(&cell))
-			{
+		{
 			const JTreeNode* node = GetTreeList()->GetNode(cell.y);
 			if (node->GetDepth() > 1)
-				{
+			{
 				itsCommandDir->DisplayExpression(
 					(GetNamedTreeList()->GetNamedNode(cell.y))->GetName());
 				node = node->GetParent();
-				}
+			}
 
 			const auto* stackNode =
 				dynamic_cast<const CMStackFrameNode*>(node);
 			assert( stackNode != nullptr );
 
 			SwitchToFrame(stackNode->GetID());
-			}
+		}
 
 		JXNamedTreeListWidget::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -532,7 +532,7 @@ CMStackWidget::ReceiveGoingAway
 	)
 {
 	if (sender == itsLink && !CMIsShuttingDown())
-		{
+	{
 		itsLink = CMGetLink();
 		ListenTo(itsLink);
 
@@ -543,11 +543,11 @@ CMStackWidget::ReceiveGoingAway
 
 		jdelete itsGetFrameCmd;
 		itsGetFrameCmd = itsLink->CreateGetFrame(this);
-		}
+	}
 	else
-		{
+	{
 		JXNamedTreeListWidget::ReceiveGoingAway(sender);
-		}
+	}
 }
 
 /******************************************************************************
@@ -575,9 +575,9 @@ CMStackWidget::Update()
 {
 	if ((itsLink->HasCore() || itsLink->ProgramIsStopped()) &&
 		itsNeedsUpdateFlag)
-		{
+	{
 		Rebuild();
-		}
+	}
 }
 
 /******************************************************************************
@@ -601,19 +601,19 @@ void
 CMStackWidget::Rebuild()
 {
 	if (ShouldRebuild())
-		{
+	{
 		itsIsWaitingForReloadFlag = true;
 		FlushOldData();
 		itsGetStackCmd->Send();		// need stack before selecting frame
 		if (!itsSmartFrameSelectFlag)
-			{
-			itsGetFrameCmd->Send();
-			}
-		}
-	else
 		{
-		itsNeedsUpdateFlag = true;
+			itsGetFrameCmd->Send();
 		}
+	}
+	else
+	{
+		itsNeedsUpdateFlag = true;
+	}
 }
 
 /******************************************************************************
@@ -644,16 +644,16 @@ CMStackWidget::FinishedLoading
 	)
 {
 	if (!itsIsWaitingForReloadFlag)		// program exited
-		{
+	{
 		FlushOldData();
 		return;
-		}
+	}
 
 	SelectFrame(initID);
 	if (itsSmartFrameSelectFlag && initID > 0)
-		{
+	{
 		itsLink->SwitchToFrame(initID);
-		}
+	}
 	itsIsWaitingForReloadFlag = false;
 	itsSmartFrameSelectFlag   = false;
 }

@@ -9,10 +9,10 @@
 
 #include "CBDiffEditor.h"
 #include "CBDiffDocument.h"
-#include <JXDisplay.h>
-#include <JStringIterator.h>
-#include <jStreamUtil.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXDisplay.h>
+#include <jx-af/jcore/JStringIterator.h>
+#include <jx-af/jcore/jStreamUtil.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -69,14 +69,14 @@ CBDiffEditor::ReadDiff
 
 	JSize lineOffset = 0;
 	while (true)
-		{
+	{
 		JIndexRange origRange, newRange;
 		const JUtf8Byte cmd = ReadCmd(input, &origRange, &newRange);
 
 		if (input.eof() || input.fail())
-			{
+		{
 			break;
-			}
+		}
 
 		origRange.first = CRLineIndexToVisualLineIndex(origRange.first) + lineOffset;
 		origRange.last  = CRLineIndexToVisualLineIndex(origRange.last)  + lineOffset;
@@ -92,20 +92,20 @@ CBDiffEditor::ReadDiff
 			GetText()->AdjustTextIndex(GetLineEnd(origRange.last), +1);
 
 		if (cmd != 'a' && st->GetText().CharacterIndexValid(origRange.last))
-			{
+		{
 			st->SetFontStyle(JStyledText::TextRange(
 								GetLineStart(origRange.first), pasteIndex),
 							 itsRemoveStyle, true);
-			}
+		}
 
 		if (newLineCount > 0)
-			{
+		{
 			if (origRange.last+1 > GetLineCount() &&
 				!st->EndsWithNewline())
-				{
+			{
 				SetCaretLocation(st->GetText().GetCharacterCount()+1);
 				Paste(JString::newline);
-				}
+			}
 
 			SetCaretLocation(pasteIndex);
 			Paste(newText);
@@ -114,10 +114,10 @@ CBDiffEditor::ReadDiff
 					pasteIndex,
 					GetText()->AdjustTextIndex(GetLineEnd(origRange.last + newLineCount), +1)),
 				insertStyle, true);
-			}
+		}
 
 		lineOffset += newLineCount;
-		}
+	}
 }
 
 /******************************************************************************
@@ -173,14 +173,14 @@ CBDiffEditor::ReadRange
 	JIndexRange r;
 	input >> r.first;
 	if (input.peek() == ',')
-		{
+	{
 		input.ignore();
 		input >> r.last;
-		}
+	}
 	else
-		{
+	{
 		r.last = r.first;
-		}
+	}
 	return r;
 }
 
@@ -202,20 +202,20 @@ CBDiffEditor::IgnoreOrigText
 	const
 {
 	if (cmd == 'a')
-		{
+	{
 		return;
-		}
+	}
 
 	input >> std::ws;
 	while (input.peek() == '<' || input.peek() == '\\')
-		{
+	{
 		JIgnoreLine(input);
-		}
+	}
 
 	if (cmd == 'c' && input.peek() == '-')
-		{
+	{
 		JIgnoreLine(input);
-		}
+	}
 }
 
 /******************************************************************************
@@ -239,24 +239,24 @@ CBDiffEditor::ReadNewText
 	*lineCount = 0;
 
 	if (cmd != 'd')
-		{
+	{
 		input >> std::ws;
 		while (input.peek() == '>')
-			{
+		{
 			input.ignore(2);
 			text += JReadUntil(input, '\n');
 			text += "\n";
 			(*lineCount)++;
-			}
+		}
 
 		if (input.peek() == '\\')
-			{
+		{
 			JIgnoreLine(input);
 
 			JStringIterator iter(&text, kJIteratorStartAtEnd);
 			iter.RemovePrev();
-			}
 		}
+	}
 
 	return text;
 }
@@ -290,25 +290,25 @@ CBDiffEditor::ShowPrevDiff()
 	JCharacterRange removeRange, insertRange;
 	bool wrapped;
 	if (JTextEditor::SearchBackward([this] (const JFont& f)
-		{
+	{
 		return f.GetStyle() == this->itsRemoveStyle;
-		},
+	},
 		false, &wrapped))
-		{
+	{
 		const bool ok = GetSelection(&removeRange);
 		assert( ok );
-		}
+	}
 
 	SetCaretLocation(origIndex);
 	if (JTextEditor::SearchBackward([this] (const JFont& f)
-		{
+	{
 		return f.GetStyle() == this->itsInsertStyle;
-		},
+	},
 		false, &wrapped))
-		{
+	{
 		const bool ok = GetSelection(&insertRange);
 		assert( ok );
-		}
+	}
 
 	SelectDiff(removeRange, insertRange, removeRange.first >= insertRange.first,
 			   hadSelection, origIndex, origRange);
@@ -331,25 +331,25 @@ CBDiffEditor::ShowNextDiff()
 	JCharacterRange removeRange, insertRange;
 	bool wrapped;
 	if (JTextEditor::SearchForward([this] (const JFont& f)
-		{
+	{
 		return f.GetStyle() == this->itsRemoveStyle;
-		},
+	},
 		false, &wrapped))
-		{
+	{
 		const bool ok = GetSelection(&removeRange);
 		assert( ok );
-		}
+	}
 
 	SetCaretLocation(hadSelection ? origRange.GetAfter() : origIndex);
 	if (JTextEditor::SearchForward([this] (const JFont& f)
-		{
+	{
 		return f.GetStyle() == this->itsInsertStyle;
-		},
+	},
 		false, &wrapped))
-		{
+	{
 		const bool ok = GetSelection(&insertRange);
 		assert( ok );
-		}
+	}
 
 	SelectDiff(removeRange, insertRange, removeRange.first <= insertRange.first,
 			   hadSelection, origIndex, origRange);
@@ -374,37 +374,37 @@ CBDiffEditor::SelectDiff
 	const bool foundRemove = !removeRange.IsNothing();
 	const bool foundInsert = !insertRange.IsNothing();
 	if (foundRemove && foundInsert && preferRemove)
-		{
+	{
 		SetSelection(removeRange);
-		}
+	}
 	else if (foundRemove && foundInsert)
-		{
+	{
 		SetSelection(insertRange);
-		}
+	}
 	else if (foundRemove)
-		{
+	{
 		SetSelection(removeRange);
-		}
+	}
 	else if (foundInsert)
-		{
+	{
 		SetSelection(insertRange);
-		}
+	}
 	else if (hadSelection)
-		{
+	{
 		SetSelection(origRange);
 		GetDisplay()->Beep();
-		}
+	}
 	else
-		{
+	{
 		SetCaretLocation(origIndex);
-		}
+	}
 
 	if (HasSelection())
-		{
+	{
 		TEScrollToSelection(true);
-		}
+	}
 	else
-		{
+	{
 		GetDisplay()->Beep();
-		}
+	}
 }

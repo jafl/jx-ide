@@ -12,13 +12,13 @@
 #include "CBListCSF.h"
 #include "cbGlobals.h"
 #include "cbmUtil.h"
-#include <JXTextButton.h>
-#include <JXInputField.h>
-#include <JXColHeaderWidget.h>
-#include <JStringTableData.h>
-#include <JTableSelection.h>
-#include <jStreamUtil.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXTextButton.h>
+#include <jx-af/jx/JXInputField.h>
+#include <jx-af/jx/JXColHeaderWidget.h>
+#include <jx-af/jcore/JStringTableData.h>
+#include <jx-af/jcore/JTableSelection.h>
+#include <jx-af/jcore/jStreamUtil.h>
+#include <jx-af/jcore/jAssert.h>
 
 const JCoordinate kNameColumn  = 1;
 const JCoordinate kValueColumn = 2;
@@ -90,11 +90,11 @@ CBCPPMacroTable::CBCPPMacroTable
 	const JSize count         = list.GetElementCount();
 	data->AppendRows(count);
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		const CBCPreprocessor::MacroInfo info = list.GetElement(i);
 		data->SetString(i,kNameColumn,  *(info.name));
 		data->SetString(i,kValueColumn, *(info.value));
-		}
+	}
 }
 
 /******************************************************************************
@@ -121,20 +121,20 @@ CBCPPMacroTable::ContentsValid()
 {
 	auto* me = const_cast<CBCPPMacroTable*>(this);
 	if (!me->EndEditing())
-		{
+	{
 		return false;
-		}
+	}
 
 	const JStringTableData* data = GetStringData();
 	const JSize rowCount         = GetRowCount();
 	for (JIndex i=1; i<rowCount; i++)
-		{
+	{
 		const JString& s1 = data->GetElement(i, kNameColumn);
 		for (JIndex j=i+1; j<=rowCount; j++)
-			{
+		{
 			const JString& s2 = data->GetElement(j, kNameColumn);
 			if (s1 == s2)
-				{
+			{
 				JTableSelection& s = me->GetTableSelection();
 				s.ClearSelection();
 				s.SelectRow(i);
@@ -143,9 +143,9 @@ CBCPPMacroTable::ContentsValid()
 				JGetUserNotification()->ReportError(
 					JGetString("UniqueName::CBCPPMacroTable"));
 				return false;
-				}
 			}
 		}
+	}
 
 	return true;
 }
@@ -172,44 +172,44 @@ CBCPPMacroTable::UpdateMacros
 	const JStringTableData* data = GetStringData();
 	const JSize count            = GetRowCount();
 	if (count == list.GetElementCount())
-		{
+	{
 		// We know there are the same number of
 		// items and no duplicates.
 
 		for (JIndex i=1; i<=count; i++)
-			{
+		{
 			JIndex j;
 			const CBCPreprocessor::MacroInfo info
 				(const_cast<JString*>(&(data->GetString(i, kNameColumn))),
 				 const_cast<JString*>(&(data->GetString(i, kValueColumn))));
 			if (!list.SearchSorted(info, JListT::kAnyMatch, &j))
-				{
+			{
 				changed = true;
 				break;
-				}
+			}
 			const CBCPreprocessor::MacroInfo info2 = list.GetElement(j);
 			if (*(info.value) != *(info2.value))
-				{
+			{
 				changed = true;
 				break;
-				}
 			}
 		}
+	}
 	else
-		{
+	{
 		changed = true;
-		}
+	}
 
 	if (changed)
-		{
+	{
 		cpp->UndefineAllMacros();
 
 		for (JIndex i=1; i<=count; i++)
-			{
+		{
 			cpp->DefineMacro(data->GetString(i, kNameColumn),
 							 data->GetString(i, kValueColumn));
-			}
 		}
+	}
 
 	return changed;
 }
@@ -231,13 +231,13 @@ CBCPPMacroTable::HandleMouseDown
 {
 	JPoint cell;
 	if (button == kJXLeftButton && GetCell(pt, &cell))
-		{
+	{
 		BeginEditing(cell);
-		}
+	}
 	else
-		{
+	{
 		ScrollForWheel(button, modifiers);
-		}
+	}
 }
 
 /******************************************************************************
@@ -253,33 +253,33 @@ CBCPPMacroTable::Receive
 	)
 {
 	if (sender == itsAddRowButton && message.Is(JXButton::kPushed))
-		{
+	{
 		AddRow();
-		}
+	}
 	else if (sender == itsRemoveRowButton && message.Is(JXButton::kPushed))
-		{
+	{
 		RemoveRow();
-		}
+	}
 
 	else if (sender == itsLoadButton && message.Is(JXButton::kPushed))
-		{
+	{
 		LoadMacros();
-		}
+	}
 	else if (sender == itsSaveButton && message.Is(JXButton::kPushed))
-		{
+	{
 		SaveMacros();
-		}
+	}
 
 	else
-		{
+	{
 		if (sender == this && message.Is(kColWidthChanged))
-			{
+		{
 			// do it regardless of which column changed so they can't shrink value column
 			AdjustColWidths();
-			}
+		}
 
 		JXStringTable::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -291,11 +291,11 @@ void
 CBCPPMacroTable::AddRow()
 {
 	if (EndEditing())
-		{
+	{
 		JStringTableData* data = GetStringData();
 		data->AppendRows(1);
 		BeginEditing(JPoint(kNameColumn, GetRowCount()));
-		}
+	}
 }
 
 /******************************************************************************
@@ -308,10 +308,10 @@ CBCPPMacroTable::RemoveRow()
 {
 	JPoint editCell;
 	if (GetEditedCell(&editCell))
-		{
+	{
 		CancelEditing();
 		GetStringData()->RemoveRow(editCell.y);
-		}
+	}
 }
 
 /******************************************************************************
@@ -339,9 +339,9 @@ CBCPPMacroTable::CreateStringTableInput
 		JXStringTable::CreateStringTableInput(cell, enclosure,
 											  hSizing, vSizing, x,y, w,h);
 	if (cell.x == kNameColumn)
-		{
+	{
 		input->SetIsRequired();
-		}
+	}
 	input->GetText()->SetCharacterInWordFunction(CBMIsCharacterInWord);
 	return input;
 }
@@ -369,9 +369,9 @@ CBCPPMacroTable::LoadMacros()
 	JString fileName;
 	if (EndEditing() &&
 		itsCSF->ChooseFile(JString::empty, JString::empty, &fileName))
-		{
+	{
 		ReadData(fileName, itsCSF->ReplaceExisting());
-		}
+	}
 }
 
 /******************************************************************************
@@ -390,36 +390,36 @@ CBCPPMacroTable::ReadData
 {
 	JStringTableData* data = GetStringData();
 	if (replaceExisting)
-		{
+	{
 		data->RemoveAllRows();
-		}
+	}
 
 	JIndex firstNewRow = 0;
 
 	std::ifstream input(fileName.GetBytes());
 	JString name, value;
 	while (!input.eof() && !input.fail())
-		{
+	{
 		name = JReadLine(input);
 		if (!name.IsEmpty())
-			{
+		{
 			value = JReadLine(input);
 			data->AppendRows(1);
 			const JSize rowCount = data->GetRowCount();
 			data->SetString(rowCount,kNameColumn,  name);
 			data->SetString(rowCount,kValueColumn, value);
 			if (firstNewRow == 0)
-				{
+			{
 				firstNewRow = rowCount;
-				}
 			}
 		}
+	}
 
 	if (firstNewRow != 0)
-		{
+	{
 		ScrollTo((GetBounds()).bottomLeft());
 		BeginEditing(JPoint(kNameColumn, firstNewRow));
-		}
+	}
 }
 
 /******************************************************************************
@@ -434,10 +434,10 @@ CBCPPMacroTable::SaveMacros()
 	JString newName;
 	if (const_cast<CBCPPMacroTable*>(this)->EndEditing() &&
 		itsCSF->SaveFile(JGetString("SavePrompt::CBCPPMacroTable"), JString::empty, itsFileName, &newName))
-		{
+	{
 		itsFileName = newName;
 		WriteData(newName);
-		}
+	}
 }
 
 /******************************************************************************
@@ -459,12 +459,12 @@ CBCPPMacroTable::WriteData
 	const JStringTableData* data = GetStringData();
 	const JSize count            = GetRowCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		data->GetString(i, kNameColumn).Print(output);
 		output << '\n';
 		data->GetString(i, kValueColumn).Print(output);
 		output << "\n\n";
-		}
+	}
 }
 
 /******************************************************************************
@@ -554,13 +554,13 @@ CBCPPMacroTable::AdjustColWidths()
 	const JSize usedWidth = GetColWidth(kNameColumn) + lineWidth;
 
 	if (apWidth > usedWidth)
-		{
+	{
 		SetColWidth(kValueColumn, apWidth - usedWidth);
-		}
+	}
 	else
-		{
+	{
 		const JSize nameWidth = apWidth/3;
 		SetColWidth(kNameColumn, nameWidth);
 		SetColWidth(kValueColumn, apWidth - nameWidth - lineWidth);
-		}
+	}
 }

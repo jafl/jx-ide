@@ -8,8 +8,8 @@
 #ifndef _H_CBProjectTree
 #define _H_CBProjectTree
 
-#include <JTree.h>
-#include <JPtrArray.h>
+#include <jx-af/jcore/JTree.h>
+#include <jx-af/jcore/JPtrArray.h>
 
 class JString;
 class JProgressDisplay;

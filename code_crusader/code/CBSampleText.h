@@ -8,7 +8,7 @@
 #ifndef _H_CBSampleText
 #define _H_CBSampleText
 
-#include <JXInputField.h>
+#include <jx-af/jx/JXInputField.h>
 
 class CBSampleText : public JXInputField
 {

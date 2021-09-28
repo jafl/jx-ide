@@ -8,8 +8,8 @@
  *****************************************************************************/
 
 #include <CMLocation.h>
-#include <jDirUtil.h>
-#include <jAssert.h>
+#include <jx-af/jcore/jDirUtil.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -33,11 +33,11 @@ CMLocation::CMLocation
 	itsLineNumber(lineNumber)
 {
 	if (!itsFileName.IsEmpty() && JIsRelativePath(itsFileName))
-		{
+	{
 		JString p, n;
 		JSplitPathAndName(itsFileName, &p, &n);
 		itsFileName = n;
-		}
+	}
 }
 
 /******************************************************************************
@@ -74,13 +74,13 @@ CMLocation::operator=
 	)
 {
 	if (this != &source)
-		{
+	{
 		itsFileName      = source.itsFileName;
 		itsFileID        = source.itsFileID;
 		itsLineNumber    = source.itsLineNumber;
 		itsFunctionName  = source.itsFunctionName;
 		itsMemoryAddress = source.itsMemoryAddress;
-		}
+	}
 
 	return *this;
 }

@@ -8,7 +8,7 @@
 #ifndef _H_CBDocumentMenu
 #define _H_CBDocumentMenu
 
-#include <JXDocumentMenu.h>
+#include <jx-af/jx/JXDocumentMenu.h>
 
 class CBDocumentMenu : public JXDocumentMenu
 {

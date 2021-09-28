@@ -8,8 +8,8 @@
 #ifndef _H_CMLocation
 #define _H_CMLocation
 
-#include <JString.h>
-#include <JFileID.h>
+#include <jx-af/jcore/JString.h>
+#include <jx-af/jcore/JFileID.h>
 
 class CMLocation
 {

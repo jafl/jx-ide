@@ -11,16 +11,16 @@
 #include "CBCommandTable.h"
 #include "CBProjectDocument.h"
 #include "cbGlobals.h"
-#include <JXWindow.h>
-#include <JXTextButton.h>
-#include <JXInputField.h>
-#include <JXStaticText.h>
-#include <JXVertPartition.h>
-#include <JXScrollbarSet.h>
-#include <JXColHeaderWidget.h>
-#include <JXHelpManager.h>
-#include <jStreamUtil.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXTextButton.h>
+#include <jx-af/jx/JXInputField.h>
+#include <jx-af/jx/JXStaticText.h>
+#include <jx-af/jx/JXVertPartition.h>
+#include <jx-af/jx/JXScrollbarSet.h>
+#include <jx-af/jx/JXColHeaderWidget.h>
+#include <jx-af/jx/JXHelpManager.h>
+#include <jx-af/jcore/jStreamUtil.h>
+#include <jx-af/jcore/jAssert.h>
 
 // setup information
 
@@ -122,18 +122,18 @@ CBEditCommandsDialog::BuildWindow
 
 	JXContainer* compartment;
 	if (itsCmdMgr != nullptr)
-		{
+	{
 		compartment = itsPartition->GetCompartment(1);
-		}
+	}
 	else
-		{
+	{
 		const JRect frame = itsPartition->GetFrame();
 		compartment =
 			jnew JXWidgetSet(window, JXWidget::kHElastic, JXWidget::kVElastic,
 							frame.left, frame.top, frame.width(), frame.height());
 		assert( compartment != nullptr );
 		itsPartition->Hide();
-		}
+	}
 
 // begin allProjectsLayout
 
@@ -182,11 +182,11 @@ CBEditCommandsDialog::BuildWindow
 // end allProjectsLayout
 
 	if (itsCmdMgr == nullptr)
-		{
+	{
 		allScrollbarSet->AdjustSize(0,
 			(compartment->GetAperture()).bottom -
 			(allScrollbarSet->GetFrame()).bottom);
-		}
+	}
 
 	const CBCommandManager::CmdList* allCmdList = (CBGetCommandManager())->GetCommandList();
 
@@ -216,7 +216,7 @@ CBEditCommandsDialog::BuildWindow
 	itsThisTable     = nullptr;
 
 	if (itsCmdMgr != nullptr)
-		{
+	{
 		compartment = itsPartition->GetCompartment(2);
 
 // begin thisProjectLayout
@@ -277,9 +277,9 @@ CBEditCommandsDialog::BuildWindow
 // end thisProjectLayout
 
 		const JUtf8Byte* map[] =
-			{
+		{
 			"project", (projDoc->GetName()).GetBytes()
-			};
+		};
 		thisCaption->GetText()->SetText(
 			JGetString("ProjectTableCaption::CBEditCommandsDialog", map, sizeof(map)));
 
@@ -307,7 +307,7 @@ CBEditCommandsDialog::BuildWindow
 		colHeader->FitToEnclosure(true, false);
 		itsThisTable->SetColTitles(colHeader);
 		colHeader->TurnOnColResizing(20);
-		}
+	}
 }
 
 /******************************************************************************
@@ -323,37 +323,37 @@ CBEditCommandsDialog::Receive
 	)
 {
 	if (sender == this && message.Is(JXDialogDirector::kDeactivated))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const JXDialogDirector::Deactivated*>(&message);
 		assert( info != nullptr );
 		if (info->Successful())
-			{
+		{
 			itsAllTable->GetCommandList((CBGetCommandManager())->GetCommandList());
 			(CBGetCommandManager())->UpdateMenuIDs();
 
 			if (itsCmdMgr != nullptr)
-				{
+			{
 				assert( itsMakeDependCmd != nullptr );
 				itsCmdMgr->SetMakeDependCommand(itsMakeDependCmd->GetText()->GetText());
 
 				assert( itsThisTable != nullptr );
 				itsThisTable->GetCommandList(itsCmdMgr->GetCommandList());
-				}
+			}
 
 			(CBGetCommandManager())->UpdateAllCommandMenus();
-			}
 		}
+	}
 
 	else if (sender == itsHelpButton && message.Is(JXButton::kPushed))
-		{
+	{
 		(JXGetHelpManager())->ShowSection("CBTasksHelp");
-		}
+	}
 
 	else
-		{
+	{
 		JXDialogDirector::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -370,9 +370,9 @@ CBEditCommandsDialog::ReadPrefs
 	JFileVersion vers;
 	input >> vers;
 	if (vers > kCurrentSetupVersion)
-		{
+	{
 		return;
-		}
+	}
 
 	JXWindow* window = GetWindow();
 	window->ReadGeometry(input);
@@ -382,13 +382,13 @@ CBEditCommandsDialog::ReadPrefs
 	itsAllTable->ReadGeometry(input);
 
 	if (itsThisTable != nullptr)
-		{
+	{
 		itsThisTable->ReadGeometry(input);
-		}
+	}
 	else
-		{
+	{
 		JReadAll(input, &itsThisTableSetup);
-		}
+	}
 }
 
 /******************************************************************************
@@ -415,21 +415,21 @@ CBEditCommandsDialog::WritePrefs
 	itsAllTable->WriteGeometry(output);
 
 	if (itsThisTable != nullptr)
-		{
+	{
 		output << ' ';
 		itsThisTable->WriteGeometry(output);
-		}
+	}
 	else if (!itsThisTableSetup.IsEmpty())
-		{
+	{
 		if (itsThisTableSetup.GetFirstCharacter() != ' ')
-			{
-			output << ' ';
-			}
-		itsThisTableSetup.Print(output);
-		}
-	else	// use setup from itsAllTable
 		{
+			output << ' ';
+		}
+		itsThisTableSetup.Print(output);
+	}
+	else	// use setup from itsAllTable
+	{
 		output << ' ';
 		itsAllTable->WriteGeometry(output);
-		}
+	}
 }

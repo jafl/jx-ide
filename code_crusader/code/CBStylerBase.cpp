@@ -25,9 +25,9 @@
 #include "CBStylerBase.h"
 #include "CBEditStylerDialog.h"
 #include "cbmUtil.h"
-#include <JXWindow.h>
-#include <JColorManager.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jcore/JColorManager.h>
+#include <jx-af/jcore/jAssert.h>
 
 // setup information -- remember to increment shared prefs file version
 
@@ -75,9 +75,9 @@ CBStylerBase::CBStylerBase
 
 	JFontStyle style(itsDefColor);
 	for (JIndex i=1; i<=typeCount; i++)
-		{
+	{
 		itsTypeStyles->AppendElement(style);
-		}
+	}
 
 	itsWordStyles = jnew JStringMap<JFontStyle>(64);
 	assert( itsWordStyles != nullptr );
@@ -114,9 +114,9 @@ CBStylerBase::GetStyle
 {
 	JFontStyle style;
 	if (!GetWordStyle(word, &style))
-		{
+	{
 		style = GetTypeStyle(typeIndex);
-		}
+	}
 
 	return style;
 }
@@ -137,9 +137,9 @@ JIndex i;
 	JFileVersion vers;
 	input >> vers;
 	if (vers > kCurrentSetupVersion)
-		{
+	{
 		return;
-		}
+	}
 
 	bool active;
 	input >> JBoolFromString(active);
@@ -152,16 +152,16 @@ JIndex i;
 	input >> typeCount;
 
 	for (i=1; i<=typeCount; i++)
-		{
+	{
 		typeStyles.AppendElement(ReadStyle(input));
-		}
+	}
 
 	JFileVersion typeListVers;
 	input >> typeListVers;
 	if (typeListVers > itsTypeNameVersion)
-		{
+	{
 		return;
-		}
+	}
 
 	SetActive(active);
 	*itsTypeStyles = typeStyles;
@@ -177,10 +177,10 @@ JIndex i;
 
 	JString s;
 	for (i=1; i<=wordCount; i++)
-		{
+	{
 		input >> s;
 		itsWordStyles->SetElement(s, ReadStyle(input));
-		}
+	}
 
 	Broadcast(WordListChanged(*itsWordStyles));
 
@@ -237,9 +237,9 @@ JIndex i;
 	output << ' ' << typeCount;
 
 	for (i=1; i<=typeCount; i++)
-		{
+	{
 		WriteStyle(output, itsTypeStyles->GetElement(i));
-		}
+	}
 
 	output << ' ' << itsTypeNameVersion;
 
@@ -249,10 +249,10 @@ JIndex i;
 
 	JStringMapCursor<JFontStyle> cursor(itsWordStyles);
 	while (cursor.Next())
-		{
+	{
 		output << ' ' << cursor.GetKey();
 		WriteStyle(output, cursor.GetValue());
-		}
+	}
 
 	// dialog geometry
 
@@ -302,18 +302,18 @@ CBStylerBase::GetWordList
 
 	JStringMapCursor<JFontStyle> cursor(&wordStyles);
 	while (cursor.Next())
-		{
+	{
 		const WordStyle data(jnew JString(cursor.GetKey()), cursor.GetValue());
 		assert( data.key != nullptr );
 		if (sort)
-			{
+		{
 			wordList->InsertSorted(data);
-			}
-		else
-			{
-			wordList->AppendElement(data);
-			}
 		}
+		else
+		{
+			wordList->AppendElement(data);
+		}
+	}
 }
 
 /******************************************************************************
@@ -331,17 +331,17 @@ CBStylerBase::CompareWords
 	const int result = JString::Compare(*w1.key, *w2.key, JString::kIgnoreCase);
 
 	if (result < 0)
-		{
+	{
 		return JListT::kFirstLessSecond;
-		}
+	}
 	else if (result == 0)
-		{
+	{
 		return JListT::kFirstEqualSecond;
-		}
+	}
 	else
-		{
+	{
 		return JListT::kFirstGreaterSecond;
-		}
+	}
 }
 
 /******************************************************************************
@@ -360,26 +360,26 @@ CBStylerBase::Receive
 
 	if (sender == CBMGetPrefsManager() &&
 		message.Is(CBMPrefsManager::kTextColorChanged))
-		{
+	{
 		SetDefaultFontColor((CBMGetPrefsManager())->GetColor(CBMPrefsManager::kTextColorIndex));
-		}
+	}
 
 	else if (sender == itsEditDialog && message.Is(JXDialogDirector::kDeactivated))
-		{
+	{
 		const auto* info = dynamic_cast<const JXDialogDirector::Deactivated*>(&message);
 		assert( info != nullptr );
 		if (info->Successful())
-			{
+		{
 			ExtractStyles();
-			}
+		}
 		itsEditDialog->GetWindow()->WriteGeometry(&itsDialogGeom);
 		itsEditDialog = nullptr;
-		}
+	}
 
 	else
-		{
+	{
 		JBroadcaster::Receive(sender, message);
-		}
+	}
 
 #endif
 }
@@ -401,30 +401,30 @@ CBStylerBase::SetDefaultFontColor
 JIndex i;
 
 	if (color != itsDefColor)
-		{
+	{
 		for (i=1; i<=itsTypeNameCount; i++)
-			{
+		{
 			JFontStyle style = itsTypeStyles->GetElement(i);
 			if (style.color == itsDefColor)
-				{
+			{
 				style.color = color;
 				itsTypeStyles->SetElement(i, style);
-				}
 			}
+		}
 
 		JStringMapCursor<JFontStyle> cursor(itsWordStyles);
 		while (cursor.Next())
-			{
+		{
 			JFontStyle style = cursor.GetValue();
 			if (style.color == itsDefColor)
-				{
+			{
 				style.color = color;
 				itsWordStyles->SetOldElement(cursor.GetKey(), style);
-				}
 			}
+		}
 
 		itsDefColor = color;
-		}
+	}
 }
 
 /******************************************************************************
@@ -448,9 +448,9 @@ CBStylerBase::EditStyles()
 	assert( itsEditDialog != nullptr );
 
 	for (auto& ws : wordList)
-		{
+	{
 		jdelete ws.key;
-		}
+	}
 
 	JXWindow* window = itsEditDialog->GetWindow();
 	window->ReadGeometry(itsDialogGeom);
@@ -477,14 +477,14 @@ CBStylerBase::ExtractStyles()
 	if (active != IsActive() ||
 		TypeStylesChanged(newTypeStyles) ||
 		WordStylesChanged(newWordStyles))
-		{
+	{
 		itsEditDialog->GetData(&active, itsTypeStyles, itsWordStyles);
 
 		SetActive(active);
 		CBMGetDocumentManager()->StylerChanged(this);
 
 		Broadcast(WordListChanged(*itsWordStyles));
-		}
+	}
 }
 
 #endif
@@ -505,12 +505,12 @@ CBStylerBase::TypeStylesChanged
 	assert( newTypeStyles.GetElementCount() == count );
 
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		if (itsTypeStyles->GetElement(i) != newTypeStyles.GetElement(i))
-			{
+		{
 			return true;
-			}
 		}
+	}
 
 	return false;
 }
@@ -529,24 +529,24 @@ CBStylerBase::WordStylesChanged
 {
 	const JSize count = itsWordStyles->GetElementCount();
 	if (newWordStyles.GetElementCount() != count)
-		{
+	{
 		return true;
-		}
+	}
 	else if (count == 0)
-		{
+	{
 		return false;
-		}
+	}
 
 	JStringMapCursor<JFontStyle> cursor(itsWordStyles);
 	JFontStyle newStyle;
 	while (cursor.Next())
-		{
+	{
 		if (!newWordStyles.GetElement(cursor.GetKey(), &newStyle) ||
 			newStyle != cursor.GetValue())
-			{
+		{
 			return true;
-			}
 		}
+	}
 
 	return false;
 }

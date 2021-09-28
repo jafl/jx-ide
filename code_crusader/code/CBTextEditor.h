@@ -8,9 +8,9 @@
 #ifndef _H_CBTextEditor
 #define _H_CBTextEditor
 
-#include <JXTEBase.h>
-#include <JXStyledText.h>
-#include <JSTStyler.h>
+#include <jx-af/jx/JXTEBase.h>
+#include <jx-af/jx/JXStyledText.h>
+#include <jx-af/jcore/JSTStyler.h>
 #include "CBTextFileType.h"
 
 class JXMenu;

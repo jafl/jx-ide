@@ -11,9 +11,9 @@
 
 #include "CBCommandSelection.h"
 #include "CBCommandTable.h"
-#include <JXDisplay.h>
-#include <JTableSelection.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXDisplay.h>
+#include <jx-af/jcore/JTableSelection.h>
+#include <jx-af/jcore/jAssert.h>
 
 static const JUtf8Byte* kCommandXAtomName = "text/x-CBCommand";
 
@@ -93,29 +93,29 @@ CBCommandSelection::ConvertData
 	JPoint cell;
 
 	if (requestType == itsCBCommandXAtom)
-		{
+	{
 		*returnType = itsCBCommandXAtom;
 		*dataLength = itsData.GetByteCount();
 		*data       = jnew unsigned char[ *dataLength ];
 		if (*data != nullptr)
-			{
+		{
 			memcpy(*data, itsData.GetRawBytes(), *dataLength);
 			return true;
-			}
 		}
+	}
 
 	else if (requestType == selMgr->GetDeleteSelectionXAtom() &&
 			 itsTable != nullptr && IsCurrent() &&
 			 (itsTable->GetTableSelection()).GetSingleSelectedCell(&cell) &&
 			 JIndex(cell.y) == itsSrcRowIndex)
-		{
+	{
 		itsTable->RemoveCommand();
 
 		*data       = jnew unsigned char[1];
 		*dataLength = 0;
 		*returnType = selMgr->GetNULLXAtom();
 		return true;
-		}
+	}
 
 	*data       = nullptr;
 	*dataLength = 0;

@@ -8,7 +8,7 @@
 #ifndef _H_CBSearchFilterHistoryMenu
 #define _H_CBSearchFilterHistoryMenu
 
-#include <JXHistoryMenuBase.h>
+#include <jx-af/jx/JXHistoryMenuBase.h>
 
 class CBSearchFilterHistoryMenu : public JXHistoryMenuBase
 {

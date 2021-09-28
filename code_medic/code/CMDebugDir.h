@@ -8,7 +8,7 @@
 #ifndef _H_CMDebugDir
 #define _H_CMDebugDir
 
-#include <JXWindowDirector.h>
+#include <jx-af/jx/JXWindowDirector.h>
 #include <fstream>
 
 class JXTextButton;

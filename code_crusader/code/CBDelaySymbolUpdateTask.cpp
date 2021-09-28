@@ -9,7 +9,7 @@
 
 #include "CBDelaySymbolUpdateTask.h"
 #include "CBProjectDocument.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 const Time kDelay = 60 * 1000;	// 60 seconds
 
@@ -50,7 +50,7 @@ CBDelaySymbolUpdateTask::Perform
 	)
 {
 	if (TimeToPerform(delta, maxSleepTime))
-		{
+	{
 		itsProjDoc->UpdateSymbolDatabase();		// deletes us
-		}
+	}
 }

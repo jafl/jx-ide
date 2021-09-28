@@ -11,10 +11,10 @@
 #include "CBKeyScriptInput.h"
 #include "CBEditMacroDialog.h"
 #include "cbGlobals.h"
-#include <JXTextButton.h>
-#include <JStringTableData.h>
-#include <JTableSelection.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXTextButton.h>
+#include <jx-af/jcore/JStringTableData.h>
+#include <jx-af/jcore/JTableSelection.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -82,20 +82,20 @@ CBKeyScriptTableBase::ContentsValid()
 {
 	auto* me = const_cast<CBKeyScriptTableBase*>(this);
 	if (!me->EndEditing())
-		{
+	{
 		return false;
-		}
+	}
 
 	const JStringTableData* data = GetStringData();
 	const JSize rowCount         = GetRowCount();
 	for (JIndex i=1; i<rowCount; i++)
-		{
+	{
 		const JString& s1 = data->GetElement(i, kMacroColumn);
 		for (JIndex j=i+1; j<=rowCount; j++)
-			{
+		{
 			const JString& s2 = data->GetElement(j, kMacroColumn);
 			if (s1 == s2)
-				{
+			{
 				JTableSelection& s = me->GetTableSelection();
 				s.ClearSelection();
 				s.SelectRow(i);
@@ -104,9 +104,9 @@ CBKeyScriptTableBase::ContentsValid()
 				JGetUserNotification()->ReportError(
 					JGetString("MustBeUnique::CBKeyScriptTableBase"));
 				return false;
-				}
 			}
 		}
+	}
 
 	return true;
 }
@@ -121,9 +121,9 @@ CBKeyScriptTableBase::Activate()
 {
 	JXStringTable::Activate();
 	if (WouldBeActive())
-		{
+	{
 		itsAddRowButton->Activate();
-		}
+	}
 }
 
 /******************************************************************************
@@ -136,9 +136,9 @@ CBKeyScriptTableBase::Deactivate()
 {
 	JXStringTable::Deactivate();
 	if (!WouldBeActive())
-		{
+	{
 		itsAddRowButton->Deactivate();
-		}
+	}
 }
 
 /******************************************************************************
@@ -158,13 +158,13 @@ CBKeyScriptTableBase::HandleMouseDown
 {
 	JPoint cell;
 	if (button == kJXLeftButton && GetCell(pt, &cell))
-		{
+	{
 		BeginEditing(cell);
-		}
+	}
 	else
-		{
+	{
 		ScrollForWheel(button, modifiers);
-		}
+	}
 }
 
 /******************************************************************************
@@ -180,24 +180,24 @@ CBKeyScriptTableBase::Receive
 	)
 {
 	if (sender == itsAddRowButton && message.Is(JXButton::kPushed))
-		{
+	{
 		AddRow();
-		}
+	}
 	else if (sender == itsRemoveRowButton && message.Is(JXButton::kPushed))
-		{
+	{
 		RemoveRow();
-		}
+	}
 
 	else
-		{
+	{
 		if (sender == this && message.Is(kColWidthChanged))
-			{
+		{
 			// do it regardless of which column changed so they can't shrink script column
 			AdjustColWidths();
-			}
+		}
 
 		JXStringTable::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -209,10 +209,10 @@ void
 CBKeyScriptTableBase::AddRow()
 {
 	if (itsDialog->ContentsValid())
-		{
+	{
 		GetStringData()->AppendRows(1);
 		BeginEditing(JPoint(1, GetRowCount()));
-		}
+	}
 }
 
 /******************************************************************************
@@ -225,10 +225,10 @@ CBKeyScriptTableBase::RemoveRow()
 {
 	JPoint editCell;
 	if (GetEditedCell(&editCell))
-		{
+	{
 		CancelEditing();
 		GetStringData()->RemoveRow(editCell.y);
-		}
+	}
 }
 
 /******************************************************************************
@@ -263,15 +263,15 @@ CBKeyScriptTableBase::AdjustColWidths()
 	const JSize usedWidth = GetColWidth(kMacroColumn) + lineWidth;
 
 	if (apWidth > usedWidth)
-		{
+	{
 		SetColWidth(kScriptColumn, apWidth - usedWidth);
-		}
+	}
 	else
-		{
+	{
 		const JSize macroWidth = apWidth/3;
 		SetColWidth(kMacroColumn, macroWidth);
 		SetColWidth(kScriptColumn, apWidth - macroWidth - lineWidth);
-		}
+	}
 }
 
 /******************************************************************************
@@ -295,20 +295,20 @@ CBKeyScriptTableBase::CreateStringTableInput
 	itsRemoveRowButton->Activate();
 
 	if (cell.x == kScriptColumn)
-		{
+	{
 		auto* obj =
 			jnew CBKeyScriptInput(enclosure, hSizing, vSizing, x,y, w,h);
 		assert( obj != nullptr );
 		return obj;
-		}
+	}
 	else
-		{
+	{
 		JXInputField* input =
 			JXStringTable::CreateStringTableInput(
 								cell, enclosure, hSizing, vSizing, x,y, w,h);
 		input->SetIsRequired();
 		return input;
-		}
+	}
 }
 
 /******************************************************************************

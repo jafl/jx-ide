@@ -8,9 +8,9 @@
 #ifndef _H_CMArray1DDir
 #define _H_CMArray1DDir
 
-#include <JXWindowDirector.h>
-#include <JString.h>
-#include <JRange.h>
+#include <jx-af/jx/JXWindowDirector.h>
+#include <jx-af/jcore/JString.h>
+#include <jx-af/jcore/JRange.h>
 
 class JTree;
 class JTreeNode;

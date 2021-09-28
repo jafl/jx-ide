@@ -8,7 +8,7 @@
  ******************************************************************************/
 
 #include "CBSQLCompleter.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 CBSQLCompleter* CBSQLCompleter::itsSelf = nullptr;
 
@@ -165,14 +165,14 @@ CBStringCompleter*
 CBSQLCompleter::Instance()
 {
 	if (itsSelf == nullptr && !recursiveInstance)
-		{
+	{
 		recursiveInstance = true;
 
 		itsSelf = jnew CBSQLCompleter;
 		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
-		}
+	}
 
 	return itsSelf;
 }

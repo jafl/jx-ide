@@ -10,7 +10,7 @@
 #ifndef _H_CMTextDisplayBase
 #define _H_CMTextDisplayBase
 
-#include <JXTEBase.h>
+#include <jx-af/jx/JXTEBase.h>
 
 class JXStyledText;
 

@@ -10,13 +10,13 @@
 #include "CMEditCommandsTable.h"
 #include "CMEditCommandsDialog.h"
 #include "CMUpdateCommandsTableWidth.h"
-#include <JXTextButton.h>
-#include <JXInputField.h>
-#include <JXWindowPainter.h>
-#include <JXFontManager.h>
-#include <JTableSelection.h>
-#include <jXGlobals.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXTextButton.h>
+#include <jx-af/jx/JXInputField.h>
+#include <jx-af/jx/JXWindowPainter.h>
+#include <jx-af/jx/JXFontManager.h>
+#include <jx-af/jcore/JTableSelection.h>
+#include <jx-af/jx/jXGlobals.h>
+#include <jx-af/jcore/jAssert.h>
 
 const JCoordinate kDefRowHeight	= 15;
 const JCoordinate kDefColWidth	= 100;
@@ -71,9 +71,9 @@ CMEditCommandsTable::SyncWithData()
 {
 	const JSize count = itsDialog->GetStringCount();
 	if (GetColCount() == 0)
-		{
+	{
 		AppendCols(1, kDefColWidth);
-		}
+	}
 	RemoveAllRows();
 	AppendRows(count, kDefRowHeight);
 
@@ -109,9 +109,9 @@ CMEditCommandsTable::AdjustColWidth()
 {
 	JCoordinate w = GetApertureWidth();
 	if (w < itsMinColWidth)
-		{
+	{
 		w = itsMinColWidth;
-		}
+	}
 	SetColWidth(1,w);
 }
 
@@ -133,12 +133,12 @@ CMEditCommandsTable::TableDrawCell
 
 	const JCoordinate w = p.GetStringWidth(str) + 2*kHMarginWidth;
 	if (w > GetColWidth(1))
-		{
+	{
 		itsMinColWidth = w;
 		auto* task = jnew CMUpdateCommandsTableWidth(this);
 		assert( task != nullptr );
 		task->Go();
-		}
+	}
 
 	// draw string
 
@@ -164,9 +164,9 @@ CMEditCommandsTable::HandleMouseDown
 {
 	JPoint cell;
 	if (GetCell(pt, &cell) && button == kJXLeftButton)
-		{
+	{
 		BeginEditing(cell);
-		}
+	}
 }
 
 /******************************************************************************
@@ -245,16 +245,16 @@ CMEditCommandsTable::RemoveCurrent()
 {
 	JPoint cell;
 	if (GetEditedCell(&cell))
-		{
+	{
 		RemoveRow(cell.y);
 		itsDialog->DeleteString(cell.y);
 		return;
-		}
+	}
 	JTableSelection& s	= GetTableSelection();
 	JTableSelectionIterator iter(&s);
 	while (iter.Next(&cell))
-		{
+	{
 		RemoveRow(cell.y);
 		itsDialog->DeleteString(cell.y);
-		}
+	}
 }

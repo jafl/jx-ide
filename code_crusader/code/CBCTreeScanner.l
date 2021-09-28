@@ -7,10 +7,10 @@ This scanner reads a C/C++ file and creates CBClass instances.
 */
 
 #include "CBCClass.h"
-#include <JStringIterator.h>
-#include <JStack.h>
-#include <JFAID.h>
-#include <jAssert.h>
+#include <jx-af/jcore/JStringIterator.h>
+#include <jx-af/jcore/JStack.h>
+#include <jx-af/jcore/JFAID.h>
+#include <jx-af/jcore/jAssert.h>
 }
 
 %option namespace="CB::Tree::C" lexer="Scanner"

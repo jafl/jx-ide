@@ -10,9 +10,9 @@
  ******************************************************************************/
 
 #include <CBCommandPathInput.h>
-#include <JXColorManager.h>
-#include <jDirUtil.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXColorManager.h>
+#include <jx-af/jcore/jDirUtil.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -63,14 +63,14 @@ CBCommandPathInput::GetPath
 {
 	const JString& text = GetText().GetText();
 	if (text == "@")
-		{
+	{
 		*path = text;
 		return true;
-		}
+	}
 	else
-		{
+	{
 		return JXPathInput::GetPath(path);
-		}
+	}
 }
 
 /******************************************************************************
@@ -82,13 +82,13 @@ bool
 CBCommandPathInput::InputValid()
 {
 	if (GetText()->GetText() == "@")
-		{
+	{
 		return true;
-		}
+	}
 	else
-		{
+	{
 		return JXPathInput::InputValid();
-		}
+	}
 }
 
 /******************************************************************************
@@ -109,7 +109,7 @@ CBCommandPathInput::StyledText::AdjustStylesBeforeBroadcast
 	)
 {
 	if (!text.IsEmpty() && text.GetFirstCharacter() == '@')
-		{
+	{
 		const JSize totalLength = text.GetCharacterCount();
 		JFont f                 = styles->GetFirstElement();
 		styles->RemoveAll();
@@ -119,12 +119,12 @@ CBCommandPathInput::StyledText::AdjustStylesBeforeBroadcast
 		*recalcRange = *redrawRange = JStyledText::TextRange(
 			JCharacterRange(1, totalLength),
 			JUtf8ByteRange(1, text.GetByteCount()));
-		}
+	}
 	else
-		{
+	{
 		return JXPathInput::StyledText::AdjustStylesBeforeBroadcast(
 			text, styles, recalcRange, redrawRange, deletion);
-		}
+	}
 }
 
 /******************************************************************************
@@ -147,13 +147,13 @@ CBCommandPathInput::GetTextColor
 	)
 {
 	if (path.GetFirstCharacter() == '@')
-		{
+	{
 		return JColorManager::GetBlackColor();
-		}
+	}
 	else
-		{
+	{
 		return JXPathInput::GetTextColor(path, base, requireWrite);
-		}
+	}
 }
 
 /******************************************************************************
@@ -168,17 +168,17 @@ CBCommandPathInput::GetTextForChoosePath()
 	const
 {
 	if (!GetText().IsEmpty() && GetText().GetText().GetFirstCharacter() == '@')
-		{
+	{
 		JString s;
 		if (!GetBasePath(&s) &&
 			!JGetHomeDirectory(&s))
-			{
-			s = JGetRootDirectory();
-			}
-		return s;
-		}
-	else
 		{
-		return JXPathInput::GetTextForChoosePath();
+			s = JGetRootDirectory();
 		}
+		return s;
+	}
+	else
+	{
+		return JXPathInput::GetTextForChoosePath();
+	}
 }

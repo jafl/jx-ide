@@ -10,12 +10,12 @@
 #ifndef _H_CBClass
 #define _H_CBClass
 
-#include <JBroadcaster.h>
-#include <JPtrArray-JString.h>
-#include <JFontStyle.h>
-#include <JRect.h>
-#include <JFAID.h>
-#include <jColor.h>
+#include <jx-af/jcore/JBroadcaster.h>
+#include <jx-af/jcore/JPtrArray-JString.h>
+#include <jx-af/jcore/JFontStyle.h>
+#include <jx-af/jcore/JRect.h>
+#include <jx-af/jcore/JFAID.h>
+#include <jx-af/jcore/jColor.h>
 
 class JPainter;
 class JFontManager;

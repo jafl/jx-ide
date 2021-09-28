@@ -14,11 +14,11 @@
 #include "CBFileHistoryMenu.h"
 #include "CBProjectDocument.h"
 #include "cbGlobals.h"
-#include <JXDisplay.h>
-#include <JXImage.h>
-#include <JXImageCache.h>
+#include <jx-af/jx/JXDisplay.h>
+#include <jx-af/jx/JXImage.h>
+#include <jx-af/jx/JXImageCache.h>
 #include <sstream>
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 #include "jcc_project_file.xpm"
 
@@ -73,20 +73,20 @@ CBFileHistoryMenu::CBFileHistoryMenuX
 	)
 {
 	if (type == CBDocumentManager::kProjectFileHistory)
-		{
+	{
 		SetDefaultIcon(GetDisplay()->GetImageCache()->GetImage(jcc_project_file), false);
-		}
+	}
 
 	CBFileHistoryMenu* master =
 		CBGetDocumentManager()->GetFileHistoryMenu(itsDocType);
 	if (master != nullptr)
-		{
+	{
 		std::ostringstream data;
 		master->WriteSetup(data);
 		const std::string s = data.str();
 		std::istringstream input(s);
 		ReadSetup(input);
-		}
+	}
 
 	ListenTo(this);
 	ListenTo(CBGetDocumentManager());
@@ -114,7 +114,7 @@ CBFileHistoryMenu::Receive
 	)
 {
 	if (sender == this && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
@@ -124,35 +124,35 @@ CBFileHistoryMenu::Receive
 
 		bool saveReopen = CBProjectDocument::WillReopenTextFiles();
 		if ((GetDisplay()->GetLatestKeyModifiers()).GetState(kJXShiftKeyIndex))
-			{
+		{
 			CBProjectDocument::ShouldReopenTextFiles(!saveReopen);
-			}
+		}
 
 		CBDocumentManager* docMgr = CBGetDocumentManager();
 		if (!(GetDisplay()->GetLatestKeyModifiers()).meta() ||
 			(docMgr->CloseProjectDocuments() &&
 			 docMgr->CloseTextDocuments()))
-			{
+		{
 			docMgr->OpenSomething(fileName);
-			}
+		}
 
 		CBProjectDocument::ShouldReopenTextFiles(saveReopen);
-		}
+	}
 
 	else if (sender == CBGetDocumentManager() &&
 			 message.Is(CBDocumentManager::kAddFileToHistory))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const CBDocumentManager::AddFileToHistory*>(&message);
 		assert( info != nullptr );
 		if (itsDocType == info->GetFileHistoryType())
-			{
+		{
 			AddFile(info->GetFullName());
-			}
 		}
+	}
 
 	else
-		{
+	{
 		JXFileHistoryMenu::Receive(sender, message);
-		}
+	}
 }

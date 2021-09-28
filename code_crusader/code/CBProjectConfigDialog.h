@@ -8,7 +8,7 @@
 #ifndef _H_CBProjectConfigDialog
 #define _H_CBProjectConfigDialog
 
-#include <JXDialogDirector.h>
+#include <jx-af/jx/JXDialogDirector.h>
 #include "CBBuildManager.h"		// need defn on MakefileMethod
 
 class JString;

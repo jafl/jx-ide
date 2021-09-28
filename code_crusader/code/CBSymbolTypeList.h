@@ -9,7 +9,7 @@
 #define _H_CBSymbolTypeList
 
 #include "CBSymbolList.h"
-#include <JPrefObject.h>
+#include <jx-af/jcore/JPrefObject.h>
 
 class JXDisplay;
 class JXImage;

@@ -8,15 +8,15 @@
  ******************************************************************************/
 
 #include "GFGPrefsDialog.h"
-#include <JXChooseSaveFile.h>
-#include <JXHelpManager.h>
-#include <JXInputField.h>
-#include <JXStaticText.h>
-#include <JXTextButton.h>
-#include <JXWindow.h>
-#include <JXColorManager.h>
-#include <jXGlobals.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXChooseSaveFile.h>
+#include <jx-af/jx/JXHelpManager.h>
+#include <jx-af/jx/JXInputField.h>
+#include <jx-af/jx/JXStaticText.h>
+#include <jx-af/jx/JXTextButton.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXColorManager.h>
+#include <jx-af/jx/jXGlobals.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -189,22 +189,22 @@ bool
 GFGPrefsDialog::OKToDeactivate()
 {
 	if (Cancelled())
-		{
+	{
 		return JXDialogDirector::OKToDeactivate();
-		}
+	}
 
 	bool ok	= JXDialogDirector::OKToDeactivate();
 	if (ok)
-		{
+	{
 		if (!itsHeaderInput->InputValid() ||
 			!itsSourceInput->InputValid() ||
 			!itsConstructorInput->InputValid() ||
 			!itsDestructorInput->InputValid() ||
 			!itsFunctionInput->InputValid())
-			{
+		{
 			ok	= false;
-			}
 		}
+	}
 
 	return ok;
 }

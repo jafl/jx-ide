@@ -11,13 +11,13 @@
 #include "CBCharActionManager.h"
 #include "CBEditMacroDialog.h"
 #include "CBListCSF.h"
-#include <JXCharInput.h>
-#include <JXTextButton.h>
-#include <JXChooseSaveFile.h>
-#include <JStringTableData.h>
-#include <jStreamUtil.h>
-#include <jGlobals.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXCharInput.h>
+#include <jx-af/jx/JXTextButton.h>
+#include <jx-af/jx/JXChooseSaveFile.h>
+#include <jx-af/jcore/JStringTableData.h>
+#include <jx-af/jcore/jStreamUtil.h>
+#include <jx-af/jcore/jGlobals.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -87,10 +87,10 @@ CBCharActionTable::GetData
 	const JStringTableData* data = GetStringData();
 	const JSize count            = GetRowCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		mgr->SetAction(data->GetString(i, kMacroColumn).GetFirstCharacter(),
 					   data->GetString(i, kScriptColumn));
-		}
+	}
 }
 
 /******************************************************************************
@@ -110,11 +110,11 @@ CBCharActionTable::SetData
 	const JStringPtrMap<JString>& actionMap = mgr.GetActionMap();
 	JStringMapCursor cursor(&actionMap);
 	while (cursor.Next())
-		{
+	{
 		data->AppendRows(1);
 		data->SetString(GetRowCount(), kMacroColumn,  cursor.GetKey());
 		data->SetString(GetRowCount(), kScriptColumn, *cursor.GetValue());
-		}
+	}
 
 	Activate();
 }
@@ -154,11 +154,11 @@ CBCharActionTable::CreateStringTableInput
 									cell, enclosure, hSizing, vSizing, x,y, w,h);
 
 	if (cell.x == kMacroColumn)
-		{
+	{
 		jdelete input;
 		input = jnew JXCharInput(enclosure, hSizing, vSizing, x,y, w,h);
 		assert( input != nullptr );
-		}
+	}
 
 	return input;
 }
@@ -176,18 +176,18 @@ CBCharActionTable::Receive
 	)
 {
 	if (sender == itsLoadButton && message.Is(JXButton::kPushed))
-		{
+	{
 		LoadMacros();
-		}
+	}
 	else if (sender == itsSaveButton && message.Is(JXButton::kPushed))
-		{
+	{
 		SaveMacros();
-		}
+	}
 
 	else
-		{
+	{
 		CBKeyScriptTableBase::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -201,9 +201,9 @@ CBCharActionTable::LoadMacros()
 	JString fileName;
 	if (GetDialog()->ContentsValid() &&
 		itsCSF->ChooseFile(JString::empty, JString::empty, &fileName))
-		{
+	{
 		ReadData(fileName, itsCSF->ReplaceExisting());
-		}
+	}
 }
 
 /******************************************************************************
@@ -222,9 +222,9 @@ CBCharActionTable::ReadData
 {
 	JStringTableData* data = GetStringData();
 	if (replace)
-		{
+	{
 		data->RemoveAllRows();
-		}
+	}
 
 	JIndex firstNewRow = 0;
 
@@ -232,38 +232,38 @@ CBCharActionTable::ReadData
 	JString action, script;
 	JIndex state = 1;
 	while (!input.eof() && !input.fail())
-		{
+	{
 		if (state == 1)
-			{
+		{
 			action = JReadLine(input);
 			if (!action.IsEmpty())
-				{
-				state = 2;
-				}
-			}
-		else if (state == 2)
 			{
+				state = 2;
+			}
+		}
+		else if (state == 2)
+		{
 			script = JReadLine(input);
 			if (!script.IsEmpty())
-				{
+			{
 				data->AppendRows(1);
 				const JSize rowCount = data->GetRowCount();
 				data->SetString(rowCount,kMacroColumn,  JString(action.GetFirstCharacter()));
 				data->SetString(rowCount,kScriptColumn, script);
 				if (firstNewRow == 0)
-					{
+				{
 					firstNewRow = rowCount;
-					}
-				state = 1;
 				}
+				state = 1;
 			}
 		}
+	}
 
 	if (firstNewRow != 0)
-		{
+	{
 		ScrollTo((GetBounds()).bottomLeft());
 		BeginEditing(JPoint(kMacroColumn, firstNewRow));
-		}
+	}
 }
 
 /******************************************************************************
@@ -278,13 +278,13 @@ CBCharActionTable::SaveMacros()
 	JString origName;
 	if (GetDialog()->ContentsValid() &&
 		GetDialog()->GetCurrentMacroSetName(&origName))
-		{
+	{
 		JString newName;
 		if (itsCSF->SaveFile(JGetString("SaveCharActionListPrompt::CBCharActionTable"), JString::empty, origName, &newName))
-			{
+		{
 			WriteData(newName);
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -306,12 +306,12 @@ CBCharActionTable::WriteData
 	const JStringTableData* data = GetStringData();
 	const JSize count            = GetRowCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		data->GetString(i, kMacroColumn).Print(output);
 		output << '\n';
 		data->GetString(i, kScriptColumn).Print(output);
 		output << "\n\n";
-		}
+	}
 }
 
 /******************************************************************************
@@ -324,10 +324,10 @@ CBCharActionTable::Activate()
 {
 	CBKeyScriptTableBase::Activate();
 	if (WouldBeActive())
-		{
+	{
 		itsLoadButton->Activate();
 		itsSaveButton->Activate();
-		}
+	}
 }
 
 /******************************************************************************
@@ -340,8 +340,8 @@ CBCharActionTable::Deactivate()
 {
 	CBKeyScriptTableBase::Deactivate();
 	if (!WouldBeActive())
-		{
+	{
 		itsLoadButton->Deactivate();
 		itsSaveButton->Deactivate();
-		}
+	}
 }

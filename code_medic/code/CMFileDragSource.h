@@ -8,7 +8,7 @@
 #ifndef _H_CMFileDragSource
 #define _H_CMFileDragSource
 
-#include <JXImageWidget.h>
+#include <jx-af/jx/JXImageWidget.h>
 
 class CMSourceDirector;
 

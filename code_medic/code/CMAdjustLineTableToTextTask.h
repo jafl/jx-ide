@@ -8,7 +8,7 @@
 #ifndef _H_CMAdjustLineTableToTextTask
 #define _H_CMAdjustLineTableToTextTask
 
-#include <JXUrgentTask.h>
+#include <jx-af/jx/JXUrgentTask.h>
 
 class CMLineIndexTable;
 

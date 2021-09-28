@@ -8,9 +8,9 @@
 #ifndef _H_CBTreeDirector
 #define _H_CBTreeDirector
 
-#include <JXWindowDirector.h>
-#include <JPrefObject.h>
-#include <JFAID.h>
+#include <jx-af/jx/JXWindowDirector.h>
+#include <jx-af/jcore/JPrefObject.h>
+#include <jx-af/jcore/JFAID.h>
 #include "CBPrefsManager.h"		// need definition of FileTypesChanged
 
 struct JXPM;

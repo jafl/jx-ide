@@ -10,13 +10,13 @@
 #include "CBEditCPPMacroDialog.h"
 #include "CBCPPMacroTable.h"
 #include "cbGlobals.h"
-#include <JXWindow.h>
-#include <JXTextButton.h>
-#include <JXStaticText.h>
-#include <JXScrollbarSet.h>
-#include <JXColHeaderWidget.h>
-#include <JXHelpManager.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXTextButton.h>
+#include <jx-af/jx/JXStaticText.h>
+#include <jx-af/jx/JXScrollbarSet.h>
+#include <jx-af/jx/JXColHeaderWidget.h>
+#include <jx-af/jx/JXHelpManager.h>
+#include <jx-af/jcore/jAssert.h>
 
 // setup information
 
@@ -173,13 +173,13 @@ CBEditCPPMacroDialog::Receive
 	)
 {
 	if (sender == itsHelpButton && message.Is(JXButton::kPushed))
-		{
+	{
 		(JXGetHelpManager())->ShowSection("CBCTreeHelp#CPP");
-		}
+	}
 	else
-		{
+	{
 		JXDialogDirector::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -210,13 +210,13 @@ CBEditCPPMacroDialog::ReadPrefs
 	JFileVersion vers;
 	input >> vers;
 	if (vers <= kCurrentSetupVersion)
-		{
+	{
 		JXWindow* window = GetWindow();
 		window->ReadGeometry(input);
 		window->Deiconify();
 
 		itsTable->ReadSetup(input);
-		}
+	}
 }
 
 /******************************************************************************

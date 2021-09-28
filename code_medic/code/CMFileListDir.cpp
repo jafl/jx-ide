@@ -12,18 +12,18 @@
 #include "CMGetSourceFileList.h"
 #include "cmGlobals.h"
 #include "cmActionDefs.h"
-#include <JXDisplay.h>
-#include <JXWindow.h>
-#include <JXTextMenu.h>
-#include <JXMenuBar.h>
-#include <JXTextButton.h>
-#include <JXFileListSet.h>
-#include <JXFileListTable.h>
-#include <JXHelpManager.h>
-#include <JXWDMenu.h>
-#include <JXImage.h>
-#include <JTableSelection.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXDisplay.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXTextMenu.h>
+#include <jx-af/jx/JXMenuBar.h>
+#include <jx-af/jx/JXTextButton.h>
+#include <jx-af/jx/JXFileListSet.h>
+#include <jx-af/jx/JXFileListTable.h>
+#include <jx-af/jx/JXHelpManager.h>
+#include <jx-af/jx/JXWDMenu.h>
+#include <jx-af/jx/JXImage.h>
+#include <jx-af/jcore/JTableSelection.h>
+#include <jx-af/jcore/jAssert.h>
 
 // File menu
 
@@ -259,63 +259,63 @@ CMFileListDir::Receive
 	)
 {
 	if (sender == GetTable() && message.Is(JXFileListTable::kProcessSelection))
-		{
+	{
 		JXFileListTable* table          = GetTable();
 		const JPtrArray<JString>& files	= table->GetFullNameList();
 
 		JTableSelectionIterator iter(&(table->GetTableSelection()));
 		JPoint cell;
 		while (iter.Next(&cell))
-			{
+		{
 			const JIndex index = table->RowIndexToFileIndex(cell.y);
 			itsCommandDir->OpenSourceFile(*(files.GetElement(index)));
-			}
 		}
+	}
 
 	else if (sender == itsLink && message.Is(CMLink::kSymbolsLoaded))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const CMLink::SymbolsLoaded*>(&message);
 		assert( info != nullptr );
 		UpdateWindowTitle(info->GetProgramName());
-		}
+	}
 
 	else if (sender == itsFileMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		UpdateFileMenu();
-		}
+	}
 	else if (sender == itsFileMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		 const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleFileMenu(selection->GetIndex());
-		}
+	}
 
 	else if (sender == itsActionsMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		UpdateActionsMenu();
-		}
+	}
 	else if (sender == itsActionsMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleActionsMenu(selection->GetIndex());
-		}
+	}
 
 	else if (sender == itsHelpMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleHelpMenu(selection->GetIndex());
-		}
+	}
 
 	else
-		{
+	{
 		JXWindowDirector::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -330,17 +330,17 @@ CMFileListDir::ReceiveGoingAway
 	)
 {
 	if (sender == itsLink && !CMIsShuttingDown())
-		{
+	{
 		itsLink = CMGetLink();
 		ListenTo(itsLink);
 
 		jdelete itsCmd;
 		itsCmd = itsLink->CreateGetSourceFileList(this);
-		}
+	}
 	else
-		{
+	{
 		JXWindowDirector::ReceiveGoingAway(sender);
-		}
+	}
 }
 
 /******************************************************************************
@@ -366,18 +366,18 @@ CMFileListDir::HandleFileMenu
 	)
 {
 	if (index == kOpenCmd)
-		{
+	{
 		itsCommandDir->OpenSourceFiles();
-		}
+	}
 
 	else if (index == kCloseWindowCmd)
-		{
+	{
 		Deactivate();
-		}
+	}
 	else if (index == kQuitCmd)
-		{
+	{
 		JXGetApplication()->Quit();
-		}
+	}
 }
 
 /******************************************************************************
@@ -390,13 +390,13 @@ CMFileListDir::UpdateActionsMenu()
 {
 	const JXFileListSet::FilterType type = itsFileListSet->GetFilterType();
 	if (type == JXFileListSet::kWildcardFilter)
-		{
+	{
 		itsActionsMenu->CheckItem(kShowFilterCmd);
-		}
+	}
 	else if (type == JXFileListSet::kRegexFilter)
-		{
+	{
 		itsActionsMenu->CheckItem(kShowRegexCmd);
-		}
+	}
 }
 
 /******************************************************************************
@@ -411,29 +411,29 @@ CMFileListDir::HandleActionsMenu
 	)
 {
 	if (index == kShowFilterCmd)
-		{
+	{
 		JXFileListSet::FilterType type = itsFileListSet->GetFilterType();
 		if (type == JXFileListSet::kWildcardFilter)
-			{
-			itsFileListSet->SetFilterType(JXFileListSet::kNoFilter);
-			}
-		else
-			{
-			itsFileListSet->SetFilterType(JXFileListSet::kWildcardFilter);
-			}
-		}
-	else if (index == kShowRegexCmd)
 		{
+			itsFileListSet->SetFilterType(JXFileListSet::kNoFilter);
+		}
+		else
+		{
+			itsFileListSet->SetFilterType(JXFileListSet::kWildcardFilter);
+		}
+	}
+	else if (index == kShowRegexCmd)
+	{
 		JXFileListSet::FilterType type = itsFileListSet->GetFilterType();
 		if (type == JXFileListSet::kRegexFilter)
-			{
+		{
 			itsFileListSet->SetFilterType(JXFileListSet::kNoFilter);
-			}
-		else
-			{
-			itsFileListSet->SetFilterType(JXFileListSet::kRegexFilter);
-			}
 		}
+		else
+		{
+			itsFileListSet->SetFilterType(JXFileListSet::kRegexFilter);
+		}
+	}
 }
 
 /******************************************************************************
@@ -448,29 +448,29 @@ CMFileListDir::HandleHelpMenu
 	)
 {
 	if (index == kAboutCmd)
-		{
+	{
 		(CMGetApplication())->DisplayAbout();
-		}
+	}
 	else if (index == kTOCCmd)
-		{
+	{
 		JXGetHelpManager()->ShowTOC();
-		}
+	}
 	else if (index == kOverviewCmd)
-		{
+	{
 		JXGetHelpManager()->ShowSection("CMOverviewHelp");
-		}
+	}
 	else if (index == kThisWindowCmd)
-		{
+	{
 		JXGetHelpManager()->ShowSection("CMSourceWindowHelp-FileList");
-		}
+	}
 	else if (index == kChangesCmd)
-		{
+	{
 		JXGetHelpManager()->ShowChangeLog();
-		}
+	}
 	else if (index == kCreditsCmd)
-		{
+	{
 		JXGetHelpManager()->ShowCredits();
-		}
+	}
 }
 
 /******************************************************************************
@@ -487,9 +487,9 @@ CMFileListDir::ReadPrefs
 	JFileVersion vers;
 	input >> vers;
 	if (vers <= kCurrentSetupVersion)
-		{
+	{
 		itsFileListSet->ReadSetup(input);
-		}
+	}
 }
 
 /******************************************************************************

@@ -8,7 +8,7 @@
 #ifndef _H_CMDebuggerProgramInput
 #define _H_CMDebuggerProgramInput
 
-#include <JXFileInput.h>
+#include <jx-af/jx/JXFileInput.h>
 
 class CMDebuggerProgramInput : public JXFileInput
 {

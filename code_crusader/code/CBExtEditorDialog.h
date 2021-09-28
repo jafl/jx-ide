@@ -10,7 +10,7 @@
 #ifndef _H_CBExtEditorDialog
 #define _H_CBExtEditorDialog
 
-#include <JXDialogDirector.h>
+#include <jx-af/jx/JXDialogDirector.h>
 
 class JString;
 class JXTextCheckbox;

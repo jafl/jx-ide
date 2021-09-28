@@ -9,13 +9,13 @@
 
 #include "CMPlot2DExprTable.h"
 #include "cmGlobals.h"
-#include <JXIntegerInput.h>
-#include <JXTextMenu.h>
-#include <JXColHeaderWidget.h>
-#include <JStringTableData.h>
-#include <JTableSelection.h>
-#include <jASCIIConstants.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXIntegerInput.h>
+#include <jx-af/jx/JXTextMenu.h>
+#include <jx-af/jx/JXColHeaderWidget.h>
+#include <jx-af/jcore/JStringTableData.h>
+#include <jx-af/jcore/JTableSelection.h>
+#include <jx-af/jcore/jASCIIConstants.h>
+#include <jx-af/jcore/jAssert.h>
 
 const JCoordinate kMinColWidth   = 20;
 const JCoordinate kExprColWidth  = 195;
@@ -100,21 +100,21 @@ CMPlot2DExprTable::HandleMouseDown
 
 	JPoint cell;
 	if (ScrollForWheel(button, modifiers))
-		{
+	{
 		// work has been done
-		}
+	}
 	else if (!GetCell(pt, &cell))
-		{
+	{
 		s.ClearSelection();
-		}
+	}
 	else if (button == kJXLeftButton && clickCount == 2)
-		{
+	{
 		BeginEditing(cell);
-		}
+	}
 	else if (button == kJXLeftButton && clickCount == 1)
-		{
+	{
 		SelectSingleCell(cell, false);
-		}
+	}
 }
 
 /******************************************************************************
@@ -131,27 +131,27 @@ CMPlot2DExprTable::HandleKeyPress
 	)
 {
 	if (c == kJReturnKey)
-		{
+	{
 		JPoint cell;
 		if (!IsEditing() && GetTableSelection().GetSingleSelectedCell(&cell))
-			{
+		{
 			BeginEditing(cell);
-			}
-		else
-			{
-			EndEditing();
-			}
 		}
+		else
+		{
+			EndEditing();
+		}
+	}
 
 	else if (!IsEditing() && HandleSelectionKeyPress(c, modifiers))
-		{
+	{
 		// work has been done
-		}
+	}
 
 	else
-		{
+	{
 		JXStringTable::HandleKeyPress(c, keySym, modifiers);
-		}
+	}
 }
 
 /******************************************************************************
@@ -197,13 +197,13 @@ CMPlot2DExprTable::CreateStringTableInput
 {
 	JXInputField* obj = nullptr;
 	if (cell.x == kRangeMinColIndex || cell.x == kRangeMaxColIndex)
-		{
+	{
 		obj = jnew JXIntegerInput(enclosure, hSizing, vSizing, x,y, w,h);
-		}
+	}
 	else
-		{
+	{
 		obj = jnew JXInputField(enclosure, hSizing, vSizing, x,y, w,h);
-		}
+	}
 
 	assert( obj != nullptr );
 	return obj;

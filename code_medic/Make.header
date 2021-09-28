@@ -3,52 +3,41 @@
 
 JX_ROOT  := ../../JX
 
-# Directories to search for header files
+APP_NAME          := medic
+APP_VERSION       := ${shell cat release/VERSION}
+SIGNATURE         := ${APP_NAME}
+MENU_STRINGS_FILE := ./strings/${APP_NAME}_menu_strings
+RPM_LIB_PATH      := /usr/lib/${SIGNATURE}
 
-SEARCHDIRS := -I./code \
-              -I./JCC \
-              -I${JX_ROOT}/include/jcore \
-              -I${JX_ROOT}/include/jx \
-              -I${JX_ROOT}/include/jexpr \
-              -I${JX_ROOT}/include/j2dplot \
-              -I${JX_ROOT}/include/reflex \
-              -I./lldb-include \
+J_STRING_FILES := ${filter-out %/${APP_NAME}_menu_strings, \
+                    ${shell echo strings/*}} strings/version
+
+MAKE_INCLUDE := ${JX_ROOT}/include/jx-af/make
+include ${MAKE_INCLUDE}/jx_config
+include ${MAKE_INCLUDE}/jexpr_constants
+include ${MAKE_INCLUDE}/j2dplot_constants
+
+SEARCHDIRS := -I./code -I./image -I./backend -I./jcc-shared \
+              ${SEARCHDIRS} -I./lldb-include \
               ${shell xml2-config --cflags} \
               ${shell pkg-config --cflags editorconfig}
 
-# other constants
-
-MEDIC_VERSION      := ${shell cat release/VERSION}
-SIGNATURE          := medic
-MENU_STRINGS_FILE  := ./strings/medic_menu_strings
-
-# also defined in .spec
-
-RPM_LIB_PATH := /usr/lib/${SIGNATURE}
-
 # makemake variables
 
-J_STRING_FILES := ${filter-out %/medic_menu_strings, \
-                    ${shell echo strings/*}} strings/version
-
-include ${JX_ROOT}/include/make/jx_config
-include ${JX_ROOT}/include/make/j2dplot_constants
-include ${JX_ROOT}/include/make/jexpr_constants
-
-DEPENDFLAGS  := ${J_COMPILER_DEPEND_FLAGS_FOR_BISON} \
-                -DCODE_MEDIC ${SEARCHDIRS}
+DEPENDFLAGS  := ${J_COMPILER_DEPEND_FLAGS_FOR_BISON} ${SEARCHDIRS} \
+                -DCODE_MEDIC
 
 # library dependencies
 
-LIB_DEPS := ${JX_ROOT}/lib/libjcore.a \
-            ${JX_ROOT}/lib/libjx.a \
-            ${JX_ROOT}/lib/libjexpr.a \
-            ${JX_ROOT}/lib/libj2dplot.a
+LIB_DEPS := ${JX_LIB_ROOT}/libjcore.a \
+            ${JX_LIB_ROOT}/libjx.a \
+            ${JX_LIB_ROOT}/libjexpr.a \
+            ${JX_LIB_ROOT}/libj2dplot.a
 
 # make variables
 
 LOADLIBES := ${J_LLDB_LIBS} ${shell pkg-config --libs editorconfig} \
-             -L${JX_ROOT}/lib -lreflex ${J_STD_LIBS}
+             -lreflex ${J_STD_LIBS}
 LDFLAGS   := -Xlinker -headerpad_max_install_names
 ifdef J_SYSTEM_HAS_SHARED_LIBS
   LDFLAGS += -Xlinker -R${RPM_LIB_PATH}
@@ -58,17 +47,20 @@ include make_reflex_target
 
 #####
 
-.PHONY : default
-default: libs medic_all
+include ${MAKE_INCLUDE}/app_targets
 
-.PHONY : medic_all
-medic_all: medic
-	-${J_POST_LINK_LLDB_CMD} medic
+${APP_NAME}::
+	@if ! test -e CMVarTreeParserY.hpp; then ${RM} code/CMVarTreeParserY.o; fi
 
-.PHONY : Makefiles
-Makefiles:
+.PHONY : post_link
+post_link::
+	-${J_POST_LINK_LLDB_CMD} ${APP_NAME}
 
-include ${JX_ROOT}/include/make/app_targets
+#
+# force reflex to run first
+#
+
+${APP_NAME}:: ./backend/gdb/GDBVarTreeScanner.cpp
 
 #
 # string data
@@ -80,24 +72,14 @@ strings: build_version_string
 	compile_jstrings ${J_STRING_FILES} \
       --code kCMDefaultStringData ./code/cmStringData.h
 
-.PHONY : stringdb
-stringdb:
-	compile_jstrings ${J_STRING_FILES} --db medic_us
-
-medic:: update_jcc strings
+${APP_NAME}:: update_jcc strings
 
 .PHONY : menu_strings
 menu_strings:
-	@${JX_ROOT}/bin/extract_menu_strings ${MENU_STRINGS_FILE} ${SIGNATURE} \
-     -a ./code/cmActionDefs.h ${JX_ROOT}/include/jx/jXActionDefs.h ${JX_ROOT}/include/jx/JXTEBase.cpp \
-     -m */*.cpp ${JX_ROOT}/include/jx/*.cpp ${JX_ROOT}/include/jexpr/*.cpp ${JX_ROOT}/include/j2dplot/*.cpp
-
-#
-# extra dependencies
-#
-
-medic::
-	@if ! test -e CMVarTreeParserY.hpp; then ${RM} code/CMVarTreeParserY.o; fi
+	@${MENU_STR_CMD} ${MENU_STRINGS_FILE} ${SIGNATURE} \
+     -a ./code/cmActionDefs.h ${JX_ACTION_DEFS} \
+     -m */*.cpp ${JX_INCLUDE_ROOT}/jx-af/jx/*.cpp \
+        ${JX_INCLUDE_ROOT}/jx-af/jexpr/*.cpp ${JX_INCLUDE_ROOT}/jx-af/j2dplot/*.cpp
 
 #
 # update shared jcc code
@@ -105,53 +87,36 @@ medic::
 
 .PHONY : update_jcc
 update_jcc:
-	@if test -d ../code_crusader/code; then \
-       mkdir -p JCC; \
-       for f in `cat jcc_shared.txt`; do \
-         if ! test -f JCC/$$f || ! cmp -s ../code_crusader/code/$$f JCC/$$f; then \
-           echo Updating $$f; \
-           cp ../code_crusader/code/$$f JCC/$$f; \
-         fi; \
-       done; \
-       cp ../code_crusader/strings/jcc_medic_shared_strings strings/; \
-     fi
-
-#
-# install binaries
-#
-
-.PHONY : jxinstall
-jxinstall: medic_all
-	@strip ${call EXE, medic}
-  ifneq (${J_WANT_INSTALL},0)
-	@cp medic ${JX_INSTALL_ROOT}/
-  endif
-
-.PHONY : jxuninstall
-jxuninstall:
-	@${RM} ${JX_INSTALL_ROOT}/medic
+	@mkdir -p jcc-shared; \
+     for f in `cat jcc-shared.txt`; do \
+       if ! test -f jcc-shared/$$f || ! cmp -s ../code_crusader/code/$$f jcc-shared/$$f; then \
+         echo Updating $$f; \
+         cp ../code_crusader/code/$$f jcc-shared/$$f; \
+       fi; \
+     done; \
+     cp ../code_crusader/strings/jcc_medic_shared_strings strings/
 
 #
 # binary distributions
 #
 
-MEDIC := Code_Medic-${MEDIC_VERSION}
+PROG := Code_Medic-${APP_VERSION}
 
-MEDIC_RELEASE_TAR_NAME := Code_Medic_${MEDIC_VERSION}.tar
+PROG_RELEASE_TAR_NAME := Code_Medic_${APP_VERSION}.tar
 
-RPM_TAR_FILE  := ${RPM_SRC_DIR}/Code_Medic-${MEDIC_VERSION}.tar
+RPM_TAR_FILE  := ${RPM_SRC_DIR}/Code_Medic-${APP_VERSION}.tar
 RPM_SPEC_FILE := ./release/pkg/code_medic.spec
 J_RPM_GZ_LIBS += /usr/lib64/liblldb.so /usr/lib64/libeditorconfig.so
 
 DEB_CTRL_FILE := ./release/pkg/code_medic.debctrl
-DEB_PKG_FILE  := code-medic_${MEDIC_VERSION}_i386.deb
+DEB_PKG_FILE  := code-medic_${APP_VERSION}_i386.deb
 
 .PHONY : release
 release: pre_build_pkgs default
-	@${J_STRIP_DEBUG} ${call EXE, medic}
-	@${MAKE} PKG_PATH=${MEDIC} init_tarball
-	@ln -s ../${call EXE,medic} ${MEDIC}/${call EXE,medic}
-	@${MAKE} PKG_PATH=${MEDIC} SOURCE_TAR_NAME=${MEDIC_RELEASE_TAR_NAME} build_pkgs
+	@${J_STRIP_DEBUG} ${EXE_NAME}
+	@${MAKE} PKG_PATH=${PROG} init_tarball
+	@ln -s ../${EXE_NAME} ${PROG}/
+	@${MAKE} PKG_PATH=${PROG} SOURCE_TAR_NAME=${PROG_RELEASE_TAR_NAME} build_pkgs
 
 #
 # personal install

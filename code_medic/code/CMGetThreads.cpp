@@ -9,7 +9,7 @@
 
 #include "CMGetThreads.h"
 #include "CMThreadsWidget.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor

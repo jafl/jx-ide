@@ -11,22 +11,22 @@
 #include "CBTextDocument.h"
 #include "CBTextEditor.h"
 #include "cbGlobals.h"
-#include <JXWindow.h>
-#include <JXTextButton.h>
-#include <JXTextCheckbox.h>
-#include <JXInputField.h>
-#include <JXStringHistoryMenu.h>
-#include <JXStaticText.h>
-#include <JXDocumentMenu.h>
-#include <JXHelpManager.h>
-#include <JXChooseSaveFile.h>
-#include <JOutPipeStream.h>
-#include <jProcessUtil.h>
-#include <jStreamUtil.h>
-#include <JString.h>
-#include <JSubstitute.h>
-#include <jDirUtil.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXTextButton.h>
+#include <jx-af/jx/JXTextCheckbox.h>
+#include <jx-af/jx/JXInputField.h>
+#include <jx-af/jx/JXStringHistoryMenu.h>
+#include <jx-af/jx/JXStaticText.h>
+#include <jx-af/jx/JXDocumentMenu.h>
+#include <jx-af/jx/JXHelpManager.h>
+#include <jx-af/jx/JXChooseSaveFile.h>
+#include <jx-af/jcore/JOutPipeStream.h>
+#include <jx-af/jcore/jProcessUtil.h>
+#include <jx-af/jcore/jStreamUtil.h>
+#include <jx-af/jcore/JString.h>
+#include <jx-af/jcore/JSubstitute.h>
+#include <jx-af/jcore/jDirUtil.h>
+#include <jx-af/jcore/jAssert.h>
 
 const JSize kHistoryLength = 20;
 
@@ -74,10 +74,10 @@ CBRunTEScriptDialog::Activate()
 	JXWindowDirector::Activate();
 
 	if (IsActive())
-		{
+	{
 		itsCmdInput->Focus();
 		itsCmdInput->SelectAll();
-		}
+	}
 }
 
 /******************************************************************************
@@ -169,13 +169,13 @@ void
 CBRunTEScriptDialog::UpdateDisplay()
 {
 	if (itsCmdInput->GetText()->IsEmpty())
-		{
+	{
 		itsRunButton->Deactivate();
-		}
+	}
 	else
-		{
+	{
 		itsRunButton->Activate();
-		}
+	}
 }
 
 /******************************************************************************
@@ -191,40 +191,40 @@ CBRunTEScriptDialog::Receive
 	)
 {
 	if (sender == itsRunButton && message.Is(JXButton::kPushed))
-		{
+	{
 		RunScript();
 		if (!itsStayOpenCB->IsChecked())
-			{
-			Deactivate();
-			}
-		}
-	else if (sender == itsCloseButton && message.Is(JXButton::kPushed))
 		{
-		Deactivate();
+			Deactivate();
 		}
+	}
+	else if (sender == itsCloseButton && message.Is(JXButton::kPushed))
+	{
+		Deactivate();
+	}
 
 	else if (sender == itsHelpButton && message.Is(JXButton::kPushed))
-		{
+	{
 		(JXGetHelpManager())->ShowSection("CBEditorHelp-ExtScript");
-		}
+	}
 
 	else if (sender == itsHistoryMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		itsHistoryMenu->UpdateInputField(message, itsCmdInput);
 		itsCmdInput->Focus();
-		}
+	}
 
 	else if (sender == itsCmdInput &&
 			 (message.Is(JStyledText::kTextSet) ||
 			  message.Is(JStyledText::kTextChanged)))
-		{
+	{
 		UpdateDisplay();
-		}
+	}
 
 	else
-		{
+	{
 		JXWindowDirector::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -257,28 +257,28 @@ CBRunTEScriptDialog::RunScript()
 {
 	CBTextDocument* textDoc = nullptr;
 	if (CBGetDocumentManager()->GetActiveTextDocument(&textDoc))
-		{
+	{
 		bool onDisk;
 		const JString fullName = textDoc->GetFullName(&onDisk);
 		if (onDisk)
-			{
+		{
 			const bool result = RunScript(textDoc->GetTextEditor(), fullName);
 			textDoc->Activate();
 			return result;
-			}
+		}
 		else
-			{
+		{
 			JGetUserNotification()->ReportError(
 				JGetString("FileDoesNotExist::CBRunTEScriptDialog"));
 			return false;
-			}
 		}
+	}
 	else
-		{
+	{
 		JGetUserNotification()->ReportError(
 			JGetString("NoEditor::CBRunTEScriptDialog"));
 		return false;
-		}
+	}
 }
 
 // private
@@ -291,21 +291,21 @@ CBRunTEScriptDialog::RunScript
 	)
 {
 	if (!itsCmdInput->InputValid())
-		{
+	{
 		return false;
-		}
+	}
 
 	itsCmdInput->GetText()->DeactivateCurrentUndo();
 
 	if (RunScript(itsCmdInput->GetText()->GetText(), te, fullName))
-		{
+	{
 		itsHistoryMenu->AddString(itsCmdInput->GetText()->GetText());
 		return true;
-		}
+	}
 	else
-		{
+	{
 		return false;
-		}
+	}
 }
 
 bool
@@ -325,19 +325,19 @@ CBRunTEScriptDialog::RunScript
 		JExecute(cmd, &pid, kJCreatePipe, &toFD,
 				 kJCreatePipe, &fromFD, kJCreatePipe, &errFD);
 	if (!execErr.OK())
-		{
+	{
 		Activate();
 		execErr.ReportIfError();
 		return false;
-		}
+	}
 	else
-		{
+	{
 		JOutPipeStream output(toFD, true);
 		JString text;
 		if (te->GetSelection(&text))
-			{
+		{
 			text.Print(output);
-			}
+		}
 		output.close();
 
 		// read stdout first since this is more likely to fill up
@@ -347,18 +347,18 @@ CBRunTEScriptDialog::RunScript
 		JString msg;
 		JReadAll(errFD, &msg);
 		if (!msg.IsEmpty())
-			{
+		{
 			msg.Prepend(JGetString("Error::CBGlobal"));
 			JGetUserNotification()->ReportError(msg);
 			return false;
-			}
+		}
 
 		text.TrimWhitespace();
 		if (!text.IsEmpty())
-			{
+		{
 			te->Paste(text);
-			}
 		}
+	}
 
 	return true;
 }
@@ -407,9 +407,9 @@ CBRunTEScriptDialog::ReadPrefs
 	JFileVersion vers;
 	input >> vers;
 	if (vers > kCurrentSetupVersion)
-		{
+	{
 		return;
-		}
+	}
 
 	JXWindow* window = GetWindow();
 	window->ReadGeometry(input);
@@ -418,11 +418,11 @@ CBRunTEScriptDialog::ReadPrefs
 	itsHistoryMenu->ReadSetup(input);
 
 	if (vers >= 1)
-		{
+	{
 		bool stayOpen;
 		input >> JBoolFromString(stayOpen);
 		itsStayOpenCB->SetState(stayOpen);
-		}
+	}
 }
 
 /******************************************************************************

@@ -17,10 +17,10 @@
 #include "CBCPreprocessor.h"
 #include "cbGlobals.h"
 #include "cbCtagsRegex.h"
-#include <jStreamUtil.h>
-#include <jDirUtil.h>
+#include <jx-af/jcore/jStreamUtil.h>
+#include <jx-af/jcore/jDirUtil.h>
 #include <sstream>
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 static const JUtf8Byte* kCtagsArgs =
 	"--format=2 --excmd=number --sort=no --extras=q "
@@ -99,9 +99,9 @@ CBSymbolList::GetSymbol
 	*type                 = info.type;
 
 	if (fullyQualifiedFileScope != nullptr)
-		{
+	{
 		*fullyQualifiedFileScope = info.fullyQualifiedFileScope;
-		}
+	}
 
 	return *(info.name);
 }
@@ -144,21 +144,21 @@ CBSymbolList::IsUniqueClassName
 
 	bool found = false;
 	for (JUnsignedOffset i=0; i<symCount; i++)
-		{
+	{
 		if (IsClass(sym[i].type) &&
 			JString::Compare(*(sym[i].name), name, CBIsCaseSensitive(sym[i].lang)) == 0)
-			{
+		{
 			if (!found)
-				{
+			{
 				found = true;
 				*lang = sym[i].lang;
-				}
+			}
 			else
-				{
+			{
 				return false;
-				}
 			}
 		}
+	}
 
 	return found;
 }
@@ -182,24 +182,24 @@ public:
 	FindSymbolCompare(const JArray<CBSymbolList::SymbolInfo>& data)
 		:
 		itsData(data)
-	{ };
+{ };
 
 	virtual ~FindSymbolCompare() { };
 
 	virtual JListT::CompareResult
 	Compare(const JIndex& s1, const JIndex& s2) const
-	{
+{
 		const CBSymbolList::SymbolInfo* info = itsData.GetCArray();
 		return JCompareStringsCaseInsensitive(info[s1-1].name, info[s2-1].name);
-	}
+}
 
 	virtual JElementComparison<JIndex>*
 	Copy() const
-	{
+{
 		auto* copy = jnew FindSymbolCompare(itsData);
 		assert( copy != nullptr );
 		return copy;
-	}
+}
 
 private:
 
@@ -236,47 +236,47 @@ CBSymbolList::FindSymbol
 	target.name = &s;
 	JIndex startIndex;
 	if (itsSymbolList->SearchSorted(target, JListT::kFirstMatch, &startIndex))
-		{
+	{
 		const JSize count = itsSymbolList->GetElementCount();
 		for (JIndex i=startIndex; i<=count; i++)
-			{
+		{
 			const SymbolInfo info = itsSymbolList->GetElement(i);
 			if (CompareSymbols(target, info) != JListT::kFirstEqualSecond)
-				{
+			{
 				break;
-				}
+			}
 
 			if (!CBIsCaseSensitive(info.lang) || *(info.name) == s)
-				{
+			{
 				if (contextFileID == info.fileID &&		// automatically fails if context is kInvalidID
 					IsFileScope(info.type))
-					{
+				{
 					matchList->RemoveAll();
 					matchList->AppendElement(i);
 					break;
-					}
+				}
 
 				if ((findDeclaration || !IsPrototype(info.type)) &&
 					(findDefinition  || !IsFunction(info.type)))
-					{
+				{
 					matchList->AppendElement(i);
-					}
-				allMatchList.AppendElement(i);
 				}
+				allMatchList.AppendElement(i);
 			}
 		}
+	}
 
 	bool usedAllList = false;
 	if (matchList->IsEmpty())
-		{
+	{
 		*matchList  = allMatchList;
 		usedAllList = true;
-		}
+	}
 
 	// replace symbols with fully qualified versions
 
 	if (!matchList->IsEmpty())
-		{
+	{
 		JString ns1, ns2;
 		PrepareContextNamespace(contextNamespace, contextLang, &ns1, &ns2);
 		PrepareCContextNamespaceList(cContextNamespaceList);
@@ -291,9 +291,9 @@ CBSymbolList::FindSymbol
 								*cContextNamespaceList, *dContextNamespaceList,
 								*goContextNamespaceList, *javaContextNamespaceList,
 								*phpContextNamespaceList))
-			{
+		{
 			if (!usedAllList && !findDeclaration && findDefinition)
-				{
+			{
 				// if no definition, try declarations
 				// (all: class decl, C++: pure virtual fn)
 
@@ -303,19 +303,19 @@ CBSymbolList::FindSymbol
 									   *cContextNamespaceList, *dContextNamespaceList,
 									   *goContextNamespaceList, *javaContextNamespaceList,
 									   *phpContextNamespaceList))
-					{
-					*matchList = allMatchList;
-					}
-				else
-					{
-					*matchList = noContextList;		// honor original request for only defn
-					}
-				}
-			else
 				{
-				*matchList = noContextList;
+					*matchList = allMatchList;
+				}
+				else
+				{
+					*matchList = noContextList;		// honor original request for only defn
 				}
 			}
+			else
+			{
+				*matchList = noContextList;
+			}
+		}
 
 		// re-sort
 
@@ -324,11 +324,11 @@ CBSymbolList::FindSymbol
 		matchList->Sort();
 
 		return true;
-		}
+	}
 	else
-		{
+	{
 		return false;
-		}
+	}
 }
 
 /******************************************************************************
@@ -371,7 +371,7 @@ CBSymbolList::ConvertToFullNames
 	const JSize count = noContextList->GetElementCount();
 	JString s1, s2;
 	for (JIndex i=count; i>=1; i--)
-		{
+	{
 		const JIndex j               = noContextList->GetElement(i) - 1;
 		const SymbolInfo& info       = sym[j];
 		const JString::Case caseSens = CBIsCaseSensitive(info.lang);
@@ -379,13 +379,13 @@ CBSymbolList::ConvertToFullNames
 		s1 = "." + *(info.name);
 		s2 = ":" + *(info.name);
 		for (JIndex k=0; k<symCount; k++)
-			{
+		{
 			if (k != j &&
 				sym[k].fileID    == info.fileID &&
 				sym[k].lineIndex == info.lineIndex &&
 				((sym[k].name)->EndsWith(s1, caseSens) ||
 				 (sym[k].name)->EndsWith(s2, caseSens)))
-				{
+			{
 				if ((info.lang == kCBCLang && useCNSContext &&
 					 !InContext(*(sym[k].name), cContextNamespaceList, JString::kCompareCase)) ||
 					(info.lang == kCBDLang && useDNSContext &&
@@ -399,19 +399,19 @@ CBSymbolList::ConvertToFullNames
 					(info.lang == contextLang && useLangNSContext &&
 					 !(sym[k].name)->BeginsWith(contextNamespace1, caseSens) &&
 					 !(sym[k].name)->Contains(contextNamespace2, caseSens)))
-					{
+				{
 					contextList->RemoveElement(i);
-					}
+				}
 				else
-					{
+				{
 					contextList->SetElement(i, k+1);
-					}
+				}
 
 				noContextList->SetElement(i, k+1);
 				break;
-				}
 			}
 		}
+	}
 
 	return !contextList->IsEmpty();
 }
@@ -438,18 +438,18 @@ CBSymbolList::PrepareContextNamespace
 		 lang == kCBJavaScriptLang ||
 		 lang == kCBEiffelLang     ||
 		 lang == kCBCSharpLang))
-		{
+	{
 		*ns1  = contextNamespace;	// name.
 		*ns1 += ".";
 
 		*ns2 = *ns1;				// .name.
 		ns2->Prepend(".");
-		}
+	}
 	else
-		{
+	{
 		ns1->Clear();
 		ns2->Clear();
-		}
+	}
 }
 
 /******************************************************************************
@@ -516,10 +516,10 @@ CBSymbolList::PrepareContextNamespaceList
 	const
 {
 	if (!contextNamespace->IsEmpty())
-		{
+	{
 		const JSize count = contextNamespace->GetElementCount();
 		for (JIndex i=count; i>=1; i--)
-			{
+		{
 			JString* cns1 = contextNamespace->GetElement(i);	// name::
 			*cns1 += namespaceOp;
 
@@ -527,8 +527,8 @@ CBSymbolList::PrepareContextNamespaceList
 			assert( cns2 != nullptr );
 			cns2->Prepend(namespaceOp);
 			contextNamespace->InsertAtIndex(i+1, cns2);
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -547,15 +547,15 @@ CBSymbolList::InContext
 {
 	const JSize count = contextNamespace.GetElementCount();
 	for (JIndex i=1; i<=count; i+=2)
-		{
+	{
 		const JString* cns1 = contextNamespace.GetElement(i);
 		const JString* cns2 = contextNamespace.GetElement(i+1);
 		if (fullName.BeginsWith(*cns1, caseSensitive) ||
 			fullName.Contains(*cns2, caseSensitive))
-			{
+		{
 			return true;
-			}
 		}
+	}
 
 	return false;
 }
@@ -579,38 +579,38 @@ public:
 	ClosestMatchCompare(const JString& prefix, const JArray<CBSymbolList::SymbolInfo>& data)
 		:
 		itsPrefix(prefix), itsData(data)
-	{ };
+{ };
 
 	virtual ~ClosestMatchCompare() { };
 
 	virtual JListT::CompareResult
 	Compare(const JIndex& s1, const JIndex& s2) const
-	{
+{
 		auto* prefix = const_cast<JString*>(&itsPrefix);
 		if (s1 == 0)
-			{
+		{
 			const CBSymbolList::SymbolInfo& info = (itsData.GetCArray())[s2-1];
 			return JCompareStringsCaseInsensitive(prefix, info.name);
-			}
+		}
 		else if (s2 == 0)
-			{
+		{
 			const CBSymbolList::SymbolInfo& info = (itsData.GetCArray())[s1-1];
 			return JCompareStringsCaseInsensitive(info.name, prefix);
-			}
+		}
 		else
-			{
+		{
 			assert_msg( 0, "CBSymbolList.cpp:ClosestMatchCompare::Compare() didn't get a zero" );
 			return JListT::kFirstEqualSecond;
-			}
-	}
+		}
+}
 
 	virtual JElementComparison<JIndex>*
 	Copy() const
-	{
+{
 		auto* copy = jnew ClosestMatchCompare(itsPrefix, itsData);
 		assert( copy != nullptr );
 		return copy;
-	}
+}
 
 private:
 
@@ -633,9 +633,9 @@ CBSymbolList::ClosestMatch
 	bool found;
 	*index = visibleList.SearchSorted1(0, JListT::kFirstMatch, &found);
 	if (*index > visibleList.GetElementCount())		// insert beyond end of list
-		{
+	{
 		*index = visibleList.GetElementCount();
-		}
+	}
 
 	return *index > 0;
 }
@@ -655,9 +655,9 @@ CBSymbolList::FileTypesChanged
 	)
 {
 	if (info.Changed(IsParsed))
-		{
+	{
 		itsReparseAllFlag = true;
-		}
+	}
 }
 
 /******************************************************************************
@@ -680,9 +680,9 @@ CBSymbolList::PrepareForUpdate
 	assert( !itsReparseAllFlag || reparseAll );
 
 	if (reparseAll)
-		{
+	{
 		RemoveAllSymbols();
-		}
+	}
 	itsChangedDuringParseFlag = reparseAll;
 
 	// sort more strictly when building the list
@@ -718,23 +718,23 @@ CBSymbolList::UpdateFinished
 
 	const JSize fileCount = deadFileList.GetElementCount();
 	if (fileCount > 0)
-		{
+	{
 		pg.FixedLengthProcessBeginning(fileCount, JGetString("CleaningUp::CBSymbolList"), false, true);
 
 		for (JIndex i=1; i<=fileCount; i++)
-			{
+		{
 			RemoveFile(deadFileList.GetElement(i));
 			pg.IncrementProgress();
-			}
+		}
 
 		pg.ProcessFinished();
-		}
+	}
 
 	if (itsChangedDuringParseFlag && !CBInUpdateThread())
-		{
+	{
 		itsReparseAllFlag = false;
 		Broadcast(Changed());
-		}
+	}
 
 	return itsChangedDuringParseFlag;
 }
@@ -749,10 +749,10 @@ CBSymbolList::RemoveAllSymbols()
 {
 	const JSize count = itsSymbolList->GetElementCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		SymbolInfo info = itsSymbolList->GetElement(i);
 		info.Free();
-		}
+	}
 	itsSymbolList->RemoveAll();
 }
 
@@ -771,15 +771,15 @@ CBSymbolList::RemoveFile
 {
 	const JSize count = itsSymbolList->GetElementCount();
 	for (JIndex i=count; i>=1; i--)
-		{
+	{
 		SymbolInfo info = itsSymbolList->GetElement(i);
 		if (info.fileID == id)
-			{
+		{
 			info.Free();
 			itsSymbolList->RemoveElement(i);
 			itsChangedDuringParseFlag = true;
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -798,13 +798,13 @@ CBSymbolList::FileChanged
 	)
 {
 	if (IsParsed(fileType))
-		{
+	{
 		if (!itsBeganEmptyFlag)
-			{
+		{
 			RemoveFile(id);
-			}
-		ParseFile(fileName, fileType, id);
 		}
+		ParseFile(fileName, fileType, id);
+	}
 }
 
 /******************************************************************************
@@ -825,11 +825,11 @@ CBSymbolList::ParseFile
 	JString data;
 	CBLanguage lang;
 	if (ProcessFile(fileName, fileType, &data, &lang))
-		{
+	{
 		icharbufstream input(data.GetBytes(), data.GetByteCount());
 		ReadSymbolList(input, lang, fileName, id);
 		itsChangedDuringParseFlag = true;
-		}
+	}
 }
 
 /******************************************************************************
@@ -868,24 +868,24 @@ CBSymbolList::ReadSymbolList
 
 	input >> std::ws;
 	while (input.peek() == '!')
-		{
+	{
 		JIgnoreLine(input);
 		input >> std::ws;
-		}
+	}
 
 	JStringPtrMap<JString> flags(JPtrArrayT::kDeleteAll);
 	while (true)
-		{
+	{
 		auto* name = jnew JString;
 		assert( name != nullptr );
 
 		input >> std::ws;
 		*name = JReadUntil(input, '\t');		// symbol name
 		if (input.eof() || input.fail())
-			{
+		{
 			jdelete name;
 			break;
-			}
+		}
 
 		JIgnoreUntil(input, '\t');				// file name
 
@@ -897,31 +897,31 @@ CBSymbolList::ReadSymbolList
 		JUtf8Character typeChar(' ');
 		JString* value;
 		if (flags.GetElement("kind", &value) && !value->IsEmpty())
-			{
+		{
 			typeChar = value->GetFirstCharacter();
-			}
+		}
 
 		JString* signature = nullptr;
 		if (flags.GetElement("signature", &value) && !value->IsEmpty())
-			{
+		{
 			signature = jnew JString(*value);
 			assert( signature != nullptr );
 			signature->Prepend(" ");
-			}
+		}
 
 		if (IgnoreSymbol(*name))
-			{
+		{
 			jdelete name;
-			}
+		}
 		else
-			{
+		{
 			const Type type = DecodeSymbolType(lang, typeChar.GetBytes()[0], flags);
 			if (signature == nullptr &&
 				(IsFunction(type) || IsPrototype(type)))
-				{
+			{
 				signature = jnew JString(" ( )");
 				assert( signature != nullptr );
-				}
+			}
 
 			const SymbolInfo info(name, signature, lang, type,
 								  false, fileID, lineIndex);
@@ -930,7 +930,7 @@ CBSymbolList::ReadSymbolList
 			// add file:name
 
 			if (IsFileScope(type))
-				{
+			{
 				auto* name1 = jnew JString(fileName);
 				assert( name1 != nullptr );
 				*name1 += ":";
@@ -938,17 +938,17 @@ CBSymbolList::ReadSymbolList
 
 				JString* sig1 = nullptr;
 				if (signature != nullptr)
-					{
+				{
 					sig1 = jnew JString(*signature);
 					assert( sig1 != nullptr );
-					}
+				}
 
 				const SymbolInfo info1(name1, sig1, lang, type,
 									   true, fileID, lineIndex);
 				itsSymbolList->InsertSorted(info1);
-				}
 			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -968,11 +968,11 @@ CBSymbolList::ReadSetup
 	std::istream* input     = (projVers <= 41 ? &projInput : symInput);
 	const JFileVersion vers = (projVers <= 41 ? projVers   : symVers);
 	if (input != nullptr)
-		{
+	{
 		ReadSetup(*input, vers);
 
 		itsReparseAllFlag = vers < 89 || (itsSymbolList->IsEmpty() && IsActive());
-		}
+	}
 }
 
 /******************************************************************************
@@ -996,7 +996,7 @@ CBSymbolList::ReadSetup
 	itsSymbolList->SetBlockSize(symbolCount+1);		// avoid repeated realloc
 
 	for (JIndex i=1; i<=symbolCount; i++)
-		{
+	{
 		auto* name = jnew JString;
 		assert( name != nullptr );
 		input >> *name;
@@ -1006,9 +1006,9 @@ CBSymbolList::ReadSetup
 
 		bool fullyQualifiedFileScope = false;
 		if (vers >= 54)
-			{
+		{
 			input >> JBoolFromString(fullyQualifiedFileScope);
-			}
+		}
 
 		JFAID_t fileID;
 		JIndex lineIndex;
@@ -1016,31 +1016,31 @@ CBSymbolList::ReadSetup
 
 		JString* signature = nullptr;
 		if (vers > 63)
-			{
+		{
 			bool hasSignature;
 			input >> JBoolFromString(hasSignature);
 
 			if (hasSignature)
-				{
+			{
 				signature = jnew JString;
 				assert( signature != nullptr );
 				input >> *signature;
-				}
 			}
+		}
 
 		itsSymbolList->AppendElement(
 			SymbolInfo(name, signature, (CBLanguage) lang, (Type) type,
 					   fullyQualifiedFileScope, fileID, lineIndex));
-		}
+	}
 
 	itsSymbolList->SetBlockSize(kBlockSize);
 
 	if (vers < 51)
-		{
+	{
 		itsSymbolList->SetCompareFunction(CompareSymbolsAndTypes);
 		itsSymbolList->Sort();
 		itsSymbolList->SetCompareFunction(CompareSymbols);
-		}
+	}
 
 	Broadcast(Changed());
 }
@@ -1059,12 +1059,12 @@ CBSymbolList::WriteSetup
 	const
 {
 	if (symOutput != nullptr)
-		{
+	{
 		const JSize symbolCount = itsSymbolList->GetElementCount();
 		*symOutput << ' ' << symbolCount;
 
 		for (JIndex i=1; i<=symbolCount; i++)
-			{
+		{
 			const SymbolInfo info = itsSymbolList->GetElement(i);
 			*symOutput << ' ' << *(info.name);
 			*symOutput << ' ' << (long) info.lang;
@@ -1074,18 +1074,18 @@ CBSymbolList::WriteSetup
 			*symOutput << ' ' << info.lineIndex;
 
 			if (info.signature != nullptr)
-				{
+			{
 				*symOutput << ' ' << JBoolToString(true);
 				*symOutput << ' ' << *(info.signature);
-				}
-			else
-				{
-				*symOutput << ' ' << JBoolToString(false);
-				}
 			}
+			else
+			{
+				*symOutput << ' ' << JBoolToString(false);
+			}
+		}
 
 		*symOutput << ' ';
-		}
+	}
 }
 
 /******************************************************************************
@@ -1137,24 +1137,24 @@ CBSymbolList::CompareSymbolsAndTypes
 		JCompareStringsCaseInsensitive(s1.name, s2.name);
 
 	if (result == JListT::kFirstEqualSecond)
-		{
+	{
 		if (s1.type < s2.type)
-			{
-			return JListT::kFirstLessSecond;
-			}
-		else if (s1.type == s2.type)
-			{
-			return JListT::kFirstEqualSecond;
-			}
-		else
-			{
-			return JListT::kFirstGreaterSecond;
-			}
-		}
-	else
 		{
-		return result;
+			return JListT::kFirstLessSecond;
 		}
+		else if (s1.type == s2.type)
+		{
+			return JListT::kFirstEqualSecond;
+		}
+		else
+		{
+			return JListT::kFirstGreaterSecond;
+		}
+	}
+	else
+	{
+		return result;
+	}
 }
 
 /******************************************************************************

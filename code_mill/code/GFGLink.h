@@ -13,7 +13,7 @@
 // Superclass Header
 #include <ace/LSOCK_Stream.h>
 #include <ace/UNIX_Addr.h>
-#include <JMessageProtocol.h>
+#include <jx-af/jcore/JMessageProtocol.h>
 
 class JOutPipeStream;
 class JProcess;

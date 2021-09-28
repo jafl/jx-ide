@@ -8,7 +8,7 @@
 #ifndef _H_CBCommandMenu
 #define _H_CBCommandMenu
 
-#include <JXTextMenu.h>
+#include <jx-af/jx/JXTextMenu.h>
 
 class CBProjectDocument;
 class CBTextDocument;

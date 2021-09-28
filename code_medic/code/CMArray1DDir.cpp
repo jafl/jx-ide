@@ -16,22 +16,22 @@
 #include "cmGlobals.h"
 #include "cmActionDefs.h"
 
-#include <JXDisplay.h>
-#include <JXWindow.h>
-#include <JXTextMenu.h>
-#include <JXMenuBar.h>
-#include <JXTextButton.h>
-#include <JXStaticText.h>
-#include <JXScrollbarSet.h>
-#include <JXHelpManager.h>
-#include <JXWDManager.h>
-#include <JXWDMenu.h>
-#include <JXImage.h>
-#include <JXCloseDirectorTask.h>
+#include <jx-af/jx/JXDisplay.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXTextMenu.h>
+#include <jx-af/jx/JXMenuBar.h>
+#include <jx-af/jx/JXTextButton.h>
+#include <jx-af/jx/JXStaticText.h>
+#include <jx-af/jx/JXScrollbarSet.h>
+#include <jx-af/jx/JXHelpManager.h>
+#include <jx-af/jx/JXWDManager.h>
+#include <jx-af/jx/JXWDMenu.h>
+#include <jx-af/jx/JXImage.h>
+#include <jx-af/jx/JXCloseDirectorTask.h>
 
-#include <JTree.h>
-#include <JNamedTreeList.h>
-#include <jAssert.h>
+#include <jx-af/jcore/JTree.h>
+#include <jx-af/jcore/JNamedTreeList.h>
+#include <jx-af/jcore/jAssert.h>
 
 // File menu
 
@@ -400,103 +400,103 @@ CMArray1DDir::Receive
 	if (sender == itsExprInput &&
 		(message.Is(JXWidget::kLostFocus) ||
 		 message.Is(CMArrayExprInput::kReturnKeyPressed)))
-		{
+	{
 		if (itsExprInput->GetText()->GetText() != itsExpr)
-			{
+		{
 			itsExpr = itsExprInput->GetText()->GetText();
 			UpdateWindowTitle();
 			itsDisplayRange.SetToEmptyAt(0);
 			BeginCreateNodes();
-			}
 		}
+	}
 	else if (sender == itsStartIndex &&
 			 (message.Is(JXWidget::kLostFocus) ||
 			  message.Is(CMArrayIndexInput::kReturnKeyPressed)))
-		{
+	{
 		JInteger value;
 		if (itsStartIndex->GetValue(&value) && value != itsRequestRange.first)
-			{
+		{
 			itsRequestRange.first = value;
 			BeginCreateNodes();
-			}
 		}
+	}
 	else if (sender == itsEndIndex &&
 			 (message.Is(JXWidget::kLostFocus) ||
 			  message.Is(CMArrayIndexInput::kReturnKeyPressed)))
-		{
+	{
 		JInteger value;
 		if (itsEndIndex->GetValue(&value) && value != itsRequestRange.last)
-			{
+		{
 			itsRequestRange.last = value;
 			BeginCreateNodes();
-			}
 		}
+	}
 
 	else if (sender == itsTree && message.Is(JTree::kNodeChanged))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const JTree::NodeChanged*>(&message);
 		assert(info != nullptr);
 		if (info->GetNode() == itsCurrentNode)
-			{
+		{
 			itsCurrentNode = nullptr;
 			CreateNextNode();
-			}
 		}
+	}
 
 	else if (sender == itsStopButton && message.Is(JXButton::kPushed))
-		{
+	{
 		itsRequestRange = itsDisplayRange;
 		itsStartIndex->SetValue(itsRequestRange.first);
 		itsEndIndex->SetValue(itsRequestRange.last);
 		CreateNodesFinished();
-		}
+	}
 
 	else if (sender == itsLink && message.Is(CMLink::kDebuggerRestarted))
-		{
+	{
 		itsWaitingForReloadFlag = true;
-		}
+	}
 	else if (sender == itsLink && message.Is(CMLink::kDebuggerStarted))
-		{
+	{
 		if (!itsWaitingForReloadFlag)
-			{
+		{
 			JXCloseDirectorTask::Close(this);	// close after bcast is finished
-			}
-		itsWaitingForReloadFlag = false;
 		}
+		itsWaitingForReloadFlag = false;
+	}
 
 	else if (sender == itsFileMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleFileMenu(selection->GetIndex());
-		}
+	}
 
 	else if (sender == itsActionMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		UpdateActionMenu();
-		}
+	}
 	else if (sender == itsActionMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleActionMenu(selection->GetIndex());
-		}
+	}
 
 	else if (sender == itsHelpMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleHelpMenu(selection->GetIndex());
-		}
+	}
 
 	else
-		{
+	{
 		JXWindowDirector::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -511,13 +511,13 @@ CMArray1DDir::ReceiveGoingAway
 	)
 {
 	if (sender == itsLink && !CMIsShuttingDown())
-		{
+	{
 		JXCloseDirectorTask::Close(this);
-		}
+	}
 	else
-		{
+	{
 		JXWindowDirector::ReceiveGoingAway(sender);
-		}
+	}
 }
 
 /******************************************************************************
@@ -530,42 +530,42 @@ CMArray1DDir::BeginCreateNodes()
 {
 	JIntRange overlap;
 	if (JIntersection(itsDisplayRange, itsRequestRange, &overlap))
-		{
+	{
 		JTreeNode* root = itsTree->GetRoot();
 		while (itsDisplayRange.first < itsRequestRange.first)
-			{
+		{
 			JTreeNode* node = root->GetChild(1);
 			if (node == itsCurrentNode)
-				{
+			{
 				itsCurrentNode = nullptr;
-				}
+			}
 			jdelete node;
 			itsDisplayRange.first++;
-			}
+		}
 		while (itsDisplayRange.last > itsRequestRange.last)
-			{
+		{
 			JTreeNode* node = root->GetChild(root->GetChildCount());
 			if (node == itsCurrentNode)
-				{
+			{
 				itsCurrentNode = nullptr;
-				}
+			}
 			jdelete node;
 			itsDisplayRange.last--;
-			}
 		}
+	}
 	else
-		{
+	{
 		(itsTree->GetRoot())->DeleteAllChildren();
 		itsCurrentNode = nullptr;
 		itsDisplayRange.SetToEmptyAt(itsRequestRange.first);
-		}
+	}
 
 	if (itsRequestRange.first < itsDisplayRange.first ||
 		itsDisplayRange.last  < itsRequestRange.last)
-		{
+	{
 		itsStopButton->Show();
 		CreateNextNode();
-		}
+	}
 }
 
 /******************************************************************************
@@ -577,13 +577,13 @@ void
 CMArray1DDir::CreateNextNode()
 {
 	if (itsCurrentNode != nullptr)
-		{
+	{
 		return;
-		}
+	}
 
 	JTreeNode* root = itsTree->GetRoot();
 	if (itsRequestRange.first < itsDisplayRange.first)
-		{
+	{
 		itsDisplayRange.first--;
 		const JString expr = GetExpression(itsDisplayRange.first);
 		CMVarNode* node    = itsLink->CreateVarNode(root, expr, expr, JString::empty);
@@ -592,9 +592,9 @@ CMArray1DDir::CreateNextNode()
 		itsCurrentNode = node;
 		root->InsertAtIndex(1, node);	// move it to the top -- inserted by ctor so it will update self
 		ListenTo(itsTree);
-		}
+	}
 	else if (itsDisplayRange.last < itsRequestRange.last)
-		{
+	{
 		itsDisplayRange.last++;
 		const JString expr = GetExpression(itsDisplayRange.last);
 		CMVarNode* node    = itsLink->CreateVarNode(root, expr, expr, JString::empty);
@@ -602,11 +602,11 @@ CMArray1DDir::CreateNextNode()
 
 		itsCurrentNode = node;
 		ListenTo(itsTree);
-		}
+	}
 	else
-		{
+	{
 		CreateNodesFinished();
-		}
+	}
 }
 
 /******************************************************************************
@@ -650,18 +650,18 @@ CMArray1DDir::HandleFileMenu
 	)
 {
 	if (index == kOpenCmd)
-		{
+	{
 		itsCommandDir->OpenSourceFiles();
-		}
+	}
 
 	else if (index == kCloseWindowCmd)
-		{
+	{
 		Close();
-		}
+	}
 	else if (index == kQuitCmd)
-		{
+	{
 		JXGetApplication()->Quit();
-		}
+	}
 }
 
 /******************************************************************************
@@ -673,23 +673,23 @@ void
 CMArray1DDir::UpdateActionMenu()
 {
 	if (itsWidget->HasSelection())
-		{
+	{
 		itsActionMenu->EnableItem(kDisplayAsCStringCmd);
 		itsActionMenu->EnableItem(kDisplay1DArrayCmd);
 		itsActionMenu->EnableItem(kPlot1DArrayCmd);
 		itsActionMenu->EnableItem(kDisplay2DArrayCmd);
 		itsActionMenu->EnableItem(kWatchVarCmd);
 		itsActionMenu->EnableItem(kWatchLocCmd);
-		}
+	}
 
 	if (itsLink->GetFeature(CMLink::kExamineMemory))
-		{
+	{
 		itsActionMenu->EnableItem(kExamineMemCmd);
-		}
+	}
 	if (itsLink->GetFeature(CMLink::kDisassembleMemory))
-		{
+	{
 		itsActionMenu->EnableItem(kDisassembleMemCmd);
-		}
+	}
 
 	itsActionMenu->EnableItem(kSavePrefsCmd);
 }
@@ -706,44 +706,44 @@ CMArray1DDir::HandleActionMenu
 	)
 {
 	if (index == kDisplayAsCStringCmd)
-		{
+	{
 		itsWidget->DisplayAsCString();
-		}
+	}
 	else if (index == kDisplay1DArrayCmd)
-		{
+	{
 		itsWidget->Display1DArray();
-		}
+	}
 	else if (index == kPlot1DArrayCmd)
-		{
+	{
 		itsWidget->Plot1DArray();
-		}
+	}
 	else if (index == kDisplay2DArrayCmd)
-		{
+	{
 		itsWidget->Display2DArray();
-		}
+	}
 
 	else if (index == kWatchVarCmd)
-		{
+	{
 		itsWidget->WatchExpression();
-		}
+	}
 	else if (index == kWatchLocCmd)
-		{
+	{
 		itsWidget->WatchLocation();
-		}
+	}
 
 	else if (index == kExamineMemCmd)
-		{
+	{
 		itsWidget->ExamineMemory(CMMemoryDir::kHexByte);
-		}
+	}
 	else if (index == kDisassembleMemCmd)
-		{
+	{
 		itsWidget->ExamineMemory(CMMemoryDir::kAsm);
-		}
+	}
 
 	else if (index == kSavePrefsCmd)
-		{
+	{
 		CMGetPrefsManager()->SaveWindowSize(kArray1DWindSizeID, GetWindow());
-		}
+	}
 }
 
 /******************************************************************************
@@ -758,29 +758,29 @@ CMArray1DDir::HandleHelpMenu
 	)
 {
 	if (index == kAboutCmd)
-		{
+	{
 		(CMGetApplication())->DisplayAbout();
-		}
+	}
 
 	else if (index == kTOCCmd)
-		{
+	{
 		JXGetHelpManager()->ShowTOC();
-		}
+	}
 	else if (index == kOverviewCmd)
-		{
+	{
 		JXGetHelpManager()->ShowSection("CMOverviewHelp");
-		}
+	}
 	else if (index == kThisWindowCmd)
-		{
+	{
 		JXGetHelpManager()->ShowSection("CMVarTreeHelp-Array1D");
-		}
+	}
 
 	else if (index == kChangesCmd)
-		{
+	{
 		JXGetHelpManager()->ShowChangeLog();
-		}
+	}
 	else if (index == kCreditsCmd)
-		{
+	{
 		JXGetHelpManager()->ShowCredits();
-		}
+	}
 }

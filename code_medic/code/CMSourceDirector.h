@@ -10,7 +10,7 @@
 #ifndef _H_CMSourceDirector
 #define _H_CMSourceDirector
 
-#include <JXWindowDirector.h>
+#include <jx-af/jx/JXWindowDirector.h>
 #include "CMLocation.h"
 
 class JXMenuBar;

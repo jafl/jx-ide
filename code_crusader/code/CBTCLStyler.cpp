@@ -12,11 +12,11 @@
 
 #include "CBTCLStyler.h"
 #include "cbmUtil.h"
-#include <JRegex.h>
-#include <JStringIterator.h>
-#include <JColorManager.h>
-#include <jGlobals.h>
-#include <jAssert.h>
+#include <jx-af/jcore/JRegex.h>
+#include <jx-af/jcore/JStringIterator.h>
+#include <jx-af/jcore/JColorManager.h>
+#include <jx-af/jcore/jGlobals.h>
+#include <jx-af/jcore/jAssert.h>
 
 CBTCLStyler* CBTCLStyler::itsSelf = nullptr;
 
@@ -53,14 +53,14 @@ CBStylerBase*
 CBTCLStyler::Instance()
 {
 	if (itsSelf == nullptr && !recursiveInstance)
-		{
+	{
 		recursiveInstance = true;
 
 		itsSelf = jnew CBTCLStyler;
 		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
-		}
+	}
 
 	return itsSelf;
 }
@@ -89,9 +89,9 @@ CBTCLStyler::CBTCLStyler()
 {
 	JFontStyle blankStyle;
 	for (JIndex i=1; i<=kTypeCount; i++)
-		{
+	{
 		SetTypeStyle(i, blankStyle);
-		}
+	}
 
 	SetTypeStyle(kPredefinedWord - kWhitespace, JFontStyle(JColorManager::GetDarkGreenColor()));
 	SetTypeStyle(kVariable       - kWhitespace, JFontStyle(JColorManager::GetBlueColor()));
@@ -134,12 +134,12 @@ CBTCLStyler::Scan
 	Token token;
 	JFontStyle style;
 	do
-		{
+	{
 		token = NextToken();
 		if (token.type == kEOF)
-			{
+		{
 			break;
-			}
+		}
 
 		// save token starts
 
@@ -148,49 +148,49 @@ CBTCLStyler::Scan
 			token.type == kVariable ||
 			token.type == kString ||
 			token.type == kComment)
-			{
+		{
 			SaveTokenStart(token.range.GetFirst());
-			}
+		}
 
 		// handle special cases
 
 		if (token.type == kString ||
 			token.type == kUnterminatedString)
-			{
+		{
 			ExtendCheckRangeForString(token.range);
-			}
+		}
 
 		// set the style
 
 		const JIndex typeIndex = token.type - kWhitespace;
 		if (token.type == kWhitespace)
-			{
+		{
 			style = GetDefaultFont().GetStyle();
-			}
+		}
 		else if (token.type == kComment       ||
 				 token.type == kString        ||
 				 token.type == kBrace         ||
 				 token.type == kSquareBracket ||
 				 token.type == kParenthesis)
-			{
+		{
 			style = GetTypeStyle(typeIndex);
-			}
+		}
 		else if (token.type < kWhitespace)
-			{
+		{
 			style = GetTypeStyle(kError - kWhitespace);
-			}
+		}
 		else
-			{
+		{
 			style = GetStyle(typeIndex, JString(text.GetRawBytes(), token.range.byteRange, JString::kNoCopy));
-			}
+		}
 
 		keepGoing = SetStyle(token.range.charRange, style);
 
 		if (token.type == kString)
-			{
+		{
 			StyleEmbeddedVariables(token);
-			}
 		}
+	}
 		while (keepGoing);
 }
 

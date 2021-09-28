@@ -10,13 +10,13 @@
 #ifndef _H_CBTree
 #define _H_CBTree
 
-#include <JContainer.h>
+#include <jx-af/jcore/JContainer.h>
 #include "CBTextFileType.h"
 #include "CBPrefsManager.h"		// need definition of FileTypesChanged
-#include <JPtrArray.h>
-#include <JRect.h>
-#include <JFAID.h>
-#include <jTime.h>
+#include <jx-af/jcore/JPtrArray.h>
+#include <jx-af/jcore/JRect.h>
+#include <jx-af/jcore/JFAID.h>
+#include <jx-af/jcore/jTime.h>
 
 class JString;
 class JPainter;

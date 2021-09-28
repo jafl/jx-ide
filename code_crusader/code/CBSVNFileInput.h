@@ -8,7 +8,7 @@
 #ifndef _H_CBSVNFileInput
 #define _H_CBSVNFileInput
 
-#include <JXFileInput.h>
+#include <jx-af/jx/JXFileInput.h>
 
 class CBSVNFileInput : public JXFileInput
 {

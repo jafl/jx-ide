@@ -11,7 +11,7 @@
 
 #include "CBProjectTableInput.h"
 #include "CBProjectTable.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -64,10 +64,10 @@ CBProjectTableInput::HandleKeyPress
 	if (itsProjectTable != nullptr &&
 		(c == '\r' || c == '\n') &&
 		!modifiers.meta() && !modifiers.shift())
-		{
+	{
 		itsProjectTable->SetInputAction(
 			modifiers.control() ? CBProjectTable::kRename : CBProjectTable::kRelink);
-		}
+	}
 
 	JXFileInput::HandleKeyPress(c, keySym, modifiers);
 }

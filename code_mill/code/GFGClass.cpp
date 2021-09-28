@@ -12,7 +12,7 @@
 #include <GFGClass.h>
 #include "GFGLink.h"
 #include "gfgGlobals.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -57,9 +57,9 @@ GFGClass::GetBaseClassCount()
 	const
 {
 	if (itsBaseClasses == nullptr)
-		{
+	{
 		return 0;
-		}
+	}
 
 	assert(itsBaseClasses->GetElementCount() == itsBaseClassFiles->GetElementCount());
 
@@ -102,17 +102,17 @@ GFGClass::AddBaseClass
 	)
 {
 	if (itsBaseClasses == nullptr)
-		{
+	{
 		itsBaseClasses = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
 		assert(itsBaseClasses != nullptr);
-		}
+	}
 	itsBaseClasses->Append(classname);
 
 	if (itsBaseClassFiles == nullptr)
-		{
+	{
 		itsBaseClassFiles = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
 		assert(itsBaseClassFiles != nullptr);
-		}
+	}
 	itsBaseClassFiles->Append(filename);
 }
 
@@ -126,9 +126,9 @@ GFGClass::GetAncestorCount()
 	const
 {
 	if (itsAncestors == nullptr)
-		{
+	{
 		return 0;
-		}
+	}
 
 	assert(itsAncestors->GetElementCount() == itsAncestorFiles->GetElementCount());
 
@@ -171,17 +171,17 @@ GFGClass::AddAncestor
 	)
 {
 	if (itsAncestors == nullptr)
-		{
+	{
 		itsAncestors = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
 		assert(itsAncestors != nullptr);
-		}
+	}
 	itsAncestors->Append(classname);
 
 	if (itsAncestorFiles == nullptr)
-		{
+	{
 		itsAncestorFiles = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
 		assert(itsAncestorFiles != nullptr);
-		}
+	}
 	itsAncestorFiles->Append(filename);
 }
 
@@ -195,9 +195,9 @@ GFGClass::Populate()
 {
 	const JSize bcount = GetBaseClassCount();
 	if (bcount == 0)
-		{
+	{
 		return;
-		}
+	}
 
 	JString classname, filename;
 
@@ -206,19 +206,19 @@ GFGClass::Populate()
 
 	const JSize count = GetAncestorCount();
 	for (JIndex i=count; i>=1; i--)
-		{
+	{
 		GetAncestor(i, &classname, &filename);
 		itsLink->ParseClass(this, filename, classname);
-		}
+	}
 
 	// Parse these last so their function declarations override
 	// those of their ancestors.
 
 	for (JIndex i = 1; i <= bcount; i++)
-		{
+	{
 		GetBaseClass(i, &classname, &filename);
 		itsLink->ParseClass(this, filename, classname);
-		}
+	}
 }
 
 /******************************************************************************
@@ -235,14 +235,14 @@ GFGClass::WritePublic
 {
 	const JSize count	= GetElementCount();
 	for (JIndex i = 1; i <= count; i++)
-		{
+	{
 		GFGMemberFunction* fn	= GetElement(i);
 		if (fn->IsUsed() &&
 			!fn->IsProtected())
-			{
+		{
 			WriteFunction(os, fn, interface);
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -259,14 +259,14 @@ GFGClass::WriteProtected
 {
 	const JSize count	= GetElementCount();
 	for (JIndex i = 1; i <= count; i++)
-		{
+	{
 		GFGMemberFunction* fn	= GetElement(i);
 		if (fn->IsUsed() &&
 			fn->IsProtected())
-			{
+		{
 			WriteFunction(os, fn, interface);
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -283,17 +283,17 @@ GFGClass::WriteFunction
 	)
 {
 	if (interface)
-		{
+	{
 		fn->GetInterface().Print(os);
 		os << std::endl;
 		return;
-		}
+	}
 
 	JString access("public");
 	if (fn->IsProtected())
-		{
+	{
 		access = "protected";
-		}
+	}
 
 	const JString s = GFGGetPrefsManager()->GetFunctionComment(fn->GetFnName(), access);
 	s.Print(os);
@@ -306,28 +306,28 @@ GFGClass::WriteFunction
 	fn->GetFnName().Print(os);
 	const JSize count	= fn->GetArgCount();
 	if (count == 0)
-		{
+	{
 		os << "()" << std::endl;
-		}
+	}
 	else
-		{
+	{
 		os << "\n\t(\n";
 		for (JIndex i = 1; i <= count; i++)
-			{
+		{
 			os << "\t";
 			fn->GetArg(i).Print(os);
 			if (i != count)
-				{
+			{
 				os << ",";
-				}
-			os << std::endl;
 			}
+			os << std::endl;
+		}
 		os << "\t)" << std::endl;
-		}
+	}
 	if (fn->IsConst())
-		{
+	{
 		os << "\tconst" << std::endl;
-		}
+	}
 	os << "{\n\n}" << std::endl << std::endl;
 }
 
@@ -344,10 +344,10 @@ GFGClass::Receive
 	)
 {
 	if (sender == itsLink && message.Is(GFGLink::kFileParsed))
-		{
+	{
 /*		const JSize count	= GetElementCount();
 		for (JIndex i = 1; i <= count; i++)
-			{
+		{
 			GFGMemberFunction* fn	= GetElement(i);
 			std::cout << "#########################" << std::endl;
 			std::cout << fn->GetFnName() << '\t' << fn->IsProtected() << '\t' << fn->IsRequired() << '\t' << fn->IsConst() << std::endl;
@@ -356,14 +356,14 @@ GFGClass::Receive
 			std::cout << "-------------------------" << std::endl;
 			const JSize acount	= fn->GetArgCount();
 			for (JIndex i = 1; i <= acount; i++)
-				{
+			{
 				std::cout << fn->GetArg(i) << std::endl;
-				}
 			}
+		}
 */		
-		}
+	}
 	else
-		{
+	{
 		JPtrArray<GFGMemberFunction>::Receive(sender, message);
-		}
+	}
 }

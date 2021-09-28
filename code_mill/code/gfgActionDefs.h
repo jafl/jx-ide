@@ -12,7 +12,7 @@
 #ifndef _H_gfgActionDefs
 #define _H_gfgActionDefs
 
-#include <jXActionDefs.h>	// for convenience
+#include <jx-af/jx/jXActionDefs.h>	// for convenience
 
 // Preferences menu
 

@@ -8,7 +8,7 @@
 #ifndef _H_CBCommandSelection
 #define _H_CBCommandSelection
 
-#include <JXSelectionManager.h>
+#include <jx-af/jx/JXSelectionManager.h>
 #include "CBCommandManager.h"
 
 class CBCommandTable;

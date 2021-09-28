@@ -10,7 +10,7 @@
 #ifndef _H_GFGPrefsDialog
 #define _H_GFGPrefsDialog
 
-#include <JXDialogDirector.h>
+#include <jx-af/jx/JXDialogDirector.h>
 
 class GFGPrefsDialog : public JXDialogDirector
 {

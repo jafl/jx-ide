@@ -11,13 +11,13 @@
 #include "CBStylerTableInput.h"
 #include "CBStylerTableMenu.h"
 #include "cbmUtil.h"
-#include <JXWindow.h>
-#include <JXTextButton.h>
-#include <JStringTableData.h>
-#include <JTableSelection.h>
-#include <JString.h>
-#include <jASCIIConstants.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXTextButton.h>
+#include <jx-af/jcore/JStringTableData.h>
+#include <jx-af/jcore/JTableSelection.h>
+#include <jx-af/jcore/JString.h>
+#include <jx-af/jcore/jASCIIConstants.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -49,11 +49,11 @@ CBStylerTable::CBStylerTable
 	const JSize count = typeStyles.GetElementCount();
 	data->AppendRows(count);
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		data->SetString(i,1, JString(typeNames[i-1], JString::kNoCopy));
 
 		SetCellStyle(JPoint(1,i), typeStyles.GetElement(i));
-		}
+	}
 }
 
 CBStylerTable::CBStylerTable
@@ -83,12 +83,12 @@ CBStylerTable::CBStylerTable
 	const JSize count = wordList.GetElementCount();
 	data->AppendRows(count);
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		const CBStylerBase::WordStyle info = wordList.GetElement(i);
 		data->SetString(i,1, *info.key);
 
 		SetCellStyle(JPoint(1,i), info.value);
-		}
+	}
 }
 
 // private
@@ -107,15 +107,15 @@ CBStylerTable::CBStylerTableX
 
 	itsAddRowButton = addRowButton;
 	if (itsAddRowButton != nullptr)
-		{
+	{
 		ListenTo(itsAddRowButton);
-		}
+	}
 
 	itsRemoveButton = removeButton;
 	if (itsRemoveButton != nullptr)
-		{
+	{
 		ListenTo(itsRemoveButton);
-		}
+	}
 
 	SetSelectionBehavior(true, true);
 	ListenTo(&(GetTableSelection()));
@@ -164,10 +164,10 @@ CBStylerTable::GetData
 	assert( count == typeStyles->GetElementCount() );
 
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		const JFontStyle style = GetCellStyle(JPoint(1,i));
 		typeStyles->SetElement(i, style);
-		}
+	}
 }
 
 void
@@ -183,15 +183,15 @@ CBStylerTable::GetData
 
 	const JSize count = GetRowCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		const JPoint cell(1,i);
 		const JString& word = data->GetString(cell);
 		if (!word.IsEmpty())
-			{
+		{
 			const JFontStyle style = GetCellStyle(cell);
 			wordStyles->SetElement(word, style);
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -213,30 +213,30 @@ CBStylerTable::HandleMouseDown
 
 	JPoint cell;
 	if (ScrollForWheel(button, modifiers))
-		{
+	{
 		// work has been done
-		}
+	}
 	else if (!GetCell(pt, &cell))
-		{
+	{
 		s.ClearSelection();
-		}
+	}
 	else if ((button == kJXLeftButton && modifiers.meta()) ||
 			 button == kJXRightButton)
-		{
+	{
 		if (!s.IsSelected(cell))
-			{
+		{
 			SelectSingleCell(cell, false);
-			}
+		}
 		DisplayFontMenu(cell, this, pt, buttonStates, modifiers);
-		}
+	}
 	else if (button == kJXLeftButton && clickCount == 2 && itsAllowEditFlag)
-		{
+	{
 		BeginEditing(cell);
-		}
+	}
 	else if (clickCount == 1)
-		{
+	{
 		BeginSelectionDrag(cell, button, modifiers);
-		}
+	}
 }
 
 /******************************************************************************
@@ -309,35 +309,35 @@ CBStylerTable::HandleKeyPress
 	const bool hadSelection = s.GetFirstSelectedCell(&topSelCell);
 
 	if (c == kJReturnKey && !IsEditing())
-		{
+	{
 		if (itsAllowEditFlag &&
 			hadSelection && s.GetSelectedCellCount() == 1)
-			{
+		{
 			BeginEditing(topSelCell);
-			}
 		}
+	}
 
 	else if ((c == kJUpArrow || c == kJDownArrow) && !IsEditing())
-		{
+	{
 		if (!hadSelection && c == kJUpArrow && GetRowCount() > 0)
-			{
+		{
 			SelectSingleCell(JPoint(1, GetRowCount()));
-			}
-		else
-			{
-			HandleSelectionKeyPress(c, modifiers);
-			}
 		}
+		else
+		{
+			HandleSelectionKeyPress(c, modifiers);
+		}
+	}
 
 	else if ((c == 'a' || c == 'A') && modifiers.meta() && !modifiers.shift())
-		{
+	{
 		s.SelectAll();
-		}
+	}
 
 	else
-		{
+	{
 		JXStringTable::HandleKeyPress(c, keySym, modifiers);
-		}
+	}
 }
 
 /******************************************************************************
@@ -353,22 +353,22 @@ CBStylerTable::Receive
 	)
 {
 	if (sender == itsAddRowButton && message.Is(JXButton::kPushed))
-		{
+	{
 		AddRow();
-		}
+	}
 	else if (sender == itsRemoveButton && message.Is(JXButton::kPushed))
-		{
+	{
 		RemoveSelection();
-		}
+	}
 	else
-		{
+	{
 		if (sender == &(GetTableSelection()))
-			{
+		{
 			UpdateButtons();
-			}
+		}
 
 		JXStringTable::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -380,10 +380,10 @@ void
 CBStylerTable::AddRow()
 {
 	if (EndEditing() && itsAllowEditFlag)
-		{
+	{
 		GetStringData()->AppendRows(1);
 		BeginEditing(JPoint(1, GetRowCount()));
-		}
+	}
 }
 
 /******************************************************************************
@@ -398,20 +398,20 @@ CBStylerTable::RemoveSelection()
 
 	JPoint editCell;
 	if (GetEditedCell(&editCell))
-		{
+	{
 		CancelEditing();
 		data->RemoveRow(editCell.y);
-		}
+	}
 	else
-		{
+	{
 		JTableSelectionIterator iter(&(GetTableSelection()));
 
 		JPoint cell;
 		while (iter.Next(&cell))
-			{
+		{
 			data->RemoveRow(cell.y);
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -423,13 +423,13 @@ void
 CBStylerTable::UpdateButtons()
 {
 	if (itsRemoveButton != nullptr && (GetTableSelection()).HasSelection())
-		{
+	{
 		itsRemoveButton->Activate();
-		}
+	}
 	else if (itsRemoveButton != nullptr)
-		{
+	{
 		itsRemoveButton->Deactivate();
-		}
+	}
 }
 
 /******************************************************************************

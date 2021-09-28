@@ -8,7 +8,7 @@ Remember to upgrade CBHTMLScanner, too!
 */
 
 #include "CBStylingScannerBase.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 }
 
 %option namespace="CB::Text::Java" lexer="Scanner"

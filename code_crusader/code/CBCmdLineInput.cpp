@@ -9,8 +9,8 @@
 
 #include "CBCmdLineInput.h"
 #include "CBExecOutputDocument.h"
-#include <jASCIIConstants.h>
-#include <jAssert.h>
+#include <jx-af/jcore/jASCIIConstants.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -57,13 +57,13 @@ CBCmdLineInput::HandleKeyPress
 	)
 {
 	if (c == kJReturnKey)
-		{
+	{
 		itsDoc->SendText(GetText()->GetText());
 		itsDoc->SendText(JString::newline);
 		GetText()->SetText(JString::empty);
-		}
+	}
 	else
-		{
+	{
 		JXInputField::HandleKeyPress(c, keySym, modifiers);
-		}
+	}
 }

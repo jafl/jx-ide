@@ -12,12 +12,12 @@
 
 #include "CBHTMLStyler.h"
 #include "cbmUtil.h"
-#include <JXDialogDirector.h>
-#include <JStringIterator.h>
-#include <JRegex.h>
-#include <JColorManager.h>
-#include <jGlobals.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXDialogDirector.h>
+#include <jx-af/jcore/JStringIterator.h>
+#include <jx-af/jcore/JRegex.h>
+#include <jx-af/jcore/JColorManager.h>
+#include <jx-af/jcore/jGlobals.h>
+#include <jx-af/jcore/jAssert.h>
 
 CBHTMLStyler* CBHTMLStyler::itsSelf = nullptr;
 
@@ -143,14 +143,14 @@ CBStylerBase*
 CBHTMLStyler::Instance()
 {
 	if (itsSelf == nullptr && !recursiveInstance)
-		{
+	{
 		recursiveInstance = true;
 
 		itsSelf = jnew CBHTMLStyler;
 		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
-		}
+	}
 
 	return itsSelf;
 }
@@ -181,9 +181,9 @@ CBHTMLStyler::CBHTMLStyler()
 {
 	JFontStyle blankStyle;
 	for (JIndex i=1; i<=kTypeCount; i++)
-		{
+	{
 		SetTypeStyle(i, blankStyle);
-		}
+	}
 
 	SetTypeStyle(kHTMLTag            - kWhitespace, JFontStyle(JColorManager::GetBlueColor()));
 	SetTypeStyle(kHTMLScript         - kWhitespace, JFontStyle(JColorManager::GetDarkRedColor()));
@@ -198,22 +198,22 @@ CBHTMLStyler::CBHTMLStyler()
 
 	const JColorID red = JColorManager::GetRedColor();
 	for (JUnsignedOffset i=0; i<kUnusedJavaKeywordCount; i++)
-		{
+	{
 		SetWordStyle(JString(kUnusedJavaKeyword[i], JString::kNoCopy), JFontStyle(red));
-		}
+	}
 	for (JUnsignedOffset i=0; i<kUnusedJSKeywordCount; i++)
-		{
+	{
 		SetWordStyle(JString(kUnusedJSKeyword[i], JString::kNoCopy), JFontStyle(red));
-		}
+	}
 
 	JPrefObject::ReadPrefs();
 
 	JFontStyle style;
 	const JString phpOpen("?php", JString::kNoCopy);
 	if (GetWordStyle(phpOpen, &style))
-		{
+	{
 		RemoveWordStyle(phpOpen);
-		}
+	}
 }
 
 /******************************************************************************
@@ -311,12 +311,12 @@ CBHTMLStyler::Scan
 	Token token;
 	JFontStyle style;
 	do
-		{
+	{
 		token = NextToken();
 		if (token.type == kEOF)
-			{
+		{
 			break;
-			}
+		}
 
 		// save token starts
 
@@ -326,50 +326,50 @@ CBHTMLStyler::Scan
 			 token.type == kJSPComment  ||
 			 (token.type == kHTMLTag &&
 			  GetCharacter(token.range.GetFirst()) == '<')))
-			{
+		{
 			SaveTokenStart(token.range.GetFirst());
 
 //			const JString s = text.GetSubstring(token.range);
 //			std::cout << yy_top_state() << ' ' << yy_start_stack_ptr << ": " << s << std::endl;
-			}
+		}
 
 		// handle special cases
 
 		if (token.type == kPHPDoubleQuoteString ||
 			token.type == kPHPExecString)
-			{
+		{
 			ExtendCheckRangeForString(token.range.charRange);
-			}
+		}
 		else if (token.type == kPHPStartEnd)
-			{
+		{
 			ExtendCheckRangeForLanguageStartEnd(kPHPStartEnd, token.range.charRange);
-			}
+		}
 		else if (token.type == kJSPStartEnd)
-			{
+		{
 			ExtendCheckRangeForLanguageStartEnd(kJSPStartEnd, token.range.charRange);
-			}
+		}
 
 		// set the style
 
 		const JIndex typeIndex = token.type - kWhitespace;
 		if (token.type == kWhitespace)
-			{
+		{
 			style = GetDefaultFont().GetStyle();
-			}
+		}
 		else if ((token.type == kHTMLNamedCharacter ||
 				  token.type == kHTMLInvalidNamedCharacter) &&
 				 top_state() != INITIAL)
-			{
+		{
 			style = GetStyle(kHTMLTag - kWhitespace, itsLatestTagName);
 			if (token.type == kHTMLInvalidNamedCharacter)
-				{
+			{
 				style.strike = !style.strike;
-				}
-			else
-				{
-				style.underlineCount++;
-				}
 			}
+			else
+			{
+				style.underlineCount++;
+			}
+		}
 		else if (token.type == kHTMLText             ||
 				 token.type == kHTMLComment          ||
 				 token.type == kCDATABlock           ||
@@ -386,59 +386,59 @@ CBHTMLStyler::Scan
 				 token.type == kJSString             ||
 				 token.type == kJSRegexSearch        ||
 				 token.type == kComment)
-			{
+		{
 			style = GetTypeStyle(typeIndex);
-			}
+		}
 		else if (token.type < kWhitespace)
-			{
+		{
 			style = GetTypeStyle(kError - kWhitespace);
-			}
+		}
 		else if (token.type == kHTMLTag)
-			{
+		{
 			style = GetTagStyle(token.range.byteRange, typeIndex);
-			}
+		}
 		else if (token.type == kHTMLScript)
-			{
+		{
 			style = GetStyle(typeIndex, *token.scriptLanguage);
-			}
+		}
 		else if (token.type == kHTMLNamedCharacter)
-			{
+		{
 			JUtf8ByteRange r = token.range.byteRange;
 			r.first++;	// skip over &
 			if (GetCharacter(token.range.GetLast(*GetStyledText())) == ';')
-				{
-				r.last--;
-				}
-			style = GetStyle(typeIndex, JString(text.GetRawBytes(), r, JString::kNoCopy));
-			}
-		else
 			{
+				r.last--;
+			}
+			style = GetStyle(typeIndex, JString(text.GetRawBytes(), r, JString::kNoCopy));
+		}
+		else
+		{
 			if (token.type == kDocCommentHTMLTag ||
 				token.type == kDocCommentSpecialTag)
-				{
+			{
 				if (!token.docCommentRange.IsEmpty())
-					{
+				{
 					SetStyle(token.docCommentRange.charRange, GetTypeStyle(kComment - kWhitespace));
-					}
-				ExtendCheckRange(token.range.charRange.last+1);
 				}
+				ExtendCheckRange(token.range.charRange.last+1);
+			}
 
 			style = GetStyle(typeIndex, JString(text.GetRawBytes(), token.range.byteRange, JString::kNoCopy));
-			}
+		}
 
 		keepGoing = SetStyle(token.range.charRange, style);
 
 		if (token.type == kPHPDoubleQuoteString ||
 			token.type == kPHPHereDocString     ||
 			token.type == kPHPExecString)
-			{
+		{
 			StyleEmbeddedPHPVariables(token);
-			}
-		else if (token.type == kJSTemplateString)
-			{
-			StyleEmbeddedJSVariables(token);
-			}
 		}
+		else if (token.type == kJSTemplateString)
+		{
+			StyleEmbeddedJSVariables(token);
+		}
+	}
 		while (keepGoing);
 }
 
@@ -482,20 +482,20 @@ CBHTMLStyler::ExtendCheckRangeForLanguageStartEnd
 
 	JRunArrayIterator iter(GetStyles(), kJIteratorStartBefore, tokenRange.first);
 	if (!iter.Next(&f1))
-		{
+	{
 		return;
-		}
+	}
 	iter.MoveTo(kJIteratorStartBefore, tokenRange.last);
 	if (!iter.Next(&f2))
-		{
+	{
 		return;
-		}
+	}
 
 	const JFontStyle& style = GetTypeStyle(tokenType - kWhitespace);
 	if (style != f1.GetStyle() || style != f1.GetStyle())
-		{
+	{
 		ExtendCheckRange(GetText().GetCharacterCount());
-		}
+	}
 }
 
 /******************************************************************************
@@ -517,48 +517,48 @@ CBHTMLStyler::GetTagStyle
 	JFontStyle style;
 	const JStringMatch m = tagNamePattern.Match(s, JRegex::kIncludeSubmatches);
 	if (!m.IsEmpty())
-		{
+	{
 		itsLatestTagName = m.GetSubstring(1);
 		itsLatestTagName.ToLower();
 
 		JString openTag;
 		if (itsLatestTagName.GetFirstCharacter() == '/' &&
 			itsLatestTagName.GetCharacterCount() > 1)
-			{
+		{
 			openTag = m.GetSubstring(2);
 			openTag.ToLower();
-			}
+		}
 
 		bool found = GetWordStyle(itsLatestTagName, &style);
 		if (!found && !openTag.IsEmpty())
-			{
+		{
 			found = GetWordStyle(openTag, &style);
-			}
+		}
 
 		if (!found)
-			{
+		{
 			found = GetXMLStyle(itsLatestTagName, &style);
-			}
+		}
 
 		if (!found && !openTag.IsEmpty())
-			{
+		{
 			found = GetXMLStyle(openTag, &style);
-			}
+		}
 
 		if (!found)
-			{
-			style = GetTypeStyle(typeIndex);
-			}
-		}
-	else if (s.GetFirstCharacter() == '<')
 		{
+			style = GetTypeStyle(typeIndex);
+		}
+	}
+	else if (s.GetFirstCharacter() == '<')
+	{
 		itsLatestTagName.Clear();
 		style = GetTypeStyle(typeIndex);
-		}
+	}
 	else
-		{
+	{
 		style = GetStyle(typeIndex, itsLatestTagName);
-		}
+	}
 
 	return style;
 }
@@ -572,18 +572,18 @@ CBHTMLStyler::GetXMLStyle
 {
 	JStringIterator iter(tagName);
 	if (!iter.Next(":") || iter.AtEnd())
-		{
+	{
 		return false;
-		}
+	}
 
 	iter.BeginMatch();
 	iter.MoveTo(kJIteratorStartAtEnd, 0);
 	const JStringMatch m = iter.FinishMatch();
 	if (GetWordStyle(m.GetString(), style))
-		{
+	{
 		itsLatestTagName = m.GetString();
 		return true;
-		}
+	}
 
 	return false;
 }
@@ -617,72 +617,72 @@ CBHTMLStyler::StyleEmbeddedPHPVariables
 	JFontStyle varStyle = GetTypeStyle(token.type - kWhitespace);
 	varStyle.underlineCount++;
 	if (varStyle == GetTypeStyle(kPHPVariable - kWhitespace))
-		{
+	{
 		varStyle.underlineCount++;
-		}
+	}
 
 	JFontStyle errStyle = GetTypeStyle(kError - kWhitespace);
 	errStyle.underlineCount++;
 	if (errStyle == GetTypeStyle(kPHPVariable - kWhitespace))
-		{
+	{
 		errStyle.underlineCount++;
-		}
+	}
 
 	const JString s(GetText().GetBytes(), token.range.byteRange);
 	JStringIterator iter(s);
 	JUtf8Character c;
 	while (iter.Next(&c) && !iter.AtEnd())
-		{
+	{
 		if (c == '\\')
-			{
+		{
 			iter.SkipNext();
-			}
+		}
 		else if (c == '$')
-			{
+		{
 			iter.SkipPrev();
 
 			JCharacterRange r = MatchAt(token, iter, phpVariablePattern);
 			if (!r.IsEmpty())
-				{
+			{
 				if (iter.Prev(&c, kJIteratorStay) && c == '{')
-					{
+				{
 					r.first--;
 					iter.SkipNext(r.GetCount()-1);
 					if (iter.Next(&c, kJIteratorStay) && c == '}')
-						{
+					{
 						iter.SkipNext();
 						r.last++;
-						}
 					}
+				}
 				else
-					{
+				{
 					iter.SkipNext(r.GetCount());
-					}
+				}
 				AdjustStyle(r, varStyle);
 				continue;
-				}
+			}
 
 			r = MatchAt(token, iter, emptyPHPVariablePattern);
 			if (!r.IsEmpty())
-				{
+			{
 				AdjustStyle(r, errStyle);
 				iter.SkipNext(r.GetCount());
-				}
 			}
+		}
 		else if (c == '{' && iter.Next(&c) && c == '$')
-			{
+		{
 			if (iter.Next(&c, kJIteratorStay) && c == '}')
-				{
+			{
 				iter.SkipNext();
 				const JIndex i = token.range.charRange.first - 1 + iter.GetPrevCharacterIndex();
 				AdjustStyle(JCharacterRange(i-2, i), errStyle);
-				}
+			}
 			else
-				{
+			{
 				iter.SkipPrev();
-				}
 			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -743,22 +743,22 @@ CBHTMLStyler::UpgradeTypeList
 	)
 {
 	if (vers < 1)
-		{
+	{
 		typeStyles->InsertElementAtIndex(2, JFontStyle(JColorManager::GetDarkRedColor()));
-		}
+	}
 
 	if (vers < 2)
-		{
+	{
 		typeStyles->InsertElementAtIndex(1, JFontStyle());
 
 		for (JIndex i=1; i<=16; i++)
-			{
+		{
 			typeStyles->InsertElementAtIndex(6, JFontStyle());
-			}
 		}
+	}
 
 	if (vers < 3)
-		{
+	{
 		typeStyles->InsertElementAtIndex(22, JFontStyle());
 		typeStyles->InsertElementAtIndex(22, JFontStyle());
 
@@ -767,62 +767,62 @@ CBHTMLStyler::UpgradeTypeList
 		typeStyles->InsertElementAtIndex(17, JFontStyle());
 		typeStyles->InsertElementAtIndex(17, JFontStyle());
 		typeStyles->InsertElementAtIndex(17, JFontStyle());
-		}
+	}
 
 	if (vers < 4)
-		{
+	{
 		typeStyles->InsertElementAtIndex(22, JFontStyle(JColorManager::GetDarkGreenColor()));
-		}
+	}
 
 	if (vers < 5)
-		{
+	{
 		for (JIndex i=1; i<=9; i++)
-			{
+		{
 			typeStyles->InsertElementAtIndex(17, JFontStyle());
-			}
 		}
+	}
 
 	if (vers < 6)
-		{
+	{
 		typeStyles->InsertElementAtIndex(6, JFontStyle());
-		}
+	}
 
 	if (vers < 7)
-		{
+	{
 		typeStyles->InsertElementAtIndex(6, JFontStyle());
-		}
+	}
 
 	if (vers < 8)
-		{
+	{
 		typeStyles->InsertElementAtIndex(33, JFontStyle(JColorManager::GetPinkColor()));
-		}
+	}
 
 	if (vers < 9)
-		{
+	{
 		typeStyles->InsertElementAtIndex(18, JFontStyle(JColorManager::GetBrownColor()));
-		}
+	}
 
 	// set new values after all new slots have been created
 
 	if (vers < 2)
-		{
+	{
 		InitPHPTypeStyles();
-		}
+	}
 
 	if (vers < 3)
-		{
+	{
 		InitJavaScriptTypeStyles();
-		}
+	}
 
 	if (vers < 5)
-		{
+	{
 		InitJSPTypeStyles();
-		}
+	}
 
 	if (vers < 6)
-		{
+	{
 		InitMustacheTypeStyles();
-		}
+	}
 }
 /******************************************************************************
  Receive (virtual protected)
@@ -843,15 +843,15 @@ CBHTMLStyler::Receive
 #if defined CODE_CRUSADER && ! defined CODE_CRUSADER_UNIT_TEST
 
 	if (message.Is(JXDialogDirector::kDeactivated))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const JXDialogDirector::Deactivated*>(&message);
 		assert( info != nullptr );
 		if (info->Successful())
-			{
+		{
 			CBMWriteSharedPrefs(true);
-			}
 		}
+	}
 
 #endif
 }

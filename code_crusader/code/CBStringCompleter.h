@@ -11,7 +11,7 @@
 #define _H_CBStringCompleter
 
 #include "CBTextFileType.h"
-#include <JPtrArray-JString.h>
+#include <jx-af/jcore/JPtrArray-JString.h>
 
 class JTextEditor;
 class CBStylerBase;

@@ -8,7 +8,7 @@
 #ifndef _H_CBTabWidthDialog
 #define _H_CBTabWidthDialog
 
-#include <JXDialogDirector.h>
+#include <jx-af/jx/JXDialogDirector.h>
 
 class JXIntegerInput;
 

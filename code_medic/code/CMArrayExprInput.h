@@ -10,7 +10,7 @@
 #ifndef _H_CMArrayExprInput
 #define _H_CMArrayExprInput
 
-#include <JXInputField.h>
+#include <jx-af/jx/JXInputField.h>
 
 class CMArrayExprInput : public JXInputField
 {

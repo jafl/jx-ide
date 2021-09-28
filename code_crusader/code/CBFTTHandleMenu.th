@@ -49,9 +49,9 @@ CBFileTypeTable::CreateMenuFn()
 	menu->ShowSeparatorAfter(1);
 	const JSize count = DataList.GetElementCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		menu->AppendItem(*DataList.GetElement(i).name, JXMenu::kRadioType);
-		}
+	}
 
 	return menu;
 }
@@ -85,17 +85,17 @@ CBFileTypeTable::IDToIndexFn
 	const
 {
 	if (id == EmptyDataID)
-		{
+	{
 		return 1;
-		}
+	}
 	else
-		{
+	{
 		JIndex index;
 		const bool found = CBPrefsManager::FindIDFn(DataList, id, &index);
 		assert( found );
 
 		return index+1;
-		}
+	}
 }
 
 /******************************************************************************
@@ -115,13 +115,13 @@ CBFileTypeTable::HandleMenuFn
 
 	CBPrefsManager::FileTypeInfo info = itsFileTypeList->GetElement(cell.y);
 	if (index == 1)
-		{
+	{
 		info.StructIDVar = EmptyDataID;
-		}
+	}
 	else
-		{
+	{
 		info.StructIDVar = DataList.GetElement(index-1).id;
-		}
+	}
 	itsFileTypeList->SetElement(cell.y, info);
 
 	TableRefreshCell(cell);

@@ -8,7 +8,7 @@
  ******************************************************************************/
 
 #include "CMGetFullPath.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 // JBroadcaster message types
 

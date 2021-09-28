@@ -9,7 +9,7 @@
 #define _H_CMGetSourceFileList
 
 #include "CMCommand.h"
-#include <JBroadcaster.h>
+#include <jx-af/jcore/JBroadcaster.h>
 
 class CMFileListDir;
 

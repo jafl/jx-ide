@@ -10,8 +10,8 @@
 #ifndef _H_CBAboutDialogIconTask
 #define _H_CBAboutDialogIconTask
 
-#include <JXAnimationTask.h>
-#include <JPtrArray.h>
+#include <jx-af/jx/JXAnimationTask.h>
+#include <jx-af/jcore/JPtrArray.h>
 
 class CBAboutDialogIconTask : public JXAnimationTask
 {

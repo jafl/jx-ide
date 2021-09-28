@@ -50,8 +50,8 @@ CMRunProgramTask::Perform
 	)
 {
 	if (!CMGetLink()->HasPendingCommands())
-		{
+	{
 		(CMGetCommandDirector())->RunProgram();
 		jdelete this;
-		}
+	}
 }

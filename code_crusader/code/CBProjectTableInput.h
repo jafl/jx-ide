@@ -8,7 +8,7 @@
 #ifndef _H_CBProjectTableInput
 #define _H_CBProjectTableInput
 
-#include <JXFileInput.h>
+#include <jx-af/jx/JXFileInput.h>
 
 class CBProjectTable;
 

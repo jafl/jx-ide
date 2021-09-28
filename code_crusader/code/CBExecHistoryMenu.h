@@ -10,7 +10,7 @@
 #ifndef _H_CBExecHistoryMenu
 #define _H_CBExecHistoryMenu
 
-#include <JXStringHistoryMenu.h>
+#include <jx-af/jx/JXStringHistoryMenu.h>
 
 class CBExecHistoryMenu : public JXStringHistoryMenu
 {

@@ -12,7 +12,7 @@
 #ifndef _H_cbActionDefs
 #define _H_cbActionDefs
 
-#include <jXActionDefs.h>	// for convenience
+#include <jx-af/jx/jXActionDefs.h>	// for convenience
 
 // File menu
 

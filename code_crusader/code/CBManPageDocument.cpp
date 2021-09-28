@@ -11,13 +11,13 @@
 #include "CBTextEditor.h"
 #include "CBViewManPageDialog.h"
 #include "cbGlobals.h"
-#include <JXWindow.h>
-#include <JProcess.h>
-#include <jTextUtil.h>
-#include <jFileUtil.h>
-#include <jStreamUtil.h>
-#include <JPtrArray-JString.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jcore/JProcess.h>
+#include <jx-af/jcore/jTextUtil.h>
+#include <jx-af/jcore/jFileUtil.h>
+#include <jx-af/jcore/jStreamUtil.h>
+#include <jx-af/jcore/JPtrArray-JString.h>
+#include <jx-af/jcore/jAssert.h>
 
 JPtrArray<JString>			CBManPageDocument::theManCmdList(JPtrArrayT::kDeleteAll);
 JPtrArray<CBTextDocument>	CBManPageDocument::theManDocList(JPtrArrayT::kForgetAll);
@@ -44,13 +44,13 @@ CBManPageDocument::Create
 	JString pageName = origPageName;
 	pageName.TrimWhitespace();
 	if (pageName.IsEmpty())
-		{
+	{
 		if (returnDoc != nullptr)
-			{
+		{
 			*returnDoc = nullptr;
-			}
-		return false;
 		}
+		return false;
+	}
 
 	CBGetViewManPageDialog()->AddToHistory(pageName, pageIndex, apropos);
 
@@ -60,27 +60,27 @@ CBManPageDocument::Create
 
 	JString cmd;
 	if (apropos)
-		{
+	{
 		cmd = GetCmd2(pageName);
-		}
+	}
 	else
-		{
+	{
 		cmd = GetCmd1(pageName, pageIndex);
-		}
+	}
 
 	JIndex i;
 	if (theManCmdList.SearchSorted(&cmd, JListT::kAnyMatch, &i))
-		{
+	{
 		CBManPageDocument* doc =
 			dynamic_cast<CBManPageDocument*>(theManDocList.GetElement(i));
 		assert( doc != nullptr );
 		doc->Activate();
 		if (returnDoc != nullptr)
-			{
+		{
 			*returnDoc = doc;
-			}
-		return true;
 		}
+		return true;
+	}
 
 	// If !apropos, we can't check cmd #2 until cmd #1 fails.
 
@@ -92,25 +92,25 @@ CBManPageDocument::Create
 	assert( doc != nullptr );
 
 	if (doc != trueDoc)
-		{
+	{
 		const bool ok = doc->Close();
 		assert( ok );
-		}
+	}
 
 	if (returnDoc != nullptr)
-		{
+	{
 		*returnDoc = trueDoc;
-		}
+	}
 
 	if (trueDoc != nullptr)
-		{
+	{
 		trueDoc->Activate();
 		return true;
-		}
+	}
 	else
-		{
+	{
 		return false;
-		}
+	}
 }
 
 /******************************************************************************
@@ -141,7 +141,7 @@ CBManPageDocument::CBManPageDocument
 
 	bool success = false;
 	if (!apropos)
-		{
+	{
 		*cmd = GetCmd1(pageName, pageIndex);
 
 		// Create() already searched theManCmdList
@@ -153,42 +153,42 @@ CBManPageDocument::CBManPageDocument
 							 kJIgnoreConnection, nullptr,
 							 kJCreatePipe, &fromFD, kJTossOutput);
 		if (!execErr.OK())
-			{
+		{
 			execErr.ReportIfError();
 			*trueDoc = this;
 			return;
-			}
+		}
 		else
-			{
+		{
 			std::ifstream input;
 			JString tempName;
 			if (JConvertToStream(fromFD, &input, &tempName))
-				{
+			{
 				JReadUNIXManOutput(input, GetTextEditor()->GetText());
 				p->WaitUntilFinished();
 				success = p->SuccessfulFinish();
 
 				input.close();
 				JRemoveFile(tempName);
-				}
+			}
 
 			jdelete p;
-			}
 		}
+	}
 
 	if (!success)
-		{
+	{
 		*cmd = GetCmd2(pageName);
 
 		JIndex i;
 		if (theManCmdList.SearchSorted(cmd, JListT::kAnyMatch, &i))
-			{
+		{
 			CBManPageDocument* doc =
 				dynamic_cast<CBManPageDocument*>(theManDocList.GetElement(i));
 			assert( doc != nullptr );
 			*trueDoc = doc;
 			return;
-			}
+		}
 
 		JProcess* p;
 		int fromFD;
@@ -197,30 +197,30 @@ CBManPageDocument::CBManPageDocument
 							 kJIgnoreConnection, nullptr,
 							 kJCreatePipe, &fromFD, kJTossOutput);
 		if (!execErr.OK())
-			{
+		{
 			execErr.ReportIfError();
 			*trueDoc = this;
 			return;
-			}
+		}
 		else
-			{
+		{
 			std::ifstream input;
 			JString tempName, text;
 			if (JConvertToStream(fromFD, &input, &tempName))
-				{
+			{
 				input >> std::ws;
 				text.SetBlockSize(1000);
 				while (!input.eof() && !input.fail())
-					{
+				{
 					text += JReadLine(input);
 					text += "\n\n";
 					input >> std::ws;
-					}
+				}
 				text.TrimWhitespace();
 
 				input.close();
 				JRemoveFile(tempName);
-				}
+			}
 
 			// We can't check the return value of "man -k" because it is
 			// always 1.  We can't use "apropos" either because it always
@@ -228,8 +228,8 @@ CBManPageDocument::CBManPageDocument
 
 			jdelete p;
 			GetTextEditor()->GetText()->SetText(text);
-			}
 		}
+	}
 
 	itsIgnoreNameChangedFlag = true;
 	FileChanged(*cmd, false);
@@ -270,9 +270,9 @@ CBManPageDocument::Receive
 {
 	if (sender == this && message.Is(JXFileDocument::kNameChanged) &&
 		!itsIgnoreNameChangedFlag)
-		{
+	{
 		RemoveFromManPageList(this);
-		}
+	}
 
 	CBTextDocument::Receive(sender, message);
 }
@@ -290,10 +290,10 @@ CBManPageDocument::RemoveFromManPageList
 {
 	JIndex i;
 	if (theManDocList.Find(doc, &i))
-		{
+	{
 		theManCmdList.DeleteElement(i);
 		theManDocList.RemoveElement(i);
-		}
+	}
 }
 
 /******************************************************************************
@@ -310,10 +310,10 @@ CBManPageDocument::GetCmd1
 {
 	JString cmd("man ");
 	if (!pageIndex.IsEmpty())
-		{
+	{
 		cmd += JPrepArgForExec(pageIndex);
 		cmd += " ";
-		}
+	}
 	cmd += JPrepArgForExec(pageName);
 	return cmd;
 }

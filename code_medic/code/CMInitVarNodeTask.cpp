@@ -9,7 +9,7 @@
 
 #include "CMInitVarNodeTask.h"
 #include "CMVarNode.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -43,7 +43,7 @@ void
 CMInitVarNodeTask::Perform()
 {
 	if (itsNode != nullptr)
-		{
+	{
 		itsNode->NameChanged();
-		}
+	}
 }

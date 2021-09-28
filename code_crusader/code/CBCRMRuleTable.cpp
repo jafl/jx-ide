@@ -11,16 +11,16 @@
 #include "CBEditCRMDialog.h"
 #include "CBListCSF.h"
 #include "cbGlobals.h"
-#include <JXWindow.h>
-#include <JXTextButton.h>
-#include <JXRegexInput.h>
-#include <JXRegexReplaceInput.h>
-#include <JXColHeaderWidget.h>
-#include <JStringTableData.h>
-#include <JTableSelection.h>
-#include <JRegex.h>
-#include <jStreamUtil.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXTextButton.h>
+#include <jx-af/jx/JXRegexInput.h>
+#include <jx-af/jx/JXRegexReplaceInput.h>
+#include <jx-af/jx/JXColHeaderWidget.h>
+#include <jx-af/jcore/JStringTableData.h>
+#include <jx-af/jcore/JTableSelection.h>
+#include <jx-af/jcore/JRegex.h>
+#include <jx-af/jcore/jStreamUtil.h>
+#include <jx-af/jcore/jAssert.h>
 
 static const JUtf8Byte* kInitFirstStr   = "[ \\t]*";
 static const JUtf8Byte* kInitRestStr    = "[ \\t]*";
@@ -89,9 +89,9 @@ CBCRMRuleTable::CBCRMRuleTable
 
 	assert( GetColCount() == kColCount );
 	for (JIndex i=1; i<=kColCount; i++)
-		{
+	{
 		SetColWidth(i, kDefaultColWidth);
-		}
+	}
 
 	JString fontName;
 	JSize fontSize;
@@ -131,12 +131,12 @@ CBCRMRuleTable::GetData
 	const JStringTableData* data = GetStringData();
 	const JSize count            = GetRowCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		list->AppendElement(
 			JStyledText::CRMRule(data->GetString(i, kFirstColumn),
 								 data->GetString(i, kRestColumn),
 								 data->GetString(i, kReplaceColumn)));
-		}
+	}
 }
 
 /******************************************************************************
@@ -156,12 +156,12 @@ CBCRMRuleTable::SetData
 	const JSize count = list.GetElementCount();
 	data->AppendRows(count);
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		const JStyledText::CRMRule r = list.GetElement(i);
 		data->SetString(i,kFirstColumn,   r.first->GetPattern());
 		data->SetString(i,kRestColumn,    r.rest->GetPattern());
 		data->SetString(i,kReplaceColumn, *r.replace);
-		}
+	}
 
 	Activate();
 }
@@ -188,11 +188,11 @@ CBCRMRuleTable::Activate()
 {
 	JXStringTable::Activate();
 	if (WouldBeActive())
-		{
+	{
 		itsAddRowButton->Activate();
 		itsLoadButton->Activate();
 		itsSaveButton->Activate();
-		}
+	}
 }
 
 /******************************************************************************
@@ -205,11 +205,11 @@ CBCRMRuleTable::Deactivate()
 {
 	JXStringTable::Deactivate();
 	if (!WouldBeActive())
-		{
+	{
 		itsAddRowButton->Deactivate();
 		itsLoadButton->Deactivate();
 		itsSaveButton->Deactivate();
-		}
+	}
 }
 
 /******************************************************************************
@@ -229,13 +229,13 @@ CBCRMRuleTable::HandleMouseDown
 {
 	JPoint cell;
 	if (button == kJXLeftButton && GetCell(pt, &cell))
-		{
+	{
 		BeginEditing(cell);
-		}
+	}
 	else
-		{
+	{
 		ScrollForWheel(button, modifiers);
-		}
+	}
 }
 
 /******************************************************************************
@@ -251,27 +251,27 @@ CBCRMRuleTable::Receive
 	)
 {
 	if (sender == itsAddRowButton && message.Is(JXButton::kPushed))
-		{
+	{
 		AddRow();
-		}
+	}
 	else if (sender == itsRemoveRowButton && message.Is(JXButton::kPushed))
-		{
+	{
 		RemoveRow();
-		}
+	}
 
 	else if (sender == itsLoadButton && message.Is(JXButton::kPushed))
-		{
+	{
 		LoadRules();
-		}
+	}
 	else if (sender == itsSaveButton && message.Is(JXButton::kPushed))
-		{
+	{
 		SaveRules();
-		}
+	}
 
 	else
-		{
+	{
 		JXStringTable::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -283,7 +283,7 @@ void
 CBCRMRuleTable::AddRow()
 {
 	if (GetWindow()->OKToUnfocusCurrentWidget())
-		{
+	{
 		JStringTableData* data = GetStringData();
 		data->AppendRows(1);
 
@@ -293,7 +293,7 @@ CBCRMRuleTable::AddRow()
 		data->SetString(rowIndex, kReplaceColumn, JString(kInitReplaceStr, JString::kNoCopy));
 
 		BeginEditing(JPoint(1, rowIndex));
-		}
+	}
 }
 
 /******************************************************************************
@@ -306,10 +306,10 @@ CBCRMRuleTable::RemoveRow()
 {
 	JPoint editCell;
 	if (GetEditedCell(&editCell))
-		{
+	{
 		CancelEditing();
 		GetStringData()->RemoveRow(editCell.y);
-		}
+	}
 }
 
 /******************************************************************************
@@ -334,20 +334,20 @@ CBCRMRuleTable::CreateStringTableInput
 
 	JXInputField* input = nullptr;
 	if (cell.x == kFirstColumn)
-		{
+	{
 		input = jnew JXRegexInput(itsFirstRegex, false,
 								  enclosure, hSizing, vSizing, x,y, w,h);
-		}
+	}
 	else if (cell.x == kRestColumn)
-		{
+	{
 		input = jnew JXRegexInput(itsRestRegex, false,
 								  enclosure, hSizing, vSizing, x,y, w,h);
-		}
+	}
 	else if (cell.x == kReplaceColumn)
-		{
+	{
 		input = jnew JXRegexReplaceInput(itsReplaceInterpolator, false,
 										 enclosure, hSizing, vSizing, x,y, w,h);
-		}
+	}
 
 	assert( input != nullptr );
 	return input;
@@ -376,9 +376,9 @@ CBCRMRuleTable::LoadRules()
 	JString fileName;
 	if (GetWindow()->OKToUnfocusCurrentWidget() &&
 		itsCSF->ChooseFile(JString::empty, JString::empty, &fileName))
-		{
+	{
 		ReadData(fileName, itsCSF->ReplaceExisting());
-		}
+	}
 }
 
 /******************************************************************************
@@ -397,9 +397,9 @@ CBCRMRuleTable::ReadData
 {
 	JStringTableData* data = GetStringData();
 	if (replaceExisting)
-		{
+	{
 		data->RemoveAllRows();
-		}
+	}
 
 	JIndex firstNewRow = 0;
 
@@ -407,47 +407,47 @@ CBCRMRuleTable::ReadData
 	JString first, rest, replace;
 	JIndex state = 1;
 	while (!input.eof() && !input.fail())
-		{
+	{
 		if (state == 1)
-			{
+		{
 			first = JReadLine(input);
 			if (!first.IsEmpty())
-				{
-				state = 2;
-				}
-			}
-		else if (state == 2)
 			{
+				state = 2;
+			}
+		}
+		else if (state == 2)
+		{
 			rest = JReadLine(input);
 			if (!rest.IsEmpty())
-				{
-				state = 3;
-				}
-			}
-		else if (state == 3)
 			{
+				state = 3;
+			}
+		}
+		else if (state == 3)
+		{
 			replace = JReadLine(input);
 			if (!replace.IsEmpty())
-				{
+			{
 				data->AppendRows(1);
 				const JSize rowCount = data->GetRowCount();
 				data->SetString(rowCount,kFirstColumn,   first);
 				data->SetString(rowCount,kRestColumn,    rest);
 				data->SetString(rowCount,kReplaceColumn, replace);
 				if (firstNewRow == 0)
-					{
+				{
 					firstNewRow = rowCount;
-					}
-				state = 1;
 				}
+				state = 1;
 			}
 		}
+	}
 
 	if (firstNewRow != 0)
-		{
+	{
 		ScrollTo((GetBounds()).bottomLeft());
 		BeginEditing(JPoint(kFirstColumn, firstNewRow));
-		}
+	}
 }
 
 /******************************************************************************
@@ -462,13 +462,13 @@ CBCRMRuleTable::SaveRules()
 	JString origName;
 	if (GetWindow()->OKToUnfocusCurrentWidget() &&
 		itsDialog->GetCurrentCRMRuleSetName(&origName))
-		{
+	{
 		JString newName;
 		if (itsCSF->SaveFile(JGetString("SaveAsPrompt::CBCRMRuleTable"), JString::empty, origName, &newName))
-			{
+		{
 			WriteData(newName);
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -490,14 +490,14 @@ CBCRMRuleTable::WriteData
 	const JStringTableData* data = GetStringData();
 	const JSize count            = GetRowCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		data->GetString(i, kFirstColumn).Print(output);
 		output << '\n';
 		data->GetString(i, kRestColumn).Print(output);
 		output << '\n';
 		data->GetString(i, kReplaceColumn).Print(output);
 		output << "\n\n";
-		}
+	}
 }
 
 /******************************************************************************
@@ -514,7 +514,7 @@ CBCRMRuleTable::ReadGeometry
 	JFileVersion vers;
 	input >> vers;
 	if (vers <= kCurrentGeometryDataVersion)
-		{
+	{
 		JCoordinate w;
 		input >> w;
 		SetColWidth(kFirstColumn, w);
@@ -522,7 +522,7 @@ CBCRMRuleTable::ReadGeometry
 		SetColWidth(kRestColumn, w);
 		input >> w;
 		SetColWidth(kReplaceColumn, w);
-		}
+	}
 
 	JIgnoreUntil(input, kGeometryDataEndDelimiter);
 }

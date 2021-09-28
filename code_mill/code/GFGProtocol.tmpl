@@ -13,7 +13,7 @@
  ******************************************************************************/
 
 #include <GFGProtocol.h>
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -107,11 +107,11 @@ GFGProtocol<ACE_PEER_STREAM_2>::Write
 
 	JSize count = 1;
 	if (data [ dataLen-1 ] != '\n')
-		{
+	{
 		count              = 2;
 		buffer[1].iov_base = const_cast<char*>("\n");
 		buffer[1].iov_len  = 1;
-		}
+	}
 
 	ACE::writev_n(get_handle(), buffer, count);
 }
@@ -134,19 +134,19 @@ GFGProtocol<ACE_PEER_STREAM_2>::handle_input
 	// protect against recursive calls
 
 	if (itsInHandleInputFlag)
-		{
+	{
 		return 0;
-		}
+	}
 	itsInHandleInputFlag = true;
 
 	// read newly received data
 
 	const ssize_t count = (peer()).recv(itsBuffer, itsBufferSize);
 	if (count > 0)
-		{
+	{
 		itsData.Append(itsBuffer, count);
 		Broadcast(GFGProtocolT::ReadReady());
-		}
+	}
 
 	itsInHandleInputFlag = false;
 	return 0;

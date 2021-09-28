@@ -8,9 +8,9 @@
  ******************************************************************************/
 
 #include "CBEiffelCompleter.h"
-#include <JStringIterator.h>
-#include <JStringMatch.h>
-#include <jAssert.h>
+#include <jx-af/jcore/JStringIterator.h>
+#include <jx-af/jcore/JStringMatch.h>
+#include <jx-af/jcore/jAssert.h>
 
 CBEiffelCompleter* CBEiffelCompleter::itsSelf = nullptr;
 
@@ -46,14 +46,14 @@ CBStringCompleter*
 CBEiffelCompleter::Instance()
 {
 	if (itsSelf == nullptr && !recursiveInstance)
-		{
+	{
 		recursiveInstance = true;
 
 		itsSelf = jnew CBEiffelCompleter;
 		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
-		}
+	}
 
 	return itsSelf;
 }
@@ -129,11 +129,11 @@ CBEiffelCompleter::MatchCase
 	JStringIterator iter(source);
 	iter.BeginMatch();
 	while (iter.Next("."))
-		{
+	{
 		const JStringMatch& m = iter.FinishMatch();
 		target->MatchCase(source, m.GetCharacterRange(), m.GetCharacterRange());
 		iter.BeginMatch();
-		}
+	}
 
 	const JStringMatch& m = iter.FinishMatch();
 	const JCharacterRange r(m.GetCharacterRange().first, source.GetCharacterCount());

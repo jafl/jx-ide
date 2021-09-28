@@ -8,7 +8,7 @@
 #ifndef _H_CBFileDragSource
 #define _H_CBFileDragSource
 
-#include <JXImageWidget.h>
+#include <jx-af/jx/JXImageWidget.h>
 
 class JXInputField;
 class CBTextDocument;

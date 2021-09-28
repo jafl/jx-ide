@@ -10,8 +10,8 @@
 #ifndef _H_CBEditCRMDialog
 #define _H_CBEditCRMDialog
 
-#include <JXDialogDirector.h>
-#include <JPrefObject.h>
+#include <jx-af/jx/JXDialogDirector.h>
+#include <jx-af/jcore/JPrefObject.h>
 #include "CBPrefsManager.h"		// need definition of CRMRuleListInfo
 
 class JXTextButton;

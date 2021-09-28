@@ -8,10 +8,10 @@
 #ifndef _H_CBPrefsManager
 #define _H_CBPrefsManager
 
-#include <JXPrefsManager.h>
+#include <jx-af/jx/JXPrefsManager.h>
 #include "CBTextFileType.h"
 #include "CBEmulator.h"
-#include <JStyledText.h>		// need definition of CRMRule
+#include <jx-af/jcore/JStyledText.h>		// need definition of CRMRule
 
 class JRegex;
 class JPoint;

@@ -49,13 +49,13 @@
 #include "CBProjectDocument.h"
 #include "CBFileListTable.h"
 #include "cbGlobals.h"
-#include <JPainter.h>
-#include <JXColorManager.h>
-#include <JFontManager.h>
-#include <JStringIterator.h>
-#include <JMinMax.h>
-#include <jGlobals.h>
-#include <jAssert.h>
+#include <jx-af/jcore/JPainter.h>
+#include <jx-af/jx/JXColorManager.h>
+#include <jx-af/jcore/JFontManager.h>
+#include <jx-af/jcore/JStringIterator.h>
+#include <jx-af/jcore/JMinMax.h>
+#include <jx-af/jcore/jGlobals.h>
+#include <jx-af/jcore/jAssert.h>
 
 // class data
 
@@ -116,82 +116,82 @@ JIndex i;
 	CBClassX(tree);
 
 	if (vers < 30)
-		{
+	{
 		input >> i;
 		assert( i == 1 );
-		}
+	}
 
 	input >> itsFullName;
 	if (vers >= 6)
-		{
+	{
 		input >> itsName;
-		}
+	}
 	else
-		{
+	{
 		itsName = RemoveNamespace(itsFullName);
-		}
+	}
 
 	if (vers >= 1)
-		{
+	{
 		input >> itsDeclType;
-		}
+	}
 	else
-		{
+	{
 		itsDeclType = kClassType;
-		}
+	}
 
 	if (vers < 40)
-		{
+	{
 		JString fileName;
 		input >> fileName;
 		itsFileID = JFAID::kInvalidID;	// ignore ID since we will be tossed
-		}
+	}
 	else
-		{
+	{
 		input >> itsFileID;
-		}
+	}
 
 	input >> itsHCoord >> itsVCoord;
 
 	if (vers >= 6)
-		{
+	{
 		input >> itsFrame;
-		}
+	}
 	else
-		{
+	{
 		CalcFrame();
-		}
+	}
 
 	if (vers == 0)
-		{
+	{
 		JIndex firstFoundParent;
 		input >> firstFoundParent;
-		}
+	}
 
 	input >> JBoolFromString(itsIsAbstractFlag);
 
 	itsIsTemplateFlag = false;
 	if (vers >= 49)
-		{
+	{
 		input >> JBoolFromString(itsIsTemplateFlag);
-		}
+	}
 
 	if (vers >= 10)
-		{
+	{
 		input >> JBoolFromString(itsVisibleFlag)
 			  >> JBoolFromString(itsCollapsedFlag)
 			  >> JBoolFromString(itsIsSelectedFlag);
 		if (vers == 10)
-			{
+		{
 			itsCollapsedFlag = false;	// itsWasVisibleFlag was true
-			}
 		}
+	}
 
 	if (vers >= 11)
-		{
+	{
 		input >> JBoolFromString(itsHasPrimaryChildrenFlag)
 			  >> JBoolFromString(itsHasSecondaryChildrenFlag);
-		}
+	}
 
 	// parents
 
@@ -199,19 +199,19 @@ JIndex i;
 	input >> parentCount;
 
 	for (i=1; i<=parentCount; i++)
-		{
+	{
 		ParentInfo pInfo;
 		pInfo.name = jnew JString;
 		assert( pInfo.name != nullptr );
 
 		input >> *(pInfo.name) >> pInfo.indexFromFile >> pInfo.inheritance;
 		itsParentInfo->AppendElement(pInfo);
-		}
+	}
 
 	// functions
 
 	if (vers < 88)
-		{
+	{
 		JSize fnCount;
 		input >> fnCount;
 
@@ -219,10 +219,10 @@ JIndex i;
 		JInteger access;
 		bool pureVirtual;
 		for (i=1; i<=fnCount; i++)
-			{
+		{
 			input >> name >> access >> JBoolFromString(pureVirtual);
-			}
 		}
+	}
 }
 
 // search target
@@ -274,13 +274,13 @@ CBClass::CBClassX
 CBClass::~CBClass()
 {
 	if (itsParentInfo != nullptr)
-		{
+	{
 		for (auto pInfo : *itsParentInfo)
-			{
+		{
 			pInfo.CleanOut();
-			}
-		jdelete itsParentInfo;
 		}
+		jdelete itsParentInfo;
+	}
 }
 
 /******************************************************************************
@@ -314,12 +314,12 @@ JIndex i;
 	output << ' ' << parentCount;
 
 	for (i=1; i<=parentCount; i++)
-		{
+	{
 		const ParentInfo pInfo = itsParentInfo->GetElement(i);
 		output << ' ' << *(pInfo.name);
 		output << ' ' << itsTree->ClassToIndexForWrite(pInfo.parent);
 		output << ' ' << pInfo.inheritance;
-		}
+	}
 
 	output << ' ';
 }
@@ -338,10 +338,10 @@ CBClass::SetSelected
 	)
 {
 	if (itsIsSelectedFlag != selected)
-		{
+	{
 		itsIsSelectedFlag = selected;
 		itsTree->BroadcastSelectionChange(this, itsIsSelectedFlag);
-		}
+	}
 }
 
 /******************************************************************************
@@ -361,10 +361,10 @@ CBClass::ForceVisible()
 	CBClass* parent;
 	while (c->GetParent(1, &parent) &&
 		   (!parent->IsVisible() || parent->IsCollapsed()))
-		{
+	{
 		parent->SetCollapsed(false);
 		c = parent;
-		}
+	}
 }
 
 /******************************************************************************
@@ -382,16 +382,16 @@ CBClass::GetFileName
 	const
 {
 	if (itsFileID != JFAID::kInvalidID)
-		{
+	{
 		*fileName = itsTree->GetProjectDoc()->GetAllFileList()->
 					GetFileName(itsFileID);
 		return true;
-		}
+	}
 	else
-		{
+	{
 		fileName->Clear();
 		return false;		// ghost
-		}
+	}
 }
 
 #endif
@@ -425,11 +425,11 @@ CBClass::ClearConnections()
 {
 	const JSize parentCount = GetParentCount();
 	for (JIndex i=1; i<=parentCount; i++)
-		{
+	{
 		ParentInfo pInfo = itsParentInfo->GetElement(i);
 		pInfo.parent     = nullptr;
 		itsParentInfo->SetElement(i, pInfo);
-		}
+	}
 
 	itsHasPrimaryChildrenFlag   = false;
 	itsHasSecondaryChildrenFlag = false;
@@ -454,23 +454,23 @@ CBClass::FindParents
 
 	const JSize parentCount = GetParentCount();
 	for (JIndex i=1; i<=parentCount; i++)
-		{
+	{
 		ParentInfo pInfo             = itsParentInfo->GetElement(i);
 		const bool parentWasNull = pInfo.parent == nullptr;
 
 		if (parentWasNull &&
 			!FindParent(&pInfo, okToCreateGhost) && okToCreateGhost)
-			{
+		{
 			pInfo.parent = NewGhost(*(pInfo.name), itsTree);
-			}
+		}
 
 		if (parentWasNull && pInfo.parent != nullptr)
-			{
+		{
 			foundAnotherParent = true;
 			(pInfo.parent)->AddChild(this, i==1);
 			itsParentInfo->SetElement(i, pInfo);
-			}
 		}
+	}
 
 	return foundAnotherParent;
 }
@@ -499,9 +499,9 @@ CBClass::FindParent
 	if (itsTree->FindClass(*(pInfo->name), &(pInfo->parent)) &&
 		pInfo->parent != this &&
 		!(pInfo->parent)->IsGhost())
-		{
+	{
 		return true;
-		}
+	}
 
 	// try all possible namespaces to look for existing parent
 
@@ -512,7 +512,7 @@ CBClass::FindParent
 
 	JStringIterator iter(&nameSpace, kJIteratorStartAtEnd);
 	while (iter.Prev(namespaceOp) && !iter.AtBeginning())
-		{
+	{
 		iter.RemoveAllNext();
 
 		// check if parent exists in namespace
@@ -522,10 +522,10 @@ CBClass::FindParent
 		testName += *(pInfo->name);
 		if (itsTree->FindClass(testName, &pInfo->parent) &&
 			pInfo->parent != this)
-			{
+		{
 			*(pInfo->name) = testName;
 			return true;
-			}
+		}
 
 		// if namespace exists as a class, check its ancestors
 
@@ -533,11 +533,11 @@ CBClass::FindParent
 		if (itsTree->FindClass(nameSpace, &nsClass) &&
 			itsTree->FindParent(*pInfo->name, nsClass, &pInfo->parent, &prefixStr) &&
 			pInfo->parent != this)
-			{
+		{
 			(pInfo->name)->Prepend(prefixStr);
 			return true;
-			}
 		}
+	}
 
 	// check for any exact match
 
@@ -582,10 +582,10 @@ CBClass::RemoveNamespace
 
 	JStringIterator iter(&name, kJIteratorStartAtEnd);
 	if (iter.Prev(GetNamespaceOperator()))
-		{
+	{
 		iter.Next(GetNamespaceOperator());
 		iter.RemoveAllPrev();
-		}
+	}
 
 	return name;
 }
@@ -617,16 +617,16 @@ CBClass::GetParent
 	const
 {
 	if (itsParentInfo->IndexValid(index))
-		{
+	{
 		ParentInfo pInfo = itsParentInfo->GetElement(index);
 		*parent          = pInfo.parent;
 		return *parent != nullptr;
-		}
+	}
 	else
-		{
+	{
 		*parent = nullptr;
 		return false;
-		}
+	}
 }
 
 /******************************************************************************
@@ -648,13 +648,13 @@ CBClass::IsAncestor
 {
 	const JIndex parentCount = child->GetParentCount();
 	for (JIndex i=1; i<=parentCount; i++)
-		{
+	{
 		const CBClass* p;
 		if (child->GetParent(i, &p) && (this == p || IsAncestor(p)))
-			{
+		{
 			return true;
-			}
 		}
+	}
 
 	return false;
 }
@@ -674,13 +674,13 @@ CBClass::AddChild
 	)
 {
 	if (primary)
-		{
+	{
 		itsHasPrimaryChildrenFlag = true;
-		}
+	}
 	else
-		{
+	{
 		itsHasSecondaryChildrenFlag = true;
-		}
+	}
 }
 
 /******************************************************************************
@@ -717,12 +717,12 @@ CBClass::FindParentsAfterRead()
 {
 	const JSize count = itsParentInfo->GetElementCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		ParentInfo pInfo    = itsParentInfo->GetElement(i);
 		pInfo.parent        = itsTree->IndexToClassAfterRead(pInfo.indexFromFile);
 		pInfo.indexFromFile = 0;	// make sure we never use it again
 		itsParentInfo->SetElement(i, pInfo);
-		}
+	}
 }
 
 /******************************************************************************
@@ -788,9 +788,9 @@ CBClass::GetDrawName()
 {
 	JString drawName = itsFullName;
 	if (itsIsTemplateFlag)
-		{
+	{
 		drawName.Append(JGetString("TemplateNameSuffix::CBClass"));
-		}
+	}
 
 	return drawName;
 }
@@ -812,23 +812,23 @@ CBClass::Draw
 
 	JRect irect;
 	if (JIntersection(itsFrame, rect, &irect))
-		{
+	{
 		if (itsIsSelectedFlag && itsDeclType == kGhostType)
-			{
+		{
 			p.SetPenColor(JColorManager::GetBlueColor());
-			}
+		}
 		else if (itsIsSelectedFlag)
-			{
+		{
 			p.SetPenColor(JColorManager::GetCyanColor());
-			}
+		}
 		else if (itsDeclType == kGhostType)
-			{
+		{
 			p.SetPenColor(JColorManager::GetGrayColor(80));
-			}
+		}
 		else
-			{
+		{
 			p.SetPenColor(JColorManager::GetWhiteColor());
-			}
+		}
 		p.SetFilling(true);
 		p.Rect(itsFrame);
 
@@ -837,55 +837,55 @@ CBClass::Draw
 		p.SetFilling(false);
 		p.SetPenColor(JColorManager::GetBlackColor());
 		p.Rect(itsFrame);
-		}
+	}
 
 	// draw dashed line if collapsed and has children
 
 	if (itsCollapsedFlag && itsHasPrimaryChildrenFlag)
-		{
+	{
 		const JPoint pt = GetLinkFromPt();
 		if (rect.top <= pt.y && pt.y <= rect.bottom)
-			{
+		{
 			// remember to update kCollapsedLinkLength
 
 			p.SetPenColor(JColorManager::GetBlackColor());
 			p.Line(pt.x   ,pt.y, pt.x+2 ,pt.y);
 			p.Line(pt.x+6 ,pt.y, pt.x+8 ,pt.y);
 			p.Line(pt.x+12,pt.y, pt.x+14,pt.y);
-			}
 		}
+	}
 
 	// primary inheritance
 
 	CBClass* parent;
 	if (GetParent(1, &parent))
-		{
+	{
 		const JPoint linkToPt   = GetLinkToPt();
 		const JPoint linkFromPt = parent->GetLinkFromPt();
 		if (NeedToDrawLink(linkFromPt, linkToPt, rect))
-			{
+		{
 			const InheritType type = GetParentType(1);
 			if (type == kInheritPublic)
-				{
+			{
 				p.SetPenColor(JColorManager::GetBlackColor());
-				}
+			}
 			else if (type == kInheritProtected)
-				{
+			{
 				p.SetPenColor(JColorManager::GetYellowColor());
-				}
+			}
 			else
-				{
+			{
 				assert( type == kInheritPrivate );
 				p.SetPenColor(JColorManager::GetRedColor());
-				}
+			}
 
 			const JCoordinate x = (linkFromPt.x + linkToPt.x)/2;
 			p.Line(linkToPt.x, linkToPt.y, x, linkToPt.y);
 			p.SetPenColor(JColorManager::GetBlackColor());
 			p.LineTo(x, linkFromPt.y);
 			p.LineTo(linkFromPt);
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -906,47 +906,47 @@ CBClass::DrawMILinks
 {
 	const JSize parentCount = GetParentCount();
 	if (parentCount < 2)
-		{
+	{
 		return;
-		}
+	}
 
 	const JPoint linkToPt = GetLinkToPt();
 
 	for (JIndex i=2; i<=parentCount; i++)
-		{
+	{
 		CBClass* parent;
 		const bool ok = GetParent(i, &parent);
 		assert( ok );
 
 		JCoordinate deltaLinkFromX = 0;
 		while (!parent->IsVisible())
-			{
+		{
 			deltaLinkFromX    = kCollapsedLinkLength;
 			const bool ok = parent->GetParent(1, &parent);
 			assert( ok );
-			}
+		}
 
 		const JPoint linkFromPt = parent->GetLinkFromPt() + JPoint(deltaLinkFromX,0);
 		if (NeedToDrawLink(linkFromPt, linkToPt, rect))
-			{
+		{
 			const InheritType type = GetParentType(i);
 			if (type == kInheritPublic)
-				{
+			{
 				p.SetPenColor(JColorManager::GetGreenColor());
-				}
+			}
 			else if (type == kInheritProtected)
-				{
+			{
 				p.SetPenColor(JColorManager::GetYellowColor());
-				}
+			}
 			else
-				{
+			{
 				assert( type == kInheritPrivate );
 				p.SetPenColor(JColorManager::GetRedColor());
-				}
+			}
 
 			p.Line(linkFromPt, linkToPt);
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -968,23 +968,23 @@ CBClass::DrawText
 
 	JRect irect;
 	if (JIntersection(itsFrame, rect, &irect))
-		{
+	{
 		JFontStyle style = kConcreteLabelStyle;
 		AdjustNameStyle(&style);
 		p.SetFontStyle(style);
 
 		if (NeedDrawName())
-			{
+		{
 			const JString drawName = GetDrawName();
 			p.String(itsFrame, drawName,
 					 JPainter::kHAlignCenter, JPainter::kVAlignCenter);
-			}
+		}
 		else
-			{
+		{
 			p.String(itsFrame, itsFullName,
 					 JPainter::kHAlignCenter, JPainter::kVAlignCenter);
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -1000,18 +1000,18 @@ CBClass::AdjustNameStyle
 	const
 {
 	if (itsIsAbstractFlag)
-		{
+	{
 		*style = kAbstractLabelStyle;
-		}
+	}
 
 	if (itsIsSelectedFlag && itsDeclType == kGhostType)
-		{
+	{
 		style->color = JColorManager::GetWhiteColor();
-		}
+	}
 	else if (itsDeclType == kGhostType)
-		{
+	{
 		style->color = GetGhostNameColor();
-		}
+	}
 }
 
 /******************************************************************************
@@ -1085,16 +1085,16 @@ CBClass::CalcFrame()
 
 	JCoordinate x = itsHCoord;
 	if (HasParents())
-		{
+	{
 		x += kLinkWidth;
-		}
+	}
 
 	JFontManager* fontManager = GetTree()->GetFontManager();
 	const JSize fontSize      = itsTree->GetFontSize();
 
 	JCoordinate w = 10;
 	if (!CBInUpdateThread())
-		{
+	{
 		const JString name = GetDrawName();
 
 		JFontStyle style = kConcreteLabelStyle;
@@ -1105,7 +1105,7 @@ CBClass::CalcFrame()
 		font.SetStyle(style);
 
 		w = JMax(kMinFrameWidth, 2*kHMarginWidth + font.GetStringWidth(fontManager, name));
-		}
+	}
 
 	const JCoordinate h = CalcFrameHeight(fontManager, fontSize);
 
@@ -1214,17 +1214,17 @@ operator>>
 
 	if (temp == CBClass::kUnusedQtSignalAccess ||
 		temp == CBClass::kUnusedQtPublicSlotAccess)
-		{
+	{
 		temp = CBClass::kPublicAccess;
-		}
+	}
 	else if (temp == CBClass::kUnusedQtProtectedSlotAccess)
-		{
+	{
 		temp = CBClass::kProtectedAccess;
-		}
+	}
 	else if (temp == CBClass::kUnusedQtPrivateSlotAccess)
-		{
+	{
 		temp = CBClass::kPrivateAccess;
-		}
+	}
 
 	access = (CBClass::FnAccessLevel) temp;
 	assert( access == CBClass::kPublicAccess     ||

@@ -11,9 +11,9 @@
 #include "CMSourceDirector.h"
 #include "CMBreakpointManager.h"
 #include "CMLink.h"
-#include <JXColorManager.h>
-#include <JListUtil.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXColorManager.h>
+#include <jx-af/jcore/JListUtil.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -151,13 +151,13 @@ CMLineNumberTable::GetBreakpoints
 {
 	const JString* fullName;
 	if (GetDirector()->GetFileName(&fullName))
-		{
+	{
 		GetLink()->GetBreakpointManager()->GetBreakpoints(*fullName, list);
-		}
+	}
 	else
-		{
+	{
 		list->CleanOut();
-		}
+	}
 }
 
 /******************************************************************************

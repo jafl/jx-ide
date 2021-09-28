@@ -6,8 +6,8 @@ This scanner reads an HTML/XML/PHP/JSP file and returns CB::Text::HTML::Scanner:
 */
 
 #include "CBStylingScannerBase.h"
-#include <JRegex.h>
-#include <jAssert.h>
+#include <jx-af/jcore/JRegex.h>
+#include <jx-af/jcore/jAssert.h>
 %}
 
 %option namespace="CB::Text::HTML" lexer="Scanner"

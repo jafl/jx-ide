@@ -8,11 +8,11 @@
 #ifndef _H_CBFileListTable
 #define _H_CBFileListTable
 
-#include <JXFileListTable.h>
+#include <jx-af/jx/JXFileListTable.h>
 #include "CBTextFileType.h"
-#include <JFAIndex.h>
-#include <JFAID.h>
-#include <jTime.h>
+#include <jx-af/jcore/JFAIndex.h>
+#include <jx-af/jcore/JFAID.h>
+#include <jx-af/jcore/jTime.h>
 
 class JProgressDisplay;
 class CBProjectTree;

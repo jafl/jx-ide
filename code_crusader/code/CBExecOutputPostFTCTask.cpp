@@ -12,7 +12,7 @@
 
 #include "CBExecOutputPostFTCTask.h"
 #include "CBExecOutputDocument.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -47,7 +47,7 @@ void
 CBExecOutputPostFTCTask::Perform()
 {
 	if (itsDoc != nullptr)
-		{
+	{
 		itsDoc->PlaceCmdLineWidgets();
-		}
+	}
 }

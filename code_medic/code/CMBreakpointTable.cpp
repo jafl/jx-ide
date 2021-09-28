@@ -13,22 +13,22 @@
 #include "CMCommandDirector.h"
 #include "CMLineIndexTable.h"
 #include "cmGlobals.h"
-#include <JXDisplay.h>
-#include <JXWindow.h>
-#include <JXTextMenu.h>
-#include <JXColHeaderWidget.h>
-#include <JXIntegerInput.h>
-#include <JXWindowPainter.h>
-#include <JXColorManager.h>
-#include <JTableSelection.h>
-#include <JFontManager.h>
-#include <JStringIterator.h>
-#include <jStreamUtil.h>
-#include <jDirUtil.h>
-#include <JListUtil.h>
-#include <jASCIIConstants.h>
+#include <jx-af/jx/JXDisplay.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXTextMenu.h>
+#include <jx-af/jx/JXColHeaderWidget.h>
+#include <jx-af/jx/JXIntegerInput.h>
+#include <jx-af/jx/JXWindowPainter.h>
+#include <jx-af/jx/JXColorManager.h>
+#include <jx-af/jcore/JTableSelection.h>
+#include <jx-af/jcore/JFontManager.h>
+#include <jx-af/jcore/JStringIterator.h>
+#include <jx-af/jcore/jStreamUtil.h>
+#include <jx-af/jcore/jDirUtil.h>
+#include <jx-af/jcore/JListUtil.h>
+#include <jx-af/jcore/jASCIIConstants.h>
 #include <sstream>
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 const JCoordinate kHMarginWidth = 3;
 const JCoordinate kVMarginWidth = 1;
@@ -98,9 +98,9 @@ CMBreakpointTable::CMBreakpointTable
 	// data
 
 	for (JIndex i=1; i<=kColCount; i++)
-		{
+	{
 		AppendCols(1, kInitColWidth[i-1]);
-		}
+	}
 
 	SetColWidth(kStatusColumn, rowHeight);
 
@@ -143,44 +143,44 @@ CMBreakpointTable::Update()
 
 	JSize count = list1.GetElementCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		itsBPList->InsertSorted(const_cast<CMBreakpoint*>(list1.GetElement(i)));
-		}
+	}
 
 	const JPtrArray<CMBreakpoint>& list2 = mgr->GetOtherpoints();
 
 	count = list2.GetElementCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		itsBPList->InsertSorted(const_cast<CMBreakpoint*>(list2.GetElement(i)));
-		}
+	}
 
 	// adjust table
 
 	count            = itsBPList->GetElementCount();
 	const JSize orig = GetRowCount();
 	if (orig < count)
-		{
+	{
 		AppendRows(count - orig);
-		}
+	}
 	else if (orig > count)
-		{
+	{
 		RemoveNextRows(count+1, orig - count);
-		}
+	}
 
 	// restore selection
 
 	if (cell.y > 0)
-		{
+	{
 		for (JIndex i=1; i<=count; i++)
-			{
+		{
 			if ((itsBPList->GetElement(i))->GetDebuggerIndex() == (JSize) cell.y)
-				{
+			{
 				SelectSingleCell(JPoint(cell.x, i));
 				break;
-				}
 			}
 		}
+	}
 
 	Refresh();
 }
@@ -198,7 +198,7 @@ CMBreakpointTable::Show
 {
 	JIndex i;
 	if (FindBreakpointByDebuggerIndex(bp, &i))
-		{
+	{
 		itsDir->Activate();
 		GetWindow()->RequestFocus();
 		TableScrollToCell(JPoint(kIgnoreCountColumn, i), true);
@@ -206,7 +206,7 @@ CMBreakpointTable::Show
 		JTableSelection& s = GetTableSelection();
 		s.ClearSelection();
 		s.SelectRow(i);
-		}
+	}
 }
 
 /******************************************************************************
@@ -222,11 +222,11 @@ CMBreakpointTable::EditIgnoreCount
 {
 	JIndex i;
 	if (FindBreakpointByDebuggerIndex(bp, &i))
-		{
+	{
 		itsDir->Activate();
 		GetWindow()->RequestFocus();
 		BeginEditing(JPoint(kIgnoreCountColumn, i));
-		}
+	}
 }
 
 /******************************************************************************
@@ -242,11 +242,11 @@ CMBreakpointTable::EditCondition
 {
 	JIndex i;
 	if (FindBreakpointByDebuggerIndex(bp, &i))
-		{
+	{
 		itsDir->Activate();
 		GetWindow()->RequestFocus();
 		BeginEditing(JPoint(kConditionColumn, i));
-		}
+	}
 }
 
 /******************************************************************************
@@ -264,14 +264,14 @@ CMBreakpointTable::FindBreakpointByDebuggerIndex
 {
 	const JSize count = itsBPList->GetElementCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		const CMBreakpoint* b = itsBPList->GetElement(i);
 		if (b->GetDebuggerIndex() == bp->GetDebuggerIndex())
-			{
+		{
 			*index = i;
 			return true;
-			}
 		}
+	}
 
 	*index = 0;
 	return false;
@@ -292,13 +292,13 @@ CMBreakpointTable::Receive
 	)
 {
 	if (sender == &(GetTableSelection()) && message.Is(JTableData::kRectChanged))
-		{
+	{
 		if ((GetTableSelection()).GetSingleSelectedCell(&itsSelectedCell))
-			{
+		{
 			itsSelectedCell.y =
 				(itsBPList->GetElement(itsSelectedCell.y))->GetDebuggerIndex();
-			}
 		}
+	}
 
 	JXEditTable::Receive(sender, message);
 }
@@ -329,24 +329,24 @@ CMBreakpointTable::TableDrawCell
 {
 	JPoint editCell;
 	if (GetEditedCell(&editCell) && cell == editCell)
-		{
+	{
 		return;
-		}
+	}
 
 	HilightIfSelected(p, cell, rect);
 
 	const CMBreakpoint* bp = itsBPList->GetElement(cell.y);
 	if (cell.x == kStatusColumn)
-		{
+	{
 		JRect r = rect;
 		r.Shrink(kHMarginWidth, kHMarginWidth);
 
 		if (bp->GetLineNumber() > 0)
-			{
+		{
 			CMLineIndexTable::DrawBreakpoint(bp, p, r);
-			}
+		}
 		else
-			{
+		{
 			JPolygon poly;
 			poly.AppendElement(JPoint(r.topLeft()));
 			poly.AppendElement(JPoint(r.topRight()));
@@ -359,54 +359,54 @@ CMBreakpointTable::TableDrawCell
 			p.Polygon(poly);
 
 			if (bp->GetAction() != CMBreakpoint::kRemoveBreakpoint)
-				{
+			{
 				p.SetPenColor(JColorManager::GetBlackColor());
 				p.SetFilling(false);
 				p.Polygon(poly);
-				}
 			}
 		}
+	}
 	else
-		{
+	{
 		JString s;
 		JPainter::HAlignment hAlign = JPainter::kHAlignLeft;
 		if (cell.x == kFileNameColumn)
-			{
+		{
 			s.Set(bp->GetFileName().GetBytes() + cmFileNameOffset(bp));
-			}
+		}
 		else if (cell.x == kLineNumberColumn)
-			{
+		{
 			const JSize line = bp->GetLineNumber();
 			if (line > 0)
-				{
+			{
 				s      = JString((JUInt64) line);
 				hAlign = JPainter::kHAlignRight;
-				}
 			}
+		}
 		else if (cell.x == kFunctionColumn)
-			{
+		{
 			s = bp->GetFunctionName();
-			}
+		}
 		else if (cell.x == kAddressColumn)
-			{
+		{
 			s = bp->GetAddress();
-			}
+		}
 		else if (cell.x == kIgnoreCountColumn)
-			{
+		{
 			s      = JString((JUInt64) bp->GetIgnoreCount());
 			hAlign = JPainter::kHAlignRight;
-			}
+		}
 		else if (cell.x == kConditionColumn)
-			{
+		{
 			bp->GetCondition(&s);
-			}
+		}
 
 		p.SetFont(itsFont);
 
 		JRect r = rect;
 		r.left += kHMarginWidth;
 		p.String(r, s, hAlign, JPainter::kVAlignCenter);
-		}
+	}
 }
 
 /******************************************************************************
@@ -427,42 +427,42 @@ CMBreakpointTable::HandleMouseDown
 	JPoint cell;
 	if (ScrollForWheel(button, modifiers) ||
 		!GetCell(pt, &cell))
-		{
+	{
 		return;
-		}
+	}
 	else if (button == kJXLeftButton)
-		{
+	{
 		if (cell.x != kStatusColumn)
-			{
+		{
 			SelectSingleCell(cell);
-			}
+		}
 
 		CMBreakpoint* bp = itsBPList->GetElement(cell.y);
 		if (cell.x == kStatusColumn)
-			{
+		{
 			CMGetLink()->SetBreakpointEnabled(bp->GetDebuggerIndex(), !bp->IsEnabled());
-			}
+		}
 		else if (clickCount == 2 &&
 				 (cell.x == kFileNameColumn || cell.x == kLineNumberColumn))
-			{
+		{
 			if (bp->GetLineNumber() > 0)
-				{
+			{
 				(itsDir->GetCommandDirector())->OpenSourceFile(bp->GetFileName(), bp->GetLineNumber());
-				}
-			}
-		else if (clickCount == 2 &&
-				 (cell.x == kFunctionColumn || cell.x == kAddressColumn))
-			{
-			if (!bp->GetFunctionName().IsEmpty())
-				{
-				(itsDir->GetCommandDirector())->DisassembleFunction(bp->GetFunctionName(), bp->GetAddress());
-				}
-			}
-		else if (clickCount == 2)
-			{
-			BeginEditing(cell);
 			}
 		}
+		else if (clickCount == 2 &&
+				 (cell.x == kFunctionColumn || cell.x == kAddressColumn))
+		{
+			if (!bp->GetFunctionName().IsEmpty())
+			{
+				(itsDir->GetCommandDirector())->DisassembleFunction(bp->GetFunctionName(), bp->GetAddress());
+			}
+		}
+		else if (clickCount == 2)
+		{
+			BeginEditing(cell);
+		}
+	}
 }
 
 /******************************************************************************
@@ -481,57 +481,57 @@ CMBreakpointTable::HandleKeyPress
 	)
 {
 	if (IsEditing())
-		{
+	{
 		JXEditTable::HandleKeyPress(c, keySym, modifiers);
-		}
+	}
 	else if (c == kJDeleteKey || c == kJForwardDeleteKey)
-		{
+	{
 		JTableSelection& s = GetTableSelection();
 		JPoint cell;
 		if (s.GetSingleSelectedCell(&cell))
-			{
+		{
 			CMBreakpoint* bp = itsBPList->GetElement(cell.y);
 			CMGetLink()->RemoveBreakpoint(*bp);
-			}
 		}
+	}
 	else if (c == kJReturnKey)
-		{
+	{
 		JTableSelection& s = GetTableSelection();
 		JPoint cell;
 		if (!s.GetSingleSelectedCell(&cell))
-			{
+		{
 			// do nothing
-			}
+		}
 		else if (cell.x == kStatusColumn)
-			{
+		{
 			CMBreakpoint* bp = itsBPList->GetElement(cell.y);
 			CMGetLink()->SetBreakpointEnabled(bp->GetDebuggerIndex(), !bp->IsEnabled());
-			}
+		}
 		else if (cell.x == kFileNameColumn || cell.x == kLineNumberColumn)
-			{
+		{
 			CMBreakpoint* bp = itsBPList->GetElement(cell.y);
 			if (bp->GetLineNumber() > 0)
-				{
-				(itsDir->GetCommandDirector())->OpenSourceFile(bp->GetFileName(), bp->GetLineNumber());
-				}
-			}
-		else if (cell.x == kFunctionColumn || cell.x == kAddressColumn)
 			{
+				(itsDir->GetCommandDirector())->OpenSourceFile(bp->GetFileName(), bp->GetLineNumber());
+			}
+		}
+		else if (cell.x == kFunctionColumn || cell.x == kAddressColumn)
+		{
 			CMBreakpoint* bp = itsBPList->GetElement(cell.y);
 			if (!bp->GetFunctionName().IsEmpty())
-				{
-				(itsDir->GetCommandDirector())->DisassembleFunction(bp->GetFunctionName(), bp->GetAddress());
-				}
-			}
-		else if (cell.x == kIgnoreCountColumn || cell.x == kConditionColumn)
 			{
-			BeginEditing(cell);
+				(itsDir->GetCommandDirector())->DisassembleFunction(bp->GetFunctionName(), bp->GetAddress());
 			}
 		}
-	else
+		else if (cell.x == kIgnoreCountColumn || cell.x == kConditionColumn)
 		{
-		HandleSelectionKeyPress(c, modifiers);
+			BeginEditing(cell);
 		}
+	}
+	else
+	{
+		HandleSelectionKeyPress(c, modifiers);
+	}
 }
 
 /******************************************************************************
@@ -575,25 +575,25 @@ CMBreakpointTable::CreateXInputField
 	CMBreakpoint* bp = itsBPList->GetElement(cell.y);
 	JString text;
 	if (cell.x == kIgnoreCountColumn)
-		{
+	{
 		auto* input = jnew JXIntegerInput(this, kFixedLeft, kFixedTop, x,y, w,h);
 		assert( input != nullptr );
 		input->SetLowerLimit(0);
 		input->SetValue(bp->GetIgnoreCount());
 
 		itsTextInput = input;
-		}
+	}
 	else if (cell.x == kConditionColumn)
-		{
+	{
 		bp->GetCondition(&text);
-		}
+	}
 
 	if (itsTextInput == nullptr)
-		{
+	{
 		itsTextInput = jnew JXInputField(this, kFixedLeft, kFixedTop, x,y, w,h);
 		assert( itsTextInput != nullptr );
 		itsTextInput->GetText()->SetText(text);
-		}
+	}
 
 	itsTextInput->SetFont(itsFont);
 	return itsTextInput;
@@ -613,38 +613,38 @@ CMBreakpointTable::ExtractInputData
 	assert( itsTextInput != nullptr );
 
 	if (!itsTextInput->InputValid())
-		{
+	{
 		return false;
-		}
+	}
 
 	CMBreakpoint* bp = itsBPList->GetElement(cell.y);
 	if (cell.x == kIgnoreCountColumn)
-		{
+	{
 		JInteger count;
 		const bool ok = dynamic_cast<JXIntegerInput*>(itsTextInput)->GetValue(&count);
 		assert( ok );
 		if (((JSize) count) != bp->GetIgnoreCount())
-			{
-			CMGetLink()->SetBreakpointIgnoreCount(bp->GetDebuggerIndex(), count);
-			}
-		return true;
-		}
-	else if (cell.x == kConditionColumn)
 		{
+			CMGetLink()->SetBreakpointIgnoreCount(bp->GetDebuggerIndex(), count);
+		}
+		return true;
+	}
+	else if (cell.x == kConditionColumn)
+	{
 		const JString& s = itsTextInput->GetText()->GetText();
 
 		JString cond;
 		const bool hasCondition = bp->GetCondition(&cond);
 		if (s != cond)
-			{
-			CMGetLink()->SetBreakpointCondition(bp->GetDebuggerIndex(), s);
-			}
-		return true;
-		}
-	else
 		{
-		return false;
+			CMGetLink()->SetBreakpointCondition(bp->GetDebuggerIndex(), s);
 		}
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 
 /******************************************************************************
@@ -672,7 +672,7 @@ CMBreakpointTable::ReadPrefs
 	JFileVersion vers;
 	input >> vers;
 	if (vers <= kCurrentGeometryDataVersion)
-		{
+	{
 		JCoordinate w;
 		input >> w;
 		SetColWidth(kStatusColumn, w);
@@ -688,7 +688,7 @@ CMBreakpointTable::ReadPrefs
 		SetColWidth(kIgnoreCountColumn, w);
 		input >> w;
 		SetColWidth(kConditionColumn, w);
-		}
+	}
 
 	JIgnoreUntil(input, kGeometryDataEndDelimiter);
 }
@@ -747,32 +747,32 @@ CMBreakpointTable::CompareBreakpointLocations
 		bp1->GetFileName().GetBytes() + cmFileNameOffset(bp1),
 		bp2->GetFileName().GetBytes() + cmFileNameOffset(bp2), JString::kIgnoreCase);
 	if (r > 0)
-		{
+	{
 		return JListT::kFirstGreaterSecond;
-		}
+	}
 	else if (r < 0)
-		{
+	{
 		return JListT::kFirstLessSecond;
-		}
+	}
 
 	JListT::CompareResult r1 =
 		JCompareIndices(bp1->GetLineNumber(), bp2->GetLineNumber());
 
 	if (r1 == JListT::kFirstEqualSecond)
-		{
+	{
 		r1 = JCompareStringsCaseInsensitive(
 				const_cast<JString*>(&(bp1->GetFunctionName())),
 				const_cast<JString*>(&(bp2->GetFunctionName())));
-		}
+	}
 
 	if (r1 == JListT::kFirstEqualSecond)
-		{
+	{
 		JString c1, c2;
 		bp1->GetCondition(&c1);
 		bp2->GetCondition(&c2);
 
 		r1 = JCompareStringsCaseInsensitive(&c1, &c2);
-		}
+	}
 
 	return r1;
 }

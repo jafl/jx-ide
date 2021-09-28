@@ -8,7 +8,7 @@
 #ifndef _H_CBCmdLineInput
 #define _H_CBCmdLineInput
 
-#include <JXInputField.h>
+#include <jx-af/jx/JXInputField.h>
 
 class CBExecOutputDocument;
 

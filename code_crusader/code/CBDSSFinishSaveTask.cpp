@@ -10,7 +10,7 @@
 #include "CBDSSFinishSaveTask.h"
 #include "CBTextDocument.h"
 #include "CBTextEditor.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor

@@ -8,7 +8,7 @@
 #ifndef _H_GFGMDIServer
 #define _H_GFGMDIServer
 
-#include <JXMDIServer.h>
+#include <jx-af/jx/JXMDIServer.h>
 
 class GFGMDIServer : public JXMDIServer
 {

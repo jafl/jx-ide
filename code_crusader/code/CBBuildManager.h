@@ -8,9 +8,9 @@
 #ifndef _H_CBBuildManager
 #define _H_CBBuildManager
 
-#include <JBroadcaster.h>
-#include <JString.h>
-#include <jTime.h>
+#include <jx-af/jcore/JBroadcaster.h>
+#include <jx-af/jcore/JString.h>
+#include <jx-af/jcore/jTime.h>
 
 class CBCommand;
 class CBProjectDocument;

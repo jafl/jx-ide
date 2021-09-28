@@ -16,15 +16,15 @@
 #include "CBPHPTreeDirector.h"
 #include "CBTextDocument.h"
 #include "cbGlobals.h"
-#include <JXDockDirector.h>
-#include <JXWindow.h>
-#include <JXHorizDockPartition.h>
-#include <JXVertDockPartition.h>
-#include <JXDockWidget.h>
-#include <JXTabGroup.h>
-#include <JXImage.h>
+#include <jx-af/jx/JXDockDirector.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXHorizDockPartition.h>
+#include <jx-af/jx/JXVertDockPartition.h>
+#include <jx-af/jx/JXDockWidget.h>
+#include <jx-af/jx/JXTabGroup.h>
+#include <jx-af/jx/JXImage.h>
 #include "jcc_project_window.xpm"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -74,9 +74,9 @@ void
 CBDockManager::DockAll()
 {
 	if (!GetDockList()->IsEmpty())
-		{
+	{
 		return;
-		}
+	}
 
 	JXDockDirector* dir = CreateDock(false);
 
@@ -118,7 +118,7 @@ CBDockManager::DockAll()
 
 	JSize count = projList->GetElementCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		CBProjectDocument* projDoc = projList->GetElement(i);
 
 		dock1->Dock(projDoc);
@@ -128,26 +128,26 @@ CBDockManager::DockAll()
 		dock2->Dock(projDoc->GetCTreeDirector());
 		dock2->Dock(projDoc->GetJavaTreeDirector());
 		dock2->Dock(projDoc->GetPHPTreeDirector());
-		}
+	}
 
 	JPtrArray<CBTextDocument>* textList =
 		CBGetDocumentManager()->GetTextDocList();
 
 	count = textList->GetElementCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		CBTextDocument* textDoc = textList->GetElement(i);
 
 		const CBTextFileType type = textDoc->GetFileType();
 		if (type == kCBExecOutputFT   ||
 			type == kCBSearchOutputFT ||
 			type == kCBShellOutputFT)
-			{
+		{
 			dock3->Dock(textDoc);
-			}
-		else
-			{
-			dock2->Dock(textDoc);
-			}
 		}
+		else
+		{
+			dock2->Dock(textDoc);
+		}
+	}
 }

@@ -12,8 +12,8 @@
 #include "CBTextDocument.h"
 #include "CBTextEditor.h"
 #include "cbGlobals.h"
-#include <JRegex.h>
-#include <jAssert.h>
+#include <jx-af/jcore/JRegex.h>
+#include <jx-af/jcore/jAssert.h>
 
 static const JUtf8Byte* kNamespaceOperator = "\\";
 
@@ -88,13 +88,13 @@ CBPHPClass::ViewSource()
 
 	JString fileName;
 	if (GetFileName(&fileName))
-		{
+	{
 		CBGetDocumentManager()->OpenTextDocument(fileName);
-		}
+	}
 	else
-		{
+	{
 		JGetUserNotification()->ReportError(JGetString("NoGhostFile::CBTreeWidget"));
-		}
+	}
 
 #endif
 }
@@ -145,10 +145,10 @@ CBPHPClass::AdjustNameStyle
 	CBClass::AdjustNameStyle(style);
 
 	if (GetDeclareType() != kGhostType)
-		{
+	{
 		if (itsIsFinalFlag)
-			{
+		{
 			style->bold = true;
-			}
 		}
+	}
 }

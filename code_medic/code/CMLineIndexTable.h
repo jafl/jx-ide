@@ -8,7 +8,7 @@
 #ifndef _H_CMLineIndexTable
 #define _H_CMLineIndexTable
 
-#include <JXTable.h>
+#include <jx-af/jx/JXTable.h>
 
 class JXTextMenu;
 class JXScrollbar;

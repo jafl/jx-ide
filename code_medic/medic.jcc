@@ -6,15 +6,15 @@ T
 T
 2 "GDBVarTreeParserY.y"
 F
-"./code/GDBVarTreeParserY.y"
+"./backend/gdb/GDBVarTreeParserY.y"
 T
 2 "GDBVarTreeScanner.l"
 F
-"./code/GDBVarTreeScanner.l"
+"./backend/gdb/GDBVarTreeScanner.l"
 T
 2 "GDBVarTreeParser.cpp"
 F
-"./code/GDBVarTreeParser.cpp"
+"./backend/gdb/GDBVarTreeParser.cpp"
 F
 T
 1 "jcc"
@@ -29,94 +29,94 @@ F
 T
 2 "CBCScanner.ll"
 F
-"./JCC/CBCScanner.ll"
+"./jcc-shared/CBCScanner.ll"
 T
 2 "CBCStyler.cpp"
 F
-"./JCC/CBCStyler.cpp"
+"./jcc-shared/CBCStyler.cpp"
 T
 2 "CBDScanner.ll"
 F
-"./JCC/CBDScanner.ll"
+"./jcc-shared/CBDScanner.ll"
 T
 2 "CBDStyler.cpp"
 F
-"./JCC/CBDStyler.cpp"
+"./jcc-shared/CBDStyler.cpp"
 T
 2 "CBGoScanner.ll"
 F
-"./JCC/CBGoScanner.ll"
+"./jcc-shared/CBGoScanner.ll"
 T
 2 "CBGoStyler.cpp"
 F
-"./JCC/CBGoStyler.cpp"
+"./jcc-shared/CBGoStyler.cpp"
 T
 2 "CBJavaScanner.ll"
 F
-"./JCC/CBJavaScanner.ll"
+"./jcc-shared/CBJavaScanner.ll"
 T
 2 "CBJavaStyler.cpp"
 F
-"./JCC/CBJavaStyler.cpp"
+"./jcc-shared/CBJavaStyler.cpp"
 T
 2 "CBHTMLScanner.ll"
 F
-"./JCC/CBHTMLScanner.ll"
+"./jcc-shared/CBHTMLScanner.ll"
 T
 2 "CBHTMLStyler.cpp"
 F
-"./JCC/CBHTMLStyler.cpp"
+"./jcc-shared/CBHTMLStyler.cpp"
 T
 2 "CBStylerBase.cpp"
 F
-"./JCC/CBStylerBase.cpp"
+"./jcc-shared/CBStylerBase.cpp"
 T
 2 "CBStylingScannerBase.cpp"
 F
-"./JCC/CBStylingScannerBase.cpp"
+"./jcc-shared/CBStylingScannerBase.cpp"
 T
 2 "CBEditStylerDialog.cpp"
 F
-"./JCC/CBEditStylerDialog.cpp"
+"./jcc-shared/CBEditStylerDialog.cpp"
 T
 2 "CBStylerTable.cpp"
 F
-"./JCC/CBStylerTable.cpp"
+"./jcc-shared/CBStylerTable.cpp"
 T
 2 "CBStylerTableInput.cpp"
 F
-"./JCC/CBStylerTableInput.cpp"
+"./jcc-shared/CBStylerTableInput.cpp"
 T
 2 "CBStylerTableMenu.cpp"
 F
-"./JCC/CBStylerTableMenu.cpp"
+"./jcc-shared/CBStylerTableMenu.cpp"
 T
 2 "CBFnMenuUpdater.cpp"
 F
-"./JCC/CBFnMenuUpdater.cpp"
+"./jcc-shared/CBFnMenuUpdater.cpp"
 T
 2 "CBFunctionMenu.cpp"
 F
-"./JCC/CBFunctionMenu.cpp"
+"./jcc-shared/CBFunctionMenu.cpp"
 T
 2 "CBTextFileType.cpp"
 F
-"./JCC/CBTextFileType.cpp"
+"./jcc-shared/CBTextFileType.cpp"
 T
 2 "cbmUtil.cpp"
 F
-"./JCC/cbmUtil.cpp"
+"./jcc-shared/cbmUtil.cpp"
 T
 2 "CBCtagsUser.cpp"
 F
-"./JCC/CBCtagsUser.cpp"
+"./jcc-shared/CBCtagsUser.cpp"
 F
 T
 1 "main"
 T
-2 "medic.cpp"
+2 "main.cpp"
 F
-"./code/medic.cpp"
+"./code/main.cpp"
 T
 2 "cmGlobals.cpp"
 F
@@ -470,427 +470,427 @@ T
 T
 2 "GDBOutputScanner.l"
 F
-"./code/GDBOutputScanner.l"
+"./backend/gdb/GDBOutputScanner.l"
 T
 2 "GDBLink.cpp"
 F
-"./code/GDBLink.cpp"
+"./backend/gdb/GDBLink.cpp"
 T
 2 "GDBPingTask.cpp"
 F
-"./code/GDBPingTask.cpp"
+"./backend/gdb/GDBPingTask.cpp"
 T
 2 "GDBBreakpointManager.cpp"
 F
-"./code/GDBBreakpointManager.cpp"
+"./backend/gdb/GDBBreakpointManager.cpp"
 T
 2 "GDBAnalyzeCore.cpp"
 F
-"./code/GDBAnalyzeCore.cpp"
+"./backend/gdb/GDBAnalyzeCore.cpp"
 T
 2 "GDBArray2DCommand.cpp"
 F
-"./code/GDBArray2DCommand.cpp"
+"./backend/gdb/GDBArray2DCommand.cpp"
 T
 2 "GDBPlot2DCommand.cpp"
 F
-"./code/GDBPlot2DCommand.cpp"
+"./backend/gdb/GDBPlot2DCommand.cpp"
 T
 2 "GDBCheckCoreStatus.cpp"
 F
-"./code/GDBCheckCoreStatus.cpp"
+"./backend/gdb/GDBCheckCoreStatus.cpp"
 T
 2 "GDBDisplaySourceForMain.cpp"
 F
-"./code/GDBDisplaySourceForMain.cpp"
+"./backend/gdb/GDBDisplaySourceForMain.cpp"
 T
 2 "GDBGetAssembly.cpp"
 F
-"./code/GDBGetAssembly.cpp"
+"./backend/gdb/GDBGetAssembly.cpp"
 T
 2 "GDBGetBreakpoints.cpp"
 F
-"./code/GDBGetBreakpoints.cpp"
+"./backend/gdb/GDBGetBreakpoints.cpp"
 T
 2 "GDBGetCompletions.cpp"
 F
-"./code/GDBGetCompletions.cpp"
+"./backend/gdb/GDBGetCompletions.cpp"
 T
 2 "GDBGetFrame.cpp"
 F
-"./code/GDBGetFrame.cpp"
+"./backend/gdb/GDBGetFrame.cpp"
 T
 2 "GDBGetFullPath.cpp"
 F
-"./code/GDBGetFullPath.cpp"
+"./backend/gdb/GDBGetFullPath.cpp"
 T
 2 "GDBGetInitArgs.cpp"
 F
-"./code/GDBGetInitArgs.cpp"
+"./backend/gdb/GDBGetInitArgs.cpp"
 T
 2 "GDBGetLocalVars.cpp"
 F
-"./code/GDBGetLocalVars.cpp"
+"./backend/gdb/GDBGetLocalVars.cpp"
 T
 2 "GDBGetMemory.cpp"
 F
-"./code/GDBGetMemory.cpp"
+"./backend/gdb/GDBGetMemory.cpp"
 T
 2 "GDBGetProgramName.cpp"
 F
-"./code/GDBGetProgramName.cpp"
+"./backend/gdb/GDBGetProgramName.cpp"
 T
 2 "GDBGetRegisters.cpp"
 F
-"./code/GDBGetRegisters.cpp"
+"./backend/gdb/GDBGetRegisters.cpp"
 T
 2 "GDBGetSourceFileList.cpp"
 F
-"./code/GDBGetSourceFileList.cpp"
+"./backend/gdb/GDBGetSourceFileList.cpp"
 T
 2 "GDBGetStack.cpp"
 F
-"./code/GDBGetStack.cpp"
+"./backend/gdb/GDBGetStack.cpp"
 T
 2 "GDBGetStackArguments.cpp"
 F
-"./code/GDBGetStackArguments.cpp"
+"./backend/gdb/GDBGetStackArguments.cpp"
 T
 2 "GDBGetStopLocation.cpp"
 F
-"./code/GDBGetStopLocation.cpp"
+"./backend/gdb/GDBGetStopLocation.cpp"
 T
 2 "GDBGetStopLocationForLink.cpp"
 F
-"./code/GDBGetStopLocationForLink.cpp"
+"./backend/gdb/GDBGetStopLocationForLink.cpp"
 T
 2 "GDBGetStopLocationForAsm.cpp"
 F
-"./code/GDBGetStopLocationForAsm.cpp"
+"./backend/gdb/GDBGetStopLocationForAsm.cpp"
 T
 2 "GDBGetThread.cpp"
 F
-"./code/GDBGetThread.cpp"
+"./backend/gdb/GDBGetThread.cpp"
 T
 2 "GDBGetThreads.cpp"
 F
-"./code/GDBGetThreads.cpp"
+"./backend/gdb/GDBGetThreads.cpp"
 T
 2 "GDBSimpleCommand.cpp"
 F
-"./code/GDBSimpleCommand.cpp"
+"./backend/gdb/GDBSimpleCommand.cpp"
 T
 2 "GDBVarCommand.cpp"
 F
-"./code/GDBVarCommand.cpp"
+"./backend/gdb/GDBVarCommand.cpp"
 T
 2 "GDBVarNode.cpp"
 F
-"./code/GDBVarNode.cpp"
+"./backend/gdb/GDBVarNode.cpp"
 F
 T
 1 "lldb"
 T
 2 "LLDBLink.cpp"
 F
-"./code/LLDBLink.cpp"
+"./backend/lldb/LLDBLink.cpp"
 T
 2 "LLDBWelcomeTask.cpp"
 F
-"./code/LLDBWelcomeTask.cpp"
+"./backend/lldb/LLDBWelcomeTask.cpp"
 T
 2 "LLDBSymbolsLoadedTask.cpp"
 F
-"./code/LLDBSymbolsLoadedTask.cpp"
+"./backend/lldb/LLDBSymbolsLoadedTask.cpp"
 T
 2 "LLDBRunBackgroundCommandTask.cpp"
 F
-"./code/LLDBRunBackgroundCommandTask.cpp"
+"./backend/lldb/LLDBRunBackgroundCommandTask.cpp"
 T
 2 "LLDBBreakpointManager.cpp"
 F
-"./code/LLDBBreakpointManager.cpp"
+"./backend/lldb/LLDBBreakpointManager.cpp"
 T
 2 "LLDBArray2DCommand.cpp"
 F
-"./code/LLDBArray2DCommand.cpp"
+"./backend/lldb/LLDBArray2DCommand.cpp"
 T
 2 "LLDBPlot2DCommand.cpp"
 F
-"./code/LLDBPlot2DCommand.cpp"
+"./backend/lldb/LLDBPlot2DCommand.cpp"
 T
 2 "LLDBDisplaySourceForMain.cpp"
 F
-"./code/LLDBDisplaySourceForMain.cpp"
+"./backend/lldb/LLDBDisplaySourceForMain.cpp"
 T
 2 "LLDBGetAssembly.cpp"
 F
-"./code/LLDBGetAssembly.cpp"
+"./backend/lldb/LLDBGetAssembly.cpp"
 T
 2 "LLDBGetBreakpoints.cpp"
 F
-"./code/LLDBGetBreakpoints.cpp"
+"./backend/lldb/LLDBGetBreakpoints.cpp"
 T
 2 "LLDBGetCompletions.cpp"
 F
-"./code/LLDBGetCompletions.cpp"
+"./backend/lldb/LLDBGetCompletions.cpp"
 T
 2 "LLDBGetFrame.cpp"
 F
-"./code/LLDBGetFrame.cpp"
+"./backend/lldb/LLDBGetFrame.cpp"
 T
 2 "LLDBGetFullPath.cpp"
 F
-"./code/LLDBGetFullPath.cpp"
+"./backend/lldb/LLDBGetFullPath.cpp"
 T
 2 "LLDBGetInitArgs.cpp"
 F
-"./code/LLDBGetInitArgs.cpp"
+"./backend/lldb/LLDBGetInitArgs.cpp"
 T
 2 "LLDBGetLocalVars.cpp"
 F
-"./code/LLDBGetLocalVars.cpp"
+"./backend/lldb/LLDBGetLocalVars.cpp"
 T
 2 "LLDBGetMemory.cpp"
 F
-"./code/LLDBGetMemory.cpp"
+"./backend/lldb/LLDBGetMemory.cpp"
 T
 2 "LLDBGetRegisters.cpp"
 F
-"./code/LLDBGetRegisters.cpp"
+"./backend/lldb/LLDBGetRegisters.cpp"
 T
 2 "LLDBGetSourceFileList.cpp"
 F
-"./code/LLDBGetSourceFileList.cpp"
+"./backend/lldb/LLDBGetSourceFileList.cpp"
 T
 2 "LLDBGetStack.cpp"
 F
-"./code/LLDBGetStack.cpp"
+"./backend/lldb/LLDBGetStack.cpp"
 T
 2 "LLDBGetThread.cpp"
 F
-"./code/LLDBGetThread.cpp"
+"./backend/lldb/LLDBGetThread.cpp"
 T
 2 "LLDBGetThreads.cpp"
 F
-"./code/LLDBGetThreads.cpp"
+"./backend/lldb/LLDBGetThreads.cpp"
 T
 2 "LLDBVarCommand.cpp"
 F
-"./code/LLDBVarCommand.cpp"
+"./backend/lldb/LLDBVarCommand.cpp"
 T
 2 "LLDBVarNode.cpp"
 F
-"./code/LLDBVarNode.cpp"
+"./backend/lldb/LLDBVarNode.cpp"
 F
 T
 1 "JVM"
 T
 2 "JVMLink.cpp"
 F
-"./code/JVMLink.cpp"
+"./backend/jvm/JVMLink.cpp"
 T
 2 "JVMSocket.cpp"
 F
-"./code/JVMSocket.cpp"
+"./backend/jvm/JVMSocket.cpp"
 T
 2 "JVMThreadNode.cpp"
 F
-"./code/JVMThreadNode.cpp"
+"./backend/jvm/JVMThreadNode.cpp"
 T
 2 "JVMStackFrameNode.cpp"
 F
-"./code/JVMStackFrameNode.cpp"
+"./backend/jvm/JVMStackFrameNode.cpp"
 T
 2 "JVMGetThreadGroups.cpp"
 F
-"./code/JVMGetThreadGroups.cpp"
+"./backend/jvm/JVMGetThreadGroups.cpp"
 T
 2 "JVMGetThreadName.cpp"
 F
-"./code/JVMGetThreadName.cpp"
+"./backend/jvm/JVMGetThreadName.cpp"
 T
 2 "JVMGetThreadParent.cpp"
 F
-"./code/JVMGetThreadParent.cpp"
+"./backend/jvm/JVMGetThreadParent.cpp"
 T
 2 "JVMGetClassInfo.cpp"
 F
-"./code/JVMGetClassInfo.cpp"
+"./backend/jvm/JVMGetClassInfo.cpp"
 T
 2 "JVMGetClassMethods.cpp"
 F
-"./code/JVMGetClassMethods.cpp"
+"./backend/jvm/JVMGetClassMethods.cpp"
 T
 2 "JVMWelcomeTask.cpp"
 F
-"./code/JVMWelcomeTask.cpp"
+"./backend/jvm/JVMWelcomeTask.cpp"
 T
 2 "JVMSetProgramTask.cpp"
 F
-"./code/JVMSetProgramTask.cpp"
+"./backend/jvm/JVMSetProgramTask.cpp"
 T
 2 "JVMBreakpointManager.cpp"
 F
-"./code/JVMBreakpointManager.cpp"
+"./backend/jvm/JVMBreakpointManager.cpp"
 T
 2 "JVMDisplaySourceForMain.cpp"
 F
-"./code/JVMDisplaySourceForMain.cpp"
+"./backend/jvm/JVMDisplaySourceForMain.cpp"
 T
 2 "JVMGetCompletions.cpp"
 F
-"./code/JVMGetCompletions.cpp"
+"./backend/jvm/JVMGetCompletions.cpp"
 T
 2 "JVMGetIDSizes.cpp"
 F
-"./code/JVMGetIDSizes.cpp"
+"./backend/jvm/JVMGetIDSizes.cpp"
 T
 2 "JVMGetSourceFileList.cpp"
 F
-"./code/JVMGetSourceFileList.cpp"
+"./backend/jvm/JVMGetSourceFileList.cpp"
 T
 2 "JVMGetStack.cpp"
 F
-"./code/JVMGetStack.cpp"
+"./backend/jvm/JVMGetStack.cpp"
 T
 2 "JVMGetThread.cpp"
 F
-"./code/JVMGetThread.cpp"
+"./backend/jvm/JVMGetThread.cpp"
 T
 2 "JVMGetThreads.cpp"
 F
-"./code/JVMGetThreads.cpp"
+"./backend/jvm/JVMGetThreads.cpp"
 T
 2 "JVMVarNode.cpp"
 F
-"./code/JVMVarNode.cpp"
+"./backend/jvm/JVMVarNode.cpp"
 F
 T
 1 "JVM - todo"
 T
 2 "JVMArray2DCommand.cpp"
 F
-"./code/JVMArray2DCommand.cpp"
+"./backend/jvm/JVMArray2DCommand.cpp"
 T
 2 "JVMPlot2DCommand.cpp"
 F
-"./code/JVMPlot2DCommand.cpp"
+"./backend/jvm/JVMPlot2DCommand.cpp"
 T
 2 "JVMGetBreakpoints.cpp"
 F
-"./code/JVMGetBreakpoints.cpp"
+"./backend/jvm/JVMGetBreakpoints.cpp"
 T
 2 "JVMGetFrame.cpp"
 F
-"./code/JVMGetFrame.cpp"
+"./backend/jvm/JVMGetFrame.cpp"
 T
 2 "JVMGetFullPath.cpp"
 F
-"./code/JVMGetFullPath.cpp"
+"./backend/jvm/JVMGetFullPath.cpp"
 T
 2 "JVMGetInitArgs.cpp"
 F
-"./code/JVMGetInitArgs.cpp"
+"./backend/jvm/JVMGetInitArgs.cpp"
 T
 2 "JVMGetLocalVars.cpp"
 F
-"./code/JVMGetLocalVars.cpp"
+"./backend/jvm/JVMGetLocalVars.cpp"
 T
 2 "JVMVarCommand.cpp"
 F
-"./code/JVMVarCommand.cpp"
+"./backend/jvm/JVMVarCommand.cpp"
 F
 T
 1 "Xdebug"
 T
 2 "XDLink.cpp"
 F
-"./code/XDLink.cpp"
+"./backend/xdebug/XDLink.cpp"
 T
 2 "XDSocket.cpp"
 F
-"./code/XDSocket.cpp"
+"./backend/xdebug/XDSocket.cpp"
 T
 2 "XDWelcomeTask.cpp"
 F
-"./code/XDWelcomeTask.cpp"
+"./backend/xdebug/XDWelcomeTask.cpp"
 T
 2 "XDSetProgramTask.cpp"
 F
-"./code/XDSetProgramTask.cpp"
+"./backend/xdebug/XDSetProgramTask.cpp"
 T
 2 "XDCloseSocketTask.cpp"
 F
-"./code/XDCloseSocketTask.cpp"
+"./backend/xdebug/XDCloseSocketTask.cpp"
 T
 2 "XDBreakpointManager.cpp"
 F
-"./code/XDBreakpointManager.cpp"
+"./backend/xdebug/XDBreakpointManager.cpp"
 T
 2 "XDArray2DCommand.cpp"
 F
-"./code/XDArray2DCommand.cpp"
+"./backend/xdebug/XDArray2DCommand.cpp"
 T
 2 "XDPlot2DCommand.cpp"
 F
-"./code/XDPlot2DCommand.cpp"
+"./backend/xdebug/XDPlot2DCommand.cpp"
 T
 2 "XDDisplaySourceForMain.cpp"
 F
-"./code/XDDisplaySourceForMain.cpp"
+"./backend/xdebug/XDDisplaySourceForMain.cpp"
 T
 2 "XDGetBreakpoints.cpp"
 F
-"./code/XDGetBreakpoints.cpp"
+"./backend/xdebug/XDGetBreakpoints.cpp"
 T
 2 "XDGetCompletions.cpp"
 F
-"./code/XDGetCompletions.cpp"
+"./backend/xdebug/XDGetCompletions.cpp"
 T
 2 "XDGetContextVars.cpp"
 F
-"./code/XDGetContextVars.cpp"
+"./backend/xdebug/XDGetContextVars.cpp"
 T
 2 "XDGetFrame.cpp"
 F
-"./code/XDGetFrame.cpp"
+"./backend/xdebug/XDGetFrame.cpp"
 T
 2 "XDGetFullPath.cpp"
 F
-"./code/XDGetFullPath.cpp"
+"./backend/xdebug/XDGetFullPath.cpp"
 T
 2 "XDGetInitArgs.cpp"
 F
-"./code/XDGetInitArgs.cpp"
+"./backend/xdebug/XDGetInitArgs.cpp"
 T
 2 "XDGetLocalVars.cpp"
 F
-"./code/XDGetLocalVars.cpp"
+"./backend/xdebug/XDGetLocalVars.cpp"
 T
 2 "XDGetSourceFileList.cpp"
 F
-"./code/XDGetSourceFileList.cpp"
+"./backend/xdebug/XDGetSourceFileList.cpp"
 T
 2 "XDGetStack.cpp"
 F
-"./code/XDGetStack.cpp"
+"./backend/xdebug/XDGetStack.cpp"
 T
 2 "XDGetThread.cpp"
 F
-"./code/XDGetThread.cpp"
+"./backend/xdebug/XDGetThread.cpp"
 T
 2 "XDGetThreads.cpp"
 F
-"./code/XDGetThreads.cpp"
+"./backend/xdebug/XDGetThreads.cpp"
 T
 2 "XDVarCommand.cpp"
 F
-"./code/XDVarCommand.cpp"
+"./backend/xdebug/XDVarCommand.cpp"
 T
 2 "XDVarNode.cpp"
 F
-"./code/XDVarNode.cpp"
+"./backend/xdebug/XDVarNode.cpp"
 F
 T
 1 "layouts"
@@ -937,13 +937,15 @@ F
 "${LIB_DEPS}"
 "make -k all"
 # search paths
-T "../../JX/include/j2dplot" T
-T "../../JX/include/jcore" T
-T "../../JX/include/jexpr" T
-T "../../JX/include/jx/" T
-T "./code/" T
-T "./JCC" T
-T "./lldb-include/" T
+T "../../JX/include" T
+T "../../JX/include/jx-af/j2dplot" T
+T "../../JX/include/jx-af/jcore" T
+T "../../JX/include/jx-af/jexpr" T
+T "../../JX/include/jx-af/jx" T
+T "./backends" T
+T "./code" T
+T "./jcc-shared" T
+T "./lldb-include" T
 F
 # C preprocessor
 T "CBCFlexLexer" "yyFlexLexer"

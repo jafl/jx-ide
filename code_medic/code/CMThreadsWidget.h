@@ -8,7 +8,7 @@
 #ifndef _H_CMThreadsWidget
 #define _H_CMThreadsWidget
 
-#include <JXNamedTreeListWidget.h>
+#include <jx-af/jx/JXNamedTreeListWidget.h>
 
 class JTree;
 class CMLink;

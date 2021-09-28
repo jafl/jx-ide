@@ -13,14 +13,14 @@
 #include "CBFnMenuUpdater.h"
 #include "cbmUtil.h"
 #include "cbCtagsRegex.h"
-#include <JXTextMenu.h>
-#include <jXConstants.h>
-#include <JPtrArray-JString.h>
-#include <JListUtil.h>
-#include <JFontManager.h>
-#include <jStreamUtil.h>
-#include <jGlobals.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXTextMenu.h>
+#include <jx-af/jx/jXConstants.h>
+#include <jx-af/jcore/JPtrArray-JString.h>
+#include <jx-af/jcore/JListUtil.h>
+#include <jx-af/jcore/JFontManager.h>
+#include <jx-af/jcore/jStreamUtil.h>
+#include <jx-af/jcore/jGlobals.h>
+#include <jx-af/jcore/jAssert.h>
 
 // sort=no requires so qualified tag comes after unqualified version
 
@@ -132,48 +132,48 @@ CBFnMenuUpdater::UpdateMenu
 	lineLangList->RemoveAll();
 
 	if (pack)
-		{
+	{
 		menu->SetDefaultFontSize(JFontManager::GetDefaultFontSize()-2, false);
 		menu->CompressHeight(true);
-		}
+	}
 	else
-		{
+	{
 		menu->SetDefaultFontSize(JFontManager::GetDefaultFontSize(), false);
 		menu->CompressHeight(false);
-		}
+	}
 
 	CBTextFileType fileType = origFileType == kCBPHPFT ? kCBJavaScriptFT : origFileType;
 
 	JString data;
 	CBLanguage lang;
 	if (ProcessFile(fileName, fileType, &data, &lang))
-		{
+	{
 		icharbufstream input(data.GetRawBytes(), data.GetByteCount());
 		ReadFunctionList(input, CBGetLanguage(fileType), sort, includeNS,
 						 &fnNameList, lineIndexList, lineLangList);
 
 		if (lang == kCBHTMLLang)
-			{
+		{
 			for (auto* s : fnNameList)
-				{
+			{
 				s->Prepend("#");
-				}
 			}
 		}
+	}
 
 	if (lang == kCBHTMLLang && ProcessFile(fileName, kCBJavaScriptFT, &data, &lang))
-		{
+	{
 		icharbufstream input(data.GetRawBytes(), data.GetByteCount());
 		ReadFunctionList(input, kCBJavaScriptLang, sort, includeNS,
 						 &fnNameList, lineIndexList, lineLangList);
-		}
+	}
 
 	// build menu
 
 	for (auto* s : fnNameList)
-		{
+	{
 		menu->AppendItem(*s);
-		}
+	}
 }
 
 /******************************************************************************
@@ -198,13 +198,13 @@ CBFnMenuUpdater::ReadFunctionList
 	const bool hasNS = CBHasNamespace(lang);
 	JString fnName;
 	while (true)
-		{
+	{
 		input >> std::ws;
 		fnName = JReadUntil(input, '\t');	// fn name
 		if (input.eof() || input.fail())
-			{
+		{
 			break;
-			}
+		}
 
 		JIgnoreUntil(input, '\t');			// file name
 
@@ -212,62 +212,62 @@ CBFnMenuUpdater::ReadFunctionList
 		input >> lineIndex;					// line index
 
 		if (IgnoreSymbol(fnName))
-			{
+		{
 			continue;
-			}
+		}
 
 		// toss qualified or unqualified version
 
 		if (hasNS && !includeNS && CBNameIsQualified(fnName))
-			{
+		{
 			continue;
-			}
+		}
 
 		// save symbol
 
 		JIndex i;
 		if (sort)
-			{
+		{
 			i = fnNameList->GetInsertionSortIndex(&fnName);
-			}
+		}
 		else
-			{
+		{
 			i = lineIndexList->GetInsertionSortIndex(lineIndex);
-			}
+		}
 		fnNameList->InsertAtIndex(i, fnName);
 		lineIndexList->InsertElementAtIndex(i, lineIndex);
 		lineLangList->InsertElementAtIndex(i, lang);
-		}
+	}
 
 	// filter
 
 	if (hasNS && includeNS)
-		{
+	{
 		JSize count = fnNameList->GetElementCount();
 		for (JIndex i=1; i<=count; i++)
-			{
+		{
 			const JString* fnName = fnNameList->GetElement(i);
 			if (CBNameIsQualified(*fnName))
-				{
+			{
 				const JIndex lineIndex = lineIndexList->GetElement(i);
 				for (JIndex j=1; j<=count; j++)
-					{
+				{
 					if (j != i && lineIndexList->GetElement(j) == lineIndex)
-						{
+					{
 						fnNameList->DeleteElement(j);
 						lineIndexList->RemoveElement(j);
 						lineLangList->RemoveElement(j);
 						count--;
 						if (j < i)
-							{
+						{
 							i--;
-							}
-						break;
 						}
+						break;
 					}
 				}
 			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -284,19 +284,19 @@ CBFnMenuUpdater::ReadPrefs
 	JFileVersion vers;
 	input >> vers;
 	if (vers <= kCurrentSetupVersion)
-		{
+	{
 		input >> JBoolFromString(itsSortFlag);
 
 		if (vers >= 2)
-			{
+		{
 			input >> JBoolFromString(itsIncludeNSFlag);
-			}
+		}
 
 		if (vers >= 1)
-			{
+		{
 			input >> JBoolFromString(itsPackFlag);
-			}
 		}
+	}
 }
 
 /******************************************************************************

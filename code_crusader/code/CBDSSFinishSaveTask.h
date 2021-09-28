@@ -8,7 +8,7 @@
 #ifndef _H_CBDSSFinishSaveTask
 #define _H_CBDSSFinishSaveTask
 
-#include <JXDirectSaveAction.h>
+#include <jx-af/jx/JXDirectSaveAction.h>
 
 class CBTextDocument;
 

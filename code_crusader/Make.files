@@ -4,7 +4,7 @@
 
 @jcc
 
-.cpp ./code/browser
+.cpp ./code/main
 .cpp ./code/cbGlobals
 .cpp ./code/CBApp
 .cpp ./code/CBPrefsManager

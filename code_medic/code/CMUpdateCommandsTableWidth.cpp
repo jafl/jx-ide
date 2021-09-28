@@ -9,7 +9,7 @@
 
 #include "CMUpdateCommandsTableWidth.h"
 #include "CMEditCommandsTable.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor

@@ -8,7 +8,7 @@
  ******************************************************************************/
 
 #include "CBPythonCompleter.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 CBPythonCompleter* CBPythonCompleter::itsSelf = nullptr;
 
@@ -33,14 +33,14 @@ CBStringCompleter*
 CBPythonCompleter::Instance()
 {
 	if (itsSelf == nullptr && !recursiveInstance)
-		{
+	{
 		recursiveInstance = true;
 
 		itsSelf = jnew CBPythonCompleter;
 		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
-		}
+	}
 
 	return itsSelf;
 }

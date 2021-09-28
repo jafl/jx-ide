@@ -12,9 +12,9 @@
 #include "GFGPrefsManager.h"
 #include "GFGPrefsDialog.h"
 #include "gfgGlobals.h"
-#include <JXChooseSaveFile.h>
+#include <jx-af/jx/JXChooseSaveFile.h>
 #include <time.h>
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 const JFileVersion kCurrentPrefsFileVersion = 0;
 
@@ -74,9 +74,9 @@ GFGPrefsManager::UpgradeData
 	)
 {
 	if (isNew)
-		{
+	{
 		SetData(kGFGProgramVersionID, GFGGetVersionNumberStr());
-		}
+	}
 }
 
 /******************************************************************************
@@ -132,12 +132,12 @@ GFGPrefsManager::Receive
 	)
 {
 	if (sender == itsDialog && message.Is(JXDialogDirector::kDeactivated))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const JXDialogDirector::Deactivated*>(&message);
 		assert( info != nullptr );
 		if (info->Successful())
-			{
+		{
 			// replace with whatever is appropriate
 			JString header;
 			JString source;
@@ -156,14 +156,14 @@ GFGPrefsManager::Receive
 			SetFunctionComment(function);
 
 			// store data somehow
-			}
-		itsDialog = nullptr;
 		}
+		itsDialog = nullptr;
+	}
 
 	else
-		{
+	{
 		JXPrefsManager::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -181,25 +181,25 @@ GFGPrefsManager::GetHeaderComment
 	JString comment;
 	std::string data;
 	if (GetData(kGFGHeaderCommentID, &data))
-		{
+	{
 		std::istringstream is(data);
 		is >> comment;
-		}
+	}
 	else
-		{
+	{
 		comment	= JGetString("CLASS_HEADER_COMMENT");
-		}
+	}
 		
 	if (!classname.IsEmpty())
-		{
+	{
 		JString copyright = GetCopyright(true);
 		const JUtf8Byte* map[] =
-			{
+		{
 			"class",     classname.GetBytes(),
 			"copyright", copyright.GetBytes()
-			};
+		};
 		JGetStringManager()->Replace(&comment, map, sizeof(map));
-		}
+	}
 
 	return comment;
 }
@@ -231,16 +231,16 @@ GFGPrefsManager::GetAuthor()
 {
 	std::string data;
 	if (GetData(kGFGAuthorID, &data))
-		{
+	{
 		std::istringstream is(data);
 		JString author;
 		is >> author;
 		return author;
-		}
+	}
 	else
-		{
+	{
 		return JString::empty;
-		}
+	}
 }
 
 /******************************************************************************
@@ -270,21 +270,21 @@ GFGPrefsManager::GetYear()
 {
 	std::string data;
 	if (GetData(kGFGYearID, &data))
-		{
+	{
 		std::istringstream is(data);
 		JString year;
 		is >> year;
 		return year;
-		}
+	}
 	else
-		{
+	{
 		time_t now;
 		time(&now);
 
 		struct tm* local_time	= localtime(&now);
 
 		return JString((JUInt64) local_time->tm_year + 1900);
-		}
+	}
 }
 
 /******************************************************************************
@@ -319,26 +319,26 @@ GFGPrefsManager::GetCopyright
 	JString copyright;
 	std::string data;
 	if (GetData(kGFGCopyrightID, &data))
-		{
+	{
 		std::istringstream is(data);
 		is >> copyright;
-		}
+	}
 	else
-		{
+	{
 		copyright	= JGetString("CLASS_COPYRIGHT");
-		}
+	}
 		
 	if (replaceVars)
-		{
+	{
 		JString author = GetAuthor();
 		JString year   = GetYear();
 		const JUtf8Byte* map[] =
-			{
+		{
 			"year",   year.GetBytes(),
 			"author", author.GetBytes()
-			};
+		};
 		JGetStringManager()->Replace(&copyright, map, sizeof(map));
-		}
+	}
 
 	return copyright;
 }
@@ -375,26 +375,26 @@ GFGPrefsManager::GetSourceComment
 	JString comment;
 	std::string data;
 	if (GetData(kGFGSourceCommentID, &data))
-		{
+	{
 		std::istringstream is(data);
 		is >> comment;
-		}
+	}
 	else
-		{
+	{
 		comment	= JGetString("CLASS_SOURCE_COMMENT");
-		}
+	}
 		
 	if (!classname.IsEmpty())
-		{
+	{
 		JString copyright = GetCopyright(true);
 		const JUtf8Byte* map[] =
-			{
+		{
 			"class",     classname.GetBytes(),
 			"base",      base.GetBytes(),
 			"copyright", copyright.GetBytes()
-			};
+		};
 		JGetStringManager()->Replace(&comment, map, sizeof(map));
-		}
+	}
 
 	return comment;
 }
@@ -427,14 +427,14 @@ GFGPrefsManager::GetConstructorComment()
 	JString comment;
 	std::string data;
 	if (GetData(kGFGConstructorCommentID, &data))
-		{
+	{
 		std::istringstream is(data);
 		is >> comment;
-		}
+	}
 	else
-		{
+	{
 		comment	= JGetString("CLASS_CONSTRUCTOR_COMMENT");
-		}
+	}
 
 	return comment;
 }
@@ -467,14 +467,14 @@ GFGPrefsManager::GetDestructorComment()
 	JString comment;
 	std::string data;
 	if (GetData(kGFGDestructorCommentID, &data))
-		{
+	{
 		std::istringstream is(data);
 		is >> comment;
-		}
+	}
 	else
-		{
+	{
 		comment	= JGetString("CLASS_DESTRUCTOR_COMMENT");
-		}
+	}
 		
 	return comment;
 }
@@ -511,24 +511,24 @@ GFGPrefsManager::GetFunctionComment
 	JString comment;
 	std::string data;
 	if (GetData(kGFGFunctionCommentID, &data))
-		{
+	{
 		std::istringstream is(data);
 		is >> comment;
-		}
+	}
 	else
-		{
+	{
 		comment	= JGetString("CLASS_FUNCTION_COMMENT");
-		}
+	}
 
 	if (!fnName.IsEmpty())
-		{
+	{
 		const JUtf8Byte* map[] =
-			{
+		{
 			"function", fnName.GetBytes(),
 			"access",   access.GetBytes()
-			};
+		};
 		JGetStringManager()->Replace(&comment, map, sizeof(map));
-		}
+	}
 			
 	return comment;
 }

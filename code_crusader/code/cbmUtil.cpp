@@ -23,17 +23,17 @@
 #include "cmGlobals.h"
 #endif
 
-#include <JXDisplay.h>
-#include <JXInputField.h>
-#include <JColorManager.h>
-#include <JStringIterator.h>
-#include <JRegex.h>
-#include <JStack.h>
-#include <jFileUtil.h>
-#include <jDirUtil.h>
-#include <jASCIIConstants.h>
+#include <jx-af/jx/JXDisplay.h>
+#include <jx-af/jx/JXInputField.h>
+#include <jx-af/jcore/JColorManager.h>
+#include <jx-af/jcore/JStringIterator.h>
+#include <jx-af/jcore/JRegex.h>
+#include <jx-af/jcore/JStack.h>
+#include <jx-af/jcore/jFileUtil.h>
+#include <jx-af/jcore/jDirUtil.h>
+#include <jx-af/jcore/jASCIIConstants.h>
 #include <editorconfig/editorconfig.h>
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 // shared prefs
 
@@ -68,41 +68,41 @@ CBMWriteSharedPrefs
 {
 	JString fileName;
 	if (!CBMGetSharedPrefsFileName(&fileName))
-		{
+	{
 		return;
-		}
+	}
 
 	if (!replace && JFileExists(fileName))
-		{
+	{
 		std::ifstream input(fileName.GetBytes());
 
 		JFileVersion vers;
 		input >> vers;
 		if (vers >= kCurrentSharedPrefsVersion)
-			{
+		{
 			return;
-			}
 		}
+	}
 
 	JString p,n;
 	JSplitPathAndName(fileName, &p, &n);
 	if (JCreateDirectory(p) != kJNoError)
-		{
+	{
 		return;
-		}
+	}
 
 	// don't replace newer prefs
 
 	if (JFileExists(fileName))
-		{
+	{
 		std::ifstream input(fileName.GetBytes());
 		JFileVersion vers;
 		input >> vers;
 		if (vers > kCurrentSharedPrefsVersion)
-			{
+		{
 			return;
-			}
 		}
+	}
 
 	std::ofstream output(fileName.GetBytes());
 	output << kCurrentSharedPrefsVersion;
@@ -138,9 +138,9 @@ CBMWriteSharedPrefs
 	output << ' ' << (long) CBPrefsManager::kColorCount;
 
 	for (JIndex i=1; i<=CBPrefsManager::kColorCount; i++)
-		{
+	{
 		output << ' ' << JColorManager::GetRGB(prefsMgr->GetColor(i));
-		}
+	}
 
 	// stylers
 
@@ -214,22 +214,22 @@ CBMReadSharedPrefs
 {
 	JString fileName;
 	if (!CBMGetSharedPrefsFileName(&fileName))
-		{
+	{
 		return false;
-		}
+	}
 
 	std::ifstream input(fileName.GetBytes());
 	if (!input.good())
-		{
+	{
 		return false;
-		}
+	}
 
 	JFileVersion vers;
 	input >> vers;
 	if (vers > kCurrentSharedPrefsVersion)
-		{
+	{
 		return false;
-		}
+	}
 
 	// font
 
@@ -241,15 +241,15 @@ CBMReadSharedPrefs
 
 	*includeNS = false;
 	if (vers >= 3)
-		{
+	{
 		input >> JBoolFromString(*includeNS);
-		}
+	}
 
 	*packFnNames = false;
 	if (vers >= 1)
-		{
+	{
 		input >> JBoolFromString(*packFnNames);
-		}
+	}
 
 	input >> JBoolFromString(*openComplFileOnTop);
 
@@ -260,73 +260,73 @@ CBMReadSharedPrefs
 
 	assert( userColorCount == 6 );
 	if (vers < 2)
-		{
+	{
 		assert( colorCount == 5 );
 		colorList[5] = JColorManager::GetRGB(JColorManager::GetGrayColor(70));
-		}
+	}
 	else
-		{
+	{
 		assert( colorCount == userColorCount );
-		}
+	}
 
 	for (JUnsignedOffset i=0; i<colorCount; i++)
-		{
+	{
 		input >> colorList[i];
-		}
+	}
 
 	// stylers
 
 	CBCStyler::Instance()->ReadFromSharedPrefs(input);
 
 	if (vers >= 5)
-		{
+	{
 		CBJavaStyler::Instance()->ReadFromSharedPrefs(input);
-		}
+	}
 
 	if (vers >= 6)
-		{
+	{
 		CBHTMLStyler::Instance()->ReadFromSharedPrefs(input);
-		}
+	}
 
 	if (vers >= 7)
-		{
+	{
 		CBDStyler::Instance()->ReadFromSharedPrefs(input);
 		CBGoStyler::Instance()->ReadFromSharedPrefs(input);
-		}
+	}
 
 	// File suffixes
 
 	input >> *cSourceSuffixList >> *cHeaderSuffixList;
 
 	if (vers >= 4)
-		{
+	{
 		input >> *fortranSuffixList >> *javaSuffixList;
-		}
+	}
 	else
-		{
+	{
 		fortranSuffixList->DeleteAll();
 		javaSuffixList->DeleteAll();
-		}
+	}
 
 	if (vers >= 6)
-		{
+	{
 		input >> *phpSuffixList;
-		}
+	}
 	else
-		{
+	{
 		phpSuffixList->DeleteAll();
-		}
+	}
 
 	if (vers >= 7)
-		{
+	{
 		input >> *dSuffixList;
 		input >> *goSuffixList;
-		}
+	}
 	else
-		{
+	{
 		dSuffixList->DeleteAll();
 		goSuffixList->DeleteAll();
-		}
+	}
 
 	return true;
 }
@@ -347,15 +347,15 @@ CBMGetSharedPrefsFileName
 	)
 {
 	if (JGetPrefsDirectory(fileName))
-		{
+	{
 		*fileName = JCombinePathAndName(*fileName, kSharedPrefsFileName);
 		return true;
-		}
+	}
 	else
-		{
+	{
 		fileName->Clear();
 		return false;
-		}
+	}
 }
 
 /******************************************************************************
@@ -411,44 +411,44 @@ CBMParseEditorOptions
 	*setTabMode    = false;
 	*setAutoIndent = false;
 
-	{
+{
 	editorconfig_handle eh = editorconfig_handle_init();
 	if (editorconfig_parse(fullName.GetBytes(), eh) == 0)
-		{
+	{
 		const JUtf8Byte *name, *value;
 
 		const int nvCount = editorconfig_handle_get_name_value_count(eh);
 		for (int i=0; i<nvCount; i++)
-			{
+		{
 			editorconfig_handle_get_name_value(eh, i, &name, &value);
 			if (strcmp(name, "indent_style") == 0)
-				{
+			{
 				*setTabMode       = true;
 				*tabInsertsSpaces = strcmp(value, "space") == 0;
-				}
-			}
-
-		if (*setTabMode)
-			{
-			for (int i=0; i<nvCount; i++)
-				{
-				editorconfig_handle_get_name_value(eh, i, &name, &value);
-				if (*tabInsertsSpaces && strcmp(name, "indent_size") == 0)
-					{
-					*setTabWidth = JString::ConvertToUInt(value, tabWidth);
-					break;
-					}
-				else if (!*tabInsertsSpaces && strcmp(name, "tab_width") == 0)
-					{
-					*setTabWidth = JString::ConvertToUInt(value, tabWidth);
-					break;
-					}
-				}
 			}
 		}
 
-	editorconfig_handle_destroy(eh);
+		if (*setTabMode)
+		{
+			for (int i=0; i<nvCount; i++)
+			{
+				editorconfig_handle_get_name_value(eh, i, &name, &value);
+				if (*tabInsertsSpaces && strcmp(name, "indent_size") == 0)
+				{
+					*setTabWidth = JString::ConvertToUInt(value, tabWidth);
+					break;
+				}
+				else if (!*tabInsertsSpaces && strcmp(name, "tab_width") == 0)
+				{
+					*setTabWidth = JString::ConvertToUInt(value, tabWidth);
+					break;
+				}
+			}
+		}
 	}
+
+	editorconfig_handle_destroy(eh);
+}
 
 	const JStringMatch
 		emacsTopTabWidthMatch = emacsTopTabWidthOption.Match(text, JRegex::kIncludeSubmatches),
@@ -460,46 +460,46 @@ CBMParseEditorOptions
 		viAutoIndentMatch     = viAutoIndentOption.Match(text, JRegex::kIncludeSubmatches);
 
 	if (!emacsTopTabWidthMatch.IsEmpty())
-		{
+	{
 		const JString s = emacsTopTabWidthMatch.GetSubstring(1);
 		*setTabWidth    = s.ConvertToUInt(tabWidth);
-		}
+	}
 	else if (!emacsTabWidthMatch.IsEmpty())
-		{
+	{
 		const JString s = emacsTabWidthMatch.GetSubstring(1);
 		*setTabWidth    = s.ConvertToUInt(tabWidth);
-		}
+	}
 	else if (!viTabWidthMatch.IsEmpty())
-		{
+	{
 		const JString s = viTabWidthMatch.GetSubstring(1);
 		*setTabWidth    = s.ConvertToUInt(tabWidth);
-		}
+	}
 
 	if (!emacsTopTabModeMatch.IsEmpty())
-		{
+	{
 		const JString s   = emacsTopTabModeMatch.GetSubstring(1);
 		*setTabMode       = true;
 		*tabInsertsSpaces = s == "nil";
-		}
+	}
 	else if (!emacsTabModeMatch.IsEmpty())
-		{
+	{
 		const JString s   = emacsTabModeMatch.GetSubstring(1);
 		*setTabMode       = true;
 		*tabInsertsSpaces = s == "nil";
-		}
+	}
 	else if (!viTabModeMatch.IsEmpty())
-		{
+	{
 		const JString s   = viTabModeMatch.GetSubstring(1);
 		*setTabMode       = true;
 		*tabInsertsSpaces = s == "s";
-		}
+	}
 
 	if (!viAutoIndentMatch.IsEmpty())
-		{
+	{
 		const JString s = viAutoIndentMatch.GetSubstring(1);
 		*setAutoIndent  = true;
 		*autoIndent     = !s.BeginsWith("no");
-		}
+	}
 }
 
 /******************************************************************************
@@ -524,16 +524,16 @@ cbmIncludeScriptComments
 	)
 {
 	while (!iter->AtBeginning())
-		{
+	{
 		iter->BeginMatch();
 		iter->Prev("\n");
 		const JStringMatch& m = iter->FinishMatch();
 		if (!pattern.Match(m.GetString()))
-			{
+		{
 			iter->Next("\n");
 			break;
-			}
 		}
+	}
 }
 
 void
@@ -557,7 +557,7 @@ CBMScrollForDefinition
 		lang == kCBPHPLang        ||
 		lang == kCBAdobeFlexLang  ||
 		lang == kCBVeraLang)
-		{
+	{
 		// search backwards for closing brace (end of function) or semicolon (declaration)
 
 		while (iter->Prev(&c) && c != '}' && c != ';') {}
@@ -565,7 +565,7 @@ CBMScrollForDefinition
 		// find start of following line
 
 		while (iter->Next(&c) && c != '\n') {}
-		}
+	}
 	else if (lang == kCBAWKLang         ||
 			 lang == kCBPerlLang        ||
 			 lang == kCBPythonLang      ||
@@ -575,42 +575,42 @@ CBMScrollForDefinition
 			 lang == kCBTCLLang         ||
 			 lang == kCBVimLang         ||
 			 lang == kCBSQLLang)
-		{
+	{
 		// search backwards for line that is neither comment nor empty
 
 		cbmIncludeScriptComments(iter, scriptCommentPattern);
-		}
+	}
 	else if (lang == kCBMakeLang)
-		{
+	{
 		// search backwards for line that is neither comment nor empty
 
 		makeCommentPattern.SetCaseSensitive(false);
 		cbmIncludeScriptComments(iter, makeCommentPattern);
-		}
+	}
 	else if (lang == kCBAntLang)
-		{
+	{
 		// search backwards for line that is neither comment nor empty
 
 		cbmIncludeScriptComments(iter, antCommentPattern);
-		}
+	}
 	else if (lang == kCBLispLang)
-		{
+	{
 		// search backwards for line that is neither comment nor empty
 
 		cbmIncludeScriptComments(iter, lispCommentPattern);
-		}
+	}
 	else if (lang == kCBASPLang)
-		{
+	{
 		// search backwards for line that is neither comment nor empty
 
 		cbmIncludeScriptComments(iter, aspCommentPattern);
-		}
+	}
 	else if (lang == kCBSQLLang)
-		{
+	{
 		// search backwards for line that is neither comment nor empty
 
 		cbmIncludeScriptComments(iter, sqlCommentPattern);
-		}
+	}
 
 	// if we moved up without hitting the top of the file,
 	// search down again for the next non-blank line
@@ -625,9 +625,9 @@ CBMScrollForDefinition
 		te->GetLineTop(te->GetLineForChar(iter->GetPrevCharacterIndex()));
 
 	if (lineTop > te->GetAperture().top)
-		{
+	{
 		te->ScrollTo(0, lineTop);
-		}
+	}
 
 	te->DisposeConstIterator(iter);
 }
@@ -648,19 +648,19 @@ CBMSelectLines
 	te->SelectLine(lineIndex);
 
 	if (lineRange.last > lineRange.first)
-		{
+	{
 		lineIndex = te->CRLineIndexToVisualLineIndex(lineRange.last);
 		te->SetSelection(JCharacterRange(
 			te->GetInsertionCharIndex(), te->GetLineCharEnd(lineIndex)));
-		}
+	}
 
 	if (!te->WillBreakCROnly())
-		{
+	{
 		const JIndex charIndex         = te->GetLineCharStart(lineIndex);
 		const JStyledText::TextRange r = te->GetText()->CharToTextRange(nullptr, JCharacterRange(charIndex, charIndex));
 		te->SetSelection(JCharacterRange(
 			te->GetInsertionCharIndex(), te->GetText()->GetParagraphEnd(r.GetFirst()).charIndex));
-		}
+	}
 }
 
 /******************************************************************************
@@ -684,38 +684,38 @@ CBMBalanceFromSelection
 
 	JUtf8Character c;
 	if (hasSelection && sel.first == sel.last)
-		{
+	{
 		openIter.Next(&c, kJIteratorStay);
 		if (CBMIsOpenGroup(lang, c))
-			{
+		{
 			hasSelection = false;
 			openIter.SkipNext();
-			}
-		else if (CBMIsCloseGroup(lang, c))
-			{
-			hasSelection = false;
-			}
 		}
+		else if (CBMIsCloseGroup(lang, c))
+		{
+			hasSelection = false;
+		}
+	}
 	else if (openIter.Next(&c, kJIteratorStay) && CBMIsOpenGroup(lang, c) &&
 			 (openIter.AtBeginning() ||
 			  (openIter.Prev(&c, kJIteratorStay) &&
 			   !CBMIsOpenGroup(lang, c) && !CBMIsCloseGroup(lang, c))))
-		{
+	{
 		openIter.SkipNext();
-		}
+	}
 	else if (openIter.Prev(&c, kJIteratorStay) && CBMIsCloseGroup(lang, c) &&
 			 (openIter.AtEnd() ||
 			  (openIter.Next(&c, kJIteratorStay) &&
 			   !CBMIsOpenGroup(lang, c) && !CBMIsCloseGroup(lang, c))))
-		{
+	{
 		openIter.SkipPrev();
-		}
+	}
 
 	if (openIter.AtBeginning() || openIter.AtEnd())
-		{
+	{
 		te->GetDisplay()->Beep();
 		return;
-		}
+	}
 
 	const JString s(te->GetText()->GetText(), JString::kNoCopy);
 	JStringIterator closeIter(s, kJIteratorStartBefore, openIter.GetNextCharacterIndex());
@@ -723,7 +723,7 @@ CBMBalanceFromSelection
 	// balance groupers until the selection is enclosed or we get an error
 
 	while (true)
-		{
+	{
 		JUtf8Character cOpen;
 		const bool foundOpen = CBMBalanceBackward(lang, &openIter, &cOpen);
 
@@ -731,7 +731,7 @@ CBMBalanceFromSelection
 		const bool foundClose = CBMBalanceForward(lang, &closeIter, &cClose);
 
 		if (foundOpen && foundClose && CBMIsMatchingPair(lang, cOpen, cClose))
-			{
+		{
 			const JIndex openIndex  = openIter.GetNextCharacterIndex();
 			const JIndex closeIndex = closeIter.GetPrevCharacterIndex();
 
@@ -739,26 +739,26 @@ CBMBalanceFromSelection
 				 (sel.first-1 < openIndex || closeIndex < sel.last+1 ||
 				  (sel.first-1 == openIndex && closeIndex == sel.last+1))) ||
 				(!hasSelection && openIndex+1 == closeIndex))
-				{
+			{
 				// keep going
-				}
+			}
 			else if (openIndex < closeIndex-1)
-				{
+			{
 				te->SetSelection(JCharacterRange(openIndex+1, closeIndex-1));
 				break;
-				}
+			}
 			else
-				{
+			{
 				te->SetCaretLocation(closeIndex);
 				break;
-				}
-			}
-		else
-			{
-			te->GetDisplay()->Beep();
-			break;
 			}
 		}
+		else
+		{
+			te->GetDisplay()->Beep();
+			break;
+		}
+	}
 }
 
 /******************************************************************************
@@ -798,27 +798,27 @@ CBMBalanceForward
 	JStack<JUtf8Byte, JArray<JUtf8Byte> > openList;
 
 	while (iter->Next(c))
-		{
+	{
 		const bool isOpen  = CBMIsOpenGroup(lang, *c);
 		const bool isClose = CBMIsCloseGroup(lang, *c);
 
 		if (isOpen)
-			{
+		{
 			openList.Push(c->GetBytes()[0]);
-			}
+		}
 		else if (isClose && openList.IsEmpty())
-			{
+		{
 			return true;
-			}
+		}
 		else if (isClose)
-			{
+		{
 			const JUtf8Byte c1 = openList.Pop();
 			if (!CBMIsMatchingPair(lang, JUtf8Character(c1), *c))
-				{
+			{
 				return false;
-				}
 			}
 		}
+	}
 
 	return false;
 }
@@ -834,27 +834,27 @@ CBMBalanceBackward
 	JStack<JUtf8Byte, JArray<JUtf8Byte> > closeList;
 
 	while (iter->Prev(c))
-		{
+	{
 		const bool isOpen  = CBMIsOpenGroup(lang, *c);
 		const bool isClose = CBMIsCloseGroup(lang, *c);
 
 		if (isClose)
-			{
+		{
 			closeList.Push(c->GetBytes()[0]);
-			}
+		}
 		else if (isOpen && closeList.IsEmpty())
-			{
+		{
 			return true;
-			}
+		}
 		else if (isOpen)
-			{
+		{
 			const JUtf8Byte c1 = closeList.Pop();
 			if (!CBMIsMatchingPair(lang, *c, JUtf8Character(c1)))
-				{
+			{
 				return false;
-				}
 			}
 		}
+	}
 
 	return false;
 }
@@ -970,9 +970,9 @@ CBMGetStringList
 	JString text = inputField->GetText()->GetText();
 	text.TrimWhitespace();
 	if (!text.IsEmpty())
-		{
+	{
 		text.Split(wsPattern, list);
-		}
+	}
 }
 
 /******************************************************************************
@@ -994,13 +994,13 @@ CBMGetSuffixList
 
 	const JSize count = list->GetElementCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		JString* suffix = list->GetElement(i);
 		if (suffix->GetFirstCharacter() != '.')
-			{
+		{
 			suffix->Prepend(".");
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -1021,13 +1021,13 @@ CBMSetStringList
 
 	const JSize count = list.GetElementCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		if (i > 1)
-			{
+		{
 			text += " ";
-			}
-		text += *(list.GetElement(i));
 		}
+		text += *(list.GetElement(i));
+	}
 
 	inputField->GetText()->SetText(text);
 }

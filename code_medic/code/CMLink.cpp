@@ -13,8 +13,8 @@
 #include "CMCommand.h"
 #include "CMBreakpoint.h"
 #include "cmGlobals.h"
-#include <jFileUtil.h>
-#include <jAssert.h>
+#include <jx-af/jcore/jFileUtil.h>
+#include <jx-af/jcore/jAssert.h>
 
 // JBroadcaster message types
 
@@ -112,13 +112,13 @@ CMLink::DeleteOneShotCommands
 {
 	const JSize count = list->GetElementCount();
 	for (JIndex i=count; i>=1; i--)
-		{
+	{
 		CMCommand* cmd = list->GetElement(i);
 		if (cmd->IsOneShot())
-			{
+		{
 			jdelete cmd;		// automatically removed from list
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -187,26 +187,26 @@ CMLink::Send
 	)
 {
 	if (command->GetState() != CMCommand::kUnassigned)
-		{
+	{
 		assert( command->GetTransactionID() != 0 );
 		return false;
-		}
+	}
 	else
-		{
+	{
 		command->SetTransactionID(GetNextTransactionID());
 
 		if (command->IsBackground())
-			{
+		{
 			itsBackgroundQ->Append(command);
-			}
+		}
 		else
-			{
+		{
 			itsForegroundQ->Append(command);
-			}
+		}
 		RunNextCommand();
 
 		return true;
-		}
+	}
 }
 
 /******************************************************************************
@@ -219,9 +219,9 @@ CMLink::GetNextTransactionID()
 {
 	itsLastCommandID++;
 	if (itsLastCommandID == 0) // Wrap, even though it isn't likely to ever happen
-		{
+	{
 		itsLastCommandID = 1;
-		}
+	}
 	return itsLastCommandID;
 }
 
@@ -239,9 +239,9 @@ CMLink::Cancel
 	)
 {
 	if (itsRunningCommand == cmd)
-		{
+	{
 		itsRunningCommand = nullptr;
-		}
+	}
 	itsBackgroundQ->Remove(cmd);
 	itsForegroundQ->Remove(cmd);
 }
@@ -255,33 +255,33 @@ void
 CMLink::RunNextCommand()
 {
 	if (!itsForegroundQ->IsEmpty() && OKToSendMultipleCommands())
-		{
+	{
 		const JSize count = itsForegroundQ->GetElementCount();
 		for (JIndex i=1; i<=count; i++)
-			{
+		{
 			CMCommand* command = itsForegroundQ->GetElement(i);
 			if (command->GetState() != CMCommand::kExecuting)
-				{
+			{
 				SendMedicCommand(command);
-				}
 			}
 		}
+	}
 	else if (!itsForegroundQ->IsEmpty())
-		{
+	{
 		CMCommand* command = itsForegroundQ->GetFirstElement();
 		if (command->GetState() != CMCommand::kExecuting && OKToSendCommands(false))
-			{
-			SendMedicCommand(command);
-			}
-		}
-	else if (!itsBackgroundQ->IsEmpty() && OKToSendCommands(true))
 		{
+			SendMedicCommand(command);
+		}
+	}
+	else if (!itsBackgroundQ->IsEmpty() && OKToSendCommands(true))
+	{
 		CMCommand* command = itsBackgroundQ->GetFirstElement();
 		if (command->GetState() != CMCommand::kExecuting)
-			{
+		{
 			SendMedicCommand(command);
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -299,25 +299,25 @@ CMLink::HandleCommandRunning
 
 	const JSize fgCount = itsForegroundQ->GetElementCount();
 	for (JIndex i=1; i<=fgCount; i++)
-		{
+	{
 		CMCommand* command = itsForegroundQ->GetElement(i);
 		if (command->GetTransactionID() == cmdID)
-			{
+		{
 			itsRunningCommand = command;
 			itsForegroundQ->RemoveElement(i);
 			break;
-			}
 		}
+	}
 
 	if (itsRunningCommand == nullptr && !itsBackgroundQ->IsEmpty())
-		{
+	{
 		CMCommand* command = itsBackgroundQ->GetFirstElement();
 		if (command->GetTransactionID() == cmdID)
-			{
+		{
 			itsRunningCommand = command;
 			itsBackgroundQ->RemoveElement(1);
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -329,21 +329,21 @@ void
 CMLink::CancelAllCommands()
 {
 	if (CMIsShuttingDown())		// command owners already deleted
-		{
+	{
 		return;
-		}
+	}
 
 	for (JIndex i=itsForegroundQ->GetElementCount(); i>=1; i--)
-		{
+	{
 		CMCommand* cmd = itsForegroundQ->GetElement(i);
 		itsForegroundQ->RemoveElement(i);	// remove first, in case auto-delete
 		cmd->Finished(false);
 
 		if (itsRunningCommand == cmd)
-			{
+		{
 			itsRunningCommand = nullptr;
-			}
 		}
+	}
 
 	CancelBackgroundCommands();
 }
@@ -357,21 +357,21 @@ void
 CMLink::CancelBackgroundCommands()
 {
 	if (CMIsShuttingDown())		// command owners already deleted
-		{
+	{
 		return;
-		}
+	}
 
 	for (JIndex i=itsBackgroundQ->GetElementCount(); i>=1; i--)
-		{
+	{
 		CMCommand* cmd = itsBackgroundQ->GetElement(i);
 		itsBackgroundQ->RemoveElement(i);	// remove first, in case auto-delete
 		cmd->Finished(false);
 
 		if (itsRunningCommand == cmd)
-			{
+		{
 			itsRunningCommand = nullptr;
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -387,13 +387,13 @@ CMLink::RememberFile
 	)
 {
 	if (fullName.IsEmpty())
-		{
+	{
 		itsFileNameMap->SetElement(fileName, nullptr, JPtrArrayT::kDelete);
-		}
+	}
 	else
-		{
+	{
 		itsFileNameMap->SetElement(fileName, fullName, JPtrArrayT::kDelete);
-		}
+	}
 }
 
 /******************************************************************************
@@ -412,51 +412,51 @@ CMLink::FindFile
 {
 	const JString* s = nullptr;
 	if (JIsAbsolutePath(fileName) && JFileExists(fileName))
-		{
+	{
 		*exists   = true;
 		*fullName = fileName;
 		return true;
-		}
+	}
 	else if (itsFileNameMap->GetElement(fileName, &s))
-		{
+	{
 		if (s == nullptr)
-			{
+		{
 			*exists = false;
 			fullName->Clear();
-			}
+		}
 		else
-			{
+		{
 			*exists   = true;
 			*fullName = *s;
-			}
-		return true;
 		}
+		return true;
+	}
 	else
-		{
+	{
 		*exists = false;
 		fullName->Clear();
 		return false;
-		}
+	}
 
 /*	All search paths are unreliable.  See CMGetFullPath.cc for more info.
 
 	if (JIsRelativePath(fileName))
-		{
+	{
 		const JSize count = itsPathList->GetElementCount();
 		for (JIndex i=1; i<=count; i++)
-			{
+		{
 			*fullName = JCombinePathAndName(*(itsPathList->GetElement(i)), fileName);
 			if (JFileExists(*fullName))
-				{
+			{
 				return true;
-				}
 			}
 		}
+	}
 	else if (JFileExists(fileName))
-		{
+	{
 		*fullName = fileName;
 		return true;
-		}
+	}
 
 	fullName->Clear();
 	return false; */
@@ -533,26 +533,26 @@ CMLink::Build1DArrayExpressionForCFamilyLanguage
 
 	const JString indexStr(index, 0);	// must use floating point conversion
 	if (expr.Contains("$i"))
-		{
+	{
 		const JUtf8Byte* map[] =
-			{
-			"i", indexStr.GetBytes()
-			};
-		JGetStringManager()->Replace(&expr, map, sizeof(map));
-		}
-	else
 		{
+			"i", indexStr.GetBytes()
+		};
+		JGetStringManager()->Replace(&expr, map, sizeof(map));
+	}
+	else
+	{
 		if (expr.GetFirstCharacter() != '(' ||
 			expr.GetLastCharacter()  != ')')
-			{
+		{
 			expr.Prepend("(");
 			expr.Append(")");
-			}
+		}
 
 		expr += "[";
 		expr += indexStr;
 		expr += "]";
-		}
+	}
 
 	return expr;
 }
@@ -580,37 +580,37 @@ CMLink::Build2DArrayExpressionForCFamilyLanguage
 	// We have to do both at the same time because otherwise we lose a $.
 
 	if (usesI || usesJ)
-		{
+	{
 		const JUtf8Byte* map[] =
-			{
+		{
 			"i", iStr.GetBytes(),
 			"j", jStr.GetBytes()
-			};
+		};
 		JGetStringManager()->Replace(&expr, map, sizeof(map));
-		}
+	}
 
 	if (!usesI || !usesJ)
-		{
+	{
 		if (expr.GetFirstCharacter() != '(' ||
 			expr.GetLastCharacter()  != ')')
-			{
+		{
 			expr.Prepend("(");
 			expr.Append(")");
-			}
+		}
 
 		if (!usesI)
-			{
+		{
 			expr += "[";
 			expr += iStr;
 			expr += "]";
-			}
+		}
 		if (!usesJ)
-			{
+		{
 			expr += "[";
 			expr += jStr;
 			expr += "]";
-			}
 		}
+	}
 
 	return expr;
 }

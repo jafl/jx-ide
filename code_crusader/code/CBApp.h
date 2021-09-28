@@ -10,8 +10,8 @@
 #ifndef _H_CBApp
 #define _H_CBApp
 
-#include <JXApplication.h>
-#include <JPrefObject.h>
+#include <jx-af/jx/JXApplication.h>
+#include <jx-af/jcore/JPrefObject.h>
 
 class JXMenuBar;
 class JXTextMenu;

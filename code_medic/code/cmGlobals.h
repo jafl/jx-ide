@@ -8,7 +8,7 @@
 #ifndef _H_cmGlobals
 #define _H_cmGlobals
 
-#include <jXGlobals.h>
+#include <jx-af/jx/jXGlobals.h>
 #include "CMApp.h"
 #include "CMPrefsManager.h"
 #include "CMLink.h"		// for convenience

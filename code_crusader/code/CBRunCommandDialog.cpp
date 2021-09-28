@@ -12,19 +12,19 @@
 #include "CBCommandManager.h"
 #include "CBCommandPathInput.h"
 #include "cbGlobals.h"
-#include <JXHelpManager.h>
-#include <JXWindow.h>
-#include <JXStaticText.h>
-#include <JXTextButton.h>
-#include <JXTextCheckbox.h>
-#include <JXDocumentMenu.h>
-#include <JXPathHistoryMenu.h>
-#include <JXChooseSaveFile.h>
-#include <JXFSRunFileDialog.h>
-#include <JXFontManager.h>
-#include <jStreamUtil.h>
-#include <jDirUtil.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXHelpManager.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXStaticText.h>
+#include <jx-af/jx/JXTextButton.h>
+#include <jx-af/jx/JXTextCheckbox.h>
+#include <jx-af/jx/JXDocumentMenu.h>
+#include <jx-af/jx/JXPathHistoryMenu.h>
+#include <jx-af/jx/JXChooseSaveFile.h>
+#include <jx-af/jfs/JXFSRunFileDialog.h>
+#include <jx-af/jx/JXFontManager.h>
+#include <jx-af/jcore/jStreamUtil.h>
+#include <jx-af/jcore/jDirUtil.h>
+#include <jx-af/jcore/jAssert.h>
 
 const JSize kHistoryLength = 20;
 
@@ -116,10 +116,10 @@ CBRunCommandDialog::Activate()
 	JXDialogDirector::Activate();
 
 	if (IsActive())
-		{
+	{
 		itsCmdInput->Focus();
 		itsCmdInput->SelectAll();
-		}
+	}
 }
 
 /******************************************************************************
@@ -257,9 +257,9 @@ CBRunCommandDialog::BuildWindow()
 	ListenTo(itsPathInput);
 
 	if (itsProjDoc != nullptr)
-		{
+	{
 		itsPathInput->SetBasePath(itsProjDoc->GetFilePath());
-		}
+	}
 
 	itsCmdInput->GetText()->SetCharacterInWordFunction(JXChooseSaveFile::IsCharacterInWord);
 	ListenTo(itsCmdInput);
@@ -289,44 +289,44 @@ CBRunCommandDialog::UpdateDisplay()
 {
 	JString p;
 	if (!itsCmdInput->GetText()->IsEmpty() && itsPathInput->GetPath(&p))
-		{
+	{
 		itsRunButton->Activate();
-		}
+	}
 	else
-		{
+	{
 		itsRunButton->Deactivate();
-		}
+	}
 
 	if (itsIsMakeCB->IsChecked())
-		{
+	{
 		itsSaveAllCB->Deactivate();
 		itsSaveAllCB->SetState(true);
 
 		itsUseWindowCB->Deactivate();
 		itsUseWindowCB->SetState(true);
-		}
+	}
 	else if (itsIsCVSCB->IsChecked())
-		{
+	{
 		itsSaveAllCB->Deactivate();
 		itsSaveAllCB->SetState(true);
 
 		itsUseWindowCB->Activate();
-		}
+	}
 	else
-		{
+	{
 		itsSaveAllCB->Activate();
 		itsUseWindowCB->Activate();
-		}
+	}
 
 	if (itsUseWindowCB->IsChecked())
-		{
+	{
 		itsRaiseCB->Activate();
-		}
+	}
 	else
-		{
+	{
 		itsRaiseCB->Deactivate();
 		itsRaiseCB->SetState(false);
-		}
+	}
 }
 
 /******************************************************************************
@@ -342,67 +342,67 @@ CBRunCommandDialog::Receive
 	)
 {
 	if (sender == this && message.Is(JXDialogDirector::kDeactivated))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const JXDialogDirector::Deactivated*>(&message);
 		assert( info != nullptr );
 		if (info->Successful())
-			{
+		{
 			Exec();
 			JPrefObject::WritePrefs();
-			}
 		}
+	}
 
 	else if (sender == itsHelpButton && message.Is(JXButton::kPushed))
-		{
+	{
 		(JXGetHelpManager())->ShowSection("CBTasksHelp");
-		}
+	}
 
 	else if (sender == itsSaveCmdMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		UpdateSaveCmdMenu();
-		}
+	}
 	else if (sender == itsSaveCmdMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleSaveCmdMenu(selection->GetIndex());
-		}
+	}
 
 	else if (sender == itsPathHistoryMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		itsPathHistoryMenu->UpdateInputField(message, itsPathInput);
-		}
+	}
 	else if (sender == itsChoosePathButton && message.Is(JXButton::kPushed))
-		{
+	{
 		itsPathInput->ChoosePath(JString::empty);
-		}
+	}
 
 	else if (sender == itsChooseCmdButton && message.Is(JXButton::kPushed))
-		{
+	{
 		JXFSRunFileDialog::HandleChooseCmdButton(itsCmdInput);
-		}
+	}
 
 	else if ((sender == itsCmdInput || sender == itsPathInput) &&
 			 (message.Is(JStyledText::kTextSet) ||
 			  message.Is(JStyledText::kTextChanged)))
-		{
+	{
 		UpdateDisplay();
-		}
+	}
 
 	else if ((sender == itsIsMakeCB ||
 			  sender == itsIsCVSCB  ||
 			  sender == itsUseWindowCB) &&
 			 message.Is(JXCheckbox::kPushed))
-		{
+	{
 		UpdateDisplay();
-		}
+	}
 
 	else
-		{
+	{
 		JXDialogDirector::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -417,10 +417,10 @@ CBRunCommandDialog::Exec()
 	assert( path != nullptr );
 
 	if (!itsPathInput->GetPath(path))
-		{
+	{
 		jdelete path;
 		return;
-		}
+	}
 	itsPathHistoryMenu->AddString(itsPathInput->GetText()->GetText());
 
 	auto* cmd = jnew JString(itsCmdInput->GetText()->GetText());
@@ -445,13 +445,13 @@ CBRunCommandDialog::Exec()
 								   itsBeepCB->IsChecked(), mt, ms, mi, false);
 
 	if (itsTextDoc != nullptr)
-		{
+	{
 		CBCommandManager::Exec(info, itsProjDoc, itsTextDoc);
-		}
+	}
 	else if (itsFullNameList != nullptr)
-		{
+	{
 		CBCommandManager::Exec(info, itsProjDoc, *itsFullNameList, *itsLineIndexList);
-		}
+	}
 
 	info.Free();
 }
@@ -467,16 +467,16 @@ CBRunCommandDialog::UpdateSaveCmdMenu()
 	itsSaveCmdMenu->EnableItem(kSaveForAllCmd);
 
 	if (itsProjDoc != nullptr)
-		{
+	{
 		itsSaveCmdMenu->EnableItem(kSaveForActiveCmd);
 
 		const JUtf8Byte* map[] =
-			{
+		{
 			"project", (itsProjDoc->GetName()).GetBytes()
-			};
+		};
 		const JString s = JGetString("SaveForActive::CBRunCommandDialog", map, sizeof(map));
 		itsSaveCmdMenu->SetItemText(kSaveForActiveCmd, s);
-		}
+	}
 }
 
 /******************************************************************************
@@ -491,17 +491,17 @@ CBRunCommandDialog::HandleSaveCmdMenu
 	)
 {
 	if (index == kSaveForAllCmd)
-		{
+	{
 		AddCommandToMenu(CBGetCommandManager());
 		(CBGetCommandManager())->UpdateMenuIDs();
-		}
+	}
 	else if (index == kSaveForActiveCmd)
-		{
+	{
 		if (itsProjDoc != nullptr)
-			{
+		{
 			AddCommandToMenu(itsProjDoc->GetCommandManager());
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -537,9 +537,9 @@ CBRunCommandDialog::ReadPrefs
 	JFileVersion vers;
 	input >> vers;
 	if (vers > kCurrentSetupVersion)
-		{
+	{
 		return;
-		}
+	}
 
 	JXWindow* window = GetWindow();
 	window->ReadGeometry(input);
@@ -560,10 +560,10 @@ CBRunCommandDialog::ReadPrefs
 	itsIsMakeCB->SetState(checked);
 
 	if (vers >= 1)
-		{
+	{
 		input >> JBoolFromString(checked);
 		itsIsCVSCB->SetState(checked);
-		}
+	}
 
 	input >> JBoolFromString(checked);
 	itsSaveAllCB->SetState(checked);

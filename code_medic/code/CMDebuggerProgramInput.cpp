@@ -11,9 +11,9 @@
  ******************************************************************************/
 
 #include "CMDebuggerProgramInput.h"
-#include <JXColorManager.h>
-#include <jProcessUtil.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXColorManager.h>
+#include <jx-af/jcore/jProcessUtil.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -64,15 +64,15 @@ CMDebuggerProgramInput::GetFile
 {
 	const JString& text = GetText().GetText();
 	if (JProgramAvailable(text))
-		{
+	{
 		*fullName = text;
 		return true;
-		}
+	}
 	else
-		{
+	{
 		fullName->Clear();
 		return false;
-		}
+	}
 }
 
 /******************************************************************************

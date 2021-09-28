@@ -8,7 +8,7 @@
 #ifndef _H_CMCommand
 #define _H_CMCommand
 
-#include <JString.h>
+#include <jx-af/jcore/JString.h>
 
 class CMCommand : virtual public JBroadcaster
 {

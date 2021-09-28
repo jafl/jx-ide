@@ -1,28 +1,22 @@
 # To use this file, first run "makemake" and then run "make".
 # (makemake is part of the JX distribution)
 
-JX_ROOT := ../../JX
+JX_ROOT := ../../../JX
 
-# Directories to search for header files
+MAKE_INCLUDE := ${JX_ROOT}/include/jx-af/make
+include ${MAKE_INCLUDE}/jx_config
 
-SEARCHDIRS := -I./code \
-              -I../code \
-              -I${JX_ROOT}/include/jcore \
-              -I${JX_ROOT}/include/jx \
-              -I${JX_ROOT}/include/reflex
+SEARCHDIRS := -I./code -I../code ${SEARCHDIRS}
 
 # makemake variables
 
-include ${JX_ROOT}/include/make/jx_config
-
-DEPENDFLAGS := ${J_COMPILER_DEPEND_FLAGS} \
-               -g ${SEARCHDIRS} -DCODE_CRUSADER \
-               -DCODE_CRUSADER_UNIT_TEST
+DEPENDFLAGS := ${J_COMPILER_DEPEND_FLAGS} -g ${SEARCHDIRS} \
+               -DCODE_CRUSADER -DCODE_CRUSADER_UNIT_TEST
 
 # make variables
 
 CPPFLAGS  += -Wno-sign-compare
-LOADLIBES := -L${JX_ROOT}/lib -ljcore -lreflex ${J_STD_LIBS}
+LOADLIBES := -L${JX_LIB_ROOT} -ljcore -lreflex ${J_STD_LIBS}
 LDFLAGS   := 
 
 # tests
@@ -38,13 +32,6 @@ TESTS := \
 include ../make_reflex_target
 
 #####
-
-.PHONY : default
-default:
-	@cd ..; ${MAKE}
-
-.PHONY : Makefiles
-Makefiles:
 
 .PHONY : test
 test:

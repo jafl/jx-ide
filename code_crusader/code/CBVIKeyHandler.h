@@ -8,7 +8,7 @@
 #ifndef _H_CBVIKeyHandler
 #define _H_CBVIKeyHandler
 
-#include <JXVIKeyHandler.h>
+#include <jx-af/jx/JXVIKeyHandler.h>
 
 class CBTextEditor;
 

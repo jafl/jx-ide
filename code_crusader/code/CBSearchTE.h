@@ -8,7 +8,7 @@
 #ifndef _H_CBSearchTE
 #define _H_CBSearchTE
 
-#include <JTextEditor.h>
+#include <jx-af/jcore/JTextEditor.h>
 #include "CBSearchDocument.h"	// need definition of RecordLink
 
 class CBSearchTE : public JTextEditor

@@ -8,7 +8,7 @@
 #ifndef _H_GFGApp
 #define _H_GFGApp
 
-#include <JXApplication.h>
+#include <jx-af/jx/JXApplication.h>
 
 class GFGApp : public JXApplication
 {

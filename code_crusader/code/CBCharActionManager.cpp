@@ -12,7 +12,7 @@
 
 #include "CBCharActionManager.h"
 #include "CBMacroManager.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 // setup information
 
@@ -47,11 +47,11 @@ CBCharActionManager::CBCharActionManager
 
 	JStringMapCursor cursor(source.itsActionMap);
 	while (cursor.Next())
-		{
+	{
 		itsActionMap->SetNewElement(
 			cursor.GetKey().GetFirstCharacter(),
 			*cursor.GetValue());
-		}
+	}
 }
 
 /******************************************************************************
@@ -78,9 +78,9 @@ CBCharActionManager::Perform
 {
 	JString* script;
 	if (itsActionMap->GetElement(JString(c), &script))
-		{
+	{
 		CBMacroManager::Perform(*script, doc);
-		}
+	}
 }
 
 /******************************************************************************
@@ -96,13 +96,13 @@ CBCharActionManager::SetAction
 	)
 {
 	if (script.IsEmpty())
-		{
+	{
 		ClearAction(c);
-		}
+	}
 	else
-		{
+	{
 		itsActionMap->SetElement(JString(c), script, JPtrArrayT::kDelete);
-		}
+	}
 }
 
 /******************************************************************************
@@ -144,9 +144,9 @@ CBCharActionManager::ReadSetup
 	JFileVersion vers;
 	input >> vers;
 	if (vers > kCurrentSetupVersion)
-		{
+	{
 		return;
-		}
+	}
 
 	ClearAllActions();
 
@@ -155,22 +155,22 @@ CBCharActionManager::ReadSetup
 	JUtf8Character c;
 	JString script;
 	while (true)
-		{
+	{
 		input >> c;
 		if (c == kEndOfSetupListMarker)
-			{
+		{
 			break;
-			}
+		}
 		input >> script;
 		SetAction(c, script);
-		}
+	}
 
 	if (vers == 0)
-		{
+	{
 		JString geom;
 		JCoordinate width;
 		input >> geom >> width;
-		}
+	}
 }
 
 /******************************************************************************
@@ -189,10 +189,10 @@ CBCharActionManager::WriteSetup
 
 	JStringMapCursor cursor(itsActionMap);
 	while (cursor.Next())
-		{
+	{
 		output << cursor.GetKey().GetFirstCharacter();
 		output << ' ' << *cursor.GetValue();
-		}
+	}
 
 	output << kEndOfSetupListMarker;
 }

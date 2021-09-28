@@ -8,7 +8,7 @@
 #ifndef _H_CMDeselectLineTask
 #define _H_CMDeselectLineTask
 
-#include <JXIdleTask.h>
+#include <jx-af/jx/JXIdleTask.h>
 
 class CMLineIndexTable;
 

@@ -6,10 +6,10 @@ This scanner reads a PHP file and builds a CBPHPClass.
 */
 
 #include "CBPHPClass.h"
-#include <JString.h>
-#include <JStringIterator.h>
-#include <JFAID.h>
-#include <jAssert.h>
+#include <jx-af/jcore/JString.h>
+#include <jx-af/jcore/JStringIterator.h>
+#include <jx-af/jcore/JFAID.h>
+#include <jx-af/jcore/jAssert.h>
 }
 
 %option namespace="CB::Tree::PHP" lexer="Scanner"

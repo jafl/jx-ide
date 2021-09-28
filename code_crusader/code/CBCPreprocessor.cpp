@@ -11,11 +11,11 @@
  ******************************************************************************/
 
 #include "CBCPreprocessor.h"
-#include <JPtrArray-JString.h>
-#include <JStringIterator.h>
-#include <JRegex.h>
-#include <jStreamUtil.h>
-#include <jAssert.h>
+#include <jx-af/jcore/JPtrArray-JString.h>
+#include <jx-af/jcore/JStringIterator.h>
+#include <jx-af/jcore/JRegex.h>
+#include <jx-af/jcore/jStreamUtil.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -60,16 +60,16 @@ CBCPreprocessor::Preprocess
 	JStringIterator iter(text);
 	JString pattern;
 	for (const auto& info : *itsMacroList)
-		{
+	{
 		pattern = "\\b" + JRegex::BackslashForLiteral(*info.name)  + "\\b";
 
 		iter.MoveTo(kJIteratorStartAtBeginning, 0);
 		while (iter.Next(*info.name))
-			{
+		{
 			iter.ReplaceLastMatch(*info.value);
 			changed = true;
-			}
 		}
+	}
 
 	return changed;
 }
@@ -94,26 +94,26 @@ CBCPreprocessor::PrintMacrosForCTags
 {
 	const JSize count = itsMacroList->GetElementCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		const MacroInfo info = itsMacroList->GetElement(i);
 
 		if (!info.name->Contains(" ") &&
 			!info.name->Contains("\t") &&
 			!info.value->Contains(" ") &&
 			!info.value->Contains("\t"))
-			{
+		{
 			output << kDefineMacroOption;
 			info.name->Print(output);
 
 			if (!info.value->IsEmpty())
-				{
+			{
 				output << '=';
 				info.value->Print(output);
-				}
+			}
 
 			output << std::endl;
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -167,35 +167,35 @@ CBCPreprocessor::ReadSetup
 	itsMacroList->DeleteAll();
 
 	if (vers >= 71)
-		{
+	{
 		input >> std::ws;
 		JIgnoreLine(input);
-		}
+	}
 
 	if (vers <= 71)
-		{
+	{
 		JSize count;
 		input >> count;
 
 		for (JIndex i=1; i<=count; i++)
-			{
-			ReadMacro(input, vers);
-			}
-		}
-	else
 		{
+			ReadMacro(input, vers);
+		}
+	}
+	else
+	{
 		while (true)
-			{
+		{
 			bool keepGoing;
 			input >> JBoolFromString(keepGoing);
 			if (!keepGoing)
-				{
+			{
 				break;
-				}
+			}
 
 			ReadMacro(input, vers);
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -232,14 +232,14 @@ CBCPreprocessor::WriteSetup
 
 	const JSize count = itsMacroList->GetElementCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		output << JBoolToString(true);
 
 		const MacroInfo info = itsMacroList->GetElement(i);
 		output << ' ' << *(info.name);
 		output << ' ' << *(info.value);
 		output << '\n';
-		}
+	}
 
 	output << JBoolToString(false) << '\n';
 }
@@ -259,11 +259,11 @@ CBPPMacroList::DeleteAll()
 {
 	const JSize count = GetElementCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		CBCPreprocessor::MacroInfo info = GetElement(i);
 		jdelete info.name;
 		jdelete info.value;
-		}
+	}
 
 	RemoveAll();
 }

@@ -8,10 +8,10 @@
 #ifndef _H_CBCtagsUser
 #define _H_CBCtagsUser
 
-#include <JBroadcaster.h>
+#include <jx-af/jcore/JBroadcaster.h>
 #include "CBTextFileType.h"
-#include <JStringPtrMap.h>	// template
-#include <JString.h>
+#include <jx-af/jcore/JStringPtrMap.h>	// template
+#include <jx-af/jcore/JString.h>
 
 class JProcess;
 class JOutPipeStream;

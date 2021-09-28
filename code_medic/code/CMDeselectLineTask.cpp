@@ -11,9 +11,9 @@
 
 #include "CMDeselectLineTask.h"
 #include "CMLineIndexTable.h"
-#include <JXTextMenu.h>
-#include <JTableSelection.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXTextMenu.h>
+#include <jx-af/jcore/JTableSelection.h>
+#include <jx-af/jcore/jAssert.h>
 
 const Time kCheckInterval = 500;	// milliseconds
 
@@ -55,9 +55,9 @@ CMDeselectLineTask::Perform
 {
 	if (TimeToPerform(delta, maxSleepTime) &&
 		!(itsTable->itsLineMenu)->IsOpen())
-		{
+	{
 		(itsTable->GetTableSelection()).ClearSelection();
 		itsTable->itsDeselectTask = nullptr;
 		jdelete this;
-		}
+	}
 }

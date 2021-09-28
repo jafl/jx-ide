@@ -8,7 +8,7 @@
 #ifndef _H_CBFileTypeTable
 #define _H_CBFileTypeTable
 
-#include <JXEditTable.h>
+#include <jx-af/jx/JXEditTable.h>
 #include "CBPrefsManager.h"		// need definition of FileTypeInfo
 
 class JXTextButton;

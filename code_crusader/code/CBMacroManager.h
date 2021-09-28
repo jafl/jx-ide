@@ -8,7 +8,7 @@
 #ifndef _H_CBMacroManager
 #define _H_CBMacroManager
 
-#include <JStyledText.h>
+#include <jx-af/jcore/JStyledText.h>
 
 class JString;
 class CBMacroList;

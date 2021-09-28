@@ -10,7 +10,7 @@
 #ifndef _H_CBFileListDirector
 #define _H_CBFileListDirector
 
-#include <JXWindowDirector.h>
+#include <jx-af/jx/JXWindowDirector.h>
 
 class JXTextMenu;
 class JXToolBar;

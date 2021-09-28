@@ -8,7 +8,7 @@
 #ifndef _H_CMEditCommandsTable
 #define _H_CMEditCommandsTable
 
-#include <JXEditTable.h>
+#include <jx-af/jx/JXEditTable.h>
 
 class JXTextButton;
 class CMEditCommandsDialog;

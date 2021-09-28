@@ -10,7 +10,7 @@
 #ifndef _H_CBTECaretInputBase
 #define _H_CBTECaretInputBase
 
-#include <JXIntegerInput.h>
+#include <jx-af/jx/JXIntegerInput.h>
 
 class JXStaticText;
 

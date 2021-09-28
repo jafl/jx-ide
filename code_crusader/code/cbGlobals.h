@@ -10,7 +10,7 @@
 
 // we include these for convenience
 
-#include <jXGlobals.h>
+#include <jx-af/jx/jXGlobals.h>
 #include "CBApp.h"
 #include "CBDocumentManager.h"
 #include "CBPrefsManager.h"

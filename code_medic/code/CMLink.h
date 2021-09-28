@@ -8,9 +8,9 @@
 #ifndef _H_CMLink
 #define _H_CMLink
 
-#include <JBroadcaster.h>
-#include <JStringPtrMap.h>
-#include <JPtrArray-JString.h>
+#include <jx-af/jcore/JBroadcaster.h>
+#include <jx-af/jcore/JStringPtrMap.h>
+#include <jx-af/jcore/JPtrArray-JString.h>
 #include "CMLocation.h"
 
 class CMCommand;

@@ -10,7 +10,7 @@
 #ifndef _H_CMApp
 #define _H_CMApp
 
-#include <JXApplication.h>
+#include <jx-af/jx/JXApplication.h>
 
 class CMApp : public JXApplication
 {

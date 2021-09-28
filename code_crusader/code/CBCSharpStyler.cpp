@@ -12,10 +12,10 @@
 
 #include "CBCSharpStyler.h"
 #include "CBPrefsManager.h"
-#include <JRegex.h>
-#include <JColorManager.h>
-#include <jGlobals.h>
-#include <jAssert.h>
+#include <jx-af/jcore/JRegex.h>
+#include <jx-af/jcore/JColorManager.h>
+#include <jx-af/jcore/jGlobals.h>
+#include <jx-af/jcore/jAssert.h>
 
 CBCSharpStyler* CBCSharpStyler::itsSelf = nullptr;
 
@@ -57,14 +57,14 @@ CBStylerBase*
 CBCSharpStyler::Instance()
 {
 	if (itsSelf == nullptr && !recursiveInstance)
-		{
+	{
 		recursiveInstance = true;
 
 		itsSelf = jnew CBCSharpStyler;
 		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
-		}
+	}
 
 	return itsSelf;
 }
@@ -93,9 +93,9 @@ CBCSharpStyler::CBCSharpStyler()
 {
 	JFontStyle blankStyle;
 	for (JIndex i=1; i<=kTypeCount; i++)
-		{
+	{
 		SetTypeStyle(i, blankStyle);
-		}
+	}
 
 	SetTypeStyle(kReservedCKeyword   - kWhitespace, JFontStyle(JColorManager::GetDarkGreenColor()));
 	SetTypeStyle(kBuiltInDataType    - kWhitespace, JFontStyle(JColorManager::GetDarkGreenColor()));
@@ -145,12 +145,12 @@ CBCSharpStyler::Scan
 	Token token;
 	JFontStyle style;
 	do
-		{
+	{
 		token = NextToken();
 		if (token.type == kEOF)
-			{
+		{
 			break;
-			}
+		}
 
 		// save token starts
 
@@ -160,48 +160,48 @@ CBCSharpStyler::Scan
 			token.type == kString             ||
 			token.type == kComment            ||
 			token.type == kDocComment)
-			{
+		{
 			SaveTokenStart(token.range.GetFirst());
-			}
+		}
 
 		// set the style
 
 		const JIndex typeIndex = token.type - kWhitespace;
 		if (token.type == kWhitespace)
-			{
+		{
 			style = GetDefaultFont().GetStyle();
-			}
+		}
 		else if (token.type == kComment    ||
 				 token.type == kDocComment ||
 				 token.type == kString)
-			{
+		{
 			style = GetTypeStyle(typeIndex);
-			}
+		}
 		else if (token.type == kPPDirective && SlurpPPComment(&token.range))
-			{
+		{
 			token.type = kComment;
 			style      = GetTypeStyle(kComment - kWhitespace);
-			}
+		}
 		else if (token.type == kPPDirective)
-			{
+		{
 			style = GetStyle(typeIndex, GetPPCommand(text));
-			}
+		}
 		else if (token.type < kWhitespace)
-			{
+		{
 			style = GetTypeStyle(kError - kWhitespace);
-			}
+		}
 		else if (token.type > kError)	// misc
-			{
+		{
 			if (!GetWordStyle(JString(text.GetRawBytes(), token.range.byteRange, JString::kNoCopy), &style))
-				{
-				style = GetDefaultFont().GetStyle();
-				}
-			}
-		else
 			{
-			style = GetStyle(typeIndex, JString(text.GetRawBytes(), token.range.byteRange, JString::kNoCopy));
+				style = GetDefaultFont().GetStyle();
 			}
 		}
+		else
+		{
+			style = GetStyle(typeIndex, JString(text.GetRawBytes(), token.range.byteRange, JString::kNoCopy));
+		}
+	}
 		while (SetStyle(token.range.charRange, style));
 }
 
@@ -243,36 +243,36 @@ CBCSharpStyler::SlurpPPComment
 	const JString& text = GetText();
 	const JString s(text.GetRawBytes(), JUtf8ByteRange(GetPPNameRange().byteRange.first, totalRange->byteRange.last), JString::kNoCopy);
 	if (!ppCommentPattern.Match(s))
-		{
+	{
 		return false;
-		}
+	}
 
 	Token token;
 	JSize nestCount = 1;
 	while (true)
-		{
+	{
 		token = NextToken();
 		if (token.type == kEOF)
-			{
+		{
 			break;
-			}
+		}
 		else if (token.type == kPPDirective)
-			{
+		{
 			const JString ppCmd(text.GetRawBytes(), GetPPNameRange().byteRange, JString::kNoCopy);
 			if (ppIfPattern.Match(ppCmd))
-				{
+			{
 				nestCount++;
-				}
+			}
 			else if (ppEndPattern.Match(ppCmd))
-				{
+			{
 				nestCount--;
 				if (nestCount == 0)
-					{
-					break;
-					}
-				}
-			else if (ppElsePattern.Match(ppCmd) && nestCount == 1)
 				{
+					break;
+				}
+			}
+			else if (ppElsePattern.Match(ppCmd) && nestCount == 1)
+			{
 				JSize prevCharByteCount;
 				const bool ok =
 					JUtf8Character::GetPrevCharacterByteCount(
@@ -285,9 +285,9 @@ CBCSharpStyler::SlurpPPComment
 				token.range.charRange.SetToEmptyAt(token.range.charRange.first);
 				token.range.byteRange.SetToEmptyAt(token.range.byteRange.first);
 				break;
-				}
 			}
 		}
+	}
 
 	totalRange->charRange.last = token.range.charRange.last;
 	totalRange->byteRange.last = token.range.byteRange.last;

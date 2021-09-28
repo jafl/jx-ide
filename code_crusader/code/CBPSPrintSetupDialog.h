@@ -8,7 +8,7 @@
 #ifndef _H_CBPSPrintSetupDialog
 #define _H_CBPSPrintSetupDialog
 
-#include <JXPSPrintSetupDialog.h>
+#include <jx-af/jx/JXPSPrintSetupDialog.h>
 
 class JXFontSizeMenu;
 

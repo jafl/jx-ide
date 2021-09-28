@@ -8,7 +8,7 @@
 #ifndef _H_CMLocalVarsDir
 #define _H_CMLocalVarsDir
 
-#include <JXWindowDirector.h>
+#include <jx-af/jx/JXWindowDirector.h>
 
 class JTree;
 class JXTextButton;

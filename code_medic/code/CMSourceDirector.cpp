@@ -25,25 +25,25 @@
 #include "cmGlobals.h"
 #include "cmActionDefs.h"
 
-#include <JXDisplay.h>
-#include <JXWindow.h>
-#include <JXMenuBar.h>
-#include <JXTextMenu.h>
-#include <JXScrollbarSet.h>
-#include <JXFileNameDisplay.h>
-#include <JXToolBar.h>
-#include <JXHelpManager.h>
-#include <JXWDManager.h>
-#include <JXImage.h>
-#include <JXColorManager.h>
-#include <JXMacWinPrefsDialog.h>
-#include <JXCloseDirectorTask.h>
+#include <jx-af/jx/JXDisplay.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXMenuBar.h>
+#include <jx-af/jx/JXTextMenu.h>
+#include <jx-af/jx/JXScrollbarSet.h>
+#include <jx-af/jx/JXFileNameDisplay.h>
+#include <jx-af/jx/JXToolBar.h>
+#include <jx-af/jx/JXHelpManager.h>
+#include <jx-af/jx/JXWDManager.h>
+#include <jx-af/jx/JXImage.h>
+#include <jx-af/jx/JXColorManager.h>
+#include <jx-af/jx/JXMacWinPrefsDialog.h>
+#include <jx-af/jx/JXCloseDirectorTask.h>
 
-#include <JStringIterator.h>
-#include <JFontManager.h>
-#include <jDirUtil.h>
-#include <jFileUtil.h>
-#include <jAssert.h>
+#include <jx-af/jcore/JStringIterator.h>
+#include <jx-af/jcore/JFontManager.h>
+#include <jx-af/jcore/jDirUtil.h>
+#include <jx-af/jcore/jFileUtil.h>
+#include <jx-af/jcore/jAssert.h>
 
 // File menu
 
@@ -162,13 +162,13 @@ CMSourceDirector::CMSourceDirector
 	CMSourceViewDirectorX(commandDir);
 
 	if (itsType == kMainSourceType)
-		{
+	{
 		itsSrcMainCmd = itsLink->CreateDisplaySourceForMain(this);
-		}
+	}
 	else if (itsType == kMainAsmType)
-		{
+	{
 		UpdateFileType();	// only need to do this once
-		}
+	}
 }
 
 // protected
@@ -188,16 +188,16 @@ CMSourceDirector::CMSourceDirector
 	CMSourceViewDirectorX(commandDir);
 
 	if (itsType == kAsmType && !fileOrFn.IsEmpty())
-		{
+	{
 		CMLocation loc;
 		loc.SetFunctionName(fileOrFn);
 		loc.SetMemoryAddress(JString("0x0", JString::kNoCopy));	// not allowed to be null
 		DisplayDisassembly(loc);
-		}
+	}
 	else if (itsType == kSourceType && JFileReadable(fileOrFn))
-		{
+	{
 		DisplayFile(fileOrFn);
-		}
+	}
 }
 
 void
@@ -224,17 +224,17 @@ CMSourceDirector::CMSourceViewDirectorX
 CMSourceDirector::~CMSourceDirector()
 {
 	if (itsType == kMainSourceType)
-		{
+	{
 		CMGetPrefsManager()->SaveWindowSize(kMainCodeWindSizeID, GetWindow());
-		}
+	}
 	else if (itsType == kMainAsmType)
-		{
+	{
 		CMGetPrefsManager()->SaveWindowSize(kMainAsmWindSizeID, GetWindow());
-		}
+	}
 	else
-		{
+	{
 		itsCommandDir->SourceWindowClosed(this);
-		}
+	}
 
 	jdelete itsSrcMainCmd;
 	jdelete itsGetAssemblyCmd;
@@ -307,7 +307,7 @@ CMSourceDirector::BuildWindow()
 	window->SetMinSize(300, 200);
 
 	if (itsType == kMainSourceType)
-		{
+	{
 		window->SetCloseAction(JXWindow::kDeactivateDirector);
 
 		window->SetWMClass(CMGetWMClassInstance(), CMGetMainSourceWindowClass());
@@ -317,9 +317,9 @@ CMSourceDirector::BuildWindow()
 		auto* icon      = jnew JXImage(display, medic_current_source_window);
 		assert( icon != nullptr );
 		window->SetIcon(icon);
-		}
+	}
 	else if (itsType == kMainAsmType)
-		{
+	{
 		window->SetCloseAction(JXWindow::kDeactivateDirector);
 
 		window->SetWMClass(CMGetWMClassInstance(), CMGetMainAsmWindowClass());
@@ -329,17 +329,17 @@ CMSourceDirector::BuildWindow()
 		auto* icon      = jnew JXImage(display, medic_current_asm_window);
 		assert( icon != nullptr );
 		window->SetIcon(icon);
-		}
+	}
 	else if (itsType == kAsmType)
-		{
+	{
 		window->SetWMClass(CMGetWMClassInstance(), CMGetAsmViewWindowClass());
 		CMGetPrefsManager()->GetWindowSize(kAsmWindSizeID, window, true);
-		}
+	}
 	else
-		{
+	{
 		window->SetWMClass(CMGetWMClassInstance(), CMGetSourceViewWindowClass());
 		CMGetPrefsManager()->GetWindowSize(kCodeWindSizeID, window, true);
-		}
+	}
 
 	JCoordinate w = window->GetFrameWidth();
 
@@ -373,19 +373,19 @@ CMSourceDirector::BuildWindow()
 	ListenTo(itsText);
 
 	if (itsType == kMainAsmType || itsType == kAsmType)
-		{
+	{
 		itsTable =
 			jnew CMLineAddressTable(this, itsText, scrollbarSet, encl,
 								   JXWidget::kFixedLeft, JXWidget::kVElastic,
 								   0, 0, kInitTableWidth, 100);
-		}
+	}
 	else
-		{
+	{
 		itsTable =
 			jnew CMLineNumberTable(this, itsText, scrollbarSet, encl,
 								  JXWidget::kFixedLeft, JXWidget::kVElastic,
 								  0, 0, kInitTableWidth, 100);
-		}
+	}
 	assert( itsTable != nullptr );
 	itsTable->FitToEnclosure(false, true);
 
@@ -405,9 +405,9 @@ CMSourceDirector::BuildWindow()
 	itsPrefsMenu->SetMenuItems(kPrefsMenuStr, "CMSourceDirector");
 	itsPrefsMenu->SetUpdateAction(JXMenu::kDisableNone);
 	if (IsMainSourceWindow())
-		{
+	{
 		itsPrefsMenu->RemoveItem(kWindowSizeCmd);
-		}
+	}
 	ListenTo(itsPrefsMenu);
 
 	itsHelpMenu = itsMenuBar->AppendTextMenu(JGetString("HelpMenuTitle::JXGlobal"));
@@ -419,9 +419,9 @@ CMSourceDirector::BuildWindow()
 	itsHelpMenu->SetItemImage(kThisWindowCmd, jx_help_specific);
 
 	if (!IsMainSourceWindow())
-		{
+	{
 		(GetDisplay()->GetWDManager())->DirectorCreated(this);
-		}
+	}
 }
 
 /******************************************************************************
@@ -451,17 +451,17 @@ CMSourceDirector::GetName()
 	const
 {
 	if (itsType == kMainSourceType)
-		{
+	{
 		return JGetString("MainSourceName::CMSourceDirector");
-		}
+	}
 	else if (itsType == kMainAsmType)
-		{
+	{
 		return JGetString("MainAsmName::CMSourceDirector");
-		}
+	}
 	else
-		{
+	{
 		return JXWindowDirector::GetName();
-		}
+	}
 }
 
 /******************************************************************************
@@ -477,21 +477,21 @@ CMSourceDirector::GetMenuIcon
 	const
 {
 	if (itsType == kMainSourceType)
-		{
+	{
 		*icon = CMGetCurrentSourceIcon();
-		}
+	}
 	else if (itsType == kMainAsmType)
-		{
+	{
 		*icon = CMGetCurrentAsmIcon();
-		}
+	}
 	else if (itsType == kAsmType)
-		{
+	{
 		*icon = CMGetAsmSourceIcon();
-		}
+	}
 	else
-		{
+	{
 		*icon = CMGetSourceFileIcon();
-		}
+	}
 	return true;
 }
 
@@ -509,13 +509,13 @@ CMSourceDirector::Receive
 {
 	if (IsMainSourceWindow() &&
 		sender == itsLink && message.Is(CMLink::kDebuggerStarted))
-		{
+	{
 		ClearDisplay();
-		}
+	}
 	else if (sender == itsLink && message.Is(CMLink::kPrepareToLoadSymbols))
-		{
+	{
 		if (!itsCurrentFile.IsEmpty())		// reload file, in case it changed
-			{
+		{
 			JCharacterRange r;
 			const JString fileName = itsCurrentFile;
 			const JIndex lineIndex = itsText->GetSelection(&r) ?
@@ -523,47 +523,47 @@ CMSourceDirector::Receive
 									 itsTable->GetCurrentLine();
 			itsCurrentFile.Clear();			// force reload
 			DisplayFile(fileName, lineIndex);
-			}
 		}
+	}
 	else if (IsMainSourceWindow() &&
 			 sender == itsLink && message.Is(CMLink::kSymbolsLoaded))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const CMLink::SymbolsLoaded*>(&message);
 		assert( info != nullptr );
 		UpdateWindowTitle(info->GetProgramName());
-		}
+	}
 	else if (IsMainSourceWindow() &&
 			 sender == itsLink && message.Is(CMLink::kProgramStopped))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const CMLink::ProgramStopped*>(&message);
 		assert( info != nullptr);
 		const CMLocation* loc;
 		const bool hasFile = info->GetLocation(&loc);
 		if (itsType == kMainSourceType && hasFile)
-			{
+		{
 			DisplayFile(loc->GetFileName(), loc->GetLineNumber());
-			}
+		}
 		else if (itsType == kMainAsmType &&
 				 !loc->GetFunctionName().IsEmpty() &&
 				 !loc->GetMemoryAddress().IsEmpty())
-			{
+		{
 			DisplayDisassembly(*loc);
-			}
+		}
 		else if (itsType == kMainAsmType)
-			{
+		{
 			// wait for kProgramStopped2
-			}
+		}
 		else
-			{
+		{
 			ClearDisplay();
 			(CMGetCommandDirector())->GetStackDir()->Activate();
-			}
 		}
+	}
 	else if (itsType == kMainAsmType && sender == itsLink &&
 			 message.Is(CMLink::kProgramStopped2))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const CMLink::ProgramStopped2*>(&message);
 		assert( info != nullptr);
@@ -571,87 +571,87 @@ CMSourceDirector::Receive
 		info->GetLocation(&loc);
 		if (!loc->GetFunctionName().IsEmpty() &&
 			!loc->GetMemoryAddress().IsEmpty())
-			{
+		{
 			DisplayDisassembly(*loc);
-			}
-		else
-			{
-			ClearDisplay();
-			}
 		}
+		else
+		{
+			ClearDisplay();
+		}
+	}
 
 	else if (sender == itsLink &&
 			 (message.Is(CMLink::kProgramFinished) ||
 			  message.Is(CMLink::kCoreCleared)     ||
 			  message.Is(CMLink::kDetachedFromProcess)))
-		{
+	{
 		if (itsSrcMainCmd != nullptr)
-			{
+		{
 			itsSrcMainCmd->CMCommand::Send();
-			}
-		else if (itsType == kMainAsmType)
-			{
-			ClearDisplay();
-			}
 		}
+		else if (itsType == kMainAsmType)
+		{
+			ClearDisplay();
+		}
+	}
 
 	else if (sender == itsFileMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		UpdateFileMenu();
-		}
+	}
 	else if (sender == itsFileMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleFileMenu(selection->GetIndex());
-		}
+	}
 
 	else if (sender == itsDebugMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		itsCommandDir->UpdateDebugMenu(itsDebugMenu, itsText, nullptr);
-		}
+	}
 	else if (sender == itsDebugMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		itsCommandDir->HandleDebugMenu(itsDebugMenu, selection->GetIndex(), itsText, nullptr);
-		}
+	}
 
 	else if (sender == itsPrefsMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		UpdatePrefsMenu();
-		}
+	}
 	else if (sender == itsPrefsMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandlePrefsMenu(selection->GetIndex());
-		}
+	}
 
 	else if (sender == itsHelpMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleHelpMenu(selection->GetIndex());
-		}
+	}
 
 	else if (sender == CMGetPrefsManager() && message.Is(CMPrefsManager::kFileTypesChanged))
-		{
+	{
 		UpdateFileType();
-		}
+	}
 	else if (sender == CMGetPrefsManager() && message.Is(CMPrefsManager::kCustomCommandsChanged))
-		{
+	{
 		itsCommandDir->AdjustDebugMenu(itsDebugMenu);
-		}
+	}
 
 	else
-		{
+	{
 		JXWindowDirector::Receive(sender,message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -666,33 +666,33 @@ CMSourceDirector::ReceiveGoingAway
 	)
 {
 	if (sender == itsLink && !CMIsShuttingDown() && IsMainSourceWindow())
-		{
+	{
 		itsLink = CMGetLink();
 		ListenTo(itsLink);
 
 		if (itsType == kMainSourceType)
-			{
+		{
 			jdelete itsSrcMainCmd;
 			itsSrcMainCmd = itsLink->CreateDisplaySourceForMain(this);
-			}
+		}
 		else if (itsType == kMainAsmType)
-			{
+		{
 			jdelete itsGetAssemblyCmd;
 			itsGetAssemblyCmd = nullptr;
-			}
+		}
 
 		auto* task = jnew CMClearSourceDisplayTask(this);
 		assert( task != nullptr );
 		task->Go();
-		}
+	}
 	else if (sender == itsLink && !CMIsShuttingDown())
-		{
+	{
 		JXCloseDirectorTask::Close(this);
-		}
+	}
 	else
-		{
+	{
 		JXWindowDirector::ReceiveGoingAway(sender);
-		}
+	}
 }
 
 /******************************************************************************
@@ -711,12 +711,12 @@ CMSourceDirector::DisplayFile
 	assert( !fileName.IsEmpty() );
 
 	if (!itsCurrentFile.IsEmpty() && JSameDirEntry(fileName, itsCurrentFile))
-		{
+	{
 		DisplayLine(lineNumber, markLine);
 		UpdateWindowTitle(JString::empty);
-		}
+	}
 	else if (JFileReadable(fileName))
-		{
+	{
 		itsCurrentFile = fileName;
 
 		JStyledText::PlainTextFormat format;
@@ -729,16 +729,16 @@ CMSourceDirector::DisplayFile
 		JStringIterator iter(text, kJIteratorStartAtEnd);
 		JUtf8Character c;
 		while (iter.Prev(&c, kJIteratorStay) && c == '\n')
-			{
+		{
 			iter.SkipPrev();
-			}
+		}
 		if (!iter.AtEnd())
-			{
+		{
 			itsText->SetSelection(JCharacterRange(
 				iter.GetNextCharacterIndex(), text.GetCharacterCount()));
 			iter.Invalidate();
 			itsText->DeleteSelection();
-			}
+		}
 		iter.Invalidate();
 
 		itsText->SetCaretLocation(1);
@@ -749,7 +749,7 @@ CMSourceDirector::DisplayFile
 		UpdateWindowTitle(JString::empty);
 
 		DisplayLine(lineNumber, markLine);
-		}
+	}
 }
 
 /******************************************************************************
@@ -770,36 +770,36 @@ CMSourceDirector::DisplayDisassembly
 	assert( !addr.IsEmpty() );
 
 	if (fnName == itsCurrentFn)
-		{
+	{
 		JIndex i;
 		if (dynamic_cast<CMLineAddressTable*>(itsTable)->FindAddressLineNumber(addr, &i))
-			{
+		{
 			DisplayLine(i);
-			}
+		}
 		else
-			{
+		{
 			itsTable->SetCurrentLine(0);
-			}
+		}
 
 		UpdateWindowTitle(JString::empty);
-		}
+	}
 	else
-		{
+	{
 		itsCurrentFn = fnName;
 
 		if (itsGetAssemblyCmd == nullptr)
-			{
+		{
 			itsGetAssemblyCmd = CMGetLink()->CreateGetAssembly(this);
-			}
+		}
 
 		if (itsGetAssemblyCmd != nullptr)
-			{
+		{
 			itsAsmLocation = loc;
 			itsGetAssemblyCmd->Send();
-			}
+		}
 
 		UpdateWindowTitle(JString::empty);
-		}
+	}
 }
 
 /******************************************************************************
@@ -821,13 +821,13 @@ CMSourceDirector::DisplayDisassembly
 	JIndex i;
 	if (!addrList->IsEmpty() &&
 		table->FindAddressLineNumber(itsAsmLocation.GetMemoryAddress(), &i))
-		{
+	{
 		DisplayLine(i);
-		}
+	}
 	else
-		{
+	{
 		table->SetCurrentLine(0);
-		}
+	}
 }
 
 /******************************************************************************
@@ -843,19 +843,19 @@ CMSourceDirector::DisplayLine
 	)
 {
 	if (lineNumber > 0)
-		{
+	{
 		const JIndex i = itsText->CRLineIndexToVisualLineIndex(lineNumber);
 
 		itsText->GoToLine(i);
 		if (IsMainSourceWindow() && markLine)
-			{
+		{
 			itsTable->SetCurrentLine(i);
-			}
-		else
-			{
-			itsText->SelectLine(i);
-			}
 		}
+		else
+		{
+			itsText->SelectLine(i);
+		}
+	}
 }
 
 /******************************************************************************
@@ -868,9 +868,9 @@ CMSourceDirector::ClearDisplay()
 {
 	auto* table = dynamic_cast<CMLineAddressTable*>(itsTable);
 	if (table != nullptr)
-		{
+	{
 		table->ClearLineNumbers();
-		}
+	}
 	itsText->GetText()->SetText(JString::empty);
 	itsFileDisplay->GetText()->SetText(JString::empty);
 	itsCurrentFile.Clear();
@@ -896,28 +896,28 @@ CMSourceDirector::UpdateFileType()
 	itsText->SetFileType(fileType);
 
 	if (!itsCurrentFile.IsEmpty() && (CMGetFnMenuUpdater())->CanCreateMenu(fileType))
-		{
+	{
 		itsMenuBar->InsertMenuAfter(itsDebugMenu, itsFnMenu);
 		itsFnMenu->TextChanged(fileType, itsCurrentFile);
-		}
+	}
 	else
-		{
+	{
 		itsMenuBar->RemoveMenu(itsFnMenu);
-		}
+	}
 
 	if (!itsCurrentFile.IsEmpty())
-		{
+	{
 		bool setTabWidth, setTabMode, tabInsertsSpaces, setAutoIndent, autoIndent;
 		JSize tabWidth;
 		CBMParseEditorOptions(itsCurrentFile, itsText->GetText()->GetText(), &setTabWidth, &tabWidth,
 							  &setTabMode, &tabInsertsSpaces, &setAutoIndent, &autoIndent);
 		if (setTabWidth)
-			{
+		{
 			itsText->GetText()->SetCRMTabCharCount(tabWidth);
 			itsText->SetDefaultTabWidth(
 				tabWidth * itsText->GetText()->GetDefaultFont().GetCharWidth(itsText->GetFontManager(), JUtf8Character(' ')));
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -935,41 +935,41 @@ CMSourceDirector::UpdateWindowTitle
 {
 	JString path, title, prefix;
 	if (itsType == kMainAsmType || itsType == kAsmType)
-		{
+	{
 		prefix = JGetString("WindowTitlePrefixMainAsm::CMSourceDirector");
 		title  = itsCurrentFn.IsEmpty() ? JGetString("WindowTitleNoAsm::CMSourceDirector") : itsCurrentFn;
-		}
+	}
 	else
-		{
+	{
 		prefix = JGetString("WindowTitlePrefixMainSrc::CMSourceDirector");
 
 		if (itsCurrentFile.IsEmpty())
-			{
+		{
 			title = JGetString("WindowTitleNoSrc::CMSourceDirector");
-			}
-		else
-			{
-			JSplitPathAndName(itsCurrentFile, &path, &title);
-			}
 		}
+		else
+		{
+			JSplitPathAndName(itsCurrentFile, &path, &title);
+		}
+	}
 
 	if (IsMainSourceWindow())
-		{
+	{
 		// Save prefix with binary name since we will be called when file
 		// name changes, too.
 
 		if (!binaryName.IsEmpty())
-			{
+		{
 			itsWindowTitlePrefix  = binaryName;
 			itsWindowTitlePrefix += prefix;
-			}
+		}
 		else if (itsWindowTitlePrefix.IsEmpty())
-			{
+		{
 			itsWindowTitlePrefix = prefix;
-			}
+		}
 
 		title.Prepend(itsWindowTitlePrefix);
-		}
+	}
 
 	GetWindow()->SetTitle(title);
 }
@@ -999,11 +999,11 @@ CMSourceDirector::HandleFileMenu
 	)
 {
 	if (index == kOpenCmd)
-		{
+	{
 		itsCommandDir->OpenSourceFiles();
-		}
+	}
 	else if (index == kEditCmd)
-		{
+	{
 		JCharacterRange r;
 		const JIndex visualIndex =
 			itsText->GetSelection(&r) ?
@@ -1015,41 +1015,41 @@ CMSourceDirector::HandleFileMenu
 				visualIndex > 0 ?
 					itsText->VisualLineIndexToCRLineIndex(visualIndex) :
 					visualIndex);
-		}
+	}
 
 	else if (index == kLoadConfigCmd)
-		{
+	{
 		itsCommandDir->LoadConfig();
-		}
+	}
 	else if (index == kSaveConfigCmd)
-		{
+	{
 		itsCommandDir->SaveConfig();
-		}
+	}
 
 	else if (index == kPageSetupCmd)
-		{
+	{
 		itsText->HandlePTPageSetup();
-		}
+	}
 	else if (index == kPrintCmd)
-		{
+	{
 		itsText->PrintPT();
-		}
+	}
 
 	else if (index == kCloseCmd)
-		{
+	{
 		if (IsMainSourceWindow())
-			{
-			Deactivate();
-			}
-		else
-			{
-			Close();
-			}
-		}
-	else if (index == kQuitCmd)
 		{
-		JXGetApplication()->Quit();
+			Deactivate();
 		}
+		else
+		{
+			Close();
+		}
+	}
+	else if (index == kQuitCmd)
+	{
+		JXGetApplication()->Quit();
+	}
 }
 
 /******************************************************************************
@@ -1078,52 +1078,52 @@ CMSourceDirector::HandlePrefsMenu
 	)
 {
 	if (index == kUseGDBCmd)
-		{
+	{
 		CMGetPrefsManager()->SetDebuggerType(CMPrefsManager::kGDBType);
-		}
+	}
 	else if (index == kUseLLDBCmd)
-		{
+	{
 		CMGetPrefsManager()->SetDebuggerType(CMPrefsManager::kLLDBType);
-		}
+	}
 	else if (index == kUseJavaCmd)
-		{
+	{
 		CMGetPrefsManager()->SetDebuggerType(CMPrefsManager::kJavaType);
-		}
+	}
 	else if (index == kUseXdebugCmd)
-		{
+	{
 		CMGetPrefsManager()->SetDebuggerType(CMPrefsManager::kXdebugType);
-		}
+	}
 
 	else if (index == kEditPrefsCmd)
-		{
+	{
 		CMGetPrefsManager()->EditPrefs();
-		}
+	}
 	else if (index == kEditToolBarCmd)
-		{
+	{
 		itsToolBar->Edit();
-		}
+	}
 	else if (index == kEditCmdsCmd)
-		{
+	{
 		auto* dlog = jnew CMEditCommandsDialog;
 		assert(dlog != nullptr);
 		dlog->BeginDialog();
-		}
+	}
 	else if (index == kEditMacWinPrefsCmd)
-		{
+	{
 		JXMacWinPrefsDialog::EditPrefs();
-		}
+	}
 
 	else if (index == kWindowSizeCmd)
-		{
+	{
 		if (itsType == kSourceType)
-			{
+		{
 			CMGetPrefsManager()->SaveWindowSize(kCodeWindSizeID, GetWindow());
-			}
-		else if (itsType == kAsmType)
-			{
-			CMGetPrefsManager()->SaveWindowSize(kAsmWindSizeID, GetWindow());
-			}
 		}
+		else if (itsType == kAsmType)
+		{
+			CMGetPrefsManager()->SaveWindowSize(kAsmWindSizeID, GetWindow());
+		}
+	}
 }
 
 /******************************************************************************
@@ -1138,27 +1138,27 @@ CMSourceDirector::HandleHelpMenu
 	)
 {
 	if (index == kAboutCmd)
-		{
+	{
 		(CMGetApplication())->DisplayAbout();
-		}
+	}
 	else if (index == kTOCCmd)
-		{
+	{
 		JXGetHelpManager()->ShowTOC();
-		}
+	}
 	else if (index == kOverviewCmd)
-		{
+	{
 		JXGetHelpManager()->ShowSection("CMOverviewHelp");
-		}
+	}
 	else if (index == kThisWindowCmd)
-		{
+	{
 		JXGetHelpManager()->ShowSection("CMSourceWindowHelp");
-		}
+	}
 	else if (index == kChangesCmd)
-		{
+	{
 		JXGetHelpManager()->ShowChangeLog();
-		}
+	}
 	else if (index == kCreditsCmd)
-		{
+	{
 		JXGetHelpManager()->ShowCredits();
-		}
+	}
 }

@@ -8,7 +8,7 @@
 #ifndef _H_CBCPPMacroTable
 #define _H_CBCPPMacroTable
 
-#include <JXStringTable.h>
+#include <jx-af/jx/JXStringTable.h>
 
 class JXTextButton;
 class JXColHeaderWidget;

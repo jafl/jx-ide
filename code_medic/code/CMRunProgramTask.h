@@ -8,7 +8,7 @@
 #ifndef _H_CMRunProgramTask
 #define _H_CMRunProgramTask
 
-#include <JXIdleTask.h>
+#include <jx-af/jx/JXIdleTask.h>
 
 class CMRunProgramTask : public JXIdleTask
 {

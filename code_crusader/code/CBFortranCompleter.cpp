@@ -8,7 +8,7 @@
  ******************************************************************************/
 
 #include "CBFortranCompleter.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 CBFortranCompleter* CBFortranCompleter::itsSelf = nullptr;
 
@@ -590,14 +590,14 @@ CBStringCompleter*
 CBFortranCompleter::Instance()
 {
 	if (itsSelf == nullptr && !recursiveInstance)
-		{
+	{
 		recursiveInstance = true;
 
 		itsSelf = jnew CBFortranCompleter;
 		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
-		}
+	}
 
 	return itsSelf;
 }

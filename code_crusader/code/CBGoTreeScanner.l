@@ -6,12 +6,12 @@ This scanner reads a GoLang file and creates CBGoClass instances.
 */
 
 #include "CBGoClass.h"
-#include <JStringIterator.h>
-#include <JRegex.h>
-#include <JPtrArray.h>
-#include <JStringPtrMap.h>
-#include <JFAID.h>
-#include <jAssert.h>
+#include <jx-af/jcore/JStringIterator.h>
+#include <jx-af/jcore/JRegex.h>
+#include <jx-af/jcore/JPtrArray.h>
+#include <jx-af/jcore/JStringPtrMap.h>
+#include <jx-af/jcore/JFAID.h>
+#include <jx-af/jcore/jAssert.h>
 
 static const JRegex modulePattern("(?:.+?/)*(.+?)(?:/[vV][.0-9]+)?");
 }

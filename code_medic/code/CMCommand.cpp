@@ -39,7 +39,7 @@
 
 #include "CMCommand.h"
 #include "cmGlobals.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -93,9 +93,9 @@ CMCommand::~CMCommand()
 	jdelete itsResultList;
 
 	if (itsState != kUnassigned)
-		{
+	{
 		CMGetLink()->Cancel(this);
-		}
+	}
 }
 
 /******************************************************************************
@@ -151,22 +151,22 @@ CMCommand::Finished
 	itsState = kUnassigned;		// before Handle*() to allow re-send
 
 	if (success)
-		{
+	{
 		HandleSuccess(itsData);
-		}
+	}
 	else
-		{
+	{
 		HandleFailure();
-		}
+	}
 
 	if (itsDeleteFlag)
-		{
+	{
 		jdelete this;
-		}
+	}
 	else
-		{
+	{
 		itsData.Clear();	// don't waste space
-		}
+	}
 }
 
 /******************************************************************************
@@ -196,10 +196,10 @@ CMCommand::GetResults()
 	const
 {
 	if (itsResultList == nullptr)
-		{
+	{
 		const_cast<CMCommand*>(this)->itsResultList = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
 		assert( itsResultList != nullptr );
-		}
+	}
 
 	return *itsResultList;
 }
@@ -218,10 +218,10 @@ CMCommand::SaveResult
 	)
 {
 	if (itsResultList == nullptr)
-		{
+	{
 		itsResultList = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
 		assert( itsResultList != nullptr );
-		}
+	}
 
 	itsResultList->Append(data);
 }

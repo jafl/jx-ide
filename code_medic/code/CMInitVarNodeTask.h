@@ -8,8 +8,8 @@
 #ifndef _H_CMInitVarNodeTask
 #define _H_CMInitVarNodeTask
 
-#include <JXUrgentTask.h>
-#include <JBroadcaster.h>
+#include <jx-af/jx/JXUrgentTask.h>
+#include <jx-af/jcore/JBroadcaster.h>
 
 class CMVarNode;
 

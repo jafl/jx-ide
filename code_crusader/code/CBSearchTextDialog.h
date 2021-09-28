@@ -8,9 +8,9 @@
 #ifndef _H_CBSearchTextDialog
 #define _H_CBSearchTextDialog
 
-#include <JXSearchTextDialog.h>
-#include <JPrefObject.h>
-#include <JString.h>
+#include <jx-af/jx/JXSearchTextDialog.h>
+#include <jx-af/jcore/JPrefObject.h>
+#include <jx-af/jcore/JString.h>
 
 class JProgressDisplay;
 class JXFileListTable;

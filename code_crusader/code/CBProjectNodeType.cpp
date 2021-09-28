@@ -6,7 +6,7 @@
  ******************************************************************************/
 
 #include "CBProjectNodeType.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 std::istream&
 operator>>

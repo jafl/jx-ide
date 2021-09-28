@@ -8,7 +8,7 @@
 #ifndef _H_CMDockManager
 #define _H_CMDockManager
 
-#include <JXDockManager.h>
+#include <jx-af/jx/JXDockManager.h>
 
 class CMDockManager : public JXDockManager
 {

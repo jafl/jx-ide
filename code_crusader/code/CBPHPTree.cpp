@@ -15,10 +15,10 @@
 #include "CBPHPTreeScanner.h"
 #include "CBProjectDocument.h"
 #include "cbGlobals.h"
-#include <jStreamUtil.h>
-#include <jDirUtil.h>
+#include <jx-af/jcore/jStreamUtil.h>
+#include <jx-af/jcore/jDirUtil.h>
 #include <fstream>
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -56,9 +56,9 @@ CBPHPTree::CBPHPTree
 	itsClassNameLexer(nullptr)
 {
 	if (projVers < 81 && !IsEmpty())
-		{
+	{
 		NextUpdateMustReparseAll();
-		}
+	}
 }
 
 #endif
@@ -146,10 +146,10 @@ CBPHPTree::ParseFile
 	)
 {
 	if (itsClassNameLexer == nullptr)
-		{
+	{
 		itsClassNameLexer = jnew CB::Tree::PHP::Scanner;
 		assert( itsClassNameLexer != nullptr );
-		}
+	}
 
 	// extract info about class
 

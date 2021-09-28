@@ -15,26 +15,26 @@
 #include "CBEditSearchPathsDialog.h"
 #include "cbGlobals.h"
 
-#include <JXDNDManager.h>
-#include <JXFileSelection.h>
-#include <JXWindowDirector.h>
-#include <JXWindow.h>
-#include <JXTextMenu.h>
-#include <JXScrollbar.h>
-#include <JXWindowPainter.h>
-#include <JXColorManager.h>
-#include <JXImage.h>
-#include <JXImageCache.h>
-#include <jXUtil.h>
+#include <jx-af/jx/JXDNDManager.h>
+#include <jx-af/jx/JXFileSelection.h>
+#include <jx-af/jx/JXWindowDirector.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXTextMenu.h>
+#include <jx-af/jx/JXScrollbar.h>
+#include <jx-af/jx/JXWindowPainter.h>
+#include <jx-af/jx/JXColorManager.h>
+#include <jx-af/jx/JXImage.h>
+#include <jx-af/jx/JXImageCache.h>
+#include <jx-af/jx/jXUtil.h>
 
-#include <JPagePrinter.h>
-#include <JEPSPrinter.h>
-#include <JString.h>
-#include <jASCIIConstants.h>
-#include <jDirUtil.h>
-#include <jMouseUtil.h>
-#include <jMath.h>
-#include <jAssert.h>
+#include <jx-af/jcore/JPagePrinter.h>
+#include <jx-af/jcore/JEPSPrinter.h>
+#include <jx-af/jcore/JString.h>
+#include <jx-af/jcore/jASCIIConstants.h>
+#include <jx-af/jcore/jDirUtil.h>
+#include <jx-af/jcore/jMouseUtil.h>
+#include <jx-af/jcore/jMath.h>
+#include <jx-af/jcore/jAssert.h>
 
 bool CBTreeWidget::itsRaiseWhenSingleMatchFlag = false;
 const JSize CBTreeWidget::kBorderWidth             = 5;
@@ -130,46 +130,46 @@ CBTreeWidget::FindClass
 	JRect selRect;
 	JSize selCount;
 	if (itsTree->GetSelectionCoverage(&selRect, &selCount))
-		{
+	{
 		const_cast<CBTreeWidget*>(this)->ScrollToRectCentered(selRect, true);
 
 		if (raiseTreeWindow &&
 			(selCount > 1 || button == kJXRightButton ||
 			 itsRaiseWhenSingleMatchFlag))
-			{
+		{
 			GetWindow()->GetDirector()->Activate();
-			}
+		}
 
 		if (openFileIfSingleMatch && button != kJXRightButton)
-			{
+		{
 			JPtrArray<CBClass> classList(JPtrArrayT::kForgetAll);
 			const bool ok = itsTree->GetSelectedClasses(&classList);
 			assert( ok );
 			if (classList.GetElementCount() == 1)
-				{
+			{
 				CBClass* theClass = classList.GetFirstElement();
 				if (button == kJXLeftButton)
-					{
+				{
 					theClass->ViewSource();
-					}
+				}
 				else if (button == kJXMiddleButton)
-					{
+				{
 					theClass->ViewHeader();
-					}
 				}
 			}
+		}
 
 		return true;
-		}
+	}
 	else
-		{
+	{
 		if (reportNotFound)
-			{
+		{
 			JGetUserNotification()->ReportError(
 				JGetString("ClassNotFound::CBTreeWidget"));
-			}
-		return false;
 		}
+		return false;
+	}
 }
 
 /******************************************************************************
@@ -206,46 +206,46 @@ CBTreeWidget::FindFunction
 	JRect selRect;
 	JSize selCount;
 	if (itsTree->GetSelectionCoverage(&selRect, &selCount))
-		{
+	{
 		const_cast<CBTreeWidget*>(this)->ScrollToRectCentered(selRect, true);
 
 		if (raiseTreeWindow &&
 			(selCount > 1 || button == kJXRightButton ||
 			 itsRaiseWhenSingleMatchFlag))
-			{
+		{
 			GetWindow()->GetDirector()->Activate();
-			}
+		}
 
 		if (openFileIfSingleMatch && button != kJXRightButton)
-			{
+		{
 			JPtrArray<CBClass> classList(JPtrArrayT::kForgetAll);
 			const bool ok = itsTree->GetSelectedClasses(&classList);
 			assert( ok );
 			if (classList.GetElementCount() == 1)
-				{
+			{
 				CBClass* theClass = classList.GetFirstElement();
 				if (button == kJXLeftButton)
-					{
+				{
 					theClass->ViewDefinition(fnName, caseSensitive, false);
-					}
+				}
 				else if (button == kJXMiddleButton)
-					{
+				{
 					theClass->ViewDeclaration(fnName, caseSensitive, false);
-					}
 				}
 			}
+		}
 
 		return true;
-		}
+	}
 	else
-		{
+	{
 		if (reportNotFound)
-			{
+		{
 			JGetUserNotification()->ReportError(
 				JGetString("FunctionNotFound::CBTreeWidget"));
-			}
-		return false;
 		}
+		return false;
+	}
 */
 	return false;
 }
@@ -281,11 +281,11 @@ CBTreeWidget::Print
 	)
 {
 	if (!itsTree->IsEmpty() && p.OpenDocument())
-		{
+	{
 		if (p.WillPrintBlackWhite())
-			{
+		{
 			CBClass::SetGhostNameColor(JColorManager::GetWhiteColor());
-			}
+		}
 
 		const JCoordinate lineHeight   = itsTree->GetLineHeight();
 		const JCoordinate footerHeight = JRound(1.5 * p.JPainter::GetLineHeight());
@@ -298,18 +298,18 @@ CBTreeWidget::Print
 		const JSize drawHeight   = linesPerPage * lineHeight;
 		JSize pageCount          = lineCount / linesPerPage;
 		if (lineCount % linesPerPage != 0)
-			{
+		{
 			pageCount++;
-			}
+		}
 
 		bool cancelled = false;
 		for (JIndex i=1; i<=pageCount; i++)
-			{
+		{
 			if (!p.NewPage())
-				{
+			{
 				cancelled = true;
 				break;
-				}
+			}
 
 			const JString pageNumberStr = "Page " + JString((JUInt64) i);
 			p.String(pageRect.left, pageRect.bottom - footerHeight, pageNumberStr,
@@ -326,15 +326,15 @@ CBTreeWidget::Print
 
 			const JRect drawRect(top, pageRect.left, top + drawHeight, pageRect.right);
 			itsTree->Draw(p, drawRect);
-			}
+		}
 
 		if (!cancelled)
-			{
+		{
 			p.CloseDocument();
-			}
+		}
 
 		CBClass::SetGhostNameColor(JColorManager::GetBlackColor());
-		}
+	}
 }
 
 /*****************************************************************************
@@ -349,28 +349,28 @@ CBTreeWidget::Print
 	)
 {
 	if (itsTree->IsEmpty())
-		{
+	{
 		return;
-		}
+	}
 
 	if (p.PSWillPrintBlackWhite())
-		{
+	{
 		CBClass::SetGhostNameColor(JColorManager::GetWhiteColor());
-		}
+	}
 
 	const JRect bounds = GetBounds();
 
 	if (p.WantsPreview())
-		{
+	{
 		JPainter& p1 = p.GetPreviewPainter(bounds);
 		itsTree->Draw(p1, bounds);
-		}
+	}
 
 	if (p.OpenDocument(bounds))
-		{
+	{
 		itsTree->Draw(p, bounds);
 		p.CloseDocument();
-		}
+	}
 
 	CBClass::SetGhostNameColor(JColorManager::GetBlackColor());
 }
@@ -397,50 +397,50 @@ CBTreeWidget::HandleMouseDown
 
 	CBClass* theClass = nullptr;
 	if (ScrollForWheel(button, modifiers))
-		{
+	{
 		return;
-		}
+	}
 
 	else if (itsTree->GetClass(pt, &theClass))
-		{
+	{
 		if (modifiers.shift())
-			{
+		{
 			theClass->ToggleSelected();
-			}
+		}
 		else if (!theClass->IsSelected())
-			{
+		{
 			itsTree->DeselectAll();
 			theClass->SetSelected(true);
 			ExpectPopupFnMenu(pt, button, theClass);
-			}
+		}
 		else if (clickCount == 1)
-			{
+		{
 			ExpectPopupFnMenu(pt, button, theClass);
-			}
+		}
 
 		else if (button == kJXLeftButton && clickCount == 2)
-			{
+		{
 			theClass->ViewSource();
-			}
+		}
 		else if (button == kJXMiddleButton && clickCount == 2)
-			{
+		{
 			theClass->ViewHeader();
-			}
+		}
 		else if (button == kJXRightButton && clickCount == 2 &&
 				 !theClass->IsGhost())
-			{
+		{
 			itsDirector->ViewFunctionList(theClass);
-			}
-		else if (button == kJXRightButton && clickCount == 2)
-			{
-			JGetUserNotification()->ReportError(JGetString("NoGhostFile::CBTreeWidget"));
-			}
 		}
+		else if (button == kJXRightButton && clickCount == 2)
+		{
+			JGetUserNotification()->ReportError(JGetString("NoGhostFile::CBTreeWidget"));
+		}
+	}
 
 	else if (!modifiers.shift())
-		{
+	{
 		itsTree->DeselectAll();
-		}
+	}
 }
 
 /******************************************************************************
@@ -459,7 +459,7 @@ CBTreeWidget::HandleMouseDrag
 	if (itsDragType == kWaitForPopupFnMenuDrag &&
 		!JMouseMoved(itsStartPt, pt) &&
 		JXGetApplication()->GetCurrentTime() >= itsMouseDownTime + kJXDoubleClickTime)
-		{
+	{
 /*
 		itsFnMenuDir = jnew CBFnListDirector(itsDirector, nullptr, itsFnMenuClass, this,
 											itsDirector->ShowInheritedFns(), true);
@@ -472,15 +472,15 @@ CBTreeWidget::HandleMouseDrag
 */
 		itsFnMenu->PopUp(this, pt, buttonStates, modifiers);
 		itsDragType = kInvalidDrag;
-		}
+	}
 	else if (itsDragType == kWaitForPopupFnMenuDrag && JMouseMoved(itsStartPt, pt))
-		{
+	{
 		auto* data = jnew JXFileSelection(this, kSelectionDataID);
 		assert( data != nullptr );
 
 		BeginDND(pt, buttonStates, modifiers, data);
 		itsDragType = kInvalidDrag;
-		}
+	}
 }
 
 /******************************************************************************
@@ -539,7 +539,7 @@ CBTreeWidget::GetSelectionData
 	)
 {
 	if (id == kSelectionDataID)
-		{
+	{
 		auto* fileData = dynamic_cast<JXFileSelection*>(data);
 		assert( fileData != nullptr );
 
@@ -555,30 +555,30 @@ CBTreeWidget::GetSelectionData
 		const JSize classCount = classList.GetElementCount();
 		JString headerName, sourceName;
 		for (JIndex i=1; i<=classCount; i++)
-			{
+		{
 			CBClass* c = classList.GetElement(i);
 			if (c->GetFileName(&headerName))
-				{
+			{
 				auto* s = jnew JString(headerName);
 				assert( s != nullptr );
 				list->Append(s);
 
 				if (docMgr->GetComplementFile(headerName, itsTree->GetFileType(),
 											  &sourceName, itsDirector->GetProjectDoc()))
-					{
+				{
 					s = jnew JString(sourceName);
 					assert( s != nullptr );
 					list->Append(s);
-					}
 				}
 			}
+		}
 
 		fileData->SetData(list);
-		}
+	}
 	else
-		{
+	{
 		JXScrollableWidget::GetSelectionData(data, id);
-		}
+	}
 }
 
 /******************************************************************************
@@ -633,9 +633,9 @@ CBTreeWidget::WillAcceptDrop
 	// dropping on ourselves makes no sense since we don't accept files
 
 	if (this == const_cast<JXWidget*>(source))
-		{
+	{
 		return false;
-		}
+	}
 
 	// we accept drops of type text/uri-list
 
@@ -643,14 +643,14 @@ CBTreeWidget::WillAcceptDrop
 
 	const JSize typeCount = typeList.GetElementCount();
 	for (JIndex i=1; i<=typeCount; i++)
-		{
+	{
 		const Atom a = typeList.GetElement(i);
 		if (a == urlXAtom)
-			{
+		{
 			*action = GetDNDManager()->GetDNDActionPrivateXAtom();
 			return true;
-			}
 		}
+	}
 
 	return false;
 }
@@ -684,15 +684,15 @@ CBTreeWidget::HandleDNDDrop
 	if (!selMgr->GetData(GetDNDManager()->GetDNDSelectionName(),
 						 time, selMgr->GetURLXAtom(),
 						 &returnType, &data, &dataLength, &delMethod))
-		{
+	{
 		return;
-		}
+	}
 
 	if (returnType != selMgr->GetURLXAtom())
-		{
+	{
 		selMgr->DeleteData(&data, delMethod);
 		return;
-		}
+	}
 
 	JPtrArray<JString> dirList(JPtrArrayT::kDeleteAll),
 					   urlList(JPtrArrayT::kDeleteAll);
@@ -700,29 +700,29 @@ CBTreeWidget::HandleDNDDrop
 
 	const JSize fileCount = dirList.GetElementCount();
 	for (JIndex i=fileCount; i>=1; i--)
-		{
+	{
 		const JString* name = dirList.GetElement(i);
 		if (!JDirectoryExists(*name))
-			{
+		{
 			dirList.DeleteElement(i);
-			}
 		}
+	}
 
 	if (dirList.IsEmpty() && urlList.IsEmpty())
-		{
+	{
 		JGetUserNotification()->ReportError(
 			JGetString("OnlyDropFolders::CBTreeWidget"));
-		}
+	}
 	else if (dirList.IsEmpty())
-		{
+	{
 		JXReportUnreachableHosts(urlList);
-		}
+	}
 	else
-		{
+	{
 		CBEditSearchPathsDialog* dlog =
 			itsDirector->GetProjectDoc()->EditSearchPaths(itsDirector);
 		dlog->AddDirectories(dirList);
-		}
+	}
 
 	selMgr->DeleteData(&data, delMethod);
 }
@@ -757,10 +757,10 @@ CBTreeWidget::HandleKeyPress
 	// open source
 
 	if (c == kJReturnKey)
-		{
+	{
 		itsKeyBuffer.Clear();
 		itsTree->ViewSelectedSources();
-		}
+	}
 
 	// open header
 
@@ -768,35 +768,35 @@ CBTreeWidget::HandleKeyPress
 			 !modifiers.GetState(kJXMetaKeyIndex)   &&
 			 modifiers.GetState(kJXControlKeyIndex) &&
 			 !modifiers.shift())
-		{
+	{
 		itsKeyBuffer.Clear();
 		itsTree->ViewSelectedHeaders();
-		}
+	}
 
 	// incremental search for class name
 
 	else if (c == ' ')
-		{
+	{
 		itsKeyBuffer.Clear();
-		}
+	}
 	else if (!itsTree->IsEmpty() && c.IsPrint() &&
 			 !modifiers.meta() && !modifiers.control())
-		{
+	{
 		itsKeyBuffer.Append(c);
 
 		CBClass* selClass = nullptr;
 		if (itsTree->ClosestVisibleMatch(itsKeyBuffer, &selClass))
-			{
+		{
 			itsTree->DeselectAll();
 			selClass->SetSelected(true);
 			ScrollToRectCentered(selClass->GetFrame(), true);
-			}
 		}
+	}
 
 	else
-		{
+	{
 		JXScrollableWidget::HandleKeyPress(c, keySym, modifiers);
-		}
+	}
 }
 
 /******************************************************************************
@@ -812,23 +812,23 @@ CBTreeWidget::Receive
 	)
 {
 	if (sender == itsTree && message.Is(CBTree::kBoundsChanged))
-		{
+	{
 		JCoordinate w,h;
 		itsTree->GetBounds(&w, &h);
 		SetBounds(w, h);
 		Refresh();
-		}
+	}
 	else if (sender == itsTree && message.Is(CBTree::kPrepareForParse))
-		{
+	{
 		Hide();
-		}
+	}
 	else if (sender == itsTree && message.Is(CBTree::kParseFinished))
-		{
+	{
 		Show();
-		}
+	}
 
 	else if (sender == itsTree && message.Is(CBTree::kFontSizeChanged))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const CBTree::FontSizeChanged*>(&message);
 		assert( info != nullptr );
@@ -839,77 +839,77 @@ CBTreeWidget::Receive
 		vScrollbar->PrepareForScaledMaxValue(info->GetVertScaleFactor());
 
 		SetVertStepSize(CBClass::GetTotalHeight(itsTree, GetFontManager()));
-		}
+	}
 
 	else if (sender == itsTree && message.Is(CBTree::kClassSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const CBTree::ClassSelected*>(&message);
 		assert( selection != nullptr );
 		RefreshRect((selection->GetClass())->GetFrame());
-		}
+	}
 	else if (sender == itsTree && message.Is(CBTree::kClassDeselected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const CBTree::ClassDeselected*>(&message);
 		assert( selection != nullptr );
 		RefreshRect((selection->GetClass())->GetFrame());
-		}
+	}
 	else if (sender == itsTree && message.Is(CBTree::kAllClassesDeselected))
-		{
+	{
 		Refresh();
-		}
+	}
 
 	else if (sender == itsTree && message.Is(CBTree::kNeedsRefresh))
-		{
+	{
 		Refresh();
-		}
+	}
 
 	else if (sender == itsTree && message.Is(CBTree::kChanged))
-		{
+	{
 		const JRect ap = GetAperture();
 
 		JPtrArray<CBClass> sel(JPtrArrayT::kForgetAll);
 		CBClass* closest = nullptr;
 		JCoordinate miny = 0;
 		if (itsTree->GetSelectedClasses(&sel))
-			{
+		{
 			bool visible  = false;
 			const JSize count = sel.GetElementCount();
 			for (JIndex i=1; i<=count; i++)
-				{
+			{
 				CBClass* c    = sel.GetElement(i);
 				const JRect r = c->GetFrame();
 				if (ap.Contains(r))
-					{
+				{
 					visible = true;
 					break;
-					}
+				}
 				else if (ap.bottom < r.bottom &&
 						 (closest == nullptr || r.top - ap.bottom < miny))
-					{
+				{
 					miny    = r.top - ap.bottom;
 					closest = c;
-					}
+				}
 				else if (r.bottom < ap.top &&
 						 (closest == nullptr || ap.top - r.bottom < miny))
-					{
+				{
 					miny    = ap.top - r.bottom;
 					closest = c;
-					}
-				}
-
-			if (!visible && closest != nullptr)
-				{
-				ScrollToRect(closest->GetFrame());
 				}
 			}
+
+			if (!visible && closest != nullptr)
+			{
+				ScrollToRect(closest->GetFrame());
+			}
 		}
+	}
 
 	else
-		{
+	{
 		JXScrollableWidget::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -925,24 +925,24 @@ CBTreeWidget::ReadSetup
 	)
 {
 	if (10 <= setVers && setVers <= 21)
-		{
+	{
 		JPoint scrollPt;
 		setInput >> scrollPt;
 		ScrollTo(scrollPt);
-		}
+	}
 
 	if (setVers >= 22)
-		{
+	{
 		ReadScrollSetup(setInput);
-		}
+	}
 	else if (setVers >= 18)
-		{
+	{
 		JXScrollbar *hScrollbar, *vScrollbar;
 		const bool ok = GetScrollbars(&hScrollbar, &vScrollbar);
 		assert( ok );
 		hScrollbar->ReadSetup(setInput);
 		vScrollbar->ReadSetup(setInput);
-		}
+	}
 }
 
 /******************************************************************************

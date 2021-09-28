@@ -27,10 +27,10 @@
 #include "CBPHPTreeDirector.h"
 #include "CBPHPTree.h"
 #include "cbGlobals.h"
-#include <JDirInfo.h>
-#include <jVCSUtil.h>
-#include <jDirUtil.h>
-#include <jAssert.h>
+#include <jx-af/jcore/JDirInfo.h>
+#include <jx-af/jcore/jVCSUtil.h>
+#include <jx-af/jcore/jDirUtil.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -117,9 +117,9 @@ JIndex i;
 							phpTree->NeedsReparseAll();
 
 	if (reparseAll)
-		{
+	{
 		RemoveAllFiles();
-		}
+	}
 	symbolDir->PrepareForListUpdate(reparseAll, pg);
 	cTreeDir->PrepareForTreeUpdate(reparseAll);
 	dTreeDir->PrepareForTreeUpdate(reparseAll);
@@ -136,9 +136,9 @@ JIndex i;
 
 	const JSize origFileCount = itsFileInfo->GetElementCount();
 	for (i=1; i<=origFileCount; i++)
-		{
+	{
 		fileUsage.AppendElement(false);
-		}
+	}
 
 	// process each file
 
@@ -153,13 +153,13 @@ JIndex i;
 	JArray<JFAID_t> deadFileIDList(fileCount+1);
 
 	for (i=1; i<=fileCount; i++)
-		{
+	{
 		if (!fileUsage.GetElement(i))
-			{
+		{
 			deadFileNameList.Append(*(fileNameList.GetElement(i)));
 			deadFileIDList.AppendElement((itsFileInfo->GetElement(i)).id);
-			}
 		}
+	}
 
 	itsFileUsage = nullptr;
 
@@ -174,9 +174,9 @@ JIndex i;
 	phpTreeDir->TreeUpdateFinished(deadFileIDList);
 
 	if (!deadFileIDList.IsEmpty())
-		{
+	{
 		itsChangedDuringParseFlag = true;
-		}
+	}
 
 	return itsChangedDuringParseFlag;
 }
@@ -211,7 +211,7 @@ CBFileListTable::ScanAll
 {
 	const JSize dirCount = dirList.GetElementCount();
 	if (dirCount > 0 || (fileTree->GetProjectRoot())->HasChildren())
-		{
+	{
 		pg.VariableLengthProcessBeginning(JGetString("ParsingFiles::CBFileListTable"), false, true);
 
 		JPtrArray<JString> allSuffixList(JPtrArrayT::kDeleteAll);
@@ -220,21 +220,21 @@ CBFileListTable::ScanAll
 		JString fullPath;
 		bool recurse;
 		for (JIndex i=1; i<=dirCount; i++)
-			{
+		{
 			if (dirList.GetFullPath(i, &fullPath, &recurse))
-				{
+			{
 				ScanDirectory(fullPath, recurse,
 							  allSuffixList, symbolList,
 							  cTree, dTree, goTree, javaTree, phpTree,
 							  pg);
-				}
 			}
+		}
 
 		fileTree->ParseFiles(this, allSuffixList, symbolList,
 							 cTree, dTree, goTree, javaTree, phpTree, pg);
 
 		pg.ProcessFinished();
-		}
+	}
 }
 
 /******************************************************************************
@@ -263,46 +263,46 @@ CBFileListTable::ScanDirectory
 	JDirInfo* info;
 	if (!JGetTrueName(origPath, &path) ||
 		!JDirInfo::Create(path, &info))
-		{
+	{
 		return;
-		}
+	}
 
 	const JSize count = info->GetEntryCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		const JDirEntry& entry = info->GetEntry(i);
 
 		// If it's a directory, recurse.
 
 		if (entry.IsDirectory() && recurse &&
 			!entry.IsLink() && !JIsVCSDirectory(entry.GetName()))
-			{
+		{
 			ScanDirectory(entry.GetFullName(), recurse,
 						  allSuffixList, symbolList,
 						  cTree, dTree, goTree, javaTree, phpTree,
 						  pg);
-			}
+		}
 
 		// If it's a file ending in one of the suffixes, parse it.
 
 		else if (entry.IsFile())
-			{
+		{
 			JString trueName = entry.GetFullName();
 			time_t modTime   = entry.GetModTime();
 			if (entry.IsWorkingLink())
-				{
+			{
 				const bool ok = JGetTrueName(entry.GetFullName(), &trueName);
 				assert( ok );
 				const JError err = JGetModificationTime(trueName, &modTime);
 				assert_ok( err );
-				}
+			}
 
 			ParseFile(trueName, allSuffixList, modTime,
 					  symbolList, cTree, dTree, goTree, javaTree, phpTree);
-			}
+		}
 
 		pg.IncrementProgress();
-		}
+	}
 
 	jdelete info;
 }
@@ -331,11 +331,11 @@ CBFileListTable::ParseFile
 	)
 {
 	if (CBPrefsManager::FileMatchesSuffix(fullName, allSuffixList))
-		{
+	{
 		const CBTextFileType fileType = CBGetPrefsManager()->GetFileType(fullName);
 		JFAID_t id;
 		if (AddFile(fullName, fileType, modTime, &id))
-			{
+		{
 			itsChangedDuringParseFlag = true;
 
 			symbolList->FileChanged(fullName, fileType, id);
@@ -344,8 +344,8 @@ CBFileListTable::ParseFile
 			goTree->FileChanged(fullName, fileType, id);
 			javaTree->FileChanged(fullName, fileType, id);
 			phpTree->FileChanged(fullName, fileType, id);
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -368,9 +368,9 @@ CBFileListTable::AddFile
 	)
 {
 	if (CBExcludeFromFileList(fileType))
-		{
+	{
 		return false;
-		}
+	}
 
 	JIndex index;
 	const bool isNew = JXFileListTable::AddFile(fullName, &index);
@@ -379,19 +379,19 @@ CBFileListTable::AddFile
 
 	itsFileUsage->SetElement(index, true);
 	if (isNew)
-		{
+	{
 		return true;
-		}
+	}
 	else if (modTime != info.modTime)
-		{
+	{
 		info.modTime = modTime;
 		itsFileInfo->SetElement(index, info);
 		return true;
-		}
+	}
 	else
-		{
+	{
 		return false;
-		}
+	}
 }
 
 /******************************************************************************
@@ -443,15 +443,15 @@ CBFileListTable::GetFileID
 	JString target(trueName);
 	JIndex index;
 	if ((GetFullNameList()).SearchSorted(&target, JListT::kAnyMatch, &index))
-		{
+	{
 		*id = (itsFileInfo->GetElement(index)).id;
 		return true;
-		}
+	}
 	else
-		{
+	{
 		*id = JFAID::kInvalidID;
 		return false;
-		}
+	}
 }
 
 /******************************************************************************
@@ -471,14 +471,14 @@ CBFileListTable::IDToIndex
 {
 	const JSize count = itsFileInfo->GetElementCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		const FileInfo info = itsFileInfo->GetElement(i);
 		if (info.id == id)
-			{
+		{
 			*index = i;
 			return true;
-			}
 		}
+	}
 
 	*index = 0;
 	return false;
@@ -496,67 +496,67 @@ CBFileListTable::GetUniqueID()
 	const
 {
 	if (itsFileInfo->IsEmpty())
-		{
+	{
 		return JFAID::kMinID;
-		}
+	}
 
 	const JFAID_t prevUniqueID = JMax(itsLastUniqueID, (JFAID_t) itsFileInfo->GetElementCount());
 
 	// this is relevant to the outmost do-while loop
 
 	enum Range
-	{
+{
 		kAboveLastUniqueID,
 		kBelowLastUniqueID,
 		kEmpty
-	};
+};
 	Range idRange = kAboveLastUniqueID;
 
 	do
-		{
+	{
 		// try the larger Id's first
 
 		JFAID_t firstId, lastId;
 
 		if (idRange == kAboveLastUniqueID && prevUniqueID < JFAID::kMaxID)
-			{
+		{
 			firstId = prevUniqueID + 1;
 			lastId  = JFAID::kMaxID;
-			}
+		}
 		else if (idRange == kAboveLastUniqueID)
-			{
+		{
 			idRange = kBelowLastUniqueID;
 			firstId = JFAID::kMinID;
 			lastId  = JFAID::kMaxID;
-			}
+		}
 		else
-			{
+		{
 			assert( idRange == kBelowLastUniqueID );
 			firstId = JFAID::kMinID;
 			lastId  = prevUniqueID;
-			}
+		}
 
 		// try all possible id's in the given range
 
 		for (JFAID_t id=firstId; id<=lastId; id++)
-			{
+		{
 			JIndex index;
 			if (!IDToIndex(id, &index))
-				{
+			{
 				itsLastUniqueID = id;
 				return id;
-				}
-			}
-
-		if (idRange == kAboveLastUniqueID)
-			{
-			idRange = kBelowLastUniqueID;
-			}
-		else if (idRange == kBelowLastUniqueID)
-			{
-			idRange = kEmpty;
 			}
 		}
+
+		if (idRange == kAboveLastUniqueID)
+		{
+			idRange = kBelowLastUniqueID;
+		}
+		else if (idRange == kBelowLastUniqueID)
+		{
+			idRange = kEmpty;
+		}
+	}
 		while (idRange != kEmpty);
 
 	// We've tried everything.  It's time to give up.
@@ -577,62 +577,62 @@ CBFileListTable::Receive
 	)
 {
 	if (sender == GetFullNameDataList() && message.Is(JListT::kElementsInserted))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const JListT::ElementsInserted*>(&message);
 		assert( info != nullptr );
 		FilesAdded(*info);
-		}
+	}
 	else if (sender == GetFullNameDataList() && message.Is(JListT::kElementsRemoved))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const JListT::ElementsRemoved*>(&message);
 		assert( info != nullptr );
 		itsFileInfo->RemoveElements(*info);
 		if (itsFileUsage != nullptr)
-			{
+		{
 			itsFileUsage->RemoveElements(*info);
-			}
 		}
+	}
 
 	else if (sender == GetFullNameDataList() && message.Is(JListT::kElementMoved))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const JListT::ElementMoved*>(&message);
 		assert( info != nullptr );
 		itsFileInfo->MoveElementToIndex(*info);
 		if (itsFileUsage != nullptr)
-			{
-			itsFileUsage->MoveElementToIndex(*info);
-			}
-		}
-	else if (sender == GetFullNameDataList() && message.Is(JListT::kElementsSwapped))
 		{
+			itsFileUsage->MoveElementToIndex(*info);
+		}
+	}
+	else if (sender == GetFullNameDataList() && message.Is(JListT::kElementsSwapped))
+	{
 		const auto* info =
 			dynamic_cast<const JListT::ElementsSwapped*>(&message);
 		assert( info != nullptr );
 		itsFileInfo->SwapElements(*info);
 		if (itsFileUsage != nullptr)
-			{
-			itsFileUsage->SwapElements(*info);
-			}
-		}
-	else if (sender == GetFullNameDataList() && message.Is(JListT::kSorted))
 		{
-		assert_msg( 0, "CBFileListTable can't handle full sort of file list" );
+			itsFileUsage->SwapElements(*info);
 		}
+	}
+	else if (sender == GetFullNameDataList() && message.Is(JListT::kSorted))
+	{
+		assert_msg( 0, "CBFileListTable can't handle full sort of file list" );
+	}
 
 	else if (sender == GetFullNameDataList() && message.Is(JListT::kElementsChanged))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const JListT::ElementsChanged*>(&message);
 		assert( info != nullptr );
 
 		for (JIndex i=info->GetFirstIndex(); i<=info->GetLastIndex(); i++)
-			{
+		{
 			UpdateFileInfo(i);
-			}
 		}
+	}
 
 	JXFileListTable::Receive(sender, message);
 }
@@ -651,17 +651,17 @@ CBFileListTable::FilesAdded
 	const JPtrArray<JString>& fileNameList = GetFullNameList();
 
 	for (JIndex i = info.GetFirstIndex(); i <= info.GetLastIndex(); i++)
-		{
+	{
 		time_t t;
 		const JError err = JGetModificationTime(*(fileNameList.GetElement(i)), &t);
 		assert_ok( err );
 
 		itsFileInfo->InsertElementAtIndex(i, FileInfo(GetUniqueID(), t));
 		if (itsFileUsage != nullptr)
-			{
+		{
 			itsFileUsage->InsertElementAtIndex(i, true);
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -687,9 +687,9 @@ CBFileListTable::UpdateFileInfo
 
 	itsFileInfo->SetElement(index, info);
 	if (itsFileUsage != nullptr)
-		{
+	{
 		itsFileUsage->SetElement(index, true);
-		}
+	}
 }
 
 /******************************************************************************
@@ -709,13 +709,13 @@ CBFileListTable::ReadSetup
 	std::istream* input          = (projVers <= 41 ? &projInput : symInput);
 	const JFileVersion vers = (projVers <= 41 ? projVers   : symVers);
 	if (vers < 40 || input == nullptr)
-		{
+	{
 		itsReparseAllFlag = true;
-		}
+	}
 	else
-		{
+	{
 		ReadSetup(*input, vers);
-		}
+	}
 }
 
 /******************************************************************************
@@ -739,7 +739,7 @@ CBFileListTable::ReadSetup
 
 	JString fileName;
 	for (JIndex i=1; i<=fileCount; i++)
-		{
+	{
 		JFAID_t id;
 		time_t t;
 		input >> fileName >> id >> t;
@@ -749,14 +749,14 @@ CBFileListTable::ReadSetup
 		assert( isNew );
 
 		itsFileInfo->InsertElementAtIndex(index, FileInfo(id, t));
-		}
+	}
 
 	ListenTo(GetFullNameDataList());
 
 	if (vers >= 80)
-		{
+	{
 		input >> itsLastUniqueID;
-		}
+	}
 }
 
 /******************************************************************************
@@ -773,22 +773,22 @@ CBFileListTable::WriteSetup
 	const
 {
 	if (symOutput != nullptr)
-		{
+	{
 		const JSize fileCount = itsFileInfo->GetElementCount();
 		*symOutput << ' ' << fileCount;
 
 		const JPtrArray<JString>& fileNameList = GetFullNameList();
 
 		for (JIndex i=1; i<=fileCount; i++)
-			{
+		{
 			*symOutput << ' ' << *(fileNameList.GetElement(i));
 
 			const FileInfo info = itsFileInfo->GetElement(i);
 			*symOutput << ' ' << info.id;
 			*symOutput << ' ' << info.modTime;
-			}
+		}
 
 		*symOutput << ' ' << itsLastUniqueID;
 		*symOutput << ' ';
-		}
+	}
 }

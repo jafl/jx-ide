@@ -8,9 +8,9 @@
 #ifndef _H_CMEditCommandsDialog
 #define _H_CMEditCommandsDialog
 
-#include <JXDialogDirector.h>
-#include <JPrefObject.h>
-#include <JPtrArray-JString.h>
+#include <jx-af/jx/JXDialogDirector.h>
+#include <jx-af/jcore/JPrefObject.h>
+#include <jx-af/jcore/JPtrArray-JString.h>
 
 class JXTextButton;
 class CMEditCommandsTable;

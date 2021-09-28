@@ -8,8 +8,8 @@
 #ifndef _H_CBCPreprocessor
 #define _H_CBCPreprocessor
 
-#include <JUtf8Character.h>
-#include <JArray.h>
+#include <jx-af/jcore/JUtf8Character.h>
+#include <jx-af/jcore/JArray.h>
 
 class JString;
 class CBPPMacroList;

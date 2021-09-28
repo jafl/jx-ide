@@ -8,9 +8,9 @@
 #ifndef _H_CMBreakpointTable
 #define _H_CMBreakpointTable
 
-#include <JXEditTable.h>
-#include <JPrefObject.h>
-#include <JFont.h>
+#include <jx-af/jx/JXEditTable.h>
+#include <jx-af/jcore/JPrefObject.h>
+#include <jx-af/jcore/JFont.h>
 
 class JXTextMenu;
 class JXInputField;

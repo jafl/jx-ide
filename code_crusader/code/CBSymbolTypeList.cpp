@@ -9,11 +9,12 @@
 
 #include "CBSymbolTypeList.h"
 #include "cbGlobals.h"
-#include <JXImage.h>
-#include <JXImageCache.h>
-#include <JColorManager.h>
-#include <jStreamUtil.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXDisplay.h>
+#include <jx-af/jx/JXImage.h>
+#include <jx-af/jx/JXImageCache.h>
+#include <jx-af/jcore/JColorManager.h>
+#include <jx-af/jcore/jStreamUtil.h>
+#include <jx-af/jcore/jAssert.h>
 
 // setup information
 
@@ -69,23 +70,23 @@ CBSymbolTypeList::SkipSetup
 	)
 {
 	if (vers >= 74)
-		{
+	{
 		return;
-		}
+	}
 
 	if (vers >= 71)
-		{
+	{
 		input >> std::ws;
 		JIgnoreLine(input);
-		}
+	}
 
 	if (vers <= 71)
-		{
+	{
 		JSize typeCount;
 		input >> typeCount;
 
 		for (JIndex i=1; i<=typeCount; i++)
-			{
+		{
 			long type;
 			input >> type;
 
@@ -100,22 +101,22 @@ CBSymbolTypeList::SkipSetup
 
 			JRGB color;
 			input >> color;
-			}
 		}
+	}
 	else
-		{
+	{
 		while (true)
-			{
+		{
 			bool keepGoing;
 			input >> JBoolFromString(keepGoing);
 			if (!keepGoing)
-				{
+			{
 				break;
-				}
+			}
 
 			JIgnoreLine(input);
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -135,15 +136,15 @@ CBSymbolTypeList::ReadPrefs
 	JFileVersion vers;
 	input >> vers;
 	if (vers > kCurrentSetupVersion)
-		{
+	{
 		return;
-		}
+	}
 
 	JSize typeCount;
 	input >> typeCount;
 
 	for (JIndex i=1; i<=typeCount; i++)
-		{
+	{
 		long type;
 		input >> type;
 
@@ -161,7 +162,7 @@ CBSymbolTypeList::ReadPrefs
 		info.style.color = JColorManager::GetColorID(color);
 
 		itsSymbolTypeList->SetElement(j, info);
-		}
+	}
 }
 
 /******************************************************************************
@@ -182,7 +183,7 @@ CBSymbolTypeList::WritePrefs
 	output << ' ' << typeCount;
 
 	for (JIndex i=1; i<=typeCount; i++)
-		{
+	{
 		const SymbolTypeInfo info = itsSymbolTypeList->GetElement(i);
 		output << ' ' << (long) info.type;
 		output << ' ' << JBoolToString(info.visible);
@@ -192,7 +193,7 @@ CBSymbolTypeList::WritePrefs
 		output << ' ' << info.style.underlineCount;
 		output << ' ' << JBoolToString(info.style.strike);
 		output << ' ' << JColorManager::GetRGB(info.style.color);
-		}
+	}
 }
 
 /******************************************************************************
@@ -213,12 +214,12 @@ CBSymbolTypeList::FindType
 
 	const JSize count = itsSymbolTypeList->GetElementCount();
 	for (JUnsignedOffset i=0; i<count; i++)
-		{
+	{
 		if (info[i].type == type)
-			{
+		{
 			return i+1;
-			}
 		}
+	}
 
 	assert_msg( 0, "CBSymbolTypeList::FindType couldn't find type" );
 	return 0;

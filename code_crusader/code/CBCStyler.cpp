@@ -12,12 +12,12 @@
 
 #include "CBCStyler.h"
 #include "cbmUtil.h"
-#include <JXDialogDirector.h>
-#include <JStringIterator.h>
-#include <JRegex.h>
-#include <JColorManager.h>
-#include <jGlobals.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXDialogDirector.h>
+#include <jx-af/jcore/JStringIterator.h>
+#include <jx-af/jcore/JRegex.h>
+#include <jx-af/jcore/JColorManager.h>
+#include <jx-af/jcore/jGlobals.h>
+#include <jx-af/jcore/jAssert.h>
 
 CBCStyler* CBCStyler::itsSelf = nullptr;
 
@@ -69,14 +69,14 @@ CBStylerBase*
 CBCStyler::Instance()
 {
 	if (itsSelf == nullptr && !recursiveInstance)
-		{
+	{
 		recursiveInstance = true;
 
 		itsSelf = jnew CBCStyler;
 		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
-		}
+	}
 
 	return itsSelf;
 }
@@ -105,9 +105,9 @@ CBCStyler::CBCStyler()
 {
 	JFontStyle blankStyle;
 	for (JIndex i=1; i<=kTypeCount; i++)
-		{
+	{
 		SetTypeStyle(i, blankStyle);
-		}
+	}
 
 	const JColorID red = JColorManager::GetRedColor();
 
@@ -164,12 +164,12 @@ CBCStyler::Scan
 	Token token;
 	JFontStyle style;
 	do
-		{
+	{
 		token = NextToken();
 		if (token.type == kEOF)
-			{
+		{
 			break;
-			}
+		}
 
 		// save token starts
 
@@ -179,47 +179,47 @@ CBCStyler::Scan
 			token.type == kBuiltInDataType    ||
 			token.type == kString             ||
 			token.type == kComment)
-			{
+		{
 			SaveTokenStart(token.range.GetFirst());
-			}
+		}
 
 		// set the style
 
 		const JIndex typeIndex = token.type - kWhitespace;
 		if (token.type == kWhitespace)
-			{
+		{
 			style = GetDefaultFont().GetStyle();
-			}
+		}
 		else if (token.type == kComment ||
 				 token.type == kString)
-			{
+		{
 			style = GetTypeStyle(typeIndex);
-			}
+		}
 		else if (token.type == kPPDirective && SlurpPPComment(&(token.range)))
-			{
+		{
 			token.type = kComment;
 			style      = GetTypeStyle(kComment - kWhitespace);
-			}
+		}
 		else if (token.type == kPPDirective)
-			{
+		{
 			style = GetStyle(typeIndex, GetPPCommand(text));
-			}
+		}
 		else if (token.type < kWhitespace)
-			{
+		{
 			style = GetTypeStyle(kError - kWhitespace);
-			}
+		}
 		else if (token.type > kError)	// misc
-			{
+		{
 			if (!GetWordStyle(JString(text.GetRawBytes(), token.range.byteRange, JString::kNoCopy), &style))
-				{
-				style = GetDefaultFont().GetStyle();
-				}
-			}
-		else
 			{
-			style = GetStyle(typeIndex, JString(text.GetRawBytes(), token.range.byteRange, JString::kNoCopy));
+				style = GetDefaultFont().GetStyle();
 			}
 		}
+		else
+		{
+			style = GetStyle(typeIndex, JString(text.GetRawBytes(), token.range.byteRange, JString::kNoCopy));
+		}
+	}
 		while (SetStyle(token.range.charRange, style));
 }
 
@@ -250,14 +250,14 @@ CBCStyler::PreexpandCheckRange
 
 	JUtf8Character c;
 	while (iter.Prev(&c, kJIteratorStay) && c.IsSpace())
-		{
+	{
 		iter.SkipPrev();
-		}
+	}
 	if (iter.Prev(&c) && c == '#')
-		{
+	{
 		checkRange->charRange.first = iter.GetNextCharacterIndex();
 		checkRange->byteRange.first = iter.GetNextByteIndex();
-		}
+	}
 }
 
 /******************************************************************************
@@ -283,36 +283,36 @@ CBCStyler::SlurpPPComment
 	const JString& text = GetText();
 	const JString s(text.GetRawBytes(), JUtf8ByteRange(GetPPNameRange().byteRange.first, totalRange->byteRange.last), JString::kNoCopy);
 	if (!ppCommentPattern.Match(s))
-		{
+	{
 		return false;
-		}
+	}
 
 	Token token;
 	JSize nestCount = 1;
 	while (true)
-		{
+	{
 		token = NextToken();
 		if (token.type == kEOF)
-			{
+		{
 			break;
-			}
+		}
 		else if (token.type == kPPDirective)
-			{
+		{
 			const JString ppCmd(text.GetRawBytes(), GetPPNameRange().byteRange, JString::kNoCopy);
 			if (ppIfPattern.Match(ppCmd))
-				{
+			{
 				nestCount++;
-				}
+			}
 			else if (ppEndPattern.Match(ppCmd))
-				{
+			{
 				nestCount--;
 				if (nestCount == 0)
-					{
-					break;
-					}
-				}
-			else if (ppElsePattern.Match(ppCmd) && nestCount == 1)
 				{
+					break;
+				}
+			}
+			else if (ppElsePattern.Match(ppCmd) && nestCount == 1)
+			{
 				JSize prevCharByteCount;
 				const bool ok =
 					JUtf8Character::GetPrevCharacterByteCount(
@@ -325,9 +325,9 @@ CBCStyler::SlurpPPComment
 				token.range.charRange.SetToEmptyAt(token.range.charRange.first);
 				token.range.byteRange.SetToEmptyAt(token.range.byteRange.first);
 				break;
-				}
 			}
 		}
+	}
 
 	totalRange->charRange.last = token.range.charRange.last;
 	totalRange->byteRange.last = token.range.byteRange.last;
@@ -347,24 +347,24 @@ CBCStyler::UpgradeTypeList
 	)
 {
 	if (vers < 1)
-		{
+	{
 		for (JIndex i=1; i<=20; i++)
-			{
+		{
 			typeStyles->RemoveElement(11);
-			}
 		}
+	}
 
 	if (vers < 2)
-		{
+	{
 		typeStyles->InsertElementAtIndex(5, typeStyles->GetElement(4));
-		}
+	}
 
 	if (vers < 3)
-		{
+	{
 		const JFontStyle style = typeStyles->GetElement(1);
 		typeStyles->InsertElementAtIndex(6, style);
 		typeStyles->InsertElementAtIndex(6, style);
-		}
+	}
 
 	// set new values after all new slots have been created
 }
@@ -388,15 +388,15 @@ CBCStyler::Receive
 #if defined CODE_CRUSADER && ! defined CODE_CRUSADER_UNIT_TEST
 
 	if (message.Is(JXDialogDirector::kDeactivated))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const JXDialogDirector::Deactivated*>(&message);
 		assert( info != nullptr );
 		if (info->Successful())
-			{
+		{
 			CBMWriteSharedPrefs(true);
-			}
 		}
+	}
 
 #endif
 }

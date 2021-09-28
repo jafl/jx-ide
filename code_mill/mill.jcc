@@ -4,9 +4,9 @@ jx_browser_data 89
 T
 1 "main"
 T
-2 "forge.cpp"
+2 "main.cpp"
 F
-"./code/forge.cpp"
+"./code/main.cpp"
 T
 2 "GFGApp.cpp"
 F
@@ -68,17 +68,6 @@ T
 2 "ChangeLog.html"
 F
 "./release/ChangeLog.html"
-F
-T
-1 "images"
-T
-2 "gfg_about_icon.xpm"
-F
-"./code/gfg_about_icon.xpm"
-T
-2 "gfg_main_window_icon.xpm"
-F
-"./code/gfg_main_window_icon.xpm"
 F
 T
 1 "misc"

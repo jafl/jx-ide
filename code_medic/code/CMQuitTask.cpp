@@ -10,8 +10,8 @@
  ******************************************************************************/
 
 #include "CMQuitTask.h"
-#include <jXGlobals.h>
-#include <jAssert.h>
+#include <jx-af/jx/jXGlobals.h>
+#include <jx-af/jcore/jAssert.h>
 
 const Time kCheckInterval = 1000;	// milliseconds
 
@@ -52,23 +52,23 @@ CMQuitTask::Perform
 	const JPtrArray<JXDirector>* list;
 	if (TimeToPerform(delta, maxSleepTime) &&
 		JXGetApplication()->GetSubdirectors(&list))
-		{
+	{
 		quit = true;
 
 		const JSize count = list->GetElementCount();
 		for (JIndex i=1; i<=count; i++)
-			{
+		{
 			if ((list->GetElement(i))->IsActive())
-				{
+			{
 				quit = false;
 				break;
-				}
 			}
 		}
+	}
 
 	if (quit)
-		{
+	{
 		JXGetApplication()->Quit();
 		jdelete this;
-		}
+	}
 }

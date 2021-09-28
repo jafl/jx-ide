@@ -19,22 +19,22 @@
 #include "cbFileVersions.h"
 #include "cbGlobals.h"
 #include "cbmUtil.h"
-#include <JXWindow.h>
-#include <JXStandAlonePG.h>
-#include <JXWebBrowser.h>
-#include <JXChooseSaveFile.h>
-#include <JXSearchTextDialog.h>
-#include <JRegex.h>
-#include <JSubstitute.h>
-#include <JLatentPG.h>
-#include <jFStreamUtil.h>
-#include <jStreamUtil.h>
-#include <jFileUtil.h>
-#include <jDirUtil.h>
-#include <JDirInfo.h>
-#include <JSimpleProcess.h>
-#include <JStringIterator.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXStandAlonePG.h>
+#include <jx-af/jx/JXWebBrowser.h>
+#include <jx-af/jx/JXChooseSaveFile.h>
+#include <jx-af/jx/JXSearchTextDialog.h>
+#include <jx-af/jcore/JRegex.h>
+#include <jx-af/jcore/JSubstitute.h>
+#include <jx-af/jcore/JLatentPG.h>
+#include <jx-af/jcore/jFStreamUtil.h>
+#include <jx-af/jcore/jStreamUtil.h>
+#include <jx-af/jcore/jFileUtil.h>
+#include <jx-af/jcore/jDirUtil.h>
+#include <jx-af/jcore/JDirInfo.h>
+#include <jx-af/jcore/JSimpleProcess.h>
+#include <jx-af/jcore/JStringIterator.h>
+#include <jx-af/jcore/jAssert.h>
 
 static const JUtf8Byte* kTextTemplateDir = "text_templates";
 
@@ -183,14 +183,14 @@ CBDocumentManager::GetFileHistoryMenu
 	const
 {
 	if (type == kProjectFileHistory)
-		{
+	{
 		return itsRecentProjectMenu;
-		}
+	}
 	else
-		{
+	{
 		assert( type == kTextFileHistory );
 		return itsRecentTextMenu;
-		}
+	}
 }
 
 /******************************************************************************
@@ -219,15 +219,15 @@ CBDocumentManager::RefreshVCSStatus()
 	JSize count = itsProjectDocuments->GetElementCount();
 	JIndex i;
 	for (i=1; i<=count; i++)
-		{
+	{
 		(itsProjectDocuments->GetElement(i))->RefreshVCSStatus();
-		}
+	}
 
 	count = itsTextDocuments->GetElementCount();
 	for (i=1; i<=count; i++)
-		{
+	{
 		(itsTextDocuments->GetElement(i))->RefreshVCSStatus();
-		}
+	}
 }
 
 /******************************************************************************
@@ -245,21 +245,21 @@ CBDocumentManager::NewProjectDocument
 {
 	CBProjectDocument* d;
 	if (CBProjectDocument::Create(&d))
-		{
+	{
 		if (doc != nullptr)
-			{
+		{
 			*doc = d;
-			}
+		}
 		return true;
-		}
+	}
 	else
-		{
+	{
 		if (doc != nullptr)
-			{
+		{
 			*doc = nullptr;
-			}
-		return false;
 		}
+		return false;
+	}
 }
 
 /******************************************************************************
@@ -298,9 +298,9 @@ CBDocumentManager::ProjDocDeleted
 	bool onDisk;
 	const JString fullName = doc->GetFullName(&onDisk);
 	if (onDisk)
-		{
+	{
 		Broadcast(AddFileToHistory(kProjectFileHistory, fullName));
-		}
+	}
 }
 
 /******************************************************************************
@@ -316,15 +316,15 @@ CBDocumentManager::GetActiveProjectDocument
 	const
 {
 	if (!itsProjectDocuments->IsEmpty())
-		{
+	{
 		*doc = itsProjectDocuments->GetFirstElement();
 		return true;
-		}
+	}
 	else
-		{
+	{
 		*doc = nullptr;
 		return false;
-		}
+	}
 }
 
 /******************************************************************************
@@ -347,25 +347,25 @@ CBDocumentManager::ProjectDocumentIsOpen
 	// check that the file exists
 
 	if (!JFileExists(fileName))
-		{
+	{
 		return false;
-		}
+	}
 
 	// search for an open CBProjectDocument that uses this file
 
 	const JSize count = itsProjectDocuments->GetElementCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		*doc = itsProjectDocuments->GetElement(i);
 
 		bool onDisk;
 		const JString docName = (**doc).GetFullName(&onDisk);
 
 		if (onDisk && JSameDirEntry(fileName, docName))
-			{
+		{
 			return true;
-			}
 		}
+	}
 
 	*doc = nullptr;
 	return false;
@@ -381,13 +381,13 @@ CBDocumentManager::CloseProjectDocuments()
 {
 	const JSize count = itsProjectDocuments->GetElementCount();
 	for (JIndex i=count; i>=1; i--)
-		{
+	{
 		CBProjectDocument* doc = itsProjectDocuments->GetElement(i);
 		if (!doc->Close())
-			{
+		{
 			break;
-			}
 		}
+	}
 
 	return itsProjectDocuments->IsEmpty();
 }
@@ -402,9 +402,9 @@ CBDocumentManager::UpdateSymbolDatabases()
 {
 	const JSize count = itsProjectDocuments->GetElementCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		(itsProjectDocuments->GetElement(i))->DelayUpdateSymbolDatabase();
-		}
+	}
 }
 
 /******************************************************************************
@@ -417,9 +417,9 @@ CBDocumentManager::CancelUpdateSymbolDatabases()
 {
 	const JSize count = itsProjectDocuments->GetElementCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		(itsProjectDocuments->GetElement(i))->CancelUpdateSymbolDatabase();
-		}
+	}
 }
 
 /******************************************************************************
@@ -432,19 +432,19 @@ CBDocumentManager::NewTextDocument()
 {
 	JString newName;
 	if (itsEditTextLocalFlag)
-		{
+	{
 		auto* doc = jnew CBTextDocument;
 		assert( doc != nullptr );
 		doc->Activate();
-		}
+	}
 	else if ((JXGetChooseSaveFile())->SaveFile(
 				JGetString("NewFilePrompt::CBDocumentManager"),
 				JString::empty, JString::empty, &newName))
-		{
+	{
 		std::ofstream output(newName.GetBytes());
 		output.close();
 		OpenTextDocument(newName);
-		}
+	}
 }
 
 /******************************************************************************
@@ -458,40 +458,40 @@ CBDocumentManager::NewTextDocumentFromTemplate()
 	JString tmplDir;
 	const bool exists = GetTextTemplateDirectory(false, &tmplDir);
 	if (!exists)
-		{
+	{
 		const JUtf8Byte* map[] =
-		{
+	{
 			"name", kTextTemplateDir
-		};
+	};
 		const JString msg = JGetString("NoTextTemplates::CBDocumentManager", map, sizeof(map));
 		JGetUserNotification()->ReportError(msg);
 		return;
-		}
+	}
 
 	tmplDir += ACE_DIRECTORY_SEPARATOR_STR "*";		// make ChooseFile() happy
 
 	JXChooseSaveFile* csf = JXGetChooseSaveFile();
 	JString tmplName;
 	if (csf->ChooseFile(JString::empty, JString::empty, tmplDir, &tmplName))
-		{
+	{
 		JString newName;
 		if (itsEditTextLocalFlag)
-			{
+		{
 			auto* doc = jnew CBTextDocument(tmplName, kCBUnknownFT, true);
 			assert( doc != nullptr );
 			doc->Activate();
-			}
+		}
 		else if (csf->SaveFile(JGetString("NewFilePrompt::CBDocumentManager"),
 							   JString::empty, JString::empty, &newName))
-			{
+		{
 			JString tmplText;
 			JReadFile(tmplName, &tmplText);
 			std::ofstream output(newName.GetBytes());
 			tmplText.Print(output);
 			output.close();
 			OpenTextDocument(newName);
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -527,58 +527,58 @@ CBDocumentManager::GetTemplateDirectory
 	const bool hasUserFiles = hasUserDir && !JDirInfo::Empty(userDir);
 
 	if (!hasHomeDir)
-		{
+	{
 		if (!JDirInfo::Empty(sysDir))
-			{
-			*fullName = sysDir;
-			return true;
-			}
-		if (create)
-			{
-			JGetUserNotification()->ReportError(JGetString("NoHomeDirectory::CBDocumentManager"));
-			}
-		return false;
-		}
-	else if (hasUserDir)
 		{
-		if (!hasUserFiles && !JDirInfo::Empty(sysDir))
-			{
 			*fullName = sysDir;
 			return true;
-			}
+		}
+		if (create)
+		{
+			JGetUserNotification()->ReportError(JGetString("NoHomeDirectory::CBDocumentManager"));
+		}
+		return false;
+	}
+	else if (hasUserDir)
+	{
+		if (!hasUserFiles && !JDirInfo::Empty(sysDir))
+		{
+			*fullName = sysDir;
+			return true;
+		}
 		*fullName = userDir;
 		return create || hasUserFiles;
-		}
+	}
 	else
-		{
+	{
 		if (!JDirInfo::Empty(sysDir))
-			{
+		{
 			*fullName = sysDir;
 			return true;
-			}
+		}
 		if (!create)
-			{
+		{
 			return false;
-			}
+		}
 
 		const JError err = JCreateDirectory(userDir);
 		if (err.OK())
-			{
+		{
 			*fullName = userDir;
 			return true;
-			}
+		}
 		else
-			{
+		{
 			const JUtf8Byte* map[] =
-			{
+		{
 				"name", userDir.GetBytes(),
 				"err",  err.GetMessage().GetBytes()
-			};
+		};
 			const JString msg = JGetString("CannotCreateTemplates::CBDocumentManager", map, sizeof(map));
 			JGetUserNotification()->ReportError(msg);
 			return false;
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -612,27 +612,27 @@ CBDocumentManager::TextDocumentDeleted
 {
 	JIndex i;
 	if (itsTextDocuments->Find(doc, &i))
-		{
+	{
 		itsTextDocuments->RemoveElement(i);
 
 		if (i == 1 && !itsTextDocuments->IsEmpty())
-			{
+		{
 			JXGetSearchTextDialog()->SetActiveTE(
 				itsTextDocuments->GetFirstElement()->GetTextEditor());
-			}
 		}
+	}
 
 	if (doc == itsListDocument)
-		{
+	{
 		itsListDocument = nullptr;
-		}
+	}
 
 	bool onDisk;
 	const JString fullName = doc->GetFullName(&onDisk);
 	if (onDisk)
-		{
+	{
 		Broadcast(AddFileToHistory(kTextFileHistory, fullName));
-		}
+	}
 }
 
 /******************************************************************************
@@ -648,15 +648,15 @@ CBDocumentManager::GetActiveTextDocument
 	const
 {
 	if (!itsTextDocuments->IsEmpty())
-		{
+	{
 		*doc = itsTextDocuments->GetFirstElement();
 		return true;
-		}
+	}
 	else
-		{
+	{
 		*doc = nullptr;
 		return false;
-		}
+	}
 }
 
 /******************************************************************************
@@ -674,11 +674,11 @@ CBDocumentManager::SetActiveTextDocument
 {
 	JIndex i;
 	if (itsTextDocuments->Find(doc, &i) && i != 1)
-		{
+	{
 		itsTextDocuments->MoveElementToIndex(i, 1);
 		doc->CheckIfModifiedByOthers();
 		JXGetSearchTextDialog()->SetActiveTE(doc->GetTextEditor());
-		}
+	}
 }
 
 /******************************************************************************
@@ -745,40 +745,40 @@ CBDocumentManager::OpenSomething
 	)
 {
 	if (!fileName.IsEmpty())
-		{
+	{
 		if (JFileReadable(fileName))
-			{
+		{
 			PrivateOpenSomething(fileName, lineRange, iconify, forceReload);
-			}
+		}
 		else if (!JFileExists(fileName))
-			{
+		{
 			const JUtf8Byte* map[] =
-			{
+		{
 				"f", fileName.GetBytes()
-			};
+		};
 			const JString msg = JGetString("FileDoesNotExist::CBDocumentManager", map, sizeof(map));
 			JGetUserNotification()->ReportError(msg);
-			}
+		}
 		else
-			{
+		{
 			const JUtf8Byte* map[] =
-			{
+		{
 				"f", fileName.GetBytes()
-			};
+		};
 			const JString msg = JGetString("CannotReadFile::CBDocumentManager", map, sizeof(map));
 			JGetUserNotification()->ReportError(msg);
-			}
 		}
+	}
 	else
-		{
+	{
 		JPtrArray<JString> fullNameList(JPtrArrayT::kDeleteAll);
 		if (JGetChooseSaveFile()->ChooseFiles(
 					JGetString("OpenFilesPrompt::CBDocumentManager"),
 					JString::empty, &fullNameList))
-			{
+		{
 			OpenSomething(fullNameList);
-			}
 		}
+	}
 }
 
 void
@@ -789,26 +789,26 @@ CBDocumentManager::OpenSomething
 {
 	const JSize count = fileNameList.GetElementCount();
 	if (count > 0)
-		{
+	{
 		JXStandAlonePG pg;
 		pg.RaiseWhenUpdate();
 		pg.FixedLengthProcessBeginning(count, JGetString("OpeningFilesProgress::CBDocumentManager"), true, false);
 
 		for (JIndex i=1; i<=count; i++)
-			{
+		{
 			const JString* fileName = fileNameList.GetElement(i);
 			if (!fileName->IsEmpty())
-				{
+			{
 				OpenSomething(*fileName);
-				}
-			if (!pg.IncrementProgress())
-				{
-				break;
-				}
 			}
+			if (!pg.IncrementProgress())
+			{
+				break;
+			}
+		}
 
 		pg.ProcessFinished();
-		}
+	}
 }
 
 /******************************************************************************
@@ -828,26 +828,26 @@ CBDocumentManager::PrivateOpenSomething
 	CBProjectDocument* doc;
 	if (CBProjectDocument::Create(fileName, false, &doc) ==
 		JXFileDocument::kNotMyFile)
-		{
+	{
 		JString cmd;
 		if (CBGetPrefsManager()->EditWithOtherProgram(fileName, &cmd))
-			{
+		{
 			JSimpleProcess::Create(cmd, true);
-			}
+		}
 		else if (CBGetPrefsManager()->GetFileType(fileName) == kCBBinaryFT ||
 				 CBTextDocument::OpenAsBinaryFile(fileName))
-			{
-			PrivateOpenBinaryDocument(fileName, iconify, forceReload);
-			}
-		else
-			{
-			PrivateOpenTextDocument(fileName, lineRange, iconify, forceReload, nullptr);
-			}
-		}
-	else if (doc != nullptr && iconify)
 		{
-		(doc->GetWindow())->Iconify();
+			PrivateOpenBinaryDocument(fileName, iconify, forceReload);
 		}
+		else
+		{
+			PrivateOpenTextDocument(fileName, lineRange, iconify, forceReload, nullptr);
+		}
+	}
+	else if (doc != nullptr && iconify)
+	{
+		(doc->GetWindow())->Iconify();
+	}
 }
 
 /******************************************************************************
@@ -886,45 +886,45 @@ CBDocumentManager::OpenTextDocument
 	)
 {
 	if (doc != nullptr)
-		{
+	{
 		*doc = nullptr;
-		}
+	}
 
 	if (fileName.IsEmpty())
-		{
+	{
 		return false;
-		}
+	}
 
 	const JUtf8Byte* map[] =
-		{
+	{
 		"f", fileName.GetBytes()
-		};
+	};
 
 	const bool isFile = JFileExists(fileName);
 	if (!isFile && JNameUsed(fileName))
-		{
+	{
 		const JString msg = JGetString("NotAFile::CBDocumentManager", map, sizeof(map));
 		JGetUserNotification()->ReportError(msg);
 		return false;
-		}
+	}
 	else if (!isFile)
-		{
+	{
 		const JString msg = JGetString("FileDoesNotExistCreate::CBDocumentManager", map, sizeof(map));
 		if (!JGetUserNotification()->AskUserYes(msg))
-			{
+		{
 			return false;
-			}
+		}
 		else
-			{
+		{
 			std::ofstream temp(fileName.GetBytes());
 			if (!temp.good())
-				{
+			{
 				const JString msg = JGetString("CannotCreateFile::CBDocumentManager", map, sizeof(map));
 				JGetUserNotification()->ReportError(msg);
 				return false;
-				}
 			}
 		}
+	}
 
 	return PrivateOpenTextDocument(fileName, lineRange, iconify, forceReload, doc);
 }
@@ -953,58 +953,58 @@ CBDocumentManager::PrivateOpenTextDocument
 	assert( !fullName.IsEmpty() );
 
 	if (returnDoc != nullptr)
-		{
+	{
 		*returnDoc = nullptr;
-		}
+	}
 
 	if (itsEditTextLocalFlag)
-		{
+	{
 		JXFileDocument* doc;
 		if (!FileDocumentIsOpen(fullName, &doc))
-			{
+		{
 			if (!WarnFileSize(fullName))
-				{
+			{
 				return false;
-				}
-			doc = jnew CBTextDocument(fullName);
 			}
+			doc = jnew CBTextDocument(fullName);
+		}
 		assert( doc != nullptr );
 		if (iconify && !doc->IsActive())
-			{
+		{
 			(doc->GetWindow())->Iconify();
-			}
+		}
 		if (!iconify || !doc->IsActive())
-			{
+		{
 			doc->Activate();
-			}
+		}
 
 		auto* textDoc = dynamic_cast<CBTextDocument*>(doc);
 		if (textDoc != nullptr)
-			{
+		{
 			textDoc->RevertIfChangedByOthers(forceReload);
 			if (!lineRange.IsEmpty())
-				{
+			{
 				textDoc->SelectLines(lineRange);
-				}
 			}
+		}
 
 		if (returnDoc != nullptr)
-			{
-			*returnDoc = textDoc;
-			}
-		return textDoc != nullptr;
-		}
-	else
 		{
+			*returnDoc = textDoc;
+		}
+		return textDoc != nullptr;
+	}
+	else
+	{
 		JString cmd;
 		if (!lineRange.IsEmpty())
-			{
+		{
 			cmd = itsEditTextFileLineCmd;
-			}
+		}
 		else
-			{
+		{
 			cmd = itsEditTextFileCmd;
-			}
+		}
 
 		const JString name = JPrepArgForExec(fullName);
 		const JString lineIndexStr(lineRange.first, 0);
@@ -1017,7 +1017,7 @@ CBDocumentManager::PrivateOpenTextDocument
 
 		JSimpleProcess::Create(cmd, true);
 		return false;
-		}
+	}
 }
 
 /******************************************************************************
@@ -1034,20 +1034,20 @@ CBDocumentManager::WarnFileSize
 	JSize size;
 	if (JGetFileLength(fullName, &size) == kJNoError &&
 		size > kMinWarnFileSize)
-		{
+	{
 		JString path, fileName;
 		JSplitPathAndName(fullName, &path, &fileName);
 
 		const JUtf8Byte* map[] =
-			{
+		{
 			"f", fileName.GetBytes()
-			};
+		};
 		const JString msg = JGetString("WarnFileTooLarge::CBDocumentManager", map, sizeof(map));
 		if (!JGetUserNotification()->AskUserNo(msg))
-			{
+		{
 			return false;
-			}
 		}
+	}
 
 	return true;
 }
@@ -1065,30 +1065,30 @@ CBDocumentManager::SaveTextDocuments
 {
 	if (!itsWarnBeforeSaveAllFlag ||
 		JGetUserNotification()->AskUserNo(JGetString("WarnSaveAll::CBDocumentManager")))
-		{
+	{
 		itsTextNeedsSaveFlag = false;
 
 		const JSize count = itsTextDocuments->GetElementCount();
 		for (JIndex i=1; i<=count; i++)
-			{
+		{
 			CBTextDocument* doc = itsTextDocuments->GetElement(i);
 			if (CBIsExecOutput(doc->GetFileType()))
-				{
+			{
 				auto* execDoc =
 					dynamic_cast<CBExecOutputDocument*>(doc);
 				assert( execDoc != nullptr );
 				if (execDoc->ProcessRunning())
-					{
-					continue;
-					}
-				}
-
-			if ((saveUntitled || doc->ExistsOnDisk()) && !doc->Save())
 				{
-				itsTextNeedsSaveFlag = true;
+					continue;
 				}
 			}
+
+			if ((saveUntitled || doc->ExistsOnDisk()) && !doc->Save())
+			{
+				itsTextNeedsSaveFlag = true;
+			}
 		}
+	}
 
 	return !itsTextNeedsSaveFlag;
 }
@@ -1106,10 +1106,10 @@ CBDocumentManager::ReloadTextDocuments
 {
 	const JSize count = itsTextDocuments->GetElementCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		CBTextDocument* doc = itsTextDocuments->GetElement(i);
 		doc->RevertIfChangedByOthers(force);
-		}
+	}
 }
 
 /******************************************************************************
@@ -1122,31 +1122,31 @@ CBDocumentManager::CloseTextDocuments()
 {
 	if (!itsWarnBeforeCloseAllFlag ||
 		JGetUserNotification()->AskUserNo(JGetString("WarnCloseAll::CBDocumentManager")))
-		{
+	{
 		// This is safe because there are no dependencies between documents.
 
 		JIndex i=1;
 		while (i <= itsTextDocuments->GetElementCount())
-			{
+		{
 			CBTextDocument* doc = itsTextDocuments->GetElement(i);
 			if (CBIsExecOutput(doc->GetFileType()))
-				{
+			{
 				auto* execDoc =
 					dynamic_cast<CBExecOutputDocument*>(doc);
 				assert( execDoc != nullptr );
 				if (execDoc->ProcessRunning())
-					{
+				{
 					i++;
 					continue;
-					}
-				}
-
-			if (!doc->Close())
-				{
-				break;
 				}
 			}
+
+			if (!doc->Close())
+			{
+				break;
+			}
 		}
+	}
 
 	return itsTextDocuments->IsEmpty();
 }
@@ -1165,11 +1165,11 @@ CBDocumentManager::FileRenamed
 {
 	const JSize count = itsProjectDocuments->GetElementCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		itsProjectDocuments->GetElement(i)->
 			GetFileTree()->GetProjectRoot()->
 				FileRenamed(origFullName, newFullName);
-		}
+	}
 }
 
 /******************************************************************************
@@ -1189,10 +1189,10 @@ CBDocumentManager::StylerChanged
 	pg.FixedLengthProcessBeginning(count, JGetString("AdjustStylesProgress::CBDocumentManager"), false, false);
 
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		(itsTextDocuments->GetElement(i))->StylerChanged(styler);
 		pg.IncrementProgress();
-		}
+	}
 
 	pg.ProcessFinished();
 }
@@ -1211,9 +1211,9 @@ CBDocumentManager::OpenBinaryDocument
 	)
 {
 	if (!fileName.IsEmpty() && JFileExists(fileName))
-		{
+	{
 		PrivateOpenBinaryDocument(fileName, false, false);
-		}
+	}
 }
 
 /******************************************************************************
@@ -1234,17 +1234,17 @@ CBDocumentManager::PrivateOpenBinaryDocument
 
 	JString cmd;
 	if (CBGetPrefsManager()->EditWithOtherProgram(fullName, &cmd))
-		{
+	{
 		JSimpleProcess::Create(cmd, true);
 //		return false;
-		}
+	}
 /*	else if (itsEditBinaryLocalFlag)
-		{
+	{
 		// some day...
 //		return true;
-		}
+	}
 */	else
-		{
+	{
 		cmd = itsEditBinaryFileCmd;
 
 		JSubstitute sub;
@@ -1254,7 +1254,7 @@ CBDocumentManager::PrivateOpenBinaryDocument
 
 		JSimpleProcess::Create(cmd, true);
 //		return false;
-		}
+	}
 }
 
 /******************************************************************************
@@ -1273,18 +1273,18 @@ CBDocumentManager::OpenComplementFile
 {
 	JString complName;
 	if (GetComplementFile(fullName, type, &complName, projDoc, searchDirs))
-		{
+	{
 		return OpenTextDocument(complName);
-		}
+	}
 	else if (CBHasComplementType(type))
-		{
+	{
 		JString path, fileName;
 		JSplitPathAndName(fullName, &path, &fileName);
 
 		const JUtf8Byte* map[] =
-		{
+	{
 			"name", fileName.GetBytes()
-		};
+	};
 		const JString msg = JGetString("ComplFileNotFound::CBDocumentManager", map, sizeof(map));
 
 		CBPrefsManager* prefsMgr = CBGetPrefsManager();
@@ -1296,14 +1296,14 @@ CBDocumentManager::OpenComplementFile
 		if (JGetChooseSaveFile()->
 				SaveFile(JGetString("SaveNewFilePrompt::CBDocumentManager"),
 						 msg, origName, &newFullName))
-			{
+		{
 			prefsMgr->SetDefaultComplementSuffix(suffixIndex, newFullName);
 
 			std::ofstream temp(newFullName.GetBytes());
 			temp.close();
 			return OpenTextDocument(newFullName);
-			}
 		}
+	}
 
 	return false;
 }
@@ -1356,13 +1356,13 @@ JIndex i;
 
 	JString fullName;
 	for (i=1; i<=suffixCount; i++)
-		{
+	{
 		fullName = baseName + *(suffixList.GetElement(i));
 		if (FileDocumentIsOpen(fullName, doc))
-			{
+		{
 			return true;
-			}
 		}
+	}
 
 	// check file name of each document, in case complement is in different directory
 
@@ -1370,18 +1370,18 @@ JIndex i;
 	JSplitPathAndName(baseName, &path, &base);
 	const JSize docCount = itsTextDocuments->GetElementCount();
 	for (i=1; i<=suffixCount; i++)
-		{
+	{
 		name = base + *(suffixList.GetElement(i));
 		for (JIndex j=1; j<=docCount; j++)
-			{
+		{
 			CBTextDocument* d = itsTextDocuments->GetElement(j);
 			if (d->GetFileName() == name)
-				{
+			{
 				*doc = d;
 				return true;
-				}
 			}
 		}
+	}
 
 	return false;
 }
@@ -1436,21 +1436,21 @@ CBDocumentManager::FindComplementFile
 
 	bool found = false;
 	for (JIndex i=1; i<=suffixCount; i++)
-		{
+	{
 		*outputName = baseName + *(suffixList.GetElement(i));
 		if (JFileExists(*outputName))
-			{
+		{
 			found = true;
 			break;
-			}
 		}
+	}
 
 	if (!found && searchDirs &&
 		(projDoc != nullptr || GetActiveProjectDocument(&projDoc)))
-		{
+	{
 		found = SearchForComplementFile(projDoc, inputName, baseName,
 										suffixList, outputName);
-		}
+	}
 
 	return found;
 }
@@ -1496,9 +1496,9 @@ JIndex i;
 	const CBDirList& origDirList = projDoc->GetDirectories();
 	JSize dirCount               = origDirList.GetElementCount();
 	if (dirCount == 0)
-		{
+	{
 		return false;
-		}
+	}
 
 	JArray<DirMatchInfo> dirList(dirCount);
 	dirList.SetSortOrder(JListT::kSortDescending);
@@ -1506,26 +1506,26 @@ JIndex i;
 
 	DirMatchInfo info;
 	for (i=1; i<=dirCount; i++)
-		{
+	{
 		info.path = jnew JString;
 		assert( info.path != nullptr );
 
 		if (origDirList.GetTruePath(i, info.path, &(info.recurse)))
-			{
+		{
 			info.matchLength = JString::CalcCharacterMatchLength(origPath, *(info.path));
 			dirList.InsertSorted(info);
-			}
-		else
-			{
-			jdelete info.path;
-			}
 		}
+		else
+		{
+			jdelete info.path;
+		}
+	}
 
 	dirCount = dirList.GetElementCount();
 	if (dirCount == 0)
-		{
+	{
 		return false;
-		}
+	}
 
 	// search for each suffix in all directories
 
@@ -1538,59 +1538,59 @@ JIndex i;
 	JSplitPathAndName(origFullName, &origFilePath, &origFileName);
 
 	const JUtf8Byte* map[] =
-	{
+{
 		"name", origFileName.GetBytes()
-	};
+};
 	const JString msg = JGetString("ComplFileProgress::CBDocumentManager", map, sizeof(map));
 	pg.FixedLengthProcessBeginning(suffixCount * dirCount, msg, true, false);
 
 	JString searchName, newPath, newName;
 	for (i=1; i<=suffixCount; i++)
-		{
+	{
 		searchName = baseName + *(suffixList.GetElement(i));
 		for (JIndex j=1; j<=dirCount; j++)
-			{
+		{
 			const DirMatchInfo info = dirList.GetElement(j);
 			if (info.recurse &&
 				JSearchSubdirs(*info.path, searchName, true, JString::kCompareCase,
 							   &newPath, &newName))
-				{
+			{
 				*outputName = JCombinePathAndName(newPath, newName);
 				found       = true;
 				break;
-				}
+			}
 			else if (!info.recurse)
-				{
+			{
 				const JString fullName = JCombinePathAndName(*(info.path), searchName);
 				if (JFileExists(fullName))
-					{
+				{
 					*outputName = fullName;
 					found       = true;
 					break;
-					}
 				}
+			}
 
 			if (!pg.IncrementProgress())
-				{
+			{
 				cancelled = true;
 				break;
-				}
-			}
-
-		if (found || cancelled)
-			{
-			break;
 			}
 		}
+
+		if (found || cancelled)
+		{
+			break;
+		}
+	}
 
 	pg.ProcessFinished();
 
 	// clean up
 
 	for (i=1; i<=dirCount; i++)
-		{
+	{
 		jdelete (dirList.GetElement(i)).path;
-		}
+	}
 
 	return found;
 }
@@ -1605,17 +1605,17 @@ CompareMatchLengths
 	)
 {
 	if (i1.matchLength < i2.matchLength)
-		{
+	{
 		return JListT::kFirstLessSecond;
-		}
+	}
 	else if (i1.matchLength == i2.matchLength)
-		{
+	{
 		return JListT::kFirstEqualSecond;
-		}
+	}
 	else
-		{
+	{
 		return JListT::kFirstGreaterSecond;
-		}
+	}
 }
 
 /******************************************************************************
@@ -1636,33 +1636,33 @@ CBDocumentManager::ReadFromProject
 	input >> textCount;
 
 	if (textCount > 0)
-		{
+	{
 		JXStandAlonePG pg;
 		pg.RaiseWhenUpdate();
 		pg.FixedLengthProcessBeginning(textCount, JGetString("OpeningFiles::CBMDIServer"), true, false);
 
 		for (JIndex i=1; i<=textCount; i++)
-			{
+		{
 			bool keep;
 			auto* doc = jnew CBTextDocument(input, vers, &keep);
 			assert( doc != nullptr );
 			if (!keep)
-				{
+			{
 				doc->Close();
-				}
+			}
 			else
-				{
+			{
 				doc->Activate();
-				}
-
-			if (!pg.IncrementProgress())
-				{
-				break;
-				}
 			}
 
-		pg.ProcessFinished();
+			if (!pg.IncrementProgress())
+			{
+				break;
+			}
 		}
+
+		pg.ProcessFinished();
+	}
 }
 
 /******************************************************************************
@@ -1683,11 +1683,11 @@ CBDocumentManager::WriteForProject
 	output << textCount;
 
 	for (JIndex i=1; i<=textCount; i++)
-		{
+	{
 		output << ' ';
 		CBTextDocument* doc = itsTextDocuments->GetElement(i);
 		doc->WriteForProject(output);
-		}
+	}
 }
 
 /******************************************************************************
@@ -1707,57 +1707,57 @@ CBDocumentManager::RestoreState
 	JFileVersion vers;
 	input >> vers;
 	if (vers > kCurrentStateVersion)
-		{
+	{
 		return false;
-		}
+	}
 
 	JSize projCount;
 	if (vers == 0)
-		{
+	{
 		bool projectWasOpen;
 		input >> JBoolFromString(projectWasOpen);
 		projCount = projectWasOpen ? 1 : 0;
-		}
+	}
 	else
-		{
+	{
 		input >> projCount;
-		}
+	}
 
 	if (projCount > 0)
-		{
+	{
 		bool saveReopen = CBProjectDocument::WillReopenTextFiles();
 		if (kCurrentStateVersion >= 2)
-			{
+		{
 			CBProjectDocument::ShouldReopenTextFiles(false);
-			}
+		}
 
 		bool onDisk = true;
 		JString fileName;
 		for (JIndex i=1; i<=projCount; i++)
-			{
+		{
 			if (vers >= 1)
-				{
+			{
 				input >> JBoolFromString(onDisk);
-				}
+			}
 			input >> fileName;
 			if (onDisk && JFileReadable(fileName))
-				{
+			{
 				OpenSomething(fileName);
-				}
 			}
-
-		CBProjectDocument::ShouldReopenTextFiles(saveReopen);
 		}
 
+		CBProjectDocument::ShouldReopenTextFiles(saveReopen);
+	}
+
 	if (kCurrentStateVersion >= 2 || projCount == 0)
-		{
+	{
 		JFileVersion projVers;
 		input >> projVers;
 		if (projVers <= kCurrentProjectFileVersion)
-			{
+		{
 			ReadFromProject(input, projVers);
-			}
 		}
+	}
 
 	return HasProjectDocuments() || HasTextDocuments();
 }
@@ -1782,9 +1782,9 @@ CBDocumentManager::SaveState
 {
 	if (itsProjectDocuments->IsEmpty() &&
 		itsTextDocuments->IsEmpty())
-		{
+	{
 		return false;
-		}
+	}
 
 	output << kCurrentStateVersion;
 
@@ -1792,15 +1792,15 @@ CBDocumentManager::SaveState
 	output << ' ' << projCount;
 
 	if (projCount > 0)
-		{
+	{
 		bool onDisk;
 		JString fullName;
 		for (JIndex i=1; i<=projCount; i++)
-			{
+		{
 			fullName = (itsProjectDocuments->GetElement(i))->GetFullName(&onDisk);
 			output << ' ' << JBoolToString(onDisk) << ' ' << fullName;
-			}
 		}
+	}
 
 	output << ' ' << kCurrentProjectFileVersion;
 	output << ' ';
@@ -1826,99 +1826,99 @@ CBDocumentManager::Receive
 	)
 {
 	if (sender == itsProjectDocuments && message.Is(JListT::kElementsInserted))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const JListT::ElementsInserted*>(&message);
 		assert( info != nullptr );
 		if (info->Contains(1))
-			{
-			Broadcast(ProjectDocumentActivated(itsProjectDocuments));
-			}
-		}
-	else if (sender == itsProjectDocuments && message.Is(JListT::kElementsRemoved))
 		{
+			Broadcast(ProjectDocumentActivated(itsProjectDocuments));
+		}
+	}
+	else if (sender == itsProjectDocuments && message.Is(JListT::kElementsRemoved))
+	{
 		const auto* info =
 			dynamic_cast<const JListT::ElementsRemoved*>(&message);
 		assert( info != nullptr );
 		if (info->Contains(1))
-			{
-			Broadcast(ProjectDocumentActivated(itsProjectDocuments));
-			}
-		}
-	else if (sender == itsProjectDocuments && message.Is(JListT::kElementMoved))
 		{
+			Broadcast(ProjectDocumentActivated(itsProjectDocuments));
+		}
+	}
+	else if (sender == itsProjectDocuments && message.Is(JListT::kElementMoved))
+	{
 		const auto* info =
 			dynamic_cast<const JListT::ElementMoved*>(&message);
 		assert( info != nullptr );
 		if (info->GetOrigIndex() == 1 || info->GetNewIndex() == 1)
-			{
-			Broadcast(ProjectDocumentActivated(itsProjectDocuments));
-			}
-		}
-	else if (sender == itsProjectDocuments && message.Is(JListT::kElementsSwapped))
 		{
+			Broadcast(ProjectDocumentActivated(itsProjectDocuments));
+		}
+	}
+	else if (sender == itsProjectDocuments && message.Is(JListT::kElementsSwapped))
+	{
 		const auto* info =
 			dynamic_cast<const JListT::ElementsSwapped*>(&message);
 		assert( info != nullptr );
 		if (info->GetIndex1() == 1 || info->GetIndex2() == 1)
-			{
-			Broadcast(ProjectDocumentActivated(itsProjectDocuments));
-			}
-		}
-	else if (sender == itsProjectDocuments && message.Is(JListT::kElementsChanged))
 		{
+			Broadcast(ProjectDocumentActivated(itsProjectDocuments));
+		}
+	}
+	else if (sender == itsProjectDocuments && message.Is(JListT::kElementsChanged))
+	{
 		const auto* info =
 			dynamic_cast<const JListT::ElementsChanged*>(&message);
 		assert( info != nullptr );
 		if (info->Contains(1))
-			{
-			Broadcast(ProjectDocumentActivated(itsProjectDocuments));
-			}
-		}
-	else if (sender == itsProjectDocuments && message.Is(JListT::kSorted))
 		{
-		assert_msg( 0, "not allowed" );
+			Broadcast(ProjectDocumentActivated(itsProjectDocuments));
 		}
+	}
+	else if (sender == itsProjectDocuments && message.Is(JListT::kSorted))
+	{
+		assert_msg( 0, "not allowed" );
+	}
 
 	else if (sender == CBGetPrefsManager() &&
 			 message.Is(CBPrefsManager::kFileTypesChanged))
-		{
+	{
 		const JSize count = itsTextDocuments->GetElementCount();
 		if (count > 0)
-			{
+		{
 			JLatentPG pg;
 			pg.FixedLengthProcessBeginning(count, JGetString("UpdateTypesProgress::CBDocumentManager"),
 										   false, false);
 
 			for (JIndex i=1; i<=count; i++)
-				{
+			{
 				(itsTextDocuments->GetElement(i))->UpdateFileType();
 				pg.IncrementProgress();
-				}
+			}
 
 			pg.ProcessFinished();
-			}
 		}
+	}
 
 	else if (sender == itsExtEditorDialog &&
 		message.Is(JXDialogDirector::kDeactivated))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const JXDialogDirector::Deactivated*>(&message);
 		assert( info != nullptr );
 		if (info->Successful())
-			{
+		{
 			itsExtEditorDialog->GetPrefs(&itsEditTextLocalFlag, &itsEditTextFileCmd,
 										 &itsEditTextFileLineCmd,
 										 &itsEditBinaryLocalFlag, &itsEditBinaryFileCmd);
-			}
-		itsExtEditorDialog = nullptr;
 		}
+		itsExtEditorDialog = nullptr;
+	}
 
 	else
-		{
+	{
 		JXDocumentManager::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -1936,12 +1936,12 @@ cbTrimBkgdFlag
 {
 	str->TrimWhitespace();
 	if (str->EndsWith("&"))
-		{
+	{
 		JStringIterator iter(str, kJIteratorStartAtEnd);
 		iter.RemovePrev();
 
 		str->TrimWhitespace();	// invalidates iter
-		}
+	}
 }
 
 void
@@ -1953,9 +1953,9 @@ CBDocumentManager::ReadPrefs
 	JFileVersion vers;
 	input >> vers;
 	if (vers > kCurrentSetupVersion)
-		{
+	{
 		return;
-		}
+	}
 
 	input >> JBoolFromString(itsEditTextLocalFlag);
 	input >> itsEditTextFileCmd;
@@ -1965,34 +1965,34 @@ CBDocumentManager::ReadPrefs
 	cbTrimBkgdFlag(&itsEditTextFileLineCmd);
 
 	if (vers < 3)
-		{
+	{
 		JXWebBrowser::ConvertVarNames(&itsEditTextFileCmd,     kVarNameList);
 		JXWebBrowser::ConvertVarNames(&itsEditTextFileLineCmd, kVarNameList);
-		}
+	}
 
 	if (vers >= 5)
-		{
+	{
 		input >> JBoolFromString(itsEditBinaryLocalFlag);
 		input >> itsEditBinaryFileCmd;
-		}
+	}
 
 	if (vers >= 1)
-		{
+	{
 		input >> JBoolFromString(itsWarnBeforeSaveAllFlag)
 			  >> JBoolFromString(itsWarnBeforeCloseAllFlag);
-		}
+	}
 
 	if (4 <= vers && vers < 6)
-		{
+	{
 		bool updateSymbolDBAfterBuild;
 		input >> JBoolFromString(updateSymbolDBAfterBuild);
-		}
+	}
 
 	if (vers >= 2)
-		{
+	{
 		itsRecentProjectMenu->ReadSetup(input);
 		itsRecentTextMenu->ReadSetup(input);
-		}
+	}
 }
 
 /******************************************************************************

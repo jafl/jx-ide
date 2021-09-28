@@ -8,7 +8,7 @@
  ******************************************************************************/
 
 #include "CBHTMLCompleter.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 CBHTMLCompleter* CBHTMLCompleter::itsSelf = nullptr;
 
@@ -72,14 +72,14 @@ CBStringCompleter*
 CBHTMLCompleter::Instance()
 {
 	if (itsSelf == nullptr && !recursiveInstance)
-		{
+	{
 		recursiveInstance = true;
 
 		itsSelf = jnew CBHTMLCompleter;
 		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
-		}
+	}
 
 	return itsSelf;
 }

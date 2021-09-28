@@ -19,17 +19,17 @@
 #include "CMAdjustLineTableToTextTask.h"
 #include "CMDeselectLineTask.h"
 #include "cmGlobals.h"
-#include <JXWindow.h>
-#include <JXTextMenu.h>
-#include <JXScrollbarSet.h>
-#include <JXScrollbar.h>
-#include <JXFontManager.h>
-#include <JTableSelection.h>
-#include <JPainter.h>
-#include <JColorManager.h>
-#include <jDirUtil.h>
-#include <JListUtil.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXTextMenu.h>
+#include <jx-af/jx/JXScrollbarSet.h>
+#include <jx-af/jx/JXScrollbar.h>
+#include <jx-af/jx/JXFontManager.h>
+#include <jx-af/jcore/JTableSelection.h>
+#include <jx-af/jcore/JPainter.h>
+#include <jx-af/jcore/JColorManager.h>
+#include <jx-af/jcore/jDirUtil.h>
+#include <jx-af/jcore/JListUtil.h>
+#include <jx-af/jcore/jAssert.h>
 
 enum
 {
@@ -208,12 +208,12 @@ CMLineIndexTable::TableDrawCell
 	HilightIfSelected(p, cell, rect);
 
 	if (JIndex(cell.x) == kBreakpointColumn)
-		{
+	{
 		DrawBreakpoints(p, cell, rect);
-		}
+	}
 
 	else if (JIndex(cell.x) == kExecPointColumn && cell.y == itsCurrentLineIndex)
-		{
+	{
 		// We can't use a static polygon because line heights can vary,
 		// e.g. due to underlines.
 
@@ -231,10 +231,10 @@ CMLineIndexTable::TableDrawCell
 		p.SetPenColor(JColorManager::GetBlackColor());
 		p.SetFilling(false);
 		p.Polygon(poly);
-		}
+	}
 
 	else if (JIndex(cell.x) == kLineNumberColumn)
-		{
+	{
 		p.SetFont(itsText->GetText()->GetDefaultFont());
 
 		JRect r  = rect;
@@ -242,7 +242,7 @@ CMLineIndexTable::TableDrawCell
 
 		const JString str = GetLineText(cell.y);
 		p.String(r, str, JPainter::kHAlignRight);
-		}
+	}
 }
 
 /******************************************************************************
@@ -262,9 +262,9 @@ CMLineIndexTable::DrawBreakpoints
 
 	bool hasMultiple;
 	if (!FindNextBreakpoint(cell.y, &hasMultiple))
-		{
+	{
 		return;
-		}
+	}
 
 	// draw breakpoint(s)
 
@@ -272,23 +272,23 @@ CMLineIndexTable::DrawBreakpoints
 	r.Shrink(kMarginWidth, kMarginWidth);
 
 	if (hasMultiple)
-		{
+	{
 		if (r.height() < 9)		// to allow concentric circles to be distinguished
-			{
+		{
 			r.top    = rect.ycenter() - 4;
 			r.bottom = r.top + 9;
 			r.left   = rect.xcenter() - 4;
 			r.right  = r.left + 9;
-			}
+		}
 
 		p.Ellipse(r);
 		r.Shrink(3, 3);
 		p.Ellipse(r);
-		}
+	}
 	else
-		{
+	{
 		DrawBreakpoint(itsBPList->GetElement(itsBPDrawIndex), p, r);
-		}
+	}
 }
 
 /******************************************************************************
@@ -313,11 +313,11 @@ CMLineIndexTable::DrawBreakpoint
 	p.Ellipse(rect);
 
 	if (bp->GetAction() != CMBreakpoint::kRemoveBreakpoint)
-		{
+	{
 		p.SetPenColor(JColorManager::GetBlackColor());
 		p.SetFilling(false);
 		p.Ellipse(rect);
-		}
+	}
 }
 
 /******************************************************************************
@@ -340,28 +340,28 @@ CMLineIndexTable::FindNextBreakpoint
 	)
 {
 	if (multiple != nullptr)
-		{
+	{
 		*multiple = false;
-		}
+	}
 
 	while (itsBPList->IndexValid(itsBPDrawIndex))
-		{
+	{
 		CMBreakpoint* bp = itsBPList->GetElement(itsBPDrawIndex);
 		const JIndex i   = itsText->CRLineIndexToVisualLineIndex(GetBreakpointLineIndex(itsBPDrawIndex, bp));
 		if (i == rowIndex)
-			{
+		{
 			if (multiple != nullptr && itsBPList->IndexValid(itsBPDrawIndex+1))
-				{
-				*multiple = BreakpointsOnSameLine(bp, itsBPList->GetElement(itsBPDrawIndex+1));
-				}
-			return true;
-			}
-		if (i > rowIndex)
 			{
-			return false;
+				*multiple = BreakpointsOnSameLine(bp, itsBPList->GetElement(itsBPDrawIndex+1));
 			}
-		itsBPDrawIndex++;
+			return true;
 		}
+		if (i > rowIndex)
+		{
+			return false;
+		}
+		itsBPDrawIndex++;
+	}
 
 	return false;
 }
@@ -380,9 +380,9 @@ CMLineIndexTable::HasMultipleBreakpointsOnLine
 {
 	if (!itsBPList->IndexValid(bpIndex) ||
 		!itsBPList->IndexValid(bpIndex+1))
-		{
+	{
 		return false;
-		}
+	}
 
 	return BreakpointsOnSameLine(
 		itsBPList->GetElement(bpIndex),
@@ -405,38 +405,38 @@ CMLineIndexTable::HandleMouseDown
 	)
 {
 	if (ScrollForWheel(button, modifiers, nullptr, itsVScrollbar))
-		{
+	{
 		return;
-		}
+	}
 
 	JPoint cell;
 	if (!GetCell(pt, &cell))
-		{
+	{
 		return;
-		}
+	}
 
 	itsText->SelectLine(cell.y);
 	const JIndex lineIndex = itsText->VisualLineIndexToCRLineIndex(cell.y);
 
 	if (button == kJXRightButton)
-		{
+	{
 		OpenLineMenu(lineIndex, pt, buttonStates, modifiers, false);
-		}
+	}
 	else if (button == kJXLeftButton &&
 			 modifiers.GetState(JXMenu::AdjustNMShortcutModifier(kJXMetaKeyIndex)) &&
 			 !modifiers.shift())
-		{
+	{
 		RunUntil(lineIndex);
-		}
+	}
 	else if (button == kJXLeftButton &&
 			 modifiers.GetState(JXMenu::AdjustNMShortcutModifier(kJXControlKeyIndex)))
-		{
+	{
 		SetExecutionPoint(lineIndex);
-		}
+	}
 	else if (button == kJXLeftButton)
-		{
+	{
 		AdjustBreakpoints(lineIndex, pt, buttonStates, modifiers);
-		}
+	}
 }
 
 /******************************************************************************
@@ -455,22 +455,22 @@ CMLineIndexTable::AdjustBreakpoints
 {
 	JIndex bpIndex;
 	if (!GetFirstBreakpointOnLine(lineIndex, &bpIndex))
-		{
+	{
 		SetBreakpoint(lineIndex, modifiers.GetState(JXMenu::AdjustNMShortcutModifier(kJXMetaKeyIndex)) &&
 			modifiers.shift());
-		}
+	}
 	else if (HasMultipleBreakpointsOnLine(bpIndex))
-		{
+	{
 		OpenLineMenu(lineIndex, pt, buttonStates, modifiers, true, bpIndex);
-		}
+	}
 	else if (modifiers.shift())
-		{
+	{
 		(itsBPList->GetElement(bpIndex))->ToggleEnabled();
-		}
+	}
 	else
-		{
+	{
 		itsLink->RemoveBreakpoint(*(itsBPList->GetElement(bpIndex)));
-		}
+	}
 }
 
 /******************************************************************************
@@ -490,48 +490,48 @@ CMLineIndexTable::OpenLineMenu
 	)
 {
 	if (itsLineMenu == nullptr)
-		{
+	{
 		itsLineMenu = jnew JXTextMenu(JString::empty, this, kFixedLeft, kFixedTop, 0,0, 10,10);
 		assert( itsLineMenu != nullptr );
 		itsLineMenu->SetToHiddenPopupMenu(true);
 		itsLineMenu->SetUpdateAction(JXMenu::kDisableNone);
 		ListenTo(itsLineMenu);
-		}
+	}
 
 	itsLineMenuLineIndex  = lineIndex;
 	itsIsFullLineMenuFlag = !onlyBreakpoints;
 
 	itsLineMenu->RemoveAllItems();
 	if (itsIsFullLineMenuFlag)
-		{
+	{
 		itsLineMenu->AppendMenuItems(kLineMenuStr);
-		}
+	}
 	itsLineMenu->AppendMenuItems(kAllBreakpointsMenuStr);
 
 	JIndex bpIndex = firstBPIndex;
 	if (bpIndex == 0 && !GetFirstBreakpointOnLine(lineIndex, &bpIndex))
-		{
+	{
 		bpIndex = 0;
-		}
+	}
 
 	itsLineMenuBPRange.SetToNothing();
 	if (itsBPList->IndexValid(bpIndex))
-		{
+	{
 		itsLineMenuBPRange.first = bpIndex;
-		}
+	}
 
 	while (itsBPList->IndexValid(bpIndex))
-		{
+	{
 		itsLineMenuBPRange.last = bpIndex;
 		const CMBreakpoint* bp  = itsBPList->GetElement(bpIndex);
 
 		const JString bpIndexStr(bp->GetDebuggerIndex(), 0);
 		const JString ignoreCountStr(bp->GetIgnoreCount(), 0);
 		const JUtf8Byte* map[] =
-			{
+		{
 			"index",        bpIndexStr.GetBytes(),
 			"ignore_count", ignoreCountStr.GetBytes()
-			};
+		};
 
 		JString s(kBreakpointMenuStr);
 		JGetStringManager()->Replace(&s, map, sizeof(map));
@@ -539,21 +539,21 @@ CMLineIndexTable::OpenLineMenu
 		itsLineMenu->AppendMenuItems(s.GetBytes());
 
 		if (!HasMultipleBreakpointsOnLine(bpIndex))
-			{
+		{
 			break;
-			}
-		bpIndex++;
 		}
+		bpIndex++;
+	}
 
 	JTableSelection& s = GetTableSelection();
 	s.ClearSelection();
 	s.SelectRow(lineIndex);
 	if (itsDeselectTask == nullptr)
-		{
+	{
 		itsDeselectTask = jnew CMDeselectLineTask(this);
 		assert( itsDeselectTask != nullptr );
 		itsDeselectTask->Start();
-		}
+	}
 
 	itsLineMenu->PopUp(this, pt, buttonStates, modifiers);
 }
@@ -568,25 +568,25 @@ CMLineIndexTable::UpdateLineMenu()
 {
 	JSize offset = 0;
 	if (itsIsFullLineMenuFlag)
-		{
+	{
 		const bool stopped = itsLink->ProgramIsStopped();
 		itsLineMenu->SetItemEnable(offset + kRunUntilCmd, stopped);
 		itsLineMenu->SetItemEnable(offset + kSetExecPtCmd,
 			stopped && itsLink->GetFeature(CMLink::kSetExecutionPoint));
 
 		offset += kLineMenuItemCount;
-		}
+	}
 
 	if (itsLineMenuBPRange.IsEmpty())
-		{
+	{
 		itsLineMenu->DisableItem(offset + kRemoveAllBreakpointsCmd);
-		}
+	}
 	offset += kAllBreakpointsMenuItemCount;
 
 	if (!itsLineMenuBPRange.IsNothing())
-		{
+	{
 		for (JIndex i=itsLineMenuBPRange.first; i<=itsLineMenuBPRange.last; i++)
-			{
+		{
 			itsLineMenu->SetItemEnable(offset + kShowBreakpointInfoCmd,
 				itsLink->GetFeature(CMLink::kShowBreakpointInfo));
 			itsLineMenu->SetItemEnable(offset + kSetConditionCmd,
@@ -596,17 +596,17 @@ CMLineIndexTable::UpdateLineMenu()
 
 			const CMBreakpoint* bp = itsBPList->GetElement(i);
 			if (!bp->HasCondition())
-				{
+			{
 				itsLineMenu->DisableItem(offset + kRemoveConditionCmd);
-				}
+			}
 			if (bp->IsEnabled())
-				{
+			{
 				itsLineMenu->CheckItem(offset + kToggleEnableCmd);
-				}
+			}
 
 			offset += kBreakpointMenuItemCount;
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -624,80 +624,80 @@ CMLineIndexTable::HandleLineMenu
 
 	JSize offset = 0;
 	if (itsIsFullLineMenuFlag)
-		{
+	{
 		if (index == offset + kRunUntilCmd)
-			{
+		{
 			RunUntil(itsLineMenuLineIndex);
 			return;
-			}
+		}
 		else if (index == offset + kSetExecPtCmd)
-			{
+		{
 			SetExecutionPoint(itsLineMenuLineIndex);
 			return;
-			}
-		offset += kLineMenuItemCount;
 		}
+		offset += kLineMenuItemCount;
+	}
 
 	// all breakpoints
 
 	if (index == offset + kSetBreakpointCmd)
-		{
+	{
 		SetBreakpoint(itsLineMenuLineIndex, false);
 		return;
-		}
+	}
 	else if (index == offset + kSetTempBreakpointCmd)
-		{
+	{
 		SetBreakpoint(itsLineMenuLineIndex, true);
 		return;
-		}
+	}
 	else if (index == offset + kRemoveAllBreakpointsCmd)
-		{
+	{
 		RemoveAllBreakpointsOnLine(itsLineMenuLineIndex);
 		return;
-		}
+	}
 	offset += kAllBreakpointsMenuItemCount;
 
 	// individual breakpoints
 
 	if (!itsLineMenuBPRange.IsNothing())
-		{
+	{
 		for (JIndex i=itsLineMenuBPRange.first; i<=itsLineMenuBPRange.last; i++)
-			{
+		{
 			CMBreakpoint* bp = itsBPList->GetElement(i);
 			if (index == offset + kShowBreakpointInfoCmd)
-				{
+			{
 				(itsDirector->GetCommandDirector()->GetBreakpointsDir()->GetBreakpointTable())->Show(bp);
 				return;
-				}
+			}
 			else if (index == offset + kRemoveBreakpointCmd)
-				{
+			{
 				itsLink->RemoveBreakpoint(*bp);
 				return;
-				}
+			}
 			else if (index == offset + kSetConditionCmd)
-				{
+			{
 				(itsDirector->GetCommandDirector()->GetBreakpointsDir()->GetBreakpointTable())->EditCondition(bp);
 				return;
-				}
+			}
 			else if (index == offset + kRemoveConditionCmd)
-				{
+			{
 				bp->RemoveCondition();
 				return;
-				}
+			}
 			else if (index == offset + kToggleEnableCmd)
-				{
+			{
 				bp->ToggleEnabled();
 				return;
-				}
+			}
 			else if (index == offset + kIgnoreNextNCmd)
-				{
+			{
 				(itsDirector->GetCommandDirector()->GetBreakpointsDir()->GetBreakpointTable())->EditIgnoreCount(bp);
 				return;
-				}
+			}
 
 			offset += kBreakpointMenuItemCount;
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -715,45 +715,45 @@ CMLineIndexTable::Receive
 	if (sender == itsText &&
 		(message.Is(JStyledText::kTextChanged) ||
 		 message.Is(JStyledText::kTextSet)))
-		{
+	{
 		AdjustToText();
-		}
+	}
 
 	else if (sender == itsVScrollbar && message.Is(JXScrollbar::kScrolled))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const JXScrollbar::Scrolled*>(&message);
 		assert( info != nullptr );
 		ScrollTo(0, info->GetValue());
-		}
+	}
 
 	else if (sender == itsLink && message.Is(CMLink::kProgramRunning))
-		{
+	{
 		itsCurrentLineIndex = 0;
 		Refresh();
-		}
+	}
 	else if (sender == itsLink->GetBreakpointManager() &&
 			 message.Is(CMBreakpointManager::kBreakpointsChanged))
-		{
+	{
 		UpdateBreakpoints();
-		}
+	}
 
 	else if (sender == itsLineMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		UpdateLineMenu();
-		}
+	}
 	else if (sender == itsLineMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleLineMenu(selection->GetIndex());
-		}
+	}
 
 	else
-		{
+	{
 		JXTable::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -768,17 +768,17 @@ CMLineIndexTable::ReceiveGoingAway
 	)
 {
 	if (sender == itsLink && !CMIsShuttingDown())
-		{
+	{
 		itsLink = CMGetLink();
 		ListenTo(itsLink);
 		ListenTo(itsLink->GetBreakpointManager());
 
 		itsBPList->RemoveAll();
-		}
+	}
 	else
-		{
+	{
 		JXTable::ReceiveGoingAway(sender);
-		}
+	}
 }
 
 /******************************************************************************
@@ -805,22 +805,22 @@ CMLineIndexTable::AdjustToText()
 	SetAllRowHeights(lineHeight);
 	const JSize origRowCount = GetRowCount();
 	if (origRowCount < lineCount)
-		{
+	{
 		AppendRows(lineCount - origRowCount, lineHeight);
-		}
+	}
 	else if (origRowCount > lineCount)
-		{
+	{
 		RemovePrevRows(origRowCount, origRowCount - lineCount);
-		}
+	}
 
 	const JCoordinate tableWidth = GetBoundsWidth();
 	const JCoordinate apWidth    = GetApertureWidth();
 	if (tableWidth != apWidth)
-		{
+	{
 		AdjustSize(tableWidth-apWidth, 0);
 		itsText->Place(GetFrameWidth(), 0);
 		itsText->AdjustSize(apWidth-tableWidth, 0);
-		}
+	}
 
 	ScrollTo(0, itsVScrollbar->GetValue());
 	UpdateBreakpoints();

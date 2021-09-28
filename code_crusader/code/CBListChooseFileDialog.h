@@ -8,7 +8,7 @@
 #ifndef _H_CBListChooseFileDialog
 #define _H_CBListChooseFileDialog
 
-#include <JXChooseFileDialog.h>
+#include <jx-af/jx/JXChooseFileDialog.h>
 
 class JXRadioGroup;
 

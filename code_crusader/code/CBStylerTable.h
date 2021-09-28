@@ -10,8 +10,8 @@
 #ifndef _H_CBStylerTable
 #define _H_CBStylerTable
 
-#include <JXStringTable.h>
-#include <JStringMap.h>
+#include <jx-af/jx/JXStringTable.h>
+#include <jx-af/jcore/JStringMap.h>
 #include "CBStylerBase.h"		// need definition of WordStyle
 
 class JXTextButton;

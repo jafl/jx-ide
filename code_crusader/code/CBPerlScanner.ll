@@ -6,8 +6,8 @@ This scanner reads a Perl file and returns CB::Text::Perl::Scanner::Tokens.
 */
 
 #include "CBStylingScannerBase.h"
-#include <JStringIterator.h>
-#include <jAssert.h>
+#include <jx-af/jcore/JStringIterator.h>
+#include <jx-af/jcore/jAssert.h>
 %}
 
 %option namespace="CB::Text::Perl" lexer="Scanner"

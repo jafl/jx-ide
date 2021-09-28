@@ -6,7 +6,7 @@ This scanner reads a Go file and returns CB::Text::Go::Scanner::Tokens.
 */
 
 #include "CBStylingScannerBase.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 %}
 
 %option namespace="CB::Text::Go" lexer="Scanner"

@@ -9,7 +9,7 @@
 #define _H_cbmUtil
 
 #include "CBTextFileType.h"
-#include <JPtrArray-JString.h>
+#include <jx-af/jcore/JPtrArray-JString.h>
 
 class JString;
 class JTextEditor;

@@ -10,11 +10,11 @@
 #include "CMTextDisplayBase.h"
 #include "cmGlobals.h"
 #include "cbmUtil.h"
-#include <JXScrollbarSet.h>
-#include <JXScrollbar.h>
-#include <JXStyledText.h>
-#include <JFontManager.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXScrollbarSet.h>
+#include <jx-af/jx/JXScrollbar.h>
+#include <jx-af/jx/JXStyledText.h>
+#include <jx-af/jcore/JFontManager.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor

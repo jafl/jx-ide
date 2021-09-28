@@ -12,8 +12,8 @@
 
 #include "CMTextDisplayBase.h"
 #include "CBTextFileType.h"
-#include <JXStyledText.h>
-#include <JSTStyler.h>
+#include <jx-af/jx/JXStyledText.h>
+#include <jx-af/jcore/JSTStyler.h>
 
 class CMSourceDirector;
 class CMCommandDirector;

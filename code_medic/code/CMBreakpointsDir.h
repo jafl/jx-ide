@@ -8,7 +8,7 @@
 #ifndef _H_CMBreakpointsDir
 #define _H_CMBreakpointsDir
 
-#include <JXWindowDirector.h>
+#include <jx-af/jx/JXWindowDirector.h>
 
 class JXTextMenu;
 class JXColHeaderWidget;

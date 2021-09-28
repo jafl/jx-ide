@@ -10,8 +10,8 @@
 #ifndef _H_CBCRMRuleTable
 #define _H_CBCRMRuleTable
 
-#include <JXStringTable.h>
-#include <JStyledText.h>		// need definition of CRMRuleList
+#include <jx-af/jx/JXStringTable.h>
+#include <jx-af/jcore/JStyledText.h>		// need definition of CRMRuleList
 
 class JXTextButton;
 class JXColHeaderWidget;

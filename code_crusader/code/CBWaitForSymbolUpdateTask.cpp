@@ -11,10 +11,10 @@
  ******************************************************************************/
 
 #include "CBWaitForSymbolUpdateTask.h"
-#include <JXApplication.h>
-#include <JProcess.h>
-#include <jTime.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXApplication.h>
+#include <jx-af/jcore/JProcess.h>
+#include <jx-af/jcore/jTime.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -51,15 +51,15 @@ CBWaitForSymbolUpdateTask::Perform()
 {
 	const time_t start = time(nullptr);
 	while (itsKeepWaitingFlag && itsProcess != nullptr)
-		{
+	{
 		if (time(nullptr) - start > 30)
-			{
+		{
 			itsProcess->Kill();
 			break;
-			}
+		}
 
 		JWait(0.1);
 		JXApplication::CheckACEReactor();
 		JProcess::CheckForFinishedChild(false);
-		}
+	}
 }

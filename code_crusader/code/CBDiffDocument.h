@@ -10,7 +10,7 @@
 
 #include "CBTextDocument.h"
 #include "CBDiffFileDialog.h"	// need defn of DiffType
-#include <JError.h>
+#include <jx-af/jcore/JError.h>
 
 class JXTextMenu;
 class JXTextButton;

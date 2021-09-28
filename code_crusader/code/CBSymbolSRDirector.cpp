@@ -21,13 +21,13 @@
 #include "CBPHPTreeDirector.h"
 #include "CBTree.h"
 #include "CBCommandMenu.h"
-#include <JXWindow.h>
-#include <JXTextButton.h>
-#include <JXMenuBar.h>
-#include <JXTextMenu.h>
-#include <JXScrollbarSet.h>
-#include <jGlobals.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXTextButton.h>
+#include <jx-af/jx/JXMenuBar.h>
+#include <jx-af/jx/JXTextMenu.h>
+#include <jx-af/jx/JXScrollbarSet.h>
+#include <jx-af/jcore/jGlobals.h>
+#include <jx-af/jcore/jAssert.h>
 
 // Actions menu
 
@@ -164,9 +164,9 @@ CBSymbolSRDirector::BuildWindow
 	window->LockCurrentMinSize();
 
 	if (focus)
-		{
+	{
 		window->ShouldFocusWhenShow(true);
-		}
+	}
 
 	itsSymbolTable =
 		jnew CBSymbolTable(itsMainSymDir, symbolList,
@@ -221,21 +221,21 @@ CBSymbolSRDirector::Receive
 	)
 {
 	if (sender == itsActionsMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		UpdateActionsMenu();
-		}
+	}
 	else if (sender == itsActionsMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleActionsMenu(selection->GetIndex());
-		}
+	}
 
 	else
-		{
+	{
 		JXWindowDirector::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -251,17 +251,17 @@ CBSymbolSRDirector::ReceiveWithFeedback
 	)
 {
 	if (sender == itsCmdMenu && message->Is(CBCommandMenu::kGetTargetInfo))
-		{
+	{
 		auto* info =
 			dynamic_cast<CBCommandMenu::GetTargetInfo*>(message);
 		assert( info != nullptr );
 		itsSymbolTable->GetFileNamesForSelection(info->GetFileList(),
 												 info->GetLineIndexList());
-		}
+	}
 	else
-		{
+	{
 		JXWindowDirector::ReceiveWithFeedback(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -298,41 +298,41 @@ CBSymbolSRDirector::HandleActionsMenu
 	)
 {
 	if (index == kCopySelNamesCmd)
-		{
+	{
 		itsSymbolTable->CopySelectedSymbolNames();
-		}
+	}
 
 	else if (index == kUpdateCmd)
-		{
+	{
 		itsProjDoc->UpdateSymbolDatabase();	// can delete us
-		}
+	}
 	else if (index == kShowCTreeCmd)
-		{
+	{
 		itsProjDoc->GetCTreeDirector()->Activate();
-		}
+	}
 	else if (index == kShowDTreeCmd)
-		{
+	{
 		itsProjDoc->GetDTreeDirector()->Activate();
-		}
+	}
 	else if (index == kShowGoTreeCmd)
-		{
+	{
 		itsProjDoc->GetGoTreeDirector()->Activate();
-		}
+	}
 	else if (index == kShowJavaTreeCmd)
-		{
+	{
 		itsProjDoc->GetJavaTreeDirector()->Activate();
-		}
+	}
 	else if (index == kShowPHPTreeCmd)
-		{
+	{
 		itsProjDoc->GetPHPTreeDirector()->Activate();
-		}
+	}
 
 	else if (index == kCloseWindowCmd)
-		{
+	{
 		Close();
-		}
+	}
 	else if (index == kCloseAllCmd)
-		{
+	{
 		itsMainSymDir->CloseSymbolBrowsers();
-		}
+	}
 }

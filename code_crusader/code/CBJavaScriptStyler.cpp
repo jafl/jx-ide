@@ -12,11 +12,11 @@
 
 #include "CBJavaScriptStyler.h"
 #include "cbmUtil.h"
-#include <JRegex.h>
-#include <JStringIterator.h>
-#include <JColorManager.h>
-#include <jGlobals.h>
-#include <jAssert.h>
+#include <jx-af/jcore/JRegex.h>
+#include <jx-af/jcore/JStringIterator.h>
+#include <jx-af/jcore/JColorManager.h>
+#include <jx-af/jcore/jGlobals.h>
+#include <jx-af/jcore/jAssert.h>
 
 CBJavaScriptStyler* CBJavaScriptStyler::itsSelf = nullptr;
 
@@ -69,14 +69,14 @@ CBStylerBase*
 CBJavaScriptStyler::Instance()
 {
 	if (itsSelf == nullptr && !recursiveInstance)
-		{
+	{
 		recursiveInstance = true;
 
 		itsSelf = jnew CBJavaScriptStyler;
 		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
-		}
+	}
 
 	return itsSelf;
 }
@@ -105,9 +105,9 @@ CBJavaScriptStyler::CBJavaScriptStyler()
 {
 	JFontStyle blankStyle;
 	for (JIndex i=1; i<=kTypeCount; i++)
-		{
+	{
 		SetTypeStyle(i, blankStyle);
-		}
+	}
 
 	const JColorID red = JColorManager::GetRedColor();
 
@@ -124,9 +124,9 @@ CBJavaScriptStyler::CBJavaScriptStyler()
 	SetTypeStyle(kError                - kWhitespace, JFontStyle(red));
 
 	for (JUnsignedOffset i=0; i<kUnusedKeywordCount; i++)
-		{
+	{
 		SetWordStyle(JString(kUnusedKeyword[i], JString::kNoCopy), JFontStyle(red));
-		}
+	}
 
 	JPrefObject::ReadPrefs();
 }
@@ -163,61 +163,61 @@ CBJavaScriptStyler::Scan
 	Token token;
 	JFontStyle style;
 	do
-		{
+	{
 		token = NextToken();
 		if (token.type == kEOF)
-			{
+		{
 			break;
-			}
+		}
 
 		// save token starts
 
 		if (token.type == kID              ||
 			token.type == kReservedKeyword ||
 			token.type == kString)
-			{
+		{
 			SaveTokenStart(token.range.GetFirst());
-			}
+		}
 
 		// set the style
 
 		const JIndex typeIndex = token.type - kWhitespace;
 		if (token.type == kWhitespace)
-			{
+		{
 			style = GetDefaultFont().GetStyle();
-			}
+		}
 		else if (token.type == kComment ||
 				 token.type == kString  ||
 				 token.type == kRegexSearch)
-			{
+		{
 			style = GetTypeStyle(typeIndex);
-			}
+		}
 		else if (token.type < kWhitespace)
-			{
+		{
 			style = GetTypeStyle(kError - kWhitespace);
-			}
+		}
 		else
-			{
+		{
 			if (token.type == kDocCommentHTMLTag ||
 				token.type == kDocCommentSpecialTag)
-				{
+			{
 				if (!(token.docCommentRange).IsEmpty())
-					{
+				{
 					SetStyle(token.docCommentRange.charRange, GetTypeStyle(kComment - kWhitespace));
-					}
-				ExtendCheckRange(token.range.charRange.last+1);
 				}
+				ExtendCheckRange(token.range.charRange.last+1);
+			}
 
 			style = GetStyle(typeIndex, JString(text.GetRawBytes(), token.range.byteRange, JString::kNoCopy));
-			}
+		}
 
 		keepGoing = SetStyle(token.range.charRange, style);
 
 		if (token.type == kTemplateString)
-			{
+		{
 			StyleEmbeddedVariables(token);
-			}
 		}
+	}
 		while (keepGoing);
 }
 
@@ -250,14 +250,14 @@ CBJavaScriptStyler::UpgradeTypeList
 	)
 {
 	if (vers < 1)
-		{
+	{
 		typeStyles->InsertElementAtIndex(9, JFontStyle(JColorManager::GetDarkGreenColor()));
-		}
+	}
 
 	if (vers < 2)
-		{
+	{
 		typeStyles->InsertElementAtIndex(6, JFontStyle(JColorManager::GetPinkColor()));
-		}
+	}
 
 	// set new values after all new slots have been created
 }

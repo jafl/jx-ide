@@ -19,13 +19,13 @@
 #include "CBTextEditor.h"
 #endif
 
-#include <JXFileDocument.h>
-#include <JXDisplay.h>
-#include <JXTEBase.h>
-#include <jFileUtil.h>
-#include <jGlobals.h>
+#include <jx-af/jx/JXFileDocument.h>
+#include <jx-af/jx/JXDisplay.h>
+#include <jx-af/jx/JXTEBase.h>
+#include <jx-af/jcore/jFileUtil.h>
+#include <jx-af/jcore/jGlobals.h>
 #include <stdio.h>
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -143,21 +143,21 @@ CBFunctionMenu::Receive
 	)
 {
 	if (sender == this && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		UpdateMenu();
-		}
+	}
 	else if (sender == this && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleSelection(selection->GetIndex());
-		}
+	}
 
 	else
-		{
+	{
 		JXTextMenu::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -173,21 +173,21 @@ CBFunctionMenu::UpdateMenu()
 
 	bool sort = updater->WillSortFnNames();
 	if (modifiers.meta())
-		{
+	{
 		sort = !sort;
-		}
+	}
 
 	bool includeNS = updater->WillIncludeNamespace();
 	if (modifiers.shift())
-		{
+	{
 		includeNS = !includeNS;
-		}
+	}
 
 	const bool pack = updater->WillPackFnNames();
 
 	if (itsNeedsUpdate || sort != itsSortFlag ||
 		includeNS != itsIncludeNSFlag || pack != itsPackFlag)
-		{
+	{
 		#if defined CODE_CRUSADER
 
 		assert( itsDoc != nullptr );
@@ -195,11 +195,11 @@ CBFunctionMenu::UpdateMenu()
 		JString fileName;
 		bool deleteFile = false;
 		if (itsDoc->NeedsSave())
-			{
+		{
 			itsDoc->SafetySave(JXDocumentManager::kTimer);
 			if (!itsDoc->GetSafetySaveFileName(&fileName) &&
 				(JCreateTempFile(&fileName)).OK())
-				{
+			{
 				// directory may not be writable
 
 				deleteFile = true;
@@ -211,17 +211,17 @@ CBFunctionMenu::UpdateMenu()
 
 				std::ofstream output(fileName.GetBytes());
 				textDoc->GetTextEditor()->GetText()->GetText().Print(output);
-				}
 			}
+		}
 		else
-			{
+		{
 			bool onDisk;
 			fileName = itsDoc->GetFullName(&onDisk);
 			if (!onDisk)
-				{
+			{
 				fileName.Clear();
-				}
 			}
+		}
 
 		#elif defined CODE_MEDIC
 
@@ -230,21 +230,21 @@ CBFunctionMenu::UpdateMenu()
 		#endif
 
 		if (!fileName.IsEmpty())
-			{
+		{
 			updater->UpdateMenu(fileName, itsFileType, sort, includeNS, pack,
 								this, itsLineIndexList, itsLineLangList);
-			}
+		}
 		else
-			{
+		{
 			this->RemoveAllItems();
 			itsLineIndexList->RemoveAll();
 			itsLineLangList->RemoveAll();
-			}
+		}
 
 		if (IsEmpty())
-			{
+		{
 			SetEmptyMenuItems();
-			}
+		}
 
 		itsNeedsUpdate    = false;
 		itsSortFlag       = sort;
@@ -256,22 +256,22 @@ CBFunctionMenu::UpdateMenu()
 		#if defined CODE_CRUSADER
 
 		if (deleteFile)
-			{
+		{
 			JRemoveFile(fileName);
-			}
+		}
 
 		#endif
-		}
+	}
 
 	// mark caret location
 
 	if (!sort && !itsLineIndexList->IsEmpty())
-		{
+	{
 		if (itsCaretItemIndex > 0)
-			{
+		{
 			ShowSeparatorAfter(itsCaretItemIndex, false);
 			itsCaretItemIndex = 0;
-			}
+		}
 
 		const JIndex lineIndex =
 			itsTE->VisualLineIndexToCRLineIndex(
@@ -282,18 +282,18 @@ CBFunctionMenu::UpdateMenu()
 		assert( count == itsLineLangList->GetElementCount() );
 
 		for (JIndex i=1; i<=count; i++)
-			{
+		{
 			if (itsLineIndexList->GetElement(i) > lineIndex)
-				{
+			{
 				itsCaretItemIndex = i-1;
 				if (itsCaretItemIndex > 0)
-					{
+				{
 					ShowSeparatorAfter(itsCaretItemIndex, true);
-					}
-				break;
 				}
+				break;
 			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -327,9 +327,9 @@ CBFunctionMenu::SetEmptyMenuItems()
 	name.ToLower();
 
 	const JUtf8Byte* map[] =
-		{
+	{
 		"name", name.GetBytes()
-		};
+	};
 	const JString menuItems = JGetString("EmptyMenu::CBFunctionMenu", map, sizeof(map));
 	SetMenuItems(menuItems.GetBytes());
 }

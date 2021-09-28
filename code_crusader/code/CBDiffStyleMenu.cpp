@@ -12,8 +12,8 @@
  ******************************************************************************/
 
 #include "CBDiffStyleMenu.h"
-#include <JColorManager.h>
-#include <jAssert.h>
+#include <jx-af/jcore/JColorManager.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor

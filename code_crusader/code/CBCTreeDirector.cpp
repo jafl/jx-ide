@@ -13,9 +13,9 @@
 #include "CBProjectDocument.h"
 #include "cbActionDefs.h"
 #include "cbGlobals.h"
-#include <JXTextMenu.h>
-#include <JXToolBar.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXTextMenu.h>
+#include <jx-af/jx/JXToolBar.h>
+#include <jx-af/jcore/jAssert.h>
 
 #include "jcc_c_tree_window.xpm"
 
@@ -124,23 +124,23 @@ CBCTreeDirector::Receive
 	)
 {
 	if (sender == itsEditCPPDialog && message.Is(JXDialogDirector::kDeactivated))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const JXDialogDirector::Deactivated*>(&message);
 		assert( info != nullptr );
 		if (info->Successful() &&
 			itsEditCPPDialog->UpdateMacros(itsCTree->GetCPreprocessor()))
-			{
+		{
 			itsCTree->NextUpdateMustReparseAll();
 			GetProjectDoc()->UpdateSymbolDatabase();
-			}
-		itsEditCPPDialog = nullptr;
 		}
+		itsEditCPPDialog = nullptr;
+	}
 
 	else
-		{
+	{
 		CBTreeDirector::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -158,20 +158,20 @@ CBCTreeDirector::UpdateTreeMenu()
 	treeMenu->EnableItem(kUpdateCurrentCmd);
 
 	if (!itsCTree->IsEmpty())
-		{
+	{
 		treeMenu->EnableItem(kFindFnCmd);
 		treeMenu->EnableItem(kTreeExpandAllCmd);
 
 		if (itsCTree->NeedsMinimizeMILinks())
-			{
+		{
 			treeMenu->EnableItem(kForceMinMILinksCmd);
-			}
 		}
+	}
 
 	bool hasSelection, canCollapse, canExpand;
 	itsCTree->GetMenuInfo(&hasSelection, &canCollapse, &canExpand);
 	if (hasSelection)
-		{
+	{
 		treeMenu->EnableItem(kTreeOpenSourceCmd);
 		treeMenu->EnableItem(kTreeOpenHeaderCmd);
 		treeMenu->EnableItem(kTreeOpenFnListCmd);
@@ -179,15 +179,15 @@ CBCTreeDirector::UpdateTreeMenu()
 		treeMenu->EnableItem(kTreeSelParentsCmd);
 		treeMenu->EnableItem(kTreeSelDescendantsCmd);
 		treeMenu->EnableItem(kCopySelNamesCmd);
-		}
+	}
 	if (canCollapse)
-		{
+	{
 		treeMenu->EnableItem(kTreeCollapseCmd);
-		}
+	}
 	if (canExpand)
-		{
+	{
 		treeMenu->EnableItem(kTreeExpandCmd);
-		}
+	}
 }
 
 /******************************************************************************
@@ -204,75 +204,75 @@ CBCTreeDirector::HandleTreeMenu
 	CBGetDocumentManager()->SetActiveProjectDocument(GetProjectDoc());
 
 	if (index == kEditCPPMacrosCmd)
-		{
+	{
 		assert( itsEditCPPDialog == nullptr );
 		itsEditCPPDialog =
 			jnew CBEditCPPMacroDialog(this, *(itsCTree->GetCPreprocessor()));
 		assert( itsEditCPPDialog != nullptr );
 		itsEditCPPDialog->BeginDialog();
 		ListenTo(itsEditCPPDialog);
-		}
+	}
 	else if (index == kEditSearchPathsCmd)
-		{
+	{
 		GetProjectDoc()->EditSearchPaths(this);
-		}
+	}
 	else if (index == kUpdateCurrentCmd)
-		{
+	{
 		GetProjectDoc()->UpdateSymbolDatabase();
-		}
+	}
 	else if (index == kForceMinMILinksCmd)
-		{
+	{
 		itsCTree->ForceMinimizeMILinks();
-		}
+	}
 
 	else if (index == kTreeOpenSourceCmd)
-		{
+	{
 		itsCTree->ViewSelectedSources();
-		}
+	}
 	else if (index == kTreeOpenHeaderCmd)
-		{
+	{
 		itsCTree->ViewSelectedHeaders();
-		}
+	}
 	else if (index == kTreeOpenFnListCmd)
-		{
+	{
 		itsCTree->ViewSelectedFunctionLists();
-		}
+	}
 
 	else if (index == kCreateDerivedClassCmd)
-		{
+	{
 		itsCTree->DeriveFromSelected();
-		}
+	}
 
 	else if (index == kTreeCollapseCmd)
-		{
+	{
 		itsCTree->CollapseExpandSelectedClasses(true);
-		}
+	}
 	else if (index == kTreeExpandCmd)
-		{
+	{
 		itsCTree->CollapseExpandSelectedClasses(false);
-		}
+	}
 	else if (index == kTreeExpandAllCmd)
-		{
+	{
 		itsCTree->ExpandAllClasses();
-		}
+	}
 
 	else if (index == kTreeSelParentsCmd)
-		{
+	{
 		itsCTree->SelectParents();
-		}
+	}
 	else if (index == kTreeSelDescendantsCmd)
-		{
+	{
 		itsCTree->SelectDescendants();
-		}
+	}
 	else if (index == kCopySelNamesCmd)
-		{
+	{
 		itsCTree->CopySelectedClassNames();
-		}
+	}
 
 	else if (index == kFindFnCmd)
-		{
+	{
 		AskForFunctionToFind();
-		}
+	}
 }
 
 /******************************************************************************

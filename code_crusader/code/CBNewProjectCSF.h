@@ -8,8 +8,8 @@
 #ifndef _H_CBNewProjectCSF
 #define _H_CBNewProjectCSF
 
-#include <JXChooseSaveFile.h>
-#include <JPrefObject.h>
+#include <jx-af/jx/JXChooseSaveFile.h>
+#include <jx-af/jcore/JPrefObject.h>
 #include "CBBuildManager.h"		// need defn of MakefileMethod
 
 class CBNewProjectSaveFileDialog;

@@ -10,7 +10,7 @@
 
 #include <reflex/abslexer.h>
 #include <reflex/matcher.h>
-#include <JStyledText.h>
+#include <jx-af/jcore/JStyledText.h>
 
 class CBStylingScannerBase : public reflex::AbstractLexer<reflex::Matcher>
 {

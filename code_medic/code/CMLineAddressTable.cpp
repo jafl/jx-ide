@@ -11,10 +11,10 @@
 #include "CMSourceDirector.h"
 #include "CMBreakpointManager.h"
 #include "CMLink.h"
-#include <JXColorManager.h>
-#include <JStringIterator.h>
-#include <JListUtil.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXColorManager.h>
+#include <jx-af/jcore/JStringIterator.h>
+#include <jx-af/jcore/JListUtil.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -74,37 +74,37 @@ CMLineAddressTable::SetLineNumbers
 	list->SetCleanUpAction(JPtrArrayT::kForgetAll);
 
 	if (itsLineTextList->IsEmpty())
-		{
+	{
 		return;
-		}
+	}
 
 	JSize charCount = 0;
 	const JString* s1 = itsLineTextList->GetFirstElement();
 	const JString* sN = itsLineTextList->GetLastElement();
 	if (s1->BeginsWith("0x") && s1->GetCharacterCount() > 2 &&
 		sN->BeginsWith("0x") && sN->GetCharacterCount() > 2)
-		{
+	{
 		charCount = 2;
 
 		if (s1->GetCharacterCount() == sN->GetCharacterCount())
-			{
+		{
 			JStringIterator iter(*sN, kJIteratorStartAfter, charCount);
 			JUtf8Character c;
 			while (iter.Next(&c) && c == '0')
-				{
+			{
 				charCount++;
-				}
 			}
 		}
+	}
 
 	if (charCount > 0)
-		{
+	{
 		for (auto* s : *itsLineTextList)
-			{
+		{
 			JStringIterator iter(s);
 			iter.RemoveNext(charCount);
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -247,23 +247,23 @@ CMLineAddressTable::GetBreakpoints
 
 	const JString* fnName;
 	if (!GetDirector()->GetFunctionName(&fnName))
-		{
+	{
 		list->CleanOut();
 		return;
-		}
+	}
 
 	CMLocation loc;
 	loc.SetFunctionName(*fnName);
 	if (!GetLink()->GetBreakpointManager()->GetBreakpoints(loc, list))
-		{
+	{
 		return;
-		}
+	}
 	list->Sort();
 
 	const JSize count = list->GetElementCount();
 	JString target;
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		const CMBreakpoint* bp = list->GetElement(i);
 
 		target = GetLineTextFromAddress(bp->GetAddress());
@@ -271,7 +271,7 @@ CMLineAddressTable::GetBreakpoints
 		bool found;
 		const JIndex j = itsLineTextList->SearchSorted1(&target, JListT::kAnyMatch, &found);
 		itsVisualBPIndexList->AppendElement(j);
-		}
+	}
 }
 
 /******************************************************************************
@@ -349,10 +349,10 @@ CMLineAddressTable::BuildAddress
 	JString s = addr;
 	JStringIterator iter(&s);
 	if (iter.Next(" "))
-		{
+	{
 		iter.SkipPrev();
 		iter.RemoveAllNext();
-		}
+	}
 
 	s.Prepend("0x");
 	return s;
@@ -373,20 +373,20 @@ CMLineAddressTable::GetLineTextFromAddress
 	JString s = addr;
 	JStringIterator iter(&s);
 	if (s.BeginsWith("0x"))
-		{
+	{
 		iter.RemoveNext(2);
-		}
+	}
 
 	if (itsLineTextList->IsEmpty())
-		{
+	{
 		return s;
-		}
+	}
 
 	while (s.GetFirstCharacter() == '0' &&
 		   s.GetCharacterCount() > itsLineTextList->GetLastElement()->GetCharacterCount())
-		{
+	{
 		iter.RemoveNext();
-		}
+	}
 
 	return s;
 }

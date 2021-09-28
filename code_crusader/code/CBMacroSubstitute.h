@@ -8,7 +8,7 @@
 #ifndef _H_CBMacroSubstitute
 #define _H_CBMacroSubstitute
 
-#include <JSubstitute.h>
+#include <jx-af/jcore/JSubstitute.h>
 
 class CBMacroSubstitute : public JSubstitute
 {

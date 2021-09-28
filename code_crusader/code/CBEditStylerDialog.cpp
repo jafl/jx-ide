@@ -9,15 +9,15 @@
 
 #include "CBEditStylerDialog.h"
 #include "CBStylerTable.h"
-#include <JXWindow.h>
-#include <JXTextButton.h>
-#include <JXTextCheckbox.h>
-#include <JXStaticText.h>
-#include <JXScrollbarSet.h>
-#include <JXHelpManager.h>
-#include <jXGlobals.h>
-#include <JString.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXTextButton.h>
+#include <jx-af/jx/JXTextCheckbox.h>
+#include <jx-af/jx/JXStaticText.h>
+#include <jx-af/jx/JXScrollbarSet.h>
+#include <jx-af/jx/JXHelpManager.h>
+#include <jx-af/jx/jXGlobals.h>
+#include <jx-af/jcore/JString.h>
+#include <jx-af/jcore/jAssert.h>
 
 const JCoordinate kMaxTypeRowCount = 10;
 
@@ -207,13 +207,13 @@ CBEditStylerDialog::Receive
 	)
 {
 	if (sender == itsHelpButton && message.Is(JXButton::kPushed))
-		{
+	{
 		#if defined CODE_CRUSADER
 		(JXGetHelpManager())->ShowSection("CBStylerHelp");
 		#endif
-		}
+	}
 	else
-		{
+	{
 		JXDialogDirector::Receive(sender, message);
-		}
+	}
 }

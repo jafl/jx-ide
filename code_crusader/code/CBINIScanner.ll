@@ -6,7 +6,7 @@ This scanner reads a PHP .ini file and returns CB::Text::INI::Scanner::Tokens.
 */
 
 #include "CBStylingScannerBase.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 %}
 
 %option namespace="CB::Text::INI" lexer="Scanner"

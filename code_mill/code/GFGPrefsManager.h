@@ -8,7 +8,7 @@
 #ifndef _H_GFGPrefsManager
 #define _H_GFGPrefsManager
 
-#include <JXPrefsManager.h>
+#include <jx-af/jx/JXPrefsManager.h>
 
 class JString;
 class GFGPrefsDialog;

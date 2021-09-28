@@ -10,11 +10,11 @@
 #ifndef _H_CBTextDocument
 #define _H_CBTextDocument
 
-#include <JXFileDocument.h>
-#include <JPrefObject.h>
+#include <jx-af/jx/JXFileDocument.h>
+#include <jx-af/jcore/JPrefObject.h>
 #include "CBTextFileType.h"
-#include <JXWidget.h>		// need defn of H/VSizing
-#include <JStyledText.h>	// need defn of PlainTextFormat, CRMRuleList
+#include <jx-af/jx/JXWidget.h>		// need defn of H/VSizing
+#include <jx-af/jcore/JStyledText.h>	// need defn of PlainTextFormat, CRMRuleList
 
 class JSTStyler;
 class CBTextEditor;

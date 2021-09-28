@@ -10,7 +10,7 @@
 #ifndef _H_CBEditSymbolPrefsDialog
 #define _H_CBEditSymbolPrefsDialog
 
-#include <JXDialogDirector.h>
+#include <jx-af/jx/JXDialogDirector.h>
 
 class JXTextButton;
 class JXTextCheckbox;

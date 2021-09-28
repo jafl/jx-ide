@@ -10,7 +10,7 @@
 #ifndef _H_CBStylerTableInput
 #define _H_CBStylerTableInput
 
-#include <JXInputField.h>
+#include <jx-af/jx/JXInputField.h>
 #include "CBTextFileType.h"
 
 class CBStylerTable;

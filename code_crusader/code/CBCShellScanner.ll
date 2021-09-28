@@ -6,7 +6,7 @@ This scanner reads a bash file and returns CB::Text::CShell::Scanner::Tokens.
 */
 
 #include "CBStylingScannerBase.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 }
 
 %option namespace="CB::Text::CShell" lexer="Scanner"

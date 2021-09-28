@@ -10,7 +10,7 @@
 #ifndef _H_CBEditStylerDialog
 #define _H_CBEditStylerDialog
 
-#include <JXDialogDirector.h>
+#include <jx-af/jx/JXDialogDirector.h>
 #include "CBStylerBase.h"		// need definition of WordStyle
 
 class JXTextButton;

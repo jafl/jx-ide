@@ -8,11 +8,11 @@
 #ifndef _H_CBSymbolList
 #define _H_CBSymbolList
 
-#include <JContainer.h>
+#include <jx-af/jcore/JContainer.h>
 #include "CBCtagsUser.h"
 #include "CBPrefsManager.h"		// need definition of FileTypesChanged
-#include <JFAID.h>
-#include <JArray.h>
+#include <jx-af/jcore/JFAID.h>
+#include <jx-af/jcore/JArray.h>
 
 class JProgressDisplay;
 class CBProjectDocument;

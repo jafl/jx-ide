@@ -8,8 +8,8 @@
 #ifndef _H_CBRunTEScriptDialog
 #define _H_CBRunTEScriptDialog
 
-#include <JXWindowDirector.h>
-#include <JPrefObject.h>
+#include <jx-af/jx/JXWindowDirector.h>
+#include <jx-af/jcore/JPrefObject.h>
 
 class JTextEditor;
 class JXTextButton;

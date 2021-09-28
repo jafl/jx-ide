@@ -6,7 +6,7 @@ This scanner reads a .properties file and returns CB::Text::Properties::Scanner:
 */
 
 #include "CBStylingScannerBase.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 %}
 
 %option namespace="CB::Text::Properties" lexer="Scanner"

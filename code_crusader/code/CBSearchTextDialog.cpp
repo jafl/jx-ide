@@ -16,31 +16,31 @@
 #include "CBProjectDocument.h"
 #include "cbmUtil.h"
 #include "cbGlobals.h"
-#include <JXDisplay.h>
-#include <JXWindow.h>
-#include <JXStaticText.h>
-#include <JXPathInput.h>
-#include <JXTextButton.h>
-#include <JXSearchTextButton.h>
-#include <JXTextCheckbox.h>
-#include <JXRadioGroup.h>
-#include <JXTextRadioButton.h>
-#include <JXScrollbarSet.h>
-#include <JXFileListTable.h>
-#include <JXStringHistoryMenu.h>
-#include <JXDocumentMenu.h>
-#include <JXDownRect.h>
-#include <JXChooseSaveFile.h>
-#include <JXFontManager.h>
-#include <JDirInfo.h>
-#include <JRegex.h>
-#include <jVCSUtil.h>
-#include <JLatentPG.h>
-#include <jStreamUtil.h>
-#include <jFileUtil.h>
+#include <jx-af/jx/JXDisplay.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXStaticText.h>
+#include <jx-af/jx/JXPathInput.h>
+#include <jx-af/jx/JXTextButton.h>
+#include <jx-af/jx/JXSearchTextButton.h>
+#include <jx-af/jx/JXTextCheckbox.h>
+#include <jx-af/jx/JXRadioGroup.h>
+#include <jx-af/jx/JXTextRadioButton.h>
+#include <jx-af/jx/JXScrollbarSet.h>
+#include <jx-af/jx/JXFileListTable.h>
+#include <jx-af/jx/JXStringHistoryMenu.h>
+#include <jx-af/jx/JXDocumentMenu.h>
+#include <jx-af/jx/JXDownRect.h>
+#include <jx-af/jx/JXChooseSaveFile.h>
+#include <jx-af/jx/JXFontManager.h>
+#include <jx-af/jcore/JDirInfo.h>
+#include <jx-af/jcore/JRegex.h>
+#include <jx-af/jcore/jVCSUtil.h>
+#include <jx-af/jcore/JLatentPG.h>
+#include <jx-af/jcore/jStreamUtil.h>
+#include <jx-af/jcore/jFileUtil.h>
 #include <sstream>
 #include <stdio.h>
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 // setup information
 
@@ -131,10 +131,10 @@ CBSearchTextDialog::Activate()
 	JXSearchTextDialog::Activate();
 
 	if (IsActive())
-		{
+	{
 		itsMultifileCB->SetState(false);
 		itsSearchDirCB->SetState(false);
-		}
+	}
 }
 
 /******************************************************************************
@@ -454,12 +454,12 @@ CBSearchTextDialog::UpdateDisplay()
 	JXSearchTextDialog::UpdateDisplay();
 
 	if (itsFileList->GetRowCount() == 0)
-		{
+	{
 		itsMultifileCB->SetState(false);
-		}
+	}
 
 	if (itsMultifileCB->IsChecked() || itsSearchDirCB->IsChecked())
-		{
+	{
 		GetFindBackButton()->Deactivate();
 		GetReplaceButton()->Deactivate();
 		GetReplaceFindFwdButton()->Deactivate();
@@ -469,15 +469,15 @@ CBSearchTextDialog::UpdateDisplay()
 		// These two buttons will already be deactivated if !HasSearchText().
 
 		if (HasSearchText())
-			{
+		{
 			GetFindFwdButton()->Activate();
 
 			if (CBGetDocumentManager()->WillEditTextFilesLocally())
-				{
+			{
 				GetReplaceAllButton()->Activate();
-				}
 			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -494,94 +494,94 @@ CBSearchTextDialog::Receive
 {
 	if (sender == GetFindFwdButton() && message.Is(JXButton::kPushed) &&
 		(itsMultifileCB->IsChecked() || itsSearchDirCB->IsChecked()))
-		{
+	{
 		SearchFiles();
-		}
+	}
 	else if (sender == GetReplaceAllButton() && message.Is(JXButton::kPushed) &&
 			 (itsMultifileCB->IsChecked() || itsSearchDirCB->IsChecked()))
-		{
+	{
 		SearchFilesAndReplace();
-		}
+	}
 
 	else if (sender == itsFileList && message.Is(JXFileListTable::kProcessSelection))
-		{
+	{
 		OpenSelectedFiles();
-		}
+	}
 	else if (sender == itsFileList &&
 			 (message.Is(JTable::kRowsInserted) ||
 			  message.Is(JTable::kRowsRemoved)))
-		{
+	{
 		UpdateDisplay();
-		}
+	}
 
 	else if (sender == itsFileListMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		UpdateFileListMenu();
-		}
+	}
 	else if (sender == itsFileListMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleFileListMenu(selection->GetIndex());
-		}
+	}
 
 	else if (sender == itsSearchDirCB && message.Is(JXCheckbox::kPushed))
-		{
+	{
 		UpdateDisplay();
-		}
+	}
 	else if (sender == itsDirInput &&
 			 (message.Is(JStyledText::kTextChanged) ||
 			  message.Is(JStyledText::kTextSet)))
-		{
+	{
 		itsSearchDirCB->SetState(true);
-		}
+	}
 	else if (sender == itsMultifileCB && message.Is(JXCheckbox::kPushed))
-		{
+	{
 		const bool on = itsMultifileCB->IsChecked();
 		if (on && itsFileList->GetRowCount() == 0)
-			{
+		{
 			AddSearchFiles();
-			}
-		UpdateDisplay();
 		}
+		UpdateDisplay();
+	}
 
 	else if (sender == CBGetDocumentManager() &&
 			 message.Is(CBDocumentManager::kProjectDocumentActivated))
-		{
+	{
 		UpdateBasePath();
-		}
+	}
 	else if (sender == itsChooseDirButton && message.Is(JXButton::kPushed))
-		{
+	{
 		itsDirInput->ChoosePath(JString::empty);
 		itsSearchDirCB->SetState(true);
-		}
+	}
 
 	else if (sender == itsDirHistory && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		bool recurse;
 		itsDirInput->GetText()->SetText(itsDirHistory->GetPath(message, &recurse));
 		itsRecurseDirCB->SetState(recurse);
 		itsSearchDirCB->SetState(true);
-		}
+	}
 	else if (sender == itsFileFilterHistory && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		bool invert;
 		itsFileFilterInput->GetText()->SetText(itsFileFilterHistory->GetFilter(message, &invert));
 		itsInvertFileFilterCB->SetState(invert);
 		itsSearchDirCB->SetState(true);
-		}
+	}
 	else if (sender == itsPathFilterHistory && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		bool invert;
 		itsPathFilterInput->GetText()->SetText(itsPathFilterHistory->GetFilter(message, &invert));
 		itsSearchDirCB->SetState(true);
-		}
+	}
 
 	else
-		{
+	{
 		JXSearchTextDialog::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -594,29 +594,29 @@ CBSearchTextDialog::UpdateFileListMenu()
 {
 	itsFileListMenu->EnableItem(kShowMatchTextCmd);
 	if (!itsOnlyListFilesFlag)
-		{
+	{
 		itsFileListMenu->CheckItem(kShowMatchTextCmd);
-		}
+	}
 
 	itsFileListMenu->EnableItem(kListFilesWithoutMatchCmd);
 	if (itsListFilesWithoutMatchFlag)
-		{
+	{
 		itsFileListMenu->CheckItem(kListFilesWithoutMatchCmd);
-		}
+	}
 
 	itsFileListMenu->EnableItem(kAddFilesCmd);
 	itsFileListMenu->EnableItem(kLoadFileSetCmd);
 
 	if (itsFileList->GetRowCount() > 0)
-		{
+	{
 		itsFileListMenu->EnableItem(kRemoveAllCmd);
 		itsFileListMenu->EnableItem(kSaveFileSetCmd);
 
 		if (itsFileList->HasSelection())
-			{
+		{
 			itsFileListMenu->EnableItem(kRemoveSelCmd);
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -631,36 +631,36 @@ CBSearchTextDialog::HandleFileListMenu
 	)
 {
 	if (index == kShowMatchTextCmd)
-		{
+	{
 		itsOnlyListFilesFlag = !itsOnlyListFilesFlag;
-		}
+	}
 	else if (index == kListFilesWithoutMatchCmd)
-		{
+	{
 		itsListFilesWithoutMatchFlag = !itsListFilesWithoutMatchFlag;
-		}
+	}
 
 	else if (index == kAddFilesCmd)
-		{
+	{
 		AddSearchFiles();
-		}
+	}
 
 	else if (index == kRemoveSelCmd)
-		{
+	{
 		itsFileList->RemoveSelectedFiles();
-		}
+	}
 	else if (index == kRemoveAllCmd)
-		{
+	{
 		itsFileList->RemoveAllFiles();
-		}
+	}
 
 	else if (index == kLoadFileSetCmd)
-		{
+	{
 		LoadFileSet();
-		}
+	}
 	else if (index == kSaveFileSetCmd)
-		{
+	{
 		SaveFileSet();
-		}
+	}
 }
 
 /******************************************************************************
@@ -685,13 +685,13 @@ CBSearchTextDialog::SearchFiles()
 	if (GetSearchParameters(&searchRegex, &entireWord, &wrapSearch,
 							&replaceStr, &interpolator, &preserveCase) &&
 		BuildSearchFileList(&fileList, &nameList))
-		{
+	{
 		const JError err =
 			CBSearchDocument::Create(fileList, nameList,
 									 *searchRegex, itsOnlyListFilesFlag,
 									 itsListFilesWithoutMatchFlag);
 		err.ReportIfError();
-		}
+	}
 }
 
 /******************************************************************************
@@ -713,12 +713,12 @@ CBSearchTextDialog::SearchFilesAndReplace()
 	if (GetSearchParameters(&searchRegex, &entireWord, &wrapSearch,
 							&replaceStr, &interpolator, &preserveCase) &&
 		BuildSearchFileList(&fileList, &nameList))
-		{
+	{
 		const JError err =
 			CBSearchDocument::Create(fileList, nameList,
 									 *searchRegex, replaceStr);
 		err.ReportIfError();
-		}
+	}
 }
 
 /******************************************************************************
@@ -746,37 +746,37 @@ CBSearchTextDialog::BuildSearchFileList
 	nameList->SetCompareFunction(JCompareStringsCaseSensitive);
 
 	if (itsMultifileCB->IsChecked())
-		{
+	{
 		const JPtrArray<JString>& fullNameList = itsFileList->GetFullNameList();
 
 		const JSize count = fullNameList.GetElementCount();
 		for (JIndex i=1; i<=count; i++)
-			{
+		{
 			SaveFileForSearch(*(fullNameList.GetElement(i)), fileList, nameList);
-			}
 		}
+	}
 
 	bool ok = true;
 
 	JString path, fileFilter, pathFilter;
 	if (GetSearchDirectory(&path, &fileFilter, &pathFilter))
-		{
+	{
 		JRegex* fileRegex = nullptr;
 		JString regexStr;
 		if (JDirInfo::BuildRegexFromWildcardFilter(fileFilter, &regexStr))
-			{
+		{
 			fileRegex = jnew JRegex(regexStr);
 			assert( fileRegex != nullptr );
 			fileRegex->SetCaseSensitive(false);
-			}
+		}
 
 		JRegex* pathRegex = nullptr;
 		if (JDirInfo::BuildRegexFromWildcardFilter(pathFilter, &regexStr))
-			{
+		{
 			pathRegex = jnew JRegex(regexStr);
 			assert( pathRegex != nullptr );
 			pathRegex->SetCaseSensitive(false);
-			}
+		}
 
 		JLatentPG pg(100);
 		pg.VariableLengthProcessBeginning(JGetString("CollectingFiles::CBSearchTextDialog"), true, false);
@@ -785,7 +785,7 @@ CBSearchTextDialog::BuildSearchFileList
 
 		jdelete fileRegex;
 		jdelete pathRegex;
-		}
+	}
 
 	return ok && !fileList->IsEmpty();
 }
@@ -809,9 +809,9 @@ CBSearchTextDialog::SearchDirectory
 {
 	JDirInfo* info;
 	if (!JDirInfo::Create(path, &info))
-		{
+	{
 		return true;	// user didn't cancel
-		}
+	}
 	info->SetWildcardFilter(const_cast<JRegex*>(fileRegex), false,
 							itsInvertFileFilterCB->IsChecked());
 
@@ -819,36 +819,36 @@ CBSearchTextDialog::SearchDirectory
 
 	const JSize count = info->GetEntryCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		const JDirEntry& entry = info->GetEntry(i);
 		if (entry.IsFile())
-			{
+		{
 			if (!pg.IncrementProgress())
-				{
+			{
 				keepGoing = false;
 				break;
-				}
-			SaveFileForSearch(entry.GetFullName(), fileList, nameList);
 			}
+			SaveFileForSearch(entry.GetFullName(), fileList, nameList);
+		}
 		else if (itsRecurseDirCB->IsChecked() &&
 				 entry.IsDirectory() && !entry.IsLink() &&
 				 !JIsVCSDirectory(entry.GetName()))
-			{
+		{
 			bool match = true;
 			if (pathRegex != nullptr)
-				{
+			{
 				match = ! pathRegex->Match(entry.GetName());
-				}
+			}
 
 			if (match &&
 				!SearchDirectory(entry.GetFullName(), fileRegex, pathRegex,
 								 fileList, nameList, pg))
-				{
+			{
 				keepGoing = false;
 				break;
-				}
 			}
 		}
+	}
 
 	jdelete info;
 	return keepGoing;
@@ -874,36 +874,36 @@ CBSearchTextDialog::SaveFileForSearch
 	const JIndex index =
 		nameList->GetInsertionSortIndex(const_cast<JString*>(&fullName), &exists);
 	if (!exists)
-		{
+	{
 		auto* file = jnew JString(fullName);
 		assert( file != nullptr );
 
 		JXFileDocument* doc;
 		if (CBGetDocumentManager()->FileDocumentIsOpen(*file, &doc) &&
 			doc->NeedsSave())
-			{
+		{
 			auto* textDoc = dynamic_cast<CBTextDocument*>(doc);
 			if (textDoc != nullptr &&
 				JCreateTempFile(file).OK())
-				{
+			{
 				std::ofstream output(file->GetBytes());
 				textDoc->GetTextEditor()->GetText()->GetText().Print(output);
-				}
 			}
+		}
 
 		if (!file->IsEmpty())
-			{
+		{
 			auto* name = jnew JString(fullName);
 			assert( name != nullptr );
 			nameList->InsertAtIndex(index, name);
 
 			fileList->InsertAtIndex(index, file);
-			}
-		else
-			{
-			jdelete file;
-			}
 		}
+		else
+		{
+			jdelete file;
+		}
+	}
 }
 
 /******************************************************************************
@@ -916,13 +916,13 @@ CBSearchTextDialog::UpdateBasePath()
 {
 	CBProjectDocument* doc;
 	if (CBGetDocumentManager()->GetActiveProjectDocument(&doc))
-		{
+	{
 		itsDirInput->SetBasePath(doc->GetFilePath());
-		}
+	}
 	else
-		{
+	{
 		itsDirInput->ClearBasePath();
-		}
+	}
 }
 
 /******************************************************************************
@@ -940,12 +940,12 @@ CBSearchTextDialog::GetSearchDirectory
 	const
 {
 	if (!itsSearchDirCB->IsChecked())
-		{
+	{
 		path->Clear();
 		fileFilter->Clear();
 		pathFilter->Clear();
 		return true;
-		}
+	}
 
 	*fileFilter = itsFileFilterInput->GetText()->GetText();
 	*pathFilter = itsPathFilterInput->GetText()->GetText();
@@ -953,16 +953,16 @@ CBSearchTextDialog::GetSearchDirectory
 	itsDirInput->ShouldAllowInvalidPath(false);
 	const bool ok = itsDirInput->GetPath(path);
 	if (ok)
-		{
+	{
 		itsDirHistory->AddPath(itsDirInput->GetText()->GetText(), itsRecurseDirCB->IsChecked());
 		itsFileFilterHistory->AddFilter(itsFileFilterInput->GetText()->GetText(), itsInvertFileFilterCB->IsChecked());
 		itsPathFilterHistory->AddFilter(itsPathFilterInput->GetText()->GetText(), false);
-		}
+	}
 	else
-		{
+	{
 		itsDirInput->Focus();
 		itsDirInput->InputValid();	// report error
-		}
+	}
 	itsDirInput->ShouldAllowInvalidPath(true);
 
 	return ok;
@@ -978,23 +978,23 @@ CBSearchTextDialog::LoadFileSet()
 {
 	JString fullName;
 	if (itsCSF->ChooseFile(JString::empty, JString::empty, &fullName))
-		{
+	{
 		if (itsCSF->ReplaceExisting())
-			{
+		{
 			itsFileList->RemoveAllFiles();
-			}
+		}
 
 		std::ifstream input(fullName.GetBytes());
 		JString file;
 		while (!input.eof() && !input.fail())
-			{
+		{
 			file = JReadLine(input);
 			if (JFileReadable(file))
-				{
+			{
 				itsFileList->AddFile(file);
-				}
 			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -1009,18 +1009,18 @@ CBSearchTextDialog::SaveFileSet()
 	JString newName;
 	if (JGetChooseSaveFile()->SaveFile(JGetString("SaveFileSet::CBSearchTextDialog"),
 									   JString::empty, itsFileSetName, &newName))
-		{
+	{
 		itsFileSetName = newName;
 
 		std::ofstream output(itsFileSetName.GetBytes());
 		const JPtrArray<JString>& fullNameList = itsFileList->GetFullNameList();
 		const JSize fileCount = fullNameList.GetElementCount();
 		for (JIndex i=1; i<=fileCount; i++)
-			{
+		{
 			fullNameList.GetElement(i)->Print(output);
 			output << '\n';
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -1033,13 +1033,13 @@ CBSearchTextDialog::AddSearchFiles()
 {
 	JPtrArray<JString> fileList(JPtrArrayT::kDeleteAll);
 	if (JXGetChooseSaveFile()->ChooseFiles(JString::empty, JString::empty, &fileList))
-		{
+	{
 		const JSize count = fileList.GetElementCount();
 		for (JIndex i=1; i<=count; i++)
-			{
+		{
 			itsFileList->AddFile(*(fileList.GetElement(i)));
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -1093,9 +1093,9 @@ CBSearchTextDialog::OpenSelectedFiles()
 {
 	JPtrArray<JString> fileList(JPtrArrayT::kDeleteAll);
 	if (itsFileList->GetSelection(&fileList))
-		{
+	{
 		CBGetDocumentManager()->OpenSomething(fileList);
-		}
+	}
 }
 
 /******************************************************************************
@@ -1114,59 +1114,59 @@ CBSearchTextDialog::ReadPrefs
 
 	JFileVersion vers;
 	if (versChar <= '6')
-		{
+	{
 		// leave version number in stream
 		vers = versChar - '0';
-		}
+	}
 	else
-		{
+	{
 		input >> vers;
-		}
+	}
 
 	if (vers > kCurrentSetupVersion)
-		{
+	{
 		return;
-		}
+	}
 
 	JXSearchTextDialog::ReadSetup(input);
 
 	// file list
 
 	if (vers >= 4)
-		{
+	{
 		input >> JBoolFromString(itsOnlyListFilesFlag);
 		if (vers >= 5)
-			{
+		{
 			input >> JBoolFromString(itsListFilesWithoutMatchFlag) >> itsFileSetName;
-			}
+		}
 
 		JSize fileCount;
 		input >> fileCount;
 
 		JString fullName;
 		for (JIndex i=1; i<=fileCount; i++)
-			{
+		{
 			input >> fullName;
 			if (JFileReadable(fullName))
-				{
+			{
 				itsFileList->AddFile(fullName);
-				}
 			}
 		}
+	}
 
 	// directory
 
 	if (vers >= 71)
-		{
+	{
 		bool b;
 		input >> JBoolFromString(b);
 		itsRecurseDirCB->SetState(b);
 
 		if (vers >= 72)
-			{
+		{
 			input >> JBoolFromString(b);
 			itsInvertFileFilterCB->SetState(b);
-			}
+		}
 
 		JString s;
 		input >> s;
@@ -1178,15 +1178,15 @@ CBSearchTextDialog::ReadPrefs
 		itsFileFilterHistory->ReadSetup(input);
 
 		if (vers >= 73)
-			{
+		{
 			input >> s;
 			itsPathFilterInput->GetText()->SetText(s);
 
 			input >> JBoolFromString(b);
 
 			itsPathFilterHistory->ReadSetup(input);
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -1218,9 +1218,9 @@ CBSearchTextDialog::WritePrefs
 	output << ' ' << fileCount;
 
 	for (JIndex i=1; i<=fileCount; i++)
-		{
+	{
 		output << ' ' << *(fullNameList.GetElement(i));
-		}
+	}
 
 	// directory
 

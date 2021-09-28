@@ -10,8 +10,8 @@
 #ifndef _H_CBEditFileTypesDialog
 #define _H_CBEditFileTypesDialog
 
-#include <JXDialogDirector.h>
-#include <JPrefObject.h>
+#include <jx-af/jx/JXDialogDirector.h>
+#include <jx-af/jcore/JPrefObject.h>
 #include "CBPrefsManager.h"		// need definition of FileTypeInfo
 
 class JXTextButton;

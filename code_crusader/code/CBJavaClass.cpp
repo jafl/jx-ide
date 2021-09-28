@@ -12,9 +12,9 @@
 #include "CBTextDocument.h"
 #include "CBTextEditor.h"
 #include "cbGlobals.h"
-#include <JXColorManager.h>
-#include <JRegex.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXColorManager.h>
+#include <jx-af/jcore/JRegex.h>
+#include <jx-af/jcore/jAssert.h>
 
 static const JUtf8Byte* kNamespaceOperator = ".";
 
@@ -51,10 +51,10 @@ CBJavaClass::CBJavaClass
 	itsIsFinalFlag(false)
 {
 	if (vers >= 52)
-		{
+	{
 		input >> JBoolFromString(itsIsPublicFlag)
 			  >> JBoolFromString(itsIsFinalFlag);
-		}
+	}
 }
 
 /******************************************************************************
@@ -98,12 +98,12 @@ CBJavaClass::ViewSource()
 
 	JString fileName;
 	if (GetFileName(&fileName))
-		{
+	{
 		CBDocumentManager* docMgr = CBGetDocumentManager();
 
 		CBTextDocument* doc = nullptr;
 		if (docMgr->OpenTextDocument(fileName, 0, &doc))
-			{
+		{
 			JString p("(class|interface)[ \t\n]*");
 			p += GetName();
 			p += "\\b";
@@ -117,25 +117,25 @@ CBJavaClass::ViewSource()
 			const JStringMatch m =
 				te->GetText()->SearchForward(start, r, false, false, &wrapped);
 			if (!m.IsEmpty())
-				{
+			{
 				te->SelectLine(te->GetLineForChar(m.GetCharacterRange().first));
 				te->ScrollForDefinition(kCBJavaLang);
-				}
+			}
 			else
-				{
+			{
 				const JUtf8Byte* map[] =
-				{
+			{
 					"name", GetName().GetBytes()
-				};
+			};
 				const JString msg = JGetString("NoDefinition::CBClass", map, sizeof(map));
 				JGetUserNotification()->ReportError(msg);
-				}
 			}
 		}
+	}
 	else
-		{
+	{
 		JGetUserNotification()->ReportError(JGetString("NoGhostFile::CBTreeWidget"));
-		}
+	}
 
 #endif
 }
@@ -186,15 +186,15 @@ CBJavaClass::AdjustNameStyle
 	CBClass::AdjustNameStyle(style);
 
 	if (GetDeclareType() != kGhostType)
-		{
+	{
 		if (!itsIsPublicFlag)
-			{
+		{
 			style->color = JColorManager::GetGrayColor(50);
-			}
+		}
 
 		if (itsIsFinalFlag)
-			{
+		{
 			style->bold = true;
-			}
 		}
+	}
 }

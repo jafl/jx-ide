@@ -12,10 +12,10 @@
 
 #include "CBSQLStyler.h"
 #include "cbmUtil.h"
-#include <JRegex.h>
-#include <JColorManager.h>
-#include <jGlobals.h>
-#include <jAssert.h>
+#include <jx-af/jcore/JRegex.h>
+#include <jx-af/jcore/JColorManager.h>
+#include <jx-af/jcore/jGlobals.h>
+#include <jx-af/jcore/jAssert.h>
 
 CBSQLStyler* CBSQLStyler::itsSelf = nullptr;
 
@@ -63,14 +63,14 @@ CBStylerBase*
 CBSQLStyler::Instance()
 {
 	if (itsSelf == nullptr && !recursiveInstance)
-		{
+	{
 		recursiveInstance = true;
 
 		itsSelf = jnew CBSQLStyler;
 		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
-		}
+	}
 
 	return itsSelf;
 }
@@ -99,9 +99,9 @@ CBSQLStyler::CBSQLStyler()
 {
 	JFontStyle blankStyle;
 	for (JIndex i=1; i<=kTypeCount; i++)
-		{
+	{
 		SetTypeStyle(i, blankStyle);
-		}
+	}
 
 	SetTypeStyle(kVariable            - kWhitespace, JFontStyle(JColorManager::GetBlueColor()));
 	SetTypeStyle(kKeyword             - kWhitespace, JFontStyle(JColorManager::GetDarkGreenColor()));
@@ -153,12 +153,12 @@ CBSQLStyler::Scan
 	Token token;
 	JFontStyle style;
 	do
-		{
+	{
 		token = NextToken();
 		if (token.type == kEOF)
-			{
+		{
 			break;
-			}
+		}
 
 		// save token starts
 
@@ -170,35 +170,35 @@ CBSQLStyler::Scan
 			token.type == kDoubleQuoteString ||
 			token.type == kBackQuoteString   ||
 			token.type == kComment)
-			{
+		{
 			SaveTokenStart(token.range.GetFirst());
-			}
+		}
 
 		// set the style
 
 		const JIndex typeIndex = token.type - kWhitespace;
 		if (token.type == kWhitespace)
-			{
+		{
 			style = GetDefaultFont().GetStyle();
-			}
+		}
 		else if (token.type == kSingleQuoteString ||
 				 token.type == kDoubleQuoteString ||
 				 token.type == kBackQuoteString   ||
 				 token.type == kComment)
-			{
+		{
 			style = GetTypeStyle(typeIndex);
-			}
+		}
 		else if (token.type < kWhitespace)
-			{
+		{
 			style = GetTypeStyle(kError - kWhitespace);
-			}
+		}
 		else
-			{
+		{
 			JString word(text.GetRawBytes(), token.range.byteRange);
 			word.ToLower();
 			style = GetStyle(typeIndex, word);
-			}
 		}
+	}
 		while (SetStyle(token.range.charRange, style));
 }
 

@@ -10,9 +10,9 @@
 #ifndef _H_CBFunctionMenu
 #define _H_CBFunctionMenu
 
-#include <JXTextMenu.h>
+#include <jx-af/jx/JXTextMenu.h>
 #include "CBCtagsUser.h"
-#include <JString.h>
+#include <jx-af/jcore/JString.h>
 
 class JXFileDocument;
 class JXTEBase;

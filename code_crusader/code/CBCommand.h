@@ -9,7 +9,7 @@
 #define _H_CBCommand
 
 #include "CBCommandManager.h"	// need defn of CmdInfo
-#include <JPtrArray-JString.h>
+#include <jx-af/jcore/JPtrArray-JString.h>
 
 class JProcess;
 class CBProjectDocument;

@@ -10,8 +10,8 @@
 #ifndef _H_CBDiffFileDialog
 #define _H_CBDiffFileDialog
 
-#include <JXWindowDirector.h>
-#include <JPrefObject.h>
+#include <jx-af/jx/JXWindowDirector.h>
+#include <jx-af/jcore/JPrefObject.h>
 
 class JXTextButton;
 class JXCheckbox;

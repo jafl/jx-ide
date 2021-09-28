@@ -12,8 +12,8 @@
 #include "CBPTPrinter.h"
 #include "CBTextEditor.h"
 #include "cbGlobals.h"
-#include <JRegex.h>
-#include <jAssert.h>
+#include <jx-af/jcore/JRegex.h>
+#include <jx-af/jcore/jAssert.h>
 
 const JSize kUnsetFontSize = 0;
 
@@ -75,19 +75,19 @@ CBPSPrinter::CreatePrintSetupDialog
 	assert( itsCBPrintSetupDialog == nullptr );
 
 	if (itsFontSize == kUnsetFontSize)
-		{
+	{
 		JString fontName;
 		CBGetPrefsManager()->GetDefaultFont(&fontName, &itsFontSize);
 
 		const JStringMatch m = nxmRegex.Match(fontName, JRegex::kIncludeSubmatches);
 		if (!m.IsEmpty())
-			{
+		{
 			const JString hStr = m.GetSubstring(1);
 			const bool ok  = hStr.ConvertToUInt(&itsFontSize);
 			assert( ok );
 			itsFontSize--;
-			}
 		}
+	}
 
 	itsCBPrintSetupDialog =
 		CBPSPrintSetupDialog::Create(destination, printCmd, fileName,
@@ -115,7 +115,7 @@ CBPSPrinter::EndUserPrintSetup
 
 	const bool ok = JXPSPrinter::EndUserPrintSetup(message, changed);
 	if (ok)
-		{
+	{
 		JSize fontSize;
 		bool printHeader;
 		itsCBPrintSetupDialog->CBGetSettings(&fontSize, &printHeader);
@@ -126,7 +126,7 @@ CBPSPrinter::EndUserPrintSetup
 
 		itsFontSize = fontSize;
 		CBGetPTTextPrinter()->ShouldPrintHeader(printHeader);
-		}
+	}
 
 	itsCBPrintSetupDialog = nullptr;
 	return ok;
@@ -146,14 +146,14 @@ CBPSPrinter::ReadPrefs
 	JFileVersion vers;
 	input >> vers;
 	if (vers <= kCurrentSetupVersion)
-		{
+	{
 		if (vers >= 1)
-			{
+		{
 			input >> itsFontSize;
-			}
+		}
 
 		JXPSPrinter::ReadXPSSetup(input);
-		}
+	}
 }
 
 /******************************************************************************
@@ -190,15 +190,15 @@ CBPSPrinter::OpenDocument()
 	JXGetApplication()->DisplayBusyCursor();	// changing font can take a while
 
 	if (JXPSPrinter::OpenDocument())
-		{
+	{
 		assert( itsFontSize != kUnsetFontSize );
 		itsTE->SetFontBeforePrintPS(itsFontSize);
 		return true;
-		}
+	}
 	else
-		{
+	{
 		return false;
-		}
+	}
 }
 
 /******************************************************************************

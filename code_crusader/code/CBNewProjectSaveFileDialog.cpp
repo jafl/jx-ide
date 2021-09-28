@@ -10,23 +10,23 @@
 #include "CBNewProjectSaveFileDialog.h"
 #include "CBProjectDocument.h"
 #include "CBBuildManager.h"
-#include <JXWindow.h>
-#include <JXStaticText.h>
-#include <JXSaveFileInput.h>
-#include <JXPathInput.h>
-#include <JXTextButton.h>
-#include <JXTextCheckbox.h>
-#include <JXRadioGroup.h>
-#include <JXTextRadioButton.h>
-#include <JXPathHistoryMenu.h>
-#include <JXCurrentPathMenu.h>
-#include <JXScrollbarSet.h>
-#include <JXNewDirButton.h>
-#include <jXGlobals.h>
-#include <JDirInfo.h>
-#include <jDirUtil.h>
-#include <jFileUtil.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXStaticText.h>
+#include <jx-af/jx/JXSaveFileInput.h>
+#include <jx-af/jx/JXPathInput.h>
+#include <jx-af/jx/JXTextButton.h>
+#include <jx-af/jx/JXTextCheckbox.h>
+#include <jx-af/jx/JXRadioGroup.h>
+#include <jx-af/jx/JXTextRadioButton.h>
+#include <jx-af/jx/JXPathHistoryMenu.h>
+#include <jx-af/jx/JXCurrentPathMenu.h>
+#include <jx-af/jx/JXScrollbarSet.h>
+#include <jx-af/jx/JXNewDirButton.h>
+#include <jx-af/jx/jXGlobals.h>
+#include <jx-af/jcore/JDirInfo.h>
+#include <jx-af/jcore/jDirUtil.h>
+#include <jx-af/jcore/jFileUtil.h>
+#include <jx-af/jcore/jAssert.h>
 
 // Template menu
 
@@ -283,7 +283,7 @@ CBNewProjectSaveFileDialog::BuildTemplateMenu
 	JString sysDir, userDir;
 	if (JXGetProgramDataDirectories(CBProjectDocument::GetTemplateDirectoryName(),
 									&sysDir, &userDir))
-		{
+	{
 		JString* menuTextStr = nullptr;
 		BuildTemplateMenuItems(sysDir,  false, &menuText, templateFile, &menuTextStr);
 		BuildTemplateMenuItems(userDir, true,  &menuText, templateFile, &menuTextStr);
@@ -291,7 +291,7 @@ CBNewProjectSaveFileDialog::BuildTemplateMenu
 		const JSize count = menuText.GetElementCount();
 		JString itemText, nmShortcut;
 		for (JIndex i=1; i<=count; i++)
-			{
+		{
 			// We have to extract user/sys here because otherwise we would
 			// have to keep extra state while building the sorted list.
 
@@ -312,11 +312,11 @@ CBNewProjectSaveFileDialog::BuildTemplateMenu
 			// mark item corresponding to initial template selection
 
 			if (menuText.GetElement(i) == menuTextStr)
-				{
+			{
 				itsTemplateIndex = itsTemplateMenu->GetItemCount();
-				}
 			}
 		}
+	}
 
 	// after selecting initial template
 
@@ -344,39 +344,39 @@ CBNewProjectSaveFileDialog::BuildTemplateMenuItems
 {
 	JDirInfo* info = nullptr;
 	if (JDirInfo::Create(path, &info))
-		{
+	{
 		info->ShowDirs(false);
 
 		const JSize count = info->GetEntryCount();
 		JString fullName, templateType;
 		for (JIndex i=1; i<=count; i++)
-			{
+		{
 			fullName = (info->GetEntry(i)).GetFullName();
 			if (CBProjectDocument::GetProjectTemplateType(fullName, &templateType))
-				{
+			{
 				auto* s = jnew JString((info->GetEntry(i)).GetName());
 				assert( s != nullptr );
 
 				if (isUserPath)
-					{
+				{
 					*s += JGetString("UserTemplateMarker::CBNewProjectSaveFileDialog");
-					}
+				}
 				else
-					{
+				{
 					*s += JGetString("SysTemplateMarker::CBNewProjectSaveFileDialog");
-					}
+				}
 
 				menuText->InsertSorted(s);
 
 				// save item corresponding to initial template selection
 
 				if (JSameDirEntry(templateFile, fullName))
-					{
+				{
 					*menuTextStr = s;
-					}
 				}
 			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -392,12 +392,12 @@ CBNewProjectSaveFileDialog::GetProjectTemplate
 	const
 {
 	if (itsTemplateIndex == kNoTemplateCmd)
-		{
+	{
 		fullName->Clear();
 		return false;
-		}
+	}
 	else
-		{
+	{
 		JString nmShortcut;
 		const bool ok = itsTemplateMenu->GetItemNMShortcut(itsTemplateIndex, &nmShortcut);
 		assert( ok );
@@ -410,7 +410,7 @@ CBNewProjectSaveFileDialog::GetProjectTemplate
 			nmShortcut == JGetString("UserTemplateMarker::CBNewProjectSaveFileDialog") ? userDir : sysDir,
 			itsTemplateMenu->GetItemText(itsTemplateIndex));
 		return true;
-		}
+	}
 }
 
 /******************************************************************************
@@ -426,22 +426,22 @@ CBNewProjectSaveFileDialog::Receive
 	)
 {
 	if (sender == itsTemplateMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		itsTemplateMenu->CheckItem(itsTemplateIndex);
-		}
+	}
 	else if (sender == itsTemplateMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		itsTemplateIndex = selection->GetIndex();
 		UpdateMakefileMethod();
-		}
+	}
 
 	else
-		{
+	{
 		JXSaveFileDialog::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -464,36 +464,36 @@ bool
 CBNewProjectSaveFileDialog::OKToDeactivate()
 {
 	if (!JXSaveFileDialog::OKToDeactivate())
-		{
+	{
 		return false;
-		}
+	}
 	else if (Cancelled())
-		{
+	{
 		return true;
-		}
+	}
 
 	const CBBuildManager::MakefileMethod method = GetMakefileMethod();
 	if (method == CBBuildManager::kManual)
-		{
+	{
 		return true;
-		}
+	}
 
 	// ask if OK to replace Make.files
 
 	if (method == CBBuildManager::kMakemake)
-		{
+	{
 		const JString makeFilesName = CBBuildManager::GetMakeFilesName(GetPath());
 		if (JFileExists(makeFilesName) &&
 			!OKToReplaceFile(makeFilesName, JGetString("CBName")))
-			{
+		{
 			return false;
-			}
 		}
+	}
 
 	// ask if OK to replace CMakeLists.txt
 
 	if (method == CBBuildManager::kCMake)
-		{
+	{
 		JString projFileName, projRoot, projSuffix;
 		GetFileName(&projFileName);
 		JSplitRootAndSuffix(projFileName, &projRoot, &projSuffix);
@@ -501,15 +501,15 @@ CBNewProjectSaveFileDialog::OKToDeactivate()
 		const JString cmakeInputName = CBBuildManager::GetCMakeInputName(GetPath(), projRoot);
 		if (JFileExists(cmakeInputName) &&
 			!OKToReplaceFile(cmakeInputName, JGetString("CBName")))
-			{
+		{
 			return false;
-			}
 		}
+	}
 
 	// ask if OK to replace .pro
 
 	if (method == CBBuildManager::kQMake)
-		{
+	{
 		JString projFileName, projRoot, projSuffix;
 		GetFileName(&projFileName);
 		JSplitRootAndSuffix(projFileName, &projRoot, &projSuffix);
@@ -517,10 +517,10 @@ CBNewProjectSaveFileDialog::OKToDeactivate()
 		const JString qmakeInputName = CBBuildManager::GetQMakeInputName(GetPath(), projRoot);
 		if (JFileExists(qmakeInputName) &&
 			!OKToReplaceFile(qmakeInputName, JGetString("CBName")))
-			{
+		{
 			return false;
-			}
 		}
+	}
 
 	// ask if OK to replace existing Makefile
 
@@ -529,14 +529,14 @@ CBNewProjectSaveFileDialog::OKToDeactivate()
 
 	const JSize count = makefileList.GetElementCount();
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		const JString* fullName = makefileList.GetElement(i);
 		if (JFileExists(*fullName) &&
 			!OKToReplaceFile(*fullName, CBBuildManager::GetMakefileMethodName(GetMakefileMethod())))
-			{
+		{
 			return false;
-			}
 		}
+	}
 
 	return true;
 }
@@ -557,10 +557,10 @@ CBNewProjectSaveFileDialog::OKToReplaceFile
 	JSplitPathAndName(fullName, &path, &name);
 
 	const JUtf8Byte* map[] =
-		{
+	{
 		"file",   name.GetBytes(),
 		"method", programName.GetBytes()
-		};
+	};
 	const JString msg = JGetString("WarnFileExists::CBNewProjectSaveFileDialog", map, sizeof(map));
 
 	return JGetUserNotification()->AskUserNo(msg);

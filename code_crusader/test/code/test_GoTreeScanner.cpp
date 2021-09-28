@@ -7,10 +7,10 @@
 
  *****************************************************************************/
 
-#include <JTestManager.h>
+#include <jx-af/jcore/JTestManager.h>
 #include "CBGoTree.h"
 #include "CBClass.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 int main()
 {

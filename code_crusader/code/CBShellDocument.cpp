@@ -10,13 +10,13 @@
 #include "CBShellDocument.h"
 #include "CBShellEditor.h"
 #include "cbGlobals.h"
-#include <JXWindow.h>
-#include <JXMenuBar.h>
-#include <JXTextButton.h>
-#include <JXScrollbarSet.h>
-#include <JOutPipeStream.h>
-#include <jSysUtil.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXMenuBar.h>
+#include <jx-af/jx/JXTextButton.h>
+#include <jx-af/jx/JXScrollbarSet.h>
+#include <jx-af/jcore/JOutPipeStream.h>
+#include <jx-af/jcore/jSysUtil.h>
+#include <jx-af/jcore/jAssert.h>
 
 const JSize kMenuButtonWidth = 60;
 
@@ -39,19 +39,19 @@ CBShellDocument::Create
 	const JError err = JProcess::Create(&p, cmd, sizeof(cmd), kJCreatePipe, &outFD,
 										kJCreatePipe, &inFD, kJAttachToFromFD);
 	if (err.OK())
-		{
+	{
 		*doc = jnew CBShellDocument(p, inFD, outFD);
 		assert( *doc != nullptr );
 
 		(**doc).Activate();
 		return true;
-		}
+	}
 	else
-		{
+	{
 		err.ReportIfError();
 		*doc = nullptr;
 		return false;
-		}
+	}
 }
 
 /******************************************************************************
@@ -185,10 +185,10 @@ CBShellDocument::SendCommand
 	)
 {
 	if (itsCmdStream != nullptr)
-		{
+	{
 		*itsCmdStream << cmd;
 		itsCmdStream->flush();
-		}
+	}
 }
 
 /******************************************************************************
@@ -204,26 +204,26 @@ CBShellDocument::Receive
 	)
 {
 	if (sender == itsDataLink && message.Is(JAsynchDataReceiverT::kDataReady))
-		{
+	{
 		ReceiveData(message);
-		}
+	}
 
 	else if (sender == itsProcess && message.Is(JProcess::kFinished))
-		{
+	{
 		DeleteLinks();
 		CloseOutFD();
 		UpdateButtons();
-		}
+	}
 
 	else if (sender == itsKillButton && message.Is(JXButton::kPushed))
-		{
+	{
 		KillProcess();
-		}
+	}
 
 	else
-		{
+	{
 		CBTextDocument::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -253,9 +253,9 @@ void
 CBShellDocument::KillProcess()
 {
 	if (ProcessRunning())
-		{
+	{
 		itsProcess->Kill();
-		}
+	}
 }
 
 /******************************************************************************
@@ -281,11 +281,11 @@ void
 CBShellDocument::UpdateButtons()
 {
 	if (ProcessRunning())
-		{
+	{
 		itsKillButton->Activate();
-		}
+	}
 	else
-		{
+	{
 		itsKillButton->Deactivate();
-		}
+	}
 }

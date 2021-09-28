@@ -10,7 +10,7 @@
 #ifndef _H_CMMDIServer
 #define _H_CMMDIServer
 
-#include <JXMDIServer.h>
+#include <jx-af/jx/JXMDIServer.h>
 
 class CMMDIServer : public JXMDIServer, virtual public JBroadcaster
 {

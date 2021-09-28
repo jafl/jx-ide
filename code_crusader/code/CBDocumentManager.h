@@ -10,10 +10,10 @@
 #ifndef _H_CBDocumentManager
 #define _H_CBDocumentManager
 
-#include <JXDocumentManager.h>
+#include <jx-af/jx/JXDocumentManager.h>
 #include "CBTextFileType.h"
-#include <JPrefObject.h>
-#include <JPtrArray.h>
+#include <jx-af/jcore/JPrefObject.h>
+#include <jx-af/jcore/JPtrArray.h>
 
 class JRegex;
 class JSTStyler;

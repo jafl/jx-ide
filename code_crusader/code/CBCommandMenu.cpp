@@ -28,7 +28,7 @@
 #include "CBRelPathCSF.h"
 #include "cbGlobals.h"
 #include "cbActionDefs.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 // Project menu
 
@@ -160,13 +160,13 @@ CBCommandMenu::CBCommandMenuX
 	ListenTo(CBGetCommandManager());
 
 	if (itsTextDoc != nullptr)
-		{
+	{
 		itsAddToProjMenu = jnew JXTextMenu(this, kAddToProjIndex, GetEnclosure());
 		assert( itsAddToProjMenu != nullptr );
 		itsAddToProjMenu->SetMenuItems(kAddToProjMenuStr, "CBCommandMenu");
 		itsAddToProjMenu->SetUpdateAction(JXMenu::kDisableNone);
 		ListenTo(itsAddToProjMenu);
-		}
+	}
 
 	itsManageProjMenu = jnew JXTextMenu(this, kManageProjIndex, GetEnclosure());
 	assert( itsManageProjMenu != nullptr );
@@ -207,9 +207,9 @@ CBCommandMenu::SetProjectDocument
 {
 	itsProjDoc = projDoc;
 	if (itsProjDoc != nullptr)
-		{
+	{
 		ClearWhenGoingAway(itsProjDoc, &itsProjDoc);
-		}
+	}
 }
 
 /******************************************************************************
@@ -225,11 +225,11 @@ CBCommandMenu::Receive
 	)
 {
 	if (sender == this && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		UpdateMenu();
-		}
+	}
 	else if (sender == this && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
@@ -237,41 +237,41 @@ CBCommandMenu::Receive
 		GetTargetInfo info;
 		BuildTargetInfo(&info);
 		HandleSelection(selection->GetIndex(), info);
-		}
+	}
 
 	else if (sender == itsAddToProjMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		UpdateAddToProjectMenu();
-		}
+	}
 	else if (sender == itsAddToProjMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleAddToProjectMenu(selection->GetIndex());
-		}
+	}
 
 	else if (sender == itsManageProjMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		UpdateManageProjectMenu();
-		}
+	}
 	else if (sender == itsManageProjMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleManageProjectMenu(selection->GetIndex());
-		}
+	}
 
 	else if (sender == CBGetCommandManager() && message.Is(CBCommandManager::kUpdateCommandMenu))
-		{
+	{
 		UpdateMenu();
-		}
+	}
 
 	else
-		{
+	{
 		JXTextMenu::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -286,9 +286,9 @@ CBCommandMenu::BuildTargetInfo
 	)
 {
 	if (itsTextDoc == nullptr)
-		{
+	{
 		BroadcastWithFeedback(info);
-		}
+	}
 }
 
 /******************************************************************************
@@ -300,9 +300,9 @@ void
 CBCommandMenu::UpdateMenu()
 {
 	while (GetItemCount() > kInitCmdCount)
-		{
+	{
 		RemoveItem(GetItemCount());
-		}
+	}
 
 	CBProjectDocument* projDoc;
 	const bool hasProject = GetProjectDocument(&projDoc);
@@ -310,9 +310,9 @@ CBCommandMenu::UpdateMenu()
 	(CBGetCommandManager())->AppendMenuItems(this, hasProject);
 
 	if (projDoc != nullptr)
-		{
+	{
 		(projDoc->GetCommandManager())->AppendMenuItems(this, hasProject);
-		}
+	}
 
 	// "Add to" sub-menu
 
@@ -320,13 +320,13 @@ CBCommandMenu::UpdateMenu()
 
 	JString itemText = JGetString("AddToProjectItemText::CBCommandMenu");
 	if (projDoc != nullptr)
-		{
+	{
 		itemText += projDoc->GetName();
-		}
+	}
 	else
-		{
+	{
 		itemText += JGetString("NoProjectName::CBCommandMenu");
-		}
+	}
 	SetItemText(kAddToProjIndex, itemText);
 
 	// "Manage" sub-menu
@@ -335,13 +335,13 @@ CBCommandMenu::UpdateMenu()
 
 	itemText = JGetString("ManageProjectItemText::CBCommandMenu");
 	if (projDoc != nullptr)
-		{
+	{
 		itemText += projDoc->GetName();
-		}
+	}
 	else
-		{
+	{
 		itemText += JGetString("NoProjectName::CBCommandMenu");
-		}
+	}
 	SetItemText(kManageProjIndex, itemText);
 }
 
@@ -359,56 +359,56 @@ CBCommandMenu::HandleSelection
 {
 	CBProjectDocument* projDoc = itsProjDoc;
 	if (projDoc != nullptr)
-		{
+	{
 		CBGetDocumentManager()->SetActiveProjectDocument(projDoc);
-		}
+	}
 	else
-		{
+	{
 		CBGetDocumentManager()->GetActiveProjectDocument(&projDoc);
-		}
+	}
 
 	if (index == kRunCmd)
-		{
+	{
 		CBRunCommandDialog* dlog;
 		if (itsTextDoc != nullptr)
-			{
+		{
 			dlog = jnew CBRunCommandDialog(projDoc, itsTextDoc);
-			}
+		}
 		else
-			{
+		{
 			dlog = jnew CBRunCommandDialog(projDoc, info.GetFileList(), info.GetLineIndexList());
-			}
+		}
 		assert( dlog != nullptr );
 		dlog->BeginDialog();
-		}
+	}
 	else if (index == kEditCmd)
-		{
+	{
 		auto* dlog = jnew CBEditCommandsDialog(projDoc);
 		assert( dlog != nullptr );
 		dlog->BeginDialog();
-		}
+	}
 
 	else if (index > kInitCmdCount)
-		{
+	{
 		JIndex i = index - kInitCmdCount;
 
 		CBCommandManager* mgr = CBGetCommandManager();
 		if (i > mgr->GetCommandCount())
-			{
+		{
 			assert( projDoc != nullptr );
 			i  -= mgr->GetCommandCount();		// before changing mgr
 			mgr = projDoc->GetCommandManager();
-			}
+		}
 
 		if (itsTextDoc != nullptr)
-			{
+		{
 			mgr->Exec(i, projDoc, itsTextDoc);
-			}
-		else
-			{
-			mgr->Exec(i, projDoc, info.GetFileList(), info.GetLineIndexList());
-			}
 		}
+		else
+		{
+			mgr->Exec(i, projDoc, info.GetFileList(), info.GetLineIndexList());
+		}
+	}
 }
 
 /******************************************************************************
@@ -420,13 +420,13 @@ void
 CBCommandMenu::UpdateAddToProjectMenu()
 {
 	if (CanAddToProject())
-		{
+	{
 		itsAddToProjMenu->EnableAll();
-		}
+	}
 	else
-		{
+	{
 		itsAddToProjMenu->DisableAll();
-		}
+	}
 }
 
 /******************************************************************************
@@ -441,9 +441,9 @@ CBCommandMenu::HandleAddToProjectMenu
 	)
 {
 	if (!CanAddToProject())
-		{
+	{
 		return;
-		}
+	}
 
 	CBProjectDocument* projDoc;
 	const bool hasProject = GetProjectDocument(&projDoc);
@@ -455,18 +455,18 @@ CBCommandMenu::HandleAddToProjectMenu
 
 	CBRelPathCSF::PathType pathType;
 	if (index == kAddToProjAbsoluteCmd)
-		{
+	{
 		pathType = CBRelPathCSF::kAbsolutePath;
-		}
+	}
 	else if (index == kAddToProjProjRelativeCmd)
-		{
+	{
 		pathType = CBRelPathCSF::kProjectRelative;
-		}
+	}
 	else
-		{
+	{
 		assert( index == kAddToProjHomeRelativeCmd );
 		pathType = CBRelPathCSF::kHomeRelative;
-		}
+	}
 
 	projDoc->AddFile(fullName, pathType);
 }
@@ -496,7 +496,7 @@ CBCommandMenu::UpdateManageProjectMenu()
 {
 	CBProjectDocument* projDoc;
 	if (GetProjectDocument(&projDoc))
-		{
+	{
 		itsManageProjMenu->EnableAll();
 
 		itsManageProjMenu->SetItemEnable(kShowCTreeCmd,
@@ -509,11 +509,11 @@ CBCommandMenu::UpdateManageProjectMenu()
 			!projDoc->GetJavaTreeDirector()->GetTree()->IsEmpty());
 		itsManageProjMenu->SetItemEnable(kShowPHPTreeCmd,
 			!projDoc->GetPHPTreeDirector()->GetTree()->IsEmpty());
-		}
+	}
 	else
-		{
+	{
 		itsManageProjMenu->DisableAll();
-		}
+	}
 }
 
 /******************************************************************************
@@ -529,42 +529,42 @@ CBCommandMenu::HandleManageProjectMenu
 {
 	CBProjectDocument* projDoc;
 	if (!GetProjectDocument(&projDoc))
-		{
+	{
 		return;
-		}
+	}
 
 	if (index == kUpdateSymbolDBCmd)
-		{
+	{
 		projDoc->UpdateSymbolDatabase();
-		}
+	}
 	else if (index == kShowSymbolBrowserCmd)
-		{
+	{
 		projDoc->GetSymbolDirector()->Activate();
-		}
+	}
 	else if (index == kShowCTreeCmd)
-		{
+	{
 		projDoc->GetCTreeDirector()->Activate();
-		}
+	}
 	else if (index == kShowDTreeCmd)
-		{
+	{
 		projDoc->GetDTreeDirector()->Activate();
-		}
+	}
 	else if (index == kShowGoTreeCmd)
-		{
+	{
 		projDoc->GetGoTreeDirector()->Activate();
-		}
+	}
 	else if (index == kShowJavaTreeCmd)
-		{
+	{
 		projDoc->GetJavaTreeDirector()->Activate();
-		}
+	}
 	else if (index == kShowPHPTreeCmd)
-		{
+	{
 		projDoc->GetPHPTreeDirector()->Activate();
-		}
+	}
 	else if (index == kShowFileListCmd)
-		{
+	{
 		projDoc->GetFileListDirector()->Activate();
-		}
+	}
 }
 
 /******************************************************************************
@@ -581,9 +581,9 @@ CBCommandMenu::GetProjectDocument
 {
 	*projDoc = itsProjDoc;
 	if (*projDoc == nullptr)
-		{
+	{
 		CBGetDocumentManager()->GetActiveProjectDocument(projDoc);
-		}
+	}
 
 	return *projDoc != nullptr;
 }

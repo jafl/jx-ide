@@ -8,7 +8,7 @@
 #ifndef _H_CMPlot2DDir
 #define _H_CMPlot2DDir
 
-#include <JXWindowDirector.h>
+#include <jx-af/jx/JXWindowDirector.h>
 
 class JStringTableData;
 class JXTextButton;

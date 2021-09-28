@@ -9,8 +9,8 @@
 #define _H_CMArray2DCommand
 
 #include "CMCommand.h"
-#include <JPoint.h>
-#include <JRange.h>
+#include <jx-af/jcore/JPoint.h>
+#include <jx-af/jcore/JRange.h>
 
 class JStringTableData;
 class JXStringTable;

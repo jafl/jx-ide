@@ -8,7 +8,7 @@
 #ifndef _H_CBSearchColorManager
 #define _H_CBSearchColorManager
 
-#include <JColorManager.h>
+#include <jx-af/jcore/JColorManager.h>
 
 class CBSearchColorManager : public JColorManager
 {

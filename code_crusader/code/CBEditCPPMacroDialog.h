@@ -10,8 +10,8 @@
 #ifndef _H_CBEditCPPMacroDialog
 #define _H_CBEditCPPMacroDialog
 
-#include <JXDialogDirector.h>
-#include <JPrefObject.h>
+#include <jx-af/jx/JXDialogDirector.h>
+#include <jx-af/jcore/JPrefObject.h>
 
 class JXTextButton;
 class CBCPPMacroTable;

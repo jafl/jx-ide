@@ -11,16 +11,16 @@
 #include "CMArray2DDir.h"
 #include "CMCommandDirector.h"
 #include "cmGlobals.h"
-#include <JXInputField.h>
-#include <JXTextMenu.h>
-#include <JXSelectionManager.h>
-#include <JXTextSelection.h>
-#include <JStringTableData.h>
-#include <JTableSelection.h>
-#include <JPagePrinter.h>
-#include <jASCIIConstants.h>
-#include <jTime.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXInputField.h>
+#include <jx-af/jx/JXTextMenu.h>
+#include <jx-af/jx/JXSelectionManager.h>
+#include <jx-af/jx/JXTextSelection.h>
+#include <jx-af/jcore/JStringTableData.h>
+#include <jx-af/jcore/JTableSelection.h>
+#include <jx-af/jcore/JPagePrinter.h>
+#include <jx-af/jcore/jASCIIConstants.h>
+#include <jx-af/jcore/jTime.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -82,31 +82,31 @@ CMArray2DTable::HandleMouseDown
 
 	JPoint cell;
 	if (ScrollForWheel(button, modifiers))
-		{
+	{
 		// work has been done
-		}
+	}
 	else if (!GetCell(pt, &cell))
-		{
+	{
 		s.ClearSelection();
-		}
+	}
 	else if (button == kJXLeftButton && modifiers.meta())
-		{
+	{
 		if (!s.IsSelected(cell))
-			{
+		{
 			SelectSingleCell(cell, false);
-			}
+		}
 
 		const JString expr = itsArrayDir->GetExpression(cell);
 		itsCmdDir->DisplayExpression(expr);
-		}
+	}
 	else if (button == kJXLeftButton && clickCount == 2)
-		{
+	{
 		BeginEditing(cell);
-		}
+	}
 	else if (button == kJXLeftButton && clickCount == 1)
-		{
+	{
 		SelectSingleCell(cell, false);
-		}
+	}
 }
 
 /******************************************************************************
@@ -123,27 +123,27 @@ CMArray2DTable::HandleKeyPress
 	)
 {
 	if (c == kJReturnKey)
-		{
+	{
 		JPoint cell;
 		if (!IsEditing() && GetTableSelection().GetSingleSelectedCell(&cell))
-			{
+		{
 			BeginEditing(cell);
-			}
-		else
-			{
-			EndEditing();
-			}
 		}
+		else
+		{
+			EndEditing();
+		}
+	}
 
 	else if (!IsEditing() && HandleSelectionKeyPress(c, modifiers))
-		{
+	{
 		// work has been done
-		}
+	}
 
 	else
-		{
+	{
 		JXStringTable::HandleKeyPress(c, keySym, modifiers);
-		}
+	}
 }
 
 /******************************************************************************
@@ -186,18 +186,18 @@ CMArray2DTable::ExtractInputData
 	const JString& text = input->GetText()->GetText();
 
 	if (!text.IsEmpty())
-		{
+	{
 		if (text != itsOrigEditValue)
-			{
+		{
 			const JString name = itsArrayDir->GetExpression(cell);
 			CMGetLink()->SetValue(name, text);
-			}
+		}
 		return true;
-		}
+	}
 	else
-		{
+	{
 		return false;
-		}
+	}
 }
 
 /******************************************************************************
@@ -243,27 +243,27 @@ CMArray2DTable::Receive
 	)
 {
 	if (sender == itsEditMenu && message.Is(JXMenu::kNeedsUpdate))
-		{
+	{
 		if (HasFocus())
-			{
+		{
 			UpdateEditMenu();
-			}
 		}
+	}
 	else if (sender == itsEditMenu && message.Is(JXMenu::kItemSelected))
-		{
+	{
 		if (HasFocus())
-			{
+		{
 			const auto* selection =
 				dynamic_cast<const JXMenu::ItemSelected*>(&message);
 			assert( selection != nullptr );
 			HandleEditMenu(selection->GetIndex());
-			}
 		}
+	}
 
 	else
-		{
+	{
 		JXStringTable::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -279,9 +279,9 @@ CMArray2DTable::UpdateEditMenu()
 	JIndex index;
 	if ((GetTableSelection()).HasSelection() &&
 		te->EditMenuCmdToIndex(JTextEditor::kCopyCmd, &index))
-		{
+	{
 		itsEditMenu->EnableItem(index);
-		}
+	}
 }
 
 /******************************************************************************
@@ -300,11 +300,11 @@ CMArray2DTable::HandleEditMenu
 	if (GetEditMenuHandler()->EditMenuIndexToCmd(index, &cmd) &&
 		cmd == JTextEditor::kCopyCmd &&
 		(GetTableSelection()).GetSingleSelectedCell(&cell))
-		{
+	{
 		auto* data =
 			jnew JXTextSelection(GetDisplay(), GetStringData()->GetString(cell));
 		assert( data != nullptr );
 
 		GetSelectionManager()->SetData(kJXClipboardName, data);
-		}
+	}
 }

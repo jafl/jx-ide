@@ -8,7 +8,7 @@
 #ifndef _H_CBCharActionManager
 #define _H_CBCharActionManager
 
-#include <JStringPtrMap.h>
+#include <jx-af/jcore/JStringPtrMap.h>
 
 class CBTextDocument;
 

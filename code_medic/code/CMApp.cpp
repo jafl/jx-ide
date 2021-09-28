@@ -11,17 +11,17 @@
 #include "CMMDIServer.h"
 #include "CMAboutDialog.h"
 #include "CMQuitTask.h"
-#include "LLDBLink.h"
+#include "lldb/LLDBLink.h"
 #include "cmGlobals.h"
 #include "cmStringData.h"
-#include <JXWindow.h>
-#include <JXAskInitDockAll.h>
-#include <JSimpleProcess.h>
-#include <JSubstitute.h>
-#include <jFileUtil.h>
-#include <jDirUtil.h>
-#include <jGlobals.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXAskInitDockAll.h>
+#include <jx-af/jcore/JSimpleProcess.h>
+#include <jx-af/jcore/JSubstitute.h>
+#include <jx-af/jcore/jFileUtil.h>
+#include <jx-af/jcore/jDirUtil.h>
+#include <jx-af/jcore/jGlobals.h>
+#include <jx-af/jcore/jAssert.h>
 
 // Application signature (MDI, prefs)
 
@@ -44,21 +44,21 @@ CMApp::CMApp
 {
 	*displayAbout = CMCreateGlobals(this);
 	if (!*displayAbout)
-		{
+	{
 		*prevVersStr = CMGetPrefsManager()->GetMedicVersionStr();
 		if (*prevVersStr == CMGetVersionNumberStr())
-			{
-			prevVersStr->Clear();
-			}
-		else
-			{
-			*displayAbout = true;
-			}
-		}
-	else
 		{
-		prevVersStr->Clear();
+			prevVersStr->Clear();
 		}
+		else
+		{
+			*displayAbout = true;
+		}
+	}
+	else
+	{
+		prevVersStr->Clear();
+	}
 
 	auto* mdi = jnew CMMDIServer;		// deleted by jXGlobals
 	assert( mdi != nullptr );
@@ -99,13 +99,13 @@ CMApp::EditFile
 
 	JString cmd;
 	if (lineIndex > 0)
-		{
+	{
 		cmd = editFileLineCmd;
-		}
+	}
 	else
-		{
+	{
 		cmd = editFileCmd;
-		}
+	}
 
 	const JString name = JPrepArgForExec(fileName);
 	const JString lineIndexStr(lineIndex, 0);
@@ -138,11 +138,11 @@ CMApp::DisplayAbout
 	dlog->BeginDialog();
 
 	if (init && prevVersStr.IsEmpty())
-		{
+	{
 		auto* task = jnew JXAskInitDockAll(dlog);
 		assert( task != nullptr );
 		task->Start();
-		}
+	}
 }
 
 /******************************************************************************
@@ -155,9 +155,9 @@ CMApp::HandleCustomEvent()
 {
 	auto* link = dynamic_cast<LLDBLink*>(CMGetLink());
 	if (link != nullptr)
-		{
+	{
 		link->HandleLLDBEvent();
-		}
+	}
 	return true;
 }
 

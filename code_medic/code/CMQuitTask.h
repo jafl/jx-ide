@@ -8,7 +8,7 @@
 #ifndef _H_CMQuitTask
 #define _H_CMQuitTask
 
-#include <JXIdleTask.h>
+#include <jx-af/jx/JXIdleTask.h>
 
 class CMQuitTask : public JXIdleTask
 {

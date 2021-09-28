@@ -8,10 +8,10 @@
 #ifndef _H_CBEditCommandsDialog
 #define _H_CBEditCommandsDialog
 
-#include <JXDialogDirector.h>
-#include <JPrefObject.h>
+#include <jx-af/jx/JXDialogDirector.h>
+#include <jx-af/jcore/JPrefObject.h>
 #include "CBCommandManager.h"	// need defn of CmdInfo
-#include <JString.h>
+#include <jx-af/jcore/JString.h>
 
 class JXTextButton;
 class JXVertPartition;

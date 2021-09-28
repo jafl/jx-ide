@@ -6,8 +6,8 @@ This scanner reads a Ruby file and returns CB::Text::Ruby::Scanner::Tokens.
 */
 
 #include "CBStylingScannerBase.h"
-#include <JStringIterator.h>
-#include <jAssert.h>
+#include <jx-af/jcore/JStringIterator.h>
+#include <jx-af/jcore/jAssert.h>
 %}
 
 %option namespace="CB::Text::Ruby" lexer="Scanner"

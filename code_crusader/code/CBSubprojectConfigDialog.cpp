@@ -11,14 +11,14 @@
 #include "CBProjectFileInput.h"
 #include "CBRelPathCSF.h"
 #include "CBProjectDocument.h"
-#include <JXWindow.h>
-#include <JXTextButton.h>
-#include <JXStaticText.h>
-#include <JXTextCheckbox.h>
-#include <JString.h>
-#include <jDirUtil.h>
-#include <jGlobals.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXTextButton.h>
+#include <jx-af/jx/JXStaticText.h>
+#include <jx-af/jx/JXTextCheckbox.h>
+#include <jx-af/jcore/JString.h>
+#include <jx-af/jcore/jDirUtil.h>
+#include <jx-af/jcore/jGlobals.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -121,14 +121,14 @@ CBSubprojectConfigDialog::BuildWindow
 	itsSubProjName->ShouldAllowInvalidFile();
 
 	if ((supervisor->GetBuildManager())->GetMakefileMethod() == CBBuildManager::kMakemake)
-		{
+	{
 		itsIncludeInDepListCB->SetState(includeInDepList);
 		itsShouldBuildCB->SetState(shouldBuild);
 
 		UpdateDisplay();
-		}
+	}
 	else
-		{
+	{
 		itsIncludeInDepListCB->SetState(false);
 		itsShouldBuildCB->SetState(false);
 
@@ -136,7 +136,7 @@ CBSubprojectConfigDialog::BuildWindow
 
 		itsIncludeInDepListCB->Deactivate();
 		itsShouldBuildCB->Deactivate();
-		}
+	}
 
 	ListenTo(itsChooseFileButton);
 	ListenTo(itsIncludeInDepListCB);
@@ -152,9 +152,9 @@ CBSubprojectConfigDialog::UpdateDisplay()
 {
 	itsShouldBuildCB->SetActive(itsIncludeInDepListCB->IsChecked());
 	if (!itsIncludeInDepListCB->IsChecked())
-		{
+	{
 		itsShouldBuildCB->SetState(false);
-		}
+	}
 }
 
 /******************************************************************************
@@ -190,17 +190,17 @@ CBSubprojectConfigDialog::Receive
 	)
 {
 	if (sender == itsChooseFileButton && message.Is(JXButton::kPushed))
-		{
+	{
 		ChooseProjectFile();
-		}
+	}
 	else if (sender == itsIncludeInDepListCB && message.Is(JXCheckbox::kPushed))
-		{
+	{
 		UpdateDisplay();
-		}
+	}
 	else
-		{
+	{
 		JXDialogDirector::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -215,16 +215,16 @@ CBSubprojectConfigDialog::ChooseProjectFile()
 	JString newName;
 	if (itsCSF->ChooseRelFile(JString::empty, JGetString("ChooseProjectFile::CBSubprojectConfigDialog"),
 							  origName, &newName))
-		{
+	{
 		JString fullName;
 		if (JConvertToAbsolutePath(newName, itsCSF->GetProjectPath(), &fullName) &&
 			CBProjectDocument::CanReadFile(fullName) == JXFileDocument::kFileReadable)
-			{
+		{
 			itsSubProjName->GetText()->SetText(newName);
-			}
-		else
-			{
-			JGetUserNotification()->ReportError(JGetString("NotProjectFile::CBSubprojectConfigDialog"));
-			}
 		}
+		else
+		{
+			JGetUserNotification()->ReportError(JGetString("NotProjectFile::CBSubprojectConfigDialog"));
+		}
+	}
 }

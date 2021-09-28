@@ -9,13 +9,13 @@
 
 #include "CBMacroSubstitute.h"
 #include "cbmUtil.h"
-#include <jProcessUtil.h>
-#include <jStreamUtil.h>
-#include <JStringIterator.h>
-#include <JMinMax.h>
-#include <jASCIIConstants.h>
-#include <jGlobals.h>
-#include <jAssert.h>
+#include <jx-af/jcore/jProcessUtil.h>
+#include <jx-af/jcore/jStreamUtil.h>
+#include <jx-af/jcore/JStringIterator.h>
+#include <jx-af/jcore/JMinMax.h>
+#include <jx-af/jcore/jASCIIConstants.h>
+#include <jx-af/jcore/jGlobals.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -56,27 +56,27 @@ CBMacroSubstitute::Evaluate
 {
 	JUtf8Character c;
 	if (iter.Next(&c, kJIteratorStay) && c == '(')
-		{
+	{
 		iter.SkipNext();
 		iter.BeginMatch();
 		if (CBMBalanceForward(kCBCLang, &iter, &c))
-			{
+		{
 			iter.SkipPrev();
 			*value = iter.FinishMatch().GetString();
 			iter.SkipNext();
 
 			auto* me = const_cast<CBMacroSubstitute*>(this);
 			if (itsExecCount == 0)
-				{
+			{
 				me->TurnOffEscapes();
-				}
+			}
 			me->itsExecCount++;
 			Substitute(value);		// recursive!
 			me->itsExecCount--;
 			if (itsExecCount == 0)
-				{
+			{
 				me->TurnOnEscapes();
-				}
+			}
 
 			pid_t pid;
 			int fromFD, errFD;
@@ -84,35 +84,35 @@ CBMacroSubstitute::Evaluate
 				JExecute(*value, &pid, kJIgnoreConnection, nullptr,
 						 kJCreatePipe, &fromFD, kJCreatePipe, &errFD);
 			if (!execErr.OK())
-				{
+			{
 				execErr.ReportIfError();
 				value->Clear();
-				}
+			}
 			else
-				{
+			{
 				JString msg;
 				JReadAll(errFD, &msg);
 				if (!msg.IsEmpty())
-					{
+				{
 					msg.Prepend(JGetString("Error::CBGlobal"));
 					JGetUserNotification()->ReportError(msg);
-					}
+				}
 
 				JReadAll(fromFD, value);
 				value->TrimWhitespace();
-				}
 			}
+		}
 		else
-			{
+		{
 			value->Clear();
-			}
+		}
 
 		return true;
-		}
+	}
 	else
-		{
+	{
 		return JSubstitute::Evaluate(iter, value);
-		}
+	}
 }
 
 /******************************************************************************

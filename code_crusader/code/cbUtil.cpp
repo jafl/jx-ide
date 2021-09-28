@@ -10,8 +10,8 @@
 #include "CBDocumentManager.h"
 #include "cbUtil.h"
 #include "cbGlobals.h"
-#include <jFileUtil.h>
-#include <jAssert.h>
+#include <jx-af/jcore/jFileUtil.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  CBCleanUpAfterRename
@@ -37,7 +37,7 @@ CBCleanUpAfterRename
 	JRemoveFile(crashName);
 
 	if (!newFullName.IsEmpty())
-		{
+	{
 		CBGetDocumentManager()->FileRenamed(origFullName, newFullName);
-		}
+	}
 }

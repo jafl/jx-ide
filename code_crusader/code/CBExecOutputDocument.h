@@ -11,11 +11,11 @@
 #define _H_CBExecOutputDocument
 
 #include "CBTextDocument.h"
-#include <JProcess.h>			// need definition of JProcess::Finished
+#include <jx-af/jcore/JProcess.h>			// need definition of JProcess::Finished
 #include <ace/LSOCK_Stream.h>
 #include <ace/UNIX_Addr.h>
-#include <JMessageProtocol.h>	// template; requires ace includes
-#include <JAsynchDataReceiver.h>
+#include <jx-af/jcore/JMessageProtocol.h>	// template; requires ace includes
+#include <jx-af/jcore/JAsynchDataReceiver.h>
 
 class JOutPipeStream;
 class JXStaticText;

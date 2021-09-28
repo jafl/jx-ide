@@ -11,10 +11,10 @@
 #include "CMGetBreakpoints.h"
 #include "cmGlobals.h"
 #include "cmFileVersions.h"
-#include <JListUtil.h>
-#include <jDirUtil.h>
-#include <jFileUtil.h>
-#include <jAssert.h>
+#include <jx-af/jcore/JListUtil.h>
+#include <jx-af/jcore/jDirUtil.h>
+#include <jx-af/jcore/jFileUtil.h>
+#include <jx-af/jcore/jAssert.h>
 
 // JBroadcaster message types
 
@@ -100,7 +100,7 @@ CMBreakpointManager::GetBreakpoints
 	list->SetCleanUpAction(JPtrArrayT::kForgetAll);
 
 	if (JIsAbsolutePath(fileName) && JFileExists(fileName))
-		{
+	{
 		CMBreakpoint target(fileName, 1);
 		bool found;
 		const JIndex startIndex =
@@ -108,18 +108,18 @@ CMBreakpointManager::GetBreakpoints
 
 		const JSize count = itsBPList->GetElementCount();
 		for (JIndex i=startIndex; i<=count; i++)
-			{
+		{
 			CMBreakpoint* bp = itsBPList->GetElement(i);
 			if (bp->GetFileID() == target.GetFileID())
-				{
+			{
 				list->Append(bp);
-				}
+			}
 			else
-				{
+			{
 				break;
-				}
 			}
 		}
+	}
 
 	return !list->IsEmpty();
 }
@@ -143,7 +143,7 @@ CMBreakpointManager::GetBreakpoints
 	list->SetCleanUpAction(JPtrArrayT::kForgetAll);
 
 	if (loc.GetFileID().IsValid())
-		{
+	{
 		CMBreakpoint target(loc.GetFileName(), loc.GetLineNumber());
 		bool found;
 		const JIndex startIndex =
@@ -151,33 +151,33 @@ CMBreakpointManager::GetBreakpoints
 
 		const JSize count = itsBPList->GetElementCount();
 		for (JIndex i=startIndex; i<=count; i++)
-			{
+		{
 			CMBreakpoint* bp = itsBPList->GetElement(i);
 			if (bp->GetLocation() == loc)
-				{
+			{
 				list->Append(bp);
-				}
+			}
 			else
-				{
+			{
 				break;
-				}
 			}
 		}
+	}
 	else if (!loc.GetFunctionName().IsEmpty())
-		{
+	{
 		const JString fn = loc.GetFunctionName() + "(";
 
 		const JSize count = itsBPList->GetElementCount();
 		for (JIndex i=1; i<=count; i++)
-			{
+		{
 			CMBreakpoint* bp = itsBPList->GetElement(i);
 			if (bp->GetFunctionName() == loc.GetFunctionName() ||
 				bp->GetFunctionName().BeginsWith(fn))
-				{
+			{
 				list->Append(bp);
-				}
 			}
 		}
+	}
 
 	return !list->IsEmpty();
 }
@@ -191,12 +191,12 @@ void
 CMBreakpointManager::EnableAll()
 {
 	for (auto* bp : *itsBPList)
-		{
+	{
 		if (!bp->IsEnabled())
-			{
+		{
 			itsLink->SetBreakpointEnabled(bp->GetDebuggerIndex(), true);
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -208,12 +208,12 @@ void
 CMBreakpointManager::DisableAll()
 {
 	for (auto* bp : *itsBPList)
-		{
+	{
 		if (bp->IsEnabled())
-			{
+		{
 			itsLink->SetBreakpointEnabled(bp->GetDebuggerIndex(), false);
-			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -234,11 +234,11 @@ CMBreakpointManager::ReadSetup
 	input >> count;
 
 	if (count > 0)
-		{
+	{
 		jdelete itsSavedBPList;
 		itsSavedBPList = jnew JPtrArray<CMBreakpoint>(JPtrArrayT::kDeleteAll);
 		assert( itsSavedBPList != nullptr );
-		}
+	}
 
 	JString fileName, condition, commands;
 	JIndex lineNumber;
@@ -247,21 +247,21 @@ CMBreakpointManager::ReadSetup
 	CMBreakpoint::Action action;
 	long tempAction;
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		input >> fileName >> lineNumber;
 		input >> JBoolFromString(enabled) >> tempAction >> ignoreCount;
 		input >> JBoolFromString(hasCondition) >> condition;
 
 		if (vers == 1)
-			{
+		{
 			input >> JBoolFromString(hasCommands) >> commands;
-			}
+		}
 
 		action = (CMBreakpoint::Action) tempAction;
 		if (!hasCondition)
-			{
+		{
 			condition.Clear();
-			}
+		}
 
 		auto* bp = jnew CMBreakpoint(0, fileName, lineNumber,
 											JString::empty, JString::empty,
@@ -273,7 +273,7 @@ CMBreakpointManager::ReadSetup
 		// set breakpoint after saving, so name resolution happens first
 
 		itsLink->SetBreakpoint(fileName, lineNumber, action == CMBreakpoint::kRemoveBreakpoint);
-		}
+	}
 }
 
 /******************************************************************************
@@ -293,7 +293,7 @@ CMBreakpointManager::WriteSetup
 
 	JString s;
 	for (JIndex i=1; i<=count; i++)
-		{
+	{
 		CMBreakpoint* bp = itsBPList->GetElement(i);
 		output << ' ' << bp->GetFileName();
 		output << ' ' << bp->GetLineNumber();
@@ -302,7 +302,7 @@ CMBreakpointManager::WriteSetup
 		output << ' ' << bp->GetIgnoreCount();
 		output << ' ' << JBoolToString(bp->GetCondition(&s));
 		output << ' ' << s;
-		}
+	}
 }
 
 /******************************************************************************
@@ -320,46 +320,46 @@ CMBreakpointManager::Receive
 	)
 {
 	if (sender == itsLink && message.Is(CMLink::kDebuggerRestarted))
-		{
+	{
 		itsRestoreBreakpointsFlag = true;
-		}
+	}
 	else if (sender == itsLink && message.Is(CMLink::kSymbolsLoaded))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const CMLink::SymbolsLoaded*>(&message);
 		assert( info != nullptr );
 		const JSize count = itsBPList->GetElementCount();
 		if (info->Successful() && itsRestoreBreakpointsFlag && count > 0)
-			{
+		{
 			jdelete itsSavedBPList;
 			itsSavedBPList = jnew JPtrArray<CMBreakpoint>(JPtrArrayT::kDeleteAll);
 			assert( itsSavedBPList != nullptr );
 			itsSavedBPList->CopyObjects(*itsBPList, JPtrArrayT::kDeleteAll, false);
 
 			for (JIndex i=1; i<=count; i++)
-				{
+			{
 				itsLink->SetBreakpoint(*(itsBPList->GetElement(i)));
-				}
 			}
-		itsRestoreBreakpointsFlag = false;
 		}
+		itsRestoreBreakpointsFlag = false;
+	}
 
 	else if (sender == itsLink && message.Is(CMLink::kBreakpointsChanged))
-		{
+	{
 		itsCmd->Send();
-		}
+	}
 	else if (sender == itsLink && message.Is(CMLink::kProgramStopped))
-		{
+	{
 		if (itsUpdateWhenStopFlag)
-			{
+		{
 			itsCmd->Send();
-			}
 		}
+	}
 
 	else
-		{
+	{
 		JBroadcaster::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -380,37 +380,37 @@ CMBreakpointManager::UpdateBreakpoints
 
 	if (itsSavedBPList != nullptr &&
 		itsSavedBPList->GetElementCount() == itsBPList->GetElementCount())
-		{
+	{
 		const JSize count = itsSavedBPList->GetElementCount();
 		JString condition;
 		for (JIndex i=1; i<=count; i++)
-			{
+		{
 			CMBreakpoint* bp = itsSavedBPList->GetElement(i);
 			const JIndex j   = (itsBPList->GetElement(i))->GetDebuggerIndex();
 
 			if (!bp->IsEnabled())
-				{
+			{
 				itsLink->SetBreakpointEnabled(j, false);
-				}
+			}
 			else if (bp->GetAction() == CMBreakpoint::kDisableBreakpoint)
-				{
+			{
 				itsLink->SetBreakpointEnabled(j, true, true);
-				}
+			}
 
 			if (bp->GetCondition(&condition))
-				{
+			{
 				itsLink->SetBreakpointCondition(j, condition);
-				}
+			}
 
 			if (bp->GetIgnoreCount() > 0)
-				{
+			{
 				itsLink->SetBreakpointIgnoreCount(j, bp->GetIgnoreCount());
-				}
 			}
+		}
 
 		jdelete itsSavedBPList;
 		itsSavedBPList = nullptr;
-		}
+	}
 }
 
 /******************************************************************************
@@ -425,11 +425,11 @@ CMBreakpointManager::BreakpointFileNameResolved
 	)
 {
 	if (itsBPList->Includes(bp))
-		{
+	{
 		itsBPList->Remove(bp);
 		itsBPList->InsertSorted(bp);
 		Broadcast(BreakpointsChanged());
-		}
+	}
 }
 
 /******************************************************************************
@@ -444,9 +444,9 @@ CMBreakpointManager::BreakpointFileNameInvalid
 	)
 {
 	if (itsSavedBPList != nullptr)
-		{
+	{
 		itsSavedBPList->Remove(bp);
-		}
+	}
 }
 
 /******************************************************************************
@@ -463,8 +463,8 @@ CMBreakpointManager::CompareBreakpointLocations
 {
 	JListT::CompareResult r = JFileID::Compare(bp1->GetFileID(), bp2->GetFileID());
 	if (r == JListT::kFirstEqualSecond)
-		{
+	{
 		r = JCompareIndices(bp1->GetLineNumber(), bp2->GetLineNumber());
-		}
+	}
 	return r;
 }

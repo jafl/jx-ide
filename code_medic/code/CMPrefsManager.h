@@ -12,10 +12,10 @@
 #ifndef _H_CMPrefsManager
 #define _H_CMPrefsManager
 
-#include <JXPrefsManager.h>
+#include <jx-af/jx/JXPrefsManager.h>
 #include "CBTextFileType.h"
-#include <JPtrArray-JString.h>
-#include <jColor.h>
+#include <jx-af/jcore/JPtrArray-JString.h>
+#include <jx-af/jcore/jColor.h>
 
 class JXWindow;
 class JXStringHistoryMenu;

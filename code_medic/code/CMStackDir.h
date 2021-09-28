@@ -8,7 +8,7 @@
 #ifndef _H_CMStackDir
 #define _H_CMStackDir
 
-#include <JXWindowDirector.h>
+#include <jx-af/jx/JXWindowDirector.h>
 
 class JXTextMenu;
 class CMCommandDirector;

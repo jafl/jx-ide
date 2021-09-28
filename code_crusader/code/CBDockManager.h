@@ -8,7 +8,7 @@
 #ifndef _H_CBDockManager
 #define _H_CBDockManager
 
-#include <JXDockManager.h>
+#include <jx-af/jx/JXDockManager.h>
 
 class CBDockManager : public JXDockManager
 {

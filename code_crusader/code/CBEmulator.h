@@ -8,7 +8,7 @@
 #ifndef _H_CBEmulator
 #define _H_CBEmulator
 
-#include <jTypes.h>
+#include <jx-af/jcore/jTypes.h>
 
 class JTEKeyHandler;
 class CBTextEditor;

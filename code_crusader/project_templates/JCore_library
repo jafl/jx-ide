@@ -1,6 +1,6 @@
-jx_browser_project_template 1 52  0 "root" 3  1 "Code" 1  2 "mylib.cc" 0  "./code/mylib.cc"    1 "strings" 1  2 "mylib" 0  "./strings/mylib"    1 "config" 1  2 "mylib_config" 0  "../../include/make/mylib_config"    T "./code/mylib.cc" "#include <JString.h>
+jx_browser_project_template 1 52  0 "root" 3  1 "Code" 1  2 "mylib.cc" 0  "./code/mylib.cc"    1 "strings" 1  2 "mylib" 0  "./strings/mylib"    1 "config" 1  2 "mylib_config" 0  "../../include/make/mylib_config"    T "./code/mylib.cc" "#include <jx-af/jcore/JString.h>
 #include <iostream.h>
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 JString 
 MyGetString()

@@ -6,7 +6,7 @@ This scanner reads a C# file and returns CB::Text::CSharp::Scanner::Tokens.
 */
 
 #include "CBStylingScannerBase.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 }
 
 %option namespace="CB::Text::CSharp" lexer="Scanner"

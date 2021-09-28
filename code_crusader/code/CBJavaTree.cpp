@@ -15,10 +15,10 @@
 #include "CBJavaTreeScanner.h"
 #include "CBProjectDocument.h"
 #include "cbGlobals.h"
-#include <jStreamUtil.h>
-#include <jDirUtil.h>
+#include <jx-af/jcore/jStreamUtil.h>
+#include <jx-af/jcore/jDirUtil.h>
 #include <fstream>
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -56,9 +56,9 @@ CBJavaTree::CBJavaTree
 	itsClassNameLexer(nullptr)
 {
 	if (projVers < 88 && !IsEmpty())	// new parser
-		{
+	{
 		NextUpdateMustReparseAll();
-		}
+	}
 }
 
 #endif
@@ -149,10 +149,10 @@ CBJavaTree::ParseFile
 	)
 {
 	if (itsClassNameLexer == nullptr)
-		{
+	{
 		itsClassNameLexer = jnew CB::Tree::Java::Scanner;
 		assert( itsClassNameLexer != nullptr );
-		}
+	}
 
 	// extract info about classes
 

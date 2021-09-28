@@ -8,15 +8,15 @@
  ******************************************************************************/
 
 #include "CBExtEditorDialog.h"
-#include <JXWindow.h>
-#include <JXTextButton.h>
-#include <JXStaticText.h>
-#include <JXTextCheckbox.h>
-#include <JXInputField.h>
-#include <JXChooseSaveFile.h>
-#include <JFontManager.h>
-#include <jGlobals.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXTextButton.h>
+#include <jx-af/jx/JXStaticText.h>
+#include <jx-af/jx/JXTextCheckbox.h>
+#include <jx-af/jx/JXInputField.h>
+#include <jx-af/jx/JXChooseSaveFile.h>
+#include <jx-af/jcore/JFontManager.h>
+#include <jx-af/jcore/jGlobals.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -198,13 +198,13 @@ CBExtEditorDialog::Receive
 {
 	if ((sender == itsExtTextEditorCB || sender == itsExtBinaryEditorCB) &&
 		message.Is(JXCheckbox::kPushed))
-		{
+	{
 		UpdateDisplay();
-		}
+	}
 	else
-		{
+	{
 		JXDialogDirector::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -216,30 +216,30 @@ void
 CBExtEditorDialog::UpdateDisplay()
 {
 	if (itsExtTextEditorCB->IsChecked())
-		{
+	{
 		itsEditTextFileCmdInput->Activate();
 		itsEditTextFileCmdInput->SetIsRequired(true);
 
 		itsEditTextFileLineCmdInput->Activate();
 		itsEditTextFileLineCmdInput->SetIsRequired(true);
-		}
+	}
 	else
-		{
+	{
 		itsEditTextFileCmdInput->Deactivate();
 		itsEditTextFileCmdInput->SetIsRequired(false);
 
 		itsEditTextFileLineCmdInput->Deactivate();
 		itsEditTextFileLineCmdInput->SetIsRequired(false);
-		}
+	}
 
 	if (itsExtBinaryEditorCB->IsChecked())
-		{
+	{
 		itsEditBinaryFileCmdInput->Activate();
 		itsEditBinaryFileCmdInput->SetIsRequired(true);
-		}
+	}
 	else
-		{
+	{
 		itsEditBinaryFileCmdInput->Deactivate();
 		itsEditBinaryFileCmdInput->SetIsRequired(false);
-		}
+	}
 }

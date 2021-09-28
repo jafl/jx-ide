@@ -11,7 +11,7 @@
 #include "CMBreakpointManager.h"
 #include "CMGetFullPath.h"
 #include "cmGlobals.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -105,22 +105,22 @@ CMBreakpoint::CMBreakpointX()
 {
 	const JString& fileName = GetFileName();
 	if (!fileName.IsEmpty())	// search target may have empty file name
-		{
+	{
 		bool exists;
 		JString fullName;
 		if (CMGetLink()->FindFile(fileName, &exists, &fullName))
-			{
+		{
 			if (exists)
-				{
-				itsLocation.SetFileName(fullName);
-				}
-			}
-		else
 			{
-			CMGetFullPath* cmd = CMGetLink()->CreateGetFullPath(fileName);
-			ListenTo(cmd);
+				itsLocation.SetFileName(fullName);
 			}
 		}
+		else
+		{
+			CMGetFullPath* cmd = CMGetLink()->CreateGetFullPath(fileName);
+			ListenTo(cmd);
+		}
+	}
 }
 
 /******************************************************************************
@@ -193,26 +193,26 @@ CMBreakpoint::Receive
 	)
 {
 	if (message.Is(CMGetFullPath::kFileFound))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const CMGetFullPath::FileFound*>(&message);
 		assert( info != nullptr );
 		itsLocation.SetFileName(info->GetFullName());
 		(CMGetLink()->GetBreakpointManager())->BreakpointFileNameResolved(this);
-		}
+	}
 	else if (message.Is(CMGetFullPath::kFileNotFound))
-		{
+	{
 		(CMGetLink()->GetBreakpointManager())->BreakpointFileNameInvalid(this);
-		}
+	}
 	else if (message.Is(CMGetFullPath::kNewCommand))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const CMGetFullPath::NewCommand*>(&message);
 		assert( info != nullptr );
 		ListenTo(info->GetNewCommand());
-		}
+	}
 	else
-		{
+	{
 		JBroadcaster::Receive(sender, message);
-		}
+	}
 }

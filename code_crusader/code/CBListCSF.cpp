@@ -9,7 +9,7 @@
 
 #include "CBListCSF.h"
 #include "CBListChooseFileDialog.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -78,16 +78,16 @@ CBListCSF::Receive
 	)
 {
 	if (sender == itsChooseDialog && message.Is(JXDialogDirector::kDeactivated))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const JXDialogDirector::Deactivated*>(&message);
 		assert( info != nullptr );
 		if (info->Successful())
-			{
+		{
 			itsReplaceExistingFlag = itsChooseDialog->ReplaceExisting();
-			}
-		itsChooseDialog = nullptr;
 		}
+		itsChooseDialog = nullptr;
+	}
 
 	JXChooseSaveFile::Receive(sender, message);
 }

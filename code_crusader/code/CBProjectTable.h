@@ -8,7 +8,7 @@
 #ifndef _H_CBProjectTable
 #define _H_CBProjectTable
 
-#include <JXNamedTreeListWidget.h>
+#include <jx-af/jx/JXNamedTreeListWidget.h>
 #include "CBRelPathCSF.h"		// need definition of PathType
 
 class JXImage;

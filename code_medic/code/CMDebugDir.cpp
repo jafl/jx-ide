@@ -10,13 +10,13 @@
 #include "CMDebugDir.h"
 #include "CMTextDisplayBase.h"
 #include "cmGlobals.h"
-#include <JXWindow.h>
-#include <JXTextButton.h>
-#include <JXStaticText.h>
-#include <JXScrollbarSet.h>
-#include <JXColorManager.h>
-#include <jXGlobals.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXTextButton.h>
+#include <jx-af/jx/JXStaticText.h>
+#include <jx-af/jx/JXScrollbarSet.h>
+#include <jx-af/jx/JXColorManager.h>
+#include <jx-af/jx/jXGlobals.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -116,31 +116,31 @@ CMDebugDir::Receive
 	)
 {
 	if (sender == itsLink)
-		{
+	{
 		itsText->SetCaretLocation(itsText->GetText()->GetText().GetCharacterCount() + 1);
 
 		if (message.Is(CMLink::kDebugOutput))
-			{
+		{
 			const auto* msg =
 				dynamic_cast<const CMLink::DebugOutput*>(&message);
 			assert( msg != nullptr );
 
 			const CMLink::DebugType type = msg->GetType();
 			if (type == CMLink::kCommandType)
-				{
+			{
 				itsText->SetCurrentFontColor(JColorManager::GetLightBlueColor());
 				itsText->Paste(itsLink->GetPrompt() + " ");
 				itsFile << itsLink->GetPrompt() << " ";
-				}
+			}
 			else if (type == CMLink::kOutputType)
-				{
+			{
 				itsText->SetCurrentFontColor(JColorManager::GetBlueColor());
-				}
+			}
 			else if (type == CMLink::kLogType)
-				{
+			{
 				itsText->Paste(kLogPrefix);
 				itsFile << kLogPrefix.GetBytes();
-				}
+			}
 
 			itsText->Paste(msg->GetText());
 			itsText->SetCurrentFontColor(JColorManager::GetBlackColor());
@@ -148,9 +148,9 @@ CMDebugDir::Receive
 
 			itsFile << msg->GetText();
 			itsFile << std::endl;
-			}
+		}
 		else if (!message.Is(CMLink::kUserOutput))
-			{
+		{
 			itsText->Paste(kLogPrefix);
 			itsText->Paste(JString(message.GetType(), JString::kNoCopy));
 			itsText->Paste(JString::newline);
@@ -158,19 +158,19 @@ CMDebugDir::Receive
 			itsFile << kLogPrefix;
 			itsFile << message.GetType();
 			itsFile << std::endl;
-			}
 		}
+	}
 
 	else if (sender == itsCopyButton && message.Is(JXButton::kPushed))
-		{
+	{
 		itsText->SelectAll();
 		itsText->Copy();
-		}
+	}
 
 	else
-		{
+	{
 		JXWindowDirector::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -185,14 +185,14 @@ CMDebugDir::ReceiveGoingAway
 	)
 {
 	if (sender == itsLink && !CMIsShuttingDown())
-		{
+	{
 		itsLink = CMGetLink();
 		ListenTo(itsLink);
 
 		itsText->GetText()->SetText(JString::empty);
-		}
+	}
 	else
-		{
+	{
 		JXWindowDirector::ReceiveGoingAway(sender);
-		}
+	}
 }

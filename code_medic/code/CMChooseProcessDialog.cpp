@@ -12,17 +12,17 @@
 #include "GDBLink.h"
 #include "cmGlobals.h"
 
-#include <JXWindow.h>
-#include <JXTextButton.h>
-#include <JXIntegerInput.h>
-#include <JXStaticText.h>
-#include <JXScrollbarSet.h>
-#include <JXFontManager.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXTextButton.h>
+#include <jx-af/jx/JXIntegerInput.h>
+#include <jx-af/jx/JXStaticText.h>
+#include <jx-af/jx/JXScrollbarSet.h>
+#include <jx-af/jx/JXFontManager.h>
 
-#include <JXColorManager.h>
-#include <jProcessUtil.h>
-#include <jStreamUtil.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXColorManager.h>
+#include <jx-af/jcore/jProcessUtil.h>
+#include <jx-af/jcore/jStreamUtil.h>
+#include <jx-af/jcore/jAssert.h>
 
 #ifdef _J_CYGWIN
 static const JString kCmdStr("ps s", JString::kNoCopy);
@@ -37,7 +37,7 @@ static const JString kCmdStr("ps xco pid,stat,command", JString::kNoCopy);
 
 CMChooseProcessDialog::CMChooseProcessDialog
 	(
-	JXDirector*		supervisor,
+	JXDirector*	supervisor,
 	const bool	attachToSelection,
 	const bool	stopProgram
 	)
@@ -53,12 +53,12 @@ CMChooseProcessDialog::CMChooseProcessDialog
 								kJIgnoreConnection, nullptr,
 								kJCreatePipe, &inFD);
 	if (err.OK())
-		{
+	{
 		JString text;
 		JReadAll(inFD, &text);
 		text.TrimWhitespace();
 		itsText->GetText()->SetText(text);
-		}
+	}
 
 	ListenTo(this);
 }
@@ -158,30 +158,30 @@ CMChooseProcessDialog::Receive
 	)
 {
 	if (sender == this && message.Is(JXDialogDirector::kDeactivated))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const JXDialogDirector::Deactivated*>(&message);
 		assert( info != nullptr );
 		if (info->Successful())
-			{
+		{
 			JInteger pid;
 			const bool ok = itsProcessIDInput->GetValue(&pid);
 			assert(ok);
 			if (itsAttachToSelectionFlag)
-				{
+			{
 				CMGetLink()->AttachToProcess(pid);
-				}
+			}
 			else
-				{
+			{
 				dynamic_cast<GDBLink*>(CMGetLink())->ProgramStarted(pid);
-				}
+			}
 
 			if (itsStopProgramFlag)
-				{
+			{
 				CMGetLink()->StopProgram();
-				}
 			}
 		}
+	}
 
 	JXDialogDirector::Receive(sender, message);
 }

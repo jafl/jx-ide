@@ -12,9 +12,9 @@
 #include "CBProjectDocument.h"
 #include "CBBuildManager.h"
 #include "cbGlobals.h"
-#include <JTree.h>
-#include <jDirUtil.h>
-#include <jAssert.h>
+#include <jx-af/jcore/JTree.h>
+#include <jx-af/jcore/jDirUtil.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -43,14 +43,14 @@ CBLibraryNode::CBLibraryNode
 {
 	CBLibraryNodeX();
 	if (vers >= 39)
-		{
+	{
 		input >> JBoolFromString(itsIncludeInDepListFlag);
-		}
+	}
 	input >> itsProjFileName;
 	if (vers >= 38)
-		{
+	{
 		input >> JBoolFromString(itsShouldBuildFlag);
-		}
+	}
 }
 
 // private
@@ -101,9 +101,9 @@ CBLibraryNode::OpenFile()
 {
 	auto* me = const_cast<CBLibraryNode*>(this);
 	if (!me->OpenProject())
-		{
+	{
 		me->EditSubprojectConfig();
-		}
+	}
 }
 
 /******************************************************************************
@@ -152,7 +152,7 @@ CBLibraryNode::BuildMakeFiles
 	if (itsShouldBuildFlag && projExists &&
 		(GetProjectDoc()->GetBuildManager())->GetMakefileMethod() ==
 			CBBuildManager::kMakemake)
-		{
+	{
 		libFileList->Append(GetFileName());
 
 		JString path, name;
@@ -161,10 +161,10 @@ CBLibraryNode::BuildMakeFiles
 
 		CBProjectDocument* doc;
 		if (CBGetDocumentManager()->ProjectDocumentIsOpen(projFullName, &doc))
-			{
+		{
 			(doc->GetBuildManager())->UpdateMakeFiles();
-			}
 		}
+	}
 
 	// don't complain about non-existent library if we have project to build it
 
@@ -214,10 +214,10 @@ CBLibraryNode::UpdateSubprojectConfig()
 
 	JTree* tree;
 	if (changed && GetTree(&tree))
-		{
+	{
 		itsIncludeInDepListFlag = true;		// force rebuild
 		tree->BroadcastChange(this);
-		}
+	}
 	itsIncludeInDepListFlag = include;
 	itsShouldBuildFlag      = build;
 }
@@ -235,15 +235,15 @@ CBLibraryNode::OpenProject
 {
 	JString fullName;
 	if (GetFullName(itsProjFileName, &fullName))
-		{
+	{
 		CBProjectDocument* doc;
 		CBProjectDocument::Create(fullName, silent, &doc);
 		return doc != nullptr;
-		}
+	}
 	else
-		{
+	{
 		return false;
-		}
+	}
 }
 
 /******************************************************************************
@@ -260,19 +260,19 @@ CBLibraryNode::Receive
 {
 	if (sender == itsSubprojDialog &&
 		message.Is(JXDialogDirector::kDeactivated))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const JXDialogDirector::Deactivated*>(&message);
 		assert( info != nullptr );
 		if (info->Successful())
-			{
+		{
 			UpdateSubprojectConfig();
-			}
-		itsSubprojDialog = nullptr;
 		}
+		itsSubprojDialog = nullptr;
+	}
 
 	else
-		{
+	{
 		CBFileNodeBase::Receive(sender, message);
-		}
+	}
 }

@@ -15,17 +15,17 @@
 #include "cbGlobals.h"
 #include "cbStringData.h"
 #include "cbmUtil.h"
-#include <JXHelpManager.h>
-#include <JXMenuBar.h>
-#include <JXTextMenu.h>
-#include <JXToolBar.h>
-#include <JXTipOfTheDayDialog.h>
-#include <JXAskInitDockAll.h>
-#include <jXActionDefs.h>
-#include <JLatentPG.h>
-#include <jFileUtil.h>
-#include <jStreamUtil.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXHelpManager.h>
+#include <jx-af/jx/JXMenuBar.h>
+#include <jx-af/jx/JXTextMenu.h>
+#include <jx-af/jx/JXToolBar.h>
+#include <jx-af/jx/JXTipOfTheDayDialog.h>
+#include <jx-af/jx/JXAskInitDockAll.h>
+#include <jx-af/jx/jXActionDefs.h>
+#include <jx-af/jcore/JLatentPG.h>
+#include <jx-af/jcore/jFileUtil.h>
+#include <jx-af/jcore/jStreamUtil.h>
+#include <jx-af/jcore/jAssert.h>
 
 static const JUtf8Byte* kDefaultSysIncludeDir[] =
 {
@@ -97,21 +97,21 @@ CBApp::CBApp
 	JPrefObject::ReadPrefs();
 
 	if (!*displayAbout)
-		{
+	{
 		*prevVersStr = CBGetPrefsManager()->GetJCCVersionStr();
 		if (*prevVersStr == CBGetVersionNumberStr())
-			{
-			prevVersStr->Clear();
-			}
-		else
-			{
-			*displayAbout = true;
-			}
-		}
-	else
 		{
-		prevVersStr->Clear();
+			prevVersStr->Clear();
 		}
+		else
+		{
+			*displayAbout = true;
+		}
+	}
+	else
+	{
+		prevVersStr->Clear();
+	}
 
 	GetSystemIncludeDirectories();
 
@@ -145,26 +145,26 @@ CBApp::Close()
 	// --man with no args must leave window open
 
 	if ((CBGetViewManPageDialog())->IsActive())
-		{
+	{
 		return false;
-		}
+	}
 
 	CBGetPrefsManager()->SaveProgramState();
 
 	// close these first so they remember all open text documents
 
 	if (!CBGetDocumentManager()->CloseProjectDocuments())
-		{
+	{
 		return false;
-		}
+	}
 
 	// close everything else
 
 	const bool success = JXApplication::Close();	// deletes us if successful
 	if (!success)
-		{
+	{
 		CBGetPrefsManager()->ForgetProgramState();
-		}
+	}
 
 	return success;
 }
@@ -179,9 +179,9 @@ CBApp::Quit()
 {
 	if (!itsWarnBeforeQuitFlag ||
 		JGetUserNotification()->AskUserNo(JGetString("AskQuit::CBApp")))
-		{
+	{
 		JXApplication::Quit();
-		}
+	}
 }
 
 /******************************************************************************
@@ -203,11 +203,11 @@ CBApp::DisplayAbout
 	dlog->BeginDialog();
 
 	if (init && prevVersStr.IsEmpty())
-		{
+	{
 		auto* task = jnew JXAskInitDockAll(dlog);
 		assert( task != nullptr );
 		task->Start();
-		}
+	}
 }
 
 /******************************************************************************
@@ -292,42 +292,42 @@ CBApp::HandleHelpMenu
 	)
 {
 	if (index == kHelpAboutCmd)
-		{
+	{
 		DisplayAbout();
-		}
+	}
 
 	else if (index == kHelpTOCCmd)
-		{
+	{
 		(JXGetHelpManager())->ShowTOC();
-		}
+	}
 	else if (index == kHelpOverviewCmd)
-		{
+	{
 		(JXGetHelpManager())->ShowSection("CBOverviewHelp");
-		}
+	}
 	else if (index == kHelpTutorialCmd)
-		{
+	{
 		(JXGetHelpManager())->ShowSection("CBProjectTutorialHelp");
-		}
+	}
 	else if (index == kHelpWindowCmd)
-		{
+	{
 		(JXGetHelpManager())->ShowSection(windowSectionName);
-		}
+	}
 
 	else if (index == kTipCmd)
-		{
+	{
 		auto* dlog = jnew JXTipOfTheDayDialog;
 		assert( dlog != nullptr );
 		dlog->BeginDialog();
-		}
+	}
 
 	else if (index == kHelpChangeLogCmd)
-		{
+	{
 		(JXGetHelpManager())->ShowChangeLog();
-		}
+	}
 	else if (index == kHelpCreditsCmd)
-		{
+	{
 		(JXGetHelpManager())->ShowCredits();
-		}
+	}
 }
 
 /******************************************************************************
@@ -350,12 +350,12 @@ CBApp::FindFile
 
 	const bool relative = JIsRelativePath(fileName);
 	if (!relative && JFileExists(fileName))
-		{
+	{
 		*fullName = fileName;
 		return true;
-		}
+	}
 	else if (relative)
-		{
+	{
 		CBDirInfoList searchPaths;
 		CollectSearchPaths(&searchPaths);
 		const JSize dirCount = searchPaths.GetElementCount(),
@@ -366,88 +366,88 @@ CBApp::FindFile
 		JLatentPG pg;
 
 		const JUtf8Byte* map[] =
-		{
+	{
 			"name", fileName.GetBytes()
-		};
+	};
 		const JString msg = JGetString("FileSearch::CBApp", map, sizeof(map));
 		pg.FixedLengthProcessBeginning(dirCount+sysCount, msg, true, false);
 
 		JString path, newName;
 		for (JIndex i=1; i<=dirCount; i++)
-			{
+		{
 			const CBDirInfo info = searchPaths.GetElement(i);
 			if (!info.recurse)
-				{
+			{
 				*fullName = JCombinePathAndName(*(info.path), fileName);
 				if (JFileExists(*fullName))
-					{
+				{
 					found = true;
 					break;
-					}
 				}
+			}
 			else if (JSearchSubdirs(*(info.path), fileName, true, caseSensitive,
 									&path, &newName, nullptr, &cancelled))
-				{
+			{
 				*fullName = JCombinePathAndName(path, newName);
 				found     = true;
 				break;
-				}
+			}
 			else if (cancelled)
-				{
+			{
 				break;
-				}
-
-			if (!pg.IncrementProgress())
-				{
-				cancelled = true;
-				break;
-				}
 			}
 
-		if (!found && !cancelled)
+			if (!pg.IncrementProgress())
 			{
+				cancelled = true;
+				break;
+			}
+		}
+
+		if (!found && !cancelled)
+		{
 			// We have to search system paths last because these are always
 			// last on the compiler search path.
 
 			for (JIndex i=1; i<=sysCount; i++)
-				{
+			{
 				if (JSearchSubdirs(*itsSystemIncludeDirs->GetElement(i), fileName, true, caseSensitive,
 								   &path, &newName, nullptr, &cancelled))
-					{
+				{
 					*fullName = JCombinePathAndName(path, newName);
 					found     = true;
 					break;
-					}
+				}
 				else if (cancelled)
-					{
+				{
 					break;
-					}
+				}
 
 				if (!pg.IncrementProgress())
-					{
+				{
 					cancelled = true;
 					break;
-					}
 				}
 			}
+		}
 
 		pg.ProcessFinished();
 		searchPaths.DeleteAll();
 		if (found)
-			{
+		{
 			return true;
-			}
 		}
+	}
 
 	if (!cancelled)
-		{
+	{
 		const JUtf8Byte* map[] =
-			{
+		{
 			"name", fileName.GetBytes()
-			};
+		};
 		const JString msg = JGetString("FileNotFound::CBApp", map, sizeof(map));
 		JGetUserNotification()->ReportError(msg);
-		}
+	}
 
 	fullName->Clear();
 	return false;
@@ -462,14 +462,14 @@ void
 CBApp::GetSystemIncludeDirectories()
 {
 	for (const auto* s : kExtraSysIncludeDir)
-		{
+	{
 		if (JDirectoryExists(JString(s, JString::kNoCopy)))
-			{
+		{
 			auto* p = jnew JString(s);
 			assert( p != nullptr );
 			itsSystemIncludeDirs->Append(p);
-			}
 		}
+	}
 
 	int pid, fd, inFD;
 	const JError err = JExecute(JString("gcc -Wp,-v -x c++ -fsyntax-only -", JString::kNoCopy), &pid,
@@ -477,39 +477,39 @@ CBApp::GetSystemIncludeDirectories()
 								kJCreatePipe, &fd,
 								kJAttachToFromFD);
 	if (!err.OK())
-		{
+	{
 		for (const auto* s : kDefaultSysIncludeDir)
-			{
+		{
 			if (JDirectoryExists(JString(s, JString::kNoCopy)))
-				{
+			{
 				auto* p = jnew JString(s);
 				assert( p != nullptr );
 				itsSystemIncludeDirs->Append(p);
-				}
 			}
-		return;
 		}
+		return;
+	}
 
 	close(inFD);	// must pass open fd to process and then explicitly close, to avoid a long wait
 
 	JString s;
 	while (true)
-		{
+	{
 		s = JReadUntil(fd, '\n');
 		if (s.IsEmpty())
-			{
+		{
 			break;
-			}
+		}
 
 		if (s.GetFirstCharacter() == ' ')
-			{
+		{
 			s.TrimWhitespace();
 			if (!s.Contains(" "))
-				{
+			{
 				itsSystemIncludeDirs->Append(s);
-				}
 			}
 		}
+	}
 }
 
 /******************************************************************************
@@ -537,14 +537,14 @@ CBApp::CollectSearchPaths
 	JString truePath;
 	bool recurse;
 	for (JIndex j=1; j<=docCount; j++)
-		{
+	{
 		CBProjectDocument* doc   = docList->GetElement(j);
 		const CBDirList& dirList = doc->GetDirectories();
 		const JSize count        = dirList.GetElementCount();
 		for (JIndex i=1; i<=count; i++)
-			{
+		{
 			if (dirList.GetTruePath(i, &truePath, &recurse))
-				{
+			{
 				CBDirInfo newInfo(jnew JString(truePath), recurse);
 				assert( newInfo.path != nullptr );
 				newInfo.projIndex = j;
@@ -553,24 +553,24 @@ CBApp::CollectSearchPaths
 				const JIndex index =
 					searchPaths->SearchSorted1(newInfo, JListT::kAnyMatch, &found);
 				if (found)
-					{
+				{
 					// compute OR of recurse flags
 
 					CBDirInfo existingInfo = searchPaths->GetElement(index);
 					if (newInfo.recurse && !existingInfo.recurse)
-						{
+					{
 						existingInfo.recurse = true;
 						searchPaths->SetElement(index, existingInfo);
-						}
+					}
 					jdelete newInfo.path;
-					}
+				}
 				else
-					{
+				{
 					searchPaths->InsertElementAtIndex(index, newInfo);
-					}
 				}
 			}
 		}
+	}
 
 	searchPaths->SetCompareFunction(CBDirInfo::CompareProjIndex);
 	searchPaths->Sort();
@@ -595,14 +595,14 @@ CBApp::FindAndViewFile
 {
 	JString fullName;
 	if (FindFile(fileName, caseSensitive, &fullName))
-		{
+	{
 		CBGetDocumentManager()->OpenSomething(fullName, lineRange);
 		return true;
-		}
+	}
 	else
-		{
+	{
 		return false;
-		}
+	}
 }
 
 /******************************************************************************
@@ -619,9 +619,9 @@ CBApp::ReadPrefs
 	JFileVersion vers;
 	input >> vers;
 	if (vers > kCurrentSetupVersion)
-		{
+	{
 		return;
-		}
+	}
 
 	input >> JBoolFromString(itsWarnBeforeQuitFlag);
 }
@@ -659,11 +659,11 @@ CBApp::CleanUpBeforeSuddenDeath
 	JXApplication::CleanUpBeforeSuddenDeath(reason);
 
 	if (reason != JXDocumentManager::kAssertFired)
-		{
+	{
 		JPrefObject::WritePrefs();
 		CBGetPrefsManager()->SaveProgramState();
 //		CBGetDocumentManager()->Save
-		}
+	}
 
 	CBCleanUpBeforeSuddenDeath(reason);		// must be last call
 }

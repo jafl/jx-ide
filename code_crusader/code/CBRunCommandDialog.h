@@ -8,8 +8,8 @@
 #ifndef _H_CBRunCommandDialog
 #define _H_CBRunCommandDialog
 
-#include <JXDialogDirector.h>
-#include <JPrefObject.h>
+#include <jx-af/jx/JXDialogDirector.h>
+#include <jx-af/jcore/JPrefObject.h>
 
 class JXInputField;
 class JXTextButton;

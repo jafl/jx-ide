@@ -18,11 +18,11 @@
  ******************************************************************************/
 
 #include "CBTECaretInputBase.h"
-#include <JXWindow.h>
-#include <JXStaticText.h>
-#include <JXMenu.h>
-#include <jASCIIConstants.h>
-#include <jAssert.h>
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXStaticText.h>
+#include <jx-af/jx/JXMenu.h>
+#include <jx-af/jcore/jASCIIConstants.h>
+#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -117,18 +117,18 @@ CBTECaretInputBase::HandleUnfocusEvent()
 	JXIntegerInput::HandleUnfocusEvent();
 
 	if (itsShouldActFlag)
-		{
+	{
 		JInteger value;
 		if (JXIntegerInput::GetValue(&value) && value != itsOrigValue)
-			{
-			Act(itsTE, value);
-			}
-		SetValue(GetValue(itsTE));
-		}
-	else
 		{
-		SetValue(itsOrigValue);
+			Act(itsTE, value);
 		}
+		SetValue(GetValue(itsTE));
+	}
+	else
+	{
+		SetValue(itsOrigValue);
+	}
 
 	itsLabel->SetBackColor(GetCurrBackColor());
 }
@@ -142,13 +142,13 @@ bool
 CBTECaretInputBase::OKToUnfocus()
 {
 	if (!itsShouldActFlag)
-		{
+	{
 		return true;
-		}
+	}
 	else
-		{
+	{
 		return JXIntegerInput::OKToUnfocus();
-		}
+	}
 }
 
 /******************************************************************************
@@ -164,25 +164,25 @@ CBTECaretInputBase::Receive
 	)
 {
 	if (sender == itsTE && message.Is(JTextEditor::kCaretLocationChanged))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const JTextEditor::CaretLocationChanged*>(&message);
 		assert( info != nullptr );
 		if (itsOptimizeUpdateFlag)
-			{
+		{
 			GetWindow()->Update();	// avoid redrawing everything in between
-			}
+		}
 		SetValue(GetValue(*info));
 		if (itsOptimizeUpdateFlag)
-			{
+		{
 			GetWindow()->Update();
-			}
 		}
+	}
 
 	else
-		{
+	{
 		JXIntegerInput::Receive(sender, message);
-		}
+	}
 }
 
 /******************************************************************************
@@ -203,28 +203,28 @@ CBTECaretInputBase::HandleKeyPress
 	)
 {
 	if (c == kJEscapeKey)
-		{
+	{
 		itsTE->Focus();
-		}
+	}
 	else if (c == '\t' &&
 			 !modifiers.GetState(kJXMetaKeyIndex)   &&
 			 modifiers.GetState(kJXControlKeyIndex) &&
 			 !modifiers.shift())
-		{
+	{
 		itsTE->Focus();
 		itsTE->HandleKeyPress(c, keySym, modifiers);
-		}
+	}
 	else if ((c == '\r' || c == '\n') &&
 			 !modifiers.meta() && !modifiers.control() && !modifiers.shift())
-		{
+	{
 		itsShouldActFlag = true;
 		itsTE->Focus();				// trigger HandleUnfocusEvent()
 		itsShouldActFlag = false;
-		}
+	}
 	else
-		{
+	{
 		JXIntegerInput::HandleKeyPress(c, keySym, modifiers);
-		}
+	}
 }
 
 /******************************************************************************
@@ -256,9 +256,9 @@ CBTECaretInputBase::Center()
 	const JCoordinate f = GetFrameHeight();
 	const JCoordinate b = GetMinBoundsHeight();
 	if (f > b)
-		{
+	{
 		y = - (f - b)/2;
-		}
+	}
 
 	ScrollTo(0, y);
 }

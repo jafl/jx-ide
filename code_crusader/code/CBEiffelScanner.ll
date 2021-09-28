@@ -6,7 +6,7 @@ This scanner reads an Eiffle file and returns CBEiffelScanner::Tokens.
 */
 
 #include "CBStylingScannerBase.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 %}
 
 %option namespace="CB::Text::Eiffel" lexer="Scanner"

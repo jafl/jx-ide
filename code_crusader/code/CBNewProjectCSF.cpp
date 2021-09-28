@@ -10,7 +10,7 @@
 #include "CBNewProjectCSF.h"
 #include "CBNewProjectSaveFileDialog.h"
 #include "cbGlobals.h"
-#include <jAssert.h>
+#include <jx-af/jcore/jAssert.h>
 
 // setup information
 
@@ -82,17 +82,17 @@ CBNewProjectCSF::Receive
 	)
 {
 	if (sender == itsSaveDialog && message.Is(JXDialogDirector::kDeactivated))
-		{
+	{
 		const auto* info =
 			dynamic_cast<const JXDialogDirector::Deactivated*>(&message);
 		assert( info != nullptr );
 		if (info->Successful())
-			{
+		{
 			itsSaveDialog->GetProjectTemplate(&itsProjectTemplate);
 			itsMakefileMethod = itsSaveDialog->GetMakefileMethod();
-			}
-		itsSaveDialog = nullptr;
 		}
+		itsSaveDialog = nullptr;
+	}
 
 	JXChooseSaveFile::Receive(sender, message);
 }
@@ -113,14 +113,14 @@ CBNewProjectCSF::ReadPrefs
 	JFileVersion vers;
 	input >> vers;
 	if (vers <= kCurrentSetupVersion)
-		{
+	{
 		if (vers >= 1)
-			{
+		{
 			input >> itsProjectTemplate;
-			}
+		}
 
 		input >> itsMakefileMethod;
-		}
+	}
 }
 
 /******************************************************************************
