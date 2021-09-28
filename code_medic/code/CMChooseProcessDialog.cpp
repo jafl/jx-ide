@@ -9,7 +9,7 @@
 
 #include "CMChooseProcessDialog.h"
 #include "CMProcessText.h"
-#include "GDBLink.h"
+#include "gdb/GDBLink.h"
 #include "cmGlobals.h"
 
 #include <jx-af/jx/JXWindow.h>
