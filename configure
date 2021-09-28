@@ -22,6 +22,7 @@ if [[ $SYS == Darwin ]]; then
 
 	brew bundle;
 
+	rm -f code_medic/lldb-include;
 	ln -sf ../misc/lldb-include code_medic;
 
 elif command -v apt-get; then
@@ -37,6 +38,7 @@ elif command -v apt-get; then
 			aspell;
 	fi
 
+	rm -f code_medic/lldb-include;
 	ln -sf /usr/lib/llvm-$LLDB_VERS/include code_medic/lldb-include;
 
 elif command -v dnf; then
@@ -64,6 +66,7 @@ elif command -v zypper; then
 		aspell aspell-en;
 
 	# lldb-devel is missing
+	rm -f code_medic/lldb-include;
 	ln -sf ../misc/lldb-include code_medic;
 
 elif [[ $SYS == Cygwin ]]; then
