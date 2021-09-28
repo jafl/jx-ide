@@ -38,4 +38,3 @@ CBStylerTableMenu.h
 CBTextFileType.cpp
 CBTextFileType.h
 cbFileVersions.h
-jcc_balance_braces.xpm

@@ -94,6 +94,7 @@ update_jcc:
          cp ../code_crusader/code/$$f jcc-shared/$$f; \
        fi; \
      done; \
+     cp ../code_crusader/image/jcc_balance_braces.xpm jcc-shared/; \
      cp ../code_crusader/strings/jcc_medic_shared_strings strings/
 
 #
