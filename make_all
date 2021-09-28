@@ -3,6 +3,6 @@
 for d in code_*; do
 	pushd $d;
 	makemake;
-	make;
+	make $*;
 	popd;
 done

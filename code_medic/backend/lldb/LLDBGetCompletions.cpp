@@ -14,6 +14,7 @@
 #include "CMCommandOutputDisplay.h"
 #include "cmGlobals.h"
 #include "LLDBLink.h"	// must be after X11 includes: Status
+#include <jx-af/jx/JXDisplay.h>
 #include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
