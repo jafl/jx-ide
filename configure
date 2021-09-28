@@ -37,8 +37,6 @@ elif command -v apt-get; then
 			aspell;
 	fi
 
-	configure_linux;
-
 	ln -sf /usr/lib/llvm-$LLDB_VERS/include code_medic/lldb-include;
 
 elif command -v dnf; then
