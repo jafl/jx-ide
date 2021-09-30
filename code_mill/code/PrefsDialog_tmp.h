@@ -1,23 +1,23 @@
 /******************************************************************************
- GFGPrefsDialog.h
+ PrefsDialog.h
 
-	Interface for the GFGPrefsDialog class
+	Interface for the PrefsDialog class
 
 	Copyright (C) 2002 by Glenn W. Bach.
 	
  *****************************************************************************/
 
-#ifndef _H_GFGPrefsDialog
-#define _H_GFGPrefsDialog
+#ifndef _H_PrefsDialog
+#define _H_PrefsDialog
 
 #include <jx-af/jx/JXDialogDirector.h>
 
-class GFGPrefsDialog : public JXDialogDirector
+class PrefsDialog : public JXDialogDirector
 {
 public:
 
-	GFGPrefsDialog()
-	virtual ~GFGPrefsDialog();
+	PrefsDialog()
+	virtual ~PrefsDialog();
 
 
 
@@ -28,8 +28,8 @@ protected:
 
 private:
 
-	GFGPrefsDialog(const GFGPrefsDialog& source);
-	const GFGPrefsDialog& operator=(const GFGPrefsDialog& source);
+	PrefsDialog(const PrefsDialog& source);
+	const PrefsDialog& operator=(const PrefsDialog& source);
 
 
 };

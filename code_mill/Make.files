@@ -5,16 +5,16 @@
 @code_mill
 
 .cpp ./code/main
-.cpp ./code/GFGApp
-.cpp ./code/gfgGlobals
-.cpp ./code/GFGPrefsManager
-.cpp ./code/GFGPrefsDialog
-.cpp ./code/GFGMDIServer
-.cpp ./code/GFGAboutDialog
-.cpp ./code/GFGLink
-.cpp ./code/GFGMainDirector
-.cpp ./code/GFGMemberFunction
-.cpp ./code/GFGClass
-.cpp ./code/GFGFunctionTable
+.cpp ./code/App
+.cpp ./code/globals
+.cpp ./code/PrefsManager
+.cpp ./code/PrefsDialog
+.cpp ./code/MDIServer
+.cpp ./code/AboutDialog
+.cpp ./code/Link
+.cpp ./code/MainDirector
+.cpp ./code/MemberFunction
+.cpp ./code/Class
+.cpp ./code/FunctionTable
 
 literal: ${LIB_DEPS}

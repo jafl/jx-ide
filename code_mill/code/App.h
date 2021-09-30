@@ -1,22 +1,22 @@
 /******************************************************************************
- GFGApp.h
+ App.h
 
 	Copyright (C) 2002 by Glenn W. Bach.
 
  *****************************************************************************/
 
-#ifndef _H_GFGApp
-#define _H_GFGApp
+#ifndef _H_App
+#define _H_App
 
 #include <jx-af/jx/JXApplication.h>
 
-class GFGApp : public JXApplication
+class App : public JXApplication
 {
 public:
 
-	GFGApp(int* argc, char* argv[], bool* displayAbout, JString* prevVersStr);
+	App(int* argc, char* argv[], bool* displayAbout, JString* prevVersStr);
 
-	virtual	~GFGApp();
+	virtual	~App();
 
 	void	DisplayAbout(const JString& prevVersStr = JString::empty);
 

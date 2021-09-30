@@ -1,5 +1,5 @@
 /******************************************************************************
- GFGMDIServer.cpp
+ MDIServer.cpp
 
 	<Description>
 
@@ -9,10 +9,10 @@
 
  *****************************************************************************/
 
-#include "GFGMDIServer.h"
-#include "GFGMainDirector.h"
-#include "GFGApp.h"
-#include "gfgGlobals.h"
+#include "MDIServer.h"
+#include "MainDirector.h"
+#include "App.h"
+#include "globals.h"
 #include <jx-af/jx/JXChooseSaveFile.h>
 #include <jx-af/jcore/jFileUtil.h>
 #include <jx-af/jcore/jAssert.h>
@@ -22,7 +22,7 @@
 
  *****************************************************************************/
 
-GFGMDIServer::GFGMDIServer()
+MDIServer::MDIServer()
 	:
 	JXMDIServer()
 {
@@ -33,7 +33,7 @@ GFGMDIServer::GFGMDIServer()
 
  *****************************************************************************/
 
-GFGMDIServer::~GFGMDIServer()
+MDIServer::~MDIServer()
 {
 }
 
@@ -43,7 +43,7 @@ GFGMDIServer::~GFGMDIServer()
  *****************************************************************************/
 
 void
-GFGMDIServer::HandleMDIRequest
+MDIServer::HandleMDIRequest
 	(
 	const JString&				dir,
 	const JPtrArray<JString>&	argList
@@ -52,7 +52,7 @@ GFGMDIServer::HandleMDIRequest
 	const JSize count = argList.GetElementCount();
 	if (count <= 1)
 	{
-		JGetUserNotification()->ReportError(JGetString("MissingTemplate::GFGMDIServer"));
+		JGetUserNotification()->ReportError(JGetString("MissingTemplate::MDIServer"));
 		return;
 	}
 
@@ -61,15 +61,15 @@ GFGMDIServer::HandleMDIRequest
 		JString arg	= *(argList.GetElement(i));
 		if (arg == "--delete")
 		{
-			GFGGetApplication()->ShouldBeDeletingTemplate(true);
+			GetApplication()->ShouldBeDeletingTemplate(true);
 		}
 	}
 
-	auto* dialog = jnew GFGMainDirector(JXGetApplication(), argList);
+	auto* dialog = jnew MainDirector(JXGetApplication(), argList);
 	assert( dialog != nullptr );
 	dialog->Activate();
 
-	if (GFGGetApplication()->IsDeletingTemplate())
+	if (GetApplication()->IsDeletingTemplate())
 	{
 		for (JIndex i=2; i <= count; i++)
 		{
@@ -88,12 +88,12 @@ GFGMDIServer::HandleMDIRequest
  ******************************************************************************/
 
 void
-GFGMDIServer::PrintCommandLineHelp()
+MDIServer::PrintCommandLineHelp()
 {
 	const JUtf8Byte* map[] =
 	{
-		"vers", GFGGetVersionNumberStr().GetBytes()
+		"vers", GetVersionNumberStr().GetBytes()
 	};
-	const JString s = JGetString("CommandLineHelp::GFGMDIServer", map, sizeof(map));
+	const JString s = JGetString("CommandLineHelp::MDIServer", map, sizeof(map));
 	std::cout << std::endl << s << std::endl << std::endl;
 }

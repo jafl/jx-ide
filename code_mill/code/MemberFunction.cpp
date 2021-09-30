@@ -1,5 +1,5 @@
 /******************************************************************************
- GFGMemberFunction.cpp
+ MemberFunction.cpp
 
 	BASE CLASS = none
 
@@ -7,7 +7,7 @@
 	
  *****************************************************************************/
 
-#include <GFGMemberFunction.h>
+#include <MemberFunction.h>
 #include <jx-af/jcore/JPtrArray-JString.h>
 #include <jx-af/jcore/JRegex.h>
 #include <jx-af/jcore/JStringIterator.h>
@@ -18,7 +18,7 @@
 
  *****************************************************************************/
 
-GFGMemberFunction::GFGMemberFunction()
+MemberFunction::MemberFunction()
 	:	
 	itsArgs(nullptr)
 {
@@ -33,7 +33,7 @@ GFGMemberFunction::GFGMemberFunction()
 
  *****************************************************************************/
 
-GFGMemberFunction::~GFGMemberFunction()
+MemberFunction::~MemberFunction()
 {
 	jdelete itsArgs;
 }
@@ -46,7 +46,7 @@ GFGMemberFunction::~GFGMemberFunction()
 static const JRegex pureVirtualPattern = "[[:space:]]*=[[:space:]]*0;$";
 
 void
-GFGMemberFunction::SetInterface
+MemberFunction::SetInterface
 	(
 	const JString& interface
 	)
@@ -66,7 +66,7 @@ GFGMemberFunction::SetInterface
  ******************************************************************************/
 
 const JString&
-GFGMemberFunction::GetArg
+MemberFunction::GetArg
 	(
 	const JIndex index
 	)
@@ -83,7 +83,7 @@ GFGMemberFunction::GetArg
  ******************************************************************************/
 
 void
-GFGMemberFunction::AddArg
+MemberFunction::AddArg
 	(
 	const JString& arg
 	)
@@ -109,10 +109,10 @@ GFGMemberFunction::AddArg
  ******************************************************************************/
 
 JListT::CompareResult
-GFGMemberFunction::CompareFunction
+MemberFunction::CompareFunction
 	(
-	GFGMemberFunction* const & f1,
-	GFGMemberFunction* const & f2
+	MemberFunction* const & f1,
+	MemberFunction* const & f2
 	)
 {
 	const JString& name1 = f1->GetFnName();

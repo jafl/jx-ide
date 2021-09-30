@@ -22,9 +22,6 @@ if [[ $SYS == Darwin ]]; then
 
 	brew bundle;
 
-	rm -f code_medic/lldb-include;
-	ln -sf ../misc/lldb-include code_medic;
-
 elif command -v apt-get; then
 
 	# debian
@@ -40,6 +37,9 @@ elif command -v apt-get; then
 
 	rm -f code_medic/lldb-include;
 	ln -sf /usr/lib/llvm-$LLDB_VERS/include code_medic/lldb-include;
+
+	rm -f code_medic/liblldb.so;
+	ln -sf /usr/lib/llvm-$LLDB_VERS/lib/liblldb.so.1 code_medic/liblldb.so;
 
 elif command -v dnf; then
 
@@ -62,7 +62,7 @@ elif command -v zypper; then
 	# openSUSE
 
 	$SUDO zypper -in install editorconfig-devel \
-		llvm-devel \
+		lldb llvm-devel \
 		aspell aspell-en;
 
 	# lldb-devel is missing

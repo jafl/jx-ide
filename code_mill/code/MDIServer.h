@@ -1,22 +1,22 @@
 /******************************************************************************
- GFGMDIServer.h
+ MDIServer.h
 
 	Copyright (C) 2002 by Glenn W. Bach.
 
  *****************************************************************************/
 
-#ifndef _H_GFGMDIServer
-#define _H_GFGMDIServer
+#ifndef _H_MDIServer
+#define _H_MDIServer
 
 #include <jx-af/jx/JXMDIServer.h>
 
-class GFGMDIServer : public JXMDIServer
+class MDIServer : public JXMDIServer
 {
 public:
 
-	GFGMDIServer();
+	MDIServer();
 
-	virtual	~GFGMDIServer();
+	virtual	~MDIServer();
 
 	static void	PrintCommandLineHelp();
 

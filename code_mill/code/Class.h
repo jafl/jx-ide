@@ -1,28 +1,28 @@
 /******************************************************************************
- GFGClass.h
+ Class.h
 
-	Interface for the GFGClass class
+	Interface for the Class class
 
 	Copyright (C) 2002 by Glenn W. Bach.
 	
  *****************************************************************************/
 
-#ifndef _H_GFGClass
-#define _H_GFGClass
+#ifndef _H_Class
+#define _H_Class
 
 // Superclass Header
 #include <jx-af/jcore/JPtrArray.h>
 
-#include <GFGMemberFunction.h>
+#include <MemberFunction.h>
 
-class GFGLink;
+class Link;
 
-class GFGClass : public JPtrArray<GFGMemberFunction>
+class Class : public JPtrArray<MemberFunction>
 {
 public:
 
-	GFGClass();
-	virtual ~GFGClass();
+	Class();
+	virtual ~Class();
 
 	JSize			GetBaseClassCount() const;
 	void			GetBaseClass(const JIndex index, JString* classname, JString* filename) const;
@@ -51,7 +51,7 @@ protected:
 	
 private:
 
-	GFGLink*	itsLink;
+	Link*	itsLink;
 
 	JPtrArray<JString>*		itsBaseClasses;
 	JPtrArray<JString>*		itsBaseClassFiles;
@@ -64,12 +64,12 @@ private:
 
 private:
 
-	void WriteFunction(std::ostream& os, GFGMemberFunction* fn, const bool interface);
+	void WriteFunction(std::ostream& os, MemberFunction* fn, const bool interface);
 
 	// not allowed
 
-	GFGClass(const GFGClass&) = delete;
-	GFGClass& operator=(const GFGClass&) = delete;
+	Class(const Class&) = delete;
+	Class& operator=(const Class&) = delete;
 };
 
 
@@ -79,7 +79,7 @@ private:
  ******************************************************************************/
 
 inline const JString&
-GFGClass::GetClassName()
+Class::GetClassName()
 	const
 {
 	return itsClassName;
@@ -91,7 +91,7 @@ GFGClass::GetClassName()
  ******************************************************************************/
 
 inline void
-GFGClass::SetClassName
+Class::SetClassName
 	(
 	const JString& classname
 	)
@@ -105,7 +105,7 @@ GFGClass::SetClassName
  ******************************************************************************/
 
 inline const JString&
-GFGClass::GetFileName()
+Class::GetFileName()
 	const
 {
 	return itsFileName;
@@ -117,7 +117,7 @@ GFGClass::GetFileName()
  ******************************************************************************/
 
 inline void
-GFGClass::SetFileName
+Class::SetFileName
 	(
 	const JString& filename
 	)

@@ -1,5 +1,5 @@
 /******************************************************************************
- GFGPrefsDialog.cpp
+ PrefsDialog.cpp
 
 	BASE CLASS = JXDialogDirector
 
@@ -7,7 +7,7 @@
 
  ******************************************************************************/
 
-#include "GFGPrefsDialog.h"
+#include "PrefsDialog.h"
 #include <jx-af/jx/JXChooseSaveFile.h>
 #include <jx-af/jx/JXHelpManager.h>
 #include <jx-af/jx/JXInputField.h>
@@ -23,7 +23,7 @@
 
  ******************************************************************************/
 
-GFGPrefsDialog::GFGPrefsDialog
+PrefsDialog::PrefsDialog
 	(
 	JXDirector*	supervisor,
 	const JString& header,
@@ -43,7 +43,7 @@ GFGPrefsDialog::GFGPrefsDialog
 
  ******************************************************************************/
 
-GFGPrefsDialog::~GFGPrefsDialog()
+PrefsDialog::~PrefsDialog()
 {
 }
 
@@ -53,7 +53,7 @@ GFGPrefsDialog::~GFGPrefsDialog()
  ******************************************************************************/
 
 void
-GFGPrefsDialog::BuildWindow
+PrefsDialog::BuildWindow
 	(
 	const JString& header,
 	const JString& source,
@@ -68,7 +68,7 @@ GFGPrefsDialog::BuildWindow
 	assert( window != nullptr );
 
 	auto* headerCommentLabel =
-		jnew JXStaticText(JGetString("headerCommentLabel::GFGPrefsDialog::JXLayout"), window,
+		jnew JXStaticText(JGetString("headerCommentLabel::PrefsDialog::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,20, 470,20);
 	assert( headerCommentLabel != nullptr );
 	headerCommentLabel->SetToLabel();
@@ -79,7 +79,7 @@ GFGPrefsDialog::BuildWindow
 	assert( itsHeaderInput != nullptr );
 
 	auto* sourceCommentLabel =
-		jnew JXStaticText(JGetString("sourceCommentLabel::GFGPrefsDialog::JXLayout"), window,
+		jnew JXStaticText(JGetString("sourceCommentLabel::PrefsDialog::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,115, 470,20);
 	assert( sourceCommentLabel != nullptr );
 	sourceCommentLabel->SetToLabel();
@@ -90,7 +90,7 @@ GFGPrefsDialog::BuildWindow
 	assert( itsSourceInput != nullptr );
 
 	auto* ctorCommentLabel =
-		jnew JXStaticText(JGetString("ctorCommentLabel::GFGPrefsDialog::JXLayout"), window,
+		jnew JXStaticText(JGetString("ctorCommentLabel::PrefsDialog::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,210, 470,20);
 	assert( ctorCommentLabel != nullptr );
 	ctorCommentLabel->SetToLabel();
@@ -101,7 +101,7 @@ GFGPrefsDialog::BuildWindow
 	assert( itsConstructorInput != nullptr );
 
 	auto* dtorCommentLabel =
-		jnew JXStaticText(JGetString("dtorCommentLabel::GFGPrefsDialog::JXLayout"), window,
+		jnew JXStaticText(JGetString("dtorCommentLabel::PrefsDialog::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,305, 470,20);
 	assert( dtorCommentLabel != nullptr );
 	dtorCommentLabel->SetToLabel();
@@ -112,7 +112,7 @@ GFGPrefsDialog::BuildWindow
 	assert( itsDestructorInput != nullptr );
 
 	auto* fnCommentLabel =
-		jnew JXStaticText(JGetString("fnCommentLabel::GFGPrefsDialog::JXLayout"), window,
+		jnew JXStaticText(JGetString("fnCommentLabel::PrefsDialog::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,400, 470,20);
 	assert( fnCommentLabel != nullptr );
 	fnCommentLabel->SetToLabel();
@@ -123,25 +123,25 @@ GFGPrefsDialog::BuildWindow
 	assert( itsFunctionInput != nullptr );
 
 	auto* cancelButton =
-		jnew JXTextButton(JGetString("cancelButton::GFGPrefsDialog::JXLayout"), window,
+		jnew JXTextButton(JGetString("cancelButton::PrefsDialog::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 110,500, 70,20);
 	assert( cancelButton != nullptr );
-	cancelButton->SetShortcuts(JGetString("cancelButton::GFGPrefsDialog::shortcuts::JXLayout"));
+	cancelButton->SetShortcuts(JGetString("cancelButton::PrefsDialog::shortcuts::JXLayout"));
 
 	auto* okButton =
-		jnew JXTextButton(JGetString("okButton::GFGPrefsDialog::JXLayout"), window,
+		jnew JXTextButton(JGetString("okButton::PrefsDialog::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 330,500, 70,20);
 	assert( okButton != nullptr );
 
 	itsHelpButton =
-		jnew JXTextButton(JGetString("itsHelpButton::GFGPrefsDialog::JXLayout"), window,
+		jnew JXTextButton(JGetString("itsHelpButton::PrefsDialog::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 220,500, 70,20);
 	assert( itsHelpButton != nullptr );
-	itsHelpButton->SetShortcuts(JGetString("itsHelpButton::GFGPrefsDialog::shortcuts::JXLayout"));
+	itsHelpButton->SetShortcuts(JGetString("itsHelpButton::PrefsDialog::shortcuts::JXLayout"));
 
 // end JXLayout
 
-	window->SetTitle(JGetString("WindowTitle::GFGPrefsDialog"));
+	window->SetTitle(JGetString("WindowTitle::PrefsDialog"));
 	SetButtons(okButton, cancelButton);
 
 	itsHeaderInput->SetIsRequired();
@@ -164,7 +164,7 @@ GFGPrefsDialog::BuildWindow
  ******************************************************************************/
 
 void
-GFGPrefsDialog::GetValues
+PrefsDialog::GetValues
 	(
 	JString* header,
 	JString* source,
@@ -186,7 +186,7 @@ GFGPrefsDialog::GetValues
  *****************************************************************************/
 
 bool
-GFGPrefsDialog::OKToDeactivate()
+PrefsDialog::OKToDeactivate()
 {
 	if (Cancelled())
 	{

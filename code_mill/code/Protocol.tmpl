@@ -1,8 +1,8 @@
-#ifndef _T_GFGProtocol
-#define _T_GFGProtocol
+#ifndef _T_Protocol
+#define _T_Protocol
 
 /******************************************************************************
- GFGProtocol.cpp
+ Protocol.cpp
 
 	Broadcasts whenever data arrives.
 
@@ -12,7 +12,7 @@
 
  ******************************************************************************/
 
-#include <GFGProtocol.h>
+#include <Protocol.h>
 #include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
@@ -21,22 +21,22 @@
  ******************************************************************************/
 
 template <ACE_PEER_STREAM_1>
-GFGProtocol<ACE_PEER_STREAM_2>::GFGProtocol()
+Protocol<ACE_PEER_STREAM_2>::Protocol()
 	:
 	ACE_Svc_Handler<ACE_PEER_STREAM_2,ACE_SYNCH>()
 {
-	GFGProtocolX();
+	ProtocolX();
 }
 
 template <ACE_PEER_STREAM_1>
-GFGProtocol<ACE_PEER_STREAM_2>::GFGProtocol
+Protocol<ACE_PEER_STREAM_2>::Protocol
 	(
 	const ACE_HANDLE fd
 	)
 	:
 	ACE_Svc_Handler<ACE_PEER_STREAM_2,ACE_SYNCH>()
 {
-	GFGProtocolX();
+	ProtocolX();
 
 	set_handle(fd);
 	open(nullptr);
@@ -46,9 +46,9 @@ GFGProtocol<ACE_PEER_STREAM_2>::GFGProtocol
 
 template <ACE_PEER_STREAM_1>
 void
-GFGProtocol<ACE_PEER_STREAM_2>::GFGProtocolX()
+Protocol<ACE_PEER_STREAM_2>::ProtocolX()
 {
-	itsBufferSize = GFGProtocolT::kDefaultBufferSize;
+	itsBufferSize = ProtocolT::kDefaultBufferSize;
 
 	itsBuffer = jnew JCharacter [ itsBufferSize ];
 	assert( itsBuffer != nullptr );
@@ -62,7 +62,7 @@ GFGProtocol<ACE_PEER_STREAM_2>::GFGProtocolX()
  ******************************************************************************/
 
 template <ACE_PEER_STREAM_1>
-GFGProtocol<ACE_PEER_STREAM_2>::~GFGProtocol()
+Protocol<ACE_PEER_STREAM_2>::~Protocol()
 {
 	jdelete [] itsBuffer;
 }
@@ -74,7 +74,7 @@ GFGProtocol<ACE_PEER_STREAM_2>::~GFGProtocol()
 
 template <ACE_PEER_STREAM_1>
 void
-GFGProtocol<ACE_PEER_STREAM_2>::Read
+Protocol<ACE_PEER_STREAM_2>::Read
 	(
 	JString* buffer
 	)
@@ -94,7 +94,7 @@ GFGProtocol<ACE_PEER_STREAM_2>::Read
 
 template <ACE_PEER_STREAM_1>
 void
-GFGProtocol<ACE_PEER_STREAM_2>::Write
+Protocol<ACE_PEER_STREAM_2>::Write
 	(
 	const JCharacter* data
 	)
@@ -126,7 +126,7 @@ GFGProtocol<ACE_PEER_STREAM_2>::Write
 
 template <ACE_PEER_STREAM_1>
 int
-GFGProtocol<ACE_PEER_STREAM_2>::handle_input
+Protocol<ACE_PEER_STREAM_2>::handle_input
 	(
 	ACE_HANDLE
 	)
@@ -145,7 +145,7 @@ GFGProtocol<ACE_PEER_STREAM_2>::handle_input
 	if (count > 0)
 	{
 		itsData.Append(itsBuffer, count);
-		Broadcast(GFGProtocolT::ReadReady());
+		Broadcast(ProtocolT::ReadReady());
 	}
 
 	itsInHandleInputFlag = false;

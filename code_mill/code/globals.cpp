@@ -1,5 +1,5 @@
 /******************************************************************************
- gfgGlobals.cpp
+ globals.cpp
 
 	Access to global objects and factories.
 
@@ -7,50 +7,50 @@
 
  ******************************************************************************/
 
-#include "gfgGlobals.h"
-#include "GFGApp.h"
-#include "GFGPrefsManager.h"
-#include "GFGMDIServer.h"
+#include "globals.h"
+#include "App.h"
+#include "PrefsManager.h"
+#include "MDIServer.h"
 #include <jx-af/jcore/jAssert.h>
 
-static GFGApp*			theApplication  = nullptr;		// owns itself
-static GFGPrefsManager*	thePrefsManager = nullptr;
-static GFGMDIServer*	theMDIServer    = nullptr;
+static App*			theApplication  = nullptr;		// owns itself
+static PrefsManager*	thePrefsManager = nullptr;
+static MDIServer*	theMDIServer    = nullptr;
 
 /******************************************************************************
- GFGCreateGlobals
+ CreateGlobals
 
 	Returns true if this is the first time the program is run.
 
  ******************************************************************************/
 
 bool
-GFGCreateGlobals
+CreateGlobals
 	(
-	GFGApp* app
+	App* app
 	)
 {
 	theApplication = app;
 
 	bool isNew;
-	thePrefsManager	= jnew GFGPrefsManager(&isNew);
+	thePrefsManager	= jnew PrefsManager(&isNew);
 	assert( thePrefsManager != nullptr );
 
 	JXInitHelp();
 
-	theMDIServer = jnew GFGMDIServer;
+	theMDIServer = jnew MDIServer;
 	assert( theMDIServer != nullptr );
 
 	return isNew;
 }
 
 /******************************************************************************
- GFGDeleteGlobals
+ DeleteGlobals
 
  ******************************************************************************/
 
 void
-GFGDeleteGlobals()
+DeleteGlobals()
 {
 	theApplication = nullptr;
 	theMDIServer   = nullptr;
@@ -62,9 +62,9 @@ GFGDeleteGlobals()
 }
 
 /******************************************************************************
- GFGCleanUpBeforeSuddenDeath
+ CleanUpBeforeSuddenDeath
 
-	This must be the last one called by GFGApp so we can save
+	This must be the last one called by App so we can save
 	the preferences to disk.
 
 	*** If the server is dead, you cannot call any code that contacts it.
@@ -72,7 +72,7 @@ GFGDeleteGlobals()
  ******************************************************************************/
 
 void
-GFGCleanUpBeforeSuddenDeath
+CleanUpBeforeSuddenDeath
 	(
 	const JXDocumentManager::SafetySaveReason reason
 	)
@@ -88,64 +88,64 @@ GFGCleanUpBeforeSuddenDeath
 }
 
 /******************************************************************************
- GFGGetApplication
+ GetApplication
 
  ******************************************************************************/
 
-GFGApp*
-GFGGetApplication()
+App*
+GetApplication()
 {
 	assert( theApplication != nullptr );
 	return theApplication;
 }
 
 /******************************************************************************
- GFGGetPrefsManager
+ GetPrefsManager
 
  ******************************************************************************/
 
-GFGPrefsManager*
-GFGGetPrefsManager()
+PrefsManager*
+GetPrefsManager()
 {
 	assert( thePrefsManager != nullptr );
 	return thePrefsManager;
 }
 
 /******************************************************************************
- GFGGetMDIServer
+ GetMDIServer
 
  ******************************************************************************/
 
-GFGMDIServer*
-GFGGetMDIServer()
+MDIServer*
+GetMDIServer()
 {
 	assert( theMDIServer != nullptr );
 	return theMDIServer;
 }
 
 /******************************************************************************
- GFGGetVersionNumberStr
+ GetVersionNumberStr
 
  ******************************************************************************/
 
 const JString&
-GFGGetVersionNumberStr()
+GetVersionNumberStr()
 {
 	return JGetString("VERSION");
 }
 
 /******************************************************************************
- GFGGetVersionStr
+ GetVersionStr
 
  ******************************************************************************/
 
 JString
-GFGGetVersionStr()
+GetVersionStr()
 {
 	const JUtf8Byte* map[] =
 	{
 		"version",   JGetString("VERSION").GetBytes(),
 		"copyright", JGetString("COPYRIGHT").GetBytes()
 	};
-	return JGetString("Description::gfgGlobals", map, sizeof(map));
+	return JGetString("Description::globals", map, sizeof(map));
 }

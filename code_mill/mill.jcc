@@ -8,55 +8,66 @@ T
 F
 "./code/main.cpp"
 T
-2 "GFGApp.cpp"
+2 "App.cpp"
 F
-"./code/GFGApp.cpp"
+"./code/App.cpp"
 T
-2 "gfgGlobals.cpp"
+2 "globals.cpp"
 F
-"./code/gfgGlobals.cpp"
+"./code/globals.cpp"
 T
-2 "GFGPrefsManager.cpp"
+2 "PrefsManager.cpp"
 F
-"./code/GFGPrefsManager.cpp"
+"./code/PrefsManager.cpp"
 T
-2 "GFGPrefsDialog.cpp"
+2 "PrefsDialog.cpp"
 F
-"./code/GFGPrefsDialog.cpp"
+"./code/PrefsDialog.cpp"
 T
-2 "GFGMDIServer.cpp"
+2 "MDIServer.cpp"
 F
-"./code/GFGMDIServer.cpp"
+"./code/MDIServer.cpp"
 T
-2 "GFGAboutDialog.cpp"
+2 "AboutDialog.cpp"
 F
-"./code/GFGAboutDialog.cpp"
+"./code/AboutDialog.cpp"
 T
-2 "GFGLink.cpp"
+2 "Link.cpp"
 F
-"./code/GFGLink.cpp"
+"./code/Link.cpp"
 F
 T
 1 "directors"
 T
-2 "GFGMainDirector.cpp"
+2 "MainDirector.cpp"
 F
-"./code/GFGMainDirector.cpp"
+"./code/MainDirector.cpp"
 F
 T
 1 "data"
 T
-2 "GFGMemberFunction.cpp"
+2 "MemberFunction.cpp"
 F
-"./code/GFGMemberFunction.cpp"
+"./code/MemberFunction.cpp"
 T
-2 "GFGClass.cpp"
+2 "Class.cpp"
 F
-"./code/GFGClass.cpp"
+"./code/Class.cpp"
 T
-2 "GFGFunctionTable.cpp"
+2 "FunctionTable.cpp"
 F
-"./code/GFGFunctionTable.cpp"
+"./code/FunctionTable.cpp"
+F
+T
+1 "misc"
+T
+2 "strings"
+F
+"./strings/strings"
+T
+2 "mill.fd"
+F
+"./mill.fd"
 F
 T
 1 "help"
@@ -68,21 +79,6 @@ T
 2 "ChangeLog.html"
 F
 "./release/ChangeLog.html"
-F
-T
-1 "misc"
-T
-2 "README"
-F
-"./README"
-T
-2 "code_mill_strings"
-F
-"./strings/code_mill_strings"
-T
-2 "mill.fd"
-F
-"./mill.fd"
 F
 F
 # tasks

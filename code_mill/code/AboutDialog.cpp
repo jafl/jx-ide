@@ -1,5 +1,5 @@
 /******************************************************************************
- GFGAboutDialog.cpp
+ AboutDialog.cpp
 
 	BASE CLASS = JXDialogDirector
 
@@ -7,8 +7,8 @@
 
  ******************************************************************************/
 
-#include "GFGAboutDialog.h"
-#include "gfgGlobals.h"
+#include "AboutDialog.h"
+#include "globals.h"
 #include <jx-af/jx/JXWindow.h>
 #include <jx-af/jx/JXTextButton.h>
 #include <jx-af/jx/JXStaticText.h>
@@ -24,7 +24,7 @@
 
  ******************************************************************************/
 
-GFGAboutDialog::GFGAboutDialog
+AboutDialog::AboutDialog
 	(
 	JXDirector*		supervisor,
 	const JString&	prevVersStr
@@ -42,7 +42,7 @@ GFGAboutDialog::GFGAboutDialog
 
  ******************************************************************************/
 
-GFGAboutDialog::~GFGAboutDialog()
+AboutDialog::~AboutDialog()
 {
 }
 
@@ -54,7 +54,7 @@ GFGAboutDialog::~GFGAboutDialog()
 #include "gfg_about_icon.xpm"
 
 void
-GFGAboutDialog::BuildWindow
+AboutDialog::BuildWindow
 	(
 	const JString& prevVersStr
 	)
@@ -65,21 +65,21 @@ GFGAboutDialog::BuildWindow
 	assert( window != nullptr );
 
 	auto* textWidget =
-		jnew JXStaticText(JGetString("textWidget::GFGAboutDialog::JXLayout"), window,
+		jnew JXStaticText(JGetString("textWidget::AboutDialog::JXLayout"), window,
 					JXWidget::kHElastic, JXWidget::kVElastic, 70,20, 280,50);
 	assert( textWidget != nullptr );
 
 	auto* okButton =
-		jnew JXTextButton(JGetString("okButton::GFGAboutDialog::JXLayout"), window,
+		jnew JXTextButton(JGetString("okButton::AboutDialog::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 260,90, 60,20);
 	assert( okButton != nullptr );
-	okButton->SetShortcuts(JGetString("okButton::GFGAboutDialog::shortcuts::JXLayout"));
+	okButton->SetShortcuts(JGetString("okButton::AboutDialog::shortcuts::JXLayout"));
 
 	itsHelpButton =
-		jnew JXTextButton(JGetString("itsHelpButton::GFGAboutDialog::JXLayout"), window,
+		jnew JXTextButton(JGetString("itsHelpButton::AboutDialog::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 155,90, 60,20);
 	assert( itsHelpButton != nullptr );
-	itsHelpButton->SetShortcuts(JGetString("itsHelpButton::GFGAboutDialog::shortcuts::JXLayout"));
+	itsHelpButton->SetShortcuts(JGetString("itsHelpButton::AboutDialog::shortcuts::JXLayout"));
 
 	auto* imageWidget =
 		jnew JXImageWidget(window,
@@ -87,13 +87,13 @@ GFGAboutDialog::BuildWindow
 	assert( imageWidget != nullptr );
 
 	itsCreditsButton =
-		jnew JXTextButton(JGetString("itsCreditsButton::GFGAboutDialog::JXLayout"), window,
+		jnew JXTextButton(JGetString("itsCreditsButton::AboutDialog::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 50,90, 60,20);
 	assert( itsCreditsButton != nullptr );
 
 // end JXLayout
 
-	window->SetTitle(JGetString("WindowTitle::GFGAboutDialog"));
+	window->SetTitle(JGetString("WindowTitle::AboutDialog"));
 	SetButtons(okButton, nullptr);
 
 	ListenTo(itsHelpButton);
@@ -101,16 +101,16 @@ GFGAboutDialog::BuildWindow
 
 	imageWidget->SetXPM(gfg_about_icon);
 
-	JString text = GFGGetVersionStr();
+	JString text = GetVersionStr();
 	if (!prevVersStr.IsEmpty())
 	{
 		const JUtf8Byte* map[] =
 		{
 			"vers", prevVersStr.GetBytes()
 		};
-		text += JGetString("UpgradeNotice::GFGAboutDialog");
+		text += JGetString("UpgradeNotice::AboutDialog");
 		JGetStringManager()->Replace(&text, map, sizeof(map));
-		itsHelpButton->SetLabel(JGetString("ChangeButtonLabel::GFGAboutDialog"));
+		itsHelpButton->SetLabel(JGetString("ChangeButtonLabel::AboutDialog"));
 		itsIsUpgradeFlag = true;
 	}
 	textWidget->GetText()->SetText(text);
@@ -131,7 +131,7 @@ GFGAboutDialog::BuildWindow
  ******************************************************************************/
 
 void
-GFGAboutDialog::Receive
+AboutDialog::Receive
 	(
 	JBroadcaster*	sender,
 	const Message&	message
@@ -145,7 +145,7 @@ GFGAboutDialog::Receive
 		}
 		else
 		{
-			(JXGetHelpManager())->ShowSection("GFGOverviewHelp");
+			(JXGetHelpManager())->ShowSection("OverviewHelp");
 		}
 		EndDialog(true);
 	}

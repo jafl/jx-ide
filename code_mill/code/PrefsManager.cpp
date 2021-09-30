@@ -1,5 +1,5 @@
 /******************************************************************************
- GFGPrefsManager.cpp
+ PrefsManager.cpp
 
 	<Description>
 
@@ -9,9 +9,9 @@
 
  *****************************************************************************/
 
-#include "GFGPrefsManager.h"
-#include "GFGPrefsDialog.h"
-#include "gfgGlobals.h"
+#include "PrefsManager.h"
+#include "PrefsDialog.h"
+#include "globals.h"
 #include <jx-af/jx/JXChooseSaveFile.h>
 #include <time.h>
 #include <jx-af/jcore/jAssert.h>
@@ -23,7 +23,7 @@ const JFileVersion kCurrentPrefsFileVersion = 0;
 
  *****************************************************************************/
 
-GFGPrefsManager::GFGPrefsManager
+PrefsManager::PrefsManager
 	(
 	bool* isNew
 	)
@@ -34,7 +34,7 @@ GFGPrefsManager::GFGPrefsManager
 	*isNew    = JPrefsManager::UpgradeData();
 
 	JXChooseSaveFile* csf = JXGetChooseSaveFile();
-	csf->SetPrefInfo(this, kGFGgCSFSetupID);
+	csf->SetPrefInfo(this, kgCSFSetupID);
 	csf->JPrefObject::ReadPrefs();
 }
 
@@ -43,7 +43,7 @@ GFGPrefsManager::GFGPrefsManager
 
  *****************************************************************************/
 
-GFGPrefsManager::~GFGPrefsManager()
+PrefsManager::~PrefsManager()
 {
 	SaveAllBeforeDestruct();
 }
@@ -54,9 +54,9 @@ GFGPrefsManager::~GFGPrefsManager()
  ******************************************************************************/
 
 void
-GFGPrefsManager::SaveAllBeforeDestruct()
+PrefsManager::SaveAllBeforeDestruct()
 {
-	SetData(kGFGProgramVersionID, GFGGetVersionNumberStr());
+	SetData(kProgramVersionID, GetVersionNumberStr());
 
 	JXPrefsManager::SaveAllBeforeDestruct();
 }
@@ -67,7 +67,7 @@ GFGPrefsManager::SaveAllBeforeDestruct()
  ******************************************************************************/
 
 void
-GFGPrefsManager::UpgradeData
+PrefsManager::UpgradeData
 	(
 	const bool		isNew,
 	const JFileVersion	currentVersion
@@ -75,7 +75,7 @@ GFGPrefsManager::UpgradeData
 {
 	if (isNew)
 	{
-		SetData(kGFGProgramVersionID, GFGGetVersionNumberStr());
+		SetData(kProgramVersionID, GetVersionNumberStr());
 	}
 }
 
@@ -85,11 +85,11 @@ GFGPrefsManager::UpgradeData
  ******************************************************************************/
 
 JString
-GFGPrefsManager::GetPrevVersionStr()
+PrefsManager::GetPrevVersionStr()
 	const
 {
 	std::string data;
-	const bool ok = GetData(kGFGProgramVersionID, &data);
+	const bool ok = GetData(kProgramVersionID, &data);
 	assert( ok );
 	return JString(data);
 }
@@ -100,7 +100,7 @@ GFGPrefsManager::GetPrevVersionStr()
  ******************************************************************************/
 
 void
-GFGPrefsManager::EditPrefs()
+PrefsManager::EditPrefs()
 {
 	assert( itsDialog == nullptr );
 
@@ -108,7 +108,7 @@ GFGPrefsManager::EditPrefs()
 	JString data;
 
 	itsDialog = 
-		jnew GFGPrefsDialog(JXGetApplication(), 
+		jnew PrefsDialog(JXGetApplication(), 
 			GetHeaderComment(),
 			GetSourceComment(),
 			GetConstructorComment(),
@@ -125,7 +125,7 @@ GFGPrefsManager::EditPrefs()
  ******************************************************************************/
 
 void
-GFGPrefsManager::Receive
+PrefsManager::Receive
 	(
 	JBroadcaster*	sender,
 	const Message&	message
@@ -172,7 +172,7 @@ GFGPrefsManager::Receive
  ******************************************************************************/
 
 JString
-GFGPrefsManager::GetHeaderComment
+PrefsManager::GetHeaderComment
 	(
 	const JString& classname
 	)
@@ -180,7 +180,7 @@ GFGPrefsManager::GetHeaderComment
 {
 	JString comment;
 	std::string data;
-	if (GetData(kGFGHeaderCommentID, &data))
+	if (GetData(kHeaderCommentID, &data))
 	{
 		std::istringstream is(data);
 		is >> comment;
@@ -210,14 +210,14 @@ GFGPrefsManager::GetHeaderComment
  ******************************************************************************/
 
 void
-GFGPrefsManager::SetHeaderComment
+PrefsManager::SetHeaderComment
 	(
 	const JString& comment
 	)
 {
 	std::ostringstream os;
 	os << comment;
-	SetData(kGFGHeaderCommentID, os);
+	SetData(kHeaderCommentID, os);
 }
 
 /******************************************************************************
@@ -226,11 +226,11 @@ GFGPrefsManager::SetHeaderComment
  ******************************************************************************/
 
 JString
-GFGPrefsManager::GetAuthor()
+PrefsManager::GetAuthor()
 	const
 {
 	std::string data;
-	if (GetData(kGFGAuthorID, &data))
+	if (GetData(kAuthorID, &data))
 	{
 		std::istringstream is(data);
 		JString author;
@@ -249,14 +249,14 @@ GFGPrefsManager::GetAuthor()
  ******************************************************************************/
 
 void
-GFGPrefsManager::SetAuthor
+PrefsManager::SetAuthor
 	(
 	const JString& author
 	)
 {
 	std::ostringstream os;
 	os << author;
-	SetData(kGFGAuthorID, os);
+	SetData(kAuthorID, os);
 }
 
 /******************************************************************************
@@ -265,11 +265,11 @@ GFGPrefsManager::SetAuthor
  ******************************************************************************/
 
 JString
-GFGPrefsManager::GetYear()
+PrefsManager::GetYear()
 	const
 {
 	std::string data;
-	if (GetData(kGFGYearID, &data))
+	if (GetData(kYearID, &data))
 	{
 		std::istringstream is(data);
 		JString year;
@@ -293,14 +293,14 @@ GFGPrefsManager::GetYear()
  ******************************************************************************/
 
 void
-GFGPrefsManager::SetYear
+PrefsManager::SetYear
 	(
 	const JString& year
 	)
 {
 	std::ostringstream os;
 	os << year;
-	SetData(kGFGYearID, os);
+	SetData(kYearID, os);
 }
 
 
@@ -310,7 +310,7 @@ GFGPrefsManager::SetYear
  ******************************************************************************/
 
 JString
-GFGPrefsManager::GetCopyright
+PrefsManager::GetCopyright
 	(
 	const bool replaceVars
 	)
@@ -318,7 +318,7 @@ GFGPrefsManager::GetCopyright
 {
 	JString copyright;
 	std::string data;
-	if (GetData(kGFGCopyrightID, &data))
+	if (GetData(kCopyrightID, &data))
 	{
 		std::istringstream is(data);
 		is >> copyright;
@@ -349,14 +349,14 @@ GFGPrefsManager::GetCopyright
  ******************************************************************************/
 
 void
-GFGPrefsManager::SetCopyright
+PrefsManager::SetCopyright
 	(
 	const JString& copyright
 	)
 {
 	std::ostringstream os;
 	os << copyright;
-	SetData(kGFGCopyrightID, os);
+	SetData(kCopyrightID, os);
 }
 
 /******************************************************************************
@@ -365,7 +365,7 @@ GFGPrefsManager::SetCopyright
  ******************************************************************************/
 
 JString
-GFGPrefsManager::GetSourceComment
+PrefsManager::GetSourceComment
 	(
 	const JString& classname,
 	const JString& base
@@ -374,7 +374,7 @@ GFGPrefsManager::GetSourceComment
 {
 	JString comment;
 	std::string data;
-	if (GetData(kGFGSourceCommentID, &data))
+	if (GetData(kSourceCommentID, &data))
 	{
 		std::istringstream is(data);
 		is >> comment;
@@ -405,14 +405,14 @@ GFGPrefsManager::GetSourceComment
  ******************************************************************************/
 
 void
-GFGPrefsManager::SetSourceComment
+PrefsManager::SetSourceComment
 	(
 	const JString& comment
 	)
 {
 	std::ostringstream os;
 	os << comment;
-	SetData(kGFGSourceCommentID, os);
+	SetData(kSourceCommentID, os);
 }
 
 /******************************************************************************
@@ -421,12 +421,12 @@ GFGPrefsManager::SetSourceComment
  ******************************************************************************/
 
 JString
-GFGPrefsManager::GetConstructorComment()
+PrefsManager::GetConstructorComment()
 	const
 {
 	JString comment;
 	std::string data;
-	if (GetData(kGFGConstructorCommentID, &data))
+	if (GetData(kConstructorCommentID, &data))
 	{
 		std::istringstream is(data);
 		is >> comment;
@@ -445,14 +445,14 @@ GFGPrefsManager::GetConstructorComment()
  ******************************************************************************/
 
 void
-GFGPrefsManager::SetConstructorComment
+PrefsManager::SetConstructorComment
 	(
 	const JString& comment
 	)
 {
 	std::ostringstream os;
 	os << comment;
-	SetData(kGFGConstructorCommentID, os);
+	SetData(kConstructorCommentID, os);
 }
 
 /******************************************************************************
@@ -461,12 +461,12 @@ GFGPrefsManager::SetConstructorComment
  ******************************************************************************/
 
 JString
-GFGPrefsManager::GetDestructorComment()
+PrefsManager::GetDestructorComment()
 	const
 {
 	JString comment;
 	std::string data;
-	if (GetData(kGFGDestructorCommentID, &data))
+	if (GetData(kDestructorCommentID, &data))
 	{
 		std::istringstream is(data);
 		is >> comment;
@@ -485,14 +485,14 @@ GFGPrefsManager::GetDestructorComment()
  ******************************************************************************/
 
 void
-GFGPrefsManager::SetDestructorComment
+PrefsManager::SetDestructorComment
 	(
 	const JString& comment
 	)
 {
 	std::ostringstream os;
 	os << comment;
-	SetData(kGFGDestructorCommentID, os);
+	SetData(kDestructorCommentID, os);
 }
 
 /******************************************************************************
@@ -501,7 +501,7 @@ GFGPrefsManager::SetDestructorComment
  ******************************************************************************/
 
 JString
-GFGPrefsManager::GetFunctionComment
+PrefsManager::GetFunctionComment
 	(
 	const JString& fnName,
 	const JString& access
@@ -510,7 +510,7 @@ GFGPrefsManager::GetFunctionComment
 {
 	JString comment;
 	std::string data;
-	if (GetData(kGFGFunctionCommentID, &data))
+	if (GetData(kFunctionCommentID, &data))
 	{
 		std::istringstream is(data);
 		is >> comment;
@@ -539,12 +539,12 @@ GFGPrefsManager::GetFunctionComment
  ******************************************************************************/
 
 void
-GFGPrefsManager::SetFunctionComment
+PrefsManager::SetFunctionComment
 	(
 	const JString& comment
 	)
 {
 	std::ostringstream os;
 	os << comment;
-	SetData(kGFGFunctionCommentID, os);
+	SetData(kFunctionCommentID, os);
 }

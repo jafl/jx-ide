@@ -1,5 +1,5 @@
 /******************************************************************************
- GFGApp.cpp
+ App.cpp
 
 	BASE CLASS = public JXApplication
 
@@ -7,10 +7,10 @@
 
  *****************************************************************************/
 
-#include "GFGApp.h"
-#include "GFGAboutDialog.h"
-#include "gfgStringData.h"
-#include "gfgGlobals.h"
+#include "App.h"
+#include "AboutDialog.h"
+#include "stringData.h"
+#include "globals.h"
 #include <jx-af/jcore/jAssert.h>
 
 static const JUtf8Byte* kAppSignature = "forge";
@@ -20,7 +20,7 @@ static const JUtf8Byte* kAppSignature = "forge";
 
  *****************************************************************************/
 
-GFGApp::GFGApp
+App::App
 	(
 	int*		argc,
 	char*		argv[],
@@ -28,15 +28,15 @@ GFGApp::GFGApp
 	JString*	prevVersStr
 	)
 	:
-	JXApplication(argc, argv, kAppSignature, kGFGDefaultStringData),
+	JXApplication(argc, argv, kAppSignature, kDefaultStringData),
 	itsDeletingTemplate(false)
 {
-	*displayAbout = GFGCreateGlobals(this);
+	*displayAbout = CreateGlobals(this);
 
 	if (!*displayAbout)
 	{
-		*prevVersStr = GFGGetPrefsManager()->GetPrevVersionStr();
-		if (*prevVersStr == GFGGetVersionNumberStr())
+		*prevVersStr = GetPrefsManager()->GetPrevVersionStr();
+		if (*prevVersStr == GetVersionNumberStr())
 		{
 			prevVersStr->Clear();
 		}
@@ -56,9 +56,9 @@ GFGApp::GFGApp
 
  *****************************************************************************/
 
-GFGApp::~GFGApp()
+App::~App()
 {
-	GFGDeleteGlobals();
+	DeleteGlobals();
 }
 
 /******************************************************************************
@@ -69,12 +69,12 @@ GFGApp::~GFGApp()
  ******************************************************************************/
 
 void
-GFGApp::DisplayAbout
+App::DisplayAbout
 	(
 	const JString& prevVersStr
 	)
 {
-	auto* dlog = jnew GFGAboutDialog(this, prevVersStr);
+	auto* dlog = jnew AboutDialog(this, prevVersStr);
 	assert( dlog != nullptr );
 	dlog->BeginDialog();
 }
@@ -87,7 +87,7 @@ GFGApp::DisplayAbout
  ******************************************************************************/
 
 void
-GFGApp::CleanUpBeforeSuddenDeath
+App::CleanUpBeforeSuddenDeath
 	(
 	const JXDocumentManager::SafetySaveReason reason
 	)
@@ -99,7 +99,7 @@ GFGApp::CleanUpBeforeSuddenDeath
 //		JPrefObject::WritePrefs();
 	}
 
-	GFGCleanUpBeforeSuddenDeath(reason);		// must be last call
+	::CleanUpBeforeSuddenDeath(reason);		// must be last call
 }
 
 /******************************************************************************
@@ -108,7 +108,7 @@ GFGApp::CleanUpBeforeSuddenDeath
  ******************************************************************************/
 
 bool
-GFGApp::IsDeletingTemplate()
+App::IsDeletingTemplate()
 	const
 {
 	return itsDeletingTemplate;
@@ -120,7 +120,7 @@ GFGApp::IsDeletingTemplate()
  ******************************************************************************/
 
 void
-GFGApp::ShouldBeDeletingTemplate
+App::ShouldBeDeletingTemplate
 	(
 	const bool delTemplate
 	)
@@ -135,7 +135,7 @@ GFGApp::ShouldBeDeletingTemplate
  ******************************************************************************/
 
 const JUtf8Byte*
-GFGApp::GetAppSignature()
+App::GetAppSignature()
 {
 	return kAppSignature;
 }
@@ -149,7 +149,7 @@ GFGApp::GetAppSignature()
  ******************************************************************************/
 
 void
-GFGApp::InitStrings()
+App::InitStrings()
 {
-	JGetStringManager()->Register(kAppSignature, kGFGDefaultStringData);
+	JGetStringManager()->Register(kAppSignature, kDefaultStringData);
 }

@@ -1,5 +1,5 @@
 /******************************************************************************
- GFGFunctionTable.cpp
+ FunctionTable.cpp
 
 	<Description>
 
@@ -9,11 +9,11 @@
 
  *****************************************************************************/
 
-#include <GFGFunctionTable.h>
-#include "GFGMemberFunction.h"
-#include "GFGClass.h"
+#include <FunctionTable.h>
+#include "MemberFunction.h"
+#include "Class.h"
 
-#include <gfgGlobals.h>
+#include <globals.h>
 
 #include <jx-af/jx/JXColHeaderWidget.h>
 #include <jx-af/jx/JXColorManager.h>
@@ -38,10 +38,10 @@ const JCoordinate kBulletRadius  = 4;
 
  ******************************************************************************/
 
-GFGFunctionTable*
-GFGFunctionTable::Create
+FunctionTable*
+FunctionTable::Create
 	(
-	GFGClass* 			list,
+	Class* 			list,
 	JXScrollbarSet*		scrollbarSet,
 	JXContainer*		enclosure,
 	const HSizingOption	hSizing,
@@ -53,11 +53,11 @@ GFGFunctionTable::Create
 	)
 {
 	auto* table =
-		jnew GFGFunctionTable(list, scrollbarSet, enclosure,
+		jnew FunctionTable(list, scrollbarSet, enclosure,
 			hSizing, vSizing, x,y, w,h);
 	assert(table != nullptr);
 
-	table->GFGFunctionTableX();
+	table->FunctionTableX();
 
 	return table;
 }
@@ -67,9 +67,9 @@ GFGFunctionTable::Create
 
  *****************************************************************************/
 
-GFGFunctionTable::GFGFunctionTable
+FunctionTable::FunctionTable
 	(
-	GFGClass* 			list,
+	Class* 			list,
 	JXScrollbarSet*		scrollbarSet,
 	JXContainer*		enclosure,
 	const HSizingOption	hSizing,
@@ -88,7 +88,7 @@ GFGFunctionTable::GFGFunctionTable
 }
 
 void
-GFGFunctionTable::GFGFunctionTableX()
+FunctionTable::FunctionTableX()
 {
 	itsNeedsAdjustment	= true;
 	
@@ -106,7 +106,7 @@ GFGFunctionTable::GFGFunctionTableX()
 
  *****************************************************************************/
 
-GFGFunctionTable::~GFGFunctionTable()
+FunctionTable::~FunctionTable()
 {
 }
 
@@ -116,7 +116,7 @@ GFGFunctionTable::~GFGFunctionTable()
  ******************************************************************************/
 
 void
-GFGFunctionTable::Receive
+FunctionTable::Receive
 	(
 	JBroadcaster*	sender,
 	const Message&	message
@@ -143,7 +143,7 @@ GFGFunctionTable::Receive
  ******************************************************************************/
 
 void
-GFGFunctionTable::HandleMouseDown
+FunctionTable::HandleMouseDown
 	(
 	const JPoint& pt,
 	const JXMouseButton button,
@@ -160,7 +160,7 @@ GFGFunctionTable::HandleMouseDown
 	JPoint cell;
 	if (GetCell(pt, &cell))
 	{
-		GFGMemberFunction* fn	= itsList->GetElement(cell.y);
+		MemberFunction* fn	= itsList->GetElement(cell.y);
 		fn->ShouldBeUsed(!fn->IsUsed());
 		TableRefresh();
 	}
@@ -172,7 +172,7 @@ GFGFunctionTable::HandleMouseDown
  ******************************************************************************/
 
 void
-GFGFunctionTable::TableDrawCell
+FunctionTable::TableDrawCell
 	(
 	JPainter&		p,
 	const JPoint&	cell,
@@ -189,7 +189,7 @@ GFGFunctionTable::TableDrawCell
 		p.SetFilling(false);
 	}
 
-	const GFGMemberFunction* fn	= itsList->GetElement(cell.y);
+	const MemberFunction* fn	= itsList->GetElement(cell.y);
 
 	if (cell.x == kFUsed)
 	{
@@ -255,7 +255,7 @@ GFGFunctionTable::TableDrawCell
  ******************************************************************************/
 
 void
-GFGFunctionTable::HandleKeyPress
+FunctionTable::HandleKeyPress
 	(
 	const JUtf8Character&	c,
 	const int				keySym,
@@ -278,7 +278,7 @@ GFGFunctionTable::HandleKeyPress
  ******************************************************************************/
 
 void
-GFGFunctionTable::AdjustColumnWidths()
+FunctionTable::AdjustColumnWidths()
 {
 	if (!itsNeedsAdjustment)
 	{
@@ -292,7 +292,7 @@ GFGFunctionTable::AdjustColumnWidths()
 	const JSize count	= itsList->GetElementCount();
 	for (JIndex i = 1; i <= count; i++)
 	{
-		const GFGMemberFunction* fn	= itsList->GetElement(i);
+		const MemberFunction* fn	= itsList->GetElement(i);
 		JSize width	= font.GetStringWidth(fontMgr, fn->GetReturnType());
 		JCoordinate adjWidth = width + 2 * kHMarginWidth;
 		if (adjWidth > GetColWidth(kFReturnType))

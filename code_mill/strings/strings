@@ -18,22 +18,22 @@ CHANGE_LOG_URL	"http://nps-codemill.sourceforge.net/ChangeLog.html"
 VERSION_URL		"http://nps-codemill.sourceforge.net/VERSION"
 DOWNLOAD_URL	"https://sourceforge.net/projects/nps-codemill/"
 
-# gfgGlobals
+# globals
 
-Description::gfgGlobals
+Description::globals
 "Code Mill $version
 
 Program description
 
 $copyright"
 
-# GFGMDIServer
+# MDIServer
 
-MissingTemplate::GFGMDIServer	"Please specify the template file to load."
+MissingTemplate::MDIServer	"Please specify the template file to load."
 
 #2345678901234567890123456789012345678901234567890123456789012345678901234567890
 
-CommandLineHelp::GFGMDIServer
+CommandLineHelp::MDIServer
 "Code Mill $vers
 
 https://sourceforge.net/projects/nps-codemill/
@@ -49,29 +49,29 @@ Usage:
 
 #2345678901234567890123456789012345678901234567890123456789012345678901234567890
 
-# GFGMainDirector
+# MainDirector
 
-WindowTitle::GFGMainDirector		"Code Mill"
-MissingClassName::GFGMainDirector	"Please provide a class name."
-InvalidDestPath::GFGMainDirector	"Please provide a valid destination directory."
-CreateFileFailed::GFGMainDirector	"There was an error creating the files."
+WindowTitle::MainDirector		"Code Mill"
+MissingClassName::MainDirector	"Please provide a class name."
+InvalidDestPath::MainDirector	"Please provide a valid destination directory."
+CreateFileFailed::MainDirector	"There was an error creating the files."
 
-UseLabel::GFGMainDirector	"Override"
-RTLabel::GFGMainDirector	"Return Type"
-FNLabel::GFGMainDirector	"Function Name"
-ConstLabel::GFGMainDirector	"Const"
-ArgsLabel::GFGMainDirector	"Arguments"
+UseLabel::MainDirector		"Override"
+RTLabel::MainDirector		"Return Type"
+FNLabel::MainDirector		"Function Name"
+ConstLabel::MainDirector	"Const"
+ArgsLabel::MainDirector		"Arguments"
 
-# GFGPrefsDialog
+# PrefsDialog
 
-WindowTitle::GFGPrefsDialog "Preferences"
+WindowTitle::PrefsDialog "Preferences"
 
-# GFGAboutDialog
+# AboutDialog
 
-WindowTitle::GFGAboutDialog		"About"
-ChangeButtonLabel::GFGAboutDialog	"Changes"
+WindowTitle::AboutDialog		"About"
+ChangeButtonLabel::AboutDialog	"Changes"
 
-UpgradeNotice::GFGAboutDialog
+UpgradeNotice::AboutDialog
 "
 
 

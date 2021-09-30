@@ -1,24 +1,24 @@
 /******************************************************************************
- GFGAboutDialog.h
+ AboutDialog.h
 
 	Copyright (C) 2002 by Glenn W. Bach.
 
  ******************************************************************************/
 
-#ifndef _H_GFGAboutDialog
-#define _H_GFGAboutDialog
+#ifndef _H_AboutDialog
+#define _H_AboutDialog
 
 #include <jx-af/jx/JXDialogDirector.h>
 
 class JXTextButton;
 
-class GFGAboutDialog : public JXDialogDirector
+class AboutDialog : public JXDialogDirector
 {
 public:
 
-	GFGAboutDialog(JXDirector* supervisor, const JString& prevVersStr);
+	AboutDialog(JXDirector* supervisor, const JString& prevVersStr);
 
-	virtual	~GFGAboutDialog();
+	virtual	~AboutDialog();
 
 protected:
 

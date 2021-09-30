@@ -19,6 +19,7 @@ include ${MAKE_INCLUDE}/j2dplot_constants
 
 SEARCHDIRS := -I./code -I./image -I./backend -I./jcc-shared \
               ${SEARCHDIRS} -I./lldb-include \
+              -I/usr/local/opt/llvm/include \
               ${shell xml2-config --cflags} \
               ${shell pkg-config --cflags editorconfig}
 
@@ -49,7 +50,7 @@ include make_reflex_target
 
 include ${MAKE_INCLUDE}/app_targets
 
-${APP_NAME}::
+${APP_NAME}:: strings
 	@if ! test -e CMVarTreeParserY.hpp; then ${RM} code/CMVarTreeParserY.o; fi
 
 .PHONY : post_link
@@ -118,15 +119,6 @@ release: pre_build_pkgs default
 	@${MAKE} PKG_PATH=${PROG} init_tarball
 	@ln -s ../${EXE_NAME} ${PROG}/
 	@${MAKE} PKG_PATH=${PROG} SOURCE_TAR_NAME=${PROG_RELEASE_TAR_NAME} build_pkgs
-
-#
-# personal install
-#
-
-.PHONY : personal
-personal: jxinstall
-	@cp medic ${HOME}/bin/
-	@${J_STRIP_DEBUG} ${call EXE, ${HOME}/bin/medic}
 
 # DO NOT DELETE THIS LINE -- Code Crusader depends on it.
 

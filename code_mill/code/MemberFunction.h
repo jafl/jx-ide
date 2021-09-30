@@ -1,23 +1,23 @@
 /******************************************************************************
- GFGMemberFunction.h
+ MemberFunction.h
 
-	Interface for the GFGMemberFunction class
+	Interface for the MemberFunction class
 
 	Copyright (C) 2002 by Glenn W. Bach.
 	
  *****************************************************************************/
 
-#ifndef _H_GFGMemberFunction
-#define _H_GFGMemberFunction
+#ifndef _H_MemberFunction
+#define _H_MemberFunction
 
 #include <jx-af/jcore/JPtrArray-JString.h>
 
-class GFGMemberFunction
+class MemberFunction
 {
 public:
 
-	GFGMemberFunction();
-	virtual ~GFGMemberFunction();
+	MemberFunction();
+	virtual ~MemberFunction();
 
 	const JString&	GetFnName() const;
 	void			SetFnName(const JString& str);
@@ -46,7 +46,7 @@ public:
 	void			AddArg(const JString& arg);
 
 	static JListT::CompareResult
-		CompareFunction(GFGMemberFunction* const & f1, GFGMemberFunction* const & f2);
+		CompareFunction(MemberFunction* const & f1, MemberFunction* const & f2);
 
 protected:
 
@@ -67,8 +67,8 @@ private:
 
 	// not allowed
 
-	GFGMemberFunction(const GFGMemberFunction&) = delete;
-	GFGMemberFunction& operator=(const GFGMemberFunction&) = delete;
+	MemberFunction(const MemberFunction&) = delete;
+	MemberFunction& operator=(const MemberFunction&) = delete;
 };
 
 
@@ -78,7 +78,7 @@ private:
  ******************************************************************************/
 
 inline const JString&
-GFGMemberFunction::GetFnName()
+MemberFunction::GetFnName()
 	const
 {
 	return itsFnName;
@@ -90,7 +90,7 @@ GFGMemberFunction::GetFnName()
  ******************************************************************************/
 
 inline void
-GFGMemberFunction::SetFnName
+MemberFunction::SetFnName
 	(
 	const JString& name
 	)
@@ -104,7 +104,7 @@ GFGMemberFunction::SetFnName
  ******************************************************************************/
 
 inline bool
-GFGMemberFunction::IsProtected()
+MemberFunction::IsProtected()
 	const
 {
 	return itsIsProtected;
@@ -116,7 +116,7 @@ GFGMemberFunction::IsProtected()
  ******************************************************************************/
 
 inline void
-GFGMemberFunction::ShouldBeProtected
+MemberFunction::ShouldBeProtected
 	(
 	const bool protect
 	)
@@ -130,7 +130,7 @@ GFGMemberFunction::ShouldBeProtected
  ******************************************************************************/
 
 inline bool
-GFGMemberFunction::IsRequired()
+MemberFunction::IsRequired()
 	const
 {
 	return itsIsRequired;
@@ -142,7 +142,7 @@ GFGMemberFunction::IsRequired()
  ******************************************************************************/
 
 inline void
-GFGMemberFunction::ShouldBeRequired
+MemberFunction::ShouldBeRequired
 	(
 	const bool require
 	)
@@ -156,7 +156,7 @@ GFGMemberFunction::ShouldBeRequired
  ******************************************************************************/
 
 inline bool
-GFGMemberFunction::IsUsed()
+MemberFunction::IsUsed()
 	const
 {
 	return itsIsUsed;
@@ -168,7 +168,7 @@ GFGMemberFunction::IsUsed()
  ******************************************************************************/
 
 inline void
-GFGMemberFunction::ShouldBeUsed
+MemberFunction::ShouldBeUsed
 	(
 	const bool use
 	)
@@ -182,7 +182,7 @@ GFGMemberFunction::ShouldBeUsed
  ******************************************************************************/
 
 inline const JString&
-GFGMemberFunction::GetInterface()
+MemberFunction::GetInterface()
 	const
 {
 	return itsInterface;
@@ -194,7 +194,7 @@ GFGMemberFunction::GetInterface()
  ******************************************************************************/
 
 inline const JString&
-GFGMemberFunction::GetReturnType()
+MemberFunction::GetReturnType()
 	const
 {
 	return itsReturnType;
@@ -206,7 +206,7 @@ GFGMemberFunction::GetReturnType()
  ******************************************************************************/
 
 inline void
-GFGMemberFunction::SetReturnType
+MemberFunction::SetReturnType
 	(
 	const JString& type
 	)
@@ -220,7 +220,7 @@ GFGMemberFunction::SetReturnType
  ******************************************************************************/
 
 inline bool
-GFGMemberFunction::IsConst()
+MemberFunction::IsConst()
 	const
 {
 	return itsIsConst;
@@ -232,7 +232,7 @@ GFGMemberFunction::IsConst()
  ******************************************************************************/
 
 inline void
-GFGMemberFunction::ShouldBeConst
+MemberFunction::ShouldBeConst
 	(
 	const bool isConst
 	)
@@ -246,7 +246,7 @@ GFGMemberFunction::ShouldBeConst
  ******************************************************************************/
 
 inline JSize
-GFGMemberFunction::GetArgCount()
+MemberFunction::GetArgCount()
 	const
 {
 	if (itsArgs == nullptr)
@@ -263,7 +263,7 @@ GFGMemberFunction::GetArgCount()
  ******************************************************************************/
 
 inline const JString&
-GFGMemberFunction::GetArgString()
+MemberFunction::GetArgString()
 	const
 {
 	return itsArgString;

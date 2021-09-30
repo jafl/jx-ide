@@ -3,11 +3,8 @@
 
 JX_ROOT := ../../JX
 
-APP_NAME          := code_mill
-APP_VERSION       := ${shell cat release/VERSION}
-SIGNATURE         := ${APP_NAME}
-MENU_STRINGS_FILE := ./strings/${APP_NAME}_menu_strings
-RPM_LIB_PATH      := /usr/lib/${SIGNATURE}
+APP_NAME  := code_mill
+SIGNATURE := ${APP_NAME}
 
 J_STRING_FILES := ${filter-out %/${APP_NAME}_menu_strings, \
                     ${shell echo strings/*}} strings/version
@@ -29,52 +26,13 @@ LIB_DEPS := ${JX_LIB_ROOT}/libjx.a \
 # make variables
 
 LOADLIBES := ${J_STD_LIBS}
-ifdef J_SYSTEM_HAS_SHARED_LIBS
-  LDFLAGS := -Xlinker -R${RPM_LIB_PATH}
-endif
+LDFLAGS   := 
 
 #####
 
 include ${MAKE_INCLUDE}/app_targets
 
-#
-# string data
-#
-
-.PHONY : strings
-strings: build_version_string
-	@${RM} ${MENU_STRINGS_FILE}
-	compile_jstrings ${J_STRING_FILES} \
-      --code kGFGDefaultStringData ./code/gfgStringData.h
-
 ${APP_NAME}:: strings
-
-.PHONY : menu_strings
-menu_strings:
-	@${MENU_STR_CMD} ${MENU_STRINGS_FILE} ${SIGNATURE} \
-     -a ./code/gfgActionDefs.h ${JX_ACTION_DEFS} \
-     -m */*.cpp ${JX_INCLUDE_ROOT}/jx-af/jx/*.cpp
-
-#
-# binary distributions
-#
-
-PROG := Code_Mill-${APP_VERSION}
-
-PROG_RELEASE_TAR_NAME := Code_Mill_${APP_VERSION}.tar
-
-RPM_TAR_FILE  := ${RPM_SRC_DIR}/Code_Mill_${APP_VERSION}.tar
-RPM_SPEC_FILE := ./release/pkg/code_mill.spec
-
-DEB_CTRL_FILE := ./release/pkg/code_mill.debctrl
-DEB_PKG_FILE  := code-mill_${APP_VERSION}_i386.deb
-
-.PHONY : release
-release: pre_build_pkgs default
-	@${J_STRIP_DEBUG} ${EXE_NAME}
-	@${MAKE} PKG_PATH=${PROG} init_tarball
-	@ln -s ../${EXE_NAME} ${PROG}/
-	@${MAKE} PKG_PATH=${PROG} SOURCE_TAR_NAME=${PROG_RELEASE_TAR_NAME} build_pkgs
 
 # DO NOT DELETE THIS LINE -- Code Crusader depends on it.
 

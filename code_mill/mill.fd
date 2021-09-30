@@ -8,7 +8,7 @@ Unit of measure: FL_COORD_PIXEL
 SnapGrid: 5
 
 =============== FORM ===============
-Name: GFGPrefsDialog
+Name: PrefsDialog
 Width: 510
 Height: 530
 Number of Objects: 14
@@ -266,7 +266,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: GFGAboutDialog
+Name: AboutDialog
 Width: 370
 Height: 120
 Number of Objects: 6
@@ -380,7 +380,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: GFGMainDirector
+Name: MainDirector
 Width: 650
 Height: 460
 Number of Objects: 17

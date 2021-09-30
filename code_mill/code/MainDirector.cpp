@@ -1,5 +1,5 @@
 /******************************************************************************
- GFGMainDirector.cpp
+ MainDirector.cpp
 
 	<Description>
 
@@ -9,14 +9,14 @@
 
  *****************************************************************************/
 
-#include "GFGMainDirector.h"
-#include "GFGApp.h"
-#include "GFGPrefsManager.h"
-#include "GFGClass.h"
-#include "GFGFunctionTable.h"
+#include "MainDirector.h"
+#include "App.h"
+#include "PrefsManager.h"
+#include "Class.h"
+#include "FunctionTable.h"
 
-#include "gfgGlobals.h"
-#include "gfgActionDefs.h"
+#include "globals.h"
+#include "actionDefs.h"
 
 #include <jx-af/jx/JXChooseSaveFile.h>
 #include <jx-af/jx/JXColHeaderWidget.h>
@@ -46,16 +46,16 @@ const JFileVersion kCurrentPrefsVersion	= 1;
 
  *****************************************************************************/
 
-GFGMainDirector::GFGMainDirector
+MainDirector::MainDirector
 	(
 	JXDirector*					supervisor,
 	const JPtrArray<JString>&	argList
 	)
 	:
 	JXWindowDirector(supervisor),
-	JPrefObject(GFGGetPrefsManager(), kGFGMainDirectorID)
+	JPrefObject(GetPrefsManager(), kMainDirectorID)
 {
-	itsClass = jnew GFGClass();
+	itsClass = jnew Class();
 	assert(itsClass != nullptr);
 
 	JString outputPath;
@@ -108,7 +108,7 @@ GFGMainDirector::GFGMainDirector
 
  *****************************************************************************/
 
-GFGMainDirector::~GFGMainDirector()
+MainDirector::~MainDirector()
 {
 	JPrefObject::WritePrefs();
 }
@@ -121,7 +121,7 @@ GFGMainDirector::~GFGMainDirector()
 #include "gfg_main_window_icon.xpm"
 
 void
-GFGMainDirector::BuildWindow
+MainDirector::BuildWindow
 	(
 	const JString& outputPath
 	)
@@ -137,22 +137,22 @@ GFGMainDirector::BuildWindow
 	assert( itsClassInput != nullptr );
 
 	auto* classNameLabel =
-		jnew JXStaticText(JGetString("classNameLabel::GFGMainDirector::JXLayout"), window,
+		jnew JXStaticText(JGetString("classNameLabel::MainDirector::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 15,10, 90,20);
 	assert( classNameLabel != nullptr );
 	classNameLabel->SetToLabel();
 
 	auto* directoryLabel =
-		jnew JXStaticText(JGetString("directoryLabel::GFGMainDirector::JXLayout"), window,
+		jnew JXStaticText(JGetString("directoryLabel::MainDirector::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 240,10, 110,20);
 	assert( directoryLabel != nullptr );
 	directoryLabel->SetToLabel();
 
 	itsChooseButton =
-		jnew JXTextButton(JGetString("itsChooseButton::GFGMainDirector::JXLayout"), window,
+		jnew JXTextButton(JGetString("itsChooseButton::MainDirector::JXLayout"), window,
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 550,10, 80,20);
 	assert( itsChooseButton != nullptr );
-	itsChooseButton->SetShortcuts(JGetString("itsChooseButton::GFGMainDirector::shortcuts::JXLayout"));
+	itsChooseButton->SetShortcuts(JGetString("itsChooseButton::MainDirector::shortcuts::JXLayout"));
 
 	auto* scrollbarSet =
 		jnew JXScrollbarSet(window,
@@ -160,22 +160,22 @@ GFGMainDirector::BuildWindow
 	assert( scrollbarSet != nullptr );
 
 	itsGenerateButton =
-		jnew JXTextButton(JGetString("itsGenerateButton::GFGMainDirector::JXLayout"), window,
+		jnew JXTextButton(JGetString("itsGenerateButton::MainDirector::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 440,425, 70,20);
 	assert( itsGenerateButton != nullptr );
-	itsGenerateButton->SetShortcuts(JGetString("itsGenerateButton::GFGMainDirector::shortcuts::JXLayout"));
+	itsGenerateButton->SetShortcuts(JGetString("itsGenerateButton::MainDirector::shortcuts::JXLayout"));
 
 	itsHelpButton =
-		jnew JXTextButton(JGetString("itsHelpButton::GFGMainDirector::JXLayout"), window,
+		jnew JXTextButton(JGetString("itsHelpButton::MainDirector::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 285,425, 70,20);
 	assert( itsHelpButton != nullptr );
-	itsHelpButton->SetShortcuts(JGetString("itsHelpButton::GFGMainDirector::shortcuts::JXLayout"));
+	itsHelpButton->SetShortcuts(JGetString("itsHelpButton::MainDirector::shortcuts::JXLayout"));
 
 	itsCancelButton =
-		jnew JXTextButton(JGetString("itsCancelButton::GFGMainDirector::JXLayout"), window,
+		jnew JXTextButton(JGetString("itsCancelButton::MainDirector::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 130,425, 70,20);
 	assert( itsCancelButton != nullptr );
-	itsCancelButton->SetShortcuts(JGetString("itsCancelButton::GFGMainDirector::shortcuts::JXLayout"));
+	itsCancelButton->SetShortcuts(JGetString("itsCancelButton::MainDirector::shortcuts::JXLayout"));
 
 	itsDirInput =
 		jnew JXPathInput(window,
@@ -183,13 +183,13 @@ GFGMainDirector::BuildWindow
 	assert( itsDirInput != nullptr );
 
 	auto* derivedLabel =
-		jnew JXStaticText(JGetString("derivedLabel::GFGMainDirector::JXLayout"), window,
+		jnew JXStaticText(JGetString("derivedLabel::MainDirector::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 15,45, 90,20);
 	assert( derivedLabel != nullptr );
 	derivedLabel->SetToLabel();
 
 	itsBaseClassTxt =
-		jnew JXStaticText(JGetString("itsBaseClassTxt::GFGMainDirector::JXLayout"), window,
+		jnew JXStaticText(JGetString("itsBaseClassTxt::MainDirector::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 105,45, 110,20);
 	assert( itsBaseClassTxt != nullptr );
 	const JFontStyle itsBaseClassTxt_style(true, false, 0, false, JColorManager::GetBlackColor());
@@ -197,7 +197,7 @@ GFGMainDirector::BuildWindow
 	itsBaseClassTxt->SetToLabel();
 
 	auto* authorLabel =
-		jnew JXStaticText(JGetString("authorLabel::GFGMainDirector::JXLayout"), window,
+		jnew JXStaticText(JGetString("authorLabel::MainDirector::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 15,390, 60,20);
 	assert( authorLabel != nullptr );
 	authorLabel->SetToLabel();
@@ -208,13 +208,13 @@ GFGMainDirector::BuildWindow
 	assert( itsAuthorInput != nullptr );
 
 	itsStringsButton =
-		jnew JXTextButton(JGetString("itsStringsButton::GFGMainDirector::JXLayout"), window,
+		jnew JXTextButton(JGetString("itsStringsButton::MainDirector::JXLayout"), window,
 					JXWidget::kFixedRight, JXWidget::kFixedBottom, 550,390, 80,20);
 	assert( itsStringsButton != nullptr );
-	itsStringsButton->SetShortcuts(JGetString("itsStringsButton::GFGMainDirector::shortcuts::JXLayout"));
+	itsStringsButton->SetShortcuts(JGetString("itsStringsButton::MainDirector::shortcuts::JXLayout"));
 
 	auto* copyrightLabel =
-		jnew JXStaticText(JGetString("copyrightLabel::GFGMainDirector::JXLayout"), window,
+		jnew JXStaticText(JGetString("copyrightLabel::MainDirector::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 250,390, 70,20);
 	assert( copyrightLabel != nullptr );
 	copyrightLabel->SetToLabel();
@@ -226,7 +226,7 @@ GFGMainDirector::BuildWindow
 
 // end JXLayout
 
-	window->SetTitle(JGetString("WindowTitle::GFGMainDirector"));
+	window->SetTitle(JGetString("WindowTitle::MainDirector"));
 	window->LockCurrentMinSize();
 
 	ListenTo(itsChooseButton);
@@ -255,7 +255,7 @@ GFGMainDirector::BuildWindow
 	window->SetIcon(image);
 
 	itsTable	=
-		GFGFunctionTable::Create(itsClass,
+		FunctionTable::Create(itsClass,
 			scrollbarSet, scrollbarSet->GetScrollEnclosure(),
 			JXWidget::kHElastic, JXWidget::kVElastic,
 			0,kColHeaderHeight, 100,
@@ -272,16 +272,16 @@ GFGMainDirector::BuildWindow
 	assert(widget != nullptr);
 	widget->FitToEnclosure(true, false);
 
-	widget->SetColTitle(GFGFunctionTable::kFUsed, JGetString("UseLabel::GFGMainDirector"));
-	widget->SetColTitle(GFGFunctionTable::kFReturnType, JGetString("RTLabel::GFGMainDirector"));
-	widget->SetColTitle(GFGFunctionTable::kFFunctionName, JGetString("FNLabel::GFGMainDirector"));
-	widget->SetColTitle(GFGFunctionTable::kFConst, JGetString("ConstLabel::GFGMainDirector"));
-	widget->SetColTitle(GFGFunctionTable::kFArgs, JGetString("ArgsLabel::GFGMainDirector"));
+	widget->SetColTitle(FunctionTable::kFUsed, JGetString("UseLabel::MainDirector"));
+	widget->SetColTitle(FunctionTable::kFReturnType, JGetString("RTLabel::MainDirector"));
+	widget->SetColTitle(FunctionTable::kFFunctionName, JGetString("FNLabel::MainDirector"));
+	widget->SetColTitle(FunctionTable::kFConst, JGetString("ConstLabel::MainDirector"));
+	widget->SetColTitle(FunctionTable::kFArgs, JGetString("ArgsLabel::MainDirector"));
 
 	itsClassInput->SetIsRequired();
 	itsDirInput->GetText()->SetText(outputPath);
-	itsAuthorInput->GetText()->SetText(GFGGetPrefsManager()->GetAuthor());
-	itsCopyrightInput->GetText()->SetText(GFGGetPrefsManager()->GetCopyright());
+	itsAuthorInput->GetText()->SetText(GetPrefsManager()->GetAuthor());
+	itsCopyrightInput->GetText()->SetText(GetPrefsManager()->GetCopyright());
 
 	JPrefObject::ReadPrefs();
 }
@@ -292,7 +292,7 @@ GFGMainDirector::BuildWindow
  ******************************************************************************/
 
 void
-GFGMainDirector::Receive
+MainDirector::Receive
 	(
 	JBroadcaster*	sender,
 	const Message&	message
@@ -317,8 +317,8 @@ GFGMainDirector::Receive
 	}
 	else if (sender == itsGenerateButton && message.Is(JXButton::kPushed))
 	{
-		GFGGetPrefsManager()->SetAuthor(itsAuthorInput->GetText()->GetText());
-		GFGGetPrefsManager()->SetCopyright(itsCopyrightInput->GetText()->GetText());
+		GetPrefsManager()->SetAuthor(itsAuthorInput->GetText()->GetText());
+		GetPrefsManager()->SetCopyright(itsCopyrightInput->GetText()->GetText());
 
 		if (Write())
 		{
@@ -327,7 +327,7 @@ GFGMainDirector::Receive
 	}
 	else if (sender == itsStringsButton && message.Is(JXButton::kPushed))
 	{
-		GFGGetPrefsManager()->EditPrefs();
+		GetPrefsManager()->EditPrefs();
 	}
 	else
 	{
@@ -343,7 +343,7 @@ GFGMainDirector::Receive
  ******************************************************************************/
 
 void
-GFGMainDirector::ReadPrefs
+MainDirector::ReadPrefs
 	(
 	std::istream& input
 	)
@@ -363,7 +363,7 @@ GFGMainDirector::ReadPrefs
  ******************************************************************************/
 
 void
-GFGMainDirector::WritePrefs
+MainDirector::WritePrefs
 	(
 	std::ostream& output
 	)
@@ -379,12 +379,12 @@ GFGMainDirector::WritePrefs
  ******************************************************************************/
 
 bool
-GFGMainDirector::Write()
+MainDirector::Write()
 {
 	JString cname = itsClassInput->GetText()->GetText();
 	if (cname.IsEmpty())
 	{
-		JGetUserNotification()->ReportError(JGetString("MissingClassName::GFGMainDirector"));
+		JGetUserNotification()->ReportError(JGetString("MissingClassName::MainDirector"));
 		itsClassInput->Focus();
 		return false;
 	}
@@ -393,7 +393,7 @@ GFGMainDirector::Write()
 	JString dir;
 	if (!itsDirInput->GetPath(&dir))
 	{
-		JGetUserNotification()->ReportError(JGetString("InvalidDestPath::GFGMainDirector"));
+		JGetUserNotification()->ReportError(JGetString("InvalidDestPath::MainDirector"));
 		itsDirInput->Focus();
 		return false;
 	}
@@ -416,7 +416,7 @@ GFGMainDirector::Write()
 	std::ofstream oh(headerfile.GetBytes());
 	if (!oh.good())
 	{
-		JGetUserNotification()->ReportError(JGetString("CreateFileFailed::GFGMainDirector"));
+		JGetUserNotification()->ReportError(JGetString("CreateFileFailed::MainDirector"));
 		return false;
 	}
 
@@ -446,7 +446,7 @@ GFGMainDirector::Write()
 		}
 	}
 
-	JString s	= GFGGetPrefsManager()->GetHeaderComment(cname);
+	JString s	= GetPrefsManager()->GetHeaderComment(cname);
 	s.Print(oh);
 
 	const JUtf8Byte* map[] =
@@ -495,11 +495,11 @@ GFGMainDirector::Write()
 	std::ofstream os(sourcefile.GetBytes());
 	if (!os.good())
 	{
-		JGetUserNotification()->ReportError(JGetString("CreateFileFailed::GFGMainDirector"));
+		JGetUserNotification()->ReportError(JGetString("CreateFileFailed::MainDirector"));
 		return false;
 	}
 
-	s	= GFGGetPrefsManager()->GetSourceComment(cname, bases);
+	s	= GetPrefsManager()->GetSourceComment(cname, bases);
 	s.Print(os);
 
 	os << std::endl;
@@ -507,7 +507,7 @@ GFGMainDirector::Write()
 	cname.Print(os);
 	os << ".h>" << std::endl << std::endl;
 
-	s	= GFGGetPrefsManager()->GetConstructorComment();
+	s	= GetPrefsManager()->GetConstructorComment();
 	s.Print(os);
 
 	const JUtf8Byte* map2[] =
@@ -520,7 +520,7 @@ GFGMainDirector::Write()
 
 	s.Print(os);
 
-	s	= GFGGetPrefsManager()->GetDestructorComment();
+	s	= GetPrefsManager()->GetDestructorComment();
 	s.Print(os);
 
 	const JUtf8Byte* map3[] =

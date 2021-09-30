@@ -5,10 +5,10 @@
 
  ******************************************************************************/
 
-#include "GFGApp.h"
-#include "GFGMDIServer.h"
-#include "GFGMainDirector.h"
-#include "gfgGlobals.h"
+#include "App.h"
+#include "MDIServer.h"
+#include "MainDirector.h"
+#include "globals.h"
 #include <jx-af/jcore/jCommandLine.h>
 #include <jx-af/jcore/jWebUtil.h>
 #include <jx-af/jcore/jAssert.h>
@@ -34,7 +34,7 @@ main
 
 #ifdef USE_MDI
 
-	if (!GFGMDIServer::WillBeMDIServer(GFGApp::GetAppSignature(), argc, argv))
+	if (!MDIServer::WillBeMDIServer(App::GetAppSignature(), argc, argv))
 	{
 		return 0;
 	}
@@ -43,7 +43,7 @@ main
 
 	bool displayAbout;
 	JString prevVersStr;
-	auto* app = jnew GFGApp(&argc, argv, &displayAbout, &prevVersStr);
+	auto* app = jnew App(&argc, argv, &displayAbout, &prevVersStr);
 	assert( app != nullptr );
 
 	if (displayAbout &&
@@ -52,9 +52,9 @@ main
 		return 0;
 	}
 
-	JCheckForNewerVersion(GFGGetPrefsManager(), kGFGVersionCheckID);
+	JCheckForNewerVersion(GetPrefsManager(), kVersionCheckID);
 
-	(GFGGetMDIServer())->HandleCmdLineOptions(argc, argv);
+	(GetMDIServer())->HandleCmdLineOptions(argc, argv);
 
 	if (displayAbout)
 	{
@@ -87,14 +87,14 @@ ParseTextOptions
 	{
 		if (JIsVersionRequest(argv[index]))
 		{
-			GFGApp::InitStrings();
+			App::InitStrings();
 			PrintVersion();
 			exit(0);
 		}
 		else if (JIsHelpRequest(argv[index]))
 		{
-			GFGApp::InitStrings();
-			GFGMDIServer::PrintCommandLineHelp();
+			App::InitStrings();
+			MDIServer::PrintCommandLineHelp();
 			exit(0);
 		}
 		index++;
@@ -110,6 +110,6 @@ void
 PrintVersion()
 {
 	std::cout << std::endl;
-	std::cout << GFGGetVersionStr() << std::endl;
+	std::cout << GetVersionStr() << std::endl;
 	std::cout << std::endl;
 }

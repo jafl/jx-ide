@@ -1,12 +1,12 @@
 /******************************************************************************
- GFGMainDirector.h
+ MainDirector.h
 
 	Copyright (C) 2002 by Glenn W. Bach.
 
  *****************************************************************************/
 
-#ifndef _H_GFGMainDirector
-#define _H_GFGMainDirector
+#ifndef _H_MainDirector
+#define _H_MainDirector
 
 #include <jx-af/jx/JXWindowDirector.h>
 #include <jx-af/jcore/JPrefObject.h>
@@ -19,18 +19,18 @@ class JXTextButton;
 class JXStaticText;
 class JXToolBar;
 
-class GFGClass;
-class GFGFunctionTable;
+class Class;
+class FunctionTable;
 
-class GFGMainDirector : public JXWindowDirector, public JPrefObject
+class MainDirector : public JXWindowDirector, public JPrefObject
 {
 public:
 
 public:
 
-	GFGMainDirector(JXDirector* supervisor, const JPtrArray<JString>& argList);
+	MainDirector(JXDirector* supervisor, const JPtrArray<JString>& argList);
 
-	virtual	~GFGMainDirector();
+	virtual	~MainDirector();
 
 protected:
 
@@ -41,8 +41,8 @@ protected:
 
 private:
 
-	GFGClass*			itsClass;
-	GFGFunctionTable*	itsTable;
+	Class*			itsClass;
+	FunctionTable*	itsTable;
 
 // begin JXLayout
 

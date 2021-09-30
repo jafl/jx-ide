@@ -1,5 +1,5 @@
 /******************************************************************************
- GFGLink.cpp
+ Link.cpp
 
 	BASE CLASS = public JBroadcaster
 
@@ -7,10 +7,10 @@
 	
  *****************************************************************************/
 
-#include <GFGLink.h>
-#include <GFGMemberFunction.h>
-#include <GFGClass.h>
-#include "gfgGlobals.h"
+#include <Link.h>
+#include <MemberFunction.h>
+#include <Class.h>
+#include "globals.h"
 
 #include <jx-af/jcore/JOutPipeStream.h>
 #include <jx-af/jcore/JProcess.h>
@@ -28,14 +28,14 @@ const JUtf8Byte kDelimiter = '\a';
 
 // JBroadcaster messages
 
-const JUtf8Byte* GFGLink::kFileParsed = "FileParsed::GFGLink";
+const JUtf8Byte* Link::kFileParsed = "FileParsed::Link";
 
 /******************************************************************************
  Constructor
 
  *****************************************************************************/
 
-GFGLink::GFGLink()
+Link::Link()
 	:
 	itsCTagsProcess(nullptr),
 	itsClassList(nullptr)
@@ -48,7 +48,7 @@ GFGLink::GFGLink()
 
  *****************************************************************************/
 
-GFGLink::~GFGLink()
+Link::~Link()
 {
 	StopCTags();
 }
@@ -59,9 +59,9 @@ GFGLink::~GFGLink()
  ******************************************************************************/
 
 void
-GFGLink::ParseClass
+Link::ParseClass
 	(
-	GFGClass*		list,
+	Class*		list,
 	const JString&	filename, 
 	const JString&	classname
 	)
@@ -108,7 +108,7 @@ GFGLink::ParseClass
  *****************************************************************************/
 
 void
-GFGLink::StopCTags()
+Link::StopCTags()
 {
 	jdelete itsCTagsProcess;
 	itsCTagsProcess = nullptr;
@@ -134,7 +134,7 @@ static const JRegex linePattern("([^[:space:]]+)[[:space:]]+[^[:space:]]+[[:spac
 // 4 = access
 
 void
-GFGLink::ParseLine
+Link::ParseLine
 	(
 	const JString& data
 	)
@@ -171,7 +171,7 @@ GFGLink::ParseLine
 		return;
 	}
 
-	auto* fn = jnew GFGMemberFunction;
+	auto* fn = jnew MemberFunction;
 	assert( fn != nullptr );
 
 	fn->SetFnName(name);
@@ -207,9 +207,9 @@ GFGLink::ParseLine
 static const JRegex commentPattern("//.*?\n");
 
 void
-GFGLink::ParseInterface
+Link::ParseInterface
 	(
-	GFGMemberFunction* 	fn,
+	MemberFunction* 	fn,
 	const JIndex 		line
 	)
 {
@@ -304,7 +304,7 @@ GFGLink::ParseInterface
  *****************************************************************************/
 
 bool
-GFGLink::StartCTags()
+Link::StartCTags()
 {
 	assert( itsCTagsProcess == nullptr );
 
@@ -327,7 +327,7 @@ GFGLink::StartCTags()
 	}
 	else
 	{
-		JGetStringManager()->ReportError("UnableToStartCTags::GFGLink", err);
+		JGetStringManager()->ReportError("UnableToStartCTags::Link", err);
 		return false;
 	}
 }

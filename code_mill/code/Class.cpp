@@ -1,17 +1,17 @@
 /******************************************************************************
- GFGClass.cpp
+ Class.cpp
 
 	<Description>
 
-	BASE CLASS = public JPtrArray<GFGMemberFunction>
+	BASE CLASS = public JPtrArray<MemberFunction>
 
 	Copyright (C) 2002 by Glenn W. Bach.
 	
  *****************************************************************************/
 
-#include <GFGClass.h>
-#include "GFGLink.h"
-#include "gfgGlobals.h"
+#include <Class.h>
+#include "Link.h"
+#include "globals.h"
 #include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
@@ -19,19 +19,19 @@
 
  *****************************************************************************/
 
-GFGClass::GFGClass()
+Class::Class()
 	:
-	JPtrArray<GFGMemberFunction>(JPtrArrayT::kDeleteAll),
+	JPtrArray<MemberFunction>(JPtrArrayT::kDeleteAll),
 	itsBaseClasses(nullptr),
 	itsBaseClassFiles(nullptr),
 	itsAncestors(nullptr),
 	itsAncestorFiles(nullptr)
 {
-	itsLink	= jnew GFGLink();
+	itsLink	= jnew Link();
 	assert(itsLink != nullptr);
 	ListenTo(itsLink);
 
-	SetCompareFunction(GFGMemberFunction::CompareFunction);
+	SetCompareFunction(MemberFunction::CompareFunction);
 }
 
 /******************************************************************************
@@ -39,7 +39,7 @@ GFGClass::GFGClass()
 
  *****************************************************************************/
 
-GFGClass::~GFGClass()
+Class::~Class()
 {
 	jdelete itsBaseClasses;
 	jdelete itsBaseClassFiles;
@@ -53,7 +53,7 @@ GFGClass::~GFGClass()
  ******************************************************************************/
 
 JSize
-GFGClass::GetBaseClassCount()
+Class::GetBaseClassCount()
 	const
 {
 	if (itsBaseClasses == nullptr)
@@ -72,7 +72,7 @@ GFGClass::GetBaseClassCount()
  ******************************************************************************/
 
 void
-GFGClass::GetBaseClass
+Class::GetBaseClass
 	(
 	const JIndex 	index,
 	JString* 		classname, 
@@ -95,7 +95,7 @@ GFGClass::GetBaseClass
  ******************************************************************************/
 
 void
-GFGClass::AddBaseClass
+Class::AddBaseClass
 	(
 	const JString& classname, 
 	const JString& filename
@@ -122,7 +122,7 @@ GFGClass::AddBaseClass
  ******************************************************************************/
 
 JSize
-GFGClass::GetAncestorCount()
+Class::GetAncestorCount()
 	const
 {
 	if (itsAncestors == nullptr)
@@ -141,7 +141,7 @@ GFGClass::GetAncestorCount()
  ******************************************************************************/
 
 void
-GFGClass::GetAncestor
+Class::GetAncestor
 	(
 	const JIndex 	index,
 	JString* 		classname, 
@@ -164,7 +164,7 @@ GFGClass::GetAncestor
  ******************************************************************************/
 
 void
-GFGClass::AddAncestor
+Class::AddAncestor
 	(
 	const JString& classname, 
 	const JString& filename
@@ -191,7 +191,7 @@ GFGClass::AddAncestor
  ******************************************************************************/
 
 void
-GFGClass::Populate()
+Class::Populate()
 {
 	const JSize bcount = GetBaseClassCount();
 	if (bcount == 0)
@@ -227,7 +227,7 @@ GFGClass::Populate()
  ******************************************************************************/
 
 void
-GFGClass::WritePublic
+Class::WritePublic
 	(
 	std::ostream& 		os,
 	const bool	interface
@@ -236,7 +236,7 @@ GFGClass::WritePublic
 	const JSize count	= GetElementCount();
 	for (JIndex i = 1; i <= count; i++)
 	{
-		GFGMemberFunction* fn	= GetElement(i);
+		MemberFunction* fn	= GetElement(i);
 		if (fn->IsUsed() &&
 			!fn->IsProtected())
 		{
@@ -251,7 +251,7 @@ GFGClass::WritePublic
  ******************************************************************************/
 
 void
-GFGClass::WriteProtected
+Class::WriteProtected
 	(
 	std::ostream& 		os,
 	const bool	interface
@@ -260,7 +260,7 @@ GFGClass::WriteProtected
 	const JSize count	= GetElementCount();
 	for (JIndex i = 1; i <= count; i++)
 	{
-		GFGMemberFunction* fn	= GetElement(i);
+		MemberFunction* fn	= GetElement(i);
 		if (fn->IsUsed() &&
 			fn->IsProtected())
 		{
@@ -275,10 +275,10 @@ GFGClass::WriteProtected
  ******************************************************************************/
 
 void
-GFGClass::WriteFunction
+Class::WriteFunction
 	(
 	std::ostream& 			os,
-	GFGMemberFunction*	fn,
+	MemberFunction*	fn,
 	const bool		interface
 	)
 {
@@ -295,7 +295,7 @@ GFGClass::WriteFunction
 		access = "protected";
 	}
 
-	const JString s = GFGGetPrefsManager()->GetFunctionComment(fn->GetFnName(), access);
+	const JString s = GetPrefsManager()->GetFunctionComment(fn->GetFnName(), access);
 	s.Print(os);
 
 	fn->GetReturnType().Print(os);
@@ -337,18 +337,18 @@ GFGClass::WriteFunction
  ******************************************************************************/
 
 void
-GFGClass::Receive
+Class::Receive
 	(
 	JBroadcaster*	sender,
 	const Message&	message
 	)
 {
-	if (sender == itsLink && message.Is(GFGLink::kFileParsed))
+	if (sender == itsLink && message.Is(Link::kFileParsed))
 	{
 /*		const JSize count	= GetElementCount();
 		for (JIndex i = 1; i <= count; i++)
 		{
-			GFGMemberFunction* fn	= GetElement(i);
+			MemberFunction* fn	= GetElement(i);
 			std::cout << "#########################" << std::endl;
 			std::cout << fn->GetFnName() << '\t' << fn->IsProtected() << '\t' << fn->IsRequired() << '\t' << fn->IsConst() << std::endl;
 			std::cout << "-------------------------" << std::endl;
@@ -364,6 +364,6 @@ GFGClass::Receive
 	}
 	else
 	{
-		JPtrArray<GFGMemberFunction>::Receive(sender, message);
+		JPtrArray<MemberFunction>::Receive(sender, message);
 	}
 }

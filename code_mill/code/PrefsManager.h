@@ -1,44 +1,44 @@
 /******************************************************************************
- GFGPrefsManager.h
+ PrefsManager.h
 
 	Copyright (C) 2002 by Glenn W. Bach.
 
  *****************************************************************************/
 
-#ifndef _H_GFGPrefsManager
-#define _H_GFGPrefsManager
+#ifndef _H_PrefsManager
+#define _H_PrefsManager
 
 #include <jx-af/jx/JXPrefsManager.h>
 
 class JString;
-class GFGPrefsDialog;
+class PrefsDialog;
 
 // Preferences -- do not change ID's once they are assigned
 
 enum
 {
-	kGFGProgramVersionID = 1,
-	kGFGgCSFSetupID,
-	kGFGMainDirectorID,
-	kGFGMainToolBarID,
-	kGFGHeaderCommentID,
-	kGFGAuthorID,
-	kGFGCopyrightID,
-	kGFGSourceCommentID,
-	kGFGConstructorCommentID,
-	kGFGDestructorCommentID,
-	kGFGFunctionCommentID,
-	kGFGYearID,
-	kGFGVersionCheckID
+	kProgramVersionID = 1,
+	kgCSFSetupID,
+	kMainDirectorID,
+	kMainToolBarID,
+	kHeaderCommentID,
+	kAuthorID,
+	kCopyrightID,
+	kSourceCommentID,
+	kConstructorCommentID,
+	kDestructorCommentID,
+	kFunctionCommentID,
+	kYearID,
+	kVersionCheckID
 };
 
-class GFGPrefsManager : public JXPrefsManager
+class PrefsManager : public JXPrefsManager
 {
 public:
 
-	GFGPrefsManager(bool* isNew);
+	PrefsManager(bool* isNew);
 
-	virtual	~GFGPrefsManager();
+	virtual	~PrefsManager();
 
 	JString GetPrevVersionStr() const;
 	void	EditPrefs();
@@ -75,7 +75,7 @@ protected:
 
 private:
 
-	GFGPrefsDialog*	itsDialog;
+	PrefsDialog*	itsDialog;
 };
 
 #endif

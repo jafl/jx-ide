@@ -1,19 +1,19 @@
 /******************************************************************************
- GFGProtocol.h
+ Protocol.h
 
 	Copyright (C) 1998 by John Lindal.
 
  ******************************************************************************/
 
-#ifndef _H_GFGProtocol
-#define _H_GFGProtocol
+#ifndef _H_Protocol
+#define _H_Protocol
 
 #include <jx-af/jcore/JBroadcaster.h>
 #include <jx-af/jcore/JString.h>
 #include <ace/Svc_Handler.h>
 #include <ace/Synch_Traits.h>
 
-class GFGProtocolT
+class ProtocolT
 {
 public:
 
@@ -42,15 +42,15 @@ public:
 };
 
 template <ACE_PEER_STREAM_1>
-class GFGProtocol : public ACE_Svc_Handler<ACE_PEER_STREAM_2, ACE_SYNCH>,
+class Protocol : public ACE_Svc_Handler<ACE_PEER_STREAM_2, ACE_SYNCH>,
 				   virtual public JBroadcaster
 {
 public:
 
-	GFGProtocol();
-	GFGProtocol(const ACE_HANDLE fd);
+	Protocol();
+	Protocol(const ACE_HANDLE fd);
 
-	virtual ~GFGProtocol();
+	virtual ~Protocol();
 
 	void	Read(JString* buffer);
 	void	Write(const JCharacter* buffer);
@@ -70,14 +70,14 @@ private:
 
 private:
 
-	void	GFGProtocolX();
+	void	ProtocolX();
 
 	// not allowed
 
-	GFGProtocol(const GFGProtocol&) = delete;
-	GFGProtocol& operator=(const GFGProtocol&) = delete;
+	Protocol(const Protocol&) = delete;
+	Protocol& operator=(const Protocol&) = delete;
 };
 
-#include <GFGProtocol.tmpl>
+#include <Protocol.tmpl>
 
 #endif

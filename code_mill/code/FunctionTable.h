@@ -1,21 +1,21 @@
 /******************************************************************************
- GFGFunctionTable.h
+ FunctionTable.h
 
-	Interface for the GFGFunctionTable class
+	Interface for the FunctionTable class
 
 	Copyright (C) 2001 by Glenn W. Bach.
 
  *****************************************************************************/
 
-#ifndef _H_GFGFunctionTable
-#define _H_GFGFunctionTable
+#ifndef _H_FunctionTable
+#define _H_FunctionTable
 
 // Superclass Header
 #include <jx-af/jx/JXTable.h>
 
-class GFGClass;
+class Class;
 
-class GFGFunctionTable : public JXTable
+class FunctionTable : public JXTable
 {
 public:
 
@@ -30,19 +30,19 @@ enum
 
 public:
 
-	static GFGFunctionTable* Create(GFGClass* list,
+	static FunctionTable* Create(Class* list,
 			JXScrollbarSet* scrollbarSet, JXContainer* enclosure,
 			const HSizingOption hSizing, const VSizingOption vSizing,
 			const JCoordinate x, const JCoordinate y,
 			const JCoordinate w, const JCoordinate h);
 
-	virtual ~GFGFunctionTable();
+	virtual ~FunctionTable();
 
 	virtual void	HandleKeyPress(const JUtf8Character& c, const int keySym, const JXKeyModifiers& modifiers) override;
 
 protected:
 
-	GFGFunctionTable(GFGClass* list,
+	FunctionTable(Class* list,
 			JXScrollbarSet* scrollbarSet, JXContainer* enclosure,
 			const HSizingOption hSizing, const VSizingOption vSizing,
 			const JCoordinate x, const JCoordinate y,
@@ -57,12 +57,12 @@ protected:
 
 private:
 
-	GFGClass*	itsList;	// we don't own this.
+	Class*	itsList;	// we don't own this.
 	bool		itsNeedsAdjustment;
 
 private:
 
-	void	GFGFunctionTableX();
+	void	FunctionTableX();
 	void	AdjustColumnWidths();
 };
 #endif

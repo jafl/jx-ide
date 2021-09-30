@@ -1,5 +1,5 @@
 /******************************************************************************
- gfgActionDefs.h
+ actionDefs.h
 
 	Shared actions for use as menu item ID's and in keybinding tables.
 	These preprocessor definitions allow them to be included in static
@@ -9,14 +9,14 @@
 
  ******************************************************************************/
 
-#ifndef _H_gfgActionDefs
-#define _H_gfgActionDefs
+#ifndef _H_actionDefs
+#define _H_actionDefs
 
 #include <jx-af/jx/jXActionDefs.h>	// for convenience
 
 // Preferences menu
 
-#define kGFGEditPreferencesAction "EditPreferences::GFGMainDirector"
-#define kGFGEditToolBarAction     "EditToolBar::GFGMainDirector"
+#define kEditPreferencesAction "EditPreferences::GFGMainDirector"
+#define kEditToolBarAction     "EditToolBar::GFGMainDirector"
 
 #endif

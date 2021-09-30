@@ -1,12 +1,12 @@
 /******************************************************************************
- GFGPrefsDialog.h
+ PrefsDialog.h
 
 	Copyright (C) 2002 by Glenn W. Bach.
 
  ******************************************************************************/
 
-#ifndef _H_GFGPrefsDialog
-#define _H_GFGPrefsDialog
+#ifndef _H_PrefsDialog
+#define _H_PrefsDialog
 
 #include <jx-af/jx/JXDialogDirector.h>
 #include <jx-af/jcore/JString.h>
@@ -14,18 +14,18 @@
 class JXInputField;
 class JXTextButton;
 
-class GFGPrefsDialog : public JXDialogDirector
+class PrefsDialog : public JXDialogDirector
 {
 public:
 
-	GFGPrefsDialog(JXDirector* supervisor, 
+	PrefsDialog(JXDirector* supervisor, 
 					const JString& header,
 					const JString& source,
 					const JString& constructor,
 					const JString& destructor,
 					const JString& function);
 
-	virtual	~GFGPrefsDialog();
+	virtual	~PrefsDialog();
 
 	void	GetValues(JString* header, JString* source,
 					  JString* constructor, JString* destructor,

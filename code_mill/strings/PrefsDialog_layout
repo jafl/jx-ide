@@ -1,0 +1,11 @@
+0
+sourceCommentLabel::PrefsDialog::JXLayout "Source comment ( allowed variables are $class, $base  and $copyright ):"
+cancelButton::PrefsDialog::shortcuts::JXLayout "^["
+dtorCommentLabel::PrefsDialog::JXLayout "Destructor comment:"
+itsHelpButton::PrefsDialog::shortcuts::JXLayout "F1"
+itsHelpButton::PrefsDialog::JXLayout "Help"
+cancelButton::PrefsDialog::JXLayout "Cancel"
+headerCommentLabel::PrefsDialog::JXLayout "Header comment ( allowed variables are $class and $copyright ):"
+fnCommentLabel::PrefsDialog::JXLayout "Function comment ( allowed variables are $function and $access ):"
+okButton::PrefsDialog::JXLayout "OK"
+ctorCommentLabel::PrefsDialog::JXLayout "Constructor comment:"
