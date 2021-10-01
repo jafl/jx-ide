@@ -7,9 +7,9 @@
 
  ******************************************************************************/
 
-#include "CBMDIServer.h"
-#include "CBTextDocument.h"
-#include "cbGlobals.h"
+#include "MDIServer.h"
+#include "TextDocument.h"
+#include "globals.h"
 #include <jx-af/jx/JXDockManager.h>
 #include <jx-af/jx/JXSplashWindow.h>
 #include <jx-af/jx/JXWindow.h>
@@ -40,14 +40,14 @@ main
 	ParseTextOptions(argc, argv, &commitFile);
 
 	const bool useMDI = commitFile.IsEmpty();
-	if (useMDI && !CBMDIServer::WillBeMDIServer(CBApp::GetAppSignature(), argc, argv))
+	if (useMDI && !MDIServer::WillBeMDIServer(App::GetAppSignature(), argc, argv))
 	{
 		return 0;
 	}
 
 	bool displayAbout;
 	JString prevVersStr;
-	auto* app = jnew CBApp(&argc, argv, useMDI, &displayAbout, &prevVersStr);
+	auto* app = jnew App(&argc, argv, useMDI, &displayAbout, &prevVersStr);
 	assert( app != nullptr );
 
 	if (displayAbout &&
@@ -58,11 +58,11 @@ main
 
 	if (useMDI)
 	{
-		JCheckForNewerVersion(CBGetPrefsManager(), kCBVersionCheckID);
+		JCheckForNewerVersion(GetPrefsManager(), kVersionCheckID);
 	}
 
-	CBMDIServer* mdi;
-	if (CBGetMDIServer(&mdi))
+	MDIServer* mdi;
+	if (GetMDIServer(&mdi))
 	{
 		mdi->HandleCmdLineOptions(argc, argv);
 	}
@@ -71,10 +71,10 @@ main
 	{
 		JXWindow::ShouldAutoDockNewWindows(false);
 
-		CBDocumentManager* docMgr = CBGetDocumentManager();
+		DocumentManager* docMgr = GetDocumentManager();
 		docMgr->OpenSomething(commitFile);
 
-		JPtrArray<CBTextDocument>* docList = docMgr->GetTextDocList();
+		JPtrArray<TextDocument>* docList = docMgr->GetTextDocList();
 		if (!docList->IsEmpty())
 		{
 			(docList->GetFirstElement())->ShouldMakeBackupFile(false);
@@ -115,14 +115,14 @@ ParseTextOptions
 	{
 		if (JIsVersionRequest(argv[index]))
 		{
-			CBApp::InitStrings();
+			App::InitStrings();
 			PrintVersion();
 			exit(0);
 		}
 		else if (JIsHelpRequest(argv[index]))
 		{
-			CBApp::InitStrings();
-			CBMDIServer::PrintCommandLineHelp();
+			App::InitStrings();
+			MDIServer::PrintCommandLineHelp();
 			exit(0);
 		}
 
@@ -146,6 +146,6 @@ void
 PrintVersion()
 {
 	std::cout << std::endl;
-	std::cout << CBGetVersionStr() << std::endl;
+	std::cout << GetVersionStr() << std::endl;
 	std::cout << std::endl;
 }

@@ -1,0 +1,5 @@
+0
+itsSVNRev2Menu::DiffFileDialog::svnLayout "2"
+itsSVNChooseButton::DiffFileDialog::svnLayout "Choose"
+itsSVNSummaryCB::DiffFileDialog::svnLayout "Summary"
+itsSVNRev1Menu::DiffFileDialog::svnLayout "1"

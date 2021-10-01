@@ -1,0 +1,9 @@
+0
+itsCloseButton::RunTEScriptDialog::JXLayout "Close"
+cmdLabel::RunTEScriptDialog::JXLayout "Enter the command to process the selected text (if any):"
+itsRunButton::RunTEScriptDialog::JXLayout "Run"
+itsRunButton::RunTEScriptDialog::shortcuts::JXLayout "^M"
+itsCloseButton::RunTEScriptDialog::shortcuts::JXLayout "#W^["
+itsStayOpenCB::RunTEScriptDialog::JXLayout "Stay open"
+itsHelpButton::RunTEScriptDialog::JXLayout "Help"
+itsHelpButton::RunTEScriptDialog::shortcuts::JXLayout "F1"

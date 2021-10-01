@@ -1,0 +1,5 @@
+0
+itsHelpButton::EditCRMDialog::JXLayout "Help"
+cancelButton::EditCRMDialog::JXLayout "Cancel"
+okButton::EditCRMDialog::JXLayout "OK"
+itsHelpButton::EditCRMDialog::shortcuts::JXLayout "F1"

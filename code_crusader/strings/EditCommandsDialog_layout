@@ -1,0 +1,5 @@
+0
+okButton::EditCommandsDialog::JXLayout "OK"
+cancelButton::EditCommandsDialog::JXLayout "Cancel"
+itsHelpButton::EditCommandsDialog::JXLayout "Help"
+itsHelpButton::EditCommandsDialog::shortcuts::JXLayout "F1"

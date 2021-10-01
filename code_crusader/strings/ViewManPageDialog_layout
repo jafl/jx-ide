@@ -1,0 +1,12 @@
+0
+itsCloseButton::ViewManPageDialog::shortcuts::JXLayout "#W^["
+itsViewButton::ViewManPageDialog::JXLayout "View"
+itsHelpButton::ViewManPageDialog::shortcuts::JXLayout "F1"
+itsAproposCheckbox::ViewManPageDialog::shortcuts::JXLayout "#P"
+itsAproposCheckbox::ViewManPageDialog::JXLayout "Apropos"
+nameLabel::ViewManPageDialog::JXLayout "Function name:"
+sectionLabel::ViewManPageDialog::JXLayout "Section index:"
+itsStayOpenCB::ViewManPageDialog::JXLayout "Stay open"
+itsHelpButton::ViewManPageDialog::JXLayout "Help"
+itsViewButton::ViewManPageDialog::shortcuts::JXLayout "^M"
+itsCloseButton::ViewManPageDialog::JXLayout "Close"

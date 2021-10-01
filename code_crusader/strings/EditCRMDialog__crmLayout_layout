@@ -1,0 +1,3 @@
+0
+newCRMButton::EditCRMDialog::crmLayout "New"
+removeCRMButton::EditCRMDialog::crmLayout "Remove"

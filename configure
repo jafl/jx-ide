@@ -94,7 +94,3 @@ else
 	exit 1;
 
 fi
-
-pushd code_medic;
-make -f Make.header update_jcc;
-popd;

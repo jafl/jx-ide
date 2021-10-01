@@ -8,9 +8,9 @@
  *****************************************************************************/
 
 #include <jx-af/jcore/JTestManager.h>
-#include "CBCTree.h"
-#include "CBClass.h"
-#include "CBCPreprocessor.h"
+#include "CTree.h"
+#include "Class.h"
+#include "CPreprocessor.h"
 #include <jx-af/jcore/jAssert.h>
 
 int main()
@@ -18,13 +18,13 @@ int main()
 	return JTestManager::Execute();
 }
 
-class TestCTree : public CBCTree
+class TestCTree : public CTree
 {
 public:
 
 	TestCTree()
 		:
-		CBCTree(nullptr, 0)
+		CTree(nullptr, 0)
 	{ };
 
 	virtual void ParseFile(const JString& fileName, const JFAID_t id) override;
@@ -37,7 +37,7 @@ TestCTree::ParseFile
 	const JFAID_t	id
 	)
 {
-	CBCTree::ParseFile(fileName, id);
+	CTree::ParseFile(fileName, id);
 }
 
 JTEST(Basic)
@@ -47,34 +47,34 @@ JTEST(Basic)
 	TestCTree tree;
 	tree.GetCPreprocessor()->DefineMacro(
 		JString("TEST_MACRO", false),
-		JString("CBCtagsUser", false));
+		JString("CtagsUser", false));
 
 	tree.PrepareForUpdate(false);
-	tree.ParseFile(JString("./data/tree/c/CBTestTree.h", false), 1);
+	tree.ParseFile(JString("./data/tree/c/TestTree.h", false), 1);
 	tree.UpdateFinished(deadFileList);
 
 	const TestCTree& constTree     = tree;
-	const JPtrArray<CBClass>& list = constTree.GetClasses();
+	const JPtrArray<Class>& list = constTree.GetClasses();
 	JAssertEqual(3, list.GetElementCount());
 
 	JSize found = 0;
-	for (CBClass* c : list)
+	for (Class* c : list)
 		{
-		if (c->GetFullName() == "CBTestTree")
+		if (c->GetFullName() == "TestTree")
 			{
 			JAssertTrue(c->HasParents());
 			JAssertEqual(2, c->GetParentCount());
 			}
 		else
 			{
-			JAssertEqual(CBClass::kGhostType, c->GetDeclareType());
+			JAssertEqual(Class::kGhostType, c->GetDeclareType());
 			}
 
 		for (const JUtf8Byte* n :
 			{
-				"CBTestTree",
-				"CBTree",
-				"CBCtagsUser"
+				"TestTree",
+				"Tree",
+				"CtagsUser"
 			})
 			{
 			if (n == c->GetFullName())
@@ -97,11 +97,11 @@ JTEST(Namespace)
 	tree.UpdateFinished(deadFileList);
 
 	const TestCTree& constTree     = tree;
-	const JPtrArray<CBClass>& list = constTree.GetClasses();
+	const JPtrArray<Class>& list = constTree.GetClasses();
 	JAssertEqual(6, list.GetElementCount());
 
 	JSize found = 0;
-	for (CBClass* c : list)
+	for (Class* c : list)
 		{
 		if (c->GetFullName() == "Test1::Test2::Bar" ||
 			c->GetFullName() == "Test1::Test2::Zot")
@@ -116,7 +116,7 @@ JTEST(Namespace)
 			}
 		else if (c->GetFullName() == "Shug")
 			{
-			JAssertEqual(CBClass::kGhostType, c->GetDeclareType());
+			JAssertEqual(Class::kGhostType, c->GetDeclareType());
 			}
 
 		for (const JUtf8Byte* n :
@@ -149,16 +149,16 @@ JTEST(Template)
 	tree.UpdateFinished(deadFileList);
 
 	const TestCTree& constTree     = tree;
-	const JPtrArray<CBClass>& list = constTree.GetClasses();
+	const JPtrArray<Class>& list = constTree.GetClasses();
 	JAssertEqual(1, list.GetElementCount());
 
-	CBClass* c = list.GetFirstElement();
+	Class* c = list.GetFirstElement();
 	JAssertTrue(c->IsTemplate());
 	JAssertStringsEqual("Foo", c->GetName());
 }
 
 bool
-CBInUpdateThread()
+InUpdateThread()
 {
 	return true;
 }

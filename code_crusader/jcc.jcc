@@ -8,896 +8,896 @@ T
 F
 "./code/main.cpp"
 T
-2 "cbGlobals.cpp"
+2 "globals.cpp"
 F
-"./code/cbGlobals.cpp"
+"./code/globals.cpp"
 T
-2 "CBApp.cpp"
+2 "App.cpp"
 F
-"./code/CBApp.cpp"
+"./code/App.cpp"
 T
-2 "CBPrefsManager.cpp"
+2 "PrefsManager.cpp"
 F
-"./code/CBPrefsManager.cpp"
+"./code/PrefsManager.cpp"
 T
-2 "CBDockManager.cpp"
+2 "DockManager.cpp"
 F
-"./code/CBDockManager.cpp"
+"./code/DockManager.cpp"
 T
-2 "CBEditMiscPrefsDialog.cpp"
+2 "EditMiscPrefsDialog.cpp"
 F
-"./code/CBEditMiscPrefsDialog.cpp"
+"./code/EditMiscPrefsDialog.cpp"
 T
-2 "CBSampleText.cpp"
+2 "SampleText.cpp"
 F
-"./code/CBSampleText.cpp"
+"./code/SampleText.cpp"
 T
-2 "CBDocumentManager.cpp"
+2 "DocumentManager.cpp"
 F
-"./code/CBDocumentManager.cpp"
+"./code/DocumentManager.cpp"
 T
-2 "CBDocumentMenu.cpp"
+2 "DocumentMenu.cpp"
 F
-"./code/CBDocumentMenu.cpp"
+"./code/DocumentMenu.cpp"
 T
-2 "CBMDIServer.cpp"
+2 "MDIServer.cpp"
 F
-"./code/CBMDIServer.cpp"
+"./code/MDIServer.cpp"
 T
-2 "CBAboutDialog.cpp"
+2 "AboutDialog.cpp"
 F
-"./code/CBAboutDialog.cpp"
+"./code/AboutDialog.cpp"
 T
-2 "CBAboutDialogIconTask.cpp"
+2 "AboutDialogIconTask.cpp"
 F
-"./code/CBAboutDialogIconTask.cpp"
+"./code/AboutDialogIconTask.cpp"
 F
 T
 1 "project"
 T
-2 "CBProjectDocument.cpp"
+2 "ProjectDocument.cpp"
 F
-"./code/CBProjectDocument.cpp"
+"./code/ProjectDocument.cpp"
 T
-2 "CBProjectTable.cpp"
+2 "ProjectTable.cpp"
 F
-"./code/CBProjectTable.cpp"
+"./code/ProjectTable.cpp"
 T
-2 "CBProjectTableInput.cpp"
+2 "ProjectTableInput.cpp"
 F
-"./code/CBProjectTableInput.cpp"
+"./code/ProjectTableInput.cpp"
 T
-2 "CBProjectTree.cpp"
+2 "ProjectTree.cpp"
 F
-"./code/CBProjectTree.cpp"
+"./code/ProjectTree.cpp"
 T
-2 "CBProjectNodeType.cpp"
+2 "ProjectNodeType.cpp"
 F
-"./code/CBProjectNodeType.cpp"
+"./code/ProjectNodeType.cpp"
 T
-2 "CBProjectNode.cpp"
+2 "ProjectNode.cpp"
 F
-"./code/CBProjectNode.cpp"
+"./code/ProjectNode.cpp"
 T
-2 "CBGroupNode.cpp"
+2 "GroupNode.cpp"
 F
-"./code/CBGroupNode.cpp"
+"./code/GroupNode.cpp"
 T
-2 "CBFileNodeBase.cpp"
+2 "FileNodeBase.cpp"
 F
-"./code/CBFileNodeBase.cpp"
+"./code/FileNodeBase.cpp"
 T
-2 "CBFileNode.cpp"
+2 "FileNode.cpp"
 F
-"./code/CBFileNode.cpp"
+"./code/FileNode.cpp"
 T
-2 "CBLibraryNode.cpp"
+2 "LibraryNode.cpp"
 F
-"./code/CBLibraryNode.cpp"
+"./code/LibraryNode.cpp"
 T
-2 "CBSubprojectConfigDialog.cpp"
+2 "SubprojectConfigDialog.cpp"
 F
-"./code/CBSubprojectConfigDialog.cpp"
+"./code/SubprojectConfigDialog.cpp"
 T
-2 "CBProjectFileInput.cpp"
+2 "ProjectFileInput.cpp"
 F
-"./code/CBProjectFileInput.cpp"
+"./code/ProjectFileInput.cpp"
 T
-2 "CBEditProjPrefsDialog.cpp"
+2 "EditProjPrefsDialog.cpp"
 F
-"./code/CBEditProjPrefsDialog.cpp"
+"./code/EditProjPrefsDialog.cpp"
 T
-2 "CBEditSearchPathsDialog.cpp"
+2 "EditSearchPathsDialog.cpp"
 F
-"./code/CBEditSearchPathsDialog.cpp"
+"./code/EditSearchPathsDialog.cpp"
 T
-2 "CBPathTable.cpp"
+2 "PathTable.cpp"
 F
-"./code/CBPathTable.cpp"
+"./code/PathTable.cpp"
 T
-2 "CBDirList.cpp"
+2 "DirList.cpp"
 F
-"./code/CBDirList.cpp"
+"./code/DirList.cpp"
 T
-2 "CBNewProjectCSF.cpp"
+2 "NewProjectCSF.cpp"
 F
-"./code/CBNewProjectCSF.cpp"
+"./code/NewProjectCSF.cpp"
 T
-2 "CBNewProjectSaveFileDialog.cpp"
+2 "NewProjectSaveFileDialog.cpp"
 F
-"./code/CBNewProjectSaveFileDialog.cpp"
+"./code/NewProjectSaveFileDialog.cpp"
 T
-2 "CBSymbolUpdatePG.cpp"
+2 "SymbolUpdatePG.cpp"
 F
-"./code/CBSymbolUpdatePG.cpp"
+"./code/SymbolUpdatePG.cpp"
 T
-2 "CBWaitForSymbolUpdateTask.cpp"
+2 "WaitForSymbolUpdateTask.cpp"
 F
-"./code/CBWaitForSymbolUpdateTask.cpp"
+"./code/WaitForSymbolUpdateTask.cpp"
 T
-2 "CBDelaySymbolUpdateTask.cpp"
+2 "DelaySymbolUpdateTask.cpp"
 F
-"./code/CBDelaySymbolUpdateTask.cpp"
+"./code/DelaySymbolUpdateTask.cpp"
 F
 T
 1 "commands"
 T
-2 "CBCommandManager.cpp"
+2 "CommandManager.cpp"
 F
-"./code/CBCommandManager.cpp"
+"./code/CommandManager.cpp"
 T
-2 "CBCommandMenu.cpp"
+2 "CommandMenu.cpp"
 F
-"./code/CBCommandMenu.cpp"
+"./code/CommandMenu.cpp"
 T
-2 "CBCommand.cpp"
+2 "Command.cpp"
 F
-"./code/CBCommand.cpp"
+"./code/Command.cpp"
 T
-2 "CBEditCommandsDialog.cpp"
+2 "EditCommandsDialog.cpp"
 F
-"./code/CBEditCommandsDialog.cpp"
+"./code/EditCommandsDialog.cpp"
 T
-2 "CBCommandTable.cpp"
+2 "CommandTable.cpp"
 F
-"./code/CBCommandTable.cpp"
+"./code/CommandTable.cpp"
 T
-2 "CBCommandPathInput.cpp"
+2 "CommandPathInput.cpp"
 F
-"./code/CBCommandPathInput.cpp"
+"./code/CommandPathInput.cpp"
 T
-2 "CBCommandSelection.cpp"
+2 "CommandSelection.cpp"
 F
-"./code/CBCommandSelection.cpp"
+"./code/CommandSelection.cpp"
 T
-2 "CBRunCommandDialog.cpp"
+2 "RunCommandDialog.cpp"
 F
-"./code/CBRunCommandDialog.cpp"
+"./code/RunCommandDialog.cpp"
 T
-2 "CBExecOutputDocument.cpp"
+2 "ExecOutputDocument.cpp"
 F
-"./code/CBExecOutputDocument.cpp"
+"./code/ExecOutputDocument.cpp"
 T
-2 "CBCmdLineInput.cpp"
+2 "CmdLineInput.cpp"
 F
-"./code/CBCmdLineInput.cpp"
+"./code/CmdLineInput.cpp"
 T
-2 "CBExecOutputPostFTCTask.cpp"
+2 "ExecOutputPostFTCTask.cpp"
 F
-"./code/CBExecOutputPostFTCTask.cpp"
+"./code/ExecOutputPostFTCTask.cpp"
 F
 T
 1 "build"
 T
-2 "CBBuildManager.cpp"
+2 "BuildManager.cpp"
 F
-"./code/CBBuildManager.cpp"
+"./code/BuildManager.cpp"
 T
-2 "CBCompileDocument.cpp"
+2 "CompileDocument.cpp"
 F
-"./code/CBCompileDocument.cpp"
+"./code/CompileDocument.cpp"
 T
-2 "CBProjectConfigDialog.cpp"
+2 "ProjectConfigDialog.cpp"
 F
-"./code/CBProjectConfigDialog.cpp"
+"./code/ProjectConfigDialog.cpp"
 F
 T
 1 "file list"
 T
-2 "CBFileListDirector.cpp"
+2 "FileListDirector.cpp"
 F
-"./code/CBFileListDirector.cpp"
+"./code/FileListDirector.cpp"
 T
-2 "CBFileListTable.cpp"
+2 "FileListTable.cpp"
 F
-"./code/CBFileListTable.cpp"
+"./code/FileListTable.cpp"
 F
 T
 1 "symbol browser"
 T
-2 "CBSymbolDirector.cpp"
+2 "SymbolDirector.cpp"
 F
-"./code/CBSymbolDirector.cpp"
+"./code/SymbolDirector.cpp"
 T
-2 "CBSymbolTable.cpp"
+2 "SymbolTable.cpp"
 F
-"./code/CBSymbolTable.cpp"
+"./code/SymbolTable.cpp"
 T
-2 "CBSymbolTypeList.cpp"
+2 "SymbolTypeList.cpp"
 F
-"./code/CBSymbolTypeList.cpp"
+"./code/SymbolTypeList.cpp"
 T
-2 "CBSymbolList.cpp"
+2 "SymbolList.cpp"
 F
-"./code/CBSymbolList.cpp"
+"./code/SymbolList.cpp"
 T
-2 "CBSymbolSRDirector.cpp"
+2 "SymbolSRDirector.cpp"
 F
-"./code/CBSymbolSRDirector.cpp"
+"./code/SymbolSRDirector.cpp"
 T
-2 "CBEditSymbolPrefsDialog.cpp"
+2 "EditSymbolPrefsDialog.cpp"
 F
-"./code/CBEditSymbolPrefsDialog.cpp"
+"./code/EditSymbolPrefsDialog.cpp"
 F
 T
 1 "class tree"
 T
-2 "CBTreeDirector.cpp"
+2 "TreeDirector.cpp"
 F
-"./code/CBTreeDirector.cpp"
+"./code/TreeDirector.cpp"
 T
-2 "CBTreeWidget.cpp"
+2 "TreeWidget.cpp"
 F
-"./code/CBTreeWidget.cpp"
+"./code/TreeWidget.cpp"
 T
-2 "CBTree.cpp"
+2 "Tree.cpp"
 F
-"./code/CBTree.cpp"
+"./code/Tree.cpp"
 T
-2 "CBClass.cpp"
+2 "Class.cpp"
 F
-"./code/CBClass.cpp"
+"./code/Class.cpp"
 T
-2 "CBEditTreePrefsDialog.cpp"
+2 "EditTreePrefsDialog.cpp"
 F
-"./code/CBEditTreePrefsDialog.cpp"
+"./code/EditTreePrefsDialog.cpp"
 T
-2 "CBCTreeDirector.cpp"
+2 "CTreeDirector.cpp"
 F
-"./code/CBCTreeDirector.cpp"
+"./code/CTreeDirector.cpp"
 T
-2 "CBCTreeScanner.l"
+2 "CTreeScanner.l"
 F
-"./code/CBCTreeScanner.l"
+"./code/CTreeScanner.l"
 T
-2 "CBCTree.cpp"
+2 "CTree.cpp"
 F
-"./code/CBCTree.cpp"
+"./code/CTree.cpp"
 T
-2 "CBCClass.cpp"
+2 "CClass.cpp"
 F
-"./code/CBCClass.cpp"
+"./code/CClass.cpp"
 T
-2 "CBCPreprocessor.cpp"
+2 "CPreprocessor.cpp"
 F
-"./code/CBCPreprocessor.cpp"
+"./code/CPreprocessor.cpp"
 T
-2 "CBEditCPPMacroDialog.cpp"
+2 "EditCPPMacroDialog.cpp"
 F
-"./code/CBEditCPPMacroDialog.cpp"
+"./code/EditCPPMacroDialog.cpp"
 T
-2 "CBCPPMacroTable.cpp"
+2 "CPPMacroTable.cpp"
 F
-"./code/CBCPPMacroTable.cpp"
+"./code/CPPMacroTable.cpp"
 T
-2 "CBDTreeDirector.cpp"
+2 "DTreeDirector.cpp"
 F
-"./code/CBDTreeDirector.cpp"
+"./code/DTreeDirector.cpp"
 T
-2 "CBDTreeScanner.l"
+2 "DTreeScanner.l"
 F
-"./code/CBDTreeScanner.l"
+"./code/DTreeScanner.l"
 T
-2 "CBDTree.cpp"
+2 "DTree.cpp"
 F
-"./code/CBDTree.cpp"
+"./code/DTree.cpp"
 T
-2 "CBDClass.cpp"
+2 "DClass.cpp"
 F
-"./code/CBDClass.cpp"
+"./code/DClass.cpp"
 T
-2 "CBGoTreeDirector.cpp"
+2 "GoTreeDirector.cpp"
 F
-"./code/CBGoTreeDirector.cpp"
+"./code/GoTreeDirector.cpp"
 T
-2 "CBGoTreeScanner.l"
+2 "GoTreeScanner.l"
 F
-"./code/CBGoTreeScanner.l"
+"./code/GoTreeScanner.l"
 T
-2 "CBGoTree.cpp"
+2 "GoTree.cpp"
 F
-"./code/CBGoTree.cpp"
+"./code/GoTree.cpp"
 T
-2 "CBGoClass.cpp"
+2 "GoClass.cpp"
 F
-"./code/CBGoClass.cpp"
+"./code/GoClass.cpp"
 T
-2 "CBJavaTreeDirector.cpp"
+2 "JavaTreeDirector.cpp"
 F
-"./code/CBJavaTreeDirector.cpp"
+"./code/JavaTreeDirector.cpp"
 T
-2 "CBJavaTreeScanner.l"
+2 "JavaTreeScanner.l"
 F
-"./code/CBJavaTreeScanner.l"
+"./code/JavaTreeScanner.l"
 T
-2 "CBJavaTree.cpp"
+2 "JavaTree.cpp"
 F
-"./code/CBJavaTree.cpp"
+"./code/JavaTree.cpp"
 T
-2 "CBJavaClass.cpp"
+2 "JavaClass.cpp"
 F
-"./code/CBJavaClass.cpp"
+"./code/JavaClass.cpp"
 T
-2 "CBPHPTreeDirector.cpp"
+2 "PHPTreeDirector.cpp"
 F
-"./code/CBPHPTreeDirector.cpp"
+"./code/PHPTreeDirector.cpp"
 T
-2 "CBPHPTreeScanner.l"
+2 "PHPTreeScanner.l"
 F
-"./code/CBPHPTreeScanner.l"
+"./code/PHPTreeScanner.l"
 T
-2 "CBPHPTree.cpp"
+2 "PHPTree.cpp"
 F
-"./code/CBPHPTree.cpp"
+"./code/PHPTree.cpp"
 T
-2 "CBPHPClass.cpp"
+2 "PHPClass.cpp"
 F
-"./code/CBPHPClass.cpp"
+"./code/PHPClass.cpp"
 F
 T
 1 "editor"
 T
-2 "CBTextDocument.cpp"
+2 "TextDocument.cpp"
 F
-"./code/CBTextDocument.cpp"
+"./code/TextDocument.cpp"
 T
-2 "CBTextEditor.cpp"
+2 "TextEditor.cpp"
 F
-"./code/CBTextEditor.cpp"
+"./code/TextEditor.cpp"
 T
-2 "CBTECaretInputBase.cpp"
+2 "TECaretInputBase.cpp"
 F
-"./code/CBTECaretInputBase.cpp"
+"./code/TECaretInputBase.cpp"
 T
-2 "CBTELineIndexInput.cpp"
+2 "TELineIndexInput.cpp"
 F
-"./code/CBTELineIndexInput.cpp"
+"./code/TELineIndexInput.cpp"
 T
-2 "CBTEColIndexInput.cpp"
+2 "TEColIndexInput.cpp"
 F
-"./code/CBTEColIndexInput.cpp"
+"./code/TEColIndexInput.cpp"
 T
-2 "CBFileNameDisplay.cpp"
+2 "FileNameDisplay.cpp"
 F
-"./code/CBFileNameDisplay.cpp"
+"./code/FileNameDisplay.cpp"
 T
-2 "CBFileDragSource.cpp"
+2 "FileDragSource.cpp"
 F
-"./code/CBFileDragSource.cpp"
+"./code/FileDragSource.cpp"
 T
-2 "CBDSSFinishSaveTask.cpp"
+2 "DSSFinishSaveTask.cpp"
 F
-"./code/CBDSSFinishSaveTask.cpp"
+"./code/DSSFinishSaveTask.cpp"
 T
-2 "CBFnMenuUpdater.cpp"
+2 "FnMenuUpdater.cpp"
 F
-"./code/CBFnMenuUpdater.cpp"
+"./code/FnMenuUpdater.cpp"
 T
-2 "CBFunctionMenu.cpp"
+2 "FunctionMenu.cpp"
 F
-"./code/CBFunctionMenu.cpp"
+"./code/FunctionMenu.cpp"
 T
-2 "CBEditTextPrefsDialog.cpp"
+2 "EditTextPrefsDialog.cpp"
 F
-"./code/CBEditTextPrefsDialog.cpp"
+"./code/EditTextPrefsDialog.cpp"
 T
-2 "CBEditCRMDialog.cpp"
+2 "EditCRMDialog.cpp"
 F
-"./code/CBEditCRMDialog.cpp"
+"./code/EditCRMDialog.cpp"
 T
-2 "CBCRMRuleListTable.cpp"
+2 "CRMRuleListTable.cpp"
 F
-"./code/CBCRMRuleListTable.cpp"
+"./code/CRMRuleListTable.cpp"
 T
-2 "CBCRMRuleTable.cpp"
+2 "CRMRuleTable.cpp"
 F
-"./code/CBCRMRuleTable.cpp"
+"./code/CRMRuleTable.cpp"
 T
-2 "CBRunTEScriptDialog.cpp"
+2 "RunTEScriptDialog.cpp"
 F
-"./code/CBRunTEScriptDialog.cpp"
+"./code/RunTEScriptDialog.cpp"
 T
-2 "CBTEScriptMenu.cpp"
+2 "TEScriptMenu.cpp"
 F
-"./code/CBTEScriptMenu.cpp"
+"./code/TEScriptMenu.cpp"
 T
-2 "CBTabWidthDialog.cpp"
+2 "TabWidthDialog.cpp"
 F
-"./code/CBTabWidthDialog.cpp"
+"./code/TabWidthDialog.cpp"
 T
-2 "CBExtEditorDialog.cpp"
+2 "ExtEditorDialog.cpp"
 F
-"./code/CBExtEditorDialog.cpp"
+"./code/ExtEditorDialog.cpp"
 F
 T
 1 "search"
 T
-2 "CBSearchTextDialog.cpp"
+2 "SearchTextDialog.cpp"
 F
-"./code/CBSearchTextDialog.cpp"
+"./code/SearchTextDialog.cpp"
 T
-2 "CBSearchPathHistoryMenu.cpp"
+2 "SearchPathHistoryMenu.cpp"
 F
-"./code/CBSearchPathHistoryMenu.cpp"
+"./code/SearchPathHistoryMenu.cpp"
 T
-2 "CBSearchFilterHistoryMenu.cpp"
+2 "SearchFilterHistoryMenu.cpp"
 F
-"./code/CBSearchFilterHistoryMenu.cpp"
+"./code/SearchFilterHistoryMenu.cpp"
 T
-2 "CBSearchDocument.cpp"
+2 "SearchDocument.cpp"
 F
-"./code/CBSearchDocument.cpp"
+"./code/SearchDocument.cpp"
 T
-2 "CBSearchTE.cpp"
+2 "SearchTE.cpp"
 F
-"./code/CBSearchTE.cpp"
+"./code/SearchTE.cpp"
 T
-2 "CBSearchFontManager.cpp"
+2 "SearchFontManager.cpp"
 F
-"./code/CBSearchFontManager.cpp"
+"./code/SearchFontManager.cpp"
 T
-2 "CBSearchColorManager.cpp"
+2 "SearchColorManager.cpp"
 F
-"./code/CBSearchColorManager.cpp"
+"./code/SearchColorManager.cpp"
 F
 T
 1 "styler"
 T
-2 "CBStylerBase.cpp"
+2 "StylerBase.cpp"
 F
-"./code/CBStylerBase.cpp"
+"./code/StylerBase.cpp"
 T
-2 "CBStylingScannerBase.cpp"
+2 "StylingScannerBase.cpp"
 F
-"./code/CBStylingScannerBase.cpp"
+"./code/StylingScannerBase.cpp"
 T
-2 "CBBourneShellScanner.ll"
+2 "BourneShellScanner.ll"
 F
-"./code/CBBourneShellScanner.ll"
+"./code/BourneShellScanner.ll"
 T
-2 "CBBourneShellStyler.cpp"
+2 "BourneShellStyler.cpp"
 F
-"./code/CBBourneShellStyler.cpp"
+"./code/BourneShellStyler.cpp"
 T
-2 "CBCScanner.ll"
+2 "CScanner.ll"
 F
-"./code/CBCScanner.ll"
+"./code/CScanner.ll"
 T
-2 "CBCStyler.cpp"
+2 "CStyler.cpp"
 F
-"./code/CBCStyler.cpp"
+"./code/CStyler.cpp"
 T
-2 "CBCSharpScanner.ll"
+2 "CSharpScanner.ll"
 F
-"./code/CBCSharpScanner.ll"
+"./code/CSharpScanner.ll"
 T
-2 "CBCSharpStyler.cpp"
+2 "CSharpStyler.cpp"
 F
-"./code/CBCSharpStyler.cpp"
+"./code/CSharpStyler.cpp"
 T
-2 "CBCShellScanner.ll"
+2 "CShellScanner.ll"
 F
-"./code/CBCShellScanner.ll"
+"./code/CShellScanner.ll"
 T
-2 "CBCShellStyler.cpp"
+2 "CShellStyler.cpp"
 F
-"./code/CBCShellStyler.cpp"
+"./code/CShellStyler.cpp"
 T
-2 "CBDScanner.ll"
+2 "DScanner.ll"
 F
-"./code/CBDScanner.ll"
+"./code/DScanner.ll"
 T
-2 "CBDStyler.cpp"
+2 "DStyler.cpp"
 F
-"./code/CBDStyler.cpp"
+"./code/DStyler.cpp"
 T
-2 "CBEiffelScanner.ll"
+2 "EiffelScanner.ll"
 F
-"./code/CBEiffelScanner.ll"
+"./code/EiffelScanner.ll"
 T
-2 "CBEiffelStyler.cpp"
+2 "EiffelStyler.cpp"
 F
-"./code/CBEiffelStyler.cpp"
+"./code/EiffelStyler.cpp"
 T
-2 "CBGoScanner.ll"
+2 "GoScanner.ll"
 F
-"./code/CBGoScanner.ll"
+"./code/GoScanner.ll"
 T
-2 "CBGoStyler.cpp"
+2 "GoStyler.cpp"
 F
-"./code/CBGoStyler.cpp"
+"./code/GoStyler.cpp"
 T
-2 "CBHTMLScanner.ll"
+2 "HTMLScanner.ll"
 F
-"./code/CBHTMLScanner.ll"
+"./code/HTMLScanner.ll"
 T
-2 "CBHTMLStyler.cpp"
+2 "HTMLStyler.cpp"
 F
-"./code/CBHTMLStyler.cpp"
+"./code/HTMLStyler.cpp"
 T
-2 "CBINIScanner.ll"
+2 "INIScanner.ll"
 F
-"./code/CBINIScanner.ll"
+"./code/INIScanner.ll"
 T
-2 "CBINIStyler.cpp"
+2 "INIStyler.cpp"
 F
-"./code/CBINIStyler.cpp"
+"./code/INIStyler.cpp"
 T
-2 "CBJavaScanner.ll"
+2 "JavaScanner.ll"
 F
-"./code/CBJavaScanner.ll"
+"./code/JavaScanner.ll"
 T
-2 "CBJavaStyler.cpp"
+2 "JavaStyler.cpp"
 F
-"./code/CBJavaStyler.cpp"
+"./code/JavaStyler.cpp"
 T
-2 "CBJavaScriptScanner.ll"
+2 "JavaScriptScanner.ll"
 F
-"./code/CBJavaScriptScanner.ll"
+"./code/JavaScriptScanner.ll"
 T
-2 "CBJavaScriptStyler.cpp"
+2 "JavaScriptStyler.cpp"
 F
-"./code/CBJavaScriptStyler.cpp"
+"./code/JavaScriptStyler.cpp"
 T
-2 "CBPerlScanner.ll"
+2 "PerlScanner.ll"
 F
-"./code/CBPerlScanner.ll"
+"./code/PerlScanner.ll"
 T
-2 "CBPerlStyler.cpp"
+2 "PerlStyler.cpp"
 F
-"./code/CBPerlStyler.cpp"
+"./code/PerlStyler.cpp"
 T
-2 "CBPropertiesScanner.ll"
+2 "PropertiesScanner.ll"
 F
-"./code/CBPropertiesScanner.ll"
+"./code/PropertiesScanner.ll"
 T
-2 "CBPropertiesStyler.cpp"
+2 "PropertiesStyler.cpp"
 F
-"./code/CBPropertiesStyler.cpp"
+"./code/PropertiesStyler.cpp"
 T
-2 "CBPythonScanner.ll"
+2 "PythonScanner.ll"
 F
-"./code/CBPythonScanner.ll"
+"./code/PythonScanner.ll"
 T
-2 "CBPythonStyler.cpp"
+2 "PythonStyler.cpp"
 F
-"./code/CBPythonStyler.cpp"
+"./code/PythonStyler.cpp"
 T
-2 "CBRubyScanner.ll"
+2 "RubyScanner.ll"
 F
-"./code/CBRubyScanner.ll"
+"./code/RubyScanner.ll"
 T
-2 "CBRubyStyler.cpp"
+2 "RubyStyler.cpp"
 F
-"./code/CBRubyStyler.cpp"
+"./code/RubyStyler.cpp"
 T
-2 "CBSQLScanner.ll"
+2 "SQLScanner.ll"
 F
-"./code/CBSQLScanner.ll"
+"./code/SQLScanner.ll"
 T
-2 "CBSQLStyler.cpp"
+2 "SQLStyler.cpp"
 F
-"./code/CBSQLStyler.cpp"
+"./code/SQLStyler.cpp"
 T
-2 "CBTCLScanner.ll"
+2 "TCLScanner.ll"
 F
-"./code/CBTCLScanner.ll"
+"./code/TCLScanner.ll"
 T
-2 "CBTCLStyler.cpp"
+2 "TCLStyler.cpp"
 F
-"./code/CBTCLStyler.cpp"
+"./code/TCLStyler.cpp"
 T
-2 "CBEditStylerDialog.cpp"
+2 "EditStylerDialog.cpp"
 F
-"./code/CBEditStylerDialog.cpp"
+"./code/EditStylerDialog.cpp"
 T
-2 "CBStylerTable.cpp"
+2 "StylerTable.cpp"
 F
-"./code/CBStylerTable.cpp"
+"./code/StylerTable.cpp"
 T
-2 "CBStylerTableInput.cpp"
+2 "StylerTableInput.cpp"
 F
-"./code/CBStylerTableInput.cpp"
+"./code/StylerTableInput.cpp"
 T
-2 "CBStylerTableMenu.cpp"
+2 "StylerTableMenu.cpp"
 F
-"./code/CBStylerTableMenu.cpp"
+"./code/StylerTableMenu.cpp"
 F
 T
 1 "completer"
 T
-2 "CBStringCompleter.cpp"
+2 "StringCompleter.cpp"
 F
-"./code/CBStringCompleter.cpp"
+"./code/StringCompleter.cpp"
 T
-2 "CBBisonCompleter.cpp"
+2 "BisonCompleter.cpp"
 F
-"./code/CBBisonCompleter.cpp"
+"./code/BisonCompleter.cpp"
 T
-2 "CBBourneShellCompleter.cpp"
+2 "BourneShellCompleter.cpp"
 F
-"./code/CBBourneShellCompleter.cpp"
+"./code/BourneShellCompleter.cpp"
 T
-2 "CBCCompleter.cpp"
+2 "CCompleter.cpp"
 F
-"./code/CBCCompleter.cpp"
+"./code/CCompleter.cpp"
 T
-2 "CBCSharpCompleter.cpp"
+2 "CSharpCompleter.cpp"
 F
-"./code/CBCSharpCompleter.cpp"
+"./code/CSharpCompleter.cpp"
 T
-2 "CBCShellCompleter.cpp"
+2 "CShellCompleter.cpp"
 F
-"./code/CBCShellCompleter.cpp"
+"./code/CShellCompleter.cpp"
 T
-2 "CBDCompleter.cpp"
+2 "DCompleter.cpp"
 F
-"./code/CBDCompleter.cpp"
+"./code/DCompleter.cpp"
 T
-2 "CBEiffelCompleter.cpp"
+2 "EiffelCompleter.cpp"
 F
-"./code/CBEiffelCompleter.cpp"
+"./code/EiffelCompleter.cpp"
 T
-2 "CBFortranCompleter.cpp"
+2 "FortranCompleter.cpp"
 F
-"./code/CBFortranCompleter.cpp"
+"./code/FortranCompleter.cpp"
 T
-2 "CBGoCompleter.cpp"
+2 "GoCompleter.cpp"
 F
-"./code/CBGoCompleter.cpp"
+"./code/GoCompleter.cpp"
 T
-2 "CBHTMLCompleter.cpp"
+2 "HTMLCompleter.cpp"
 F
-"./code/CBHTMLCompleter.cpp"
+"./code/HTMLCompleter.cpp"
 T
-2 "CBJavaCompleter.cpp"
+2 "JavaCompleter.cpp"
 F
-"./code/CBJavaCompleter.cpp"
+"./code/JavaCompleter.cpp"
 T
-2 "CBJavaScriptCompleter.cpp"
+2 "JavaScriptCompleter.cpp"
 F
-"./code/CBJavaScriptCompleter.cpp"
+"./code/JavaScriptCompleter.cpp"
 T
-2 "CBJSPCompleter.cpp"
+2 "JSPCompleter.cpp"
 F
-"./code/CBJSPCompleter.cpp"
+"./code/JSPCompleter.cpp"
 T
-2 "CBLexCompleter.cpp"
+2 "LexCompleter.cpp"
 F
-"./code/CBLexCompleter.cpp"
+"./code/LexCompleter.cpp"
 T
-2 "CBLuaCompleter.cpp"
+2 "LuaCompleter.cpp"
 F
-"./code/CBLuaCompleter.cpp"
+"./code/LuaCompleter.cpp"
 T
-2 "CBMakeCompleter.cpp"
+2 "MakeCompleter.cpp"
 F
-"./code/CBMakeCompleter.cpp"
+"./code/MakeCompleter.cpp"
 T
-2 "CBPascalCompleter.cpp"
+2 "PascalCompleter.cpp"
 F
-"./code/CBPascalCompleter.cpp"
+"./code/PascalCompleter.cpp"
 T
-2 "CBPerlCompleter.cpp"
+2 "PerlCompleter.cpp"
 F
-"./code/CBPerlCompleter.cpp"
+"./code/PerlCompleter.cpp"
 T
-2 "CBPHPCompleter.cpp"
+2 "PHPCompleter.cpp"
 F
-"./code/CBPHPCompleter.cpp"
+"./code/PHPCompleter.cpp"
 T
-2 "CBPythonCompleter.cpp"
+2 "PythonCompleter.cpp"
 F
-"./code/CBPythonCompleter.cpp"
+"./code/PythonCompleter.cpp"
 T
-2 "CBREXXCompleter.cpp"
+2 "REXXCompleter.cpp"
 F
-"./code/CBREXXCompleter.cpp"
+"./code/REXXCompleter.cpp"
 T
-2 "CBRubyCompleter.cpp"
+2 "RubyCompleter.cpp"
 F
-"./code/CBRubyCompleter.cpp"
+"./code/RubyCompleter.cpp"
 T
-2 "CBSQLCompleter.cpp"
+2 "SQLCompleter.cpp"
 F
-"./code/CBSQLCompleter.cpp"
+"./code/SQLCompleter.cpp"
 T
-2 "CBTCLCompleter.cpp"
+2 "TCLCompleter.cpp"
 F
-"./code/CBTCLCompleter.cpp"
+"./code/TCLCompleter.cpp"
 F
 T
 1 "macros"
 T
-2 "CBMacroManager.cpp"
+2 "MacroManager.cpp"
 F
-"./code/CBMacroManager.cpp"
+"./code/MacroManager.cpp"
 T
-2 "CBEditMacroDialog.cpp"
+2 "EditMacroDialog.cpp"
 F
-"./code/CBEditMacroDialog.cpp"
+"./code/EditMacroDialog.cpp"
 T
-2 "CBMacroSetTable.cpp"
+2 "MacroSetTable.cpp"
 F
-"./code/CBMacroSetTable.cpp"
+"./code/MacroSetTable.cpp"
 T
-2 "CBMacroTable.cpp"
+2 "MacroTable.cpp"
 F
-"./code/CBMacroTable.cpp"
+"./code/MacroTable.cpp"
 T
-2 "CBMacroSubstitute.cpp"
+2 "MacroSubstitute.cpp"
 F
-"./code/CBMacroSubstitute.cpp"
+"./code/MacroSubstitute.cpp"
 T
-2 "CBCharActionManager.cpp"
+2 "CharActionManager.cpp"
 F
-"./code/CBCharActionManager.cpp"
+"./code/CharActionManager.cpp"
 T
-2 "CBCharActionTable.cpp"
+2 "CharActionTable.cpp"
 F
-"./code/CBCharActionTable.cpp"
+"./code/CharActionTable.cpp"
 T
-2 "CBKeyScriptTableBase.cpp"
+2 "KeyScriptTableBase.cpp"
 F
-"./code/CBKeyScriptTableBase.cpp"
+"./code/KeyScriptTableBase.cpp"
 T
-2 "CBKeyScriptInput.cpp"
+2 "KeyScriptInput.cpp"
 F
-"./code/CBKeyScriptInput.cpp"
+"./code/KeyScriptInput.cpp"
 F
 T
 1 "emulator"
 T
-2 "CBEmulator.cpp"
+2 "Emulator.cpp"
 F
-"./code/CBEmulator.cpp"
+"./code/Emulator.cpp"
 T
-2 "CBVIKeyHandler.cpp"
+2 "VIKeyHandler.cpp"
 F
-"./code/CBVIKeyHandler.cpp"
+"./code/VIKeyHandler.cpp"
 F
 T
 1 "file types"
 T
-2 "CBTextFileType.cpp"
+2 "TextFileType.cpp"
 F
-"./code/CBTextFileType.cpp"
+"./code/TextFileType.cpp"
 T
-2 "CBEditFileTypesDialog.cpp"
+2 "EditFileTypesDialog.cpp"
 F
-"./code/CBEditFileTypesDialog.cpp"
+"./code/EditFileTypesDialog.cpp"
 T
-2 "CBFileTypeTable.cpp"
+2 "FileTypeTable.cpp"
 F
-"./code/CBFileTypeTable.cpp"
+"./code/FileTypeTable.cpp"
 F
 T
 1 "diff"
 T
-2 "CBDiffFileDialog.cpp"
+2 "DiffFileDialog.cpp"
 F
-"./code/CBDiffFileDialog.cpp"
+"./code/DiffFileDialog.cpp"
 T
-2 "CBDiffStyleMenu.cpp"
+2 "DiffStyleMenu.cpp"
 F
-"./code/CBDiffStyleMenu.cpp"
+"./code/DiffStyleMenu.cpp"
 T
-2 "CBSVNFileInput.cpp"
+2 "SVNFileInput.cpp"
 F
-"./code/CBSVNFileInput.cpp"
+"./code/SVNFileInput.cpp"
 T
-2 "CBDiffDocument.cpp"
+2 "DiffDocument.cpp"
 F
-"./code/CBDiffDocument.cpp"
+"./code/DiffDocument.cpp"
 T
-2 "CBDiffEditor.cpp"
+2 "DiffEditor.cpp"
 F
-"./code/CBDiffEditor.cpp"
+"./code/DiffEditor.cpp"
 F
 T
 1 "printing"
 T
-2 "CBPSPrinter.cpp"
+2 "PSPrinter.cpp"
 F
-"./code/CBPSPrinter.cpp"
+"./code/PSPrinter.cpp"
 T
-2 "CBPSPrintSetupDialog.cpp"
+2 "PSPrintSetupDialog.cpp"
 F
-"./code/CBPSPrintSetupDialog.cpp"
+"./code/PSPrintSetupDialog.cpp"
 T
-2 "CBPTPrinter.cpp"
+2 "PTPrinter.cpp"
 F
-"./code/CBPTPrinter.cpp"
+"./code/PTPrinter.cpp"
 T
-2 "CBPTPrintSetupDialog.cpp"
+2 "PTPrintSetupDialog.cpp"
 F
-"./code/CBPTPrintSetupDialog.cpp"
+"./code/PTPrintSetupDialog.cpp"
 F
 T
 1 "shell"
 T
-2 "CBShellDocument.cpp"
+2 "ShellDocument.cpp"
 F
-"./code/CBShellDocument.cpp"
+"./code/ShellDocument.cpp"
 T
-2 "CBShellEditor.cpp"
+2 "ShellEditor.cpp"
 F
-"./code/CBShellEditor.cpp"
+"./code/ShellEditor.cpp"
 F
 T
 1 "misc"
 T
-2 "CBFileHistoryMenu.cpp"
+2 "FileHistoryMenu.cpp"
 F
-"./code/CBFileHistoryMenu.cpp"
+"./code/FileHistoryMenu.cpp"
 T
-2 "CBFindFileDialog.cpp"
+2 "FindFileDialog.cpp"
 F
-"./code/CBFindFileDialog.cpp"
+"./code/FindFileDialog.cpp"
 T
-2 "CBViewManPageDialog.cpp"
+2 "ViewManPageDialog.cpp"
 F
-"./code/CBViewManPageDialog.cpp"
+"./code/ViewManPageDialog.cpp"
 T
-2 "CBManPageDocument.cpp"
+2 "ManPageDocument.cpp"
 F
-"./code/CBManPageDocument.cpp"
+"./code/ManPageDocument.cpp"
 T
-2 "CBCtagsUser.cpp"
+2 "CtagsUser.cpp"
 F
-"./code/CBCtagsUser.cpp"
+"./code/CtagsUser.cpp"
 T
-2 "CBListCSF.cpp"
+2 "ListCSF.cpp"
 F
-"./code/CBListCSF.cpp"
+"./code/ListCSF.cpp"
 T
-2 "CBListChooseFileDialog.cpp"
+2 "ListChooseFileDialog.cpp"
 F
-"./code/CBListChooseFileDialog.cpp"
+"./code/ListChooseFileDialog.cpp"
 T
-2 "CBRelPathCSF.cpp"
+2 "RelPathCSF.cpp"
 F
-"./code/CBRelPathCSF.cpp"
+"./code/RelPathCSF.cpp"
 T
-2 "CBRPChooseFileDialog.cpp"
+2 "RPChooseFileDialog.cpp"
 F
-"./code/CBRPChooseFileDialog.cpp"
+"./code/RPChooseFileDialog.cpp"
 T
-2 "CBRPChoosePathDialog.cpp"
+2 "RPChoosePathDialog.cpp"
 F
-"./code/CBRPChoosePathDialog.cpp"
+"./code/RPChoosePathDialog.cpp"
 T
-2 "CBExecHistoryMenu.cpp"
+2 "ExecHistoryMenu.cpp"
 F
-"./code/CBExecHistoryMenu.cpp"
+"./code/ExecHistoryMenu.cpp"
 T
-2 "cbmUtil.cpp"
+2 "sharedUtil.cpp"
 F
-"./code/cbmUtil.cpp"
+"./code/sharedUtil.cpp"
 T
-2 "cbUtil.cpp"
+2 "util.cpp"
 F
-"./code/cbUtil.cpp"
+"./code/util.cpp"
 F
 T
 1 "layouts"
@@ -909,17 +909,17 @@ F
 T
 1 "strings"
 T
-2 "jcc_private_strings"
+2 "strings"
 F
-"./strings/jcc_private_strings"
+"./strings/strings"
 T
-2 "jcc_cmd_line_strings"
+2 "cmd_line_strings"
 F
-"./strings/jcc_cmd_line_strings"
+"./strings/cmd_line_strings"
 T
-2 "jcc_medic_shared_strings"
+2 "shared_strings"
 F
-"./strings/jcc_medic_shared_strings"
+"./strings/shared_strings"
 T
 2 "tip_of_the_day"
 F

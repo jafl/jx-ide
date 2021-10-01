@@ -1,6 +1,4 @@
 medic
-jcc-shared/*
-strings/jcc_medic_shared_strings
 lldb-include
 *Scanner.cpp
 *Scanner.h

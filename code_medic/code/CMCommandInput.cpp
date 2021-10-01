@@ -45,7 +45,7 @@ CMCommandInput::CMCommandInput
 	CMTextDisplayBase::AdjustFont(this);
 	WantInput(true, true);
 	SetBorderWidth(0);
-	GetText()->SetCharacterInWordFunction(CBMIsCharacterInWord);
+	GetText()->SetCharacterInWordFunction(::IsCharacterInWord);
 }
 
 /******************************************************************************

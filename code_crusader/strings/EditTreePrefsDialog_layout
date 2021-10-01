@@ -1,0 +1,12 @@
+0
+belowLabel::EditTreePrefsDialog::JXLayout "Below classes"
+itsRaiseSingleMatchCB::EditTreePrefsDialog::JXLayout "Raise window if search matches single class"
+okButton::EditTreePrefsDialog::shortcuts::JXLayout "^M"
+itsHelpButton::EditTreePrefsDialog::JXLayout "Help"
+aboveLabel::EditTreePrefsDialog::JXLayout "Above classes"
+cancelButton::EditTreePrefsDialog::JXLayout "Cancel"
+itsHelpButton::EditTreePrefsDialog::shortcuts::JXLayout "F1"
+okButton::EditTreePrefsDialog::JXLayout "OK"
+itsShowInheritedFnsCB::EditTreePrefsDialog::JXLayout "Show inherited functions in lists"
+itsAutoMinMILinkCB::EditTreePrefsDialog::JXLayout "Automatically minimize MI link lengths"
+miLinksLabel::EditTreePrefsDialog::JXLayout "Draw MI links:"

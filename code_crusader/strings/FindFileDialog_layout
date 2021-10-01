@@ -1,0 +1,9 @@
+0
+nameLabel::FindFileDialog::JXLayout "Name of file:"
+itsFindButton::FindFileDialog::JXLayout "Find"
+itsCloseButton::FindFileDialog::JXLayout "Close"
+itsStayOpenCB::FindFileDialog::JXLayout "Stay open"
+itsCloseButton::FindFileDialog::shortcuts::JXLayout "#W^["
+itsIgnoreCaseCB::FindFileDialog::JXLayout "Ignore case (only if no partial path)"
+itsFindButton::FindFileDialog::shortcuts::JXLayout "^M"
+itsIgnoreCaseCB::FindFileDialog::shortcuts::JXLayout "#I"

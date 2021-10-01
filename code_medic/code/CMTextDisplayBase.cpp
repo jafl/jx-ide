@@ -84,7 +84,7 @@ CMTextDisplayBase::CMTextDisplayBaseX
 	AdjustFont(this);
 
 	ShouldAllowDragAndDrop(true);
-	GetText()->SetCharacterInWordFunction(CBMIsCharacterInWord);
+	GetText()->SetCharacterInWordFunction(::IsCharacterInWord);
 	SetPTPrinter(CMGetPTPrinter());
 }
 

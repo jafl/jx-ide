@@ -1,0 +1,3 @@
+0
+removeMacroSetButton::EditMacroDialog::macroSetLayout "Remove"
+newMacroSetButton::EditMacroDialog::macroSetLayout "New"

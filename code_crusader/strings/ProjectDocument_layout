@@ -1,0 +1,4 @@
+0
+itsUpdateCounter::ProjectDocument::JXLayout "1000000"
+itsConfigButton::ProjectDocument::JXLayout "Config"
+itsUpdateLabel::ProjectDocument::JXLayout "Reloading symbols..."

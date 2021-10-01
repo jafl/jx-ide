@@ -1069,11 +1069,11 @@ CMPrefsManager::SyncWithCodeCrusader()
 					   phpSuffixList(JPtrArrayT::kDeleteAll),
 					   dSuffixList(JPtrArrayT::kDeleteAll),
 					   goSuffixList(JPtrArrayT::kDeleteAll);
-	if (CBMReadSharedPrefs(&fontName, &size, &tabCharCount, &sort, &includeNS, &pack,
-						   &openOnTop, kColorCount, colorList,
-						   &cSourceSuffixes, &cHeaderSuffixes,
-						   &fortranSuffixList, &javaSuffixList,
-						   &phpSuffixList, &dSuffixList, &goSuffixList))
+	if (ReadSharedPrefs(&fontName, &size, &tabCharCount, &sort, &includeNS, &pack,
+						&openOnTop, kColorCount, colorList,
+						&cSourceSuffixes, &cHeaderSuffixes,
+						&fortranSuffixList, &javaSuffixList,
+						&phpSuffixList, &dSuffixList, &goSuffixList))
 	{
 		SetDefaultFont(fontName, size);
 		SetTabCharCount(tabCharCount);

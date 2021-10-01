@@ -1,0 +1,10 @@
+0
+itsViewButton::DiffFileDialog::JXLayout "View"
+itsIgnoreBlankLinesCB::DiffFileDialog::JXLayout "Ignore blank lines (requires GNU)"
+itsCloseButton::DiffFileDialog::JXLayout "Close"
+itsHelpButton::DiffFileDialog::JXLayout "Help"
+itsHelpButton::DiffFileDialog::shortcuts::JXLayout "F1"
+itsStayOpenCB::DiffFileDialog::JXLayout "Stay open"
+itsIgnoreSpaceChangeCB::DiffFileDialog::JXLayout "Ignore changes in amount of whitespace"
+itsCloseButton::DiffFileDialog::shortcuts::JXLayout "#W^["
+itsViewButton::DiffFileDialog::shortcuts::JXLayout "^M"

@@ -8,8 +8,8 @@
  *****************************************************************************/
 
 #include <jx-af/jcore/JTestManager.h>
-#include "CBDTree.h"
-#include "CBClass.h"
+#include "DTree.h"
+#include "Class.h"
 #include <jx-af/jcore/jAssert.h>
 
 int main()
@@ -17,13 +17,13 @@ int main()
 	return JTestManager::Execute();
 }
 
-class TestDTree : public CBDTree
+class TestDTree : public DTree
 {
 public:
 
 	TestDTree()
 		:
-		CBDTree(nullptr, 0)
+		DTree(nullptr, 0)
 	{ };
 
 	virtual void ParseFile(const JString& fileName, const JFAID_t id) override;
@@ -36,7 +36,7 @@ TestDTree::ParseFile
 	const JFAID_t	id
 	)
 {
-	CBDTree::ParseFile(fileName, id);
+	DTree::ParseFile(fileName, id);
 }
 
 JTEST(Basic)
@@ -52,11 +52,11 @@ JTEST(Basic)
 	tree.UpdateFinished(deadFileList);
 
 	const TestDTree& constTree     = tree;
-	const JPtrArray<CBClass>& list = constTree.GetClasses();
+	const JPtrArray<Class>& list = constTree.GetClasses();
 	JAssertEqual(8, list.GetElementCount());
 
 	JSize found = 0;
-	for (CBClass* c : list)
+	for (Class* c : list)
 		{
 std::cout << c->GetFullName() << std::endl;
 		if (c->GetFullName() == "a.A1")
@@ -128,11 +128,11 @@ JTEST(Alias)
 	tree.UpdateFinished(deadFileList);
 
 	const TestDTree& constTree     = tree;
-	const JPtrArray<CBClass>& list = constTree.GetClasses();
+	const JPtrArray<Class>& list = constTree.GetClasses();
 	JAssertEqual(5, list.GetElementCount());
 
 	JSize found = 0;
-	for (CBClass* c : list)
+	for (Class* c : list)
 		{
 		if (c->GetFullName() == "alias.Foo2")
 			{
@@ -167,7 +167,7 @@ JTEST(Alias)
 }
 
 bool
-CBInUpdateThread()
+InUpdateThread()
 {
 	return true;
 }

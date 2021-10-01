@@ -82,6 +82,9 @@ private:
 						const JPtrArray<JString>& dSuffixes,
 						const JPtrArray<JString>& goSuffixes);
 
+	void	GetSuffixList(JXInputField* inputField, JPtrArray<JString>* list);
+	void	SetSuffixList(JXInputField* inputField, const JPtrArray<JString>& list);
+
 	void	ChooseDebugger(const JString& name, JXInputField* input);
 };
 

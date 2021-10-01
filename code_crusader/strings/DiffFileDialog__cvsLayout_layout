@@ -1,0 +1,5 @@
+0
+itsCVSRev2Menu::DiffFileDialog::cvsLayout "2"
+itsCVSChooseButton::DiffFileDialog::cvsLayout "Choose"
+itsCVSSummaryCB::DiffFileDialog::cvsLayout "Summary"
+itsCVSRev1Menu::DiffFileDialog::cvsLayout "1"

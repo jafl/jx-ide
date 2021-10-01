@@ -1,0 +1,5 @@
+0
+itsHelpButton::EditMacroDialog::shortcuts::JXLayout "F1"
+okButton::EditMacroDialog::JXLayout "OK"
+itsHelpButton::EditMacroDialog::JXLayout "Help"
+cancelButton::EditMacroDialog::JXLayout "Cancel"

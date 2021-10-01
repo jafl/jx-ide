@@ -1,0 +1,8 @@
+0
+updateMakefileLabel::EditCommandsDialog::thisProjectLayout "Command to update this project's Makefile:"
+thisCaption::EditCommandsDialog::thisProjectLayout "Tasks that are specific to the currently active project:"
+thisNewButton::EditCommandsDialog::thisProjectLayout "New"
+thisRemoveButton::EditCommandsDialog::thisProjectLayout "Remove"
+thisExportButton::EditCommandsDialog::thisProjectLayout "Export"
+thisDuplicateButton::EditCommandsDialog::thisProjectLayout "Duplicate"
+thisImportButton::EditCommandsDialog::thisProjectLayout "Import"

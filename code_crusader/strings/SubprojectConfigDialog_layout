@@ -1,0 +1,11 @@
+0
+itsIncludeInDepListCB::SubprojectConfigDialog::shortcuts::JXLayout "#I"
+okButton::SubprojectConfigDialog::shortcuts::JXLayout "^M"
+itsChooseFileButton::SubprojectConfigDialog::JXLayout "Choose"
+itsShouldBuildCB::SubprojectConfigDialog::JXLayout "Automatically build this sub-project"
+itsShouldBuildCB::SubprojectConfigDialog::shortcuts::JXLayout "#B"
+itsChooseFileButton::SubprojectConfigDialog::shortcuts::JXLayout "#O"
+okButton::SubprojectConfigDialog::JXLayout "OK"
+fileLabel::SubprojectConfigDialog::JXLayout "Project file:"
+itsIncludeInDepListCB::SubprojectConfigDialog::JXLayout "Include library in project dependencies"
+cancelButton::SubprojectConfigDialog::JXLayout "Cancel"

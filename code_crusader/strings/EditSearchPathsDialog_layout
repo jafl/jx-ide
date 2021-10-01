@@ -1,0 +1,10 @@
+0
+choosePathButton::EditSearchPathsDialog::shortcuts::JXLayout "#O"
+addPathButton::EditSearchPathsDialog::shortcuts::JXLayout "#N"
+instrText::EditSearchPathsDialog::JXLayout "instr"
+choosePathButton::EditSearchPathsDialog::JXLayout "Choose"
+removePathButton::EditSearchPathsDialog::shortcuts::JXLayout "#R"
+removePathButton::EditSearchPathsDialog::JXLayout "Remove"
+cancelButton::EditSearchPathsDialog::JXLayout "Cancel"
+addPathButton::EditSearchPathsDialog::JXLayout "New"
+okButton::EditSearchPathsDialog::JXLayout "OK"

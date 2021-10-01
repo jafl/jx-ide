@@ -1,0 +1,7 @@
+0
+anyProjectTitle::EditCommandsDialog::allProjectsLayout "Tasks that can be used with any project:"
+allDuplicateButton::EditCommandsDialog::allProjectsLayout "Duplicate"
+allRemoveButton::EditCommandsDialog::allProjectsLayout "Remove"
+allNewButton::EditCommandsDialog::allProjectsLayout "New"
+allExportButton::EditCommandsDialog::allProjectsLayout "Export"
+allImportButton::EditCommandsDialog::allProjectsLayout "Import"

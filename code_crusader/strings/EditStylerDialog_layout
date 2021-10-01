@@ -1,0 +1,11 @@
+0
+okButton::EditStylerDialog::JXLayout "OK"
+cancelButton::EditStylerDialog::JXLayout "Cancel"
+removeButton::EditStylerDialog::shortcuts::JXLayout "#R"
+removeButton::EditStylerDialog::JXLayout "Remove"
+itsHelpButton::EditStylerDialog::JXLayout "Help"
+instrText::EditStylerDialog::JXLayout "instr"
+itsActiveCB::EditStylerDialog::JXLayout "Use context sensitive highlighting"
+newWordButton::EditStylerDialog::JXLayout "New"
+itsHelpButton::EditStylerDialog::shortcuts::JXLayout "F1"
+newWordButton::EditStylerDialog::shortcuts::JXLayout "#N"

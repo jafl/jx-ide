@@ -335,7 +335,7 @@ CMSourceText::HandleCustomSearchMenuItems
 
 	if (index == kBalanceCmd)
 	{
-		CBMBalanceFromSelection(this, kCBCLang);
+		BalanceFromSelection(this, kCBCLang);
 		return true;
 	}
 

@@ -8,8 +8,8 @@
  *****************************************************************************/
 
 #include <jx-af/jcore/JTestManager.h>
-#include "CBGoTree.h"
-#include "CBClass.h"
+#include "GoTree.h"
+#include "Class.h"
 #include <jx-af/jcore/jAssert.h>
 
 int main()
@@ -17,13 +17,13 @@ int main()
 	return JTestManager::Execute();
 }
 
-class TestGoTree : public CBGoTree
+class TestGoTree : public GoTree
 {
 public:
 
 	TestGoTree()
 		:
-		CBGoTree(nullptr, 0)
+		GoTree(nullptr, 0)
 	{ };
 
 	virtual void ParseFile(const JString& fileName, const JFAID_t id) override;
@@ -36,7 +36,7 @@ TestGoTree::ParseFile
 	const JFAID_t	id
 	)
 {
-	CBGoTree::ParseFile(fileName, id);
+	GoTree::ParseFile(fileName, id);
 }
 
 JTEST(Basic)
@@ -51,11 +51,11 @@ JTEST(Basic)
 	tree.UpdateFinished(deadFileList);
 
 	const TestGoTree& constTree    = tree;
-	const JPtrArray<CBClass>& list = constTree.GetClasses();
+	const JPtrArray<Class>& list = constTree.GetClasses();
 	JAssertEqual(10, list.GetElementCount());
 
 	JSize found = 0;
-	for (CBClass* c : list)
+	for (Class* c : list)
 		{
 		if (c->GetFullName() == "a.A1" || c->GetFullName() == "c.C1")
 			{
@@ -87,7 +87,7 @@ JTEST(Basic)
 			}
 		else if (c->GetFullName() == "D1")
 			{
-			JAssertEqual(CBClass::kGhostType, c->GetDeclareType());
+			JAssertEqual(Class::kGhostType, c->GetDeclareType());
 			}
 
 		for (const JUtf8Byte* n :
@@ -115,7 +115,7 @@ JTEST(Basic)
 }
 
 bool
-CBInUpdateThread()
+InUpdateThread()
 {
 	return true;
 }

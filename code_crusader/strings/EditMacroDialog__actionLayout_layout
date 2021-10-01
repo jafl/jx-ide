@@ -1,0 +1,5 @@
+0
+loadActionFileButton::EditMacroDialog::actionLayout "Load"
+removeActionButton::EditMacroDialog::actionLayout "Remove"
+saveActionFileButton::EditMacroDialog::actionLayout "Save"
+newActionButton::EditMacroDialog::actionLayout "New"

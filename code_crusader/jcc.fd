@@ -8,7 +8,7 @@ Unit of measure: FL_COORD_PIXEL
 SnapGrid: 5
 
 =============== FORM ===============
-Name: CBTreeDirector
+Name: TreeDirector
 Width: 400
 Height: 430
 Number of Objects: 3
@@ -65,10 +65,10 @@ resize: FL_RESIZE_ALL
 gravity: FL_NoGravity FL_NoGravity
 name: itsToolBar
 callback: 
-argument: CBGetPrefsManager(), toolBarPrefID, menuBar,
+argument: GetPrefsManager(), toolBarPrefID, menuBar,
 
 =============== FORM ===============
-Name: CBEditFileTypesDialog
+Name: EditFileTypesDialog
 Width: 700
 Height: 400
 Number of Objects: 10
@@ -254,7 +254,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CBTextDocument
+Name: TextDocument
 Width: 550
 Height: 550
 Number of Objects: 13
@@ -287,7 +287,7 @@ alignment: FL_ALIGN_CENTER
 style: FL_NORMAL_STYLE
 size: FL_NORMAL_SIZE
 lcol: FL_BLACK
-label: CBFileDragSource
+label: FileDragSource
 shortcut: 
 resize: FL_RESIZE_ALL
 gravity: FL_SouthWest FL_NoGravity
@@ -347,7 +347,7 @@ resize: FL_RESIZE_ALL
 gravity: FL_NoGravity FL_NoGravity
 name: itsToolBar
 callback: 
-argument: CBGetPrefsManager(), kCBTEToolBarID, itsMenuBar,
+argument: GetPrefsManager(), kTEToolBarID, itsMenuBar,
 
 --------------------
 class: FL_BOX
@@ -395,7 +395,7 @@ alignment: FL_ALIGN_CENTER
 style: FL_NORMAL_STYLE
 size: FL_NORMAL_SIZE
 lcol: FL_BLACK
-label: CBTELineIndexInput
+label: TELineIndexInput
 shortcut: 
 resize: FL_RESIZE_ALL
 gravity: FL_North FL_NoGravity
@@ -449,7 +449,7 @@ alignment: FL_ALIGN_CENTER
 style: FL_NORMAL_STYLE
 size: FL_NORMAL_SIZE
 lcol: FL_BLACK
-label: CBTEColIndexInput
+label: TEColIndexInput
 shortcut: 
 resize: FL_RESIZE_ALL
 gravity: FL_North FL_NoGravity
@@ -467,7 +467,7 @@ alignment: FL_ALIGN_CENTER
 style: FL_NORMAL_STYLE
 size: FL_NORMAL_SIZE
 lcol: FL_BLACK
-label: CBFileNameDisplay
+label: FileNameDisplay
 shortcut: 
 resize: FL_RESIZE_ALL
 gravity: FL_South FL_NoGravity
@@ -494,7 +494,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CBEditTextPrefsDialog
+Name: EditTextPrefsDialog
 Width: 640
 Height: 530
 Number of Objects: 52
@@ -1071,7 +1071,7 @@ label: Text
 shortcut: 
 resize: FL_RESIZE_ALL
 gravity: FL_NoGravity FL_NoGravity
-name: <itsColorButton[CBPrefsManager::kTextColorIndex-1]>
+name: <itsColorButton[PrefsManager::kTextColorIndex-1]>
 callback: 
 argument: 
 
@@ -1089,7 +1089,7 @@ label: Background
 shortcut: 
 resize: FL_RESIZE_ALL
 gravity: FL_NoGravity FL_NoGravity
-name: <itsColorButton[CBPrefsManager::kBackColorIndex-1]>
+name: <itsColorButton[PrefsManager::kBackColorIndex-1]>
 callback: 
 argument: 
 
@@ -1125,7 +1125,7 @@ label: Selection
 shortcut: 
 resize: FL_RESIZE_ALL
 gravity: FL_NoGravity FL_NoGravity
-name: <itsColorButton[CBPrefsManager::kSelColorIndex-1]>
+name: <itsColorButton[PrefsManager::kSelColorIndex-1]>
 callback: 
 argument: 
 
@@ -1143,7 +1143,7 @@ label: Outline
 shortcut: 
 resize: FL_RESIZE_ALL
 gravity: FL_NoGravity FL_NoGravity
-name: <itsColorButton[CBPrefsManager::kSelLineColorIndex-1]>
+name: <itsColorButton[PrefsManager::kSelLineColorIndex-1]>
 callback: 
 argument: 
 
@@ -1161,7 +1161,7 @@ label: Caret
 shortcut: 
 resize: FL_RESIZE_ALL
 gravity: FL_NoGravity FL_NoGravity
-name: <itsColorButton[CBPrefsManager::kCaretColorIndex-1]>
+name: <itsColorButton[PrefsManager::kCaretColorIndex-1]>
 callback: 
 argument: 
 
@@ -1323,7 +1323,7 @@ label: Right margin & whitespace
 shortcut: 
 resize: FL_RESIZE_ALL
 gravity: FL_NoGravity FL_NoGravity
-name: <itsColorButton[CBPrefsManager::kRightMarginColorIndex-1]>
+name: <itsColorButton[PrefsManager::kRightMarginColorIndex-1]>
 callback: 
 argument: 
 
@@ -1373,7 +1373,7 @@ alignment: FL_ALIGN_CENTER
 style: FL_NORMAL_STYLE
 size: FL_NORMAL_SIZE
 lcol: FL_BLACK
-label: CBSampleText
+label: SampleText
 shortcut: 
 resize: FL_RESIZE_ALL
 gravity: FL_NorthWest FL_NoGravity
@@ -1436,7 +1436,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CBSearchTextDialog
+Name: SearchTextDialog
 Width: 450
 Height: 460
 Number of Objects: 42
@@ -2027,7 +2027,7 @@ alignment: FL_ALIGN_CENTER
 style: FL_NORMAL_STYLE
 size: FL_NORMAL_SIZE
 lcol: FL_BLACK
-label: CBSearchPathHistoryMenu
+label: SearchPathHistoryMenu
 shortcut: 
 resize: FL_RESIZE_ALL
 gravity: FL_NorthEast FL_NoGravity
@@ -2063,7 +2063,7 @@ alignment: FL_ALIGN_CENTER
 style: FL_NORMAL_STYLE
 size: FL_NORMAL_SIZE
 lcol: FL_BLACK
-label: CBSearchFilterHistoryMenu
+label: SearchFilterHistoryMenu
 shortcut: 
 resize: FL_RESIZE_ALL
 gravity: FL_NorthEast FL_NoGravity
@@ -2153,7 +2153,7 @@ alignment: FL_ALIGN_CENTER
 style: FL_NORMAL_STYLE
 size: FL_NORMAL_SIZE
 lcol: FL_BLACK
-label: CBSearchFilterHistoryMenu
+label: SearchFilterHistoryMenu
 shortcut: 
 resize: FL_RESIZE_ALL
 gravity: FL_NorthEast FL_NoGravity
@@ -2198,7 +2198,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CBAboutDialog
+Name: AboutDialog
 Width: 430
 Height: 180
 Number of Objects: 7
@@ -2330,7 +2330,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CBFindFileDialog
+Name: FindFileDialog
 Width: 290
 Height: 140
 Number of Objects: 8
@@ -2480,7 +2480,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CBViewManPageDialog
+Name: ViewManPageDialog
 Width: 360
 Height: 150
 Number of Objects: 11
@@ -2684,7 +2684,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CBEditMiscPrefsDialog
+Name: EditMiscPrefsDialog
 Width: 370
 Height: 390
 Number of Objects: 20
@@ -3050,7 +3050,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CBExtEditorDialog
+Name: ExtEditorDialog
 Width: 450
 Height: 220
 Number of Objects: 13
@@ -3290,7 +3290,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CBEditTreePrefsDialog
+Name: EditTreePrefsDialog
 Width: 320
 Height: 290
 Number of Objects: 12
@@ -3383,7 +3383,7 @@ resize: FL_RESIZE_ALL
 gravity: FL_North FL_NoGravity
 name: itsFontSizeMenu
 callback: 
-argument: JFontManager::GetDefaultFontName(), JGetString("FontSize::CBEditTreePrefsDialog")
+argument: JFontManager::GetDefaultFontName(), JGetString("FontSize::EditTreePrefsDialog")
 
 --------------------
 class: FL_CHECKBUTTON
@@ -3512,7 +3512,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CBEditSearchPathsDialog
+Name: EditSearchPathsDialog
 Width: 370
 Height: 370
 Number of Objects: 8
@@ -3662,7 +3662,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CBEditStylerDialog
+Name: EditStylerDialog
 Width: 370
 Height: 390
 Number of Objects: 10
@@ -3848,7 +3848,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CBFileListDirector
+Name: FileListDirector
 Width: 340
 Height: 450
 Number of Objects: 3
@@ -3905,10 +3905,10 @@ resize: FL_RESIZE_ALL
 gravity: FL_NoGravity FL_NoGravity
 name: itsToolBar
 callback: 
-argument: CBGetPrefsManager(), kCBFileListToolBarID, menuBar,
+argument: GetPrefsManager(), kFileListToolBarID, menuBar,
 
 =============== FORM ===============
-Name: CBEditMacroDialog
+Name: EditMacroDialog
 Width: 350
 Height: 530
 Number of Objects: 5
@@ -4004,7 +4004,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CBEditMacroDialog__actionLayout__compartment
+Name: EditMacroDialog__actionLayout__compartment
 Width: 310
 Height: 150
 Number of Objects: 7
@@ -4136,7 +4136,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CBEditMacroDialog__macroLayout__compartment
+Name: EditMacroDialog__macroLayout__compartment
 Width: 310
 Height: 150
 Number of Objects: 7
@@ -4268,7 +4268,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CBEditMacroDialog__macroSetLayout__compartment
+Name: EditMacroDialog__macroSetLayout__compartment
 Width: 310
 Height: 150
 Number of Objects: 5
@@ -4364,7 +4364,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CBListChooseFileDialog
+Name: ListChooseFileDialog
 Width: 310
 Height: 420
 Number of Objects: 19
@@ -4712,7 +4712,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CBRunTEScriptDialog
+Name: RunTEScriptDialog
 Width: 390
 Height: 110
 Number of Objects: 8
@@ -4862,7 +4862,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CBEditCRMDialog
+Name: EditCRMDialog
 Width: 540
 Height: 370
 Number of Objects: 5
@@ -4958,7 +4958,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CBEditCRMDialog__ruleLayout__compartment
+Name: EditCRMDialog__ruleLayout__compartment
 Width: 500
 Height: 150
 Number of Objects: 6
@@ -5072,7 +5072,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CBEditCRMDialog__crmLayout__compartment
+Name: EditCRMDialog__crmLayout__compartment
 Width: 500
 Height: 150
 Number of Objects: 5
@@ -5168,7 +5168,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CBEditCPPMacroDialog
+Name: EditCPPMacroDialog
 Width: 370
 Height: 290
 Number of Objects: 10
@@ -5354,7 +5354,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CBPTPrintSetupDialog
+Name: PTPrintSetupDialog
 Width: 370
 Height: 240
 Number of Objects: 19
@@ -5702,7 +5702,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CBPSPrintSetupDialog
+Name: PSPrintSetupDialog
 Width: 370
 Height: 300
 Number of Objects: 21
@@ -6083,10 +6083,10 @@ resize: FL_RESIZE_ALL
 gravity: FL_North FL_NoGravity
 name: itsFontSizeMenu
 callback: 
-argument: JFontManager::GetDefaultMonospaceFontName(), JGetString("FontSizeMenuTitle::CBPSPrintSetupDialog")
+argument: JFontManager::GetDefaultMonospaceFontName(), JGetString("FontSizeMenuTitle::PSPrintSetupDialog")
 
 =============== FORM ===============
-Name: CBProjectDocument
+Name: ProjectDocument
 Width: 510
 Height: 430
 Number of Objects: 8
@@ -6143,7 +6143,7 @@ resize: FL_RESIZE_ALL
 gravity: FL_NoGravity FL_NoGravity
 name: itsToolBar
 callback: 
-argument: CBGetPrefsManager(), kCBProjectToolBarID, menuBar,
+argument: GetPrefsManager(), kProjectToolBarID, menuBar,
 
 --------------------
 class: FL_BUTTON
@@ -6236,7 +6236,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CBRPChooseFileDialog
+Name: RPChooseFileDialog
 Width: 310
 Height: 430
 Number of Objects: 20
@@ -6527,7 +6527,7 @@ resize: FL_RESIZE_NONE
 gravity: FL_NorthWest FL_NoGravity
 name: (absolutePathRB)
 callback: 
-argument: CBRelPathCSF::kAbsolutePath
+argument: RelPathCSF::kAbsolutePath
 
 --------------------
 class: FL_CHECKBUTTON
@@ -6545,7 +6545,7 @@ resize: FL_RESIZE_NONE
 gravity: FL_NorthWest FL_NoGravity
 name: (projectRelativeRB)
 callback: 
-argument: CBRelPathCSF::kProjectRelative
+argument: RelPathCSF::kProjectRelative
 
 --------------------
 class: FL_CHECKBUTTON
@@ -6563,7 +6563,7 @@ resize: FL_RESIZE_NONE
 gravity: FL_NorthWest FL_NoGravity
 name: (homeDirRB)
 callback: 
-argument: CBRelPathCSF::kHomeRelative
+argument: RelPathCSF::kHomeRelative
 
 --------------------
 class: FL_BOX
@@ -6602,7 +6602,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CBRPChoosePathDialog
+Name: RPChoosePathDialog
 Width: 310
 Height: 460
 Number of Objects: 22
@@ -6929,7 +6929,7 @@ resize: FL_RESIZE_NONE
 gravity: FL_NorthWest FL_NoGravity
 name: (absolutePathRB)
 callback: 
-argument: CBRelPathCSF::kAbsolutePath
+argument: RelPathCSF::kAbsolutePath
 
 --------------------
 class: FL_CHECKBUTTON
@@ -6947,7 +6947,7 @@ resize: FL_RESIZE_NONE
 gravity: FL_NorthWest FL_NoGravity
 name: (projectRelativeRB)
 callback: 
-argument: CBRelPathCSF::kProjectRelative
+argument: RelPathCSF::kProjectRelative
 
 --------------------
 class: FL_CHECKBUTTON
@@ -6965,7 +6965,7 @@ resize: FL_RESIZE_NONE
 gravity: FL_NorthWest FL_NoGravity
 name: (homeDirRB)
 callback: 
-argument: CBRelPathCSF::kHomeRelative
+argument: RelPathCSF::kHomeRelative
 
 --------------------
 class: FL_BOX
@@ -7004,7 +7004,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CBProjectConfigDialog
+Name: ProjectConfigDialog
 Width: 410
 Height: 380
 Number of Objects: 18
@@ -7133,7 +7133,7 @@ resize: FL_RESIZE_ALL
 gravity: FL_NorthWest FL_NoGravity
 name: (makemakeLabel)
 callback: 
-argument: CBBuildManager::kMakemake
+argument: BuildManager::kMakemake
 
 --------------------
 class: FL_INPUT
@@ -7187,7 +7187,7 @@ resize: FL_RESIZE_ALL
 gravity: FL_NorthWest FL_NoGravity
 name: (gmakeLabel)
 callback: 
-argument: CBBuildManager::kQMake
+argument: BuildManager::kQMake
 
 --------------------
 class: FL_CHECKBUTTON
@@ -7205,7 +7205,7 @@ resize: FL_RESIZE_ALL
 gravity: FL_NorthWest FL_NoGravity
 name: (manualLabel)
 callback: 
-argument: CBBuildManager::kManual
+argument: BuildManager::kManual
 
 --------------------
 class: FL_INPUT
@@ -7331,10 +7331,10 @@ resize: FL_RESIZE_ALL
 gravity: FL_NorthWest FL_NoGravity
 name: (cmakeLabel)
 callback: 
-argument: CBBuildManager::kCMake
+argument: BuildManager::kCMake
 
 =============== FORM ===============
-Name: CBEditProjPrefsDialog
+Name: EditProjPrefsDialog
 Width: 360
 Height: 310
 Number of Objects: 13
@@ -7463,7 +7463,7 @@ resize: FL_RESIZE_NONE
 gravity: FL_NorthWest FL_NoGravity
 name: (absolutePathRB)
 callback: 
-argument: CBProjectTable::kAbsolutePath
+argument: ProjectTable::kAbsolutePath
 
 --------------------
 class: FL_CHECKBUTTON
@@ -7481,7 +7481,7 @@ resize: FL_RESIZE_NONE
 gravity: FL_NorthWest FL_NoGravity
 name: (projectRelativeLabel)
 callback: 
-argument: CBProjectTable::kProjectRelative
+argument: ProjectTable::kProjectRelative
 
 --------------------
 class: FL_CHECKBUTTON
@@ -7499,7 +7499,7 @@ resize: FL_RESIZE_NONE
 gravity: FL_NorthWest FL_NoGravity
 name: (homeDirLabel)
 callback: 
-argument: CBProjectTable::kHomeRelative
+argument: ProjectTable::kHomeRelative
 
 --------------------
 class: FL_TEXT
@@ -7535,7 +7535,7 @@ resize: FL_RESIZE_NONE
 gravity: FL_NorthWest FL_NoGravity
 name: (dndAskLabel)
 callback: 
-argument: CBProjectTable::kAskPathType
+argument: ProjectTable::kAskPathType
 
 --------------------
 class: FL_CHECKBUTTON
@@ -7574,7 +7574,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CBSubprojectConfigDialog
+Name: SubprojectConfigDialog
 Width: 360
 Height: 160
 Number of Objects: 8
@@ -7679,7 +7679,7 @@ alignment: FL_ALIGN_CENTER
 style: FL_NORMAL_STYLE
 size: FL_NORMAL_SIZE
 lcol: FL_BLACK
-label: CBProjectFileInput
+label: ProjectFileInput
 shortcut: 
 resize: FL_RESIZE_NONE
 gravity: FL_South FL_NoGravity
@@ -7724,7 +7724,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CBDiffFileDialog
+Name: DiffFileDialog
 Width: 550
 Height: 210
 Number of Objects: 9
@@ -7811,13 +7811,13 @@ alignment: FL_ALIGN_CENTER
 style: FL_NORMAL_STYLE
 size: FL_NORMAL_SIZE
 lcol: FL_BLACK
-label: CBDiffStyleMenu
+label: DiffStyleMenu
 shortcut: 
 resize: FL_RESIZE_ALL
 gravity: FL_NorthWest FL_NoGravity
 name: itsCommonStyleMenu
 callback: 
-argument: JGetString("SharedStyleMenuTitle::CBDiffFileDialog")
+argument: JGetString("SharedStyleMenuTitle::DiffFileDialog")
 
 --------------------
 class: FL_CHECKBUTTON
@@ -7892,7 +7892,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CBSymbolDirector
+Name: SymbolDirector
 Width: 400
 Height: 430
 Number of Objects: 3
@@ -7949,10 +7949,10 @@ resize: FL_RESIZE_ALL
 gravity: FL_NoGravity FL_NoGravity
 name: itsToolBar
 callback: 
-argument: CBGetPrefsManager(), kCBSymbolToolBarID, menuBar,
+argument: GetPrefsManager(), kSymbolToolBarID, menuBar,
 
 =============== FORM ===============
-Name: CBSymbolSRDirector
+Name: SymbolSRDirector
 Width: 400
 Height: 230
 Number of Objects: 3
@@ -8012,7 +8012,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CBNewProjectSaveFileDialog
+Name: NewProjectSaveFileDialog
 Width: 310
 Height: 500
 Number of Objects: 25
@@ -8285,7 +8285,7 @@ resize: FL_RESIZE_ALL
 gravity: FL_NorthWest FL_NoGravity
 name: (manualRB)
 callback: 
-argument: CBBuildManager::kManual
+argument: BuildManager::kManual
 
 --------------------
 class: FL_CHECKBUTTON
@@ -8303,7 +8303,7 @@ resize: FL_RESIZE_ALL
 gravity: FL_NorthWest FL_NoGravity
 name: (qmakeRB)
 callback: 
-argument: CBBuildManager::kQMake
+argument: BuildManager::kQMake
 
 --------------------
 class: FL_CHECKBUTTON
@@ -8321,7 +8321,7 @@ resize: FL_RESIZE_ALL
 gravity: FL_NorthWest FL_NoGravity
 name: (makemakeRB)
 callback: 
-argument: CBBuildManager::kMakemake
+argument: BuildManager::kMakemake
 
 --------------------
 class: FL_BOX
@@ -8447,7 +8447,7 @@ resize: FL_RESIZE_ALL
 gravity: FL_NorthWest FL_NoGravity
 name: (cmakeRB)
 callback: 
-argument: CBBuildManager::kCMake
+argument: BuildManager::kCMake
 
 --------------------
 class: FL_BUTTON
@@ -8468,7 +8468,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CBEditSymbolPrefsDialog
+Name: EditSymbolPrefsDialog
 Width: 470
 Height: 90
 Number of Objects: 5
@@ -8564,7 +8564,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CBEditCommandsDialog
+Name: EditCommandsDialog
 Width: 620
 Height: 530
 Number of Objects: 5
@@ -8660,7 +8660,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CBEditCommandsDialog__allProjectsLayout__compartment
+Name: EditCommandsDialog__allProjectsLayout__compartment
 Width: 580
 Height: 210
 Number of Objects: 8
@@ -8810,7 +8810,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CBEditCommandsDialog__thisProjectLayout__compartment
+Name: EditCommandsDialog__thisProjectLayout__compartment
 Width: 580
 Height: 240
 Number of Objects: 10
@@ -8996,7 +8996,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CBRunCommandDialog
+Name: RunCommandDialog
 Width: 470
 Height: 260
 Number of Objects: 19
@@ -9083,7 +9083,7 @@ alignment: FL_ALIGN_CENTER
 style: FL_NORMAL_STYLE
 size: FL_NORMAL_SIZE
 lcol: FL_BLACK
-label: CBCommandPathInput
+label: CommandPathInput
 shortcut: 
 resize: FL_RESIZE_ALL
 gravity: FL_North FL_NoGravity
@@ -9344,7 +9344,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CBTabWidthDialog
+Name: TabWidthDialog
 Width: 180
 Height: 90
 Number of Objects: 5
@@ -9440,7 +9440,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CBDiffFileDialog__plainLayout__plainCard
+Name: DiffFileDialog__plainLayout__plainCard
 Width: 530
 Height: 70
 Number of Objects: 9
@@ -9491,7 +9491,7 @@ alignment: FL_ALIGN_CENTER
 style: FL_NORMAL_STYLE
 size: FL_NORMAL_SIZE
 lcol: FL_BLACK
-label: CBDiffStyleMenu
+label: DiffStyleMenu
 shortcut: 
 resize: FL_RESIZE_ALL
 gravity: FL_NorthEast FL_NoGravity
@@ -9509,7 +9509,7 @@ alignment: FL_ALIGN_CENTER
 style: FL_NORMAL_STYLE
 size: FL_NORMAL_SIZE
 lcol: FL_BLACK
-label: CBDiffStyleMenu
+label: DiffStyleMenu
 shortcut: 
 resize: FL_RESIZE_ALL
 gravity: FL_NorthEast FL_NoGravity
@@ -9608,7 +9608,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CBDiffFileDialog__cvsLayout__cvsCard
+Name: DiffFileDialog__cvsLayout__cvsCard
 Width: 510
 Height: 90
 Number of Objects: 10
@@ -9659,7 +9659,7 @@ alignment: FL_ALIGN_CENTER
 style: FL_NORMAL_STYLE
 size: FL_NORMAL_SIZE
 lcol: FL_BLACK
-label: CBDiffStyleMenu
+label: DiffStyleMenu
 shortcut: 
 resize: FL_RESIZE_ALL
 gravity: FL_NorthWest FL_NoGravity
@@ -9677,7 +9677,7 @@ alignment: FL_ALIGN_CENTER
 style: FL_NORMAL_STYLE
 size: FL_NORMAL_SIZE
 lcol: FL_BLACK
-label: CBDiffStyleMenu
+label: DiffStyleMenu
 shortcut: 
 resize: FL_RESIZE_ALL
 gravity: FL_NorthEast FL_NoGravity
@@ -9794,7 +9794,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CBDiffFileDialog__svnLayout__svnCard
+Name: DiffFileDialog__svnLayout__svnCard
 Width: 510
 Height: 90
 Number of Objects: 10
@@ -9827,7 +9827,7 @@ alignment: FL_ALIGN_CENTER
 style: FL_NORMAL_STYLE
 size: FL_NORMAL_SIZE
 lcol: FL_BLACK
-label: CBSVNFileInput
+label: SVNFileInput
 shortcut: 
 resize: FL_RESIZE_ALL
 gravity: FL_North FL_NoGravity
@@ -9845,7 +9845,7 @@ alignment: FL_ALIGN_CENTER
 style: FL_NORMAL_STYLE
 size: FL_NORMAL_SIZE
 lcol: FL_BLACK
-label: CBDiffStyleMenu
+label: DiffStyleMenu
 shortcut: 
 resize: FL_RESIZE_ALL
 gravity: FL_NorthWest FL_NoGravity
@@ -9863,7 +9863,7 @@ alignment: FL_ALIGN_CENTER
 style: FL_NORMAL_STYLE
 size: FL_NORMAL_SIZE
 lcol: FL_BLACK
-label: CBDiffStyleMenu
+label: DiffStyleMenu
 shortcut: 
 resize: FL_RESIZE_ALL
 gravity: FL_NorthEast FL_NoGravity
@@ -9980,7 +9980,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CBDiffFileDialog__gitLayout__gitCard
+Name: DiffFileDialog__gitLayout__gitCard
 Width: 510
 Height: 90
 Number of Objects: 10
@@ -10031,7 +10031,7 @@ alignment: FL_ALIGN_CENTER
 style: FL_NORMAL_STYLE
 size: FL_NORMAL_SIZE
 lcol: FL_BLACK
-label: CBDiffStyleMenu
+label: DiffStyleMenu
 shortcut: 
 resize: FL_RESIZE_ALL
 gravity: FL_NorthWest FL_NoGravity
@@ -10049,7 +10049,7 @@ alignment: FL_ALIGN_CENTER
 style: FL_NORMAL_STYLE
 size: FL_NORMAL_SIZE
 lcol: FL_BLACK
-label: CBDiffStyleMenu
+label: DiffStyleMenu
 shortcut: 
 resize: FL_RESIZE_ALL
 gravity: FL_NorthEast FL_NoGravity

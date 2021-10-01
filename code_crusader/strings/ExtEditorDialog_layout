@@ -1,0 +1,11 @@
+0
+okButton::ExtEditorDialog::JXLayout "OK"
+editBinaryLabel::ExtEditorDialog::JXLayout "Shell cmd to edit binary file:"
+editBinaryHint::ExtEditorDialog::JXLayout "(use $f in place of file name)"
+itsExtBinaryEditorCB::ExtEditorDialog::JXLayout "Use external binary editor"
+itsExtTextEditorCB::ExtEditorDialog::JXLayout "Use external text editor"
+editTextHint::ExtEditorDialog::JXLayout "(use $f in place of file name, $l in place of line number)"
+editLineLabel::ExtEditorDialog::JXLayout "Shell cmd to edit line of file:"
+okButton::ExtEditorDialog::shortcuts::JXLayout "^M"
+cancelButton::ExtEditorDialog::JXLayout "Cancel"
+editTextLabel::ExtEditorDialog::JXLayout "Shell cmd to edit text file:"

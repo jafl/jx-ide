@@ -1,0 +1,7 @@
+0
+okButton::EditSymbolPrefsDialog::JXLayout "OK"
+itsHelpButton::EditSymbolPrefsDialog::shortcuts::JXLayout "F1"
+itsHelpButton::EditSymbolPrefsDialog::JXLayout "Help"
+itsRaiseTreeOnRightClickCB::EditSymbolPrefsDialog::JXLayout "Raise class inheritance trees when searching with right mouse button"
+okButton::EditSymbolPrefsDialog::shortcuts::JXLayout "^M"
+cancelButton::EditSymbolPrefsDialog::JXLayout "Cancel"

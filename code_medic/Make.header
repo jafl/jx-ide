@@ -3,11 +3,8 @@
 
 JX_ROOT  := ../../JX
 
-APP_NAME          := medic
-APP_VERSION       := ${shell cat release/VERSION}
-SIGNATURE         := ${APP_NAME}
-MENU_STRINGS_FILE := ./strings/${APP_NAME}_menu_strings
-RPM_LIB_PATH      := /usr/lib/${SIGNATURE}
+APP_NAME  := medic
+SIGNATURE := ${APP_NAME}
 
 J_STRING_FILES := ${filter-out %/${APP_NAME}_menu_strings, \
                     ${shell echo strings/*}} strings/version
@@ -40,85 +37,28 @@ LIB_DEPS := ${JX_LIB_ROOT}/libj2dplot.a \
 LOADLIBES := ${J_LLDB_LIBS} ${shell pkg-config --libs editorconfig} \
              -lreflex ${J_STD_LIBS}
 LDFLAGS   := -Xlinker -headerpad_max_install_names
-ifdef J_SYSTEM_HAS_SHARED_LIBS
-  LDFLAGS += -Xlinker -R${RPM_LIB_PATH}
-endif
 
 include make_reflex_target
 
 #####
 
+EXTRA_MENU_STRING_FILES := \
+    ${JX_INCLUDE_ROOT}/jx-af/jexpr/*.cpp \
+    ${JX_INCLUDE_ROOT}/jx-af/j2dplot/*.cpp
+
+J_RPM_GZ_LIBS += /usr/lib64/liblldb.so /usr/lib64/libeditorconfig.so
+
 include ${MAKE_INCLUDE}/app_targets
 
 ${APP_NAME}:: strings
+
+# force reflex to run first
+${APP_NAME}:: ./backend/gdb/GDBVarTreeScanner.cpp
 	@if ! test -e CMVarTreeParserY.hpp; then ${RM} code/CMVarTreeParserY.o; fi
 
 .PHONY : post_link
 post_link::
 	-${J_POST_LINK_LLDB_CMD} ${APP_NAME}
-
-#
-# force reflex to run first
-#
-
-${APP_NAME}:: ./backend/gdb/GDBVarTreeScanner.cpp
-
-#
-# string data
-#
-
-.PHONY : strings
-strings: build_version_string
-	@${RM} ${MENU_STRINGS_FILE}
-	compile_jstrings ${J_STRING_FILES} \
-      --code kCMDefaultStringData ./code/cmStringData.h
-
-${APP_NAME}:: update_jcc strings
-
-.PHONY : menu_strings
-menu_strings:
-	@${MENU_STR_CMD} ${MENU_STRINGS_FILE} ${SIGNATURE} \
-     -a ./code/cmActionDefs.h ${JX_ACTION_DEFS} \
-     -m */*.cpp ${JX_INCLUDE_ROOT}/jx-af/jx/*.cpp \
-        ${JX_INCLUDE_ROOT}/jx-af/jexpr/*.cpp ${JX_INCLUDE_ROOT}/jx-af/j2dplot/*.cpp
-
-#
-# update shared jcc code
-#
-
-.PHONY : update_jcc
-update_jcc:
-	@mkdir -p jcc-shared; \
-     for f in `cat jcc-shared.txt`; do \
-       if ! test -f jcc-shared/$$f || ! cmp -s ../code_crusader/code/$$f jcc-shared/$$f; then \
-         echo Updating $$f; \
-         cp ../code_crusader/code/$$f jcc-shared/$$f; \
-       fi; \
-     done; \
-     cp ../code_crusader/image/jcc_balance_braces.xpm jcc-shared/; \
-     cp ../code_crusader/strings/jcc_medic_shared_strings strings/
-
-#
-# binary distributions
-#
-
-PROG := Code_Medic-${APP_VERSION}
-
-PROG_RELEASE_TAR_NAME := Code_Medic_${APP_VERSION}.tar
-
-RPM_TAR_FILE  := ${RPM_SRC_DIR}/Code_Medic-${APP_VERSION}.tar
-RPM_SPEC_FILE := ./release/pkg/code_medic.spec
-J_RPM_GZ_LIBS += /usr/lib64/liblldb.so /usr/lib64/libeditorconfig.so
-
-DEB_CTRL_FILE := ./release/pkg/code_medic.debctrl
-DEB_PKG_FILE  := code-medic_${APP_VERSION}_i386.deb
-
-.PHONY : release
-release: pre_build_pkgs default
-	@${J_STRIP_DEBUG} ${EXE_NAME}
-	@${MAKE} PKG_PATH=${PROG} init_tarball
-	@ln -s ../${EXE_NAME} ${PROG}/
-	@${MAKE} PKG_PATH=${PROG} SOURCE_TAR_NAME=${PROG_RELEASE_TAR_NAME} build_pkgs
 
 # DO NOT DELETE THIS LINE -- Code Crusader depends on it.
 

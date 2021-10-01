@@ -1,0 +1,5 @@
+0
+lineLabel::TextDocument::JXLayout "Line"
+itsSettingsMenu::TextDocument::JXLayout "Settings"
+colLabel::TextDocument::JXLayout "Col"
+itsActionButton::TextDocument::JXLayout ""

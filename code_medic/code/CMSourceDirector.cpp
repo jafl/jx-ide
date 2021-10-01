@@ -909,8 +909,8 @@ CMSourceDirector::UpdateFileType()
 	{
 		bool setTabWidth, setTabMode, tabInsertsSpaces, setAutoIndent, autoIndent;
 		JSize tabWidth;
-		CBMParseEditorOptions(itsCurrentFile, itsText->GetText()->GetText(), &setTabWidth, &tabWidth,
-							  &setTabMode, &tabInsertsSpaces, &setAutoIndent, &autoIndent);
+		ParseEditorOptions(itsCurrentFile, itsText->GetText()->GetText(), &setTabWidth, &tabWidth,
+						   &setTabMode, &tabInsertsSpaces, &setAutoIndent, &autoIndent);
 		if (setTabWidth)
 		{
 			itsText->GetText()->SetCRMTabCharCount(tabWidth);

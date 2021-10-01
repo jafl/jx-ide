@@ -8,12 +8,12 @@
  *****************************************************************************/
 
 #include <jx-af/jcore/JTestManager.h>
-#include "CBHTMLStyler.h"
-#include "cbTestUtil.h"
+#include "HTMLStyler.h"
+#include "testUtil.h"
 #include <jx-af/jcore/JColorManager.h>
 #include <jx-af/jcore/jAssert.h>
 
-class TestHTMLStyler : public CBHTMLStyler
+class TestHTMLStyler : public HTMLStyler
 {
 public:
 

@@ -816,7 +816,7 @@ CMVarTreeWidget::CreateXInputField
 	itsOrigEditValue = input->GetText()->GetText();
 
 	input->SetIsRequired();
-	input->GetText()->SetCharacterInWordFunction(CBMIsCharacterInWord);
+	input->GetText()->SetCharacterInWordFunction(::IsCharacterInWord);
 	return input;
 }
 

@@ -1,0 +1,5 @@
+0
+itsPlainChoose2Button::DiffFileDialog::plainLayout "Choose"
+file2Label::DiffFileDialog::plainLayout "2:"
+itsPlainChoose1Button::DiffFileDialog::plainLayout "Choose"
+file1Label::DiffFileDialog::plainLayout "1:"

@@ -19,10 +19,6 @@ F
 T
 1 "jcc"
 T
-2 "jcc_shared.txt"
-F
-"./jcc_shared.txt"
-T
 2 "CMStylerStubs.cpp"
 F
 "./code/CMStylerStubs.cpp"

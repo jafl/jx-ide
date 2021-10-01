@@ -1,0 +1,5 @@
+0
+tabWidthLabel::TabWidthDialog::JXLayout "Spaces per tab:"
+okButton::TabWidthDialog::shortcuts::JXLayout "^M"
+okButton::TabWidthDialog::JXLayout "OK"
+cancelButton::TabWidthDialog::JXLayout "Cancel"

@@ -8,8 +8,8 @@
  *****************************************************************************/
 
 #include <jx-af/jcore/JTestManager.h>
-#include "CBJavaTree.h"
-#include "CBClass.h"
+#include "JavaTree.h"
+#include "Class.h"
 #include <jx-af/jcore/jAssert.h>
 
 int main()
@@ -17,13 +17,13 @@ int main()
 	return JTestManager::Execute();
 }
 
-class TestJavaTree : public CBJavaTree
+class TestJavaTree : public JavaTree
 {
 public:
 
 	TestJavaTree()
 		:
-		CBJavaTree(nullptr, 0)
+		JavaTree(nullptr, 0)
 	{ };
 
 	virtual void ParseFile(const JString& fileName, const JFAID_t id) override;
@@ -36,7 +36,7 @@ TestJavaTree::ParseFile
 	const JFAID_t	id
 	)
 {
-	CBJavaTree::ParseFile(fileName, id);
+	JavaTree::ParseFile(fileName, id);
 }
 
 JTEST(Basic)
@@ -51,11 +51,11 @@ JTEST(Basic)
 	tree.UpdateFinished(deadFileList);
 
 	const TestJavaTree& constTree  = tree;
-	const JPtrArray<CBClass>& list = constTree.GetClasses();
+	const JPtrArray<Class>& list = constTree.GetClasses();
 	JAssertEqual(8, list.GetElementCount());
 
 	JSize found = 0;
-	for (CBClass* c : list)
+	for (Class* c : list)
 		{
 		if (c->GetFullName() == "com.android.systemui.statusbar.policy.AccessibilityController")
 			{
@@ -76,7 +76,7 @@ JTEST(Basic)
 			}
 		else
 			{
-			JAssertEqual(CBClass::kGhostType, c->GetDeclareType());
+			JAssertEqual(Class::kGhostType, c->GetDeclareType());
 			}
 
 		JAssertFalse(c->IsTemplate());
@@ -115,16 +115,16 @@ JTEST(Template)
 	tree.UpdateFinished(deadFileList);
 
 	const TestJavaTree& constTree  = tree;
-	const JPtrArray<CBClass>& list = constTree.GetClasses();
+	const JPtrArray<Class>& list = constTree.GetClasses();
 	JAssertEqual(5, list.GetElementCount());
 
 	JSize found = 0;
-	for (CBClass* c : list)
+	for (Class* c : list)
 		{
 		if (c->GetFullName() == "com.opencsv.bean.BeanVerifier" ||
 			c->GetFullName() == "test.foo.Test1")
 			{
-			JAssertEqual(CBClass::kGhostType, c->GetDeclareType());
+			JAssertEqual(Class::kGhostType, c->GetDeclareType());
 			}
 		else if (c->GetFullName() == "test.csv.verifier.StartDateVerifier")
 			{
@@ -159,7 +159,7 @@ JTEST(Template)
 }
 
 bool
-CBInUpdateThread()
+InUpdateThread()
 {
 	return true;
 }

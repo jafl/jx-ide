@@ -1,0 +1,5 @@
+0
+itsGitRev2Menu::DiffFileDialog::gitLayout "2"
+itsGitChooseButton::DiffFileDialog::gitLayout "Choose"
+itsGitRev1Menu::DiffFileDialog::gitLayout "1"
+itsGitSummaryCB::DiffFileDialog::gitLayout "Summary"

@@ -1,0 +1,5 @@
+0
+loadMacroFileButton::EditMacroDialog::macroLayout "Load"
+newMacroButton::EditMacroDialog::macroLayout "New"
+removeMacroButton::EditMacroDialog::macroLayout "Remove"
+saveMacroFileButton::EditMacroDialog::macroLayout "Save"

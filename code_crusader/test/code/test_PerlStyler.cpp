@@ -8,12 +8,12 @@
  *****************************************************************************/
 
 #include <jx-af/jcore/JTestManager.h>
-#include "CBPerlStyler.h"
-#include "cbTestUtil.h"
+#include "PerlStyler.h"
+#include "testUtil.h"
 #include <jx-af/jcore/JColorManager.h>
 #include <jx-af/jcore/jAssert.h>
 
-class TestPerlStyler : public CBPerlStyler
+class TestPerlStyler : public PerlStyler
 {
 public:
 

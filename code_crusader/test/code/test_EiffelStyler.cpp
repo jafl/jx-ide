@@ -8,8 +8,8 @@
  *****************************************************************************/
 
 #include <jx-af/jcore/JTestManager.h>
-#include "CBEiffelStyler.h"
-#include "cbTestUtil.h"
+#include "EiffelStyler.h"
+#include "testUtil.h"
 #include <jx-af/jcore/jAssert.h>
 
 int main()
@@ -22,7 +22,7 @@ JTEST(Basic)
 	JStyledText* st = jnew JStyledText(false, false);
 	assert( st != nullptr );
 
-	CBStylerBase* styler = CBEiffelStyler::Instance();
+	StylerBase* styler = EiffelStyler::Instance();
 
 	// empty
 	UpdateStyles(st, styler);

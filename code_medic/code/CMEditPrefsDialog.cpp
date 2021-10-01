@@ -268,31 +268,31 @@ CMEditPrefsDialog::BuildWindow
 	itsEditFileLineCmdInput->SetIsRequired();
 	itsEditFileLineCmdInput->SetFont(font);
 
-	CBMSetStringList(itsCSourceSuffixInput, cSourceSuffixes);
+	SetSuffixList(itsCSourceSuffixInput, cSourceSuffixes);
 	itsCSourceSuffixInput->SetIsRequired();
 	itsCSourceSuffixInput->SetFont(font);
 
-	CBMSetStringList(itsCHeaderSuffixInput, cHeaderSuffixes);
+	SetSuffixList(itsCHeaderSuffixInput, cHeaderSuffixes);
 	itsCHeaderSuffixInput->SetIsRequired();
 	itsCHeaderSuffixInput->SetFont(font);
 
-	CBMSetStringList(itsJavaSuffixInput, javaSuffixes);
+	SetSuffixList(itsJavaSuffixInput, javaSuffixes);
 	itsJavaSuffixInput->SetIsRequired();
 	itsJavaSuffixInput->SetFont(font);
 
-	CBMSetStringList(itsPHPSuffixInput, phpSuffixes);
+	SetSuffixList(itsPHPSuffixInput, phpSuffixes);
 	itsPHPSuffixInput->SetIsRequired();
 	itsPHPSuffixInput->SetFont(font);
 
-	CBMSetStringList(itsFortranSuffixInput, fortranSuffixes);
+	SetSuffixList(itsFortranSuffixInput, fortranSuffixes);
 	itsFortranSuffixInput->SetIsRequired();
 	itsFortranSuffixInput->SetFont(font);
 
-	CBMSetStringList(itsDSuffixInput, dSuffixes);
+	SetSuffixList(itsDSuffixInput, dSuffixes);
 	itsDSuffixInput->SetIsRequired();
 	itsDSuffixInput->SetFont(font);
 
-	CBMSetStringList(itsGoSuffixInput, goSuffixes);
+	SetSuffixList(itsGoSuffixInput, goSuffixes);
 	itsGoSuffixInput->SetIsRequired();
 	itsGoSuffixInput->SetFont(font);
 
@@ -327,13 +327,76 @@ CMEditPrefsDialog::GetPrefs
 	*editFileCmd     = itsEditFileCmdInput->GetText()->GetText();
 	*editFileLineCmd = itsEditFileLineCmdInput->GetText()->GetText();
 
-	CBMGetSuffixList(itsCSourceSuffixInput, cSourceSuffixes);
-	CBMGetSuffixList(itsCHeaderSuffixInput, cHeaderSuffixes);
-	CBMGetSuffixList(itsJavaSuffixInput, javaSuffixes);
-	CBMGetSuffixList(itsPHPSuffixInput, phpSuffixes);
-	CBMGetSuffixList(itsFortranSuffixInput, fortranSuffixes);
-	CBMGetSuffixList(itsDSuffixInput, dSuffixes);
-	CBMGetSuffixList(itsGoSuffixInput, goSuffixes);
+	GetSuffixList(itsCSourceSuffixInput, cSourceSuffixes);
+	GetSuffixList(itsCHeaderSuffixInput, cHeaderSuffixes);
+	GetSuffixList(itsJavaSuffixInput, javaSuffixes);
+	GetSuffixList(itsPHPSuffixInput, phpSuffixes);
+	GetSuffixList(itsFortranSuffixInput, fortranSuffixes);
+	GetSuffixList(itsDSuffixInput, dSuffixes);
+	GetSuffixList(itsGoSuffixInput, goSuffixes);
+}
+
+/******************************************************************************
+ GetSuffixList
+
+	Checks that each string starts with a period.
+
+ ******************************************************************************/
+
+static const JRegex wsPattern = "[ \t]+";
+
+void
+CMEditPrefsDialog
+	(
+	JXInputField*		inputField,
+	JPtrArray<JString>*	list
+	)
+{
+	list->DeleteAll();
+
+	JString text = inputField->GetText()->GetText();
+	text.TrimWhitespace();
+	if (!text.IsEmpty())
+	{
+		text.Split(wsPattern, list);
+	}
+
+	const JSize count = list->GetElementCount();
+	for (JIndex i=1; i<=count; i++)
+	{
+		JString* suffix = list->GetElement(i);
+		if (suffix->GetFirstCharacter() != '.')
+		{
+			suffix->Prepend(".");
+		}
+	}
+}
+
+/******************************************************************************
+ SetSuffixList
+
+ ******************************************************************************/
+
+void
+CMEditPrefsDialog
+	(
+	JXInputField*				inputField,
+	const JPtrArray<JString>&	list
+	)
+{
+	JString text;
+
+	const JSize count = list.GetElementCount();
+	for (JIndex i=1; i<=count; i++)
+	{
+		if (i > 1)
+		{
+			text += " ";
+		}
+		text += *(list.GetElement(i));
+	}
+
+	inputField->GetText()->SetText(text);
 }
 
 /******************************************************************************

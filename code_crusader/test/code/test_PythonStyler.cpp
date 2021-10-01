@@ -8,8 +8,8 @@
  *****************************************************************************/
 
 #include <jx-af/jcore/JTestManager.h>
-#include "CBPythonStyler.h"
-#include "cbTestUtil.h"
+#include "PythonStyler.h"
+#include "testUtil.h"
 #include <jx-af/jcore/jAssert.h>
 
 int main()
@@ -22,7 +22,7 @@ JTEST(Basic)
 	JStyledText* st = jnew JStyledText(false, false);
 	assert( st != nullptr );
 
-	CBStylerBase* styler = CBPythonStyler::Instance();
+	StylerBase* styler = PythonStyler::Instance();
 
 	// empty
 	UpdateStyles(st, styler);

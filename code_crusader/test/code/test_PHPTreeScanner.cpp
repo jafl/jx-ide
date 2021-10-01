@@ -8,8 +8,8 @@
  *****************************************************************************/
 
 #include <jx-af/jcore/JTestManager.h>
-#include "CBPHPTree.h"
-#include "CBClass.h"
+#include "PHPTree.h"
+#include "Class.h"
 #include <jx-af/jcore/jAssert.h>
 
 int main()
@@ -17,13 +17,13 @@ int main()
 	return JTestManager::Execute();
 }
 
-class TestPHPTree : public CBPHPTree
+class TestPHPTree : public PHPTree
 {
 public:
 
 	TestPHPTree()
 		:
-		CBPHPTree(nullptr, 0)
+		PHPTree(nullptr, 0)
 	{ };
 
 	virtual void ParseFile(const JString& fileName, const JFAID_t id) override;
@@ -36,7 +36,7 @@ TestPHPTree::ParseFile
 	const JFAID_t	id
 	)
 {
-	CBPHPTree::ParseFile(fileName, id);
+	PHPTree::ParseFile(fileName, id);
 }
 
 JTEST(Basic)
@@ -51,11 +51,11 @@ JTEST(Basic)
 	tree.UpdateFinished(deadFileList);
 
 	const TestPHPTree& constTree   = tree;
-	const JPtrArray<CBClass>& list = constTree.GetClasses();
+	const JPtrArray<Class>& list = constTree.GetClasses();
 	JAssertEqual(5, list.GetElementCount());
 
 	JSize found = 0;
-	for (CBClass* c : list)
+	for (Class* c : list)
 		{
 		if (c->GetFullName() == "Zend\\Authentication\\Adapter\\DbTable\\Exception\\InvalidArgumentException")
 			{
@@ -73,7 +73,7 @@ JTEST(Basic)
 			}
 		else
 			{
-			JAssertEqual(CBClass::kGhostType, c->GetDeclareType());
+			JAssertEqual(Class::kGhostType, c->GetDeclareType());
 			}
 
 		for (const JUtf8Byte* n :
@@ -96,7 +96,7 @@ JTEST(Basic)
 }
 
 bool
-CBInUpdateThread()
+InUpdateThread()
 {
 	return true;
 }

@@ -535,7 +535,7 @@ CMVarNode::TrimExpression
 	{
 		JStringIterator iter(s, kJIteratorStartAfter, 1);
 		JUtf8Character c;
-		if (!CBMBalanceForward(kCBCLang, &iter, &c) || !iter.AtEnd())
+		if (!BalanceForward(kCBCLang, &iter, &c) || !iter.AtEnd())
 		{
 			break;
 		}

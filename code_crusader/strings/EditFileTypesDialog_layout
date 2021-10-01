@@ -1,0 +1,13 @@
+0
+okButton::EditFileTypesDialog::JXLayout "OK"
+removeTypeButton::EditFileTypesDialog::JXLayout "Remove"
+addTypeButton::EditFileTypesDialog::shortcuts::JXLayout "#N"
+duplicateTypeButton::EditFileTypesDialog::JXLayout "Duplicate"
+duplicateTypeButton::EditFileTypesDialog::shortcuts::JXLayout "#D"
+addTypeButton::EditFileTypesDialog::JXLayout "New"
+itsExecOutputWrapCB::EditFileTypesDialog::JXLayout "Wrap text in Compile and Program Output windows"
+removeTypeButton::EditFileTypesDialog::shortcuts::JXLayout "#R"
+itsUnknownTypeWrapCB::EditFileTypesDialog::JXLayout "Wrap text in other windows"
+itsHelpButton::EditFileTypesDialog::JXLayout "Help"
+cancelButton::EditFileTypesDialog::JXLayout "Cancel"
+itsHelpButton::EditFileTypesDialog::shortcuts::JXLayout "F1"

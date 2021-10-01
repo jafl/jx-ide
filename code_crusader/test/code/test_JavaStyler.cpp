@@ -8,8 +8,8 @@
  *****************************************************************************/
 
 #include <jx-af/jcore/JTestManager.h>
-#include "CBJavaStyler.h"
-#include "cbTestUtil.h"
+#include "JavaStyler.h"
+#include "testUtil.h"
 #include <jx-af/jcore/jAssert.h>
 
 int main()
@@ -22,7 +22,7 @@ JTEST(Basic)
 	JStyledText* st = jnew JStyledText(false, false);
 	assert( st != nullptr );
 
-	CBStylerBase* styler = CBJavaStyler::Instance();
+	StylerBase* styler = JavaStyler::Instance();
 
 	// empty
 	UpdateStyles(st, styler);

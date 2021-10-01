@@ -1,0 +1,5 @@
+0
+saveRuleFileButton::EditCRMDialog::ruleLayout "Save"
+newRuleButton::EditCRMDialog::ruleLayout "New"
+loadRuleFileButton::EditCRMDialog::ruleLayout "Load"
+removeRuleButton::EditCRMDialog::ruleLayout "Remove"

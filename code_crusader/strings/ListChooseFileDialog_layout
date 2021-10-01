@@ -1,0 +1,13 @@
+0
+appendRB::ListChooseFileDialog::JXLayout "Merge"
+pathLabel::ListChooseFileDialog::JXLayout "Path:"
+upButton::ListChooseFileDialog::JXLayout "Up"
+selectAllButton::ListChooseFileDialog::JXLayout "Select all"
+openButton::ListChooseFileDialog::JXLayout "Open"
+filterLabel::ListChooseFileDialog::JXLayout "Filter:"
+openButton::ListChooseFileDialog::shortcuts::JXLayout "^M"
+replaceRB::ListChooseFileDialog::JXLayout "Replace"
+desktopButton::ListChooseFileDialog::JXLayout "Desktop"
+showHiddenCB::ListChooseFileDialog::JXLayout "Show hidden files"
+cancelButton::ListChooseFileDialog::JXLayout "Cancel"
+homeButton::ListChooseFileDialog::JXLayout "Home"
