@@ -14,13 +14,17 @@ fi
 
 if [[ $SYS == Darwin ]]; then
 
-	if ! command -v brew; then
-		/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)";
-	else
-		brew update;
-	fi
+	if [[ -z $HOMEBREW_VERSION ]]; then
+		if ! command -v brew; then
+			echo Installing Homebrew...;
+			sudo /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)";
+		else
+			echo Updating Homebrew...;
+			brew update;
+		fi
 
-	brew bundle;
+		brew bundle;
+	fi
 
 elif command -v apt-get; then
 
@@ -31,8 +35,7 @@ elif command -v apt-get; then
 	if [[ -z $LGTM_SRC ]]; then
 		$SUDO apt update;
 		$SUDO apt -y install libeditorconfig-dev \
-			llvm liblldb-$LLDB_VERS-dev \
-			aspell;
+			llvm liblldb-$LLDB_VERS-dev;
 	fi
 
 	rm -f code_medic/lldb-include;
@@ -46,24 +49,21 @@ elif command -v dnf; then
 	# redhat
 
 	$SUDO dnf -y install editorconfig-devel \
-		lldb-devel llvm-devel \
-		aspell aspell-en;
+		lldb-devel llvm-devel;
 
 elif command -v yum; then
 
 	# redhat
 
 	$SUDO yum -y install editorconfig-devel \
-		lldb-devel llvm-devel \
-		aspell aspell-en;
+		lldb-devel llvm-devel;
 
 elif command -v zypper; then
 
 	# openSUSE
 
 	$SUDO zypper -in install editorconfig-devel \
-		lldb llvm-devel \
-		aspell aspell-en;
+		lldb llvm-devel;
 
 	# lldb-devel is missing
 	rm -f code_medic/lldb-include;
@@ -85,8 +85,6 @@ elif [[ $SYS == Cygwin ]]; then
 		echo "Unknown architecture '$ARCH'.  Please file an issue on github.";
 		exit 1;
 	fi
-
-	$SETUP -q -P aspell,aspell-en;
 
 else
 
