@@ -12,7 +12,7 @@
 
 #include "XDWelcomeTask.h"
 #include "XDLink.h"
-#include "cmGlobals.h"
+#include "globals.h"
 
 /******************************************************************************
  Constructor
@@ -47,7 +47,7 @@ XDWelcomeTask::~XDWelcomeTask()
 void
 XDWelcomeTask::Perform()
 {
-	auto* link = dynamic_cast<XDLink*>(CMGetLink());
+	auto* link = dynamic_cast<XDLink*>(GetLink());
 	if (link != nullptr)
 	{
 		link->BroadcastWelcome(itsMessage, itsErrorFlag);

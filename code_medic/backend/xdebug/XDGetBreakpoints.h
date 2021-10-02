@@ -8,9 +8,9 @@
 #ifndef _H_XDGetBreakpoints
 #define _H_XDGetBreakpoints
 
-#include "CMGetBreakpoints.h"
+#include "GetBreakpointsCmd.h"
 
-class XDGetBreakpoints : public CMGetBreakpoints
+class XDGetBreakpoints : public GetBreakpointsCmd
 {
 public:
 

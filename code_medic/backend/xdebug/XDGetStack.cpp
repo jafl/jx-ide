@@ -1,17 +1,17 @@
 /******************************************************************************
  XDGetStack.cpp
 
-	BASE CLASS = CMGetStack
+	BASE CLASS = GetStack
 
 	Copyright (C) 2007 by John Lindal.
 
  ******************************************************************************/
 
 #include "XDGetStack.h"
-#include "CMStackFrameNode.h"
-#include "CMStackWidget.h"
+#include "StackFrameNode.h"
+#include "StackWidget.h"
 #include "XDLink.h"
-#include "cmGlobals.h"
+#include "globals.h"
 #include <jx-af/jcore/JTree.h>
 #include <jx-af/jcore/jFileUtil.h>
 #include <jx-af/jcore/jAssert.h>
@@ -26,10 +26,10 @@ const JSize kFrameIndexWidth = 2;	// width of frame index in characters
 XDGetStack::XDGetStack
 	(
 	JTree*			tree,
-	CMStackWidget*	widget
+	StackWidget*	widget
 	)
 	:
-	CMGetStack(JString("stack_get", JString::kNoCopy), tree, widget)
+	GetStack(JString("stack_get", JString::kNoCopy), tree, widget)
 {
 }
 
@@ -53,7 +53,7 @@ XDGetStack::HandleSuccess
 	const JString& data
 	)
 {
-	auto* link = dynamic_cast<XDLink*>(CMGetLink());
+	auto* link = dynamic_cast<XDLink*>(GetLink());
 	xmlNode* root;
 	if (link == nullptr || !link->GetParsedData(&root))
 	{
@@ -93,7 +93,7 @@ XDGetStack::HandleSuccess
 		frameName += name;
 
 		auto* node =
-			jnew CMStackFrameNode(stackRoot, frameIndex, frameName,
+			jnew StackFrameNode(stackRoot, frameIndex, frameName,
 								 fileName, lineIndex);
 		assert( node != nullptr );
 		stackRoot->Prepend(node);

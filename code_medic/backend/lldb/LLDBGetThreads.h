@@ -8,15 +8,15 @@
 #ifndef _H_LLDBGetThreads
 #define _H_LLDBGetThreads
 
-#include "CMGetThreads.h"
+#include "GetThreads.h"
 
 class JTree;
 
-class LLDBGetThreads : public CMGetThreads
+class LLDBGetThreads : public GetThreads
 {
 public:
 
-	LLDBGetThreads(JTree* tree, CMThreadsWidget* widget);
+	LLDBGetThreads(JTree* tree, ThreadsWidget* widget);
 
 	virtual	~LLDBGetThreads();
 

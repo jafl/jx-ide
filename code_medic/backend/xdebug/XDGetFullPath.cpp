@@ -1,7 +1,7 @@
 /******************************************************************************
  XDGetFullPath.cpp
 
-	BASE CLASS = CMGetFullPath
+	BASE CLASS = GetFullPathCmd
 
 	Copyright (C) 2007 by John Lindal.
 
@@ -21,7 +21,7 @@ XDGetFullPath::XDGetFullPath
 	const JIndex	lineIndex	// for convenience
 	)
 	:
-	CMGetFullPath(JString("status", JString::kNoCopy), fileName, lineIndex)
+	GetFullPathCmd(JString("status", JString::kNoCopy), fileName, lineIndex)
 {
 }
 

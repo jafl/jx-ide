@@ -10,6 +10,7 @@
 
 #include "TextFileType.h"
 #include <jx-af/jcore/JPtrArray-JString.h>
+#include <jx-af/jcore/jColor.h>
 
 class JString;
 class JTextEditor;

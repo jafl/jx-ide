@@ -12,7 +12,7 @@
 
 #include "JVMSetProgramTask.h"
 #include "JVMLink.h"
-#include "cmGlobals.h"
+#include "globals.h"
 
 /******************************************************************************
  Constructor
@@ -40,7 +40,7 @@ JVMSetProgramTask::~JVMSetProgramTask()
 void
 JVMSetProgramTask::Perform()
 {
-	auto* link = dynamic_cast<JVMLink*>(CMGetLink());
+	auto* link = dynamic_cast<JVMLink*>(GetLink());
 	if (link != nullptr)
 	{
 		link->BroadcastProgramSet();

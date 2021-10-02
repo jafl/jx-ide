@@ -1,7 +1,7 @@
 /******************************************************************************
  JVMStackFrameNode.cpp
 
-	BASE CLASS = public CMStackFrameNode
+	BASE CLASS = public StackFrameNode
 
 	Copyright (C) 2001 by John Lindal.
 
@@ -9,7 +9,7 @@
 
 #include "JVMStackFrameNode.h"
 #include "JVMLink.h"
-#include "cmGlobals.h"
+#include "globals.h"
 #include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
@@ -26,14 +26,14 @@ JVMStackFrameNode::JVMStackFrameNode
 	const JUInt64	codeOffset
 	)
 	:
-	CMStackFrameNode(parent, id, JString::empty, JString::empty, 0),
+	StackFrameNode(parent, id, JString::empty, JString::empty, 0),
 	itsClassID(classID),
 	itsMethodID(methodID),
 	itsCodeOffset(codeOffset)
 {
 	if (!UpdateNodeName())
 	{
-		ListenTo(CMGetLink());
+		ListenTo(GetLink());
 	}
 }
 
@@ -72,7 +72,7 @@ JVMStackFrameNode::Receive
 
 	else
 	{
-		CMStackFrameNode::Receive(sender, message);
+		StackFrameNode::Receive(sender, message);
 	}
 }
 
@@ -84,7 +84,7 @@ JVMStackFrameNode::Receive
 bool
 JVMStackFrameNode::UpdateNodeName()
 {
-	auto* link = dynamic_cast<JVMLink*>(CMGetLink());
+	auto* link = dynamic_cast<JVMLink*>(GetLink());
 	JString c, m;
 	if (link->GetClassName(itsClassID, &c) &&
 		link->GetMethodName(itsClassID, itsMethodID, &m))

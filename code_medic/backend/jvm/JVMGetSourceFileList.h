@@ -8,15 +8,15 @@
 #ifndef _H_JVMGetSourceFileList
 #define _H_JVMGetSourceFileList
 
-#include "CMGetSourceFileList.h"
+#include "GetSourceFileList.h"
 
-class CMFileListDir;
+class FileListDir;
 
-class JVMGetSourceFileList : public CMGetSourceFileList
+class JVMGetSourceFileList : public GetSourceFileList
 {
 public:
 
-	JVMGetSourceFileList(CMFileListDir* fileList);
+	JVMGetSourceFileList(FileListDir* fileList);
 
 	virtual	~JVMGetSourceFileList();
 

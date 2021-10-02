@@ -5,8 +5,8 @@ Copyright (C) 2007 by John Lindal.
 This scanner reads output from gdb --interpreter=mi2.
 */
 
-#include "CMLocation.h"
-#include "CMBreakpoint.h"
+#include "Location.h"
+#include "Breakpoint.h"
 #include <jx-af/jcore/JStringIterator.h>
 #include <jx-af/jcore/JRegex.h>
 #include <jx-af/jcore/jAssert.h>
@@ -81,7 +81,7 @@ public:
 	struct Data
 	{
 		JUInt		number;
-		CMLocation*	pLocation;
+		Location*	pLocation;
 		JString*	pString;
 	};
 
@@ -116,7 +116,7 @@ private:
 	// "Registers" -- temporary buffers for use in Token
 
 	Data			itsData;
-	CMLocation		itsLocation;
+	Location		itsLocation;
 	JString			itsString;
 
 private:
@@ -492,7 +492,7 @@ PROMPT "(gdb) "\n?
 
 
 
-	/* Medic running CMCommand */
+	/* Medic running Command */
 
 
 

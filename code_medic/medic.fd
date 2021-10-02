@@ -7,7 +7,7 @@ Number of forms: 20
 Unit of measure: FL_COORD_PIXEL
 
 =============== FORM ===============
-Name: CMChooseProcessDialog
+Name: ChooseProcessDialog
 Width: 390
 Height: 500
 Number of Objects: 7
@@ -139,7 +139,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CMEditCommandsDialog
+Name: EditCommandsDialog
 Width: 350
 Height: 370
 Number of Objects: 8
@@ -289,7 +289,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CMAboutDialog
+Name: AboutDialog
 Width: 430
 Height: 180
 Number of Objects: 7
@@ -421,7 +421,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CMSourceDirector
+Name: SourceDirector
 Width: 600
 Height: 550
 Number of Objects: 5
@@ -478,7 +478,7 @@ resize: FL_RESIZE_ALL
 gravity: FL_NoGravity FL_NoGravity
 name: itsToolBar
 callback: 
-argument: CMGetPrefsManager(), prefID, itsMenuBar,
+argument: GetPrefsManager(), prefID, itsMenuBar,
 
 --------------------
 class: FL_BOX
@@ -508,7 +508,7 @@ alignment: FL_ALIGN_CENTER
 style: FL_NORMAL_STYLE
 size: FL_NORMAL_SIZE
 lcol: FL_BLACK
-label: CMFileDragSource
+label: FileDragSource
 shortcut: 
 resize: FL_RESIZE_ALL
 gravity: FL_SouthWest FL_NoGravity
@@ -517,7 +517,7 @@ callback:
 argument: this
 
 =============== FORM ===============
-Name: CMCommandDirector
+Name: CommandDirector
 Width: 500
 Height: 550
 Number of Objects: 9
@@ -574,7 +574,7 @@ resize: FL_RESIZE_ALL
 gravity: FL_NoGravity FL_NoGravity
 name: itsToolBar
 callback: 
-argument: CMGetPrefsManager(), kCmdWindowToolBarID, menuBar,
+argument: GetPrefsManager(), kCmdWindowToolBarID, menuBar,
 
 --------------------
 class: FL_BUTTON
@@ -640,7 +640,7 @@ alignment: FL_ALIGN_CENTER
 style: FL_NORMAL_STYLE
 size: FL_NORMAL_SIZE
 lcol: FL_BLACK
-label: CMCommandInput
+label: CommandInput
 shortcut: 
 resize: FL_RESIZE_ALL
 gravity: FL_North FL_NoGravity
@@ -685,7 +685,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CMArray1DDir
+Name: Array1DDir
 Width: 300
 Height: 500
 Number of Objects: 10
@@ -718,7 +718,7 @@ alignment: FL_ALIGN_CENTER
 style: FL_NORMAL_STYLE
 size: FL_NORMAL_SIZE
 lcol: FL_BLACK
-label: CMArrayExprInput
+label: ArrayExprInput
 shortcut: 
 resize: FL_RESIZE_ALL
 gravity: FL_North FL_NoGravity
@@ -826,7 +826,7 @@ alignment: FL_ALIGN_CENTER
 style: FL_NORMAL_STYLE
 size: FL_NORMAL_SIZE
 lcol: FL_BLACK
-label: CMArrayIndexInput
+label: ArrayIndexInput
 shortcut: 
 resize: FL_RESIZE_ALL
 gravity: FL_NorthWest FL_NoGravity
@@ -844,7 +844,7 @@ alignment: FL_ALIGN_CENTER
 style: FL_NORMAL_STYLE
 size: FL_NORMAL_SIZE
 lcol: FL_BLACK
-label: CMArrayIndexInput
+label: ArrayIndexInput
 shortcut: 
 resize: FL_RESIZE_ALL
 gravity: FL_NorthWest FL_NoGravity
@@ -871,7 +871,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CMFileListDir
+Name: FileListDir
 Width: 250
 Height: 500
 Number of Objects: 3
@@ -931,7 +931,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CMStackDir
+Name: StackDir
 Width: 450
 Height: 500
 Number of Objects: 3
@@ -991,7 +991,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CMEditPrefsDialog
+Name: EditPrefsDialog
 Width: 450
 Height: 480
 Number of Objects: 30
@@ -1024,7 +1024,7 @@ alignment: FL_ALIGN_CENTER
 style: FL_NORMAL_STYLE
 size: FL_NORMAL_SIZE
 lcol: FL_BLACK
-label: CMDebuggerProgramInput
+label: DebuggerProgramInput
 shortcut: 
 resize: FL_RESIZE_ALL
 gravity: FL_North FL_NoGravity
@@ -1042,7 +1042,7 @@ alignment: FL_ALIGN_CENTER
 style: FL_NORMAL_STYLE
 size: FL_NORMAL_SIZE
 lcol: FL_BLACK
-label: CMDebuggerProgramInput
+label: DebuggerProgramInput
 shortcut: 
 resize: FL_RESIZE_ALL
 gravity: FL_North FL_NoGravity
@@ -1537,7 +1537,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CMVarTreeDir
+Name: VarTreeDir
 Width: 450
 Height: 500
 Number of Objects: 3
@@ -1597,7 +1597,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CMDebugDir
+Name: DebugDir
 Width: 450
 Height: 500
 Number of Objects: 3
@@ -1657,7 +1657,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CMLocalVarsDir
+Name: LocalVarsDir
 Width: 450
 Height: 500
 Number of Objects: 3
@@ -1717,7 +1717,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CMThreadsDir
+Name: ThreadsDir
 Width: 450
 Height: 500
 Number of Objects: 3
@@ -1777,7 +1777,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CMArray2DDir
+Name: Array2DDir
 Width: 370
 Height: 500
 Number of Objects: 17
@@ -1846,7 +1846,7 @@ alignment: FL_ALIGN_CENTER
 style: FL_NORMAL_STYLE
 size: FL_NORMAL_SIZE
 lcol: FL_BLACK
-label: CMArrayExprInput
+label: ArrayExprInput
 shortcut: 
 resize: FL_RESIZE_ALL
 gravity: FL_North FL_NoGravity
@@ -1936,7 +1936,7 @@ alignment: FL_ALIGN_CENTER
 style: FL_NORMAL_STYLE
 size: FL_NORMAL_SIZE
 lcol: FL_BLACK
-label: CMArrayIndexInput
+label: ArrayIndexInput
 shortcut: 
 resize: FL_RESIZE_ALL
 gravity: FL_NorthWest FL_NoGravity
@@ -1954,7 +1954,7 @@ alignment: FL_ALIGN_CENTER
 style: FL_NORMAL_STYLE
 size: FL_NORMAL_SIZE
 lcol: FL_BLACK
-label: CMArrayIndexInput
+label: ArrayIndexInput
 shortcut: 
 resize: FL_RESIZE_ALL
 gravity: FL_NorthWest FL_NoGravity
@@ -2044,7 +2044,7 @@ alignment: FL_ALIGN_CENTER
 style: FL_NORMAL_STYLE
 size: FL_NORMAL_SIZE
 lcol: FL_BLACK
-label: CMArrayIndexInput
+label: ArrayIndexInput
 shortcut: 
 resize: FL_RESIZE_ALL
 gravity: FL_NorthWest FL_NoGravity
@@ -2062,7 +2062,7 @@ alignment: FL_ALIGN_CENTER
 style: FL_NORMAL_STYLE
 size: FL_NORMAL_SIZE
 lcol: FL_BLACK
-label: CMArrayIndexInput
+label: ArrayIndexInput
 shortcut: 
 resize: FL_RESIZE_ALL
 gravity: FL_NorthWest FL_NoGravity
@@ -2089,7 +2089,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CMArray2DDir__tableLayout__encl
+Name: Array2DDir__tableLayout__encl
 Width: 370
 Height: 330
 Number of Objects: 4
@@ -2122,7 +2122,7 @@ alignment: FL_ALIGN_CENTER
 style: FL_NORMAL_STYLE
 size: FL_NORMAL_SIZE
 lcol: FL_BLACK
-label: CMArray2DTable(itsCommandDir, this, menuBar, itsData, scrollbarSet,
+label: Array2DTable(itsCommandDir, this, menuBar, itsData, scrollbarSet,
 shortcut: 
 resize: FL_RESIZE_ALL
 gravity: FL_NoGravity FL_NoGravity
@@ -2167,7 +2167,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CMPlot2DDir
+Name: Plot2DDir
 Width: 570
 Height: 500
 Number of Objects: 7
@@ -2299,7 +2299,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CMBreakpointsDir
+Name: BreakpointsDir
 Width: 450
 Height: 500
 Number of Objects: 3
@@ -2359,7 +2359,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CMBreakpointsDir__tablelayout__encl
+Name: BreakpointsDir__tablelayout__encl
 Width: 400
 Height: 300
 Number of Objects: 3
@@ -2392,7 +2392,7 @@ alignment: FL_ALIGN_CENTER
 style: FL_NORMAL_STYLE
 size: FL_NORMAL_SIZE
 lcol: FL_BLACK
-label: CMBreakpointTable(this, scrollbarSet,
+label: BreakpointTable(this, scrollbarSet,
 shortcut: 
 resize: FL_RESIZE_ALL
 gravity: FL_NoGravity FL_NoGravity
@@ -2419,7 +2419,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CMMemoryDir
+Name: MemoryDir
 Width: 500
 Height: 500
 Number of Objects: 8
@@ -2488,7 +2488,7 @@ alignment: FL_ALIGN_CENTER
 style: FL_NORMAL_STYLE
 size: FL_NORMAL_SIZE
 lcol: FL_BLACK
-label: CMArrayExprInput
+label: ArrayExprInput
 shortcut: 
 resize: FL_RESIZE_ALL
 gravity: FL_North FL_NoGravity
@@ -2542,7 +2542,7 @@ alignment: FL_ALIGN_CENTER
 style: FL_NORMAL_STYLE
 size: FL_NORMAL_SIZE
 lcol: FL_BLACK
-label: CMArrayIndexInput
+label: ArrayIndexInput
 shortcut: 
 resize: FL_RESIZE_ALL
 gravity: FL_NorthWest FL_NoGravity
@@ -2569,7 +2569,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: CMRegistersDir
+Name: RegistersDir
 Width: 450
 Height: 500
 Number of Objects: 3

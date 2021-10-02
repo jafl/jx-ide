@@ -8,9 +8,9 @@
 #ifndef _H_LLDBGetFullPath
 #define _H_LLDBGetFullPath
 
-#include "CMGetFullPath.h"
+#include "GetFullPathCmd.h"
 
-class LLDBGetFullPath : public CMGetFullPath
+class LLDBGetFullPath : public GetFullPathCmd
 {
 public:
 

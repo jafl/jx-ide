@@ -8,13 +8,13 @@
 #ifndef _H_JVMGetThread
 #define _H_JVMGetThread
 
-#include "CMGetThread.h"
+#include "GetThread.h"
 
-class JVMGetThread : public CMGetThread
+class JVMGetThread : public GetThread
 {
 public:
 
-	JVMGetThread(CMThreadsWidget* widget);
+	JVMGetThread(ThreadsWidget* widget);
 
 	virtual	~JVMGetThread();
 

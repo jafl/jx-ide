@@ -8,16 +8,16 @@
 #ifndef _H_JVMGetCompletions
 #define _H_JVMGetCompletions
 
-#include "CMGetCompletions.h"
+#include "GetCompletionsCmd.h"
 
-class CMCommandInput;
-class CMCommandOutputDisplay;
+class CommandInput;
+class CommandOutputDisplay;
 
-class JVMGetCompletions : public CMGetCompletions
+class JVMGetCompletions : public GetCompletionsCmd
 {
 public:
 
-	JVMGetCompletions(CMCommandInput* input, CMCommandOutputDisplay* history);
+	JVMGetCompletions(CommandInput* input, CommandOutputDisplay* history);
 
 	virtual	~JVMGetCompletions();
 

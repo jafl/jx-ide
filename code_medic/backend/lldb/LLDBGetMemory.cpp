@@ -1,7 +1,7 @@
 /******************************************************************************
  LLDBGetMemory.cpp
 
-	BASE CLASS = CMGetMemory
+	BASE CLASS = GetMemory
 
 	Copyright (C) 2016 by John Lindal.
 
@@ -10,9 +10,9 @@
 #include "LLDBGetMemory.h"
 #include "lldb/API/SBCommandInterpreter.h"
 #include "lldb/API/SBCommandReturnObject.h"
-#include "CMMemoryDir.h"
+#include "MemoryDir.h"
 #include "LLDBLink.h"
-#include "cmGlobals.h"
+#include "globals.h"
 #include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
@@ -22,10 +22,10 @@
 
 LLDBGetMemory::LLDBGetMemory
 	(
-	CMMemoryDir* dir
+	MemoryDir* dir
 	)
 	:
-	CMGetMemory(dir)
+	GetMemory(dir)
 {
 }
 
@@ -54,7 +54,7 @@ LLDBGetMemory::HandleSuccess
 	const JString& data
 	)
 {
-	auto* link = dynamic_cast<LLDBLink*>(CMGetLink());
+	auto* link = dynamic_cast<LLDBLink*>(GetLink());
 	if (link == nullptr)
 	{
 		return;
@@ -66,7 +66,7 @@ LLDBGetMemory::HandleSuccess
 		return;
 	}
 
-	CMMemoryDir::DisplayType type;
+	MemoryDir::DisplayType type;
 	JSize count;
 	const JString& expr = GetDirector()->GetExpression(&type, &count);
 

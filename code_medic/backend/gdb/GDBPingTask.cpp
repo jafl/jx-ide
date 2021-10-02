@@ -12,7 +12,7 @@
 
 #include "GDBPingTask.h"
 #include "GDBLink.h"
-#include "cmGlobals.h"
+#include "globals.h"
 
 const Time kCheckInterval = 1000;	// milliseconds
 
@@ -50,6 +50,6 @@ GDBPingTask::Perform
 {
 	if (TimeToPerform(delta, maxSleepTime))
 	{
-		dynamic_cast<GDBLink*>(CMGetLink())->SendPing();
+		dynamic_cast<GDBLink*>(GetLink())->SendPing();
 	}
 }

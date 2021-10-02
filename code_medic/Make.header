@@ -14,7 +14,7 @@ include ${MAKE_INCLUDE}/jx_config
 include ${MAKE_INCLUDE}/jexpr_constants
 include ${MAKE_INCLUDE}/j2dplot_constants
 
-SEARCHDIRS := -I./code -I./image -I./backend -I./jcc-shared \
+SEARCHDIRS := -I./code -I./image -I./backend -I./shared \
               ${SEARCHDIRS} -I./lldb-include \
               -I/usr/local/opt/llvm/include \
               ${shell xml2-config --cflags} \
@@ -54,7 +54,7 @@ ${APP_NAME}:: strings
 
 # force reflex to run first
 ${APP_NAME}:: ./backend/gdb/GDBVarTreeScanner.cpp
-	@if ! test -e CMVarTreeParserY.hpp; then ${RM} code/CMVarTreeParserY.o; fi
+	@if ! test -e VarTreeParserY.hpp; then ${RM} code/VarTreeParserY.o; fi
 
 .PHONY : post_link
 post_link::

@@ -1,7 +1,7 @@
 /******************************************************************************
  LLDBGetCompletions.cpp
 
-	BASE CLASS = CMGetCompletions
+	BASE CLASS = GetCompletionsCmd
 
 	Copyright (C) 2016 by John Lindal.
 
@@ -10,9 +10,9 @@
 #include "LLDBGetCompletions.h"
 #include "lldb/API/SBCommandInterpreter.h"
 #include "lldb/API/SBStringList.h"
-#include "CMCommandInput.h"
-#include "CMCommandOutputDisplay.h"
-#include "cmGlobals.h"
+#include "CommandInput.h"
+#include "CommandOutputDisplay.h"
+#include "globals.h"
 #include "LLDBLink.h"	// must be after X11 includes: Status
 #include <jx-af/jx/JXDisplay.h>
 #include <jx-af/jcore/jAssert.h>
@@ -24,11 +24,11 @@
 
 LLDBGetCompletions::LLDBGetCompletions
 	(
-	CMCommandInput*			input,
-	CMCommandOutputDisplay*	history
+	CommandInput*			input,
+	CommandOutputDisplay*	history
 	)
 	:
-	CMGetCompletions(JString::empty),
+	GetCompletionsCmd(JString::empty),
 	itsPrefix(input->GetText()->GetText()),
 	itsInput(input),
 	itsHistory(history)
@@ -55,7 +55,7 @@ LLDBGetCompletions::HandleSuccess
 	const JString& data
 	)
 {
-	auto* link = dynamic_cast<LLDBLink*>(CMGetLink());
+	auto* link = dynamic_cast<LLDBLink*>(GetLink());
 	if (link == nullptr)
 	{
 		return;

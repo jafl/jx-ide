@@ -1,7 +1,7 @@
 /******************************************************************************
  JVMGetIDSizes.cpp
 
-	BASE CLASS = CMCommand
+	BASE CLASS = Command
 
 	Copyright (C) 2009 by John Lindal.
 
@@ -9,7 +9,7 @@
 
 #include "JVMGetIDSizes.h"
 #include "JVMLink.h"
-#include "cmGlobals.h"
+#include "globals.h"
 #include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
@@ -19,7 +19,7 @@
 
 JVMGetIDSizes::JVMGetIDSizes()
 	:
-	CMCommand("", true, false)
+	Command("", true, false)
 {
 	Send();
 }
@@ -41,9 +41,9 @@ JVMGetIDSizes::~JVMGetIDSizes()
 void
 JVMGetIDSizes::Starting()
 {
-	CMCommand::Starting();
+	Command::Starting();
 
-	dynamic_cast<JVMLink*>(CMGetLink())->Send(this,
+	dynamic_cast<JVMLink*>(GetLink())->Send(this,
 		JVMLink::kVirtualMachineCmdSet, JVMLink::kVMIDSizesCmd, nullptr, 0);
 }
 
@@ -58,7 +58,7 @@ JVMGetIDSizes::HandleSuccess
 	const JString& origData
 	)
 {
-	auto* link = dynamic_cast<JVMLink*>(CMGetLink());
+	auto* link = dynamic_cast<JVMLink*>(GetLink());
 	const JVMSocket::MessageReady* msg;
 	if (!link->GetLatestMessageFromJVM(&msg))
 	{

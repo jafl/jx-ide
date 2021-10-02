@@ -1,7 +1,7 @@
 /******************************************************************************
  JVMThreadNode.cpp
 
-	BASE CLASS = public CMThreadNode
+	BASE CLASS = public ThreadNode
 
 	Copyright (C) 2011 by John Lindal.
 
@@ -11,7 +11,7 @@
 #include "JVMGetThreadName.h"
 #include "JVMGetThreadParent.h"
 #include "JVMLink.h"
-#include "cmGlobals.h"
+#include "globals.h"
 #include <jx-af/jcore/JListUtil.h>
 #include <jx-af/jcore/jAssert.h>
 
@@ -26,14 +26,14 @@ JVMThreadNode::JVMThreadNode
 	const JUInt64	id
 	)
 	:
-	CMThreadNode(id, JString::empty, JString::empty, 0),
+	ThreadNode(id, JString::empty, JString::empty, 0),
 	itsType(type)
 {
 	if (id != kRootThreadGroupID)
 	{
-		dynamic_cast<JVMLink*>(CMGetLink())->ThreadCreated(this);
+		dynamic_cast<JVMLink*>(GetLink())->ThreadCreated(this);
 
-		CMCommand* cmd = jnew JVMGetThreadName(this);
+		Command* cmd = jnew JVMGetThreadName(this);
 		assert( cmd != nullptr );
 	}
 }
@@ -45,19 +45,19 @@ JVMThreadNode::JVMThreadNode
 	const JUInt64 id
 	)
 	:
-	CMThreadNode(id, JString::empty, JString::empty, 0),
+	ThreadNode(id, JString::empty, JString::empty, 0),
 	itsType(kThreadType)
 {
 }
 
-// constructor for nodes owned by CMThreadsDir
+// constructor for nodes owned by ThreadsDir
 
 JVMThreadNode::JVMThreadNode
 	(
 	const JVMThreadNode& node
 	)
 	:
-	CMThreadNode(node.GetID(), node.GetName(), JString::empty, 0),
+	ThreadNode(node.GetID(), node.GetName(), JString::empty, 0),
 	itsType(node.GetType())
 {
 	if (itsType == kGroupType)
@@ -73,7 +73,7 @@ JVMThreadNode::JVMThreadNode
 
 JVMThreadNode::~JVMThreadNode()
 {
-	auto* link = dynamic_cast<JVMLink*>(CMGetLink());
+	auto* link = dynamic_cast<JVMLink*>(GetLink());
 	if (link != nullptr)	// when switching debugger type, it won't be a JVMLink
 	{
 		link->ThreadDeleted(this);
@@ -90,11 +90,11 @@ JVMThreadNode::~JVMThreadNode()
 void
 JVMThreadNode::NameChanged()
 {
-	CMThreadNode::NameChanged();
+	ThreadNode::NameChanged();
 
 	if (!HasParent())
 	{
-		CMCommand* cmd = jnew JVMGetThreadParent(this);
+		Command* cmd = jnew JVMGetThreadParent(this);
 		assert( cmd != nullptr );
 	}
 }
@@ -110,7 +110,7 @@ JVMThreadNode::FindParent
 	const JUInt64 id
 	)
 {
-	auto* link = dynamic_cast<JVMLink*>(CMGetLink());
+	auto* link = dynamic_cast<JVMLink*>(GetLink());
 
 	JVMThreadNode* parent;
 	if (!link->FindThread(id, &parent))

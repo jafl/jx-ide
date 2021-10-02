@@ -1,14 +1,14 @@
 /******************************************************************************
  GDBGetRegisters.cpp
 
-	BASE CLASS = CMGetRegisters
+	BASE CLASS = GetRegisters
 
 	Copyright (C) 2011 by John Lindal.
 
  ******************************************************************************/
 
 #include "GDBGetRegisters.h"
-#include "CMRegistersDir.h"
+#include "RegistersDir.h"
 #include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
@@ -18,10 +18,10 @@
 
 GDBGetRegisters::GDBGetRegisters
 	(
-	CMRegistersDir* dir
+	RegistersDir* dir
 	)
 	:
-	CMGetRegisters(JString("info all-registers", JString::kNoCopy), dir)
+	GetRegisters(JString("info all-registers", JString::kNoCopy), dir)
 {
 }
 

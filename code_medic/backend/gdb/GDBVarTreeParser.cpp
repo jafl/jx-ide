@@ -7,8 +7,8 @@
 
 #include "GDBVarTreeParser.h"
 #include "GDBVarTreeScanner.h"
-#include "CMVarNode.h"
-#include "cmGlobals.h"
+#include "VarNode.h"
+#include "globals.h"
 #include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
@@ -102,7 +102,7 @@ GDBVarTreeParser::yyerror
 
 	std::ostringstream log;
 	log << "yyerror() called: " << message;
-	CMGetLink()->Log(log);
+	GetLink()->Log(log);
 
 	return 0;
 }
@@ -115,8 +115,8 @@ GDBVarTreeParser::yyerror
 void
 GDBVarTreeParser::AppendAsArrayElement
 	(
-	CMVarNode*				node,
-	JPtrArray<CMVarNode>*	list
+	VarNode*				node,
+	JPtrArray<VarNode>*	list
 	)
 	const
 {
@@ -134,21 +134,21 @@ void
 GDBVarTreeParser::AppendAsArrayElement
 	(
 	const JString&				groupLabel,
-	const JPtrArray<CMVarNode>& data,
-	JPtrArray<CMVarNode>*		list
+	const JPtrArray<VarNode>& data,
+	JPtrArray<VarNode>*		list
 	)
 	const
 {
 	const JString name = "[" + JString((JUInt64) list->GetElementCount()) + "]";
 
-	CMVarNode* node = CMGetLink()->CreateVarNode(nullptr, name, JString::empty, groupLabel);
+	VarNode* node = GetLink()->CreateVarNode(nullptr, name, JString::empty, groupLabel);
 	assert( node != nullptr );
 	list->Append(node);
 
 	const JSize count = data.GetElementCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		node->Append(const_cast<CMVarNode*>(data.GetElement(i)));
+		node->Append(const_cast<VarNode*>(data.GetElement(i)));
 	}
 }
 
@@ -162,11 +162,11 @@ GDBVarTreeParser::ReportRecoverableError()
 {
 	if (itsGDBErrorFlag)
 	{
-		CMVarNode* child;
+		VarNode* child;
 		itsCurrentNode->GetLastChild(&child);
 		child->SetValid(false);
 
-		child = CMGetLink()->CreateVarNode(itsCurrentNode,
+		child = GetLink()->CreateVarNode(itsCurrentNode,
 					JGetString("ErrorNodeName::GDBVarTreeParser"), JString::empty,
 					JGetString("ErrorNodeValue::GDBVarTreeParser"));
 		child->SetValid(false);

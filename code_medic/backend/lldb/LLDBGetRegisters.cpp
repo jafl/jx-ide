@@ -1,7 +1,7 @@
 /******************************************************************************
  LLDBGetRegisters.cpp
 
-	BASE CLASS = CMGetRegisters
+	BASE CLASS = GetRegisters
 
 	Copyright (C) 2016 by John Lindal.
 
@@ -10,9 +10,9 @@
 #include "LLDBGetRegisters.h"
 #include "lldb/API/SBCommandInterpreter.h"
 #include "lldb/API/SBCommandReturnObject.h"
-#include "CMRegistersDir.h"
+#include "RegistersDir.h"
 #include "LLDBLink.h"
-#include "cmGlobals.h"
+#include "globals.h"
 #include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
@@ -22,10 +22,10 @@
 
 LLDBGetRegisters::LLDBGetRegisters
 	(
-	CMRegistersDir* dir
+	RegistersDir* dir
 	)
 	:
-	CMGetRegisters(JString::empty, dir)
+	GetRegisters(JString::empty, dir)
 {
 }
 
@@ -49,7 +49,7 @@ LLDBGetRegisters::HandleSuccess
 	const JString& data
 	)
 {
-	auto* link = dynamic_cast<LLDBLink*>(CMGetLink());
+	auto* link = dynamic_cast<LLDBLink*>(GetLink());
 	if (link == nullptr)
 	{
 		return;

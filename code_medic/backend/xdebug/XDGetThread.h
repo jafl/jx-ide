@@ -8,13 +8,13 @@
 #ifndef _H_XDGetThread
 #define _H_XDGetThread
 
-#include "CMGetThread.h"
+#include "GetThread.h"
 
-class XDGetThread : public CMGetThread
+class XDGetThread : public GetThread
 {
 public:
 
-	XDGetThread(CMThreadsWidget* widget);
+	XDGetThread(ThreadsWidget* widget);
 
 	virtual	~XDGetThread();
 

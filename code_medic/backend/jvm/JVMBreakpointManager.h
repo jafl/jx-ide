@@ -8,12 +8,12 @@
 #ifndef _H_JVMBreakpointManager
 #define _H_JVMBreakpointManager
 
-#include "CMBreakpointManager.h"
+#include "BreakpointManager.h"
 
 class JVMLink;
 class JVMGetBreakpoints;
 
-class JVMBreakpointManager : public CMBreakpointManager
+class JVMBreakpointManager : public BreakpointManager
 {
 public:
 

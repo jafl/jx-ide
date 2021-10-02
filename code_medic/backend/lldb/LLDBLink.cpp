@@ -3,7 +3,7 @@
 
 	Interface to lldb.
 
-	BASE CLASS = CMLink
+	BASE CLASS = Link
 
 	Copyright (C) 2016 by John Lindal.
 
@@ -43,7 +43,7 @@
 #include "lldb/API/SBListener.h"
 #include "lldb/API/SBEvent.h"
 
-#include "cmGlobals.h"
+#include "globals.h"
 
 #include <jx-af/jx/JXAssert.h>
 #include <jx-af/jcore/jFileUtil.h>
@@ -82,7 +82,7 @@ const uint32_t kLLDBEventMask = 0xFFFFFFFF;
 
 LLDBLink::LLDBLink()
 	:
-	CMLink(kFeatures),
+	Link(kFeatures),
 	SBListener("LLDBLink"),		// without a name, the listener is invalid
 	itsDebugger(nullptr),
 	itsStdoutStream(nullptr),
@@ -320,7 +320,7 @@ bool
 LLDBLink::OKToSendMultipleCommands()
 	const
 {
-	return CMLink::OKToSendMultipleCommands();
+	return Link::OKToSendMultipleCommands();
 }
 
 /******************************************************************************
@@ -604,7 +604,7 @@ LLDBLink::SymbolsLoaded
 	JString path, name;
 	JSplitPathAndName(fullName, &path, &name);
 	Broadcast(PrepareToLoadSymbols());
-	Broadcast(CMLink::SymbolsLoaded(true, name));
+	Broadcast(Link::SymbolsLoaded(true, name));
 }
 
 /******************************************************************************
@@ -744,7 +744,7 @@ LLDBLink::RunProgram
 
  *****************************************************************************/
 
-CMBreakpointManager*
+BreakpointManager*
 LLDBLink::GetBreakpointManager()
 {
 	return itsBPMgr;
@@ -1332,228 +1332,228 @@ LLDBLink::SetValue
 }
 
 /******************************************************************************
- CreateArray2DCommand
+ CreateArray2DCmd
 
  *****************************************************************************/
 
-CMArray2DCommand*
-LLDBLink::CreateArray2DCommand
+Array2DCmd*
+LLDBLink::CreateArray2DCmd
 	(
-	CMArray2DDir*		dir,
+	Array2DDir*		dir,
 	JXStringTable*		table,
 	JStringTableData*	data
 	)
 {
-	CMArray2DCommand* cmd = jnew LLDBArray2DCommand(dir, table, data);
+	Array2DCmd* cmd = jnew LLDBArray2DCommand(dir, table, data);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreatePlot2DCommand
+ CreatePlot2DCmd
 
  *****************************************************************************/
 
-CMPlot2DCommand*
-LLDBLink::CreatePlot2DCommand
+Plot2DCommand*
+LLDBLink::CreatePlot2DCmd
 	(
-	CMPlot2DDir*	dir,
+	Plot2DDir*	dir,
 	JArray<JFloat>*	x,
 	JArray<JFloat>*	y
 	)
 {
-	CMPlot2DCommand* cmd = jnew LLDBPlot2DCommand(dir, x, y);
+	Plot2DCommand* cmd = jnew LLDBPlot2DCommand(dir, x, y);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateDisplaySourceForMain
+ CreateDisplaySourceForMainCmd
 
  *****************************************************************************/
 
-CMDisplaySourceForMain*
-LLDBLink::CreateDisplaySourceForMain
+DisplaySourceForMainCmd*
+LLDBLink::CreateDisplaySourceForMainCmd
 	(
-	CMSourceDirector* sourceDir
+	SourceDirector* sourceDir
 	)
 {
-	CMDisplaySourceForMain* cmd = jnew LLDBDisplaySourceForMain(sourceDir);
+	DisplaySourceForMainCmd* cmd = jnew LLDBDisplaySourceForMain(sourceDir);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateGetCompletions
+ CreateGetCompletionsCmd
 
  *****************************************************************************/
 
-CMGetCompletions*
-LLDBLink::CreateGetCompletions
+GetCompletionsCmd*
+LLDBLink::CreateGetCompletionsCmd
 	(
-	CMCommandInput*	input,
-	CMCommandOutputDisplay*	history
+	CommandInput*	input,
+	CommandOutputDisplay*	history
 	)
 {
-	CMGetCompletions* cmd = jnew LLDBGetCompletions(input, history);
+	GetCompletionsCmd* cmd = jnew LLDBGetCompletions(input, history);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateGetFrame
+ CreateGetFrameCmd
 
  *****************************************************************************/
 
-CMGetFrame*
-LLDBLink::CreateGetFrame
+GetFrameCmd*
+LLDBLink::CreateGetFrameCmd
 	(
-	CMStackWidget* widget
+	StackWidget* widget
 	)
 {
-	CMGetFrame* cmd = jnew LLDBGetFrame(widget);
+	GetFrameCmd* cmd = jnew LLDBGetFrame(widget);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateGetStack
+ CreateGetStackCmd
 
  *****************************************************************************/
 
-CMGetStack*
-LLDBLink::CreateGetStack
+GetStack*
+LLDBLink::CreateGetStackCmd
 	(
 	JTree*			tree,
-	CMStackWidget*	widget
+	StackWidget*	widget
 	)
 {
-	CMGetStack* cmd = jnew LLDBGetStack(tree, widget);
+	GetStack* cmd = jnew LLDBGetStack(tree, widget);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateGetThread
+ CreateGetThreadCmd
 
  *****************************************************************************/
 
-CMGetThread*
-LLDBLink::CreateGetThread
+GetThread*
+LLDBLink::CreateGetThreadCmd
 	(
-	CMThreadsWidget* widget
+	ThreadsWidget* widget
 	)
 {
-	CMGetThread* cmd = jnew LLDBGetThread(widget);
+	GetThread* cmd = jnew LLDBGetThread(widget);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateGetThreads
+ CreateGetThreadsCmd
 
  *****************************************************************************/
 
-CMGetThreads*
-LLDBLink::CreateGetThreads
+GetThreads*
+LLDBLink::CreateGetThreadsCmd
 	(
 	JTree*				tree,
-	CMThreadsWidget*	widget
+	ThreadsWidget*	widget
 	)
 {
-	CMGetThreads* cmd = jnew LLDBGetThreads(tree, widget);
+	GetThreads* cmd = jnew LLDBGetThreads(tree, widget);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateGetFullPath
+ CreateGetFullPathCmd
 
  *****************************************************************************/
 
-CMGetFullPath*
-LLDBLink::CreateGetFullPath
+GetFullPath*
+LLDBLink::CreateGetFullPathCmd
 	(
 	const JString&	fileName,
 	const JIndex	lineIndex
 	)
 {
-	CMGetFullPath* cmd = jnew LLDBGetFullPath(fileName, lineIndex);
+	GetFullPath* cmd = jnew LLDBGetFullPath(fileName, lineIndex);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateGetInitArgs
+ CreateGetInitArgsCmd
 
  *****************************************************************************/
 
-CMGetInitArgs*
-LLDBLink::CreateGetInitArgs
+GetInitArgs*
+LLDBLink::CreateGetInitArgsCmd
 	(
 	JXInputField* argInput
 	)
 {
-	CMGetInitArgs* cmd = jnew LLDBGetInitArgs(argInput);
+	GetInitArgs* cmd = jnew LLDBGetInitArgs(argInput);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateGetLocalVars
+ CreateGetLocalVarsCmd
 
  *****************************************************************************/
 
-CMGetLocalVars*
-LLDBLink::CreateGetLocalVars
+GetLocalVars*
+LLDBLink::CreateGetLocalVarsCmd
 	(
-	CMVarNode* rootNode
+	VarNode* rootNode
 	)
 {
-	CMGetLocalVars* cmd = jnew LLDBGetLocalVars(rootNode);
+	GetLocalVars* cmd = jnew LLDBGetLocalVars(rootNode);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateGetSourceFileList
+ CreateGetSourceFileListCmd
 
  *****************************************************************************/
 
-CMGetSourceFileList*
-LLDBLink::CreateGetSourceFileList
+GetSourceFileList*
+LLDBLink::CreateGetSourceFileListCmd
 	(
-	CMFileListDir* fileList
+	FileListDir* fileList
 	)
 {
-	CMGetSourceFileList* cmd = jnew LLDBGetSourceFileList(fileList);
+	GetSourceFileList* cmd = jnew LLDBGetSourceFileList(fileList);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateVarValueCommand
+ CreateVarValueCmd
 
  *****************************************************************************/
 
-CMVarCommand*
-LLDBLink::CreateVarValueCommand
+VarCommand*
+LLDBLink::CreateVarValueCmd
 	(
 	const JString& expr
 	)
 {
-	CMVarCommand* cmd = jnew LLDBVarCommand(expr);
+	VarCommand* cmd = jnew LLDBVarCommand(expr);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateVarContentCommand
+ CreateVarContentCmd
 
  *****************************************************************************/
 
-CMVarCommand*
-LLDBLink::CreateVarContentCommand
+VarCommand*
+LLDBLink::CreateVarContentCmd
 	(
 	const JString& expr
 	)
@@ -1562,7 +1562,7 @@ LLDBLink::CreateVarContentCommand
 	s += expr;
 	s += ")";
 
-	CMVarCommand* cmd = jnew LLDBVarCommand(s);
+	VarCommand* cmd = jnew LLDBVarCommand(s);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1572,18 +1572,18 @@ LLDBLink::CreateVarContentCommand
 
  *****************************************************************************/
 
-CMVarNode*
+VarNode*
 LLDBLink::CreateVarNode
 	(
 	const bool shouldUpdate		// false for Local Variables
 	)
 {
-	CMVarNode* node = jnew LLDBVarNode(shouldUpdate);
+	VarNode* node = jnew LLDBVarNode(shouldUpdate);
 	assert( node != nullptr );
 	return node;
 }
 
-CMVarNode*
+VarNode*
 LLDBLink::CreateVarNode
 	(
 	JTreeNode*		parent,
@@ -1592,7 +1592,7 @@ LLDBLink::CreateVarNode
 	const JString&	value
 	)
 {
-	CMVarNode* node = jnew LLDBVarNode(parent, name, value);
+	VarNode* node = jnew LLDBVarNode(parent, name, value);
 	assert( node != nullptr );
 	return node;
 }
@@ -1629,49 +1629,49 @@ LLDBLink::Build2DArrayExpression
 }
 
 /******************************************************************************
- CreateGetMemory
+ CreateGetMemoryCmd
 
  *****************************************************************************/
 
-CMGetMemory*
-LLDBLink::CreateGetMemory
+GetMemory*
+LLDBLink::CreateGetMemoryCmd
 	(
-	CMMemoryDir* dir
+	MemoryDir* dir
 	)
 {
-	CMGetMemory* cmd = jnew LLDBGetMemory(dir);
+	GetMemory* cmd = jnew LLDBGetMemory(dir);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateGetAssembly
+ CreateGetAssemblyCmd
 
  *****************************************************************************/
 
-CMGetAssembly*
-LLDBLink::CreateGetAssembly
+GetAssemblyCmd*
+LLDBLink::CreateGetAssemblyCmd
 	(
-	CMSourceDirector* dir
+	SourceDirector* dir
 	)
 {
-	CMGetAssembly* cmd = jnew LLDBGetAssembly(dir);
+	GetAssemblyCmd* cmd = jnew LLDBGetAssembly(dir);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateGetRegisters
+ CreateGetRegistersCmd
 
  *****************************************************************************/
 
-CMGetRegisters*
-LLDBLink::CreateGetRegisters
+GetRegisters*
+LLDBLink::CreateGetRegistersCmd
 	(
-	CMRegistersDir* dir
+	RegistersDir* dir
 	)
 {
-	CMGetRegisters* cmd = jnew LLDBGetRegisters(dir);
+	GetRegisters* cmd = jnew LLDBGetRegisters(dir);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1711,7 +1711,7 @@ LLDBLink::SendRaw
 void
 LLDBLink::SendMedicCommand
 	(
-	CMCommand* command
+	Command* command
 	)
 {
 	command->Starting();
@@ -1729,7 +1729,7 @@ LLDBLink::SendMedicCommand
 void
 LLDBLink::SendMedicCommandSync
 	(
-	CMCommand* command
+	Command* command
 	)
 {
 	HandleCommandRunning(command->GetTransactionID());
@@ -1782,7 +1782,7 @@ LLDBLink::ProgramStopped
 				JString(file.GetDirectory(), JString::kNoCopy),
 				JString(file.GetFilename(), JString::kNoCopy));
 		}
-		CMLocation location(fullName, line.IsValid() ? line.GetLine() : 0);
+		Location location(fullName, line.IsValid() ? line.GetLine() : 0);
 
 		if (f.GetFunctionName() != nullptr)
 		{
@@ -1795,7 +1795,7 @@ LLDBLink::ProgramStopped
 			const JString a = JString(addr.GetLoadAddress(t), JString::kBase16);
 			location.SetMemoryAddress(a);
 		}
-		Broadcast(CMLink::ProgramStopped(location));
+		Broadcast(Link::ProgramStopped(location));
 
 		if (msg != nullptr && file.IsValid())
 		{

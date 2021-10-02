@@ -11,8 +11,8 @@
 
 #include "LLDBRunBackgroundCommandTask.h"
 #include "LLDBLink.h"
-#include "CMCommand.h"
-#include "cmGlobals.h"
+#include "Command.h"
+#include "globals.h"
 
 /******************************************************************************
  Constructor
@@ -21,7 +21,7 @@
 
 LLDBRunBackgroundCommandTask::LLDBRunBackgroundCommandTask
 	(
-	CMCommand* cmd
+	Command* cmd
 	)
 	:
 	itsCmd(cmd)
@@ -46,7 +46,7 @@ LLDBRunBackgroundCommandTask::~LLDBRunBackgroundCommandTask()
 void
 LLDBRunBackgroundCommandTask::Perform()
 {
-	auto* link = dynamic_cast<LLDBLink*>(CMGetLink());
+	auto* link = dynamic_cast<LLDBLink*>(GetLink());
 	if (link != nullptr && itsCmd != nullptr)
 	{
 		link->SendMedicCommandSync(itsCmd);

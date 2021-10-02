@@ -1,0 +1,6 @@
+0
+okButton::ChooseProcessDialog::JXLayout "OK"
+pidLabel::ChooseProcessDialog::JXLayout "Process id:"
+okButton::ChooseProcessDialog::shortcuts::JXLayout "^M"
+cancelButton::ChooseProcessDialog::JXLayout "Cancel"
+hint::ChooseProcessDialog::JXLayout "Double click on the process id or type it into the input field."

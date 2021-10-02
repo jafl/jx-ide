@@ -8,13 +8,13 @@
 #ifndef _H_JVMGetStack
 #define _H_JVMGetStack
 
-#include "CMGetStack.h"
+#include "GetStack.h"
 
-class JVMGetStack : public CMGetStack
+class JVMGetStack : public GetStack
 {
 public:
 
-	JVMGetStack(JTree* tree, CMStackWidget* widget);
+	JVMGetStack(JTree* tree, StackWidget* widget);
 
 	virtual	~JVMGetStack();
 

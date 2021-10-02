@@ -1,16 +1,16 @@
 /******************************************************************************
  GDBGetLocalVars.cpp
 
-	BASE CLASS = CMGetLocalVars
+	BASE CLASS = GetLocalVars
 
 	Copyright (C) 2001 by John Lindal.
 
  ******************************************************************************/
 
 #include "GDBGetLocalVars.h"
-#include "CMVarNode.h"
+#include "VarNode.h"
 #include "GDBVarTreeParser.h"
-#include "cmGlobals.h"
+#include "globals.h"
 #include <jx-af/jcore/JStringIterator.h>
 #include <jx-af/jcore/JRegex.h>
 #include <jx-af/jcore/jAssert.h>
@@ -22,10 +22,10 @@
 
 GDBGetLocalVars::GDBGetLocalVars
 	(
-	CMVarNode* rootNode
+	VarNode* rootNode
 	)
 	:
-	CMGetLocalVars(JString(
+	GetLocalVars(JString(
 		"set print pretty off\n"
 		"set print array off\n"
 		"set print repeats 0\n"
@@ -160,14 +160,14 @@ GDBGetLocalVars::HandleSuccess
 
 	for (JIndex i=1; i<=newCount; i++)
 	{
-		CMVarNode* node = nullptr;
+		VarNode* node = nullptr;
 		if (i <= origCount)
 		{
 			node = itsRootNode->GetVarChild(i);
 		}
 		else
 		{
-			node = CMGetLink()->CreateVarNode(nullptr, *(nameList.GetElement(i)), JString::empty, JString::empty);
+			node = GetLink()->CreateVarNode(nullptr, *(nameList.GetElement(i)), JString::empty, JString::empty);
 			assert( node != nullptr );
 			itsRootNode->Append(node);	// avoid automatic update
 		}

@@ -8,15 +8,15 @@
 #ifndef _H_GDBGetLocalVars
 #define _H_GDBGetLocalVars
 
-#include "CMGetLocalVars.h"
+#include "GetLocalVars.h"
 
-class CMVarNode;
+class VarNode;
 
-class GDBGetLocalVars : public CMGetLocalVars
+class GDBGetLocalVars : public GetLocalVars
 {
 public:
 
-	GDBGetLocalVars(CMVarNode* rootNode);
+	GDBGetLocalVars(VarNode* rootNode);
 
 	virtual	~GDBGetLocalVars();
 
@@ -26,7 +26,7 @@ protected:
 
 private:
 
-	CMVarNode*	itsRootNode;	// not owned
+	VarNode*	itsRootNode;	// not owned
 
 private:
 

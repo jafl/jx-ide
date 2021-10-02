@@ -1,7 +1,7 @@
 /******************************************************************************
  GDBGetSourceFileList.cpp
 
-	BASE CLASS = CMGetSourceFileList
+	BASE CLASS = GetSourceFileList
 
 	We do not use -file-list-exec-source-files because it generates much
 	more data and the output takes too long to parse.
@@ -11,8 +11,8 @@
  ******************************************************************************/
 
 #include "GDBGetSourceFileList.h"
-#include "CMFileListDir.h"
-#include "cmGlobals.h"
+#include "FileListDir.h"
+#include "globals.h"
 #include <jx-af/jx/JXFileListTable.h>
 #include <jx-af/jcore/JStringIterator.h>
 #include <jx-af/jcore/JRegex.h>
@@ -27,10 +27,10 @@
 
 GDBGetSourceFileList::GDBGetSourceFileList
 	(
-	CMFileListDir* fileList
+	FileListDir* fileList
 	)
 	:
-	CMGetSourceFileList(JString("info sources", JString::kNoCopy), fileList)
+	GetSourceFileList(JString("info sources", JString::kNoCopy), fileList)
 {
 }
 
@@ -92,6 +92,6 @@ GDBGetSourceFileList::HandleSuccess
 	{
 		std::ostringstream log;
 		log << "GDBGetSourceFileList failed to match";
-		CMGetLink()->Log(log);
+		GetLink()->Log(log);
 	}
 }

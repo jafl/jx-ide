@@ -1,16 +1,16 @@
 /******************************************************************************
  JVMGetSourceFileList.cpp
 
-	BASE CLASS = CMGetSourceFileList
+	BASE CLASS = GetSourceFileList
 
 	Copyright (C) 2009 by John Lindal.
 
  ******************************************************************************/
 
 #include "JVMGetSourceFileList.h"
-#include "CMFileListDir.h"
+#include "FileListDir.h"
 #include "JVMLink.h"
-#include "cmGlobals.h"
+#include "globals.h"
 #include <jx-af/jx/JXFileListTable.h>
 #include <jx-af/jcore/JDirInfo.h>
 #include <jx-af/jcore/jAssert.h>
@@ -22,10 +22,10 @@
 
 JVMGetSourceFileList::JVMGetSourceFileList
 	(
-	CMFileListDir* fileList
+	FileListDir* fileList
 	)
 	:
-	CMGetSourceFileList(JString("NOP", JString::kNoCopy), fileList)
+	GetSourceFileList(JString("NOP", JString::kNoCopy), fileList)
 {
 }
 
@@ -46,14 +46,14 @@ JVMGetSourceFileList::~JVMGetSourceFileList()
 void
 JVMGetSourceFileList::Starting()
 {
-	CMGetSourceFileList::Starting();
+	GetSourceFileList::Starting();
 
-	dynamic_cast<JVMLink*>(CMGetLink())->FlushClassList();
+	dynamic_cast<JVMLink*>(GetLink())->FlushClassList();
 
 	JXFileListTable* table = GetFileList()->GetTable();
 	table->RemoveAllFiles();
 
-	const JPtrArray<JString>& list = dynamic_cast<JVMLink*>(CMGetLink())->GetSourcePathList();
+	const JPtrArray<JString>& list = dynamic_cast<JVMLink*>(GetLink())->GetSourcePathList();
 	const JSize count              = list.GetElementCount();
 	for (JIndex i=1; i<=count; i++)
 	{
@@ -86,9 +86,9 @@ JVMGetSourceFileList::ScanDirectory
 		const JDirEntry& e = info->GetEntry(i);
 		if (e.GetType() == JDirEntry::kFile)
 		{
-			const CBTextFileType fileType =
-				CMGetPrefsManager()->GetFileType(e.GetName());
-			if (fileType == kCBJavaSourceFT)
+			const TextFileType fileType =
+				GetPrefsManager()->GetFileType(e.GetName());
+			if (fileType == kJavaSourceFT)
 			{
 				table->AddFile(e.GetFullName());
 			}

@@ -8,11 +8,11 @@
 #ifndef _H_XDBreakpointManager
 #define _H_XDBreakpointManager
 
-#include "CMBreakpointManager.h"
+#include "BreakpointManager.h"
 
 class XDLink;
 
-class XDBreakpointManager : public CMBreakpointManager
+class XDBreakpointManager : public BreakpointManager
 {
 public:
 

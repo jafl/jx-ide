@@ -3,7 +3,7 @@
 
 	Interface to Xdebug.
 
-	BASE CLASS = CMLink
+	BASE CLASS = Link
 
 	Copyright (C) 2007 by John Lindal.
 
@@ -31,12 +31,12 @@
 #include "XDVarCommand.h"
 #include "XDVarNode.h"
 
-#include "CMCommandDirector.h"
-#include "CMStackDir.h"
-#include "CMStackWidget.h"
-#include "CMStackFrameNode.h"
-#include "CMMDIServer.h"
-#include "cmGlobals.h"
+#include "CommandDirector.h"
+#include "StackDir.h"
+#include "StackWidget.h"
+#include "StackFrameNode.h"
+#include "MDIServer.h"
+#include "globals.h"
 
 #include <libxml/parser.h>
 
@@ -75,7 +75,7 @@ static const bool kFeatures[]=
 
 XDLink::XDLink()
 	:
-	CMLink(kFeatures),
+	Link(kFeatures),
 	itsAcceptor(nullptr),
 	itsLink(nullptr),
 	itsParsedDataRoot(nullptr)
@@ -348,7 +348,7 @@ XDLink::ReceiveMessageFromDebugger()
 		if (!itsProgramIsStoppedFlag)
 		{
 			itsProgramIsStoppedFlag = true;
-			Broadcast(ProgramStopped(CMLocation(JString::empty, 1)));
+			Broadcast(ProgramStopped(Location(JString::empty, 1)));
 		}
 
 		itsDebuggerBusyFlag = false;
@@ -412,7 +412,7 @@ XDLink::ReceiveMessageFromDebugger()
 				HandleCommandRunning(id);
 			}
 
-			CMCommand* cmd;
+			Command* cmd;
 			if (GetRunningCommand(&cmd))
 			{
 				itsParsedDataRoot = root;
@@ -469,7 +469,7 @@ XDLink::SetProgram
 		Broadcast(UserOutput(error, true));
 		return;
 	}
-	else if (CMMDIServer::IsBinary(fullName))
+	else if (MDIServer::IsBinary(fullName))
 	{
 		const JString error = JGetString("ConfigFileIsBinary::XDLink");
 		Broadcast(UserOutput(error, true));
@@ -477,7 +477,7 @@ XDLink::SetProgram
 	}
 
 	JString line;
-	if (!CMMDIServer::GetLanguage(fullName, &line) ||
+	if (!MDIServer::GetLanguage(fullName, &line) ||
 		JString::Compare(line, "php", JString::kIgnoreCase) != 0)
 	{
 		const JString error = JGetString("ConfigFileWrongLanguage::XDLink");
@@ -594,7 +594,7 @@ XDLink::RunProgram
 
  *****************************************************************************/
 
-CMBreakpointManager*
+BreakpointManager*
 XDLink::GetBreakpointManager()
 {
 	return itsBPMgr;
@@ -687,13 +687,13 @@ XDLink::RemoveAllBreakpointsOnLine
 {
 	bool changed = false;
 
-	JPtrArray<CMBreakpoint> list(JPtrArrayT::kForgetAll);
+	JPtrArray<Breakpoint> list(JPtrArrayT::kForgetAll);
 	JString cmd;
 	if (itsBPMgr->GetBreakpoints(fileName, &list))
 	{
 		for (JIndex i=1; i<=list.GetElementCount(); i++)
 		{
-			CMBreakpoint* bp = list.GetElement(i);
+			Breakpoint* bp = list.GetElement(i);
 			if (bp->GetLineNumber() == lineIndex)
 			{
 				cmd  = "breakpoint_remove -d ";
@@ -733,11 +733,11 @@ XDLink::RemoveAllBreakpoints()
 {
 	bool changed = false;
 
-	const JPtrArray<CMBreakpoint>& list = itsBPMgr->GetBreakpoints();
+	const JPtrArray<Breakpoint>& list = itsBPMgr->GetBreakpoints();
 	JString cmd;
 	for (JIndex i=1; i<=list.GetElementCount(); i++)
 	{
-		const CMBreakpoint* bp = list.GetElement(i);
+		const Breakpoint* bp = list.GetElement(i);
 
 		cmd	 = "breakpoint_remove -d ";
 		cmd += JString((JUInt64) bp->GetDebuggerIndex());
@@ -870,10 +870,10 @@ XDLink::SwitchToFrame
 		Broadcast(FrameChanged());
 	}
 
-	const CMStackFrameNode* frame;
+	const StackFrameNode* frame;
 	JString fileName;
 	JIndex lineIndex;
-	if (CMGetCommandDirector()->GetStackDir()->GetStackWidget()->GetStackFrame(id, &frame) &&
+	if (GetCommandDirector()->GetStackDir()->GetStackWidget()->GetStackFrame(id, &frame) &&
 		frame->GetFile(&fileName, &lineIndex))
 	{
 		if (fileName.BeginsWith("file://"))
@@ -881,7 +881,7 @@ XDLink::SwitchToFrame
 			JStringIterator iter(&fileName);
 			iter.RemoveNext(7);
 		}
-		Broadcast(ProgramStopped(CMLocation(fileName, lineIndex)));
+		Broadcast(ProgramStopped(Location(fileName, lineIndex)));
 	}
 }
 
@@ -996,212 +996,212 @@ XDLink::SetValue
 }
 
 /******************************************************************************
- CreateArray2DCommand
+ CreateArray2DCmd
 
  *****************************************************************************/
 
-CMArray2DCommand*
-XDLink::CreateArray2DCommand
+Array2DCmd*
+XDLink::CreateArray2DCmd
 	(
-	CMArray2DDir*		dir,
+	Array2DDir*		dir,
 	JXStringTable*		table,
 	JStringTableData*	data
 	)
 {
-	CMArray2DCommand* cmd = jnew XDArray2DCommand(dir, table, data);
+	Array2DCmd* cmd = jnew XDArray2DCommand(dir, table, data);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreatePlot2DCommand
+ CreatePlot2DCmd
 
  *****************************************************************************/
 
-CMPlot2DCommand*
-XDLink::CreatePlot2DCommand
+Plot2DCommand*
+XDLink::CreatePlot2DCmd
 	(
-	CMPlot2DDir*	dir,
+	Plot2DDir*	dir,
 	JArray<JFloat>*	x,
 	JArray<JFloat>*	y
 	)
 {
-	CMPlot2DCommand* cmd = jnew XDPlot2DCommand(dir, x, y);
+	Plot2DCommand* cmd = jnew XDPlot2DCommand(dir, x, y);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateDisplaySourceForMain
+ CreateDisplaySourceForMainCmd
 
  *****************************************************************************/
 
-CMDisplaySourceForMain*
-XDLink::CreateDisplaySourceForMain
+DisplaySourceForMainCmd*
+XDLink::CreateDisplaySourceForMainCmd
 	(
-	CMSourceDirector* sourceDir
+	SourceDirector* sourceDir
 	)
 {
-	CMDisplaySourceForMain* cmd = jnew XDDisplaySourceForMain(sourceDir);
+	DisplaySourceForMainCmd* cmd = jnew XDDisplaySourceForMain(sourceDir);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateGetCompletions
+ CreateGetCompletionsCmd
 
  *****************************************************************************/
 
-CMGetCompletions*
-XDLink::CreateGetCompletions
+GetCompletionsCmd*
+XDLink::CreateGetCompletionsCmd
 	(
-	CMCommandInput*	input,
-	CMCommandOutputDisplay*	history
+	CommandInput*	input,
+	CommandOutputDisplay*	history
 	)
 {
-	CMGetCompletions* cmd = jnew XDGetCompletions(input, history);
+	GetCompletionsCmd* cmd = jnew XDGetCompletions(input, history);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateGetFrame
+ CreateGetFrameCmd
 
  *****************************************************************************/
 
-CMGetFrame*
-XDLink::CreateGetFrame
+GetFrameCmd*
+XDLink::CreateGetFrameCmd
 	(
-	CMStackWidget* widget
+	StackWidget* widget
 	)
 {
-	CMGetFrame* cmd = jnew XDGetFrame(widget);
+	GetFrameCmd* cmd = jnew XDGetFrame(widget);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateGetStack
+ CreateGetStackCmd
 
  *****************************************************************************/
 
-CMGetStack*
-XDLink::CreateGetStack
+GetStack*
+XDLink::CreateGetStackCmd
 	(
 	JTree*			tree,
-	CMStackWidget*	widget
+	StackWidget*	widget
 	)
 {
-	CMGetStack* cmd = jnew XDGetStack(tree, widget);
+	GetStack* cmd = jnew XDGetStack(tree, widget);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateGetThread
+ CreateGetThreadCmd
 
  *****************************************************************************/
 
-CMGetThread*
-XDLink::CreateGetThread
+GetThread*
+XDLink::CreateGetThreadCmd
 	(
-	CMThreadsWidget* widget
+	ThreadsWidget* widget
 	)
 {
-	CMGetThread* cmd = jnew XDGetThread(widget);
+	GetThread* cmd = jnew XDGetThread(widget);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateGetThreads
+ CreateGetThreadsCmd
 
  *****************************************************************************/
 
-CMGetThreads*
-XDLink::CreateGetThreads
+GetThreads*
+XDLink::CreateGetThreadsCmd
 	(
 	JTree*				tree,
-	CMThreadsWidget*	widget
+	ThreadsWidget*	widget
 	)
 {
-	CMGetThreads* cmd = jnew XDGetThreads(tree, widget);
+	GetThreads* cmd = jnew XDGetThreads(tree, widget);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateGetFullPath
+ CreateGetFullPathCmd
 
  *****************************************************************************/
 
-CMGetFullPath*
-XDLink::CreateGetFullPath
+GetFullPathCmd*
+XDLink::CreateGetFullPathCmd
 	(
 	const JString&	fileName,
 	const JIndex	lineIndex
 	)
 {
-	CMGetFullPath* cmd = jnew XDGetFullPath(fileName, lineIndex);
+	GetFullPathCmd* cmd = jnew XDGetFullPath(fileName, lineIndex);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateGetInitArgs
+ CreateGetInitArgsCmd
 
  *****************************************************************************/
 
-CMGetInitArgs*
-XDLink::CreateGetInitArgs
+GetInitArgs*
+XDLink::CreateGetInitArgsCmd
 	(
 	JXInputField* argInput
 	)
 {
-	CMGetInitArgs* cmd = jnew XDGetInitArgs(argInput);
+	GetInitArgs* cmd = jnew XDGetInitArgs(argInput);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateGetLocalVars
+ CreateGetLocalVarsCmd
 
  *****************************************************************************/
 
-CMGetLocalVars*
-XDLink::CreateGetLocalVars
+GetLocalVars*
+XDLink::CreateGetLocalVarsCmd
 	(
-	CMVarNode* rootNode
+	VarNode* rootNode
 	)
 {
-	CMGetLocalVars* cmd = jnew XDGetLocalVars(rootNode);
+	GetLocalVars* cmd = jnew XDGetLocalVars(rootNode);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateGetSourceFileList
+ CreateGetSourceFileListCmd
 
  *****************************************************************************/
 
-CMGetSourceFileList*
-XDLink::CreateGetSourceFileList
+GetSourceFileList*
+XDLink::CreateGetSourceFileListCmd
 	(
-	CMFileListDir* fileList
+	FileListDir* fileList
 	)
 {
-	CMGetSourceFileList* cmd = jnew XDGetSourceFileList(fileList);
+	GetSourceFileList* cmd = jnew XDGetSourceFileList(fileList);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateVarValueCommand
+ CreateVarValueCmd
 
  *****************************************************************************/
 
-CMVarCommand*
-XDLink::CreateVarValueCommand
+VarCommand*
+XDLink::CreateVarValueCmd
 	(
 	const JString& expr
 	)
@@ -1211,23 +1211,23 @@ XDLink::CreateVarValueCommand
 	s += " -d ";
 	s += JString((JUInt64)itsStackFrameIndex);
 
-	CMVarCommand* cmd = jnew XDVarCommand(s);
+	VarCommand* cmd = jnew XDVarCommand(s);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateVarContentCommand
+ CreateVarContentCmd
 
  *****************************************************************************/
 
-CMVarCommand*
-XDLink::CreateVarContentCommand
+VarCommand*
+XDLink::CreateVarContentCmd
 	(
 	const JString& expr
 	)
 {
-	return CreateVarValueCommand(expr);
+	return CreateVarValueCmd(expr);
 }
 
 /******************************************************************************
@@ -1235,18 +1235,18 @@ XDLink::CreateVarContentCommand
 
  *****************************************************************************/
 
-CMVarNode*
+VarNode*
 XDLink::CreateVarNode
 	(
 	const bool shouldUpdate		// false for Local Variables
 	)
 {
-	CMVarNode* node = jnew XDVarNode(shouldUpdate);
+	VarNode* node = jnew XDVarNode(shouldUpdate);
 	assert( node != nullptr );
 	return node;
 }
 
-CMVarNode*
+VarNode*
 XDLink::CreateVarNode
 	(
 	JTreeNode*		parent,
@@ -1255,7 +1255,7 @@ XDLink::CreateVarNode
 	const JString&	value
 	)
 {
-	CMVarNode* node = jnew XDVarNode(parent, name, fullName, value);
+	VarNode* node = jnew XDVarNode(parent, name, fullName, value);
 	assert( node != nullptr );
 	return node;
 }
@@ -1381,42 +1381,42 @@ XDLink::Build2DArrayExpression
 }
 
 /******************************************************************************
- CreateGetMemory
+ CreateGetMemoryCmd
 
  *****************************************************************************/
 
-CMGetMemory*
-XDLink::CreateGetMemory
+GetMemory*
+XDLink::CreateGetMemoryCmd
 	(
-	CMMemoryDir* dir
+	MemoryDir* dir
 	)
 {
 	return nullptr;
 }
 
 /******************************************************************************
- CreateGetAssembly
+ CreateGetAssemblyCmd
 
  *****************************************************************************/
 
-CMGetAssembly*
-XDLink::CreateGetAssembly
+GetAssemblyCmd*
+XDLink::CreateGetAssemblyCmd
 	(
-	CMSourceDirector* dir
+	SourceDirector* dir
 	)
 {
 	return nullptr;
 }
 
 /******************************************************************************
- CreateGetRegisters
+ CreateGetRegistersCmd
 
  *****************************************************************************/
 
-CMGetRegisters*
-XDLink::CreateGetRegisters
+GetRegisters*
+XDLink::CreateGetRegistersCmd
 	(
-	CMRegistersDir* dir
+	RegistersDir* dir
 	)
 {
 	return nullptr;
@@ -1506,7 +1506,7 @@ XDLink::SendRaw
 void
 XDLink::SendMedicCommand
 	(
-	CMCommand* command
+	Command* command
 	)
 {
 	command->Starting();

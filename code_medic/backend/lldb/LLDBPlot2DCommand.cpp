@@ -1,20 +1,20 @@
 /******************************************************************************
  LLDBPlot2DCommand.cpp
 
-	BASE CLASS = CMPlot2DCommand
+	BASE CLASS = Plot2DCommand
 
 	Copyright (C) 2016 by John Lindal.
 
  ******************************************************************************/
 
 #include "LLDBPlot2DCommand.h"
-#include "CMPlot2DDir.h"
+#include "Plot2DDir.h"
 #include "LLDBLink.h"
 #include "lldb/API/SBTarget.h"
 #include "lldb/API/SBProcess.h"
 #include "lldb/API/SBThread.h"
 #include "lldb/API/SBValue.h"
-#include "cmGlobals.h"
+#include "globals.h"
 #include <jx-af/jcore/JRegex.h>
 #include <jx-af/jcore/jAssert.h>
 
@@ -25,12 +25,12 @@
 
 LLDBPlot2DCommand::LLDBPlot2DCommand
 	(
-	CMPlot2DDir*	dir,
+	Plot2DDir*	dir,
 	JArray<JFloat>*	x,
 	JArray<JFloat>*	y
 	)
 	:
-	CMPlot2DCommand(dir, x, y)
+	Plot2DCommand(dir, x, y)
 {
 }
 
@@ -56,7 +56,7 @@ LLDBPlot2DCommand::UpdateRange
 	const JInteger	max
 	)
 {
-	CMPlot2DCommand::UpdateRange(curveIndex, min, max);
+	Plot2DCommand::UpdateRange(curveIndex, min, max);
 
 	itsCurveIndex = curveIndex;
 }
@@ -75,7 +75,7 @@ LLDBPlot2DCommand::HandleSuccess
 	)
 {
 	lldb::SBFrame f =
-		dynamic_cast<LLDBLink*>(CMGetLink())->GetDebugger()->
+		dynamic_cast<LLDBLink*>(GetLink())->GetDebugger()->
 			GetSelectedTarget().GetProcess().GetSelectedThread().GetSelectedFrame();
 
 	JArray<JFloat>* x = GetX();

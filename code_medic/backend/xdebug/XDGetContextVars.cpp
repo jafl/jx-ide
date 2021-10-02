@@ -1,7 +1,7 @@
 /******************************************************************************
  XDGetContextVars.cpp
 
-	BASE CLASS = CMCommand
+	BASE CLASS = Command
 
 	Copyright (C) 2007 by John Lindal.
 
@@ -9,8 +9,8 @@
 
 #include "XDGetContextVars.h"
 #include "XDLink.h"
-#include "CMVarNode.h"
-#include "cmGlobals.h"
+#include "VarNode.h"
+#include "globals.h"
 #include <jx-af/jcore/JStringIterator.h>
 #include <jx-af/jcore/jAssert.h>
 
@@ -21,17 +21,17 @@
 
 XDGetContextVars::XDGetContextVars
 	(
-	CMVarNode*		rootNode,
+	VarNode*		rootNode,
 	const JString&	contextID
 	)
 	:
-	CMCommand("", true, true),
+	Command("", true, true),
 	itsRootNode(rootNode)
 {
 	JString cmd("context_get -c ");
 	cmd += contextID;
 	cmd += " -d ";
-	cmd += JString((JUInt64) dynamic_cast<XDLink*>(CMGetLink())->GetStackFrameIndex());
+	cmd += JString((JUInt64) dynamic_cast<XDLink*>(GetLink())->GetStackFrameIndex());
 	SetCommand(cmd);
 }
 
@@ -55,7 +55,7 @@ XDGetContextVars::HandleSuccess
 	const JString& data
 	)
 {
-	auto* link = dynamic_cast<XDLink*>(CMGetLink());
+	auto* link = dynamic_cast<XDLink*>(GetLink());
 	xmlNode* root;
 	if (link == nullptr || !link->GetParsedData(&root))
 	{
@@ -75,7 +75,7 @@ XDGetContextVars::BuildTree
 	(
 	const JSize	depth,
 	xmlNode*	root,
-	CMVarNode*	varRoot
+	VarNode*	varRoot
 	)
 {
 	xmlNode* node = root->children;
@@ -86,7 +86,7 @@ XDGetContextVars::BuildTree
 		fullName = JGetXMLNodeAttr(node, "fullname");
 		type     = JGetXMLNodeAttr(node, "type");
 
-		CMVarNode* n;
+		VarNode* n;
 		if (node->children != nullptr && node->children->type == XML_TEXT_NODE)
 		{
 			value = (char*) node->children->content;
@@ -113,12 +113,12 @@ XDGetContextVars::BuildTree
 				value.Append("\"");
 			}
 
-			n = CMGetLink()->CreateVarNode(nullptr, name, fullName, value);
+			n = GetLink()->CreateVarNode(nullptr, name, fullName, value);
 			assert( n != nullptr );
 		}
 		else
 		{
-			n = CMGetLink()->CreateVarNode(nullptr, name, fullName, JString::empty);
+			n = GetLink()->CreateVarNode(nullptr, name, fullName, JString::empty);
 			assert( n != nullptr );
 
 			if (type == "array" && JGetXMLNodeAttr(node, "children") == "1")

@@ -1,14 +1,14 @@
 /******************************************************************************
  GDBBreakpointManager.cpp
 
-	BASE CLASS = CMBreakpointManager
+	BASE CLASS = BreakpointManager
 
 	Copyright (C) 2007 by John Lindal.
 
  *****************************************************************************/
 
 #include "GDBBreakpointManager.h"
-#include "GDBGetBreakpoints.h"
+#include "GDBGetBreakpointsCmd.h"
 #include "GDBLink.h"
 #include <jx-af/jcore/jAssert.h>
 
@@ -22,7 +22,7 @@ GDBBreakpointManager::GDBBreakpointManager
 	GDBLink* link
 	)
 	:
-	CMBreakpointManager(link, jnew GDBGetBreakpoints())
+	BreakpointManager(link, jnew GDBGetBreakpointsCmd())
 {
 }
 

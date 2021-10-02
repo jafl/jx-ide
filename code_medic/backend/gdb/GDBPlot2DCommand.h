@@ -8,13 +8,13 @@
 #ifndef _H_GDBPlot2DCommand
 #define _H_GDBPlot2DCommand
 
-#include "CMPlot2DCommand.h"
+#include "Plot2DCommand.h"
 
-class GDBPlot2DCommand : public CMPlot2DCommand
+class GDBPlot2DCommand : public Plot2DCommand
 {
 public:
 
-	GDBPlot2DCommand(CMPlot2DDir* dir, JArray<JFloat>* x, JArray<JFloat>* y);
+	GDBPlot2DCommand(Plot2DDir* dir, JArray<JFloat>* x, JArray<JFloat>* y);
 
 	virtual	~GDBPlot2DCommand();
 

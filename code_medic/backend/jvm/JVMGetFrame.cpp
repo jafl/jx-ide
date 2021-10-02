@@ -1,14 +1,14 @@
 /******************************************************************************
  JVMGetFrame.cpp
 
-	BASE CLASS = CMGetFrame
+	BASE CLASS = GetFrameCmd
 
 	Copyright (C) 2009 by John Lindal.
 
  ******************************************************************************/
 
 #include "JVMGetFrame.h"
-#include "CMStackWidget.h"
+#include "StackWidget.h"
 #include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
@@ -18,10 +18,10 @@
 
 JVMGetFrame::JVMGetFrame
 	(
-	CMStackWidget* widget
+	StackWidget* widget
 	)
 	:
-	CMGetFrame(JString("NOP", JString::kNoCopy)),
+	GetFrameCmd(JString("NOP", JString::kNoCopy)),
 	itsWidget(widget)
 {
 }

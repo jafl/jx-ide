@@ -1,14 +1,14 @@
 /******************************************************************************
  LLDBGetFullPath.cpp
 
-	BASE CLASS = CMGetFullPath
+	BASE CLASS = GetFullPathCmd
 
 	Copyright (C) 2016 by John Lindal.
 
  ******************************************************************************/
 
 #include "LLDBGetFullPath.h"
-#include "cmGlobals.h"
+#include "globals.h"
 #include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
@@ -22,7 +22,7 @@ LLDBGetFullPath::LLDBGetFullPath
 	const JIndex	lineIndex	// for convenience
 	)
 	:
-	CMGetFullPath(JString::empty, fileName, lineIndex)
+	GetFullPathCmd(JString::empty, fileName, lineIndex)
 {
 }
 
@@ -47,5 +47,5 @@ LLDBGetFullPath::HandleSuccess
 	)
 {
 	Broadcast(FileNotFound(GetFileName()));
-	CMGetLink()->RememberFile(GetFileName(), JString::empty);
+	GetLink()->RememberFile(GetFileName(), JString::empty);
 }

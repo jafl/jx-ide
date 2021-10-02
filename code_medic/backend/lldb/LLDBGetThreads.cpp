@@ -1,7 +1,7 @@
 /******************************************************************************
  LLDBGetThreads.cpp
 
-	BASE CLASS = CMGetThreads
+	BASE CLASS = GetThreads
 
 	Copyright (C) 2016 by John Lindal.
 
@@ -13,9 +13,9 @@
 #include "lldb/API/SBThread.h"
 #include "lldb/API/SBFrame.h"
 #include "lldb/API/SBStream.h"
-#include "CMThreadsWidget.h"
-#include "CMThreadNode.h"
-#include "cmGlobals.h"
+#include "ThreadsWidget.h"
+#include "ThreadNode.h"
+#include "globals.h"
 #include "LLDBLink.h"	// must be after X11 includes: Status
 #include <jx-af/jcore/JTree.h>
 #include <jx-af/jcore/JStringIterator.h>
@@ -33,10 +33,10 @@ const JSize kThreadIndexWidth = 2;	// width of thread index in characters
 LLDBGetThreads::LLDBGetThreads
 	(
 	JTree*				tree,
-	CMThreadsWidget*	widget
+	ThreadsWidget*	widget
 	)
 	:
-	CMGetThreads(JString::empty, widget),
+	GetThreads(JString::empty, widget),
 	itsTree(tree)
 {
 }
@@ -63,7 +63,7 @@ LLDBGetThreads::HandleSuccess
 	const JString& data
 	)
 {
-	auto* link = dynamic_cast<LLDBLink*>(CMGetLink());
+	auto* link = dynamic_cast<LLDBLink*>(GetLink());
 	if (link == nullptr)
 	{
 		return;
@@ -119,7 +119,7 @@ LLDBGetThreads::HandleSuccess
 			name.Prepend(indexStr);
 		}
 
-		auto* node = jnew CMThreadNode(t.GetThreadID(), name, fileName, lineIndex);
+		auto* node = jnew ThreadNode(t.GetThreadID(), name, fileName, lineIndex);
 		assert( node != nullptr );
 
 		root->Append(node);

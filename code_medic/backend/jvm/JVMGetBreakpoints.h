@@ -8,9 +8,9 @@
 #ifndef _H_JVMGetBreakpoints
 #define _H_JVMGetBreakpoints
 
-#include "CMGetBreakpoints.h"
+#include "GetBreakpointsCmd.h"
 
-class JVMGetBreakpoints : public CMGetBreakpoints
+class JVMGetBreakpoints : public GetBreakpointsCmd
 {
 public:
 

@@ -1,0 +1,6 @@
+0
+itsStopButton::Array1DDir::shortcuts::JXLayout "^["
+endLabel::Array1DDir::JXLayout "Ending index:"
+startLabel::Array1DDir::JXLayout "Starting index:"
+itsStopButton::Array1DDir::JXLayout "Stop"
+exprLabel::Array1DDir::JXLayout "Expression:"

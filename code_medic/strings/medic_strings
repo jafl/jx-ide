@@ -24,9 +24,9 @@ CHANGE_LOG_URL	"http://codemedic.sourceforge.net/ChangeLog.html"
 VERSION_URL		"http://codemedic.sourceforge.net/VERSION"
 DOWNLOAD_URL	"https://sourceforge.net/projects/codemedic/"
 
-ActionsMenuTitle::CMGlobal	"Actions"
+ActionsMenuTitle::global	"Actions"
 
-# CMMDIServer
+# MDIServer
 
 CMCommandLineHelp
 
@@ -65,152 +65,152 @@ A debugging environment for X.
 
 $copyright"
 
-# CMAboutDialog
+# AboutDialog
 
-WindowTitle::CMAboutDialog			"About"
-ChangeButtonLabel::CMAboutDialog	"Changes"
+WindowTitle::AboutDialog			"About"
+ChangeButtonLabel::AboutDialog	"Changes"
 
-UpgradeNotice::CMAboutDialog
+UpgradeNotice::AboutDialog
 "
 
 
 You have just upgraded from version $vers"
 
-# CMEditPrefsDialog
+# EditPrefsDialog
 
-WindowTitle::CMEditPrefsDialog			"Edit preferences"
-ChooseDebuggerPrompt::CMEditPrefsDialog	"Choose $name binary:"
+WindowTitle::EditPrefsDialog			"Edit preferences"
+ChooseDebuggerPrompt::EditPrefsDialog	"Choose $name binary:"
 
-# CMCommandDirector
+# CommandDirector
 
-WindowsMenuText::CMCommandDirector		"Command line"
-WindowTitleSuffix::CMCommandDirector	" Command Line"
-DebugMenuTitle::CMCommandDirector		"Debug"
-ChooseSourcePrompt::CMCommandDirector	"Choose Source Files"
-ChooseConfigPrompt::CMCommandDirector	"Choose configuration file"
-SaveFilePrompt::CMCommandDirector		"Choose file name"
-ChooseBinaryPrompt::CMCommandDirector	"Choose binary"
-ChooseCorePrompt::CMCommandDirector		"Choose core file"
+WindowsMenuText::CommandDirector		"Command line"
+WindowTitleSuffix::CommandDirector	" Command Line"
+DebugMenuTitle::CommandDirector		"Debug"
+ChooseSourcePrompt::CommandDirector	"Choose Source Files"
+ChooseConfigPrompt::CommandDirector	"Choose configuration file"
+SaveFilePrompt::CommandDirector		"Choose file name"
+ChooseBinaryPrompt::CommandDirector	"Choose binary"
+ChooseCorePrompt::CommandDirector		"Choose core file"
 
-CannotOpenFile::CMCommandDirector	"Unable to open $name because it either does not exist or is not readable, or the debugger is being unhelpful."
+CannotOpenFile::CommandDirector	"Unable to open $name because it either does not exist or is not readable, or the debugger is being unhelpful."
 
-NoBinaryButtonLabel::CMCommandDirector "<no binary>"
+NoBinaryButtonLabel::CommandDirector "<no binary>"
 
-NoSelection::CMCommandDirector
+NoSelection::CommandDirector
 "This command cannot be run because you either have not selected any text or have selected more than one line."
 
-Welcome::CMCommandDirector
+Welcome::CommandDirector
 "Welcome to Code Medic $vers
 (requires: gdb 7.4 or newer, Xdebug 2.0 or newer)
 
 Running on top of:
 "
 
-ConfigTooNew::CMCommandDirector
+ConfigTooNew::CommandDirector
 "This configuration file was created by a newer version of Code Medic.  You need the newest version in order to open it."
 
-# CMSourceDirector
+# SourceDirector
 
-MainSourceName::CMSourceDirector	"Current source"
-MainAsmName::CMSourceDirector		"Current assembly"
+MainSourceName::SourceDirector	"Current source"
+MainAsmName::SourceDirector		"Current assembly"
 
-WindowTitlePrefixMainSrc::CMSourceDirector	" Current Source - "
-WindowTitleNoSrc::CMSourceDirector			"(No source)"
+WindowTitlePrefixMainSrc::SourceDirector	" Current Source - "
+WindowTitleNoSrc::SourceDirector			"(No source)"
 
-WindowTitlePrefixMainAsm::CMSourceDirector	" Current Disassembly - "
-WindowTitleNoAsm::CMSourceDirector			"(No function)"
+WindowTitlePrefixMainAsm::SourceDirector	" Current Disassembly - "
+WindowTitleNoAsm::SourceDirector			"(No function)"
 
-InitSourceWindowTitle::CMSourceDirector	"Current Source - (No source)"
-InitAsmWindowTitle::CMSourceDirector	"Current Disassembly - (No function)"
+InitSourceWindowTitle::SourceDirector	"Current Source - (No source)"
+InitAsmWindowTitle::SourceDirector	"Current Disassembly - (No function)"
 
-# CMVarTreeDir
+# VarTreeDir
 
-WindowsMenuText::CMVarTreeDir	"Variables"
-WindowTitleSuffix::CMVarTreeDir	" Variables"
+WindowsMenuText::VarTreeDir	"Variables"
+WindowTitleSuffix::VarTreeDir	" Variables"
 
-# CMVarTreeWidget
+# VarTreeWidget
 
-BaseMenuTitle::CMVarTreeWidget	"Base"
+BaseMenuTitle::VarTreeWidget	"Base"
 
-# CMLocalVarsDir
+# LocalVarsDir
 
-WindowsMenuText::CMLocalVarsDir		"Local variables"
-WindowTitleSuffix::CMLocalVarsDir	" Local Variables"
+WindowsMenuText::LocalVarsDir		"Local variables"
+WindowTitleSuffix::LocalVarsDir	" Local Variables"
 
-# CMThreadsDir
+# ThreadsDir
 
-WindowsMenuText::CMThreadsDir	"Threads"
-WindowTitleSuffix::CMThreadsDir	" Threads"
+WindowsMenuText::ThreadsDir	"Threads"
+WindowTitleSuffix::ThreadsDir	" Threads"
 
-# CMThreadsWidget
+# ThreadsWidget
 
-NoSourceFile::CMThreadsWidget	"Unable to determine the source file for this thread."
+NoSourceFile::ThreadsWidget	"Unable to determine the source file for this thread."
 
-# CMStackDir
+# StackDir
 
-WindowsMenuText::CMStackDir		"Stack trace"
-WindowTitleSuffix::CMStackDir	" Stack Trace"
+WindowsMenuText::StackDir		"Stack trace"
+WindowTitleSuffix::StackDir	" Stack Trace"
 
-# CMStackWidget
+# StackWidget
 
-NoSourceFile::CMStackWidget	"Unable to determine the source file for this stack frame."
+NoSourceFile::StackWidget	"Unable to determine the source file for this stack frame."
 
-# CMRegistersDir
+# RegistersDir
 
-WindowsMenuText::CMRegistersDir		"Registers"
-WindowTitleSuffix::CMRegistersDir	" Registers"
+WindowsMenuText::RegistersDir		"Registers"
+WindowTitleSuffix::RegistersDir	" Registers"
 
-# CMBreakpointsDir
+# BreakpointsDir
 
-WindowsMenuText::CMBreakpointsDir	"Breakpoints"
-WindowTitleSuffix::CMBreakpointsDir	" Breakpoints"
+WindowsMenuText::BreakpointsDir	"Breakpoints"
+WindowTitleSuffix::BreakpointsDir	" Breakpoints"
 
-# CMFileListDir
+# FileListDir
 
-WindowsMenuText::CMFileListDir		"File list"
-WindowTitleSuffix::CMFileListDir	" Files"
+WindowsMenuText::FileListDir		"File list"
+WindowTitleSuffix::FileListDir	" Files"
 
-# CMDebugDir
+# DebugDir
 
-WindowTitle::CMDebugDir		"Debug"
-WindowsMenuText::CMDebugDir	"Debugging info"
+WindowTitle::DebugDir		"Debug"
+WindowsMenuText::DebugDir	"Debugging info"
 
-# CMPlot2DDir
+# Plot2DDir
 
-WindowTitleSuffix::CMPlot2DDir	" (2D Plot)"
+WindowTitleSuffix::Plot2DDir	" (2D Plot)"
 
-# CMPlot2DExprTable
+# Plot2DExprTable
 
-XExprColTitle::CMPlot2DExprTable	"X"
-YExprColTitle::CMPlot2DExprTable	"Y"
-RangeMinColTitle::CMPlot2DExprTable	"Start"
-RangeMaxColTitle::CMPlot2DExprTable	"End"
+XExprColTitle::Plot2DExprTable	"X"
+YExprColTitle::Plot2DExprTable	"Y"
+RangeMinColTitle::Plot2DExprTable	"Start"
+RangeMaxColTitle::Plot2DExprTable	"End"
 
-# CMArray1DDir
+# Array1DDir
 
-WindowTitleSuffix::CMArray1DDir	"  (1D Array)"
+WindowTitleSuffix::Array1DDir	"  (1D Array)"
 
-# CMArray2DDir
+# Array2DDir
 
-WindowTitleSuffix::CMArray2DDir	"  (2D Array)"
+WindowTitleSuffix::Array2DDir	"  (2D Array)"
 
-# CMMemoryDir
+# MemoryDir
 
-WindowTitleSuffix::CMMemoryDir	"  (Memory)"
+WindowTitleSuffix::MemoryDir	"  (Memory)"
 
-# CMEditCommandsDialog
+# EditCommandsDialog
 
-WindowTitle::CMEditCommandsDialog	"Edit custom gdb commands"
+WindowTitle::EditCommandsDialog	"Edit custom gdb commands"
 
-# CMFileDragSource
+# FileDragSource
 
-Hint::CMFileDragSource	"Drag this to drag the URL for this file."
+Hint::FileDragSource	"Drag this to drag the URL for this file."
 
-# CMChooseProcessDialog
+# ChooseProcessDialog
 
-WindowTitle::CMChooseProcessDialog	"Choose process"
+WindowTitle::ChooseProcessDialog	"Choose process"
 
-# XDLink
+# xdebug::Link
 
 Prompt::XDLink			"(xdb)"
 ScriptPrompt::XDLink	"    >"
@@ -243,7 +243,7 @@ ConfigFileIsBinary::XDLink		"The file you specified appears to be a program, not
 ConfigFileWrongLanguage::XDLink	"The file you specified is not for PHP.
 "
 
-# JVMLink
+# jvm::Link
 
 Prompt::JVMLink			""
 ScriptPrompt::JVMLink	""
@@ -276,7 +276,7 @@ ProgramFinished::JVMLink	"Program finished"
 WarnKillProgram::JVMLink	"Are you sure you want to kill the current program?"
 WarnDetachProgram::JVMLink	"Are you sure you want to detach from the current program?"
 
-# LLDBLink
+# lldb::Link
 
 ScriptPrompt::LLDBLink	""
 
@@ -294,7 +294,7 @@ WarnDetachProgram::LLDBLink		"Are you sure you want to detach from the current p
 CannotFindMain::LLDBDisplaySourceForMain
 "Unable to find function main().  Does the binary contain debugging information?"
 
-# GDBLink
+# gdb::Link
 
 Prompt::GDBLink			"(gdb)"
 ScriptPrompt::GDBLink	"    >"
@@ -324,9 +324,9 @@ StartIgnoreResultCommand::GDBLink	"echo \\032\\032:Medic ignore command:$id:"
 EndIgnoreResultCommand::GDBLink		"echo \\032\\032:Medic ignore command done:$id:"
 PingCommand::GDBLink				"echo \\032\\032:Medic debugger ready:$id:"
 
-# GDBDisplaySourceForMain
+# gdb::DisplaySourceForMainCmd
 
-RunCommand::GDBDisplaySourceForMain
+RunCommand::GDBDisplaySourceForMainCmd
 "echo \\032\\032:Medic command:0:
 define hook-run
 echo \\032\\032:Medic program starting:
@@ -337,22 +337,22 @@ end
 echo \\032\\032:Medic command done:0:
 "
 
-# GDBAnalyzeCore
+# gdb::AnalyzeCoreCmd
 
-Prompt::GDBAnalyzeCore		"Name of program"
-FindProgram::GDBAnalyzeCore	"Please locate \"$name\""
+Prompt::GDBAnalyzeCoreCmd		"Name of program"
+FindProgram::GDBAnalyzeCoreCmd	"Please locate \"$name\""
 
 # GDBVarTreeParser
 
 ErrorNodeName::GDBVarTreeParser		"gdb error"
 ErrorNodeValue::GDBVarTreeParser	"<gdb encountered an error.  Some fields may be missing.>"
 
-# CMBreakpointTable
+# BreakpointTable
 
-Column1::CMBreakpointTable	""
-Column2::CMBreakpointTable	"File name"
-Column3::CMBreakpointTable	"Line"
-Column4::CMBreakpointTable	"Function"
-Column5::CMBreakpointTable	"Address"
-Column6::CMBreakpointTable	"Ignore"
-Column7::CMBreakpointTable	"Condition"
+Column1::BreakpointTable	""
+Column2::BreakpointTable	"File name"
+Column3::BreakpointTable	"Line"
+Column4::BreakpointTable	"Function"
+Column5::BreakpointTable	"Address"
+Column6::BreakpointTable	"Ignore"
+Column7::BreakpointTable	"Condition"

@@ -1,7 +1,7 @@
 /******************************************************************************
  XDVarCommand.cpp
 
-	BASE CLASS = CMVarCommand
+	BASE CLASS = VarCommand
 
 	Copyright (C) 2007 by John Lindal.
 
@@ -10,8 +10,8 @@
 #include "XDVarCommand.h"
 #include "XDGetContextVars.h"
 #include "XDLink.h"
-#include "CMVarNode.h"
-#include "cmGlobals.h"
+#include "VarNode.h"
+#include "globals.h"
 #include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
@@ -24,11 +24,11 @@ XDVarCommand::XDVarCommand
 	const JString& cmd
 	)
 	:
-	CMVarCommand()
+	VarCommand()
 {
 	SetCommand(cmd);
 
-	itsRootNode = CMGetLink()->CreateVarNode(false);
+	itsRootNode = GetLink()->CreateVarNode(false);
 	assert( itsRootNode != nullptr );
 }
 
@@ -53,7 +53,7 @@ XDVarCommand::HandleSuccess
 	const JString& data
 	)
 {
-	auto* link = dynamic_cast<XDLink*>(CMGetLink());
+	auto* link = dynamic_cast<XDLink*>(GetLink());
 	xmlNode* root;
 	if (link == nullptr || !link->GetParsedData(&root))
 	{

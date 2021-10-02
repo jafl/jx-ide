@@ -8,15 +8,15 @@
 #ifndef _H_JVMGetFrame
 #define _H_JVMGetFrame
 
-#include "CMGetFrame.h"
+#include "GetFrameCmd.h"
 
-class CMStackWidget;
+class StackWidget;
 
-class JVMGetFrame : public CMGetFrame
+class JVMGetFrame : public GetFrameCmd
 {
 public:
 
-	JVMGetFrame(CMStackWidget* widget);
+	JVMGetFrame(StackWidget* widget);
 
 	virtual	~JVMGetFrame();
 
@@ -26,7 +26,7 @@ protected:
 
 private:
 
-	CMStackWidget*	itsWidget;
+	StackWidget*	itsWidget;
 };
 
 #endif

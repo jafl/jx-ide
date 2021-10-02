@@ -8,9 +8,9 @@
 #ifndef _H_JVMVarNode
 #define _H_JVMVarNode
 
-#include "CMVarNode.h"
+#include "VarNode.h"
 
-class JVMVarNode : public CMVarNode
+class JVMVarNode : public VarNode
 {
 public:
 

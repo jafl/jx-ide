@@ -8,9 +8,9 @@
 #ifndef _H_XDVarNode
 #define _H_XDVarNode
 
-#include "CMVarNode.h"
+#include "VarNode.h"
 
-class XDVarNode : public CMVarNode
+class XDVarNode : public VarNode
 {
 public:
 

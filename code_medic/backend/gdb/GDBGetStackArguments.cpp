@@ -1,17 +1,17 @@
 /******************************************************************************
  GDBGetStackArguments.cpp
 
-	BASE CLASS = CMCommand
+	BASE CLASS = Command
 
 	Copyright (C) 2009 by John Lindal.
 
  ******************************************************************************/
 
 #include "GDBGetStackArguments.h"
-#include "CMStackFrameNode.h"
-#include "CMStackArgNode.h"
+#include "StackFrameNode.h"
+#include "StackArgNode.h"
 #include "GDBLink.h"
-#include "cmGlobals.h"
+#include "globals.h"
 #include <jx-af/jcore/JTree.h>
 #include <jx-af/jcore/JStringIterator.h>
 #include <jx-af/jcore/JRegex.h>
@@ -27,7 +27,7 @@ GDBGetStackArguments::GDBGetStackArguments
 	JTree* tree
 	)
 	:
-	CMCommand("-stack-list-arguments 1", false, true),
+	Command("-stack-list-arguments 1", false, true),
 	itsTree(tree)
 {
 }
@@ -85,13 +85,13 @@ GDBGetStackArguments::HandleSuccess
 		assert( ok );
 
 		auto* frameNode =
-			dynamic_cast<CMStackFrameNode*>(root->GetChild(frameCount - frameIndex));
+			dynamic_cast<StackFrameNode*>(root->GetChild(frameCount - frameIndex));
 		assert( frameNode != nullptr );
 
 		stream.seekg(iter.GetLastMatch().GetUtf8ByteRange().last);
 		if (!GDBLink::ParseMapArray(stream, &argList))
 		{
-			CMGetLink()->Log("invalid stack argument list");
+			GetLink()->Log("invalid stack argument list");
 			break;
 		}
 
@@ -103,7 +103,7 @@ GDBGetStackArguments::HandleSuccess
 			if (!arg->GetElement("name", &name) ||
 				!arg->GetElement("value", &value))
 			{
-				CMGetLink()->Log("invalid stack argument");
+				GetLink()->Log("invalid stack argument");
 				continue;
 			}
 
@@ -115,7 +115,7 @@ GDBGetStackArguments::HandleSuccess
 			}
 			iter.Invalidate();
 
-			auto* argNode = jnew CMStackArgNode(frameNode, *name, *value);
+			auto* argNode = jnew StackArgNode(frameNode, *name, *value);
 			assert( argNode != nullptr );
 		}
 	}

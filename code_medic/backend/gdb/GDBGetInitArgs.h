@@ -8,11 +8,11 @@
 #ifndef _H_GDBGetInitArgs
 #define _H_GDBGetInitArgs
 
-#include "CMGetInitArgs.h"
+#include "GetInitArgs.h"
 
 class JXInputField;
 
-class GDBGetInitArgs : public CMGetInitArgs
+class GDBGetInitArgs : public GetInitArgs
 {
 public:
 

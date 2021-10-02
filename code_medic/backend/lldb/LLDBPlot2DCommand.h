@@ -8,13 +8,13 @@
 #ifndef _H_LLDBPlot2DCommand
 #define _H_LLDBPlot2DCommand
 
-#include "CMPlot2DCommand.h"
+#include "Plot2DCommand.h"
 
-class LLDBPlot2DCommand : public CMPlot2DCommand
+class LLDBPlot2DCommand : public Plot2DCommand
 {
 public:
 
-	LLDBPlot2DCommand(CMPlot2DDir* dir, JArray<JFloat>* x, JArray<JFloat>* y);
+	LLDBPlot2DCommand(Plot2DDir* dir, JArray<JFloat>* x, JArray<JFloat>* y);
 
 	virtual	~LLDBPlot2DCommand();
 

@@ -1,21 +1,21 @@
 /******************************************************************************
  LLDBArray2DCommand.cpp
 
-	BASE CLASS = CMArray2DCommand
+	BASE CLASS = Array2DCmd
 
 	Copyright (C) 2016 by John Lindal.
 
  ******************************************************************************/
 
 #include "LLDBArray2DCommand.h"
-#include "CMArray2DDir.h"
-#include "CMVarNode.h"
+#include "Array2DDir.h"
+#include "VarNode.h"
 #include "LLDBLink.h"
 #include "lldb/API/SBTarget.h"
 #include "lldb/API/SBProcess.h"
 #include "lldb/API/SBThread.h"
 #include "lldb/API/SBValue.h"
-#include "cmGlobals.h"
+#include "globals.h"
 #include <jx-af/jx/JXStringTable.h>
 #include <jx-af/jx/JXColorManager.h>
 #include <jx-af/jcore/JStringTableData.h>
@@ -29,12 +29,12 @@
 
 LLDBArray2DCommand::LLDBArray2DCommand
 	(
-	CMArray2DDir*		dir,
+	Array2DDir*		dir,
 	JXStringTable*		table,
 	JStringTableData*	data
 	)
 	:
-	CMArray2DCommand(dir, table, data)
+	Array2DCmd(dir, table, data)
 {
 }
 
@@ -59,7 +59,7 @@ LLDBArray2DCommand::HandleSuccess
 	)
 {
 	lldb::SBFrame f =
-		dynamic_cast<LLDBLink*>(CMGetLink())->GetDebugger()->
+		dynamic_cast<LLDBLink*>(GetLink())->GetDebugger()->
 			GetSelectedTarget().GetProcess().GetSelectedThread().GetSelectedFrame();
 	if (!f.IsValid())
 	{
@@ -99,7 +99,7 @@ LLDBArray2DCommand::HandleSuccess
 
 		GetData()->SetString(cell, JString(value, JString::kNoCopy));
 		GetTable()->SetCellStyle(cell,
-			CMVarNode::GetFontStyle(true, isNew));
+			VarNode::GetFontStyle(true, isNew));
 	}
 
 	GetDirector()->UpdateNext();

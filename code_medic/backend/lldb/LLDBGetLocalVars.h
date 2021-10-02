@@ -8,15 +8,15 @@
 #ifndef _H_LLDBGetLocalVars
 #define _H_LLDBGetLocalVars
 
-#include "CMGetLocalVars.h"
+#include "GetLocalVars.h"
 
-class CMVarNode;
+class VarNode;
 
-class LLDBGetLocalVars : public CMGetLocalVars
+class LLDBGetLocalVars : public GetLocalVars
 {
 public:
 
-	LLDBGetLocalVars(CMVarNode* rootNode);
+	LLDBGetLocalVars(VarNode* rootNode);
 
 	virtual	~LLDBGetLocalVars();
 
@@ -26,7 +26,7 @@ protected:
 
 private:
 
-	CMVarNode*	itsRootNode;	// not owned
+	VarNode*	itsRootNode;	// not owned
 
 private:
 

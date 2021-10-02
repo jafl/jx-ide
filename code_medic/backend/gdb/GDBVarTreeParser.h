@@ -10,7 +10,7 @@
 
 #include "GDBVarTreeScanner.h"
 
-class CMVarNode;
+class VarNode;
 
 class GDBVarTreeParser
 {
@@ -23,12 +23,12 @@ public:
 	int		Parse(const JString& text);
 	void	ReportRecoverableError();
 
-	CMVarNode*	GetRootNode() const;
+	VarNode*	GetRootNode() const;
 
 private:
 
 	GDB::VarTree::Scanner*	itsScanner;
-	CMVarNode*				itsCurrentNode;
+	VarNode*				itsCurrentNode;
 	bool					itsIsPointerFlag;
 
 	// compensate for gdb stopping on error
@@ -40,10 +40,10 @@ private:
 
 	int		yyparse();
 
-	void	AppendAsArrayElement(CMVarNode* node, JPtrArray<CMVarNode>* list) const;
+	void	AppendAsArrayElement(VarNode* node, JPtrArray<VarNode>* list) const;
 	void	AppendAsArrayElement(const JString& groupLabel,
-								 const JPtrArray<CMVarNode>& data,
-								 JPtrArray<CMVarNode>* list) const;
+								 const JPtrArray<VarNode>& data,
+								 JPtrArray<VarNode>* list) const;
 
 	int yylex(YYSTYPE* lvalp);
 	int yyerror(const char* message);
@@ -60,7 +60,7 @@ private:
 
  *****************************************************************************/
 
-inline CMVarNode*
+inline VarNode*
 GDBVarTreeParser::GetRootNode()
 	const
 {

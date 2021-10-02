@@ -9,7 +9,7 @@
 
 #include "LLDBSymbolsLoadedTask.h"
 #include "LLDBLink.h"
-#include "cmGlobals.h"
+#include "globals.h"
 
 /******************************************************************************
  Constructor
@@ -42,7 +42,7 @@ LLDBSymbolsLoadedTask::~LLDBSymbolsLoadedTask()
 void
 LLDBSymbolsLoadedTask::Perform()
 {
-	auto* link = dynamic_cast<LLDBLink*>(CMGetLink());
+	auto* link = dynamic_cast<LLDBLink*>(GetLink());
 	if (link != nullptr)
 	{
 		link->SymbolsLoaded(itsFileName);

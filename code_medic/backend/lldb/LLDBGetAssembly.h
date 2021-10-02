@@ -8,15 +8,15 @@
 #ifndef _H_LLDBGetAssembly
 #define _H_LLDBGetAssembly
 
-#include "CMGetAssembly.h"
+#include "GetAssemblyCmd.h"
 
-class CMSourceDirector;
+class SourceDirector;
 
-class LLDBGetAssembly : public CMGetAssembly
+class LLDBGetAssembly : public GetAssemblyCmd
 {
 public:
 
-	LLDBGetAssembly(CMSourceDirector* dir);
+	LLDBGetAssembly(SourceDirector* dir);
 
 	virtual	~LLDBGetAssembly();
 

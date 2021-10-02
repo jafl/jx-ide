@@ -8,11 +8,11 @@
 #ifndef _H_XDVarCommand
 #define _H_XDVarCommand
 
-#include "CMVarCommand.h"
+#include "VarCommand.h"
 
-class CMVarNode;
+class VarNode;
 
-class XDVarCommand : public CMVarCommand
+class XDVarCommand : public VarCommand
 {
 public:
 
@@ -26,7 +26,7 @@ protected:
 
 private:
 
-	CMVarNode*	itsRootNode;
+	VarNode*	itsRootNode;
 };
 
 #endif

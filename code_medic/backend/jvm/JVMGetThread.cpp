@@ -1,16 +1,16 @@
 /******************************************************************************
  JVMGetThread.cpp
 
-	BASE CLASS = CMGetThread
+	BASE CLASS = GetThread
 
 	Copyright (C) 2009 by John Lindal.
 
  ******************************************************************************/
 
 #include "JVMGetThread.h"
-#include "CMThreadsWidget.h"
+#include "ThreadsWidget.h"
 #include "JVMLink.h"
-#include "cmGlobals.h"
+#include "globals.h"
 #include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
@@ -20,10 +20,10 @@
 
 JVMGetThread::JVMGetThread
 	(
-	CMThreadsWidget* widget
+	ThreadsWidget* widget
 	)
 	:
-	CMGetThread(JString("NOP", JString::kNoCopy), widget)
+	GetThread(JString("NOP", JString::kNoCopy), widget)
 {
 }
 
@@ -47,6 +47,6 @@ JVMGetThread::HandleSuccess
 	const JString& data
 	)
 {
-	auto* link = dynamic_cast<JVMLink*>(CMGetLink());
+	auto* link = dynamic_cast<JVMLink*>(GetLink());
 	GetWidget()->FinishedLoading(link->GetCurrentThreadID());
 }

@@ -8,11 +8,11 @@
 #ifndef _H_GDBBreakpointManager
 #define _H_GDBBreakpointManager
 
-#include "CMBreakpointManager.h"
+#include "BreakpointManager.h"
 
 class GDBLink;
 
-class GDBBreakpointManager : public CMBreakpointManager
+class GDBBreakpointManager : public BreakpointManager
 {
 public:
 

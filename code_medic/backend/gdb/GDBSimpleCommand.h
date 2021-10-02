@@ -8,9 +8,9 @@
 #ifndef _H_GDBSimpleCommand
 #define _H_GDBSimpleCommand
 
-#include "CMCommand.h"
+#include "Command.h"
 
-class GDBSimpleCommand : public CMCommand
+class GDBSimpleCommand : public Command
 {
 public:
 

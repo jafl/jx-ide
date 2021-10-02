@@ -8,13 +8,13 @@
 #ifndef _H_JVMGetThreadGroups
 #define _H_JVMGetThreadGroups
 
-#include "CMCommand.h"
+#include "Command.h"
 #include <jx-af/jcore/JBroadcaster.h>
 
 class JTreeNode;
 class JVMThreadNode;
 
-class JVMGetThreadGroups : public CMCommand, virtual public JBroadcaster
+class JVMGetThreadGroups : public Command, virtual public JBroadcaster
 {
 public:
 

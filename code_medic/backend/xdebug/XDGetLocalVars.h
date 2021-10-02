@@ -8,15 +8,15 @@
 #ifndef _H_XDGetLocalVars
 #define _H_XDGetLocalVars
 
-#include "CMGetLocalVars.h"
+#include "GetLocalVars.h"
 
-class CMVarNode;
+class VarNode;
 
-class XDGetLocalVars : public CMGetLocalVars
+class XDGetLocalVars : public GetLocalVars
 {
 public:
 
-	XDGetLocalVars(CMVarNode* rootNode);
+	XDGetLocalVars(VarNode* rootNode);
 
 	virtual	~XDGetLocalVars();
 
@@ -26,7 +26,7 @@ protected:
 
 private:
 
-	CMVarNode*	itsRootNode;	// not owned
+	VarNode*	itsRootNode;	// not owned
 };
 
 #endif

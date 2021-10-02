@@ -8,15 +8,15 @@
 #ifndef _H_XDGetThreads
 #define _H_XDGetThreads
 
-#include "CMGetThreads.h"
+#include "GetThreads.h"
 
 class JTree;
 
-class XDGetThreads : public CMGetThreads
+class XDGetThreads : public GetThreads
 {
 public:
 
-	XDGetThreads(JTree* tree, CMThreadsWidget* widget);
+	XDGetThreads(JTree* tree, ThreadsWidget* widget);
 
 	virtual	~XDGetThreads();
 

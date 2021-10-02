@@ -3,7 +3,7 @@
 
 	Sends a command that does not expect any response.
 
-	BASE CLASS = CMCommand
+	BASE CLASS = Command
 
 	Copyright (C) 2010 by John Lindal.
 
@@ -22,7 +22,7 @@ GDBSimpleCommand::GDBSimpleCommand
 	const JString& cmd
 	)
 	:
-	CMCommand(cmd, true, false)
+	Command(cmd, true, false)
 {
 	ShouldIgnoreResult(true);
 }

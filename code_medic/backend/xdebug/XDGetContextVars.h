@@ -8,20 +8,20 @@
 #ifndef _H_XDGetContextVars
 #define _H_XDGetContextVars
 
-#include "CMCommand.h"
+#include "Command.h"
 #include <jx-af/jcore/jXMLUtil.h>	// need defn of xmlNode
 
-class CMVarNode;
+class VarNode;
 
-class XDGetContextVars : public CMCommand
+class XDGetContextVars : public Command
 {
 public:
 
-	XDGetContextVars(CMVarNode* rootNode, const JString& contextID);
+	XDGetContextVars(VarNode* rootNode, const JString& contextID);
 
 	virtual	~XDGetContextVars();
 
-	static void	BuildTree(const JSize depth, xmlNode* root, CMVarNode* varRoot);
+	static void	BuildTree(const JSize depth, xmlNode* root, VarNode* varRoot);
 
 protected:
 
@@ -29,7 +29,7 @@ protected:
 
 private:
 
-	CMVarNode*	itsRootNode;	// not owned
+	VarNode*	itsRootNode;	// not owned
 };
 
 #endif

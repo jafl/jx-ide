@@ -1,7 +1,7 @@
 /******************************************************************************
  LLDBGetThread.cpp
 
-	BASE CLASS = CMGetThread
+	BASE CLASS = GetThread
 
 	Copyright (C) 2016 by John Lindal.
 
@@ -11,9 +11,9 @@
 #include "lldb/API/SBTarget.h"
 #include "lldb/API/SBProcess.h"
 #include "lldb/API/SBThread.h"
-#include "CMThreadsWidget.h"
+#include "ThreadsWidget.h"
 #include "LLDBGetThreads.h"
-#include "cmGlobals.h"
+#include "globals.h"
 #include "LLDBLink.h"	// must be after X11 includes: Status
 #include <jx-af/jcore/jAssert.h>
 
@@ -24,10 +24,10 @@
 
 LLDBGetThread::LLDBGetThread
 	(
-	CMThreadsWidget* widget
+	ThreadsWidget* widget
 	)
 	:
-	CMGetThread(JString::empty, widget)
+	GetThread(JString::empty, widget)
 {
 }
 
@@ -51,7 +51,7 @@ LLDBGetThread::HandleSuccess
 	const JString& data
 	)
 {
-	auto* link = dynamic_cast<LLDBLink*>(CMGetLink());
+	auto* link = dynamic_cast<LLDBLink*>(GetLink());
 	if (link == nullptr)
 	{
 		return;

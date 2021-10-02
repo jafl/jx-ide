@@ -8,17 +8,17 @@
 #ifndef _H_JVMGetThreads
 #define _H_JVMGetThreads
 
-#include "CMGetThreads.h"
+#include "GetThreads.h"
 
 class JTree;
 class JTreeNode;
 class JVMThreadNode;
 
-class JVMGetThreads : public CMGetThreads
+class JVMGetThreads : public GetThreads
 {
 public:
 
-	JVMGetThreads(JTree* tree, CMThreadsWidget* widget);
+	JVMGetThreads(JTree* tree, ThreadsWidget* widget);
 
 	virtual	~JVMGetThreads();
 

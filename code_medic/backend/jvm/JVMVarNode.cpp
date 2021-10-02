@@ -1,15 +1,15 @@
 /******************************************************************************
  JVMVarNode.cpp
 
-	BASE CLASS = public CMVarNode
+	BASE CLASS = public VarNode
 
 	Copyright (C) 2009 by John Lindal.
 
  *****************************************************************************/
 
 #include "JVMVarNode.h"
-#include "CMVarCommand.h"
-#include "cmGlobals.h"
+#include "VarCommand.h"
+#include "globals.h"
 #include <jx-af/jcore/JTree.h>
 #include <jx-af/jcore/JRegex.h>
 #include <jx-af/jcore/jAssert.h>
@@ -24,7 +24,7 @@ JVMVarNode::JVMVarNode				// root node
 	const bool shouldUpdate		// false for Local Variables
 	)
 	:
-	CMVarNode(shouldUpdate)
+	VarNode(shouldUpdate)
 {
 }
 
@@ -36,7 +36,7 @@ JVMVarNode::JVMVarNode
 	const JString&	value
 	)
 	:
-	CMVarNode(parent, name, value)
+	VarNode(parent, name, value)
 {
 }
 

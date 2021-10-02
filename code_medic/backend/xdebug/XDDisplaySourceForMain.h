@@ -8,13 +8,13 @@
 #ifndef _H_XDDisplaySourceForMain
 #define _H_XDDisplaySourceForMain
 
-#include "CMDisplaySourceForMain.h"
+#include "DisplaySourceForMainCmd.h"
 
-class XDDisplaySourceForMain : public CMDisplaySourceForMain
+class XDDisplaySourceForMain : public DisplaySourceForMainCmd
 {
 public:
 
-	XDDisplaySourceForMain(CMSourceDirector* sourceDir);
+	XDDisplaySourceForMain(SourceDirector* sourceDir);
 
 	virtual	~XDDisplaySourceForMain();
 

@@ -1,7 +1,7 @@
 /******************************************************************************
  JVMGetFullPath.cpp
 
-	BASE CLASS = CMGetFullPath
+	BASE CLASS = GetFullPathCmd
 
 	Copyright (C) 2009 by John Lindal.
 
@@ -21,7 +21,7 @@ JVMGetFullPath::JVMGetFullPath
 	const JIndex	lineIndex	// for convenience
 	)
 	:
-	CMGetFullPath(JString("NOP", JString::kNoCopy), fileName, lineIndex)
+	GetFullPathCmd(JString("NOP", JString::kNoCopy), fileName, lineIndex)
 {
 }
 

@@ -5,7 +5,7 @@
 	Unfortunately, we cannot listen for later calls to "set args" because
 	one can only define a hook for single word commands.
 
-	BASE CLASS = CMGetInitArgs
+	BASE CLASS = GetInitArgs
 
 	Copyright (C) 2002 by John Lindal.
 
@@ -13,7 +13,7 @@
 
 #include "GDBGetInitArgs.h"
 #include "GDBOutputScanner.h"
-#include "cmGlobals.h"
+#include "globals.h"
 #include <jx-af/jx/JXInputField.h>
 #include <jx-af/jcore/JStringIterator.h>
 #include <jx-af/jcore/JRegex.h>
@@ -29,7 +29,7 @@ GDBGetInitArgs::GDBGetInitArgs
 	JXInputField* argInput
 	)
 	:
-	CMGetInitArgs(JString("show args", JString::kNoCopy)),
+	GetInitArgs(JString("show args", JString::kNoCopy)),
 	itsArgInput(argInput)
 {
 }
@@ -84,5 +84,5 @@ GDBGetInitArgs::HandleSuccess
 		return;
 	}
 
-	CMGetLink()->Log("GDBGetInitArgs failed to match");
+	GetLink()->Log("GDBGetInitArgs failed to match");
 }

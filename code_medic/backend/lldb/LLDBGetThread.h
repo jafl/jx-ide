@@ -8,13 +8,13 @@
 #ifndef _H_LLDBGetThread
 #define _H_LLDBGetThread
 
-#include "CMGetThread.h"
+#include "GetThread.h"
 
-class LLDBGetThread : public CMGetThread
+class LLDBGetThread : public GetThread
 {
 public:
 
-	LLDBGetThread(CMThreadsWidget* widget);
+	LLDBGetThread(ThreadsWidget* widget);
 
 	virtual	~LLDBGetThread();
 

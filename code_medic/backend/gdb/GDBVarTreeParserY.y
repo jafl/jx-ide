@@ -1,7 +1,7 @@
 %{
-#include "CMVarNode.h"
+#include "VarNode.h"
 #include "GDBVarGroupInfo.h"
-#include "cmGlobals.h"
+#include "globals.h"
 #include <jx-af/jcore/JStringIterator.h>
 
 // also uncomment yydebug=1; below
@@ -9,7 +9,7 @@
 //#define YYDEBUG 1
 
 inline bool
-cmIsOpenablePointer
+isOpenablePointer
 	(
 	const JString& s
 	)
@@ -21,8 +21,8 @@ cmIsOpenablePointer
 
 %union {
 	JString*				pString;
-	CMVarNode*				pNode;
-	JPtrArray<CMVarNode>*	pList;
+	VarNode*				pNode;
+	JPtrArray<VarNode>*	pList;
 	GDBVarGroupInfo*		pGroup;
 }
 
@@ -89,7 +89,7 @@ top_group :
 
 	group P_EOF
 	{
-		itsCurrentNode = $$ = CMGetLink()->CreateVarNode(nullptr, JString::empty, JString::empty, $1->GetName());
+		itsCurrentNode = $$ = GetLink()->CreateVarNode(nullptr, JString::empty, JString::empty, $1->GetName());
 		for (JIndex i=1; i<=$1->list->GetElementCount(); i++)
 		{
 			itsCurrentNode->Append($1->list->GetElement(i));
@@ -103,7 +103,7 @@ top_group :
 
 	| reference_value group P_EOF
 	{
-		itsCurrentNode = $$ = CMGetLink()->CreateVarNode(nullptr, JString::empty, JString::empty, *$1);
+		itsCurrentNode = $$ = GetLink()->CreateVarNode(nullptr, JString::empty, JString::empty, *$1);
 		for (JIndex i=1; i<=$2->list->GetElementCount(); i++)
 		{
 			itsCurrentNode->Append($2->list->GetElement(i));
@@ -120,7 +120,7 @@ top_group :
 
 	| value P_EOF
 	{
-		itsCurrentNode = $$ = CMGetLink()->CreateVarNode(nullptr, JString::empty, JString::empty, *$1);
+		itsCurrentNode = $$ = GetLink()->CreateVarNode(nullptr, JString::empty, JString::empty, *$1);
 		itsCurrentNode->MakePointer(itsIsPointerFlag);
 		itsIsPointerFlag = false;
 
@@ -131,8 +131,8 @@ top_group :
 
 	| reference_value value P_EOF
 	{
-		itsCurrentNode = $$ = CMGetLink()->CreateVarNode(nullptr, JString::empty, JString::empty, *$1);
-		CMVarNode* child = CMGetLink()->CreateVarNode(itsCurrentNode, JString::empty, JString::empty, *$2);
+		itsCurrentNode = $$ = GetLink()->CreateVarNode(nullptr, JString::empty, JString::empty, *$1);
+		VarNode* child = GetLink()->CreateVarNode(itsCurrentNode, JString::empty, JString::empty, *$2);
 		child->MakePointer(itsIsPointerFlag);
 		itsIsPointerFlag = false;
 
@@ -159,7 +159,7 @@ group :
 
 	| P_GROUP_OPEN group P_GROUP_CLOSE
 	{
-		JPtrArray<CMVarNode>* list = jnew JPtrArray<CMVarNode>(JPtrArrayT::kForgetAll);
+		JPtrArray<VarNode>* list = jnew JPtrArray<VarNode>(JPtrArrayT::kForgetAll);
 		assert( list != nullptr );
 		AppendAsArrayElement(JString::empty, *($2->list), list);
 		$$ = jnew GDBVarGroupInfo(nullptr, list);
@@ -182,7 +182,7 @@ group :
 
 	| P_SUMMARY P_GROUP_OPEN group P_GROUP_CLOSE
 	{
-		JPtrArray<CMVarNode>* list = jnew JPtrArray<CMVarNode>(JPtrArrayT::kForgetAll);
+		JPtrArray<VarNode>* list = jnew JPtrArray<VarNode>(JPtrArrayT::kForgetAll);
 		assert( list != nullptr );
 		AppendAsArrayElement($3->GetName(), *($3->list), list);
 		$$ = jnew GDBVarGroupInfo($1, list);
@@ -196,7 +196,7 @@ node_list :
 
 	node
 	{
-		JPtrArray<CMVarNode>* list = $$ = jnew JPtrArray<CMVarNode>(JPtrArrayT::kForgetAll);
+		JPtrArray<VarNode>* list = $$ = jnew JPtrArray<VarNode>(JPtrArrayT::kForgetAll);
 		assert( list != nullptr );
 		list->Append($1);
 	}
@@ -211,7 +211,7 @@ node_list :
 	{
 		$$ = $1;
 
-		CMVarNode* node = CMGetLink()->CreateVarNode(nullptr, JString::empty, JString::empty, *$3);
+		VarNode* node = GetLink()->CreateVarNode(nullptr, JString::empty, JString::empty, *$3);
 		if ((($$->GetFirstElement())->GetName()).BeginsWith(JString("[", JString::kNoCopy)))
 		{
 			AppendAsArrayElement(node, $$);
@@ -226,7 +226,7 @@ node_list :
 
 	| group ',' group
 	{
-		JPtrArray<CMVarNode>* list = $$ = jnew JPtrArray<CMVarNode>(JPtrArrayT::kForgetAll);
+		JPtrArray<VarNode>* list = $$ = jnew JPtrArray<VarNode>(JPtrArrayT::kForgetAll);
 		assert( list != nullptr );
 		AppendAsArrayElement($1->GetName(), *($1->list), list);
 		AppendAsArrayElement($3->GetName(), *($3->list), list);
@@ -243,7 +243,7 @@ node_list :
 		}
 		else
 		{
-			JPtrArray<CMVarNode>* list = $$ = jnew JPtrArray<CMVarNode>(JPtrArrayT::kForgetAll);
+			JPtrArray<VarNode>* list = $$ = jnew JPtrArray<VarNode>(JPtrArrayT::kForgetAll);
 			assert( list != nullptr );
 			AppendAsArrayElement(JString::empty, *$1, list);
 
@@ -258,7 +258,7 @@ node_list :
 	| node_list '.' '.' '.'
 	{
 		$$ = $1;
-		CMVarNode* child = CMGetLink()->CreateVarNode(nullptr, JString("...", JString::kNoCopy), JString::empty, JString::empty);
+		VarNode* child = GetLink()->CreateVarNode(nullptr, JString("...", JString::kNoCopy), JString::empty, JString::empty);
 		$$->Append(child);
 	}
 	;
@@ -273,7 +273,7 @@ node :
 			iter.RemovePrev();
 			$1->TrimWhitespace();
 		}
-		itsCurrentNode = $$ = CMGetLink()->CreateVarNode(nullptr, *$1, JString::empty, *$2);
+		itsCurrentNode = $$ = GetLink()->CreateVarNode(nullptr, *$1, JString::empty, *$2);
 		if (!$1->BeginsWith("_vptr.") && !$1->BeginsWith("_vb."))
 		{
 			itsCurrentNode->MakePointer(itsIsPointerFlag);
@@ -292,7 +292,7 @@ node :
 			iter.RemovePrev();
 			$1->TrimWhitespace();
 		}
-		itsCurrentNode = $$ = CMGetLink()->CreateVarNode(nullptr, *$1, JString::empty, $2->GetName());
+		itsCurrentNode = $$ = GetLink()->CreateVarNode(nullptr, *$1, JString::empty, $2->GetName());
 		itsIsPointerFlag = false;
 		for (JIndex i=1; i<=$2->list->GetElementCount(); i++)
 		{
@@ -305,7 +305,7 @@ node :
 
 	| P_NO_DATA_FIELDS
 	{
-		itsCurrentNode = $$ = CMGetLink()->CreateVarNode(nullptr, *$1, JString::empty, JString::empty);
+		itsCurrentNode = $$ = GetLink()->CreateVarNode(nullptr, *$1, JString::empty, JString::empty);
 		itsIsPointerFlag = false;
 
 		jdelete $1;
@@ -319,7 +319,7 @@ node :
 			iter.RemovePrev();
 			$1->TrimWhitespace();
 		}
-		itsCurrentNode = $$ = CMGetLink()->CreateVarNode(nullptr, *$1, JString::empty, JString("<nothing>", JString::kNoCopy));
+		itsCurrentNode = $$ = GetLink()->CreateVarNode(nullptr, *$1, JString::empty, JString("<nothing>", JString::kNoCopy));
 		itsIsPointerFlag = false;
 
 		jdelete $1;
@@ -376,7 +376,7 @@ value_list :
 
 	value_node
 	{
-		JPtrArray<CMVarNode>* list = $$ = jnew JPtrArray<CMVarNode>(JPtrArrayT::kForgetAll);
+		JPtrArray<VarNode>* list = $$ = jnew JPtrArray<VarNode>(JPtrArrayT::kForgetAll);
 		assert( list != nullptr );
 		AppendAsArrayElement($1, $$);
 	}
@@ -390,7 +390,7 @@ value_list :
 	| value_list '.' '.' '.'
 	{
 		$$ = $1;
-		CMVarNode* child = CMGetLink()->CreateVarNode(nullptr, JString("...", JString::kNoCopy), JString::empty, JString::empty);
+		VarNode* child = GetLink()->CreateVarNode(nullptr, JString("...", JString::kNoCopy), JString::empty, JString::empty);
 		$$->Append(child);
 	}
 	;
@@ -401,7 +401,7 @@ value_node :
 
 	value
 	{
-		itsCurrentNode = $$ = CMGetLink()->CreateVarNode(nullptr, JString::empty, JString::empty, *$1);
+		itsCurrentNode = $$ = GetLink()->CreateVarNode(nullptr, JString::empty, JString::empty, *$1);
 		itsCurrentNode->MakePointer(itsIsPointerFlag);
 		itsIsPointerFlag = false;
 
@@ -421,20 +421,20 @@ value :
 
 	| P_HEX
 	{
-		itsIsPointerFlag = cmIsOpenablePointer(*$1);
+		itsIsPointerFlag = isOpenablePointer(*$1);
 		$$ = $1;
 	}
 
 	| '@' P_HEX
 	{
-		itsIsPointerFlag = cmIsOpenablePointer(*$2);
+		itsIsPointerFlag = isOpenablePointer(*$2);
 		$$ = $2;
 		$$->Prepend("@");
 	}
 
 	| P_PAREN_EXPR P_HEX
 	{
-		itsIsPointerFlag = cmIsOpenablePointer(*$2);
+		itsIsPointerFlag = isOpenablePointer(*$2);
 		$$ = $1;
 		$$->Append(" ");
 		$$->Append(*$2);
@@ -469,7 +469,7 @@ value :
 
 	| P_HEX P_BRACKET
 	{
-		itsIsPointerFlag = cmIsOpenablePointer(*$1);
+		itsIsPointerFlag = isOpenablePointer(*$1);
 		$$ = $1;
 		$$->Append(" ");
 		$$->Append(*$2);

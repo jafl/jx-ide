@@ -1,7 +1,7 @@
 /******************************************************************************
  LLDBGetStack.cpp
 
-	BASE CLASS = CMGetStack
+	BASE CLASS = GetStack
 
 	Copyright (C) 2016 by John Lindal.
 
@@ -16,10 +16,10 @@
 #include "lldb/API/SBFileSpec.h"
 #include "lldb/API/SBValueList.h"
 #include "lldb/API/SBValue.h"
-#include "CMStackFrameNode.h"
-#include "CMStackArgNode.h"
-#include "CMStackWidget.h"
-#include "cmGlobals.h"
+#include "StackFrameNode.h"
+#include "StackArgNode.h"
+#include "StackWidget.h"
+#include "globals.h"
 #include "LLDBLink.h"	// must be after X11 includes: Status
 #include <jx-af/jcore/JTree.h>
 #include <jx-af/jcore/JRegex.h>
@@ -36,10 +36,10 @@ const JSize kFrameIndexWidth = 2;	// width of frame index in characters
 LLDBGetStack::LLDBGetStack
 	(
 	JTree*			tree,
-	CMStackWidget*	widget
+	StackWidget*	widget
 	)
 	:
-	CMGetStack(JString::empty, tree, widget)
+	GetStack(JString::empty, tree, widget)
 {
 }
 
@@ -65,7 +65,7 @@ LLDBGetStack::HandleSuccess
 	const JString& cmdData
 	)
 {
-	auto* link = dynamic_cast<LLDBLink*>(CMGetLink());
+	auto* link = dynamic_cast<LLDBLink*>(GetLink());
 	if (link == nullptr)
 	{
 		return;
@@ -114,7 +114,7 @@ LLDBGetStack::HandleSuccess
 		}
 
 		auto* node =
-			jnew CMStackFrameNode(root, f.GetFrameID(), frameName,
+			jnew StackFrameNode(root, f.GetFrameID(), frameName,
 								 fileName, lineIndex);
 		assert( node != nullptr );
 		root->Prepend(node);
@@ -143,7 +143,7 @@ LLDBGetStack::HandleSuccess
 
 			if (v.GetName() != nullptr)
 			{
-				auto* argNode = jnew CMStackArgNode(node,
+				auto* argNode = jnew StackArgNode(node,
 					JString(v.GetName(), JString::kNoCopy),
 					JString(v.GetValue() == nullptr ? "null" : v.GetValue(), JString::kNoCopy));
 				assert( argNode != nullptr );

@@ -10,14 +10,14 @@
 
 #include <jx-af/jcore/JPtrArray-JString.h>
 
-class CMVarNode;
+class VarNode;
 
 struct GDBVarGroupInfo
 {
 	JString*				name;
-	JPtrArray<CMVarNode>*	list;
+	JPtrArray<VarNode>*	list;
 
-	GDBVarGroupInfo(JString* n, JPtrArray<CMVarNode>* l)
+	GDBVarGroupInfo(JString* n, JPtrArray<VarNode>* l)
 		:
 		name(n), list(l)
 	{ };

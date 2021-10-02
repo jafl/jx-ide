@@ -8,13 +8,13 @@
 #ifndef _H_LLDBGetMemory
 #define _H_LLDBGetMemory
 
-#include "CMGetMemory.h"
+#include "GetMemory.h"
 
-class LLDBGetMemory : public CMGetMemory
+class LLDBGetMemory : public GetMemory
 {
 public:
 
-	LLDBGetMemory(CMMemoryDir* dir);
+	LLDBGetMemory(MemoryDir* dir);
 
 	virtual	~LLDBGetMemory();
 

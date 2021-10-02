@@ -1,14 +1,14 @@
 /******************************************************************************
  XDGetCompletions.cpp
 
-	BASE CLASS = CMGetCompletions
+	BASE CLASS = GetCompletionsCmd
 
 	Copyright (C) 2007 by John Lindal.
 
  ******************************************************************************/
 
 #include "XDGetCompletions.h"
-#include "CMCommandInput.h"
+#include "CommandInput.h"
 #include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
@@ -18,11 +18,11 @@
 
 XDGetCompletions::XDGetCompletions
 	(
-	CMCommandInput*			input,
-	CMCommandOutputDisplay*	history
+	CommandInput*			input,
+	CommandOutputDisplay*	history
 	)
 	:
-	CMGetCompletions(JString("status", JString::kNoCopy)),
+	GetCompletionsCmd(JString("status", JString::kNoCopy)),
 	itsPrefix(input->GetText()->GetText()),
 	itsInput(input),
 	itsHistory(history)

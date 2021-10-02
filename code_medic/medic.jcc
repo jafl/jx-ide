@@ -19,93 +19,93 @@ F
 T
 1 "jcc"
 T
-2 "CMStylerStubs.cpp"
+2 "StylerStubs.cpp"
 F
-"./code/CMStylerStubs.cpp"
+"./code/StylerStubs.cpp"
 T
-2 "CBCScanner.ll"
+2 "CScanner.ll"
 F
-"./jcc-shared/CBCScanner.ll"
+"./shared/CScanner.ll"
 T
-2 "CBCStyler.cpp"
+2 "CStyler.cpp"
 F
-"./jcc-shared/CBCStyler.cpp"
+"./shared/CStyler.cpp"
 T
-2 "CBDScanner.ll"
+2 "DScanner.ll"
 F
-"./jcc-shared/CBDScanner.ll"
+"./shared/DScanner.ll"
 T
-2 "CBDStyler.cpp"
+2 "DStyler.cpp"
 F
-"./jcc-shared/CBDStyler.cpp"
+"./shared/DStyler.cpp"
 T
-2 "CBGoScanner.ll"
+2 "GoScanner.ll"
 F
-"./jcc-shared/CBGoScanner.ll"
+"./shared/GoScanner.ll"
 T
-2 "CBGoStyler.cpp"
+2 "GoStyler.cpp"
 F
-"./jcc-shared/CBGoStyler.cpp"
+"./shared/GoStyler.cpp"
 T
-2 "CBJavaScanner.ll"
+2 "JavaScanner.ll"
 F
-"./jcc-shared/CBJavaScanner.ll"
+"./shared/JavaScanner.ll"
 T
-2 "CBJavaStyler.cpp"
+2 "JavaStyler.cpp"
 F
-"./jcc-shared/CBJavaStyler.cpp"
+"./shared/JavaStyler.cpp"
 T
-2 "CBHTMLScanner.ll"
+2 "HTMLScanner.ll"
 F
-"./jcc-shared/CBHTMLScanner.ll"
+"./shared/HTMLScanner.ll"
 T
-2 "CBHTMLStyler.cpp"
+2 "HTMLStyler.cpp"
 F
-"./jcc-shared/CBHTMLStyler.cpp"
+"./shared/HTMLStyler.cpp"
 T
-2 "CBStylerBase.cpp"
+2 "StylerBase.cpp"
 F
-"./jcc-shared/CBStylerBase.cpp"
+"./shared/StylerBase.cpp"
 T
-2 "CBStylingScannerBase.cpp"
+2 "StylingScannerBase.cpp"
 F
-"./jcc-shared/CBStylingScannerBase.cpp"
+"./shared/StylingScannerBase.cpp"
 T
-2 "CBEditStylerDialog.cpp"
+2 "EditStylerDialog.cpp"
 F
-"./jcc-shared/CBEditStylerDialog.cpp"
+"./shared/EditStylerDialog.cpp"
 T
-2 "CBStylerTable.cpp"
+2 "StylerTable.cpp"
 F
-"./jcc-shared/CBStylerTable.cpp"
+"./shared/StylerTable.cpp"
 T
-2 "CBStylerTableInput.cpp"
+2 "StylerTableInput.cpp"
 F
-"./jcc-shared/CBStylerTableInput.cpp"
+"./shared/StylerTableInput.cpp"
 T
-2 "CBStylerTableMenu.cpp"
+2 "StylerTableMenu.cpp"
 F
-"./jcc-shared/CBStylerTableMenu.cpp"
+"./shared/StylerTableMenu.cpp"
 T
-2 "CBFnMenuUpdater.cpp"
+2 "FnMenuUpdater.cpp"
 F
-"./jcc-shared/CBFnMenuUpdater.cpp"
+"./shared/FnMenuUpdater.cpp"
 T
-2 "CBFunctionMenu.cpp"
+2 "FunctionMenu.cpp"
 F
-"./jcc-shared/CBFunctionMenu.cpp"
+"./shared/FunctionMenu.cpp"
 T
-2 "CBTextFileType.cpp"
+2 "TextFileType.cpp"
 F
-"./jcc-shared/CBTextFileType.cpp"
+"./shared/TextFileType.cpp"
 T
-2 "cbmUtil.cpp"
+2 "sharedUtil.cpp"
 F
-"./jcc-shared/cbmUtil.cpp"
+"./shared/sharedUtil.cpp"
 T
-2 "CBCtagsUser.cpp"
+2 "CtagsUser.cpp"
 F
-"./jcc-shared/CBCtagsUser.cpp"
+"./shared/CtagsUser.cpp"
 F
 T
 1 "main"
@@ -114,352 +114,352 @@ T
 F
 "./code/main.cpp"
 T
-2 "cmGlobals.cpp"
+2 "globals.cpp"
 F
-"./code/cmGlobals.cpp"
+"./code/globals.cpp"
 T
-2 "CMApp.cpp"
+2 "App.cpp"
 F
-"./code/CMApp.cpp"
+"./code/App.cpp"
 T
-2 "CMPrefsManager.cpp"
+2 "PrefsManager.cpp"
 F
-"./code/CMPrefsManager.cpp"
+"./code/PrefsManager.cpp"
 T
-2 "CMDockManager.cpp"
+2 "DockManager.cpp"
 F
-"./code/CMDockManager.cpp"
+"./code/DockManager.cpp"
 T
-2 "CMEditPrefsDialog.cpp"
+2 "EditPrefsDialog.cpp"
 F
-"./code/CMEditPrefsDialog.cpp"
+"./code/EditPrefsDialog.cpp"
 T
-2 "CMDebuggerProgramInput.cpp"
+2 "DebuggerProgramInput.cpp"
 F
-"./code/CMDebuggerProgramInput.cpp"
+"./code/DebuggerProgramInput.cpp"
 T
-2 "CMMDIServer.cpp"
+2 "MDIServer.cpp"
 F
-"./code/CMMDIServer.cpp"
+"./code/MDIServer.cpp"
 T
-2 "CMAboutDialog.cpp"
+2 "AboutDialog.cpp"
 F
-"./code/CMAboutDialog.cpp"
+"./code/AboutDialog.cpp"
 T
-2 "CMDebugDir.cpp"
+2 "DebugDir.cpp"
 F
-"./code/CMDebugDir.cpp"
+"./code/DebugDir.cpp"
 T
-2 "CMQuitTask.cpp"
+2 "QuitTask.cpp"
 F
-"./code/CMQuitTask.cpp"
+"./code/QuitTask.cpp"
 F
 T
 1 "command line"
 T
-2 "CMCommandDirector.cpp"
+2 "CommandDirector.cpp"
 F
-"./code/CMCommandDirector.cpp"
+"./code/CommandDirector.cpp"
 T
-2 "CMCommandOutputDisplay.cpp"
+2 "CommandOutputDisplay.cpp"
 F
-"./code/CMCommandOutputDisplay.cpp"
+"./code/CommandOutputDisplay.cpp"
 T
-2 "CMCommandInput.cpp"
+2 "CommandInput.cpp"
 F
-"./code/CMCommandInput.cpp"
+"./code/CommandInput.cpp"
 T
-2 "CMGetCompletions.cpp"
+2 "GetCompletionsCmd.cpp"
 F
-"./code/CMGetCompletions.cpp"
+"./code/GetCompletionsCmd.cpp"
 T
-2 "CMGetInitArgs.cpp"
+2 "GetInitArgs.cpp"
 F
-"./code/CMGetInitArgs.cpp"
+"./code/GetInitArgs.cpp"
 T
-2 "CMChooseProcessDialog.cpp"
+2 "ChooseProcessDialog.cpp"
 F
-"./code/CMChooseProcessDialog.cpp"
+"./code/ChooseProcessDialog.cpp"
 T
-2 "CMProcessText.cpp"
+2 "ProcessText.cpp"
 F
-"./code/CMProcessText.cpp"
+"./code/ProcessText.cpp"
 T
-2 "CMEditCommandsDialog.cpp"
+2 "EditCommandsDialog.cpp"
 F
-"./code/CMEditCommandsDialog.cpp"
+"./code/EditCommandsDialog.cpp"
 T
-2 "CMEditCommandsTable.cpp"
+2 "EditCommandsTable.cpp"
 F
-"./code/CMEditCommandsTable.cpp"
+"./code/EditCommandsTable.cpp"
 T
-2 "CMUpdateCommandsTableWidth.cpp"
+2 "UpdateCommandsTableWidth.cpp"
 F
-"./code/CMUpdateCommandsTableWidth.cpp"
+"./code/UpdateCommandsTableWidth.cpp"
 T
-2 "CMRunProgramTask.cpp"
+2 "RunProgramTask.cpp"
 F
-"./code/CMRunProgramTask.cpp"
+"./code/RunProgramTask.cpp"
 F
 T
 1 "source view"
 T
-2 "CMSourceDirector.cpp"
+2 "SourceDirector.cpp"
 F
-"./code/CMSourceDirector.cpp"
+"./code/SourceDirector.cpp"
 T
-2 "CMSourceText.cpp"
+2 "SourceText.cpp"
 F
-"./code/CMSourceText.cpp"
+"./code/SourceText.cpp"
 T
-2 "CMTextDisplayBase.cpp"
+2 "TextDisplayBase.cpp"
 F
-"./code/CMTextDisplayBase.cpp"
+"./code/TextDisplayBase.cpp"
 T
-2 "CMLineIndexTable.cpp"
+2 "LineIndexTable.cpp"
 F
-"./code/CMLineIndexTable.cpp"
+"./code/LineIndexTable.cpp"
 T
-2 "CMAdjustLineTableToTextTask.cpp"
+2 "AdjustLineTableToTextTask.cpp"
 F
-"./code/CMAdjustLineTableToTextTask.cpp"
+"./code/AdjustLineTableToTextTask.cpp"
 T
-2 "CMDeselectLineTask.cpp"
+2 "DeselectLineTask.cpp"
 F
-"./code/CMDeselectLineTask.cpp"
+"./code/DeselectLineTask.cpp"
 T
-2 "CMLineNumberTable.cpp"
+2 "LineNumberTable.cpp"
 F
-"./code/CMLineNumberTable.cpp"
+"./code/LineNumberTable.cpp"
 T
-2 "CMLineAddressTable.cpp"
+2 "LineAddressTable.cpp"
 F
-"./code/CMLineAddressTable.cpp"
+"./code/LineAddressTable.cpp"
 T
-2 "CMFileDragSource.cpp"
+2 "FileDragSource.cpp"
 F
-"./code/CMFileDragSource.cpp"
+"./code/FileDragSource.cpp"
 T
-2 "CMDisplaySourceForMain.cpp"
+2 "DisplaySourceForMainCmd.cpp"
 F
-"./code/CMDisplaySourceForMain.cpp"
+"./code/DisplaySourceForMainCmd.cpp"
 T
-2 "CMClearSourceDisplayTask.cpp"
+2 "ClearSourceDisplayTask.cpp"
 F
-"./code/CMClearSourceDisplayTask.cpp"
+"./code/ClearSourceDisplayTask.cpp"
 T
-2 "CMGetAssembly.cpp"
+2 "GetAssemblyCmd.cpp"
 F
-"./code/CMGetAssembly.cpp"
+"./code/GetAssemblyCmd.cpp"
 F
 T
 1 "breakpoint"
 T
-2 "CMBreakpointsDir.cpp"
+2 "BreakpointsDir.cpp"
 F
-"./code/CMBreakpointsDir.cpp"
+"./code/BreakpointsDir.cpp"
 T
-2 "CMBreakpointTable.cpp"
+2 "BreakpointTable.cpp"
 F
-"./code/CMBreakpointTable.cpp"
+"./code/BreakpointTable.cpp"
 T
-2 "CMBreakpointManager.cpp"
+2 "BreakpointManager.cpp"
 F
-"./code/CMBreakpointManager.cpp"
+"./code/BreakpointManager.cpp"
 T
-2 "CMBreakpoint.cpp"
+2 "Breakpoint.cpp"
 F
-"./code/CMBreakpoint.cpp"
+"./code/Breakpoint.cpp"
 T
-2 "CMLocation.cpp"
+2 "Location.cpp"
 F
-"./code/CMLocation.cpp"
+"./code/Location.cpp"
 T
-2 "CMGetBreakpoints.cpp"
+2 "GetBreakpointsCmd.cpp"
 F
-"./code/CMGetBreakpoints.cpp"
+"./code/GetBreakpointsCmd.cpp"
 F
 T
 1 "threads"
 T
-2 "CMThreadsDir.cpp"
+2 "ThreadsDir.cpp"
 F
-"./code/CMThreadsDir.cpp"
+"./code/ThreadsDir.cpp"
 T
-2 "CMThreadsWidget.cpp"
+2 "ThreadsWidget.cpp"
 F
-"./code/CMThreadsWidget.cpp"
+"./code/ThreadsWidget.cpp"
 T
-2 "CMThreadNode.cpp"
+2 "ThreadNode.cpp"
 F
-"./code/CMThreadNode.cpp"
+"./code/ThreadNode.cpp"
 T
-2 "CMGetThreads.cpp"
+2 "GetThreads.cpp"
 F
-"./code/CMGetThreads.cpp"
+"./code/GetThreads.cpp"
 T
-2 "CMGetThread.cpp"
+2 "GetThread.cpp"
 F
-"./code/CMGetThread.cpp"
+"./code/GetThread.cpp"
 F
 T
 1 "stack"
 T
-2 "CMStackDir.cpp"
+2 "StackDir.cpp"
 F
-"./code/CMStackDir.cpp"
+"./code/StackDir.cpp"
 T
-2 "CMStackWidget.cpp"
+2 "StackWidget.cpp"
 F
-"./code/CMStackWidget.cpp"
+"./code/StackWidget.cpp"
 T
-2 "CMStackFrameNode.cpp"
+2 "StackFrameNode.cpp"
 F
-"./code/CMStackFrameNode.cpp"
+"./code/StackFrameNode.cpp"
 T
-2 "CMStackArgNode.cpp"
+2 "StackArgNode.cpp"
 F
-"./code/CMStackArgNode.cpp"
+"./code/StackArgNode.cpp"
 T
-2 "CMGetStack.cpp"
+2 "GetStack.cpp"
 F
-"./code/CMGetStack.cpp"
+"./code/GetStack.cpp"
 T
-2 "CMGetFrame.cpp"
+2 "GetFrameCmd.cpp"
 F
-"./code/CMGetFrame.cpp"
+"./code/GetFrameCmd.cpp"
 F
 T
 1 "locals"
 T
-2 "CMLocalVarsDir.cpp"
+2 "LocalVarsDir.cpp"
 F
-"./code/CMLocalVarsDir.cpp"
+"./code/LocalVarsDir.cpp"
 T
-2 "CMGetLocalVars.cpp"
+2 "GetLocalVars.cpp"
 F
-"./code/CMGetLocalVars.cpp"
+"./code/GetLocalVars.cpp"
 F
 T
 1 "variables"
 T
-2 "CMVarTreeDir.cpp"
+2 "VarTreeDir.cpp"
 F
-"./code/CMVarTreeDir.cpp"
+"./code/VarTreeDir.cpp"
 T
-2 "CMVarTreeWidget.cpp"
+2 "VarTreeWidget.cpp"
 F
-"./code/CMVarTreeWidget.cpp"
+"./code/VarTreeWidget.cpp"
 T
-2 "CMVarNode.cpp"
+2 "VarNode.cpp"
 F
-"./code/CMVarNode.cpp"
+"./code/VarNode.cpp"
 T
-2 "CMInitVarNodeTask.cpp"
+2 "InitVarNodeTask.cpp"
 F
-"./code/CMInitVarNodeTask.cpp"
+"./code/InitVarNodeTask.cpp"
 T
-2 "CMVarCommand.cpp"
+2 "VarCommand.cpp"
 F
-"./code/CMVarCommand.cpp"
+"./code/VarCommand.cpp"
 F
 T
 1 "arrays"
 T
-2 "CMArray1DDir.cpp"
+2 "Array1DDir.cpp"
 F
-"./code/CMArray1DDir.cpp"
+"./code/Array1DDir.cpp"
 T
-2 "CMArray2DDir.cpp"
+2 "Array2DDir.cpp"
 F
-"./code/CMArray2DDir.cpp"
+"./code/Array2DDir.cpp"
 T
-2 "CMArray2DTable.cpp"
+2 "Array2DTable.cpp"
 F
-"./code/CMArray2DTable.cpp"
+"./code/Array2DTable.cpp"
 T
-2 "CMArray2DCommand.cpp"
+2 "Array2DCmd.cpp"
 F
-"./code/CMArray2DCommand.cpp"
+"./code/Array2DCmd.cpp"
 T
-2 "CMArrayExprInput.cpp"
+2 "ArrayExprInput.cpp"
 F
-"./code/CMArrayExprInput.cpp"
+"./code/ArrayExprInput.cpp"
 T
-2 "CMArrayIndexInput.cpp"
+2 "ArrayIndexInput.cpp"
 F
-"./code/CMArrayIndexInput.cpp"
+"./code/ArrayIndexInput.cpp"
 F
 T
 1 "plots"
 T
-2 "CMPlot2DDir.cpp"
+2 "Plot2DDir.cpp"
 F
-"./code/CMPlot2DDir.cpp"
+"./code/Plot2DDir.cpp"
 T
-2 "CMPlot2DExprTable.cpp"
+2 "Plot2DExprTable.cpp"
 F
-"./code/CMPlot2DExprTable.cpp"
+"./code/Plot2DExprTable.cpp"
 T
-2 "CMPlot2DCommand.cpp"
+2 "Plot2DCommand.cpp"
 F
-"./code/CMPlot2DCommand.cpp"
+"./code/Plot2DCommand.cpp"
 F
 T
 1 "memory"
 T
-2 "CMMemoryDir.cpp"
+2 "MemoryDir.cpp"
 F
-"./code/CMMemoryDir.cpp"
+"./code/MemoryDir.cpp"
 T
-2 "CMGetMemory.cpp"
+2 "GetMemory.cpp"
 F
-"./code/CMGetMemory.cpp"
+"./code/GetMemory.cpp"
 F
 T
 1 "registers"
 T
-2 "CMRegistersDir.cpp"
+2 "RegistersDir.cpp"
 F
-"./code/CMRegistersDir.cpp"
+"./code/RegistersDir.cpp"
 T
-2 "CMGetRegisters.cpp"
+2 "GetRegisters.cpp"
 F
-"./code/CMGetRegisters.cpp"
+"./code/GetRegisters.cpp"
 F
 T
 1 "file list"
 T
-2 "CMFileListDir.cpp"
+2 "FileListDir.cpp"
 F
-"./code/CMFileListDir.cpp"
+"./code/FileListDir.cpp"
 T
-2 "CMGetSourceFileList.cpp"
+2 "GetSourceFileList.cpp"
 F
-"./code/CMGetSourceFileList.cpp"
+"./code/GetSourceFileList.cpp"
 T
-2 "CMGetFullPath.cpp"
+2 "GetFullPath.cpp"
 F
-"./code/CMGetFullPath.cpp"
+"./code/GetFullPath.cpp"
 F
 T
 1 "link"
 T
-2 "CMLink.cpp"
+2 "Link.cpp"
 F
-"./code/CMLink.cpp"
+"./code/Link.cpp"
 T
-2 "CMCommand.cpp"
+2 "Command.cpp"
 F
-"./code/CMCommand.cpp"
+"./code/Command.cpp"
 T
-2 "CMPipeT.cpp"
+2 "PipeT.cpp"
 F
-"./code/CMPipeT.cpp"
+"./code/PipeT.cpp"
 T
-2 "CMPipe.h"
+2 "Pipe.h"
 F
-"./code/CMPipe.h"
+"./code/Pipe.h"
 F
 T
 1 "gbd"
@@ -480,45 +480,45 @@ T
 F
 "./backend/gdb/GDBBreakpointManager.cpp"
 T
-2 "GDBAnalyzeCore.cpp"
+2 "GDBAnalyzeCoreCmd.cpp"
 F
-"./backend/gdb/GDBAnalyzeCore.cpp"
+"./backend/gdb/GDBAnalyzeCoreCmd.cpp"
 T
-2 "GDBArray2DCommand.cpp"
+2 "GDBArray2DCmd.cpp"
 F
-"./backend/gdb/GDBArray2DCommand.cpp"
+"./backend/gdb/GDBArray2DCmd.cpp"
 T
 2 "GDBPlot2DCommand.cpp"
 F
 "./backend/gdb/GDBPlot2DCommand.cpp"
 T
-2 "GDBCheckCoreStatus.cpp"
+2 "GDBCheckCoreStatusCmd.cpp"
 F
-"./backend/gdb/GDBCheckCoreStatus.cpp"
+"./backend/gdb/GDBCheckCoreStatusCmd.cpp"
 T
-2 "GDBDisplaySourceForMain.cpp"
+2 "GDBDisplaySourceForMainCmd.cpp"
 F
-"./backend/gdb/GDBDisplaySourceForMain.cpp"
+"./backend/gdb/GDBDisplaySourceForMainCmd.cpp"
 T
-2 "GDBGetAssembly.cpp"
+2 "GDBGetAssemblyCmd.cpp"
 F
-"./backend/gdb/GDBGetAssembly.cpp"
+"./backend/gdb/GDBGetAssemblyCmd.cpp"
 T
-2 "GDBGetBreakpoints.cpp"
+2 "GDBGetBreakpointsCmd.cpp"
 F
-"./backend/gdb/GDBGetBreakpoints.cpp"
+"./backend/gdb/GDBGetBreakpointsCmd.cpp"
 T
-2 "GDBGetCompletions.cpp"
+2 "GDBGetCompletionsCmd.cpp"
 F
-"./backend/gdb/GDBGetCompletions.cpp"
+"./backend/gdb/GDBGetCompletionsCmd.cpp"
 T
-2 "GDBGetFrame.cpp"
+2 "GDBGetFrameCmd.cpp"
 F
-"./backend/gdb/GDBGetFrame.cpp"
+"./backend/gdb/GDBGetFrameCmd.cpp"
 T
-2 "GDBGetFullPath.cpp"
+2 "GDBGetFullPathCmd.cpp"
 F
-"./backend/gdb/GDBGetFullPath.cpp"
+"./backend/gdb/GDBGetFullPathCmd.cpp"
 T
 2 "GDBGetInitArgs.cpp"
 F
@@ -928,7 +928,7 @@ T "./test/java" "&make_default ; ../../$program" "" FFFFTFF "Build & Run test-ja
 F
 # build settings
 1
-F
+T
 "medic"
 "${LIB_DEPS}"
 "make -k all"

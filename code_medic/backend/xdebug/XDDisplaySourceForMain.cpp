@@ -1,7 +1,7 @@
 /******************************************************************************
  XDDisplaySourceForMain.cpp
 
-	BASE CLASS = CMDisplaySourceForMain
+	BASE CLASS = DisplaySourceForMainCmd
 
 	Copyright (C) 2001 by John Lindal.
 
@@ -17,10 +17,10 @@
 
 XDDisplaySourceForMain::XDDisplaySourceForMain
 	(
-	CMSourceDirector* sourceDir
+	SourceDirector* sourceDir
 	)
 	:
-	CMDisplaySourceForMain(sourceDir, JString("status", JString::kNoCopy))
+	DisplaySourceForMainCmd(sourceDir, JString("status", JString::kNoCopy))
 {
 }
 

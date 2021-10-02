@@ -1,7 +1,7 @@
 /******************************************************************************
  JVMGetBreakpoints.cpp
 
-	BASE CLASS = CMGetBreakpoints
+	BASE CLASS = GetBreakpointsCmd
 
 	Copyright (C) 2009 by John Lindal.
 
@@ -18,7 +18,7 @@
 
 JVMGetBreakpoints::JVMGetBreakpoints()
 	:
-	CMGetBreakpoints(JString("NOP", JString::kNoCopy))
+	GetBreakpointsCmd(JString("NOP", JString::kNoCopy))
 {
 }
 

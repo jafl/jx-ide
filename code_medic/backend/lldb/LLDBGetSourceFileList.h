@@ -8,15 +8,15 @@
 #ifndef _H_LLDBGetSourceFileList
 #define _H_LLDBGetSourceFileList
 
-#include "CMGetSourceFileList.h"
+#include "GetSourceFileList.h"
 
-class CMFileListDir;
+class FileListDir;
 
-class LLDBGetSourceFileList : public CMGetSourceFileList
+class LLDBGetSourceFileList : public GetSourceFileList
 {
 public:
 
-	LLDBGetSourceFileList(CMFileListDir* fileList);
+	LLDBGetSourceFileList(FileListDir* fileList);
 
 	virtual	~LLDBGetSourceFileList();
 

@@ -8,15 +8,15 @@
 #ifndef _H_GDBGetStack
 #define _H_GDBGetStack
 
-#include "CMGetStack.h"
+#include "GetStack.h"
 
 class GDBGetStackArguments;
 
-class GDBGetStack : public CMGetStack
+class GDBGetStack : public GetStack
 {
 public:
 
-	GDBGetStack(JTree* tree, CMStackWidget* widget);
+	GDBGetStack(JTree* tree, StackWidget* widget);
 
 	virtual	~GDBGetStack();
 

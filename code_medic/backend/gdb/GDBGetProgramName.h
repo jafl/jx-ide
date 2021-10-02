@@ -8,9 +8,9 @@
 #ifndef _H_GDBGetProgramName
 #define _H_GDBGetProgramName
 
-#include "CMCommand.h"
+#include "Command.h"
 
-class GDBGetProgramName : public CMCommand
+class GDBGetProgramName : public Command
 {
 public:
 

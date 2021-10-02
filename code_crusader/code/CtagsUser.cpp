@@ -10,12 +10,7 @@
  ******************************************************************************/
 
 #include "CtagsUser.h"
-
-#ifdef CODE_CRUSADER
 #include "globals.h"
-#elif defined CODE_MEDIC
-#include "cmGlobals.h"
-#endif
 
 #include <jx-af/jcore/JProcess.h>
 #include <jx-af/jcore/JOutPipeStream.h>

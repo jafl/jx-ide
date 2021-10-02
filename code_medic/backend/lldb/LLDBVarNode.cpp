@@ -1,7 +1,7 @@
 /******************************************************************************
  LLDBVarNode.cpp
 
-	BASE CLASS = public CMVarNode
+	BASE CLASS = public VarNode
 
 	Copyright (C) 2016 by John Lindal.
 
@@ -9,8 +9,8 @@
 
 #include "LLDBVarNode.h"
 #include "lldb/API/SBType.h"
-#include "CMVarCommand.h"
-#include "cmGlobals.h"
+#include "VarCommand.h"
+#include "globals.h"
 #include <jx-af/jcore/JTree.h>
 #include <jx-af/jcore/JRegex.h>
 #include <jx-af/jcore/jAssert.h>
@@ -25,7 +25,7 @@ LLDBVarNode::LLDBVarNode			// root node
 	const bool shouldUpdate		// false for Local Variables
 	)
 	:
-	CMVarNode(shouldUpdate)
+	VarNode(shouldUpdate)
 {
 }
 
@@ -36,7 +36,7 @@ LLDBVarNode::LLDBVarNode
 	const JString&	value
 	)
 	:
-	CMVarNode(parent, name, value)
+	VarNode(parent, name, value)
 {
 }
 
@@ -72,7 +72,7 @@ LLDBVarNode::GetFullName
 
  ******************************************************************************/
 
-CMVarNode*
+VarNode*
 LLDBVarNode::BuildTree
 	(
 	lldb::SBFrame& f,
@@ -143,7 +143,7 @@ LLDBVarNode::BuildTree
 		name.Append(">");
 	}
 
-	CMVarNode* node = CMGetLink()->CreateVarNode(nullptr, name, JString::empty, value);
+	VarNode* node = GetLink()->CreateVarNode(nullptr, name, JString::empty, value);
 	assert( node != nullptr );
 
 	if (isPointer)
@@ -164,7 +164,7 @@ LLDBVarNode::BuildTree
 			lldb::SBValue child = v.GetChildAtIndex(i, lldb::eDynamicDontRunTarget, true);
 			if (child.IsValid())
 			{
-				CMVarNode* n = BuildTree(f, child);
+				VarNode* n = BuildTree(f, child);
 				node->Append(n);	// avoid automatic update
 			}
 		}

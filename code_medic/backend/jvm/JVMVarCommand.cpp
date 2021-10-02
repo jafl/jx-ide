@@ -1,7 +1,7 @@
 /******************************************************************************
  JVMVarCommand.cpp
 
-	BASE CLASS = CMVarCommand
+	BASE CLASS = VarCommand
 
 	Copyright (C) 2009 by John Lindal.
 
@@ -20,7 +20,7 @@ JVMVarCommand::JVMVarCommand
 	const JString& origCmd
 	)
 	:
-	CMVarCommand()
+	VarCommand()
 {
 	SetCommand(JString("NOP", JString::kNoCopy));
 }

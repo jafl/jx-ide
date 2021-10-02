@@ -8,9 +8,9 @@
 #ifndef _H_LLDBVarCommand
 #define _H_LLDBVarCommand
 
-#include "CMVarCommand.h"
+#include "VarCommand.h"
 
-class LLDBVarCommand : public CMVarCommand
+class LLDBVarCommand : public VarCommand
 {
 public:
 

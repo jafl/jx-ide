@@ -8,9 +8,9 @@
 #ifndef _H_GDBVarCommand
 #define _H_GDBVarCommand
 
-#include "CMVarCommand.h"
+#include "VarCommand.h"
 
-class GDBVarCommand : public CMVarCommand
+class GDBVarCommand : public VarCommand
 {
 public:
 

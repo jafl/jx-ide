@@ -11,7 +11,7 @@
 // conflict between X11 and LLDB
 #undef Status
 
-#include "CMLink.h"
+#include "Link.h"
 #include "lldb/API/SBDebugger.h"
 #include "lldb/API/SBListener.h"
 #include <stdio.h>
@@ -28,7 +28,7 @@ typedef long j_lldb_cookie_fn_return;
 typedef unsigned long j_lldb_cookie_size;
 #endif
 
-class LLDBLink : public CMLink, public lldb::SBListener
+class LLDBLink : public Link, public lldb::SBListener
 {
 public:
 
@@ -64,7 +64,7 @@ public:
 	virtual bool	OKToSendMultipleCommands() const override;
 	virtual bool	OKToSendCommands(const bool background) const override;
 
-	virtual CMBreakpointManager*	GetBreakpointManager() override;
+	virtual BreakpointManager*	GetBreakpointManager() override;
 
 	virtual void	ShowBreakpointInfo(const JIndex debuggerIndex) override;
 	virtual void	SetBreakpoint(const JString& fileName, const JIndex lineIndex,
@@ -108,39 +108,39 @@ public:
 	virtual const JString&	GetPrompt()	const override;
 	virtual const JString&	GetScriptPrompt() const override;
 
-	// CMCommand factory
+	// Command factory
 
-	virtual CMArray2DCommand*		CreateArray2DCommand(CMArray2DDir* dir,
+	virtual Array2DCmd*		CreateArray2DCmd(Array2DDir* dir,
 														 JXStringTable* table,
 														 JStringTableData* data) override;
-	virtual CMPlot2DCommand*		CreatePlot2DCommand(CMPlot2DDir* dir,
+	virtual Plot2DCommand*		CreatePlot2DCmd(Plot2DDir* dir,
 														JArray<JFloat>* x,
 														JArray<JFloat>* y) override;
-	virtual CMDisplaySourceForMain*	CreateDisplaySourceForMain(CMSourceDirector* sourceDir) override;
-	virtual CMGetCompletions*		CreateGetCompletions(CMCommandInput* input,
-														 CMCommandOutputDisplay* history) override;
-	virtual CMGetFrame*				CreateGetFrame(CMStackWidget* widget) override;
-	virtual CMGetStack*				CreateGetStack(JTree* tree, CMStackWidget* widget) override;
-	virtual CMGetThread*			CreateGetThread(CMThreadsWidget* widget) override;
-	virtual CMGetThreads*			CreateGetThreads(JTree* tree, CMThreadsWidget* widget) override;
-	virtual CMGetFullPath*			CreateGetFullPath(const JString& fileName,
+	virtual DisplaySourceForMainCmd*	CreateDisplaySourceForMainCmd(SourceDirector* sourceDir) override;
+	virtual GetCompletionsCmd*		CreateGetCompletionsCmd(CommandInput* input,
+														 CommandOutputDisplay* history) override;
+	virtual GetFrameCmd*				CreateGetFrameCmd(StackWidget* widget) override;
+	virtual GetStack*				CreateGetStackCmd(JTree* tree, StackWidget* widget) override;
+	virtual GetThread*			CreateGetThreadCmd(ThreadsWidget* widget) override;
+	virtual GetThreads*			CreateGetThreadsCmd(JTree* tree, ThreadsWidget* widget) override;
+	virtual GetFullPath*			CreateGetFullPathCmd(const JString& fileName,
 													  const JIndex lineIndex = 0) override;
-	virtual CMGetInitArgs*			CreateGetInitArgs(JXInputField* argInput) override;
-	virtual CMGetLocalVars*			CreateGetLocalVars(CMVarNode* rootNode) override;
-	virtual CMGetSourceFileList*	CreateGetSourceFileList(CMFileListDir* fileList) override;
-	virtual CMVarCommand*			CreateVarValueCommand(const JString& expr) override;
-	virtual CMVarCommand*			CreateVarContentCommand(const JString& expr) override;
-	virtual CMVarNode*				CreateVarNode(const bool shouldUpdate = true) override;
-	virtual CMVarNode*				CreateVarNode(JTreeNode* parent, const JString& name,
+	virtual GetInitArgs*			CreateGetInitArgsCmd(JXInputField* argInput) override;
+	virtual GetLocalVars*			CreateGetLocalVarsCmd(VarNode* rootNode) override;
+	virtual GetSourceFileList*	CreateGetSourceFileListCmd(FileListDir* fileList) override;
+	virtual VarCommand*			CreateVarValueCmd(const JString& expr) override;
+	virtual VarCommand*			CreateVarContentCmd(const JString& expr) override;
+	virtual VarNode*				CreateVarNode(const bool shouldUpdate = true) override;
+	virtual VarNode*				CreateVarNode(JTreeNode* parent, const JString& name,
 												  const JString& fullName, const JString& value) override;
 	virtual JString					Build1DArrayExpression(const JString& expr,
 														   const JInteger index) override;
 	virtual JString					Build2DArrayExpression(const JString& expr,
 														   const JInteger rowIndex,
 														   const JInteger colIndex) override;
-	virtual CMGetMemory*			CreateGetMemory(CMMemoryDir* dir) override;
-	virtual CMGetAssembly*			CreateGetAssembly(CMSourceDirector* dir) override;
-	virtual CMGetRegisters*			CreateGetRegisters(CMRegistersDir* dir) override;
+	virtual GetMemory*			CreateGetMemoryCmd(MemoryDir* dir) override;
+	virtual GetAssemblyCmd*			CreateGetAssemblyCmd(SourceDirector* dir) override;
+	virtual GetRegisters*			CreateGetRegistersCmd(RegistersDir* dir) override;
 
 	// called by commands
 
@@ -152,13 +152,13 @@ public:
 
 	// called by LLDBRunBackgroundCommandTask
 
-	void	SendMedicCommandSync(CMCommand* command);
+	void	SendMedicCommandSync(Command* command);
 
 	// called by LLDBSymbolsLoadedTask
 
 	void	SymbolsLoaded(const JString& fullName);
 
-	// called by CMApp
+	// called by App
 
 	void	HandleLLDBEvent();
 
@@ -168,7 +168,7 @@ public:
 
 protected:
 
-	virtual void	SendMedicCommand(CMCommand* command) override;
+	virtual void	SendMedicCommand(Command* command) override;
 
 private:
 

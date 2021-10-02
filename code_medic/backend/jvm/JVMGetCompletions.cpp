@@ -1,7 +1,7 @@
 /******************************************************************************
  JVMGetCompletions.cpp
 
-	BASE CLASS = CMGetCompletions
+	BASE CLASS = GetCompletionsCmd
 
 	Copyright (C) 2009 by John Lindal.
 
@@ -17,11 +17,11 @@
 
 JVMGetCompletions::JVMGetCompletions
 	(
-	CMCommandInput*			input,
-	CMCommandOutputDisplay*	history
+	CommandInput*			input,
+	CommandOutputDisplay*	history
 	)
 	:
-	CMGetCompletions(JString("NOP", JString::kNoCopy))
+	GetCompletionsCmd(JString("NOP", JString::kNoCopy))
 {
 }
 

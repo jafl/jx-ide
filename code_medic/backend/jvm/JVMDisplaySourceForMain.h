@@ -8,13 +8,13 @@
 #ifndef _H_JVMDisplaySourceForMain
 #define _H_JVMDisplaySourceForMain
 
-#include "CMDisplaySourceForMain.h"
+#include "DisplaySourceForMainCmd.h"
 
-class JVMDisplaySourceForMain : public CMDisplaySourceForMain
+class JVMDisplaySourceForMain : public DisplaySourceForMainCmd
 {
 public:
 
-	JVMDisplaySourceForMain(CMSourceDirector* sourceDir);
+	JVMDisplaySourceForMain(SourceDirector* sourceDir);
 
 	virtual	~JVMDisplaySourceForMain();
 

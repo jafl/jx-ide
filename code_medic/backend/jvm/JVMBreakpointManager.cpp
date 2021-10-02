@@ -1,7 +1,7 @@
 /******************************************************************************
  JVMBreakpointManager.cpp
 
-	BASE CLASS = CMBreakpointManager
+	BASE CLASS = BreakpointManager
 
 	Copyright (C) 2009 by John Lindal.
 
@@ -22,7 +22,7 @@ JVMBreakpointManager::JVMBreakpointManager
 	JVMLink* link
 	)
 	:
-	CMBreakpointManager(link, jnew JVMGetBreakpoints())
+	BreakpointManager(link, jnew JVMGetBreakpoints())
 {
 }
 

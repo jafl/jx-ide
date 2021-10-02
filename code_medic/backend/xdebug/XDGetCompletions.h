@@ -8,16 +8,16 @@
 #ifndef _H_XDGetCompletions
 #define _H_XDGetCompletions
 
-#include "CMGetCompletions.h"
+#include "GetCompletionsCmd.h"
 
-class CMCommandInput;
-class CMCommandOutputDisplay;
+class CommandInput;
+class CommandOutputDisplay;
 
-class XDGetCompletions : public CMGetCompletions
+class XDGetCompletions : public GetCompletionsCmd
 {
 public:
 
-	XDGetCompletions(CMCommandInput* input, CMCommandOutputDisplay* history);
+	XDGetCompletions(CommandInput* input, CommandOutputDisplay* history);
 
 	virtual	~XDGetCompletions();
 
@@ -28,8 +28,8 @@ protected:
 private:
 
 	JString					itsPrefix;
-	CMCommandInput*			itsInput;
-	CMCommandOutputDisplay*	itsHistory;
+	CommandInput*			itsInput;
+	CommandOutputDisplay*	itsHistory;
 
 private:
 

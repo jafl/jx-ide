@@ -8,15 +8,15 @@
 #ifndef _H_XDGetFrame
 #define _H_XDGetFrame
 
-#include "CMGetFrame.h"
+#include "GetFrameCmd.h"
 
-class CMStackWidget;
+class StackWidget;
 
-class XDGetFrame : public CMGetFrame
+class XDGetFrame : public GetFrameCmd
 {
 public:
 
-	XDGetFrame(CMStackWidget* widget);
+	XDGetFrame(StackWidget* widget);
 
 	virtual	~XDGetFrame();
 
@@ -26,7 +26,7 @@ protected:
 
 private:
 
-	CMStackWidget*	itsWidget;
+	StackWidget*	itsWidget;
 };
 
 #endif

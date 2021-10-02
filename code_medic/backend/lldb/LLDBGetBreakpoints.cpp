@@ -1,14 +1,14 @@
 /******************************************************************************
  LLDBGetBreakpoints.cpp
 
-	BASE CLASS = CMGetBreakpoints
+	BASE CLASS = GetBreakpointsCmd
 
 	Copyright (C) 2016 by John Lindal.
 
  ******************************************************************************/
 
 #include "LLDBGetBreakpoints.h"
-#include "CMBreakpointManager.h"
+#include "BreakpointManager.h"
 #include "LLDBLink.h"
 #include "lldb/API/SBBreakpoint.h"
 #include "lldb/API/SBBreakpointLocation.h"
@@ -16,7 +16,7 @@
 #include "lldb/API/SBFunction.h"
 #include "lldb/API/SBLineEntry.h"
 #include "lldb/API/SBFileSpec.h"
-#include "cmGlobals.h"
+#include "globals.h"
 #include <jx-af/jcore/jFileUtil.h>
 #include <jx-af/jcore/jAssert.h>
 
@@ -27,7 +27,7 @@
 
 LLDBGetBreakpoints::LLDBGetBreakpoints()
 	:
-	CMGetBreakpoints(JString::empty)
+	GetBreakpointsCmd(JString::empty)
 {
 }
 
@@ -51,7 +51,7 @@ LLDBGetBreakpoints::HandleSuccess
 	const JString& cmdData
 	)
 {
-	auto* link = dynamic_cast<LLDBLink*>(CMGetLink());
+	auto* link = dynamic_cast<LLDBLink*>(GetLink());
 	if (link == nullptr)
 	{
 		return;
@@ -63,13 +63,13 @@ LLDBGetBreakpoints::HandleSuccess
 		return;
 	}
 
-	(CMGetLink()->GetBreakpointManager())->SetUpdateWhenStop(false);
+	(GetLink()->GetBreakpointManager())->SetUpdateWhenStop(false);
 
-	JPtrArray<CMBreakpoint> bpList(JPtrArrayT::kForgetAll);	// ownership taken by CMBreakpointManager
-	bpList.SetCompareFunction(CMBreakpointManager::CompareBreakpointLocations);
+	JPtrArray<Breakpoint> bpList(JPtrArrayT::kForgetAll);	// ownership taken by BreakpointManager
+	bpList.SetCompareFunction(BreakpointManager::CompareBreakpointLocations);
 	bpList.SetSortOrder(JListT::kSortAscending);
 
-	JPtrArray<CMBreakpoint> otherList(JPtrArrayT::kForgetAll);	// ownership taken by CMBreakpointManager
+	JPtrArray<Breakpoint> otherList(JPtrArrayT::kForgetAll);	// ownership taken by BreakpointManager
 
 	JSize count = t.GetNumBreakpoints();
 	JString func, addr, cond;
@@ -87,9 +87,9 @@ LLDBGetBreakpoints::HandleSuccess
 		lldb::SBLineEntry e            = a.GetLineEntry();
 		lldb::SBFileSpec file          = e.GetFileSpec();
 
-		const CMBreakpoint::Action action = b.IsOneShot() ?
-			CMBreakpoint::kRemoveBreakpoint :
-			CMBreakpoint::kKeepBreakpoint;
+		const Breakpoint::Action action = b.IsOneShot() ?
+			Breakpoint::kRemoveBreakpoint :
+			Breakpoint::kKeepBreakpoint;
 
 		if (fn.IsValid())
 		{
@@ -111,22 +111,22 @@ LLDBGetBreakpoints::HandleSuccess
 			cond.Clear();
 		}
 
-		CMBreakpoint* bp = nullptr;
+		Breakpoint* bp = nullptr;
 		if (file.IsValid())
 		{
 			const JString fullName = JCombinePathAndName(
 				JString(file.GetDirectory(), JString::kNoCopy),
 				JString(file.GetFilename(), JString::kNoCopy));
 
-			bp = jnew CMBreakpoint(b.GetID(), fullName, e.GetLine(), func, addr,
+			bp = jnew Breakpoint(b.GetID(), fullName, e.GetLine(), func, addr,
 								  b.IsEnabled(), action,
 								  cond, b.GetIgnoreCount());
 			assert( bp != nullptr );
 		}
 		else if (fn.IsValid())
 		{
-			CMLocation loc;
-			bp = jnew CMBreakpoint(b.GetID(), loc, func, addr,
+			Location loc;
+			bp = jnew Breakpoint(b.GetID(), loc, func, addr,
 								  b.IsEnabled(), action,
 								  cond, b.GetIgnoreCount());
 			assert( bp != nullptr );
@@ -138,9 +138,9 @@ LLDBGetBreakpoints::HandleSuccess
 
 			// may be deleted or other status change
 
-			if (action != CMBreakpoint::kKeepBreakpoint || b.GetIgnoreCount() > 0)
+			if (action != Breakpoint::kKeepBreakpoint || b.GetIgnoreCount() > 0)
 			{
-				(CMGetLink()->GetBreakpointManager())->SetUpdateWhenStop(true);
+				(GetLink()->GetBreakpointManager())->SetUpdateWhenStop(true);
 			}
 		}
 	}
@@ -148,14 +148,14 @@ LLDBGetBreakpoints::HandleSuccess
 	count = t.GetNumWatchpoints();
 	if (count > 0)	// may be deleted when go out of scope
 	{
-		(CMGetLink()->GetBreakpointManager())->SetUpdateWhenStop(true);
+		(GetLink()->GetBreakpointManager())->SetUpdateWhenStop(true);
 	}
 
 	for (JUnsignedOffset i=0; i<count; i++)
 	{
 		lldb::SBWatchpoint w = t.GetWatchpointAtIndex(i);
 
-		CMLocation loc;
+		Location loc;
 		addr = JString(w.GetWatchAddress(), JString::kBase16);
 
 		if (w.GetCondition() != nullptr)
@@ -167,12 +167,12 @@ LLDBGetBreakpoints::HandleSuccess
 			cond.Clear();
 		}
 
-		auto* bp = jnew CMBreakpoint(w.GetID(), loc, JString::empty, addr,
-											 w.IsEnabled(), CMBreakpoint::kKeepBreakpoint,
+		auto* bp = jnew Breakpoint(w.GetID(), loc, JString::empty, addr,
+											 w.IsEnabled(), Breakpoint::kKeepBreakpoint,
 											 cond, w.GetIgnoreCount());
 		assert( bp != nullptr );
 		bpList.InsertSorted(bp);
 	}
 
-	CMGetLink()->GetBreakpointManager()->UpdateBreakpoints(bpList, otherList);
+	GetLink()->GetBreakpointManager()->UpdateBreakpoints(bpList, otherList);
 }

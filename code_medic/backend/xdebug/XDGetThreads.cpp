@@ -1,14 +1,14 @@
 /******************************************************************************
  XDGetThreads.cpp
 
-	BASE CLASS = CMGetThreads
+	BASE CLASS = GetThreads
 
 	Copyright (C) 2007 by John Lindal.
 
  ******************************************************************************/
 
 #include "XDGetThreads.h"
-#include "CMThreadsWidget.h"
+#include "ThreadsWidget.h"
 #include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
@@ -19,10 +19,10 @@
 XDGetThreads::XDGetThreads
 	(
 	JTree*				tree,
-	CMThreadsWidget*	widget
+	ThreadsWidget*	widget
 	)
 	:
-	CMGetThreads(JString("status", JString::kNoCopy), widget)
+	GetThreads(JString("status", JString::kNoCopy), widget)
 {
 }
 

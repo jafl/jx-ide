@@ -3,7 +3,7 @@
 
 	Interface to JVM debugging agent.
 
-	BASE CLASS = CMLink
+	BASE CLASS = Link
 
 	Copyright (C) 2009 by John Lindal.
 
@@ -36,10 +36,10 @@
 #include "JVMVarCommand.h"
 #include "JVMVarNode.h"
 
-#include "CMCommandDirector.h"
-#include "CMSourceDirector.h"
-#include "CMMDIServer.h"
-#include "cmGlobals.h"
+#include "CommandDirector.h"
+#include "SourceDirector.h"
+#include "MDIServer.h"
+#include "globals.h"
 
 #include <jx-af/jx/JXTimerTask.h>
 #include <jx-af/jx/JXAssert.h>
@@ -83,7 +83,7 @@ const JUtf8Byte* JVMLink::kIDResolved = "IDResolved::JVMLink";
 
 JVMLink::JVMLink()
 	:
-	CMLink(kFeatures),
+	Link(kFeatures),
 	itsAcceptor(nullptr),
 	itsDebugLink(nullptr),
 	itsProcess(nullptr),
@@ -380,7 +380,7 @@ JVMLink::Receive
 		assert( info != nullptr );
 		ReceiveMessageFromJVM(*info);
 	}
-	else if (sender == itsInputLink && message.Is(CMPipeT::kReadReady))
+	else if (sender == itsInputLink && message.Is(PipeT::kReadReady))
 	{
 		ReadFromProcess();
 	}
@@ -438,7 +438,7 @@ JVMLink::ReceiveMessageFromJVM
 
 		HandleCommandRunning(info.GetID());
 
-		CMCommand* cmd;
+		Command* cmd;
 		if (GetRunningCommand(&cmd))
 		{
 			itsLatestMsg = &info;
@@ -682,7 +682,7 @@ JVMLink::CheckNextThreadGroup()
 		}
 	}
 
-	CMCommand* cmd = jnew JVMGetThreadParent(node, true);
+	Command* cmd = jnew JVMGetThreadParent(node, true);
 	assert( cmd != nullptr );
 
 	itsCullThreadGroupIndex++;
@@ -755,7 +755,7 @@ JVMLink::AddClass
 
 	Broadcast(IDResolved(id));
 
-	CMCommand* cmd = jnew JVMGetClassMethods(id);
+	Command* cmd = jnew JVMGetClassMethods(id);
 	assert( cmd != nullptr );
 }
 
@@ -782,7 +782,7 @@ JVMLink::GetClassName
 	}
 	else
 	{
-		CMCommand* cmd = jnew JVMGetClassInfo(id);
+		Command* cmd = jnew JVMGetClassInfo(id);
 		assert( cmd != nullptr );
 
 		name->Clear();
@@ -1177,7 +1177,7 @@ JVMLink::SetProgram
 		Broadcast(UserOutput(error, true));
 		return;
 	}
-	else if (CMMDIServer::IsBinary(fullName))
+	else if (MDIServer::IsBinary(fullName))
 	{
 		const JString error = JGetString("ConfigFileIsBinary::JVMLink");
 		Broadcast(UserOutput(error, true));
@@ -1185,7 +1185,7 @@ JVMLink::SetProgram
 	}
 
 	JString line;
-	if (!CMMDIServer::GetLanguage(fullName, &line) ||
+	if (!MDIServer::GetLanguage(fullName, &line) ||
 		JString::Compare(line, "java", JString::kIgnoreCase) != 0)
 	{
 		const JString error = JGetString("ConfigFileWrongLanguage::JVMLink");
@@ -1331,7 +1331,7 @@ JVMLink::RunProgram
 {
 	DetachOrKill();
 
-	itsJVMCmd         = CMGetPrefsManager()->GetJVMCommand();
+	itsJVMCmd         = GetPrefsManager()->GetJVMCommand();
 	itsJVMProcessArgs = args;
 
 	JString cmd = itsJVMCmd;
@@ -1377,7 +1377,7 @@ JVMLink::RunProgram
 
  *****************************************************************************/
 
-CMBreakpointManager*
+BreakpointManager*
 JVMLink::GetBreakpointManager()
 {
 	return itsBPMgr;
@@ -1607,7 +1607,7 @@ JVMLink::SwitchToFrame
 		JString fullName;
 		if (GetClassSourceFile(info.classID, &fullName))
 		{
-			Broadcast(ProgramStopped(CMLocation(fullName, 1)));
+			Broadcast(ProgramStopped(Location(fullName, 1)));
 		}
 	}
 }
@@ -1700,212 +1700,212 @@ JVMLink::SetValue
 }
 
 /******************************************************************************
- CreateArray2DCommand
+ CreateArray2DCmd
 
  *****************************************************************************/
 
-CMArray2DCommand*
-JVMLink::CreateArray2DCommand
+Array2DCmd*
+JVMLink::CreateArray2DCmd
 	(
-	CMArray2DDir*		dir,
+	Array2DDir*		dir,
 	JXStringTable*		table,
 	JStringTableData*	data
 	)
 {
-	CMArray2DCommand* cmd = jnew JVMArray2DCommand(dir, table, data);
+	Array2DCmd* cmd = jnew JVMArray2DCommand(dir, table, data);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreatePlot2DCommand
+ CreatePlot2DCmd
 
  *****************************************************************************/
 
-CMPlot2DCommand*
-JVMLink::CreatePlot2DCommand
+Plot2DCommand*
+JVMLink::CreatePlot2DCmd
 	(
-	CMPlot2DDir*	dir,
+	Plot2DDir*	dir,
 	JArray<JFloat>*	x,
 	JArray<JFloat>*	y
 	)
 {
-	CMPlot2DCommand* cmd = jnew JVMPlot2DCommand(dir, x, y);
+	Plot2DCommand* cmd = jnew JVMPlot2DCommand(dir, x, y);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateDisplaySourceForMain
+ CreateDisplaySourceForMainCmd
 
  *****************************************************************************/
 
-CMDisplaySourceForMain*
-JVMLink::CreateDisplaySourceForMain
+DisplaySourceForMainCmd*
+JVMLink::CreateDisplaySourceForMainCmd
 	(
-	CMSourceDirector* sourceDir
+	SourceDirector* sourceDir
 	)
 {
-	CMDisplaySourceForMain* cmd = jnew JVMDisplaySourceForMain(sourceDir);
+	DisplaySourceForMainCmd* cmd = jnew JVMDisplaySourceForMain(sourceDir);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateGetCompletions
+ CreateGetCompletionsCmd
 
  *****************************************************************************/
 
-CMGetCompletions*
-JVMLink::CreateGetCompletions
+GetCompletionsCmd*
+JVMLink::CreateGetCompletionsCmd
 	(
-	CMCommandInput*	input,
-	CMCommandOutputDisplay*	history
+	CommandInput*	input,
+	CommandOutputDisplay*	history
 	)
 {
-	CMGetCompletions* cmd = jnew JVMGetCompletions(input, history);
+	GetCompletionsCmd* cmd = jnew JVMGetCompletions(input, history);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateGetFrame
+ CreateGetFrameCmd
 
  *****************************************************************************/
 
-CMGetFrame*
-JVMLink::CreateGetFrame
+GetFrameCmd*
+JVMLink::CreateGetFrameCmd
 	(
-	CMStackWidget* widget
+	StackWidget* widget
 	)
 {
-	CMGetFrame* cmd = jnew JVMGetFrame(widget);
+	GetFrameCmd* cmd = jnew JVMGetFrame(widget);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateGetStack
+ CreateGetStackCmd
 
  *****************************************************************************/
 
-CMGetStack*
-JVMLink::CreateGetStack
+GetStack*
+JVMLink::CreateGetStackCmd
 	(
 	JTree*			tree,
-	CMStackWidget*	widget
+	StackWidget*	widget
 	)
 {
-	CMGetStack* cmd = jnew JVMGetStack(tree, widget);
+	GetStack* cmd = jnew JVMGetStack(tree, widget);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateGetThread
+ CreateGetThreadCmd
 
  *****************************************************************************/
 
-CMGetThread*
-JVMLink::CreateGetThread
+GetThread*
+JVMLink::CreateGetThreadCmd
 	(
-	CMThreadsWidget* widget
+	ThreadsWidget* widget
 	)
 {
-	CMGetThread* cmd = jnew JVMGetThread(widget);
+	GetThread* cmd = jnew JVMGetThread(widget);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateGetThreads
+ CreateGetThreadsCmd
 
  *****************************************************************************/
 
-CMGetThreads*
-JVMLink::CreateGetThreads
+GetThreads*
+JVMLink::CreateGetThreadsCmd
 	(
 	JTree*				tree,
-	CMThreadsWidget*	widget
+	ThreadsWidget*	widget
 	)
 {
-	CMGetThreads* cmd = jnew JVMGetThreads(tree, widget);
+	GetThreads* cmd = jnew JVMGetThreads(tree, widget);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateGetFullPath
+ CreateGetFullPathCmd
 
  *****************************************************************************/
 
-CMGetFullPath*
-JVMLink::CreateGetFullPath
+GetFullPathCmd*
+JVMLink::CreateGetFullPathCmd
 	(
 	const JString&	fileName,
 	const JIndex	lineIndex
 	)
 {
-	CMGetFullPath* cmd = jnew JVMGetFullPath(fileName, lineIndex);
+	GetFullPathCmd* cmd = jnew JVMGetFullPath(fileName, lineIndex);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateGetInitArgs
+ CreateGetInitArgsCmd
 
  *****************************************************************************/
 
-CMGetInitArgs*
-JVMLink::CreateGetInitArgs
+GetInitArgs*
+JVMLink::CreateGetInitArgsCmd
 	(
 	JXInputField* argInput
 	)
 {
-	CMGetInitArgs* cmd = jnew JVMGetInitArgs(argInput);
+	GetInitArgs* cmd = jnew JVMGetInitArgs(argInput);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateGetLocalVars
+ CreateGetLocalVarsCmd
 
  *****************************************************************************/
 
-CMGetLocalVars*
-JVMLink::CreateGetLocalVars
+GetLocalVars*
+JVMLink::CreateGetLocalVarsCmd
 	(
-	CMVarNode* rootNode
+	VarNode* rootNode
 	)
 {
-	CMGetLocalVars* cmd = jnew JVMGetLocalVars(rootNode);
+	GetLocalVars* cmd = jnew JVMGetLocalVars(rootNode);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateGetSourceFileList
+ CreateGetSourceFileListCmd
 
  *****************************************************************************/
 
-CMGetSourceFileList*
-JVMLink::CreateGetSourceFileList
+GetSourceFileList*
+JVMLink::CreateGetSourceFileListCmd
 	(
-	CMFileListDir* fileList
+	FileListDir* fileList
 	)
 {
-	CMGetSourceFileList* cmd = jnew JVMGetSourceFileList(fileList);
+	GetSourceFileList* cmd = jnew JVMGetSourceFileList(fileList);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateVarValueCommand
+ CreateVarValueCmd
 
  *****************************************************************************/
 
-CMVarCommand*
-JVMLink::CreateVarValueCommand
+VarCommand*
+JVMLink::CreateVarValueCmd
 	(
 	const JString& expr
 	)
@@ -1913,18 +1913,18 @@ JVMLink::CreateVarValueCommand
 	JString s("print ");
 	s += expr;
 
-	CMVarCommand* cmd = jnew JVMVarCommand(s);
+	VarCommand* cmd = jnew JVMVarCommand(s);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateVarContentCommand
+ CreateVarContentCmd
 
  *****************************************************************************/
 
-CMVarCommand*
-JVMLink::CreateVarContentCommand
+VarCommand*
+JVMLink::CreateVarContentCmd
 	(
 	const JString& expr
 	)
@@ -1933,7 +1933,7 @@ JVMLink::CreateVarContentCommand
 	s += expr;
 	s += ")";
 
-	CMVarCommand* cmd = jnew JVMVarCommand(s);
+	VarCommand* cmd = jnew JVMVarCommand(s);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1943,18 +1943,18 @@ JVMLink::CreateVarContentCommand
 
  *****************************************************************************/
 
-CMVarNode*
+VarNode*
 JVMLink::CreateVarNode
 	(
 	const bool shouldUpdate		// false for Local Variables
 	)
 {
-	CMVarNode* node = jnew JVMVarNode(shouldUpdate);
+	VarNode* node = jnew JVMVarNode(shouldUpdate);
 	assert( node != nullptr );
 	return node;
 }
 
-CMVarNode*
+VarNode*
 JVMLink::CreateVarNode
 	(
 	JTreeNode*		parent,
@@ -1963,7 +1963,7 @@ JVMLink::CreateVarNode
 	const JString&	value
 	)
 {
-	CMVarNode* node = jnew JVMVarNode(parent, name, fullName, value);
+	VarNode* node = jnew JVMVarNode(parent, name, fullName, value);
 	assert( node != nullptr );
 	return node;
 }
@@ -2000,42 +2000,42 @@ JVMLink::Build2DArrayExpression
 }
 
 /******************************************************************************
- CreateGetMemory
+ CreateGetMemoryCmd
 
  *****************************************************************************/
 
-CMGetMemory*
-JVMLink::CreateGetMemory
+GetMemory*
+JVMLink::CreateGetMemoryCmd
 	(
-	CMMemoryDir* dir
+	MemoryDir* dir
 	)
 {
 	return nullptr;
 }
 
 /******************************************************************************
- CreateGetAssembly
+ CreateGetAssemblyCmd
 
  *****************************************************************************/
 
-CMGetAssembly*
-JVMLink::CreateGetAssembly
+GetAssemblyCmd*
+JVMLink::CreateGetAssemblyCmd
 	(
-	CMSourceDirector* dir
+	SourceDirector* dir
 	)
 {
 	return nullptr;
 }
 
 /******************************************************************************
- CreateGetRegisters
+ CreateGetRegistersCmd
 
  *****************************************************************************/
 
-CMGetRegisters*
-JVMLink::CreateGetRegisters
+GetRegisters*
+JVMLink::CreateGetRegistersCmd
 	(
-	CMRegistersDir* dir
+	RegistersDir* dir
 	)
 {
 	return nullptr;
@@ -2070,7 +2070,7 @@ JVMLink::SendRaw
 bool
 JVMLink::Send
 	(
-	CMCommand* command
+	Command* command
 	)
 {
 	if (command->GetCommand() == "NOP")
@@ -2081,7 +2081,7 @@ JVMLink::Send
 	}
 	else
 	{
-		return CMLink::Send(command);
+		return Link::Send(command);
 	}
 }
 
@@ -2093,7 +2093,7 @@ JVMLink::Send
 void
 JVMLink::SendMedicCommand
 	(
-	CMCommand* command
+	Command* command
 	)
 {
 	command->Starting();
@@ -2118,7 +2118,7 @@ JVMLink::SendMedicCommand
 void
 JVMLink::Send
 	(
-	const CMCommand*		command,
+	const Command*		command,
 	const JIndex			cmdSet,
 	const JIndex			cmd,
 	const unsigned char*	data,
@@ -2184,7 +2184,7 @@ JVMLink::StopProgram()
 {
 	itsProgramIsStoppedFlag = true;
 	itsDebugLink->Send(GetNextTransactionID(), kVirtualMachineCmdSet, kVMSuspendCmd, nullptr, 0);
-	Broadcast(ProgramStopped(CMLocation(JString::empty, 1)));
+	Broadcast(ProgramStopped(Location(JString::empty, 1)));
 }
 
 /******************************************************************************
@@ -2320,7 +2320,7 @@ JVMLink::InitDebugger()
 bool
 JVMLink::ChangeDebugger()
 {
-	CMPrefsManager* mgr = CMGetPrefsManager();
+	PrefsManager* mgr = GetPrefsManager();
 	if (itsJVMCmd != mgr->GetJVMCommand() && itsProcess != nullptr)
 	{
 		const bool ok = RestartDebugger();
@@ -2389,7 +2389,7 @@ JVMLink::ConnectionEstablished
 
 	itsAcceptor->close();
 
-	CMCommand* cmd = jnew JVMGetIDSizes();
+	Command* cmd = jnew JVMGetIDSizes();
 	assert( cmd != nullptr );
 
 	// listen for class unload
@@ -2427,7 +2427,7 @@ JVMLink::ConnectionEstablished
 	Broadcast(DebuggerReadyForInput());
 	Broadcast(UserOutput(JGetString("Connected::JVMLink"), false));
 	Broadcast(SymbolsLoaded(true, programName));
-	Broadcast(ProgramStopped(CMLocation(JString::empty, 1)));
+	Broadcast(ProgramStopped(Location(JString::empty, 1)));
 
 	// show main()
 
@@ -2436,7 +2436,7 @@ JVMLink::ConnectionEstablished
 		JString fullName = ClassNameToResourcePath(itsMainClassName);
 		if (ClassSignatureToFile(fullName, &fullName))
 		{
-			((CMGetCommandDirector())->GetCurrentSourceDir())->DisplayFile(fullName);
+			((GetCommandDirector())->GetCurrentSourceDir())->DisplayFile(fullName);
 		}
 	}
 }

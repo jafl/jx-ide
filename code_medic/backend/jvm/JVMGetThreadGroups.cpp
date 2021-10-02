@@ -1,7 +1,7 @@
 /******************************************************************************
  JVMGetThreadGroups.cpp
 
-	BASE CLASS = CMCommand, virtual JBroadcaster
+	BASE CLASS = Command, virtual JBroadcaster
 
 	Copyright (C) 2011 by John Lindal.
 
@@ -10,7 +10,7 @@
 #include "JVMGetThreadGroups.h"
 #include "JVMThreadNode.h"
 #include "JVMLink.h"
-#include "cmGlobals.h"
+#include "globals.h"
 #include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
@@ -24,7 +24,7 @@ JVMGetThreadGroups::JVMGetThreadGroups
 	JVMThreadNode*	parent
 	)
 	:
-	CMCommand("", true, false),
+	Command("", true, false),
 	itsRoot(root),
 	itsParent(parent)
 {
@@ -34,7 +34,7 @@ JVMGetThreadGroups::JVMGetThreadGroups
 		ListenTo(itsParent);
 	}
 
-	CMCommand::Send();
+	Command::Send();
 }
 
 /******************************************************************************
@@ -54,14 +54,14 @@ JVMGetThreadGroups::~JVMGetThreadGroups()
 void
 JVMGetThreadGroups::Starting()
 {
-	CMCommand::Starting();
+	Command::Starting();
 
 	if (itsRoot == nullptr)
 	{
 		return;
 	}
 
-	auto* link = dynamic_cast<JVMLink*>(CMGetLink());
+	auto* link = dynamic_cast<JVMLink*>(GetLink());
 	if (itsParent == nullptr)
 	{
 		link->Send(this,
@@ -93,7 +93,7 @@ JVMGetThreadGroups::HandleSuccess
 	const JString& origData
 	)
 {
-	auto* link = dynamic_cast<JVMLink*>(CMGetLink());
+	auto* link = dynamic_cast<JVMLink*>(GetLink());
 	const JVMSocket::MessageReady* msg;
 	if (!link->GetLatestMessageFromJVM(&msg))
 	{

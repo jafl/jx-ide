@@ -1,15 +1,15 @@
 /******************************************************************************
  GDBPlot2DCommand.cpp
 
-	BASE CLASS = CMPlot2DCommand
+	BASE CLASS = Plot2DCommand
 
 	Copyright (C) 2009 by John Lindal.
 
  ******************************************************************************/
 
 #include "GDBPlot2DCommand.h"
-#include "CMPlot2DDir.h"
-#include "cmGlobals.h"
+#include "Plot2DDir.h"
+#include "globals.h"
 #include <jx-af/jcore/JStringIterator.h>
 #include <jx-af/jcore/JRegex.h>
 #include <jx-af/jcore/jAssert.h>
@@ -21,12 +21,12 @@
 
 GDBPlot2DCommand::GDBPlot2DCommand
 	(
-	CMPlot2DDir*	dir,
+	Plot2DDir*	dir,
 	JArray<JFloat>*	x,
 	JArray<JFloat>*	y
 	)
 	:
-	CMPlot2DCommand(dir, x, y)
+	Plot2DCommand(dir, x, y)
 {
 }
 
@@ -52,7 +52,7 @@ GDBPlot2DCommand::UpdateRange
 	const JInteger	max
 	)
 {
-	CMPlot2DCommand::UpdateRange(curveIndex, min, max);
+	Plot2DCommand::UpdateRange(curveIndex, min, max);
 
 	JString cmd("set print pretty off\nset print array off\n"
 				"set print repeats 0\nset width 0\n");

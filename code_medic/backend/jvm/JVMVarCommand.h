@@ -8,9 +8,9 @@
 #ifndef _H_JVMVarCommand
 #define _H_JVMVarCommand
 
-#include "CMVarCommand.h"
+#include "VarCommand.h"
 
-class JVMVarCommand : public CMVarCommand
+class JVMVarCommand : public VarCommand
 {
 public:
 

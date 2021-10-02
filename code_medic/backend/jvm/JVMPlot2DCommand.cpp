@@ -1,7 +1,7 @@
 /******************************************************************************
  JVMPlot2DCommand.cpp
 
-	BASE CLASS = CMPlot2DCommand
+	BASE CLASS = Plot2DCommand
 
 	Copyright (C) 2009 by John Lindal.
 
@@ -17,12 +17,12 @@
 
 JVMPlot2DCommand::JVMPlot2DCommand
 	(
-	CMPlot2DDir*	dir,
+	Plot2DDir*	dir,
 	JArray<JFloat>*	x,
 	JArray<JFloat>*	y
 	)
 	:
-	CMPlot2DCommand(dir, x, y)
+	Plot2DCommand(dir, x, y)
 {
 	SetCommand("NOP");
 }

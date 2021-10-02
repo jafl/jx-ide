@@ -1,17 +1,17 @@
 /******************************************************************************
  JVMGetThreads.cpp
 
-	BASE CLASS = CMGetThreads
+	BASE CLASS = GetThreads
 
 	Copyright (C) 2009 by John Lindal.
 
  ******************************************************************************/
 
 #include "JVMGetThreads.h"
-#include "CMThreadsWidget.h"
+#include "ThreadsWidget.h"
 #include "JVMThreadNode.h"
 #include "JVMLink.h"
-#include "cmGlobals.h"
+#include "globals.h"
 #include <jx-af/jcore/JTree.h>
 #include <jx-af/jcore/jAssert.h>
 
@@ -23,10 +23,10 @@
 JVMGetThreads::JVMGetThreads
 	(
 	JTree*				tree,
-	CMThreadsWidget*	widget
+	ThreadsWidget*	widget
 	)
 	:
-	CMGetThreads(JString("NOP", JString::kNoCopy), widget),
+	GetThreads(JString("NOP", JString::kNoCopy), widget),
 	itsTree(tree)
 {
 }
@@ -51,7 +51,7 @@ JVMGetThreads::HandleSuccess
 	const JString& data
 	)
 {
-	auto* link = dynamic_cast<JVMLink*>(CMGetLink());
+	auto* link = dynamic_cast<JVMLink*>(GetLink());
 	CopyTree(link->GetThreadRoot(), itsTree->GetRoot());
 
 	GetWidget()->FinishedLoading(link->GetCurrentThreadID());
@@ -83,7 +83,7 @@ JVMGetThreads::CopyTree
 		}
 		else
 		{
-			dynamic_cast<CMThreadNode*>(dest)->AppendThread(child2);
+			dynamic_cast<ThreadNode*>(dest)->AppendThread(child2);
 		}
 
 		CopyTree(child1, child2);

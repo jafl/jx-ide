@@ -1,7 +1,7 @@
 /******************************************************************************
  JVMGetLocalVars.cpp
 
-	BASE CLASS = CMGetLocalVars
+	BASE CLASS = GetLocalVars
 
 	Copyright (C) 2009 by John Lindal.
 
@@ -17,10 +17,10 @@
 
 JVMGetLocalVars::JVMGetLocalVars
 	(
-	CMVarNode* rootNode
+	VarNode* rootNode
 	)
 	:
-	CMGetLocalVars(JString("NOP", JString::kNoCopy)),
+	GetLocalVars(JString("NOP", JString::kNoCopy)),
 	itsRootNode(rootNode)
 {
 }

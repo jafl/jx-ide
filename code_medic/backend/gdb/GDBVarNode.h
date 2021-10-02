@@ -8,9 +8,9 @@
 #ifndef _H_GDBVarNode
 #define _H_GDBVarNode
 
-#include "CMVarNode.h"
+#include "VarNode.h"
 
-class GDBVarNode : public CMVarNode
+class GDBVarNode : public VarNode
 {
 public:
 

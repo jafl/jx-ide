@@ -8,9 +8,9 @@
 #ifndef _H_JVMGetFullPath
 #define _H_JVMGetFullPath
 
-#include "CMGetFullPath.h"
+#include "GetFullPathCmd.h"
 
-class JVMGetFullPath : public CMGetFullPath
+class JVMGetFullPath : public GetFullPathCmd
 {
 public:
 

@@ -11,13 +11,13 @@
 #include <jx-af/jx/JXUrgentTask.h>
 #include <jx-af/jcore/JBroadcaster.h>
 
-class CMCommand;
+class Command;
 
 class LLDBRunBackgroundCommandTask : public JXUrgentTask, virtual public JBroadcaster
 {
 public:
 
-	LLDBRunBackgroundCommandTask(CMCommand* cmd);
+	LLDBRunBackgroundCommandTask(Command* cmd);
 
 	virtual ~LLDBRunBackgroundCommandTask();
 
@@ -25,7 +25,7 @@ public:
 
 private:
 
-	CMCommand*	itsCmd;
+	Command*	itsCmd;
 };
 
 #endif

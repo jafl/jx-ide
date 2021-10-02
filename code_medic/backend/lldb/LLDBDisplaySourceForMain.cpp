@@ -3,21 +3,21 @@
 
 	Finds main() and displays it in the Current Source window.
 
-	BASE CLASS = CMDisplaySourceForMain
+	BASE CLASS = DisplaySourceForMainCmd
 
 	Copyright (C) 2016 by John Lindal.
 
  ******************************************************************************/
 
 #include "LLDBDisplaySourceForMain.h"
-#include "CMSourceDirector.h"
+#include "SourceDirector.h"
 #include "LLDBLink.h"
 #include "lldb/API/SBTarget.h"
 #include "lldb/API/SBSymbolContextList.h"
 #include "lldb/API/SBSymbolContext.h"
 #include "lldb/API/SBCompileUnit.h"
 #include "lldb/API/SBFileSpec.h"
-#include "cmGlobals.h"
+#include "globals.h"
 #include <jx-af/jcore/jFileUtil.h>
 #include <jx-af/jcore/jAssert.h>
 
@@ -28,12 +28,12 @@
 
 LLDBDisplaySourceForMain::LLDBDisplaySourceForMain
 	(
-	CMSourceDirector* sourceDir
+	SourceDirector* sourceDir
 	)
 	:
-	CMDisplaySourceForMain(sourceDir, JString::empty)
+	DisplaySourceForMainCmd(sourceDir, JString::empty)
 {
-	ListenTo(CMGetLink());
+	ListenTo(GetLink());
 }
 
 /******************************************************************************
@@ -57,19 +57,19 @@ LLDBDisplaySourceForMain::Receive
 	const Message&	message
 	)
 {
-	if (sender == CMGetLink() && message.Is(CMLink::kSymbolsLoaded))
+	if (sender == GetLink() && message.Is(Link::kSymbolsLoaded))
 	{
 		const auto* info =
-			dynamic_cast<const CMLink::SymbolsLoaded*>(&message);
+			dynamic_cast<const Link::SymbolsLoaded*>(&message);
 		assert( info != nullptr );
 		if (info->Successful())
 		{
-			CMCommand::Send();
+			Command::Send();
 		}
 	}
 	else
 	{
-		CMDisplaySourceForMain::Receive(sender, message);
+		DisplaySourceForMainCmd::Receive(sender, message);
 	}
 }
 
@@ -84,7 +84,7 @@ LLDBDisplaySourceForMain::HandleSuccess
 	const JString& data
 	)
 {
-	lldb::SBTarget t = dynamic_cast<LLDBLink*>(CMGetLink())->GetDebugger()->GetSelectedTarget();
+	lldb::SBTarget t = dynamic_cast<LLDBLink*>(GetLink())->GetDebugger()->GetSelectedTarget();
 	bool found   = false;
 	if (t.IsValid())
 	{
@@ -125,8 +125,8 @@ LLDBDisplaySourceForMain::HandleSuccess
 
 	if (!found)
 	{
-		CMGetLink()->NotifyUser(JGetString("CannotFindMain::LLDBDisplaySourceForMain"), true);
-		CMGetLink()->Log("LLDBDisplaySourceForMain failed to find 'main'");
+		GetLink()->NotifyUser(JGetString("CannotFindMain::LLDBDisplaySourceForMain"), true);
+		GetLink()->Log("LLDBDisplaySourceForMain failed to find 'main'");
 
 		GetSourceDir()->ClearDisplay();
 	}

@@ -1,14 +1,14 @@
 /******************************************************************************
  GDBGetMemory.cpp
 
-	BASE CLASS = CMGetMemory
+	BASE CLASS = GetMemory
 
 	Copyright (C) 2011 by John Lindal.
 
  ******************************************************************************/
 
 #include "GDBGetMemory.h"
-#include "CMMemoryDir.h"
+#include "MemoryDir.h"
 #include <jx-af/jcore/JStringIterator.h>
 #include <jx-af/jcore/JRegex.h>
 #include <jx-af/jcore/jAssert.h>
@@ -20,10 +20,10 @@
 
 GDBGetMemory::GDBGetMemory
 	(
-	CMMemoryDir* dir
+	MemoryDir* dir
 	)
 	:
-	CMGetMemory(dir)
+	GetMemory(dir)
 {
 }
 
@@ -49,9 +49,9 @@ static const JUtf8Byte* kCommandName[] =
 void
 GDBGetMemory::Starting()
 {
-	CMGetMemory::Starting();
+	GetMemory::Starting();
 
-	CMMemoryDir::DisplayType type;
+	MemoryDir::DisplayType type;
 	JSize count;
 	const JString& expr = GetDirector()->GetExpression(&type, &count);
 

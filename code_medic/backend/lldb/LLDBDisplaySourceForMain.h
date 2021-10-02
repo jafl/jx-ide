@@ -8,13 +8,13 @@
 #ifndef _H_LLDBDisplaySourceForMain
 #define _H_LLDBDisplaySourceForMain
 
-#include "CMDisplaySourceForMain.h"
+#include "DisplaySourceForMainCmd.h"
 
-class LLDBDisplaySourceForMain : public CMDisplaySourceForMain
+class LLDBDisplaySourceForMain : public DisplaySourceForMainCmd
 {
 public:
 
-	LLDBDisplaySourceForMain(CMSourceDirector* sourceDir);
+	LLDBDisplaySourceForMain(SourceDirector* sourceDir);
 
 	virtual	~LLDBDisplaySourceForMain();
 

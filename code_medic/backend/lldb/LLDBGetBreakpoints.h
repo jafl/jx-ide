@@ -8,9 +8,9 @@
 #ifndef _H_LLDBGetBreakpoints
 #define _H_LLDBGetBreakpoints
 
-#include "CMGetBreakpoints.h"
+#include "GetBreakpointsCmd.h"
 
-class LLDBGetBreakpoints : public CMGetBreakpoints
+class LLDBGetBreakpoints : public GetBreakpointsCmd
 {
 public:
 

@@ -55,7 +55,7 @@
 
 #else
 
-#include "CMStylerStubs.h"
+#include "StylerStubs.h"
 #include <jx-af/jcore/JString.h>
 
 #endif

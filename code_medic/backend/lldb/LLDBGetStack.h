@@ -8,15 +8,15 @@
 #ifndef _H_LLDBGetStack
 #define _H_LLDBGetStack
 
-#include "CMGetStack.h"
+#include "GetStack.h"
 
 class LLDBGetStackArguments;
 
-class LLDBGetStack : public CMGetStack
+class LLDBGetStack : public GetStack
 {
 public:
 
-	LLDBGetStack(JTree* tree, CMStackWidget* widget);
+	LLDBGetStack(JTree* tree, StackWidget* widget);
 
 	virtual	~LLDBGetStack();
 

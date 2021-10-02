@@ -8,13 +8,13 @@
 #ifndef _H_JVMPlot2DCommand
 #define _H_JVMPlot2DCommand
 
-#include "CMPlot2DCommand.h"
+#include "Plot2DCommand.h"
 
-class JVMPlot2DCommand : public CMPlot2DCommand
+class JVMPlot2DCommand : public Plot2DCommand
 {
 public:
 
-	JVMPlot2DCommand(CMPlot2DDir* dir, JArray<JFloat>* x, JArray<JFloat>* y);
+	JVMPlot2DCommand(Plot2DDir* dir, JArray<JFloat>* x, JArray<JFloat>* y);
 
 	virtual	~JVMPlot2DCommand();
 

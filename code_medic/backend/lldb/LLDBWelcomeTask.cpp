@@ -12,7 +12,7 @@
 
 #include "LLDBWelcomeTask.h"
 #include "LLDBLink.h"
-#include "cmGlobals.h"
+#include "globals.h"
 
 /******************************************************************************
  Constructor
@@ -47,7 +47,7 @@ LLDBWelcomeTask::~LLDBWelcomeTask()
 void
 LLDBWelcomeTask::Perform()
 {
-	auto* link = dynamic_cast<LLDBLink*>(CMGetLink());
+	auto* link = dynamic_cast<LLDBLink*>(GetLink());
 	if (link != nullptr)
 	{
 		link->BroadcastWelcome(itsMessage, itsRestartFlag);

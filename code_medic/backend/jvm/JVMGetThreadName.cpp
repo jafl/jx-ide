@@ -1,7 +1,7 @@
 /******************************************************************************
  JVMGetThreadName.cpp
 
-	BASE CLASS = CMCommand, virtual JBroadcaster
+	BASE CLASS = Command, virtual JBroadcaster
 
 	Copyright (C) 2011 by John Lindal.
 
@@ -10,7 +10,7 @@
 #include "JVMGetThreadName.h"
 #include "JVMThreadNode.h"
 #include "JVMLink.h"
-#include "cmGlobals.h"
+#include "globals.h"
 #include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
@@ -23,11 +23,11 @@ JVMGetThreadName::JVMGetThreadName
 	JVMThreadNode* node
 	)
 	:
-	CMCommand("", true, false),
+	Command("", true, false),
 	itsNode(node)
 {
 	ClearWhenGoingAway(itsNode, &itsNode);
-	CMCommand::Send();
+	Command::Send();
 }
 
 /******************************************************************************
@@ -47,11 +47,11 @@ JVMGetThreadName::~JVMGetThreadName()
 void
 JVMGetThreadName::Starting()
 {
-	CMCommand::Starting();
+	Command::Starting();
 
 	if (itsNode != nullptr)
 	{
-		auto* link = dynamic_cast<JVMLink*>(CMGetLink());
+		auto* link = dynamic_cast<JVMLink*>(GetLink());
 
 		const JSize length  = link->GetObjectIDSize();
 		auto* data = (unsigned char*) calloc(length, 1);
@@ -80,7 +80,7 @@ JVMGetThreadName::HandleSuccess
 	const JString& origData
 	)
 {
-	auto* link = dynamic_cast<JVMLink*>(CMGetLink());
+	auto* link = dynamic_cast<JVMLink*>(GetLink());
 	const JVMSocket::MessageReady* msg;
 	if (!link->GetLatestMessageFromJVM(&msg))
 	{

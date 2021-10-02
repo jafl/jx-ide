@@ -1,7 +1,7 @@
 /******************************************************************************
  XDBreakpointManager.cpp
 
-	BASE CLASS = CMBreakpointManager
+	BASE CLASS = BreakpointManager
 
 	Copyright (C) 2007 by John Lindal.
 
@@ -22,7 +22,7 @@ XDBreakpointManager::XDBreakpointManager
 	XDLink* link
 	)
 	:
-	CMBreakpointManager(link, jnew XDGetBreakpoints())
+	BreakpointManager(link, jnew XDGetBreakpoints())
 {
 }
 

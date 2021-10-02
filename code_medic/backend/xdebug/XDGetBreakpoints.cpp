@@ -5,16 +5,16 @@
 	breakpoint.  gdb does not print enough information when "break" is
 	used.
 
-	BASE CLASS = CMGetBreakpoints
+	BASE CLASS = GetBreakpointsCmd
 
 	Copyright (C) 2007 by John Lindal.
 
  ******************************************************************************/
 
 #include "XDGetBreakpoints.h"
-#include "CMBreakpointManager.h"
+#include "BreakpointManager.h"
 #include "XDLink.h"
-#include "cmGlobals.h"
+#include "globals.h"
 #include <jx-af/jcore/JStringIterator.h>
 #include <jx-af/jcore/JRegex.h>
 #include <jx-af/jcore/jAssert.h>
@@ -26,7 +26,7 @@
 
 XDGetBreakpoints::XDGetBreakpoints()
 	:
-	CMGetBreakpoints(JString("breakpoint_list", JString::kNoCopy))
+	GetBreakpointsCmd(JString("breakpoint_list", JString::kNoCopy))
 {
 }
 
@@ -50,20 +50,20 @@ XDGetBreakpoints::HandleSuccess
 	const JString& data
 	)
 {
-	auto* link = dynamic_cast<XDLink*>(CMGetLink());
+	auto* link = dynamic_cast<XDLink*>(GetLink());
 	xmlNode* root;
 	if (link == nullptr || !link->GetParsedData(&root))
 	{
 		return;
 	}
 
-	(CMGetLink()->GetBreakpointManager())->SetUpdateWhenStop(false);
+	(GetLink()->GetBreakpointManager())->SetUpdateWhenStop(false);
 
-	JPtrArray<CMBreakpoint> bpList(JPtrArrayT::kForgetAll);	// ownership taken by CMBreakpointManager
-	bpList.SetCompareFunction(CMBreakpointManager::CompareBreakpointLocations);
+	JPtrArray<Breakpoint> bpList(JPtrArrayT::kForgetAll);	// ownership taken by BreakpointManager
+	bpList.SetCompareFunction(BreakpointManager::CompareBreakpointLocations);
 	bpList.SetSortOrder(JListT::kSortAscending);
 
-	JPtrArray<CMBreakpoint> otherList(JPtrArrayT::kForgetAll);	// ownership taken by CMBreakpointManager
+	JPtrArray<Breakpoint> otherList(JPtrArrayT::kForgetAll);	// ownership taken by BreakpointManager
 
 	xmlNode* node = root->children;
 	JString type, idStr, fileName, lineStr, state;
@@ -94,19 +94,19 @@ XDGetBreakpoints::HandleSuccess
 			const bool enabled = state == "enabled";
 
 			auto* bp =
-				jnew CMBreakpoint(bpIndex, fileName, lineNumber, JString::empty, JString::empty,
-								 enabled, CMBreakpoint::kKeepBreakpoint, JString::empty, 0);
+				jnew Breakpoint(bpIndex, fileName, lineNumber, JString::empty, JString::empty,
+								 enabled, Breakpoint::kKeepBreakpoint, JString::empty, 0);
 			assert( bp != nullptr );
 			bpList.InsertSorted(bp);
 
 			if (true)	// no way to know if it is temporary -- may be deleted or other status change
 			{
-				(CMGetLink()->GetBreakpointManager())->SetUpdateWhenStop(true);
+				(GetLink()->GetBreakpointManager())->SetUpdateWhenStop(true);
 			}
 		}
 
 		node = node->next;
 	}
 
-	(CMGetLink()->GetBreakpointManager())->UpdateBreakpoints(bpList, otherList);
+	(GetLink()->GetBreakpointManager())->UpdateBreakpoints(bpList, otherList);
 }

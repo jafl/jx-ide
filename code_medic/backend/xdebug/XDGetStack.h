@@ -8,13 +8,13 @@
 #ifndef _H_XDGetStack
 #define _H_XDGetStack
 
-#include "CMGetStack.h"
+#include "GetStack.h"
 
-class XDGetStack : public CMGetStack
+class XDGetStack : public GetStack
 {
 public:
 
-	XDGetStack(JTree* tree, CMStackWidget* widget);
+	XDGetStack(JTree* tree, StackWidget* widget);
 
 	virtual	~XDGetStack();
 

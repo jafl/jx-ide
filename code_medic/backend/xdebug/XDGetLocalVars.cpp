@@ -1,7 +1,7 @@
 /******************************************************************************
  XDGetLocalVars.cpp
 
-	BASE CLASS = CMGetLocalVars
+	BASE CLASS = GetLocalVars
 
 	Copyright (C) 2007 by John Lindal.
 
@@ -10,8 +10,8 @@
 #include "XDGetLocalVars.h"
 #include "XDGetContextVars.h"
 #include "XDLink.h"
-#include "CMVarNode.h"
-#include "cmGlobals.h"
+#include "VarNode.h"
+#include "globals.h"
 #include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
@@ -21,10 +21,10 @@
 
 XDGetLocalVars::XDGetLocalVars
 	(
-	CMVarNode* rootNode
+	VarNode* rootNode
 	)
 	:
-	CMGetLocalVars(JString("context_names", JString::kNoCopy)),
+	GetLocalVars(JString("context_names", JString::kNoCopy)),
 	itsRootNode(rootNode)
 {
 }
@@ -49,7 +49,7 @@ XDGetLocalVars::HandleSuccess
 	const JString& data
 	)
 {
-	auto* link = dynamic_cast<XDLink*>(CMGetLink());
+	auto* link = dynamic_cast<XDLink*>(GetLink());
 	xmlNode* root;
 	if (link == nullptr || !link->GetParsedData(&root))
 	{

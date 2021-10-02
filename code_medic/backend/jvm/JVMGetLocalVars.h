@@ -8,15 +8,15 @@
 #ifndef _H_JVMGetLocalVars
 #define _H_JVMGetLocalVars
 
-#include "CMGetLocalVars.h"
+#include "GetLocalVars.h"
 
-class CMVarNode;
+class VarNode;
 
-class JVMGetLocalVars : public CMGetLocalVars
+class JVMGetLocalVars : public GetLocalVars
 {
 public:
 
-	JVMGetLocalVars(CMVarNode* rootNode);
+	JVMGetLocalVars(VarNode* rootNode);
 
 	virtual	~JVMGetLocalVars();
 
@@ -26,7 +26,7 @@ protected:
 
 private:
 
-	CMVarNode*	itsRootNode;	// not owned
+	VarNode*	itsRootNode;	// not owned
 };
 
 #endif

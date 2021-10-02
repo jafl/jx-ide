@@ -1,14 +1,14 @@
 /******************************************************************************
  LLDBGetLocalVars.cpp
 
-	BASE CLASS = CMGetLocalVars
+	BASE CLASS = GetLocalVars
 
 	Copyright (C) 2016 by John Lindal.
 
  ******************************************************************************/
 
 #include "LLDBGetLocalVars.h"
-#include "CMVarNode.h"
+#include "VarNode.h"
 #include "lldb/API/SBTarget.h"
 #include "lldb/API/SBProcess.h"
 #include "lldb/API/SBThread.h"
@@ -17,7 +17,7 @@
 #include "lldb/API/SBValue.h"
 #include "LLDBLink.h"
 #include "LLDBVarNode.h"
-#include "cmGlobals.h"
+#include "globals.h"
 #include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
@@ -27,10 +27,10 @@
 
 LLDBGetLocalVars::LLDBGetLocalVars
 	(
-	CMVarNode* rootNode
+	VarNode* rootNode
 	)
 	:
-	CMGetLocalVars(JString::empty),
+	GetLocalVars(JString::empty),
 	itsRootNode(rootNode)
 {
 }
@@ -55,7 +55,7 @@ LLDBGetLocalVars::HandleSuccess
 	const JString& data
 	)
 {
-	auto* link = dynamic_cast<LLDBLink*>(CMGetLink());
+	auto* link = dynamic_cast<LLDBLink*>(GetLink());
 	if (link == nullptr)
 	{
 		itsRootNode->DeleteAllChildren();
@@ -124,7 +124,7 @@ LLDBGetLocalVars::HandleSuccess
 		lldb::SBValue v = vars.GetValueAtIndex(i-1);
 		if (v.IsValid())	// paranoia
 		{
-			CMVarNode* node = LLDBVarNode::BuildTree(f, v);
+			VarNode* node = LLDBVarNode::BuildTree(f, v);
 
 			if (i <= origCount)
 			{

@@ -8,11 +8,11 @@
 #ifndef _H_GDBGetStackArguments
 #define _H_GDBGetStackArguments
 
-#include "CMCommand.h"
+#include "Command.h"
 
 class JTree;
 
-class GDBGetStackArguments : public CMCommand
+class GDBGetStackArguments : public Command
 {
 public:
 

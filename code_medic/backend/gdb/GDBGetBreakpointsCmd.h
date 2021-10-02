@@ -1,0 +1,39 @@
+/******************************************************************************
+ GDBGetBreakpointsCmd.h
+
+	Copyright (C) 2001 by John Lindal.
+
+ ******************************************************************************/
+
+#ifndef _H_GDBGetBreakpointsCmd
+#define _H_GDBGetBreakpointsCmd
+
+#include "GetBreakpointsCmd.h"
+#include "Breakpoint.h"		// need defn of Action
+#include <jx-af/jcore/JStringPtrMap.h>
+
+class GDBGetBreakpointsCmd : public GetBreakpointsCmd
+{
+public:
+
+	GDBGetBreakpointsCmd();
+
+	virtual	~GDBGetBreakpointsCmd();
+
+protected:
+
+	virtual void	HandleSuccess(const JString& data) override;
+
+private:
+
+	void	ParseBreakpoint(JStringPtrMap<JString>& map,
+							JPtrArray<Breakpoint>* list);
+	void	ParseOther(JStringPtrMap<JString>& map,
+					   JPtrArray<Breakpoint>* list);
+
+	bool	ParseCommon(JStringPtrMap<JString>& map, JIndex* bpIndex,
+							Breakpoint::Action* action, bool* enabled,
+							JSize* ignoreCount);
+};
+
+#endif

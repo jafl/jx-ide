@@ -1,7 +1,7 @@
 /******************************************************************************
  JVMDisplaySourceForMain.cpp
 
-	BASE CLASS = CMDisplaySourceForMain
+	BASE CLASS = DisplaySourceForMainCmd
 
 	Copyright (C) 2009 by John Lindal.
 
@@ -17,10 +17,10 @@
 
 JVMDisplaySourceForMain::JVMDisplaySourceForMain
 	(
-	CMSourceDirector* sourceDir
+	SourceDirector* sourceDir
 	)
 	:
-	CMDisplaySourceForMain(sourceDir, JString("NOP", JString::kNoCopy))
+	DisplaySourceForMainCmd(sourceDir, JString("NOP", JString::kNoCopy))
 {
 }
 

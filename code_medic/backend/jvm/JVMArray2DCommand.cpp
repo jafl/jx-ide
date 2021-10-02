@@ -1,7 +1,7 @@
 /******************************************************************************
  JVMArray2DCommand.cpp
 
-	BASE CLASS = CMArray2DCommand
+	BASE CLASS = Array2DCmd
 
 	Copyright (C) 2009 by John Lindal.
 
@@ -17,12 +17,12 @@
 
 JVMArray2DCommand::JVMArray2DCommand
 	(
-	CMArray2DDir*		dir,
+	Array2DDir*		dir,
 	JXStringTable*		table,
 	JStringTableData*	data
 	)
 	:
-	CMArray2DCommand(dir, table, data)
+	Array2DCmd(dir, table, data)
 {
 	SetCommand("NOP");
 }

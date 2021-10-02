@@ -1,7 +1,7 @@
 /******************************************************************************
  LLDBGetFrame.cpp
 
-	BASE CLASS = CMGetFrame
+	BASE CLASS = GetFrameCmd
 
 	Copyright (C) 2016 by John Lindal.
 
@@ -12,8 +12,8 @@
 #include "lldb/API/SBProcess.h"
 #include "lldb/API/SBThread.h"
 #include "lldb/API/SBFrame.h"
-#include "CMStackWidget.h"
-#include "cmGlobals.h"
+#include "StackWidget.h"
+#include "globals.h"
 #include "LLDBLink.h"	// must be after X11 includes: Status
 #include <jx-af/jcore/JRegex.h>
 #include <jx-af/jcore/jAssert.h>
@@ -25,10 +25,10 @@
 
 LLDBGetFrame::LLDBGetFrame
 	(
-	CMStackWidget* widget
+	StackWidget* widget
 	)
 	:
-	CMGetFrame(JString::empty),
+	GetFrameCmd(JString::empty),
 	itsWidget(widget)
 {
 }
@@ -53,7 +53,7 @@ LLDBGetFrame::HandleSuccess
 	const JString& cmdData
 	)
 {
-	auto* link = dynamic_cast<LLDBLink*>(CMGetLink());
+	auto* link = dynamic_cast<LLDBLink*>(GetLink());
 	if (link == nullptr)
 	{
 		return;

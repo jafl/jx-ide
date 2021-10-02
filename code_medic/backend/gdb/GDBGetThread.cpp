@@ -1,14 +1,14 @@
 /******************************************************************************
  GDBGetThread.cpp
 
-	BASE CLASS = CMGetThread
+	BASE CLASS = GetThread
 
 	Copyright (C) 2001 by John Lindal.
 
  ******************************************************************************/
 
 #include "GDBGetThread.h"
-#include "CMThreadsWidget.h"
+#include "ThreadsWidget.h"
 #include "GDBGetThreads.h"
 #include <jx-af/jcore/JStringIterator.h>
 #include <jx-af/jcore/jStreamUtil.h>
@@ -22,10 +22,10 @@
 
 GDBGetThread::GDBGetThread
 	(
-	CMThreadsWidget* widget
+	ThreadsWidget* widget
 	)
 	:
-	CMGetThread(JString("set width 0\ninfo threads", JString::kNoCopy), widget)
+	GetThread(JString("set width 0\ninfo threads", JString::kNoCopy), widget)
 {
 }
 

@@ -1,7 +1,7 @@
 /******************************************************************************
  JVMGetClassMethods.cpp
 
-	BASE CLASS = CMCommand, virtual JBroadcaster
+	BASE CLASS = Command, virtual JBroadcaster
 
 	Copyright (C) 2011 by John Lindal.
 
@@ -9,7 +9,7 @@
 
 #include "JVMGetClassMethods.h"
 #include "JVMLink.h"
-#include "cmGlobals.h"
+#include "globals.h"
 #include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
@@ -22,10 +22,10 @@ JVMGetClassMethods::JVMGetClassMethods
 	const JUInt64 id
 	)
 	:
-	CMCommand("", true, false),
+	Command("", true, false),
 	itsID(id)
 {
-	CMCommand::Send();
+	Command::Send();
 }
 
 /******************************************************************************
@@ -45,9 +45,9 @@ JVMGetClassMethods::~JVMGetClassMethods()
 void
 JVMGetClassMethods::Starting()
 {
-	CMCommand::Starting();
+	Command::Starting();
 
-	auto* link = dynamic_cast<JVMLink*>(CMGetLink());
+	auto* link = dynamic_cast<JVMLink*>(GetLink());
 
 	const JSize length  = link->GetObjectIDSize();
 	auto* data = (unsigned char*) calloc(length, 1);
@@ -72,7 +72,7 @@ JVMGetClassMethods::HandleSuccess
 	const JString& origData
 	)
 {
-	auto* link = dynamic_cast<JVMLink*>(CMGetLink());
+	auto* link = dynamic_cast<JVMLink*>(GetLink());
 	const JVMSocket::MessageReady* msg;
 	if (!link->GetLatestMessageFromJVM(&msg))
 	{

@@ -8,9 +8,9 @@
 #ifndef _H_JVMStackFrameNode
 #define _H_JVMStackFrameNode
 
-#include "CMStackFrameNode.h"
+#include "StackFrameNode.h"
 
-class JVMStackFrameNode : public CMStackFrameNode
+class JVMStackFrameNode : public StackFrameNode
 {
 public:
 

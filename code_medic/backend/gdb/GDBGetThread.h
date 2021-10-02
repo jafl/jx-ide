@@ -8,13 +8,13 @@
 #ifndef _H_GDBGetThread
 #define _H_GDBGetThread
 
-#include "CMGetThread.h"
+#include "GetThread.h"
 
-class GDBGetThread : public CMGetThread
+class GDBGetThread : public GetThread
 {
 public:
 
-	GDBGetThread(CMThreadsWidget* widget);
+	GDBGetThread(ThreadsWidget* widget);
 
 	virtual	~GDBGetThread();
 

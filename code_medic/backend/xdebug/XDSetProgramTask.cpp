@@ -12,7 +12,7 @@
 
 #include "XDSetProgramTask.h"
 #include "XDLink.h"
-#include "cmGlobals.h"
+#include "globals.h"
 
 /******************************************************************************
  Constructor
@@ -40,7 +40,7 @@ XDSetProgramTask::~XDSetProgramTask()
 void
 XDSetProgramTask::Perform()
 {
-	auto* link = dynamic_cast<XDLink*>(CMGetLink());
+	auto* link = dynamic_cast<XDLink*>(GetLink());
 	if (link != nullptr)
 	{
 		link->BroadcastProgramSet();

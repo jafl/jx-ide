@@ -8,11 +8,11 @@
 #ifndef _H_JVMGetInitArgs
 #define _H_JVMGetInitArgs
 
-#include "CMGetInitArgs.h"
+#include "GetInitArgs.h"
 
 class JXInputField;
 
-class JVMGetInitArgs : public CMGetInitArgs
+class JVMGetInitArgs : public GetInitArgs
 {
 public:
 

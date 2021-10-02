@@ -8,13 +8,13 @@
 #ifndef _H_LLDBGetRegisters
 #define _H_LLDBGetRegisters
 
-#include "CMGetRegisters.h"
+#include "GetRegisters.h"
 
-class LLDBGetRegisters : public CMGetRegisters
+class LLDBGetRegisters : public GetRegisters
 {
 public:
 
-	LLDBGetRegisters(CMRegistersDir* dir);
+	LLDBGetRegisters(RegistersDir* dir);
 
 	virtual	~LLDBGetRegisters();
 

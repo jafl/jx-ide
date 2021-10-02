@@ -8,16 +8,16 @@
 #ifndef _H_LLDBGetCompletions
 #define _H_LLDBGetCompletions
 
-#include "CMGetCompletions.h"
+#include "GetCompletionsCmd.h"
 
-class CMCommandInput;
-class CMCommandOutputDisplay;
+class CommandInput;
+class CommandOutputDisplay;
 
-class LLDBGetCompletions : public CMGetCompletions
+class LLDBGetCompletions : public GetCompletionsCmd
 {
 public:
 
-	LLDBGetCompletions(CMCommandInput* input, CMCommandOutputDisplay* history);
+	LLDBGetCompletions(CommandInput* input, CommandOutputDisplay* history);
 
 	virtual	~LLDBGetCompletions();
 
@@ -28,8 +28,8 @@ protected:
 private:
 
 	JString					itsPrefix;
-	CMCommandInput*			itsInput;
-	CMCommandOutputDisplay*	itsHistory;
+	CommandInput*			itsInput;
+	CommandOutputDisplay*	itsHistory;
 };
 
 #endif

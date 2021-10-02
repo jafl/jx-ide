@@ -8,15 +8,15 @@
 #ifndef _H_XDGetSourceFileList
 #define _H_XDGetSourceFileList
 
-#include "CMGetSourceFileList.h"
+#include "GetSourceFileList.h"
 
-class CMFileListDir;
+class FileListDir;
 
-class XDGetSourceFileList : public CMGetSourceFileList
+class XDGetSourceFileList : public GetSourceFileList
 {
 public:
 
-	XDGetSourceFileList(CMFileListDir* fileList);
+	XDGetSourceFileList(FileListDir* fileList);
 
 	virtual	~XDGetSourceFileList();
 

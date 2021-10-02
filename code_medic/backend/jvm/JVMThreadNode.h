@@ -8,9 +8,9 @@
 #ifndef _H_JVMThreadNode
 #define _H_JVMThreadNode
 
-#include "CMThreadNode.h"
+#include "ThreadNode.h"
 
-class JVMThreadNode : public CMThreadNode
+class JVMThreadNode : public ThreadNode
 {
 public:
 

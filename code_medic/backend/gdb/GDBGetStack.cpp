@@ -1,7 +1,7 @@
 /******************************************************************************
  GDBGetStack.cpp
 
-	BASE CLASS = CMGetStack
+	BASE CLASS = GetStack
 
 	Copyright (C) 2001-09 by John Lindal.
 
@@ -9,10 +9,10 @@
 
 #include "GDBGetStack.h"
 #include "GDBGetStackArguments.h"
-#include "CMStackFrameNode.h"
-#include "CMStackWidget.h"
+#include "StackFrameNode.h"
+#include "StackWidget.h"
 #include "GDBLink.h"
-#include "cmGlobals.h"
+#include "globals.h"
 #include <jx-af/jcore/JTree.h>
 #include <jx-af/jcore/JStringIterator.h>
 #include <jx-af/jcore/JRegex.h>
@@ -28,10 +28,10 @@ const JSize kFrameIndexWidth = 2;	// width of frame index in characters
 GDBGetStack::GDBGetStack
 	(
 	JTree*			tree,
-	CMStackWidget*	widget
+	StackWidget*	widget
 	)
 	:
-	CMGetStack(JString("-stack-list-frames", JString::kNoCopy), tree, widget)
+	GetStack(JString("-stack-list-frames", JString::kNoCopy), tree, widget)
 {
 	itsArgsCmd = jnew GDBGetStackArguments(tree);
 }
@@ -76,7 +76,7 @@ GDBGetStack::HandleSuccess
 		stream.seekg(iter.GetLastMatch().GetUtf8ByteRange().last);
 		if (!GDBLink::ParseMap(stream, &map))
 		{
-			CMGetLink()->Log("invalid data map");
+			GetLink()->Log("invalid data map");
 			break;
 		}
 		iter.MoveTo(kJIteratorStartAfter, (std::streamoff) stream.tellg());
@@ -85,12 +85,12 @@ GDBGetStack::HandleSuccess
 		JIndex frameIndex;
 		if (!map.GetElement("level", &s))
 		{
-			CMGetLink()->Log("missing frame index");
+			GetLink()->Log("missing frame index");
 			continue;
 		}
 		if (!s->ConvertToUInt(&frameIndex))
 		{
-			CMGetLink()->Log("frame index is not integer");
+			GetLink()->Log("frame index is not integer");
 			continue;
 		}
 
@@ -104,7 +104,7 @@ GDBGetStack::HandleSuccess
 		JString* fnName;
 		if (!map.GetElement("func", &fnName))
 		{
-			CMGetLink()->Log("missing function name");
+			GetLink()->Log("missing function name");
 			continue;
 		}
 		frameName += *fnName;
@@ -118,12 +118,12 @@ GDBGetStack::HandleSuccess
 		if (map.GetElement("line", &s) &&
 			!s->ConvertToUInt(&lineIndex))
 		{
-			CMGetLink()->Log("line number is not integer");
+			GetLink()->Log("line number is not integer");
 			continue;
 		}
 
 		auto* node =
-			jnew CMStackFrameNode(root, frameIndex, frameName,
+			jnew StackFrameNode(root, frameIndex, frameName,
 								  fileName, lineIndex);
 		assert( node != nullptr );
 		root->Prepend(node);

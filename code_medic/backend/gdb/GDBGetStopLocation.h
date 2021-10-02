@@ -8,11 +8,11 @@
 #ifndef _H_GDBGetStopLocation
 #define _H_GDBGetStopLocation
 
-#include "CMCommand.h"
+#include "Command.h"
 
-class CMLocation;
+class Location;
 
-class GDBGetStopLocation : public CMCommand
+class GDBGetStopLocation : public Command
 {
 public:
 
@@ -22,7 +22,7 @@ public:
 
 protected:
 
-	CMLocation	GetLocation() const;
+	Location	GetLocation() const;
 };
 
 #endif

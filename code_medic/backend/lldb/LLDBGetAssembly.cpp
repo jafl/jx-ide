@@ -3,7 +3,7 @@
 
 	Get the assembly code for the current function.
 
-	BASE CLASS = CMGetAssembly
+	BASE CLASS = GetAssemblyCmd
 
 	Copyright (C) 2016 by John Lindal.
 
@@ -12,9 +12,9 @@
 #include "LLDBGetAssembly.h"
 #include "lldb/API/SBCommandInterpreter.h"
 #include "lldb/API/SBCommandReturnObject.h"
-#include "CMSourceDirector.h"
+#include "SourceDirector.h"
 #include "LLDBLink.h"
-#include "cmGlobals.h"
+#include "globals.h"
 #include <jx-af/jcore/JStringIterator.h>
 #include <jx-af/jcore/JRegex.h>
 #include <jx-af/jcore/jFileUtil.h>
@@ -30,10 +30,10 @@
 
 LLDBGetAssembly::LLDBGetAssembly
 	(
-	CMSourceDirector* dir
+	SourceDirector* dir
 	)
 	:
-	CMGetAssembly(dir, JString::empty)
+	GetAssemblyCmd(dir, JString::empty)
 {
 }
 
@@ -59,7 +59,7 @@ LLDBGetAssembly::HandleSuccess
 	const JString& cmdData
 	)
 {
-	auto* link = dynamic_cast<LLDBLink*>(CMGetLink());
+	auto* link = dynamic_cast<LLDBLink*>(GetLink());
 	if (link == nullptr)
 	{
 		return;
@@ -71,7 +71,7 @@ LLDBGetAssembly::HandleSuccess
 		return;
 	}
 
-	const CMLocation& loc = GetDirector()->GetDisassemblyLocation();
+	const Location& loc = GetDirector()->GetDisassemblyLocation();
 
 	const JString cmd = "disassemble -n " + JPrepArgForExec(loc.GetFunctionName());
 	lldb::SBCommandReturnObject result;

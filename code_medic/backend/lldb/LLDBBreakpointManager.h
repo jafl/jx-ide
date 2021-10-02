@@ -8,11 +8,11 @@
 #ifndef _H_LLDBBreakpointManager
 #define _H_LLDBBreakpointManager
 
-#include "CMBreakpointManager.h"
+#include "BreakpointManager.h"
 
 class LLDBLink;
 
-class LLDBBreakpointManager : public CMBreakpointManager
+class LLDBBreakpointManager : public BreakpointManager
 {
 public:
 

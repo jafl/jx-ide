@@ -8,13 +8,13 @@
 #ifndef _H_GDBGetMemory
 #define _H_GDBGetMemory
 
-#include "CMGetMemory.h"
+#include "GetMemory.h"
 
-class GDBGetMemory : public CMGetMemory
+class GDBGetMemory : public GetMemory
 {
 public:
 
-	GDBGetMemory(CMMemoryDir* dir);
+	GDBGetMemory(MemoryDir* dir);
 
 	virtual	~GDBGetMemory();
 

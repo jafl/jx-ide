@@ -8,9 +8,9 @@
 #ifndef _H_XDGetFullPath
 #define _H_XDGetFullPath
 
-#include "CMGetFullPath.h"
+#include "GetFullPathCmd.h"
 
-class XDGetFullPath : public CMGetFullPath
+class XDGetFullPath : public GetFullPathCmd
 {
 public:
 

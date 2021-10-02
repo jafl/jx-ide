@@ -6,7 +6,7 @@
 	http://ftp.gnu.org/pub/old-gnu/Manuals/gdb-5.1.1/html_node/gdb_211.html
 	http://www.devworld.apple.com/documentation/DeveloperTools/gdb/gdb/gdb_25.html
 
-	BASE CLASS = CMLink
+	BASE CLASS = Link
 
 	Copyright (C) 2001 by John Lindal.
 
@@ -16,24 +16,24 @@
 #include "GDBOutputScanner.h"
 #include "GDBPingTask.h"
 #include "GDBBreakpointManager.h"
-#include "CMChooseProcessDialog.h"
+#include "ChooseProcessDialog.h"
 
-#include "GDBAnalyzeCore.h"
-#include "GDBArray2DCommand.h"
+#include "GDBAnalyzeCoreCmd.h"
+#include "GDBArray2DCmd.h"
 #include "GDBPlot2DCommand.h"
-#include "GDBCheckCoreStatus.h"
-#include "GDBDisplaySourceForMain.h"
+#include "GDBCheckCoreStatusCmd.h"
+#include "GDBDisplaySourceForMainCmd.h"
 #include "GDBGetStopLocationForLink.h"
 #include "GDBGetStopLocationForAsm.h"
-#include "GDBGetCompletions.h"
-#include "GDBGetFrame.h"
+#include "GDBGetCompletionsCmd.h"
+#include "GDBGetFrameCmd.h"
 #include "GDBGetStack.h"
 #include "GDBGetThread.h"
 #include "GDBGetThreads.h"
 #include "GDBGetMemory.h"
-#include "GDBGetAssembly.h"
+#include "GDBGetAssemblyCmd.h"
 #include "GDBGetRegisters.h"
-#include "GDBGetFullPath.h"
+#include "GDBGetFullPathCmd.h"
 #include "GDBGetInitArgs.h"
 #include "GDBGetLocalVars.h"
 #include "GDBGetProgramName.h"
@@ -42,7 +42,7 @@
 #include "GDBVarCommand.h"
 #include "GDBVarNode.h"
 
-#include "cmGlobals.h"
+#include "globals.h"
 
 #include <jx-af/jx/JXAssert.h>
 #include <jx-af/jcore/JProcess.h>
@@ -78,7 +78,7 @@ static const bool kFeatures[]=
 
 GDBLink::GDBLink()
 	:
-	CMLink(kFeatures),
+	Link(kFeatures),
 	itsDebuggerProcess(nullptr),
 	itsChildProcess(nullptr),
 	itsOutputLink(nullptr),
@@ -306,7 +306,7 @@ bool
 GDBLink::OKToSendMultipleCommands()
 	const
 {
-	return CMLink::OKToSendMultipleCommands();
+	return Link::OKToSendMultipleCommands();
 }
 
 /******************************************************************************
@@ -348,7 +348,7 @@ GDBLink::Receive
 	const Message&	message
 	)
 {
-	if (sender == itsInputLink && message.Is(CMPipeT::kReadReady))
+	if (sender == itsInputLink && message.Is(PipeT::kReadReady))
 	{
 		ReadFromDebugger();
 	}
@@ -422,7 +422,7 @@ GDBLink::ReadFromDebugger()
 
 			// If we stopped the program in order to send commands to the
 			// debugger, we need to continue once everything settles down.
-			// Unless it is invoked by a CMCommand, itsContinueCount has to
+			// Unless it is invoked by a Command, itsContinueCount has to
 			// start at 2 because we have to ignore the prompt received
 			// immediately after sending SIGINT.
 
@@ -441,7 +441,7 @@ GDBLink::ReadFromDebugger()
 
 			else if (itsIsDebuggingFlag && !wasStopped)
 			{
-				CMLocation location;
+				Location location;
 				SendProgramStopped(location);
 			}
 
@@ -479,7 +479,7 @@ GDBLink::ReadFromDebugger()
 		}
 		else if (token.type == GDB::Output::Scanner::kCommandOutput)
 		{
-			CMCommand* cmd;
+			Command* cmd;
 			if (GetRunningCommand(&cmd))
 			{
 				cmd->Accumulate(*(token.data.pString));
@@ -487,7 +487,7 @@ GDBLink::ReadFromDebugger()
 		}
 		else if (token.type == GDB::Output::Scanner::kCommandResult)
 		{
-			CMCommand* cmd;
+			Command* cmd;
 			if (GetRunningCommand(&cmd))
 			{
 				cmd->SaveResult(*(token.data.pString));
@@ -496,7 +496,7 @@ GDBLink::ReadFromDebugger()
 		else if (token.type == GDB::Output::Scanner::kEndMedicCmd ||
 				 token.type == GDB::Output::Scanner::kEndMedicIgnoreCmd)
 		{
-			CMCommand* cmd;
+			Command* cmd;
 			if (GetRunningCommand(&cmd))
 			{
 				cmd->Finished(true);	// may delete object
@@ -578,7 +578,7 @@ GDBLink::ReadFromDebugger()
 		{
 			// We have to check whether a core was loaded or cleared.
 
-			auto* cmd = jnew GDBCheckCoreStatus;
+			auto* cmd = jnew GDBCheckCoreStatusCmd;
 			assert( cmd != nullptr );
 		}
 
@@ -614,7 +614,7 @@ GDBLink::ReadFromDebugger()
 			if (itsChildProcess == nullptr)	// ask user for PID
 			{
 				auto* dialog =
-					jnew CMChooseProcessDialog(JXGetApplication(), false);
+					jnew ChooseProcessDialog(JXGetApplication(), false);
 				assert( dialog != nullptr );
 				dialog->BeginDialog();
 			}
@@ -712,7 +712,7 @@ GDBLink::SaveProgramName
 /******************************************************************************
  SaveCoreName
 
-	Callback for GDBCheckCoreStatus.
+	Callback for GDBCheckCoreStatusCmd.
 
  *****************************************************************************/
 
@@ -760,7 +760,7 @@ GDBLink::FirstBreakImpossible()
 void
 GDBLink::SendProgramStopped
 	(
-	const CMLocation& location
+	const Location& location
 	)
 {
 	if (itsFirstBreakFlag)					// tbreak to get pid
@@ -798,7 +798,7 @@ GDBLink::SendProgramStopped
 void
 GDBLink::PrivateSendProgramStopped
 	(
-	const CMLocation& location
+	const Location& location
 	)
 {
 	Broadcast(ProgramStopped(location));
@@ -820,7 +820,7 @@ GDBLink::PrivateSendProgramStopped
 void
 GDBLink::SendProgramStopped2
 	(
-	const CMLocation& location
+	const Location& location
 	)
 {
 	Broadcast(ProgramStopped2(location));
@@ -886,7 +886,7 @@ GDBLink::SetCore
 		const JString cmdStr = "core-file " + fullName;
 		if (itsProgramName.IsEmpty())
 		{
-			auto* cmd = jnew GDBAnalyzeCore(cmdStr);
+			auto* cmd = jnew GDBAnalyzeCoreCmd(cmdStr);
 			assert( cmd != nullptr );
 			cmd->Send();
 		}
@@ -940,7 +940,7 @@ GDBLink::RunProgram
 
  *****************************************************************************/
 
-CMBreakpointManager*
+BreakpointManager*
 GDBLink::GetBreakpointManager()
 {
 	return itsBPMgr;
@@ -1482,233 +1482,233 @@ GDBLink::SetValue
 }
 
 /******************************************************************************
- CreateArray2DCommand
+ CreateArray2DCmd
 
  *****************************************************************************/
 
-CMArray2DCommand*
-GDBLink::CreateArray2DCommand
+Array2DCmd*
+GDBLink::CreateArray2DCmd
 	(
-	CMArray2DDir*		dir,
+	Array2DDir*		dir,
 	JXStringTable*		table,
 	JStringTableData*	data
 	)
 {
-	CMArray2DCommand* cmd = jnew GDBArray2DCommand(dir, table, data);
+	Array2DCmd* cmd = jnew GDBArray2DCmd(dir, table, data);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreatePlot2DCommand
+ CreatePlot2DCmd
 
  *****************************************************************************/
 
-CMPlot2DCommand*
-GDBLink::CreatePlot2DCommand
+Plot2DCommand*
+GDBLink::CreatePlot2DCmd
 	(
-	CMPlot2DDir*	dir,
+	Plot2DDir*	dir,
 	JArray<JFloat>*	x,
 	JArray<JFloat>*	y
 	)
 {
-	CMPlot2DCommand* cmd = jnew GDBPlot2DCommand(dir, x, y);
+	Plot2DCommand* cmd = jnew GDBPlot2DCommand(dir, x, y);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateDisplaySourceForMain
+ CreateDisplaySourceForMainCmd
 
  *****************************************************************************/
 
-CMDisplaySourceForMain*
-GDBLink::CreateDisplaySourceForMain
+DisplaySourceForMainCmd*
+GDBLink::CreateDisplaySourceForMainCmd
 	(
-	CMSourceDirector* sourceDir
+	SourceDirector* sourceDir
 	)
 {
-	CMDisplaySourceForMain* cmd = jnew GDBDisplaySourceForMain(sourceDir);
+	DisplaySourceForMainCmd* cmd = jnew GDBDisplaySourceForMainCmd(sourceDir);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateGetCompletions
+ CreateGetCompletionsCmd
 
  *****************************************************************************/
 
-CMGetCompletions*
-GDBLink::CreateGetCompletions
+GetCompletionsCmd*
+GDBLink::CreateGetCompletionsCmd
 	(
-	CMCommandInput*	input,
-	CMCommandOutputDisplay*	history
+	CommandInput*	input,
+	CommandOutputDisplay*	history
 	)
 {
-	CMGetCompletions* cmd = jnew GDBGetCompletions(input, history);
+	GetCompletionsCmd* cmd = jnew GDBGetCompletionsCmd(input, history);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateGetFrame
+ CreateGetFrameCmd
 
  *****************************************************************************/
 
-CMGetFrame*
-GDBLink::CreateGetFrame
+GetFrameCmd*
+GDBLink::CreateGetFrameCmd
 	(
-	CMStackWidget* widget
+	StackWidget* widget
 	)
 {
-	CMGetFrame* cmd = jnew GDBGetFrame(widget);
+	GetFrameCmd* cmd = jnew GDBGetFrameCmd(widget);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateGetStack
+ CreateGetStackCmd
 
  *****************************************************************************/
 
-CMGetStack*
-GDBLink::CreateGetStack
+GetStack*
+GDBLink::CreateGetStackCmd
 	(
 	JTree*			tree,
-	CMStackWidget*	widget
+	StackWidget*	widget
 	)
 {
-	CMGetStack* cmd = jnew GDBGetStack(tree, widget);
+	GetStack* cmd = jnew GDBGetStack(tree, widget);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateGetThread
+ CreateGetThreadCmd
 
  *****************************************************************************/
 
-CMGetThread*
-GDBLink::CreateGetThread
+GetThread*
+GDBLink::CreateGetThreadCmd
 	(
-	CMThreadsWidget* widget
+	ThreadsWidget* widget
 	)
 {
-	CMGetThread* cmd = jnew GDBGetThread(widget);
+	GetThread* cmd = jnew GDBGetThread(widget);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateGetThreads
+ CreateGetThreadsCmd
 
  *****************************************************************************/
 
-CMGetThreads*
-GDBLink::CreateGetThreads
+GetThreads*
+GDBLink::CreateGetThreadsCmd
 	(
 	JTree*				tree,
-	CMThreadsWidget*	widget
+	ThreadsWidget*	widget
 	)
 {
-	CMGetThreads* cmd = jnew GDBGetThreads(tree, widget);
+	GetThreads* cmd = jnew GDBGetThreads(tree, widget);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateGetFullPath
+ CreateGetFullPathCmd
 
  *****************************************************************************/
 
-CMGetFullPath*
-GDBLink::CreateGetFullPath
+GetFullPathCmd*
+GDBLink::CreateGetFullPathCmd
 	(
 	const JString&	fileName,
 	const JIndex	lineIndex
 	)
 {
-	CMGetFullPath* cmd = jnew GDBGetFullPath(fileName, lineIndex);
+	GetFullPathCmd* cmd = jnew GDBGetFullPathCmd(fileName, lineIndex);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateGetInitArgs
+ CreateGetInitArgsCmd
 
  *****************************************************************************/
 
-CMGetInitArgs*
-GDBLink::CreateGetInitArgs
+GetInitArgs*
+GDBLink::CreateGetInitArgsCmd
 	(
 	JXInputField* argInput
 	)
 {
-	CMGetInitArgs* cmd = jnew GDBGetInitArgs(argInput);
+	GetInitArgs* cmd = jnew GDBGetInitArgs(argInput);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateGetLocalVars
+ CreateGetLocalVarsCmd
 
  *****************************************************************************/
 
-CMGetLocalVars*
-GDBLink::CreateGetLocalVars
+GetLocalVars*
+GDBLink::CreateGetLocalVarsCmd
 	(
-	CMVarNode* rootNode
+	VarNode* rootNode
 	)
 {
-	CMGetLocalVars* cmd = jnew GDBGetLocalVars(rootNode);
+	GetLocalVars* cmd = jnew GDBGetLocalVars(rootNode);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateGetSourceFileList
+ CreateGetSourceFileListCmd
 
  *****************************************************************************/
 
-CMGetSourceFileList*
-GDBLink::CreateGetSourceFileList
+GetSourceFileList*
+GDBLink::CreateGetSourceFileListCmd
 	(
-	CMFileListDir* fileList
+	FileListDir* fileList
 	)
 {
-	CMGetSourceFileList* cmd = jnew GDBGetSourceFileList(fileList);
+	GetSourceFileList* cmd = jnew GDBGetSourceFileList(fileList);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateVarValueCommand
+ CreateVarValueCmd
 
  *****************************************************************************/
 
-CMVarCommand*
-GDBLink::CreateVarValueCommand
-	(
-	const JString& expr
-	)
-{
-	CMVarCommand* cmd = jnew GDBVarCommand("print " + expr);
-	assert( cmd != nullptr );
-	return cmd;
-}
-
-/******************************************************************************
- CreateVarContentCommand
-
- *****************************************************************************/
-
-CMVarCommand*
-GDBLink::CreateVarContentCommand
+VarCommand*
+GDBLink::CreateVarValueCmd
 	(
 	const JString& expr
 	)
 {
-	CMVarCommand* cmd = jnew GDBVarCommand("print *(" + expr + ")");
+	VarCommand* cmd = jnew GDBVarCommand("print " + expr);
+	assert( cmd != nullptr );
+	return cmd;
+}
+
+/******************************************************************************
+ CreateVarContentCmd
+
+ *****************************************************************************/
+
+VarCommand*
+GDBLink::CreateVarContentCmd
+	(
+	const JString& expr
+	)
+{
+	VarCommand* cmd = jnew GDBVarCommand("print *(" + expr + ")");
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1718,18 +1718,18 @@ GDBLink::CreateVarContentCommand
 
  *****************************************************************************/
 
-CMVarNode*
+VarNode*
 GDBLink::CreateVarNode
 	(
 	const bool shouldUpdate		// false for Local Variables
 	)
 {
-	CMVarNode* node = jnew GDBVarNode(shouldUpdate);
+	VarNode* node = jnew GDBVarNode(shouldUpdate);
 	assert( node != nullptr );
 	return node;
 }
 
-CMVarNode*
+VarNode*
 GDBLink::CreateVarNode
 	(
 	JTreeNode*		parent,
@@ -1738,7 +1738,7 @@ GDBLink::CreateVarNode
 	const JString&	value
 	)
 {
-	CMVarNode* node = jnew GDBVarNode(parent, name, value);
+	VarNode* node = jnew GDBVarNode(parent, name, value);
 	assert( node != nullptr );
 	return node;
 }
@@ -1775,49 +1775,49 @@ GDBLink::Build2DArrayExpression
 }
 
 /******************************************************************************
- CreateGetMemory
+ CreateGetMemoryCmd
 
  *****************************************************************************/
 
-CMGetMemory*
-GDBLink::CreateGetMemory
+GetMemory*
+GDBLink::CreateGetMemoryCmd
 	(
-	CMMemoryDir* dir
+	MemoryDir* dir
 	)
 {
-	CMGetMemory* cmd = jnew GDBGetMemory(dir);
+	GetMemory* cmd = jnew GDBGetMemory(dir);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateGetAssembly
+ CreateGetAssemblyCmd
 
  *****************************************************************************/
 
-CMGetAssembly*
-GDBLink::CreateGetAssembly
+GetAssemblyCmd*
+GDBLink::CreateGetAssemblyCmd
 	(
-	CMSourceDirector* dir
+	SourceDirector* dir
 	)
 {
-	CMGetAssembly* cmd = jnew GDBGetAssembly(dir);
+	GetAssemblyCmd* cmd = jnew GDBGetAssemblyCmd(dir);
 	assert( cmd != nullptr );
 	return cmd;
 }
 
 /******************************************************************************
- CreateGetRegisters
+ CreateGetRegistersCmd
 
  *****************************************************************************/
 
-CMGetRegisters*
-GDBLink::CreateGetRegisters
+GetRegisters*
+GDBLink::CreateGetRegistersCmd
 	(
-	CMRegistersDir* dir
+	RegistersDir* dir
 	)
 {
-	CMGetRegisters* cmd = jnew GDBGetRegisters(dir);
+	GetRegisters* cmd = jnew GDBGetRegisters(dir);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -2101,7 +2101,7 @@ GDBLink::SendRaw
 void
 GDBLink::SendMedicCommand
 	(
-	CMCommand* command
+	Command* command
 	)
 {
 	if (itsOutputLink == nullptr)
@@ -2223,7 +2223,7 @@ GDBLink::StopProgram()
 	else
 	{
 		auto* dlog =
-			jnew CMChooseProcessDialog(JXGetApplication(), false, true);
+			jnew ChooseProcessDialog(JXGetApplication(), false, true);
 		assert( dlog != nullptr );
 		dlog->BeginDialog();
 	}
@@ -2295,7 +2295,7 @@ GDBLink::StartDebugger()
 
 	itsScanner->Reset();
 
-	itsDebuggerCmd    = CMGetPrefsManager()->GetGDBCommand();
+	itsDebuggerCmd    = GetPrefsManager()->GetGDBCommand();
 	const JString cmd = itsDebuggerCmd + " --fullname --interpreter=mi2";
 
 	int toFD, fromFD;
@@ -2360,7 +2360,7 @@ GDBLink::InitDebugger()
 bool
 GDBLink::ChangeDebugger()
 {
-	CMPrefsManager* mgr = CMGetPrefsManager();
+	PrefsManager* mgr = GetPrefsManager();
 	if (itsDebuggerCmd != mgr->GetGDBCommand())
 	{
 		return RestartDebugger();

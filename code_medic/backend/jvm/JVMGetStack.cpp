@@ -1,7 +1,7 @@
 /******************************************************************************
  JVMGetStack.cpp
 
-	BASE CLASS = CMGetStack
+	BASE CLASS = GetStack
 
 	Copyright (C) 2009 by John Lindal.
 
@@ -9,9 +9,9 @@
 
 #include "JVMGetStack.h"
 #include "JVMStackFrameNode.h"
-#include "CMStackWidget.h"
+#include "StackWidget.h"
 #include "JVMLink.h"
-#include "cmGlobals.h"
+#include "globals.h"
 #include <jx-af/jcore/JTree.h>
 #include <jx-af/jcore/jAssert.h>
 
@@ -23,10 +23,10 @@
 JVMGetStack::JVMGetStack
 	(
 	JTree*			tree,
-	CMStackWidget*	widget
+	StackWidget*	widget
 	)
 	:
-	CMGetStack(JString::empty, tree, widget)
+	GetStack(JString::empty, tree, widget)
 {
 }
 
@@ -47,9 +47,9 @@ JVMGetStack::~JVMGetStack()
 void
 JVMGetStack::Starting()
 {
-	CMCommand::Starting();
+	Command::Starting();
 
-	auto* link       = dynamic_cast<JVMLink*>(CMGetLink());
+	auto* link       = dynamic_cast<JVMLink*>(GetLink());
 	const JSize length  = link->GetObjectIDSize();
 	const JSize size    = length+8;
 	auto* data = (unsigned char*) calloc(size, 1);
@@ -81,7 +81,7 @@ JVMGetStack::HandleSuccess
 	const JString& origData
 	)
 {
-	auto* link = dynamic_cast<JVMLink*>(CMGetLink());
+	auto* link = dynamic_cast<JVMLink*>(GetLink());
 	const JVMSocket::MessageReady* msg;
 	if (!link->GetLatestMessageFromJVM(&msg))
 	{

@@ -9,7 +9,7 @@
 
 #include "GDBGetStopLocationForLink.h"
 #include "GDBLink.h"
-#include "cmGlobals.h"
+#include "globals.h"
 #include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
@@ -43,5 +43,5 @@ GDBGetStopLocationForLink::HandleSuccess
 	const JString& cmdData
 	)
 {
-	dynamic_cast<GDBLink*>(CMGetLink())->SendProgramStopped(GetLocation());
+	dynamic_cast<GDBLink*>(GetLink())->SendProgramStopped(GetLocation());
 }

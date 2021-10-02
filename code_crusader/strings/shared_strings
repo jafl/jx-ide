@@ -2,7 +2,7 @@
 
 # Copyright © 2000 by John Lindal.
 
-# CBFunctionMenu
+# FunctionMenu
 
 EmptyMenu::FunctionMenu	"No $name %d"
 

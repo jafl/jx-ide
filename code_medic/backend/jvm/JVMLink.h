@@ -8,7 +8,7 @@
 #ifndef _H_JVMLink
 #define _H_JVMLink
 
-#include "CMLink.h"
+#include "Link.h"
 #include "JVMSocket.h"
 #include <jx-af/jcore/JProcess.h>
 #include <jx-af/jcore/JAliasArray.h>
@@ -18,7 +18,7 @@
 #include <ace/INET_Addr.h>
 #include <ace/LSOCK_Stream.h>
 #include <ace/UNIX_Addr.h>
-#include "CMPipe.h"
+#include "Pipe.h"
 
 class JProcess;
 class JXTimerTask;
@@ -26,7 +26,7 @@ class JVMSocket;
 class JVMBreakpointManager;
 class JVMThreadNode;
 
-class JVMLink : public CMLink
+class JVMLink : public Link
 {
 public:
 
@@ -192,9 +192,9 @@ public:
 	virtual bool	OKToDetachOrKill() const override;
 
 	virtual bool	OKToSendCommands(const bool background) const override;
-	virtual bool	Send(CMCommand* cmd) override;
+	virtual bool	Send(Command* cmd) override;
 
-	virtual CMBreakpointManager*	GetBreakpointManager() override;
+	virtual BreakpointManager*	GetBreakpointManager() override;
 
 	virtual void	ShowBreakpointInfo(const JIndex debuggerIndex) override;
 	virtual void	SetBreakpoint(const JString& fileName, const JIndex lineIndex,
@@ -260,43 +260,43 @@ public:
 	void	AddFrame(const JUInt64 id, const JUInt64 classID,
 					 const JUInt64 methodID, const JUInt64 codeOffset);
 
-	// CMCommand factory
+	// Command factory
 
-	virtual CMArray2DCommand*		CreateArray2DCommand(CMArray2DDir* dir,
+	virtual Array2DCmd*		CreateArray2DCmd(Array2DDir* dir,
 														 JXStringTable* table,
 														 JStringTableData* data) override;
-	virtual CMPlot2DCommand*		CreatePlot2DCommand(CMPlot2DDir* dir,
+	virtual Plot2DCommand*		CreatePlot2DCmd(Plot2DDir* dir,
 														JArray<JFloat>* x,
 														JArray<JFloat>* y) override;
-	virtual CMDisplaySourceForMain*	CreateDisplaySourceForMain(CMSourceDirector* sourceDir) override;
-	virtual CMGetCompletions*		CreateGetCompletions(CMCommandInput* input,
-														 CMCommandOutputDisplay* history) override;
-	virtual CMGetFrame*				CreateGetFrame(CMStackWidget* widget) override;
-	virtual CMGetStack*				CreateGetStack(JTree* tree, CMStackWidget* widget) override;
-	virtual CMGetThread*			CreateGetThread(CMThreadsWidget* widget) override;
-	virtual CMGetThreads*			CreateGetThreads(JTree* tree, CMThreadsWidget* widget) override;
-	virtual CMGetFullPath*			CreateGetFullPath(const JString& fileName,
+	virtual DisplaySourceForMainCmd*	CreateDisplaySourceForMainCmd(SourceDirector* sourceDir) override;
+	virtual GetCompletionsCmd*		CreateGetCompletionsCmd(CommandInput* input,
+														 CommandOutputDisplay* history) override;
+	virtual GetFrameCmd*				CreateGetFrameCmd(StackWidget* widget) override;
+	virtual GetStack*				CreateGetStackCmd(JTree* tree, StackWidget* widget) override;
+	virtual GetThread*			CreateGetThreadCmd(ThreadsWidget* widget) override;
+	virtual GetThreads*			CreateGetThreadsCmd(JTree* tree, ThreadsWidget* widget) override;
+	virtual GetFullPathCmd*			CreateGetFullPathCmd(const JString& fileName,
 													  const JIndex lineIndex = 0) override;
-	virtual CMGetInitArgs*			CreateGetInitArgs(JXInputField* argInput) override;
-	virtual CMGetLocalVars*			CreateGetLocalVars(CMVarNode* rootNode) override;
-	virtual CMGetSourceFileList*	CreateGetSourceFileList(CMFileListDir* fileList) override;
-	virtual CMVarCommand*			CreateVarValueCommand(const JString& expr) override;
-	virtual CMVarCommand*			CreateVarContentCommand(const JString& expr) override;
-	virtual CMVarNode*				CreateVarNode(const bool shouldUpdate = true) override;
-	virtual CMVarNode*				CreateVarNode(JTreeNode* parent, const JString& name,
+	virtual GetInitArgs*			CreateGetInitArgsCmd(JXInputField* argInput) override;
+	virtual GetLocalVars*			CreateGetLocalVarsCmd(VarNode* rootNode) override;
+	virtual GetSourceFileList*	CreateGetSourceFileListCmd(FileListDir* fileList) override;
+	virtual VarCommand*			CreateVarValueCmd(const JString& expr) override;
+	virtual VarCommand*			CreateVarContentCmd(const JString& expr) override;
+	virtual VarNode*				CreateVarNode(const bool shouldUpdate = true) override;
+	virtual VarNode*				CreateVarNode(JTreeNode* parent, const JString& name,
 												  const JString& fullName, const JString& value) override;
 	virtual JString					Build1DArrayExpression(const JString& expr,
 														   const JInteger index) override;
 	virtual JString					Build2DArrayExpression(const JString& expr,
 														   const JInteger rowIndex,
 														   const JInteger colIndex) override;
-	virtual CMGetMemory*			CreateGetMemory(CMMemoryDir* dir) override;
-	virtual CMGetAssembly*			CreateGetAssembly(CMSourceDirector* dir) override;
-	virtual CMGetRegisters*			CreateGetRegisters(CMRegistersDir* dir) override;
+	virtual GetMemory*			CreateGetMemoryCmd(MemoryDir* dir) override;
+	virtual GetAssemblyCmd*			CreateGetAssemblyCmd(SourceDirector* dir) override;
+	virtual GetRegisters*			CreateGetRegistersCmd(RegistersDir* dir) override;
 
 	// called by JVM commands
 
-	void		Send(const CMCommand* command, const JIndex cmdSet, const JIndex cmd,
+	void		Send(const Command* command, const JIndex cmdSet, const JIndex cmd,
 					 const unsigned char* data, const JSize count);
 	bool	GetLatestMessageFromJVM(const JVMSocket::MessageReady** msg) const;
 
@@ -326,14 +326,14 @@ public:
 
 protected:
 
-	virtual void	SendMedicCommand(CMCommand* command) override;
+	virtual void	SendMedicCommand(Command* command) override;
 
 	virtual void	Receive(JBroadcaster* sender, const Message& message) override;
 
 private:
 
 	typedef ACE_Acceptor<JVMSocket, ACE_SOCK_ACCEPTOR>	JVMAcceptor;
-	typedef CMPipe<ACE_LSOCK_STREAM>					ProcessLink;
+	typedef Pipe<ACE_LSOCK_STREAM>					ProcessLink;
 
 public:
 

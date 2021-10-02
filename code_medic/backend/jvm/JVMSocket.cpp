@@ -11,7 +11,7 @@
 
 #include "JVMSocket.h"
 #include "JVMLink.h"
-#include "cmGlobals.h"
+#include "globals.h"
 #include <jx-af/jcore/jAssert.h>
 
 static const JString kHandshake("JDWP-Handshake", JString::kNoCopy);
@@ -69,7 +69,7 @@ JVMSocket::open
 	if (result == 0)
 	{
 		JNetworkProtocolBase<ACE_SOCK_STREAM>::Send(kHandshake);
-		dynamic_cast<JVMLink*>(CMGetLink())->ConnectionEstablished(this);
+		dynamic_cast<JVMLink*>(GetLink())->ConnectionEstablished(this);
 		StartTimer();
 	}
 	return result;
@@ -89,7 +89,7 @@ JVMSocket::handle_close
 	ACE_Reactor_Mask	m
 	)
 {
-	dynamic_cast<JVMLink*>(CMGetLink())->ConnectionFinished(this);
+	dynamic_cast<JVMLink*>(GetLink())->ConnectionFinished(this);
 	return JNetworkProtocolBase<ACE_SOCK_STREAM>::handle_close(h, m);
 }
 
@@ -133,7 +133,7 @@ JVMSocket::handle_input
 			itsHandshakeFinishedFlag = true;
 			itsRecvData->RemoveNextElements(1, kHandshake.GetByteCount());
 
-			dynamic_cast<JVMLink*>(CMGetLink())->InitDebugger();
+			dynamic_cast<JVMLink*>(GetLink())->InitDebugger();
 		}
 
 		while (itsHandshakeFinishedFlag && itsRecvData->GetElementCount() >= 11)

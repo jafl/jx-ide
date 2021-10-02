@@ -1,7 +1,7 @@
 /******************************************************************************
  LLDBBreakpointManager.cpp
 
-	BASE CLASS = CMBreakpointManager
+	BASE CLASS = BreakpointManager
 
 	Copyright (C) 2016 by John Lindal.
 
@@ -22,7 +22,7 @@ LLDBBreakpointManager::LLDBBreakpointManager
 	LLDBLink* link
 	)
 	:
-	CMBreakpointManager(link, jnew LLDBGetBreakpoints())
+	BreakpointManager(link, jnew LLDBGetBreakpoints())
 {
 }
 

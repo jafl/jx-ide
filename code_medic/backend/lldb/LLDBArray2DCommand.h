@@ -8,13 +8,13 @@
 #ifndef _H_LLDBArray2DCommand
 #define _H_LLDBArray2DCommand
 
-#include "CMArray2DCommand.h"
+#include "Array2DCmd.h"
 
-class LLDBArray2DCommand : public CMArray2DCommand
+class LLDBArray2DCommand : public Array2DCmd
 {
 public:
 
-	LLDBArray2DCommand(CMArray2DDir* dir,
+	LLDBArray2DCommand(Array2DDir* dir,
 					   JXStringTable* table, JStringTableData* data);
 
 	virtual	~LLDBArray2DCommand();

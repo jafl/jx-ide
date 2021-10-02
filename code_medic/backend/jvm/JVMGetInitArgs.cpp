@@ -1,7 +1,7 @@
 /******************************************************************************
  JVMGetInitArgs.cpp
 
-	BASE CLASS = CMGetInitArgs
+	BASE CLASS = GetInitArgs
 
 	Copyright (C) 2009 by John Lindal.
 
@@ -20,7 +20,7 @@ JVMGetInitArgs::JVMGetInitArgs
 	JXInputField* argInput
 	)
 	:
-	CMGetInitArgs(JString("NOP", JString::kNoCopy))
+	GetInitArgs(JString("NOP", JString::kNoCopy))
 {
 }
 

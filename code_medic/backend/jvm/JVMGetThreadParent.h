@@ -8,12 +8,12 @@
 #ifndef _H_JVMGetThreadParent
 #define _H_JVMGetThreadParent
 
-#include "CMCommand.h"
+#include "Command.h"
 #include <jx-af/jcore/JBroadcaster.h>
 
 class JVMThreadNode;
 
-class JVMGetThreadParent : public CMCommand, virtual public JBroadcaster
+class JVMGetThreadParent : public Command, virtual public JBroadcaster
 {
 public:
 

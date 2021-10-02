@@ -8,9 +8,9 @@
 #ifndef _H_JVMGetIDSizes
 #define _H_JVMGetIDSizes
 
-#include "CMCommand.h"
+#include "Command.h"
 
-class JVMGetIDSizes : public CMCommand
+class JVMGetIDSizes : public Command
 {
 public:
 

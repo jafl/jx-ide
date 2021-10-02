@@ -8,15 +8,15 @@
 #ifndef _H_LLDBGetFrame
 #define _H_LLDBGetFrame
 
-#include "CMGetFrame.h"
+#include "GetFrameCmd.h"
 
-class CMStackWidget;
+class StackWidget;
 
-class LLDBGetFrame : public CMGetFrame
+class LLDBGetFrame : public GetFrameCmd
 {
 public:
 
-	LLDBGetFrame(CMStackWidget* widget);
+	LLDBGetFrame(StackWidget* widget);
 
 	virtual	~LLDBGetFrame();
 
@@ -26,7 +26,7 @@ protected:
 
 private:
 
-	CMStackWidget*	itsWidget;
+	StackWidget*	itsWidget;
 };
 
 #endif

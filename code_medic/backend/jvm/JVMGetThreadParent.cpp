@@ -1,7 +1,7 @@
 /******************************************************************************
  JVMGetThreadParent.cpp
 
-	BASE CLASS = CMCommand, virtual JBroadcaster
+	BASE CLASS = Command, virtual JBroadcaster
 
 	Copyright (C) 2011 by John Lindal.
 
@@ -10,7 +10,7 @@
 #include "JVMGetThreadParent.h"
 #include "JVMThreadNode.h"
 #include "JVMLink.h"
-#include "cmGlobals.h"
+#include "globals.h"
 #include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
@@ -24,12 +24,12 @@ JVMGetThreadParent::JVMGetThreadParent
 	const bool	checkOnly
 	)
 	:
-	CMCommand("", true, false),
+	Command("", true, false),
 	itsNode(node),
 	itsCheckOnlyFlag(checkOnly)
 {
 	ClearWhenGoingAway(itsNode, &itsNode);
-	CMCommand::Send();
+	Command::Send();
 }
 
 /******************************************************************************
@@ -49,11 +49,11 @@ JVMGetThreadParent::~JVMGetThreadParent()
 void
 JVMGetThreadParent::Starting()
 {
-	CMCommand::Starting();
+	Command::Starting();
 
 	if (itsNode != nullptr)
 	{
-		auto* link = dynamic_cast<JVMLink*>(CMGetLink());
+		auto* link = dynamic_cast<JVMLink*>(GetLink());
 
 		const JSize length  = link->GetObjectIDSize();
 		auto* data = (unsigned char*) calloc(length, 1);
@@ -82,7 +82,7 @@ JVMGetThreadParent::HandleSuccess
 	const JString& origData
 	)
 {
-	auto* link = dynamic_cast<JVMLink*>(CMGetLink());
+	auto* link = dynamic_cast<JVMLink*>(GetLink());
 	const JVMSocket::MessageReady* msg;
 	if (!link->GetLatestMessageFromJVM(&msg))
 	{

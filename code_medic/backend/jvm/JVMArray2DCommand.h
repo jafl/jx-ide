@@ -8,13 +8,13 @@
 #ifndef _H_JVMArray2DCommand
 #define _H_JVMArray2DCommand
 
-#include "CMArray2DCommand.h"
+#include "Array2DCmd.h"
 
-class JVMArray2DCommand : public CMArray2DCommand
+class JVMArray2DCommand : public Array2DCmd
 {
 public:
 
-	JVMArray2DCommand(CMArray2DDir* dir,
+	JVMArray2DCommand(Array2DDir* dir,
 					 JXStringTable* table, JStringTableData* data);
 
 	virtual	~JVMArray2DCommand();

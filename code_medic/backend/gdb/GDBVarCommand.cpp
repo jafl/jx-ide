@@ -1,7 +1,7 @@
 /******************************************************************************
  GDBVarCommand.cpp
 
-	BASE CLASS = CMVarCommand
+	BASE CLASS = VarCommand
 
 	Copyright (C) 2001 by John Lindal.
 
@@ -9,7 +9,7 @@
 
 #include "GDBVarCommand.h"
 #include "GDBVarTreeParser.h"
-#include "cmGlobals.h"
+#include "globals.h"
 #include <jx-af/jcore/JStringIterator.h>
 #include <jx-af/jcore/JRegex.h>
 #include <jx-af/jcore/jAssert.h>
@@ -24,7 +24,7 @@ GDBVarCommand::GDBVarCommand
 	const JString& origCmd
 	)
 	:
-	CMVarCommand()
+	VarCommand()
 {
 	JString cmd("set print pretty off\nset print array off\n"
 				"set print repeats 0\nset width 0\n");
@@ -80,7 +80,7 @@ GDBVarCommand::HandleSuccess
 	}
 	else
 	{
-		CMGetLink()->Log("GDBVarCommand failed to match");
+		GetLink()->Log("GDBVarCommand failed to match");
 	}
 
 	if (!success)

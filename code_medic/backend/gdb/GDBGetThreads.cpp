@@ -1,15 +1,15 @@
 /******************************************************************************
  GDBGetThreads.cpp
 
-	BASE CLASS = CMGetThreads
+	BASE CLASS = GetThreads
 
 	Copyright (C) 2001 by John Lindal.
 
  ******************************************************************************/
 
 #include "GDBGetThreads.h"
-#include "CMThreadsWidget.h"
-#include "CMThreadNode.h"
+#include "ThreadsWidget.h"
+#include "ThreadNode.h"
 #include <jx-af/jcore/JTree.h>
 #include <jx-af/jcore/JStringIterator.h>
 #include <jx-af/jcore/JRegex.h>
@@ -26,10 +26,10 @@
 GDBGetThreads::GDBGetThreads
 	(
 	JTree*				tree,
-	CMThreadsWidget*	widget
+	ThreadsWidget*	widget
 	)
 	:
-	CMGetThreads(JString("set width 0\ninfo threads", JString::kNoCopy), widget),
+	GetThreads(JString("set width 0\ninfo threads", JString::kNoCopy), widget),
 	itsTree(tree)
 {
 }
@@ -115,7 +115,7 @@ GDBGetThreads::HandleSuccess
 		{
 			ExtractLocation(*line, &fileName, &lineIndex);
 
-			auto* node = jnew CMThreadNode(threadIndex, *line, fileName, lineIndex);
+			auto* node = jnew ThreadNode(threadIndex, *line, fileName, lineIndex);
 			assert( node != nullptr );
 
 			root->Append(node);

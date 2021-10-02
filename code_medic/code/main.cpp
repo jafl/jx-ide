@@ -5,10 +5,10 @@
 
  ******************************************************************************/
 
-#include "CMApp.h"
-#include "CMCommandDirector.h"
-#include "CMMDIServer.h"
-#include "cmGlobals.h"
+#include "App.h"
+#include "CommandDirector.h"
+#include "MDIServer.h"
+#include "globals.h"
 #include <jx-af/jx/JXDockManager.h>
 #include <jx-af/jx/JXSplashWindow.h>
 #include <jx-af/jcore/jProcessUtil.h>
@@ -39,14 +39,14 @@ main
 {
 	ParseTextOptions(argc, argv);
 
-	if (!CMMDIServer::WillBeMDIServer(CMApp::GetAppSignature(), argc, argv))
+	if (!MDIServer::WillBeMDIServer(App::GetAppSignature(), argc, argv))
 	{
 		return 0;
 	}
 
 	bool displayAbout;
 	JString prevVersStr;
-	auto* app = jnew CMApp(&argc, argv, &displayAbout, &prevVersStr);
+	auto* app = jnew App(&argc, argv, &displayAbout, &prevVersStr);
 	assert( app != nullptr );
 
 	if (displayAbout &&
@@ -55,9 +55,9 @@ main
 		return 0;
 	}
 
-	JCheckForNewerVersion(CMGetPrefsManager(), kVersionCheckID);
+	JCheckForNewerVersion(GetPrefsManager(), kVersionCheckID);
 
-	CMCreateCommandDirector();	// so dock appears after JCheckForNewerVersion()
+	CreateCommandDirector();	// so dock appears after JCheckForNewerVersion()
 
 	JXMDIServer* mdi;
 	if (JXGetMDIServer(&mdi))
@@ -96,13 +96,13 @@ ParseTextOptions
 	{
 		if (JIsVersionRequest(argv[index]))
 		{
-			CMApp::InitStrings();
+			App::InitStrings();
 			PrintVersion();
 			exit(0);
 		}
 		else if (JIsHelpRequest(argv[index]))
 		{
-			CMApp::InitStrings();
+			App::InitStrings();
 			PrintHelp();
 			exit(0);
 		}
@@ -123,7 +123,7 @@ PrintHelp()
 		"version",   JGetString("VERSION").GetBytes(),
 		"copyright", JGetString("COPYRIGHT").GetBytes()
 	};
-	const JString s = JGetString("CMCommandLineHelp", map, sizeof(map));
+	const JString s = JGetString("CommandLineHelp", map, sizeof(map));
 	std::cout << std::endl << s << std::endl << std::endl;
 }
 
@@ -141,6 +141,6 @@ PrintVersion()
 		"version",   JGetString("VERSION").GetBytes(),
 		"copyright", JGetString("COPYRIGHT").GetBytes()
 	};
-	std::cout << JGetString("CMDescription", map, sizeof(map));
+	std::cout << JGetString("Description", map, sizeof(map));
 	std::cout << std::endl << std::endl;
 }

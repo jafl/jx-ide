@@ -1,14 +1,14 @@
 /******************************************************************************
  XDGetFrame.cpp
 
-	BASE CLASS = CMGetFrame
+	BASE CLASS = GetFrameCmd
 
 	Copyright (C) 2007 by John Lindal.
 
  ******************************************************************************/
 
 #include "XDGetFrame.h"
-#include "CMStackWidget.h"
+#include "StackWidget.h"
 #include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
@@ -18,10 +18,10 @@
 
 XDGetFrame::XDGetFrame
 	(
-	CMStackWidget* widget
+	StackWidget* widget
 	)
 	:
-	CMGetFrame(JString("status", JString::kNoCopy)),
+	GetFrameCmd(JString("status", JString::kNoCopy)),
 	itsWidget(widget)
 {
 }

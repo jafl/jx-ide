@@ -8,11 +8,11 @@
 #ifndef _H_LLDBVarNode
 #define _H_LLDBVarNode
 
-#include "CMVarNode.h"
+#include "VarNode.h"
 #include "lldb/API/SBFrame.h"
 #include "lldb/API/SBValue.h"
 
-class LLDBVarNode : public CMVarNode
+class LLDBVarNode : public VarNode
 {
 public:
 
@@ -24,7 +24,7 @@ public:
 
 	virtual JString	GetFullName(bool* isPointer = nullptr) const override;
 
-	static CMVarNode*	BuildTree(lldb::SBFrame& frame, lldb::SBValue& value);
+	static VarNode*	BuildTree(lldb::SBFrame& frame, lldb::SBValue& value);
 };
 
 #endif

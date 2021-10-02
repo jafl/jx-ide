@@ -12,7 +12,7 @@
 
 #include "JVMWelcomeTask.h"
 #include "JVMLink.h"
-#include "cmGlobals.h"
+#include "globals.h"
 
 /******************************************************************************
  Constructor
@@ -47,7 +47,7 @@ JVMWelcomeTask::~JVMWelcomeTask()
 void
 JVMWelcomeTask::Perform()
 {
-	auto* link = dynamic_cast<JVMLink*>(CMGetLink());
+	auto* link = dynamic_cast<JVMLink*>(GetLink());
 	if (link != nullptr)
 	{
 		link->BroadcastWelcome(itsMessage, itsErrorFlag);

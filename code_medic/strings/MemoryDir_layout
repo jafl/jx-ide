@@ -1,0 +1,4 @@
+0
+exprLabel::MemoryDir::JXLayout "Expression:"
+countLabel::MemoryDir::JXLayout "# of items:"
+itsDisplayTypeMenu::MemoryDir::JXLayout "Display as:"

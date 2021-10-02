@@ -8,13 +8,13 @@
 #ifndef _H_GDBGetRegisters
 #define _H_GDBGetRegisters
 
-#include "CMGetRegisters.h"
+#include "GetRegisters.h"
 
-class GDBGetRegisters : public CMGetRegisters
+class GDBGetRegisters : public GetRegisters
 {
 public:
 
-	GDBGetRegisters(CMRegistersDir* dir);
+	GDBGetRegisters(RegistersDir* dir);
 
 	virtual	~GDBGetRegisters();
 

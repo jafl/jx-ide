@@ -1,7 +1,7 @@
 /******************************************************************************
  LLDBGetSourceFileList.cpp
 
-	BASE CLASS = CMGetSourceFileList
+	BASE CLASS = GetSourceFileList
 
 	Copyright (C) 2016 by John Lindal.
 
@@ -11,9 +11,9 @@
 #include "lldb/API/SBTarget.h"
 #include "lldb/API/SBModule.h"
 #include "lldb/API/SBCompileUnit.h"
-#include "CMFileListDir.h"
+#include "FileListDir.h"
 #include "LLDBLink.h"
-#include "cmGlobals.h"
+#include "globals.h"
 #include <jx-af/jx/JXFileListTable.h>
 #include <jx-af/jcore/jFileUtil.h>
 #include <jx-af/jcore/jStreamUtil.h>
@@ -26,10 +26,10 @@
 
 LLDBGetSourceFileList::LLDBGetSourceFileList
 	(
-	CMFileListDir* fileList
+	FileListDir* fileList
 	)
 	:
-	CMGetSourceFileList(JString::empty, fileList)
+	GetSourceFileList(JString::empty, fileList)
 {
 }
 
@@ -53,7 +53,7 @@ LLDBGetSourceFileList::HandleSuccess
 	const JString& origData
 	)
 {
-	auto* link = dynamic_cast<LLDBLink*>(CMGetLink());
+	auto* link = dynamic_cast<LLDBLink*>(GetLink());
 	if (link == nullptr)
 	{
 		return;

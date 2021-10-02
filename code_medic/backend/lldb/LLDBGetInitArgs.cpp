@@ -3,14 +3,14 @@
 
 	Gets the initial setting for the arguments to the program set by .lldbinit
 
-	BASE CLASS = CMGetInitArgs
+	BASE CLASS = GetInitArgs
 
 	Copyright (C) 2016 by John Lindal.
 
  ******************************************************************************/
 
 #include "LLDBGetInitArgs.h"
-#include "cmGlobals.h"
+#include "globals.h"
 #include <jx-af/jx/JXInputField.h>
 #include <jx-af/jcore/jAssert.h>
 
@@ -24,7 +24,7 @@ LLDBGetInitArgs::LLDBGetInitArgs
 	JXInputField* argInput
 	)
 	:
-	CMGetInitArgs(JString::empty),
+	GetInitArgs(JString::empty),
 	itsArgInput(argInput)
 {
 }

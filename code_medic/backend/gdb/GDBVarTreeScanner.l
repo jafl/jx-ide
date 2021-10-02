@@ -5,7 +5,7 @@ Copyright (C) 2001 by John Lindal.
 This scanner reads output from gdb's print command.
 */
 
-#include "CMVarNode.h"
+#include "VarNode.h"
 #include "GDBVarGroupInfo.h"
 #include <jx-af/jcore/JString.h>
 #include <jx-af/jcore/JStringIterator.h>

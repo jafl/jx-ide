@@ -8,9 +8,9 @@
 #ifndef _H_JVMGetClassMethods
 #define _H_JVMGetClassMethods
 
-#include "CMCommand.h"
+#include "Command.h"
 
-class JVMGetClassMethods : public CMCommand
+class JVMGetClassMethods : public Command
 {
 public:
 

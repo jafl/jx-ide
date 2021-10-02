@@ -8,15 +8,15 @@
 #ifndef _H_GDBGetSourceFileList
 #define _H_GDBGetSourceFileList
 
-#include "CMGetSourceFileList.h"
+#include "GetSourceFileList.h"
 
-class CMFileListDir;
+class FileListDir;
 
-class GDBGetSourceFileList : public CMGetSourceFileList
+class GDBGetSourceFileList : public GetSourceFileList
 {
 public:
 
-	GDBGetSourceFileList(CMFileListDir* fileList);
+	GDBGetSourceFileList(FileListDir* fileList);
 
 	virtual	~GDBGetSourceFileList();
 

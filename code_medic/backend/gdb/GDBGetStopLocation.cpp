@@ -1,7 +1,7 @@
 /******************************************************************************
  GDBGetStopLocation.cpp
 
-	BASE CLASS = CMCommand
+	BASE CLASS = Command
 
 	Copyright (C) 2009-11 by John Lindal.
 
@@ -9,7 +9,7 @@
 
 #include "GDBGetStopLocation.h"
 #include "GDBLink.h"
-#include "cmGlobals.h"
+#include "globals.h"
 #include <jx-af/jcore/JRegex.h>
 #include <jx-af/jcore/jAssert.h>
 
@@ -20,7 +20,7 @@
 
 GDBGetStopLocation::GDBGetStopLocation()
 	:
-	CMCommand("-stack-info-frame", false, false)
+	Command("-stack-info-frame", false, false)
 {
 }
 
@@ -40,13 +40,13 @@ GDBGetStopLocation::~GDBGetStopLocation()
 
 static const JRegex locationPattern = "\\bframe=\\{";
 
-CMLocation
+Location
 GDBGetStopLocation::GetLocation()
 	const
 {
 	const JString& data = GetLastResult();
 
-	CMLocation loc;
+	Location loc;
 	const JStringMatch m = locationPattern.Match(data, JRegex::kIgnoreSubmatches);
 	if (!m.IsEmpty())
 	{
@@ -59,19 +59,19 @@ GDBGetStopLocation::GetLocation()
 		const bool parsed = GDBLink::ParseMap(stream, &map);
 		if (!parsed)
 		{
-			CMGetLink()->Log("invalid data map");
+			GetLink()->Log("invalid data map");
 		}
 		else if (!map.GetElement("fullname", &fullName))
 		{
-			CMGetLink()->Log("missing file name");
+			GetLink()->Log("missing file name");
 		}
 		else if (!map.GetElement("line", &s))
 		{
-			CMGetLink()->Log("missing line index");
+			GetLink()->Log("missing line index");
 		}
 		else if (!s->ConvertToUInt(&lineIndex))
 		{
-			CMGetLink()->Log("line index is not integer");
+			GetLink()->Log("line index is not integer");
 		}
 		else
 		{
@@ -87,7 +87,7 @@ GDBGetStopLocation::GetLocation()
 	}
 	else
 	{
-		CMGetLink()->Log("GDBGetStopLocation failed to match");
+		GetLink()->Log("GDBGetStopLocation failed to match");
 	}
 
 	return loc;
