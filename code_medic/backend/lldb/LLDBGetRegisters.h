@@ -8,9 +8,9 @@
 #ifndef _H_LLDBGetRegisters
 #define _H_LLDBGetRegisters
 
-#include "GetRegisters.h"
+#include "GetRegistersCmd.h"
 
-class LLDBGetRegisters : public GetRegisters
+class LLDBGetRegisters : public GetRegistersCmd
 {
 public:
 

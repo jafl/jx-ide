@@ -1,7 +1,7 @@
 /******************************************************************************
  XDGetStack.cpp
 
-	BASE CLASS = GetStack
+	BASE CLASS = GetStackCmd
 
 	Copyright (C) 2007 by John Lindal.
 
@@ -29,7 +29,7 @@ XDGetStack::XDGetStack
 	StackWidget*	widget
 	)
 	:
-	GetStack(JString("stack_get", JString::kNoCopy), tree, widget)
+	GetStackCmd(JString("stack_get", JString::kNoCopy), tree, widget)
 {
 }
 

@@ -1,7 +1,7 @@
 /******************************************************************************
  GDBBreakpointManager.cpp
 
-	BASE CLASS = BreakpointManager
+	BASE CLASS = ::BreakpointManager
 
 	Copyright (C) 2007 by John Lindal.
 
@@ -17,12 +17,12 @@
 
  *****************************************************************************/
 
-GDBBreakpointManager::GDBBreakpointManager
+gdb::BreakpointManager::BreakpointManager
 	(
-	GDBLink* link
+	Link* link
 	)
 	:
-	BreakpointManager(link, jnew GDBGetBreakpointsCmd())
+	::BreakpointManager(link, jnew GetBreakpointsCmd())
 {
 }
 
@@ -31,6 +31,6 @@ GDBBreakpointManager::GDBBreakpointManager
 
  *****************************************************************************/
 
-GDBBreakpointManager::~GDBBreakpointManager()
+gdb::BreakpointManager::~BreakpointManager()
 {
 }

@@ -37,12 +37,12 @@ const JSize kCommandCount = sizeof(kCommand) / sizeof(JUtf8Byte*);
 
  ******************************************************************************/
 
-GDBDisplaySourceForMainCmd::GDBDisplaySourceForMainCmd
+gdb::DisplaySourceForMainCmd::DisplaySourceForMainCmd
 	(
 	SourceDirector* sourceDir
 	)
 	:
-	DisplaySourceForMainCmd(sourceDir, JString(kCommand[0], JString::kNoCopy)),
+	::DisplaySourceForMainCmd(sourceDir, JString(kCommand[0], JString::kNoCopy)),
 	itsHasCoreFlag(false),
 	itsNextCmdIndex(1)
 {
@@ -54,7 +54,7 @@ GDBDisplaySourceForMainCmd::GDBDisplaySourceForMainCmd
 
  ******************************************************************************/
 
-GDBDisplaySourceForMainCmd::~GDBDisplaySourceForMainCmd()
+gdb::DisplaySourceForMainCmd::~DisplaySourceForMainCmd()
 {
 }
 
@@ -64,7 +64,7 @@ GDBDisplaySourceForMainCmd::~GDBDisplaySourceForMainCmd()
  ******************************************************************************/
 
 void
-GDBDisplaySourceForMainCmd::Receive
+gdb::DisplaySourceForMainCmd::Receive
 	(
 	JBroadcaster*	sender,
 	const Message&	message
@@ -106,7 +106,7 @@ static const JRegex locationPattern =
 	"032032(.+):([[:digit:]]+):[[:digit:]]+:[^:]+:0x[[:xdigit:]]+";
 
 void
-GDBDisplaySourceForMainCmd::HandleSuccess
+gdb::DisplaySourceForMainCmd::HandleSuccess
 	(
 	const JString& data
 	)
@@ -131,7 +131,7 @@ GDBDisplaySourceForMainCmd::HandleSuccess
 			"tbreak_cmd", kBreakCommand[ itsNextCmdIndex-1 ]
 		};
 		const JString cmd = JGetString("RunCommand::GDBDisplaySourceForMainCmd", map, sizeof(map));
-		dynamic_cast<GDBLink*>(GetLink())->SendWhenStopped(cmd);
+		dynamic_cast<Link*>(GetLink())->SendWhenStopped(cmd);
 	}
 	else if (itsNextCmdIndex < kCommandCount)
 	{
@@ -148,13 +148,13 @@ GDBDisplaySourceForMainCmd::HandleSuccess
 			GetSourceDir()->ClearDisplay();
 		}
 
-		dynamic_cast<GDBLink*>(GetLink())->FirstBreakImpossible();
+		dynamic_cast<Link*>(GetLink())->FirstBreakImpossible();
 
 		const JUtf8Byte* map[] =
 		{
 			"tbreak_cmd", ""
 		};
 		const JString cmd = JGetString("RunCommand::GDBDisplaySourceForMainCmd", map, sizeof(map));
-		dynamic_cast<GDBLink*>(GetLink())->SendWhenStopped(cmd);
+		dynamic_cast<Link*>(GetLink())->SendWhenStopped(cmd);
 	}
 }

@@ -174,19 +174,19 @@ public:
 	virtual bool	ChangeDebugger() override;
 	virtual bool	RestartDebugger() override;
 
-	virtual JString		GetChooseProgramInstructions() const override;
+	virtual JString	GetChooseProgramInstructions() const override;
 	virtual bool	HasProgram() const override;
 	virtual bool	GetProgram(JString* fullName) const override;
-	virtual void		SetProgram(const JString& fullName) override;
-	virtual void		ReloadProgram() override;
+	virtual void	SetProgram(const JString& fullName) override;
+	virtual void	ReloadProgram() override;
 	virtual bool	HasCore() const override;
 	virtual bool	GetCore(JString* fullName) const override;
-	virtual void		SetCore(const JString& fullName) override;
-	virtual void		AttachToProcess(const pid_t pid) override;
+	virtual void	SetCore(const JString& fullName) override;
+	virtual void	AttachToProcess(const pid_t pid) override;
 
-	virtual void		RunProgram(const JString& args) override;
-	virtual void		StopProgram() override;
-	virtual void		KillProgram() override;
+	virtual void	RunProgram(const JString& args) override;
+	virtual void	StopProgram() override;
+	virtual void	KillProgram() override;
 	virtual bool	ProgramIsRunning() const override;
 	virtual bool	ProgramIsStopped() const override;
 	virtual bool	OKToDetachOrKill() const override;
@@ -240,7 +240,7 @@ public:
 	JUInt64			GetCurrentThreadID() const;
 	void			ThreadCreated(JVMThreadNode* node);
 	void			ThreadDeleted(JVMThreadNode* node);
-	bool		FindThread(const JUInt64 id, JVMThreadNode** node) const;
+	bool			FindThread(const JUInt64 id, JVMThreadNode** node) const;
 
 	void	FlushClassList();
 	void	AddClass(const JUInt64 id, const JString& signature);
@@ -262,42 +262,42 @@ public:
 
 	// Command factory
 
-	virtual Array2DCmd*		CreateArray2DCmd(Array2DDir* dir,
+	virtual Array2DCmd*					CreateArray2DCmd(Array2DDir* dir,
 														 JXStringTable* table,
 														 JStringTableData* data) override;
-	virtual Plot2DCommand*		CreatePlot2DCmd(Plot2DDir* dir,
+	virtual Plot2DCmd*					CreatePlot2DCmd(Plot2DDir* dir,
 														JArray<JFloat>* x,
 														JArray<JFloat>* y) override;
 	virtual DisplaySourceForMainCmd*	CreateDisplaySourceForMainCmd(SourceDirector* sourceDir) override;
-	virtual GetCompletionsCmd*		CreateGetCompletionsCmd(CommandInput* input,
-														 CommandOutputDisplay* history) override;
+	virtual GetCompletionsCmd*			CreateGetCompletionsCmd(CommandInput* input,
+																CommandOutputDisplay* history) override;
 	virtual GetFrameCmd*				CreateGetFrameCmd(StackWidget* widget) override;
-	virtual GetStack*				CreateGetStackCmd(JTree* tree, StackWidget* widget) override;
-	virtual GetThread*			CreateGetThreadCmd(ThreadsWidget* widget) override;
-	virtual GetThreads*			CreateGetThreadsCmd(JTree* tree, ThreadsWidget* widget) override;
-	virtual GetFullPathCmd*			CreateGetFullPathCmd(const JString& fileName,
-													  const JIndex lineIndex = 0) override;
-	virtual GetInitArgs*			CreateGetInitArgsCmd(JXInputField* argInput) override;
-	virtual GetLocalVars*			CreateGetLocalVarsCmd(VarNode* rootNode) override;
-	virtual GetSourceFileList*	CreateGetSourceFileListCmd(FileListDir* fileList) override;
-	virtual VarCommand*			CreateVarValueCmd(const JString& expr) override;
-	virtual VarCommand*			CreateVarContentCmd(const JString& expr) override;
-	virtual VarNode*				CreateVarNode(const bool shouldUpdate = true) override;
-	virtual VarNode*				CreateVarNode(JTreeNode* parent, const JString& name,
-												  const JString& fullName, const JString& value) override;
-	virtual JString					Build1DArrayExpression(const JString& expr,
-														   const JInteger index) override;
-	virtual JString					Build2DArrayExpression(const JString& expr,
-														   const JInteger rowIndex,
-														   const JInteger colIndex) override;
-	virtual GetMemory*			CreateGetMemoryCmd(MemoryDir* dir) override;
-	virtual GetAssemblyCmd*			CreateGetAssemblyCmd(SourceDirector* dir) override;
-	virtual GetRegisters*			CreateGetRegistersCmd(RegistersDir* dir) override;
+	virtual GetStackCmd*				CreateGetStackCmd(JTree* tree, StackWidget* widget) override;
+	virtual GetThreadCmd*				CreateGetThreadCmd(ThreadsWidget* widget) override;
+	virtual GetThreadsCmd*				CreateGetThreadsCmd(JTree* tree, ThreadsWidget* widget) override;
+	virtual GetFullPathCmd*				CreateGetFullPathCmd(const JString& fileName,
+															 const JIndex lineIndex = 0) override;
+	virtual GetInitArgsCmd*				CreateGetInitArgsCmd(JXInputField* argInput) override;
+	virtual GetLocalVarsCmd*			CreateGetLocalVarsCmd(VarNode* rootNode) override;
+	virtual GetSourceFileListCmd*		CreateGetSourceFileListCmd(FileListDir* fileList) override;
+	virtual VarCmd*						CreateVarValueCmd(const JString& expr) override;
+	virtual VarCmd*						CreateVarContentCmd(const JString& expr) override;
+	virtual VarNode*					CreateVarNode(const bool shouldUpdate = true) override;
+	virtual VarNode*					CreateVarNode(JTreeNode* parent, const JString& name,
+													  const JString& fullName, const JString& value) override;
+	virtual JString						Build1DArrayExpression(const JString& expr,
+															   const JInteger index) override;
+	virtual JString						Build2DArrayExpression(const JString& expr,
+															   const JInteger rowIndex,
+															   const JInteger colIndex) override;
+	virtual GetMemoryCmd*				CreateGetMemoryCmd(MemoryDir* dir) override;
+	virtual GetAssemblyCmd*				CreateGetAssemblyCmd(SourceDirector* dir) override;
+	virtual GetRegistersCmd*			CreateGetRegistersCmd(RegistersDir* dir) override;
 
 	// called by JVM commands
 
-	void		Send(const Command* command, const JIndex cmdSet, const JIndex cmd,
-					 const unsigned char* data, const JSize count);
+	void	Send(const Command* command, const JIndex cmdSet, const JIndex cmd,
+				 const unsigned char* data, const JSize count);
 	bool	GetLatestMessageFromJVM(const JVMSocket::MessageReady** msg) const;
 
 	// called by JVMDSocket
@@ -314,7 +314,7 @@ public:
 
 	void	BroadcastProgramSet();
 
-	// called by JVMGetIDSizes
+	// called by JVMGetIDSizesCmd
 
 	void	SetIDSizes(const JSize fieldIDSize, const JSize methodIDSize,
 					   const JSize objectIDSize, const JSize refTypeIDSize,
@@ -333,7 +333,7 @@ protected:
 private:
 
 	typedef ACE_Acceptor<JVMSocket, ACE_SOCK_ACCEPTOR>	JVMAcceptor;
-	typedef Pipe<ACE_LSOCK_STREAM>					ProcessLink;
+	typedef Pipe<ACE_LSOCK_STREAM>						ProcessLink;
 
 public:
 

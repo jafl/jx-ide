@@ -8,11 +8,11 @@
 #ifndef _H_LLDBGetStack
 #define _H_LLDBGetStack
 
-#include "GetStack.h"
+#include "GetStackCmd.h"
 
 class LLDBGetStackArguments;
 
-class LLDBGetStack : public GetStack
+class LLDBGetStack : public GetStackCmd
 {
 public:
 

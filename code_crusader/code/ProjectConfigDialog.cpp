@@ -233,7 +233,7 @@ ProjectConfigDialog::Receive
 	}
 	else if (sender == itsHelpButton && message.Is(JXButton::kPushed))
 	{
-		(JXGetHelpManager())->ShowSection("ProjectHelp-Config");
+		JXGetHelpManager()->ShowSection("ProjectHelp-Config");
 	}
 	else
 	{

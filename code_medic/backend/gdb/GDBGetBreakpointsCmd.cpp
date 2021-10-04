@@ -24,9 +24,9 @@
 
  ******************************************************************************/
 
-GDBGetBreakpointsCmd::GDBGetBreakpointsCmd()
+gdb::GetBreakpointsCmd::GetBreakpointsCmd()
 	:
-	GetBreakpointsCmd(JString("-break-list", JString::kNoCopy))
+	::GetBreakpointsCmd(JString("-break-list", JString::kNoCopy))
 {
 }
 
@@ -35,7 +35,7 @@ GDBGetBreakpointsCmd::GDBGetBreakpointsCmd()
 
  ******************************************************************************/
 
-GDBGetBreakpointsCmd::~GDBGetBreakpointsCmd()
+gdb::GetBreakpointsCmd::~GetBreakpointsCmd()
 {
 }
 
@@ -47,7 +47,7 @@ GDBGetBreakpointsCmd::~GDBGetBreakpointsCmd()
 static const JRegex bpPattern = "\\bbkpt=\\{";
 
 void
-GDBGetBreakpointsCmd::HandleSuccess
+gdb::GetBreakpointsCmd::HandleSuccess
 	(
 	const JString& cmdData
 	)
@@ -55,7 +55,7 @@ GDBGetBreakpointsCmd::HandleSuccess
 	(GetLink()->GetBreakpointManager())->SetUpdateWhenStop(false);
 
 	JPtrArray<Breakpoint> bpList(JPtrArrayT::kForgetAll);		// ownership taken by BreakpointManager
-	bpList.SetCompareFunction(BreakpointManager::CompareBreakpointLocations);
+	bpList.SetCompareFunction(::BreakpointManager::CompareBreakpointLocations);
 	bpList.SetSortOrder(JListT::kSortAscending);
 
 	JPtrArray<Breakpoint> otherList(JPtrArrayT::kForgetAll);	// ownership taken by BreakpointManager
@@ -69,7 +69,7 @@ GDBGetBreakpointsCmd::HandleSuccess
 	while (iter.Next(bpPattern))
 	{
 		stream.seekg(iter.GetLastMatch().GetUtf8ByteRange().last);
-		if (!GDBLink::ParseMap(stream, &map))
+		if (!Link::ParseMap(stream, &map))
 		{
 			GetLink()->Log("invalid data map");
 			break;
@@ -101,7 +101,7 @@ GDBGetBreakpointsCmd::HandleSuccess
  *****************************************************************************/
 
 void
-GDBGetBreakpointsCmd::ParseBreakpoint
+gdb::GetBreakpointsCmd::ParseBreakpoint
 	(
 	JStringPtrMap<JString>&		map,
 	JPtrArray<Breakpoint>*	list
@@ -208,7 +208,7 @@ GDBGetBreakpointsCmd::ParseBreakpoint
  *****************************************************************************/
 
 void
-GDBGetBreakpointsCmd::ParseOther
+gdb::GetBreakpointsCmd::ParseOther
 	(
 	JStringPtrMap<JString>&		map,
 	JPtrArray<Breakpoint>*	list
@@ -254,12 +254,12 @@ GDBGetBreakpointsCmd::ParseOther
  *****************************************************************************/
 
 bool
-GDBGetBreakpointsCmd::ParseCommon
+gdb::GetBreakpointsCmd::ParseCommon
 	(
 	JStringPtrMap<JString>&	map,
 	JIndex*					bpIndex,
-	Breakpoint::Action*	action,
-	bool*				enabled,
+	Breakpoint::Action*		action,
+	bool*					enabled,
 	JSize*					ignoreCount
 	)
 {

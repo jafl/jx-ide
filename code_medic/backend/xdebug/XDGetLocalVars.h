@@ -8,11 +8,11 @@
 #ifndef _H_XDGetLocalVars
 #define _H_XDGetLocalVars
 
-#include "GetLocalVars.h"
+#include "GetLocalVarsCmd.h"
 
 class VarNode;
 
-class XDGetLocalVars : public GetLocalVars
+class XDGetLocalVars : public GetLocalVarsCmd
 {
 public:
 

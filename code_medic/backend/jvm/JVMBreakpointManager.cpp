@@ -8,7 +8,7 @@
  *****************************************************************************/
 
 #include "JVMBreakpointManager.h"
-#include "JVMGetBreakpoints.h"
+#include "JVMGetBreakpointsCmd.h"
 #include "JVMLink.h"
 #include <jx-af/jcore/jAssert.h>
 
@@ -22,7 +22,7 @@ JVMBreakpointManager::JVMBreakpointManager
 	JVMLink* link
 	)
 	:
-	BreakpointManager(link, jnew JVMGetBreakpoints())
+	BreakpointManager(link, jnew JVMGetBreakpointsCmd())
 {
 }
 

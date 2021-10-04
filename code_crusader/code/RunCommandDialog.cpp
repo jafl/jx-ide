@@ -355,7 +355,7 @@ RunCommandDialog::Receive
 
 	else if (sender == itsHelpButton && message.Is(JXButton::kPushed))
 	{
-		(JXGetHelpManager())->ShowSection("TasksHelp");
+		JXGetHelpManager()->ShowSection("TasksHelp");
 	}
 
 	else if (sender == itsSaveCmdMenu && message.Is(JXMenu::kNeedsUpdate))

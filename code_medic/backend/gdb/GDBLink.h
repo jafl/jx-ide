@@ -16,20 +16,23 @@
 #include <jx-af/jcore/JStringPtrMap.h>
 
 class JProcess;
-class GDBBreakpointManager;
-class GDBGetStopLocationForLink;
-class GDBGetStopLocationForAsm;
-class GDBPingTask;
 
-namespace GDB::Output { class Scanner; }
+namespace gdb {
 
-class GDBLink : public Link
+class BreakpointManager;
+class GetStopLocationForLinkCmd;
+class GetStopLocationForAsmCmd;
+class PingTask;
+
+namespace Output { class Scanner; }
+
+class Link : public ::Link
 {
 public:
 
-	GDBLink();
+	Link();
 
-	virtual	~GDBLink();
+	virtual	~Link();
 
 	virtual bool	DebuggerHasStarted() const override;
 	virtual bool	HasLoadedSymbols() const override;
@@ -61,7 +64,7 @@ public:
 	void			Send(const JString& text);
 	void			SendWhenStopped(const JString& text);
 
-	virtual BreakpointManager*	GetBreakpointManager() override;
+	virtual ::BreakpointManager*	GetBreakpointManager() override;
 
 	virtual void	ShowBreakpointInfo(const JIndex debuggerIndex) override;
 	virtual void	SetBreakpoint(const JString& fileName, const JIndex lineIndex,
@@ -107,37 +110,37 @@ public:
 
 	// Command factory
 
-	virtual Array2DCmd*		CreateArray2DCmd(Array2DDir* dir,
+	virtual ::Array2DCmd*				CreateArray2DCmd(Array2DDir* dir,
 														 JXStringTable* table,
 														 JStringTableData* data) override;
-	virtual Plot2DCommand*		CreatePlot2DCmd(Plot2DDir* dir,
+	virtual ::Plot2DCmd*				CreatePlot2DCmd(Plot2DDir* dir,
 														JArray<JFloat>* x,
 														JArray<JFloat>* y) override;
-	virtual DisplaySourceForMainCmd*	CreateDisplaySourceForMainCmd(SourceDirector* sourceDir) override;
-	virtual GetCompletionsCmd*		CreateGetCompletionsCmd(CommandInput* input,
-														 CommandOutputDisplay* history) override;
-	virtual GetFrameCmd*				CreateGetFrameCmd(StackWidget* widget) override;
-	virtual GetStack*				CreateGetStackCmd(JTree* tree, StackWidget* widget) override;
-	virtual GetThread*			CreateGetThreadCmd(ThreadsWidget* widget) override;
-	virtual GetThreads*			CreateGetThreadsCmd(JTree* tree, ThreadsWidget* widget) override;
-	virtual GetFullPath*			CreateGetFullPathCmd(const JString& fileName,
-													  const JIndex lineIndex = 0) override;
-	virtual GetInitArgs*			CreateGetInitArgsCmd(JXInputField* argInput) override;
-	virtual GetLocalVars*			CreateGetLocalVarsCmd(VarNode* rootNode) override;
-	virtual GetSourceFileList*	CreateGetSourceFileListCmd(FileListDir* fileList) override;
-	virtual VarCommand*			CreateVarValueCmd(const JString& expr) override;
-	virtual VarCommand*			CreateVarContentCmd(const JString& expr) override;
-	virtual VarNode*				CreateVarNode(const bool shouldUpdate = true) override;
-	virtual VarNode*				CreateVarNode(JTreeNode* parent, const JString& name,
-												  const JString& fullName, const JString& value) override;
-	virtual JString					Build1DArrayExpression(const JString& expr,
-														   const JInteger index) override;
-	virtual JString					Build2DArrayExpression(const JString& expr,
-														   const JInteger rowIndex,
-														   const JInteger colIndex) override;
-	virtual GetMemory*			CreateGetMemoryCmd(MemoryDir* dir) override;
-	virtual GetAssemblyCmd*			CreateGetAssemblyCmd(SourceDirector* dir) override;
-	virtual GetRegisters*			CreateGetRegistersCmd(RegistersDir* dir) override;
+	virtual ::DisplaySourceForMainCmd*	CreateDisplaySourceForMainCmd(SourceDirector* sourceDir) override;
+	virtual ::GetCompletionsCmd*		CreateGetCompletionsCmd(CommandInput* input,
+																CommandOutputDisplay* history) override;
+	virtual ::GetFrameCmd*				CreateGetFrameCmd(StackWidget* widget) override;
+	virtual ::GetStackCmd*				CreateGetStackCmd(JTree* tree, StackWidget* widget) override;
+	virtual ::GetThreadCmd*				CreateGetThreadCmd(ThreadsWidget* widget) override;
+	virtual ::GetThreadsCmd*			CreateGetThreadsCmd(JTree* tree, ThreadsWidget* widget) override;
+	virtual ::GetFullPathCmd*			CreateGetFullPathCmd(const JString& fileName,
+															 const JIndex lineIndex = 0) override;
+	virtual ::GetInitArgsCmd*			CreateGetInitArgsCmd(JXInputField* argInput) override;
+	virtual ::GetLocalVarsCmd*			CreateGetLocalVarsCmd(::VarNode* rootNode) override;
+	virtual ::GetSourceFileListCmd*		CreateGetSourceFileListCmd(FileListDir* fileList) override;
+	virtual ::VarCmd*					CreateVarValueCmd(const JString& expr) override;
+	virtual ::VarCmd*					CreateVarContentCmd(const JString& expr) override;
+	virtual ::VarNode*					CreateVarNode(const bool shouldUpdate = true) override;
+	virtual ::VarNode*					CreateVarNode(JTreeNode* parent, const JString& name,
+													  const JString& fullName, const JString& value) override;
+	virtual JString						Build1DArrayExpression(const JString& expr,
+															   const JInteger index) override;
+	virtual JString						Build2DArrayExpression(const JString& expr,
+															   const JInteger rowIndex,
+															   const JInteger colIndex) override;
+	virtual ::GetMemoryCmd*				CreateGetMemoryCmd(MemoryDir* dir) override;
+	virtual ::GetAssemblyCmd*			CreateGetAssemblyCmd(SourceDirector* dir) override;
+	virtual ::GetRegistersCmd*			CreateGetRegistersCmd(RegistersDir* dir) override;
 
 	// called by GDB commands
 
@@ -152,7 +155,7 @@ public:
 
 	void	ProgramStarted(const pid_t pid);
 
-	// called by GDBGetStopLocation*
+	// called by GDBGetStopLocationCmd*
 
 	void	SendProgramStopped(const Location& location);
 	void	SendProgramStopped2(const Location& location);
@@ -204,11 +207,11 @@ private:
 	JSize	itsContinueCount;			// # of prompts with empty fg Q before "continue"
 	JIndex	itsPingID;
 
-	GDB::Output::Scanner*			itsScanner;
-	GDBBreakpointManager*		itsBPMgr;
-	GDBGetStopLocationForLink*	itsGetStopLocation;
-	GDBGetStopLocationForAsm*	itsGetStopLocation2;
-	GDBPingTask*				itsPingTask;
+	gdb::Output::Scanner*			itsScanner;
+	gdb::BreakpointManager*			itsBPMgr;
+	gdb::GetStopLocationForLinkCmd*	itsGetStopLocation;
+	gdb::GetStopLocationForAsmCmd*	itsGetStopLocation2;
+	gdb::PingTask*					itsPingTask;
 
 private:
 
@@ -223,6 +226,8 @@ private:
 	void	ProgramFinished1();
 
 	void	PrivateSendProgramStopped(const Location& location);
+};
+
 };
 
 #endif

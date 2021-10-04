@@ -1,7 +1,7 @@
 /******************************************************************************
  LLDBGetStack.cpp
 
-	BASE CLASS = GetStack
+	BASE CLASS = GetStackCmd
 
 	Copyright (C) 2016 by John Lindal.
 
@@ -39,7 +39,7 @@ LLDBGetStack::LLDBGetStack
 	StackWidget*	widget
 	)
 	:
-	GetStack(JString::empty, tree, widget)
+	GetStackCmd(JString::empty, tree, widget)
 {
 }
 

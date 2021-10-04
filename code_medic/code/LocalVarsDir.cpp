@@ -8,7 +8,7 @@
  *****************************************************************************/
 
 #include "LocalVarsDir.h"
-#include "GetLocalVars.h"
+#include "GetLocalVarsCmd.h"
 #include "VarTreeWidget.h"
 #include "VarNode.h"
 #include "CommandDirector.h"

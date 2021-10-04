@@ -17,7 +17,7 @@ This scanner reads output from gdb's print command.
 	assert( lvalp->pString != nullptr );
 %}
 
-%option namespace="GDB::VarTree" lexer="Scanner"
+%option namespace="gdb::VarTree" lexer="Scanner"
 %option lex="NextToken" params="YYSTYPE* lvalp"
 %option unicode nodefault full freespace
 %option bison noyywrap

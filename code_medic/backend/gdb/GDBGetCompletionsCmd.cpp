@@ -20,13 +20,13 @@
 
  ******************************************************************************/
 
-GDBGetCompletionsCmd::GDBGetCompletionsCmd
+gdb::GetCompletionsCmd::GetCompletionsCmd
 	(
 	CommandInput*			input,
 	CommandOutputDisplay*	history
 	)
 	:
-	GetCompletionsCmd(BuildCommand(input->GetText()->GetText())),
+	::GetCompletionsCmd(BuildCommand(input->GetText()->GetText())),
 	itsPrefix(input->GetText()->GetText()),
 	itsInput(input),
 	itsHistory(history)
@@ -38,7 +38,7 @@ GDBGetCompletionsCmd::GDBGetCompletionsCmd
 
  ******************************************************************************/
 
-GDBGetCompletionsCmd::~GDBGetCompletionsCmd()
+gdb::GetCompletionsCmd::~GetCompletionsCmd()
 {
 }
 
@@ -48,7 +48,7 @@ GDBGetCompletionsCmd::~GDBGetCompletionsCmd()
  ******************************************************************************/
 
 JString
-GDBGetCompletionsCmd::BuildCommand
+gdb::GetCompletionsCmd::BuildCommand
 	(
 	const JString& prefix
 	)
@@ -62,7 +62,7 @@ GDBGetCompletionsCmd::BuildCommand
  ******************************************************************************/
 
 void
-GDBGetCompletionsCmd::HandleSuccess
+gdb::GetCompletionsCmd::HandleSuccess
 	(
 	const JString& data
 	)

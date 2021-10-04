@@ -10,14 +10,16 @@
 
 #include "Array2DCmd.h"
 
-class GDBArray2DCmd : public Array2DCmd
+namespace gdb {
+
+class Array2DCmd : public ::Array2DCmd
 {
 public:
 
-	GDBArray2DCmd(Array2DDir* dir,
-					 JXStringTable* table, JStringTableData* data);
+	Array2DCmd(Array2DDir* dir,
+			   JXStringTable* table, JStringTableData* data);
 
-	virtual	~GDBArray2DCmd();
+	virtual	~Array2DCmd();
 
 	virtual void	PrepareToSend(const UpdateType type, const JIndex index,
 								  const JInteger arrayIndex) override;
@@ -25,6 +27,8 @@ public:
 protected:
 
 	virtual void	HandleSuccess(const JString& data) override;
+};
+
 };
 
 #endif

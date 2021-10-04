@@ -1,7 +1,7 @@
 /******************************************************************************
  LLDBGetSourceFileList.cpp
 
-	BASE CLASS = GetSourceFileList
+	BASE CLASS = GetSourceFileListCmd
 
 	Copyright (C) 2016 by John Lindal.
 
@@ -29,7 +29,7 @@ LLDBGetSourceFileList::LLDBGetSourceFileList
 	FileListDir* fileList
 	)
 	:
-	GetSourceFileList(JString::empty, fileList)
+	GetSourceFileListCmd(JString::empty, fileList)
 {
 }
 

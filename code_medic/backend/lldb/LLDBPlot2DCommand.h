@@ -8,9 +8,9 @@
 #ifndef _H_LLDBPlot2DCommand
 #define _H_LLDBPlot2DCommand
 
-#include "Plot2DCommand.h"
+#include "Plot2DCmd.h"
 
-class LLDBPlot2DCommand : public Plot2DCommand
+class LLDBPlot2DCommand : public Plot2DCmd
 {
 public:
 

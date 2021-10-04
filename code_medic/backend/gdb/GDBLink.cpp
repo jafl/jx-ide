@@ -3,10 +3,7 @@
 
 	Interface to gdb.
 
-	http://ftp.gnu.org/pub/old-gnu/Manuals/gdb-5.1.1/html_node/gdb_211.html
-	http://www.devworld.apple.com/documentation/DeveloperTools/gdb/gdb/gdb_25.html
-
-	BASE CLASS = Link
+	BASE CLASS = ::Link
 
 	Copyright (C) 2001 by John Lindal.
 
@@ -16,32 +13,32 @@
 #include "GDBOutputScanner.h"
 #include "GDBPingTask.h"
 #include "GDBBreakpointManager.h"
-#include "ChooseProcessDialog.h"
 
 #include "GDBAnalyzeCoreCmd.h"
 #include "GDBArray2DCmd.h"
-#include "GDBPlot2DCommand.h"
+#include "GDBPlot2DCmd.h"
 #include "GDBCheckCoreStatusCmd.h"
 #include "GDBDisplaySourceForMainCmd.h"
-#include "GDBGetStopLocationForLink.h"
-#include "GDBGetStopLocationForAsm.h"
+#include "GDBGetStopLocationForLinkCmd.h"
+#include "GDBGetStopLocationForAsmCmd.h"
 #include "GDBGetCompletionsCmd.h"
 #include "GDBGetFrameCmd.h"
-#include "GDBGetStack.h"
-#include "GDBGetThread.h"
-#include "GDBGetThreads.h"
-#include "GDBGetMemory.h"
+#include "GDBGetStackCmd.h"
+#include "GDBGetThreadCmd.h"
+#include "GDBGetThreadsCmd.h"
+#include "GDBGetMemoryCmd.h"
 #include "GDBGetAssemblyCmd.h"
-#include "GDBGetRegisters.h"
+#include "GDBGetRegistersCmd.h"
 #include "GDBGetFullPathCmd.h"
-#include "GDBGetInitArgs.h"
-#include "GDBGetLocalVars.h"
-#include "GDBGetProgramName.h"
-#include "GDBGetSourceFileList.h"
-#include "GDBSimpleCommand.h"
-#include "GDBVarCommand.h"
+#include "GDBGetInitArgsCmd.h"
+#include "GDBGetLocalVarsCmd.h"
+#include "GDBGetProgramNameCmd.h"
+#include "GDBGetSourceFileListCmd.h"
+#include "GDBSimpleCmd.h"
+#include "GDBVarCmd.h"
 #include "GDBVarNode.h"
 
+#include "ChooseProcessDialog.h"
 #include "globals.h"
 
 #include <jx-af/jx/JXAssert.h>
@@ -76,9 +73,9 @@ static const bool kFeatures[]=
 
  *****************************************************************************/
 
-GDBLink::GDBLink()
+gdb::Link::Link()
 	:
-	Link(kFeatures),
+	::Link(kFeatures),
 	itsDebuggerProcess(nullptr),
 	itsChildProcess(nullptr),
 	itsOutputLink(nullptr),
@@ -86,19 +83,19 @@ GDBLink::GDBLink()
 {
 	InitFlags();
 
-	itsScanner = jnew GDB::Output::Scanner;
+	itsScanner = jnew Output::Scanner;
 	assert( itsScanner != nullptr );
 
-	itsBPMgr = jnew GDBBreakpointManager(this);
+	itsBPMgr = jnew BreakpointManager(this);
 	assert( itsBPMgr != nullptr );
 
-	itsGetStopLocation = jnew GDBGetStopLocationForLink();
+	itsGetStopLocation = jnew GetStopLocationForLinkCmd();
 	assert( itsGetStopLocation != nullptr );
 
-	itsGetStopLocation2 = jnew GDBGetStopLocationForAsm();
+	itsGetStopLocation2 = jnew GetStopLocationForAsmCmd();
 	assert( itsGetStopLocation2 != nullptr );
 
-	itsPingTask = jnew GDBPingTask();
+	itsPingTask = jnew PingTask();
 	assert( itsPingTask != nullptr );
 
 	StartDebugger();
@@ -109,7 +106,7 @@ GDBLink::GDBLink()
 
  *****************************************************************************/
 
-GDBLink::~GDBLink()
+gdb::Link::~Link()
 {
 	StopDebugger();
 
@@ -128,7 +125,7 @@ GDBLink::~GDBLink()
  *****************************************************************************/
 
 void
-GDBLink::InitFlags()
+gdb::Link::InitFlags()
 {
 	itsHasStartedFlag           = false;
 	itsInitFinishedFlag         = false;
@@ -151,7 +148,7 @@ GDBLink::InitFlags()
  ******************************************************************************/
 
 const JString&
-GDBLink::GetPrompt()
+gdb::Link::GetPrompt()
 	const
 {
 	return JGetString("Prompt::GDBLink");
@@ -163,7 +160,7 @@ GDBLink::GetPrompt()
  ******************************************************************************/
 
 const JString&
-GDBLink::GetScriptPrompt()
+gdb::Link::GetScriptPrompt()
 	const
 {
 	return JGetString("ScriptPrompt::GDBLink");
@@ -175,7 +172,7 @@ GDBLink::GetScriptPrompt()
  ******************************************************************************/
 
 bool
-GDBLink::DebuggerHasStarted()
+gdb::Link::DebuggerHasStarted()
 	const
 {
 	return itsHasStartedFlag;
@@ -187,7 +184,7 @@ GDBLink::DebuggerHasStarted()
  ******************************************************************************/
 
 JString
-GDBLink::GetChooseProgramInstructions()
+gdb::Link::GetChooseProgramInstructions()
 	const
 {
 	return JGetString("ChooseProgramInstr::GDBLink");
@@ -199,7 +196,7 @@ GDBLink::GetChooseProgramInstructions()
  ******************************************************************************/
 
 bool
-GDBLink::HasProgram()
+gdb::Link::HasProgram()
 	const
 {
 	return !itsProgramName.IsEmpty();
@@ -211,7 +208,7 @@ GDBLink::HasProgram()
  ******************************************************************************/
 
 bool
-GDBLink::GetProgram
+gdb::Link::GetProgram
 	(
 	JString* fullName
 	)
@@ -227,7 +224,7 @@ GDBLink::GetProgram
  ******************************************************************************/
 
 bool
-GDBLink::HasCore()
+gdb::Link::HasCore()
 	const
 {
 	return !itsCoreName.IsEmpty();
@@ -239,7 +236,7 @@ GDBLink::HasCore()
  ******************************************************************************/
 
 bool
-GDBLink::GetCore
+gdb::Link::GetCore
 	(
 	JString* fullName
 	)
@@ -255,7 +252,7 @@ GDBLink::GetCore
  ******************************************************************************/
 
 bool
-GDBLink::HasLoadedSymbols()
+gdb::Link::HasLoadedSymbols()
 	const
 {
 	return itsSymbolsLoadedFlag;
@@ -267,7 +264,7 @@ GDBLink::HasLoadedSymbols()
  *****************************************************************************/
 
 bool
-GDBLink::IsDebugging()
+gdb::Link::IsDebugging()
 	const
 {
 	return itsIsDebuggingFlag;
@@ -279,7 +276,7 @@ GDBLink::IsDebugging()
  *****************************************************************************/
 
 bool
-GDBLink::ProgramIsRunning()
+gdb::Link::ProgramIsRunning()
 	const
 {
 	return itsIsDebuggingFlag && !itsProgramIsStoppedFlag;
@@ -291,7 +288,7 @@ GDBLink::ProgramIsRunning()
  *****************************************************************************/
 
 bool
-GDBLink::ProgramIsStopped()
+gdb::Link::ProgramIsStopped()
 	const
 {
 	return itsIsDebuggingFlag && itsProgramIsStoppedFlag;
@@ -303,7 +300,7 @@ GDBLink::ProgramIsStopped()
  *****************************************************************************/
 
 bool
-GDBLink::OKToSendMultipleCommands()
+gdb::Link::OKToSendMultipleCommands()
 	const
 {
 	return Link::OKToSendMultipleCommands();
@@ -315,7 +312,7 @@ GDBLink::OKToSendMultipleCommands()
  *****************************************************************************/
 
 bool
-GDBLink::OKToSendCommands
+gdb::Link::OKToSendCommands
 	(
 	const bool background
 	)
@@ -330,7 +327,7 @@ GDBLink::OKToSendCommands
  *****************************************************************************/
 
 bool
-GDBLink::IsDefiningScript()
+gdb::Link::IsDefiningScript()
 	const
 {
 	return itsDefiningScriptFlag;
@@ -342,7 +339,7 @@ GDBLink::IsDefiningScript()
  *****************************************************************************/
 
 void
-GDBLink::Receive
+gdb::Link::Receive
 	(
 	JBroadcaster*	sender,
 	const Message&	message
@@ -376,7 +373,7 @@ GDBLink::Receive
  *****************************************************************************/
 
 void
-GDBLink::ReadFromDebugger()
+gdb::Link::ReadFromDebugger()
 {
 	JString data;
 	itsInputLink->Read(&data);
@@ -385,8 +382,8 @@ GDBLink::ReadFromDebugger()
 	itsScanner->AppendInput(data);
 	while (true)
 	{
-		const GDB::Output::Scanner::Token token = itsScanner->NextToken();
-		if (token.type == GDB::Output::Scanner::kEOF)
+		const Output::Scanner::Token token = itsScanner->NextToken();
+		if (token.type == Output::Scanner::kEOF)
 		{
 			break;
 		}
@@ -403,7 +400,7 @@ GDBLink::ReadFromDebugger()
 		//  correct status.)
 
 		const bool wasStopped = itsProgramIsStoppedFlag;
-		if (token.type == GDB::Output::Scanner::kReadyForInput)
+		if (token.type == Output::Scanner::kReadyForInput)
 		{
 			itsPingTask->Stop();
 
@@ -455,7 +452,7 @@ GDBLink::ReadFromDebugger()
 
 		// process token
 
-		if (token.type == GDB::Output::Scanner::kProgramOutput)
+		if (token.type == Output::Scanner::kProgramOutput)
 		{
 			if (itsPrintingOutputFlag)
 			{
@@ -463,7 +460,7 @@ GDBLink::ReadFromDebugger()
 				Broadcast(UserOutput(*(token.data.pString), false, false));
 			}
 		}
-		else if (token.type == GDB::Output::Scanner::kErrorOutput)
+		else if (token.type == Output::Scanner::kErrorOutput)
 		{
 			if (itsPrintingOutputFlag)
 			{
@@ -471,13 +468,13 @@ GDBLink::ReadFromDebugger()
 			}
 		}
 
-		else if (token.type == GDB::Output::Scanner::kBeginMedicCmd ||
-				 token.type == GDB::Output::Scanner::kBeginMedicIgnoreCmd)
+		else if (token.type == Output::Scanner::kBeginMedicCmd ||
+				 token.type == Output::Scanner::kBeginMedicIgnoreCmd)
 		{
 			HandleCommandRunning(token.data.number);
 			itsPrintingOutputFlag = false;
 		}
-		else if (token.type == GDB::Output::Scanner::kCommandOutput)
+		else if (token.type == Output::Scanner::kCommandOutput)
 		{
 			Command* cmd;
 			if (GetRunningCommand(&cmd))
@@ -485,7 +482,7 @@ GDBLink::ReadFromDebugger()
 				cmd->Accumulate(*(token.data.pString));
 			}
 		}
-		else if (token.type == GDB::Output::Scanner::kCommandResult)
+		else if (token.type == Output::Scanner::kCommandResult)
 		{
 			Command* cmd;
 			if (GetRunningCommand(&cmd))
@@ -493,8 +490,8 @@ GDBLink::ReadFromDebugger()
 				cmd->SaveResult(*(token.data.pString));
 			}
 		}
-		else if (token.type == GDB::Output::Scanner::kEndMedicCmd ||
-				 token.type == GDB::Output::Scanner::kEndMedicIgnoreCmd)
+		else if (token.type == Output::Scanner::kEndMedicCmd ||
+				 token.type == Output::Scanner::kEndMedicIgnoreCmd)
 		{
 			Command* cmd;
 			if (GetRunningCommand(&cmd))
@@ -511,27 +508,27 @@ GDBLink::ReadFromDebugger()
 			itsPrintingOutputFlag = true;
 		}
 
-		else if (token.type == GDB::Output::Scanner::kBreakpointsChanged)
+		else if (token.type == Output::Scanner::kBreakpointsChanged)
 		{
 			if (!itsFirstBreakFlag)		// ignore tbreak in hook-run
 			{
 				Broadcast(BreakpointsChanged());
 			}
 		}
-		else if (token.type == GDB::Output::Scanner::kFrameChanged)
+		else if (token.type == Output::Scanner::kFrameChanged)
 		{
 			Broadcast(FrameChanged());	// sync with kFrameChangedAndProgramStoppedAtLocation
 		}
-		else if (token.type == GDB::Output::Scanner::kThreadChanged)
+		else if (token.type == Output::Scanner::kThreadChanged)
 		{
 			Broadcast(ThreadChanged());
 		}
-		else if (token.type == GDB::Output::Scanner::kValueChanged)
+		else if (token.type == Output::Scanner::kValueChanged)
 		{
 			Broadcast(ValueChanged());
 		}
 
-		else if (token.type == GDB::Output::Scanner::kPrepareToLoadSymbols)
+		else if (token.type == Output::Scanner::kPrepareToLoadSymbols)
 		{
 			itsIsDebuggingFlag   = false;
 			itsSymbolsLoadedFlag = false;
@@ -539,7 +536,7 @@ GDBLink::ReadFromDebugger()
 			ClearFileNameMap();
 			Broadcast(PrepareToLoadSymbols());
 		}
-		else if (token.type == GDB::Output::Scanner::kFinishedLoadingSymbolsFromProgram)
+		else if (token.type == Output::Scanner::kFinishedLoadingSymbolsFromProgram)
 		{
 			itsSymbolsLoadedFlag = true;
 
@@ -547,7 +544,7 @@ GDBLink::ReadFromDebugger()
 			// output because the pattern "Reading symbols from [^\n]+..."
 			// will slurp up "(no debugging symbols found)..." as well.
 
-			auto* cmd = jnew GDBGetProgramName;
+			auto* cmd = jnew GetProgramNameCmd;
 			assert( cmd != nullptr );
 
 			if (token.data.pString != nullptr)
@@ -555,7 +552,7 @@ GDBLink::ReadFromDebugger()
 				Broadcast(UserOutput(*(token.data.pString), false));
 			}
 		}
-		else if (token.type == GDB::Output::Scanner::kNoSymbolsInProgram)
+		else if (token.type == Output::Scanner::kNoSymbolsInProgram)
 		{
 			if (!itsIsAttachedFlag)
 			{
@@ -568,48 +565,48 @@ GDBLink::ReadFromDebugger()
 				Broadcast(SymbolsLoaded(false, name));
 			}
 		}
-		else if (token.type == GDB::Output::Scanner::kSymbolsReloaded)
+		else if (token.type == Output::Scanner::kSymbolsReloaded)
 		{
 			Broadcast(PrepareToLoadSymbols());
 			Broadcast(SymbolsReloaded());
 		}
 
-		else if (token.type == GDB::Output::Scanner::kCoreChanged)
+		else if (token.type == Output::Scanner::kCoreChanged)
 		{
 			// We have to check whether a core was loaded or cleared.
 
-			auto* cmd = jnew GDBCheckCoreStatusCmd;
+			auto* cmd = jnew CheckCoreStatusCmd;
 			assert( cmd != nullptr );
 		}
 
-		else if (token.type == GDB::Output::Scanner::kAttachedToProcess)
+		else if (token.type == Output::Scanner::kAttachedToProcess)
 		{
 			itsIsAttachedFlag  = true;
 			itsIsDebuggingFlag = true;
 			ProgramStarted(token.data.number);
 			Broadcast(AttachedToProcess());
 		}
-		else if (token.type == GDB::Output::Scanner::kDetachingFromProcess)
+		else if (token.type == Output::Scanner::kDetachingFromProcess)
 		{
 			ProgramFinished1();
 		}
 
-		else if (token.type == GDB::Output::Scanner::kProgramStarting)
+		else if (token.type == Output::Scanner::kProgramStarting)
 		{
 			itsIsDebuggingFlag      = true;
 			itsProgramIsStoppedFlag = false;
 			itsFirstBreakFlag       = true;
 			itsPrintingOutputFlag   = false;	// ignore tbreak output
 		}
-		else if (token.type == GDB::Output::Scanner::kBeginGetPID)
+		else if (token.type == Output::Scanner::kBeginGetPID)
 		{
 			itsPrintingOutputFlag = false;	// ignore "info prog"
 		}
-		else if (token.type == GDB::Output::Scanner::kProgramPID)
+		else if (token.type == Output::Scanner::kProgramPID)
 		{
 			ProgramStarted(token.data.number);
 		}
-		else if (token.type == GDB::Output::Scanner::kEndGetPID)
+		else if (token.type == Output::Scanner::kEndGetPID)
 		{
 			if (itsChildProcess == nullptr)	// ask user for PID
 			{
@@ -620,7 +617,7 @@ GDBLink::ReadFromDebugger()
 			}
 		}
 
-		else if (token.type == GDB::Output::Scanner::kProgramStoppedAtLocation)
+		else if (token.type == Output::Scanner::kProgramStoppedAtLocation)
 		{
 			itsProgramIsStoppedFlag = true;
 			if (token.data.pLocation != nullptr)
@@ -638,7 +635,7 @@ GDBLink::ReadFromDebugger()
 				Broadcast(UserOutput(*(token.data.pString), false));
 			}
 		}
-		else if (token.type == GDB::Output::Scanner::kFrameChangedAndProgramStoppedAtLocation)
+		else if (token.type == Output::Scanner::kFrameChangedAndProgramStoppedAtLocation)
 		{
 			Broadcast(FrameChanged());	// sync with kFrameChanged
 
@@ -646,24 +643,24 @@ GDBLink::ReadFromDebugger()
 			itsGetStopLocation->Send();
 		}
 
-		else if (token.type == GDB::Output::Scanner::kBeginScriptDefinition)
+		else if (token.type == Output::Scanner::kBeginScriptDefinition)
 		{
 			itsDefiningScriptFlag = true;
 			Broadcast(DebuggerDefiningScript());
 		}
 
-		else if (token.type == GDB::Output::Scanner::kPlugInMessage)
+		else if (token.type == Output::Scanner::kPlugInMessage)
 		{
 			Broadcast(PlugInMessage(*(token.data.pString)));
 		}
 
-		else if (token.type == GDB::Output::Scanner::kProgramRunning)
+		else if (token.type == Output::Scanner::kProgramRunning)
 		{
 			itsProgramIsStoppedFlag = false;
 			CancelBackgroundCommands();
 			Broadcast(ProgramRunning());
 		}
-		else if (token.type == GDB::Output::Scanner::kProgramFinished)
+		else if (token.type == Output::Scanner::kProgramFinished)
 		{
 			ProgramFinished1();
 
@@ -672,12 +669,12 @@ GDBLink::ReadFromDebugger()
 				Broadcast(UserOutput(*(token.data.pString), false));
 			}
 		}
-		else if (token.type == GDB::Output::Scanner::kProgramKilled)
+		else if (token.type == Output::Scanner::kProgramKilled)
 		{
 			ProgramFinished1();
 		}
 
-		else if (token.type == GDB::Output::Scanner::kDebuggerFinished)
+		else if (token.type == Output::Scanner::kDebuggerFinished)
 		{
 			JXGetApplication()->Quit();
 			itsWaitingToQuitFlag = true;
@@ -688,12 +685,12 @@ GDBLink::ReadFromDebugger()
 /******************************************************************************
  SaveProgramName
 
-	Callback for GDBGetProgramName.
+	Callback for GetProgramNameCmd.
 
  *****************************************************************************/
 
 void
-GDBLink::SaveProgramName
+gdb::Link::SaveProgramName
 	(
 	const JString& fileName
 	)
@@ -712,12 +709,12 @@ GDBLink::SaveProgramName
 /******************************************************************************
  SaveCoreName
 
-	Callback for GDBCheckCoreStatusCmd.
+	Callback for CheckCoreStatusCmd.
 
  *****************************************************************************/
 
 void
-GDBLink::SaveCoreName
+gdb::Link::SaveCoreName
 	(
 	const JString& fileName
 	)
@@ -741,7 +738,7 @@ GDBLink::SaveCoreName
  *****************************************************************************/
 
 void
-GDBLink::FirstBreakImpossible()
+gdb::Link::FirstBreakImpossible()
 {
 	if (itsFirstBreakFlag)
 	{
@@ -758,7 +755,7 @@ GDBLink::FirstBreakImpossible()
  *****************************************************************************/
 
 void
-GDBLink::SendProgramStopped
+gdb::Link::SendProgramStopped
 	(
 	const Location& location
 	)
@@ -796,7 +793,7 @@ GDBLink::SendProgramStopped
  *****************************************************************************/
 
 void
-GDBLink::PrivateSendProgramStopped
+gdb::Link::PrivateSendProgramStopped
 	(
 	const Location& location
 	)
@@ -818,7 +815,7 @@ GDBLink::PrivateSendProgramStopped
  *****************************************************************************/
 
 void
-GDBLink::SendProgramStopped2
+gdb::Link::SendProgramStopped2
 	(
 	const Location& location
 	)
@@ -832,7 +829,7 @@ GDBLink::SendProgramStopped2
  *****************************************************************************/
 
 void
-GDBLink::SetProgram
+gdb::Link::SetProgram
 	(
 	const JString& fullName
 	)
@@ -858,7 +855,7 @@ GDBLink::SetProgram
  *****************************************************************************/
 
 void
-GDBLink::ReloadProgram()
+gdb::Link::ReloadProgram()
 {
 	if (HasProgram())
 	{
@@ -872,7 +869,7 @@ GDBLink::ReloadProgram()
  *****************************************************************************/
 
 void
-GDBLink::SetCore
+gdb::Link::SetCore
 	(
 	const JString& fullName
 	)
@@ -886,7 +883,7 @@ GDBLink::SetCore
 		const JString cmdStr = "core-file " + fullName;
 		if (itsProgramName.IsEmpty())
 		{
-			auto* cmd = jnew GDBAnalyzeCoreCmd(cmdStr);
+			auto* cmd = jnew AnalyzeCoreCmd(cmdStr);
 			assert( cmd != nullptr );
 			cmd->Send();
 		}
@@ -905,7 +902,7 @@ GDBLink::SetCore
  *****************************************************************************/
 
 void
-GDBLink::AttachToProcess
+gdb::Link::AttachToProcess
 	(
 	const pid_t pid
 	)
@@ -922,7 +919,7 @@ GDBLink::AttachToProcess
  *****************************************************************************/
 
 void
-GDBLink::RunProgram
+gdb::Link::RunProgram
 	(
 	const JString& args
 	)
@@ -941,7 +938,7 @@ GDBLink::RunProgram
  *****************************************************************************/
 
 BreakpointManager*
-GDBLink::GetBreakpointManager()
+gdb::Link::GetBreakpointManager()
 {
 	return itsBPMgr;
 }
@@ -952,7 +949,7 @@ GDBLink::GetBreakpointManager()
  *****************************************************************************/
 
 void
-GDBLink::ShowBreakpointInfo
+gdb::Link::ShowBreakpointInfo
 	(
 	const JIndex debuggerIndex
 	)
@@ -974,7 +971,7 @@ GDBLink::ShowBreakpointInfo
  *****************************************************************************/
 
 void
-GDBLink::SetBreakpoint
+gdb::Link::SetBreakpoint
 	(
 	const JString&	fileName,
 	const JIndex	lineIndex,
@@ -1001,7 +998,7 @@ GDBLink::SetBreakpoint
  *****************************************************************************/
 
 void
-GDBLink::SetBreakpoint
+gdb::Link::SetBreakpoint
 	(
 	const JString&	address,
 	const bool	temporary
@@ -1025,7 +1022,7 @@ GDBLink::SetBreakpoint
  *****************************************************************************/
 
 void
-GDBLink::RemoveBreakpoint
+gdb::Link::RemoveBreakpoint
 	(
 	const JIndex debuggerIndex
 	)
@@ -1045,7 +1042,7 @@ GDBLink::RemoveBreakpoint
  *****************************************************************************/
 
 void
-GDBLink::RemoveAllBreakpointsOnLine
+gdb::Link::RemoveAllBreakpointsOnLine
 	(
 	const JString&	fileName,
 	const JIndex	lineIndex
@@ -1069,7 +1066,7 @@ GDBLink::RemoveAllBreakpointsOnLine
  *****************************************************************************/
 
 void
-GDBLink::RemoveAllBreakpointsAtAddress
+gdb::Link::RemoveAllBreakpointsAtAddress
 	(
 	const JString& addr
 	)
@@ -1089,7 +1086,7 @@ GDBLink::RemoveAllBreakpointsAtAddress
  *****************************************************************************/
 
 void
-GDBLink::RemoveAllBreakpoints()
+gdb::Link::RemoveAllBreakpoints()
 {
 	if (!itsProgramIsStoppedFlag)
 	{
@@ -1105,7 +1102,7 @@ GDBLink::RemoveAllBreakpoints()
  *****************************************************************************/
 
 void
-GDBLink::SetBreakpointEnabled
+gdb::Link::SetBreakpointEnabled
 	(
 	const JIndex	debuggerIndex,
 	const bool	enabled,
@@ -1129,7 +1126,7 @@ GDBLink::SetBreakpointEnabled
  *****************************************************************************/
 
 void
-GDBLink::SetBreakpointCondition
+gdb::Link::SetBreakpointCondition
 	(
 	const JIndex	debuggerIndex,
 	const JString&	condition
@@ -1150,7 +1147,7 @@ GDBLink::SetBreakpointCondition
  *****************************************************************************/
 
 void
-GDBLink::RemoveBreakpointCondition
+gdb::Link::RemoveBreakpointCondition
 	(
 	const JIndex debuggerIndex
 	)
@@ -1170,7 +1167,7 @@ GDBLink::RemoveBreakpointCondition
  *****************************************************************************/
 
 void
-GDBLink::SetBreakpointIgnoreCount
+gdb::Link::SetBreakpointIgnoreCount
 	(
 	const JIndex	debuggerIndex,
 	const JSize		count
@@ -1191,7 +1188,7 @@ GDBLink::SetBreakpointIgnoreCount
  *****************************************************************************/
 
 void
-GDBLink::WatchExpression
+gdb::Link::WatchExpression
 	(
 	const JString& expr
 	)
@@ -1212,7 +1209,7 @@ GDBLink::WatchExpression
  *****************************************************************************/
 
 void
-GDBLink::WatchLocation
+gdb::Link::WatchLocation
 	(
 	const JString& expr
 	)
@@ -1233,7 +1230,7 @@ GDBLink::WatchLocation
  *****************************************************************************/
 
 void
-GDBLink::SwitchToThread
+gdb::Link::SwitchToThread
 	(
 	const JUInt64 id
 	)
@@ -1251,7 +1248,7 @@ GDBLink::SwitchToThread
  *****************************************************************************/
 
 void
-GDBLink::SwitchToFrame
+gdb::Link::SwitchToFrame
 	(
 	const JUInt64 id
 	)
@@ -1269,7 +1266,7 @@ GDBLink::SwitchToFrame
  *****************************************************************************/
 
 void
-GDBLink::StepOver()
+gdb::Link::StepOver()
 {
 	Send(JString("next", JString::kNoCopy));
 }
@@ -1280,7 +1277,7 @@ GDBLink::StepOver()
  *****************************************************************************/
 
 void
-GDBLink::StepInto()
+gdb::Link::StepInto()
 {
 	Send(JString("step", JString::kNoCopy));
 }
@@ -1291,7 +1288,7 @@ GDBLink::StepInto()
  *****************************************************************************/
 
 void
-GDBLink::StepOut()
+gdb::Link::StepOut()
 {
 	Send(JString("finish", JString::kNoCopy));
 }
@@ -1302,7 +1299,7 @@ GDBLink::StepOut()
  *****************************************************************************/
 
 void
-GDBLink::Continue()
+gdb::Link::Continue()
 {
 	Send(JString("continue", JString::kNoCopy));
 }
@@ -1313,7 +1310,7 @@ GDBLink::Continue()
  *****************************************************************************/
 
 void
-GDBLink::RunUntil
+gdb::Link::RunUntil
 	(
 	const JString&	fileName,
 	const JIndex	lineIndex
@@ -1334,7 +1331,7 @@ GDBLink::RunUntil
  *****************************************************************************/
 
 void
-GDBLink::SetExecutionPoint
+gdb::Link::SetExecutionPoint
 	(
 	const JString&	fileName,
 	const JIndex	lineIndex
@@ -1358,7 +1355,7 @@ GDBLink::SetExecutionPoint
  *****************************************************************************/
 
 void
-GDBLink::StepOverAssembly()
+gdb::Link::StepOverAssembly()
 {
 	Send(JString("nexti", JString::kNoCopy));
 }
@@ -1369,7 +1366,7 @@ GDBLink::StepOverAssembly()
  *****************************************************************************/
 
 void
-GDBLink::StepIntoAssembly()
+gdb::Link::StepIntoAssembly()
 {
 	Send(JString("stepi", JString::kNoCopy));
 }
@@ -1380,7 +1377,7 @@ GDBLink::StepIntoAssembly()
  *****************************************************************************/
 
 void
-GDBLink::RunUntil
+gdb::Link::RunUntil
 	(
 	const JString& addr
 	)
@@ -1397,7 +1394,7 @@ GDBLink::RunUntil
  *****************************************************************************/
 
 void
-GDBLink::SetExecutionPoint
+gdb::Link::SetExecutionPoint
 	(
 	const JString& addr
 	)
@@ -1417,7 +1414,7 @@ GDBLink::SetExecutionPoint
  *****************************************************************************/
 
 void
-GDBLink::BackupOver()
+gdb::Link::BackupOver()
 {
 	Send(JString("reverse-next", JString::kNoCopy));
 }
@@ -1428,7 +1425,7 @@ GDBLink::BackupOver()
  *****************************************************************************/
 
 void
-GDBLink::BackupInto()
+gdb::Link::BackupInto()
 {
 	Send(JString("reverse-step", JString::kNoCopy));
 }
@@ -1439,7 +1436,7 @@ GDBLink::BackupInto()
  *****************************************************************************/
 
 void
-GDBLink::BackupOut()
+gdb::Link::BackupOut()
 {
 	Send(JString("reverse-finish", JString::kNoCopy));
 }
@@ -1450,7 +1447,7 @@ GDBLink::BackupOut()
  *****************************************************************************/
 
 void
-GDBLink::BackupContinue()
+gdb::Link::BackupContinue()
 {
 	Send(JString("reverse-continue", JString::kNoCopy));
 }
@@ -1461,7 +1458,7 @@ GDBLink::BackupContinue()
  *****************************************************************************/
 
 void
-GDBLink::SetValue
+gdb::Link::SetValue
 	(
 	const JString& name,
 	const JString& value
@@ -1486,15 +1483,15 @@ GDBLink::SetValue
 
  *****************************************************************************/
 
-Array2DCmd*
-GDBLink::CreateArray2DCmd
+::Array2DCmd*
+gdb::Link::CreateArray2DCmd
 	(
-	Array2DDir*		dir,
+	Array2DDir*			dir,
 	JXStringTable*		table,
 	JStringTableData*	data
 	)
 {
-	Array2DCmd* cmd = jnew GDBArray2DCmd(dir, table, data);
+	Array2DCmd* cmd = jnew Array2DCmd(dir, table, data);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1504,15 +1501,15 @@ GDBLink::CreateArray2DCmd
 
  *****************************************************************************/
 
-Plot2DCommand*
-GDBLink::CreatePlot2DCmd
+::Plot2DCmd*
+gdb::Link::CreatePlot2DCmd
 	(
 	Plot2DDir*	dir,
 	JArray<JFloat>*	x,
 	JArray<JFloat>*	y
 	)
 {
-	Plot2DCommand* cmd = jnew GDBPlot2DCommand(dir, x, y);
+	Plot2DCmd* cmd = jnew Plot2DCmd(dir, x, y);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1522,13 +1519,13 @@ GDBLink::CreatePlot2DCmd
 
  *****************************************************************************/
 
-DisplaySourceForMainCmd*
-GDBLink::CreateDisplaySourceForMainCmd
+::DisplaySourceForMainCmd*
+gdb::Link::CreateDisplaySourceForMainCmd
 	(
 	SourceDirector* sourceDir
 	)
 {
-	DisplaySourceForMainCmd* cmd = jnew GDBDisplaySourceForMainCmd(sourceDir);
+	DisplaySourceForMainCmd* cmd = jnew DisplaySourceForMainCmd(sourceDir);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1538,14 +1535,14 @@ GDBLink::CreateDisplaySourceForMainCmd
 
  *****************************************************************************/
 
-GetCompletionsCmd*
-GDBLink::CreateGetCompletionsCmd
+::GetCompletionsCmd*
+gdb::Link::CreateGetCompletionsCmd
 	(
 	CommandInput*	input,
 	CommandOutputDisplay*	history
 	)
 {
-	GetCompletionsCmd* cmd = jnew GDBGetCompletionsCmd(input, history);
+	GetCompletionsCmd* cmd = jnew GetCompletionsCmd(input, history);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1555,13 +1552,13 @@ GDBLink::CreateGetCompletionsCmd
 
  *****************************************************************************/
 
-GetFrameCmd*
-GDBLink::CreateGetFrameCmd
+::GetFrameCmd*
+gdb::Link::CreateGetFrameCmd
 	(
 	StackWidget* widget
 	)
 {
-	GetFrameCmd* cmd = jnew GDBGetFrameCmd(widget);
+	GetFrameCmd* cmd = jnew GetFrameCmd(widget);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1571,14 +1568,14 @@ GDBLink::CreateGetFrameCmd
 
  *****************************************************************************/
 
-GetStack*
-GDBLink::CreateGetStackCmd
+::GetStackCmd*
+gdb::Link::CreateGetStackCmd
 	(
 	JTree*			tree,
 	StackWidget*	widget
 	)
 {
-	GetStack* cmd = jnew GDBGetStack(tree, widget);
+	GetStackCmd* cmd = jnew GetStackCmd(tree, widget);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1588,13 +1585,13 @@ GDBLink::CreateGetStackCmd
 
  *****************************************************************************/
 
-GetThread*
-GDBLink::CreateGetThreadCmd
+::GetThreadCmd*
+gdb::Link::CreateGetThreadCmd
 	(
 	ThreadsWidget* widget
 	)
 {
-	GetThread* cmd = jnew GDBGetThread(widget);
+	GetThreadCmd* cmd = jnew GetThreadCmd(widget);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1604,14 +1601,14 @@ GDBLink::CreateGetThreadCmd
 
  *****************************************************************************/
 
-GetThreads*
-GDBLink::CreateGetThreadsCmd
+::GetThreadsCmd*
+gdb::Link::CreateGetThreadsCmd
 	(
 	JTree*				tree,
 	ThreadsWidget*	widget
 	)
 {
-	GetThreads* cmd = jnew GDBGetThreads(tree, widget);
+	GetThreadsCmd* cmd = jnew GetThreadsCmd(tree, widget);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1621,14 +1618,14 @@ GDBLink::CreateGetThreadsCmd
 
  *****************************************************************************/
 
-GetFullPathCmd*
-GDBLink::CreateGetFullPathCmd
+::GetFullPathCmd*
+gdb::Link::CreateGetFullPathCmd
 	(
 	const JString&	fileName,
 	const JIndex	lineIndex
 	)
 {
-	GetFullPathCmd* cmd = jnew GDBGetFullPathCmd(fileName, lineIndex);
+	GetFullPathCmd* cmd = jnew GetFullPathCmd(fileName, lineIndex);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1638,13 +1635,13 @@ GDBLink::CreateGetFullPathCmd
 
  *****************************************************************************/
 
-GetInitArgs*
-GDBLink::CreateGetInitArgsCmd
+::GetInitArgsCmd*
+gdb::Link::CreateGetInitArgsCmd
 	(
 	JXInputField* argInput
 	)
 {
-	GetInitArgs* cmd = jnew GDBGetInitArgs(argInput);
+	GetInitArgsCmd* cmd = jnew GetInitArgsCmd(argInput);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1654,13 +1651,13 @@ GDBLink::CreateGetInitArgsCmd
 
  *****************************************************************************/
 
-GetLocalVars*
-GDBLink::CreateGetLocalVarsCmd
+::GetLocalVarsCmd*
+gdb::Link::CreateGetLocalVarsCmd
 	(
-	VarNode* rootNode
+	::VarNode* rootNode
 	)
 {
-	GetLocalVars* cmd = jnew GDBGetLocalVars(rootNode);
+	GetLocalVarsCmd* cmd = jnew GetLocalVarsCmd(rootNode);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1670,13 +1667,13 @@ GDBLink::CreateGetLocalVarsCmd
 
  *****************************************************************************/
 
-GetSourceFileList*
-GDBLink::CreateGetSourceFileListCmd
+::GetSourceFileListCmd*
+gdb::Link::CreateGetSourceFileListCmd
 	(
 	FileListDir* fileList
 	)
 {
-	GetSourceFileList* cmd = jnew GDBGetSourceFileList(fileList);
+	GetSourceFileListCmd* cmd = jnew GetSourceFileListCmd(fileList);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1686,13 +1683,13 @@ GDBLink::CreateGetSourceFileListCmd
 
  *****************************************************************************/
 
-VarCommand*
-GDBLink::CreateVarValueCmd
+::VarCmd*
+gdb::Link::CreateVarValueCmd
 	(
 	const JString& expr
 	)
 {
-	VarCommand* cmd = jnew GDBVarCommand("print " + expr);
+	VarCmd* cmd = jnew VarCmd("print " + expr);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1702,13 +1699,13 @@ GDBLink::CreateVarValueCmd
 
  *****************************************************************************/
 
-VarCommand*
-GDBLink::CreateVarContentCmd
+::VarCmd*
+gdb::Link::CreateVarContentCmd
 	(
 	const JString& expr
 	)
 {
-	VarCommand* cmd = jnew GDBVarCommand("print *(" + expr + ")");
+	VarCmd* cmd = jnew VarCmd("print *(" + expr + ")");
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1718,19 +1715,19 @@ GDBLink::CreateVarContentCmd
 
  *****************************************************************************/
 
-VarNode*
-GDBLink::CreateVarNode
+::VarNode*
+gdb::Link::CreateVarNode
 	(
 	const bool shouldUpdate		// false for Local Variables
 	)
 {
-	VarNode* node = jnew GDBVarNode(shouldUpdate);
+	VarNode* node = jnew VarNode(shouldUpdate);
 	assert( node != nullptr );
 	return node;
 }
 
-VarNode*
-GDBLink::CreateVarNode
+::VarNode*
+gdb::Link::CreateVarNode
 	(
 	JTreeNode*		parent,
 	const JString&	name,
@@ -1738,7 +1735,7 @@ GDBLink::CreateVarNode
 	const JString&	value
 	)
 {
-	VarNode* node = jnew GDBVarNode(parent, name, value);
+	VarNode* node = jnew VarNode(parent, name, value);
 	assert( node != nullptr );
 	return node;
 }
@@ -1749,7 +1746,7 @@ GDBLink::CreateVarNode
  *****************************************************************************/
 
 JString
-GDBLink::Build1DArrayExpression
+gdb::Link::Build1DArrayExpression
 	(
 	const JString&	expr,
 	const JInteger	index
@@ -1764,7 +1761,7 @@ GDBLink::Build1DArrayExpression
  *****************************************************************************/
 
 JString
-GDBLink::Build2DArrayExpression
+gdb::Link::Build2DArrayExpression
 	(
 	const JString&	expr,
 	const JInteger	rowIndex,
@@ -1779,13 +1776,13 @@ GDBLink::Build2DArrayExpression
 
  *****************************************************************************/
 
-GetMemory*
-GDBLink::CreateGetMemoryCmd
+::GetMemoryCmd*
+gdb::Link::CreateGetMemoryCmd
 	(
 	MemoryDir* dir
 	)
 {
-	GetMemory* cmd = jnew GDBGetMemory(dir);
+	GetMemoryCmd* cmd = jnew GetMemoryCmd(dir);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1795,13 +1792,13 @@ GDBLink::CreateGetMemoryCmd
 
  *****************************************************************************/
 
-GetAssemblyCmd*
-GDBLink::CreateGetAssemblyCmd
+::GetAssemblyCmd*
+gdb::Link::CreateGetAssemblyCmd
 	(
 	SourceDirector* dir
 	)
 {
-	GetAssemblyCmd* cmd = jnew GDBGetAssemblyCmd(dir);
+	GetAssemblyCmd* cmd = jnew GetAssemblyCmd(dir);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1811,13 +1808,13 @@ GDBLink::CreateGetAssemblyCmd
 
  *****************************************************************************/
 
-GetRegisters*
-GDBLink::CreateGetRegistersCmd
+::GetRegistersCmd*
+gdb::Link::CreateGetRegistersCmd
 	(
 	RegistersDir* dir
 	)
 {
-	GetRegisters* cmd = jnew GDBGetRegisters(dir);
+	GetRegistersCmd* cmd = jnew GetRegistersCmd(dir);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1831,7 +1828,7 @@ GDBLink::CreateGetRegistersCmd
  *****************************************************************************/
 
 bool
-GDBLink::ParseList
+gdb::Link::ParseList
 	(
 	std::istringstream&	stream,
 	JPtrArray<JString>*	list,
@@ -1876,7 +1873,7 @@ GDBLink::ParseList
  *****************************************************************************/
 
 bool
-GDBLink::ParseMap
+gdb::Link::ParseMap
 	(
 	std::istringstream&		stream,
 	JStringPtrMap<JString>*	map
@@ -1952,7 +1949,7 @@ GDBLink::ParseMap
  *****************************************************************************/
 
 bool
-GDBLink::ParseMapArray
+gdb::Link::ParseMapArray
 	(
 	std::istringstream&						stream,
 	JPtrArray< JStringPtrMap<JString> >*	list
@@ -2011,7 +2008,7 @@ GDBLink::ParseMapArray
  *****************************************************************************/
 
 void
-GDBLink::SendPing()
+gdb::Link::SendPing()
 {
 	itsPingID++;
 	if (itsPingID == 0)
@@ -2035,7 +2032,7 @@ GDBLink::SendPing()
  *****************************************************************************/
 
 void
-GDBLink::SendWhenStopped
+gdb::Link::SendWhenStopped
 	(
 	const JString& text
 	)
@@ -2051,7 +2048,7 @@ GDBLink::SendWhenStopped
  *****************************************************************************/
 
 void
-GDBLink::Send
+gdb::Link::Send
 	(
 	const JString& text
 	)
@@ -2075,7 +2072,7 @@ GDBLink::Send
  *****************************************************************************/
 
 void
-GDBLink::SendRaw
+gdb::Link::SendRaw
 	(
 	const JString& text
 	)
@@ -2099,7 +2096,7 @@ GDBLink::SendRaw
  *****************************************************************************/
 
 void
-GDBLink::SendMedicCommand
+gdb::Link::SendMedicCommand
 	(
 	Command* command
 	)
@@ -2152,7 +2149,7 @@ GDBLink::SendMedicCommand
  *****************************************************************************/
 
 void
-GDBLink::ProgramStarted
+gdb::Link::ProgramStarted
 	(
 	const pid_t pid
 	)
@@ -2181,7 +2178,7 @@ GDBLink::ProgramStarted
  *****************************************************************************/
 
 void
-GDBLink::ProgramFinished1()
+gdb::Link::ProgramFinished1()
 {
 	jdelete itsChildProcess;
 	itsChildProcess = nullptr;
@@ -2205,7 +2202,7 @@ GDBLink::ProgramFinished1()
  *****************************************************************************/
 
 void
-GDBLink::StopProgram()
+gdb::Link::StopProgram()
 {
 	if (itsFirstBreakFlag)
 	{
@@ -2235,7 +2232,7 @@ GDBLink::StopProgram()
  *****************************************************************************/
 
 void
-GDBLink::KillProgram()
+gdb::Link::KillProgram()
 {
 	SendWhenStopped(JString("kill", JString::kNoCopy));
 }
@@ -2246,7 +2243,7 @@ GDBLink::KillProgram()
  *****************************************************************************/
 
 void
-GDBLink::DetachOrKill()
+gdb::Link::DetachOrKill()
 {
 	if (itsIsAttachedFlag)
 	{
@@ -2264,7 +2261,7 @@ GDBLink::DetachOrKill()
  *****************************************************************************/
 
 bool
-GDBLink::OKToDetachOrKill()
+gdb::Link::OKToDetachOrKill()
 	const
 {
 	if (itsIsAttachedFlag)
@@ -2289,7 +2286,7 @@ GDBLink::OKToDetachOrKill()
  *****************************************************************************/
 
 bool
-GDBLink::StartDebugger()
+gdb::Link::StartDebugger()
 {
 	assert( itsDebuggerProcess == nullptr && itsChildProcess == nullptr );
 
@@ -2333,7 +2330,7 @@ GDBLink::StartDebugger()
  *****************************************************************************/
 
 void
-GDBLink::InitDebugger()
+gdb::Link::InitDebugger()
 {
 	Send(JGetString("InitCommands::GDBLink"));
 
@@ -2358,7 +2355,7 @@ GDBLink::InitDebugger()
  *****************************************************************************/
 
 bool
-GDBLink::ChangeDebugger()
+gdb::Link::ChangeDebugger()
 {
 	PrefsManager* mgr = GetPrefsManager();
 	if (itsDebuggerCmd != mgr->GetGDBCommand())
@@ -2377,7 +2374,7 @@ GDBLink::ChangeDebugger()
  *****************************************************************************/
 
 bool
-GDBLink::RestartDebugger()
+gdb::Link::RestartDebugger()
 {
 	const bool symbolsWereLoaded = itsSymbolsLoadedFlag;
 
@@ -2398,7 +2395,7 @@ GDBLink::RestartDebugger()
  *****************************************************************************/
 
 void
-GDBLink::StopDebugger()
+gdb::Link::StopDebugger()
 {
 	DetachOrKill();
 	Send(JString("quit", JString::kNoCopy));

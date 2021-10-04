@@ -10,13 +10,15 @@
 
 #include "DisplaySourceForMainCmd.h"
 
-class GDBDisplaySourceForMainCmd : public DisplaySourceForMainCmd
+namespace gdb {
+
+class DisplaySourceForMainCmd : public ::DisplaySourceForMainCmd
 {
 public:
 
-	GDBDisplaySourceForMainCmd(SourceDirector* sourceDir);
+	DisplaySourceForMainCmd(SourceDirector* sourceDir);
 
-	virtual	~GDBDisplaySourceForMainCmd();
+	virtual	~DisplaySourceForMainCmd();
 
 protected:
 
@@ -27,6 +29,8 @@ private:
 
 	bool	itsHasCoreFlag;
 	JIndex	itsNextCmdIndex;
+};
+
 };
 
 #endif

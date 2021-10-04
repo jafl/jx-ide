@@ -168,7 +168,7 @@ EditProjPrefsDialog::Receive
 
 	else if (sender == itsHelpButton && message.Is(JXButton::kPushed))
 	{
-		(JXGetHelpManager())->ShowSection("ProjectHelp-Prefs");
+		JXGetHelpManager()->ShowSection("ProjectHelp-Prefs");
 	}
 
 	else

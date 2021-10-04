@@ -11,7 +11,7 @@
 #include <jx-af/jcore/JNamedTreeNode.h>
 #include <jx-af/jcore/JFontStyle.h>
 
-class VarCommand;
+class VarCmd;
 
 class VarNode : public JNamedTreeNode
 {
@@ -57,7 +57,7 @@ public:
 
 	static void	TrimExpression(JString* s);
 
-	// called by GetLocalVars
+	// called by GetLocalVarsCmd
 
 	void	UpdateValue();
 	void	UpdateValue(VarNode* root);
@@ -75,12 +75,12 @@ protected:
 private:
 
 	const bool		itsShouldListenToLinkFlag;
-	VarCommand*	itsValueCommand;
+	VarCmd*	itsValueCommand;
 	JString			itsValue;
 	bool			itsIsPointerFlag;
 	bool			itsValidFlag;
 	bool			itsNewValueFlag;
-	VarCommand*	itsContentCommand;
+	VarCmd*	itsContentCommand;
 
 	// used for base conversion
 

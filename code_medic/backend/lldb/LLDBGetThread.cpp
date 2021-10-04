@@ -1,7 +1,7 @@
 /******************************************************************************
  LLDBGetThread.cpp
 
-	BASE CLASS = GetThread
+	BASE CLASS = GetThreadCmd
 
 	Copyright (C) 2016 by John Lindal.
 
@@ -27,7 +27,7 @@ LLDBGetThread::LLDBGetThread
 	ThreadsWidget* widget
 	)
 	:
-	GetThread(JString::empty, widget)
+	GetThreadCmd(JString::empty, widget)
 {
 }
 

@@ -1018,7 +1018,7 @@ XDLink::CreateArray2DCmd
 
  *****************************************************************************/
 
-Plot2DCommand*
+Plot2DCmd*
 XDLink::CreatePlot2DCmd
 	(
 	Plot2DDir*	dir,
@@ -1026,7 +1026,7 @@ XDLink::CreatePlot2DCmd
 	JArray<JFloat>*	y
 	)
 {
-	Plot2DCommand* cmd = jnew XDPlot2DCommand(dir, x, y);
+	Plot2DCmd* cmd = jnew XDPlot2DCommand(dir, x, y);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1085,14 +1085,14 @@ XDLink::CreateGetFrameCmd
 
  *****************************************************************************/
 
-GetStack*
+GetStackCmd*
 XDLink::CreateGetStackCmd
 	(
 	JTree*			tree,
 	StackWidget*	widget
 	)
 {
-	GetStack* cmd = jnew XDGetStack(tree, widget);
+	GetStackCmd* cmd = jnew XDGetStack(tree, widget);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1102,13 +1102,13 @@ XDLink::CreateGetStackCmd
 
  *****************************************************************************/
 
-GetThread*
+GetThreadCmd*
 XDLink::CreateGetThreadCmd
 	(
 	ThreadsWidget* widget
 	)
 {
-	GetThread* cmd = jnew XDGetThread(widget);
+	GetThreadCmd* cmd = jnew XDGetThread(widget);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1118,14 +1118,14 @@ XDLink::CreateGetThreadCmd
 
  *****************************************************************************/
 
-GetThreads*
+GetThreadsCmd*
 XDLink::CreateGetThreadsCmd
 	(
 	JTree*				tree,
 	ThreadsWidget*	widget
 	)
 {
-	GetThreads* cmd = jnew XDGetThreads(tree, widget);
+	GetThreadsCmd* cmd = jnew XDGetThreads(tree, widget);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1152,13 +1152,13 @@ XDLink::CreateGetFullPathCmd
 
  *****************************************************************************/
 
-GetInitArgs*
+GetInitArgsCmd*
 XDLink::CreateGetInitArgsCmd
 	(
 	JXInputField* argInput
 	)
 {
-	GetInitArgs* cmd = jnew XDGetInitArgs(argInput);
+	GetInitArgsCmd* cmd = jnew XDGetInitArgs(argInput);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1168,13 +1168,13 @@ XDLink::CreateGetInitArgsCmd
 
  *****************************************************************************/
 
-GetLocalVars*
+GetLocalVarsCmd*
 XDLink::CreateGetLocalVarsCmd
 	(
 	VarNode* rootNode
 	)
 {
-	GetLocalVars* cmd = jnew XDGetLocalVars(rootNode);
+	GetLocalVarsCmd* cmd = jnew XDGetLocalVars(rootNode);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1184,13 +1184,13 @@ XDLink::CreateGetLocalVarsCmd
 
  *****************************************************************************/
 
-GetSourceFileList*
+GetSourceFileListCmd*
 XDLink::CreateGetSourceFileListCmd
 	(
 	FileListDir* fileList
 	)
 {
-	GetSourceFileList* cmd = jnew XDGetSourceFileList(fileList);
+	GetSourceFileListCmd* cmd = jnew XDGetSourceFileList(fileList);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1200,7 +1200,7 @@ XDLink::CreateGetSourceFileListCmd
 
  *****************************************************************************/
 
-VarCommand*
+VarCmd*
 XDLink::CreateVarValueCmd
 	(
 	const JString& expr
@@ -1211,7 +1211,7 @@ XDLink::CreateVarValueCmd
 	s += " -d ";
 	s += JString((JUInt64)itsStackFrameIndex);
 
-	VarCommand* cmd = jnew XDVarCommand(s);
+	VarCmd* cmd = jnew XDVarCommand(s);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1221,7 +1221,7 @@ XDLink::CreateVarValueCmd
 
  *****************************************************************************/
 
-VarCommand*
+VarCmd*
 XDLink::CreateVarContentCmd
 	(
 	const JString& expr
@@ -1385,7 +1385,7 @@ XDLink::Build2DArrayExpression
 
  *****************************************************************************/
 
-GetMemory*
+GetMemoryCmd*
 XDLink::CreateGetMemoryCmd
 	(
 	MemoryDir* dir
@@ -1413,7 +1413,7 @@ XDLink::CreateGetAssemblyCmd
 
  *****************************************************************************/
 
-GetRegisters*
+GetRegistersCmd*
 XDLink::CreateGetRegistersCmd
 	(
 	RegistersDir* dir

@@ -205,7 +205,7 @@ RunTEScriptDialog::Receive
 
 	else if (sender == itsHelpButton && message.Is(JXButton::kPushed))
 	{
-		(JXGetHelpManager())->ShowSection("EditorHelp-ExtScript");
+		JXGetHelpManager()->ShowSection("EditorHelp-ExtScript");
 	}
 
 	else if (sender == itsHistoryMenu && message.Is(JXMenu::kItemSelected))

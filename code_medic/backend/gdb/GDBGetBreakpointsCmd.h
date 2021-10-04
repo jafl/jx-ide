@@ -12,13 +12,15 @@
 #include "Breakpoint.h"		// need defn of Action
 #include <jx-af/jcore/JStringPtrMap.h>
 
-class GDBGetBreakpointsCmd : public GetBreakpointsCmd
+namespace gdb {
+
+class GetBreakpointsCmd : public ::GetBreakpointsCmd
 {
 public:
 
-	GDBGetBreakpointsCmd();
+	GetBreakpointsCmd();
 
-	virtual	~GDBGetBreakpointsCmd();
+	virtual	~GetBreakpointsCmd();
 
 protected:
 
@@ -34,6 +36,8 @@ private:
 	bool	ParseCommon(JStringPtrMap<JString>& map, JIndex* bpIndex,
 							Breakpoint::Action* action, bool* enabled,
 							JSize* ignoreCount);
+};
+
 };
 
 #endif

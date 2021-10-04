@@ -10,17 +10,21 @@
 
 #include "Command.h"
 
-class GDBCheckCoreStatusCmd : public Command
+namespace gdb {
+
+class CheckCoreStatusCmd : public Command
 {
 public:
 
-	GDBCheckCoreStatusCmd();
+	CheckCoreStatusCmd();
 
-	virtual	~GDBCheckCoreStatusCmd();
+	virtual	~CheckCoreStatusCmd();
 
 protected:
 
 	virtual void	HandleSuccess(const JString& data) override;
+};
+
 };
 
 #endif

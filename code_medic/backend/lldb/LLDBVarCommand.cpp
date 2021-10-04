@@ -1,7 +1,7 @@
 /******************************************************************************
  LLDBVarCommand.cpp
 
-	BASE CLASS = VarCommand
+	BASE CLASS = VarCmd
 
 	Copyright (C) 2016 by John Lindal.
 
@@ -29,7 +29,7 @@ LLDBVarCommand::LLDBVarCommand
 	const JString& expr
 	)
 	:
-	VarCommand()
+	VarCmd()
 {
 	itsExpr = expr;
 }

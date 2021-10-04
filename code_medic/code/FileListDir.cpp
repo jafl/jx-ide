@@ -9,7 +9,7 @@
 
 #include "FileListDir.h"
 #include "CommandDirector.h"
-#include "GetSourceFileList.h"
+#include "GetSourceFileListCmd.h"
 #include "globals.h"
 #include "actionDefs.h"
 #include <jx-af/jx/JXDisplay.h>

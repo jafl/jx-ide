@@ -174,7 +174,7 @@ EditCPPMacroDialog::Receive
 {
 	if (sender == itsHelpButton && message.Is(JXButton::kPushed))
 	{
-		(JXGetHelpManager())->ShowSection("CTreeHelp#CPP");
+		JXGetHelpManager()->ShowSection("CTreeHelp#CPP");
 	}
 	else
 	{

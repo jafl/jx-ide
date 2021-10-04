@@ -8,9 +8,9 @@
 #ifndef _H_XDGetThread
 #define _H_XDGetThread
 
-#include "GetThread.h"
+#include "GetThreadCmd.h"
 
-class XDGetThread : public GetThread
+class XDGetThread : public GetThreadCmd
 {
 public:
 

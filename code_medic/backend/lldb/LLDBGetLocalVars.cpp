@@ -1,7 +1,7 @@
 /******************************************************************************
  LLDBGetLocalVars.cpp
 
-	BASE CLASS = GetLocalVars
+	BASE CLASS = GetLocalVarsCmd
 
 	Copyright (C) 2016 by John Lindal.
 
@@ -30,7 +30,7 @@ LLDBGetLocalVars::LLDBGetLocalVars
 	VarNode* rootNode
 	)
 	:
-	GetLocalVars(JString::empty),
+	GetLocalVarsCmd(JString::empty),
 	itsRootNode(rootNode)
 {
 }

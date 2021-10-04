@@ -171,7 +171,7 @@ EditTreePrefsDialog::Receive
 
 	else if (sender == itsHelpButton && message.Is(JXButton::kPushed))
 	{
-		(JXGetHelpManager())->ShowSection("TreePrefsHelp");
+		JXGetHelpManager()->ShowSection("TreePrefsHelp");
 	}
 
 	else

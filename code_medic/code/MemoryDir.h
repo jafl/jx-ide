@@ -15,7 +15,7 @@ class JXTextButton;
 class JXTextMenu;
 class JXStaticText;
 class Link;
-class GetMemory;
+class GetMemoryCmd;
 class ArrayExprInput;
 class ArrayIndexInput;
 class CommandDirector;
@@ -24,7 +24,7 @@ class MemoryDir : public JXWindowDirector
 {
 public:
 
-	// remember to sync itsDisplayTypeMenu and GetMemory::kCommandName
+	// remember to sync itsDisplayTypeMenu and *GetMemoryCmd::kCommandName
 
 	enum DisplayType
 	{
@@ -44,7 +44,7 @@ public:
 
 	virtual	~MemoryDir();
 
-	virtual void		Activate() override;
+	virtual void	Activate() override;
 	virtual bool	Deactivate() override;
 	virtual bool	GetMenuIcon(const JXImage** icon) const override;
 
@@ -67,10 +67,10 @@ private:
 	JString				itsExpr;
 	DisplayType			itsDisplayType;
 	JSize				itsItemCount;
-	GetMemory*		itsCmd;			// can be nullptr
-	bool			itsShouldUpdateFlag;
-	bool			itsNeedsUpdateFlag;
-	bool			itsWaitingForReloadFlag;
+	GetMemoryCmd*		itsCmd;			// can be nullptr
+	bool				itsShouldUpdateFlag;
+	bool				itsNeedsUpdateFlag;
+	bool				itsWaitingForReloadFlag;
 
 	JXTextMenu*			itsFileMenu;
 	JXTextMenu*			itsActionMenu;

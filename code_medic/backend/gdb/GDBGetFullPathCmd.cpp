@@ -22,13 +22,13 @@
 
  ******************************************************************************/
 
-GDBGetFullPathCmd::GDBGetFullPathCmd
+gdb::GetFullPathCmd::GetFullPathCmd
 	(
 	const JString&	fileName,
 	const JIndex	lineIndex	// for convenience
 	)
 	:
-	GetFullPathCmd(BuildCommand(fileName), fileName, lineIndex)
+	::GetFullPathCmd(BuildCommand(fileName), fileName, lineIndex)
 {
 }
 
@@ -37,7 +37,7 @@ GDBGetFullPathCmd::GDBGetFullPathCmd
 
  ******************************************************************************/
 
-GDBGetFullPathCmd::~GDBGetFullPathCmd()
+gdb::GetFullPathCmd::~GetFullPathCmd()
 {
 }
 
@@ -47,7 +47,7 @@ GDBGetFullPathCmd::~GDBGetFullPathCmd()
  ******************************************************************************/
 
 JString
-GDBGetFullPathCmd::BuildCommand
+gdb::GetFullPathCmd::BuildCommand
 	(
 	const JString& fileName
 	)
@@ -67,7 +67,7 @@ static const JRegex redirectPattern = "file: \\\"([^\"]+)\\\", line number: 1\\n
 static const JRegex pathPattern     = ",fullname=\"([^\"]+)\"";
 
 void
-GDBGetFullPathCmd::HandleSuccess
+gdb::GetFullPathCmd::HandleSuccess
 	(
 	const JString& cmdData
 	)
@@ -88,7 +88,7 @@ GDBGetFullPathCmd::HandleSuccess
 		}
 		else
 		{
-			auto* cmd = jnew GDBGetFullPathCmd(fullName, GetLineIndex());
+			auto* cmd = jnew GetFullPathCmd(fullName, GetLineIndex());
 			assert( cmd != nullptr );
 			Broadcast(NewCommand(cmd));
 		}

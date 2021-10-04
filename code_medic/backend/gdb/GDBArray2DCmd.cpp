@@ -22,14 +22,14 @@
 
  ******************************************************************************/
 
-GDBArray2DCmd::GDBArray2DCmd
+gdb::Array2DCmd::Array2DCmd
 	(
 	Array2DDir*		dir,
 	JXStringTable*		table,
 	JStringTableData*	data
 	)
 	:
-	Array2DCmd(dir, table, data)
+	::Array2DCmd(dir, table, data)
 {
 }
 
@@ -38,7 +38,7 @@ GDBArray2DCmd::GDBArray2DCmd
 
  ******************************************************************************/
 
-GDBArray2DCmd::~GDBArray2DCmd()
+gdb::Array2DCmd::~Array2DCmd()
 {
 }
 
@@ -48,7 +48,7 @@ GDBArray2DCmd::~GDBArray2DCmd()
  ******************************************************************************/
 
 void
-GDBArray2DCmd::PrepareToSend
+gdb::Array2DCmd::PrepareToSend
 	(
 	const UpdateType	type,
 	const JIndex		index,
@@ -82,7 +82,7 @@ GDBArray2DCmd::PrepareToSend
 static const JRegex prefixPattern = "^\\$[[:digit:]]+[[:space:]]+=[[:space:]]+(.*)$";
 
 void
-GDBArray2DCmd::HandleSuccess
+gdb::Array2DCmd::HandleSuccess
 	(
 	const JString& data
 	)

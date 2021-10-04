@@ -9,7 +9,7 @@
 
 #include "Plot2DDir.h"
 #include "Plot2DExprTable.h"
-#include "Plot2DCommand.h"
+#include "Plot2DCmd.h"
 #include "CommandDirector.h"
 #include "VarNode.h"
 #include "globals.h"
@@ -171,7 +171,7 @@ Plot2DDir::Plot2DDirX1
 
 	itsExprData->AppendCols(Plot2DExprTable::kColCount);
 
-	itsUpdateCmdList = jnew JPtrArray<Plot2DCommand>(JPtrArrayT::kDeleteAll);
+	itsUpdateCmdList = jnew JPtrArray<Plot2DCmd>(JPtrArrayT::kDeleteAll);
 	assert( itsUpdateCmdList != nullptr );
 
 	itsXData = jnew JPtrArray<JArray<JFloat> >(JPtrArrayT::kDeleteAll);
@@ -658,7 +658,7 @@ Plot2DDir::Update
 	JString curveName;
 	for (JIndex i=first; i<=last; i++)
 	{
-		Plot2DCommand* cmd;
+		Plot2DCmd* cmd;
 		if (itsUpdateCmdList->IndexValid(i))
 		{
 			cmd = itsUpdateCmdList->GetElement(i);

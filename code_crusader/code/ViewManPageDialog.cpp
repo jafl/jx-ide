@@ -216,7 +216,7 @@ ViewManPageDialog::Receive
 	}
 	else if (sender == itsHelpButton && message.Is(JXButton::kPushed))
 	{
-		(JXGetHelpManager())->ShowSection("ManPageHelp");
+		JXGetHelpManager()->ShowSection("ManPageHelp");
 	}
 
 	else if (sender == itsFnHistoryMenu && message.Is(JXMenu::kItemSelected))

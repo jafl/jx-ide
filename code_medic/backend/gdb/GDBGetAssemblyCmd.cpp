@@ -23,12 +23,12 @@
 
  ******************************************************************************/
 
-GDBGetAssemblyCmd::GDBGetAssemblyCmd
+gdb::GetAssemblyCmd::GetAssemblyCmd
 	(
 	SourceDirector* dir
 	)
 	:
-	GetAssemblyCmd(dir, JString::empty)
+	::GetAssemblyCmd(dir, JString::empty)
 {
 }
 
@@ -37,7 +37,7 @@ GDBGetAssemblyCmd::GDBGetAssemblyCmd
 
  ******************************************************************************/
 
-GDBGetAssemblyCmd::~GDBGetAssemblyCmd()
+gdb::GetAssemblyCmd::~GetAssemblyCmd()
 {
 }
 
@@ -47,7 +47,7 @@ GDBGetAssemblyCmd::~GDBGetAssemblyCmd()
  *****************************************************************************/
 
 void
-GDBGetAssemblyCmd::Starting()
+gdb::GetAssemblyCmd::Starting()
 {
 	GetAssemblyCmd::Starting();
 
@@ -83,7 +83,7 @@ static const JRegex bpPattern     = "asm_insns=\\[";
 static const JRegex offsetPattern = "<\\+[[:digit:]]+>$";
 
 void
-GDBGetAssemblyCmd::HandleSuccess
+gdb::GetAssemblyCmd::HandleSuccess
 	(
 	const JString& cmdData
 	)
@@ -101,7 +101,7 @@ GDBGetAssemblyCmd::HandleSuccess
 	if (!m.IsEmpty())
 	{
 		stream.seekg(m.GetUtf8ByteRange().last);
-		if (!GDBLink::ParseMapArray(stream, &list))
+		if (!Link::ParseMapArray(stream, &list))
 		{
 			GetLink()->Log("invalid data map");
 		}

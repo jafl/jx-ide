@@ -10,15 +10,19 @@
 
 #include "BreakpointManager.h"
 
-class GDBLink;
+namespace gdb {
 
-class GDBBreakpointManager : public BreakpointManager
+class Link;
+
+class BreakpointManager : public ::BreakpointManager
 {
 public:
 
-	GDBBreakpointManager(GDBLink* link);
+	BreakpointManager(Link* link);
 
-	virtual	~GDBBreakpointManager();
+	virtual	~BreakpointManager();
+};
+
 };
 
 #endif

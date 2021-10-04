@@ -8,9 +8,9 @@
 #ifndef _H_XDGetStack
 #define _H_XDGetStack
 
-#include "GetStack.h"
+#include "GetStackCmd.h"
 
-class XDGetStack : public GetStack
+class XDGetStack : public GetStackCmd
 {
 public:
 

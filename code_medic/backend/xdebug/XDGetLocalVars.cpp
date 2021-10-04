@@ -1,7 +1,7 @@
 /******************************************************************************
  XDGetLocalVars.cpp
 
-	BASE CLASS = GetLocalVars
+	BASE CLASS = GetLocalVarsCmd
 
 	Copyright (C) 2007 by John Lindal.
 
@@ -24,7 +24,7 @@ XDGetLocalVars::XDGetLocalVars
 	VarNode* rootNode
 	)
 	:
-	GetLocalVars(JString("context_names", JString::kNoCopy)),
+	GetLocalVarsCmd(JString("context_names", JString::kNoCopy)),
 	itsRootNode(rootNode)
 {
 }

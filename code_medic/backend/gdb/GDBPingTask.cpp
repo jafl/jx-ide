@@ -21,7 +21,7 @@ const Time kCheckInterval = 1000;	// milliseconds
 
  ******************************************************************************/
 
-GDBPingTask::GDBPingTask()
+gdb::PingTask::PingTask()
 	:
 	JXIdleTask(kCheckInterval)
 {
@@ -32,7 +32,7 @@ GDBPingTask::GDBPingTask()
 
  ******************************************************************************/
 
-GDBPingTask::~GDBPingTask()
+gdb::PingTask::~PingTask()
 {
 }
 
@@ -42,7 +42,7 @@ GDBPingTask::~GDBPingTask()
  ******************************************************************************/
 
 void
-GDBPingTask::Perform
+gdb::PingTask::Perform
 	(
 	const Time	delta,
 	Time*		maxSleepTime
@@ -50,6 +50,6 @@ GDBPingTask::Perform
 {
 	if (TimeToPerform(delta, maxSleepTime))
 	{
-		dynamic_cast<GDBLink*>(GetLink())->SendPing();
+		dynamic_cast<gdb::Link*>(GetLink())->SendPing();
 	}
 }

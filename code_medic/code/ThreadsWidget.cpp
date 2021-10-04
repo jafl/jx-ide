@@ -11,8 +11,8 @@
 #include "ThreadNode.h"
 #include "CommandDirector.h"
 #include "ThreadsDir.h"
-#include "GetThreads.h"
-#include "GetThread.h"
+#include "GetThreadsCmd.h"
+#include "GetThreadCmd.h"
 #include "globals.h"
 #include <jx-af/jx/JXWindow.h>
 #include <jx-af/jx/JXDeleteObjectTask.h>
@@ -83,7 +83,7 @@ ThreadsWidget::ThreadsWidget
 ThreadsWidget::~ThreadsWidget()
 {
 	jdelete itsTree;
-	JXDeleteObjectTask<GetThreads>::Delete(itsGetThreadsCmd);
+	JXDeleteObjectTask<GetThreadsCmd>::Delete(itsGetThreadsCmd);
 	jdelete itsGetCurrentThreadCmd;
 	jdelete itsOpenIDList;
 }

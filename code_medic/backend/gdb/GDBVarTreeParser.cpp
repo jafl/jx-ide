@@ -6,7 +6,6 @@
  *****************************************************************************/
 
 #include "GDBVarTreeParser.h"
-#include "GDBVarTreeScanner.h"
 #include "VarNode.h"
 #include "globals.h"
 #include <jx-af/jcore/jAssert.h>
@@ -16,12 +15,12 @@
 
  *****************************************************************************/
 
-GDBVarTreeParser::GDBVarTreeParser()
+gdb::VarTreeParser::VarTreeParser()
 	:
 	itsCurrentNode(nullptr),
 	itsIsPointerFlag(false)
 {
-	itsScanner = jnew GDB::VarTree::Scanner;
+	itsScanner = jnew gdb::VarTree::Scanner;
 	assert(itsScanner != nullptr);
 }
 
@@ -30,7 +29,7 @@ GDBVarTreeParser::GDBVarTreeParser()
 
  *****************************************************************************/
 
-GDBVarTreeParser::~GDBVarTreeParser()
+gdb::VarTreeParser::~VarTreeParser()
 {
 	jdelete itsScanner;
 	jdelete itsCurrentNode;
@@ -42,7 +41,7 @@ GDBVarTreeParser::~GDBVarTreeParser()
  *****************************************************************************/
 
 int
-GDBVarTreeParser::Parse
+gdb::VarTreeParser::Parse
 	(
 	const JString& text
 	)
@@ -59,7 +58,7 @@ GDBVarTreeParser::Parse
  *****************************************************************************/
 
 int
-GDBVarTreeParser::yylex
+gdb::VarTreeParser::yylex
 	(
 	YYSTYPE* lvalp
 	)
@@ -93,7 +92,7 @@ GDBVarTreeParser::yylex
  *****************************************************************************/
 
 int
-GDBVarTreeParser::yyerror
+gdb::VarTreeParser::yyerror
 	(
 	const char* message
 	)
@@ -113,9 +112,9 @@ GDBVarTreeParser::yyerror
  *****************************************************************************/
 
 void
-GDBVarTreeParser::AppendAsArrayElement
+gdb::VarTreeParser::AppendAsArrayElement
 	(
-	VarNode*				node,
+	VarNode*			node,
 	JPtrArray<VarNode>*	list
 	)
 	const
@@ -131,11 +130,11 @@ GDBVarTreeParser::AppendAsArrayElement
  *****************************************************************************/
 
 void
-GDBVarTreeParser::AppendAsArrayElement
+gdb::VarTreeParser::AppendAsArrayElement
 	(
 	const JString&				groupLabel,
-	const JPtrArray<VarNode>& data,
-	JPtrArray<VarNode>*		list
+	const JPtrArray<VarNode>&	data,
+	JPtrArray<VarNode>*			list
 	)
 	const
 {
@@ -158,7 +157,7 @@ GDBVarTreeParser::AppendAsArrayElement
  *****************************************************************************/
 
 void
-GDBVarTreeParser::ReportRecoverableError()
+gdb::VarTreeParser::ReportRecoverableError()
 {
 	if (itsGDBErrorFlag)
 	{

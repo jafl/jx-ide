@@ -173,9 +173,9 @@ T
 F
 "./code/GetCompletionsCmd.cpp"
 T
-2 "GetInitArgs.cpp"
+2 "GetInitArgsCmd.cpp"
 F
-"./code/GetInitArgs.cpp"
+"./code/GetInitArgsCmd.cpp"
 T
 2 "ChooseProcessDialog.cpp"
 F
@@ -294,13 +294,13 @@ T
 F
 "./code/ThreadNode.cpp"
 T
-2 "GetThreads.cpp"
+2 "GetThreadsCmd.cpp"
 F
-"./code/GetThreads.cpp"
+"./code/GetThreadsCmd.cpp"
 T
-2 "GetThread.cpp"
+2 "GetThreadCmd.cpp"
 F
-"./code/GetThread.cpp"
+"./code/GetThreadCmd.cpp"
 F
 T
 1 "stack"
@@ -321,9 +321,9 @@ T
 F
 "./code/StackArgNode.cpp"
 T
-2 "GetStack.cpp"
+2 "GetStackCmd.cpp"
 F
-"./code/GetStack.cpp"
+"./code/GetStackCmd.cpp"
 T
 2 "GetFrameCmd.cpp"
 F
@@ -336,9 +336,9 @@ T
 F
 "./code/LocalVarsDir.cpp"
 T
-2 "GetLocalVars.cpp"
+2 "GetLocalVarsCmd.cpp"
 F
-"./code/GetLocalVars.cpp"
+"./code/GetLocalVarsCmd.cpp"
 F
 T
 1 "variables"
@@ -359,9 +359,9 @@ T
 F
 "./code/InitVarNodeTask.cpp"
 T
-2 "VarCommand.cpp"
+2 "VarCmd.cpp"
 F
-"./code/VarCommand.cpp"
+"./code/VarCmd.cpp"
 F
 T
 1 "arrays"
@@ -401,9 +401,9 @@ T
 F
 "./code/Plot2DExprTable.cpp"
 T
-2 "Plot2DCommand.cpp"
+2 "Plot2DCmd.cpp"
 F
-"./code/Plot2DCommand.cpp"
+"./code/Plot2DCmd.cpp"
 F
 T
 1 "memory"
@@ -412,9 +412,9 @@ T
 F
 "./code/MemoryDir.cpp"
 T
-2 "GetMemory.cpp"
+2 "GetMemoryCmd.cpp"
 F
-"./code/GetMemory.cpp"
+"./code/GetMemoryCmd.cpp"
 F
 T
 1 "registers"
@@ -423,9 +423,9 @@ T
 F
 "./code/RegistersDir.cpp"
 T
-2 "GetRegisters.cpp"
+2 "GetRegistersCmd.cpp"
 F
-"./code/GetRegisters.cpp"
+"./code/GetRegistersCmd.cpp"
 F
 T
 1 "file list"
@@ -434,13 +434,13 @@ T
 F
 "./code/FileListDir.cpp"
 T
-2 "GetSourceFileList.cpp"
+2 "GetSourceFileListCmd.cpp"
 F
-"./code/GetSourceFileList.cpp"
+"./code/GetSourceFileListCmd.cpp"
 T
-2 "GetFullPath.cpp"
+2 "GetFullPathCmd.cpp"
 F
-"./code/GetFullPath.cpp"
+"./code/GetFullPathCmd.cpp"
 F
 T
 1 "link"
@@ -448,6 +448,10 @@ T
 2 "Link.cpp"
 F
 "./code/Link.cpp"
+T
+2 "Link.h"
+F
+"./code/Link.h"
 T
 2 "Command.cpp"
 F
@@ -488,9 +492,9 @@ T
 F
 "./backend/gdb/GDBArray2DCmd.cpp"
 T
-2 "GDBPlot2DCommand.cpp"
+2 "GDBPlot2DCmd.cpp"
 F
-"./backend/gdb/GDBPlot2DCommand.cpp"
+"./backend/gdb/GDBPlot2DCmd.cpp"
 T
 2 "GDBCheckCoreStatusCmd.cpp"
 F
@@ -520,65 +524,65 @@ T
 F
 "./backend/gdb/GDBGetFullPathCmd.cpp"
 T
-2 "GDBGetInitArgs.cpp"
+2 "GDBGetInitArgsCmd.cpp"
 F
-"./backend/gdb/GDBGetInitArgs.cpp"
+"./backend/gdb/GDBGetInitArgsCmd.cpp"
 T
-2 "GDBGetLocalVars.cpp"
+2 "GDBGetLocalVarsCmd.cpp"
 F
-"./backend/gdb/GDBGetLocalVars.cpp"
+"./backend/gdb/GDBGetLocalVarsCmd.cpp"
 T
-2 "GDBGetMemory.cpp"
+2 "GDBGetMemoryCmd.cpp"
 F
-"./backend/gdb/GDBGetMemory.cpp"
+"./backend/gdb/GDBGetMemoryCmd.cpp"
 T
-2 "GDBGetProgramName.cpp"
+2 "GDBGetProgramNameCmd.cpp"
 F
-"./backend/gdb/GDBGetProgramName.cpp"
+"./backend/gdb/GDBGetProgramNameCmd.cpp"
 T
-2 "GDBGetRegisters.cpp"
+2 "GDBGetRegistersCmd.cpp"
 F
-"./backend/gdb/GDBGetRegisters.cpp"
+"./backend/gdb/GDBGetRegistersCmd.cpp"
 T
-2 "GDBGetSourceFileList.cpp"
+2 "GDBGetSourceFileListCmd.cpp"
 F
-"./backend/gdb/GDBGetSourceFileList.cpp"
+"./backend/gdb/GDBGetSourceFileListCmd.cpp"
 T
-2 "GDBGetStack.cpp"
+2 "GDBGetStackCmd.cpp"
 F
-"./backend/gdb/GDBGetStack.cpp"
+"./backend/gdb/GDBGetStackCmd.cpp"
 T
-2 "GDBGetStackArguments.cpp"
+2 "GDBGetStackArgumentsCmd.cpp"
 F
-"./backend/gdb/GDBGetStackArguments.cpp"
+"./backend/gdb/GDBGetStackArgumentsCmd.cpp"
 T
-2 "GDBGetStopLocation.cpp"
+2 "GDBGetStopLocationCmd.cpp"
 F
-"./backend/gdb/GDBGetStopLocation.cpp"
+"./backend/gdb/GDBGetStopLocationCmd.cpp"
 T
-2 "GDBGetStopLocationForLink.cpp"
+2 "GDBGetStopLocationForLinkCmd.cpp"
 F
-"./backend/gdb/GDBGetStopLocationForLink.cpp"
+"./backend/gdb/GDBGetStopLocationForLinkCmd.cpp"
 T
-2 "GDBGetStopLocationForAsm.cpp"
+2 "GDBGetStopLocationForAsmCmd.cpp"
 F
-"./backend/gdb/GDBGetStopLocationForAsm.cpp"
+"./backend/gdb/GDBGetStopLocationForAsmCmd.cpp"
 T
-2 "GDBGetThread.cpp"
+2 "GDBGetThreadCmd.cpp"
 F
-"./backend/gdb/GDBGetThread.cpp"
+"./backend/gdb/GDBGetThreadCmd.cpp"
 T
-2 "GDBGetThreads.cpp"
+2 "GDBGetThreadsCmd.cpp"
 F
-"./backend/gdb/GDBGetThreads.cpp"
+"./backend/gdb/GDBGetThreadsCmd.cpp"
 T
-2 "GDBSimpleCommand.cpp"
+2 "GDBSimpleCmd.cpp"
 F
-"./backend/gdb/GDBSimpleCommand.cpp"
+"./backend/gdb/GDBSimpleCmd.cpp"
 T
-2 "GDBVarCommand.cpp"
+2 "GDBVarCmd.cpp"
 F
-"./backend/gdb/GDBVarCommand.cpp"
+"./backend/gdb/GDBVarCmd.cpp"
 T
 2 "GDBVarNode.cpp"
 F
@@ -698,25 +702,25 @@ T
 F
 "./backend/jvm/JVMStackFrameNode.cpp"
 T
-2 "JVMGetThreadGroups.cpp"
+2 "JVMGetThreadGroupsCmd.cpp"
 F
-"./backend/jvm/JVMGetThreadGroups.cpp"
+"./backend/jvm/JVMGetThreadGroupsCmd.cpp"
 T
-2 "JVMGetThreadName.cpp"
+2 "JVMGetThreadNameCmd.cpp"
 F
-"./backend/jvm/JVMGetThreadName.cpp"
+"./backend/jvm/JVMGetThreadNameCmd.cpp"
 T
-2 "JVMGetThreadParent.cpp"
+2 "JVMGetThreadParentCmd.cpp"
 F
-"./backend/jvm/JVMGetThreadParent.cpp"
+"./backend/jvm/JVMGetThreadParentCmd.cpp"
 T
-2 "JVMGetClassInfo.cpp"
+2 "JVMGetClassInfoCmd.cpp"
 F
-"./backend/jvm/JVMGetClassInfo.cpp"
+"./backend/jvm/JVMGetClassInfoCmd.cpp"
 T
-2 "JVMGetClassMethods.cpp"
+2 "JVMGetClassMethodsCmd.cpp"
 F
-"./backend/jvm/JVMGetClassMethods.cpp"
+"./backend/jvm/JVMGetClassMethodsCmd.cpp"
 T
 2 "JVMWelcomeTask.cpp"
 F
@@ -730,33 +734,33 @@ T
 F
 "./backend/jvm/JVMBreakpointManager.cpp"
 T
-2 "JVMDisplaySourceForMain.cpp"
+2 "JVMDisplaySourceForMainCmd.cpp"
 F
-"./backend/jvm/JVMDisplaySourceForMain.cpp"
+"./backend/jvm/JVMDisplaySourceForMainCmd.cpp"
 T
-2 "JVMGetCompletions.cpp"
+2 "JVMGetCompletionsCmd.cpp"
 F
-"./backend/jvm/JVMGetCompletions.cpp"
+"./backend/jvm/JVMGetCompletionsCmd.cpp"
 T
-2 "JVMGetIDSizes.cpp"
+2 "JVMGetIDSizesCmd.cpp"
 F
-"./backend/jvm/JVMGetIDSizes.cpp"
+"./backend/jvm/JVMGetIDSizesCmd.cpp"
 T
-2 "JVMGetSourceFileList.cpp"
+2 "JVMGetSourceFileListCmd.cpp"
 F
-"./backend/jvm/JVMGetSourceFileList.cpp"
+"./backend/jvm/JVMGetSourceFileListCmd.cpp"
 T
-2 "JVMGetStack.cpp"
+2 "JVMGetStackCmd.cpp"
 F
-"./backend/jvm/JVMGetStack.cpp"
+"./backend/jvm/JVMGetStackCmd.cpp"
 T
-2 "JVMGetThread.cpp"
+2 "JVMGetThreadCmd.cpp"
 F
-"./backend/jvm/JVMGetThread.cpp"
+"./backend/jvm/JVMGetThreadCmd.cpp"
 T
-2 "JVMGetThreads.cpp"
+2 "JVMGetThreadsCmd.cpp"
 F
-"./backend/jvm/JVMGetThreads.cpp"
+"./backend/jvm/JVMGetThreadsCmd.cpp"
 T
 2 "JVMVarNode.cpp"
 F
@@ -765,37 +769,37 @@ F
 T
 1 "JVM - todo"
 T
-2 "JVMArray2DCommand.cpp"
+2 "JVMArray2DCmd.cpp"
 F
-"./backend/jvm/JVMArray2DCommand.cpp"
+"./backend/jvm/JVMArray2DCmd.cpp"
 T
-2 "JVMPlot2DCommand.cpp"
+2 "JVMPlot2DCmd.cpp"
 F
-"./backend/jvm/JVMPlot2DCommand.cpp"
+"./backend/jvm/JVMPlot2DCmd.cpp"
 T
-2 "JVMGetBreakpoints.cpp"
+2 "JVMGetBreakpointsCmd.cpp"
 F
-"./backend/jvm/JVMGetBreakpoints.cpp"
+"./backend/jvm/JVMGetBreakpointsCmd.cpp"
 T
-2 "JVMGetFrame.cpp"
+2 "JVMGetFrameCmd.cpp"
 F
-"./backend/jvm/JVMGetFrame.cpp"
+"./backend/jvm/JVMGetFrameCmd.cpp"
 T
-2 "JVMGetFullPath.cpp"
+2 "JVMGetFullPathCmd.cpp"
 F
-"./backend/jvm/JVMGetFullPath.cpp"
+"./backend/jvm/JVMGetFullPathCmd.cpp"
 T
-2 "JVMGetInitArgs.cpp"
+2 "JVMGetInitArgsCmd.cpp"
 F
-"./backend/jvm/JVMGetInitArgs.cpp"
+"./backend/jvm/JVMGetInitArgsCmd.cpp"
 T
-2 "JVMGetLocalVars.cpp"
+2 "JVMGetLocalVarsCmd.cpp"
 F
-"./backend/jvm/JVMGetLocalVars.cpp"
+"./backend/jvm/JVMGetLocalVarsCmd.cpp"
 T
-2 "JVMVarCommand.cpp"
+2 "JVMVarCmd.cpp"
 F
-"./backend/jvm/JVMVarCommand.cpp"
+"./backend/jvm/JVMVarCmd.cpp"
 F
 T
 1 "Xdebug"
@@ -928,7 +932,7 @@ T "./test/java" "&make_default ; ../../$program" "" FFFFTFF "Build & Run test-ja
 F
 # build settings
 1
-T
+F
 "medic"
 "${LIB_DEPS}"
 "make -k all"

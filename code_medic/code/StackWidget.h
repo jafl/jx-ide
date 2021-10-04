@@ -14,7 +14,7 @@ class JTree;
 class Link;
 class CommandDirector;
 class StackDir;
-class GetStack;
+class GetStackCmd;
 class GetFrameCmd;
 class StackFrameNode;
 
@@ -39,7 +39,7 @@ public:
 	virtual void	HandleKeyPress(const JUtf8Character& c, const int keySym,
 								   const JXKeyModifiers& modifiers) override;
 
-	// void called by GetStack
+	// void called by GetStackCmd
 
 	void	FinishedLoading(const JIndex initID);
 
@@ -66,7 +66,7 @@ private:
 	CommandDirector*	itsCommandDir;
 	StackDir*			itsStackDir;
 	JTree*				itsTree;
-	GetStack*			itsGetStackCmd;
+	GetStackCmd*			itsGetStackCmd;
 	GetFrameCmd*			itsGetFrameCmd;
 	bool				itsNeedsUpdateFlag;
 	bool				itsSmartFrameSelectFlag;

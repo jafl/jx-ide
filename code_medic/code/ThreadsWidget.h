@@ -14,8 +14,8 @@ class JTree;
 class Link;
 class CommandDirector;
 class ThreadsDir;
-class GetThreads;
-class GetThread;
+class GetThreadsCmd;
+class GetThreadCmd;
 
 class ThreadsWidget : public JXNamedTreeListWidget
 {
@@ -36,7 +36,7 @@ public:
 	virtual void	HandleKeyPress(const JUtf8Character& c, const int keySym,
 								   const JXKeyModifiers& modifiers) override;
 
-	// void called by GetStack
+	// void called by GetStackCmd
 
 	void	FinishedLoading(const JIndex currentID);
 
@@ -60,8 +60,8 @@ private:
 	CommandDirector*	itsCommandDir;
 	ThreadsDir*		itsThreadDir;
 	JTree*				itsTree;
-	GetThreads*		itsGetThreadsCmd;
-	GetThread*		itsGetCurrentThreadCmd;
+	GetThreadsCmd*		itsGetThreadsCmd;
+	GetThreadCmd*		itsGetCurrentThreadCmd;
 	bool				itsNeedsUpdateFlag;
 	bool				itsIsWaitingForReloadFlag;
 	bool				itsChangingThreadFlag;

@@ -15,25 +15,25 @@
 #include "JVMBreakpointManager.h"
 #include "JVMThreadNode.h"
 
-#include "JVMArray2DCommand.h"
-#include "JVMPlot2DCommand.h"
-#include "JVMDisplaySourceForMain.h"
-#include "JVMGetCompletions.h"
-#include "JVMGetFrame.h"
-#include "JVMGetStack.h"
-#include "JVMGetThread.h"
-#include "JVMGetThreads.h"
-#include "JVMGetThreadGroups.h"
-#include "JVMGetThreadName.h"
-#include "JVMGetThreadParent.h"
-#include "JVMGetClassInfo.h"
-#include "JVMGetClassMethods.h"
-#include "JVMGetFullPath.h"
-#include "JVMGetIDSizes.h"
-#include "JVMGetInitArgs.h"
-#include "JVMGetLocalVars.h"
-#include "JVMGetSourceFileList.h"
-#include "JVMVarCommand.h"
+#include "JVMArray2DCmd.h"
+#include "JVMPlot2DCmd.h"
+#include "JVMDisplaySourceForMainCmd.h"
+#include "JVMGetCompletionsCmd.h"
+#include "JVMGetFrameCmd.h"
+#include "JVMGetStackCmd.h"
+#include "JVMGetThreadCmd.h"
+#include "JVMGetThreadsCmd.h"
+#include "JVMGetThreadGroupsCmd.h"
+#include "JVMGetThreadNameCmd.h"
+#include "JVMGetThreadParentCmd.h"
+#include "JVMGetClassInfoCmd.h"
+#include "JVMGetClassMethodsCmd.h"
+#include "JVMGetFullPathCmd.h"
+#include "JVMGetIDSizesCmd.h"
+#include "JVMGetInitArgsCmd.h"
+#include "JVMGetLocalVarsCmd.h"
+#include "JVMGetSourceFileListCmd.h"
+#include "JVMVarCmd.h"
 #include "JVMVarNode.h"
 
 #include "CommandDirector.h"
@@ -530,7 +530,7 @@ JVMLink::DispatchEventsFromJVM
 			Log(log2);
 
 			JVMThreadNode* node;
-			if (!FindThread(threadID, &node))	// might be created by JVMGetThreadGroups
+			if (!FindThread(threadID, &node))	// might be created by JVMGetThreadGroupsCmd
 			{
 				node = jnew JVMThreadNode(JVMThreadNode::kThreadType, threadID);
 				assert( node != nullptr );
@@ -682,7 +682,7 @@ JVMLink::CheckNextThreadGroup()
 		}
 	}
 
-	Command* cmd = jnew JVMGetThreadParent(node, true);
+	Command* cmd = jnew JVMGetThreadParentCmd(node, true);
 	assert( cmd != nullptr );
 
 	itsCullThreadGroupIndex++;
@@ -755,7 +755,7 @@ JVMLink::AddClass
 
 	Broadcast(IDResolved(id));
 
-	Command* cmd = jnew JVMGetClassMethods(id);
+	Command* cmd = jnew JVMGetClassMethodsCmd(id);
 	assert( cmd != nullptr );
 }
 
@@ -782,7 +782,7 @@ JVMLink::GetClassName
 	}
 	else
 	{
-		Command* cmd = jnew JVMGetClassInfo(id);
+		Command* cmd = jnew JVMGetClassInfoCmd(id);
 		assert( cmd != nullptr );
 
 		name->Clear();
@@ -1712,7 +1712,7 @@ JVMLink::CreateArray2DCmd
 	JStringTableData*	data
 	)
 {
-	Array2DCmd* cmd = jnew JVMArray2DCommand(dir, table, data);
+	Array2DCmd* cmd = jnew JVMArray2DCmd(dir, table, data);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1722,7 +1722,7 @@ JVMLink::CreateArray2DCmd
 
  *****************************************************************************/
 
-Plot2DCommand*
+Plot2DCmd*
 JVMLink::CreatePlot2DCmd
 	(
 	Plot2DDir*	dir,
@@ -1730,7 +1730,7 @@ JVMLink::CreatePlot2DCmd
 	JArray<JFloat>*	y
 	)
 {
-	Plot2DCommand* cmd = jnew JVMPlot2DCommand(dir, x, y);
+	Plot2DCmd* cmd = jnew JVMPlot2DCmd(dir, x, y);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1746,7 +1746,7 @@ JVMLink::CreateDisplaySourceForMainCmd
 	SourceDirector* sourceDir
 	)
 {
-	DisplaySourceForMainCmd* cmd = jnew JVMDisplaySourceForMain(sourceDir);
+	DisplaySourceForMainCmd* cmd = jnew JVMDisplaySourceForMainCmd(sourceDir);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1763,7 +1763,7 @@ JVMLink::CreateGetCompletionsCmd
 	CommandOutputDisplay*	history
 	)
 {
-	GetCompletionsCmd* cmd = jnew JVMGetCompletions(input, history);
+	GetCompletionsCmd* cmd = jnew JVMGetCompletionsCmd(input, history);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1779,7 +1779,7 @@ JVMLink::CreateGetFrameCmd
 	StackWidget* widget
 	)
 {
-	GetFrameCmd* cmd = jnew JVMGetFrame(widget);
+	GetFrameCmd* cmd = jnew JVMGetFrameCmd(widget);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1789,14 +1789,14 @@ JVMLink::CreateGetFrameCmd
 
  *****************************************************************************/
 
-GetStack*
+GetStackCmd*
 JVMLink::CreateGetStackCmd
 	(
 	JTree*			tree,
 	StackWidget*	widget
 	)
 {
-	GetStack* cmd = jnew JVMGetStack(tree, widget);
+	GetStackCmd* cmd = jnew JVMGetStackCmd(tree, widget);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1806,13 +1806,13 @@ JVMLink::CreateGetStackCmd
 
  *****************************************************************************/
 
-GetThread*
+GetThreadCmd*
 JVMLink::CreateGetThreadCmd
 	(
 	ThreadsWidget* widget
 	)
 {
-	GetThread* cmd = jnew JVMGetThread(widget);
+	GetThreadCmd* cmd = jnew JVMGetThreadCmd(widget);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1822,14 +1822,14 @@ JVMLink::CreateGetThreadCmd
 
  *****************************************************************************/
 
-GetThreads*
+GetThreadsCmd*
 JVMLink::CreateGetThreadsCmd
 	(
 	JTree*				tree,
 	ThreadsWidget*	widget
 	)
 {
-	GetThreads* cmd = jnew JVMGetThreads(tree, widget);
+	GetThreadsCmd* cmd = jnew JVMGetThreadsCmd(tree, widget);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1846,7 +1846,7 @@ JVMLink::CreateGetFullPathCmd
 	const JIndex	lineIndex
 	)
 {
-	GetFullPathCmd* cmd = jnew JVMGetFullPath(fileName, lineIndex);
+	GetFullPathCmd* cmd = jnew JVMGetFullPathCmd(fileName, lineIndex);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1856,13 +1856,13 @@ JVMLink::CreateGetFullPathCmd
 
  *****************************************************************************/
 
-GetInitArgs*
+GetInitArgsCmd*
 JVMLink::CreateGetInitArgsCmd
 	(
 	JXInputField* argInput
 	)
 {
-	GetInitArgs* cmd = jnew JVMGetInitArgs(argInput);
+	GetInitArgsCmd* cmd = jnew JVMGetInitArgsCmd(argInput);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1872,13 +1872,13 @@ JVMLink::CreateGetInitArgsCmd
 
  *****************************************************************************/
 
-GetLocalVars*
+GetLocalVarsCmd*
 JVMLink::CreateGetLocalVarsCmd
 	(
 	VarNode* rootNode
 	)
 {
-	GetLocalVars* cmd = jnew JVMGetLocalVars(rootNode);
+	GetLocalVarsCmd* cmd = jnew JVMGetLocalVarsCmd(rootNode);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1888,13 +1888,13 @@ JVMLink::CreateGetLocalVarsCmd
 
  *****************************************************************************/
 
-GetSourceFileList*
+GetSourceFileListCmd*
 JVMLink::CreateGetSourceFileListCmd
 	(
 	FileListDir* fileList
 	)
 {
-	GetSourceFileList* cmd = jnew JVMGetSourceFileList(fileList);
+	GetSourceFileListCmd* cmd = jnew JVMGetSourceFileListCmd(fileList);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1904,7 +1904,7 @@ JVMLink::CreateGetSourceFileListCmd
 
  *****************************************************************************/
 
-VarCommand*
+VarCmd*
 JVMLink::CreateVarValueCmd
 	(
 	const JString& expr
@@ -1913,7 +1913,7 @@ JVMLink::CreateVarValueCmd
 	JString s("print ");
 	s += expr;
 
-	VarCommand* cmd = jnew JVMVarCommand(s);
+	VarCmd* cmd = jnew JVMVarCmd(s);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1923,7 +1923,7 @@ JVMLink::CreateVarValueCmd
 
  *****************************************************************************/
 
-VarCommand*
+VarCmd*
 JVMLink::CreateVarContentCmd
 	(
 	const JString& expr
@@ -1933,7 +1933,7 @@ JVMLink::CreateVarContentCmd
 	s += expr;
 	s += ")";
 
-	VarCommand* cmd = jnew JVMVarCommand(s);
+	VarCmd* cmd = jnew JVMVarCmd(s);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -2004,7 +2004,7 @@ JVMLink::Build2DArrayExpression
 
  *****************************************************************************/
 
-GetMemory*
+GetMemoryCmd*
 JVMLink::CreateGetMemoryCmd
 	(
 	MemoryDir* dir
@@ -2032,7 +2032,7 @@ JVMLink::CreateGetAssemblyCmd
 
  *****************************************************************************/
 
-GetRegisters*
+GetRegistersCmd*
 JVMLink::CreateGetRegistersCmd
 	(
 	RegistersDir* dir
@@ -2389,7 +2389,7 @@ JVMLink::ConnectionEstablished
 
 	itsAcceptor->close();
 
-	Command* cmd = jnew JVMGetIDSizes();
+	Command* cmd = jnew JVMGetIDSizesCmd();
 	assert( cmd != nullptr );
 
 	// listen for class unload
@@ -2416,7 +2416,7 @@ JVMLink::ConnectionEstablished
 	itsThreadRoot->DeleteAllChildren();
 	ListenTo(itsThreadTree);
 
-	cmd = jnew JVMGetThreadGroups(itsThreadRoot, nullptr);
+	cmd = jnew JVMGetThreadGroupsCmd(itsThreadRoot, nullptr);
 	assert( cmd != nullptr );
 
 	// trigger commands

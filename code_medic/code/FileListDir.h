@@ -17,7 +17,7 @@ class JXFileListSet;
 class JXFileListTable;
 class Link;
 class CommandDirector;
-class GetSourceFileList;
+class GetSourceFileListCmd;
 
 class FileListDir : public JXWindowDirector, public JPrefObject
 {
@@ -44,7 +44,7 @@ private:
 
 	Link*					itsLink;
 	CommandDirector*		itsCommandDir;
-	GetSourceFileList*	itsCmd;
+	GetSourceFileListCmd*	itsCmd;
 
 	JXTextMenu*	itsFileMenu;
 	JXTextMenu*	itsActionsMenu;

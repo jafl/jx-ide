@@ -1,7 +1,7 @@
 /******************************************************************************
  LLDBGetRegisters.cpp
 
-	BASE CLASS = GetRegisters
+	BASE CLASS = GetRegistersCmd
 
 	Copyright (C) 2016 by John Lindal.
 
@@ -25,7 +25,7 @@ LLDBGetRegisters::LLDBGetRegisters
 	RegistersDir* dir
 	)
 	:
-	GetRegisters(JString::empty, dir)
+	GetRegistersCmd(JString::empty, dir)
 {
 }
 

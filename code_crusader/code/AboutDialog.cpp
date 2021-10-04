@@ -158,18 +158,18 @@ AboutDialog::Receive
 	{
 		if (itsIsUpgradeFlag)
 		{
-			(JXGetHelpManager())->ShowChangeLog();
+			JXGetHelpManager()->ShowChangeLog();
 		}
 		else
 		{
-			(JXGetHelpManager())->ShowTOC();
+			JXGetHelpManager()->ShowTOC();
 		}
 		EndDialog(true);
 	}
 
 	else if (sender == itsCreditsButton && message.Is(JXButton::kPushed))
 	{
-		(JXGetHelpManager())->ShowCredits();
+		JXGetHelpManager()->ShowCredits();
 		EndDialog(true);
 	}
 

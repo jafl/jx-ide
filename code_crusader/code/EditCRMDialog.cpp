@@ -267,7 +267,7 @@ EditCRMDialog::Receive
 {
 	if (sender == itsHelpButton && message.Is(JXButton::kPushed))
 	{
-		(JXGetHelpManager())->ShowSection("CRMHelp");
+		JXGetHelpManager()->ShowSection("CRMHelp");
 	}
 	else
 	{

@@ -12,7 +12,7 @@
 #include "StackArgNode.h"
 #include "CommandDirector.h"
 #include "StackDir.h"
-#include "GetStack.h"
+#include "GetStackCmd.h"
 #include "GetFrameCmd.h"
 #include "globals.h"
 #include <jx-af/jx/JXWindow.h>

@@ -8,7 +8,7 @@
  *****************************************************************************/
 
 #include "RegistersDir.h"
-#include "GetRegisters.h"
+#include "GetRegistersCmd.h"
 #include "CommandDirector.h"
 #include "VarNode.h"
 #include "globals.h"

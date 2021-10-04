@@ -10,17 +10,21 @@
 
 #include "Command.h"
 
-class GDBAnalyzeCoreCmd : public Command
+namespace gdb {
+
+class AnalyzeCoreCmd : public Command
 {
 public:
 
-	GDBAnalyzeCoreCmd(const JString& cmd);
+	AnalyzeCoreCmd(const JString& cmd);
 
-	virtual	~GDBAnalyzeCoreCmd();
+	virtual	~AnalyzeCoreCmd();
 
 protected:
 
 	virtual void	HandleSuccess(const JString& data) override;
+};
+
 };
 
 #endif

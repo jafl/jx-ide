@@ -8,11 +8,11 @@
 #ifndef _H_LLDBGetThreads
 #define _H_LLDBGetThreads
 
-#include "GetThreads.h"
+#include "GetThreadsCmd.h"
 
 class JTree;
 
-class LLDBGetThreads : public GetThreads
+class LLDBGetThreads : public GetThreadsCmd
 {
 public:
 

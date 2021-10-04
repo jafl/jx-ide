@@ -1,7 +1,7 @@
 /******************************************************************************
  LLDBPlot2DCommand.cpp
 
-	BASE CLASS = Plot2DCommand
+	BASE CLASS = Plot2DCmd
 
 	Copyright (C) 2016 by John Lindal.
 
@@ -30,7 +30,7 @@ LLDBPlot2DCommand::LLDBPlot2DCommand
 	JArray<JFloat>*	y
 	)
 	:
-	Plot2DCommand(dir, x, y)
+	Plot2DCmd(dir, x, y)
 {
 }
 
@@ -56,7 +56,7 @@ LLDBPlot2DCommand::UpdateRange
 	const JInteger	max
 	)
 {
-	Plot2DCommand::UpdateRange(curveIndex, min, max);
+	Plot2DCmd::UpdateRange(curveIndex, min, max);
 
 	itsCurveIndex = curveIndex;
 }

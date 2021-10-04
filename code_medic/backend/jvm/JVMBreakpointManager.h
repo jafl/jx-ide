@@ -11,7 +11,7 @@
 #include "BreakpointManager.h"
 
 class JVMLink;
-class JVMGetBreakpoints;
+class JVMGetBreakpointsCmd;
 
 class JVMBreakpointManager : public BreakpointManager
 {

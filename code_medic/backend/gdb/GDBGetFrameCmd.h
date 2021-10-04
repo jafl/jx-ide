@@ -12,13 +12,15 @@
 
 class StackWidget;
 
-class GDBGetFrameCmd : public GetFrameCmd
+namespace gdb {
+
+class GetFrameCmd : public ::GetFrameCmd
 {
 public:
 
-	GDBGetFrameCmd(StackWidget* widget);
+	GetFrameCmd(StackWidget* widget);
 
-	virtual	~GDBGetFrameCmd();
+	virtual	~GetFrameCmd();
 
 protected:
 
@@ -27,6 +29,8 @@ protected:
 private:
 
 	StackWidget*	itsWidget;
+};
+
 };
 
 #endif

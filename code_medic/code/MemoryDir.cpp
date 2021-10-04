@@ -8,7 +8,7 @@
  *****************************************************************************/
 
 #include "MemoryDir.h"
-#include "GetMemory.h"
+#include "GetMemoryCmd.h"
 #include "ArrayExprInput.h"
 #include "ArrayIndexInput.h"
 #include "CommandDirector.h"

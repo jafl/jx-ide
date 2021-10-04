@@ -1,7 +1,7 @@
 /******************************************************************************
  XDPlot2DCommand.cpp
 
-	BASE CLASS = Plot2DCommand
+	BASE CLASS = Plot2DCmd
 
 	Copyright (C) 2007 by John Lindal.
 
@@ -22,7 +22,7 @@ XDPlot2DCommand::XDPlot2DCommand
 	JArray<JFloat>*	y
 	)
 	:
-	Plot2DCommand(dir, x, y)
+	Plot2DCmd(dir, x, y)
 {
 	SetCommand("status");
 }

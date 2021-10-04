@@ -16,7 +16,7 @@ class JXTextMenu;
 class Link;
 class VarTreeWidget;
 class CommandDirector;
-class GetLocalVars;
+class GetLocalVarsCmd;
 
 class LocalVarsDir : public JXWindowDirector
 {
@@ -43,7 +43,7 @@ private:
 	CommandDirector*	itsCommandDir;
 	JTree*				itsTree;		// owned by itsWidget
 	VarTreeWidget*	itsWidget;
-	GetLocalVars*		itsGetLocalsCmd;
+	GetLocalVarsCmd*		itsGetLocalsCmd;
 	bool			itsNeedsUpdateFlag;
 
 	JXTextMenu*	itsFileMenu;

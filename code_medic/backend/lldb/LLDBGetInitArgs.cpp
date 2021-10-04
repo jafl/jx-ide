@@ -3,7 +3,7 @@
 
 	Gets the initial setting for the arguments to the program set by .lldbinit
 
-	BASE CLASS = GetInitArgs
+	BASE CLASS = GetInitArgsCmd
 
 	Copyright (C) 2016 by John Lindal.
 
@@ -24,7 +24,7 @@ LLDBGetInitArgs::LLDBGetInitArgs
 	JXInputField* argInput
 	)
 	:
-	GetInitArgs(JString::empty),
+	GetInitArgsCmd(JString::empty),
 	itsArgInput(argInput)
 {
 }

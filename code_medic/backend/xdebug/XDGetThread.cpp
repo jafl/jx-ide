@@ -1,7 +1,7 @@
 /******************************************************************************
  XDGetThread.cpp
 
-	BASE CLASS = GetThread
+	BASE CLASS = GetThreadCmd
 
 	Copyright (C) 2007 by John Lindal.
 
@@ -21,7 +21,7 @@ XDGetThread::XDGetThread
 	ThreadsWidget* widget
 	)
 	:
-	GetThread(JString("status", JString::kNoCopy), widget)
+	GetThreadCmd(JString("status", JString::kNoCopy), widget)
 {
 }
 

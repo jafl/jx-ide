@@ -18,7 +18,7 @@
 
  ******************************************************************************/
 
-GDBCheckCoreStatusCmd::GDBCheckCoreStatusCmd()
+gdb::CheckCoreStatusCmd::CheckCoreStatusCmd()
 	:
 	Command("info files", true, false)
 {
@@ -30,7 +30,7 @@ GDBCheckCoreStatusCmd::GDBCheckCoreStatusCmd()
 
  ******************************************************************************/
 
-GDBCheckCoreStatusCmd::~GDBCheckCoreStatusCmd()
+gdb::CheckCoreStatusCmd::~CheckCoreStatusCmd()
 {
 }
 
@@ -42,7 +42,7 @@ GDBCheckCoreStatusCmd::~GDBCheckCoreStatusCmd()
 static const JRegex coreFilePattern = "Local core dump file:\n\t`([^\n]+)'";
 
 void
-GDBCheckCoreStatusCmd::HandleSuccess
+gdb::CheckCoreStatusCmd::HandleSuccess
 	(
 	const JString& data
 	)
@@ -62,5 +62,5 @@ GDBCheckCoreStatusCmd::HandleSuccess
 	// Link has to broadcast status of core regardless of whether or not
 	// we get what we expect from gdb.
 
-	dynamic_cast<GDBLink*>(GetLink())->SaveCoreName(fileName);
+	dynamic_cast<Link*>(GetLink())->SaveCoreName(fileName);
 }

@@ -18,7 +18,7 @@ class JX2DPlotWidget;
 class Link;
 class CommandDirector;
 class Plot2DExprTable;
-class Plot2DCommand;
+class Plot2DCmd;
 
 class Plot2DDir : public JXWindowDirector
 {
@@ -51,7 +51,7 @@ private:
 	JStringTableData*			itsExprData;
 	Plot2DExprTable*			itsExprTable;
 	bool						itsShouldUpdateFlag;
-	JPtrArray<Plot2DCommand>*	itsUpdateCmdList;
+	JPtrArray<Plot2DCmd>*	itsUpdateCmdList;
 	JPtrArray<JArray<JFloat> >*	itsXData;
 	JPtrArray<JArray<JFloat> >*	itsYData;
 	bool						itsWaitingForReloadFlag;

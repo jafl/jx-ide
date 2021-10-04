@@ -12,13 +12,15 @@
 
 class VarNode;
 
-class GDBVarTreeParser
+namespace gdb {
+
+class VarTreeParser
 {
 public:
 
-	GDBVarTreeParser();
+	VarTreeParser();
 
-	virtual	~GDBVarTreeParser();
+	virtual	~VarTreeParser();
 
 	int		Parse(const JString& text);
 	void	ReportRecoverableError();
@@ -27,7 +29,7 @@ public:
 
 private:
 
-	GDB::VarTree::Scanner*	itsScanner;
+	gdb::VarTree::Scanner*	itsScanner;
 	VarNode*				itsCurrentNode;
 	bool					itsIsPointerFlag;
 
@@ -50,8 +52,8 @@ private:
 
 	// not allowed
 
-	GDBVarTreeParser(const GDBVarTreeParser&) = delete;
-	GDBVarTreeParser& operator=(const GDBVarTreeParser&) = delete;
+	VarTreeParser(const VarTreeParser&) = delete;
+	VarTreeParser& operator=(const VarTreeParser&) = delete;
 };
 
 
@@ -61,10 +63,12 @@ private:
  *****************************************************************************/
 
 inline VarNode*
-GDBVarTreeParser::GetRootNode()
+VarTreeParser::GetRootNode()
 	const
 {
 	return itsCurrentNode;
 }
+
+};
 
 #endif

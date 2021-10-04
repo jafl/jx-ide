@@ -38,7 +38,7 @@ class MemoryDir;
 class RegistersDir;
 class FileListDir;
 class DebugDir;
-class GetInitArgs;
+class GetInitArgsCmd;
 
 class CommandDirector : public JXWindowDirector
 {
@@ -165,7 +165,7 @@ private:
 	JString		itsCurrentCommand;
 	bool	itsWaitingToRunFlag;
 
-	GetInitArgs*	itsGetArgsCmd;		// nullptr except at startup; deleted by Link
+	GetInitArgsCmd*	itsGetArgsCmd;		// nullptr except at startup; deleted by Link
 
 // begin JXLayout
 

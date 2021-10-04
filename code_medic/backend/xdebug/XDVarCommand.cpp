@@ -1,7 +1,7 @@
 /******************************************************************************
  XDVarCommand.cpp
 
-	BASE CLASS = VarCommand
+	BASE CLASS = VarCmd
 
 	Copyright (C) 2007 by John Lindal.
 
@@ -24,7 +24,7 @@ XDVarCommand::XDVarCommand
 	const JString& cmd
 	)
 	:
-	VarCommand()
+	VarCmd()
 {
 	SetCommand(cmd);
 

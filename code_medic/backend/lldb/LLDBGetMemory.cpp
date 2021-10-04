@@ -1,7 +1,7 @@
 /******************************************************************************
  LLDBGetMemory.cpp
 
-	BASE CLASS = GetMemory
+	BASE CLASS = GetMemoryCmd
 
 	Copyright (C) 2016 by John Lindal.
 
@@ -25,7 +25,7 @@ LLDBGetMemory::LLDBGetMemory
 	MemoryDir* dir
 	)
 	:
-	GetMemory(dir)
+	GetMemoryCmd(dir)
 {
 }
 

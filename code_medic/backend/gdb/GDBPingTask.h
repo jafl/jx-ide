@@ -10,15 +10,19 @@
 
 #include <jx-af/jx/JXIdleTask.h>
 
-class GDBPingTask : public JXIdleTask
+namespace gdb {
+
+class PingTask : public JXIdleTask
 {
 public:
 
-	GDBPingTask();
+	PingTask();
 
-	virtual ~GDBPingTask();
+	virtual ~PingTask();
 
 	virtual void	Perform(const Time delta, Time* maxSleepTime) override;
+};
+
 };
 
 #endif

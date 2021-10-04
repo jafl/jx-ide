@@ -10,17 +10,21 @@
 
 #include "VarNode.h"
 
-class GDBVarNode : public VarNode
+namespace gdb {
+
+class VarNode : public ::VarNode
 {
 public:
 
-	GDBVarNode(const bool shouldUpdate = true);
+	VarNode(const bool shouldUpdate = true);
 
-	GDBVarNode(JTreeNode* parent, const JString& name, const JString& value);
+	VarNode(JTreeNode* parent, const JString& name, const JString& value);
 
-	virtual	~GDBVarNode();
+	virtual	~VarNode();
 
 	virtual JString	GetFullName(bool* isPointer = nullptr) const override;
+};
+
 };
 
 #endif

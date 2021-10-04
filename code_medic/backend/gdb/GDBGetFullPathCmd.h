@@ -10,13 +10,15 @@
 
 #include "GetFullPathCmd.h"
 
-class GDBGetFullPathCmd : public GetFullPathCmd
+namespace gdb {
+
+class GetFullPathCmd : public ::GetFullPathCmd
 {
 public:
 
-	GDBGetFullPathCmd(const JString& fileName, const JIndex lineIndex = 0);
+	GetFullPathCmd(const JString& fileName, const JIndex lineIndex = 0);
 
-	virtual	~GDBGetFullPathCmd();
+	virtual	~GetFullPathCmd();
 
 protected:
 
@@ -25,6 +27,8 @@ protected:
 private:
 
 	static JString	BuildCommand(const JString& fileName);
+};
+
 };
 
 #endif

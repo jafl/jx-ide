@@ -8,7 +8,7 @@
  *****************************************************************************/
 
 #include "GDBVarNode.h"
-#include "VarCommand.h"
+#include "VarCmd.h"
 #include "globals.h"
 #include <jx-af/jcore/JTree.h>
 #include <jx-af/jcore/JRegex.h>
@@ -19,23 +19,23 @@
 
  *****************************************************************************/
 
-GDBVarNode::GDBVarNode				// root node
+gdb::VarNode::VarNode				// root node
 	(
 	const bool shouldUpdate		// false for Local Variables
 	)
 	:
-	VarNode(shouldUpdate)
+	::VarNode(shouldUpdate)
 {
 }
 
-GDBVarNode::GDBVarNode
+gdb::VarNode::VarNode
 	(
 	JTreeNode*		parent,
 	const JString&	name,
 	const JString&	value
 	)
 	:
-	VarNode(parent, name, value)
+	::VarNode(parent, name, value)
 {
 }
 
@@ -44,7 +44,7 @@ GDBVarNode::GDBVarNode
 
  *****************************************************************************/
 
-GDBVarNode::~GDBVarNode()
+gdb::VarNode::~VarNode()
 {
 }
 
@@ -57,7 +57,7 @@ GDBVarNode::~GDBVarNode()
  ******************************************************************************/
 
 JString
-GDBVarNode::GetFullName
+gdb::VarNode::GetFullName
 	(
 	bool* isPointer
 	)

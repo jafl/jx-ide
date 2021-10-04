@@ -8,9 +8,9 @@
 #ifndef _H_LLDBGetMemory
 #define _H_LLDBGetMemory
 
-#include "GetMemory.h"
+#include "GetMemoryCmd.h"
 
-class LLDBGetMemory : public GetMemory
+class LLDBGetMemory : public GetMemoryCmd
 {
 public:
 

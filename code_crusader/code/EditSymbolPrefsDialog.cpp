@@ -116,7 +116,7 @@ EditSymbolPrefsDialog::Receive
 
 	else if (sender == itsHelpButton && message.Is(JXButton::kPushed))
 	{
-		(JXGetHelpManager())->ShowSection("SymbolHelp-Prefs");
+		JXGetHelpManager()->ShowSection("SymbolHelp-Prefs");
 	}
 
 	else
@@ -145,7 +145,7 @@ EditSymbolPrefsDialog::UpdateSettings()
 
 	for (JIndex i=1; i<=docCount; i++)
 	{
-		((docList->GetElement(i))->GetSymbolDirector())->
+		docList->GetElement(i)->GetSymbolDirector()->
 			SetPrefs(itsRaiseTreeOnRightClickCB->IsChecked(),
 					 i==1);
 

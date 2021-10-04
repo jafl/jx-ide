@@ -153,7 +153,7 @@
 <ul>
 	<li>Added auto-detection of indenting style:  spaces or tabs.  If the file contains a mix, whitespace is made visible so you can clean it up.</li>
 
-	<li>Rudimentary support for <a href="help.html#CBEditorHelp-Emulators">vi emulation</a>.  You can turn it on in Editor Preferences dialog.</li>
+	<li>Rudimentary support for <a href="help.html#EditorHelp-Emulators">vi emulation</a>.  You can turn it on in Editor Preferences dialog.</li>
 
 	<li>Line index input in Editor windows accepts $ as shortcut for "last line."</li>
 
@@ -199,7 +199,7 @@
 	<li>Added support for Linux Large File System (LFS).</li>
 </ul>
 
-<h3><a href="help.html#CBProjectHelp">Project</a></h3>
+<h3><a href="help.html#ProjectHelp">Project</a></h3>
 
 <ul>
 	<li>Fixed Config button in Project window to search for <code>pom.xml</code> (Maven) and <code>build.xml</code> (ant) if no Makefile is found.</li>
@@ -207,7 +207,7 @@
 	<li>When a program crashes, Code Crusader tries to find the core file and print the location so you can Ctrl-double-click to open it with Code Medic.</li>
 </ul>
 
-<h3><a href="help.html#CBEditorHelp">Text Editor</a></h3>
+<h3><a href="help.html#EditorHelp">Text Editor</a></h3>
 
 <ul>
 	<li>Added "Clean all ws &amp; alignment" and "Clean selected ws &amp; align" to Edit menu.  "Clean all whitespace" and "Clean selected ws" no longer adjust alignment.</li>
@@ -264,7 +264,7 @@
 	<li>Window docking finally works with all window managers.</li>
 </ul>
 
-<h3><a href="help.html#CBProjectHelp">Project</a></h3>
+<h3><a href="help.html#ProjectHelp">Project</a></h3>
 
 <ul>
 	<li>Compile output recognizes errors printed by Maven builds.</li>
@@ -294,12 +294,12 @@
 	<li>Fixed bug which caused symlinks to be reparsed every time a project was opened.</li>
 </ul>
 
-<h3><a href="help.html#CBEditorHelp">Text Editor</a></h3>
+<h3><a href="help.html#EditorHelp">Text Editor</a></h3>
 
 <ul>
 	<li>Added "Previous search/compile result" and "Next search/compile result" to Search menu.  (Finally!)  This allows scanning through the active search or compile results without having to return to the Search Results or Compiler Output window.  The active Search Results or Compiler Output window is highlighted on the Windows menu.</li>
 
-	<li>Improved <a href="help.html#CBMacroHelp">character actions</a> to support automatic closing of XML tags.  See the <code>xml-auto-close</code> script included in the package.</li>
+	<li>Improved <a href="help.html#MacroHelp">character actions</a> to support automatic closing of XML tags.  See the <code>xml-auto-close</code> script included in the package.</li>
 
 	<li>Created <code>clean_indentation</code> script for XML files.</li>
 
@@ -385,13 +385,13 @@
 
 <h2>5.2.1</h2>
 
-<h3><a href="help.html#CBProjectHelp">Project</a></h3>
+<h3><a href="help.html#ProjectHelp">Project</a></h3>
 
 <ul>
 	<li>Fixed bug that prevented reading old versions of project files.</li>
 </ul>
 
-<h3><a href="help.html#CBEditorHelp">Text Editor</a></h3>
+<h3><a href="help.html#EditorHelp">Text Editor</a></h3>
 
 <ul>
 	<li>Fixed bug in PHP syntax highlighting that caused crash when adjacent PHP blocks were placed inside <code>&lt;script&gt;...&lt;/script&gt;</code>.</li>
@@ -412,7 +412,7 @@
 	<li>Added support for graphical Subversion diff.</li>
 </ul>
 
-<h3><a href="help.html#CBProjectHelp">Project</a></h3>
+<h3><a href="help.html#ProjectHelp">Project</a></h3>
 
 <ul>
 	<li>Fixed bug in Java inheritance tree parser to ignore comments embedded in package, import, and class declaration statements.</li>
@@ -420,7 +420,7 @@
 	<li>Fixed bug so new projects automatically build the symbol database from the files in the project's directory.</li>
 </ul>
 
-<h3><a href="help.html#CBEditorHelp">Text Editor</a></h3>
+<h3><a href="help.html#EditorHelp">Text Editor</a></h3>
 
 <ul>
 	<li>Fixed Functions menu so it ignores the namespace option for languages that don't have it.</li>
@@ -445,13 +445,13 @@
 
 <h2>5.1.1</h2>
 
-<h3><a href="help.html#CBProjectHelp">Project</a></h3>
+<h3><a href="help.html#ProjectHelp">Project</a></h3>
 
 <ul>
 	<li>Improved extraction of function names from JavaScript files.  (requires ctags 5.6-3)</li>
 </ul>
 
-<h3><a href="help.html#CBEditorHelp">Text Editor</a></h3>
+<h3><a href="help.html#EditorHelp">Text Editor</a></h3>
 
 <ul>
 	<li>Read only files are now indicated by a red border around the file icon (and drag source!) in the status bar of each window.</li>
@@ -468,13 +468,13 @@
 
 <h2>5.1</h2>
 
-<h3><a href="help.html#CBProjectHelp">Project</a></h3>
+<h3><a href="help.html#ProjectHelp">Project</a></h3>
 
 <ul>
 	<li>Symbol browser now includes JavaScript functions defined in PHP files.  (requires ctags 5.6-2)</li>
 </ul>
 
-<h3><a href="help.html#CBEditorHelp">Text Editor</a></h3>
+<h3><a href="help.html#EditorHelp">Text Editor</a></h3>
 
 <ul>
 	<li>Added Targets menu to Ant build files (<code>build.xml</code>).</li>
@@ -499,7 +499,7 @@
 
 <h2>5.0.3</h2>
 
-<h3><a href="help.html#CBProjectHelp">Project</a></h3>
+<h3><a href="help.html#ProjectHelp">Project</a></h3>
 
 <ul>
 	<li>Only displays "checked out" status if the project is using CVS and <code>CVSREAD</code> is set.</li>
@@ -509,7 +509,7 @@
 	<li>Fixed crash when dropping files already in a project from a file manager to the top of a group.</li>
 </ul>
 
-<h3><a href="help.html#CBEditorHelp">Text Editor</a></h3>
+<h3><a href="help.html#EditorHelp">Text Editor</a></h3>
 
 <ul>
 	<li>Fixed bug so Multifile Replace All does not hang after the process is finished.</li>
@@ -556,7 +556,7 @@
 	<li>Fixed lots of issues related to working with version control, e.g., CVS tab in "Compare files" dialog, check-out status in Project window, "This task invokes version control" flag for tasks, CVS-merge-friendly <code>.jcc</code> file, and preferences moved from <code>.jcc</code> to <code>.jup</code> file.</li>
 </ul>
 
-<h3><a href="help.html#CBProjectHelp">Project</a></h3>
+<h3><a href="help.html#ProjectHelp">Project</a></h3>
 
 <ul>
 	<li>Pressing Ctrl-Return after editing a file name renames the existing file.</li>
@@ -576,7 +576,7 @@
 	<li>Symbol browser now reports if it cannot find a file.</li>
 </ul>
 
-<h3><a href="help.html#CBCTreeHelp">Java Class Tree</a></h3>
+<h3><a href="help.html#CTreeHelp">Java Class Tree</a></h3>
 
 <ul>
 	<li>Fixed bug in parser so package is extracted from <code>package</code> statement, not the file path.</li>
@@ -584,7 +584,7 @@
 	<li>Fixed parser so it searches imported classes for the superclasses, if they are not fully qualified.</li>
 </ul>
 
-<h3><a href="help.html#CBEditorHelp">Text Editor</a></h3>
+<h3><a href="help.html#EditorHelp">Text Editor</a></h3>
 
 <ul>
 	<li>Replaced "Read only" checkbox with Settings menu to allow options for each individual window to be changed.</li>
@@ -678,13 +678,13 @@
 
 <h2>4.0.3</h2>
 
-<h3><a href="help.html#CBProjectHelp">Project</a></h3>
+<h3><a href="help.html#ProjectHelp">Project</a></h3>
 
 <ul>
 	<li>Fixed bug that caused crashes when executing commands that contained calls to other commands.</li>
 </ul>
 
-<h3><a href="help.html#CBCTreeHelp">C++ Class Tree</a></h3>
+<h3><a href="help.html#CTreeHelp">C++ Class Tree</a></h3>
 
 <ul>
 	<li>Fixed bug that caused occasional crashes when displaying menu of functions or closing Function List window.</li>
@@ -693,7 +693,7 @@
 
 <h2>4.0.2</h2>
 
-<h3><a href="help.html#CBEditorHelp">Text Editor</a></h3>
+<h3><a href="help.html#EditorHelp">Text Editor</a></h3>
 
 <ul>
 	<li>Fixed "Open selection as file name" to recognize single quotes, too.</li>
@@ -756,13 +756,13 @@
 <h3>Major changes</h3>
 
 <ul>
-	<li>Added <a href="help.html#CBCommandsHelp">Commands menu</a> to all windows.  This replaces the Project menu in the Editor window and makes the Make and Run dialogs obsolete.</li>
+	<li>Added <a href="help.html#CommandsHelp">Commands menu</a> to all windows.  This replaces the Project menu in the Editor window and makes the Make and Run dialogs obsolete.</li>
 
 	<li>You are no longer restricted to only one <code>make</code> related task at a time.  For example, you can select any number of files or groups in the Project or inheritance tree windows and compile them all.  You can also request a second compile job while the first one is still running.  Another neat feature is that you can compile from either source or header file, provided they both have the same root name.</li>
 
 	<li>Added support for Bison, lex, Pascal, REXX, and Ruby.  Added syntax higlighting for Bison, Bourne shell, C shell, Java, Perl, and TCL.  Dramatically improved syntax highlighting for PHP and added support for XML namespaces.  Added keyword completion for TCL.</li>
 
-	<li>Function arguments are now displayed in the <a href="help.html#CBSymbolHelp">symbol browser</a> for C, C++, and Java functions.</li>
+	<li>Function arguments are now displayed in the <a href="help.html#SymbolHelp">symbol browser</a> for C, C++, and Java functions.</li>
 
 	<li>Requires <a href="http://ctags.sourceforge.net/"> Exuberant <code>ctags</code></a> version 5.4.</li>
 
@@ -771,7 +771,7 @@
 	<li>All windows are dockable.  Right-click in the docktab at the left of the menu bar to create a dock.  Then drag the docktab and drop it in a docking area.  (If the window can't shrink far enough to fit, the docking area will not accept the drop.)</li>
 </ul>
 
-<h3><a href="help.html#CBProjectHelp">Project</a></h3>
+<h3><a href="help.html#ProjectHelp">Project</a></h3>
 
 <ul>
 	<li>Redesigned sub-project build system.  When <code>makemake</code> is used to build the Makefile, the project dependencies are encoded in the Makefile so everything can be built without running Code Crusader.  This is useful when writing scripts for nightly builds.</li>
@@ -782,9 +782,9 @@
 
 	<li>Added "Compare selected files with backup" item to Source menu.</li>
 
-	<li>Added new <a href="help.html#CBProjectHelp-Prefs">preferences</a> to raise output window when building, compiling, and running.</li>
+	<li>Added new <a href="help.html#ProjectHelp-Prefs">preferences</a> to raise output window when building, compiling, and running.</li>
 
-	<li>Added "Show selected files in file manager" item to the List menu in the <a href="help.html#CBFileListHelp">File List</a> window and to the Source menu in the <a href="help.html#CBProjectHelp">Project</a> window.</li>
+	<li>Added "Show selected files in file manager" item to the List menu in the <a href="help.html#FileListHelp">File List</a> window and to the Source menu in the <a href="help.html#ProjectHelp">Project</a> window.</li>
 
 	<li>When you create a project template, it saves the Makefile if there are no makemake or qmake files.</li>
 
@@ -804,7 +804,7 @@
 
 	<li>Eliminated need for "Recalculate dependencies before make" option.  Makefile is now rebuilt once a day, even if the project has not changed, in order to keep the dependencies up to date.  (You can do it more often, if you wish, by using the "Update Makefile" item on the Project menu in the Project window.  If you use CVS and do not wish to have the Makefile built automatically, you can turn off this option in the Project Preferences dialog.)</li>
 
-	<li>Added <code>--make-name</code> option to <a href="help.html#CBMakemakeHelp">makemake</a>.</li>
+	<li>Added <code>--make-name</code> option to <a href="help.html#MakemakeHelp">makemake</a>.</li>
 
 	<li>When the contents of a command output window are saved, the command window will not be re-used again, i.e., it becomes like a regular Text Editor window.</li>
 
@@ -813,7 +813,7 @@
 	<li>Fixed bug so Make.files is updated when files or groups in the project have been rearranged.</li>
 </ul>
 
-<h3><a href="help.html#CBEditorHelp">Text Editor</a></h3>
+<h3><a href="help.html#EditorHelp">Text Editor</a></h3>
 
 <ul>
 	<li>Added right-click context menu.</li>
@@ -822,15 +822,15 @@
 
 	<li>Added Drag-and-Drop source to the left of the file name at the bottom of the window.  This turns into a Direct Save (XDS) source when you are editing the file name.  Double clicking on the icon displays the file in the file manager of your choice.</li>
 
-	<li>Added more convenient interface for running <a href="help.html#CBEditorHelp-ExtScript">external scripts</a>.</li>
+	<li>Added more convenient interface for running <a href="help.html#EditorHelp-ExtScript">external scripts</a>.</li>
 
-	<li>Moved "Compare files..." item to File menu.  Also added smart item to compare the current file with whatever is most appropriate.  This smart item works just like the <a href="help.html#CBDiffHelp"><code>--diff</code> command line option</a>.</li>
+	<li>Moved "Compare files..." item to File menu.  Also added smart item to compare the current file with whatever is most appropriate.  This smart item works just like the <a href="help.html#DiffHelp"><code>--diff</code> command line option</a>.</li>
 
 	<li>Added "Place bookmark" item to Search menu.  This places a scrolltab at the current scrollbar thumb location.</li>
 
-	<li>Added <a href="help.html#CBEditorHelp-Prefs">option</a> to include namespace for each function in <a href="help.html#CBEditorHelp-SourceCode">Functions menu</a>.  This setting is toggled via the Shift key.</li>
+	<li>Added <a href="help.html#EditorHelp-Prefs">option</a> to include namespace for each function in <a href="help.html#EditorHelp-SourceCode">Functions menu</a>.  This setting is toggled via the Shift key.</li>
 
-	<li>Added <a href="help.html#CBEditorHelp-Prefs">option</a> to draw right margin indicator.</li>
+	<li>Added <a href="help.html#EditorHelp-Prefs">option</a> to draw right margin indicator.</li>
 
 	<li>If no text is selected, "Find selection" menu items search for the word that contains the caret.  This avoids the need to double click before performing "Find selection" when you want to search for a single word.</li>
 
@@ -853,7 +853,7 @@
 	<li>Fixed bug in C/C++ styler so "0" is treated as decimal rather than octal.</li>
 </ul>
 
-<h3><a href="help.html#CBCTreeHelp">C++ Class Tree</a></h3>
+<h3><a href="help.html#CTreeHelp">C++ Class Tree</a></h3>
 
 <ul>
 	<li>Fixed parser to handle classes declared inside a namespace.</li>
@@ -906,41 +906,41 @@
 <h3>Major changes</h3>
 
 <ul>
-	<li>Created <a href="help.html#CBSymbolHelp">symbol browser</a> to display and allow searching of all symbols in source code.  It includes symbols from Assembly, ASP, AWK, Bourne Shell, C, C++, Cobol, Eiffel, FORTRAN, Java, Lisp, make, Perl, PHP, Python, Scheme, TCL, and Vim.</li>
+	<li>Created <a href="help.html#SymbolHelp">symbol browser</a> to display and allow searching of all symbols in source code.  It includes symbols from Assembly, ASP, AWK, Bourne Shell, C, C++, Cobol, Eiffel, FORTRAN, Java, Lisp, make, Perl, PHP, Python, Scheme, TCL, and Vim.</li>
 
-	<li><a href="help.html#CBEditorHelp-SourceCode">Functions menu</a> is available in Editor window for all the above languages and also HTML.</li>
+	<li><a href="help.html#EditorHelp-SourceCode">Functions menu</a> is available in Editor window for all the above languages and also HTML.</li>
 
 	<li>Requires <a href="http://ctags.sourceforge.net/"> Exuberant <tt>ctags</tt></a> version 5.0.</li>
 
 	<li>Meta-double-click in the editor now searches the symbol list, so it is no longer restricted to only C++ class names and functions.  Meta-double-click is now also context sensitive.  Use Meta-Shift-double-click to avoid this.</li>
 
-	<p>Added <a href="help.html#CBJavaTreeHelp">Java class tree</a>.</p>
+	<p>Added <a href="help.html#JavaTreeHelp">Java class tree</a>.</p>
 
-	<li><a href="help.html#CBCompleterHelp">Keyword completion</a> uses <a href="help.html#CBSymbolHelp">symbol list</a> instead of the C++ class tree, so it now works for Bourne Shell, C, C++, Eiffel, FORTRAN, Java, Perl, and Python.</li>
+	<li><a href="help.html#CompleterHelp">Keyword completion</a> uses <a href="help.html#SymbolHelp">symbol list</a> instead of the C++ class tree, so it now works for Bourne Shell, C, C++, Eiffel, FORTRAN, Java, Perl, and Python.</li>
 
-	<li>Created <a href="help.html#CBDiffHelp">File Differences</a> dialog for displaying the differences between two files.</li>
+	<li>Created <a href="help.html#DiffHelp">File Differences</a> dialog for displaying the differences between two files.</li>
 
-	<li>Added ability to create projects and text files from <a href="help.html#CBFileTemplateHelp">templates</a>.</li>
+	<li>Added ability to create projects and text files from <a href="help.html#FileTemplateHelp">templates</a>.</li>
 
-	<li><a href="help.html#CBFileTypeHelp">File types</a> are no longer restricted to pure suffixes, i.e., they don't have to start with a period.</li>
+	<li><a href="help.html#FileTypeHelp">File types</a> are no longer restricted to pure suffixes, i.e., they don't have to start with a period.</li>
 
-	<li>Added support for editing binary files via an <a href="help.html#CBProjectHelp-ExtEditor">external editor</a>.  If a file appears to be binary, Code Crusader will ask if you want to edit as a text or binary file.  Also added "Binary" type in <a href="help.html#CBFileTypeHelp">File Types</a> dialog.  Files of this type are automatically opened as binary files without asking.</li>
+	<li>Added support for editing binary files via an <a href="help.html#ProjectHelp-ExtEditor">external editor</a>.  If a file appears to be binary, Code Crusader will ask if you want to edit as a text or binary file.  Also added "Binary" type in <a href="help.html#FileTypeHelp">File Types</a> dialog.  Files of this type are automatically opened as binary files without asking.</li>
 
-	<li>Added "External" type in <a href="help.html#CBFileTypeHelp">File Types</a> dialog to allow particular types of files (e.g. window layouts and images) to be edited via other programs.  When these files are added to a <a href="help.html#CBProjectHelp">project</a>, double-clicking automatically runs the appropriate program instead of opening a <a href="help.html#CBEditorHelp">Text Editor</a> window.</li>
+	<li>Added "External" type in <a href="help.html#FileTypeHelp">File Types</a> dialog to allow particular types of files (e.g. window layouts and images) to be edited via other programs.  When these files are added to a <a href="help.html#ProjectHelp">project</a>, double-clicking automatically runs the appropriate program instead of opening a <a href="help.html#EditorHelp">Text Editor</a> window.</li>
 
 	<li>Added support for all <a href="help.html#JXComposeHelp">European languages</a>.</li>
 </ul>
 
-<h3><a href="help.html#CBProjectHelp">Project</a></h3>
+<h3><a href="help.html#ProjectHelp">Project</a></h3>
 
 <ul>
 	<li>New "External" file type allows use of wizard to create and edit Make.header.  Simply add the wizard's file to the project and define a file type for it.</li>
 
-	<li>Added "Java archive" <a href="help.html#CBFileTypeHelp">file type</a> to allow automatic building of subprojects and convenient access to the subprojects by double-clicking on the <tt>.jar</tt> file in the project window.</li>
+	<li>Added "Java archive" <a href="help.html#FileTypeHelp">file type</a> to allow automatic building of subprojects and convenient access to the subprojects by double-clicking on the <tt>.jar</tt> file in the project window.</li>
 
 	<li>For Java projects, <tt>.jar</tt> files are automatically added to the <tt>-classpath</tt>.  <tt>JPATH</tt> must now be used in Make.header to specify additional values for <tt>-classpath</tt>.  All <tt>.java</tt> files are compiled with a single call to <tt>${JAVAC}</tt> to avoid link errors.  To upgrade existing Make.header files, remove the "<tt>%.class : %.java</tt>" rule.</li>
 
-	<li>Added several command line options to <a href="help.html#CBMakemakeHelp">makemake</a>.</li>
+	<li>Added several command line options to <a href="help.html#MakemakeHelp">makemake</a>.</li>
 
 	<li>Saves symbol table and C++ class tree in separate <tt>.jst</tt> file.  This file can be safely deleted, because it will be regenerated automatically when needed.  The main project file (<tt>.jcc</tt>) is now very small and therefore suitable for inclusion in source distributions.  If you use the same project file on more than one machine, you only need to transfer the <tt>.jcc</tt> file.</li>
 
@@ -948,9 +948,9 @@
 
 	<li>If you hold down the Meta key while choosing a project from the "Recent projects" menu, everything else will be closed before the project is opened.</li>
 
-	<li>Added icon for the <a href="help.html#CBFileListHelp">File List</a> window.  This is now a "first class" window with all the menu items and shortcuts provided by the Project, Symbol Browser, and Class Tree windows.</li>
+	<li>Added icon for the <a href="help.html#FileListHelp">File List</a> window.  This is now a "first class" window with all the menu items and shortcuts provided by the Project, Symbol Browser, and Class Tree windows.</li>
 
-	<li><a href="help.html#CBFileListHelp">File List</a> now displays unique portions of the paths if two files have the same name.</li>
+	<li><a href="help.html#FileListHelp">File List</a> now displays unique portions of the paths if two files have the same name.</li>
 
 	<li>When you Meta-double-click on a file in the project window, the icon becomes a button.  Clicking this button lets you change the name of the file via the Choose File dialog.</li>
 
@@ -967,34 +967,34 @@
 	<li>Fixed bug so it doesn't crash when a very large group of files is dropped on the window.</li>
 </ul>
 
-<h3><a href="help.html#CBEditorHelp">Text Editor</a></h3>
+<h3><a href="help.html#EditorHelp">Text Editor</a></h3>
 
 <ul>
-	<li>Renamed "HTML preferences..." menu item to "Web browser preferences..."  The URL prefixes no longer need to be specified.  The file suffixes have been moved to the <a href="help.html#CBFileTypeHelp">File Types</a> dialog.</li>
+	<li>Renamed "HTML preferences..." menu item to "Web browser preferences..."  The URL prefixes no longer need to be specified.  The file suffixes have been moved to the <a href="help.html#FileTypeHelp">File Types</a> dialog.</li>
 
 	<li>Added column display at bottom of window.  Shift-return in the line number display jumps to the line and activates the column display.</li>
 
-	<li>Shift left/right items on Edit menu honor the <a href="help.html#CBEditorHelp-Prefs"> Tab inserts spaces</a> preference option.</li>
+	<li>Shift left/right items on Edit menu honor the <a href="help.html#EditorHelp-Prefs"> Tab inserts spaces</a> preference option.</li>
 
 	<li>The Control and Meta double click shortcuts activate when you release the mouse button, so you can select more than a single word.  This is useful for strings like "<tt>std::ios</tt>".  In addition, to help avoid mistakes, if the selected text contains a newline, the action is not performed.</li>
 
-	<li>Displays pop-up menu if there is more than one possible <a href="help.html#CBCompleterHelp">completion</a>.</li>
+	<li>Displays pop-up menu if there is more than one possible <a href="help.html#CompleterHelp">completion</a>.</li>
 
-	<li>Added Operator, Delimiter, and Unicode Character categories to C/C++ <a href="help.html#CBStylerHelp">context-sensitive highlighting</a>.</li>
+	<li>Added Operator, Delimiter, and Unicode Character categories to C/C++ <a href="help.html#StylerHelp">context-sensitive highlighting</a>.</li>
 
-	<li>Updated list of keywords in C/C++ <a href="help.html#CBStylerHelp">context-sensitive highlighting</a> and <a href="help.html#CBCompleterHelp">keyword completion</a>.</li>
+	<li>Updated list of keywords in C/C++ <a href="help.html#StylerHelp">context-sensitive highlighting</a> and <a href="help.html#CompleterHelp">keyword completion</a>.</li>
 
 	<li>"<tt>#if 0 ... #endif</tt>" is styled as a comment.</li>
 
-	<li><a href="help.html#CBEditorHelp-SourceCode">Functions menu</a> for FORTRAN includes labels.  (This is most useful when the menu displays the items in the order in which they appear in the file.)</li>
+	<li><a href="help.html#EditorHelp-SourceCode">Functions menu</a> for FORTRAN includes labels.  (This is most useful when the menu displays the items in the order in which they appear in the file.)</li>
 
-	<li>Recognizes Modula-2 and Modula-3 <a href="help.html#CBFileTypeHelp">file types</a> and provides button to switch between module and interface.</li>
+	<li>Recognizes Modula-2 and Modula-3 <a href="help.html#FileTypeHelp">file types</a> and provides button to switch between module and interface.</li>
 
-	<li>Updated <a href="help.html#CBCompleterHelp">HTML keyword completion</a> to include all the <a href="http://www.w3.org/TR/html401/sgml/entities.html">new escaped characters in HTML 4.01</a>.</li>
+	<li>Updated <a href="help.html#CompleterHelp">HTML keyword completion</a> to include all the <a href="http://www.w3.org/TR/html401/sgml/entities.html">new escaped characters in HTML 4.01</a>.</li>
 
-	<li>Added "Script" type in <a href="help.html#CBStylerHelp">Edit HTML Styles</a> dialog. Specific language names can be overridden by entering them in the lower table.</li>
+	<li>Added "Script" type in <a href="help.html#StylerHelp">Edit HTML Styles</a> dialog. Specific language names can be overridden by entering them in the lower table.</li>
 
-	<li>Added <tt>$r</tt> and <tt>$s</tt> variables to <a href="help.html#CBMacroHelp">macros</a>.</li>
+	<li>Added <tt>$r</tt> and <tt>$s</tt> variables to <a href="help.html#MacroHelp">macros</a>.</li>
 
 	<li>Added "Search clipboard forward" and "Search clipboard backwards" to Search menu. This allows you to search for text that is selected in a terminal window just like selected text in a Text Editor window.  You simply use Ctrl-H instead of Meta-H.</li>
 
@@ -1038,22 +1038,22 @@
 
 	<li>Added command line options --force-reload and --no-force-reload.  If a file is listed after --force-reload on the command line and the file is already open in a Text Editor window, Code Crusader will automatically load the latest version from disk if the disk version has been modified and the contents of the Text Editor window have not been modified.</li>
 
-	<li>If <a href="help.html#CBEditorHelp-SourceCode">Functions menu</a> is not sorted alphabetically, horizontal line marks location of caret.</li>
+	<li>If <a href="help.html#EditorHelp-SourceCode">Functions menu</a> is not sorted alphabetically, horizontal line marks location of caret.</li>
 
-	<li>Added option to display items on <a href="help.html#CBEditorHelp-SourceCode">Functions menu</a> with a smaller font, so more will fit on the screen.</li>
+	<li>Added option to display items on <a href="help.html#EditorHelp-SourceCode">Functions menu</a> with a smaller font, so more will fit on the screen.</li>
 
 	<li>Fixed bug so "Read only" is set correctly when a file is re-opened as a result of opening a project.</li>
 
 	<li>Allows you to try to save a file even if it is write protected.</li>
 
-	<li>Fixed bug in <a href="help.html#CBEditorHelp-SourceCode">Functions menu</a> so it works when file is in a write-protected directory and text is not saved.</li>
+	<li>Fixed bug in <a href="help.html#EditorHelp-SourceCode">Functions menu</a> so it works when file is in a write-protected directory and text is not saved.</li>
 
 	<li>Fixed bug to allow pasting to and from Gnome and KDE programs.</li>
 
 	<li>Added hack to allow pasting from rxvt and other similar, broken terminal programs.</li>
 </ul>
 
-<h3><a href="help.html#CBCompileHelp">Make</a> and <a href="help.html#CBRunProgramHelp">Run</a></h3>
+<h3><a href="help.html#CompileHelp">Make</a> and <a href="help.html#RunProgramHelp">Run</a></h3>
 
 <ul>
 	<li>The target name for a new project is now set to the name of the project instead of a.out.</li>
@@ -1063,7 +1063,7 @@
 	<li>Prompts are printed while waiting for input, not after input is entered.</li>
 </ul>
 
-<h3><a href="help.html#CBCTreeHelp">C++ Class Tree</a></h3>
+<h3><a href="help.html#CTreeHelp">C++ Class Tree</a></h3>
 
 <ul>
 	<li>Added "Select descendants" item to Tree menu.  When this selection is dragged to the file list in the Search Text dialog, you can search all derived classes of a given class.</li>
@@ -1096,7 +1096,7 @@
 
 	<li>Fixed MDI operation so multiple, simultaneous invocations don't time out and start new processes.</li>
 
-	<li>No longer reparses all source files after you edit <a href="help.html#CBMacroHelp">macros</a> or <a href="help.html#CBCRMHelp">CPM rules</a>.</li>
+	<li>No longer reparses all source files after you edit <a href="help.html#MacroHelp">macros</a> or <a href="help.html#CRMHelp">CPM rules</a>.</li>
 
 	<li>Unsaved files on the Files menu are now dark red instead of bright red to make the file names easier to read.</li>
 
@@ -1124,37 +1124,37 @@
 
 <h2>2.1.4</h2>
 
-<h3><a href="help.html#CBProjectHelp">Project</a></h3>
+<h3><a href="help.html#ProjectHelp">Project</a></h3>
 
 <ul>
 	<li>Updates Make.files when you close the project, so it can be built even if Code Crusader is not running.</li>
 
-	<li>Added option --check to <a href="help.html#CBMakemakeHelp">makemake</a>.  Fixed <tt>touch</tt> target so <tt>TOUCHHEADERS</tt> is no longer needed and fixed bug so it no longer adds a link command to Java targets.</li>
+	<li>Added option --check to <a href="help.html#MakemakeHelp">makemake</a>.  Fixed <tt>touch</tt> target so <tt>TOUCHHEADERS</tt> is no longer needed and fixed bug so it no longer adds a link command to Java targets.</li>
 
 	<li>Fixed bug so scrollbar no longer jumps when you rearrange files at the bottom of the project window.</li>
 
 	<li>Fixed bug in Sub-project configuration dialog so Choose button doesn't crash if text in input field ends with slash.</li>
 </ul>
 
-<h3><a href="help.html#CBEditorHelp">Text Editor</a></h3>
+<h3><a href="help.html#EditorHelp">Text Editor</a></h3>
 
 <ul>
-	<li><a href="help.html#CBEditorHelp-SourceCode">Functions menu</a> now requires <a href="http://ctags.sourceforge.net/">Exuberant <code>ctags</code></a> version 3.3.</li>
+	<li><a href="help.html#EditorHelp-SourceCode">Functions menu</a> now requires <a href="http://ctags.sourceforge.net/">Exuberant <code>ctags</code></a> version 3.3.</li>
 
 	<li>Fixed bug so "Run script" menu item won't hang if the script outputs a large amount of text.</li>
 
-	<li>Added <tt>namespace</tt> to the built-in list of C++ keywords used by <a href="help.html#CBStylerHelp">context-sensitive highlighting</a> and <a href="help.html#CBCompleterHelp">keyword completion</a>.</li>
+	<li>Added <tt>namespace</tt> to the built-in list of C++ keywords used by <a href="help.html#StylerHelp">context-sensitive highlighting</a> and <a href="help.html#CompleterHelp">keyword completion</a>.</li>
 
-	<li>Added <tt>::</tt> to list of recognized operators for C/C++ <a href="help.html#CBStylerHelp">context-sensitive highlighting</a>.</li>
+	<li>Added <tt>::</tt> to list of recognized operators for C/C++ <a href="help.html#StylerHelp">context-sensitive highlighting</a>.</li>
 </ul>
 
-<h3><a href="help.html#CBCompileHelp">Make</a> and <a href="help.html#CBRunProgramHelp">Run</a></h3>
+<h3><a href="help.html#CompileHelp">Make</a> and <a href="help.html#RunProgramHelp">Run</a></h3>
 
 <ul>
 	<li>Fixed bug so it now rebuilds Makefile when you move a project to a different machine.</li>
 </ul>
 
-<h3><a href="help.html#CBCTreeHelp">C++ Class Tree</a></h3>
+<h3><a href="help.html#CTreeHelp">C++ Class Tree</a></h3>
 
 <ul>
 	<li>Fixed bug so parser doesn't mistake <tt>::</tt> in class name for an inheritance declaration.</li>
@@ -1169,13 +1169,13 @@
 
 <h2>2.1.3</h2>
 
-<h3><a href="help.html#CBCompileHelp">Make</a> and <a href="help.html#CBRunProgramHelp">Run</a></h3>
+<h3><a href="help.html#CompileHelp">Make</a> and <a href="help.html#RunProgramHelp">Run</a></h3>
 
 <ul>
 	<li>Automatically adds <tt>./</tt> to your execution path so you don't have to remember to specify it explicitly.</li>
 </ul>
 
-<h3><a href="help.html#CBCTreeHelp">C++ Class Tree</a></h3>
+<h3><a href="help.html#CTreeHelp">C++ Class Tree</a></h3>
 
 <ul>
 	<li>Now searches for class::function when looking for a function's definition.  If this fails, it falls back on the original ::function.</li>
@@ -1184,7 +1184,7 @@
 
 <h2>2.1.2</h2>
 
-<h3><a href="help.html#CBProjectHelp">Project</a></h3>
+<h3><a href="help.html#ProjectHelp">Project</a></h3>
 
 <ul>
 	<li>Figured out <a href="http://www.newplanetsoftware.com/jcc/multi_version.php">how</a> to build multiple versions of a program or library from a single project.</li>
@@ -1196,10 +1196,10 @@
 	<li>Fixed bug in Search Paths dialog so it no longer crashes when you toggle the recursion flag for an empty path.</li>
 </ul>
 
-<h3><a href="help.html#CBEditorHelp">Text Editor</a></h3>
+<h3><a href="help.html#EditorHelp">Text Editor</a></h3>
 
 <ul>
-	<li>Holding down the Meta key toggles the Drag-And-Drop setting in the <a href="help.html#CBEditorHelp-Prefs">Preferences</a> dialog.  (Once you begin dragging, you can release the Meta key so that you can move the text.)</li>
+	<li>Holding down the Meta key toggles the Drag-And-Drop setting in the <a href="help.html#EditorHelp-Prefs">Preferences</a> dialog.  (Once you begin dragging, you can release the Meta key so that you can move the text.)</li>
 
 	<li>Added option to set styled printing font size independently of the screen font size.</li>
 
@@ -1215,30 +1215,30 @@
 
 <h2>2.1.1</h2>
 
-<h3><a href="help.html#CBProjectHelp">Project</a></h3>
+<h3><a href="help.html#ProjectHelp">Project</a></h3>
 
 <ul>
-	<li>Added option in <a href="help.html#CBProjectHelp-Config">Project Configuration</a> dialog to include an arbitrary expression at the end of the dependency list.</li>
+	<li>Added option in <a href="help.html#ProjectHelp-Config">Project Configuration</a> dialog to include an arbitrary expression at the end of the dependency list.</li>
 
-	<li>Target name in <a href="help.html#CBProjectHelp-Config">Project Configuration</a> dialog can now be a list of target names separated by commas.</li>
+	<li>Target name in <a href="help.html#ProjectHelp-Config">Project Configuration</a> dialog can now be a list of target names separated by commas.</li>
 
 	<li>Added option in Sub-project configuration dialog to not include the library in the list of dependencies passed to make.</li>
 
 	<li>Split Project menu into Project and Source menus.</li>
 </ul>
 
-<h3><a href="help.html#CBEditorHelp">Text Editor</a></h3>
+<h3><a href="help.html#EditorHelp">Text Editor</a></h3>
 
 <ul>
-	<li>Added option in <a href="help.html#CBEditorHelp-Prefs">Preferences</a> dialog to not sort the function names displayed in the <a href="help.html#CBEditorHelp-SourceCode">Functions menu</a>.  Holding down the Meta key while opening the menu toggles this setting.</li>
+	<li>Added option in <a href="help.html#EditorHelp-Prefs">Preferences</a> dialog to not sort the function names displayed in the <a href="help.html#EditorHelp-SourceCode">Functions menu</a>.  Holding down the Meta key while opening the menu toggles this setting.</li>
 
 	<li>Fixed bug in toolbar so it is now safe to use Close, Close All, and Quit buttons. In addition, the Open button no longer crashes when used from an empty editor.</li>
 </ul>
 
-<h3><a href="help.html#CBCompileHelp">Make</a> and <a href="help.html#CBRunProgramHelp">Run</a></h3>
+<h3><a href="help.html#CompileHelp">Make</a> and <a href="help.html#RunProgramHelp">Run</a></h3>
 
 <ul>
-	<li>Added option in <a href="help.html#CBRunProgramHelp">Run</a> dialog to not create an editor to display the program's output.  If an editor is not created, then you can quit Code Crusader without having to first quit the program.</li>
+	<li>Added option in <a href="help.html#RunProgramHelp">Run</a> dialog to not create an editor to display the program's output.  If an editor is not created, then you can quit Code Crusader without having to first quit the program.</li>
 </ul>
 
 <h3>Miscellaneous</h3>
@@ -1256,39 +1256,39 @@
 	<li>Added button toolbars in all major windows.  They are configurable via the "Toolbar buttons..." item on each Preferences menu.</li>
 </ul>
 
-<h3><a href="help.html#CBProjectHelp">Project</a></h3>
+<h3><a href="help.html#ProjectHelp">Project</a></h3>
 
 <ul>
 	<li>Automatically builds projects associated with library files before building the project itself.  You can also do this from within the Makefile, but now you don't have to learn how until you need it for some other reason.</li>
 
 	<li>Added "Edit sub-project configuration" item on Project menu to edit the name of the project file attached to a library.  This also allows you to turn off the automatic building of individual sub-projects.</li>
 
-	<li>Created <a href="help.html#CBProjectHelp-Prefs">Project Preferences</a> dialog, which includes the option to not reopen text files when a project is opened.</li>
+	<li>Created <a href="help.html#ProjectHelp-Prefs">Project Preferences</a> dialog, which includes the option to not reopen text files when a project is opened.</li>
 
 	<li>Fixed several bugs so Make.files is now always updated when necessary.</li>
 
 	<li>Fixed bug so it no longer crashes in rare cases when adding project relative paths to the list of search paths.</li>
 </ul>
 
-<h3><a href="help.html#CBEditorHelp">Text Editor</a></h3>
+<h3><a href="help.html#EditorHelp">Text Editor</a></h3>
 
 <ul>
 	<li>Shift-return maintains the current indentation but ignores the line prefix.</li>
 
-	<li>Changed the default behavior so <a href="help.html#CBEditorHelp-MouseShortcuts"> Meta-dbl-click</a> doesn't raise the C++ class tree if there is a single match. You can change this in the <a href="help.html#CBTreePrefsHelp">C++ Class Tree Preferences</a> dialog.</li>
+	<li>Changed the default behavior so <a href="help.html#EditorHelp-MouseShortcuts"> Meta-dbl-click</a> doesn't raise the C++ class tree if there is a single match. You can change this in the <a href="help.html#TreePrefsHelp">C++ Class Tree Preferences</a> dialog.</li>
 
-	<li>Added option in <a href="help.html#CBEditorHelp-Prefs">Preferences</a> dialog to have Tab insert spaces instead of a Tab character.</li>
+	<li>Added option in <a href="help.html#EditorHelp-Prefs">Preferences</a> dialog to have Tab insert spaces instead of a Tab character.</li>
 
 	<li>Added option in plain text Print Setup dialog to print line numbers.</li>
 
-	<li>So many people have asked that I have finally added the option to make Home/End work like on Windows and to have the caret follow when the text scrolls. They are in the <a href="help.html#CBEditorHelp-Prefs">Preferences</a> dialog.</li>
+	<li>So many people have asked that I have finally added the option to make Home/End work like on Windows and to have the caret follow when the text scrolls. They are in the <a href="help.html#EditorHelp-Prefs">Preferences</a> dialog.</li>
 
 	<li>Optimized opening batches of files and DOS files.</li>
 
-	<li>Fixed bug in <a href="help.html#CBMacroHelp">macros</a> so $f, $p, $n, $l now work correctly.</li>
+	<li>Fixed bug in <a href="help.html#MacroHelp">macros</a> so $f, $p, $n, $l now work correctly.</li>
 </ul>
 
-<h3><a href="help.html#CBCompileHelp">Make</a> and <a href="help.html#CBRunProgramHelp">Run</a></h3>
+<h3><a href="help.html#CompileHelp">Make</a> and <a href="help.html#RunProgramHelp">Run</a></h3>
 
 <ul>
 	<li>Fixed Program Output window so text appears when it is printed, not just when a newline is received.</li>
@@ -1299,7 +1299,7 @@
 <ul>
 	<li>Added draggable icon in Save File dialog.  This implements local saving via the new <a href="http://www.newplanetsoftware.com/xds/">Direct Save</a> (XDS) protocol.</li>
 
-	<li>Fixed <a href="help.html#CBCompileHelp">Compiler Output</a> window and <a href="help.html#CBSearchTextHelp-Multifile">multi-file Search Results</a> window to use current font color instead of always black.</li>
+	<li>Fixed <a href="help.html#CompileHelp">Compiler Output</a> window and <a href="help.html#SearchTextHelp-Multifile">multi-file Search Results</a> window to use current font color instead of always black.</li>
 
 	<li>Fixed bug so it now correctly restores the position and size of the Text Editor windows when they are re-opened along with a project.</li>
 </ul>
@@ -1307,7 +1307,7 @@
 
 <h2>2.0.1</h2>
 
-<h3><a href="help.html#CBProjectHelp">Project</a></h3>
+<h3><a href="help.html#ProjectHelp">Project</a></h3>
 
 <ul>
 	<li>Fixed bugs in specification of when to rewrite Make.files.</li>
@@ -1315,7 +1315,7 @@
 	<li>Optimized code for "Add files..." item on Project menu.</li>
 </ul>
 
-<h3><a href="help.html#CBCompileHelp">Make</a> and <a href="help.html#CBRunProgramHelp">Run</a></h3>
+<h3><a href="help.html#CompileHelp">Make</a> and <a href="help.html#RunProgramHelp">Run</a></h3>
 
 <ul>
 	<li>Fixed code to work around egcs thunks bug.</li>
@@ -1327,20 +1327,20 @@
 <h3>Major changes</h3>
 
 <ul>
-	<li><a href="help.html#CBProjectHelp">Project</a> window simplifies interface to <a href="http://www.gnu.org/manual/make/">GNU <tt>make</tt></a>.</li>
+	<li><a href="help.html#ProjectHelp">Project</a> window simplifies interface to <a href="http://www.gnu.org/manual/make/">GNU <tt>make</tt></a>.</li>
 
-	<li><a href="help.html#CBEditorHelp-SourceCode">Functions menu</a> in <a href="help.html#CBEditorHelp">Text Editor</a> windows displaying source lets you jump to each function's definition.</li>
+	<li><a href="help.html#EditorHelp-SourceCode">Functions menu</a> in <a href="help.html#EditorHelp">Text Editor</a> windows displaying source lets you jump to each function's definition.</li>
 </ul>
 
-<h3><a href="help.html#CBEditorHelp">Text Editor</a></h3>
+<h3><a href="help.html#EditorHelp">Text Editor</a></h3>
 
 <ul>
-	<li>Added variables $f, $p, $n, $l to the <a href="help.html#CBEditorHelp-ExtScript">Run Script</a> dialog.</li>
+	<li>Added variables $f, $p, $n, $l to the <a href="help.html#EditorHelp-ExtScript">Run Script</a> dialog.</li>
 
 	<li>Added option in Miscellaneous Preferences dialog to turn off "Close before saving?" message.</li>
 </ul>
 
-<h3><a href="help.html#CBCompileHelp">Make</a> and <a href="help.html#CBRunProgramHelp">Run</a></h3>
+<h3><a href="help.html#CompileHelp">Make</a> and <a href="help.html#RunProgramHelp">Run</a></h3>
 
 <ul>
 	<li>Execution paths can be specified relative to the project file's directory.</li>
@@ -1356,10 +1356,10 @@
 	<li>If the window is read-only, Tab switches focus between the display and the command line input field.</li>
 </ul>
 
-<h3><a href="help.html#CBCTreeHelp">C++ Class Tree</a></h3>
+<h3><a href="help.html#CTreeHelp">C++ Class Tree</a></h3>
 
 <ul>
-	<li>This window is now a secondary window accessible from the <a href="help.html#CBProjectHelp">Project</a> window.</li>
+	<li>This window is now a secondary window accessible from the <a href="help.html#ProjectHelp">Project</a> window.</li>
 
 	<li>Search paths can be specified relative to the project file's directory.</li>
 </ul>
@@ -1367,9 +1367,9 @@
 <h3>Miscellaneous</h3>
 
 <ul>
-	<li>Added Matches menu in <a href="help.html#CBSearchTextHelp-Multifile">multi-file Search Results</a> window.  This works just like the Errors menu in the <a href="help.html#CBCompileHelp">Compiler Output</a> window.</li>
+	<li>Added Matches menu in <a href="help.html#SearchTextHelp-Multifile">multi-file Search Results</a> window.  This works just like the Errors menu in the <a href="help.html#CompileHelp">Compiler Output</a> window.</li>
 
-	<li>Added support for <a href="help.html#CBMiscHelp-Scrolling">wheel mice</a>.</li>
+	<li>Added support for <a href="help.html#MiscHelp-Scrolling">wheel mice</a>.</li>
 
 	<li>No longer pauses when you begin dragging text or files.</li>
 

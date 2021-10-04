@@ -8,11 +8,11 @@
 #ifndef _H_LLDBGetInitArgs
 #define _H_LLDBGetInitArgs
 
-#include "GetInitArgs.h"
+#include "GetInitArgsCmd.h"
 
 class JXInputField;
 
-class LLDBGetInitArgs : public GetInitArgs
+class LLDBGetInitArgs : public GetInitArgsCmd
 {
 public:
 

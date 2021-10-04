@@ -8,11 +8,11 @@
 #ifndef _H_XDGetThreads
 #define _H_XDGetThreads
 
-#include "GetThreads.h"
+#include "GetThreadsCmd.h"
 
 class JTree;
 
-class XDGetThreads : public GetThreads
+class XDGetThreads : public GetThreadsCmd
 {
 public:
 

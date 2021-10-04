@@ -1,7 +1,7 @@
 /******************************************************************************
  XDGetSourceFileList.cpp
 
-	BASE CLASS = GetSourceFileList
+	BASE CLASS = GetSourceFileListCmd
 
 	Copyright (C) 2007 by John Lindal.
 
@@ -25,7 +25,7 @@ XDGetSourceFileList::XDGetSourceFileList
 	FileListDir* fileList
 	)
 	:
-	GetSourceFileList(JString("status", JString::kNoCopy), fileList)
+	GetSourceFileListCmd(JString("status", JString::kNoCopy), fileList)
 {
 }
 
@@ -46,7 +46,7 @@ XDGetSourceFileList::~XDGetSourceFileList()
 void
 XDGetSourceFileList::Starting()
 {
-	GetSourceFileList::Starting();
+	GetSourceFileListCmd::Starting();
 
 	JXFileListTable* table = GetFileList()->GetTable();
 	table->RemoveAllFiles();

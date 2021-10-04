@@ -16,32 +16,32 @@
 <h2>Table of Contents</h2>
 
 <ul>
-	<li><a href="#CMOverviewHelp">Overview</a></li>
+	<li><a href="#OverviewHelp">Overview</a></li>
 
-	<li><a href="#CMGettingStartedHelp">Getting started</a></li>
+	<li><a href="#GettingStartedHelp">Getting started</a></li>
 
-	<li><a href="#CMSourceWindowHelp">Viewing source files</a></li>
+	<li><a href="#SourceWindowHelp">Viewing source files</a></li>
 
-	<li><a href="#CMBreakpointsHelp">Setting breakpoints, watchpoints, catchpoints</a></li>
+	<li><a href="#BreakpointsHelp">Setting breakpoints, watchpoints, catchpoints</a></li>
 
-	<li><a href="#CMVarTreeHelp">Examining variables</a></li>
+	<li><a href="#VarTreeHelp">Examining variables</a></li>
 
-	<li><a href="#CM2DPlotHelp">Plotting variables</a></li>
+	<li><a href="#2DPlotHelp">Plotting variables</a></li>
 
-	<li><a href="#CMThreadsHelp">Examining the threads that are executing</a></li>
+	<li><a href="#ThreadsHelp">Examining the threads that are executing</a></li>
 
-	<li><a href="#CMStackHelp">Examining the execution stack</a></li>
+	<li><a href="#StackHelp">Examining the execution stack</a></li>
 
-	<li><a href="#CMCommandDirHelp">Command line interface</a></li>
+	<li><a href="#CommandDirHelp">Command line interface</a></li>
 
-	<li><a href="#CMMiscHelp">Miscellaneous</a></li>
+	<li><a href="#MiscHelp">Miscellaneous</a></li>
 		<ul>
-		<li><a href="#CMMiscHelp-FileChooser">File chooser</a></li>
-		<li><a href="#CMMiscHelp-Scrolling">Scrollbars</a></li>
-		<li><a href="#CMMiscHelp-WindowManagement">Window management</a></li>
+		<li><a href="#MiscHelp-FileChooser">File chooser</a></li>
+		<li><a href="#MiscHelp-Scrolling">Scrollbars</a></li>
+		<li><a href="#MiscHelp-WindowManagement">Window management</a></li>
 		<li><a href="http://libjx.sourceforge.net/help/dock.html">Docking</a></li>
-		<li><a href="#CMMiscHelp-Shortcuts">Useful shortcuts</a></li>
-		<li><a href="#CMMiscHelp-MultiSelect">Selecting multiple items from a list</a></li>
+		<li><a href="#MiscHelp-Shortcuts">Useful shortcuts</a></li>
+		<li><a href="#MiscHelp-MultiSelect">Selecting multiple items from a list</a></li>
 		</ul>
 
 	<li><a href="http://www.gnu.org/software/gdb/documentation/">gdb manual</a></li>
@@ -61,22 +61,22 @@
 
 <p>Code Medic is a graphical front-end for various debuggers:  gdb, xdebug, Java.  It was designed to work with <a href="http://sourceforge.net/p/codecrusader/">Code Crusader</a> but can also be used alone.</p>
 
-<p>See the <a href="#CMGettingStartedHelp">getting started</a> section for a quick guide to using Code Medic.</p>
+<p>See the <a href="#GettingStartedHelp">getting started</a> section for a quick guide to using Code Medic.</p>
 
 <p>Code Medic currently provides the following features:</p>
 
 <ul>
-	<li><a href="#CMSourceWindowHelp">Source view</a> for setting breakpoints and stepping through code</li>
+	<li><a href="#SourceWindowHelp">Source view</a> for setting breakpoints and stepping through code</li>
 
-	<li><a href="#CMSourceWindowHelp-FileList">Files window</a> provides access to all source files used by the program being debugged.</li>
+	<li><a href="#SourceWindowHelp-FileList">Files window</a> provides access to all source files used by the program being debugged.</li>
 
-	<li><a href="#CMVarTreeHelp">Variables window</a> for examining the values of variables, the contents of structures and objects, and the elements of <a href="#CMVarTreeHelp-Array1D">arrays</a>.</li>
+	<li><a href="#VarTreeHelp">Variables window</a> for examining the values of variables, the contents of structures and objects, and the elements of <a href="#VarTreeHelp-Array1D">arrays</a>.</li>
 
-	<li><a href="#CMThreadsHelp">Threads window</a> for switching between threads</li>
+	<li><a href="#ThreadsHelp">Threads window</a> for switching between threads</li>
 
-	<li><a href="#CMStackHelp">Stack Trace window</a> for examining the execution stack and switching between frames</li>
+	<li><a href="#StackHelp">Stack Trace window</a> for examining the execution stack and switching between frames</li>
 
-	<li><a href="#CMCommandDirHelp">Command line interface</a> to provide access to all the other features provided by <a href="http://www.gnu.org/software/gdb/documentation/">gdb</a></li>
+	<li><a href="#CommandDirHelp">Command line interface</a> to provide access to all the other features provided by <a href="http://www.gnu.org/software/gdb/documentation/">gdb</a></li>
 </ul>
 
 
@@ -99,19 +99,19 @@
 
 <h4>gdb</h4>
 
-<p>If you did not specify a program to debug as an argument to Code Medic, you must select one by using the "Choose program..." item on the Debug menu in either the <a href="#CMCommandDirHelp">Command Line</a> window or any <a href="#CMSourceWindowHelp">Source View</a> window.  After loading the program into gdb, Code Medic will fill the <a href="#CMSourceWindowHelp-FileList">Files</a> window with all the source files used by the program.  It will then display the function <code>main()</code> in the <a href="#CMSourceWindowHelp">Current Source View</a> window.</p>
+<p>If you did not specify a program to debug as an argument to Code Medic, you must select one by using the "Choose program..." item on the Debug menu in either the <a href="#CommandDirHelp">Command Line</a> window or any <a href="#SourceWindowHelp">Source View</a> window.  After loading the program into gdb, Code Medic will fill the <a href="#SourceWindowHelp-FileList">Files</a> window with all the source files used by the program.  It will then display the function <code>main()</code> in the <a href="#SourceWindowHelp">Current Source View</a> window.</p>
 
 <p>By default, Code Medic uses the version of gdb that is on your execution path.  You can run a different version of gdb by using the "Preferences..." item on the Preferences menu.</p>
 
 <h4>Java</h4>
 
-<p>In Java, the program to run is specified as a command line argument to the JVM, and the JVM does not know where the source files are.  Choosing a program therefore means selecting a <a href="#CMJavaConfigFileHelp">configuration file</a> that defines everything needed for debugging.</p>
+<p>In Java, the program to run is specified as a command line argument to the JVM, and the JVM does not know where the source files are.  Choosing a program therefore means selecting a <a href="#JavaConfigFileHelp">configuration file</a> that defines everything needed for debugging.</p>
 
-<p>If you did not specify a configuration file as an argument to Code Medic, you must select one by using the "Choose program..." item on the Debug menu in either the <a href="#CMCommandDirHelp">Command Line</a> window or any <a href="#CMSourceWindowHelp">Source View</a> window.</p>
+<p>If you did not specify a configuration file as an argument to Code Medic, you must select one by using the "Choose program..." item on the Debug menu in either the <a href="#CommandDirHelp">Command Line</a> window or any <a href="#SourceWindowHelp">Source View</a> window.</p>
 
 <p>After you choose a program, you can either run it from within Code Medic or you can start it yourself with the <code>-agentlib:jdwp</code> option.  More information on this is available <a href="http://java.sun.com/javase/8/docs/technotes/guides/jpda/conninv.html#Invocation">here</a>.</p>
 
-<p>After you start the program, Code Medic will fill the <a href="#CMSourceWindowHelp-FileList">Files</a> window with all the source files used by the program.  It will then display the class that defines <code>main()</code> in the <a href="#CMSourceWindowHelp">Current Source View</a> window, if the source is available.</p>
+<p>After you start the program, Code Medic will fill the <a href="#SourceWindowHelp-FileList">Files</a> window with all the source files used by the program.  It will then display the class that defines <code>main()</code> in the <a href="#SourceWindowHelp">Current Source View</a> window, if the source is available.</p>
 
 <p>By default, Code Medic uses the version of the JVM that is on your execution path.  You can run a different version by using the "Preferences..." item on the Preferences menu.  If you include either <code>-agentlib:jdwp</code> or <code>-Xrunjdwp</code> as part of the command, this will override the default.  If you configure it yourself, you must include <code>transport=dt_socket,address=localhost:9001</code> in order to connect to Code Medic.</p>
 
@@ -119,39 +119,39 @@
 
 <p>Xdebug uses a remote debugging protocol, so you cannot run the program from within Code Medic.  Instead, you must start your program with instructions to connect to port 9000 of the computer on which Code Medic is running.  More information on this is available <a href="http://www.xdebug.org/docs/remote">here</a>.</p>
 
-<p>Choosing a program means selecting a <a href="#CMXdebugConfigFileHelp">configuration file</a> that defines everything needed for debugging.  You do not have to load a configuration file, but it makes it easier to open the program's source files.</p>
+<p>Choosing a program means selecting a <a href="#XdebugConfigFileHelp">configuration file</a> that defines everything needed for debugging.  You do not have to load a configuration file, but it makes it easier to open the program's source files.</p>
 
 <h3>Examining the state of the program</h3>
 
-<p>To display the value of a variable or expression when your program is paused at a <a href="#CMBreakpointsHelp">breakpoint</a>, select the variable name or expression in a <a href="#CMSourceWindowHelp">Source View</a> window and then use the "Display variable" item on the Debug menu.  This will open the <a href="#CMVarTreeHelp">Variables</a> window and display the result.</p>
+<p>To display the value of a variable or expression when your program is paused at a <a href="#BreakpointsHelp">breakpoint</a>, select the variable name or expression in a <a href="#SourceWindowHelp">Source View</a> window and then use the "Display variable" item on the Debug menu.  This will open the <a href="#VarTreeHelp">Variables</a> window and display the result.</p>
 
-<p>To display the current execution stack when your program is paused at a <a href="#CMBreakpointsHelp">breakpoint</a>, open the <a href="#CMStackHelp">Stack Trace</a> window.  (You can also pause your program by using the "Pause execution" item on the Debug menu.)</p>
+<p>To display the current execution stack when your program is paused at a <a href="#BreakpointsHelp">breakpoint</a>, open the <a href="#StackHelp">Stack Trace</a> window.  (You can also pause your program by using the "Pause execution" item on the Debug menu.)</p>
 
 <h3>Debugging a core file</h3>
 
-<p>Once a program is loaded when using gdb, you may load a core file by using the "Choose core..." item on the Debug menu in either the <a href="#CMCommandDirHelp">Command Line</a> window or any <a href="#CMSourceWindowHelp">Source View</a> window.  Once the core file has been loaded, the <a href="#CMStackHelp">Stack Trace</a> window will automatically be opened to show you the state of the program when it crashed and to allow you to navigate through the execution stack to perform the post mortem.</p>
+<p>Once a program is loaded when using gdb, you may load a core file by using the "Choose core..." item on the Debug menu in either the <a href="#CommandDirHelp">Command Line</a> window or any <a href="#SourceWindowHelp">Source View</a> window.  Once the core file has been loaded, the <a href="#StackHelp">Stack Trace</a> window will automatically be opened to show you the state of the program when it crashed and to allow you to navigate through the execution stack to perform the post mortem.</p>
 
 <h3>Debugging a running program</h3>
 
-<p>Once a program is loaded when using gdb, you may debug a running copy of the program by using the "Choose process..." item on the Debug menu in either the <a href="#CMCommandDirHelp">Command Line</a> window or any <a href="#CMSourceWindowHelp">Source View</a> window.  Code Medic will pause the process and display the <a href="#CMStackHelp">Stack Trace</a> window to show you the current state of the program.</p>
+<p>Once a program is loaded when using gdb, you may debug a running copy of the program by using the "Choose process..." item on the Debug menu in either the <a href="#CommandDirHelp">Command Line</a> window or any <a href="#SourceWindowHelp">Source View</a> window.  Code Medic will pause the process and display the <a href="#StackHelp">Stack Trace</a> window to show you the current state of the program.</p>
 
 
 <hr>
 <h2><a name="CMSourceWindowHelp">Source View Window</a></h2>
 
-<p>When the program is paused, the Current Source window displays the source file corresponding to the <a href="#CMStackHelp">stack frame</a> that is currently being debugged.  If a cyan colored arrow is visible to the left of the line numbers, this indicates the line at which the program is paused.</p>
+<p>When the program is paused, the Current Source window displays the source file corresponding to the <a href="#StackHelp">stack frame</a> that is currently being debugged.  If a cyan colored arrow is visible to the left of the line numbers, this indicates the line at which the program is paused.</p>
 
-<p>All other Source View windows display the source files that you have opened either via the <a href="#CMSourceWindowHelp-FileList">Files</a> window or the "Open source file..." item on the File menu.</p>
+<p>All other Source View windows display the source files that you have opened either via the <a href="#SourceWindowHelp-FileList">Files</a> window or the "Open source file..." item on the File menu.</p>
 
 <p>These windows only display the program's source files.  They do not allow you to edit the files because then it would no longer correspond to the debugging information stored in the program.  When the files and the debugging information do not correspond, the result is pure confusion.</p>
 
-<p>Since one cannot edit the files, all keypresses (except menu shortcuts) are sent to the <a href="#CMCommandDirHelp">Command Line</a>.</p>
+<p>Since one cannot edit the files, all keypresses (except menu shortcuts) are sent to the <a href="#CommandDirHelp">Command Line</a>.</p>
 
 <h3><a name="CMSourceWindowHelp-FileList">Opening source files</a></h3>
 
 <p>The Files window displays a list of all the source files that are used by the program being debugged.  (Unfortunately, <code>gdb</code> does not report files used by shared libraries until after the program has been started, and <code>lldb</code> does not provide any way to list the source files.)</p>
 
-<p>To open a file, either select it and press Return or double click on it.  You can also <a href="#CMMiscHelp-MultiSelect">select several files</a> and press Return to open them all at once.</p>
+<p>To open a file, either select it and press Return or double click on it.  You can also <a href="#MiscHelp-MultiSelect">select several files</a> and press Return to open them all at once.</p>
 
 <p>To locate a file, simply type the first few letters in its name, and the first file name that matches will be selected.  You can search for groups of files by using the wildcard or the <a href="http://libjx.sourceforge.net/help/regex.html">regular expression</a> filter on the Actions menu.</p>
 
@@ -169,11 +169,11 @@
 <hr>
 <h2><a name="CMBreakpointsHelp">Breakpoints Window</a></h2>
 
-<p>To set a breakpoint, either click on the line number in a <a href="#CMSourceWindowHelp">Source View</a> window or use the <code>break</code> or <code>tbreak</code> commands in the <a href="#CMCommandDirHelp">Command Line</a> window.</p>
+<p>To set a breakpoint, either click on the line number in a <a href="#SourceWindowHelp">Source View</a> window or use the <code>break</code> or <code>tbreak</code> commands in the <a href="#CommandDirHelp">Command Line</a> window.</p>
 
-<p>To set a watchpoint, either use the "Watch expression" menu item or use the <code>watch</code> command in the <a href="#CMCommandDirHelp">Command Line</a> window.</p>
+<p>To set a watchpoint, either use the "Watch expression" menu item or use the <code>watch</code> command in the <a href="#CommandDirHelp">Command Line</a> window.</p>
 
-<p>To set a catchpoint, use the <code>catch</code> command in the <a href="#CMCommandDirHelp">Command Line</a> window.</p>
+<p>To set a catchpoint, use the <code>catch</code> command in the <a href="#CommandDirHelp">Command Line</a> window.</p>
 
 <p>The Breakpoints window displays a list of all the breakpoints, watchpoints, and catchpoints that you have set.  Breakpoints are also displayed in the Source View windows, to the left of the line number.</p>
 
@@ -197,8 +197,8 @@
 
 <ul>
 	<li>Use the "New expression" item on the Actions menu and then type in the expression in the input field that is created.</li>
-	<li>Select the expression in a <a href="#CMSourceWindowHelp">Source View</a> window and use the "Display variable" item on the Debug menu.</li>
-	<li>Double click with the middle mouse button on the text in the <a href="#CMSourceWindowHelp">Source View</a> window.</li>
+	<li>Select the expression in a <a href="#SourceWindowHelp">Source View</a> window and use the "Display variable" item on the Debug menu.</li>
+	<li>Double click with the middle mouse button on the text in the <a href="#SourceWindowHelp">Source View</a> window.</li>
 </ul>
 
 <p>You can display the value of any arbitrary expression, not just a simple variable name.</p>
@@ -207,7 +207,7 @@
 
 <p>To change an expression that is being displayed, double click on it.  If the expression is inside a structure, it will be copied to a new line so you can edit it.</p>
 
-<p>To change the value of a variable, double click on it.  Note that this is only appropriate for simple variables.  To edit a string, you must first display it as an array of characters.  In addition, an attempt to change the result of evaluating an expression containing mathematical operations will not succeed.  All errors are displayed in the <a href="#CMCommandDirHelp">Command Line</a> window.</p>
+<p>To change the value of a variable, double click on it.  Note that this is only appropriate for simple variables.  To edit a string, you must first display it as an array of characters.  In addition, an attempt to change the result of evaluating an expression containing mathematical operations will not succeed.  All errors are displayed in the <a href="#CommandDirHelp">Command Line</a> window.</p>
 
 <p>Here is the complete list of all the ways to view the contents of structures, objects, and pointers:</p>
 
@@ -237,7 +237,7 @@
 	<dd>Close all items.</dd>
 </dl>
 
-<p>The keyboard shortcuts obviously only work when one or more items are <a href="#CMMiscHelp-MultiSelect">selected</a>.</p>
+<p>The keyboard shortcuts obviously only work when one or more items are <a href="#MiscHelp-MultiSelect">selected</a>.</p>
 
 <h3><a name="CMVarTreeHelp-Local">Local variables</a></h3>
 
@@ -259,7 +259,7 @@
 
 <h3>Plotting a one dimensional array</h3>
 
-<p>Instructions for plotting are provided in a <a href="#CM2DPlotHelp">separate section</a>.</p>
+<p>Instructions for plotting are provided in a <a href="#2DPlotHelp">separate section</a>.</p>
 
 <h3><a name="CMVarTreeHelp-Array2D">Examining a two dimensional array</a></h3>
 
@@ -315,21 +315,21 @@
 <hr>
 <h2><a name="CMThreadsHelp">Threads Window</a></h2>
 
-<p>When a program that uses threads is paused, the Threads window displays the list of threads that are currently executing.  You can switch between the threads by clicking on the items in the list or by using the up and down arrow keys to move by one thread at a time.  The execution stack for the currently selected thread is displayed in the <a href="#CMStackHelp">Stack Trace</a> window.</p>
+<p>When a program that uses threads is paused, the Threads window displays the list of threads that are currently executing.  You can switch between the threads by clicking on the items in the list or by using the up and down arrow keys to move by one thread at a time.  The execution stack for the currently selected thread is displayed in the <a href="#StackHelp">Stack Trace</a> window.</p>
 
-<p>To open a <a href="#CMSourceWindowHelp">Source View</a> window for a particular thread, hold down the Meta key and click on the item in the list.</p>
+<p>To open a <a href="#SourceWindowHelp">Source View</a> window for a particular thread, hold down the Meta key and click on the item in the list.</p>
 
 
 <hr>
 <h2><a name="CMStackHelp">Stack Trace Window</a></h2>
 
-<p>When the program is paused, the Stack Trace window displays the current execution stack.  You can navigate between the frames by clicking on the function name or by using the up and down arrow keys to move by one frame at a time.  The source code for the currently selected frame is displayed in the <a href="#CMSourceWindowHelp">Current Source View</a> window.</p>
+<p>When the program is paused, the Stack Trace window displays the current execution stack.  You can navigate between the frames by clicking on the function name or by using the up and down arrow keys to move by one frame at a time.  The source code for the currently selected frame is displayed in the <a href="#SourceWindowHelp">Current Source View</a> window.</p>
 
 <p>The arguments that were passed to each function are displayed below the corresponding function name when you click on the arrow to the left of the function name.  To show the arguments to all functions, hold down the Shift key while clicking on any of the arrows.</p>
 
-<p>To display an argument in the <a href="#CMVarTreeHelp">Variables</a> window, simply click on it.</p>
+<p>To display an argument in the <a href="#VarTreeHelp">Variables</a> window, simply click on it.</p>
 
-<p>To open a <a href="#CMSourceWindowHelp">Source View</a> window for a particular frame other than the currently selected one, hold down the Meta key and click on the function name.</p>
+<p>To open a <a href="#SourceWindowHelp">Source View</a> window for a particular frame other than the currently selected one, hold down the Meta key and click on the function name.</p>
 
 
 <hr>
@@ -367,7 +367,7 @@
 	<dd>The directory in which to execute <code>java</code>.  If not specified, it defaults to the directory containing the configuration file.  <q>java-path</q> is only required when Code Medic starts the JVM.</dd>
 
 	<dt>java-exec</dt>
-	<dd>The arguments to pass to <code>java</code> which specify which program to run.  (The arguments to <code>main</code> are specified at the bottom of the <a href="#CMCommandDirHelp">Command Line window</a>.)  If not specified, it defaults to the value of <q>main-class</q>.  Normally, you only need to specify <q>java-exec</q> if you need to use Java's <code>-jar</code> option.  However, you can also use it to specify a custom <code>-agentlib:jdwp</code> configuration.  <q>java-exec</q> is only used when Code Medic starts the JVM.</dd>
+	<dd>The arguments to pass to <code>java</code> which specify which program to run.  (The arguments to <code>main</code> are specified at the bottom of the <a href="#CommandDirHelp">Command Line window</a>.)  If not specified, it defaults to the value of <q>main-class</q>.  Normally, you only need to specify <q>java-exec</q> if you need to use Java's <code>-jar</code> option.  However, you can also use it to specify a custom <code>-agentlib:jdwp</code> configuration.  <q>java-exec</q> is only used when Code Medic starts the JVM.</dd>
 
 	<dt>source-path</dt>
 	<dd>A directory containing the root of a class heirarchy, e.g., the directory that contains <code>com/test/HelloWorld.java</code>.  This can be repeated with each line defining a different directory.  Directories can be relative to the location of the config file.</dd>
@@ -401,7 +401,7 @@
 
 <h3><a name="CMMiscHelp-Shortcuts">Useful Shortcuts</a></h3>
 
-<p>On PC's, Meta is normally bound to the Alt key on the keyboard.  Your system's configuration may be different, however.  You can use "<a href="#CMMiscHelp-ModifierKeys"><code>xmodmap</code></a>" to examine and change this configuration.</p>
+<p>On PC's, Meta is normally bound to the Alt key on the keyboard.  Your system's configuration may be different, however.  You can use "<a href="#MiscHelp-ModifierKeys"><code>xmodmap</code></a>" to examine and change this configuration.</p>
 
 <p>Drag-And-Drop can be cancelled by pressing the Escape key before releasing the mouse button.</p>
 

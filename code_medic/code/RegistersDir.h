@@ -12,7 +12,7 @@
 
 class JXTextMenu;
 class JXStaticText;
-class GetRegisters;
+class GetRegistersCmd;
 class CommandDirector;
 
 class RegistersDir : public JXWindowDirector
@@ -39,7 +39,7 @@ private:
 
 	CommandDirector*	itsCommandDir;
 	JXStaticText*		itsWidget;
-	GetRegisters*		itsCmd;			// can be nullptr
+	GetRegistersCmd*		itsCmd;			// can be nullptr
 	bool				itsShouldUpdateFlag;
 	bool				itsNeedsUpdateFlag;
 

@@ -8,7 +8,7 @@
  *****************************************************************************/
 
 #include "JVMVarNode.h"
-#include "VarCommand.h"
+#include "VarCmd.h"
 #include "globals.h"
 #include <jx-af/jcore/JTree.h>
 #include <jx-af/jcore/JRegex.h>

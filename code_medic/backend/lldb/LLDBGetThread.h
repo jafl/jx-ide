@@ -8,9 +8,9 @@
 #ifndef _H_LLDBGetThread
 #define _H_LLDBGetThread
 
-#include "GetThread.h"
+#include "GetThreadCmd.h"
 
-class LLDBGetThread : public GetThread
+class LLDBGetThread : public GetThreadCmd
 {
 public:
 

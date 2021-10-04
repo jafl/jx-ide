@@ -19,12 +19,12 @@
 
  ******************************************************************************/
 
-GDBGetFrameCmd::GDBGetFrameCmd
+gdb::GetFrameCmd::GetFrameCmd
 	(
 	StackWidget* widget
 	)
 	:
-	GetFrameCmd(JString("-stack-info-frame", JString::kNoCopy)),
+	::GetFrameCmd(JString("-stack-info-frame", JString::kNoCopy)),
 	itsWidget(widget)
 {
 }
@@ -34,7 +34,7 @@ GDBGetFrameCmd::GDBGetFrameCmd
 
  ******************************************************************************/
 
-GDBGetFrameCmd::~GDBGetFrameCmd()
+gdb::GetFrameCmd::~GetFrameCmd()
 {
 }
 
@@ -46,7 +46,7 @@ GDBGetFrameCmd::~GDBGetFrameCmd()
 static const JRegex framePattern = "\\bframe=\\{";
 
 void
-GDBGetFrameCmd::HandleSuccess
+gdb::GetFrameCmd::HandleSuccess
 	(
 	const JString& cmdData
 	)
@@ -62,7 +62,7 @@ GDBGetFrameCmd::HandleSuccess
 		JStringPtrMap<JString> map(JPtrArrayT::kDeleteAll);
 		JString* s;
 		JIndex frameIndex;
-		if (!GDBLink::ParseMap(stream, &map))
+		if (!Link::ParseMap(stream, &map))
 		{
 			GetLink()->Log("invalid data map");
 		}

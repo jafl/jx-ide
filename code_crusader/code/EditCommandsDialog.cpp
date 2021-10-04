@@ -347,7 +347,7 @@ EditCommandsDialog::Receive
 
 	else if (sender == itsHelpButton && message.Is(JXButton::kPushed))
 	{
-		(JXGetHelpManager())->ShowSection("TasksHelp");
+		JXGetHelpManager()->ShowSection("TasksHelp");
 	}
 
 	else

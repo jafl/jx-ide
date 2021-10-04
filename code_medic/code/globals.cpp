@@ -237,7 +237,7 @@ StartDebugger()
 	PrefsManager::DebuggerType type = GetPrefsManager()->GetDebuggerType();
 	if (type == PrefsManager::kGDBType)
 	{
-		theLink = jnew GDBLink;
+		theLink = jnew gdb::Link;
 	}
 	else if (type == PrefsManager::kLLDBType)
 	{

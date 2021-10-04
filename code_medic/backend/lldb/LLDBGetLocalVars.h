@@ -8,11 +8,11 @@
 #ifndef _H_LLDBGetLocalVars
 #define _H_LLDBGetLocalVars
 
-#include "GetLocalVars.h"
+#include "GetLocalVarsCmd.h"
 
 class VarNode;
 
-class LLDBGetLocalVars : public GetLocalVars
+class LLDBGetLocalVars : public GetLocalVarsCmd
 {
 public:
 

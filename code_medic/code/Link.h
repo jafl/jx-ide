@@ -36,21 +36,21 @@ class ThreadsWidget;
 class VarNode;
 class FileListDir;
 class Array2DCmd;
-class Plot2DCommand;
+class Plot2DCmd;
 class DisplaySourceForMainCmd;
 class GetCompletionsCmd;
 class GetFrameCmd;
-class GetStack;
-class GetThread;
-class GetThreads;
-class GetMemory;
+class GetStackCmd;
+class GetThreadCmd;
+class GetThreadsCmd;
+class GetMemoryCmd;
 class GetAssemblyCmd;
-class GetRegisters;
+class GetRegistersCmd;
 class GetFullPathCmd;
-class GetInitArgs;
-class GetLocalVars;
-class GetSourceFileList;
-class VarCommand;
+class GetInitArgsCmd;
+class GetLocalVarsCmd;
+class GetSourceFileListCmd;
+class VarCmd;
 class VarNode;
 
 class Link : virtual public JBroadcaster
@@ -179,23 +179,23 @@ public:
 	virtual Array2DCmd*					CreateArray2DCmd(Array2DDir* dir,
 														 JXStringTable* table,
 														 JStringTableData* data) = 0;
-	virtual Plot2DCommand*				CreatePlot2DCmd(Plot2DDir* dir,
+	virtual Plot2DCmd*				CreatePlot2DCmd(Plot2DDir* dir,
 														JArray<JFloat>* x,
 														JArray<JFloat>* y) = 0;
 	virtual DisplaySourceForMainCmd*	CreateDisplaySourceForMainCmd(SourceDirector* sourceDir) = 0;
 	virtual GetCompletionsCmd*				CreateGetCompletionsCmd(CommandInput* input,
 																CommandOutputDisplay* history) = 0;
 	virtual GetFrameCmd*				CreateGetFrameCmd(StackWidget* widget) = 0;
-	virtual GetStack*					CreateGetStackCmd(JTree* tree, StackWidget* widget) = 0;
-	virtual GetThread*					CreateGetThreadCmd(ThreadsWidget* widget) = 0;
-	virtual GetThreads*					CreateGetThreadsCmd(JTree* tree, ThreadsWidget* widget) = 0;
+	virtual GetStackCmd*					CreateGetStackCmd(JTree* tree, StackWidget* widget) = 0;
+	virtual GetThreadCmd*					CreateGetThreadCmd(ThreadsWidget* widget) = 0;
+	virtual GetThreadsCmd*					CreateGetThreadsCmd(JTree* tree, ThreadsWidget* widget) = 0;
 	virtual GetFullPathCmd*				CreateGetFullPathCmd(const JString& fileName,
 															 const JIndex lineIndex = 0) = 0;
-	virtual GetInitArgs*				CreateGetInitArgsCmd(JXInputField* argInput) = 0;
-	virtual GetLocalVars*				CreateGetLocalVarsCmd(VarNode* rootNode) = 0;
-	virtual GetSourceFileList*			CreateGetSourceFileListCmd(FileListDir* fileList) = 0;
-	virtual VarCommand*					CreateVarValueCmd(const JString& expr) = 0;
-	virtual VarCommand*					CreateVarContentCmd(const JString& expr) = 0;
+	virtual GetInitArgsCmd*				CreateGetInitArgsCmd(JXInputField* argInput) = 0;
+	virtual GetLocalVarsCmd*				CreateGetLocalVarsCmd(VarNode* rootNode) = 0;
+	virtual GetSourceFileListCmd*			CreateGetSourceFileListCmd(FileListDir* fileList) = 0;
+	virtual VarCmd*					CreateVarValueCmd(const JString& expr) = 0;
+	virtual VarCmd*					CreateVarContentCmd(const JString& expr) = 0;
 	virtual VarNode*					CreateVarNode(const bool shouldUpdate = true) = 0;
 	virtual VarNode*					CreateVarNode(JTreeNode* parent, const JString& name,
 													  const JString& fullName, const JString& value) = 0;
@@ -204,9 +204,9 @@ public:
 	virtual JString						Build2DArrayExpression(const JString& expr,
 															   const JInteger rowIndex,
 															   const JInteger colIndex) = 0;
-	virtual GetMemory*					CreateGetMemoryCmd(MemoryDir* dir) = 0;
+	virtual GetMemoryCmd*					CreateGetMemoryCmd(MemoryDir* dir) = 0;
 	virtual GetAssemblyCmd*				CreateGetAssemblyCmd(SourceDirector* dir) = 0;
-	virtual GetRegisters*				CreateGetRegistersCmd(RegistersDir* dir) = 0;
+	virtual GetRegistersCmd*				CreateGetRegistersCmd(RegistersDir* dir) = 0;
 
 	// only when user types input for program being debugged
 

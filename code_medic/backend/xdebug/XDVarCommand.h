@@ -8,11 +8,11 @@
 #ifndef _H_XDVarCommand
 #define _H_XDVarCommand
 
-#include "VarCommand.h"
+#include "VarCmd.h"
 
 class VarNode;
 
-class XDVarCommand : public VarCommand
+class XDVarCommand : public VarCmd
 {
 public:
 

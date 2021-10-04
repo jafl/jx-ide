@@ -8,8 +8,8 @@
  *****************************************************************************/
 
 #include "JVMThreadNode.h"
-#include "JVMGetThreadName.h"
-#include "JVMGetThreadParent.h"
+#include "JVMGetThreadNameCmd.h"
+#include "JVMGetThreadParentCmd.h"
 #include "JVMLink.h"
 #include "globals.h"
 #include <jx-af/jcore/JListUtil.h>
@@ -33,7 +33,7 @@ JVMThreadNode::JVMThreadNode
 	{
 		dynamic_cast<JVMLink*>(GetLink())->ThreadCreated(this);
 
-		Command* cmd = jnew JVMGetThreadName(this);
+		Command* cmd = jnew JVMGetThreadNameCmd(this);
 		assert( cmd != nullptr );
 	}
 }
@@ -94,7 +94,7 @@ JVMThreadNode::NameChanged()
 
 	if (!HasParent())
 	{
-		Command* cmd = jnew JVMGetThreadParent(this);
+		Command* cmd = jnew JVMGetThreadParentCmd(this);
 		assert( cmd != nullptr );
 	}
 }

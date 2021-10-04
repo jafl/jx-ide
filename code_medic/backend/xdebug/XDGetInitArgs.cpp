@@ -5,7 +5,7 @@
 	Unfortunately, we cannot listen for later calls to "set args" because
 	one can only define a hook for single word commands.
 
-	BASE CLASS = GetInitArgs
+	BASE CLASS = GetInitArgsCmd
 
 	Copyright (C) 2007 by John Lindal.
 
@@ -24,7 +24,7 @@ XDGetInitArgs::XDGetInitArgs
 	JXInputField* argInput
 	)
 	:
-	GetInitArgs(JString("status", JString::kNoCopy))
+	GetInitArgsCmd(JString("status", JString::kNoCopy))
 {
 }
 

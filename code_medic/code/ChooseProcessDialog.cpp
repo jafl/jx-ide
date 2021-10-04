@@ -173,7 +173,7 @@ ChooseProcessDialog::Receive
 			}
 			else
 			{
-				dynamic_cast<GDBLink*>(GetLink())->ProgramStarted(pid);
+				dynamic_cast<gdb::Link*>(GetLink())->ProgramStarted(pid);
 			}
 
 			if (itsStopProgramFlag)

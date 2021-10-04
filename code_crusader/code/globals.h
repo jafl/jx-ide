@@ -27,12 +27,12 @@ class SymbolTypeList;
 class PTPrinter;
 class PSPrinter;
 
-App*					GetApplication();
-DocumentManager*		GetDocumentManager();
-PrefsManager*			GetPrefsManager();
-bool					GetMDIServer(MDIServer** mdi);
+App*				GetApplication();
+DocumentManager*	GetDocumentManager();
+PrefsManager*		GetPrefsManager();
+bool				GetMDIServer(MDIServer** mdi);
 
-SearchTextDialog*		GetSearchTextDialog();
+SearchTextDialog*	GetSearchTextDialog();
 RunTEScriptDialog*	GetRunTEScriptDialog();
 ViewManPageDialog*	GetViewManPageDialog();
 FindFileDialog*		GetFindFileDialog();
@@ -45,11 +45,11 @@ SymbolTypeList*		GetSymbolTypeList();
 PTPrinter*			GetPTTextPrinter();
 PSPrinter*			GetPSTextPrinter();
 
-const JString&			GetVersionNumberStr();
-JString					GetVersionStr();
+const JString&		GetVersionNumberStr();
+JString				GetVersionStr();
 
-bool					InUpdateThread();
-void					SetUpdateThread();
+bool				InUpdateThread();
+void				SetUpdateThread();
 
 	// icons
 

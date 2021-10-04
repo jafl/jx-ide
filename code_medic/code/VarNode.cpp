@@ -8,7 +8,7 @@
  *****************************************************************************/
 
 #include "VarNode.h"
-#include "VarCommand.h"
+#include "VarCmd.h"
 #include "InitVarNodeTask.h"
 #include "globals.h"
 #include "sharedUtil.h"
@@ -379,26 +379,26 @@ VarNode::Receive
 	}
 
 	else if (sender == itsValueCommand &&
-			 message.Is(VarCommand::kValueUpdated))
+			 message.Is(VarCmd::kValueUpdated))
 	{
 		const auto& info =
-			dynamic_cast<const VarCommand::ValueMessage&>(message);
+			dynamic_cast<const VarCmd::ValueMessage&>(message);
 
 		SetValid(true);
 		Update(info.GetRootNode());
 	}
 	else if (sender == itsValueCommand &&
-			 message.Is(VarCommand::kValueFailed))
+			 message.Is(VarCmd::kValueFailed))
 	{
 		SetValue(itsValueCommand->GetData());
 		MakePointer(false);
 	}
 
 	else if (sender == itsContentCommand &&
-			 message.Is(VarCommand::kValueUpdated))
+			 message.Is(VarCmd::kValueUpdated))
 	{
 		const auto& info =
-			dynamic_cast<const VarCommand::ValueMessage&>(message);
+			dynamic_cast<const VarCmd::ValueMessage&>(message);
 
 		VarNode* root = info.GetRootNode();
 
@@ -426,7 +426,7 @@ VarNode::Receive
 		}
 	}
 	else if (sender == itsContentCommand &&
-			 message.Is(VarCommand::kValueFailed))
+			 message.Is(VarCmd::kValueFailed))
 	{
 		DeleteAllChildren();
 		VarNode* child = GetLink()->CreateVarNode(this, JString::empty, JString::empty, itsContentCommand->GetData());
@@ -587,7 +587,7 @@ VarNode::UpdateChildren()
 /******************************************************************************
  UpdateValue
 
-	Called by self and *GetLocalVars.
+	Called by self and *GetLocalVarsCmd.
 
  ******************************************************************************/
 
@@ -614,7 +614,7 @@ VarNode::UpdateValue()
 /******************************************************************************
  UpdateValue
 
-	Called by *GetLocalVars.
+	Called by *GetLocalVarsCmd.
 
  ******************************************************************************/
 
@@ -631,7 +631,7 @@ VarNode::UpdateValue
 /******************************************************************************
  UpdateFailed
 
-	Called by *GetLocalVars.
+	Called by *GetLocalVarsCmd.
 
  ******************************************************************************/
 

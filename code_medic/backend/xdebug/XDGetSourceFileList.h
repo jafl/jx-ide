@@ -8,11 +8,11 @@
 #ifndef _H_XDGetSourceFileList
 #define _H_XDGetSourceFileList
 
-#include "GetSourceFileList.h"
+#include "GetSourceFileListCmd.h"
 
 class FileListDir;
 
-class XDGetSourceFileList : public GetSourceFileList
+class XDGetSourceFileList : public GetSourceFileListCmd
 {
 public:
 

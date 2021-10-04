@@ -209,7 +209,7 @@ EditStylerDialog::Receive
 	if (sender == itsHelpButton && message.Is(JXButton::kPushed))
 	{
 		#if defined CODE_CRUSADER
-		(JXGetHelpManager())->ShowSection("StylerHelp");
+		JXGetHelpManager()->ShowSection("StylerHelp");
 		#endif
 	}
 	else

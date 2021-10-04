@@ -1354,7 +1354,7 @@ LLDBLink::CreateArray2DCmd
 
  *****************************************************************************/
 
-Plot2DCommand*
+Plot2DCmd*
 LLDBLink::CreatePlot2DCmd
 	(
 	Plot2DDir*	dir,
@@ -1362,7 +1362,7 @@ LLDBLink::CreatePlot2DCmd
 	JArray<JFloat>*	y
 	)
 {
-	Plot2DCommand* cmd = jnew LLDBPlot2DCommand(dir, x, y);
+	Plot2DCmd* cmd = jnew LLDBPlot2DCommand(dir, x, y);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1421,14 +1421,14 @@ LLDBLink::CreateGetFrameCmd
 
  *****************************************************************************/
 
-GetStack*
+GetStackCmd*
 LLDBLink::CreateGetStackCmd
 	(
 	JTree*			tree,
 	StackWidget*	widget
 	)
 {
-	GetStack* cmd = jnew LLDBGetStack(tree, widget);
+	GetStackCmd* cmd = jnew LLDBGetStack(tree, widget);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1438,13 +1438,13 @@ LLDBLink::CreateGetStackCmd
 
  *****************************************************************************/
 
-GetThread*
+GetThreadCmd*
 LLDBLink::CreateGetThreadCmd
 	(
 	ThreadsWidget* widget
 	)
 {
-	GetThread* cmd = jnew LLDBGetThread(widget);
+	GetThreadCmd* cmd = jnew LLDBGetThread(widget);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1454,14 +1454,14 @@ LLDBLink::CreateGetThreadCmd
 
  *****************************************************************************/
 
-GetThreads*
+GetThreadsCmd*
 LLDBLink::CreateGetThreadsCmd
 	(
 	JTree*				tree,
 	ThreadsWidget*	widget
 	)
 {
-	GetThreads* cmd = jnew LLDBGetThreads(tree, widget);
+	GetThreadsCmd* cmd = jnew LLDBGetThreads(tree, widget);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1471,14 +1471,14 @@ LLDBLink::CreateGetThreadsCmd
 
  *****************************************************************************/
 
-GetFullPath*
+GetFullPathCmd*
 LLDBLink::CreateGetFullPathCmd
 	(
 	const JString&	fileName,
 	const JIndex	lineIndex
 	)
 {
-	GetFullPath* cmd = jnew LLDBGetFullPath(fileName, lineIndex);
+	GetFullPathCmd* cmd = jnew LLDBGetFullPath(fileName, lineIndex);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1488,13 +1488,13 @@ LLDBLink::CreateGetFullPathCmd
 
  *****************************************************************************/
 
-GetInitArgs*
+GetInitArgsCmd*
 LLDBLink::CreateGetInitArgsCmd
 	(
 	JXInputField* argInput
 	)
 {
-	GetInitArgs* cmd = jnew LLDBGetInitArgs(argInput);
+	GetInitArgsCmd* cmd = jnew LLDBGetInitArgs(argInput);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1504,13 +1504,13 @@ LLDBLink::CreateGetInitArgsCmd
 
  *****************************************************************************/
 
-GetLocalVars*
+GetLocalVarsCmd*
 LLDBLink::CreateGetLocalVarsCmd
 	(
 	VarNode* rootNode
 	)
 {
-	GetLocalVars* cmd = jnew LLDBGetLocalVars(rootNode);
+	GetLocalVarsCmd* cmd = jnew LLDBGetLocalVars(rootNode);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1520,13 +1520,13 @@ LLDBLink::CreateGetLocalVarsCmd
 
  *****************************************************************************/
 
-GetSourceFileList*
+GetSourceFileListCmd*
 LLDBLink::CreateGetSourceFileListCmd
 	(
 	FileListDir* fileList
 	)
 {
-	GetSourceFileList* cmd = jnew LLDBGetSourceFileList(fileList);
+	GetSourceFileListCmd* cmd = jnew LLDBGetSourceFileList(fileList);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1536,13 +1536,13 @@ LLDBLink::CreateGetSourceFileListCmd
 
  *****************************************************************************/
 
-VarCommand*
+VarCmd*
 LLDBLink::CreateVarValueCmd
 	(
 	const JString& expr
 	)
 {
-	VarCommand* cmd = jnew LLDBVarCommand(expr);
+	VarCmd* cmd = jnew LLDBVarCommand(expr);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1552,7 +1552,7 @@ LLDBLink::CreateVarValueCmd
 
  *****************************************************************************/
 
-VarCommand*
+VarCmd*
 LLDBLink::CreateVarContentCmd
 	(
 	const JString& expr
@@ -1562,7 +1562,7 @@ LLDBLink::CreateVarContentCmd
 	s += expr;
 	s += ")";
 
-	VarCommand* cmd = jnew LLDBVarCommand(s);
+	VarCmd* cmd = jnew LLDBVarCommand(s);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1633,13 +1633,13 @@ LLDBLink::Build2DArrayExpression
 
  *****************************************************************************/
 
-GetMemory*
+GetMemoryCmd*
 LLDBLink::CreateGetMemoryCmd
 	(
 	MemoryDir* dir
 	)
 {
-	GetMemory* cmd = jnew LLDBGetMemory(dir);
+	GetMemoryCmd* cmd = jnew LLDBGetMemory(dir);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1665,13 +1665,13 @@ LLDBLink::CreateGetAssemblyCmd
 
  *****************************************************************************/
 
-GetRegisters*
+GetRegistersCmd*
 LLDBLink::CreateGetRegistersCmd
 	(
 	RegistersDir* dir
 	)
 {
-	GetRegisters* cmd = jnew LLDBGetRegisters(dir);
+	GetRegistersCmd* cmd = jnew LLDBGetRegisters(dir);
 	assert( cmd != nullptr );
 	return cmd;
 }

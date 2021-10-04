@@ -20,17 +20,17 @@ isOpenablePointer
 %}
 
 %union {
-	JString*				pString;
-	VarNode*				pNode;
+	JString*			pString;
+	::VarNode*			pNode;
 	JPtrArray<VarNode>*	pList;
-	GDBVarGroupInfo*		pGroup;
+	GDBVarGroupInfo*	pGroup;
 }
 
 %{
 #define NOTAB
 #include "GDBVarTreeParser.h"
 
-#define yyparse GDBVarTreeParser::yyparse
+#define yyparse gdb::VarTreeParser::yyparse
 %}
 
 %define api.pure

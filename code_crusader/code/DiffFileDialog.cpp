@@ -726,7 +726,7 @@ DiffFileDialog::Receive
 	}
 	else if (sender == itsHelpButton && message.Is(JXButton::kPushed))
 	{
-		(JXGetHelpManager())->ShowSection("EditorHelp");
+		JXGetHelpManager()->ShowSection("EditorHelp");
 	}
 
 	else if (sender == itsPlainChoose1Button && message.Is(JXButton::kPushed))

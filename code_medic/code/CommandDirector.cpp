@@ -29,7 +29,7 @@
 #include "EditCommandsDialog.h"
 #include "ChooseProcessDialog.h"
 #include "GetFullPathCmd.h"
-#include "GetInitArgs.h"
+#include "GetInitArgsCmd.h"
 #include "RunProgramTask.h"
 
 #include "MemoryDir.h"
@@ -1095,24 +1095,24 @@ CommandDirector::Receive
 		ChangeProgram();
 	}
 
-	else if (message.Is(GetFullPath::kFileFound))
+	else if (message.Is(GetFullPathCmd::kFileFound))
 	{
 		const auto* info =
-			dynamic_cast<const GetFullPath::FileFound*>(&message);
+			dynamic_cast<const GetFullPathCmd::FileFound*>(&message);
 		assert( info != nullptr );
 		OpenSourceFile(info->GetFullName(), info->GetLineIndex());
 	}
-	else if (message.Is(GetFullPath::kFileNotFound))
+	else if (message.Is(GetFullPathCmd::kFileNotFound))
 	{
 		const auto* info =
-			dynamic_cast<const GetFullPath::FileNotFound*>(&message);
+			dynamic_cast<const GetFullPathCmd::FileNotFound*>(&message);
 		assert( info != nullptr );
 		ReportUnreadableSourceFile(info->GetFileName());
 	}
-	else if (message.Is(GetFullPath::kNewCommand))
+	else if (message.Is(GetFullPathCmd::kNewCommand))
 	{
 		const auto* info =
-			dynamic_cast<const GetFullPath::NewCommand*>(&message);
+			dynamic_cast<const GetFullPathCmd::NewCommand*>(&message);
 		assert( info != nullptr );
 		ListenTo(info->GetNewCommand());
 	}

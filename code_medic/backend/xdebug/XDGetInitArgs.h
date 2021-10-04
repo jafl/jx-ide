@@ -8,11 +8,11 @@
 #ifndef _H_XDGetInitArgs
 #define _H_XDGetInitArgs
 
-#include "GetInitArgs.h"
+#include "GetInitArgsCmd.h"
 
 class JXInputField;
 
-class XDGetInitArgs : public GetInitArgs
+class XDGetInitArgs : public GetInitArgsCmd
 {
 public:
 

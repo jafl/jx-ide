@@ -12,19 +12,23 @@
 
 class SourceDirector;
 
-class GDBGetAssemblyCmd : public GetAssemblyCmd
+namespace gdb {
+
+class GetAssemblyCmd : public ::GetAssemblyCmd
 {
 public:
 
-	GDBGetAssemblyCmd(SourceDirector* dir);
+	GetAssemblyCmd(SourceDirector* dir);
 
-	virtual	~GDBGetAssemblyCmd();
+	virtual	~GetAssemblyCmd();
 
 	virtual void	Starting() override;
 
 protected:
 
 	virtual void	HandleSuccess(const JString& data) override;
+};
+
 };
 
 #endif

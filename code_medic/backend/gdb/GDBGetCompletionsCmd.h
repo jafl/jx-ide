@@ -13,13 +13,15 @@
 class CommandInput;
 class CommandOutputDisplay;
 
-class GDBGetCompletionsCmd : public GetCompletionsCmd
+namespace gdb {
+
+class GetCompletionsCmd : public ::GetCompletionsCmd
 {
 public:
 
-	GDBGetCompletionsCmd(CommandInput* input, CommandOutputDisplay* history);
+	GetCompletionsCmd(CommandInput* input, CommandOutputDisplay* history);
 
-	virtual	~GDBGetCompletionsCmd();
+	virtual	~GetCompletionsCmd();
 
 protected:
 
@@ -34,6 +36,8 @@ private:
 private:
 
 	static JString	BuildCommand(const JString& prefix);
+};
+
 };
 
 #endif
