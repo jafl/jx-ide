@@ -17,7 +17,7 @@
 
  ******************************************************************************/
 
-JVMGetIDSizesCmd::JVMGetIDSizesCmd()
+jvm::GetIDSizesCmd::GetIDSizesCmd()
 	:
 	Command("", true, false)
 {
@@ -29,7 +29,7 @@ JVMGetIDSizesCmd::JVMGetIDSizesCmd()
 
  ******************************************************************************/
 
-JVMGetIDSizesCmd::~JVMGetIDSizesCmd()
+jvm::GetIDSizesCmd::~GetIDSizesCmd()
 {
 }
 
@@ -39,12 +39,12 @@ JVMGetIDSizesCmd::~JVMGetIDSizesCmd()
  *****************************************************************************/
 
 void
-JVMGetIDSizesCmd::Starting()
+jvm::GetIDSizesCmd::Starting()
 {
 	Command::Starting();
 
-	dynamic_cast<JVMLink*>(GetLink())->Send(this,
-		JVMLink::kVirtualMachineCmdSet, JVMLink::kVMIDSizesCmd, nullptr, 0);
+	dynamic_cast<Link*>(GetLink())->Send(this,
+		Link::kVirtualMachineCmdSet, Link::kVMIDSizesCmd, nullptr, 0);
 }
 
 /******************************************************************************
@@ -53,13 +53,13 @@ JVMGetIDSizesCmd::Starting()
  ******************************************************************************/
 
 void
-JVMGetIDSizesCmd::HandleSuccess
+jvm::GetIDSizesCmd::HandleSuccess
 	(
 	const JString& origData
 	)
 {
-	auto* link = dynamic_cast<JVMLink*>(GetLink());
-	const JVMSocket::MessageReady* msg;
+	auto* link = dynamic_cast<Link*>(GetLink());
+	const Socket::MessageReady* msg;
 	if (!link->GetLatestMessageFromJVM(&msg))
 	{
 		return;
@@ -68,11 +68,11 @@ JVMGetIDSizesCmd::HandleSuccess
 	const unsigned char* data = msg->GetData();
 	assert( msg->GetDataLength() == 20 );
 
-	const JSize fieldIDSize   = JVMSocket::Unpack4(data);
-	const JSize methodIDSize  = JVMSocket::Unpack4(data+4);
-	const JSize objectIDSize  = JVMSocket::Unpack4(data+8);
-	const JSize refTypeIDSize = JVMSocket::Unpack4(data+12);
-	const JSize frameIDSize   = JVMSocket::Unpack4(data+16);
+	const JSize fieldIDSize   = Socket::Unpack4(data);
+	const JSize methodIDSize  = Socket::Unpack4(data+4);
+	const JSize objectIDSize  = Socket::Unpack4(data+8);
+	const JSize refTypeIDSize = Socket::Unpack4(data+12);
+	const JSize frameIDSize   = Socket::Unpack4(data+16);
 
 	link->SetIDSizes(fieldIDSize, methodIDSize, objectIDSize, refTypeIDSize, frameIDSize);
 }

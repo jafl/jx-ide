@@ -12,13 +12,15 @@
 
 class StackWidget;
 
-class JVMGetFrameCmd : public GetFrameCmd
+namespace jvm {
+
+class GetFrameCmd : public ::GetFrameCmd
 {
 public:
 
-	JVMGetFrameCmd(StackWidget* widget);
+	GetFrameCmd(StackWidget* widget);
 
-	virtual	~JVMGetFrameCmd();
+	virtual	~GetFrameCmd();
 
 protected:
 
@@ -27,6 +29,8 @@ protected:
 private:
 
 	StackWidget*	itsWidget;
+};
+
 };
 
 #endif

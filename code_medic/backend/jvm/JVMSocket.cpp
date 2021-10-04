@@ -20,14 +20,14 @@ const time_t kClientDeadTime = 5;		// seconds
 
 // Broadcaster messages
 
-const JUtf8Byte* JVMSocket::kMessageReady = "MessageReady::JVMSocket";
+const JUtf8Byte* jvm::Socket::kMessageReady = "MessageReady::JVMSocket";
 
 /******************************************************************************
  Constructor
 
  ******************************************************************************/
 
-JVMSocket::JVMSocket()
+jvm::Socket::Socket()
 	:
 	JNetworkProtocolBase<ACE_SOCK_STREAM>(false),
 	itsHandshakeFinishedFlag(false),
@@ -46,7 +46,7 @@ JVMSocket::JVMSocket()
 
  ******************************************************************************/
 
-JVMSocket::~JVMSocket()
+jvm::Socket::~Socket()
 {
 	jdelete [] itsBuffer;
 	jdelete itsRecvData;
@@ -60,7 +60,7 @@ JVMSocket::~JVMSocket()
  ******************************************************************************/
 
 int
-JVMSocket::open
+jvm::Socket::open
 	(
 	void* data
 	)
@@ -69,7 +69,7 @@ JVMSocket::open
 	if (result == 0)
 	{
 		JNetworkProtocolBase<ACE_SOCK_STREAM>::Send(kHandshake);
-		dynamic_cast<JVMLink*>(GetLink())->ConnectionEstablished(this);
+		dynamic_cast<Link*>(GetLink())->ConnectionEstablished(this);
 		StartTimer();
 	}
 	return result;
@@ -83,13 +83,13 @@ JVMSocket::open
  ******************************************************************************/
 
 int
-JVMSocket::handle_close
+jvm::Socket::handle_close
 	(
 	ACE_HANDLE			h,
 	ACE_Reactor_Mask	m
 	)
 {
-	dynamic_cast<JVMLink*>(GetLink())->ConnectionFinished(this);
+	dynamic_cast<Link*>(GetLink())->ConnectionFinished(this);
 	return JNetworkProtocolBase<ACE_SOCK_STREAM>::handle_close(h, m);
 }
 
@@ -102,7 +102,7 @@ JVMSocket::handle_close
  ******************************************************************************/
 
 int
-JVMSocket::handle_input
+jvm::Socket::handle_input
 	(
 	ACE_HANDLE
 	)
@@ -133,7 +133,7 @@ JVMSocket::handle_input
 			itsHandshakeFinishedFlag = true;
 			itsRecvData->RemoveNextElements(1, kHandshake.GetByteCount());
 
-			dynamic_cast<JVMLink*>(GetLink())->InitDebugger();
+			dynamic_cast<Link*>(GetLink())->InitDebugger();
 		}
 
 		while (itsHandshakeFinishedFlag && itsRecvData->GetElementCount() >= 11)
@@ -170,7 +170,7 @@ JVMSocket::handle_input
  ******************************************************************************/
 
 void
-JVMSocket::Send
+jvm::Socket::Send
 	(
 	const JIndex			id,
 	const JIndex			cmdSet,
@@ -181,7 +181,7 @@ JVMSocket::Send
 {
 	std::ostringstream log;
 	log << "send: " << id << ' ' << cmdSet << ' ' << cmd;
-	JVMLink::Log(log);
+	Link::Log(log);
 
 	unsigned char header[11];
 	Pack4(count+11, header);	// total length
@@ -213,7 +213,7 @@ JVMSocket::Send
  ******************************************************************************/
 
 void
-JVMSocket::StartTimer()
+jvm::Socket::StartTimer()
 {
 	StopTimer();
 
@@ -230,7 +230,7 @@ JVMSocket::StartTimer()
  ******************************************************************************/
 
 void
-JVMSocket::StopTimer()
+jvm::Socket::StopTimer()
 {
 	(reactor())->cancel_timer(itsTimerID);
 }
@@ -238,12 +238,12 @@ JVMSocket::StopTimer()
 /******************************************************************************
  handle_timeout (virtual)
 
-	Notify JVMLink that session seems to be closed.
+	Notify Link that session seems to be closed.
 
  ******************************************************************************/
 
 int
-JVMSocket::handle_timeout
+jvm::Socket::handle_timeout
 	(
 	const ACE_Time_Value&	time,
 	const void*				data
@@ -259,7 +259,7 @@ JVMSocket::handle_timeout
  ******************************************************************************/
 
 void
-JVMSocket::Pack
+jvm::Socket::Pack
 	(
 	const JSize		size,
 	const JUInt64	value,
@@ -286,7 +286,7 @@ JVMSocket::Pack
  ******************************************************************************/
 
 JUInt64
-JVMSocket::Unpack
+jvm::Socket::Unpack
 	(
 	const JSize				size,
 	const unsigned char*	data
@@ -316,7 +316,7 @@ JVMSocket::Unpack
  ******************************************************************************/
 
 void
-JVMSocket::Pack2
+jvm::Socket::Pack2
 	(
 	const JUInt32	value,
 	unsigned char*	data
@@ -334,7 +334,7 @@ JVMSocket::Pack2
  ******************************************************************************/
 
 JUInt32
-JVMSocket::Unpack2
+jvm::Socket::Unpack2
 	(
 	const unsigned char* data
 	)
@@ -354,7 +354,7 @@ JVMSocket::Unpack2
  ******************************************************************************/
 
 void
-JVMSocket::Pack4
+jvm::Socket::Pack4
 	(
 	const JUInt32	value,
 	unsigned char*	data
@@ -372,7 +372,7 @@ JVMSocket::Pack4
  ******************************************************************************/
 
 JUInt32
-JVMSocket::Unpack4
+jvm::Socket::Unpack4
 	(
 	const unsigned char* data
 	)
@@ -392,7 +392,7 @@ JVMSocket::Unpack4
  ******************************************************************************/
 
 void
-JVMSocket::Pack8
+jvm::Socket::Pack8
 	(
 	const JUInt64	value,
 	unsigned char*	data
@@ -410,7 +410,7 @@ JVMSocket::Pack8
  ******************************************************************************/
 
 JUInt64
-JVMSocket::Unpack8
+jvm::Socket::Unpack8
 	(
 	const unsigned char* data
 	)
@@ -430,7 +430,7 @@ JVMSocket::Unpack8
  ******************************************************************************/
 
 void
-JVMSocket::PackString
+jvm::Socket::PackString
 	(
 	const JString&	s,
 	unsigned char*	data
@@ -448,7 +448,7 @@ JVMSocket::PackString
  ******************************************************************************/
 
 JString
-JVMSocket::UnpackString
+jvm::Socket::UnpackString
 	(
 	const unsigned char*	data,
 	JSize*					dataLength

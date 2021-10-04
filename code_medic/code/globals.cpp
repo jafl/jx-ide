@@ -245,7 +245,7 @@ StartDebugger()
 	}
 	else if (type == PrefsManager::kJavaType)
 	{
-		theLink = jnew JVMLink;
+		theLink = jnew jvm::Link;
 	}
 	else if (type == PrefsManager::kXdebugType)
 	{

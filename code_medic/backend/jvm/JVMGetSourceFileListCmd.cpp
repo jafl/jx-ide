@@ -20,12 +20,12 @@
 
  ******************************************************************************/
 
-JVMGetSourceFileListCmd::JVMGetSourceFileListCmd
+jvm::GetSourceFileListCmd::GetSourceFileListCmd
 	(
 	FileListDir* fileList
 	)
 	:
-	GetSourceFileListCmd(JString("NOP", JString::kNoCopy), fileList)
+	::GetSourceFileListCmd(JString("NOP", JString::kNoCopy), fileList)
 {
 }
 
@@ -34,7 +34,7 @@ JVMGetSourceFileListCmd::JVMGetSourceFileListCmd
 
  ******************************************************************************/
 
-JVMGetSourceFileListCmd::~JVMGetSourceFileListCmd()
+jvm::GetSourceFileListCmd::~GetSourceFileListCmd()
 {
 }
 
@@ -44,16 +44,16 @@ JVMGetSourceFileListCmd::~JVMGetSourceFileListCmd()
  *****************************************************************************/
 
 void
-JVMGetSourceFileListCmd::Starting()
+jvm::GetSourceFileListCmd::Starting()
 {
 	GetSourceFileListCmd::Starting();
 
-	dynamic_cast<JVMLink*>(GetLink())->FlushClassList();
+	dynamic_cast<Link*>(GetLink())->FlushClassList();
 
 	JXFileListTable* table = GetFileList()->GetTable();
 	table->RemoveAllFiles();
 
-	const JPtrArray<JString>& list = dynamic_cast<JVMLink*>(GetLink())->GetSourcePathList();
+	const JPtrArray<JString>& list = dynamic_cast<Link*>(GetLink())->GetSourcePathList();
 	const JSize count              = list.GetElementCount();
 	for (JIndex i=1; i<=count; i++)
 	{
@@ -67,7 +67,7 @@ JVMGetSourceFileListCmd::Starting()
  *****************************************************************************/
 
 void
-JVMGetSourceFileListCmd::ScanDirectory
+jvm::GetSourceFileListCmd::ScanDirectory
 	(
 	const JString& path
 	)
@@ -108,7 +108,7 @@ JVMGetSourceFileListCmd::ScanDirectory
  ******************************************************************************/
 
 void
-JVMGetSourceFileListCmd::HandleSuccess
+jvm::GetSourceFileListCmd::HandleSuccess
 	(
 	const JString& origData
 	)

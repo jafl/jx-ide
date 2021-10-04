@@ -15,12 +15,12 @@
 
  ******************************************************************************/
 
-JVMGetInitArgsCmd::JVMGetInitArgsCmd
+jvm::GetInitArgsCmd::GetInitArgsCmd
 	(
 	JXInputField* argInput
 	)
 	:
-	GetInitArgsCmd(JString("NOP", JString::kNoCopy))
+	::GetInitArgsCmd(JString("NOP", JString::kNoCopy))
 {
 }
 
@@ -29,7 +29,7 @@ JVMGetInitArgsCmd::JVMGetInitArgsCmd
 
  ******************************************************************************/
 
-JVMGetInitArgsCmd::~JVMGetInitArgsCmd()
+jvm::GetInitArgsCmd::~GetInitArgsCmd()
 {
 }
 
@@ -39,7 +39,7 @@ JVMGetInitArgsCmd::~JVMGetInitArgsCmd()
  ******************************************************************************/
 
 void
-JVMGetInitArgsCmd::HandleSuccess
+jvm::GetInitArgsCmd::HandleSuccess
 	(
 	const JString& data
 	)

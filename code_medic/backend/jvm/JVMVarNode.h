@@ -10,18 +10,22 @@
 
 #include "VarNode.h"
 
-class JVMVarNode : public VarNode
+namespace jvm {
+
+class VarNode : public ::VarNode
 {
 public:
 
-	JVMVarNode(const bool shouldUpdate = true);
+	VarNode(const bool shouldUpdate = true);
 
-	JVMVarNode(JTreeNode* parent, const JString& name,
+	VarNode(JTreeNode* parent, const JString& name,
 			   const JString& fullName, const JString& value);
 
-	virtual	~JVMVarNode();
+	virtual	~VarNode();
 
 	virtual JString	GetFullName(bool* isPointer = nullptr) const override;
+};
+
 };
 
 #endif

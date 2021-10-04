@@ -15,12 +15,12 @@
 
  ******************************************************************************/
 
-JVMVarCmd::JVMVarCmd
+jvm::VarCmd::VarCmd
 	(
 	const JString& origCmd
 	)
 	:
-	VarCmd()
+	::VarCmd()
 {
 	SetCommand(JString("NOP", JString::kNoCopy));
 }
@@ -30,7 +30,7 @@ JVMVarCmd::JVMVarCmd
 
  ******************************************************************************/
 
-JVMVarCmd::~JVMVarCmd()
+jvm::VarCmd::~VarCmd()
 {
 }
 
@@ -40,7 +40,7 @@ JVMVarCmd::~JVMVarCmd()
  ******************************************************************************/
 
 void
-JVMVarCmd::HandleSuccess
+jvm::VarCmd::HandleSuccess
 	(
 	const JString& data
 	)

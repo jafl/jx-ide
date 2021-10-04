@@ -12,17 +12,21 @@
 
 class JXInputField;
 
-class JVMGetInitArgsCmd : public GetInitArgsCmd
+namespace jvm {
+
+class GetInitArgsCmd : public ::GetInitArgsCmd
 {
 public:
 
-	JVMGetInitArgsCmd(JXInputField* argInput);
+	GetInitArgsCmd(JXInputField* argInput);
 
-	virtual	~JVMGetInitArgsCmd();
+	virtual	~GetInitArgsCmd();
 
 protected:
 
 	virtual void	HandleSuccess(const JString& data) override;
+};
+
 };
 
 #endif

@@ -10,18 +10,22 @@
 
 #include "Array2DCmd.h"
 
-class JVMArray2DCmd : public Array2DCmd
+namespace jvm {
+
+class Array2DCmd : public ::Array2DCmd
 {
 public:
 
-	JVMArray2DCmd(Array2DDir* dir,
-				  JXStringTable* table, JStringTableData* data);
+	Array2DCmd(Array2DDir* dir,
+			   JXStringTable* table, JStringTableData* data);
 
-	virtual	~JVMArray2DCmd();
+	virtual	~Array2DCmd();
 
 protected:
 
 	virtual void	HandleSuccess(const JString& data) override;
+};
+
 };
 
 #endif

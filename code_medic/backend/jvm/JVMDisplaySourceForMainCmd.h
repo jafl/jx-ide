@@ -10,17 +10,21 @@
 
 #include "DisplaySourceForMainCmd.h"
 
-class JVMDisplaySourceForMainCmd : public DisplaySourceForMainCmd
+namespace jvm {
+
+class DisplaySourceForMainCmd : public ::DisplaySourceForMainCmd
 {
 public:
 
-	JVMDisplaySourceForMainCmd(SourceDirector* sourceDir);
+	DisplaySourceForMainCmd(SourceDirector* sourceDir);
 
-	virtual	~JVMDisplaySourceForMainCmd();
+	virtual	~DisplaySourceForMainCmd();
 
 protected:
 
 	virtual void	HandleSuccess(const JString& data) override;
+};
+
 };
 
 #endif

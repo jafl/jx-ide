@@ -10,15 +10,19 @@
 
 #include <jx-af/jx/JXUrgentTask.h>
 
-class JVMSetProgramTask : public JXUrgentTask
+namespace jvm {
+
+class SetProgramTask : public JXUrgentTask
 {
 public:
 
-	JVMSetProgramTask();
+	SetProgramTask();
 
-	virtual ~JVMSetProgramTask();
+	virtual ~SetProgramTask();
 
 	virtual void	Perform() override;
+};
+
 };
 
 #endif

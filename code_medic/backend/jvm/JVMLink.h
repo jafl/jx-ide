@@ -22,11 +22,14 @@
 
 class JProcess;
 class JXTimerTask;
-class JVMSocket;
-class JVMBreakpointManager;
-class JVMThreadNode;
 
-class JVMLink : public Link
+namespace jvm {
+
+class Socket;
+class BreakpointManager;
+class ThreadNode;
+
+class Link : public ::Link
 {
 public:
 
@@ -162,9 +165,9 @@ public:
 
 public:
 
-	JVMLink();
+	Link();
 
-	virtual	~JVMLink();
+	virtual	~Link();
 
 	virtual bool	DebuggerHasStarted() const override;
 	virtual bool	HasLoadedSymbols() const override;
@@ -194,7 +197,7 @@ public:
 	virtual bool	OKToSendCommands(const bool background) const override;
 	virtual bool	Send(Command* cmd) override;
 
-	virtual BreakpointManager*	GetBreakpointManager() override;
+	virtual ::BreakpointManager*	GetBreakpointManager() override;
 
 	virtual void	ShowBreakpointInfo(const JIndex debuggerIndex) override;
 	virtual void	SetBreakpoint(const JString& fileName, const JIndex lineIndex,
@@ -236,11 +239,11 @@ public:
 	JSize	GetReferenceTypeIDSize() const;
 	JSize	GetFrameIDSize() const;
 
-	JVMThreadNode*	GetThreadRoot();
-	JUInt64			GetCurrentThreadID() const;
-	void			ThreadCreated(JVMThreadNode* node);
-	void			ThreadDeleted(JVMThreadNode* node);
-	bool			FindThread(const JUInt64 id, JVMThreadNode** node) const;
+	ThreadNode*	GetThreadRoot();
+	JUInt64		GetCurrentThreadID() const;
+	void		ThreadCreated(ThreadNode* node);
+	void		ThreadDeleted(ThreadNode* node);
+	bool		FindThread(const JUInt64 id, ThreadNode** node) const;
 
 	void	FlushClassList();
 	void	AddClass(const JUInt64 id, const JString& signature);
@@ -262,49 +265,49 @@ public:
 
 	// Command factory
 
-	virtual Array2DCmd*					CreateArray2DCmd(Array2DDir* dir,
+	virtual ::Array2DCmd*				CreateArray2DCmd(Array2DDir* dir,
 														 JXStringTable* table,
 														 JStringTableData* data) override;
-	virtual Plot2DCmd*					CreatePlot2DCmd(Plot2DDir* dir,
+	virtual ::Plot2DCmd*				CreatePlot2DCmd(Plot2DDir* dir,
 														JArray<JFloat>* x,
 														JArray<JFloat>* y) override;
-	virtual DisplaySourceForMainCmd*	CreateDisplaySourceForMainCmd(SourceDirector* sourceDir) override;
-	virtual GetCompletionsCmd*			CreateGetCompletionsCmd(CommandInput* input,
+	virtual ::DisplaySourceForMainCmd*	CreateDisplaySourceForMainCmd(SourceDirector* sourceDir) override;
+	virtual ::GetCompletionsCmd*		CreateGetCompletionsCmd(CommandInput* input,
 																CommandOutputDisplay* history) override;
-	virtual GetFrameCmd*				CreateGetFrameCmd(StackWidget* widget) override;
-	virtual GetStackCmd*				CreateGetStackCmd(JTree* tree, StackWidget* widget) override;
-	virtual GetThreadCmd*				CreateGetThreadCmd(ThreadsWidget* widget) override;
-	virtual GetThreadsCmd*				CreateGetThreadsCmd(JTree* tree, ThreadsWidget* widget) override;
-	virtual GetFullPathCmd*				CreateGetFullPathCmd(const JString& fileName,
+	virtual ::GetFrameCmd*				CreateGetFrameCmd(StackWidget* widget) override;
+	virtual ::GetStackCmd*				CreateGetStackCmd(JTree* tree, StackWidget* widget) override;
+	virtual ::GetThreadCmd*				CreateGetThreadCmd(ThreadsWidget* widget) override;
+	virtual ::GetThreadsCmd*			CreateGetThreadsCmd(JTree* tree, ThreadsWidget* widget) override;
+	virtual ::GetFullPathCmd*			CreateGetFullPathCmd(const JString& fileName,
 															 const JIndex lineIndex = 0) override;
-	virtual GetInitArgsCmd*				CreateGetInitArgsCmd(JXInputField* argInput) override;
-	virtual GetLocalVarsCmd*			CreateGetLocalVarsCmd(VarNode* rootNode) override;
-	virtual GetSourceFileListCmd*		CreateGetSourceFileListCmd(FileListDir* fileList) override;
-	virtual VarCmd*						CreateVarValueCmd(const JString& expr) override;
-	virtual VarCmd*						CreateVarContentCmd(const JString& expr) override;
-	virtual VarNode*					CreateVarNode(const bool shouldUpdate = true) override;
-	virtual VarNode*					CreateVarNode(JTreeNode* parent, const JString& name,
+	virtual ::GetInitArgsCmd*			CreateGetInitArgsCmd(JXInputField* argInput) override;
+	virtual ::GetLocalVarsCmd*			CreateGetLocalVarsCmd(::VarNode* rootNode) override;
+	virtual ::GetSourceFileListCmd*		CreateGetSourceFileListCmd(FileListDir* fileList) override;
+	virtual ::VarCmd*					CreateVarValueCmd(const JString& expr) override;
+	virtual ::VarCmd*					CreateVarContentCmd(const JString& expr) override;
+	virtual ::VarNode*					CreateVarNode(const bool shouldUpdate = true) override;
+	virtual ::VarNode*					CreateVarNode(JTreeNode* parent, const JString& name,
 													  const JString& fullName, const JString& value) override;
 	virtual JString						Build1DArrayExpression(const JString& expr,
 															   const JInteger index) override;
 	virtual JString						Build2DArrayExpression(const JString& expr,
 															   const JInteger rowIndex,
 															   const JInteger colIndex) override;
-	virtual GetMemoryCmd*				CreateGetMemoryCmd(MemoryDir* dir) override;
-	virtual GetAssemblyCmd*				CreateGetAssemblyCmd(SourceDirector* dir) override;
-	virtual GetRegistersCmd*			CreateGetRegistersCmd(RegistersDir* dir) override;
+	virtual ::GetMemoryCmd*				CreateGetMemoryCmd(MemoryDir* dir) override;
+	virtual ::GetAssemblyCmd*			CreateGetAssemblyCmd(SourceDirector* dir) override;
+	virtual ::GetRegistersCmd*			CreateGetRegistersCmd(RegistersDir* dir) override;
 
 	// called by JVM commands
 
 	void	Send(const Command* command, const JIndex cmdSet, const JIndex cmd,
 				 const unsigned char* data, const JSize count);
-	bool	GetLatestMessageFromJVM(const JVMSocket::MessageReady** msg) const;
+	bool	GetLatestMessageFromJVM(const Socket::MessageReady** msg) const;
 
 	// called by JVMDSocket
 
 	void	InitDebugger();
-	void	ConnectionEstablished(JVMSocket* socket);
-	void	ConnectionFinished(JVMSocket* socket);
+	void	ConnectionEstablished(Socket* socket);
+	void	ConnectionFinished(Socket* socket);
 
 	// called by JVMWelcomeTask
 
@@ -332,8 +335,8 @@ protected:
 
 private:
 
-	typedef ACE_Acceptor<JVMSocket, ACE_SOCK_ACCEPTOR>	JVMAcceptor;
-	typedef Pipe<ACE_LSOCK_STREAM>						ProcessLink;
+	typedef ACE_Acceptor<Socket, ACE_SOCK_ACCEPTOR>	Acceptor;
+	typedef Pipe<ACE_LSOCK_STREAM>					ProcessLink;
 
 public:
 
@@ -392,12 +395,12 @@ public:
 
 private:
 
-	JVMAcceptor*			itsAcceptor;
-	JVMSocket*				itsDebugLink;	// nullptr if not connected to JVM
-	JProcess*				itsProcess;		// nullptr unless we started the JVM
-	ProcessLink*			itsOutputLink;	// nullptr unless we started the JVM
-	ProcessLink*			itsInputLink;	// nullptr unless we started the JVM
-	JVMBreakpointManager*	itsBPMgr;
+	Acceptor*			itsAcceptor;
+	Socket*				itsDebugLink;	// nullptr if not connected to JVM
+	JProcess*			itsProcess;		// nullptr unless we started the JVM
+	ProcessLink*		itsOutputLink;	// nullptr unless we started the JVM
+	ProcessLink*		itsInputLink;	// nullptr unless we started the JVM
+	BreakpointManager*	itsBPMgr;
 
 	JString itsJVMCWD;
 	JString	itsJVMCmd;
@@ -409,7 +412,7 @@ private:
 	JString	itsMainClassName;			// can be empty
 	bool	itsProgramIsStoppedFlag;	// the JVM is stopped
 
-	const JVMSocket::MessageReady*	itsLatestMsg;
+	const Socket::MessageReady*	itsLatestMsg;
 
 	JSize	itsFieldIDSize;
 	JSize	itsMethodIDSize;
@@ -421,12 +424,12 @@ private:
 	JArray<ClassInfo>*		itsClassByIDList;
 	JAliasArray<ClassInfo>*	itsClassByNameList;
 
-	JTree*						itsThreadTree;
-	JVMThreadNode*				itsThreadRoot;
-	JUInt64						itsCurrentThreadID;
-	JPtrArray<JVMThreadNode>*	itsThreadList;
-	JXTimerTask*				itsCullThreadGroupsTask;
-	JIndex						itsCullThreadGroupIndex;
+	JTree*					itsThreadTree;
+	ThreadNode*				itsThreadRoot;
+	JUInt64					itsCurrentThreadID;
+	JPtrArray<ThreadNode>*	itsThreadList;
+	JXTimerTask*			itsCullThreadGroupsTask;
+	JIndex					itsCullThreadGroupIndex;
 
 	JArray<FrameInfo>*	itsFrameList;
 
@@ -436,7 +439,7 @@ private:
 
 	bool	StartDebugger();
 	void	InitFlags();
-	void	ReceiveMessageFromJVM(const JVMSocket::MessageReady& info);
+	void	ReceiveMessageFromJVM(const Socket::MessageReady& info);
 	void	DispatchEventsFromJVM(const unsigned char* data, const JSize length);
 	void	ReadFromProcess();
 	void	StopDebugger();
@@ -485,6 +488,7 @@ public:
 		};
 };
 
+};
 
 /******************************************************************************
  BroadcastWelcome
@@ -492,7 +496,7 @@ public:
  *****************************************************************************/
 
 inline void
-JVMLink::BroadcastWelcome
+jvm::Link::BroadcastWelcome
 	(
 	const JString&	msg,
 	const bool		error
@@ -508,7 +512,7 @@ JVMLink::BroadcastWelcome
  *****************************************************************************/
 
 inline const JPtrArray<JString>&
-JVMLink::GetSourcePathList()
+jvm::Link::GetSourcePathList()
 	const
 {
 	return *itsSourcePathList;
@@ -520,9 +524,9 @@ JVMLink::GetSourcePathList()
  *****************************************************************************/
 
 inline bool
-JVMLink::GetLatestMessageFromJVM
+jvm::Link::GetLatestMessageFromJVM
 	(
-	const JVMSocket::MessageReady** msg
+	const Socket::MessageReady** msg
 	)
 	const
 {
@@ -536,35 +540,35 @@ JVMLink::GetLatestMessageFromJVM
  *****************************************************************************/
 
 inline JSize
-JVMLink::GetFieldIDSize()
+jvm::Link::GetFieldIDSize()
 	const
 {
 	return itsFieldIDSize;
 }
 
 inline JSize
-JVMLink::GetMethodIDSize()
+jvm::Link::GetMethodIDSize()
 	const
 {
 	return itsMethodIDSize;
 }
 
 inline JSize
-JVMLink::GetObjectIDSize()
+jvm::Link::GetObjectIDSize()
 	const
 {
 	return itsObjectIDSize;
 }
 
 inline JSize
-JVMLink::GetReferenceTypeIDSize()
+jvm::Link::GetReferenceTypeIDSize()
 	const
 {
 	return itsReferenceTypeIDSize;
 }
 
 inline JSize
-JVMLink::GetFrameIDSize()
+jvm::Link::GetFrameIDSize()
 	const
 {
 	return itsFrameIDSize;
@@ -575,8 +579,8 @@ JVMLink::GetFrameIDSize()
 
  *****************************************************************************/
 
-inline JVMThreadNode*
-JVMLink::GetThreadRoot()
+inline jvm::ThreadNode*
+jvm::Link::GetThreadRoot()
 {
 	return itsThreadRoot;
 }
@@ -587,7 +591,7 @@ JVMLink::GetThreadRoot()
  *****************************************************************************/
 
 inline JUInt64
-JVMLink::GetCurrentThreadID()
+jvm::Link::GetCurrentThreadID()
 	const
 {
 	return itsCurrentThreadID;

@@ -12,15 +12,18 @@
 #include <jx-af/jcore/JBroadcaster.h>
 
 class JTreeNode;
-class JVMThreadNode;
 
-class JVMGetThreadGroupsCmd : public Command, virtual public JBroadcaster
+namespace jvm {
+
+class ThreadNode;
+
+class GetThreadGroupsCmd : public Command, virtual public JBroadcaster
 {
 public:
 
-	JVMGetThreadGroupsCmd(JTreeNode* root, JVMThreadNode* parent);
+	GetThreadGroupsCmd(JTreeNode* root, ThreadNode* parent);
 
-	virtual	~JVMGetThreadGroupsCmd();
+	virtual	~GetThreadGroupsCmd();
 
 	virtual void	Starting() override;
 
@@ -31,8 +34,10 @@ protected:
 
 private:
 
-	JTreeNode*		itsRoot;
-	JVMThreadNode*	itsParent;	// can be nullptr
+	JTreeNode*	itsRoot;
+	ThreadNode*	itsParent;	// can be nullptr
+};
+
 };
 
 #endif

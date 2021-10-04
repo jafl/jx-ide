@@ -17,12 +17,12 @@
 
  *****************************************************************************/
 
-JVMBreakpointManager::JVMBreakpointManager
+jvm::BreakpointManager::BreakpointManager
 	(
-	JVMLink* link
+	Link* link
 	)
 	:
-	BreakpointManager(link, jnew JVMGetBreakpointsCmd())
+	::BreakpointManager(link, jnew GetBreakpointsCmd())
 {
 }
 
@@ -31,6 +31,6 @@ JVMBreakpointManager::JVMBreakpointManager
 
  *****************************************************************************/
 
-JVMBreakpointManager::~JVMBreakpointManager()
+jvm::BreakpointManager::~BreakpointManager()
 {
 }

@@ -10,7 +10,9 @@
 
 #include "ThreadNode.h"
 
-class JVMThreadNode : public ThreadNode
+namespace jvm {
+
+class ThreadNode : public ::ThreadNode
 {
 public:
 
@@ -27,17 +29,17 @@ public:
 
 public:
 
-	JVMThreadNode(const Type type, const JUInt64 id);
-	JVMThreadNode(const JUInt64 id);
-	JVMThreadNode(const JVMThreadNode& source);
+	ThreadNode(const Type type, const JUInt64 id);
+	ThreadNode(const JUInt64 id);
+	ThreadNode(const ThreadNode& source);
 
-	virtual	~JVMThreadNode();
+	virtual	~ThreadNode();
 
 	Type	GetType() const;
 	void	FindParent(const JUInt64 id);
 
 	static JListT::CompareResult
-		CompareID(JVMThreadNode* const & t1, JVMThreadNode* const & t2);
+		CompareID(ThreadNode* const & t1, ThreadNode* const & t2);
 
 protected:
 
@@ -48,14 +50,15 @@ private:
 	const Type	itsType;
 };
 
+};
 
 /******************************************************************************
  GetType
 
  ******************************************************************************/
 
-inline JVMThreadNode::Type
-JVMThreadNode::GetType()
+inline jvm::ThreadNode::Type
+jvm::ThreadNode::GetType()
 	const
 {
 	return itsType;

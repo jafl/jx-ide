@@ -10,19 +10,23 @@
 
 #include "GetStackCmd.h"
 
-class JVMGetStackCmd : public GetStackCmd
+namespace jvm {
+
+class GetStackCmd : public ::GetStackCmd
 {
 public:
 
-	JVMGetStackCmd(JTree* tree, StackWidget* widget);
+	GetStackCmd(JTree* tree, StackWidget* widget);
 
-	virtual	~JVMGetStackCmd();
+	virtual	~GetStackCmd();
 
 	virtual void	Starting() override;
 
 protected:
 
 	virtual void	HandleSuccess(const JString& data) override;
+};
+
 };
 
 #endif

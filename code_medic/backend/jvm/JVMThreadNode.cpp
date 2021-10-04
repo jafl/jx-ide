@@ -20,44 +20,44 @@
 
  *****************************************************************************/
 
-JVMThreadNode::JVMThreadNode
+jvm::ThreadNode::ThreadNode
 	(
 	const Type		type,
 	const JUInt64	id
 	)
 	:
-	ThreadNode(id, JString::empty, JString::empty, 0),
+	::ThreadNode(id, JString::empty, JString::empty, 0),
 	itsType(type)
 {
 	if (id != kRootThreadGroupID)
 	{
-		dynamic_cast<JVMLink*>(GetLink())->ThreadCreated(this);
+		dynamic_cast<Link*>(GetLink())->ThreadCreated(this);
 
-		Command* cmd = jnew JVMGetThreadNameCmd(this);
+		Command* cmd = jnew GetThreadNameCmd(this);
 		assert( cmd != nullptr );
 	}
 }
 
 // constructor for search target
 
-JVMThreadNode::JVMThreadNode
+jvm::ThreadNode::ThreadNode
 	(
 	const JUInt64 id
 	)
 	:
-	ThreadNode(id, JString::empty, JString::empty, 0),
+	::ThreadNode(id, JString::empty, JString::empty, 0),
 	itsType(kThreadType)
 {
 }
 
 // constructor for nodes owned by ThreadsDir
 
-JVMThreadNode::JVMThreadNode
+jvm::ThreadNode::ThreadNode
 	(
-	const JVMThreadNode& node
+	const ThreadNode& node
 	)
 	:
-	ThreadNode(node.GetID(), node.GetName(), JString::empty, 0),
+	::ThreadNode(node.GetID(), node.GetName(), JString::empty, 0),
 	itsType(node.GetType())
 {
 	if (itsType == kGroupType)
@@ -71,10 +71,10 @@ JVMThreadNode::JVMThreadNode
 
  *****************************************************************************/
 
-JVMThreadNode::~JVMThreadNode()
+jvm::ThreadNode::~ThreadNode()
 {
-	auto* link = dynamic_cast<JVMLink*>(GetLink());
-	if (link != nullptr)	// when switching debugger type, it won't be a JVMLink
+	auto* link = dynamic_cast<Link*>(GetLink());
+	if (link != nullptr)	// when switching debugger type, it won't be a Link
 	{
 		link->ThreadDeleted(this);
 	}
@@ -88,13 +88,13 @@ JVMThreadNode::~JVMThreadNode()
  ******************************************************************************/
 
 void
-JVMThreadNode::NameChanged()
+jvm::ThreadNode::NameChanged()
 {
 	ThreadNode::NameChanged();
 
 	if (!HasParent())
 	{
-		Command* cmd = jnew JVMGetThreadParentCmd(this);
+		Command* cmd = jnew GetThreadParentCmd(this);
 		assert( cmd != nullptr );
 	}
 }
@@ -105,17 +105,17 @@ JVMThreadNode::NameChanged()
  *****************************************************************************/
 
 void
-JVMThreadNode::FindParent
+jvm::ThreadNode::FindParent
 	(
 	const JUInt64 id
 	)
 {
-	auto* link = dynamic_cast<JVMLink*>(GetLink());
+	auto* link = dynamic_cast<Link*>(GetLink());
 
-	JVMThreadNode* parent;
+	ThreadNode* parent;
 	if (!link->FindThread(id, &parent))
 	{
-		parent = jnew JVMThreadNode(kGroupType, id);
+		parent = jnew ThreadNode(kGroupType, id);
 		assert( parent != nullptr );
 	}
 
@@ -128,10 +128,10 @@ JVMThreadNode::FindParent
  ******************************************************************************/
 
 JListT::CompareResult
-JVMThreadNode::CompareID
+jvm::ThreadNode::CompareID
 	(
-	JVMThreadNode* const & t1,
-	JVMThreadNode* const & t2
+	ThreadNode* const & t1,
+	ThreadNode* const & t2
 	)
 {
 	return JCompareUInt64(t1->GetID(), t2->GetID());

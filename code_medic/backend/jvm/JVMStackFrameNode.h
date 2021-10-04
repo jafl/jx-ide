@@ -10,15 +10,17 @@
 
 #include "StackFrameNode.h"
 
-class JVMStackFrameNode : public StackFrameNode
+namespace jvm {
+
+class StackFrameNode : public ::StackFrameNode
 {
 public:
 
-	JVMStackFrameNode(JTreeNode* parent,
-					  const JUInt64 id, const JUInt64 classID,
-					  const JUInt64 methodID, const JUInt64 codeOffset);
+	StackFrameNode(JTreeNode* parent,
+				   const JUInt64 id, const JUInt64 classID,
+				   const JUInt64 methodID, const JUInt64 codeOffset);
 
-	virtual	~JVMStackFrameNode();
+	virtual	~StackFrameNode();
 
 protected:
 
@@ -33,6 +35,8 @@ private:
 private:
 
 	bool	UpdateNodeName();
+};
+
 };
 
 #endif

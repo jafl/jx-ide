@@ -11,15 +11,17 @@
 #include "Command.h"
 #include <jx-af/jcore/JBroadcaster.h>
 
-class JVMThreadNode;
+namespace jvm {
 
-class JVMGetThreadNameCmd : public Command, virtual public JBroadcaster
+class ThreadNode;
+
+class GetThreadNameCmd : public Command, virtual public JBroadcaster
 {
 public:
 
-	JVMGetThreadNameCmd(JVMThreadNode* node);
+	GetThreadNameCmd(ThreadNode* node);
 
-	virtual	~JVMGetThreadNameCmd();
+	virtual	~GetThreadNameCmd();
 
 	virtual void	Starting() override;
 
@@ -30,7 +32,9 @@ protected:
 
 private:
 
-	JVMThreadNode*	itsNode;
+	ThreadNode*	itsNode;
+};
+
 };
 
 #endif

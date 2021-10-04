@@ -11,15 +11,17 @@
 #include "Command.h"
 #include <jx-af/jcore/JBroadcaster.h>
 
-class JVMThreadNode;
+namespace jvm {
 
-class JVMGetThreadParentCmd : public Command, virtual public JBroadcaster
+class ThreadNode;
+
+class GetThreadParentCmd : public Command, virtual public JBroadcaster
 {
 public:
 
-	JVMGetThreadParentCmd(JVMThreadNode* node, const bool checkOnly = false);
+	GetThreadParentCmd(ThreadNode* node, const bool checkOnly = false);
 
-	virtual	~JVMGetThreadParentCmd();
+	virtual	~GetThreadParentCmd();
 
 	virtual void	Starting() override;
 
@@ -30,8 +32,10 @@ protected:
 
 private:
 
-	JVMThreadNode*	itsNode;
+	ThreadNode*	itsNode;
 	const bool	itsCheckOnlyFlag;
+};
+
 };
 
 #endif

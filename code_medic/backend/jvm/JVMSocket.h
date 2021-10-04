@@ -11,14 +11,16 @@
 #include <jx-af/jcore/JNetworkProtocolBase.h>
 #include <ace/SOCK_Stream.h>
 
-class JVMSocket : public JNetworkProtocolBase<ACE_SOCK_STREAM>,
-				  virtual public JBroadcaster
+namespace jvm {
+
+class Socket : public JNetworkProtocolBase<ACE_SOCK_STREAM>,
+			   virtual public JBroadcaster
 {
 public:
 
-	JVMSocket();
+	Socket();
 
-	virtual	~JVMSocket();
+	virtual	~Socket();
 
 	void	Send(const JIndex id, const JIndex cmdSet, const JIndex cmd,
 				 const unsigned char* data, const JSize count);
@@ -47,11 +49,11 @@ public:
 
 private:
 
-	bool				itsHandshakeFinishedFlag;	// true => handshake is complete
+	bool					itsHandshakeFinishedFlag;	// true => handshake is complete
 	unsigned char*			itsBuffer;					// buffer to receive raw bytes
 	JArray<unsigned char>*	itsRecvData;				// buffer containing unprocessed bytes
 
-	long		itsTimerID;
+	long	itsTimerID;
 	bool	itsInHandleInputFlag;		// true => stack passes through handle_input()
 
 private:
@@ -124,13 +126,15 @@ public:
 		private:
 
 			const JIndex			itsID;
-			const bool			itsIsReplyFlag;
+			const bool				itsIsReplyFlag;
 			const JIndex			itsCmdSet;
 			const JIndex			itsCmd;
 			const JIndex			itsErrorCode;
 			const unsigned char*	itsData;
 			const JSize				itsDataLength;
 		};
+};
+
 };
 
 #endif

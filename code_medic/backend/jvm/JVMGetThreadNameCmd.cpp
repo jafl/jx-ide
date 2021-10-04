@@ -18,9 +18,9 @@
 
  ******************************************************************************/
 
-JVMGetThreadNameCmd::JVMGetThreadNameCmd
+jvm::GetThreadNameCmd::GetThreadNameCmd
 	(
-	JVMThreadNode* node
+	ThreadNode* node
 	)
 	:
 	Command("", true, false),
@@ -35,7 +35,7 @@ JVMGetThreadNameCmd::JVMGetThreadNameCmd
 
  ******************************************************************************/
 
-JVMGetThreadNameCmd::~JVMGetThreadNameCmd()
+jvm::GetThreadNameCmd::~GetThreadNameCmd()
 {
 }
 
@@ -45,24 +45,24 @@ JVMGetThreadNameCmd::~JVMGetThreadNameCmd()
  *****************************************************************************/
 
 void
-JVMGetThreadNameCmd::Starting()
+jvm::GetThreadNameCmd::Starting()
 {
 	Command::Starting();
 
 	if (itsNode != nullptr)
 	{
-		auto* link = dynamic_cast<JVMLink*>(GetLink());
+		auto* link = dynamic_cast<Link*>(GetLink());
 
 		const JSize length  = link->GetObjectIDSize();
 		auto* data = (unsigned char*) calloc(length, 1);
 		assert( data != nullptr );
 
-		JVMSocket::Pack(length, itsNode->GetID(), data);
+		Socket::Pack(length, itsNode->GetID(), data);
 
-		const bool isGroup = itsNode->GetType() == JVMThreadNode::kGroupType;
+		const bool isGroup = itsNode->GetType() == ThreadNode::kGroupType;
 		link->Send(this,
-			isGroup ? JVMLink::kThreadGroupReferenceCmdSet : JVMLink::kThreadReferenceCmdSet,
-			isGroup ? JVMLink::kTGNameCmd : JVMLink::kTNameCmd,
+			isGroup ? Link::kThreadGroupReferenceCmdSet : Link::kThreadReferenceCmdSet,
+			isGroup ? Link::kTGNameCmd : Link::kTNameCmd,
 			data, length);
 
 		free(data);
@@ -75,13 +75,13 @@ JVMGetThreadNameCmd::Starting()
  ******************************************************************************/
 
 void
-JVMGetThreadNameCmd::HandleSuccess
+jvm::GetThreadNameCmd::HandleSuccess
 	(
 	const JString& origData
 	)
 {
-	auto* link = dynamic_cast<JVMLink*>(GetLink());
-	const JVMSocket::MessageReady* msg;
+	auto* link = dynamic_cast<Link*>(GetLink());
+	const Socket::MessageReady* msg;
 	if (!link->GetLatestMessageFromJVM(&msg))
 	{
 		return;
@@ -92,7 +92,7 @@ JVMGetThreadNameCmd::HandleSuccess
 		const unsigned char* data = msg->GetData();
 
 		JSize count;
-		const JString name = JVMSocket::UnpackString(data, &count);
+		const JString name = Socket::UnpackString(data, &count);
 
 		itsNode->SetName(name);
 	}
@@ -106,7 +106,7 @@ JVMGetThreadNameCmd::HandleSuccess
  *****************************************************************************/
 
 void
-JVMGetThreadNameCmd::HandleFailure()
+jvm::GetThreadNameCmd::HandleFailure()
 {
 	jdelete itsNode;
 }

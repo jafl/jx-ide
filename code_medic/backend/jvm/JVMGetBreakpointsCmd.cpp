@@ -16,9 +16,9 @@
 
  ******************************************************************************/
 
-JVMGetBreakpointsCmd::JVMGetBreakpointsCmd()
+jvm::GetBreakpointsCmd::GetBreakpointsCmd()
 	:
-	GetBreakpointsCmd(JString("NOP", JString::kNoCopy))
+	::GetBreakpointsCmd(JString("NOP", JString::kNoCopy))
 {
 }
 
@@ -27,7 +27,7 @@ JVMGetBreakpointsCmd::JVMGetBreakpointsCmd()
 
  ******************************************************************************/
 
-JVMGetBreakpointsCmd::~JVMGetBreakpointsCmd()
+jvm::GetBreakpointsCmd::~GetBreakpointsCmd()
 {
 }
 
@@ -37,7 +37,7 @@ JVMGetBreakpointsCmd::~JVMGetBreakpointsCmd()
  *****************************************************************************/
 
 void
-JVMGetBreakpointsCmd::HandleSuccess
+jvm::GetBreakpointsCmd::HandleSuccess
 	(
 	const JString& data
 	)

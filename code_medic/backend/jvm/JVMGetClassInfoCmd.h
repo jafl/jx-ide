@@ -10,13 +10,15 @@
 
 #include "Command.h"
 
-class JVMGetClassInfoCmd : public Command
+namespace jvm {
+
+class GetClassInfoCmd : public Command
 {
 public:
 
-	JVMGetClassInfoCmd(const JUInt64 id);
+	GetClassInfoCmd(const JUInt64 id);
 
-	virtual	~JVMGetClassInfoCmd();
+	virtual	~GetClassInfoCmd();
 
 	virtual void	Starting() override;
 
@@ -27,6 +29,8 @@ protected:
 private:
 
 	const JUInt64	itsID;
+};
+
 };
 
 #endif

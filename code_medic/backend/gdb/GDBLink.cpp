@@ -51,21 +51,21 @@
 
 static const bool kFeatures[]=
 {
-	true,		// kSetProgram
-	true,		// kSetArgs
-	true,		// kSetCore
-	true,		// kSetProcess
-	true,		// kRunProgram
-	true,		// kStopProgram
-	true,		// kSetExecutionPoint
-	true,		// kExecuteBackwards
-	true,		// kShowBreakpointInfo
-	true,		// kSetBreakpointCondition
-	true,		// kSetBreakpointIgnoreCount
-	true,		// kWatchExpression
-	true,		// kWatchLocation
-	true,		// kExamineMemory
-	true,		// kDisassembleMemory
+	true,	// kSetProgram
+	true,	// kSetArgs
+	true,	// kSetCore
+	true,	// kSetProcess
+	true,	// kRunProgram
+	true,	// kStopProgram
+	true,	// kSetExecutionPoint
+	true,	// kExecuteBackwards
+	true,	// kShowBreakpointInfo
+	true,	// kSetBreakpointCondition
+	true,	// kSetBreakpointIgnoreCount
+	true,	// kWatchExpression
+	true,	// kWatchLocation
+	true,	// kExamineMemory
+	true,	// kDisassembleMemory
 };
 
 /******************************************************************************

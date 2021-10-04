@@ -10,17 +10,21 @@
 
 #include "GetThreadCmd.h"
 
-class JVMGetThreadCmd : public GetThreadCmd
+namespace jvm {
+
+class GetThreadCmd : public ::GetThreadCmd
 {
 public:
 
-	JVMGetThreadCmd(ThreadsWidget* widget);
+	GetThreadCmd(ThreadsWidget* widget);
 
-	virtual	~JVMGetThreadCmd();
+	virtual	~GetThreadCmd();
 
 protected:
 
 	virtual void	HandleSuccess(const JString& data) override;
+};
+
 };
 
 #endif

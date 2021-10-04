@@ -12,13 +12,15 @@
 
 class FileListDir;
 
-class JVMGetSourceFileListCmd : public GetSourceFileListCmd
+namespace jvm {
+
+class GetSourceFileListCmd : public ::GetSourceFileListCmd
 {
 public:
 
-	JVMGetSourceFileListCmd(FileListDir* fileList);
+	GetSourceFileListCmd(FileListDir* fileList);
 
-	virtual	~JVMGetSourceFileListCmd();
+	virtual	~GetSourceFileListCmd();
 
 	virtual void	Starting() override;
 
@@ -29,6 +31,8 @@ protected:
 private:
 
 	void	ScanDirectory(const JString& path);
+};
+
 };
 
 #endif

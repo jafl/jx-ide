@@ -15,12 +15,12 @@
 
  ******************************************************************************/
 
-JVMDisplaySourceForMainCmd::JVMDisplaySourceForMainCmd
+jvm::DisplaySourceForMainCmd::DisplaySourceForMainCmd
 	(
 	SourceDirector* sourceDir
 	)
 	:
-	DisplaySourceForMainCmd(sourceDir, JString("NOP", JString::kNoCopy))
+	::DisplaySourceForMainCmd(sourceDir, JString("NOP", JString::kNoCopy))
 {
 }
 
@@ -29,7 +29,7 @@ JVMDisplaySourceForMainCmd::JVMDisplaySourceForMainCmd
 
  ******************************************************************************/
 
-JVMDisplaySourceForMainCmd::~JVMDisplaySourceForMainCmd()
+jvm::DisplaySourceForMainCmd::~DisplaySourceForMainCmd()
 {
 }
 
@@ -39,7 +39,7 @@ JVMDisplaySourceForMainCmd::~JVMDisplaySourceForMainCmd()
  ******************************************************************************/
 
 void
-JVMDisplaySourceForMainCmd::HandleSuccess
+jvm::DisplaySourceForMainCmd::HandleSuccess
 	(
 	const JString& data
 	)

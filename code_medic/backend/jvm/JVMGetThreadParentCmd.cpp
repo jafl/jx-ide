@@ -18,9 +18,9 @@
 
  ******************************************************************************/
 
-JVMGetThreadParentCmd::JVMGetThreadParentCmd
+jvm::GetThreadParentCmd::GetThreadParentCmd
 	(
-	JVMThreadNode*	node,
+	ThreadNode*	node,
 	const bool	checkOnly
 	)
 	:
@@ -37,7 +37,7 @@ JVMGetThreadParentCmd::JVMGetThreadParentCmd
 
  ******************************************************************************/
 
-JVMGetThreadParentCmd::~JVMGetThreadParentCmd()
+jvm::GetThreadParentCmd::~GetThreadParentCmd()
 {
 }
 
@@ -47,24 +47,24 @@ JVMGetThreadParentCmd::~JVMGetThreadParentCmd()
  *****************************************************************************/
 
 void
-JVMGetThreadParentCmd::Starting()
+jvm::GetThreadParentCmd::Starting()
 {
 	Command::Starting();
 
 	if (itsNode != nullptr)
 	{
-		auto* link = dynamic_cast<JVMLink*>(GetLink());
+		auto* link = dynamic_cast<Link*>(GetLink());
 
 		const JSize length  = link->GetObjectIDSize();
 		auto* data = (unsigned char*) calloc(length, 1);
 		assert( data != nullptr );
 
-		JVMSocket::Pack(length, itsNode->GetID(), data);
+		Socket::Pack(length, itsNode->GetID(), data);
 
-		const bool isGroup = itsNode->GetType() == JVMThreadNode::kGroupType;
+		const bool isGroup = itsNode->GetType() == ThreadNode::kGroupType;
 		link->Send(this,
-			isGroup ? JVMLink::kThreadGroupReferenceCmdSet : JVMLink::kThreadReferenceCmdSet,
-			isGroup ? JVMLink::kTGParentCmd : JVMLink::kTThreadGroupCmd,
+			isGroup ? Link::kThreadGroupReferenceCmdSet : Link::kThreadReferenceCmdSet,
+			isGroup ? Link::kTGParentCmd : Link::kTThreadGroupCmd,
 			data, length);
 
 		free(data);
@@ -77,13 +77,13 @@ JVMGetThreadParentCmd::Starting()
  ******************************************************************************/
 
 void
-JVMGetThreadParentCmd::HandleSuccess
+jvm::GetThreadParentCmd::HandleSuccess
 	(
 	const JString& origData
 	)
 {
-	auto* link = dynamic_cast<JVMLink*>(GetLink());
-	const JVMSocket::MessageReady* msg;
+	auto* link = dynamic_cast<Link*>(GetLink());
+	const Socket::MessageReady* msg;
 	if (!link->GetLatestMessageFromJVM(&msg))
 	{
 		return;
@@ -93,7 +93,7 @@ JVMGetThreadParentCmd::HandleSuccess
 	{
 		const unsigned char* data = msg->GetData();
 
-		const JUInt64 id = JVMSocket::Unpack(link->GetObjectIDSize(), data);
+		const JUInt64 id = Socket::Unpack(link->GetObjectIDSize(), data);
 
 		itsNode->FindParent(id);
 	}
@@ -107,7 +107,7 @@ JVMGetThreadParentCmd::HandleSuccess
  *****************************************************************************/
 
 void
-JVMGetThreadParentCmd::HandleFailure()
+jvm::GetThreadParentCmd::HandleFailure()
 {
 	jdelete itsNode;
 }

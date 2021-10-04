@@ -17,7 +17,7 @@
 
  *****************************************************************************/
 
-JVMStackFrameNode::JVMStackFrameNode
+jvm::StackFrameNode::StackFrameNode
 	(
 	JTreeNode*		parent,
 	const JUInt64	id,
@@ -26,7 +26,7 @@ JVMStackFrameNode::JVMStackFrameNode
 	const JUInt64	codeOffset
 	)
 	:
-	StackFrameNode(parent, id, JString::empty, JString::empty, 0),
+	::StackFrameNode(parent, id, JString::empty, JString::empty, 0),
 	itsClassID(classID),
 	itsMethodID(methodID),
 	itsCodeOffset(codeOffset)
@@ -42,7 +42,7 @@ JVMStackFrameNode::JVMStackFrameNode
 
  *****************************************************************************/
 
-JVMStackFrameNode::~JVMStackFrameNode()
+jvm::StackFrameNode::~StackFrameNode()
 {
 }
 
@@ -52,16 +52,16 @@ JVMStackFrameNode::~JVMStackFrameNode()
  ******************************************************************************/
 
 void
-JVMStackFrameNode::Receive
+jvm::StackFrameNode::Receive
 	(
 	JBroadcaster*	sender,
 	const Message&	message
 	)
 {
-	if (message.Is(JVMLink::kIDResolved))
+	if (message.Is(Link::kIDResolved))
 	{
 		const auto* info =
-			dynamic_cast<const JVMLink::IDResolved*>(&message);
+			dynamic_cast<const Link::IDResolved*>(&message);
 		assert( info != nullptr );
 
 		if (info->GetID() == itsClassID || info->GetID() == itsMethodID)
@@ -82,9 +82,9 @@ JVMStackFrameNode::Receive
  *****************************************************************************/
 
 bool
-JVMStackFrameNode::UpdateNodeName()
+jvm::StackFrameNode::UpdateNodeName()
 {
-	auto* link = dynamic_cast<JVMLink*>(GetLink());
+	auto* link = dynamic_cast<Link*>(GetLink());
 	JString c, m;
 	if (link->GetClassName(itsClassID, &c) &&
 		link->GetMethodName(itsClassID, itsMethodID, &m))

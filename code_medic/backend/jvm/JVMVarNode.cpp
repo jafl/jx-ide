@@ -19,16 +19,16 @@
 
  *****************************************************************************/
 
-JVMVarNode::JVMVarNode				// root node
+jvm::VarNode::VarNode			// root node
 	(
 	const bool shouldUpdate		// false for Local Variables
 	)
 	:
-	VarNode(shouldUpdate)
+	::VarNode(shouldUpdate)
 {
 }
 
-JVMVarNode::JVMVarNode
+jvm::VarNode::VarNode
 	(
 	JTreeNode*		parent,
 	const JString&	name,
@@ -36,7 +36,7 @@ JVMVarNode::JVMVarNode
 	const JString&	value
 	)
 	:
-	VarNode(parent, name, value)
+	::VarNode(parent, name, value)
 {
 }
 
@@ -45,7 +45,7 @@ JVMVarNode::JVMVarNode
 
  *****************************************************************************/
 
-JVMVarNode::~JVMVarNode()
+jvm::VarNode::~VarNode()
 {
 }
 
@@ -58,7 +58,7 @@ JVMVarNode::~JVMVarNode()
  ******************************************************************************/
 
 JString
-JVMVarNode::GetFullName
+jvm::VarNode::GetFullName
 	(
 	bool* isPointer
 	)

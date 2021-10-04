@@ -12,15 +12,18 @@
 
 class JTree;
 class JTreeNode;
-class JVMThreadNode;
 
-class JVMGetThreadsCmd : public GetThreadsCmd
+namespace jvm {
+
+class ThreadNode;
+
+class GetThreadsCmd : public ::GetThreadsCmd
 {
 public:
 
-	JVMGetThreadsCmd(JTree* tree, ThreadsWidget* widget);
+	GetThreadsCmd(JTree* tree, ThreadsWidget* widget);
 
-	virtual	~JVMGetThreadsCmd();
+	virtual	~GetThreadsCmd();
 
 protected:
 
@@ -32,7 +35,9 @@ private:
 
 private:
 
-	void	CopyTree(JVMThreadNode* src, JTreeNode* dest);
+	void	CopyTree(ThreadNode* src, JTreeNode* dest);
+};
+
 };
 
 #endif

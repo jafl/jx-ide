@@ -15,13 +15,13 @@
 
  ******************************************************************************/
 
-JVMGetCompletionsCmd::JVMGetCompletionsCmd
+jvm::GetCompletionsCmd::GetCompletionsCmd
 	(
 	CommandInput*			input,
 	CommandOutputDisplay*	history
 	)
 	:
-	GetCompletionsCmd(JString("NOP", JString::kNoCopy))
+	::GetCompletionsCmd(JString("NOP", JString::kNoCopy))
 {
 }
 
@@ -30,7 +30,7 @@ JVMGetCompletionsCmd::JVMGetCompletionsCmd
 
  ******************************************************************************/
 
-JVMGetCompletionsCmd::~JVMGetCompletionsCmd()
+jvm::GetCompletionsCmd::~GetCompletionsCmd()
 {
 }
 
@@ -40,7 +40,7 @@ JVMGetCompletionsCmd::~JVMGetCompletionsCmd()
  ******************************************************************************/
 
 void
-JVMGetCompletionsCmd::HandleSuccess
+jvm::GetCompletionsCmd::HandleSuccess
 	(
 	const JString& data
 	)

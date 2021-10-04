@@ -10,17 +10,21 @@
 
 #include "VarCmd.h"
 
-class JVMVarCmd : public VarCmd
+namespace jvm {
+
+class VarCmd : public ::VarCmd
 {
 public:
 
-	JVMVarCmd(const JString& cmd);
+	VarCmd(const JString& cmd);
 
-	virtual	~JVMVarCmd();
+	virtual	~VarCmd();
 
 protected:
 
 	virtual void	HandleSuccess(const JString& data) override;
+};
+
 };
 
 #endif

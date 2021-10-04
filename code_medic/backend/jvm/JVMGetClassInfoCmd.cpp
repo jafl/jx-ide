@@ -17,7 +17,7 @@
 
  ******************************************************************************/
 
-JVMGetClassInfoCmd::JVMGetClassInfoCmd
+jvm::GetClassInfoCmd::GetClassInfoCmd
 	(
 	const JUInt64 id
 	)
@@ -33,7 +33,7 @@ JVMGetClassInfoCmd::JVMGetClassInfoCmd
 
  ******************************************************************************/
 
-JVMGetClassInfoCmd::~JVMGetClassInfoCmd()
+jvm::GetClassInfoCmd::~GetClassInfoCmd()
 {
 }
 
@@ -43,20 +43,20 @@ JVMGetClassInfoCmd::~JVMGetClassInfoCmd()
  *****************************************************************************/
 
 void
-JVMGetClassInfoCmd::Starting()
+jvm::GetClassInfoCmd::Starting()
 {
 	Command::Starting();
 
-	auto* link = dynamic_cast<JVMLink*>(GetLink());
+	auto* link = dynamic_cast<Link*>(GetLink());
 
 	const JSize length  = link->GetObjectIDSize();
 	auto* data = (unsigned char*) calloc(length, 1);
 	assert( data != nullptr );
 
-	JVMSocket::Pack(length, itsID, data);
+	Socket::Pack(length, itsID, data);
 
 	link->Send(this,
-		JVMLink::kReferenceTypeCmdSet, JVMLink::kRTSignatureCmd, data, length);
+		Link::kReferenceTypeCmdSet, Link::kRTSignatureCmd, data, length);
 
 	free(data);
 }
@@ -67,13 +67,13 @@ JVMGetClassInfoCmd::Starting()
  ******************************************************************************/
 
 void
-JVMGetClassInfoCmd::HandleSuccess
+jvm::GetClassInfoCmd::HandleSuccess
 	(
 	const JString& origData
 	)
 {
-	auto* link = dynamic_cast<JVMLink*>(GetLink());
-	const JVMSocket::MessageReady* msg;
+	auto* link = dynamic_cast<Link*>(GetLink());
+	const Socket::MessageReady* msg;
 	if (!link->GetLatestMessageFromJVM(&msg))
 	{
 		return;
@@ -82,7 +82,7 @@ JVMGetClassInfoCmd::HandleSuccess
 	const unsigned char* data = msg->GetData();
 
 	JSize count;
-	const JString sig = JVMSocket::UnpackString(data, &count);
+	const JString sig = Socket::UnpackString(data, &count);
 
 	link->AddClass(itsID, sig);
 }

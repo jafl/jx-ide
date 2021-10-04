@@ -15,14 +15,14 @@
 
  ******************************************************************************/
 
-JVMArray2DCmd::JVMArray2DCmd
+jvm::Array2DCmd::Array2DCmd
 	(
-	Array2DDir*		dir,
+	Array2DDir*			dir,
 	JXStringTable*		table,
 	JStringTableData*	data
 	)
 	:
-	Array2DCmd(dir, table, data)
+	::Array2DCmd(dir, table, data)
 {
 	SetCommand("NOP");
 }
@@ -32,7 +32,7 @@ JVMArray2DCmd::JVMArray2DCmd
 
  ******************************************************************************/
 
-JVMArray2DCmd::~JVMArray2DCmd()
+jvm::Array2DCmd::~Array2DCmd()
 {
 }
 
@@ -42,7 +42,7 @@ JVMArray2DCmd::~JVMArray2DCmd()
  ******************************************************************************/
 
 void
-JVMArray2DCmd::HandleSuccess
+jvm::Array2DCmd::HandleSuccess
 	(
 	const JString& data
 	)

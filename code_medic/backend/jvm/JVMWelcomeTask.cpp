@@ -19,7 +19,7 @@
 
  ******************************************************************************/
 
-JVMWelcomeTask::JVMWelcomeTask
+jvm::WelcomeTask::WelcomeTask
 	(
 	const JString&	msg,
 	const bool	error
@@ -35,7 +35,7 @@ JVMWelcomeTask::JVMWelcomeTask
 
  ******************************************************************************/
 
-JVMWelcomeTask::~JVMWelcomeTask()
+jvm::WelcomeTask::~WelcomeTask()
 {
 }
 
@@ -45,9 +45,9 @@ JVMWelcomeTask::~JVMWelcomeTask()
  ******************************************************************************/
 
 void
-JVMWelcomeTask::Perform()
+jvm::WelcomeTask::Perform()
 {
-	auto* link = dynamic_cast<JVMLink*>(GetLink());
+	auto* link = dynamic_cast<Link*>(GetLink());
 	if (link != nullptr)
 	{
 		link->BroadcastWelcome(itsMessage, itsErrorFlag);

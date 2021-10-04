@@ -10,16 +10,20 @@
 
 #include "BreakpointManager.h"
 
-class JVMLink;
-class JVMGetBreakpointsCmd;
+namespace jvm {
 
-class JVMBreakpointManager : public BreakpointManager
+class Link;
+class GetBreakpointsCmd;
+
+class BreakpointManager : public ::BreakpointManager
 {
 public:
 
-	JVMBreakpointManager(JVMLink* link);
+	BreakpointManager(Link* link);
 
-	virtual	~JVMBreakpointManager();
+	virtual	~BreakpointManager();
+};
+
 };
 
 #endif

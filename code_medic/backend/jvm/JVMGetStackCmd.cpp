@@ -20,13 +20,13 @@
 
  ******************************************************************************/
 
-JVMGetStackCmd::JVMGetStackCmd
+jvm::GetStackCmd::GetStackCmd
 	(
 	JTree*			tree,
 	StackWidget*	widget
 	)
 	:
-	GetStackCmd(JString::empty, tree, widget)
+	::GetStackCmd(JString::empty, tree, widget)
 {
 }
 
@@ -35,7 +35,7 @@ JVMGetStackCmd::JVMGetStackCmd
 
  ******************************************************************************/
 
-JVMGetStackCmd::~JVMGetStackCmd()
+jvm::GetStackCmd::~GetStackCmd()
 {
 }
 
@@ -45,27 +45,27 @@ JVMGetStackCmd::~JVMGetStackCmd()
  *****************************************************************************/
 
 void
-JVMGetStackCmd::Starting()
+jvm::GetStackCmd::Starting()
 {
 	Command::Starting();
 
-	auto* link       = dynamic_cast<JVMLink*>(GetLink());
+	auto* link       = dynamic_cast<Link*>(GetLink());
 	const JSize length  = link->GetObjectIDSize();
 	const JSize size    = length+8;
 	auto* data = (unsigned char*) calloc(size, 1);
 	assert( data != nullptr );
 
 	unsigned char* d = data;
-	JVMSocket::Pack(length, link->GetCurrentThreadID(), d);
+	Socket::Pack(length, link->GetCurrentThreadID(), d);
 	d += length;
 
-	JVMSocket::Pack4(0, d);
+	Socket::Pack4(0, d);
 	d += 4;
 
-	JVMSocket::Pack4(-1, d);
+	Socket::Pack4(-1, d);
 
 	link->Send(this,
-		JVMLink::kThreadReferenceCmdSet, JVMLink::kTFramesCmd, data, size);
+		Link::kThreadReferenceCmdSet, Link::kTFramesCmd, data, size);
 
 	free(data);
 }
@@ -76,13 +76,13 @@ JVMGetStackCmd::Starting()
  ******************************************************************************/
 
 void
-JVMGetStackCmd::HandleSuccess
+jvm::GetStackCmd::HandleSuccess
 	(
 	const JString& origData
 	)
 {
-	auto* link = dynamic_cast<JVMLink*>(GetLink());
-	const JVMSocket::MessageReady* msg;
+	auto* link = dynamic_cast<Link*>(GetLink());
+	const Socket::MessageReady* msg;
 	if (!link->GetLatestMessageFromJVM(&msg))
 	{
 		return;
@@ -97,28 +97,28 @@ JVMGetStackCmd::HandleSuccess
 	const JSize classIDLength  = link->GetObjectIDSize();
 	const JSize methodIDLength = link->GetMethodIDSize();
 
-	const JSize frameCount = JVMSocket::Unpack4(data);
+	const JSize frameCount = Socket::Unpack4(data);
 	data                  += 4;
 
 	for (JIndex i=1; i<=frameCount; i++)
 	{
-		const JSize id = JVMSocket::Unpack(frameIDLength, data);
+		const JSize id = Socket::Unpack(frameIDLength, data);
 		data          += frameIDLength;
 
 		const JIndex type = *data;
 		data++;
 
-		const JUInt64 classID = JVMSocket::Unpack(classIDLength, data);
+		const JUInt64 classID = Socket::Unpack(classIDLength, data);
 		data                 += classIDLength;
 
-		const JUInt64 methodID = JVMSocket::Unpack(methodIDLength, data);
+		const JUInt64 methodID = Socket::Unpack(methodIDLength, data);
 		data                  += methodIDLength;
 
-		const JUInt64 offset = JVMSocket::Unpack8(data);
+		const JUInt64 offset = Socket::Unpack8(data);
 		data                += 8;
 
 		auto* node =
-			jnew JVMStackFrameNode(root, id, classID, methodID, offset);
+			jnew StackFrameNode(root, id, classID, methodID, offset);
 		assert( node != nullptr );
 		root->Prepend(node);
 

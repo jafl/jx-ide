@@ -18,12 +18,12 @@
 
  ******************************************************************************/
 
-JVMGetThreadCmd::JVMGetThreadCmd
+jvm::GetThreadCmd::GetThreadCmd
 	(
 	ThreadsWidget* widget
 	)
 	:
-	GetThreadCmd(JString("NOP", JString::kNoCopy), widget)
+	::GetThreadCmd(JString("NOP", JString::kNoCopy), widget)
 {
 }
 
@@ -32,7 +32,7 @@ JVMGetThreadCmd::JVMGetThreadCmd
 
  ******************************************************************************/
 
-JVMGetThreadCmd::~JVMGetThreadCmd()
+jvm::GetThreadCmd::~GetThreadCmd()
 {
 }
 
@@ -42,11 +42,11 @@ JVMGetThreadCmd::~JVMGetThreadCmd()
  ******************************************************************************/
 
 void
-JVMGetThreadCmd::HandleSuccess
+jvm::GetThreadCmd::HandleSuccess
 	(
 	const JString& data
 	)
 {
-	auto* link = dynamic_cast<JVMLink*>(GetLink());
+	auto* link = dynamic_cast<Link*>(GetLink());
 	GetWidget()->FinishedLoading(link->GetCurrentThreadID());
 }

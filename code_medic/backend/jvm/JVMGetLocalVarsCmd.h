@@ -12,13 +12,15 @@
 
 class VarNode;
 
-class JVMGetLocalVarsCmd : public GetLocalVarsCmd
+namespace jvm {
+
+class GetLocalVarsCmd : public ::GetLocalVarsCmd
 {
 public:
 
-	JVMGetLocalVarsCmd(VarNode* rootNode);
+	GetLocalVarsCmd(VarNode* rootNode);
 
-	virtual	~JVMGetLocalVarsCmd();
+	virtual	~GetLocalVarsCmd();
 
 protected:
 
@@ -27,6 +29,8 @@ protected:
 private:
 
 	VarNode*	itsRootNode;	// not owned
+};
+
 };
 
 #endif

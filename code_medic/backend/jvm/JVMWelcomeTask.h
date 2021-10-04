@@ -11,13 +11,15 @@
 #include <jx-af/jx/JXUrgentTask.h>
 #include <jx-af/jcore/JString.h>
 
-class JVMWelcomeTask : public JXUrgentTask
+namespace jvm {
+
+class WelcomeTask : public JXUrgentTask
 {
 public:
 
-	JVMWelcomeTask(const JString& msg, const bool error);
+	WelcomeTask(const JString& msg, const bool error);
 
-	virtual ~JVMWelcomeTask();
+	virtual ~WelcomeTask();
 
 	virtual void	Perform();
 
@@ -25,6 +27,8 @@ private:
 
 	JString		itsMessage;
 	bool	itsErrorFlag;
+};
+
 };
 
 #endif

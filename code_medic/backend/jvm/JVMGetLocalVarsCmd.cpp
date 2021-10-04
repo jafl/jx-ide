@@ -15,12 +15,12 @@
 
  ******************************************************************************/
 
-JVMGetLocalVarsCmd::JVMGetLocalVarsCmd
+jvm::GetLocalVarsCmd::GetLocalVarsCmd
 	(
 	VarNode* rootNode
 	)
 	:
-	GetLocalVarsCmd(JString("NOP", JString::kNoCopy)),
+	::GetLocalVarsCmd(JString("NOP", JString::kNoCopy)),
 	itsRootNode(rootNode)
 {
 }
@@ -30,7 +30,7 @@ JVMGetLocalVarsCmd::JVMGetLocalVarsCmd
 
  ******************************************************************************/
 
-JVMGetLocalVarsCmd::~JVMGetLocalVarsCmd()
+jvm::GetLocalVarsCmd::~GetLocalVarsCmd()
 {
 }
 
@@ -40,7 +40,7 @@ JVMGetLocalVarsCmd::~JVMGetLocalVarsCmd()
  ******************************************************************************/
 
 void
-JVMGetLocalVarsCmd::HandleSuccess
+jvm::GetLocalVarsCmd::HandleSuccess
 	(
 	const JString& data
 	)

@@ -20,13 +20,13 @@
 
  ******************************************************************************/
 
-JVMGetThreadsCmd::JVMGetThreadsCmd
+jvm::GetThreadsCmd::GetThreadsCmd
 	(
-	JTree*				tree,
+	JTree*			tree,
 	ThreadsWidget*	widget
 	)
 	:
-	GetThreadsCmd(JString("NOP", JString::kNoCopy), widget),
+	::GetThreadsCmd(JString("NOP", JString::kNoCopy), widget),
 	itsTree(tree)
 {
 }
@@ -36,7 +36,7 @@ JVMGetThreadsCmd::JVMGetThreadsCmd
 
  ******************************************************************************/
 
-JVMGetThreadsCmd::~JVMGetThreadsCmd()
+jvm::GetThreadsCmd::~GetThreadsCmd()
 {
 }
 
@@ -46,12 +46,12 @@ JVMGetThreadsCmd::~JVMGetThreadsCmd()
  ******************************************************************************/
 
 void
-JVMGetThreadsCmd::HandleSuccess
+jvm::GetThreadsCmd::HandleSuccess
 	(
 	const JString& data
 	)
 {
-	auto* link = dynamic_cast<JVMLink*>(GetLink());
+	auto* link = dynamic_cast<Link*>(GetLink());
 	CopyTree(link->GetThreadRoot(), itsTree->GetRoot());
 
 	GetWidget()->FinishedLoading(link->GetCurrentThreadID());
@@ -63,18 +63,18 @@ JVMGetThreadsCmd::HandleSuccess
  ******************************************************************************/
 
 void
-JVMGetThreadsCmd::CopyTree
+jvm::GetThreadsCmd::CopyTree
 	(
-	JVMThreadNode*	src,
-	JTreeNode*		dest
+	ThreadNode*	src,
+	JTreeNode*	dest
 	)
 {
 	const JSize count = src->GetChildCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		auto* child1 = dynamic_cast<JVMThreadNode*>(src->GetChild(i));
+		auto* child1 = dynamic_cast<ThreadNode*>(src->GetChild(i));
 
-		auto* child2 = jnew JVMThreadNode(*child1);
+		auto* child2 = jnew ThreadNode(*child1);
 		assert( child2 != nullptr );
 
 		if (dest->IsRoot())

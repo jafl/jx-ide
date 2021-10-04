@@ -10,19 +10,23 @@
 
 #include "Command.h"
 
-class JVMGetIDSizesCmd : public Command
+namespace jvm {
+
+class GetIDSizesCmd : public Command
 {
 public:
 
-	JVMGetIDSizesCmd();
+	GetIDSizesCmd();
 
-	virtual	~JVMGetIDSizesCmd();
+	virtual	~GetIDSizesCmd();
 
 	virtual void	Starting() override;
 
 protected:
 
 	virtual void	HandleSuccess(const JString& data) override;
+};
+
 };
 
 #endif

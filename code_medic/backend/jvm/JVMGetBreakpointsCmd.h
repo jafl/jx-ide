@@ -10,17 +10,21 @@
 
 #include "GetBreakpointsCmd.h"
 
-class JVMGetBreakpointsCmd : public GetBreakpointsCmd
+namespace jvm {
+
+class GetBreakpointsCmd : public ::GetBreakpointsCmd
 {
 public:
 
-	JVMGetBreakpointsCmd();
+	GetBreakpointsCmd();
 
-	virtual	~JVMGetBreakpointsCmd();
+	virtual	~GetBreakpointsCmd();
 
 protected:
 
 	virtual void	HandleSuccess(const JString& data) override;
+};
+
 };
 
 #endif

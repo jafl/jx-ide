@@ -13,17 +13,21 @@
 class CommandInput;
 class CommandOutputDisplay;
 
-class JVMGetCompletionsCmd : public GetCompletionsCmd
+namespace jvm {
+
+class GetCompletionsCmd : public ::GetCompletionsCmd
 {
 public:
 
-	JVMGetCompletionsCmd(CommandInput* input, CommandOutputDisplay* history);
+	GetCompletionsCmd(CommandInput* input, CommandOutputDisplay* history);
 
-	virtual	~JVMGetCompletionsCmd();
+	virtual	~GetCompletionsCmd();
 
 protected:
 
 	virtual void	HandleSuccess(const JString& data) override;
+};
+
 };
 
 #endif

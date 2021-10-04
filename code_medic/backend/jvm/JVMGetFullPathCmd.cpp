@@ -15,13 +15,13 @@
 
  ******************************************************************************/
 
-JVMGetFullPathCmd::JVMGetFullPathCmd
+jvm::GetFullPathCmd::GetFullPathCmd
 	(
 	const JString&	fileName,
 	const JIndex	lineIndex	// for convenience
 	)
 	:
-	GetFullPathCmd(JString("NOP", JString::kNoCopy), fileName, lineIndex)
+	::GetFullPathCmd(JString("NOP", JString::kNoCopy), fileName, lineIndex)
 {
 }
 
@@ -30,7 +30,7 @@ JVMGetFullPathCmd::JVMGetFullPathCmd
 
  ******************************************************************************/
 
-JVMGetFullPathCmd::~JVMGetFullPathCmd()
+jvm::GetFullPathCmd::~GetFullPathCmd()
 {
 }
 
@@ -40,7 +40,7 @@ JVMGetFullPathCmd::~JVMGetFullPathCmd()
  ******************************************************************************/
 
 void
-JVMGetFullPathCmd::HandleSuccess
+jvm::GetFullPathCmd::HandleSuccess
 	(
 	const JString& data
 	)

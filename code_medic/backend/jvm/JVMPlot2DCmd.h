@@ -10,17 +10,21 @@
 
 #include "Plot2DCmd.h"
 
-class JVMPlot2DCmd : public Plot2DCmd
+namespace jvm {
+
+class Plot2DCmd : public ::Plot2DCmd
 {
 public:
 
-	JVMPlot2DCmd(Plot2DDir* dir, JArray<JFloat>* x, JArray<JFloat>* y);
+	Plot2DCmd(Plot2DDir* dir, JArray<JFloat>* x, JArray<JFloat>* y);
 
-	virtual	~JVMPlot2DCmd();
+	virtual	~Plot2DCmd();
 
 protected:
 
 	virtual void	HandleSuccess(const JString& data) override;
+};
+
 };
 
 #endif

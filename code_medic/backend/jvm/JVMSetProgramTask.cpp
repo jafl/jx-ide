@@ -19,7 +19,7 @@
 
  ******************************************************************************/
 
-JVMSetProgramTask::JVMSetProgramTask()
+jvm::SetProgramTask::SetProgramTask()
 {
 }
 
@@ -28,7 +28,7 @@ JVMSetProgramTask::JVMSetProgramTask()
 
  ******************************************************************************/
 
-JVMSetProgramTask::~JVMSetProgramTask()
+jvm::SetProgramTask::~SetProgramTask()
 {
 }
 
@@ -38,9 +38,9 @@ JVMSetProgramTask::~JVMSetProgramTask()
  ******************************************************************************/
 
 void
-JVMSetProgramTask::Perform()
+jvm::SetProgramTask::Perform()
 {
-	auto* link = dynamic_cast<JVMLink*>(GetLink());
+	auto* link = dynamic_cast<Link*>(GetLink());
 	if (link != nullptr)
 	{
 		link->BroadcastProgramSet();

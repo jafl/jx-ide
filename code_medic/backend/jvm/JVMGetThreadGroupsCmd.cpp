@@ -18,10 +18,10 @@
 
  ******************************************************************************/
 
-JVMGetThreadGroupsCmd::JVMGetThreadGroupsCmd
+jvm::GetThreadGroupsCmd::GetThreadGroupsCmd
 	(
-	JTreeNode*		root,
-	JVMThreadNode*	parent
+	JTreeNode*	root,
+	ThreadNode*	parent
 	)
 	:
 	Command("", true, false),
@@ -42,7 +42,7 @@ JVMGetThreadGroupsCmd::JVMGetThreadGroupsCmd
 
  ******************************************************************************/
 
-JVMGetThreadGroupsCmd::~JVMGetThreadGroupsCmd()
+jvm::GetThreadGroupsCmd::~GetThreadGroupsCmd()
 {
 }
 
@@ -52,7 +52,7 @@ JVMGetThreadGroupsCmd::~JVMGetThreadGroupsCmd()
  *****************************************************************************/
 
 void
-JVMGetThreadGroupsCmd::Starting()
+jvm::GetThreadGroupsCmd::Starting()
 {
 	Command::Starting();
 
@@ -61,11 +61,11 @@ JVMGetThreadGroupsCmd::Starting()
 		return;
 	}
 
-	auto* link = dynamic_cast<JVMLink*>(GetLink());
+	auto* link = dynamic_cast<Link*>(GetLink());
 	if (itsParent == nullptr)
 	{
 		link->Send(this,
-			JVMLink::kVirtualMachineCmdSet, JVMLink::kVMTopLevelThreadGroupsCmd, nullptr, 0);
+			Link::kVirtualMachineCmdSet, Link::kVMTopLevelThreadGroupsCmd, nullptr, 0);
 	}
 	else
 	{
@@ -73,10 +73,10 @@ JVMGetThreadGroupsCmd::Starting()
 		auto* data = (unsigned char*) calloc(length, 1);
 		assert( data != nullptr );
 
-		JVMSocket::Pack(length, itsParent->GetID(), data);
+		Socket::Pack(length, itsParent->GetID(), data);
 
 		link->Send(this,
-			JVMLink::kThreadGroupReferenceCmdSet, JVMLink::kTGChildrenCmd, data, length);
+			Link::kThreadGroupReferenceCmdSet, Link::kTGChildrenCmd, data, length);
 
 		free(data);
 	}
@@ -88,13 +88,13 @@ JVMGetThreadGroupsCmd::Starting()
  ******************************************************************************/
 
 void
-JVMGetThreadGroupsCmd::HandleSuccess
+jvm::GetThreadGroupsCmd::HandleSuccess
 	(
 	const JString& origData
 	)
 {
-	auto* link = dynamic_cast<JVMLink*>(GetLink());
-	const JVMSocket::MessageReady* msg;
+	auto* link = dynamic_cast<Link*>(GetLink());
+	const Socket::MessageReady* msg;
 	if (!link->GetLatestMessageFromJVM(&msg))
 	{
 		return;
@@ -110,18 +110,18 @@ JVMGetThreadGroupsCmd::HandleSuccess
 
 	if (itsParent != nullptr)
 	{
-		const JSize threadCount = JVMSocket::Unpack4(data);
+		const JSize threadCount = Socket::Unpack4(data);
 		data                   += 4;
 
 		for (JIndex i=1; i<=threadCount; i++)
 		{
-			const JUInt64 id = JVMSocket::Unpack(idLength, data);
+			const JUInt64 id = Socket::Unpack(idLength, data);
 			data            += idLength;
 
-			JVMThreadNode* node;
+			ThreadNode* node;
 			if (!link->FindThread(id, &node))	// might be created by ThreadStartEvent
 			{
-				node = jnew JVMThreadNode(JVMThreadNode::kThreadType, id);
+				node = jnew ThreadNode(ThreadNode::kThreadType, id);
 				assert( node != nullptr );
 
 				itsParent->AppendThread(node);
@@ -129,18 +129,18 @@ JVMGetThreadGroupsCmd::HandleSuccess
 		}
 	}
 
-	const JSize groupCount = JVMSocket::Unpack4(data);
+	const JSize groupCount = Socket::Unpack4(data);
 	data                  += 4;
 
 	for (JIndex i=1; i<=groupCount; i++)
 	{
-		const JUInt64 id = JVMSocket::Unpack(idLength, data);
+		const JUInt64 id = Socket::Unpack(idLength, data);
 		data            += idLength;
 
-		JVMThreadNode* node;
+		ThreadNode* node;
 		if (!link->FindThread(id, &node))	// might be created by ThreadStartEvent
 		{
-			node = jnew JVMThreadNode(JVMThreadNode::kGroupType, id);
+			node = jnew ThreadNode(ThreadNode::kGroupType, id);
 			assert( node != nullptr );
 
 			if (itsParent != nullptr)
@@ -171,7 +171,7 @@ JVMGetThreadGroupsCmd::HandleSuccess
  ******************************************************************************/
 
 void
-JVMGetThreadGroupsCmd::ReceiveGoingAway
+jvm::GetThreadGroupsCmd::ReceiveGoingAway
 	(
 	JBroadcaster* sender
 	)

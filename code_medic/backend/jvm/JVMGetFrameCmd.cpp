@@ -16,12 +16,12 @@
 
  ******************************************************************************/
 
-JVMGetFrameCmd::JVMGetFrameCmd
+jvm::GetFrameCmd::GetFrameCmd
 	(
 	StackWidget* widget
 	)
 	:
-	GetFrameCmd(JString("NOP", JString::kNoCopy)),
+	::GetFrameCmd(JString("NOP", JString::kNoCopy)),
 	itsWidget(widget)
 {
 }
@@ -31,7 +31,7 @@ JVMGetFrameCmd::JVMGetFrameCmd
 
  ******************************************************************************/
 
-JVMGetFrameCmd::~JVMGetFrameCmd()
+jvm::GetFrameCmd::~GetFrameCmd()
 {
 }
 
@@ -41,7 +41,7 @@ JVMGetFrameCmd::~JVMGetFrameCmd()
  ******************************************************************************/
 
 void
-JVMGetFrameCmd::HandleSuccess
+jvm::GetFrameCmd::HandleSuccess
 	(
 	const JString& data
 	)

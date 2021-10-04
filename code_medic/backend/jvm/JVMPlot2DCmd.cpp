@@ -15,14 +15,14 @@
 
  ******************************************************************************/
 
-JVMPlot2DCmd::JVMPlot2DCmd
+jvm::Plot2DCmd::Plot2DCmd
 	(
 	Plot2DDir*	dir,
 	JArray<JFloat>*	x,
 	JArray<JFloat>*	y
 	)
 	:
-	Plot2DCmd(dir, x, y)
+	::Plot2DCmd(dir, x, y)
 {
 	SetCommand("NOP");
 }
@@ -32,7 +32,7 @@ JVMPlot2DCmd::JVMPlot2DCmd
 
  ******************************************************************************/
 
-JVMPlot2DCmd::~JVMPlot2DCmd()
+jvm::Plot2DCmd::~Plot2DCmd()
 {
 }
 
@@ -42,7 +42,7 @@ JVMPlot2DCmd::~JVMPlot2DCmd()
  ******************************************************************************/
 
 void
-JVMPlot2DCmd::HandleSuccess
+jvm::Plot2DCmd::HandleSuccess
 	(
 	const JString& data
 	)

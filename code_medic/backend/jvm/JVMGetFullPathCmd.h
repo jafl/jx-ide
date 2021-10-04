@@ -10,17 +10,21 @@
 
 #include "GetFullPathCmd.h"
 
-class JVMGetFullPathCmd : public GetFullPathCmd
+namespace jvm {
+
+class GetFullPathCmd : public ::GetFullPathCmd
 {
 public:
 
-	JVMGetFullPathCmd(const JString& fileName, const JIndex lineIndex = 0);
+	GetFullPathCmd(const JString& fileName, const JIndex lineIndex = 0);
 
-	virtual	~JVMGetFullPathCmd();
+	virtual	~GetFullPathCmd();
 
 protected:
 
 	virtual void	HandleSuccess(const JString& data) override;
+};
+
 };
 
 #endif
