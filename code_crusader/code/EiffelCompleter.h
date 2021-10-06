@@ -23,9 +23,9 @@ protected:
 
 	EiffelCompleter();
 
-	virtual bool	IsWordCharacter(const JUtf8Character& c,
+	bool	IsWordCharacter(const JUtf8Character& c,
 										const bool includeNS) const override;
-	virtual void		MatchCase(const JString& source, JString* target) const override;
+	void		MatchCase(const JString& source, JString* target) const override;
 
 private:
 

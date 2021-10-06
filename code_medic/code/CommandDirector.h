@@ -48,9 +48,9 @@ public:
 
 	virtual ~CommandDirector();
 
-	virtual bool		Close() override;
-	virtual const JString&	GetName() const override;
-	virtual bool		GetMenuIcon(const JXImage** icon) const override;
+	bool		Close() override;
+	const JString&	GetName() const override;
+	bool		GetMenuIcon(const JXImage** icon) const override;
 
 	void	InitializeCommandOutput();
 	void	PrepareCommand(const JString& cmd);
@@ -131,8 +131,8 @@ public:
 
 protected:
 
-	virtual void	Receive(JBroadcaster* sender, const Message& message) override;
-	virtual void	ReceiveGoingAway(JBroadcaster* sender) override;
+	void	Receive(JBroadcaster* sender, const Message& message) override;
+	void	ReceiveGoingAway(JBroadcaster* sender) override;
 
 private:
 

@@ -43,7 +43,7 @@ public:
 
 protected:
 
-	virtual void	NameChanged() override;
+	void	NameChanged() override;
 
 private:
 

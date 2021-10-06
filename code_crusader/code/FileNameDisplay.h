@@ -28,9 +28,9 @@ public:
 	void	SetTE(JXTEBase* te);
 	void	DiskCopyIsModified(const bool mod);
 
-	virtual void		HandleKeyPress(const JUtf8Character& c, const int keySym,
+	void		HandleKeyPress(const JUtf8Character& c, const int keySym,
 									   const JXKeyModifiers& modifiers) override;
-	virtual bool	InputValid() override;
+	bool	InputValid() override;
 
 protected:
 
@@ -46,7 +46,7 @@ protected:
 
 		protected:
 
-		virtual void	AdjustStylesBeforeBroadcast(
+		void	AdjustStylesBeforeBroadcast(
 							const JString& text, JRunArray<JFont>* styles,
 							JStyledText::TextRange* recalcRange,
 							JStyledText::TextRange* redrawRange,
@@ -59,8 +59,8 @@ protected:
 
 protected:
 
-	virtual void	HandleFocusEvent() override;
-	virtual void	HandleUnfocusEvent() override;
+	void	HandleFocusEvent() override;
+	void	HandleUnfocusEvent() override;
 
 private:
 

@@ -44,9 +44,9 @@ public:
 
 	virtual	~MemoryDir();
 
-	virtual void	Activate() override;
-	virtual bool	Deactivate() override;
-	virtual bool	GetMenuIcon(const JXImage** icon) const override;
+	void	Activate() override;
+	bool	Deactivate() override;
+	bool	GetMenuIcon(const JXImage** icon) const override;
 
 	void	StreamOut(std::ostream& output);
 
@@ -56,8 +56,8 @@ public:
 
 protected:
 
-	virtual void	Receive(JBroadcaster* sender, const Message& message) override;
-	virtual void	ReceiveGoingAway(JBroadcaster* sender) override;
+	void	Receive(JBroadcaster* sender, const Message& message) override;
+	void	ReceiveGoingAway(JBroadcaster* sender) override;
 
 private:
 

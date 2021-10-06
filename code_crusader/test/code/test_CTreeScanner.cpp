@@ -27,7 +27,7 @@ public:
 		CTree(nullptr, 0)
 	{ };
 
-	virtual void ParseFile(const JString& fileName, const JFAID_t id) override;
+	void ParseFile(const JString& fileName, const JFAID_t id) override;
 };
 
 void

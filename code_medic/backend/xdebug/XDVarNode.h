@@ -21,11 +21,11 @@ public:
 
 	virtual	~XDVarNode();
 
-	virtual JString	GetFullName(bool* isPointer = nullptr) const override;
+	JString	GetFullName(bool* isPointer = nullptr) const override;
 
 protected:
 
-	virtual void	NameChanged() override;
+	void	NameChanged() override;
 
 private:
 

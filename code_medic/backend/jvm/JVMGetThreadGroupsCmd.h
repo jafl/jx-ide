@@ -25,12 +25,12 @@ public:
 
 	virtual	~GetThreadGroupsCmd();
 
-	virtual void	Starting() override;
+	void	Starting() override;
 
 protected:
 
-	virtual void	HandleSuccess(const JString& data) override;
-	virtual void	ReceiveGoingAway(JBroadcaster* sender) override;
+	void	HandleSuccess(const JString& data) override;
+	void	ReceiveGoingAway(JBroadcaster* sender) override;
 
 private:
 

@@ -23,7 +23,7 @@ protected:
 
 	LuaCompleter();
 
-	virtual bool	IsWordCharacter(const JUtf8Character& c,
+	bool	IsWordCharacter(const JUtf8Character& c,
 										const bool includeNS) const override;
 
 private:

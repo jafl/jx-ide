@@ -175,7 +175,7 @@ App::CleanUpBeforeSuddenDeath
 	)
 {
 	JXApplication::CleanUpBeforeSuddenDeath(reason);
-	CleanUpBeforeSuddenDeath(reason);		// must be last call
+	::CleanUpBeforeSuddenDeath(reason);		// must be last call
 }
 
 /******************************************************************************

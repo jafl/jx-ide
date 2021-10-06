@@ -19,7 +19,7 @@ public:
 
 	virtual ~LLDBWelcomeTask();
 
-	virtual void	Perform() override;
+	void	Perform() override;
 
 private:
 

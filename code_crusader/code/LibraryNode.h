@@ -22,22 +22,22 @@ public:
 
 	virtual ~LibraryNode();
 
-	virtual void	OpenFile() const override;
-	virtual void	OpenComplementFile() const override;
+	void	OpenFile() const override;
+	void	OpenComplementFile() const override;
 	void			EditSubprojectConfig();
 
 	bool	OpenProject(const bool silent = false);
 
-	virtual void		StreamOut(std::ostream& output) const override;
-	virtual bool	IncludedInMakefile() const override;
-	virtual void		BuildMakeFiles(JString* text,
+	void		StreamOut(std::ostream& output) const override;
+	bool	IncludedInMakefile() const override;
+	void		BuildMakeFiles(JString* text,
 									   JPtrArray<JTreeNode>* invalidList,
 									   JPtrArray<JString>* libFileList,
 									   JPtrArray<JString>* libProjPathList) const override;
 
 protected:
 
-	virtual void	Receive(JBroadcaster* sender, const Message& message) override;
+	void	Receive(JBroadcaster* sender, const Message& message) override;
 
 private:
 

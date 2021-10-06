@@ -27,8 +27,8 @@ public:
 
 	virtual ~MacroTable();
 
-	virtual void	Activate() override;
-	virtual void	Deactivate() override;
+	void	Activate() override;
+	void	Deactivate() override;
 
 	void	GetData(MacroManager* mgr) const;
 	void	SetData(const MacroManager& mgr);
@@ -36,7 +36,7 @@ public:
 
 protected:
 
-	virtual void	Receive(JBroadcaster* sender, const Message& message) override;
+	void	Receive(JBroadcaster* sender, const Message& message) override;
 
 private:
 

@@ -23,7 +23,7 @@ public:
 
 	virtual	~VarNode();
 
-	virtual JString	GetFullName(bool* isPointer = nullptr) const override;
+	JString	GetFullName(bool* isPointer = nullptr) const override;
 };
 
 };

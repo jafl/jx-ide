@@ -39,7 +39,7 @@ public:
 	bool	IsPointer() const;
 	void	MakePointer(const bool pointer, const bool adjustOpenable = true);
 
-	virtual bool	OKToOpen() const override;
+	bool	OKToOpen() const override;
 
 	void	ShouldUpdate(const bool update);
 
@@ -65,9 +65,9 @@ public:
 
 protected:
 
-	virtual void	NameChanged() override;
-	virtual void	Receive(JBroadcaster* sender, const Message& message) override;
-	virtual void	ReceiveGoingAway(JBroadcaster* sender) override;
+	void	NameChanged() override;
+	void	Receive(JBroadcaster* sender, const Message& message) override;
+	void	ReceiveGoingAway(JBroadcaster* sender) override;
 
 	JString	GetFullNameForCFamilyLanguage(bool* isPointer) const;
 	JString	GetPathForCFamilyLanguage() const;

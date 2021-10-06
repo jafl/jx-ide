@@ -25,7 +25,7 @@ public:
 
 	virtual ~RunTEScriptDialog();
 
-	virtual void	Activate() override;
+	void	Activate() override;
 
 	bool	RunScript();
 	bool	RunSimpleScript(const JString& scriptName, JTextEditor* te,
@@ -33,10 +33,10 @@ public:
 
 protected:
 
-	virtual void	ReadPrefs(std::istream& input) override;
-	virtual void	WritePrefs(std::ostream& output) const override;
+	void	ReadPrefs(std::istream& input) override;
+	void	WritePrefs(std::ostream& output) const override;
 
-	virtual void	Receive(JBroadcaster* sender, const Message& message) override;
+	void	Receive(JBroadcaster* sender, const Message& message) override;
 
 private:
 

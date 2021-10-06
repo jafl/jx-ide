@@ -36,7 +36,7 @@ public:
 	bool	GetStackFrame(const JUInt64 id, const StackFrameNode** frame);
 	void	SwitchToFrame(const JUInt64 id);
 
-	virtual void	HandleKeyPress(const JUtf8Character& c, const int keySym,
+	void	HandleKeyPress(const JUtf8Character& c, const int keySym,
 								   const JXKeyModifiers& modifiers) override;
 
 	// void called by GetStackCmd
@@ -45,20 +45,20 @@ public:
 
 protected:
 
-	virtual void	TableDrawCell(JPainter& p, const JPoint& cell, const JRect& rect) override;
-	virtual JSize	GetMinCellWidth(const JPoint& cell) const override;
+	void	TableDrawCell(JPainter& p, const JPoint& cell, const JRect& rect) override;
+	JSize	GetMinCellWidth(const JPoint& cell) const override;
 
-	virtual void	AdjustCursor(const JPoint& pt, const JXKeyModifiers& modifiers) override;
-	virtual void	HandleMouseDown(const JPoint& pt, const JXMouseButton button,
+	void	AdjustCursor(const JPoint& pt, const JXKeyModifiers& modifiers) override;
+	void	HandleMouseDown(const JPoint& pt, const JXMouseButton button,
 									const JSize clickCount,
 									const JXButtonStates& buttonStates,
 									const JXKeyModifiers& modifiers) override;
-	virtual void	HandleMouseUp(const JPoint& pt, const JXMouseButton button,
+	void	HandleMouseUp(const JPoint& pt, const JXMouseButton button,
 								  const JXButtonStates& buttonStates,
 								  const JXKeyModifiers& modifiers) override;
 
-	virtual void	Receive(JBroadcaster* sender, const Message& message) override;
-	virtual void	ReceiveGoingAway(JBroadcaster* sender) override;
+	void	Receive(JBroadcaster* sender, const Message& message) override;
+	void	ReceiveGoingAway(JBroadcaster* sender) override;
 
 private:
 

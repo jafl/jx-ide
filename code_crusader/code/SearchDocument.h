@@ -31,10 +31,10 @@ public:
 
 	virtual ~SearchDocument();
 
-	virtual void	OpenPrevListItem() override;
-	virtual void	OpenNextListItem() override;
+	void	OpenPrevListItem() override;
+	void	OpenNextListItem() override;
 
-	virtual void	ConvertSelectionToFullPath(JString* fileName) const override;
+	void	ConvertSelectionToFullPath(JString* fileName) const override;
 
 protected:
 
@@ -43,12 +43,12 @@ protected:
 					 JProcess* p, const int fd,
 					 const JString& windowTitle);
 
-	virtual void		PlaceCmdLineWidgets() override;
-	virtual void		AppendText(const JString& text) override;
-	virtual bool	ProcessFinished(const JProcess::Finished& info) override;
-	virtual bool	NeedsFormattedData() const override;
+	void		PlaceCmdLineWidgets() override;
+	void		AppendText(const JString& text) override;
+	bool	ProcessFinished(const JProcess::Finished& info) override;
+	bool	NeedsFormattedData() const override;
 
-	virtual void	Receive(JBroadcaster* sender, const Message& message) override;
+	void	Receive(JBroadcaster* sender, const Message& message) override;
 
 private:
 

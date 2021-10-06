@@ -32,11 +32,11 @@ public:
 
 protected:
 
-	virtual void	HandleMDIRequest(const JString& dir,
+	void	HandleMDIRequest(const JString& dir,
 									 const JPtrArray<JString>& argList) override;
 
-	virtual void	ReadPrefs(std::istream& input) override;
-	virtual void	WritePrefs(std::ostream& output) const override;
+	void	ReadPrefs(std::istream& input) override;
+	void	WritePrefs(std::ostream& output) const override;
 
 private:
 

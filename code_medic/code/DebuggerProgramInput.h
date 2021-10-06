@@ -21,8 +21,8 @@ public:
 
 	virtual ~DebuggerProgramInput();
 
-	virtual bool	InputValid() override;
-	virtual bool	GetFile(JString* fullName) const override;
+	bool	InputValid() override;
+	bool	GetFile(JString* fullName) const override;
 
 protected:
 
@@ -37,7 +37,7 @@ protected:
 
 		protected:
 
-		virtual JSize	ComputeErrorLength(JXFSInputBase* field,
+		JSize	ComputeErrorLength(JXFSInputBase* field,
 										   const JSize totalLength,
 										   const JString& fullName) const override;
 	};

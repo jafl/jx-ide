@@ -32,18 +32,18 @@ public:
 
 protected:
 
-	virtual bool			ExtractInputData(const JPoint& cell) override;
-	virtual JXInputField*	CreateXInputField(const JPoint& cell,
+	bool			ExtractInputData(const JPoint& cell) override;
+	JXInputField*	CreateXInputField(const JPoint& cell,
 											  const JCoordinate x, const JCoordinate y,
 											  const JCoordinate w, const JCoordinate h) override;
-	virtual void			PrepareDeleteXInputField() override;
+	void			PrepareDeleteXInputField() override;
 
-	virtual void			TableDrawCell(JPainter& p, const JPoint& cell, const JRect& rect) override;
-	virtual void			HandleMouseDown(const JPoint& pt, const JXMouseButton button,
+	void			TableDrawCell(JPainter& p, const JPoint& cell, const JRect& rect) override;
+	void			HandleMouseDown(const JPoint& pt, const JXMouseButton button,
 											const JSize clickCount,
 											const JXButtonStates& buttonStates,
 											const JXKeyModifiers& modifiers) override;
-	virtual void			ApertureResized(const JCoordinate dw, const JCoordinate dh) override;
+	void			ApertureResized(const JCoordinate dw, const JCoordinate dh) override;
 
 private:
 

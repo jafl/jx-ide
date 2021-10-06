@@ -23,10 +23,10 @@ protected:
 
 	JSPCompleter();
 
-	virtual bool	IsWordCharacter(const JUtf8Character& c,
+	bool	IsWordCharacter(const JUtf8Character& c,
 										const bool includeNS) const override;
-	virtual void		UpdateWordList() override;
-	virtual void		Receive(JBroadcaster* sender, const Message& message) override;
+	void		UpdateWordList() override;
+	void		Receive(JBroadcaster* sender, const Message& message) override;
 
 private:
 

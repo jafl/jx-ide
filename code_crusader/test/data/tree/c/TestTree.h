@@ -39,15 +39,15 @@ public:
 
 	CPreprocessor*	GetCPreprocessor() const;
 
-	virtual void	StreamOut(std::ostream& projOutput, std::ostream* setOutput,
+	void	StreamOut(std::ostream& projOutput, std::ostream* setOutput,
 							  std::ostream* symOutput, const DirList* dirList) const override;
 
 protected:
 
-	virtual bool	UpdateFinished(const JArray<JFAID_t>& deadFileList) override;
-	virtual void		ParseFile(const JString& fileName, const JFAID_t id) override;
+	bool	UpdateFinished(const JArray<JFAID_t>& deadFileList) override;
+	void		ParseFile(const JString& fileName, const JFAID_t id) override;
 
-	virtual void	Receive(JBroadcaster* sender, const Message& message) override;
+	void	Receive(JBroadcaster* sender, const Message& message) override;
 
 private:
 

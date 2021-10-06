@@ -32,11 +32,11 @@ public:
 
 protected:
 
-	virtual void		Receive(JBroadcaster* sender, const Message& message) override;
-	virtual bool	OKToDeactivate() override;
+	void		Receive(JBroadcaster* sender, const Message& message) override;
+	bool	OKToDeactivate() override;
 
-	virtual void	ReadPrefs(std::istream& input) override;
-	virtual void	WritePrefs(std::ostream& output) const override;
+	void	ReadPrefs(std::istream& input) override;
+	void	WritePrefs(std::ostream& output) const override;
 
 private:
 

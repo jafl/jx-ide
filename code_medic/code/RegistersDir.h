@@ -23,17 +23,17 @@ public:
 
 	virtual	~RegistersDir();
 
-	virtual void			Activate() override;
-	virtual bool			Deactivate() override;
-	virtual const JString&	GetName() const override;
-	virtual bool			GetMenuIcon(const JXImage** icon) const override;
+	void			Activate() override;
+	bool			Deactivate() override;
+	const JString&	GetName() const override;
+	bool			GetMenuIcon(const JXImage** icon) const override;
 
 	void	Update(const JString& data);
 
 protected:
 
-	virtual void	Receive(JBroadcaster* sender, const Message& message) override;
-	virtual void	ReceiveGoingAway(JBroadcaster* sender) override;
+	void	Receive(JBroadcaster* sender, const Message& message) override;
+	void	ReceiveGoingAway(JBroadcaster* sender) override;
 
 private:
 

@@ -122,7 +122,7 @@ LineIndexTable::LineIndexTable
 	itsLineMenu(nullptr),
 	itsDeselectTask(nullptr)
 {
-	itsLink = GetLink();
+	itsLink = ::GetLink();
 	ListenTo(itsLink);
 
 	itsBPList = jnew JPtrArray<Breakpoint>(JPtrArrayT::kForgetAll);
@@ -769,7 +769,7 @@ LineIndexTable::ReceiveGoingAway
 {
 	if (sender == itsLink && !IsShuttingDown())
 	{
-		itsLink = GetLink();
+		itsLink = ::GetLink();
 		ListenTo(itsLink);
 		ListenTo(itsLink->GetBreakpointManager());
 

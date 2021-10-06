@@ -21,12 +21,12 @@ public:
 
 	virtual	~Array2DCmd();
 
-	virtual void	PrepareToSend(const UpdateType type, const JIndex index,
+	void	PrepareToSend(const UpdateType type, const JIndex index,
 								  const JInteger arrayIndex) override;
 
 protected:
 
-	virtual void	HandleSuccess(const JString& data) override;
+	void	HandleSuccess(const JString& data) override;
 };
 
 };

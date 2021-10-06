@@ -18,21 +18,21 @@ public:
 
 	virtual ~SymbolUpdatePG();
 
-	virtual bool	IncrementProgress(const JString& message = JString::empty) override;
-	virtual bool	IncrementProgress(const JSize delta) override;
-	virtual bool	IncrementProgress(const JString& message, const JSize delta) override;
-	virtual void		ProcessFinished() override;
-	virtual void		DisplayBusyCursor() override;
+	bool	IncrementProgress(const JString& message = JString::empty) override;
+	bool	IncrementProgress(const JSize delta) override;
+	bool	IncrementProgress(const JString& message, const JSize delta) override;
+	void		ProcessFinished() override;
+	void		DisplayBusyCursor() override;
 
 	void	SetScaleFactor(const JSize scaleFactor);
 
 protected:
 
-	virtual void	ProcessBeginning(const ProcessType processType, const JSize stepCount,
+	void	ProcessBeginning(const ProcessType processType, const JSize stepCount,
 									 const JString& message, const bool allowCancel,
 									 const bool allowBackground) override;
 
-	virtual bool	CheckForCancel() override;
+	bool	CheckForCancel() override;
 
 private:
 

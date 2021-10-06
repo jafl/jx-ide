@@ -41,7 +41,7 @@ public:
 	void	GetData(JArray<JFontStyle>* typeStyles) const;
 	void	GetData(JStringMap<JFontStyle>* wordStyles) const;
 
-	virtual void	HandleKeyPress(const JUtf8Character& c,
+	void	HandleKeyPress(const JUtf8Character& c,
 								   const int keySym, const JXKeyModifiers& modifiers) override;
 
 	// called by StylerTableInput
@@ -52,24 +52,24 @@ public:
 
 protected:
 
-	virtual void	HandleMouseDown(const JPoint& pt, const JXMouseButton button,
+	void	HandleMouseDown(const JPoint& pt, const JXMouseButton button,
 									const JSize clickCount,
 									const JXButtonStates& buttonStates,
 									const JXKeyModifiers& modifiers) override;
-	virtual void	HandleMouseDrag(const JPoint& pt, const JXButtonStates& buttonStates,
+	void	HandleMouseDrag(const JPoint& pt, const JXButtonStates& buttonStates,
 									const JXKeyModifiers& modifiers) override;
-	virtual void	HandleMouseUp(const JPoint& pt, const JXMouseButton button,
+	void	HandleMouseUp(const JPoint& pt, const JXMouseButton button,
 								  const JXButtonStates& buttonStates,
 								  const JXKeyModifiers& modifiers) override;
 
-	virtual JXInputField*
+	JXInputField*
 		CreateStringTableInput(const JPoint& cell, JXContainer* enclosure,
 							   const HSizingOption hSizing, const VSizingOption vSizing,
 							   const JCoordinate x, const JCoordinate y,
 							   const JCoordinate w, const JCoordinate h) override;
 
-	virtual void	ApertureResized(const JCoordinate dw, const JCoordinate dh) override;
-	virtual void	Receive(JBroadcaster* sender, const Message& message) override;
+	void	ApertureResized(const JCoordinate dw, const JCoordinate dh) override;
+	void	Receive(JBroadcaster* sender, const Message& message) override;
 
 private:
 

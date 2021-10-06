@@ -42,7 +42,7 @@ protected:
 	virtual bool	IsWordCharacter(const JUtf8Character& c,
 										const bool includeNS) const = 0;
 	virtual void		MatchCase(const JString& source, JString* target) const;
-	virtual void		Receive(JBroadcaster* sender, const Message& message) override;
+	void		Receive(JBroadcaster* sender, const Message& message) override;
 
 private:
 

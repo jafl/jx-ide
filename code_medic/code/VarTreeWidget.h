@@ -48,35 +48,35 @@ public:
 	void	ExamineMemory(const MemoryDir::DisplayType type);
 	void	ShouldUpdate(const bool update);
 
-	virtual void	HandleKeyPress(const JUtf8Character& c, const int keySym,
+	void	HandleKeyPress(const JUtf8Character& c, const int keySym,
 								   const JXKeyModifiers& modifiers) override;
-	virtual bool	IsEditable(const JPoint& cell) const override;
+	bool	IsEditable(const JPoint& cell) const override;
 
 	void	ReadSetup(std::istream& input, const JFileVersion vers);
 	void	WriteSetup(std::ostream& output) const;
 
 protected:
 
-	virtual void	TableDrawCell(JPainter& p, const JPoint& cell, const JRect& rect) override;
-	virtual JSize	GetMinCellWidth(const JPoint& cell) const override;
+	void	TableDrawCell(JPainter& p, const JPoint& cell, const JRect& rect) override;
+	JSize	GetMinCellWidth(const JPoint& cell) const override;
 
-	virtual void	HandleMouseDown(const JPoint& pt, const JXMouseButton button,
+	void	HandleMouseDown(const JPoint& pt, const JXMouseButton button,
 									const JSize clickCount,
 									const JXButtonStates& buttonStates,
 									const JXKeyModifiers& modifiers) override;
-	virtual void	HandleMouseDrag(const JPoint& pt, const JXButtonStates& buttonStates,
+	void	HandleMouseDrag(const JPoint& pt, const JXButtonStates& buttonStates,
 									const JXKeyModifiers& modifiers) override;
-	virtual void	HandleMouseUp(const JPoint& pt, const JXMouseButton button,
+	void	HandleMouseUp(const JPoint& pt, const JXMouseButton button,
 								  const JXButtonStates& buttonStates,
 								  const JXKeyModifiers& modifiers) override;
 
-	virtual JXInputField*	CreateXInputField(const JPoint& cell,
+	JXInputField*	CreateXInputField(const JPoint& cell,
 											  const JCoordinate x, const JCoordinate y,
 											  const JCoordinate w, const JCoordinate h) override;
-	virtual bool	ExtractInputData(const JPoint& cell) override;
+	bool	ExtractInputData(const JPoint& cell) override;
 
-	virtual void	Receive(JBroadcaster* sender, const Message& message) override;
-	virtual void	ReceiveGoingAway(JBroadcaster* sender) override;
+	void	Receive(JBroadcaster* sender, const Message& message) override;
+	void	ReceiveGoingAway(JBroadcaster* sender) override;
 
 private:
 

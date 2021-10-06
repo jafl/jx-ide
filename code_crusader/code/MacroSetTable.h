@@ -40,19 +40,19 @@ public:
 
 protected:
 
-	virtual void	HandleMouseDown(const JPoint& pt, const JXMouseButton button,
+	void	HandleMouseDown(const JPoint& pt, const JXMouseButton button,
 									const JSize clickCount,
 									const JXButtonStates& buttonStates,
 									const JXKeyModifiers& modifiers) override;
 
-	virtual JXInputField*
+	JXInputField*
 		CreateStringTableInput(const JPoint& cell, JXContainer* enclosure,
 							   const HSizingOption hSizing, const VSizingOption vSizing,
 							   const JCoordinate x, const JCoordinate y,
 							   const JCoordinate w, const JCoordinate h) override;
 
-	virtual void	ApertureResized(const JCoordinate dw, const JCoordinate dh) override;
-	virtual void	Receive(JBroadcaster* sender, const Message& message) override;
+	void	ApertureResized(const JCoordinate dw, const JCoordinate dh) override;
+	void	Receive(JBroadcaster* sender, const Message& message) override;
 
 private:
 

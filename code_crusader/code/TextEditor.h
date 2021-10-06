@@ -40,9 +40,9 @@ public:
 	void	OpenSelection();
 	void	ScrollForDefinition(const Language lang);
 
-	virtual void	HandleKeyPress(const JUtf8Character& c,
+	void	HandleKeyPress(const JUtf8Character& c,
 								   const int keySym, const JXKeyModifiers& modifiers) override;
-	virtual void	HandleShortcut(const int key, const JXKeyModifiers& modifiers) override;
+	void	HandleShortcut(const int key, const JXKeyModifiers& modifiers) override;
 
 	JSize	GetTabCharCount() const;
 	void	SetTabCharCount(const JSize charCount);
@@ -100,21 +100,21 @@ public:
 
 protected:
 
-	virtual void	Draw(JXWindowPainter& p, const JRect& rect) override;
+	void	Draw(JXWindowPainter& p, const JRect& rect) override;
 
-	virtual void	AdjustCursor(const JPoint& pt, const JXKeyModifiers& modifiers) override;
-	virtual void	HandleMouseDown(const JPoint& pt, const JXMouseButton button,
+	void	AdjustCursor(const JPoint& pt, const JXKeyModifiers& modifiers) override;
+	void	HandleMouseDown(const JPoint& pt, const JXMouseButton button,
 									const JSize clickCount,
 									const JXButtonStates& buttonStates,
 									const JXKeyModifiers& modifiers) override;
-	virtual void	HandleMouseUp(const JPoint& pt, const JXMouseButton button,
+	void	HandleMouseUp(const JPoint& pt, const JXMouseButton button,
 								  const JXButtonStates& buttonStates,
 								  const JXKeyModifiers& modifiers) override;
 
-	virtual JCoordinate	GetPrintHeaderHeight(JPagePrinter& p) const override;
-	virtual void		DrawPrintHeader(JPagePrinter& p, const JCoordinate footerHeight) override;
+	JCoordinate	GetPrintHeaderHeight(JPagePrinter& p) const override;
+	void		DrawPrintHeader(JPagePrinter& p, const JCoordinate footerHeight) override;
 
-	virtual void	Receive(JBroadcaster* sender, const Message& message) override;
+	void	Receive(JBroadcaster* sender, const Message& message) override;
 
 protected:
 
@@ -129,7 +129,7 @@ protected:
 
 		protected:
 
-		virtual void	AdjustStylesBeforeBroadcast(
+		void	AdjustStylesBeforeBroadcast(
 							const JString& text, JRunArray<JFont>* styles,
 							JStyledText::TextRange* recalcRange,
 							JStyledText::TextRange* redrawRange,

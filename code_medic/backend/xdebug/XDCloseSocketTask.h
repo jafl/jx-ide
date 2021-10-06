@@ -20,7 +20,7 @@ public:
 
 	virtual ~XDCloseSocketTask();
 
-	virtual void	Perform() override;
+	void	Perform() override;
 
 private:
 

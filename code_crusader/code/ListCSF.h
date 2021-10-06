@@ -25,13 +25,13 @@ public:
 
 protected:
 
-	virtual JXChooseFileDialog*
+	JXChooseFileDialog*
 	CreateChooseFileDialog(JXDirector* supervisor, JDirInfo* dirInfo,
 						   const JString& fileFilter,
 						   const bool allowSelectMultiple,
 						   const JString& origName, const JString& message) override;
 
-	virtual void	Receive(JBroadcaster* sender, const Message& message) override;
+	void	Receive(JBroadcaster* sender, const Message& message) override;
 
 private:
 

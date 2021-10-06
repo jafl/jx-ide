@@ -23,12 +23,12 @@ public:
 
 	virtual ~DebugDir();
 
-	virtual const JString&	GetName() const override;
+	const JString&	GetName() const override;
 
 protected:
 
-	virtual void	Receive(JBroadcaster* sender, const Message& message) override;
-	virtual void	ReceiveGoingAway(JBroadcaster* sender) override;
+	void	Receive(JBroadcaster* sender, const Message& message) override;
+	void	ReceiveGoingAway(JBroadcaster* sender) override;
 
 private:
 

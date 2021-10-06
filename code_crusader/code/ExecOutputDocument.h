@@ -39,7 +39,7 @@ public:
 
 	virtual ~ExecOutputDocument();
 
-	virtual void	Activate() override;
+	void	Activate() override;
 
 	void	IncrementUseCount();
 	void	DecrementUseCount();
@@ -57,7 +57,7 @@ public:
 	virtual void	OpenPrevListItem();
 	virtual void	OpenNextListItem();
 
-	virtual void	ConvertSelectionToFullPath(JString* fileName) const override;
+	void	ConvertSelectionToFullPath(JString* fileName) const override;
 
 protected:
 
@@ -75,8 +75,8 @@ protected:
 	bool	GetRecordLink(RecordLink** link) const;
 	bool	GetDataLink(DataLink** link) const;
 
-	virtual bool	OKToClose() override;
-	virtual void		Receive(JBroadcaster* sender, const Message& message) override;
+	bool	OKToClose() override;
+	void		Receive(JBroadcaster* sender, const Message& message) override;
 
 private:
 

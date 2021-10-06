@@ -20,21 +20,21 @@ public:
 
 	virtual ~FileNode();
 
-	virtual void	OpenFile() const override;
-	virtual void	OpenComplementFile() const override;
-	virtual void	ViewPlainDiffs(const bool silent) const override;
-	virtual void	ViewVCSDiffs(const bool silent) const override;
+	void	OpenFile() const override;
+	void	OpenComplementFile() const override;
+	void	ViewPlainDiffs(const bool silent) const override;
+	void	ViewVCSDiffs(const bool silent) const override;
 
-	virtual bool	ParseFiles(FileListTable* parser,
+	bool	ParseFiles(FileListTable* parser,
 								   const JPtrArray<JString>& allSuffixList,
 								   SymbolList* symbolList,
 								   CTree* cTree, DTree* dTree, GoTree* goTree,
 								   JavaTree* javaTree, PHPTree* phpTree,
 								   JProgressDisplay& pg) const override;
 
-	virtual void	CreateFilesForTemplate(std::istream& input,
+	void	CreateFilesForTemplate(std::istream& input,
 										   const JFileVersion vers) const override;
-	virtual void	SaveFilesInTemplate(std::ostream& output) const override;
+	void	SaveFilesInTemplate(std::ostream& output) const override;
 
 private:
 

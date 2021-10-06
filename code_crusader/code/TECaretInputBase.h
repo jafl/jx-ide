@@ -29,7 +29,7 @@ public:
 	void		SetTE(JXTEBase* te);
 	void		ShouldOptimizeUpdate(const bool optimize);
 
-	virtual void	HandleKeyPress(const JUtf8Character& c,
+	void	HandleKeyPress(const JUtf8Character& c,
 								   const int keySym, const JXKeyModifiers& modifiers) override;
 
 protected:
@@ -39,14 +39,14 @@ protected:
 	virtual JIndex	GetValue(JXTEBase* te) const = 0;
 	virtual JIndex	GetValue(const JTextEditor::CaretLocationChanged& info) const = 0;
 
-	virtual void		BoundsResized(const JCoordinate dw, const JCoordinate dh) override;
-	virtual JCoordinate	GetFTCMinContentSize(const bool horizontal) const override;
+	void		BoundsResized(const JCoordinate dw, const JCoordinate dh) override;
+	JCoordinate	GetFTCMinContentSize(const bool horizontal) const override;
 
-	virtual void		HandleFocusEvent() override;
-	virtual void		HandleUnfocusEvent() override;
-	virtual bool	OKToUnfocus() override;
+	void		HandleFocusEvent() override;
+	void		HandleUnfocusEvent() override;
+	bool	OKToUnfocus() override;
 
-	virtual void	Receive(JBroadcaster* sender, const Message& message) override;
+	void	Receive(JBroadcaster* sender, const Message& message) override;
 
 private:
 

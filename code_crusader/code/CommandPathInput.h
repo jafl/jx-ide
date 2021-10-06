@@ -41,7 +41,7 @@ protected:
 
 		protected:
 
-		virtual void	AdjustStylesBeforeBroadcast(
+		void	AdjustStylesBeforeBroadcast(
 							const JString& text, JRunArray<JFont>* styles,
 							JStyledText::TextRange* recalcRange,
 							JStyledText::TextRange* redrawRange,

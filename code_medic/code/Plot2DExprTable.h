@@ -39,21 +39,21 @@ public:
 
 	void	ConfigureColHeader(JXColHeaderWidget* colHeader);
 
-	virtual void		HandleKeyPress(const JUtf8Character& c, const int keySym,
+	void		HandleKeyPress(const JUtf8Character& c, const int keySym,
 									   const JXKeyModifiers& modifiers) override;
 
 protected:
 
-	virtual void	HandleMouseDown(const JPoint& pt, const JXMouseButton button,
+	void	HandleMouseDown(const JPoint& pt, const JXMouseButton button,
 									const JSize clickCount,
 									const JXButtonStates& buttonStates,
 									const JXKeyModifiers& modifiers) override;
 
-	virtual JXInputField*	CreateXInputField(const JPoint& cell,
+	JXInputField*	CreateXInputField(const JPoint& cell,
 											  const JCoordinate x, const JCoordinate y,
 											  const JCoordinate w, const JCoordinate h) override;
 
-	virtual JXInputField*
+	JXInputField*
 		CreateStringTableInput(const JPoint& cell, JXContainer* enclosure,
 							   const HSizingOption hSizing, const VSizingOption vSizing,
 							   const JCoordinate x, const JCoordinate y,

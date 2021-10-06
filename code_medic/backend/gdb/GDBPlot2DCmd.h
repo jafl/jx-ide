@@ -20,12 +20,12 @@ public:
 
 	virtual	~Plot2DCmd();
 
-	virtual void	UpdateRange(const JIndex curveIndex,
+	void	UpdateRange(const JIndex curveIndex,
 								const JInteger min,const JInteger max) override;
 
 protected:
 
-	virtual void	HandleSuccess(const JString& data) override;
+	void	HandleSuccess(const JString& data) override;
 };
 
 };

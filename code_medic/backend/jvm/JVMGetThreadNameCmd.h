@@ -23,12 +23,12 @@ public:
 
 	virtual	~GetThreadNameCmd();
 
-	virtual void	Starting() override;
+	void	Starting() override;
 
 protected:
 
-	virtual void	HandleSuccess(const JString& data) override;
-	virtual void	HandleFailure() override;
+	void	HandleSuccess(const JString& data) override;
+	void	HandleFailure() override;
 
 private:
 

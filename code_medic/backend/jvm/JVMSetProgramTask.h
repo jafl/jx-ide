@@ -20,7 +20,7 @@ public:
 
 	virtual ~SetProgramTask();
 
-	virtual void	Perform() override;
+	void	Perform() override;
 };
 
 };

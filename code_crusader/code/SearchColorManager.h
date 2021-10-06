@@ -18,7 +18,7 @@ public:
 
 	virtual ~SearchColorManager();
 
-	virtual bool	GetColorID(const JString& name, JColorID* id) override;
+	bool	GetColorID(const JString& name, JColorID* id) const override;
 };
 
 #endif

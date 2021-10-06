@@ -30,7 +30,7 @@ protected:
 	static JString	GetCmd1(const JString& pageName, const JString& pageIndex);
 	static JString	GetCmd2(const JString& pageName);
 
-	virtual void	Receive(JBroadcaster* sender, const Message& message) override;
+	void	Receive(JBroadcaster* sender, const Message& message) override;
 
 private:
 

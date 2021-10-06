@@ -19,7 +19,7 @@ public:
 
 	virtual ~XDWelcomeTask();
 
-	virtual void	Perform() override;
+	void	Perform() override;
 
 private:
 

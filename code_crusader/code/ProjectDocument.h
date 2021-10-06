@@ -70,10 +70,10 @@ public:
 
 	virtual ~ProjectDocument();
 
-	virtual void			Activate() override;
-	virtual const JString&	GetName() const override;
-	virtual bool		GetMenuIcon(const JXImage** icon) const override;
-	virtual bool		Close() override;
+	void			Activate() override;
+	const JString&	GetName() const override;
+	bool		GetMenuIcon(const JXImage** icon) const override;
+	bool		Close() override;
 
 	ProjectTree*	GetFileTree() const;
 	ProjectTable*	GetFileTable() const;
@@ -149,12 +149,12 @@ protected:
 					  const JString& setName, const JString& symName,
 					  const bool silent);
 
-	virtual void	DiscardChanges() override;
-	virtual JError	WriteFile(const JString& fullName, const bool safetySave) const override;
-	virtual void	WriteTextFile(std::ostream& output, const bool safetySave) const override;
+	void	DiscardChanges() override;
+	JError	WriteFile(const JString& fullName, const bool safetySave) const override;
+	void	WriteTextFile(std::ostream& output, const bool safetySave) const override;
 
-	virtual void	Receive(JBroadcaster* sender, const Message& message) override;
-	virtual void	ReceiveWithFeedback(JBroadcaster* sender, Message* message) override;
+	void	Receive(JBroadcaster* sender, const Message& message) override;
+	void	ReceiveWithFeedback(JBroadcaster* sender, Message* message) override;
 
 private:
 

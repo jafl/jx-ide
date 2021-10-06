@@ -18,7 +18,7 @@ public:
 
 	virtual ~XDSetProgramTask();
 
-	virtual void	Perform() override;
+	void	Perform() override;
 };
 
 #endif

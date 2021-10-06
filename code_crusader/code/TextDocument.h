@@ -60,8 +60,8 @@ public:
 
 	virtual ~TextDocument();
 
-	virtual void		Activate() override;
-	virtual bool	GetMenuIcon(const JXImage** icon) const override;
+	void		Activate() override;
+	bool	GetMenuIcon(const JXImage** icon) const override;
 
 	void	GoToLine(const JIndex lineIndex) const;
 	void	SelectLines(const JIndexRange& range) const;
@@ -119,16 +119,16 @@ protected:
 	CommandMenu*	GetCommandMenu();
 
 	void			ReadFile(const JString& fileName, const bool firstTime);
-	virtual void	WriteTextFile(std::ostream& output, const bool safetySave) const override;
-	virtual void	DiscardChanges() override;
+	void	WriteTextFile(std::ostream& output, const bool safetySave) const override;
+	void	DiscardChanges() override;
 
-	virtual void	HandleFileModifiedByOthers(const bool modTimeChanged,
+	void	HandleFileModifiedByOthers(const bool modTimeChanged,
 											   const bool permsChanged) override;
 
-	virtual void	ReadPrefs(std::istream& input) override;
-	virtual void	WritePrefs(std::ostream& output) const override;
+	void	ReadPrefs(std::istream& input) override;
+	void	WritePrefs(std::ostream& output) const override;
 
-	virtual void	Receive(JBroadcaster* sender, const Message& message) override;
+	void	Receive(JBroadcaster* sender, const Message& message) override;
 
 private:
 

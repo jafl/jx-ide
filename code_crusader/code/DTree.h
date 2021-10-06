@@ -31,14 +31,14 @@ public:
 
 	virtual ~DTree();
 
-	virtual void	StreamOut(std::ostream& projOutput, std::ostream* setOutput,
+	void	StreamOut(std::ostream& projOutput, std::ostream* setOutput,
 							  std::ostream* symOutput, const DirList* dirList) const override;
 
-	virtual bool	UpdateFinished(const JArray<JFAID_t>& deadFileList) override;
+	bool	UpdateFinished(const JArray<JFAID_t>& deadFileList) override;
 
 protected:
 
-	virtual void	ParseFile(const JString& fileName, const JFAID_t id) override;
+	void	ParseFile(const JString& fileName, const JFAID_t id) override;
 
 private:
 

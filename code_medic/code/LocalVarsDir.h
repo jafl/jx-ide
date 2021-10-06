@@ -28,14 +28,14 @@ public:
 
 	virtual	~LocalVarsDir();
 
-	virtual void			Activate() override;
-	virtual const JString&	GetName() const override;
-	virtual bool		GetMenuIcon(const JXImage** icon) const override;
+	void			Activate() override;
+	const JString&	GetName() const override;
+	bool		GetMenuIcon(const JXImage** icon) const override;
 
 protected:
 
-	virtual void	Receive(JBroadcaster* sender, const Message& message) override;
-	virtual void	ReceiveGoingAway(JBroadcaster* sender) override;
+	void	Receive(JBroadcaster* sender, const Message& message) override;
+	void	ReceiveGoingAway(JBroadcaster* sender) override;
 
 private:
 

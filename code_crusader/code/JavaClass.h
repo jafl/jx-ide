@@ -21,16 +21,16 @@ public:
 
 	virtual ~JavaClass();
 
-	virtual void	ViewSource() const override;
-	virtual void	ViewHeader() const override;
+	void	ViewSource() const override;
+	void	ViewHeader() const override;
 
-	virtual void	StreamOut(std::ostream& output) const override;
+	void	StreamOut(std::ostream& output) const override;
 
 protected:
 
-	virtual Class*	NewGhost(const JString& name, Tree* tree) override;
+	Class*	NewGhost(const JString& name, Tree* tree) override;
 
-	virtual void	AdjustNameStyle(JFontStyle* style) const override;
+	void	AdjustNameStyle(JFontStyle* style) const override;
 
 private:
 

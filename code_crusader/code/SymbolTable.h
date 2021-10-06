@@ -44,27 +44,27 @@ public:
 	JError	SetNameFilter(const JString& filterStr, const bool isRegex);
 	void	SetDisplayList(const JArray<JIndex>& list);
 
-	virtual void	HandleKeyPress(const JUtf8Character& c,
+	void	HandleKeyPress(const JUtf8Character& c,
 								   const int keySym, const JXKeyModifiers& modifiers) override;
 
 protected:
 
-	virtual void	TableDrawCell(JPainter& p, const JPoint& cell, const JRect& rect) override;
+	void	TableDrawCell(JPainter& p, const JPoint& cell, const JRect& rect) override;
 
-	virtual void	HandleMouseDown(const JPoint& pt, const JXMouseButton button,
+	void	HandleMouseDown(const JPoint& pt, const JXMouseButton button,
 									const JSize clickCount,
 									const JXButtonStates& buttonStates,
 									const JXKeyModifiers& modifiers) override;
-	virtual void	HandleMouseDrag(const JPoint& pt, const JXButtonStates& buttonStates,
+	void	HandleMouseDrag(const JPoint& pt, const JXButtonStates& buttonStates,
 									const JXKeyModifiers& modifiers) override;
-	virtual void	HandleMouseUp(const JPoint& pt, const JXMouseButton button,
+	void	HandleMouseUp(const JPoint& pt, const JXMouseButton button,
 								  const JXButtonStates& buttonStates,
 								  const JXKeyModifiers& modifiers) override;
 
-	virtual void	HandleFocusEvent() override;
+	void	HandleFocusEvent() override;
 
-	virtual void	ApertureResized(const JCoordinate dw, const JCoordinate dh) override;
-	virtual void	Receive(JBroadcaster* sender, const Message& message) override;
+	void	ApertureResized(const JCoordinate dw, const JCoordinate dh) override;
+	void	Receive(JBroadcaster* sender, const Message& message) override;
 
 private:
 

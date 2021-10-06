@@ -48,13 +48,13 @@ protected:
 	void	SetWordStyle(const JString& word, const JFontStyle& style);
 	void	RemoveWordStyle(const JString& word);
 
-	virtual void	ReadPrefs(std::istream& input) override;
-	virtual void	WritePrefs(std::ostream& output) const override;
+	void	ReadPrefs(std::istream& input) override;
+	void	WritePrefs(std::ostream& output) const override;
 
 	virtual void	UpgradeTypeList(const JFileVersion vers,
 									JArray<JFontStyle>* typeStyles) = 0;
 
-	virtual void	Receive(JBroadcaster* sender, const Message& message) override;
+	void	Receive(JBroadcaster* sender, const Message& message) override;
 
 private:
 

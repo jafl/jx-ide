@@ -20,7 +20,7 @@ public:
 
 	virtual ~PingTask();
 
-	virtual void	Perform(const Time delta, Time* maxSleepTime) override;
+	void	Perform(const Time delta, Time* maxSleepTime) override;
 };
 
 };

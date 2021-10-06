@@ -27,8 +27,8 @@ public:
 
 	virtual ~CharActionTable();
 
-	virtual void	Activate() override;
-	virtual void	Deactivate() override;
+	void	Activate() override;
+	void	Deactivate() override;
 
 	void	GetData(CharActionManager* mgr) const;
 	void	SetData(const CharActionManager& mgr);
@@ -36,13 +36,13 @@ public:
 
 protected:
 
-	virtual JXInputField*
+	JXInputField*
 		CreateStringTableInput(const JPoint& cell, JXContainer* enclosure,
 							   const HSizingOption hSizing, const VSizingOption vSizing,
 							   const JCoordinate x, const JCoordinate y,
 							   const JCoordinate w, const JCoordinate h) override;
 
-	virtual void	Receive(JBroadcaster* sender, const Message& message) override;
+	void	Receive(JBroadcaster* sender, const Message& message) override;
 
 private:
 

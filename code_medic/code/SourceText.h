@@ -34,21 +34,21 @@ public:
 
 	void	SetFileType(const TextFileType type);
 
-	virtual void	HandleKeyPress(const JUtf8Character& c, const int keySym,
+	void	HandleKeyPress(const JUtf8Character& c, const int keySym,
 								   const JXKeyModifiers& modifiers) override;
 
 protected:
 
-	virtual void	BoundsResized(const JCoordinate dw, const JCoordinate dh) override;
-	virtual void	HandleMouseDown(const JPoint& pt, const JXMouseButton button,
+	void	BoundsResized(const JCoordinate dw, const JCoordinate dh) override;
+	void	HandleMouseDown(const JPoint& pt, const JXMouseButton button,
 									const JSize clickCount,
 									const JXButtonStates& buttonStates,
 									const JXKeyModifiers& modifiers) override;
-	virtual void	HandleMouseUp(const JPoint& pt, const JXMouseButton button,
+	void	HandleMouseUp(const JPoint& pt, const JXMouseButton button,
 								  const JXButtonStates& buttonStates,
 								  const JXKeyModifiers& modifiers) override;
 
-	virtual void	Receive(JBroadcaster* sender, const Message& message) override;
+	void	Receive(JBroadcaster* sender, const Message& message) override;
 
 protected:
 

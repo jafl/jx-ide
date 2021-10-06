@@ -41,6 +41,7 @@ SearchColorManager::GetColorID
 	const JString&	name,
 	JColorID*		id
 	)
+	const
 {
 	*id = 0;
 	return true;

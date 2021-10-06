@@ -30,10 +30,10 @@ public:
 
 protected:
 
-	virtual void	UpdateTreeMenu() override;
-	virtual void	HandleTreeMenu(const JIndex index) override;
+	void	UpdateTreeMenu() override;
+	void	HandleTreeMenu(const JIndex index) override;
 
-	virtual void	Receive(JBroadcaster* sender, const Message& message) override;
+	void	Receive(JBroadcaster* sender, const Message& message) override;
 
 private:
 

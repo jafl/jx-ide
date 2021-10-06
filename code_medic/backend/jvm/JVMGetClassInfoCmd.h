@@ -20,11 +20,11 @@ public:
 
 	virtual	~GetClassInfoCmd();
 
-	virtual void	Starting() override;
+	void	Starting() override;
 
 protected:
 
-	virtual void	HandleSuccess(const JString& data) override;
+	void	HandleSuccess(const JString& data) override;
 
 private:
 

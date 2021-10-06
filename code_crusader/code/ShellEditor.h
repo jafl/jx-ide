@@ -28,7 +28,7 @@ public:
 
 	void	InsertText(const JString& text);
 
-	virtual void	HandleKeyPress(const JUtf8Character& c,
+	void	HandleKeyPress(const JUtf8Character& c,
 								   const int keySym, const JXKeyModifiers& modifiers) override;
 
 private:

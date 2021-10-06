@@ -64,8 +64,8 @@ public:
 	void	ClearDisplay();
 
 	Type					GetType() const;
-	virtual const JString&	GetName() const override;
-	virtual bool		GetMenuIcon(const JXImage** icon) const override;
+	const JString&	GetName() const override;
+	bool		GetMenuIcon(const JXImage** icon) const override;
 
 	// called by GDBGetAssemblyCmd
 
@@ -78,8 +78,8 @@ protected:
 	SourceDirector(CommandDirector* commandDir, const JString& fileOrFn,
 					 const Type type);
 
-	virtual void	Receive(JBroadcaster* sender, const Message& message) override;
-	virtual void	ReceiveGoingAway(JBroadcaster* sender) override;
+	void	Receive(JBroadcaster* sender, const Message& message) override;
+	void	ReceiveGoingAway(JBroadcaster* sender) override;
 
 private:
 

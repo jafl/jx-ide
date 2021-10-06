@@ -24,14 +24,14 @@ protected:
 
 	HTMLStyler();
 
-	virtual void		Scan(const JStyledText::TextIndex& startIndex,
+	void		Scan(const JStyledText::TextIndex& startIndex,
 							 std::istream& input, const TokenExtra& initData) override;
-	virtual void		UpgradeTypeList(const JFileVersion vers,
+	void		UpgradeTypeList(const JFileVersion vers,
 										JArray<JFontStyle>* typeStyles) override;
 
-	virtual void	Receive(JBroadcaster* sender, const Message& message) override;
+	void	Receive(JBroadcaster* sender, const Message& message) override;
 
-	virtual const JString&	GetScannedText() const override;
+	const JString&	GetScannedText() const override;
 
 private:
 

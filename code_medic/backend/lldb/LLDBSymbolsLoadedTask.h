@@ -19,7 +19,7 @@ public:
 
 	virtual ~LLDBSymbolsLoadedTask();
 
-	virtual void	Perform() override;
+	void	Perform() override;
 
 private:
 

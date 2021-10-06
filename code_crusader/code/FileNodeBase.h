@@ -24,23 +24,23 @@ public:
 	const JString&	GetFileName() const;
 	void			SetFileName(const JString& fileName);
 
-	virtual bool	GetFullName(JString* fullName) const override;
+	bool	GetFullName(JString* fullName) const override;
 
-	virtual void		StreamOut(std::ostream& output) const override;
-	virtual bool	IncludedInMakefile() const override;
-	virtual void		BuildMakeFiles(JString* text,
+	void		StreamOut(std::ostream& output) const override;
+	bool	IncludedInMakefile() const override;
+	void		BuildMakeFiles(JString* text,
 									   JPtrArray<JTreeNode>* invalidList,
 									   JPtrArray<JString>* libFileList,
 									   JPtrArray<JString>* libProjPathList) const override;
-	virtual bool	IncludedInCMakeData() const override;
-	virtual void		BuildCMakeData(JString* src, JString* hdr,
+	bool	IncludedInCMakeData() const override;
+	void		BuildCMakeData(JString* src, JString* hdr,
 									   JPtrArray<JTreeNode>* invalidList) const override;
-	virtual bool	IncludedInQMakeData() const override;
-	virtual void		BuildQMakeData(JString* src, JString* hdr,
+	bool	IncludedInQMakeData() const override;
+	void		BuildQMakeData(JString* src, JString* hdr,
 									   JPtrArray<JTreeNode>* invalidList) const override;
-	virtual void		Print(JString* text) const override;
-	virtual void		FileRenamed(const JString& origFullName, const JString& newFullName) override;
-	virtual void		ShowFileLocation() const override;
+	void		Print(JString* text) const override;
+	void		FileRenamed(const JString& origFullName, const JString& newFullName) override;
+	void		ShowFileLocation() const override;
 
 	static FileNodeBase*	New(ProjectTree* tree, const JString& fileName);
 
@@ -49,7 +49,7 @@ protected:
 	bool	GetFullName(const JString& fileName, JString* fullName) const;
 	void		ReportNotFound() const;
 
-	virtual bool	FindFile1(const JString& fullName,
+	bool	FindFile1(const JString& fullName,
 								  ProjectNode** node) override;
 
 private:

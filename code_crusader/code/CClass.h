@@ -20,12 +20,12 @@ public:
 
 	virtual ~CClass();
 
-	virtual void	ViewSource() const override;
-	virtual void	ViewHeader() const override;
+	void	ViewSource() const override;
+	void	ViewHeader() const override;
 
 protected:
 
-	virtual Class*	NewGhost(const JString& name, Tree* tree) override;
+	Class*	NewGhost(const JString& name, Tree* tree) override;
 };
 
 #endif

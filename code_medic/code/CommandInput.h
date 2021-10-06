@@ -21,13 +21,13 @@ public:
 
 	virtual	~CommandInput();
 
-	virtual void	HandleKeyPress(const JUtf8Character& c, const int keySym,
+	void	HandleKeyPress(const JUtf8Character& c, const int keySym,
 								   const JXKeyModifiers& modifiers) override;
 
 protected:
 
-	virtual void	HandleFocusEvent() override;
-	virtual void	HandleUnfocusEvent() override;
+	void	HandleFocusEvent() override;
+	void	HandleUnfocusEvent() override;
 
 public:
 

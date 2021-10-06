@@ -38,7 +38,7 @@ public:
 
 	virtual ~FunctionTable();
 
-	virtual void	HandleKeyPress(const JUtf8Character& c, const int keySym, const JXKeyModifiers& modifiers) override;
+	void	HandleKeyPress(const JUtf8Character& c, const int keySym, const JXKeyModifiers& modifiers) override;
 
 protected:
 
@@ -48,12 +48,12 @@ protected:
 			const JCoordinate x, const JCoordinate y,
 			const JCoordinate w, const JCoordinate h);
 
-	virtual void	Receive(JBroadcaster* sender, const Message& message) override;
-	virtual void	HandleMouseDown(const JPoint& pt, const JXMouseButton button,
+	void	Receive(JBroadcaster* sender, const Message& message) override;
+	void	HandleMouseDown(const JPoint& pt, const JXMouseButton button,
 									const JSize clickCount,
 									const JXButtonStates& buttonStates,
 									const JXKeyModifiers& modifiers) override;
-	virtual void	TableDrawCell(JPainter& p, const JPoint& cell, const JRect& rect) override;
+	void	TableDrawCell(JPainter& p, const JPoint& cell, const JRect& rect) override;
 
 private:
 

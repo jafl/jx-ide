@@ -63,18 +63,18 @@ public:
 
 protected:
 
-	virtual JXChooseFileDialog*
+	JXChooseFileDialog*
 	CreateChooseFileDialog(JXDirector* supervisor, JDirInfo* dirInfo,
 						   const JString& fileFilter,
 						   const bool allowSelectMultiple,
 						   const JString& origName, const JString& message) override;
 
-	virtual JXChoosePathDialog*
+	JXChoosePathDialog*
 	CreateChoosePathDialog(JXDirector* supervisor, JDirInfo* dirInfo,
 						   const JString& fileFilter,
 						   const bool selectOnlyWritable, const JString& message) override;
 
-	virtual void	Receive(JBroadcaster* sender, const Message& message) override;
+	void	Receive(JBroadcaster* sender, const Message& message) override;
 
 private:
 

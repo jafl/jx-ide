@@ -28,8 +28,8 @@ public:
 
 protected:
 
-	virtual void	UpdateTreeMenu() override;
-	virtual void	HandleTreeMenu(const JIndex index) override;
+	void	UpdateTreeMenu() override;
+	void	HandleTreeMenu(const JIndex index) override;
 
 private:
 

@@ -24,15 +24,15 @@ protected:
 
 	PerlStyler();
 
-	virtual void	Scan(const JStyledText::TextIndex& startIndex,
+	void	Scan(const JStyledText::TextIndex& startIndex,
 						 std::istream& input, const TokenExtra& initData) override;
-	virtual void	PreexpandCheckRange(const JString& text,
+	void	PreexpandCheckRange(const JString& text,
 										const JRunArray<JFont>& styles,
 										const JCharacterRange& modifiedRange,
 										const bool deletion,
 										JStyledText::TextRange* checkRange) override;
 
-	virtual void	UpgradeTypeList(const JFileVersion vers,
+	void	UpgradeTypeList(const JFileVersion vers,
 									JArray<JFontStyle>* typeStyles) override;
 
 private:

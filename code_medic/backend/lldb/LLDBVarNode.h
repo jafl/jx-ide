@@ -22,7 +22,7 @@ public:
 
 	virtual	~LLDBVarNode();
 
-	virtual JString	GetFullName(bool* isPointer = nullptr) const override;
+	JString	GetFullName(bool* isPointer = nullptr) const override;
 
 	static VarNode*	BuildTree(lldb::SBFrame& frame, lldb::SBValue& value);
 };

@@ -36,111 +36,111 @@ public:
 
 	virtual	~LLDBLink();
 
-	virtual bool	DebuggerHasStarted() const override;
-	virtual bool	HasLoadedSymbols() const override;
-	virtual bool	IsDebugging() const override;
-	virtual bool	IsDefiningScript() const override;
+	bool	DebuggerHasStarted() const override;
+	bool	HasLoadedSymbols() const override;
+	bool	IsDebugging() const override;
+	bool	IsDefiningScript() const override;
 
-	virtual bool	ChangeDebugger() override;
-	virtual bool	RestartDebugger() override;
+	bool	ChangeDebugger() override;
+	bool	RestartDebugger() override;
 
-	virtual JString	GetChooseProgramInstructions() const override;
-	virtual bool	HasProgram() const override;
-	virtual bool	GetProgram(JString* fullName) const override;
-	virtual void	SetProgram(const JString& fullName) override;
-	virtual void	ReloadProgram() override;
-	virtual bool	HasCore() const override;
-	virtual bool	GetCore(JString* fullName) const override;
-	virtual void	SetCore(const JString& fullName) override;
-	virtual void	AttachToProcess(const pid_t pid) override;
+	JString	GetChooseProgramInstructions() const override;
+	bool	HasProgram() const override;
+	bool	GetProgram(JString* fullName) const override;
+	void	SetProgram(const JString& fullName) override;
+	void	ReloadProgram() override;
+	bool	HasCore() const override;
+	bool	GetCore(JString* fullName) const override;
+	void	SetCore(const JString& fullName) override;
+	void	AttachToProcess(const pid_t pid) override;
 
-	virtual void	RunProgram(const JString& args) override;
-	virtual void	StopProgram() override;
-	virtual void	KillProgram() override;
-	virtual bool	ProgramIsRunning() const override;
-	virtual bool	ProgramIsStopped() const override;
-	virtual bool	OKToDetachOrKill() const override;
+	void	RunProgram(const JString& args) override;
+	void	StopProgram() override;
+	void	KillProgram() override;
+	bool	ProgramIsRunning() const override;
+	bool	ProgramIsStopped() const override;
+	bool	OKToDetachOrKill() const override;
 
-	virtual bool	OKToSendMultipleCommands() const override;
-	virtual bool	OKToSendCommands(const bool background) const override;
+	bool	OKToSendMultipleCommands() const override;
+	bool	OKToSendCommands(const bool background) const override;
 
-	virtual BreakpointManager*	GetBreakpointManager() override;
+	BreakpointManager*	GetBreakpointManager() override;
 
-	virtual void	ShowBreakpointInfo(const JIndex debuggerIndex) override;
-	virtual void	SetBreakpoint(const JString& fileName, const JIndex lineIndex,
+	void	ShowBreakpointInfo(const JIndex debuggerIndex) override;
+	void	SetBreakpoint(const JString& fileName, const JIndex lineIndex,
 								  const bool temporary = false) override;
-	virtual void	SetBreakpoint(const JString& address,
+	void	SetBreakpoint(const JString& address,
 								  const bool temporary = false) override;
-	virtual void	RemoveBreakpoint(const JIndex debuggerIndex) override;
-	virtual void	RemoveAllBreakpointsOnLine(const JString& fileName,
+	void	RemoveBreakpoint(const JIndex debuggerIndex) override;
+	void	RemoveAllBreakpointsOnLine(const JString& fileName,
 										   const JIndex lineIndex) override;
-	virtual void	RemoveAllBreakpointsAtAddress(const JString& addr) override;
-	virtual void	RemoveAllBreakpoints() override;
-	virtual void	SetBreakpointEnabled(const JIndex debuggerIndex, const bool enabled,
+	void	RemoveAllBreakpointsAtAddress(const JString& addr) override;
+	void	RemoveAllBreakpoints() override;
+	void	SetBreakpointEnabled(const JIndex debuggerIndex, const bool enabled,
 									 const bool once = false) override;
-	virtual void	SetBreakpointCondition(const JIndex debuggerIndex,
+	void	SetBreakpointCondition(const JIndex debuggerIndex,
 									   const JString& condition) override;
-	virtual void	RemoveBreakpointCondition(const JIndex debuggerIndex) override;
-	virtual void	SetBreakpointIgnoreCount(const JIndex debuggerIndex, const JSize count) override;
+	void	RemoveBreakpointCondition(const JIndex debuggerIndex) override;
+	void	SetBreakpointIgnoreCount(const JIndex debuggerIndex, const JSize count) override;
 
-	virtual void	WatchExpression(const JString& expr) override;
-	virtual void	WatchLocation(const JString& expr) override;
+	void	WatchExpression(const JString& expr) override;
+	void	WatchLocation(const JString& expr) override;
 
-	virtual void	SwitchToThread(const JUInt64 id) override;
-	virtual void	SwitchToFrame(const JUInt64 id) override;
-	virtual void	StepOver() override;
-	virtual void	StepInto() override;
-	virtual void	StepOut() override;
-	virtual void	Continue() override;
-	virtual void	RunUntil(const JString& fileName, const JIndex lineIndex) override;
-	virtual void	SetExecutionPoint(const JString& fileName, const JIndex lineIndex) override;
-	virtual void	StepOverAssembly() override;
-	virtual void	StepIntoAssembly() override;
-	virtual void	RunUntil(const JString& addr) override;
-	virtual void	SetExecutionPoint(const JString& addr) override;
-	virtual void	BackupOver() override;
-	virtual void	BackupInto() override;
-	virtual void	BackupOut() override;
-	virtual void	BackupContinue() override;
+	void	SwitchToThread(const JUInt64 id) override;
+	void	SwitchToFrame(const JUInt64 id) override;
+	void	StepOver() override;
+	void	StepInto() override;
+	void	StepOut() override;
+	void	Continue() override;
+	void	RunUntil(const JString& fileName, const JIndex lineIndex) override;
+	void	SetExecutionPoint(const JString& fileName, const JIndex lineIndex) override;
+	void	StepOverAssembly() override;
+	void	StepIntoAssembly() override;
+	void	RunUntil(const JString& addr) override;
+	void	SetExecutionPoint(const JString& addr) override;
+	void	BackupOver() override;
+	void	BackupInto() override;
+	void	BackupOut() override;
+	void	BackupContinue() override;
 
-	virtual void	SetValue(const JString& name, const JString& value) override;
+	void	SetValue(const JString& name, const JString& value) override;
 
-	virtual const JString&	GetPrompt()	const override;
-	virtual const JString&	GetScriptPrompt() const override;
+	const JString&	GetPrompt()	const override;
+	const JString&	GetScriptPrompt() const override;
 
 	// Command factory
 
-	virtual Array2DCmd*					CreateArray2DCmd(Array2DDir* dir,
+	Array2DCmd*					CreateArray2DCmd(Array2DDir* dir,
 														 JXStringTable* table,
 														 JStringTableData* data) override;
-	virtual Plot2DCmd*					CreatePlot2DCmd(Plot2DDir* dir,
+	Plot2DCmd*					CreatePlot2DCmd(Plot2DDir* dir,
 														JArray<JFloat>* x,
 														JArray<JFloat>* y) override;
-	virtual DisplaySourceForMainCmd*	CreateDisplaySourceForMainCmd(SourceDirector* sourceDir) override;
-	virtual GetCompletionsCmd*			CreateGetCompletionsCmd(CommandInput* input,
+	DisplaySourceForMainCmd*	CreateDisplaySourceForMainCmd(SourceDirector* sourceDir) override;
+	GetCompletionsCmd*			CreateGetCompletionsCmd(CommandInput* input,
 																CommandOutputDisplay* history) override;
-	virtual GetFrameCmd*				CreateGetFrameCmd(StackWidget* widget) override;
-	virtual GetStackCmd*				CreateGetStackCmd(JTree* tree, StackWidget* widget) override;
-	virtual GetThreadCmd*				CreateGetThreadCmd(ThreadsWidget* widget) override;
-	virtual GetThreadsCmd*				CreateGetThreadsCmd(JTree* tree, ThreadsWidget* widget) override;
-	virtual GetFullPathCmd*				CreateGetFullPathCmd(const JString& fileName,
+	GetFrameCmd*				CreateGetFrameCmd(StackWidget* widget) override;
+	GetStackCmd*				CreateGetStackCmd(JTree* tree, StackWidget* widget) override;
+	GetThreadCmd*				CreateGetThreadCmd(ThreadsWidget* widget) override;
+	GetThreadsCmd*				CreateGetThreadsCmd(JTree* tree, ThreadsWidget* widget) override;
+	GetFullPathCmd*				CreateGetFullPathCmd(const JString& fileName,
 															 const JIndex lineIndex = 0) override;
-	virtual GetInitArgsCmd*				CreateGetInitArgsCmd(JXInputField* argInput) override;
-	virtual GetLocalVarsCmd*			CreateGetLocalVarsCmd(VarNode* rootNode) override;
-	virtual GetSourceFileListCmd*		CreateGetSourceFileListCmd(FileListDir* fileList) override;
-	virtual VarCmd*						CreateVarValueCmd(const JString& expr) override;
-	virtual VarCmd*						CreateVarContentCmd(const JString& expr) override;
-	virtual VarNode*					CreateVarNode(const bool shouldUpdate = true) override;
-	virtual VarNode*					CreateVarNode(JTreeNode* parent, const JString& name,
+	GetInitArgsCmd*				CreateGetInitArgsCmd(JXInputField* argInput) override;
+	GetLocalVarsCmd*			CreateGetLocalVarsCmd(VarNode* rootNode) override;
+	GetSourceFileListCmd*		CreateGetSourceFileListCmd(FileListDir* fileList) override;
+	VarCmd*						CreateVarValueCmd(const JString& expr) override;
+	VarCmd*						CreateVarContentCmd(const JString& expr) override;
+	VarNode*					CreateVarNode(const bool shouldUpdate = true) override;
+	VarNode*					CreateVarNode(JTreeNode* parent, const JString& name,
 													  const JString& fullName, const JString& value) override;
-	virtual JString						Build1DArrayExpression(const JString& expr,
+	JString						Build1DArrayExpression(const JString& expr,
 															   const JInteger index) override;
-	virtual JString						Build2DArrayExpression(const JString& expr,
+	JString						Build2DArrayExpression(const JString& expr,
 															   const JInteger rowIndex,
 															   const JInteger colIndex) override;
-	virtual GetMemoryCmd*				CreateGetMemoryCmd(MemoryDir* dir) override;
-	virtual GetAssemblyCmd*				CreateGetAssemblyCmd(SourceDirector* dir) override;
-	virtual GetRegistersCmd*			CreateGetRegistersCmd(RegistersDir* dir) override;
+	GetMemoryCmd*				CreateGetMemoryCmd(MemoryDir* dir) override;
+	GetAssemblyCmd*				CreateGetAssemblyCmd(SourceDirector* dir) override;
+	GetRegistersCmd*			CreateGetRegistersCmd(RegistersDir* dir) override;
 
 	// called by commands
 
@@ -164,11 +164,11 @@ public:
 
 	// mostly when user types input for program being debugged
 
-	virtual void	SendRaw(const JString& text) override;
+	void	SendRaw(const JString& text) override;
 
 protected:
 
-	virtual void	SendMedicCommand(Command* command) override;
+	void	SendMedicCommand(Command* command) override;
 
 private:
 
