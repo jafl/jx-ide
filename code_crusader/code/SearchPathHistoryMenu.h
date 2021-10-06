@@ -39,11 +39,6 @@ private:
 
 	void	SearchPathHistoryMenuX();
 	void	RemoveInvalidPaths();
-
-	// not allowed
-
-	SearchPathHistoryMenu(const SearchPathHistoryMenu& source);
-	const SearchPathHistoryMenu& operator=(const SearchPathHistoryMenu& source);
 };
 
 #endif

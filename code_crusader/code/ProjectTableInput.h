@@ -24,18 +24,11 @@ public:
 	virtual ~ProjectTableInput();
 
 	void	HandleKeyPress(const JUtf8Character& c,
-								   const int keySym, const JXKeyModifiers& modifiers) override;
+						   const int keySym, const JXKeyModifiers& modifiers) override;
 
 private:
 
 	ProjectTable*	itsProjectTable;
-
-private:
-
-	// not allowed
-
-	ProjectTableInput(const ProjectTableInput& source);
-	const ProjectTableInput& operator=(const ProjectTableInput& source);
 };
 
 #endif

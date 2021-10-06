@@ -61,11 +61,6 @@ private:
 						const JArray<PrefsManager::CRMRuleListInfo>& crmList,
 						const bool execOutputWordWrap,
 						const bool unknownTypeWordWrap);
-
-	// not allowed
-
-	EditFileTypesDialog(const EditFileTypesDialog& source);
-	const EditFileTypesDialog& operator=(const EditFileTypesDialog& source);
 };
 
 #endif

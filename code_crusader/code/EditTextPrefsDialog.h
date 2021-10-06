@@ -93,17 +93,12 @@ private:
 	void	UpdateSettings();
 
 	bool	HandleColorButton(JBroadcaster* sender);
-	void		SetDefaultColors();
-	void		SetReverseVideoColors();
-	void		ChangeColor(const JIndex colorIndex, const JColorID color);
-	void		UpdateSampleText();
+	void	SetDefaultColors();
+	void	SetReverseVideoColors();
+	void	ChangeColor(const JIndex colorIndex, const JColorID color);
+	void	UpdateSampleText();
 
 	void	UpdateDisplay();
-
-	// not allowed
-
-	EditTextPrefsDialog(const EditTextPrefsDialog& source);
-	const EditTextPrefsDialog& operator=(const EditTextPrefsDialog& source);
 };
 
 #endif

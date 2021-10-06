@@ -61,11 +61,6 @@ private:
 						const JString& subProjectBuildCmd);
 
 	void	UpdateDisplay();
-
-	// not allowed
-
-	ProjectConfigDialog(const ProjectConfigDialog& source);
-	const ProjectConfigDialog& operator=(const ProjectConfigDialog& source);
 };
 
 #endif

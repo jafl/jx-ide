@@ -24,7 +24,7 @@ public:
 
 	~Location();
 
-	const Location& operator=(const Location& source);
+	Location& operator=(const Location& source);
 
 	const JString&	GetFileName() const;
 	const JFileID&	GetFileID() const;

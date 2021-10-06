@@ -29,13 +29,6 @@ public:
 private:
 
 	ExecOutputDocument*	itsDoc;
-
-private:
-
-	// not allowed
-
-	CmdLineInput(const CmdLineInput& source);
-	const CmdLineInput& operator=(const CmdLineInput& source);
 };
 
 #endif

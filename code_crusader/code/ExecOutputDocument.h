@@ -108,11 +108,6 @@ private:
 	void	UpdateButtons();
 	void	CloseOutFD();
 
-	// not allowed
-
-	ExecOutputDocument(const ExecOutputDocument& source);
-	const ExecOutputDocument& operator=(const ExecOutputDocument& source);
-
 	static TextEditor*	ConstructTextEditor(TextDocument* document,
 												const JString& fileName,
 												JXMenuBar* menuBar,

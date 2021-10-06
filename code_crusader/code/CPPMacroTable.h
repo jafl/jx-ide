@@ -75,11 +75,6 @@ private:
 	void	WriteData(const JString& fileName) const;
 
 	void	AdjustColWidths();
-
-	// not allowed
-
-	CPPMacroTable(const CPPMacroTable& source);
-	const CPPMacroTable& operator=(const CPPMacroTable& source);
 };
 
 #endif

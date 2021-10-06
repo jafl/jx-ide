@@ -142,45 +142,45 @@ private:
 
 	void	UpdateProjectConfig();
 
-	void		PrintTargetName(std::ostream& output) const;
+	void	PrintTargetName(std::ostream& output) const;
 	bool	SaveOpenFile(const JString& fileName);
 
-	void		CreateMakemakeFiles(const JString& makeHeaderText,
-									const JString& makeFilesText,
-									const bool readingTemplate);
-	void		CreateCMakeFiles(const JString& cmakeHeaderText,
-								 const bool readingTemplate);
-	void		CreateQMakeFiles(const JString& qmakeHeaderText,
-								 const bool readingTemplate);
-	void		RecreateMakeHeaderFile();
+	void	CreateMakemakeFiles(const JString& makeHeaderText,
+								const JString& makeFilesText,
+								const bool readingTemplate);
+	void	CreateCMakeFiles(const JString& cmakeHeaderText,
+							 const bool readingTemplate);
+	void	CreateQMakeFiles(const JString& qmakeHeaderText,
+							 const bool readingTemplate);
+	void	RecreateMakeHeaderFile();
 
 	bool	WriteSubProjectBuildFile(const bool reportError);
 
-	void		UpdateMakeHeader(const JString& fileName,
-								 const JPtrArray<JString>& libFileList,
-								 const JPtrArray<JString>& libProjPathList) const;
-	void		UpdateMakeFiles(const JString& fileName, const JString& text) const;
+	void	UpdateMakeHeader(const JString& fileName,
+							 const JPtrArray<JString>& libFileList,
+							 const JPtrArray<JString>& libProjPathList) const;
+	void	UpdateMakeFiles(const JString& fileName, const JString& text) const;
 
-	void		WriteCMakeInput(const JString& inputFileName,
-								const JString& src, const JString& hdr,
-								const JString& outputFileName) const;
-	void		WriteQMakeInput(const JString& inputFileName,
-								const JString& src, const JString& hdr,
-								const JString& outputFileName) const;
+	void	WriteCMakeInput(const JString& inputFileName,
+							const JString& src, const JString& hdr,
+							const JString& outputFileName) const;
+	void	WriteQMakeInput(const JString& inputFileName,
+							const JString& src, const JString& hdr,
+							const JString& outputFileName) const;
 
 	bool	MakeFilesChanged() const;
 	bool	CMakeHeaderChanged() const;
 	bool	QMakeHeaderChanged() const;
-	ModTime		SaveMakeFileModTimes();
+	ModTime	SaveMakeFileModTimes();
 	bool	MakefileExists() const;
 
-	void		GetMakefileNames(JPtrArray<JString>* list) const;
-	void		GetMakemakeFileNames(JString* makeHeaderName,
-									 JString* makeFilesName) const;
-	void		GetCMakeFileNames(JString* cmakeHeaderName,
-								  JString* cmakeInputName) const;
-	void		GetQMakeFileNames(JString* qmakeHeaderName,
-								  JString* qmakeInputName) const;
+	void	GetMakefileNames(JPtrArray<JString>* list) const;
+	void	GetMakemakeFileNames(JString* makeHeaderName,
+								 JString* makeFilesName) const;
+	void	GetCMakeFileNames(JString* cmakeHeaderName,
+							  JString* cmakeInputName) const;
+	void	GetQMakeFileNames(JString* qmakeHeaderName,
+							  JString* qmakeInputName) const;
 
 	void	ReadSetup(std::istream& projInput, const JFileVersion projVers,
 					  std::istream* setInput, const JFileVersion setVers,
@@ -188,8 +188,8 @@ private:
 
 	// not allowed
 
-	BuildManager(const BuildManager& source);
-	const BuildManager& operator=(const BuildManager& source);
+	BuildManager(const BuildManager&) = delete;
+	BuildManager& operator=(const BuildManager&) = delete;
 };
 
 std::istream& operator>>(std::istream& input, BuildManager::MakefileMethod& method);

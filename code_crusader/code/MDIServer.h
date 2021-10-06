@@ -55,11 +55,6 @@ private:
 	void	DisplayVCSDiffs(const JUtf8Byte* type, JIndex* index,
 							const JPtrArray<JString>& argList,
 							const bool silent);
-
-	// not allowed
-
-	MDIServer(const MDIServer& source);
-	const MDIServer& operator=(const MDIServer& source);
 };
 
 

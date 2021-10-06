@@ -228,11 +228,6 @@ private:
 
 	static void	UpgradeCommand(CmdInfo* info);
 
-	// not allowed
-
-	CommandManager(const CommandManager& source);
-	const CommandManager& operator=(const CommandManager& source);
-
 public:
 
 	// JBroadcaster messages

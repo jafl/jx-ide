@@ -77,11 +77,6 @@ private:
 	void	UpdateSaveCmdMenu();
 	void	HandleSaveCmdMenu(const JIndex item);
 	void	AddCommandToMenu(CommandManager* mgr);
-
-	// not allowed
-
-	RunCommandDialog(const RunCommandDialog& source);
-	const RunCommandDialog& operator=(const RunCommandDialog& source);
 };
 
 #endif

@@ -37,16 +37,11 @@ private:
 
 private:
 
-	void		TEScriptMenuX();
+	void	TEScriptMenuX();
 	bool	UpdateSelf();
 	bool	HandleSelection(const JIndex index);
 
 	static bool	ShowExecutables(const JDirEntry& entry);
-
-	// not allowed
-
-	TEScriptMenu(const TEScriptMenu& source);
-	const TEScriptMenu& operator=(const TEScriptMenu& source);
 };
 
 #endif

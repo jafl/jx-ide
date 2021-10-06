@@ -67,7 +67,7 @@ Location::Location
 
  *****************************************************************************/
 
-const Location&
+Location&
 Location::operator=
 	(
 	const Location& source

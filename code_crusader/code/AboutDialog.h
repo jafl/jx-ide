@@ -42,11 +42,6 @@ private:
 private:
 
 	void	BuildWindow(const JString& prevVersStr);
-
-	// not allowed
-
-	AboutDialog(const AboutDialog& source);
-	const AboutDialog& operator=(const AboutDialog& source);
 };
 
 #endif

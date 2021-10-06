@@ -116,7 +116,7 @@ private:
 	JPoint			itsStartPt;
 	JXMouseButton	itsFnMenuButton;
 	Time			itsMouseDownTime;
-	Class*		itsFnMenuClass;		// not owned
+	Class*			itsFnMenuClass;		// not owned
 
 	static bool	itsRaiseWhenSingleMatchFlag;
 
@@ -124,11 +124,6 @@ private:
 
 	void	ExpectPopupFnMenu(const JPoint& pt, const JXMouseButton button,
 							  Class* theClass);
-
-	// not allowed
-
-	TreeWidget(const TreeWidget& source);
-	const TreeWidget& operator=(const TreeWidget& source);
 };
 
 

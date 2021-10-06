@@ -56,11 +56,6 @@ private:
 							 JPtrArray<JString>* fnNameList,
 							 JArray<JIndex>* lineIndexList,
 							 JArray<Language>* lineLangList);
-
-	// not allowed
-
-	FnMenuUpdater(const FnMenuUpdater& source);
-	const FnMenuUpdater& operator=(const FnMenuUpdater& source);
 };
 
 

@@ -25,13 +25,6 @@ public:
 private:
 
 	LineIndexTable*	itsTable;	// not owned
-
-private:
-
-	// not allowed
-
-	AdjustLineTableToTextTask(const AdjustLineTableToTextTask& source);
-	const AdjustLineTableToTextTask& operator=(const AdjustLineTableToTextTask& source);
 };
 
 #endif

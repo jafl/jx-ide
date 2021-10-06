@@ -54,7 +54,6 @@ CompileDocument::CompileDocument
 	)
 	:
 	ExecOutputDocument(kExecOutputFT, "CompileHelp", false),
-	itsProjDoc(projDoc),
 	itsHasErrorsFlag(false)
 {
 	itsErrorMenu = InsertTextMenu(JGetString("ErrorMenuTitle::CompileDocument"));

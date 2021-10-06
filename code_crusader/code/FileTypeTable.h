@@ -100,8 +100,8 @@ private:
 	void	BuildScriptMenuItems(const JString& path, const bool isUserPath,
 								 JPtrArray<JString>* menuText) const;
 
-	void		GetNewScriptDirectory();
-	void		CreateNewScriptDirectory();
+	void	GetNewScriptDirectory();
+	void	CreateNewScriptDirectory();
 	bool	CreateDirectory(const JString& path) const;
 
 	JXTextMenu*	CreateCRMMenu();
@@ -110,11 +110,6 @@ private:
 	JIndex		CRMIDToMenuIndex(const JIndex id) const;
 
 	void	UpdateButtons();
-
-	// not allowed
-
-	FileTypeTable(const FileTypeTable& source);
-	const FileTypeTable& operator=(const FileTypeTable& source);
 };
 
 #endif

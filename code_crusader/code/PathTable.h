@@ -46,17 +46,17 @@ protected:
 
 	void			TableDrawCell(JPainter& p, const JPoint& cell, const JRect& rect) override;
 	JXInputField*	CreateXInputField(const JPoint& cell,
-											  const JCoordinate x, const JCoordinate y,
-											  const JCoordinate w, const JCoordinate h) override;
-	bool		ExtractInputData(const JPoint& cell) override;
+									  const JCoordinate x, const JCoordinate y,
+									  const JCoordinate w, const JCoordinate h) override;
+	bool			ExtractInputData(const JPoint& cell) override;
 	void			PrepareDeleteXInputField() override;
 
 	bool	WillAcceptDrop(const JArray<Atom>& typeList, Atom* action,
-									   const JPoint& pt, const Time time,
-									   const JXWidget* source) override;
-	void		HandleDNDDrop(const JPoint& pt, const JArray<Atom>& typeList,
-									  const Atom action, const Time time,
-									  const JXWidget* source) override;
+						   const JPoint& pt, const Time time,
+						   const JXWidget* source) override;
+	void	HandleDNDDrop(const JPoint& pt, const JArray<Atom>& typeList,
+						  const Atom action, const Time time,
+						  const JXWidget* source) override;
 
 	void	ApertureResized(const JCoordinate dw, const JCoordinate dh) override;
 	void	Receive(JBroadcaster* sender, const Message& message) override;
@@ -71,17 +71,12 @@ private:
 	JXTextButton*		itsAddPathButton;		// not owned
 	JXTextButton*		itsRemovePathButton;	// not owned
 	JXTextButton*		itsChoosePathButton;	// not owned
-	RelPathCSF*		itsCSF;					// not owned
+	RelPathCSF*			itsCSF;					// not owned
 
 private:
 
 	void	ChoosePath();
 	void	UpdateButtons();
-
-	// not allowed
-
-	PathTable(const PathTable& source);
-	const PathTable& operator=(const PathTable& source);
 };
 
 #endif

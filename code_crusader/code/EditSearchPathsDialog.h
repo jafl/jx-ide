@@ -49,11 +49,6 @@ private:
 private:
 
 	void	BuildWindow(const DirList& dirList, RelPathCSF* csf);
-
-	// not allowed
-
-	EditSearchPathsDialog(const EditSearchPathsDialog& source);
-	const EditSearchPathsDialog& operator=(const EditSearchPathsDialog& source);
 };
 
 #endif

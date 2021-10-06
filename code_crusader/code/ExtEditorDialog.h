@@ -60,11 +60,6 @@ private:
 						const JString& editBinaryFileCmd);
 
 	void	UpdateDisplay();
-
-	// not allowed
-
-	ExtEditorDialog(const ExtEditorDialog& source);
-	const ExtEditorDialog& operator=(const ExtEditorDialog& source);
 };
 
 #endif

@@ -70,11 +70,6 @@ private:
 
 	void	GetSystemIncludeDirectories();
 	void	CollectSearchPaths(DirInfoList* searchPaths) const;
-
-	// not allowed
-
-	App(const App& source);
-	const App& operator=(const App& source);
 };
 
 

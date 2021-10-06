@@ -40,11 +40,6 @@ private:
 
 	void	BuildWindow(const bool raiseTreeOnRightClick);
 	void	UpdateSettings();
-
-	// not allowed
-
-	EditSymbolPrefsDialog(const EditSymbolPrefsDialog& source);
-	const EditSymbolPrefsDialog& operator=(const EditSymbolPrefsDialog& source);
 };
 
 #endif

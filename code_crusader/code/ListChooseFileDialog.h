@@ -47,11 +47,6 @@ private:
 						const JString& appendToListStr,
 						const JString& origName,
 						const JString& message);
-
-	// not allowed
-
-	ListChooseFileDialog(const ListChooseFileDialog& source);
-	const ListChooseFileDialog& operator=(const ListChooseFileDialog& source);
 };
 
 #endif

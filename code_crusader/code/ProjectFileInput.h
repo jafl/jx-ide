@@ -38,13 +38,6 @@ protected:
 										   const JSize totalLength,
 										   const JString& fullName) const override;
 	};
-
-private:
-
-	// not allowed
-
-	ProjectFileInput(const ProjectFileInput& source);
-	const ProjectFileInput& operator=(const ProjectFileInput& source);
 };
 
 #endif

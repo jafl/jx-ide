@@ -46,11 +46,6 @@ private:
 								   TreeDirector* director,
 								   const JSize marginWidth, DirList* dirList);
 	static void		InitGoTreeToolBar(JXToolBar* toolBar, JXTextMenu* treeMenu);
-
-	// not allowed
-
-	GoTreeDirector(const GoTreeDirector& source);
-	const GoTreeDirector& operator=(const GoTreeDirector& source);
 };
 
 

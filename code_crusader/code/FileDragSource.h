@@ -46,13 +46,6 @@ private:
 
 	TextDocument*	itsDoc;			// owns us
 	JXInputField*	itsNameInput;	// nullptr => dragging for XDND
-
-private:
-
-	// not allowed
-
-	FileDragSource(const FileDragSource& source);
-	const FileDragSource& operator=(const FileDragSource& source);
 };
 
 

@@ -57,11 +57,6 @@ private:
 
 	void	ReadData(const JString& fileName, const bool replace);
 	void	WriteData(const JString& fileName) const;
-
-	// not allowed
-
-	CharActionTable(const CharActionTable& source);
-	const CharActionTable& operator=(const CharActionTable& source);
 };
 
 #endif

@@ -29,21 +29,14 @@ public:
 protected:
 
 	void	HandleMouseDown(const JPoint& pt, const JXMouseButton button,
-									const JSize clickCount,
-									const JXButtonStates& buttonStates,
-									const JXKeyModifiers& modifiers) override;
+							const JSize clickCount,
+							const JXButtonStates& buttonStates,
+							const JXKeyModifiers& modifiers) override;
 
 private:
 
 	StylerTable*	itsStylerTable;		// the table owns us
 	TextFileType	itsFileType;
-
-private:
-
-	// not allowed
-
-	StylerTableInput(const StylerTableInput& source);
-	const StylerTableInput& operator=(const StylerTableInput& source);
 };
 
 #endif

@@ -23,11 +23,11 @@ public:
 	virtual ~CompileDocument();
 
 	void	SetConnection(JProcess* p, const int inFD, const int outFD,
-								  const JString& windowTitle,
-								  const JString& dontCloseMsg,
-								  const JString& execDir,
-								  const JString& execCmd,
-								  const bool showPID) override;
+						  const JString& windowTitle,
+						  const JString& dontCloseMsg,
+						  const JString& execDir,
+						  const JString& execCmd,
+						  const bool showPID) override;
 
 	void	OpenPrevListItem() override;
 	void	OpenNextListItem() override;
@@ -35,11 +35,11 @@ public:
 	void	ConvertSelectionToFullPath(JString* fileName) const override;
 
 	static bool	WillDoubleSpace();
-	static void		ShouldDoubleSpace(const bool ds);
+	static void	ShouldDoubleSpace(const bool ds);
 
 protected:
 
-	void		AppendText(const JString& text) override;
+	void	AppendText(const JString& text) override;
 	bool	ProcessFinished(const JProcess::Finished& info) override;
 	bool	NeedsFormattedData() const override;
 
@@ -47,10 +47,9 @@ protected:
 
 private:
 
-	ProjectDocument*	itsProjDoc;			// nullptr is allowed
-	JString				itsPrevLine;
-	bool			itsHasErrorsFlag;	// true => found errors
-	JXTextMenu*			itsErrorMenu;		// not owned
+	JString		itsPrevLine;
+	bool		itsHasErrorsFlag;	// true => found errors
+	JXTextMenu*	itsErrorMenu;		// not owned
 
 	static bool	theDoubleSpaceFlag;
 
@@ -59,14 +58,9 @@ private:
 	void	UpdateErrorMenu();
 	void	HandleErrorMenu(const JIndex index);
 
-	void		ShowFirstError();
+	void	ShowFirstError();
 	bool	ShowPrevError();
 	bool	ShowNextError();
-
-	// not allowed
-
-	CompileDocument(const CompileDocument& source);
-	const CompileDocument& operator=(const CompileDocument& source);
 };
 
 

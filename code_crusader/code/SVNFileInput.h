@@ -40,13 +40,6 @@ protected:
 							JStyledText::TextRange* redrawRange,
 							const bool deletion) override;
 	};
-
-private:
-
-	// not allowed
-
-	SVNFileInput(const SVNFileInput& source);
-	const SVNFileInput& operator=(const SVNFileInput& source);
 };
 
 #endif

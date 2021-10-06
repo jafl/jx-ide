@@ -47,11 +47,6 @@ private:
 	void	BuildWindow(const RelPathCSF::PathType pathType,
 						const JString& origName,
 						const JString& message);
-
-	// not allowed
-
-	RPChooseFileDialog(const RPChooseFileDialog& source);
-	const RPChooseFileDialog& operator=(const RPChooseFileDialog& source);
 };
 
 #endif

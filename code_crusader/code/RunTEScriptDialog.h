@@ -53,18 +53,13 @@ private:
 
 private:
 
-	void		BuildWindow();
-	void		UpdateDisplay();
+	void	BuildWindow();
+	void	UpdateDisplay();
 	bool	RunScript(JTextEditor* te, const JString& fullName);
 	bool	RunScript(const JString& cmd, JTextEditor* te,
-						  const JString& fullName);
-	void		ReplaceVariables(JString* cmd, JTextEditor* te,
-								 const JString& fullName);
-
-	// not allowed
-
-	RunTEScriptDialog(const RunTEScriptDialog& source);
-	const RunTEScriptDialog& operator=(const RunTEScriptDialog& source);
+					  const JString& fullName);
+	void	ReplaceVariables(JString* cmd, JTextEditor* te,
+							 const JString& fullName);
 };
 
 #endif

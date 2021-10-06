@@ -50,14 +50,9 @@ private:
 
 private:
 
-	void		BuildWindow();
-	void		UpdateDisplay();
+	void	BuildWindow();
+	void	UpdateDisplay();
 	bool	FindFile();
-
-	// not allowed
-
-	FindFileDialog(const FindFileDialog& source);
-	const FindFileDialog& operator=(const FindFileDialog& source);
 };
 
 #endif

@@ -260,11 +260,6 @@ private:
 
 	int		StartSymbolLoadTimer();
 	void	StopSymbolLoadTimer(const int timerStatus);
-
-	// not allowed
-
-	ProjectDocument(const ProjectDocument& source);
-	const ProjectDocument& operator=(const ProjectDocument& source);
 };
 
 

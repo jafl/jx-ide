@@ -27,8 +27,8 @@ public:
 	void			SetPrintInfo(TextEditor* te, const JString& headerName);
 
 	virtual bool	OpenDocument();
-	virtual void		CloseDocument();
-	virtual void		CancelDocument();
+	virtual void	CloseDocument();
+	virtual void	CancelDocument();
 
 protected:
 
@@ -41,22 +41,15 @@ protected:
 							   const bool collate, const bool bw);
 
 	virtual bool	EndUserPrintSetup(const JBroadcaster::Message& message,
-										  bool* changed);
+									  bool* changed);
 
 private:
 
-	JSize			itsFontSize;
+	JSize		itsFontSize;
 	TextEditor*	itsTE;			// nullptr unless printing; not owned
-	JString			itsHeaderName;	// only used during printing
+	JString		itsHeaderName;	// only used during printing
 
 	PSPrintSetupDialog*	itsCBPrintSetupDialog;
-
-private:
-
-	// not allowed
-
-	PSPrinter(const PSPrinter& source);
-	const PSPrinter& operator=(const PSPrinter& source);
 };
 
 

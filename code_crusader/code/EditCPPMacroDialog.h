@@ -49,11 +49,6 @@ private:
 private:
 
 	void	BuildWindow(const CPreprocessor& cpp);
-
-	// not allowed
-
-	EditCPPMacroDialog(const EditCPPMacroDialog& source);
-	const EditCPPMacroDialog& operator=(const EditCPPMacroDialog& source);
 };
 
 #endif

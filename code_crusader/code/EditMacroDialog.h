@@ -77,11 +77,6 @@ private:
 	void	BuildWindow(JArray<PrefsManager::MacroSetInfo>* macroList,
 						const JIndex initialSelection,
 						const JIndex firstUnusedID);
-
-	// not allowed
-
-	EditMacroDialog(const EditMacroDialog& source);
-	const EditMacroDialog& operator=(const EditMacroDialog& source);
 };
 
 #endif

@@ -37,13 +37,6 @@ protected:
 private:
 
 	TECaretInputBase*	itsColInput;
-
-private:
-
-	// not allowed
-
-	TELineIndexInput(const TELineIndexInput& source);
-	const TELineIndexInput& operator=(const TELineIndexInput& source);
 };
 
 #endif

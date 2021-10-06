@@ -70,7 +70,7 @@ DirList::~DirList()
 
  ******************************************************************************/
 
-const DirList&
+DirList&
 DirList::operator=
 	(
 	const DirList& source

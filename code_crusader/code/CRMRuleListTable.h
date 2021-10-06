@@ -76,11 +76,6 @@ private:
 		CompareNames(
 			const PrefsManager::CRMRuleListInfo& i1,
 			const PrefsManager::CRMRuleListInfo& i2);
-
-	// not allowed
-
-	CRMRuleListTable(const CRMRuleListTable& source);
-	const CRMRuleListTable& operator=(const CRMRuleListTable& source);
 };
 
 #endif

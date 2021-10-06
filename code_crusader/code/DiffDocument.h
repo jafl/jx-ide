@@ -106,11 +106,6 @@ private:
 												TEColIndexInput* colInput,
 												JXScrollbarSet* scrollbarSet);
 
-	// not allowed
-
-	DiffDocument(const DiffDocument& source);
-	const DiffDocument& operator=(const DiffDocument& source);
-
 public:
 
 	// JError classes

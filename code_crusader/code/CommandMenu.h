@@ -64,11 +64,6 @@ private:
 
 	void	BuildTargetInfo(GetTargetInfo* info);
 
-	// not allowed
-
-	CommandMenu(const CommandMenu& source);
-	const CommandMenu& operator=(const CommandMenu& source);
-
 public:
 
 	// JBroadcaster messages

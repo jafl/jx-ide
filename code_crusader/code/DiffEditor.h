@@ -50,11 +50,6 @@ private:
 					   const bool preferRemove, const bool hadSelection,
 					   const JStyledText::TextIndex& origIndex,
 					   const JStyledText::TextRange& origRange);
-
-	// not allowed
-
-	DiffEditor(const DiffEditor& source);
-	const DiffEditor& operator=(const DiffEditor& source);
 };
 
 #endif

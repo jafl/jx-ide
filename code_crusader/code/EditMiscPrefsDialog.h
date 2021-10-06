@@ -51,11 +51,6 @@ private:
 
 	void	BuildWindow();
 	void	UpdateSettings();
-
-	// not allowed
-
-	EditMiscPrefsDialog(const EditMiscPrefsDialog& source);
-	const EditMiscPrefsDialog& operator=(const EditMiscPrefsDialog& source);
 };
 
 #endif

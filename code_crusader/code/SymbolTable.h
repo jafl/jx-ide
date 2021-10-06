@@ -45,21 +45,21 @@ public:
 	void	SetDisplayList(const JArray<JIndex>& list);
 
 	void	HandleKeyPress(const JUtf8Character& c,
-								   const int keySym, const JXKeyModifiers& modifiers) override;
+						   const int keySym, const JXKeyModifiers& modifiers) override;
 
 protected:
 
 	void	TableDrawCell(JPainter& p, const JPoint& cell, const JRect& rect) override;
 
 	void	HandleMouseDown(const JPoint& pt, const JXMouseButton button,
-									const JSize clickCount,
-									const JXButtonStates& buttonStates,
-									const JXKeyModifiers& modifiers) override;
+							const JSize clickCount,
+							const JXButtonStates& buttonStates,
+							const JXKeyModifiers& modifiers) override;
 	void	HandleMouseDrag(const JPoint& pt, const JXButtonStates& buttonStates,
-									const JXKeyModifiers& modifiers) override;
+							const JXKeyModifiers& modifiers) override;
 	void	HandleMouseUp(const JPoint& pt, const JXMouseButton button,
-								  const JXButtonStates& buttonStates,
-								  const JXKeyModifiers& modifiers) override;
+						  const JXButtonStates& buttonStates,
+						  const JXKeyModifiers& modifiers) override;
 
 	void	HandleFocusEvent() override;
 
@@ -70,26 +70,21 @@ private:
 
 	SymbolDirector*	itsSymbolDirector;			// not owned
 	SymbolList*		itsSymbolList;				// not owned
-	JArray<JIndex>*		itsVisibleList;				// index of each visible symbol
+	JArray<JIndex>*	itsVisibleList;				// index of each visible symbol
 	bool			itsVisibleListLockedFlag;	// true => RebuildTable() doesn't change it
-	JRegex*				itsNameFilter;				// nullptr if not used
-	JString*			itsNameLiteral;				// nullptr if not used
+	JRegex*			itsNameFilter;				// nullptr if not used
+	JString*		itsNameLiteral;				// nullptr if not used
 
 	JSize			itsMaxStringWidth;
 	mutable JString	itsKeyBuffer;
 
 private:
 
-	void		RebuildTable();
+	void	RebuildTable();
 	bool	CalcColWidths(const JString& symbolName, const JString* signature);
-	void		AdjustColWidths();
+	void	AdjustColWidths();
 
 	JIndex	CellToSymbolIndex(const JPoint& cell) const;
-
-	// not allowed
-
-	SymbolTable(const SymbolTable& source);
-	const SymbolTable& operator=(const SymbolTable& source);
 };
 
 #endif

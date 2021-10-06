@@ -2546,7 +2546,7 @@ ProjectDocument::StopSymbolLoadTimer
 		itsLastSymbolLoadTime = kSymbolLoadTimerStart - (t.it_value.tv_sec + (t.it_value.tv_usec / 1.0e6));
 	}
 
-	bzero(&t, sizeof(t));
+	memset(&t, 0, sizeof(t));
 	setitimer(ITIMER_PROF, &t, nullptr);
 }
 

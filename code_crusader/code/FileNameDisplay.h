@@ -77,7 +77,7 @@ private:
 	JString		itsOrigFile;
 	Action		itsUnfocusAction;
 
-	TextDocument*		itsDoc;			// not owned
+	TextDocument*	itsDoc;			// not owned
 	FileDragSource*	itsDragSource;	// not owned
 	bool			itsDiskModFlag;
 	bool			itsCBHasFocusFlag;
@@ -85,11 +85,6 @@ private:
 private:
 
 	void	UpdateDisplay(const bool hasFocus);
-
-	// not allowed
-
-	FileNameDisplay(const FileNameDisplay& source);
-	const FileNameDisplay& operator=(const FileNameDisplay& source);
 };
 
 #endif

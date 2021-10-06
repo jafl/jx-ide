@@ -72,11 +72,6 @@ private:
 	void	RemoveRow();
 
 	void	AdjustColWidths();
-
-	// not allowed
-
-	KeyScriptTableBase(const KeyScriptTableBase& source);
-	const KeyScriptTableBase& operator=(const KeyScriptTableBase& source);
 };
 
 

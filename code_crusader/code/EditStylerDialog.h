@@ -55,11 +55,6 @@ private:
 						const JArray<JFontStyle>& typeStyles,
 						const JArray<StylerBase::WordStyle>& wordList,
 						const TextFileType fileType);
-
-	// not allowed
-
-	EditStylerDialog(const EditStylerDialog& source);
-	const EditStylerDialog& operator=(const EditStylerDialog& source);
 };
 
 #endif

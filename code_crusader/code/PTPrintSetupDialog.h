@@ -40,11 +40,6 @@ private:
 	void	BuildWindow(const JXPTPrinter::Destination dest,
 						const JString& printCmd, const JString& fileName,
 						const bool printLineNumbers, const bool printHeader);
-
-	// not allowed
-
-	PTPrintSetupDialog(const PTPrintSetupDialog& source);
-	const PTPrintSetupDialog& operator=(const PTPrintSetupDialog& source);
 };
 
 #endif

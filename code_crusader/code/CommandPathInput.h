@@ -47,13 +47,6 @@ protected:
 							JStyledText::TextRange* redrawRange,
 							const bool deletion) override;
 	};
-
-private:
-
-	// not allowed
-
-	CommandPathInput(const CommandPathInput& source);
-	const CommandPathInput& operator=(const CommandPathInput& source);
 };
 
 #endif

@@ -46,11 +46,6 @@ private:
 									TreeDirector* director,
 									const JSize marginWidth, DirList* dirList);
 	static void		InitPHPTreeToolBar(JXToolBar* toolBar, JXTextMenu* treeMenu);
-
-	// not allowed
-
-	PHPTreeDirector(const PHPTreeDirector& source);
-	const PHPTreeDirector& operator=(const PHPTreeDirector& source);
 };
 
 

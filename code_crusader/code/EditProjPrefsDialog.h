@@ -51,11 +51,6 @@ private:
 						const bool rebuildMakefileDaily,
 						const ProjectTable::DropFileAction dropFileAction);
 	void	UpdateSettings();
-
-	// not allowed
-
-	EditProjPrefsDialog(const EditProjPrefsDialog& source);
-	const EditProjPrefsDialog& operator=(const EditProjPrefsDialog& source);
 };
 
 #endif

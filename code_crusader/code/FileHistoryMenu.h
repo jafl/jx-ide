@@ -39,11 +39,6 @@ private:
 private:
 
 	void	FileHistoryMenuX(const DocumentManager::FileHistoryType type);
-
-	// not allowed
-
-	FileHistoryMenu(const FileHistoryMenu& source);
-	const FileHistoryMenu& operator=(const FileHistoryMenu& source);
 };
 
 #endif

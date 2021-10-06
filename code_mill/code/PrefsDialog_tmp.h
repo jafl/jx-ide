@@ -19,19 +19,9 @@ public:
 	PrefsDialog()
 	virtual ~PrefsDialog();
 
-
-
 protected:
 
 	virtual bool	OKToDeactivate();
-
-
-private:
-
-	PrefsDialog(const PrefsDialog& source);
-	const PrefsDialog& operator=(const PrefsDialog& source);
-
-
 };
 
 #endif

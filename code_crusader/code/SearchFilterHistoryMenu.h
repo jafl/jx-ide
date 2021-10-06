@@ -30,13 +30,6 @@ public:
 
 	const JString&	GetFilter(const Message& message, bool* invert) const;
 	const JString&	GetFilter(const JIndex index, bool* invert) const;
-
-private:
-
-	// not allowed
-
-	SearchFilterHistoryMenu(const SearchFilterHistoryMenu& source);
-	const SearchFilterHistoryMenu& operator=(const SearchFilterHistoryMenu& source);
 };
 
 #endif

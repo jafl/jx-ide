@@ -35,13 +35,6 @@ protected:
 	bool	IsExact(const JFontID id) override;
 	bool	HasGlyphForCharacter(const JFontID id, const JUtf8Character& c) override;
 	bool	GetSubstituteFontName(const JFont& f, const JUtf8Character& c, JString* name) override;
-
-private:
-
-	// not allowed
-
-	SearchFontManager(const SearchFontManager& source);
-	const SearchFontManager& operator=(const SearchFontManager& source);
 };
 
 #endif

@@ -31,13 +31,6 @@ protected:
 private:
 
 	JPtrArray<JXImage>*	itsImageList;
-
-private:
-
-	// not allowed
-
-	AboutDialogIconTask(const AboutDialogIconTask& source);
-	const AboutDialogIconTask& operator=(const AboutDialogIconTask& source);
 };
 
 #endif

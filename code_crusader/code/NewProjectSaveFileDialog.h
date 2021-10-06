@@ -27,7 +27,7 @@ public:
 
 	virtual ~NewProjectSaveFileDialog();
 
-	bool						GetProjectTemplate(JString* fullName) const;
+	bool							GetProjectTemplate(JString* fullName) const;
 	BuildManager::MakefileMethod	GetMakefileMethod() const;
 
 protected:
@@ -37,7 +37,7 @@ protected:
 							   const BuildManager::MakefileMethod method);
 
 	bool	OKToDeactivate() override;
-	void		Receive(JBroadcaster* sender, const Message& message) override;
+	void	Receive(JBroadcaster* sender, const Message& message) override;
 
 private:
 
@@ -64,12 +64,7 @@ private:
 								   JString** menuTextStr) const;
 
 	bool	OKToReplaceFile(const JString& fullName,
-								const JString& programName);
-
-	// not allowed
-
-	NewProjectSaveFileDialog(const NewProjectSaveFileDialog& source);
-	const NewProjectSaveFileDialog& operator=(const NewProjectSaveFileDialog& source);
+							const JString& programName);
 };
 
 #endif

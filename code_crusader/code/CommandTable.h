@@ -116,11 +116,6 @@ private:
 	void	HandleOptionsMenu(const JIndex index);
 
 	void	UpdateButtons();
-
-	// not allowed
-
-	CommandTable(const CommandTable& source);
-	const CommandTable& operator=(const CommandTable& source);
 };
 
 #endif

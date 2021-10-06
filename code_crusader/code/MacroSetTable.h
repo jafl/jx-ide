@@ -74,11 +74,6 @@ private:
 	void	AddRow();
 	void	RemoveRow();
 	void	SwitchDisplay();
-
-	// not allowed
-
-	MacroSetTable(const MacroSetTable& source);
-	const MacroSetTable& operator=(const MacroSetTable& source);
 };
 
 #endif

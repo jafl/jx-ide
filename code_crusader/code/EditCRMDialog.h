@@ -68,11 +68,6 @@ private:
 	void	BuildWindow(JArray<PrefsManager::CRMRuleListInfo>* crmList,
 						const JIndex initialSelection,
 						const JIndex firstUnusedID);
-
-	// not allowed
-
-	EditCRMDialog(const EditCRMDialog& source);
-	const EditCRMDialog& operator=(const EditCRMDialog& source);
 };
 
 #endif

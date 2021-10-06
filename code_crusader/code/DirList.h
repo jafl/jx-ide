@@ -49,7 +49,7 @@ public:
 
 	virtual ~DirList();
 
-	const DirList& operator=(const DirList& source);
+	DirList& operator=(const DirList& source);
 
 	bool	GetFullPath(const JIndex index, JString* fullPath,
 							bool* recurse) const;

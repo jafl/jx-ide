@@ -99,30 +99,25 @@ private:
 
 private:
 
-	void		ScanAll(ProjectTree* fileTree, const DirList& dirList,
-						SymbolList* symbolList,
-						CTree* cTree, DTree* dTree, GoTree* goTree,
-						JavaTree* javaTree, PHPTree* phpTree,
-						JProgressDisplay& pg);
-	void		ScanDirectory(const JString& path, const bool recurse,
-							  const JPtrArray<JString>& allSuffixList,
-							  SymbolList* symbolList,
-							  CTree* cTree, DTree* dTree, GoTree* goTree,
-							  JavaTree* javaTree, PHPTree* phpTree,
-							  JProgressDisplay& pg);
+	void	ScanAll(ProjectTree* fileTree, const DirList& dirList,
+					SymbolList* symbolList,
+					CTree* cTree, DTree* dTree, GoTree* goTree,
+					JavaTree* javaTree, PHPTree* phpTree,
+					JProgressDisplay& pg);
+	void	ScanDirectory(const JString& path, const bool recurse,
+						  const JPtrArray<JString>& allSuffixList,
+						  SymbolList* symbolList,
+						  CTree* cTree, DTree* dTree, GoTree* goTree,
+						  JavaTree* javaTree, PHPTree* phpTree,
+						  JProgressDisplay& pg);
 	bool	AddFile(const JString& fullName, const TextFileType fileType,
-						const time_t modTime, JFAID_t* id);
+					const time_t modTime, JFAID_t* id);
 
 	bool	IDToIndex(const JFAID_t id, JIndex* index) const;
-	JFAID_t		GetUniqueID() const;
+	JFAID_t	GetUniqueID() const;
 
 	void	FilesAdded(const JListT::ElementsInserted& info);
 	void	UpdateFileInfo(const JIndex index);
-
-	// not allowed
-
-	FileListTable(const FileListTable& source);
-	const FileListTable& operator=(const FileListTable& source);
 };
 
 #endif

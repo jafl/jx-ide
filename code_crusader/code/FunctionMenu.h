@@ -46,10 +46,10 @@ private:
 	JArray<JIndex>*		itsLineIndexList;
 	JArray<Language>*	itsLineLangList;
 	JIndex				itsCaretItemIndex;
-	bool			itsNeedsUpdate;		// true if must rebuild menu
-	bool			itsSortFlag;		// true if menu is currently sorted
-	bool			itsIncludeNSFlag;	// true if menu is displaying namespace
-	bool			itsPackFlag;		// true if menu is currently packed
+	bool				itsNeedsUpdate;		// true if must rebuild menu
+	bool				itsSortFlag;		// true if menu is currently sorted
+	bool				itsIncludeNSFlag;	// true if menu is displaying namespace
+	bool				itsPackFlag;		// true if menu is currently packed
 
 	#ifdef CODE_MEDIC
 	JString itsFileName;
@@ -63,11 +63,6 @@ private:
 	void	SetEmptyMenuItems();
 	void	UpdateMenu();
 	void	HandleSelection(const JIndex index);
-
-	// not allowed
-
-	FunctionMenu(const FunctionMenu& source);
-	const FunctionMenu& operator=(const FunctionMenu& source);
 };
 
 #endif

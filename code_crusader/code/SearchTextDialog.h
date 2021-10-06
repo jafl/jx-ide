@@ -49,7 +49,7 @@ private:
 	JXFileListTable*	itsFileList;
 	ListCSF*			itsCSF;
 
-	mutable JString		itsFileSetName;
+	mutable JString	itsFileSetName;
 	bool			itsOnlyListFilesFlag;
 	bool			itsListFilesWithoutMatchFlag;
 
@@ -77,31 +77,26 @@ private:
 	void	UpdateFileListMenu();
 	void	HandleFileListMenu(const JIndex item);
 
-	void		SearchFiles() const;
-	void		SearchFilesAndReplace();
+	void	SearchFiles() const;
+	void	SearchFilesAndReplace();
 	bool	BuildSearchFileList(JPtrArray<JString>* fileList,
-									JPtrArray<JString>* nameList) const;
+								JPtrArray<JString>* nameList) const;
 	bool	SearchDirectory(const JString& path, const JRegex* fileRegex,
-								const JRegex* pathRegex,
-								JPtrArray<JString>* fileList,
-								JPtrArray<JString>* nameList,
-								JProgressDisplay& pg) const;
-	void		SaveFileForSearch(const JString& fullName,
-								  JPtrArray<JString>* fileList,
-								  JPtrArray<JString>* nameList) const;
-	void		UpdateBasePath();
+							const JRegex* pathRegex,
+							JPtrArray<JString>* fileList,
+							JPtrArray<JString>* nameList,
+							JProgressDisplay& pg) const;
+	void	SaveFileForSearch(const JString& fullName,
+							  JPtrArray<JString>* fileList,
+							  JPtrArray<JString>* nameList) const;
+	void	UpdateBasePath();
 	bool	GetSearchDirectory(JString* path, JString* fileFilter,
-								   JString *pathFilter) const;
+							   JString *pathFilter) const;
 
 	void	LoadFileSet();
 	void	SaveFileSet() const;
 	void	OpenSelectedFiles() const;
 	void	AddSearchFiles();
-
-	// not allowed
-
-	SearchTextDialog(const SearchTextDialog& source);
-	const SearchTextDialog& operator=(const SearchTextDialog& source);
 };
 
 #endif

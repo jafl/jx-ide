@@ -118,11 +118,6 @@ private:
 
 	void	BuildAncestorList(const Class& theClass,
 							  JPtrArray<JString>* list) const;
-
-	// not allowed
-
-	SymbolDirector(const SymbolDirector& source);
-	const SymbolDirector& operator=(const SymbolDirector& source);
 };
 
 

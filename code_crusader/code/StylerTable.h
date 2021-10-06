@@ -42,7 +42,7 @@ public:
 	void	GetData(JStringMap<JFontStyle>* wordStyles) const;
 
 	void	HandleKeyPress(const JUtf8Character& c,
-								   const int keySym, const JXKeyModifiers& modifiers) override;
+						   const int keySym, const JXKeyModifiers& modifiers) override;
 
 	// called by StylerTableInput
 
@@ -53,14 +53,14 @@ public:
 protected:
 
 	void	HandleMouseDown(const JPoint& pt, const JXMouseButton button,
-									const JSize clickCount,
-									const JXButtonStates& buttonStates,
-									const JXKeyModifiers& modifiers) override;
+							const JSize clickCount,
+							const JXButtonStates& buttonStates,
+							const JXKeyModifiers& modifiers) override;
 	void	HandleMouseDrag(const JPoint& pt, const JXButtonStates& buttonStates,
-									const JXKeyModifiers& modifiers) override;
+							const JXKeyModifiers& modifiers) override;
 	void	HandleMouseUp(const JPoint& pt, const JXMouseButton button,
-								  const JXButtonStates& buttonStates,
-								  const JXKeyModifiers& modifiers) override;
+						  const JXButtonStates& buttonStates,
+						  const JXKeyModifiers& modifiers) override;
 
 	JXInputField*
 		CreateStringTableInput(const JPoint& cell, JXContainer* enclosure,
@@ -82,16 +82,11 @@ private:
 private:
 
 	void	StylerTableX(const TextFileType fileType, const bool allowEdit,
-						   JXTextButton* addRowButton, JXTextButton* removeButton);
+						 JXTextButton* addRowButton, JXTextButton* removeButton);
 	void	UpdateButtons();
 
 	void	AddRow();
 	void	RemoveSelection();
-
-	// not allowed
-
-	StylerTable(const StylerTable& source);
-	const StylerTable& operator=(const StylerTable& source);
 };
 
 #endif

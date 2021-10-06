@@ -42,11 +42,6 @@ private:
 private:
 
 	static void	RemoveFromManPageList(ManPageDocument* doc);
-
-	// not allowed
-
-	ManPageDocument(const ManPageDocument& source);
-	const ManPageDocument& operator=(const ManPageDocument& source);
 };
 
 #endif

@@ -42,9 +42,9 @@ protected:
 
 private:
 
-	SymbolDirector*	itsMainSymDir;		// owns us
+	SymbolDirector*		itsMainSymDir;		// owns us
 	ProjectDocument*	itsProjDoc;			// not owned
-	SymbolList*		itsSymbolList;		// not owned
+	SymbolList*			itsSymbolList;		// not owned
 	SymbolTable*		itsSymbolTable;
 	JXTextMenu*			itsActionsMenu;
 	CommandMenu*		itsCmdMenu;
@@ -65,11 +65,6 @@ private:
 
 	void	UpdateActionsMenu();
 	void	HandleActionsMenu(const JIndex index);
-
-	// not allowed
-
-	SymbolSRDirector(const SymbolSRDirector& source);
-	const SymbolSRDirector& operator=(const SymbolSRDirector& source);
 };
 
 

@@ -79,11 +79,6 @@ private:
 
 	void	UpdatePrefsMenu();
 	void	HandlePrefsMenu(const JIndex index);
-
-	// not allowed
-
-	FileListDirector(const FileListDirector& source);
-	const FileListDirector& operator=(const FileListDirector& source);
 };
 
 

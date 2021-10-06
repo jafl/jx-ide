@@ -62,11 +62,6 @@ private:
 	void	UpdateDisplay();
 	void	ViewManPage();
 	void	SetFunction(const JString& historyStr);
-
-	// not allowed
-
-	ViewManPageDialog(const ViewManPageDialog& source);
-	const ViewManPageDialog& operator=(const ViewManPageDialog& source);
 };
 
 #endif

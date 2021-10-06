@@ -65,11 +65,6 @@ private:
 												 TELineIndexInput* lineInput,
 												 TEColIndexInput* colInput,
 												 JXScrollbarSet* scrollbarSet);
-
-	// not allowed
-
-	ShellDocument(const ShellDocument& source);
-	const ShellDocument& operator=(const ShellDocument& source);
 };
 
 

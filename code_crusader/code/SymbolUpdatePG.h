@@ -38,13 +38,6 @@ private:
 
 	std::ostream&	itsLink;
 	JSize			itsScaleFactor;
-
-private:
-
-	// not allowed
-
-	SymbolUpdatePG(const SymbolUpdatePG& source);
-	const SymbolUpdatePG& operator=(const SymbolUpdatePG& source);
 };
 
 

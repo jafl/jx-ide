@@ -71,8 +71,8 @@ protected:
 private:
 
 	EditCRMDialog*	itsDialog;
-	JXTextButton*		itsAddRowButton;
-	JXTextButton*		itsRemoveRowButton;
+	JXTextButton*	itsAddRowButton;
+	JXTextButton*	itsRemoveRowButton;
 
 	ListCSF*		itsCSF;
 	JXTextButton*	itsLoadButton;
@@ -94,11 +94,6 @@ private:
 
 	void	ReadData(const JString& fileName, const bool replace);
 	void	WriteData(const JString& fileName) const;
-
-	// not allowed
-
-	CRMRuleTable(const CRMRuleTable& source);
-	const CRMRuleTable& operator=(const CRMRuleTable& source);
 };
 
 #endif

@@ -59,11 +59,6 @@ private:
 	void	UpdateDisplay();
 
 	void	ChooseProjectFile();
-
-	// not allowed
-
-	SubprojectConfigDialog(const SubprojectConfigDialog& source);
-	const SubprojectConfigDialog& operator=(const SubprojectConfigDialog& source);
 };
 
 #endif

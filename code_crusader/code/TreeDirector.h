@@ -155,11 +155,6 @@ private:
 	void	UpdatePrefsMenu();
 	void	HandlePrefsMenu(const JIndex index);
 	void	EditTreePrefs();
-
-	// not allowed
-
-	TreeDirector(const TreeDirector& source);
-	const TreeDirector& operator=(const TreeDirector& source);
 };
 
 

@@ -33,11 +33,6 @@ private:
 private:
 
 	void	BuildWindow(const JSize tabWidth);
-
-	// not allowed
-
-	TabWidthDialog(const TabWidthDialog& source);
-	const TabWidthDialog& operator=(const TabWidthDialog& source);
 };
 
 #endif

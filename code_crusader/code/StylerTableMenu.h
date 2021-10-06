@@ -41,11 +41,6 @@ private:
 
 	void	UpdateStyle(const JIndex index, const JFontStyle& origStyle,
 						JFontStyle* style);
-
-	// not allowed
-
-	StylerTableMenu(const StylerTableMenu& source);
-	const StylerTableMenu& operator=(const StylerTableMenu& source);
 };
 
 /******************************************************************************

@@ -35,13 +35,6 @@ protected:
 private:
 
 	TELineIndexInput*	itsLineInput;	// not owned
-
-private:
-
-	// not allowed
-
-	TEColIndexInput(const TEColIndexInput& source);
-	const TEColIndexInput& operator=(const TEColIndexInput& source);
 };
 
 #endif

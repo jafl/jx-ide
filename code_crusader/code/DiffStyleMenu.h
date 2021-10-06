@@ -37,13 +37,6 @@ protected:
 private:
 
 	JFontStyle	itsStyle;
-
-private:
-
-	// not allowed
-
-	DiffStyleMenu(const DiffStyleMenu& source);
-	const DiffStyleMenu& operator=(const DiffStyleMenu& source);
 };
 
 

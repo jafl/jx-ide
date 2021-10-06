@@ -214,16 +214,11 @@ private:
 	void	UpdateReadOnlyDisplay();
 
 	static TextEditor*	ConstructTextEditor(TextDocument* document,
-												const JString& fileName,
-												JXMenuBar* menuBar,
-												TELineIndexInput* lineInput,
-												TEColIndexInput* colInput,
-												JXScrollbarSet* scrollbarSet);
-
-	// not allowed
-
-	TextDocument(const TextDocument& source);
-	const TextDocument& operator=(const TextDocument& source);
+											const JString& fileName,
+											JXMenuBar* menuBar,
+											TELineIndexInput* lineInput,
+											TEColIndexInput* colInput,
+											JXScrollbarSet* scrollbarSet);
 
 public:
 

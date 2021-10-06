@@ -242,11 +242,6 @@ private:
 							 const JString& filterStr,
 							 const RelPathCSF::PathType pathType,
 							 bool* changed);
-
-	// not allowed
-
-	ProjectTable(const ProjectTable& source);
-	const ProjectTable& operator=(const ProjectTable& source);
 };
 
 std::istream& operator>>(std::istream& input, ProjectTable::DropFileAction& action);

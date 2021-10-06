@@ -137,7 +137,7 @@ PROMPT "(gdb) "\n?
 %{
 /************************************************************************/
 
-	bzero(&itsData, sizeof(itsData));
+	memset(&itsData, 0, sizeof(itsData));
 
 %}
 

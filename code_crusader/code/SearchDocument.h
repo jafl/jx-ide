@@ -43,8 +43,8 @@ protected:
 					 JProcess* p, const int fd,
 					 const JString& windowTitle);
 
-	void		PlaceCmdLineWidgets() override;
-	void		AppendText(const JString& text) override;
+	void	PlaceCmdLineWidgets() override;
+	void	AppendText(const JString& text) override;
 	bool	ProcessFinished(const JProcess::Finished& info) override;
 	bool	NeedsFormattedData() const override;
 
@@ -52,9 +52,9 @@ protected:
 
 private:
 
-	const bool			itsIsReplaceFlag;
-	const bool			itsOnlyListFilesFlag;
-	bool				itsFoundFlag;			// true => something matched
+	const bool				itsIsReplaceFlag;
+	const bool				itsOnlyListFilesFlag;
+	bool					itsFoundFlag;			// true => something matched
 	JStyledText::TextIndex	itsPrevQuoteIndex;		// start of previous quote from file
 
 	JXTextMenu*				itsMatchMenu;
@@ -68,18 +68,13 @@ private:
 	void	UpdateMatchMenu();
 	void	HandleMatchMenu(const JIndex index);
 
-	void		ShowFirstMatch();
+	void	ShowFirstMatch();
 	bool	ShowPrevMatch();
 	bool	ShowNextMatch();
 
 	JFontStyle	GetFileNameStyle() const;
 	JFontStyle	GetMatchStyle() const;
 	JFontStyle	GetErrorStyle() const;
-
-	// not allowed
-
-	SearchDocument(const SearchDocument& source);
-	const SearchDocument& operator=(const SearchDocument& source);
 };
 
 #endif

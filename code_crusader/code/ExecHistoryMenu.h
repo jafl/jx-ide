@@ -30,11 +30,6 @@ public:
 private:
 
 	void	ExecHistoryMenuX();
-
-	// not allowed
-
-	ExecHistoryMenu(const ExecHistoryMenu& source);
-	const ExecHistoryMenu& operator=(const ExecHistoryMenu& source);
 };
 
 #endif

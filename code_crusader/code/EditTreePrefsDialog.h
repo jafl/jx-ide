@@ -58,11 +58,6 @@ private:
 						const bool autoMinMILinks, const bool drawMILinksOnTop,
 						const bool raiseWhenSingleMatch);
 	void	UpdateSettings();
-
-	// not allowed
-
-	EditTreePrefsDialog(const EditTreePrefsDialog& source);
-	const EditTreePrefsDialog& operator=(const EditTreePrefsDialog& source);
 };
 
 #endif

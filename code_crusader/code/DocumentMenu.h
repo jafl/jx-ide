@@ -26,13 +26,6 @@ public:
 protected:
 
 	void	Receive(JBroadcaster* sender, const Message& message) override;
-
-private:
-
-	// not allowed
-
-	DocumentMenu(const DocumentMenu& source);
-	const DocumentMenu& operator=(const DocumentMenu& source);
 };
 
 #endif

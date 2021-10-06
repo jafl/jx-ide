@@ -30,7 +30,7 @@ public:
 	void		ShouldOptimizeUpdate(const bool optimize);
 
 	void	HandleKeyPress(const JUtf8Character& c,
-								   const int keySym, const JXKeyModifiers& modifiers) override;
+						   const int keySym, const JXKeyModifiers& modifiers) override;
 
 protected:
 
@@ -42,8 +42,8 @@ protected:
 	void		BoundsResized(const JCoordinate dw, const JCoordinate dh) override;
 	JCoordinate	GetFTCMinContentSize(const bool horizontal) const override;
 
-	void		HandleFocusEvent() override;
-	void		HandleUnfocusEvent() override;
+	void	HandleFocusEvent() override;
+	void	HandleUnfocusEvent() override;
 	bool	OKToUnfocus() override;
 
 	void	Receive(JBroadcaster* sender, const Message& message) override;
@@ -52,19 +52,14 @@ private:
 
 	JXTEBase*	itsTE;				// not owned
 	JInteger	itsOrigValue;
-	bool	itsShouldActFlag;
-	bool	itsOptimizeUpdateFlag;
+	bool		itsShouldActFlag;
+	bool		itsOptimizeUpdateFlag;
 
 	JXStaticText*	itsLabel;		// not owned
 
 private:
 
 	void	Center();
-
-	// not allowed
-
-	TECaretInputBase(const TECaretInputBase& source);
-	const TECaretInputBase& operator=(const TECaretInputBase& source);
 };
 
 

@@ -47,11 +47,6 @@ private:
 						const bool collate, const bool bw,
 						const JSize fontSize,
 						const bool printHeader);
-
-	// not allowed
-
-	PSPrintSetupDialog(const PSPrintSetupDialog& source);
-	const PSPrintSetupDialog& operator=(const PSPrintSetupDialog& source);
 };
 
 #endif

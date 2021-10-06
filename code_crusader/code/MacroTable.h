@@ -51,11 +51,6 @@ private:
 
 	void	ReadData(const JString& fileName, const bool replace);
 	void	WriteData(const JString& fileName) const;
-
-	// not allowed
-
-	MacroTable(const MacroTable& source);
-	const MacroTable& operator=(const MacroTable& source);
 };
 
 #endif

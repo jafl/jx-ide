@@ -29,15 +29,8 @@ protected:
 
 private:
 
-	bool	itsDrawRightMarginFlag;
+	bool		itsDrawRightMarginFlag;
 	JColorID	itsRightMarginColor;
-
-private:
-
-	// not allowed
-
-	SampleText(const SampleText& source);
-	const SampleText& operator=(const SampleText& source);
 };
 
 

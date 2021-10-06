@@ -62,11 +62,6 @@ private:
 private:
 
 	void	BuildWindow(ProjectDocument* projDoc);
-
-	// not allowed
-
-	EditCommandsDialog(const EditCommandsDialog& source);
-	const EditCommandsDialog& operator=(const EditCommandsDialog& source);
 };
 
 #endif

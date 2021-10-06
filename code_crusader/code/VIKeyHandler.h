@@ -27,13 +27,6 @@ public:
 private:
 
 	TextEditor*	itsCBTE;
-
-private:
-
-	// not allowed
-
-	VIKeyHandler(const VIKeyHandler& source);
-	const VIKeyHandler& operator=(const VIKeyHandler& source);
 };
 
 #endif

@@ -33,8 +33,8 @@ private:
 
 	// not allowed
 
-	MacroSubstitute(const MacroSubstitute& source);
-	const MacroSubstitute& operator=(const MacroSubstitute& source);
+	MacroSubstitute(const MacroSubstitute&) = delete;
+	MacroSubstitute& operator=(const MacroSubstitute&) = delete;
 };
 
 #endif

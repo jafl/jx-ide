@@ -225,11 +225,6 @@ private:
 							 bool* isSafetySave, bool* isBackup) const;
 
 	void	UpdateBasePath();
-
-	// not allowed
-
-	DiffFileDialog(const DiffFileDialog& source);
-	const DiffFileDialog& operator=(const DiffFileDialog& source);
 };
 
 #endif

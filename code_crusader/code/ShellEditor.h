@@ -33,16 +33,9 @@ public:
 
 private:
 
-	ShellDocument*		itsShellDoc;
+	ShellDocument*			itsShellDoc;
 	JStyledText::TextIndex	itsInsertIndex;
 	JFont					itsInsertFont;
-
-private:
-
-	// not allowed
-
-	ShellEditor(const ShellEditor& source);
-	const ShellEditor& operator=(const ShellEditor& source);
 };
 
 #endif
