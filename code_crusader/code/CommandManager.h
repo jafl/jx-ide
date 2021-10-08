@@ -23,8 +23,8 @@ class CompileDocument;
 class DocumentManager;
 class BuildManager;
 
-typedef JPtrArray<JPtrArray<JString> >						CmdQueue;
-typedef JStack<const JUtf8Byte*, JArray<const JUtf8Byte*> >	FunctionStack;
+using CmdQueue      = JPtrArray<JPtrArray<JString> >;
+using FunctionStack = JStack<const JUtf8Byte*, JArray<const JUtf8Byte*> >;
 
 class CommandManager : public JPrefObject, virtual public JBroadcaster
 {
@@ -95,7 +95,7 @@ public:
 
 	CommandManager(DocumentManager* docMgr = nullptr);
 
-	virtual	~CommandManager();
+	~CommandManager();
 
 	void	Exec(const JIndex cmdIndex, ProjectDocument* projDoc,
 				 TextDocument* textDoc);
@@ -110,22 +110,22 @@ public:
 					 const JArray<JIndex>& lineIndexList);
 
 	bool	Prepare(const JString& cmdName, ProjectDocument* projDoc,
-						const JPtrArray<JString>& fullNameList,
-						const JArray<JIndex>& lineIndexList,
-						Command** cmd, CmdInfo** returnInfo,
-						FunctionStack* fnStack);
+					const JPtrArray<JString>& fullNameList,
+					const JArray<JIndex>& lineIndexList,
+					Command** cmd, CmdInfo** returnInfo,
+					FunctionStack* fnStack);
 
 	bool	GetMakeDependCmdStr(ProjectDocument* projDoc, const bool reportError,
-									JString* cmdStr) const;
+								JString* cmdStr) const;
 	bool	MakeDepend(ProjectDocument* projDoc,
-						   ExecOutputDocument* compileDoc,
-						   Command** resultCmd);
+					   ExecOutputDocument* compileDoc,
+					   Command** resultCmd);
 
 	const JString&	GetMakeDependCommand() const;
 	void			SetMakeDependCommand(const JString& cmd);
 
 	bool	Substitute(ProjectDocument* projDoc, const bool reportError,
-						   JString* cmdStr) const;
+					   JString* cmdStr) const;
 
 	JSize		GetCommandCount() const;
 	CmdList*	GetCommandList();
@@ -146,12 +146,12 @@ public:
 	void	WriteSetup(std::ostream& output) const;
 
 	static bool	ReadCommands(std::istream& input,
-								 JString* makeDependCmd, CmdList* cmdList,
-								 JFileVersion* returnVers = nullptr);
+							 JString* makeDependCmd, CmdList* cmdList,
+							 JFileVersion* returnVers = nullptr);
 
 	void	ConvertCompileDialog(std::istream& input, const JFileVersion vers,
-								 BuildManager* buildMgr,
-								 const bool readWindGeom);
+							 BuildManager* buildMgr,
+							 const bool readWindGeom);
 	void	ConvertRunDialog(std::istream& input, const JFileVersion vers,
 							 const bool readWindGeom);
 
@@ -163,7 +163,7 @@ public:
 
 	// used by Command
 
-	CompileDocument*				GetCompileDoc(ProjectDocument* projDoc);
+	CompileDocument*			GetCompileDoc(ProjectDocument* projDoc);
 	static ExecOutputDocument*	GetOutputDoc();
 
 	// used by CommandSelection & CommandTable
@@ -198,28 +198,28 @@ private:
 	void	UpdateFileMarkers(const bool convertFromAncient, JString* s);
 
 	static bool	Prepare(const CmdInfo& info, ProjectDocument* projDoc,
-							const JPtrArray<JString>& fullNameList,
-							const JArray<JIndex>& lineIndexList, Command** cmd,
-							FunctionStack* fnStack);
+						const JPtrArray<JString>& fullNameList,
+						const JArray<JIndex>& lineIndexList, Command** cmd,
+						FunctionStack* fnStack);
 	bool		FindCommandName(const JString& name, CmdInfo* info) const;
 	static bool	Parse(const JString& cmd, CmdQueue* cmdQueue,
-						  FunctionStack* fnStack);
+					  FunctionStack* fnStack);
 	static bool	BuildCmdPath(JString* cmdPath, ProjectDocument* projDoc,
-								 const JString& fullName, const bool reportError);
+							 const JString& fullName, const bool reportError);
 	static bool	ProcessCmdQueue(const JString& cmdPath, const CmdQueue& cmdQueue,
-									const CmdInfo& info, ProjectDocument* projDoc,
-									const JPtrArray<JString>& fullNameList,
-									const JArray<JIndex>& lineIndexList,
-									const bool reportError,
-									Command** cmd, FunctionStack* fnStack);
+								const CmdInfo& info, ProjectDocument* projDoc,
+								const JPtrArray<JString>& fullNameList,
+								const JArray<JIndex>& lineIndexList,
+								const bool reportError,
+								Command** cmd, FunctionStack* fnStack);
 	static bool	Substitute(JString* arg, ProjectDocument* projDoc,
-							   const JString& fullName, const JIndex lineIndex,
-							   const bool reportError);
+						   const JString& fullName, const JIndex lineIndex,
+						   const bool reportError);
 	static bool	Add(const JString& path, const JPtrArray<JString>& cmdArgs,
-						const CmdInfo& info, ProjectDocument* projDoc,
-						const JPtrArray<JString>& fullNameList,
-						const JArray<JIndex>& lineIndexList,
-						Command** cmd, FunctionStack* fnStack);
+					const CmdInfo& info, ProjectDocument* projDoc,
+					const JPtrArray<JString>& fullNameList,
+					const JArray<JIndex>& lineIndexList,
+					Command** cmd, FunctionStack* fnStack);
 	static bool	UsesFile(const JString& arg);
 
 	JString	GetUniqueMenuID();

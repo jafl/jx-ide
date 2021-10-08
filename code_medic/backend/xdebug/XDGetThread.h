@@ -16,7 +16,7 @@ public:
 
 	XDGetThread(ThreadsWidget* widget);
 
-	virtual	~XDGetThread();
+	~XDGetThread();
 
 protected:
 

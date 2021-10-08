@@ -27,8 +27,8 @@ class ExecOutputDocument : public TextDocument
 
 public:
 
-	typedef JMessageProtocol<ACE_LSOCK_STREAM>		RecordLink;
-	typedef JAsynchDataReceiver<ACE_LSOCK_STREAM>	DataLink;
+	using RecordLink = JMessageProtocol<ACE_LSOCK_STREAM>;
+	using DataLink   = JAsynchDataReceiver<ACE_LSOCK_STREAM>;
 
 public:
 
@@ -37,7 +37,7 @@ public:
 						 const bool focusToCmd = true,
 						 const bool allowStop = true);
 
-	virtual ~ExecOutputDocument();
+	~ExecOutputDocument();
 
 	void	Activate() override;
 
@@ -52,7 +52,7 @@ public:
 								  const bool showPID);
 
 	bool	ProcessRunning() const;
-	void		SendText(const JString& text);
+	void	SendText(const JString& text);
 
 	virtual void	OpenPrevListItem();
 	virtual void	OpenNextListItem();
@@ -67,8 +67,8 @@ protected:
 	void	StopProcess();
 	void	KillProcess();
 
-	virtual void		PlaceCmdLineWidgets();
-	virtual void		AppendText(const JString& text);
+	virtual void	PlaceCmdLineWidgets();
+	virtual void	AppendText(const JString& text);
 	virtual bool	ProcessFinished(const JProcess::Finished& info);
 	virtual bool	NeedsFormattedData() const;
 
@@ -76,17 +76,17 @@ protected:
 	bool	GetDataLink(DataLink** link) const;
 
 	bool	OKToClose() override;
-	void		Receive(JBroadcaster* sender, const Message& message) override;
+	void	Receive(JBroadcaster* sender, const Message& message) override;
 
 private:
 
-	JProcess*		itsProcess;				// deleted when we get a new one
-	JString			itsPath;
+	JProcess*	itsProcess;				// deleted when we get a new one
+	JString		itsPath;
 	bool		itsReceivedDataFlag;
 	bool		itsProcessPausedFlag;
-	JString			itsDontCloseMsg;
+	JString		itsDontCloseMsg;
 	bool		itsClearWhenStartFlag;
-	JSize			itsUseCount;
+	JSize		itsUseCount;
 
 	RecordLink*		itsRecordLink;			// can be nullptr
 	DataLink*		itsDataLink;			// can be nullptr
@@ -99,7 +99,7 @@ private:
 	JXStaticText*	itsCmdPrompt;
 	CmdLineInput*	itsCmdInput;
 	JXTextButton*	itsEOFButton;
-	const bool	itsFocusToCmdFlag;
+	const bool		itsFocusToCmdFlag;
 
 private:
 
@@ -109,11 +109,11 @@ private:
 	void	CloseOutFD();
 
 	static TextEditor*	ConstructTextEditor(TextDocument* document,
-												const JString& fileName,
-												JXMenuBar* menuBar,
-												TELineIndexInput* lineInput,
-												TEColIndexInput* colInput,
-												JXScrollbarSet* scrollbarSet);
+											const JString& fileName,
+											JXMenuBar* menuBar,
+											TELineIndexInput* lineInput,
+											TEColIndexInput* colInput,
+											JXScrollbarSet* scrollbarSet);
 
 public:
 

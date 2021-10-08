@@ -18,13 +18,13 @@ public:
 
 	GetRegistersCmd(const JString& cmd, RegistersDir* dir);
 
-	virtual	~GetRegistersCmd();
+	~GetRegistersCmd();
 
 	RegistersDir*	GetDirector();
 
 protected:
 
-	virtual void	HandleFailure();
+	void	HandleFailure() override;
 
 private:
 

@@ -19,7 +19,7 @@ public:
 				const bool isPublic, const bool isFinal);
 	JavaClass(std::istream& input, const JFileVersion vers, Tree* tree);
 
-	virtual ~JavaClass();
+	~JavaClass();
 
 	void	ViewSource() const override;
 	void	ViewHeader() const override;

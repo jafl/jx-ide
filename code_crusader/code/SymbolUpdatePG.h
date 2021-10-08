@@ -16,21 +16,21 @@ public:
 
 	SymbolUpdatePG(std::ostream& link, const JSize scaleFactor);
 
-	virtual ~SymbolUpdatePG();
+	~SymbolUpdatePG();
 
 	bool	IncrementProgress(const JString& message = JString::empty) override;
 	bool	IncrementProgress(const JSize delta) override;
 	bool	IncrementProgress(const JString& message, const JSize delta) override;
-	void		ProcessFinished() override;
-	void		DisplayBusyCursor() override;
+	void	ProcessFinished() override;
+	void	DisplayBusyCursor() override;
 
 	void	SetScaleFactor(const JSize scaleFactor);
 
 protected:
 
 	void	ProcessBeginning(const ProcessType processType, const JSize stepCount,
-									 const JString& message, const bool allowCancel,
-									 const bool allowBackground) override;
+							 const JString& message, const bool allowCancel,
+							 const bool allowBackground) override;
 
 	bool	CheckForCancel() override;
 

@@ -24,7 +24,7 @@ public:
 				 const JCoordinate x, const JCoordinate y,
 				 const JCoordinate w, const JCoordinate h);
 
-	virtual ~DiffEditor();
+	~DiffEditor();
 
 	void	ReadDiff(std::istream& input,
 					 const JFontStyle& removeStyle, const JFontStyle& insertStyle);

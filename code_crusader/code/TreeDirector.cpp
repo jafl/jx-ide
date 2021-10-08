@@ -114,15 +114,15 @@ enum
 
 TreeDirector::TreeDirector
 	(
-	ProjectDocument*		supervisor,
-	TreeCreateFn*			createTreeFn,
-	const JUtf8Byte*		windowTitleSuffixID,
-	const JUtf8Byte*		windowHelpName,
-	const JXPM&				windowIcon,
-	const JUtf8Byte*		treeMenuItems,
-	const JUtf8Byte*		treeMenuNamespace,
-	const JIndex			toolBarPrefID,
-	TreeInitToolBarFn*	initToolBarFn
+	ProjectDocument*	supervisor,
+	TreeCreateFn		createTreeFn,
+	const JUtf8Byte*	windowTitleSuffixID,
+	const JUtf8Byte*	windowHelpName,
+	const JXPM&			windowIcon,
+	const JUtf8Byte*	treeMenuItems,
+	const JUtf8Byte*	treeMenuNamespace,
+	const JIndex		toolBarPrefID,
+	TreeInitToolBarFn	initToolBarFn
 	)
 	:
 	JXWindowDirector(supervisor),
@@ -171,23 +171,23 @@ static void skipFnListDirector
 
 TreeDirector::TreeDirector
 	(
-	std::istream&			projInput,
-	const JFileVersion		projVers,
-	std::istream*			setInput,
-	const JFileVersion		setVers,
-	std::istream*			symStream,
-	const JFileVersion		origSymVers,
-	ProjectDocument*		supervisor,
+	std::istream&		projInput,
+	const JFileVersion	projVers,
+	std::istream*		setInput,
+	const JFileVersion	setVers,
+	std::istream*		symStream,
+	const JFileVersion	origSymVers,
+	ProjectDocument*	supervisor,
 	const bool			subProject,
-	TreeStreamInFn*		streamInTreeFn,
-	const JUtf8Byte*		windowTitleSuffixID,
-	const JUtf8Byte*		windowHelpName,
-	const JXPM&				windowIcon,
-	const JUtf8Byte*		treeMenuItems,
-	const JUtf8Byte*		treeMenuNamespace,
-	const JIndex			toolBarPrefID,
-	TreeInitToolBarFn*	initToolBarFn,
-	DirList*				dirList,
+	TreeStreamInFn		streamInTreeFn,
+	const JUtf8Byte*	windowTitleSuffixID,
+	const JUtf8Byte*	windowHelpName,
+	const JXPM&			windowIcon,
+	const JUtf8Byte*	treeMenuItems,
+	const JUtf8Byte*	treeMenuNamespace,
+	const JIndex		toolBarPrefID,
+	TreeInitToolBarFn	initToolBarFn,
+	DirList*			dirList,
 	const bool			readCompileRunDialogs
 	)
 	:
@@ -293,12 +293,12 @@ TreeDirector::TreeDirector
 JXScrollbarSet*
 TreeDirector::TreeDirectorX
 	(
-	ProjectDocument*		doc,
-	const JXPM&				windowIcon,
-	const JUtf8Byte*		treeMenuItems,
-	const JUtf8Byte*		treeMenuNamespace,
-	const JIndex			toolBarPrefID,
-	TreeInitToolBarFn*	initToolBarFn
+	ProjectDocument*	doc,
+	const JXPM&			windowIcon,
+	const JUtf8Byte*	treeMenuItems,
+	const JUtf8Byte*	treeMenuNamespace,
+	const JIndex		toolBarPrefID,
+	TreeInitToolBarFn	initToolBarFn
 	)
 {
 	itsProjDoc = doc;
@@ -509,11 +509,11 @@ TreeDirector::ViewFunctionList
 JXScrollbarSet*
 TreeDirector::BuildWindow
 	(
-	const JXPM&				windowIcon,
-	const JUtf8Byte*		treeMenuItems,
-	const JUtf8Byte*		treeMenuNamespace,
-	const JIndex			toolBarPrefID,
-	TreeInitToolBarFn*	initToolBarFn
+	const JXPM&			windowIcon,
+	const JUtf8Byte*	treeMenuItems,
+	const JUtf8Byte*	treeMenuNamespace,
+	const JIndex		toolBarPrefID,
+	TreeInitToolBarFn	initToolBarFn
 	)
 {
 // begin JXLayout

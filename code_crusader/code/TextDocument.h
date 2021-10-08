@@ -13,7 +13,7 @@
 #include <jx-af/jx/JXFileDocument.h>
 #include <jx-af/jcore/JPrefObject.h>
 #include "TextFileType.h"
-#include <jx-af/jx/JXWidget.h>		// need defn of H/VSizing
+#include <jx-af/jx/JXWidget.h>			// need defn of H/VSizing
 #include <jx-af/jcore/JStyledText.h>	// need defn of PlainTextFormat, CRMRuleList
 
 class JSTStyler;
@@ -38,29 +38,29 @@ class TextDocument;
 class TELineIndexInput;
 class TEColIndexInput;
 class JXScrollbarSet;
-typedef TextEditor* (TextEditorCtorFn)(TextDocument* document,
-											const JString& fileName,
-											JXMenuBar* menuBar,
-											TELineIndexInput* lineInput,
-											TEColIndexInput* colInput,
-											JXScrollbarSet* scrollbarSet);
+
+using TextEditorCtorFn =
+	TextEditor* (*)(TextDocument* document, const JString& fileName,
+					JXMenuBar* menuBar,
+					TELineIndexInput* lineInput, TEColIndexInput* colInput,
+					JXScrollbarSet* scrollbarSet);
 
 class TextDocument : public JXFileDocument, public JPrefObject
 {
 public:
 
 	TextDocument(const TextFileType type = kUnknownFT,
-				   const JUtf8Byte* helpSectionName = "EditorHelp",
-				   const bool setWMClass = true,
-				   TextEditorCtorFn* teCtorFn = ConstructTextEditor);
+				 const JUtf8Byte* helpSectionName = "EditorHelp",
+				 const bool setWMClass = true,
+				 TextEditorCtorFn teCtorFn = ConstructTextEditor);
 	TextDocument(const JString& fileName,
-				   const TextFileType type = kUnknownFT,
-				   const bool tmpl = false);
+				 const TextFileType type = kUnknownFT,
+				 const bool tmpl = false);
 	TextDocument(std::istream& input, const JFileVersion vers, bool* keep);
 
-	virtual ~TextDocument();
+	~TextDocument();
 
-	void		Activate() override;
+	void	Activate() override;
 	bool	GetMenuIcon(const JXImage** icon) const override;
 
 	void	GoToLine(const JIndex lineIndex) const;
@@ -71,24 +71,24 @@ public:
 	void	WriteForProject(std::ostream& output) const;
 
 	bool	GetWindowSize(JPoint* desktopLoc,
-							  JCoordinate* width, JCoordinate* height) const;
-	void		SaveWindowSize() const;
+						  JCoordinate* width, JCoordinate* height) const;
+	void	SaveWindowSize() const;
 
 	bool	WillOpenComplFileOnTop() const;
-	void		ShouldOpenComplFileOnTop(const bool doIt);
+	void	ShouldOpenComplFileOnTop(const bool doIt);
 
 	TextEditor*	GetTextEditor() const;
-	JXMenuBar*		GetMenuBar() const;
-	JXToolBar*		GetToolBar() const;
-	JRect			GetFileDisplayInfo(JXWidget::HSizingOption* hSizing,
-									   JXWidget::VSizingOption* vSizing) const;
-	void			SetFileDisplayVisible(const bool show);
+	JXMenuBar*	GetMenuBar() const;
+	JXToolBar*	GetToolBar() const;
+	JRect		GetFileDisplayInfo(JXWidget::HSizingOption* hSizing,
+								   JXWidget::VSizingOption* vSizing) const;
+	void		SetFileDisplayVisible(const bool show);
 
 	TextFileType	GetFileType() const;
-	bool		GetStyler(StylerBase** styler) const;
-	bool		GetStringCompleter(StringCompleter** completer) const;
-	bool		GetCharActionManager(CharActionManager** mgr) const;
-	bool		GetMacroManager(MacroManager** mgr) const;
+	bool			GetStyler(StylerBase** styler) const;
+	bool			GetStringCompleter(StringCompleter** completer) const;
+	bool			GetCharActionManager(CharActionManager** mgr) const;
+	bool			GetMacroManager(MacroManager** mgr) const;
 
 	void	OverrideTabWidth(const JSize tabWidth);
 	void	OverrideAutoIndent(const bool autoIndent);
@@ -118,12 +118,12 @@ protected:
 	JXTextMenu*		InsertTextMenu(const JString& title);
 	CommandMenu*	GetCommandMenu();
 
-	void			ReadFile(const JString& fileName, const bool firstTime);
+	void	ReadFile(const JString& fileName, const bool firstTime);
 	void	WriteTextFile(std::ostream& output, const bool safetySave) const override;
 	void	DiscardChanges() override;
 
 	void	HandleFileModifiedByOthers(const bool modTimeChanged,
-											   const bool permsChanged) override;
+									   const bool permsChanged) override;
 
 	void	ReadPrefs(std::istream& input) override;
 	void	WritePrefs(std::ostream& output) const override;
@@ -148,23 +148,23 @@ private:
 
 	TextEditor*		itsTextEditor;				// owned by its enclosure
 	bool			itsOpenOverComplementFlag;	// true if open window over complement file
-	JXTextMenu*			itsFileMenu;
-	JXTextMenu*			itsFileFormatMenu;
-	JXTextMenu*			itsDiffMenu;
-	CommandMenu*		itsCmdMenu;
-	JXTextMenu*			itsWindowMenu;
-	JXTextMenu*			itsPrefsMenu;
-	JXTextMenu*			itsPrefsStylesMenu;
-	JXTextMenu*			itsHelpMenu;
+	JXTextMenu*		itsFileMenu;
+	JXTextMenu*		itsFileFormatMenu;
+	JXTextMenu*		itsDiffMenu;
+	CommandMenu*	itsCmdMenu;
+	JXTextMenu*		itsWindowMenu;
+	JXTextMenu*		itsPrefsMenu;
+	JXTextMenu*		itsPrefsStylesMenu;
+	JXTextMenu*		itsHelpMenu;
 
 	TextFileType				itsFileType;
-	CharActionManager*		itsActionMgr;		// not owned; can be nullptr
+	CharActionManager*			itsActionMgr;		// not owned; can be nullptr
 	MacroManager*				itsMacroMgr;		// not owned; can be nullptr
 	JStyledText::CRMRuleList*	itsCRMRuleList;		// not owned; can be nullptr
 
 	const JUtf8Byte*	itsHelpSectionName;
-	bool			itsUpdateFileTypeFlag;		// false while constructing
-	bool			itsOverrideFlag[ kSettingCount ];
+	bool				itsUpdateFileTypeFlag;		// false while constructing
+	bool				itsOverrideFlag[ kSettingCount ];
 
 	JStyledText::PlainTextFormat	itsFileFormat;
 
@@ -186,7 +186,7 @@ private:
 	void	TextDocumentX1(const TextFileType type);
 	void	TextDocumentX2(const bool setWindowSize);
 	void	BuildWindow(const bool setWMClass,
-						TextEditorCtorFn* teCtorFn);
+						TextEditorCtorFn teCtorFn);
 	void	DisplayFileName(const JString& name);
 
 	void	UpdateFileMenu();

@@ -20,21 +20,21 @@ public:
 					  const JCoordinate x, const JCoordinate y,
 					  const JCoordinate w, const JCoordinate h);
 
-	virtual ~LineNumberTable();
+	~LineNumberTable();
 
 protected:
 
-	virtual JColorID	GetCurrentLineMarkerColor() const;
-	virtual JString		GetLineText(const JIndex lineIndex) const;
-	virtual JString		GetLongestLineText(const JIndex lineCount) const;
-	virtual JIndex		GetBreakpointLineIndex(const JIndex bpIndex, const Breakpoint* bp) const;
-	virtual bool		GetFirstBreakpointOnLine(const JIndex lineIndex, JIndex* bpIndex) const;
-	virtual bool		BreakpointsOnSameLine(const Breakpoint* bp1, const Breakpoint* bp2) const;
-	virtual void		GetBreakpoints(JPtrArray<Breakpoint>* list);
-	virtual void		SetBreakpoint(const JIndex lineIndex, const bool temporary);
-	virtual void		RemoveAllBreakpointsOnLine(const JIndex lineIndex);
-	virtual void		RunUntil(const JIndex lineIndex);
-	virtual void		SetExecutionPoint(const JIndex lineIndex);
+	JColorID	GetCurrentLineMarkerColor() const override;
+	JString		GetLineText(const JIndex lineIndex) const override;
+	JString		GetLongestLineText(const JIndex lineCount) const override;
+	JIndex		GetBreakpointLineIndex(const JIndex bpIndex, const Breakpoint* bp) const override;
+	bool		GetFirstBreakpointOnLine(const JIndex lineIndex, JIndex* bpIndex) const override;
+	bool		BreakpointsOnSameLine(const Breakpoint* bp1, const Breakpoint* bp2) const override;
+	void		GetBreakpoints(JPtrArray<Breakpoint>* list) override;
+	void		SetBreakpoint(const JIndex lineIndex, const bool temporary) override;
+	void		RemoveAllBreakpointsOnLine(const JIndex lineIndex) override;
+	void		RunUntil(const JIndex lineIndex) override;
+	void		SetExecutionPoint(const JIndex lineIndex) override;
 
 private:
 

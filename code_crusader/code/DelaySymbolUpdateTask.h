@@ -18,7 +18,7 @@ public:
 
 	DelaySymbolUpdateTask(ProjectDocument* projDoc);
 
-	virtual ~DelaySymbolUpdateTask();
+	~DelaySymbolUpdateTask();
 
 	virtual void	Perform(const Time delta, Time* maxSleepTime);
 

@@ -19,7 +19,7 @@ public:
 	Array2DCmd(Array2DDir* dir,
 			   JXStringTable* table, JStringTableData* data);
 
-	virtual	~Array2DCmd();
+	~Array2DCmd();
 
 protected:
 

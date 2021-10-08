@@ -18,7 +18,7 @@ public:
 
 	GetProgramNameCmd();
 
-	virtual	~GetProgramNameCmd();
+	~GetProgramNameCmd();
 
 protected:
 

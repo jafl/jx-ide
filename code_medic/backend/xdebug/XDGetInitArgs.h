@@ -18,7 +18,7 @@ public:
 
 	XDGetInitArgs(JXInputField* argInput);
 
-	virtual	~XDGetInitArgs();
+	~XDGetInitArgs();
 
 protected:
 

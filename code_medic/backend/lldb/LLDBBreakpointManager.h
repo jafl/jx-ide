@@ -10,15 +10,19 @@
 
 #include "BreakpointManager.h"
 
-class LLDBLink;
+namespace lldb {
 
-class LLDBBreakpointManager : public BreakpointManager
+class Link;
+
+class BreakpointManager : public ::BreakpointManager
 {
 public:
 
-	LLDBBreakpointManager(LLDBLink* link);
+	BreakpointManager(Link* link);
 
-	virtual	~LLDBBreakpointManager();
+	~BreakpointManager();
+};
+
 };
 
 #endif

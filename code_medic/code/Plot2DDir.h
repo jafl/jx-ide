@@ -28,9 +28,9 @@ public:
 	Plot2DDir(std::istream& input, const JFileVersion vers,
 				CommandDirector* supervisor);
 
-	virtual	~Plot2DDir();
+	~Plot2DDir();
 
-	void		Activate() override;
+	void	Activate() override;
 	bool	GetMenuIcon(const JXImage** icon) const override;
 
 	void	StreamOut(std::ostream& output);
@@ -51,7 +51,7 @@ private:
 	JStringTableData*			itsExprData;
 	Plot2DExprTable*			itsExprTable;
 	bool						itsShouldUpdateFlag;
-	JPtrArray<Plot2DCmd>*	itsUpdateCmdList;
+	JPtrArray<Plot2DCmd>*		itsUpdateCmdList;
 	JPtrArray<JArray<JFloat> >*	itsXData;
 	JPtrArray<JArray<JFloat> >*	itsYData;
 	bool						itsWaitingForReloadFlag;

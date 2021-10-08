@@ -21,12 +21,12 @@ public:
 					   const JCoordinate x, const JCoordinate y,
 					   const JCoordinate w, const JCoordinate h);
 
-	virtual ~TELineIndexInput();
+	~TELineIndexInput();
 
 	void	SetTE(JXTEBase* te, TECaretInputBase* colInput);
 
 	void	HandleKeyPress(const JUtf8Character& c,
-								   const int keySym, const JXKeyModifiers& modifiers) override;
+						   const int keySym, const JXKeyModifiers& modifiers) override;
 
 protected:
 

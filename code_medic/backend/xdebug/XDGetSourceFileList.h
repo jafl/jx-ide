@@ -18,7 +18,7 @@ public:
 
 	XDGetSourceFileList(FileListDir* fileList);
 
-	virtual	~XDGetSourceFileList();
+	~XDGetSourceFileList();
 
 	void	Starting() override;
 

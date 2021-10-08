@@ -16,18 +16,18 @@ public:
 
 	SearchFontManager();
 
-	virtual ~SearchFontManager();
+	~SearchFontManager();
 
-	void		GetFontNames(JPtrArray<JString>* fontNames) override;
-	void		GetMonospaceFontNames(JPtrArray<JString>* fontNames) override;
+	void	GetFontNames(JPtrArray<JString>* fontNames) override;
+	void	GetMonospaceFontNames(JPtrArray<JString>* fontNames) override;
 	bool	GetFontSizes(const JString& name, JSize* minSize,
-									 JSize* maxSize, JArray<JSize>* sizeList) override;
+						 JSize* maxSize, JArray<JSize>* sizeList) override;
 
 protected:
 
 	JSize	GetLineHeight(const JFontID fontID, const JSize size,
-								  const JFontStyle& style,
-								  JCoordinate* ascent, JCoordinate* descent) override;
+						  const JFontStyle& style,
+						  JCoordinate* ascent, JCoordinate* descent) override;
 
 	JSize	GetCharWidth(const JFontID fontID, const JUtf8Character& c) override;
 	JSize	GetStringWidth(const JFontID fontID, const JString& str) override;

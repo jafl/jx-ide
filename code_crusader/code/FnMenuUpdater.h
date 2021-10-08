@@ -19,24 +19,24 @@ public:
 
 	FnMenuUpdater();
 
-	virtual ~FnMenuUpdater();
+	~FnMenuUpdater();
 
 	bool	CanCreateMenu(const TextFileType type) const;
 
-	void		UpdateMenu(const JString& fileName, const TextFileType fileType,
-						   const bool sort, const bool includeNS,
-						   const bool pack,
-						   JXTextMenu* menu, JArray<JIndex>* lineIndexList,
-						   JArray<Language>* lineLangList);
+	void	UpdateMenu(const JString& fileName, const TextFileType fileType,
+					   const bool sort, const bool includeNS,
+					   const bool pack,
+					   JXTextMenu* menu, JArray<JIndex>* lineIndexList,
+					   JArray<Language>* lineLangList);
 
 	bool	WillSortFnNames() const;
-	void		ShouldSortFnNames(const bool sort);
+	void	ShouldSortFnNames(const bool sort);
 
 	bool	WillIncludeNamespace() const;
-	void		ShouldIncludeNamespace(const bool includeNS);
+	void	ShouldIncludeNamespace(const bool includeNS);
 
 	bool	WillPackFnNames() const;
-	void		ShouldPackFnNames(const bool pack);
+	void	ShouldPackFnNames(const bool pack);
 
 protected:
 

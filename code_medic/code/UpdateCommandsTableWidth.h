@@ -20,9 +20,9 @@ public:
 
 	UpdateCommandsTableWidth(EditCommandsTable* table);
 
-	virtual ~UpdateCommandsTableWidth();
+	~UpdateCommandsTableWidth();
 
-	virtual void	Perform();
+	void	Perform() override;
 
 private:
 

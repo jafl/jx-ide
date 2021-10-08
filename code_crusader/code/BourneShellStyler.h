@@ -16,18 +16,18 @@ class BourneShellStyler : public StylerBase, public TextScanner::BourneShell::Sc
 public:
 
 	static StylerBase*	Instance();
-	static void				Shutdown();
+	static void			Shutdown();
 
-	virtual ~BourneShellStyler();
+	~BourneShellStyler();
 
 protected:
 
 	BourneShellStyler();
 
 	void	Scan(const JStyledText::TextIndex& startIndex,
-						 std::istream& input, const TokenExtra& initData) override;
+				 std::istream& input, const TokenExtra& initData) override;
 	void	UpgradeTypeList(const JFileVersion vers,
-									JArray<JFontStyle>* typeStyles) override;
+							JArray<JFontStyle>* typeStyles) override;
 
 private:
 

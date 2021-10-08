@@ -18,7 +18,7 @@ public:
 
 	GetStackCmd(JTree* tree, StackWidget* widget);
 
-	virtual	~GetStackCmd();
+	~GetStackCmd();
 
 	void	Starting() override;
 

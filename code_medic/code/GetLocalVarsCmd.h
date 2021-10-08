@@ -16,7 +16,7 @@ public:
 
 	GetLocalVarsCmd(const JString& cmd);
 
-	virtual	~GetLocalVarsCmd();
+	~GetLocalVarsCmd();
 };
 
 #endif

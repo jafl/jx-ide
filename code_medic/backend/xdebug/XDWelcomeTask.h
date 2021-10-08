@@ -17,7 +17,7 @@ public:
 
 	XDWelcomeTask(const JString& msg, const bool error);
 
-	virtual ~XDWelcomeTask();
+	~XDWelcomeTask();
 
 	void	Perform() override;
 

@@ -34,11 +34,11 @@ public:
 	Array2DDir(std::istream& input, const JFileVersion vers,
 				 CommandDirector* supervisor);
 
-	virtual	~Array2DDir();
+	~Array2DDir();
 
 	const JString&	GetExpression() const;
-	bool		ArrayRowIndexValid(const JInteger index) const;
-	bool		ArrayColIndexValid(const JInteger index) const;
+	bool			ArrayRowIndexValid(const JInteger index) const;
+	bool			ArrayColIndexValid(const JInteger index) const;
 
 	void	Display1DArray();
 	void	Plot1DArray();
@@ -47,7 +47,7 @@ public:
 	void	WatchLocation();
 	void	ExamineMemory(const MemoryDir::DisplayType type);
 
-	void		Activate() override;
+	void	Activate() override;
 	bool	GetMenuIcon(const JXImage** icon) const override;
 
 	void	StreamOut(std::ostream& output);
@@ -72,11 +72,11 @@ private:
 	JIntRange			itsRowRequestRange;
 	JIntRange			itsColDisplayRange;
 	JIntRange			itsColRequestRange;
-	bool			itsShouldUpdateFlag;
+	bool				itsShouldUpdateFlag;
 	JArray<JIntRange>*	itsRowUpdateList;
 	JArray<JIntRange>*	itsColUpdateList;
-	Array2DCmd*	itsUpdateCmd;
-	bool			itsWaitingForReloadFlag;
+	Array2DCmd*			itsUpdateCmd;
+	bool				itsWaitingForReloadFlag;
 
 	JXTextMenu*			itsFileMenu;
 	JXTextMenu*			itsActionMenu;

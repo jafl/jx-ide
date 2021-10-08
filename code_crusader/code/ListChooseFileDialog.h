@@ -23,7 +23,7 @@ public:
 			   const JString& replaceListStr, const JString& appendToListStr,
 			   const JString& origName, const JString& message);
 
-	virtual ~ListChooseFileDialog();
+	~ListChooseFileDialog();
 
 	bool	ReplaceExisting() const;
 

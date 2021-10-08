@@ -22,7 +22,7 @@ public:
 
 	ThreadsDir(CommandDirector* supervisor);
 
-	virtual	~ThreadsDir();
+	~ThreadsDir();
 
 	void			Activate() override;
 	const JString&	GetName() const override;
@@ -36,7 +36,7 @@ protected:
 private:
 
 	CommandDirector*	itsCommandDir;
-	ThreadsWidget*	itsWidget;
+	ThreadsWidget*		itsWidget;
 
 	JXTextMenu*	itsFileMenu;
 	JXTextMenu*	itsHelpMenu;

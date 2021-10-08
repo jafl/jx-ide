@@ -26,11 +26,11 @@ public:
 
 	LocalVarsDir(CommandDirector* supervisor);
 
-	virtual	~LocalVarsDir();
+	~LocalVarsDir();
 
 	void			Activate() override;
 	const JString&	GetName() const override;
-	bool		GetMenuIcon(const JXImage** icon) const override;
+	bool			GetMenuIcon(const JXImage** icon) const override;
 
 protected:
 
@@ -42,9 +42,9 @@ private:
 	Link*				itsLink;
 	CommandDirector*	itsCommandDir;
 	JTree*				itsTree;		// owned by itsWidget
-	VarTreeWidget*	itsWidget;
-	GetLocalVarsCmd*		itsGetLocalsCmd;
-	bool			itsNeedsUpdateFlag;
+	VarTreeWidget*		itsWidget;
+	GetLocalVarsCmd*	itsGetLocalsCmd;
+	bool				itsNeedsUpdateFlag;
 
 	JXTextMenu*	itsFileMenu;
 	JXTextMenu*	itsActionMenu;

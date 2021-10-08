@@ -16,24 +16,24 @@ class PerlStyler : public StylerBase, public TextScanner::Perl::Scanner
 public:
 
 	static StylerBase*	Instance();
-	static void				Shutdown();
+	static void			Shutdown();
 
-	virtual ~PerlStyler();
+	~PerlStyler();
 
 protected:
 
 	PerlStyler();
 
 	void	Scan(const JStyledText::TextIndex& startIndex,
-						 std::istream& input, const TokenExtra& initData) override;
+				 std::istream& input, const TokenExtra& initData) override;
 	void	PreexpandCheckRange(const JString& text,
-										const JRunArray<JFont>& styles,
-										const JCharacterRange& modifiedRange,
-										const bool deletion,
-										JStyledText::TextRange* checkRange) override;
+								const JRunArray<JFont>& styles,
+								const JCharacterRange& modifiedRange,
+								const bool deletion,
+								JStyledText::TextRange* checkRange) override;
 
 	void	UpgradeTypeList(const JFileVersion vers,
-									JArray<JFontStyle>* typeStyles) override;
+							JArray<JFontStyle>* typeStyles) override;
 
 private:
 

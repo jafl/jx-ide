@@ -20,7 +20,7 @@ public:
 
 	GetInitArgsCmd(JXInputField* argInput);
 
-	virtual	~GetInitArgsCmd();
+	~GetInitArgsCmd();
 
 protected:
 

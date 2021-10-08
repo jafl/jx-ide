@@ -17,15 +17,15 @@ class ManPageDocument : public TextDocument
 public:
 
 	static bool	Create(ManPageDocument** doc, const JString& pageName,
-						   const JString& pageIndex = JString::empty,
-						   const bool apropos = false);
+					   const JString& pageIndex = JString::empty,
+					   const bool apropos = false);
 
-	virtual ~ManPageDocument();
+	~ManPageDocument();
 
 protected:
 
 	ManPageDocument(const JString& pageName, const JString& pageIndex,
-					  const bool apropos, ManPageDocument** trueDoc);
+					const bool apropos, ManPageDocument** trueDoc);
 
 	static JString	GetCmd1(const JString& pageName, const JString& pageIndex);
 	static JString	GetCmd2(const JString& pageName);
@@ -36,7 +36,7 @@ private:
 
 	bool	itsIgnoreNameChangedFlag;
 
-	static JPtrArray<JString>			theManCmdList;
+	static JPtrArray<JString>		theManCmdList;
 	static JPtrArray<TextDocument>	theManDocList;
 
 private:

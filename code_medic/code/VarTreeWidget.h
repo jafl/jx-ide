@@ -30,7 +30,7 @@ public:
 					const JCoordinate x, const JCoordinate y,
 					const JCoordinate w, const JCoordinate h);
 
-	virtual ~VarTreeWidget();
+	~VarTreeWidget();
 
 	VarNode*	NewExpression(const JString& expr = JString::empty);
 	VarNode*	DisplayExpression(const JString& expr);

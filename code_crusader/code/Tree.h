@@ -28,7 +28,7 @@ class TreeDirector;
 class ProjectDocument;
 
 class Tree;
-typedef Class* (ClassStreamInFn)(std::istream& input, const JFileVersion vers, Tree* tree);
+using ClassStreamInFn = Class* (*)(std::istream& input, const JFileVersion vers, Tree* tree);
 
 class Tree : public JContainer
 {
@@ -36,64 +36,64 @@ class Tree : public JContainer
 
 public:
 
-	Tree(ClassStreamInFn* streamInFn,
+	Tree(ClassStreamInFn streamInFn,
 		   TreeDirector* director, const TextFileType fileType,
 		   const JSize marginWidth);
 	Tree(std::istream& projInput, const JFileVersion projVers,
 		   std::istream* setInput, const JFileVersion setVers,
 		   std::istream* symInput, const JFileVersion symVers,
-		   ClassStreamInFn* streamInFn,
+		   ClassStreamInFn streamInFn,
 		   TreeDirector* director, const TextFileType fileType,
 		   const JSize marginWidth, DirList* dirList);
 
-	virtual ~Tree();
+	~Tree();
 
-	void		NextUpdateMustReparseAll();
+	void	NextUpdateMustReparseAll();
 	bool	NeedsReparseAll() const;
-	void		RebuildLayout();
+	void	RebuildLayout();
 
 	bool	FindClass(const JString& fullName, Class** theClass) const;
 	bool	FindClass(const JString& fullName, const Class** theClass) const;
 	bool	IsUniqueClassName(const JString& name, const Class** theClass) const;
 	bool	ClosestVisibleMatch(const JString& prefixStr, Class** theClass) const;
 	bool	FindParent(const JString& parentName, const Class* container,
-						   Class** parent, JString* nameSpace) const;
+					   Class** parent, JString* nameSpace) const;
 
 	virtual void	StreamOut(std::ostream& projOutput, std::ostream* setOutput,
 							  std::ostream* symOutput, const DirList* dirList) const;
 
 	bool	HasSelection() const;
-	void		DeselectAll();
+	void	DeselectAll();
 	bool	GetSelectedClasses(JPtrArray<Class>* classList) const;
 	bool	GetSelectionCoverage(JRect* coverage, JSize* count) const;
-	void		SelectClasses(const JString& name, const bool deselectAll = true);
-	void		SelectImplementors(const JString& fnName, const bool caseSensitive,
-								   const bool deselectAll = true);
-	void		SelectParents();
-	void		SelectDescendants();
-	void		CollapseExpandSelectedClasses(const bool collapse);
-	void		ExpandAllClasses();
+	void	SelectClasses(const JString& name, const bool deselectAll = true);
+	void	SelectImplementors(const JString& fnName, const bool caseSensitive,
+							   const bool deselectAll = true);
+	void	SelectParents();
+	void	SelectDescendants();
+	void	CollapseExpandSelectedClasses(const bool collapse);
+	void	ExpandAllClasses();
 
-	void		ViewSelectedSources() const;
-	void		ViewSelectedHeaders() const;
-	void		ViewSelectedFunctionLists() const;
-	void		CopySelectedClassNames() const;
-	void		DeriveFromSelected() const;
+	void	ViewSelectedSources() const;
+	void	ViewSelectedHeaders() const;
+	void	ViewSelectedFunctionLists() const;
+	void	CopySelectedClassNames() const;
+	void	DeriveFromSelected() const;
 
 	bool	WillAutoMinimizeMILinks() const;
-	void		ShouldAutoMinimizeMILinks(const bool autoMinimize);
+	void	ShouldAutoMinimizeMILinks(const bool autoMinimize);
 	bool	NeedsMinimizeMILinks() const;		// when auto-minimize is off or cancelled
-	void		ForceMinimizeMILinks();
+	void	ForceMinimizeMILinks();
 
-	void		GetMenuInfo(bool* hasSelection,
-							bool* canCollapse, bool* canExpand) const;
+	void	GetMenuInfo(bool* hasSelection,
+						bool* canCollapse, bool* canExpand) const;
 	bool	GetClass(const JPoint& pt, Class** theClass) const;
 	bool	HitSameClass(const JPoint& pt1, const JPoint& pt2, Class** theClass) const;
 
-	void		Draw(JPainter& p, const JRect& rect) const;
+	void	Draw(JPainter& p, const JRect& rect) const;
 
 	bool	WillDrawMILinksOnTop() const;
-	void		ShouldDrawMILinksOnTop(const bool drawOnTop);
+	void	ShouldDrawMILinksOnTop(const bool drawOnTop);
 
 	JFontManager*	GetFontManager() const;
 	JSize			GetFontSize() const;
@@ -102,8 +102,8 @@ public:
 	void			GetBounds(JCoordinate* width, JCoordinate* height) const;
 
 	const JPtrArray<JString>&	GetParseSuffixes() const;
-	const JPtrArray<Class>&	GetClasses() const;
-	const JPtrArray<Class>&	GetVisibleClasses() const;
+	const JPtrArray<Class>&		GetClasses() const;
+	const JPtrArray<Class>&		GetVisibleClasses() const;
 
 	ProjectDocument*	GetProjectDoc() const;
 	TreeDirector*		GetTreeDirector() const;
@@ -117,7 +117,7 @@ public:
 
 	void	FileTypesChanged(const PrefsManager::FileTypesChanged& info);
 
-	virtual void		PrepareForUpdate(const bool reparseAll);
+	virtual void	PrepareForUpdate(const bool reparseAll);
 	virtual bool	UpdateFinished(const JArray<JFAID_t>& deadFileList);
 
 	// called by FileListTable
@@ -207,15 +207,15 @@ private:
 
 private:
 
-	TreeDirector*			itsDirector;				// not owned
+	TreeDirector*		itsDirector;				// not owned
 
-	JPtrArray<Class>*		itsClassesByFull;			// owns objects
-	JPtrArray<Class>*		itsVisibleByGeom;			// doesn't own objects
-	JPtrArray<Class>*		itsVisibleByName;			// doesn't own objects
+	JPtrArray<Class>*	itsClassesByFull;			// owns objects
+	JPtrArray<Class>*	itsVisibleByGeom;			// doesn't own objects
+	JPtrArray<Class>*	itsVisibleByName;			// doesn't own objects
 
 	const TextFileType	itsFileType;
-	JPtrArray<JString>*		itsSuffixList;
-	JPtrArray<JString>*		itsCollapsedList;			// nullptr unless updating files
+	JPtrArray<JString>*	itsSuffixList;
+	JPtrArray<JString>*	itsCollapsedList;			// nullptr unless updating files
 	bool				itsReparseAllFlag;			// true => flush all on next update
 	bool				itsChangedDuringParseFlag;	// only used while parsing
 	bool				itsBeganEmptyFlag;			// true => ignore RemoveFile()
@@ -224,18 +224,18 @@ private:
 	JCoordinate	itsWidth;
 	JCoordinate	itsHeight;
 	const JSize	itsMarginWidth;
-	bool	itsBroadcastClassSelFlag;
+	bool		itsBroadcastClassSelFlag;
 
 	bool	itsDrawMILinksOnTopFlag;
 
 	bool	itsMinimizeMILinksFlag;
 	bool	itsNeedsMinimizeMILinksFlag;		// true => links not currently minimized
 
-	ClassStreamInFn*	itsStreamInFn;
+	ClassStreamInFn	itsStreamInFn;
 
 private:
 
-	void	TreeX(TreeDirector* director, ClassStreamInFn* streamInFn);
+	void	TreeX(TreeDirector* director, ClassStreamInFn streamInFn);
 
 	void	RemoveFile(const JFAID_t id);
 
@@ -245,20 +245,20 @@ private:
 	void	PlaceClass(Class* theClass, const JCoordinate x, JCoordinate* y,
 					   JCoordinate* maxWidth);
 
-	void		SaveCollapsedClasses(JPtrArray<JString>* list) const;
+	void	SaveCollapsedClasses(JPtrArray<JString>* list) const;
 	bool	RestoreCollapsedClasses(const JPtrArray<JString>& list);
 
-	void		MinimizeMILinks();
+	void	MinimizeMILinks();
 	bool	ArrangeRoots(const JArray<RootMIInfo>& rootList,
-							 JArray<JIndex>* rootOrder, JProgressDisplay& pg) const;
-	void		CleanList(JArray<RootSubset>* list) const;
-	void		FindMIClasses(Class* theClass, JArray<bool>* marked,
-							  const JArray<RootGeom>& rootGeom,
-							  JArray<RootMIInfo>* rootList) const;
-	void		FindRoots(Class* theClass, const JArray<RootGeom>& rootGeom,
-						  JArray<RootMIInfo>* rootInfoList) const;
+						 JArray<JIndex>* rootOrder, JProgressDisplay& pg) const;
+	void	CleanList(JArray<RootSubset>* list) const;
+	void	FindMIClasses(Class* theClass, JArray<bool>* marked,
+						  const JArray<RootGeom>& rootGeom,
+						  JArray<RootMIInfo>* rootList) const;
+	void	FindRoots(Class* theClass, const JArray<RootGeom>& rootGeom,
+					  JArray<RootMIInfo>* rootInfoList) const;
 	bool	FindRoot(Class* root, const JArray<RootMIInfo>& rootInfoList,
-						 JIndex* index) const;
+					 JIndex* index) const;
 
 	void	CollectAncestors(Class* cbClass, JPtrArray<Class>* list) const;
 
@@ -274,12 +274,12 @@ private:
 
 	// called by Class
 
-	void		AddClass(Class* newClass);
+	void	AddClass(Class* newClass);
 
 	Class*	IndexToClassAfterRead(const JIndex index) const;
-	JIndex		ClassToIndexForWrite(const Class* theClass) const;
+	JIndex	ClassToIndexForWrite(const Class* theClass) const;
 
-	void		BroadcastSelectionChange(Class* theClass, const bool isSelected);
+	void	BroadcastSelectionChange(Class* theClass, const bool isSelected);
 
 	// not allowed
 

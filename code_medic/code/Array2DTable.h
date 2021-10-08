@@ -27,21 +27,21 @@ public:
 				   const JCoordinate x, const JCoordinate y,
 				   const JCoordinate w, const JCoordinate h);
 
-	virtual ~Array2DTable();
+	~Array2DTable();
 
 	void	HandleKeyPress(const JUtf8Character& c, const int keySym,
-								   const JXKeyModifiers& modifiers) override;
+						   const JXKeyModifiers& modifiers) override;
 
 protected:
 
 	void	HandleMouseDown(const JPoint& pt, const JXMouseButton button,
-									const JSize clickCount,
-									const JXButtonStates& buttonStates,
-									const JXKeyModifiers& modifiers) override;
+							const JSize clickCount,
+							const JXButtonStates& buttonStates,
+							const JXKeyModifiers& modifiers) override;
 
 	JXInputField*	CreateXInputField(const JPoint& cell,
-											  const JCoordinate x, const JCoordinate y,
-											  const JCoordinate w, const JCoordinate h) override;
+									  const JCoordinate x, const JCoordinate y,
+									  const JCoordinate w, const JCoordinate h) override;
 	bool			ExtractInputData(const JPoint& cell) override;
 
 	JCoordinate	GetPrintHeaderHeight(JPagePrinter& p) const override;
@@ -52,7 +52,7 @@ protected:
 private:
 
 	CommandDirector*	itsCmdDir;
-	Array2DDir*		itsArrayDir;
+	Array2DDir*			itsArrayDir;
 	JXTextMenu*			itsEditMenu;
 	JString				itsOrigEditValue;
 

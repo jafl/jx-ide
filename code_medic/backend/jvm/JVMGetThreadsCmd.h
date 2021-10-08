@@ -23,7 +23,7 @@ public:
 
 	GetThreadsCmd(JTree* tree, ThreadsWidget* widget);
 
-	virtual	~GetThreadsCmd();
+	~GetThreadsCmd();
 
 protected:
 

@@ -18,7 +18,7 @@ public:
 
 	GetIDSizesCmd();
 
-	virtual	~GetIDSizesCmd();
+	~GetIDSizesCmd();
 
 	void	Starting() override;
 

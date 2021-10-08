@@ -253,7 +253,7 @@ public:
 
 	CtagsUser(const JUtf8Byte* args);
 
-	virtual ~CtagsUser();
+	~CtagsUser();
 
 	bool		IsActive() const;
 	static bool	HasExuberantCtags();
@@ -278,10 +278,10 @@ protected:
 	void	SetCtagsArgs(const JUtf8Byte* args);
 
 	bool	ProcessFile(const JString& fileName, const TextFileType fileType,
-							JString* result, Language* lang);
-	void		ReadExtensionFlags(std::istream& input, JStringPtrMap<JString>* flags) const;
-	Type		DecodeSymbolType(const Language lang, const JUtf8Byte c,
-								 const JStringPtrMap<JString>& flags) const;
+						JString* result, Language* lang);
+	void	ReadExtensionFlags(std::istream& input, JStringPtrMap<JString>* flags) const;
+	Type	DecodeSymbolType(const Language lang, const JUtf8Byte c,
+							 const JStringPtrMap<JString>& flags) const;
 
 	virtual void	InitCtags(std::ostream& output);
 	void			DeleteProcess();
@@ -299,10 +299,10 @@ private:
 
 private:
 
-	JProcess*			itsProcess;
-	JString				itsArgs;
-	JOutPipeStream*		itsCmdPipe;
-	int					itsResultFD;
+	JProcess*		itsProcess;
+	JString			itsArgs;
+	JOutPipeStream*	itsCmdPipe;
+	int				itsResultFD;
 	bool			itsIsActiveFlag;
 	bool			itsTryRestartFlag;
 

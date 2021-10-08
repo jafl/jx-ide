@@ -18,7 +18,7 @@ public:
 			 const JFAID_t fileID, Tree* tree, const bool isFinal);
 	DClass(std::istream& input, const JFileVersion vers, Tree* tree);
 
-	virtual ~DClass();
+	~DClass();
 
 	void	ViewSource() const override;
 	void	ViewHeader() const override;

@@ -26,10 +26,10 @@ class Link : public JBroadcaster
 public:
 
 	Link();
-	virtual ~Link();
+	~Link();
 
 	bool	StartCTags();
-	void		ParseClass(Class* list, const JString& filename, const JString& classname);
+	void	ParseClass(Class* list, const JString& filename, const JString& classname);
 	
 private:
 
@@ -38,9 +38,9 @@ private:
 	JOutPipeStream*	itsOutputLink;				// nullptr if process not started
 	int				itsInputFD;					// -1 if process not started
 
-	Class*		itsClassList;
-	JString			itsCurrentClass;
-	JString			itsCurrentFile;
+	Class*	itsClassList;
+	JString	itsCurrentClass;
+	JString	itsCurrentFile;
 
 private:
 

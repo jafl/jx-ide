@@ -31,7 +31,7 @@ public:
 				   const JCoordinate x, const JCoordinate y,
 				   const JCoordinate w, const JCoordinate h);
 
-	virtual ~CommandTable();
+	~CommandTable();
 
 	void	GetCommandList(CommandManager::CmdList* cmdList) const;
 
@@ -40,8 +40,8 @@ public:
 	void	SetColTitles(JXColHeaderWidget* widget) const;
 
 	bool	IsEditable(const JPoint& cell) const override;
-	void		HandleKeyPress(const JUtf8Character& c,
-									   const int keySym, const JXKeyModifiers& modifiers) override;
+	void	HandleKeyPress(const JUtf8Character& c,
+						   const int keySym, const JXKeyModifiers& modifiers) override;
 
 	// called by CommandSelection
 
@@ -52,31 +52,31 @@ protected:
 	void	Draw(JXWindowPainter& p, const JRect& rect) override;
 
 	void	HandleMouseDown(const JPoint& pt, const JXMouseButton button,
-									const JSize clickCount,
-									const JXButtonStates& buttonStates,
-									const JXKeyModifiers& modifiers) override;
+							const JSize clickCount,
+							const JXButtonStates& buttonStates,
+							const JXKeyModifiers& modifiers) override;
 	void	HandleMouseDrag(const JPoint& pt, const JXButtonStates& buttonStates,
-									const JXKeyModifiers& modifiers) override;
+							const JXKeyModifiers& modifiers) override;
 
 	Atom	GetDNDAction(const JXContainer* target,
-								 const JXButtonStates& buttonStates,
-								 const JXKeyModifiers& modifiers) override;
+						 const JXButtonStates& buttonStates,
+						 const JXKeyModifiers& modifiers) override;
 
 	bool	WillAcceptDrop(const JArray<Atom>& typeList, Atom* action,
-									   const JPoint& pt, const Time time,
-									   const JXWidget* source) override;
-	void		HandleDNDEnter() override;
-	void		HandleDNDHere(const JPoint& pt, const JXWidget* source) override;
-	void		HandleDNDLeave() override;
-	void		HandleDNDDrop(const JPoint& pt, const JArray<Atom>& typeList,
-									  const Atom action, const Time time,
-									  const JXWidget* source) override;
+						   const JPoint& pt, const Time time,
+						   const JXWidget* source) override;
+	void	HandleDNDEnter() override;
+	void	HandleDNDHere(const JPoint& pt, const JXWidget* source) override;
+	void	HandleDNDLeave() override;
+	void	HandleDNDDrop(const JPoint& pt, const JArray<Atom>& typeList,
+						  const Atom action, const Time time,
+						  const JXWidget* source) override;
 
 	void			TableDrawCell(JPainter& p, const JPoint& cell, const JRect& rect) override;
 	JXInputField*	CreateXInputField(const JPoint& cell,
 											  const JCoordinate x, const JCoordinate y,
 											  const JCoordinate w, const JCoordinate h) override;
-	bool		ExtractInputData(const JPoint& cell) override;
+	bool			ExtractInputData(const JPoint& cell) override;
 	void			PrepareDeleteXInputField() override;
 
 	void	Receive(JBroadcaster* sender, const Message& message) override;

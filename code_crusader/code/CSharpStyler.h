@@ -16,18 +16,18 @@ class CSharpStyler : public StylerBase, public TextScanner::CSharp::Scanner
 public:
 
 	static StylerBase*	Instance();
-	static void				Shutdown();
+	static void			Shutdown();
 
-	virtual ~CSharpStyler();
+	~CSharpStyler();
 
 protected:
 
 	CSharpStyler();
 
 	void	Scan(const JStyledText::TextIndex& startIndex,
-						 std::istream& input, const TokenExtra& initData) override;
+				 std::istream& input, const TokenExtra& initData) override;
 	void	UpgradeTypeList(const JFileVersion vers,
-									JArray<JFontStyle>* typeStyles) override;
+							JArray<JFontStyle>* typeStyles) override;
 
 private:
 

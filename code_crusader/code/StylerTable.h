@@ -36,7 +36,7 @@ public:
 				  const JCoordinate x, const JCoordinate y,
 				  const JCoordinate w, const JCoordinate h);
 
-	virtual ~StylerTable();
+	~StylerTable();
 
 	void	GetData(JArray<JFontStyle>* typeStyles) const;
 	void	GetData(JStringMap<JFontStyle>* wordStyles) const;

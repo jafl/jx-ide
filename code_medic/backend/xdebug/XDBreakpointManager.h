@@ -18,7 +18,7 @@ public:
 
 	XDBreakpointManager(XDLink* link);
 
-	virtual	~XDBreakpointManager();
+	~XDBreakpointManager();
 };
 
 #endif

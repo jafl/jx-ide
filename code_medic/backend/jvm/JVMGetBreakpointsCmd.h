@@ -18,7 +18,7 @@ public:
 
 	GetBreakpointsCmd();
 
-	virtual	~GetBreakpointsCmd();
+	~GetBreakpointsCmd();
 
 protected:
 

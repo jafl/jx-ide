@@ -30,7 +30,7 @@ public:
 
 	MainDirector(JXDirector* supervisor, const JPtrArray<JString>& argList);
 
-	virtual	~MainDirector();
+	~MainDirector();
 
 protected:
 

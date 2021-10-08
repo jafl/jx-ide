@@ -24,7 +24,7 @@ public:
 
 	XDLink();
 
-	virtual	~XDLink();
+	~XDLink();
 
 	bool	DebuggerHasStarted() const override;
 	bool	HasLoadedSymbols() const override;
@@ -52,25 +52,25 @@ public:
 	bool	OKToDetachOrKill() const override;
 
 	bool	OKToSendCommands(const bool background) const override;
-	void			Send(const JUtf8Byte* text);
-	void			Send(const JString& text);
+	void	Send(const JUtf8Byte* text);
+	void	Send(const JString& text);
 
 	BreakpointManager*	GetBreakpointManager() override;
 
 	void	ShowBreakpointInfo(const JIndex debuggerIndex) override;
 	void	SetBreakpoint(const JString& fileName, const JIndex lineIndex,
-								  const bool temporary = false) override;
+						  const bool temporary = false) override;
 	void	SetBreakpoint(const JString& address,
-								  const bool temporary = false) override;
+						  const bool temporary = false) override;
 	void	RemoveBreakpoint(const JIndex debuggerIndex) override;
 	void	RemoveAllBreakpointsOnLine(const JString& fileName,
-										   const JIndex lineIndex) override;
+									   const JIndex lineIndex) override;
 	void	RemoveAllBreakpointsAtAddress(const JString& addr) override;
 	void	RemoveAllBreakpoints() override;
 	void	SetBreakpointEnabled(const JIndex debuggerIndex, const bool enabled,
-									 const bool once = false) override;
+								 const bool once = false) override;
 	void	SetBreakpointCondition(const JIndex debuggerIndex,
-									   const JString& condition) override;
+								   const JString& condition) override;
 	void	RemoveBreakpointCondition(const JIndex debuggerIndex) override;
 	void	SetBreakpointIgnoreCount(const JIndex debuggerIndex, const JSize count) override;
 
@@ -98,20 +98,20 @@ public:
 	// Command factory
 
 	Array2DCmd*					CreateArray2DCmd(Array2DDir* dir,
-														 JXStringTable* table,
-														 JStringTableData* data) override;
+												 JXStringTable* table,
+												 JStringTableData* data) override;
 	Plot2DCmd*					CreatePlot2DCmd(Plot2DDir* dir,
-														JArray<JFloat>* x,
-														JArray<JFloat>* y) override;
+												JArray<JFloat>* x,
+												JArray<JFloat>* y) override;
 	DisplaySourceForMainCmd*	CreateDisplaySourceForMainCmd(SourceDirector* sourceDir) override;
 	GetCompletionsCmd*			CreateGetCompletionsCmd(CommandInput* input,
-																CommandOutputDisplay* history) override;
+														CommandOutputDisplay* history) override;
 	GetFrameCmd*				CreateGetFrameCmd(StackWidget* widget) override;
 	GetStackCmd*				CreateGetStackCmd(JTree* tree, StackWidget* widget) override;
 	GetThreadCmd*				CreateGetThreadCmd(ThreadsWidget* widget) override;
 	GetThreadsCmd*				CreateGetThreadsCmd(JTree* tree, ThreadsWidget* widget) override;
 	GetFullPathCmd*				CreateGetFullPathCmd(const JString& fileName,
-															 const JIndex lineIndex = 0) override;
+													 const JIndex lineIndex = 0) override;
 	GetInitArgsCmd*				CreateGetInitArgsCmd(JXInputField* argInput) override;
 	GetLocalVarsCmd*			CreateGetLocalVarsCmd(VarNode* rootNode) override;
 	GetSourceFileListCmd*		CreateGetSourceFileListCmd(FileListDir* fileList) override;
@@ -119,12 +119,12 @@ public:
 	VarCmd*						CreateVarContentCmd(const JString& expr) override;
 	VarNode*					CreateVarNode(const bool shouldUpdate = true) override;
 	VarNode*					CreateVarNode(JTreeNode* parent, const JString& name,
-													  const JString& fullName, const JString& value) override;
+											  const JString& fullName, const JString& value) override;
 	JString						Build1DArrayExpression(const JString& expr,
-															   const JInteger index) override;
+													   const JInteger index) override;
 	JString						Build2DArrayExpression(const JString& expr,
-															   const JInteger rowIndex,
-															   const JInteger colIndex) override;
+													   const JInteger rowIndex,
+													   const JInteger colIndex) override;
 	GetMemoryCmd*				CreateGetMemoryCmd(MemoryDir* dir) override;
 	GetAssemblyCmd*				CreateGetAssemblyCmd(SourceDirector* dir) override;
 	GetRegistersCmd*			CreateGetRegistersCmd(RegistersDir* dir) override;
@@ -158,7 +158,7 @@ protected:
 
 private:
 
-	typedef ACE_Acceptor<XDSocket, ACE_SOCK_ACCEPTOR>	XDAcceptor;
+	using XDAcceptor = ACE_Acceptor<XDSocket, ACE_SOCK_ACCEPTOR>;
 
 private:
 

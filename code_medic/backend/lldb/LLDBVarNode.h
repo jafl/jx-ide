@@ -12,19 +12,23 @@
 #include "lldb/API/SBFrame.h"
 #include "lldb/API/SBValue.h"
 
-class LLDBVarNode : public VarNode
+namespace lldb {
+
+class VarNode : public ::VarNode
 {
 public:
 
-	LLDBVarNode(const bool shouldUpdate = true);
+	VarNode(const bool shouldUpdate = true);
 
-	LLDBVarNode(JTreeNode* parent, const JString& name, const JString& value);
+	VarNode(JTreeNode* parent, const JString& name, const JString& value);
 
-	virtual	~LLDBVarNode();
+	~VarNode();
 
 	JString	GetFullName(bool* isPointer = nullptr) const override;
 
-	static VarNode*	BuildTree(lldb::SBFrame& frame, lldb::SBValue& value);
+	static ::VarNode*	BuildTree(SBFrame& frame, SBValue& value);
+};
+
 };
 
 #endif

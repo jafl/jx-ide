@@ -20,7 +20,7 @@ public:
 
 	VarTreeParser();
 
-	virtual	~VarTreeParser();
+	~VarTreeParser();
 
 	int		Parse(const JString& text);
 	void	ReportRecoverableError();

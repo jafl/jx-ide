@@ -1138,7 +1138,7 @@ CtagsUser::HasExuberantCtags()
 		itsHasExuberantCtagsFlag = kFailure;
 
 		// this hack is required on Linux kernel 2.3.x (4/19/2000)
-		j_sig_func*	origHandler = signal(SIGCHLD, emptyHandler);
+		j_sig_func origHandler = signal(SIGCHLD, emptyHandler);
 
 		pid_t pid;
 

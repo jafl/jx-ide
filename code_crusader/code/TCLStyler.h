@@ -16,18 +16,18 @@ class TCLStyler : public StylerBase, public TextScanner::TCL::Scanner
 public:
 
 	static StylerBase*	Instance();
-	static void				Shutdown();
+	static void			Shutdown();
 
-	virtual ~TCLStyler();
+	~TCLStyler();
 
 protected:
 
 	TCLStyler();
 
 	void	Scan(const JStyledText::TextIndex& startIndex,
-						 std::istream& input, const TokenExtra& initData) override;
+				 std::istream& input, const TokenExtra& initData) override;
 	void	UpgradeTypeList(const JFileVersion vers,
-									JArray<JFontStyle>* typeStyles) override;
+							JArray<JFontStyle>* typeStyles) override;
 
 private:
 

@@ -20,35 +20,35 @@ public:
 
 	PTPrinter();
 
-	virtual ~PTPrinter();
+	~PTPrinter();
 
 	void	SetHeaderName(const JString& name);
 
 	// printing parameters
 
 	bool	WillPrintHeader() const;
-	void		ShouldPrintHeader(const bool print);
+	void	ShouldPrintHeader(const bool print);
 
 protected:
 
-	virtual void	ReadPrefs(std::istream& input);
-	virtual void	WritePrefs(std::ostream& output) const;
+	void	ReadPrefs(std::istream& input) override;
+	void	WritePrefs(std::ostream& output) const override;
 
-	virtual JSize	GetHeaderLineCount() const;
-	virtual void	PrintHeader(std::ostream& output, const JIndex pageIndex);
+	JSize	GetHeaderLineCount() const override;
+	void	PrintHeader(std::ostream& output, const JIndex pageIndex) override;
 
-	virtual JXPTPrintSetupDialog*
+	JXPTPrintSetupDialog*
 		CreatePrintSetupDialog(const Destination destination,
 							   const JString& printCmd, const JString& fileName,
-							   const bool printLineNumbers);
+							   const bool printLineNumbers) override;
 
-	virtual bool	EndUserPrintSetup(const JBroadcaster::Message& message,
-										  bool* changed);
+	bool	EndUserPrintSetup(const JBroadcaster::Message& message,
+							  bool* changed) override;
 
 private:
 
 	bool	itsPrintHeaderFlag;
-	JString		itsHeaderName;
+	JString	itsHeaderName;
 
 	PTPrintSetupDialog*	itsCBPrintSetupDialog;
 };

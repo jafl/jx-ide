@@ -33,7 +33,7 @@ public:
 	ThreadNode(const JUInt64 id);
 	ThreadNode(const ThreadNode& source);
 
-	virtual	~ThreadNode();
+	~ThreadNode();
 
 	Type	GetType() const;
 	void	FindParent(const JUInt64 id);

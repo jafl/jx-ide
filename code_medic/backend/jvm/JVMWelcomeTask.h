@@ -19,13 +19,13 @@ public:
 
 	WelcomeTask(const JString& msg, const bool error);
 
-	virtual ~WelcomeTask();
+	~WelcomeTask();
 
-	virtual void	Perform();
+	void	Perform() override;
 
 private:
 
-	JString		itsMessage;
+	JString	itsMessage;
 	bool	itsErrorFlag;
 };
 

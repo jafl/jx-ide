@@ -28,7 +28,7 @@ public:
 					  const JIndex initialSelection,
 					  const JIndex firstUnusedID);
 
-	virtual ~EditMacroDialog();
+	~EditMacroDialog();
 
 	bool	ContentsValid() const;
 	bool	GetCurrentMacroSetName(JString* name) const;
@@ -42,13 +42,13 @@ protected:
 	void	WritePrefs(std::ostream& output) const override;
 
 	bool	OKToDeactivate() override;
-	void		Receive(JBroadcaster* sender, const Message& message) override;
+	void	Receive(JBroadcaster* sender, const Message& message) override;
 
 private:
 
-	MacroSetTable*	itsMacroSetTable;
+	MacroSetTable*		itsMacroSetTable;
 	CharActionTable*	itsActionTable;
-	MacroTable*		itsMacroTable;
+	MacroTable*			itsMacroTable;
 
 // begin JXLayout
 

@@ -21,7 +21,7 @@ public:
 					const JCoordinate x, const JCoordinate y,
 					const JCoordinate w, const JCoordinate h);
 
-	virtual ~DiffStyleMenu();
+	~DiffStyleMenu();
 
 	const JFontStyle&	GetStyle() const;
 	void				SetStyle(const JFontStyle& style);
@@ -31,8 +31,8 @@ public:
 
 protected:
 
-	virtual JFontStyle	GetFontStyleForMenuUpdate() const;
-	virtual void		HandleMenuItem(const JIndex menuItem);
+	JFontStyle	GetFontStyleForMenuUpdate() const override;
+	void		HandleMenuItem(const JIndex menuItem) override;
 
 private:
 

@@ -18,7 +18,7 @@ public:
 
 	XDGetThreads(JTree* tree, ThreadsWidget* widget);
 
-	virtual	~XDGetThreads();
+	~XDGetThreads();
 
 protected:
 

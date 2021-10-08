@@ -19,9 +19,9 @@ public:
 
 	ExecOutputPostFTCTask(ExecOutputDocument* doc);
 
-	virtual ~ExecOutputPostFTCTask();
+	~ExecOutputPostFTCTask();
 
-	virtual void	Perform();
+	void	Perform() override;
 
 private:
 

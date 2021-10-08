@@ -20,7 +20,7 @@ public:
 
 	GetFrameCmd(StackWidget* widget);
 
-	virtual	~GetFrameCmd();
+	~GetFrameCmd();
 
 protected:
 

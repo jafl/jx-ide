@@ -19,10 +19,10 @@ public:
 					const JCoordinate x, const JCoordinate y,
 					const JCoordinate w, const JCoordinate h);
 
-	virtual	~CommandInput();
+	~CommandInput();
 
 	void	HandleKeyPress(const JUtf8Character& c, const int keySym,
-								   const JXKeyModifiers& modifiers) override;
+						   const JXKeyModifiers& modifiers) override;
 
 protected:
 
@@ -39,44 +39,44 @@ public:
 	static const JUtf8Byte* kDownArrowKeyPressed;
 
 	class ReturnKeyPressed : public JBroadcaster::Message
-		{
+	{
 		public:
 
 			ReturnKeyPressed()
 				:
 				JBroadcaster::Message(kReturnKeyPressed)
 				{ };
-		};
+	};
 
 	class TabKeyPressed : public JBroadcaster::Message
-		{
+	{
 		public:
 
 			TabKeyPressed()
 				:
 				JBroadcaster::Message(kTabKeyPressed)
 				{ };
-		};
+	};
 
 	class UpArrowKeyPressed : public JBroadcaster::Message
-		{
+	{
 		public:
 
 			UpArrowKeyPressed()
 				:
 				JBroadcaster::Message(kUpArrowKeyPressed)
 				{ };
-		};
+	};
 
 	class DownArrowKeyPressed : public JBroadcaster::Message
-		{
+	{
 		public:
 
 			DownArrowKeyPressed()
 				:
 				JBroadcaster::Message(kDownArrowKeyPressed)
 				{ };
-		};
+	};
 };
 
 #endif

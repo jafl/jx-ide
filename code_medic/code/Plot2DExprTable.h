@@ -35,23 +35,23 @@ public:
 					  const JCoordinate x, const JCoordinate y,
 					  const JCoordinate w, const JCoordinate h);
 
-	virtual ~Plot2DExprTable();
+	~Plot2DExprTable();
 
 	void	ConfigureColHeader(JXColHeaderWidget* colHeader);
 
-	void		HandleKeyPress(const JUtf8Character& c, const int keySym,
-									   const JXKeyModifiers& modifiers) override;
+	void	HandleKeyPress(const JUtf8Character& c, const int keySym,
+						   const JXKeyModifiers& modifiers) override;
 
 protected:
 
 	void	HandleMouseDown(const JPoint& pt, const JXMouseButton button,
-									const JSize clickCount,
-									const JXButtonStates& buttonStates,
-									const JXKeyModifiers& modifiers) override;
+							const JSize clickCount,
+							const JXButtonStates& buttonStates,
+							const JXKeyModifiers& modifiers) override;
 
 	JXInputField*	CreateXInputField(const JPoint& cell,
-											  const JCoordinate x, const JCoordinate y,
-											  const JCoordinate w, const JCoordinate h) override;
+									  const JCoordinate x, const JCoordinate y,
+									  const JCoordinate w, const JCoordinate h) override;
 
 	JXInputField*
 		CreateStringTableInput(const JPoint& cell, JXContainer* enclosure,

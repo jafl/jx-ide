@@ -80,7 +80,7 @@ public:
 
 	Link(const bool* features);
 
-	virtual	~Link();
+	~Link();
 
 	bool	GetFeature(const Feature id) const;
 

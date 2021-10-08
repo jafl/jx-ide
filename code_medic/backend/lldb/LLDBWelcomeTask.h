@@ -11,13 +11,15 @@
 #include <jx-af/jx/JXUrgentTask.h>
 #include <jx-af/jcore/JString.h>
 
-class LLDBWelcomeTask : public JXUrgentTask
+namespace lldb {
+
+class WelcomeTask : public JXUrgentTask
 {
 public:
 
-	LLDBWelcomeTask(const JString& msg, const bool restart);
+	WelcomeTask(const JString& msg, const bool restart);
 
-	virtual ~LLDBWelcomeTask();
+	~WelcomeTask();
 
 	void	Perform() override;
 
@@ -25,6 +27,8 @@ private:
 
 	JString	itsMessage;
 	bool	itsRestartFlag;
+};
+
 };
 
 #endif

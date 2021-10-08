@@ -23,7 +23,7 @@ public:
 					   const JCoordinate x, const JCoordinate y,
 					   const JCoordinate w, const JCoordinate h);
 
-	virtual ~TECaretInputBase();
+	~TECaretInputBase();
 
 	JXTEBase*	GetTE();
 	void		SetTE(JXTEBase* te);

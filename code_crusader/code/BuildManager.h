@@ -42,15 +42,15 @@ public:
 				   std::istream* setInput, const JFileVersion setVers,
 				   ProjectDocument* doc);
 
-	virtual ~BuildManager();
+	~BuildManager();
 
-	void		CreateMakeFiles(const MakefileMethod method);
+	void	CreateMakeFiles(const MakefileMethod method);
 	bool	UpdateMakeFiles(const bool reportError = true);
 	bool	UpdateMakefile(ExecOutputDocument* compileDoc = nullptr,
-							   Command** cmd = nullptr,
-							   const bool force = false);
+						   Command** cmd = nullptr,
+						   const bool force = false);
 
-	void		EditProjectConfig();
+	void	EditProjectConfig();
 	bool	EditMakeConfig();
 
 	const JString&	GetBuildTargetName() const;
@@ -61,7 +61,7 @@ public:
 	static const JString&	GetSubProjectBuildSuffix();
 
 	static bool	WillRebuildMakefileDaily();
-	static void		ShouldRebuildMakefileDaily(const bool rebuild);
+	static void	ShouldRebuildMakefileDaily(const bool rebuild);
 
 	// stored in project
 
@@ -94,8 +94,8 @@ public:
 	// called by ProjectConfigDialog
 
 	static bool	UpdateMakeDependCmd(const MakefileMethod oldMethod,
-										const MakefileMethod newMethod,
-										JString* cmd);
+									const MakefileMethod newMethod,
+									JString* cmd);
 
 protected:
 
@@ -123,7 +123,7 @@ private:
 private:
 
 	MakefileMethod	itsMakefileMethod;
-	bool		itsNeedWriteMakeFilesFlag;	// true => Make.files changed
+	bool			itsNeedWriteMakeFilesFlag;	// true => Make.files changed
 	JString			itsTargetName;				// name of target in Make.files
 	JString			itsDepListExpr;				// "literal:" at end of Make.files
 	JString			itsSubProjectBuildCmd;

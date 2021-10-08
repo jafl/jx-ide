@@ -21,21 +21,21 @@ public:
 					  const JCoordinate x, const JCoordinate y,
 					  const JCoordinate w, const JCoordinate h);
 
-	virtual ~FileDragSource();
+	~FileDragSource();
 
 protected:
 
 	void	AdjustCursor(const JPoint& pt, const JXKeyModifiers& modifiers) override;
 	void	HandleMouseDown(const JPoint& pt, const JXMouseButton button,
-									const JSize clickCount,
-									const JXButtonStates& buttonStates,
-									const JXKeyModifiers& modifiers) override;
+							const JSize clickCount,
+							const JXButtonStates& buttonStates,
+							const JXKeyModifiers& modifiers) override;
 
 	Atom	GetDNDAction(const JXContainer* target,
-								 const JXButtonStates& buttonStates,
-								 const JXKeyModifiers& modifiers) override;
+						 const JXButtonStates& buttonStates,
+						 const JXKeyModifiers& modifiers) override;
 	void	HandleDNDResponse(const JXContainer* target,
-									  const bool dropAccepted, const Atom action) override;
+							  const bool dropAccepted, const Atom action) override;
 
 private:
 

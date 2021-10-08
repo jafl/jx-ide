@@ -21,7 +21,7 @@ public:
 
 	GetCompletionsCmd(CommandInput* input, CommandOutputDisplay* history);
 
-	virtual	~GetCompletionsCmd();
+	~GetCompletionsCmd();
 
 protected:
 

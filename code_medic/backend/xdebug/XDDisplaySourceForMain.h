@@ -16,7 +16,7 @@ public:
 
 	XDDisplaySourceForMain(SourceDirector* sourceDir);
 
-	virtual	~XDDisplaySourceForMain();
+	~XDDisplaySourceForMain();
 
 protected:
 

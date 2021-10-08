@@ -30,46 +30,46 @@ class CommandMenu;
 class SymbolUpdatePG;
 
 class TreeDirector;
-typedef Tree* (TreeCreateFn)(TreeDirector* director, const JSize marginWidth);
-typedef Tree* (TreeStreamInFn)(std::istream& projInput, const JFileVersion projVers,
-								   std::istream* setInput, const JFileVersion setVers,
-								   std::istream* symInput, const JFileVersion symVers,
-								   TreeDirector* director,
-								   const JSize marginWidth, DirList* dirList);
-typedef void (TreeInitToolBarFn)(JXToolBar* toolBar, JXTextMenu* treeMenu);
+using TreeCreateFn   = Tree* (*)(TreeDirector* director, const JSize marginWidth);
+using TreeStreamInFn = Tree* (*)(std::istream& projInput, const JFileVersion projVers,
+								 std::istream* setInput, const JFileVersion setVers,
+								 std::istream* symInput, const JFileVersion symVers,
+								 TreeDirector* director,
+								 const JSize marginWidth, DirList* dirList);
+using TreeInitToolBarFn = void (*)(JXToolBar* toolBar, JXTextMenu* treeMenu);
 
 class TreeDirector : public JXWindowDirector, public JPrefObject
 {
 public:
 
-	TreeDirector(ProjectDocument* supervisor, TreeCreateFn* createTreeFn,
+	TreeDirector(ProjectDocument* supervisor, TreeCreateFn createTreeFn,
 				   const JUtf8Byte* windowTitleSuffixID,
 				   const JUtf8Byte* windowHelpName,
 				   const JXPM& windowIcon,
 				   const JUtf8Byte* treeMenuItems, const JUtf8Byte* treeMenuNamespace,
-				   const JIndex toolBarPrefID, TreeInitToolBarFn* initToolBarFn);
+				   const JIndex toolBarPrefID, TreeInitToolBarFn initToolBarFn);
 	TreeDirector(std::istream& projInput, const JFileVersion projVers,
 				   std::istream* setInput, const JFileVersion setVers,
 				   std::istream* symInput, const JFileVersion symVers,
 				   ProjectDocument* supervisor, const bool subProject,
-				   TreeStreamInFn* streamInTreeFn,
+				   TreeStreamInFn streamInTreeFn,
 				   const JUtf8Byte* windowTitleSuffixID,
 				   const JUtf8Byte* windowHelpName,
 				   const JXPM& windowIcon,
 				   const JUtf8Byte* treeMenuItems, const JUtf8Byte* treeMenuNamespace,
-				   const JIndex toolBarPrefID, TreeInitToolBarFn* initToolBarFn,
+				   const JIndex toolBarPrefID, TreeInitToolBarFn initToolBarFn,
 				   DirList* dirList, const bool readCompileRunDialogs);
 
-	virtual ~TreeDirector();
+	~TreeDirector();
 
 	ProjectDocument*	GetProjectDoc() const;
-	TreeWidget*		GetTreeWidget() const;
+	TreeWidget*			GetTreeWidget() const;
 	Tree*				GetTree() const;
 
-	void		AskForFunctionToFind();
+	void	AskForFunctionToFind();
 	bool	ShowInheritedFns() const;
 
-	void		ViewFunctionList(const Class* theClass);
+	void	ViewFunctionList(const Class* theClass);
 
 	virtual void	StreamOut(std::ostream& projOutput, std::ostream* setOutput,
 							  std::ostream* symOutput, const DirList* dirList) const;
@@ -84,7 +84,7 @@ public:
 
 	// called by FileListTable
 
-	void		PrepareForTreeUpdate(const bool reparseAll);
+	void	PrepareForTreeUpdate(const bool reparseAll);
 	bool	TreeUpdateFinished(const JArray<JFAID_t>& deadFileList);
 
 	// called by ProjectDocument
@@ -139,11 +139,11 @@ private:
 	JXScrollbarSet*	TreeDirectorX(ProjectDocument* doc, const JXPM& windowIcon,
 									const JUtf8Byte* treeMenuItems,
 									const JUtf8Byte* treeMenuNamespace,
-									const JIndex toolBarPrefID, TreeInitToolBarFn* initToolBarFn);
+									const JIndex toolBarPrefID, TreeInitToolBarFn initToolBarFn);
 	JXScrollbarSet*	BuildWindow(const JXPM& windowIcon,
 								const JUtf8Byte* treeMenuItems,
 								const JUtf8Byte* treeMenuNamespace,
-								const JIndex toolBarPrefID, TreeInitToolBarFn* initToolBarFn);
+								const JIndex toolBarPrefID, TreeInitToolBarFn initToolBarFn);
 	void			AdjustWindowTitle();
 
 	void	UpdateFileMenu();

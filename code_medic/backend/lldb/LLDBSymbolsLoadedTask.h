@@ -11,19 +11,23 @@
 #include <jx-af/jx/JXUrgentTask.h>
 #include <jx-af/jcore/JString.h>
 
-class LLDBSymbolsLoadedTask : public JXUrgentTask
+namespace lldb {
+
+class SymbolsLoadedTask : public JXUrgentTask
 {
 public:
 
-	LLDBSymbolsLoadedTask(const JString& fileName);
+	SymbolsLoadedTask(const JString& fileName);
 
-	virtual ~LLDBSymbolsLoadedTask();
+	~SymbolsLoadedTask();
 
 	void	Perform() override;
 
 private:
 
 	JString	itsFileName;
+};
+
 };
 
 #endif

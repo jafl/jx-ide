@@ -15,9 +15,9 @@ class JavaScriptCompleter : public StringCompleter
 public:
 
 	static StringCompleter*	Instance();
-	static void					Shutdown();
+	static void				Shutdown();
 
-	virtual ~JavaScriptCompleter();
+	~JavaScriptCompleter();
 
 	static JSize	GetDefaultWordList(const JUtf8Byte*** list);
 
@@ -26,8 +26,8 @@ protected:
 	JavaScriptCompleter();
 
 	bool	IsWordCharacter(const JUtf8Character& c,
-										const bool includeNS) const override;
-	void		MatchCase(const JString& source, JString* target) const override;
+							const bool includeNS) const override;
+	void	MatchCase(const JString& source, JString* target) const override;
 
 private:
 

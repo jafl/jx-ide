@@ -25,14 +25,14 @@ public:
 
 	VarTreeDir(CommandDirector* supervisor);
 
-	virtual	~VarTreeDir();
+	~VarTreeDir();
 
 	void	DisplayExpression(const JString& expr);
 
 	void			Activate() override;
-	bool		Deactivate() override;
+	bool			Deactivate() override;
 	const JString&	GetName() const override;
-	bool		GetMenuIcon(const JXImage** icon) const override;
+	bool			GetMenuIcon(const JXImage** icon) const override;
 
 	void	ReadSetup(std::istream& input, const JFileVersion vers);
 	void	WriteSetup(std::ostream& output) const;
@@ -47,7 +47,7 @@ private:
 	Link*				itsLink;
 	CommandDirector*	itsCommandDir;
 	JTree*				itsTree;		// owned by itsWidget
-	VarTreeWidget*	itsWidget;
+	VarTreeWidget*		itsWidget;
 
 	JXTextMenu*	itsFileMenu;
 	JXTextMenu*	itsActionMenu;

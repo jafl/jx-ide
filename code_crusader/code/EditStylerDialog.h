@@ -27,7 +27,7 @@ public:
 					   const JArray<StylerBase::WordStyle>& wordList,
 					   const TextFileType fileType);
 
-	virtual ~EditStylerDialog();
+	~EditStylerDialog();
 
 	void	GetData(bool* active, JArray<JFontStyle>* typeStyles,
 					JStringMap<JFontStyle>* wordStyles) const;

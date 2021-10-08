@@ -32,7 +32,7 @@ public:
 
 	EditTextPrefsDialog(TextDocument* doc);
 
-	virtual ~EditTextPrefsDialog();
+	~EditTextPrefsDialog();
 
 protected:
 

@@ -19,7 +19,7 @@ public:
 
 	XDGetContextVars(VarNode* rootNode, const JString& contextID);
 
-	virtual	~XDGetContextVars();
+	~XDGetContextVars();
 
 	static void	BuildTree(const JSize depth, xmlNode* root, VarNode* varRoot);
 

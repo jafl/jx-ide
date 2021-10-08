@@ -41,7 +41,7 @@ public:
 	~CPreprocessor();
 
 	bool	Preprocess(JString* text) const;
-	void		PrintMacrosForCTags(std::ostream& output) const;
+	void	PrintMacrosForCTags(std::ostream& output) const;
 
 	void	ReadSetup(std::istream& input, const JFileVersion vers);
 	void	WriteSetup(std::ostream& output) const;

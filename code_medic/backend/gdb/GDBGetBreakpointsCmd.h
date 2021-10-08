@@ -20,7 +20,7 @@ public:
 
 	GetBreakpointsCmd();
 
-	virtual	~GetBreakpointsCmd();
+	~GetBreakpointsCmd();
 
 protected:
 
@@ -34,8 +34,8 @@ private:
 					   JPtrArray<Breakpoint>* list);
 
 	bool	ParseCommon(JStringPtrMap<JString>& map, JIndex* bpIndex,
-							Breakpoint::Action* action, bool* enabled,
-							JSize* ignoreCount);
+						Breakpoint::Action* action, bool* enabled,
+						JSize* ignoreCount);
 };
 
 };

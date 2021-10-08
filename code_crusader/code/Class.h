@@ -60,47 +60,47 @@ public:
 
 public:
 
-	virtual ~Class();
+	~Class();
 
 	const Tree*	GetTree() const;
 
 	const JString&	GetFullName() const;
 	const JString&	GetName() const;
-	bool		GetFileID(JFAID_t* id) const;
-	bool		GetFileName(JString* fileName) const;
+	bool			GetFileID(JFAID_t* id) const;
+	bool			GetFileName(JString* fileName) const;
 
 	virtual void	ViewSource() const;
 	virtual void	ViewHeader() const;
 
-	DeclareType		GetDeclareType() const;
+	DeclareType	GetDeclareType() const;
 	bool		IsAbstract() const;
-	void			SetAbstract(const bool abstract = true);
+	void		SetAbstract(const bool abstract = true);
 	bool		IsTemplate() const;
-	void			SetTemplate(const bool tmpl = true);
+	void		SetTemplate(const bool tmpl = true);
 	bool		IsGhost() const;
 
 	void			AddParent(const InheritType type, const JString& name);
-	bool		FindParents(const bool okToCreateGhost);
-	bool		HasParents() const;
+	bool			FindParents(const bool okToCreateGhost);
+	bool			HasParents() const;
 	JSize			GetParentCount() const;
 	const JString&	GetParentName(const JIndex index) const;
 	InheritType		GetParentType(const JIndex index) const;
-	bool		GetParent(const JIndex index, Class** parent) const;
-	bool		GetParent(const JIndex index, const Class** parent) const;
-	bool		IsAncestor(const Class* child) const;
+	bool			GetParent(const JIndex index, Class** parent) const;
+	bool			GetParent(const JIndex index, const Class** parent) const;
+	bool			IsAncestor(const Class* child) const;
 
-	bool		HasChildren() const;
-	bool		HasPrimaryChildren() const;
-	bool		HasSecondaryChildren() const;
+	bool	HasChildren() const;
+	bool	HasPrimaryChildren() const;
+	bool	HasSecondaryChildren() const;
 
-	bool		Implements(const JString& name, const bool caseSensitive) const;
+	bool	Implements(const JString& name, const bool caseSensitive) const;
 
 	void	Draw(JPainter& p, const JRect& rect) const;
 	void	DrawMILinks(JPainter& p, const JRect& rect) const;
 	void	DrawText(JPainter& p, const JRect& rect) const;
 
 	const JRect&		GetFrame() const;
-	bool			Contains(const JPoint& pt) const;
+	bool				Contains(const JPoint& pt) const;
 	JCoordinate			GetTotalWidth() const;
 	JCoordinate			GetTotalHeight() const;
 	static JCoordinate	GetTotalHeight(Tree* tree, JFontManager* fontManager);
@@ -108,15 +108,15 @@ public:
 	void				SetCoords(const JCoordinate x, const JCoordinate y);
 
 	bool	IsVisible() const;
-	void		SetVisible(const bool visible);
-	void		ForceVisible();
+	void	SetVisible(const bool visible);
+	void	ForceVisible();
 
 	bool	IsSelected() const;
-	void		SetSelected(const bool selected);
-	void		ToggleSelected();
+	void	SetSelected(const bool selected);
+	void	ToggleSelected();
 
 	bool	IsCollapsed() const;
-	void		SetCollapsed(const bool collapse);
+	void	SetCollapsed(const bool collapse);
 
 	virtual void	StreamOut(std::ostream& output) const;
 
@@ -136,7 +136,7 @@ protected:
 			const JUtf8Byte* namespaceOperator);
 	Class(const JString& name);	// search target
 
-	virtual Class*	NewGhost(const JString& name, Tree* tree);
+	virtual Class*		NewGhost(const JString& name, Tree* tree);
 	const JUtf8Byte*	GetNamespaceOperator() const;
 	JString				RemoveNamespace(const JString& fullName);
 
@@ -147,7 +147,7 @@ private:
 	struct ParentInfo
 	{
 		JString*	name;
-		Class*	parent;			// can be nullptr; not owned
+		Class*		parent;			// can be nullptr; not owned
 		InheritType	inheritance;
 		JIndex		indexFromFile;	// used while reading from file
 
@@ -178,8 +178,8 @@ private:
 	JString		itsName;						// class name
 	DeclareType	itsDeclType;
 	JFAID_t		itsFileID;
-	bool	itsIsAbstractFlag;				// true if contains pure virtual functions
-	bool	itsIsTemplateFlag;
+	bool		itsIsAbstractFlag;				// true if contains pure virtual functions
+	bool		itsIsTemplateFlag;
 
 	JCoordinate	itsHCoord;						// coordinates in class tree
 	JCoordinate	itsVCoord;
@@ -199,20 +199,20 @@ private:
 
 private:
 
-	void		ClassX(Tree* tree);
+	void	ClassX(Tree* tree);
 	bool	FindParent(ParentInfo* pInfo, const bool okToSearchGhosts);
-	void		AddChild(Class* child, const bool primary);
+	void	AddChild(Class* child, const bool primary);
 
 	static JCoordinate	CalcFrameHeight(JFontManager* fontManager,
 										const JSize fontSize);
 
 	bool	NeedDrawName() const;
-	JString		GetDrawName() const;
+	JString	GetDrawName() const;
 
 	bool	NeedToDrawLink(const JPoint& pt1, const JPoint& pt2,
-							   const JRect& visRect) const;
-	JPoint		GetLinkFromPt() const;
-	JPoint		GetLinkToPt() const;
+						   const JRect& visRect) const;
+	JPoint	GetLinkFromPt() const;
+	JPoint	GetLinkToPt() const;
 
 	// called by Tree
 

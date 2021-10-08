@@ -24,29 +24,29 @@ class SourceText : public TextDisplayBase
 public:
 
 	SourceText(SourceDirector* srcDir, CommandDirector* cmdDir,
-					JXMenuBar* menuBar,
-					JXScrollbarSet* scrollbarSet, JXContainer* enclosure,
-					const HSizingOption hSizing, const VSizingOption vSizing,
-					const JCoordinate x, const JCoordinate y,
-					const JCoordinate w, const JCoordinate h);
+				JXMenuBar* menuBar,
+				JXScrollbarSet* scrollbarSet, JXContainer* enclosure,
+				const HSizingOption hSizing, const VSizingOption vSizing,
+				const JCoordinate x, const JCoordinate y,
+				const JCoordinate w, const JCoordinate h);
 
-	virtual ~SourceText();
+	~SourceText();
 
 	void	SetFileType(const TextFileType type);
 
 	void	HandleKeyPress(const JUtf8Character& c, const int keySym,
-								   const JXKeyModifiers& modifiers) override;
+						   const JXKeyModifiers& modifiers) override;
 
 protected:
 
 	void	BoundsResized(const JCoordinate dw, const JCoordinate dh) override;
 	void	HandleMouseDown(const JPoint& pt, const JXMouseButton button,
-									const JSize clickCount,
-									const JXButtonStates& buttonStates,
-									const JXKeyModifiers& modifiers) override;
+							const JSize clickCount,
+							const JXButtonStates& buttonStates,
+							const JXKeyModifiers& modifiers) override;
 	void	HandleMouseUp(const JPoint& pt, const JXMouseButton button,
-								  const JXButtonStates& buttonStates,
-								  const JXKeyModifiers& modifiers) override;
+						  const JXButtonStates& buttonStates,
+						  const JXKeyModifiers& modifiers) override;
 
 	void	Receive(JBroadcaster* sender, const Message& message) override;
 
@@ -63,7 +63,7 @@ protected:
 			itsTokenStartList(JSTStyler::NewTokenStartList())
 		{ };
 
-		virtual ~StyledText();
+		~StyledText();
 
 		protected:
 
@@ -83,9 +83,9 @@ protected:
 
 private:
 
-	SourceDirector*	itsSrcDir;
+	SourceDirector*		itsSrcDir;
 	CommandDirector*	itsCmdDir;
-	StylerBase*		itsStyler;
+	StylerBase*			itsStyler;
 	JIndex				itsFirstSearchMenuItem;	// index of first item added to Search menu
 	JSize				itsLastClickCount;
 

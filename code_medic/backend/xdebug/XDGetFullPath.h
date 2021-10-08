@@ -16,7 +16,7 @@ public:
 
 	XDGetFullPath(const JString& fileName, const JIndex lineIndex = 0);
 
-	virtual	~XDGetFullPath();
+	~XDGetFullPath();
 
 protected:
 

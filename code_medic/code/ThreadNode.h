@@ -15,9 +15,9 @@ class ThreadNode : public JNamedTreeNode
 public:
 
 	ThreadNode(const JUInt64 id, const JString& name,
-				 const JString& fileName, const JIndex lineIndex);
+				const JString& fileName, const JIndex lineIndex);
 
-	virtual	~ThreadNode();
+	~ThreadNode();
 
 	JUInt64	GetID() const;
 	bool	GetFile(JString* fileName, JIndex* lineIndex) const;

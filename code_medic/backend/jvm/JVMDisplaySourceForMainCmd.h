@@ -18,7 +18,7 @@ public:
 
 	DisplaySourceForMainCmd(SourceDirector* sourceDir);
 
-	virtual	~DisplaySourceForMainCmd();
+	~DisplaySourceForMainCmd();
 
 protected:
 

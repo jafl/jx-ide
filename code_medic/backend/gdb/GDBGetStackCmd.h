@@ -20,7 +20,7 @@ public:
 
 	GetStackCmd(JTree* tree, StackWidget* widget);
 
-	virtual	~GetStackCmd();
+	~GetStackCmd();
 
 protected:
 

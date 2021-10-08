@@ -18,7 +18,7 @@ public:
 
 	SimpleCmd(const JString& cmd);
 
-	virtual	~SimpleCmd();
+	~SimpleCmd();
 
 protected:
 

@@ -24,7 +24,7 @@ public:
 							  JXMenu* owner, const JIndex itemIndex,
 							  JXContainer* enclosure);
 
-	virtual ~SearchFilterHistoryMenu();
+	~SearchFilterHistoryMenu();
 
 	void	AddFilter(const JString& filter, const bool invert);
 

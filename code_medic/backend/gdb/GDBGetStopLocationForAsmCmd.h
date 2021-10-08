@@ -18,7 +18,7 @@ public:
 
 	GetStopLocationForAsmCmd();
 
-	virtual	~GetStopLocationForAsmCmd();
+	~GetStopLocationForAsmCmd();
 
 protected:
 

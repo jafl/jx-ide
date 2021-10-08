@@ -19,14 +19,14 @@ public:
 
 	GetStackCmd(const JString& cmd, JTree* tree, StackWidget* widget);
 
-	virtual	~GetStackCmd();
+	~GetStackCmd();
 
 	JTree*			GetTree();
 	StackWidget*	GetWidget();
 
 protected:
 
-	virtual void	HandleFailure();
+	void	HandleFailure() override;
 
 private:
 

@@ -19,7 +19,7 @@ public:
 			  const bool isPublic);
 	GoClass(std::istream& input, const JFileVersion vers, Tree* tree);
 
-	virtual ~GoClass();
+	~GoClass();
 
 	void	ViewSource() const override;
 	void	ViewHeader() const override;

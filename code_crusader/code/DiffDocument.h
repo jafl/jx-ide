@@ -46,7 +46,7 @@ public:
 							  const bool silent = false,
 							  DiffDocument* origDoc = nullptr);
 
-	virtual ~DiffDocument();
+	~DiffDocument();
 
 protected:
 
@@ -81,7 +81,7 @@ private:
 	const JFontStyle	itsRemoveStyle;
 	const JFontStyle	itsInsertStyle;
 
-	DiffEditor*	itsDiffEditor;
+	DiffEditor*		itsDiffEditor;
 	JXTextMenu*		itsDiffMenu;
 	JXTextButton*	itsDiffButton;
 

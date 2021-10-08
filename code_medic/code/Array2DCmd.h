@@ -29,14 +29,14 @@ public:
 public:
 
 	Array2DCmd(Array2DDir* dir,
-					 JXStringTable* table, JStringTableData* data);
+				JXStringTable* table, JStringTableData* data);
 
-	virtual	~Array2DCmd();
+	~Array2DCmd();
 
 	virtual void	PrepareToSend(const UpdateType type, const JIndex index,
 								  const JInteger arrayIndex);
 
-	Array2DDir*		GetDirector();
+	Array2DDir*			GetDirector();
 	JXStringTable*		GetTable();
 	JStringTableData*	GetData();
 	UpdateType			GetType() const;
@@ -51,7 +51,7 @@ protected:
 
 private:
 
-	Array2DDir*		itsDirector;
+	Array2DDir*			itsDirector;
 	JXStringTable*		itsTable;
 	JStringTableData*	itsData;		// not owned
 	UpdateType			itsType;

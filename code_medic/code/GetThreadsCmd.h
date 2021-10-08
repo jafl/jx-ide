@@ -18,13 +18,13 @@ public:
 
 	GetThreadsCmd(const JString& cmd, ThreadsWidget* widget);
 
-	virtual	~GetThreadsCmd();
+	~GetThreadsCmd();
 
 	ThreadsWidget*	GetWidget();
 
 protected:
 
-	virtual void	HandleFailure();
+	void	HandleFailure() override;
 
 private:
 

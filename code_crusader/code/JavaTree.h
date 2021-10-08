@@ -27,7 +27,7 @@ public:
 			   JavaTreeDirector* director, const JSize marginWidth,
 			   DirList* dirList);
 
-	virtual ~JavaTree();
+	~JavaTree();
 
 	void	StreamOut(std::ostream& projOutput, std::ostream* setOutput,
 							  std::ostream* symOutput, const DirList* dirList) const override;

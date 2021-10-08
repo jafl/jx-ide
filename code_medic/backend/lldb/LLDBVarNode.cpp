@@ -20,23 +20,23 @@
 
  *****************************************************************************/
 
-LLDBVarNode::LLDBVarNode			// root node
+lldb::VarNode::VarNode			// root node
 	(
 	const bool shouldUpdate		// false for Local Variables
 	)
 	:
-	VarNode(shouldUpdate)
+	::VarNode(shouldUpdate)
 {
 }
 
-LLDBVarNode::LLDBVarNode
+lldb::VarNode::VarNode
 	(
 	JTreeNode*		parent,
 	const JString&	name,
 	const JString&	value
 	)
 	:
-	VarNode(parent, name, value)
+	::VarNode(parent, name, value)
 {
 }
 
@@ -45,7 +45,7 @@ LLDBVarNode::LLDBVarNode
 
  *****************************************************************************/
 
-LLDBVarNode::~LLDBVarNode()
+lldb::VarNode::~VarNode()
 {
 }
 
@@ -58,7 +58,7 @@ LLDBVarNode::~LLDBVarNode()
  ******************************************************************************/
 
 JString
-LLDBVarNode::GetFullName
+lldb::VarNode::GetFullName
 	(
 	bool* isPointer
 	)
@@ -72,11 +72,11 @@ LLDBVarNode::GetFullName
 
  ******************************************************************************/
 
-VarNode*
-LLDBVarNode::BuildTree
+::VarNode*
+lldb::VarNode::BuildTree
 	(
-	lldb::SBFrame& f,
-	lldb::SBValue& v
+	SBFrame& f,
+	SBValue& v
 	)
 {
 	const JUtf8Byte* s = v.GetValue();
@@ -99,9 +99,9 @@ LLDBVarNode::BuildTree
 	{
 		lldb::BasicType type = v.GetType().GetPointeeType().GetBasicType();
 
-		if (type == lldb::eBasicTypeChar       ||
-			type == lldb::eBasicTypeSignedChar ||
-			type == lldb::eBasicTypeUnsignedChar)
+		if (type == eBasicTypeChar       ||
+			type == eBasicTypeSignedChar ||
+			type == eBasicTypeUnsignedChar)
 		{
 #ifdef _J_LLDB_HAS_SBVALUE_GETSUMMARY
 			if (v.GetSummary() != nullptr)
@@ -120,9 +120,9 @@ LLDBVarNode::BuildTree
 	else if (v.GetType().GetTypeClass() == lldb::eTypeClassArray)
 	{
 		lldb::BasicType type = v.GetChildAtIndex(0).GetType().GetBasicType();
-		if (type == lldb::eBasicTypeChar       ||
-			type == lldb::eBasicTypeSignedChar ||
-			type == lldb::eBasicTypeUnsignedChar)
+		if (type == eBasicTypeChar       ||
+			type == eBasicTypeSignedChar ||
+			type == eBasicTypeUnsignedChar)
 		{
 #ifdef _J_LLDB_HAS_SBVALUE_GETSUMMARY
 			if (v.GetSummary() != nullptr)
@@ -143,7 +143,7 @@ LLDBVarNode::BuildTree
 		name.Append(">");
 	}
 
-	VarNode* node = GetLink()->CreateVarNode(nullptr, name, JString::empty, value);
+	::VarNode* node = GetLink()->CreateVarNode(nullptr, name, JString::empty, value);
 	assert( node != nullptr );
 
 	if (isPointer)
@@ -161,10 +161,10 @@ LLDBVarNode::BuildTree
 		const JSize count = v.GetNumChildren();
 		for (JUnsignedOffset i=0; i<count; i++)
 		{
-			lldb::SBValue child = v.GetChildAtIndex(i, lldb::eDynamicDontRunTarget, true);
+			SBValue child = v.GetChildAtIndex(i, lldb::eDynamicDontRunTarget, true);
 			if (child.IsValid())
 			{
-				VarNode* n = BuildTree(f, child);
+				::VarNode* n = BuildTree(f, child);
 				node->Append(n);	// avoid automatic update
 			}
 		}

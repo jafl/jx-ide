@@ -21,27 +21,27 @@ public:
 
 	PSPrinter(JXDisplay* display);
 
-	virtual ~PSPrinter();
+	~PSPrinter();
 
 	const JString&	GetHeaderName() const;
 	void			SetPrintInfo(TextEditor* te, const JString& headerName);
 
-	virtual bool	OpenDocument();
-	virtual void	CloseDocument();
-	virtual void	CancelDocument();
+	bool	OpenDocument() override;
+	void	CloseDocument() override;
+	void	CancelDocument() override;
 
 protected:
 
-	virtual void	ReadPrefs(std::istream& input);
-	virtual void	WritePrefs(std::ostream& output) const;
+	void	ReadPrefs(std::istream& input) override;
+	void	WritePrefs(std::ostream& output) const override;
 
-	virtual JXPSPrintSetupDialog*
+	JXPSPrintSetupDialog*
 		CreatePrintSetupDialog(const Destination destination,
 							   const JString& printCmd, const JString& fileName,
-							   const bool collate, const bool bw);
+							   const bool collate, const bool bw) override;
 
-	virtual bool	EndUserPrintSetup(const JBroadcaster::Message& message,
-									  bool* changed);
+	bool	EndUserPrintSetup(const JBroadcaster::Message& message,
+							  bool* changed) override;
 
 private:
 

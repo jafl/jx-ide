@@ -21,7 +21,7 @@ public:
 
 	EditMiscPrefsDialog();
 
-	virtual ~EditMiscPrefsDialog();
+	~EditMiscPrefsDialog();
 
 protected:
 

@@ -19,7 +19,7 @@ public:
 
 	VarCmd();
 
-	virtual	~VarCmd();
+	~VarCmd();
 
 	const JString&	GetData() const;
 

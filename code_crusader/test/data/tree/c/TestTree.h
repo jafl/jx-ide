@@ -35,31 +35,31 @@ public:
 			TestTreeDirector* director, const JSize marginWidth,
 			DirList* dirList);
 
-	virtual ~TestTree();
+	~TestTree();
 
 	CPreprocessor*	GetCPreprocessor() const;
 
 	void	StreamOut(std::ostream& projOutput, std::ostream* setOutput,
-							  std::ostream* symOutput, const DirList* dirList) const override;
+					  std::ostream* symOutput, const DirList* dirList) const override;
 
 protected:
 
 	bool	UpdateFinished(const JArray<JFAID_t>& deadFileList) override;
-	void		ParseFile(const JString& fileName, const JFAID_t id) override;
+	void	ParseFile(const JString& fileName, const JFAID_t id) override;
 
 	void	Receive(JBroadcaster* sender, const Message& message) override;
 
 private:
 
-	CPreprocessor*	itsCPP;
-	TestTreeScanner*		itsClassNameLexer;	// nullptr unless parsing
+	CPreprocessor*		itsCPP;
+	TestTreeScanner*	itsClassNameLexer;	// nullptr unless parsing
 
 private:
 
 	void	TestTreeX();
 
 	static Class* StreamInCClass(std::istream& input, const JFileVersion vers,
-								   Tree* tree);
+								 Tree* tree);
 };
 
 

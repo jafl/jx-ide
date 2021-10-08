@@ -15,9 +15,9 @@ class DCompleter : public StringCompleter
 public:
 
 	static StringCompleter*	Instance();
-	static void					Shutdown();
+	static void				Shutdown();
 
-	virtual ~DCompleter();
+	~DCompleter();
 
 	static JSize	GetDefaultWordList(const JUtf8Byte*** list);
 
@@ -26,7 +26,7 @@ protected:
 	DCompleter();
 
 	bool	IsWordCharacter(const JUtf8Character& c,
-										const bool includeNS) const override;
+							const bool includeNS) const override;
 
 private:
 

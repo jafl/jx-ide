@@ -15,16 +15,16 @@ class GoCompleter : public StringCompleter
 public:
 
 	static StringCompleter*	Instance();
-	static void					Shutdown();
+	static void				Shutdown();
 
-	virtual ~GoCompleter();
+	~GoCompleter();
 
 protected:
 
 	GoCompleter();
 
 	bool	IsWordCharacter(const JUtf8Character& c,
-										const bool includeNS) const override;
+							const bool includeNS) const override;
 
 private:
 

@@ -16,18 +16,18 @@ class GoStyler : public StylerBase, public TextScanner::Go::Scanner
 public:
 
 	static StylerBase*	Instance();
-	static void				Shutdown();
+	static void			Shutdown();
 
-	virtual ~GoStyler();
+	~GoStyler();
 
 protected:
 
 	GoStyler();
 
 	void	Scan(const JStyledText::TextIndex& startIndex,
-						 std::istream& input, const TokenExtra& initData) override;
+				 std::istream& input, const TokenExtra& initData) override;
 	void	UpgradeTypeList(const JFileVersion vers,
-									JArray<JFontStyle>* typeStyles) override;
+							JArray<JFontStyle>* typeStyles) override;
 
 	void	Receive(JBroadcaster* sender, const Message& message) override;
 

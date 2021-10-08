@@ -33,7 +33,7 @@ public:
 					  const JCoordinate x, const JCoordinate y,
 					  const JCoordinate w, const JCoordinate h);
 
-	virtual ~TextDisplayBase();
+	~TextDisplayBase();
 
 	static void	AdjustFont(JXTEBase* te);
 

@@ -18,7 +18,7 @@ public:
 	GroupNode(std::istream& input, const JFileVersion vers,
 				ProjectNode* parent);
 
-	virtual ~GroupNode();
+	~GroupNode();
 
 	virtual void	Print(JString* text) const;
 	virtual void	ShowFileLocation() const;

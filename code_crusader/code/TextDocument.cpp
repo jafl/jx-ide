@@ -224,9 +224,9 @@ const JUtf8Byte* TextDocument::kSaved = "Saved::TextDocument";
 TextDocument::TextDocument
 	(
 	const TextFileType	type,		// first to avoid conflict with fileName
-	const JUtf8Byte*		helpSectionName,
+	const JUtf8Byte*	helpSectionName,
 	const bool			setWMClass,
-	TextEditorCtorFn*		teCtorFn
+	TextEditorCtorFn	teCtorFn
 	)
 	:
 	JXFileDocument(GetApplication(),
@@ -476,8 +476,8 @@ TextDocument::GetMenuIcon
 void
 TextDocument::BuildWindow
 	(
-	const bool		setWMClass,
-	TextEditorCtorFn*	teCtorFn
+	const bool			setWMClass,
+	TextEditorCtorFn	teCtorFn
 	)
 {
 // begin JXLayout

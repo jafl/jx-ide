@@ -17,7 +17,7 @@ public:
 
 	XDSocket();
 
-	virtual	~XDSocket();
+	~XDSocket();
 
 	void	StartTimer();
 	void	StopTimer();

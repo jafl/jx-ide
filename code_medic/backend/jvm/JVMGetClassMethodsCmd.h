@@ -18,7 +18,7 @@ public:
 
 	GetClassMethodsCmd(const JUInt64 id);
 
-	virtual	~GetClassMethodsCmd();
+	~GetClassMethodsCmd();
 
 	void	Starting() override;
 

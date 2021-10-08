@@ -20,7 +20,7 @@ public:
 
 	GetStopLocationCmd();
 
-	virtual	~GetStopLocationCmd();
+	~GetStopLocationCmd();
 
 protected:
 

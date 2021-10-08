@@ -62,18 +62,18 @@ public:
 
 public:
 
-	static bool		Create(ProjectDocument** doc);
+	static bool			Create(ProjectDocument** doc);
 	static FileStatus	Create(const JString& fullName, const bool silent,
 							   ProjectDocument** doc);
 	static FileStatus	CanReadFile(const JString& fullName);
 	static FileStatus	CanReadFile(std::istream& input, JFileVersion* actualFileVersion);
 
-	virtual ~ProjectDocument();
+	~ProjectDocument();
 
 	void			Activate() override;
 	const JString&	GetName() const override;
-	bool		GetMenuIcon(const JXImage** icon) const override;
-	bool		Close() override;
+	bool			GetMenuIcon(const JXImage** icon) const override;
+	bool			Close() override;
 
 	ProjectTree*	GetFileTree() const;
 	ProjectTable*	GetFileTable() const;
@@ -81,18 +81,18 @@ public:
 							const RelPathCSF::PathType pathType);
 	void			EditMakeConfig();
 
-	CommandManager*	GetCommandManager() const;
+	CommandManager*		GetCommandManager() const;
 	BuildManager*		GetBuildManager() const;
 	const JString&		GetBuildTargetName() const;
 	FileListDirector*	GetFileListDirector() const;
-	FileListTable*	GetAllFileList() const;
-	SymbolDirector*	GetSymbolDirector() const;
-	CTreeDirector*	GetCTreeDirector() const;
-	DTreeDirector*	GetDTreeDirector() const;
-	GoTreeDirector*	GetGoTreeDirector() const;
+	FileListTable*		GetAllFileList() const;
+	SymbolDirector*		GetSymbolDirector() const;
+	CTreeDirector*		GetCTreeDirector() const;
+	DTreeDirector*		GetDTreeDirector() const;
+	GoTreeDirector*		GetGoTreeDirector() const;
 	JavaTreeDirector*	GetJavaTreeDirector() const;
 	PHPTreeDirector*	GetPHPTreeDirector() const;
-	RelPathCSF*		GetRelPathCSF() const;
+	RelPathCSF*			GetRelPathCSF() const;
 
 	bool					HasDirectories() const;
 	const DirList&			GetDirectories() const;
@@ -112,10 +112,10 @@ public:
 	static void	WriteStaticGlobalPrefs(std::ostream& output);
 
 	static bool	WillReopenTextFiles();
-	static void		ShouldReopenTextFiles(const bool reopen);
+	static void	ShouldReopenTextFiles(const bool reopen);
 
 	static bool	WillAskOKToOpenOldVersion();
-	static void		ShouldAskOKToOpenOldVersion(const bool ask);
+	static void	ShouldAskOKToOpenOldVersion(const bool ask);
 
 	static const JString&	GetAddFilesFilter();
 	static void				SetAddFilesFilter(const JString& filter);
@@ -127,7 +127,7 @@ public:
 	// called by NewProjectSaveFileDialog
 
 	static const JUtf8Byte*	GetTemplateDirectoryName();
-	static bool			GetProjectTemplateType(const JString& fullName,
+	static bool				GetProjectTemplateType(const JString& fullName,
 												   JString* type);
 
 	// called by EditTreePrefsDialog

@@ -18,7 +18,7 @@ public:
 
 	DSSFinishSaveTask(TextDocument* doc);
 
-	virtual ~DSSFinishSaveTask();
+	~DSSFinishSaveTask();
 
 	virtual void	Save(const JString& fullName);
 

@@ -25,7 +25,7 @@ public:
 	App(int* argc, char* argv[], const bool useMDI,
 		  bool* displayAbout, JString* prevVersStr);
 
-	virtual ~App();
+	~App();
 
 	virtual void	Quit();
 

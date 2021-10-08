@@ -34,7 +34,7 @@ public:
 						 const JCoordinate x, const JCoordinate y,
 						 const JCoordinate w, const JCoordinate h);
 
-	virtual ~KeyScriptTableBase();
+	~KeyScriptTableBase();
 
 	void	Activate() override;
 	void	Deactivate() override;

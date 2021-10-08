@@ -19,7 +19,7 @@ public:
 
 	MDIServer();
 
-	virtual ~MDIServer();
+	~MDIServer();
 
 	static void	PrintCommandLineHelp();
 
@@ -33,7 +33,7 @@ public:
 protected:
 
 	void	HandleMDIRequest(const JString& dir,
-									 const JPtrArray<JString>& argList) override;
+							 const JPtrArray<JString>& argList) override;
 
 	void	ReadPrefs(std::istream& input) override;
 	void	WritePrefs(std::ostream& output) const override;

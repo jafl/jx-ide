@@ -29,7 +29,7 @@ public:
 
 	DiffFileDialog(JXDirector* supervisor);
 
-	virtual ~DiffFileDialog();
+	~DiffFileDialog();
 
 	void	SetFile1(const JString& fullName);
 	void	SetFile2(const JString& fullName);
@@ -79,14 +79,14 @@ private:
 
 private:
 
-	JIndex				itsTabIndex;
+	JIndex			itsTabIndex;
 	DiffStyleMenu*	itsStyleMenu[ kTabCount ][2];
-	JIndex				itsCVSRev1Cmd;
-	JIndex				itsCVSRev2Cmd;
-	JIndex				itsSVNRev1Cmd;
-	JIndex				itsSVNRev2Cmd;
-	JIndex				itsGitRev1Cmd;
-	JIndex				itsGitRev2Cmd;
+	JIndex			itsCVSRev1Cmd;
+	JIndex			itsCVSRev2Cmd;
+	JIndex			itsSVNRev1Cmd;
+	JIndex			itsSVNRev2Cmd;
+	JIndex			itsGitRev1Cmd;
+	JIndex			itsGitRev2Cmd;
 
 // begin JXLayout
 
@@ -156,70 +156,70 @@ private:
 
 private:
 
-	void		BuildWindow();
-	void		UpdateDisplay();
+	void	BuildWindow();
+	void	UpdateDisplay();
 	bool	ViewDiffs();
 
 	bool	CheckFile(JXFileInput* widget) const;
-	void		ChooseFile(JXFileInput* widget);
-	void		ChoosePath(JXFileInput* widget);
+	void	ChooseFile(JXFileInput* widget);
+	void	ChoosePath(JXFileInput* widget);
 
 	JString		BuildDiffCmd();
 	void		DiffDirectory(const JString& fullName, const JString& diffCmd,
 							  JXCheckbox* summaryCB, const JString& summaryArgs);
 
 	bool	CheckVCSFileOrPath(JXFileInput* widget, const bool reportError,
-								   JString* fullName) const;
-	void		UpdateVCSRevMenu(JXTextMenu* menu, const JIndex cmd);
+							   JString* fullName) const;
+	void	UpdateVCSRevMenu(JXTextMenu* menu, const JIndex cmd);
 
-	void		ViewCVSDiffs(const JString& fullName, const bool silent);
-	void		HandleCVSRevMenu(JXTextMenu* menu, const JIndex index,
-								 JIndex* cmd, JXInputField* input);
+	void	ViewCVSDiffs(const JString& fullName, const bool silent);
+	void	HandleCVSRevMenu(JXTextMenu* menu, const JIndex index,
+							 JIndex* cmd, JXInputField* input);
 	bool	BuildCVSDiffCmd(const JString& fullName,
-								const JIndex rev1Cmd, const JString& rev1,
-								const JIndex rev2Cmd, const JString& rev2,
-								JString* getCmd, JString* diffCmd,
-								JString* name1, JString* name2,
-								const bool silent);
+							const JIndex rev1Cmd, const JString& rev1,
+							const JIndex rev2Cmd, const JString& rev2,
+							JString* getCmd, JString* diffCmd,
+							JString* name1, JString* name2,
+							const bool silent);
 
 	bool	GetCurrentCVSRevision(const JString& fullName, JString* rev);
 	bool	GetPreviousCVSRevision(const JString& fullName, JString* rev);
 
-	void		ViewSVNDiffs(const JString& fullName, const bool silent);
+	void	ViewSVNDiffs(const JString& fullName, const bool silent);
 	bool	CheckSVNFileOrPath(JXFileInput* widget, const bool reportError,
-								   JString* fullName) const;
-	void		HandleSVNRevMenu(JXTextMenu* menu, const JIndex index,
-								 JIndex* cmd, JXInputField* input);
+							   JString* fullName) const;
+	void	HandleSVNRevMenu(JXTextMenu* menu, const JIndex index,
+							 JIndex* cmd, JXInputField* input);
 	bool	BuildSVNDiffCmd(const JString& fullName,
-								const JIndex rev1Cmd, const JString& rev1,
-								const JIndex rev2Cmd, const JString& rev2,
-								JString* getCmd, JString* diffCmd,
-								JString* name1, JString* name2,
-								const bool silent,
-								const bool forDirectory = false);
+							const JIndex rev1Cmd, const JString& rev1,
+							const JIndex rev2Cmd, const JString& rev2,
+							JString* getCmd, JString* diffCmd,
+							JString* name1, JString* name2,
+							const bool silent,
+							const bool forDirectory = false);
 	bool	BuildSVNRepositoryPath(JString* fullName, const JIndex cmd,
-									   const JString& rev, JString* name,
-									   const bool silent);
+								   const JString& rev, JString* name,
+								   const bool silent);
 
-	void		ViewGitDiffs(const JString& fullName, const bool silent);
-	void		HandleGitRevMenu(JXTextMenu* menu, const JIndex index,
-								 JIndex* cmd, JXInputField* input);
+	void	ViewGitDiffs(const JString& fullName, const bool silent);
+	void	HandleGitRevMenu(JXTextMenu* menu, const JIndex index,
+							 JIndex* cmd, JXInputField* input);
 	bool	BuildGitDiffCmd(const JString& fullName,
-								const JIndex rev1Cmd, const JString& rev1,
-								const JIndex rev2Cmd, const JString& rev2,
-								JString* get1Cmd, JString* get2Cmd, JString* diffCmd,
-								JString* name1, JString* name2,
-								const bool silent);
+							const JIndex rev1Cmd, const JString& rev1,
+							const JIndex rev2Cmd, const JString& rev2,
+							JString* get1Cmd, JString* get2Cmd, JString* diffCmd,
+							JString* name1, JString* name2,
+							const bool silent);
 	bool	BuildGitDiffDirectoryCmd(const JString& path,
-										 const JIndex rev1Cmd, const JString& rev1,
-										 const JIndex rev2Cmd, const JString& rev2,
-										 JString* diffCmd);
+									 const JIndex rev1Cmd, const JString& rev1,
+									 const JIndex rev2Cmd, const JString& rev2,
+									 JString* diffCmd);
 	bool	GetCurrentGitRevision(const JString& fullName, JString* rev);
 	bool	GetPreviousGitRevision(const JString& fullName, JString* rev);
 	bool	GetLatestGitRevisions(const JString& fullName,
-									  JString* rev1, JString* rev2);
+								  JString* rev1, JString* rev2);
 	bool	GetBestCommonGitAncestor(const JString& path,
-										 JString* rev1, const JUtf8Byte* rev2);
+									 JString* rev1, const JUtf8Byte* rev2);
 
 	JString	GetSmartDiffInfo(const JString& origFileName,
 							 bool* isSafetySave, bool* isBackup) const;

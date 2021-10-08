@@ -449,10 +449,6 @@ T
 F
 "./code/Link.cpp"
 T
-2 "Link.h"
-F
-"./code/Link.h"
-T
 2 "Command.cpp"
 F
 "./code/Command.cpp"
@@ -603,81 +599,81 @@ T
 F
 "./backend/lldb/LLDBSymbolsLoadedTask.cpp"
 T
-2 "LLDBRunBackgroundCommandTask.cpp"
+2 "LLDBRunBackgroundCmdTask.cpp"
 F
-"./backend/lldb/LLDBRunBackgroundCommandTask.cpp"
+"./backend/lldb/LLDBRunBackgroundCmdTask.cpp"
 T
 2 "LLDBBreakpointManager.cpp"
 F
 "./backend/lldb/LLDBBreakpointManager.cpp"
 T
-2 "LLDBArray2DCommand.cpp"
+2 "LLDBArray2DCmd.cpp"
 F
-"./backend/lldb/LLDBArray2DCommand.cpp"
+"./backend/lldb/LLDBArray2DCmd.cpp"
 T
-2 "LLDBPlot2DCommand.cpp"
+2 "LLDBPlot2DCmd.cpp"
 F
-"./backend/lldb/LLDBPlot2DCommand.cpp"
+"./backend/lldb/LLDBPlot2DCmd.cpp"
 T
-2 "LLDBDisplaySourceForMain.cpp"
+2 "LLDBDisplaySourceForMainCmd.cpp"
 F
-"./backend/lldb/LLDBDisplaySourceForMain.cpp"
+"./backend/lldb/LLDBDisplaySourceForMainCmd.cpp"
 T
-2 "LLDBGetAssembly.cpp"
+2 "LLDBGetAssemblyCmd.cpp"
 F
-"./backend/lldb/LLDBGetAssembly.cpp"
+"./backend/lldb/LLDBGetAssemblyCmd.cpp"
 T
-2 "LLDBGetBreakpoints.cpp"
+2 "LLDBGetBreakpointsCmd.cpp"
 F
-"./backend/lldb/LLDBGetBreakpoints.cpp"
+"./backend/lldb/LLDBGetBreakpointsCmd.cpp"
 T
-2 "LLDBGetCompletions.cpp"
+2 "LLDBGetCompletionsCmd.cpp"
 F
-"./backend/lldb/LLDBGetCompletions.cpp"
+"./backend/lldb/LLDBGetCompletionsCmd.cpp"
 T
-2 "LLDBGetFrame.cpp"
+2 "LLDBGetFrameCmd.cpp"
 F
-"./backend/lldb/LLDBGetFrame.cpp"
+"./backend/lldb/LLDBGetFrameCmd.cpp"
 T
-2 "LLDBGetFullPath.cpp"
+2 "LLDBGetFullPathCmd.cpp"
 F
-"./backend/lldb/LLDBGetFullPath.cpp"
+"./backend/lldb/LLDBGetFullPathCmd.cpp"
 T
-2 "LLDBGetInitArgs.cpp"
+2 "LLDBGetInitArgsCmd.cpp"
 F
-"./backend/lldb/LLDBGetInitArgs.cpp"
+"./backend/lldb/LLDBGetInitArgsCmd.cpp"
 T
-2 "LLDBGetLocalVars.cpp"
+2 "LLDBGetLocalVarsCmd.cpp"
 F
-"./backend/lldb/LLDBGetLocalVars.cpp"
+"./backend/lldb/LLDBGetLocalVarsCmd.cpp"
 T
-2 "LLDBGetMemory.cpp"
+2 "LLDBGetMemoryCmd.cpp"
 F
-"./backend/lldb/LLDBGetMemory.cpp"
+"./backend/lldb/LLDBGetMemoryCmd.cpp"
 T
-2 "LLDBGetRegisters.cpp"
+2 "LLDBGetRegistersCmd.cpp"
 F
-"./backend/lldb/LLDBGetRegisters.cpp"
+"./backend/lldb/LLDBGetRegistersCmd.cpp"
 T
-2 "LLDBGetSourceFileList.cpp"
+2 "LLDBGetSourceFileListCmd.cpp"
 F
-"./backend/lldb/LLDBGetSourceFileList.cpp"
+"./backend/lldb/LLDBGetSourceFileListCmd.cpp"
 T
-2 "LLDBGetStack.cpp"
+2 "LLDBGetStackCmd.cpp"
 F
-"./backend/lldb/LLDBGetStack.cpp"
+"./backend/lldb/LLDBGetStackCmd.cpp"
 T
-2 "LLDBGetThread.cpp"
+2 "LLDBGetThreadCmd.cpp"
 F
-"./backend/lldb/LLDBGetThread.cpp"
+"./backend/lldb/LLDBGetThreadCmd.cpp"
 T
-2 "LLDBGetThreads.cpp"
+2 "LLDBGetThreadsCmd.cpp"
 F
-"./backend/lldb/LLDBGetThreads.cpp"
+"./backend/lldb/LLDBGetThreadsCmd.cpp"
 T
-2 "LLDBVarCommand.cpp"
+2 "LLDBVarCmd.cpp"
 F
-"./backend/lldb/LLDBVarCommand.cpp"
+"./backend/lldb/LLDBVarCmd.cpp"
 T
 2 "LLDBVarNode.cpp"
 F

@@ -20,7 +20,7 @@ public:
 
 	AboutDialog(JXDirector* supervisor, const JString& prevVersStr);
 
-	virtual ~AboutDialog();
+	~AboutDialog();
 
 protected:
 
@@ -28,7 +28,7 @@ protected:
 
 private:
 
-	bool				itsIsUpgradeFlag;
+	bool	itsIsUpgradeFlag;
 
 // begin JXLayout
 

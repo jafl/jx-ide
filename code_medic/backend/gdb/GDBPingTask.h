@@ -18,7 +18,7 @@ public:
 
 	PingTask();
 
-	virtual ~PingTask();
+	~PingTask();
 
 	void	Perform(const Time delta, Time* maxSleepTime) override;
 };

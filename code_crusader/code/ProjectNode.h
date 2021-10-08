@@ -30,12 +30,12 @@ public:
 	ProjectNode(ProjectTree* tree, const ProjectNodeType type,
 				  const JString& name, const bool isOpenable);
 
-	virtual ~ProjectNode();
+	~ProjectNode();
 
 	ProjectNodeType	GetType() const;
-	virtual bool		IncludedInMakefile() const;
-	virtual bool		IncludedInCMakeData() const;
-	virtual bool		IncludedInQMakeData() const;
+	virtual bool	IncludedInMakefile() const;
+	virtual bool	IncludedInCMakeData() const;
+	virtual bool	IncludedInQMakeData() const;
 
 	ProjectDocument*	GetProjectDoc() const;
 

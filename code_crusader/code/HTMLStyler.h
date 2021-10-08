@@ -16,18 +16,18 @@ class HTMLStyler : public StylerBase, public TextScanner::HTML::Scanner
 public:
 
 	static StylerBase*	Instance();
-	static void				Shutdown();
+	static void			Shutdown();
 
-	virtual ~HTMLStyler();
+	~HTMLStyler();
 
 protected:
 
 	HTMLStyler();
 
-	void		Scan(const JStyledText::TextIndex& startIndex,
-							 std::istream& input, const TokenExtra& initData) override;
-	void		UpgradeTypeList(const JFileVersion vers,
-										JArray<JFontStyle>* typeStyles) override;
+	void	Scan(const JStyledText::TextIndex& startIndex,
+				 std::istream& input, const TokenExtra& initData) override;
+	void	UpgradeTypeList(const JFileVersion vers,
+							JArray<JFontStyle>* typeStyles) override;
 
 	void	Receive(JBroadcaster* sender, const Message& message) override;
 

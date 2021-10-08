@@ -19,7 +19,7 @@ public:
 
 	GetSourceFileListCmd(const JString& cmd, FileListDir* fileList);
 
-	virtual	~GetSourceFileListCmd();
+	~GetSourceFileListCmd();
 
 	FileListDir*	GetFileList();
 

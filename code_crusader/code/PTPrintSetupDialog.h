@@ -19,7 +19,7 @@ public:
 			   const JString& printCmd, const JString& fileName,
 			   const bool printLineNumbers, const bool printHeader);
 
-	virtual ~PTPrintSetupDialog();
+	~PTPrintSetupDialog();
 
 	bool	ShouldPrintHeader() const;
 

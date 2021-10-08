@@ -44,26 +44,26 @@ public:
 
 	DocumentManager();
 
-	virtual ~DocumentManager();
+	~DocumentManager();
 
 	bool	GetTemplateDirectory(const JUtf8Byte* dirName,
 									 const bool create, JString* fullName);
 	bool	GetTextTemplateDirectory(const bool create, JString* tmplDir);
 
 	bool	NewProjectDocument(ProjectDocument** doc = nullptr);
-	void		NewTextDocument();
-	void		NewTextDocumentFromTemplate();
-	void		NewShellDocument();
+	void	NewTextDocument();
+	void	NewTextDocumentFromTemplate();
+	void	NewShellDocument();
 	bool	OpenTextDocument(const JString& fileName,
-								 const JIndex lineIndex = 0,
-								 TextDocument** doc = nullptr,
-								 const bool iconify = false,
-								 const bool forceReload = false);
+							 const JIndex lineIndex = 0,
+							 TextDocument** doc = nullptr,
+							 const bool iconify = false,
+							 const bool forceReload = false);
 	bool	OpenTextDocument(const JString& fileName,
-								 const JIndexRange& lineRange,
-								 TextDocument** doc = nullptr,
-								 const bool iconify = false,
-								 const bool forceReload = false);
+							 const JIndexRange& lineRange,
+							 TextDocument** doc = nullptr,
+							 const bool iconify = false,
+							 const bool forceReload = false);
 	static bool	WarnFileSize(const JString& fileName);
 
 	void	OpenBinaryDocument(const JString& fileName);
@@ -80,18 +80,18 @@ public:
 	bool	HasProjectDocuments() const;
 	bool	GetActiveProjectDocument(ProjectDocument** doc) const;
 	bool	ProjectDocumentIsOpen(const JString& fileName,
-									  ProjectDocument** doc) const;
+								  ProjectDocument** doc) const;
 	bool	CloseProjectDocuments();
 
 	bool	HasTextDocuments() const;
-	JSize		GetTextDocumentCount() const;
+	JSize	GetTextDocumentCount() const;
 	bool	GetActiveTextDocument(TextDocument** doc) const;
 	bool	TextDocumentsNeedSave();
 	bool	SaveTextDocuments(const bool saveUntitled);
-	void		ReloadTextDocuments(const bool force);
+	void	ReloadTextDocuments(const bool force);
 	bool	CloseTextDocuments();
-	void		FileRenamed(const JString& origFullName, const JString& newFullName);
-	void		StylerChanged(JSTStyler* styler);
+	void	FileRenamed(const JString& origFullName, const JString& newFullName);
+	void	StylerChanged(JSTStyler* styler);
 
 	void	ProjDocCreated(ProjectDocument* doc);
 	void	ProjDocDeleted(ProjectDocument* doc);
@@ -106,17 +106,17 @@ public:
 	void		SetActiveListDocument(ExecOutputDocument* doc);
 
 	bool	OpenComplementFile(const JString& fullName, const TextFileType type,
-								   ProjectDocument* projDoc = nullptr,
-								   const bool searchDirs = true);
+							   ProjectDocument* projDoc = nullptr,
+							   const bool searchDirs = true);
 	bool	GetComplementFile(const JString& inputName, const TextFileType inputType,
-								  JString* outputName, ProjectDocument* projDoc = nullptr,
-								  const bool searchDirs = true) const;
+							  JString* outputName, ProjectDocument* projDoc = nullptr,
+							  const bool searchDirs = true) const;
 	bool	GetOpenComplementFile(const JString& inputName,
-									  const TextFileType inputType,
-									  JXFileDocument** doc) const;
+								  const TextFileType inputType,
+								  JXFileDocument** doc) const;
 
 	JPtrArray<ProjectDocument>*	GetProjectDocList() const;
-	JPtrArray<TextDocument>*		GetTextDocList() const;
+	JPtrArray<TextDocument>*	GetTextDocList() const;
 
 	void	AddToFileHistoryMenu(const FileHistoryType type,
 								 const JString& fullName);
@@ -125,11 +125,11 @@ public:
 	void	CancelUpdateSymbolDatabases();
 	void	RefreshVCSStatus();
 
-	void		ChooseEditors();
+	void	ChooseEditors();
 	bool	WillEditTextFilesLocally() const;
-	void		ShouldEditTextFilesLocally(const bool local);
+	void	ShouldEditTextFilesLocally(const bool local);
 	bool	WillEditBinaryFilesLocally() const;
-	void		ShouldEditBinaryFilesLocally(const bool local);
+	void	ShouldEditBinaryFilesLocally(const bool local);
 
 	// called by PrefsManager
 
@@ -160,7 +160,7 @@ private:
 
 	JPtrArray<ProjectDocument>*	itsProjectDocuments;
 
-	JPtrArray<TextDocument>*		itsTextDocuments;
+	JPtrArray<TextDocument>*	itsTextDocuments;
 	ExecOutputDocument*			itsListDocument;
 	bool						itsTextNeedsSaveFlag;
 
@@ -175,43 +175,43 @@ private:
 	// external editors
 
 	bool	itsEditTextLocalFlag;
-	JString		itsEditTextFileCmd;
-	JString		itsEditTextFileLineCmd;
+	JString	itsEditTextFileCmd;
+	JString	itsEditTextFileLineCmd;
 
 	bool	itsEditBinaryLocalFlag;
-	JString		itsEditBinaryFileCmd;
+	JString	itsEditBinaryFileCmd;
 
 	ExtEditorDialog*	itsExtEditorDialog;
 
 private:
 
-	void		PrivateOpenSomething(const JString& fileName,
-									 const JIndexRange& lineRange,
-									 const bool iconify,
-									 const bool forceReload);
+	void	PrivateOpenSomething(const JString& fileName,
+								 const JIndexRange& lineRange,
+								 const bool iconify,
+								 const bool forceReload);
 	bool	PrivateOpenTextDocument(const JString& fullName,
-										const JIndexRange& lineRange,
-										const bool iconify,
-										const bool forceReload,
-										TextDocument** doc) const;
+									const JIndexRange& lineRange,
+									const bool iconify,
+									const bool forceReload,
+									TextDocument** doc) const;
 	void		PrivateOpenBinaryDocument(const JString& fullName,
 										  const bool iconify,
 										  const bool forceReload) const;
 
 	bool	FindComplementFile(const JString& inputName,
-								   const TextFileType outputType,
-								   JString* outputName,
-								   ProjectDocument* projDoc,
-								   const bool searchDirs) const;
+							   const TextFileType outputType,
+							   JString* outputName,
+							   ProjectDocument* projDoc,
+							   const bool searchDirs) const;
 	bool	SearchForComplementFile(ProjectDocument* projDoc,
-										const JString& origFullName,
-										const JString& baseFullName,
-										const JPtrArray<JString>& suffixList,
-										JString* outputName) const;
+									const JString& origFullName,
+									const JString& baseFullName,
+									const JPtrArray<JString>& suffixList,
+									JString* outputName) const;
 
 	bool	FindOpenComplementFile(const JString& inputName,
-									   const TextFileType outputType,
-									   JXFileDocument** doc) const;
+								   const TextFileType outputType,
+								   JXFileDocument** doc) const;
 
 private:
 

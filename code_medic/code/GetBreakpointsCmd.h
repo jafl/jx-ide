@@ -16,7 +16,7 @@ public:
 
 	GetBreakpointsCmd(const JString& cmd);
 
-	virtual	~GetBreakpointsCmd();
+	~GetBreakpointsCmd();
 };
 
 #endif

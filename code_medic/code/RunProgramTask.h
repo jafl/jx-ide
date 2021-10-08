@@ -16,9 +16,9 @@ public:
 
 	RunProgramTask();
 
-	virtual ~RunProgramTask();
+	~RunProgramTask();
 
-	virtual void	Perform(const Time delta, Time* maxSleepTime);
+	void	Perform(const Time delta, Time* maxSleepTime) override;
 };
 
 #endif

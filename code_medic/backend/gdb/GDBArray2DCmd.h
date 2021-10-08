@@ -19,10 +19,10 @@ public:
 	Array2DCmd(Array2DDir* dir,
 			   JXStringTable* table, JStringTableData* data);
 
-	virtual	~Array2DCmd();
+	~Array2DCmd();
 
 	void	PrepareToSend(const UpdateType type, const JIndex index,
-								  const JInteger arrayIndex) override;
+						  const JInteger arrayIndex) override;
 
 protected:
 

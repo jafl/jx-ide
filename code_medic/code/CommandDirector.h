@@ -46,11 +46,11 @@ public:
 
 	CommandDirector(JXDirector* supervisor);
 
-	virtual ~CommandDirector();
+	~CommandDirector();
 
-	bool		Close() override;
+	bool			Close() override;
 	const JString&	GetName() const override;
-	bool		GetMenuIcon(const JXImage** icon) const override;
+	bool			GetMenuIcon(const JXImage** icon) const override;
 
 	void	InitializeCommandOutput();
 	void	PrepareCommand(const JString& cmd);
@@ -95,13 +95,13 @@ public:
 
 	SourceDirector*	GetCurrentSourceDir();
 	ThreadsDir*		GetThreadsDir();
-	StackDir*			GetStackDir();
+	StackDir*		GetStackDir();
 	BreakpointsDir*	GetBreakpointsDir();
 	VarTreeDir*		GetVarTreeDir();
-	LocalVarsDir*		GetLocalVarsDir();
-	RegistersDir*		GetRegistersDir();
-	FileListDir*		GetFileListDir();
-	DebugDir*			GetDebugDir();
+	LocalVarsDir*	GetLocalVarsDir();
+	RegistersDir*	GetRegistersDir();
+	FileListDir*	GetFileListDir();
+	DebugDir*		GetDebugDir();
 
 	// called by SourceText
 
@@ -136,33 +136,33 @@ protected:
 
 private:
 
-	Link*				itsLink;
+	Link*			itsLink;
 	SourceDirector*	itsCurrentSourceDir;
 	SourceDirector*	itsCurrentAsmDir;
 	ThreadsDir*		itsThreadsDir;
-	StackDir*			itsStackDir;
+	StackDir*		itsStackDir;
 	BreakpointsDir*	itsBreakpointsDir;
 	VarTreeDir*		itsVarTreeDir;
-	LocalVarsDir*		itsLocalVarsDir;
-	RegistersDir*		itsRegistersDir;
-	FileListDir*		itsFileListDir;
-	DebugDir*			itsDebugDir;
+	LocalVarsDir*	itsLocalVarsDir;
+	RegistersDir*	itsRegistersDir;
+	FileListDir*	itsFileListDir;
+	DebugDir*		itsDebugDir;
 
 	JPtrArray<SourceDirector>*	itsSourceDirs;
 	JPtrArray<SourceDirector>*	itsAsmDirs;
 	JPtrArray<Array1DDir>*		itsArray1DDirs;
 	JPtrArray<Array2DDir>*		itsArray2DDirs;
-	JPtrArray<Plot2DDir>*			itsPlot2DDirs;
-	JPtrArray<MemoryDir>*			itsMemoryDirs;
+	JPtrArray<Plot2DDir>*		itsPlot2DDirs;
+	JPtrArray<MemoryDir>*		itsMemoryDirs;
 
 	JXTextMenu*		itsFileMenu;
 	JXTextMenu*		itsDebugMenu;
 	JXTextMenu*		itsPrefsMenu;
 	JXTextMenu*		itsHelpMenu;
 
-	JIndex		itsHistoryIndex;
-	JString		itsCurrentHistoryFile;
-	JString		itsCurrentCommand;
+	JIndex	itsHistoryIndex;
+	JString	itsCurrentHistoryFile;
+	JString	itsCurrentCommand;
 	bool	itsWaitingToRunFlag;
 
 	GetInitArgsCmd*	itsGetArgsCmd;		// nullptr except at startup; deleted by Link

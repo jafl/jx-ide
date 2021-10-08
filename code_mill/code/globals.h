@@ -18,17 +18,17 @@
 
 class MDIServer;
 
-App*				GetApplication();
+App*			GetApplication();
 PrefsManager*	GetPrefsManager();
 MDIServer*		GetMDIServer();
 
-const JString&		GetVersionNumberStr();
-JString				GetVersionStr();
+const JString&	GetVersionNumberStr();
+JString			GetVersionStr();
 
 	// called by App
 
 bool	CreateGlobals(App* app);
-void		DeleteGlobals();
-void		CleanUpBeforeSuddenDeath(const JXDocumentManager::SafetySaveReason reason);
+void	DeleteGlobals();
+void	CleanUpBeforeSuddenDeath(const JXDocumentManager::SafetySaveReason reason);
 
 #endif

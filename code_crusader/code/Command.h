@@ -22,15 +22,15 @@ public:
 	Command(const JString& path, const bool refreshVCSStatusWhenFinished,
 			  const bool beepWhenFinished, ProjectDocument* projDoc);
 
-	virtual	~Command();
+	~Command();
 
-	void		SetParent(Command* cmd);
+	void	SetParent(Command* cmd);
 	bool	Add(const JPtrArray<JString>& cmdArgs,
-					const JPtrArray<JString>& fullNameList,
-					const JArray<JIndex>& lineIndexList,
-					FunctionStack* fnStack);
-	void		Add(Command* subCmd, const CommandManager::CmdInfo& cmdInfo);
-	void		MarkEndOfSequence();
+				const JPtrArray<JString>& fullNameList,
+				const JArray<JIndex>& lineIndexList,
+				FunctionStack* fnStack);
+	void	Add(Command* subCmd, const CommandManager::CmdInfo& cmdInfo);
+	void	MarkEndOfSequence();
 	bool	Start(const CommandManager::CmdInfo& info);
 	bool	StartMakeProcess(ExecOutputDocument* outputDoc);
 
@@ -48,7 +48,7 @@ private:
 		JPtrArray<JString>*			cmd;		// can be nullptr
 		Command*					cmdObj;		// can be nullptr
 		CommandManager::CmdInfo*	cmdInfo;	// nullptr if cmdObj==nullptr
-		bool					isMakeDepend;
+		bool						isMakeDepend;
 
 		CmdInfo()
 			:
@@ -68,31 +68,31 @@ private:
 
 private:
 
-	ProjectDocument*		itsProjDoc;			// can be nullptr
-	const JString			itsCmdPath;
-	JArray<CmdInfo>*		itsCmdList;
+	ProjectDocument*	itsProjDoc;			// can be nullptr
+	const JString		itsCmdPath;
+	JArray<CmdInfo>*	itsCmdList;
 	ExecOutputDocument*	itsOutputDoc;		// not owned; can be nullptr
-	JString					itsWindowTitle;
-	JString					itsDontCloseMsg;
+	JString				itsWindowTitle;
+	JString				itsDontCloseMsg;
 	const bool			itsBeepFlag;
 	bool				itsRefreshVCSStatusFlag;
 	bool				itsUpdateSymbolDatabaseFlag;
 	bool				itsInQueueFlag;
 	bool				itsSuccessFlag;
 	bool				itsCancelledFlag;
-	Command*				itsMakeDependCmd;
+	Command*			itsMakeDependCmd;
 
 	// used for subroutines
 
 	ExecOutputDocument*	itsBuildOutputDoc;	// can be nullptr; ensures single window for subroutines
 	ExecOutputDocument*	itsRunOutputDoc;	// can be nullptr; ensures single window for subroutines
-	Command*				itsParent;			// can be nullptr; not owned; parent who Start()ed us
+	Command*			itsParent;			// can be nullptr; not owned; parent who Start()ed us
 	bool				itsCallParentProcessFinishedFlag;
 
 private:
 
 	bool	StartProcess();
-	void		ProcessFinished(const bool success, const bool cancelled);
+	void	ProcessFinished(const bool success, const bool cancelled);
 
 	void	SetCompileDocStrings();
 

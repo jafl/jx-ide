@@ -19,7 +19,7 @@ public:
 	StackArgNode(StackFrameNode* parent,
 				   const JString& name, const JString& value);
 
-	virtual	~StackArgNode();
+	~StackArgNode();
 
 	const JString&	GetValue() const;
 

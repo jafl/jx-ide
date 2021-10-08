@@ -57,11 +57,11 @@ enum
 
 SymbolSRDirector::SymbolSRDirector
 	(
-	SymbolDirector*	mainSym,
+	SymbolDirector*		mainSym,
 	ProjectDocument*	projDoc,
-	SymbolList*		symbolList,
+	SymbolList*			symbolList,
 	const JString&		filterStr,
-	const bool		isRegex,
+	const bool			isRegex,
 	JError*				err
 	)
 	:
@@ -79,9 +79,9 @@ SymbolSRDirector::SymbolSRDirector
 
 SymbolSRDirector::SymbolSRDirector
 	(
-	SymbolDirector*		mainSym,
+	SymbolDirector*			mainSym,
 	ProjectDocument*		projDoc,
-	SymbolList*			symbolList,
+	SymbolList*				symbolList,
 	const JArray<JIndex>&	displayList,
 	const JString&			searchStr
 	)

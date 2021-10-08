@@ -18,7 +18,7 @@ public:
 
 	App(int* argc, char* argv[], bool* displayAbout, JString* prevVersStr);
 
-	virtual	~App();
+	~App();
 
 	void	EditFile(const JString& fileName, const JIndex lineIndex = 0) const;
 
@@ -30,8 +30,8 @@ public:
 
 protected:
 
-	virtual bool	HandleCustomEvent();
-	virtual void	CleanUpBeforeSuddenDeath(const JXDocumentManager::SafetySaveReason reason);
+	bool	HandleCustomEvent() override;
+	void	CleanUpBeforeSuddenDeath(const JXDocumentManager::SafetySaveReason reason) override;
 };
 
 #endif

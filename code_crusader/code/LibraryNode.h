@@ -20,20 +20,20 @@ public:
 	LibraryNode(std::istream& input, const JFileVersion vers,
 				  ProjectNode* parent);
 
-	virtual ~LibraryNode();
+	~LibraryNode();
 
 	void	OpenFile() const override;
 	void	OpenComplementFile() const override;
-	void			EditSubprojectConfig();
+	void	EditSubprojectConfig();
 
 	bool	OpenProject(const bool silent = false);
 
-	void		StreamOut(std::ostream& output) const override;
+	void	StreamOut(std::ostream& output) const override;
 	bool	IncludedInMakefile() const override;
-	void		BuildMakeFiles(JString* text,
-									   JPtrArray<JTreeNode>* invalidList,
-									   JPtrArray<JString>* libFileList,
-									   JPtrArray<JString>* libProjPathList) const override;
+	void	BuildMakeFiles(JString* text,
+						   JPtrArray<JTreeNode>* invalidList,
+						   JPtrArray<JString>* libFileList,
+						   JPtrArray<JString>* libProjPathList) const override;
 
 protected:
 
@@ -42,7 +42,7 @@ protected:
 private:
 
 	bool	itsIncludeInDepListFlag;	// true => include in Make.files
-	JString		itsProjFileName;			// can be relative
+	JString	itsProjFileName;			// can be relative
 	bool	itsShouldBuildFlag;			// true => open and build sub-project
 
 	SubprojectConfigDialog*	itsSubprojDialog;

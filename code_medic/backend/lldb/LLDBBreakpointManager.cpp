@@ -8,7 +8,7 @@
  *****************************************************************************/
 
 #include "LLDBBreakpointManager.h"
-#include "LLDBGetBreakpoints.h"
+#include "LLDBGetBreakpointsCmd.h"
 #include "LLDBLink.h"
 #include <jx-af/jcore/jAssert.h>
 
@@ -17,12 +17,12 @@
 
  *****************************************************************************/
 
-LLDBBreakpointManager::LLDBBreakpointManager
+lldb::BreakpointManager::BreakpointManager
 	(
-	LLDBLink* link
+	Link* link
 	)
 	:
-	BreakpointManager(link, jnew LLDBGetBreakpoints())
+	::BreakpointManager(link, jnew GetBreakpointsCmd())
 {
 }
 
@@ -31,6 +31,6 @@ LLDBBreakpointManager::LLDBBreakpointManager
 
  *****************************************************************************/
 
-LLDBBreakpointManager::~LLDBBreakpointManager()
+lldb::BreakpointManager::~BreakpointManager()
 {
 }

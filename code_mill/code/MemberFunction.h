@@ -17,7 +17,7 @@ class MemberFunction
 public:
 
 	MemberFunction();
-	virtual ~MemberFunction();
+	~MemberFunction();
 
 	const JString&	GetFnName() const;
 	void			SetFnName(const JString& str);

@@ -25,7 +25,7 @@ public:
 
 	EditCommandsDialog(ProjectDocument* projDoc);
 
-	virtual ~EditCommandsDialog();
+	~EditCommandsDialog();
 
 protected:
 
@@ -36,10 +36,10 @@ protected:
 
 private:
 
-	CommandTable*		itsAllTable;
+	CommandTable*	itsAllTable;
 	CommandManager*	itsCmdMgr;			// can be nullptr
-	CommandTable*		itsThisTable;		// nullptr if itsCmdMgr == nullptr
-	JString				itsThisTableSetup;	// used when itsThisTable == nullptr
+	CommandTable*	itsThisTable;		// nullptr if itsCmdMgr == nullptr
+	JString			itsThisTableSetup;	// used when itsThisTable == nullptr
 
 // begin JXLayout
 

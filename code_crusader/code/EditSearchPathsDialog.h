@@ -27,7 +27,7 @@ public:
 							const DirList& dirList,
 							RelPathCSF* csf);
 
-	virtual ~EditSearchPathsDialog();
+	~EditSearchPathsDialog();
 
 	void	AddDirectories(const JPtrArray<JString>& list);
 	void	GetPathList(DirList* pathList) const;

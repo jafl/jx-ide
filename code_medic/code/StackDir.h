@@ -20,11 +20,11 @@ public:
 
 	StackDir(CommandDirector* supervisor);
 
-	virtual	~StackDir();
+	~StackDir();
 
 	void			Activate() override;
 	const JString&	GetName() const override;
-	bool		GetMenuIcon(const JXImage** icon) const override;
+	bool			GetMenuIcon(const JXImage** icon) const override;
 
 	StackWidget*	GetStackWidget();
 

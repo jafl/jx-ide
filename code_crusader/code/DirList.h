@@ -14,7 +14,7 @@
 struct DirInfo
 {
 	JString*	path;
-	bool	recurse;
+	bool		recurse;
 	JIndex		projIndex;	// for use by App::CollectSearchPaths()
 
 	DirInfo()
@@ -47,14 +47,14 @@ public:
 	DirList();
 	DirList(const DirList& source);
 
-	virtual ~DirList();
+	~DirList();
 
 	DirList& operator=(const DirList& source);
 
 	bool	GetFullPath(const JIndex index, JString* fullPath,
-							bool* recurse) const;
+						bool* recurse) const;
 	bool	GetTruePath(const JIndex index, JString* truePath,
-							bool* recurse) const;
+						bool* recurse) const;
 
 	const JString&	GetPath(const JIndex index, bool* recurse) const;
 	void			AddPath(const JString& path, const bool recurse);
@@ -63,7 +63,7 @@ public:
 	const JString&	GetBasePath() const;
 	void			SetBasePath(const JString& path);
 
-	bool		Contains(const JString& path) const;
+	bool	Contains(const JString& path) const;
 
 	void	ReadDirectories(std::istream& input, const JFileVersion vers);
 	void	WriteDirectories(std::ostream& output) const;

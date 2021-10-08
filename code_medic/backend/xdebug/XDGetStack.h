@@ -16,7 +16,7 @@ public:
 
 	XDGetStack(JTree* tree, StackWidget* widget);
 
-	virtual	~XDGetStack();
+	~XDGetStack();
 
 protected:
 

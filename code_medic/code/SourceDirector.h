@@ -47,13 +47,13 @@ public:
 
 	void	CreateWindowsMenu();
 
-	virtual ~SourceDirector();
+	~SourceDirector();
 
 	CommandDirector*	GetCommandDirector();
 
 	bool	IsMainSourceWindow() const;
 	bool	GetFileName(const JString** fileName) const;
-	JIndex		GetCurrentExecLine() const;
+	JIndex	GetCurrentExecLine() const;
 
 	bool	GetFunctionName(const JString** fnName) const;
 
@@ -63,15 +63,15 @@ public:
 	void	DisplayLine(const JSize lineNumber, const bool markLine = true);
 	void	ClearDisplay();
 
-	Type					GetType() const;
+	Type			GetType() const;
 	const JString&	GetName() const override;
-	bool		GetMenuIcon(const JXImage** icon) const override;
+	bool			GetMenuIcon(const JXImage** icon) const override;
 
 	// called by GDBGetAssemblyCmd
 
 	const Location&	GetDisassemblyLocation() const;
-	void				DisplayDisassembly(JPtrArray<JString>* addrList,
-										   const JString& instText);
+	void			DisplayDisassembly(JPtrArray<JString>* addrList,
+									   const JString& instText);
 
 protected:
 
@@ -86,8 +86,8 @@ private:
 	Link*				itsLink;
 	CommandDirector*	itsCommandDir;
 	const Type			itsType;
-	LineIndexTable*	itsTable;
-	SourceText*		itsText;
+	LineIndexTable*		itsTable;
+	SourceText*			itsText;
 	JString				itsCurrentFile;			// can be empty
 	JString				itsCurrentFn;			// can be empty
 	Location			itsAsmLocation;			// used while waiting for GetAssemblyCmd
@@ -100,7 +100,7 @@ private:
 	JXTextMenu*		itsHelpMenu;
 
 	DisplaySourceForMainCmd*	itsSrcMainCmd;
-	GetAssemblyCmd*			itsGetAssemblyCmd;	// can be nullptr
+	GetAssemblyCmd*				itsGetAssemblyCmd;	// can be nullptr
 
 // begin JXLayout
 

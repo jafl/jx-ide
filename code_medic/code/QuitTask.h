@@ -16,9 +16,9 @@ public:
 
 	QuitTask();
 
-	virtual ~QuitTask();
+	~QuitTask();
 
-	virtual void	Perform(const Time delta, Time* maxSleepTime);
+	void	Perform(const Time delta, Time* maxSleepTime) override;
 };
 
 #endif

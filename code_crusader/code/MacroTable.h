@@ -25,7 +25,7 @@ public:
 				 const JCoordinate x, const JCoordinate y,
 				 const JCoordinate w, const JCoordinate h);
 
-	virtual ~MacroTable();
+	~MacroTable();
 
 	void	Activate() override;
 	void	Deactivate() override;

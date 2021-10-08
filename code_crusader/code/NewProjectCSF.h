@@ -20,9 +20,9 @@ public:
 
 	NewProjectCSF();
 
-	virtual ~NewProjectCSF();
+	~NewProjectCSF();
 
-	bool						GetProjectTemplate(JString* fullName) const;
+	bool							GetProjectTemplate(JString* fullName) const;
 	BuildManager::MakefileMethod	GetMakefileMethod() const;
 
 protected:

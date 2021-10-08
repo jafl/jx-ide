@@ -18,13 +18,13 @@ public:
 
 	GetAssemblyCmd(SourceDirector* dir, const JString& cmd);
 
-	virtual	~GetAssemblyCmd();
+	~GetAssemblyCmd();
 
 	SourceDirector*	GetDirector();
 
 protected:
 
-	virtual void	HandleFailure();
+	void	HandleFailure() override;
 
 private:
 

@@ -21,7 +21,7 @@ public:
 
 	DebugDir(JXDirector* supervisor);
 
-	virtual ~DebugDir();
+	~DebugDir();
 
 	const JString&	GetName() const override;
 

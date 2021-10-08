@@ -19,7 +19,7 @@ public:
 
 	AboutDialogIconTask(JXImageWidget* widget);
 
-	virtual ~AboutDialogIconTask();
+	~AboutDialogIconTask();
 
 protected:
 

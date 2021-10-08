@@ -16,7 +16,7 @@ public:
 
 	App(int* argc, char* argv[], bool* displayAbout, JString* prevVersStr);
 
-	virtual	~App();
+	~App();
 
 	void	DisplayAbout(const JString& prevVersStr = JString::empty);
 

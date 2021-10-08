@@ -16,7 +16,7 @@ public:
 
 	GetInitArgsCmd(const JString& cmd);
 
-	virtual	~GetInitArgsCmd();
+	~GetInitArgsCmd();
 };
 
 #endif

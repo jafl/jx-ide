@@ -16,14 +16,14 @@ public:
 
 	MDIServer();
 
-	virtual	~MDIServer();
+	~MDIServer();
 
 	static void	PrintCommandLineHelp();
 
 protected:
 
 	void	HandleMDIRequest(const JString& dir,
-									 const JPtrArray<JString>& argList) override;
+							 const JPtrArray<JString>& argList) override;
 };
 
 #endif

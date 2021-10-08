@@ -18,7 +18,7 @@ public:
 
 	GetMemoryCmd(MemoryDir* dir);
 
-	virtual	~GetMemoryCmd();
+	~GetMemoryCmd();
 
 	void	Starting() override;
 

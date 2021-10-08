@@ -66,34 +66,34 @@ public:
 				   const JCoordinate x, const JCoordinate y,
 				   const JCoordinate w, const JCoordinate h);
 
-	virtual ~ProjectTable();
+	~ProjectTable();
 
 	bool	NewGroup(GroupNode** returnNode = nullptr);
-	void		AddDirectoryTree();
-	void		AddDirectoryTree(const JString& fullPath,
-								 const RelPathCSF::PathType pathType);
-	void		AddFiles();
+	void	AddDirectoryTree();
+	void	AddDirectoryTree(const JString& fullPath,
+							 const RelPathCSF::PathType pathType);
+	void	AddFiles();
 	bool	AddFiles(const JPtrArray<JString>& fullNameList,
-						 const RelPathCSF::PathType pathType,
-						 const bool updateProject = true,
-						 const bool silent = false);
+					 const RelPathCSF::PathType pathType,
+					 const bool updateProject = true,
+					 const bool silent = false);
 
 	bool	HasSelection() const;
 	bool	GetSelectionType(SelType* type, bool* single, JIndex* index) const;
-	void		SelectAll();
-	void		ClearSelection();
-	void		SelectFileNodes(const JPtrArray<JTreeNode>& nodeList);
-	void		OpenSelection();
-	void		OpenComplementFiles();
-	void		RemoveSelection();
-	void		PlainDiffSelection();
-	void		VCSDiffSelection();
-	void		ShowSelectedFileLocations();
-	void		GetSelectedFileNames(JPtrArray<JString>* list) const;
-	void		EditFilePath();
-	void		EditSubprojectConfig();
+	void	SelectAll();
+	void	ClearSelection();
+	void	SelectFileNodes(const JPtrArray<JTreeNode>& nodeList);
+	void	OpenSelection();
+	void	OpenComplementFiles();
+	void	RemoveSelection();
+	void	PlainDiffSelection();
+	void	VCSDiffSelection();
+	void	ShowSelectedFileLocations();
+	void	GetSelectedFileNames(JPtrArray<JString>* list) const;
+	void	EditFilePath();
+	void	EditSubprojectConfig();
 
-	ProjectNode*			GetProjectNode(const JIndex index);
+	ProjectNode*		GetProjectNode(const JIndex index);
 	const ProjectNode*	GetProjectNode(const JIndex index) const;
 
 	void	ReadSetup(std::istream& projInput, const JFileVersion projVers,
@@ -103,19 +103,19 @@ public:
 	static DropFileAction	GetDropFileAction();
 	static void				SetDropFileAction(const DropFileAction action);
 
-	void		HandleKeyPress(const JUtf8Character& c,
-									   const int keySym, const JXKeyModifiers& modifiers) override;
+	void	HandleKeyPress(const JUtf8Character& c,
+						   const int keySym, const JXKeyModifiers& modifiers) override;
 	bool	IsSelectable(const JPoint& cell,
-									 const bool forExtend) const override;
+						 const bool forExtend) const override;
 
 	void	SetInputAction(const InputAction action);
 
 protected:
 
-	JSize		GetDepth(const JIndex index) const;
+	JSize	GetDepth(const JIndex index) const;
 
 	bool	GetImage(const JIndex index, const JXImage** image) const override;
-	void		AdjustToTree() override;
+	void	AdjustToTree() override;
 
 	void	Draw(JXWindowPainter& p, const JRect& rect) override;
 

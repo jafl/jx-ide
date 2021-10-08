@@ -24,7 +24,7 @@ public:
 
 	SearchTE();
 
-	virtual ~SearchTE();
+	~SearchTE();
 
 	void	SearchFiles(const JPtrArray<JString>& fileList,
 						const JPtrArray<JString>& nameList,

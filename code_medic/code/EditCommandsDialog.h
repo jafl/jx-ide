@@ -20,7 +20,7 @@ class EditCommandsDialog : public JXDialogDirector, public JPrefObject
 public:
 
 	EditCommandsDialog();
-	virtual ~EditCommandsDialog();
+	~EditCommandsDialog();
 
 	JSize						GetStringCount() const;
 	const JPtrArray<JString>&	GetStringList() const;
@@ -32,7 +32,7 @@ public:
 
 protected:
 
-	void		Receive(JBroadcaster* sender, const Message& message) override;
+	void	Receive(JBroadcaster* sender, const Message& message) override;
 	bool	OKToDeactivate() override;
 
 	void	ReadPrefs(std::istream& input) override;
@@ -40,7 +40,7 @@ protected:
 
 private:
 
-	JPtrArray<JString>*		itsCommands;
+	JPtrArray<JString>*	itsCommands;
 	EditCommandsTable*	itsWidget;
 
 // begin JXLayout

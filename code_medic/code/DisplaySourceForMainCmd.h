@@ -19,7 +19,7 @@ public:
 
 	DisplaySourceForMainCmd(SourceDirector* sourceDir, const JString& cmd);
 
-	virtual	~DisplaySourceForMainCmd();
+	~DisplaySourceForMainCmd();
 
 	SourceDirector*	GetSourceDir();
 

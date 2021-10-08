@@ -17,14 +17,14 @@ public:
 	static StringCompleter*	Instance();
 	static void					Shutdown();
 
-	virtual ~PascalCompleter();
+	~PascalCompleter();
 
 protected:
 
 	PascalCompleter();
 
 	bool	IsWordCharacter(const JUtf8Character& c,
-										const bool includeNS) const override;
+							const bool includeNS) const override;
 
 private:
 

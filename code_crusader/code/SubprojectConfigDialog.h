@@ -27,7 +27,7 @@ public:
 							 const bool shouldBuild,
 							 RelPathCSF* csf);
 
-	virtual ~SubprojectConfigDialog();
+	~SubprojectConfigDialog();
 
 	void	GetConfig(bool* includeInDepList,
 					  JString* subProjName, bool* shouldBuild) const;

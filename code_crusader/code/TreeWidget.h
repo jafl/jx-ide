@@ -37,7 +37,7 @@ public:
 				 const JCoordinate x, const JCoordinate y,
 				 const JCoordinate w, const JCoordinate h);
 
-	virtual ~TreeWidget();
+	~TreeWidget();
 
 	Tree*	GetTree() const;
 

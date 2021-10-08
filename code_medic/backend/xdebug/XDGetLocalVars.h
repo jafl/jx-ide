@@ -18,7 +18,7 @@ public:
 
 	XDGetLocalVars(VarNode* rootNode);
 
-	virtual	~XDGetLocalVars();
+	~XDGetLocalVars();
 
 protected:
 

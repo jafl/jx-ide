@@ -39,18 +39,18 @@ public:
 					const JCoordinate x, const JCoordinate y,
 					const JCoordinate w, const JCoordinate h);
 
-	virtual ~FileListTable();
+	~FileListTable();
 
 	bool	Update(std::ostream& link,
-					   ProjectTree* fileTree, const DirList& dirList,
-					   SymbolDirector* symbolDir,
-					   CTreeDirector* cTreeDir, DTreeDirector* dTreeDir,
-					   GoTreeDirector* goTreeDir, JavaTreeDirector* javaTreeDir,
-					   PHPTreeDirector* phpTreeDir);
-	void		UpdateFinished();
+				   ProjectTree* fileTree, const DirList& dirList,
+				   SymbolDirector* symbolDir,
+				   CTreeDirector* cTreeDir, DTreeDirector* dTreeDir,
+				   GoTreeDirector* goTreeDir, JavaTreeDirector* javaTreeDir,
+				   PHPTreeDirector* phpTreeDir);
+	void	UpdateFinished();
 
 	const JString&	GetFileName(const JFAID_t id) const;
-	bool		GetFileID(const JString& trueName, JFAID_t* id) const;
+	bool			GetFileID(const JString& trueName, JFAID_t* id) const;
 
 	void	ReadSetup(std::istream& projInput, const JFileVersion projVers,
 					  std::istream* symInput, const JFileVersion symVers);

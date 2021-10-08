@@ -18,7 +18,7 @@ public:
 
 	GetStopLocationForLinkCmd();
 
-	virtual	~GetStopLocationForLinkCmd();
+	~GetStopLocationForLinkCmd();
 
 protected:
 

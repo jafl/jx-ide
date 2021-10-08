@@ -29,7 +29,7 @@ public:
 					   std::istream* symInput, const JFileVersion symVers,
 					   ProjectDocument* supervisor, const bool subProject);
 
-	virtual ~FileListDirector();
+	~FileListDirector();
 
 	FileListTable*	GetFileListTable() const;
 
@@ -45,7 +45,7 @@ private:
 
 	ProjectDocument*	itsProjDoc;
 	JXFileListSet*		itsFLSet;
-	FileListTable*	itsFLTable;
+	FileListTable*		itsFLTable;
 
 	JXTextMenu*		itsFileMenu;
 	JXTextMenu*		itsListMenu;

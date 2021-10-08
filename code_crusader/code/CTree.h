@@ -31,12 +31,12 @@ public:
 			CTreeDirector* director, const JSize marginWidth,
 			DirList* dirList);
 
-	virtual ~CTree();
+	~CTree();
 
 	CPreprocessor*	GetCPreprocessor() const;
 
 	void	StreamOut(std::ostream& projOutput, std::ostream* setOutput,
-							  std::ostream* symOutput, const DirList* dirList) const override;
+					  std::ostream* symOutput, const DirList* dirList) const override;
 
 	bool	UpdateFinished(const JArray<JFAID_t>& deadFileList) override;
 
@@ -47,7 +47,7 @@ protected:
 
 private:
 
-	CPreprocessor*	itsCPP;
+	CPreprocessor*				itsCPP;
 	TreeScanner::C::Scanner*	itsClassNameLexer;	// nullptr unless parsing
 
 private:

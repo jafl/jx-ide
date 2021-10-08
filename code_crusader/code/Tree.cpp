@@ -74,10 +74,10 @@ const JUtf8Byte* Tree::kAllClassesDeselected = "AllClassesDeselected::Tree";
 
 Tree::Tree
 	(
-	ClassStreamInFn*		streamInFn,
-	TreeDirector*			director,
+	ClassStreamInFn		streamInFn,
+	TreeDirector*		director,
 	const TextFileType	fileType,
-	const JSize				marginWidth
+	const JSize			marginWidth
 	)
 	:
 	JContainer(),
@@ -91,17 +91,17 @@ Tree::Tree
 
 Tree::Tree
 	(
-	std::istream&			projInput,
-	const JFileVersion		projVers,
-	std::istream*			setInput,
-	const JFileVersion		setVers,
-	std::istream*			symStream,
-	const JFileVersion		origSymVers,
-	ClassStreamInFn*		streamInFn,
-	TreeDirector*			director,
+	std::istream&		projInput,
+	const JFileVersion	projVers,
+	std::istream*		setInput,
+	const JFileVersion	setVers,
+	std::istream*		symStream,
+	const JFileVersion	origSymVers,
+	ClassStreamInFn		streamInFn,
+	TreeDirector*		director,
 	const TextFileType	fileType,
-	const JSize				marginWidth,
-	DirList*				dirList
+	const JSize			marginWidth,
+	DirList*			dirList
 	)
 	:
 	JContainer(),
@@ -287,8 +287,8 @@ JIndex i;
 void
 Tree::TreeX
 	(
-	TreeDirector*		director,
-	ClassStreamInFn*	streamInFn
+	TreeDirector*	director,
+	ClassStreamInFn	streamInFn
 	)
 {
 	itsDirector = director;

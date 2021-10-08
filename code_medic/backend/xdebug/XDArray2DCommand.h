@@ -17,7 +17,7 @@ public:
 	XDArray2DCommand(Array2DDir* dir,
 					 JXStringTable* table, JStringTableData* data);
 
-	virtual	~XDArray2DCommand();
+	~XDArray2DCommand();
 
 protected:
 

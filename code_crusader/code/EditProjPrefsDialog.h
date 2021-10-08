@@ -26,7 +26,7 @@ public:
 						  const bool rebuildMakefileDaily,
 						  const ProjectTable::DropFileAction dropFileAction);
 
-	virtual ~EditProjPrefsDialog();
+	~EditProjPrefsDialog();
 
 protected:
 

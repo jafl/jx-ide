@@ -20,7 +20,7 @@ public:
 
 	SymbolTypeList(JXDisplay* display);
 
-	virtual ~SymbolTypeList();
+	~SymbolTypeList();
 
 //	bool		IsVisible(const SymbolList::Type type) const;
 	Language	GetLanguage(const SymbolList::Type type) const;

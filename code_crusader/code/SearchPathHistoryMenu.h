@@ -24,7 +24,7 @@ public:
 							JXMenu* owner, const JIndex itemIndex,
 							JXContainer* enclosure);
 
-	virtual ~SearchPathHistoryMenu();
+	~SearchPathHistoryMenu();
 
 	void	AddPath(const JString& fullName, const bool recurse);
 

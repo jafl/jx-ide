@@ -24,7 +24,7 @@ public:
 			   const RelPathCSF::PathType pathType,
 			   const JString& message = JString::empty);
 
-	virtual ~RPChoosePathDialog();
+	~RPChoosePathDialog();
 
 	RelPathCSF::PathType	GetPathType() const;
 

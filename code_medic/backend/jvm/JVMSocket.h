@@ -20,7 +20,7 @@ public:
 
 	Socket();
 
-	virtual	~Socket();
+	~Socket();
 
 	void	Send(const JIndex id, const JIndex cmdSet, const JIndex cmd,
 				 const unsigned char* data, const JSize count);

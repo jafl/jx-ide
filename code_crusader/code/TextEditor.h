@@ -33,7 +33,7 @@ public:
 				 const JCoordinate x, const JCoordinate y,
 				 const JCoordinate w, const JCoordinate h);
 
-	virtual ~TextEditor();
+	~TextEditor();
 
 	TextDocument*	GetDocument();
 
@@ -125,7 +125,7 @@ protected:
 		StyledText(TextDocument* doc, JFontManager* fontManager,
 				   const bool pasteStyledText);
 
-		virtual ~StyledText();
+		~StyledText();
 
 		protected:
 

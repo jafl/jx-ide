@@ -32,7 +32,7 @@ public:
 
 	void	SetProjectDocument(ProjectDocument* projDoc);
 
-	virtual ~CommandMenu();
+	~CommandMenu();
 
 protected:
 

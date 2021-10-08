@@ -15,16 +15,16 @@ class BourneShellCompleter : public StringCompleter
 public:
 
 	static StringCompleter*	Instance();
-	static void					Shutdown();
+	static void				Shutdown();
 
-	virtual ~BourneShellCompleter();
+	~BourneShellCompleter();
 
 protected:
 
 	BourneShellCompleter();
 
 	bool	IsWordCharacter(const JUtf8Character& c,
-										const bool includeNS) const override;
+							const bool includeNS) const override;
 
 private:
 

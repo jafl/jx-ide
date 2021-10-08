@@ -18,7 +18,7 @@ public:
 
 	XDCloseSocketTask(XDSocket* socket);
 
-	virtual ~XDCloseSocketTask();
+	~XDCloseSocketTask();
 
 	void	Perform() override;
 

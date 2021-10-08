@@ -25,7 +25,7 @@ public:
 						  const bool autoMinMILinks, const bool drawMILinksOnTop,
 						  const bool raiseWhenSingleMatch);
 
-	virtual ~EditTreePrefsDialog();
+	~EditTreePrefsDialog();
 
 protected:
 

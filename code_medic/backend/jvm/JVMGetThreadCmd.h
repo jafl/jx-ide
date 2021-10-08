@@ -18,7 +18,7 @@ public:
 
 	GetThreadCmd(ThreadsWidget* widget);
 
-	virtual	~GetThreadCmd();
+	~GetThreadCmd();
 
 protected:
 

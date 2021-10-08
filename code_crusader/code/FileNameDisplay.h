@@ -23,13 +23,13 @@ public:
 					  const JCoordinate x, const JCoordinate y,
 					  const JCoordinate w, const JCoordinate h);
 
-	virtual ~FileNameDisplay();
+	~FileNameDisplay();
 
 	void	SetTE(JXTEBase* te);
 	void	DiskCopyIsModified(const bool mod);
 
-	void		HandleKeyPress(const JUtf8Character& c, const int keySym,
-									   const JXKeyModifiers& modifiers) override;
+	void	HandleKeyPress(const JUtf8Character& c, const int keySym,
+						   const JXKeyModifiers& modifiers) override;
 	bool	InputValid() override;
 
 protected:

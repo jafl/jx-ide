@@ -18,7 +18,7 @@ public:
 
 	GetRegistersCmd(RegistersDir* dir);
 
-	virtual	~GetRegistersCmd();
+	~GetRegistersCmd();
 
 protected:
 

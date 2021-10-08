@@ -38,7 +38,7 @@ public:
 
 	PrefsManager(bool* isNew);
 
-	virtual	~PrefsManager();
+	~PrefsManager();
 
 	JString GetPrevVersionStr() const;
 	void	EditPrefs();

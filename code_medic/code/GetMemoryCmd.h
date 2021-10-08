@@ -18,13 +18,13 @@ public:
 
 	GetMemoryCmd(MemoryDir* dir);
 
-	virtual	~GetMemoryCmd();
+	~GetMemoryCmd();
 
 	MemoryDir*	GetDirector();
 
 protected:
 
-	virtual void	HandleFailure();
+	void	HandleFailure() override;
 
 private:
 

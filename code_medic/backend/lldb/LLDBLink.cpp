@@ -1,5 +1,5 @@
 /******************************************************************************
- LLDBLink.cpp
+ Link.cpp
 
 	Interface to lldb.
 
@@ -13,24 +13,24 @@
 #include "LLDBBreakpointManager.h"
 #include "LLDBWelcomeTask.h"
 #include "LLDBSymbolsLoadedTask.h"
-#include "LLDBRunBackgroundCommandTask.h"
+#include "LLDBRunBackgroundCmdTask.h"
 
-#include "LLDBArray2DCommand.h"
-#include "LLDBPlot2DCommand.h"
-#include "LLDBDisplaySourceForMain.h"
-#include "LLDBGetCompletions.h"
-#include "LLDBGetFrame.h"
-#include "LLDBGetStack.h"
-#include "LLDBGetThread.h"
-#include "LLDBGetThreads.h"
-#include "LLDBGetMemory.h"
-#include "LLDBGetAssembly.h"
-#include "LLDBGetRegisters.h"
-#include "LLDBGetFullPath.h"
-#include "LLDBGetInitArgs.h"
-#include "LLDBGetLocalVars.h"
-#include "LLDBGetSourceFileList.h"
-#include "LLDBVarCommand.h"
+#include "LLDBArray2DCmd.h"
+#include "LLDBPlot2DCmd.h"
+#include "LLDBDisplaySourceForMainCmd.h"
+#include "LLDBGetCompletionsCmd.h"
+#include "LLDBGetFrameCmd.h"
+#include "LLDBGetStackCmd.h"
+#include "LLDBGetThreadCmd.h"
+#include "LLDBGetThreadsCmd.h"
+#include "LLDBGetMemoryCmd.h"
+#include "LLDBGetAssemblyCmd.h"
+#include "LLDBGetRegistersCmd.h"
+#include "LLDBGetFullPathCmd.h"
+#include "LLDBGetInitArgsCmd.h"
+#include "LLDBGetLocalVarsCmd.h"
+#include "LLDBGetSourceFileListCmd.h"
+#include "LLDBVarCmd.h"
 #include "LLDBVarNode.h"
 
 // must be before X11 includes which #define Success
@@ -73,16 +73,16 @@ static const bool kFeatures[]=
 	true,		// kDisassembleMemory
 };
 
-const uint32_t kLLDBEventMask = 0xFFFFFFFF;
+static const uint32_t kEventMask = 0xFFFFFFFF;
 
 /******************************************************************************
  Constructor
 
  *****************************************************************************/
 
-LLDBLink::LLDBLink()
+lldb::Link::Link()
 	:
-	Link(kFeatures),
+	::Link(kFeatures),
 	SBListener("LLDBLink"),		// without a name, the listener is invalid
 	itsDebugger(nullptr),
 	itsStdoutStream(nullptr),
@@ -91,7 +91,7 @@ LLDBLink::LLDBLink()
 {
 	InitFlags();
 
-	itsBPMgr = jnew LLDBBreakpointManager(this);
+	itsBPMgr = jnew BreakpointManager(this);
 	assert( itsBPMgr != nullptr );
 
 	StartDebugger(false);
@@ -102,7 +102,7 @@ LLDBLink::LLDBLink()
 
  *****************************************************************************/
 
-LLDBLink::~LLDBLink()
+lldb::Link::~Link()
 {
 	StopDebugger();
 
@@ -117,7 +117,7 @@ LLDBLink::~LLDBLink()
  *****************************************************************************/
 
 void
-LLDBLink::InitFlags()
+lldb::Link::InitFlags()
 {
 	itsIsAttachedFlag = false;
 }
@@ -128,10 +128,10 @@ LLDBLink::InitFlags()
  ******************************************************************************/
 
 const JString&
-LLDBLink::GetPrompt()
+lldb::Link::GetPrompt()
 	const
 {
-	const_cast<LLDBLink*>(this)->itsPrompt = itsDebugger->GetPrompt();
+	const_cast<Link*>(this)->itsPrompt = itsDebugger->GetPrompt();
 	return itsPrompt;
 }
 
@@ -141,7 +141,7 @@ LLDBLink::GetPrompt()
  ******************************************************************************/
 
 const JString&
-LLDBLink::GetScriptPrompt()
+lldb::Link::GetScriptPrompt()
 	const
 {
 	return JGetString("ScriptPrompt::LLDBLink");
@@ -153,7 +153,7 @@ LLDBLink::GetScriptPrompt()
  ******************************************************************************/
 
 bool
-LLDBLink::DebuggerHasStarted()
+lldb::Link::DebuggerHasStarted()
 	const
 {
 	return true;
@@ -165,7 +165,7 @@ LLDBLink::DebuggerHasStarted()
  ******************************************************************************/
 
 JString
-LLDBLink::GetChooseProgramInstructions()
+lldb::Link::GetChooseProgramInstructions()
 	const
 {
 	return JGetString("ChooseProgramInstr::LLDBLink");
@@ -177,7 +177,7 @@ LLDBLink::GetChooseProgramInstructions()
  ******************************************************************************/
 
 bool
-LLDBLink::HasProgram()
+lldb::Link::HasProgram()
 	const
 {
 	return itsDebugger->GetNumTargets() > 0;
@@ -189,13 +189,13 @@ LLDBLink::HasProgram()
  ******************************************************************************/
 
 bool
-LLDBLink::GetProgram
+lldb::Link::GetProgram
 	(
 	JString* fullName
 	)
 	const
 {
-	lldb::SBFileSpec f = itsDebugger->GetSelectedTarget().GetExecutable();
+	SBFileSpec f = itsDebugger->GetSelectedTarget().GetExecutable();
 	if (f.Exists())
 {
 		*fullName = JCombinePathAndName(
@@ -216,7 +216,7 @@ LLDBLink::GetProgram
  ******************************************************************************/
 
 bool
-LLDBLink::HasCore()
+lldb::Link::HasCore()
 	const
 {
 	return !itsCoreName.IsEmpty();
@@ -228,7 +228,7 @@ LLDBLink::HasCore()
  ******************************************************************************/
 
 bool
-LLDBLink::GetCore
+lldb::Link::GetCore
 	(
 	JString* fullName
 	)
@@ -244,15 +244,15 @@ LLDBLink::GetCore
  ******************************************************************************/
 
 bool
-LLDBLink::HasLoadedSymbols()
+lldb::Link::HasLoadedSymbols()
 	const
 {
-	lldb::SBProcess p     = itsDebugger->GetSelectedTarget().GetProcess();
-	lldb::StateType state = p.GetState();
-	return p.IsValid() &&
-				state != lldb::eStateInvalid  &&
-				state != lldb::eStateUnloaded &&
-				state != lldb::eStateConnected;
+	SBProcess p     = itsDebugger->GetSelectedTarget().GetProcess();
+	StateType state = p.GetState();
+	return (p.IsValid() &&
+			state != eStateInvalid  &&
+			state != eStateUnloaded &&
+			state != eStateConnected);
 }
 
 /******************************************************************************
@@ -261,19 +261,19 @@ LLDBLink::HasLoadedSymbols()
  *****************************************************************************/
 
 bool
-LLDBLink::IsDebugging()
+lldb::Link::IsDebugging()
 	const
 {
-	lldb::SBProcess p     = itsDebugger->GetSelectedTarget().GetProcess();
-	lldb::StateType state = p.GetState();
-	return p.IsValid() &&
-				(state == lldb::eStateAttaching ||
-				 state == lldb::eStateLaunching ||
-				 state == lldb::eStateRunning   ||
-				 state == lldb::eStateStepping  ||
-				 state == lldb::eStateStopped   ||
-				 state == lldb::eStateCrashed   ||
-				 state == lldb::eStateSuspended);
+	SBProcess p     = itsDebugger->GetSelectedTarget().GetProcess();
+	StateType state = p.GetState();
+	return (p.IsValid() &&
+			(state == eStateAttaching ||
+			 state == eStateLaunching ||
+			 state == eStateRunning   ||
+			 state == eStateStepping  ||
+			 state == eStateStopped   ||
+			 state == eStateCrashed   ||
+			 state == eStateSuspended));
 }
 
 /******************************************************************************
@@ -282,16 +282,16 @@ LLDBLink::IsDebugging()
  *****************************************************************************/
 
 bool
-LLDBLink::ProgramIsRunning()
+lldb::Link::ProgramIsRunning()
 	const
 {
-	lldb::SBProcess p     = itsDebugger->GetSelectedTarget().GetProcess();
-	lldb::StateType state = p.GetState();
-	return p.IsValid() &&
-				(state == lldb::eStateAttaching ||
-				 state == lldb::eStateLaunching ||
-				 state == lldb::eStateRunning   ||
-				 state == lldb::eStateStepping);
+	SBProcess p     = itsDebugger->GetSelectedTarget().GetProcess();
+	StateType state = p.GetState();
+	return (p.IsValid() &&
+			(state == eStateAttaching ||
+			 state == eStateLaunching ||
+			 state == eStateRunning   ||
+			 state == eStateStepping));
 }
 
 /******************************************************************************
@@ -300,27 +300,15 @@ LLDBLink::ProgramIsRunning()
  *****************************************************************************/
 
 bool
-LLDBLink::ProgramIsStopped()
+lldb::Link::ProgramIsStopped()
 	const
 {
-	lldb::SBProcess p     = itsDebugger->GetSelectedTarget().GetProcess();
-	lldb::StateType state = p.GetState();
-	return p.IsValid() &&
-				(state == lldb::eStateStopped   ||
-				 state == lldb::eStateCrashed   ||
-				 state == lldb::eStateSuspended);
-}
-
-/******************************************************************************
- OKToSendMultipleCommands
-
- *****************************************************************************/
-
-bool
-LLDBLink::OKToSendMultipleCommands()
-	const
-{
-	return Link::OKToSendMultipleCommands();
+	SBProcess p     = itsDebugger->GetSelectedTarget().GetProcess();
+	StateType state = p.GetState();
+	return (p.IsValid() &&
+			(state == eStateStopped   ||
+			 state == eStateCrashed   ||
+			 state == eStateSuspended));
 }
 
 /******************************************************************************
@@ -329,7 +317,7 @@ LLDBLink::OKToSendMultipleCommands()
  *****************************************************************************/
 
 bool
-LLDBLink::OKToSendCommands
+lldb::Link::OKToSendCommands
 	(
 	const bool background
 	)
@@ -344,19 +332,19 @@ LLDBLink::OKToSendCommands
  *****************************************************************************/
 
 bool
-LLDBLink::IsDefiningScript()
+lldb::Link::IsDefiningScript()
 	const
 {
 	return false;
 }
 
 /******************************************************************************
- HandleLLDBEvent
+ HandleEvent
 
  *****************************************************************************/
 
 void
-LLDBLink::HandleLLDBEvent()
+lldb::Link::HandleEvent()
 {
 	// read from LLDB
 
@@ -377,7 +365,7 @@ LLDBLink::HandleLLDBEvent()
 
 	// read from process
 
-	lldb::SBProcess p = itsDebugger->GetSelectedTarget().GetProcess();
+	SBProcess p = itsDebugger->GetSelectedTarget().GetProcess();
 	if (p.IsValid())
 	{
 		count = p.GetSTDOUT(buf, 1023);
@@ -412,22 +400,22 @@ LLDBLink::HandleLLDBEvent()
 
 	// check for events
 
-	lldb::SBEvent e;
+	SBEvent e;
 	if (GetNextEvent(e))
 	{
-		HandleLLDBEvent(e);
+		HandleEvent(e);
 	}
 }
 
 /******************************************************************************
- HandleLLDBEvent (private)
+ HandleEvent (private)
 
  *****************************************************************************/
 
 void
-LLDBLink::HandleLLDBEvent
+lldb::Link::HandleEvent
 	(
-	const lldb::SBEvent& e
+	const SBEvent& e
 	)
 {
 	if (!e.IsValid())
@@ -442,20 +430,20 @@ LLDBLink::HandleLLDBEvent
 	msg += ":";
 	msg += JString((JUInt64) eventType);
 
-	if (lldb::SBProcess::EventIsProcessEvent(e))
+	if (SBProcess::EventIsProcessEvent(e))
 	{
-		const lldb::StateType state = lldb::SBProcess::GetStateFromEvent(e);
-		msg += "; process state: " + JString((JUInt64) state) + ", " + JString((JUInt64) lldb::SBProcess::GetRestartedFromEvent(e));
+		const StateType state = SBProcess::GetStateFromEvent(e);
+		msg += "; process state: " + JString((JUInt64) state) + ", " + JString((JUInt64) SBProcess::GetRestartedFromEvent(e));
 
-		if (state == lldb::eStateRunning ||
-			state == lldb::eStateStepping)
+		if (state == eStateRunning ||
+			state == eStateStepping)
 		{
 			CancelBackgroundCommands();
 			Broadcast(DebuggerBusy());
 			Broadcast(ProgramRunning());
 		}
-		else if (state == lldb::eStateStopped ||
-				 state == lldb::eStateCrashed)
+		else if (state == eStateStopped ||
+				 state == eStateCrashed)
 		{
 			Broadcast(DebuggerReadyForInput());
 			RunNextCommand();
@@ -467,44 +455,44 @@ LLDBLink::HandleLLDBEvent
 				msg += s;
 			}
 		}
-		else if (state == lldb::eStateExited ||
-				 state == lldb::eStateDetached)
+		else if (state == eStateExited ||
+				 state == eStateDetached)
 		{
 			ProgramFinished1();
 		}
 	}
-	else if (lldb::SBThread::EventIsThreadEvent(e))
+	else if (SBThread::EventIsThreadEvent(e))
 	{
-		lldb::SBThread t = lldb::SBThread::GetThreadFromEvent(e);
-		lldb::SBFrame f  = lldb::SBThread::GetStackFrameFromEvent(e);
+		SBThread t = SBThread::GetThreadFromEvent(e);
+		SBFrame f  = SBThread::GetStackFrameFromEvent(e);
 
-		if (eventType & lldb::SBThread::eBroadcastBitThreadSelected)
+		if (eventType & SBThread::eBroadcastBitThreadSelected)
 		{
 			// sync with SwitchToThread()
 			Broadcast(ThreadChanged());
 			ProgramStopped();
 		}
-		else if ((eventType & lldb::SBThread::eBroadcastBitStackChanged) ||
-				 (eventType & lldb::SBThread::eBroadcastBitSelectedFrameChanged))
+		else if ((eventType & SBThread::eBroadcastBitStackChanged) ||
+				 (eventType & SBThread::eBroadcastBitSelectedFrameChanged))
 		{
 			// sync with SwitchToFrame()
 			Broadcast(FrameChanged());
 			ProgramStopped();
 		}
 	}
-	else if (lldb::SBBreakpoint::EventIsBreakpointEvent(e))
+	else if (SBBreakpoint::EventIsBreakpointEvent(e))
 	{
-		msg += "; bkpt event type: " + JString((JUInt64) lldb::SBBreakpoint::GetBreakpointEventTypeFromEvent(e));
+		msg += "; bkpt event type: " + JString((JUInt64) SBBreakpoint::GetBreakpointEventTypeFromEvent(e));
 		Broadcast(BreakpointsChanged());
 	}
-	else if (lldb::SBWatchpoint::EventIsWatchpointEvent(e))
+	else if (SBWatchpoint::EventIsWatchpointEvent(e))
 	{
-		msg += "; watch event type: " + JString((JUInt64) lldb::SBWatchpoint::GetWatchpointEventTypeFromEvent(e));
+		msg += "; watch event type: " + JString((JUInt64) SBWatchpoint::GetWatchpointEventTypeFromEvent(e));
 		Broadcast(BreakpointsChanged());
 	}
-	else if (lldb::SBCommandInterpreter::EventIsCommandInterpreterEvent(e))
+	else if (SBCommandInterpreter::EventIsCommandInterpreterEvent(e))
 	{
-		if (eventType & lldb::SBCommandInterpreter::eBroadcastBitQuitCommandReceived)
+		if (eventType & SBCommandInterpreter::eBroadcastBitQuitCommandReceived)
 		{
 			JXGetApplication()->Quit();
 		}
@@ -514,12 +502,12 @@ LLDBLink::HandleLLDBEvent
 }
 
 /******************************************************************************
- ReceiveLLDBMessageLine (private static)
+ ReceiveMessageLine (private static)
 
  *****************************************************************************/
 
 j_lldb_cookie_fn_return
-LLDBLink::ReceiveLLDBMessageLine
+lldb::Link::ReceiveMessageLine
 	(
 	void*				baton,
 	const char*			line,
@@ -527,17 +515,17 @@ LLDBLink::ReceiveLLDBMessageLine
 	)
 {
 	const JString msg(line, count);
-	static_cast<LLDBLink*>(baton)->Broadcast(UserOutput(msg, false));
+	static_cast<Link*>(baton)->Broadcast(UserOutput(msg, false));
 	return count;
 }
 
 /******************************************************************************
- ReceiveLLDBErrorLine (private static)
+ ReceiveErrorLine (private static)
 
  *****************************************************************************/
 
 j_lldb_cookie_fn_return
-LLDBLink::ReceiveLLDBErrorLine
+lldb::Link::ReceiveErrorLine
 	(
 	void*				baton,
 	const char*			line,
@@ -545,23 +533,23 @@ LLDBLink::ReceiveLLDBErrorLine
 	)
 {
 	const JString msg(line, count);
-	static_cast<LLDBLink*>(baton)->Broadcast(UserOutput(msg, true));
+	static_cast<Link*>(baton)->Broadcast(UserOutput(msg, true));
 	return count;
 }
 
 /******************************************************************************
- LogLLDBMessage (private static)
+ LogMessage (private static)
 
  *****************************************************************************/
 
 void
-LLDBLink::LogLLDBMessage
+lldb::Link::LogMessage
 	(
 	const JUtf8Byte*	msg,
 	void*				baton
 	)
 {
-	static_cast<LLDBLink*>(baton)->Broadcast(DebugOutput(JString(msg, JString::kNoCopy), kLogType));
+	static_cast<Link*>(baton)->Broadcast(DebugOutput(JString(msg, JString::kNoCopy), kLogType));
 }
 
 /******************************************************************************
@@ -570,19 +558,19 @@ LLDBLink::LogLLDBMessage
  *****************************************************************************/
 
 void
-LLDBLink::SetProgram
+lldb::Link::SetProgram
 	(
 	const JString& fullName
 	)
 {
 	DetachOrKill(true);
 
-	lldb::SBTarget t = itsDebugger->CreateTarget(fullName.GetBytes());
+	SBTarget t = itsDebugger->CreateTarget(fullName.GetBytes());
 	if (t.IsValid())
 	{
-		StartListeningForEvents(t.GetBroadcaster(), kLLDBEventMask);
+		StartListeningForEvents(t.GetBroadcaster(), kEventMask);
 
-		auto* task = jnew LLDBSymbolsLoadedTask(fullName);
+		auto* task = jnew SymbolsLoadedTask(fullName);
 		assert( task != nullptr );
 		task->Go();
 	}
@@ -596,7 +584,7 @@ LLDBLink::SetProgram
  *****************************************************************************/
 
 void
-LLDBLink::SymbolsLoaded
+lldb::Link::SymbolsLoaded
 	(
 	const JString& fullName
 	)
@@ -604,7 +592,7 @@ LLDBLink::SymbolsLoaded
 	JString path, name;
 	JSplitPathAndName(fullName, &path, &name);
 	Broadcast(PrepareToLoadSymbols());
-	Broadcast(Link::SymbolsLoaded(true, name));
+	Broadcast(::Link::SymbolsLoaded(true, name));
 }
 
 /******************************************************************************
@@ -613,7 +601,7 @@ LLDBLink::SymbolsLoaded
  *****************************************************************************/
 
 void
-LLDBLink::ReloadProgram()
+lldb::Link::ReloadProgram()
 {
 	JString fullName;
 	if (GetProgram(&fullName))
@@ -628,14 +616,14 @@ LLDBLink::ReloadProgram()
  *****************************************************************************/
 
 void
-LLDBLink::SetCore
+lldb::Link::SetCore
 	(
 	const JString& fullName
 	)
 {
 	DetachOrKill(false);
 
-	lldb::SBTarget t = itsDebugger->GetSelectedTarget();
+	SBTarget t = itsDebugger->GetSelectedTarget();
 	if (t.IsValid())
 	{
 		t.LoadCore(fullName.GetBytes());
@@ -658,20 +646,20 @@ LLDBLink::SetCore
  *****************************************************************************/
 
 void
-LLDBLink::AttachToProcess
+lldb::Link::AttachToProcess
 	(
-	const pid_t pid
+	const ::pid_t pid
 	)
 {
 	DetachOrKill(true);
 
-	lldb::SBTarget t = itsDebugger->CreateTarget("");
+	SBTarget t = itsDebugger->CreateTarget("");
 	if (t.IsValid())
 	{
-		lldb::SBAttachInfo info(pid);
+		SBAttachInfo info(pid);
 		info.SetListener(*this);
 
-		lldb::SBError e;
+		SBError e;
 		t.Attach(info, e);
 
 		if (e.Fail())
@@ -681,14 +669,14 @@ LLDBLink::AttachToProcess
 		else if (t.IsValid())
 		{
 			itsIsAttachedFlag = true;
-			StartListeningForEvents(t.GetBroadcaster(), kLLDBEventMask);
+			StartListeningForEvents(t.GetBroadcaster(), kEventMask);
 
-			lldb::SBFileSpec f     = t.GetExecutable();
+			SBFileSpec f     = t.GetExecutable();
 			const JString fullName = JCombinePathAndName(
 				JString(f.GetDirectory(), JString::kNoCopy),
 				JString(f.GetFilename(), JString::kNoCopy));
 
-			auto* task = jnew LLDBSymbolsLoadedTask(fullName);
+			auto* task = jnew SymbolsLoadedTask(fullName);
 			assert( task != nullptr );
 			task->Go();
 
@@ -703,12 +691,12 @@ LLDBLink::AttachToProcess
  *****************************************************************************/
 
 void
-LLDBLink::RunProgram
+lldb::Link::RunProgram
 	(
 	const JString& args
 	)
 {
-	lldb::SBTarget t = itsDebugger->GetSelectedTarget();
+	SBTarget t = itsDebugger->GetSelectedTarget();
 	if (t.IsValid())
 	{
 		DetachOrKill(false);
@@ -731,7 +719,7 @@ LLDBLink::RunProgram
 			lldbArgs[ argList.GetElementCount() ] = nullptr;
 		}
 
-		lldb::SBError error;
+		SBError error;
 		t.Launch(*this, (const char**) lldbArgs, (const char**) environ,
 				 nullptr, nullptr, nullptr, ".", 0, false, error);
 
@@ -745,7 +733,7 @@ LLDBLink::RunProgram
  *****************************************************************************/
 
 BreakpointManager*
-LLDBLink::GetBreakpointManager()
+lldb::Link::GetBreakpointManager()
 {
 	return itsBPMgr;
 }
@@ -756,7 +744,7 @@ LLDBLink::GetBreakpointManager()
  *****************************************************************************/
 
 void
-LLDBLink::ShowBreakpointInfo
+lldb::Link::ShowBreakpointInfo
 	(
 	const JIndex debuggerIndex
 	)
@@ -770,20 +758,20 @@ LLDBLink::ShowBreakpointInfo
  *****************************************************************************/
 
 void
-LLDBLink::SetBreakpoint
+lldb::Link::SetBreakpoint
 	(
 	const JString&	fileName,
 	const JIndex	lineIndex,
-	const bool	temporary
+	const bool		temporary
 	)
 {
 	JString path, name;
 	JSplitPathAndName(fileName, &path, &name);
 
-	lldb::SBTarget t = itsDebugger->GetSelectedTarget();
+	SBTarget t = itsDebugger->GetSelectedTarget();
 	if (t.IsValid())
 	{
-		lldb::SBBreakpoint b = t.BreakpointCreateByLocation(name.GetBytes(), lineIndex);
+		SBBreakpoint b = t.BreakpointCreateByLocation(name.GetBytes(), lineIndex);
 		b.SetOneShot(temporary);
 	}
 }
@@ -794,18 +782,18 @@ LLDBLink::SetBreakpoint
  *****************************************************************************/
 
 void
-LLDBLink::SetBreakpoint
+lldb::Link::SetBreakpoint
 	(
 	const JString&	address,
-	const bool	temporary
+	const bool		temporary
 	)
 {
-	lldb::SBTarget t = itsDebugger->GetSelectedTarget();
+	SBTarget t = itsDebugger->GetSelectedTarget();
 	if (t.IsValid())
 	{
 		JUtf8Byte* end;
 		const lldb::addr_t a = strtoull(address.GetBytes(), &end, 0);
-		lldb::SBBreakpoint b = t.BreakpointCreateByAddress(a);
+		SBBreakpoint b = t.BreakpointCreateByAddress(a);
 		b.SetOneShot(temporary);
 	}
 }
@@ -816,12 +804,12 @@ LLDBLink::SetBreakpoint
  *****************************************************************************/
 
 void
-LLDBLink::RemoveBreakpoint
+lldb::Link::RemoveBreakpoint
 	(
 	const JIndex debuggerIndex
 	)
 {
-	lldb::SBTarget t = itsDebugger->GetSelectedTarget();
+	SBTarget t = itsDebugger->GetSelectedTarget();
 	if (t.IsValid())
 	{
 		t.BreakpointDelete(debuggerIndex);
@@ -834,13 +822,13 @@ LLDBLink::RemoveBreakpoint
  *****************************************************************************/
 
 void
-LLDBLink::RemoveAllBreakpointsOnLine
+lldb::Link::RemoveAllBreakpointsOnLine
 	(
 	const JString&	fileName,
 	const JIndex	lineIndex
 	)
 {
-	lldb::SBTarget t = itsDebugger->GetSelectedTarget();
+	SBTarget t = itsDebugger->GetSelectedTarget();
 	if (!t.IsValid())
 	{
 		return;
@@ -852,13 +840,13 @@ LLDBLink::RemoveAllBreakpointsOnLine
 	const JSize bpCount = t.GetNumBreakpoints();
 	for (long i=bpCount-1; i>=0; i--)
 	{
-		lldb::SBBreakpoint b = t.GetBreakpointAtIndex(i);
+		SBBreakpoint b = t.GetBreakpointAtIndex(i);
 
 		const JSize locCount = b.GetNumLocations();
 		for (JUnsignedOffset j=0; j<locCount; j++)
 		{
-			lldb::SBAddress a   = b.GetLocationAtIndex(j).GetAddress();
-			lldb::SBLineEntry e = a.GetLineEntry();
+			SBAddress a   = b.GetLocationAtIndex(j).GetAddress();
+			SBLineEntry e = a.GetLineEntry();
 			if (e.GetLine() == lineIndex &&
 				JString::Compare(e.GetFileSpec().GetFilename(), name) == 0)
 			{
@@ -874,12 +862,12 @@ LLDBLink::RemoveAllBreakpointsOnLine
  *****************************************************************************/
 
 void
-LLDBLink::RemoveAllBreakpointsAtAddress
+lldb::Link::RemoveAllBreakpointsAtAddress
 	(
 	const JString& addrStr
 	)
 {
-	lldb::SBTarget t = itsDebugger->GetSelectedTarget();
+	SBTarget t = itsDebugger->GetSelectedTarget();
 	if (!t.IsValid())
 	{
 		return;
@@ -891,12 +879,12 @@ LLDBLink::RemoveAllBreakpointsAtAddress
 	const JSize bpCount = t.GetNumBreakpoints();
 	for (long i=bpCount-1; i>=0; i--)
 	{
-		lldb::SBBreakpoint b = t.GetBreakpointAtIndex(i);
+		SBBreakpoint b = t.GetBreakpointAtIndex(i);
 
 		const JSize locCount = b.GetNumLocations();
 		for (JUnsignedOffset j=0; j<locCount; j++)
 		{
-			lldb::SBAddress a = b.GetLocationAtIndex(j).GetAddress();
+			SBAddress a = b.GetLocationAtIndex(j).GetAddress();
 			if (a.GetLoadAddress(t) == addr)
 			{
 				t.BreakpointDelete(b.GetID());
@@ -911,9 +899,9 @@ LLDBLink::RemoveAllBreakpointsAtAddress
  *****************************************************************************/
 
 void
-LLDBLink::RemoveAllBreakpoints()
+lldb::Link::RemoveAllBreakpoints()
 {
-	lldb::SBTarget t = itsDebugger->GetSelectedTarget();
+	SBTarget t = itsDebugger->GetSelectedTarget();
 	if (t.IsValid())
 	{
 		t.DeleteAllBreakpoints();
@@ -926,17 +914,17 @@ LLDBLink::RemoveAllBreakpoints()
  *****************************************************************************/
 
 void
-LLDBLink::SetBreakpointEnabled
+lldb::Link::SetBreakpointEnabled
 	(
 	const JIndex	debuggerIndex,
-	const bool	enabled,
-	const bool	once
+	const bool		enabled,
+	const bool		once
 	)
 {
-	lldb::SBTarget t = itsDebugger->GetSelectedTarget();
+	SBTarget t = itsDebugger->GetSelectedTarget();
 	if (t.IsValid())
 	{
-		lldb::SBBreakpoint b = t.FindBreakpointByID(debuggerIndex);
+		SBBreakpoint b = t.FindBreakpointByID(debuggerIndex);
 		b.SetEnabled(enabled);
 		b.SetOneShot(once);
 	}
@@ -948,13 +936,13 @@ LLDBLink::SetBreakpointEnabled
  *****************************************************************************/
 
 void
-LLDBLink::SetBreakpointCondition
+lldb::Link::SetBreakpointCondition
 	(
 	const JIndex	debuggerIndex,
 	const JString&	condition
 	)
 {
-	lldb::SBTarget t = itsDebugger->GetSelectedTarget();
+	SBTarget t = itsDebugger->GetSelectedTarget();
 	if (t.IsValid())
 	{
 		t.FindBreakpointByID(debuggerIndex).SetCondition(condition.GetBytes());
@@ -967,12 +955,12 @@ LLDBLink::SetBreakpointCondition
  *****************************************************************************/
 
 void
-LLDBLink::RemoveBreakpointCondition
+lldb::Link::RemoveBreakpointCondition
 	(
 	const JIndex debuggerIndex
 	)
 {
-	lldb::SBTarget t = itsDebugger->GetSelectedTarget();
+	SBTarget t = itsDebugger->GetSelectedTarget();
 	if (t.IsValid())
 	{
 		t.FindBreakpointByID(debuggerIndex).SetCondition("");
@@ -985,13 +973,13 @@ LLDBLink::RemoveBreakpointCondition
  *****************************************************************************/
 
 void
-LLDBLink::SetBreakpointIgnoreCount
+lldb::Link::SetBreakpointIgnoreCount
 	(
 	const JIndex	debuggerIndex,
 	const JSize		count
 	)
 {
-	lldb::SBTarget t = itsDebugger->GetSelectedTarget();
+	SBTarget t = itsDebugger->GetSelectedTarget();
 	if (t.IsValid())
 	{
 		t.FindBreakpointByID(debuggerIndex).SetIgnoreCount(count);
@@ -1004,7 +992,7 @@ LLDBLink::SetBreakpointIgnoreCount
  *****************************************************************************/
 
 void
-LLDBLink::WatchExpression
+lldb::Link::WatchExpression
 	(
 	const JString& expr
 	)
@@ -1018,7 +1006,7 @@ LLDBLink::WatchExpression
  *****************************************************************************/
 
 void
-LLDBLink::WatchLocation
+lldb::Link::WatchLocation
 	(
 	const JString& expr
 	)
@@ -1032,16 +1020,16 @@ LLDBLink::WatchLocation
  *****************************************************************************/
 
 void
-LLDBLink::Watch
+lldb::Link::Watch
 	(
 	const JString&	expr,
 	const bool	resolveAddress
 	)
 {
-	lldb::SBTarget t = itsDebugger->GetSelectedTarget();
+	SBTarget t = itsDebugger->GetSelectedTarget();
 	if (t.IsValid())
 	{
-		lldb::SBValue v = t.EvaluateExpression(expr.GetBytes());
+		SBValue v = t.EvaluateExpression(expr.GetBytes());
 		if (v.IsValid())
 		{
 			v.Watch(resolveAddress, false, true);
@@ -1055,17 +1043,17 @@ LLDBLink::Watch
  *****************************************************************************/
 
 void
-LLDBLink::SwitchToThread
+lldb::Link::SwitchToThread
 	(
 	const JUInt64 id
 	)
 {
-	lldb::SBProcess p = itsDebugger->GetSelectedTarget().GetProcess();
+	SBProcess p = itsDebugger->GetSelectedTarget().GetProcess();
 	if (p.IsValid() && ProgramIsStopped())
 	{
 		p.SetSelectedThreadByID(id);	// does not broadcast
 
-		// sync with HandleLLDBEvent()
+		// sync with HandleEvent()
 		Broadcast(ThreadChanged());
 		ProgramStopped();
 	}
@@ -1077,17 +1065,17 @@ LLDBLink::SwitchToThread
  *****************************************************************************/
 
 void
-LLDBLink::SwitchToFrame
+lldb::Link::SwitchToFrame
 	(
 	const JUInt64 id
 	)
 {
-	lldb::SBThread t = itsDebugger->GetSelectedTarget().GetProcess().GetSelectedThread();
+	SBThread t = itsDebugger->GetSelectedTarget().GetProcess().GetSelectedThread();
 	if (t.IsValid() && ProgramIsStopped())
 	{
 		t.SetSelectedFrame(id);		// does not broadcast
 
-		// sync with HandleLLDBEvent()
+		// sync with HandleEvent()
 		Broadcast(FrameChanged());
 		ProgramStopped();
 	}
@@ -1099,9 +1087,9 @@ LLDBLink::SwitchToFrame
  *****************************************************************************/
 
 void
-LLDBLink::StepOver()
+lldb::Link::StepOver()
 {
-	lldb::SBThread t = itsDebugger->GetSelectedTarget().GetProcess().GetSelectedThread();
+	SBThread t = itsDebugger->GetSelectedTarget().GetProcess().GetSelectedThread();
 	if (t.IsValid() && ProgramIsStopped())
 	{
 		t.StepOver();
@@ -1114,9 +1102,9 @@ LLDBLink::StepOver()
  *****************************************************************************/
 
 void
-LLDBLink::StepInto()
+lldb::Link::StepInto()
 {
-	lldb::SBThread t = itsDebugger->GetSelectedTarget().GetProcess().GetSelectedThread();
+	SBThread t = itsDebugger->GetSelectedTarget().GetProcess().GetSelectedThread();
 	if (t.IsValid() && ProgramIsStopped())
 	{
 		t.StepInto();
@@ -1129,9 +1117,9 @@ LLDBLink::StepInto()
  *****************************************************************************/
 
 void
-LLDBLink::StepOut()
+lldb::Link::StepOut()
 {
-	lldb::SBThread t = itsDebugger->GetSelectedTarget().GetProcess().GetSelectedThread();
+	SBThread t = itsDebugger->GetSelectedTarget().GetProcess().GetSelectedThread();
 	if (t.IsValid() && ProgramIsStopped())
 	{
 		t.StepOut();
@@ -1144,9 +1132,9 @@ LLDBLink::StepOut()
  *****************************************************************************/
 
 void
-LLDBLink::Continue()
+lldb::Link::Continue()
 {
-	lldb::SBProcess p = itsDebugger->GetSelectedTarget().GetProcess();
+	SBProcess p = itsDebugger->GetSelectedTarget().GetProcess();
 	if (p.IsValid() && ProgramIsStopped())
 	{
 		p.Continue();
@@ -1159,7 +1147,7 @@ LLDBLink::Continue()
  *****************************************************************************/
 
 void
-LLDBLink::RunUntil
+lldb::Link::RunUntil
 	(
 	const JString&	fileName,
 	const JIndex	lineIndex
@@ -1178,7 +1166,7 @@ LLDBLink::RunUntil
  *****************************************************************************/
 
 void
-LLDBLink::SetExecutionPoint
+lldb::Link::SetExecutionPoint
 	(
 	const JString&	fileName,
 	const JIndex	lineIndex
@@ -1202,9 +1190,9 @@ LLDBLink::SetExecutionPoint
  *****************************************************************************/
 
 void
-LLDBLink::StepOverAssembly()
+lldb::Link::StepOverAssembly()
 {
-	lldb::SBThread t = itsDebugger->GetSelectedTarget().GetProcess().GetSelectedThread();
+	SBThread t = itsDebugger->GetSelectedTarget().GetProcess().GetSelectedThread();
 	if (t.IsValid() && ProgramIsStopped())
 	{
 		t.StepInstruction(true);
@@ -1217,9 +1205,9 @@ LLDBLink::StepOverAssembly()
  *****************************************************************************/
 
 void
-LLDBLink::StepIntoAssembly()
+lldb::Link::StepIntoAssembly()
 {
-	lldb::SBThread t = itsDebugger->GetSelectedTarget().GetProcess().GetSelectedThread();
+	SBThread t = itsDebugger->GetSelectedTarget().GetProcess().GetSelectedThread();
 	if (t.IsValid() && ProgramIsStopped())
 	{
 		t.StepInstruction(false);
@@ -1232,12 +1220,12 @@ LLDBLink::StepIntoAssembly()
  *****************************************************************************/
 
 void
-LLDBLink::RunUntil
+lldb::Link::RunUntil
 	(
 	const JString& addr
 	)
 {
-	lldb::SBThread t = itsDebugger->GetSelectedTarget().GetProcess().GetSelectedThread();
+	SBThread t = itsDebugger->GetSelectedTarget().GetProcess().GetSelectedThread();
 	if (t.IsValid() && ProgramIsStopped())
 	{
 		JUtf8Byte* end;
@@ -1252,7 +1240,7 @@ LLDBLink::RunUntil
  *****************************************************************************/
 
 void
-LLDBLink::SetExecutionPoint
+lldb::Link::SetExecutionPoint
 	(
 	const JString& addr
 	)
@@ -1273,7 +1261,7 @@ LLDBLink::SetExecutionPoint
  *****************************************************************************/
 
 void
-LLDBLink::BackupOver()
+lldb::Link::BackupOver()
 {
 }
 
@@ -1283,7 +1271,7 @@ LLDBLink::BackupOver()
  *****************************************************************************/
 
 void
-LLDBLink::BackupInto()
+lldb::Link::BackupInto()
 {
 }
 
@@ -1293,7 +1281,7 @@ LLDBLink::BackupInto()
  *****************************************************************************/
 
 void
-LLDBLink::BackupOut()
+lldb::Link::BackupOut()
 {
 }
 
@@ -1303,7 +1291,7 @@ LLDBLink::BackupOut()
  *****************************************************************************/
 
 void
-LLDBLink::BackupContinue()
+lldb::Link::BackupContinue()
 {
 }
 
@@ -1313,13 +1301,13 @@ LLDBLink::BackupContinue()
  *****************************************************************************/
 
 void
-LLDBLink::SetValue
+lldb::Link::SetValue
 	(
 	const JString& name,
 	const JString& value
 	)
 {
-	lldb::SBFrame f = itsDebugger->GetSelectedTarget().GetProcess().GetSelectedThread().GetSelectedFrame();
+	SBFrame f = itsDebugger->GetSelectedTarget().GetProcess().GetSelectedThread().GetSelectedFrame();
 	if (f.IsValid())
 	{
 		JString expr = name;
@@ -1336,15 +1324,15 @@ LLDBLink::SetValue
 
  *****************************************************************************/
 
-Array2DCmd*
-LLDBLink::CreateArray2DCmd
+::Array2DCmd*
+lldb::Link::CreateArray2DCmd
 	(
-	Array2DDir*		dir,
+	Array2DDir*			dir,
 	JXStringTable*		table,
 	JStringTableData*	data
 	)
 {
-	Array2DCmd* cmd = jnew LLDBArray2DCommand(dir, table, data);
+	Array2DCmd* cmd = jnew Array2DCmd(dir, table, data);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1354,15 +1342,15 @@ LLDBLink::CreateArray2DCmd
 
  *****************************************************************************/
 
-Plot2DCmd*
-LLDBLink::CreatePlot2DCmd
+::Plot2DCmd*
+lldb::Link::CreatePlot2DCmd
 	(
 	Plot2DDir*	dir,
 	JArray<JFloat>*	x,
 	JArray<JFloat>*	y
 	)
 {
-	Plot2DCmd* cmd = jnew LLDBPlot2DCommand(dir, x, y);
+	Plot2DCmd* cmd = jnew Plot2DCmd(dir, x, y);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1372,13 +1360,13 @@ LLDBLink::CreatePlot2DCmd
 
  *****************************************************************************/
 
-DisplaySourceForMainCmd*
-LLDBLink::CreateDisplaySourceForMainCmd
+::DisplaySourceForMainCmd*
+lldb::Link::CreateDisplaySourceForMainCmd
 	(
 	SourceDirector* sourceDir
 	)
 {
-	DisplaySourceForMainCmd* cmd = jnew LLDBDisplaySourceForMain(sourceDir);
+	DisplaySourceForMainCmd* cmd = jnew DisplaySourceForMainCmd(sourceDir);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1388,14 +1376,14 @@ LLDBLink::CreateDisplaySourceForMainCmd
 
  *****************************************************************************/
 
-GetCompletionsCmd*
-LLDBLink::CreateGetCompletionsCmd
+::GetCompletionsCmd*
+lldb::Link::CreateGetCompletionsCmd
 	(
 	CommandInput*	input,
 	CommandOutputDisplay*	history
 	)
 {
-	GetCompletionsCmd* cmd = jnew LLDBGetCompletions(input, history);
+	GetCompletionsCmd* cmd = jnew GetCompletionsCmd(input, history);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1405,13 +1393,13 @@ LLDBLink::CreateGetCompletionsCmd
 
  *****************************************************************************/
 
-GetFrameCmd*
-LLDBLink::CreateGetFrameCmd
+::GetFrameCmd*
+lldb::Link::CreateGetFrameCmd
 	(
 	StackWidget* widget
 	)
 {
-	GetFrameCmd* cmd = jnew LLDBGetFrame(widget);
+	GetFrameCmd* cmd = jnew GetFrameCmd(widget);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1421,14 +1409,14 @@ LLDBLink::CreateGetFrameCmd
 
  *****************************************************************************/
 
-GetStackCmd*
-LLDBLink::CreateGetStackCmd
+::GetStackCmd*
+lldb::Link::CreateGetStackCmd
 	(
 	JTree*			tree,
 	StackWidget*	widget
 	)
 {
-	GetStackCmd* cmd = jnew LLDBGetStack(tree, widget);
+	GetStackCmd* cmd = jnew GetStackCmd(tree, widget);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1438,13 +1426,13 @@ LLDBLink::CreateGetStackCmd
 
  *****************************************************************************/
 
-GetThreadCmd*
-LLDBLink::CreateGetThreadCmd
+::GetThreadCmd*
+lldb::Link::CreateGetThreadCmd
 	(
 	ThreadsWidget* widget
 	)
 {
-	GetThreadCmd* cmd = jnew LLDBGetThread(widget);
+	GetThreadCmd* cmd = jnew GetThreadCmd(widget);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1454,14 +1442,14 @@ LLDBLink::CreateGetThreadCmd
 
  *****************************************************************************/
 
-GetThreadsCmd*
-LLDBLink::CreateGetThreadsCmd
+::GetThreadsCmd*
+lldb::Link::CreateGetThreadsCmd
 	(
 	JTree*				tree,
 	ThreadsWidget*	widget
 	)
 {
-	GetThreadsCmd* cmd = jnew LLDBGetThreads(tree, widget);
+	GetThreadsCmd* cmd = jnew GetThreadsCmd(tree, widget);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1471,14 +1459,14 @@ LLDBLink::CreateGetThreadsCmd
 
  *****************************************************************************/
 
-GetFullPathCmd*
-LLDBLink::CreateGetFullPathCmd
+::GetFullPathCmd*
+lldb::Link::CreateGetFullPathCmd
 	(
 	const JString&	fileName,
 	const JIndex	lineIndex
 	)
 {
-	GetFullPathCmd* cmd = jnew LLDBGetFullPath(fileName, lineIndex);
+	GetFullPathCmd* cmd = jnew GetFullPathCmd(fileName, lineIndex);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1488,13 +1476,13 @@ LLDBLink::CreateGetFullPathCmd
 
  *****************************************************************************/
 
-GetInitArgsCmd*
-LLDBLink::CreateGetInitArgsCmd
+::GetInitArgsCmd*
+lldb::Link::CreateGetInitArgsCmd
 	(
 	JXInputField* argInput
 	)
 {
-	GetInitArgsCmd* cmd = jnew LLDBGetInitArgs(argInput);
+	GetInitArgsCmd* cmd = jnew GetInitArgsCmd(argInput);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1504,13 +1492,13 @@ LLDBLink::CreateGetInitArgsCmd
 
  *****************************************************************************/
 
-GetLocalVarsCmd*
-LLDBLink::CreateGetLocalVarsCmd
+::GetLocalVarsCmd*
+lldb::Link::CreateGetLocalVarsCmd
 	(
-	VarNode* rootNode
+	::VarNode* rootNode
 	)
 {
-	GetLocalVarsCmd* cmd = jnew LLDBGetLocalVars(rootNode);
+	GetLocalVarsCmd* cmd = jnew GetLocalVarsCmd(rootNode);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1520,13 +1508,13 @@ LLDBLink::CreateGetLocalVarsCmd
 
  *****************************************************************************/
 
-GetSourceFileListCmd*
-LLDBLink::CreateGetSourceFileListCmd
+::GetSourceFileListCmd*
+lldb::Link::CreateGetSourceFileListCmd
 	(
 	FileListDir* fileList
 	)
 {
-	GetSourceFileListCmd* cmd = jnew LLDBGetSourceFileList(fileList);
+	GetSourceFileListCmd* cmd = jnew GetSourceFileListCmd(fileList);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1536,13 +1524,13 @@ LLDBLink::CreateGetSourceFileListCmd
 
  *****************************************************************************/
 
-VarCmd*
-LLDBLink::CreateVarValueCmd
+::VarCmd*
+lldb::Link::CreateVarValueCmd
 	(
 	const JString& expr
 	)
 {
-	VarCmd* cmd = jnew LLDBVarCommand(expr);
+	VarCmd* cmd = jnew VarCmd(expr);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1552,8 +1540,8 @@ LLDBLink::CreateVarValueCmd
 
  *****************************************************************************/
 
-VarCmd*
-LLDBLink::CreateVarContentCmd
+::VarCmd*
+lldb::Link::CreateVarContentCmd
 	(
 	const JString& expr
 	)
@@ -1562,7 +1550,7 @@ LLDBLink::CreateVarContentCmd
 	s += expr;
 	s += ")";
 
-	VarCmd* cmd = jnew LLDBVarCommand(s);
+	VarCmd* cmd = jnew VarCmd(s);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1572,19 +1560,19 @@ LLDBLink::CreateVarContentCmd
 
  *****************************************************************************/
 
-VarNode*
-LLDBLink::CreateVarNode
+::VarNode*
+lldb::Link::CreateVarNode
 	(
 	const bool shouldUpdate		// false for Local Variables
 	)
 {
-	VarNode* node = jnew LLDBVarNode(shouldUpdate);
+	VarNode* node = jnew VarNode(shouldUpdate);
 	assert( node != nullptr );
 	return node;
 }
 
-VarNode*
-LLDBLink::CreateVarNode
+::VarNode*
+lldb::Link::CreateVarNode
 	(
 	JTreeNode*		parent,
 	const JString&	name,
@@ -1592,7 +1580,7 @@ LLDBLink::CreateVarNode
 	const JString&	value
 	)
 {
-	VarNode* node = jnew LLDBVarNode(parent, name, value);
+	VarNode* node = jnew VarNode(parent, name, value);
 	assert( node != nullptr );
 	return node;
 }
@@ -1603,7 +1591,7 @@ LLDBLink::CreateVarNode
  *****************************************************************************/
 
 JString
-LLDBLink::Build1DArrayExpression
+lldb::Link::Build1DArrayExpression
 	(
 	const JString&	expr,
 	const JInteger	index
@@ -1618,7 +1606,7 @@ LLDBLink::Build1DArrayExpression
  *****************************************************************************/
 
 JString
-LLDBLink::Build2DArrayExpression
+lldb::Link::Build2DArrayExpression
 	(
 	const JString&	expr,
 	const JInteger	rowIndex,
@@ -1633,13 +1621,13 @@ LLDBLink::Build2DArrayExpression
 
  *****************************************************************************/
 
-GetMemoryCmd*
-LLDBLink::CreateGetMemoryCmd
+::GetMemoryCmd*
+lldb::Link::CreateGetMemoryCmd
 	(
 	MemoryDir* dir
 	)
 {
-	GetMemoryCmd* cmd = jnew LLDBGetMemory(dir);
+	GetMemoryCmd* cmd = jnew GetMemoryCmd(dir);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1649,13 +1637,13 @@ LLDBLink::CreateGetMemoryCmd
 
  *****************************************************************************/
 
-GetAssemblyCmd*
-LLDBLink::CreateGetAssemblyCmd
+::GetAssemblyCmd*
+lldb::Link::CreateGetAssemblyCmd
 	(
 	SourceDirector* dir
 	)
 {
-	GetAssemblyCmd* cmd = jnew LLDBGetAssembly(dir);
+	GetAssemblyCmd* cmd = jnew GetAssemblyCmd(dir);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1665,13 +1653,13 @@ LLDBLink::CreateGetAssemblyCmd
 
  *****************************************************************************/
 
-GetRegistersCmd*
-LLDBLink::CreateGetRegistersCmd
+::GetRegistersCmd*
+lldb::Link::CreateGetRegistersCmd
 	(
 	RegistersDir* dir
 	)
 {
-	GetRegistersCmd* cmd = jnew LLDBGetRegisters(dir);
+	GetRegistersCmd* cmd = jnew GetRegistersCmd(dir);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1684,14 +1672,14 @@ LLDBLink::CreateGetRegistersCmd
  *****************************************************************************/
 
 void
-LLDBLink::SendRaw
+lldb::Link::SendRaw
 	(
 	const JString& text
 	)
 {
 	if (ProgramIsRunning())
 	{
-		lldb::SBProcess p = itsDebugger->GetSelectedTarget().GetProcess();
+		SBProcess p = itsDebugger->GetSelectedTarget().GetProcess();
 		p.PutSTDIN(text.GetBytes(), text.GetByteCount());
 		p.PutSTDIN("\n", 1);
 		itsLastProgramInput = text;
@@ -1709,14 +1697,14 @@ LLDBLink::SendRaw
  *****************************************************************************/
 
 void
-LLDBLink::SendMedicCommand
+lldb::Link::SendMedicCommand
 	(
 	Command* command
 	)
 {
 	command->Starting();
 
-	JXUrgentTask* task = jnew LLDBRunBackgroundCommandTask(command);
+	JXUrgentTask* task = jnew RunBackgroundCmdTask(command);
 	assert( task != nullptr );
 	task->Go();
 }
@@ -1727,7 +1715,7 @@ LLDBLink::SendMedicCommand
  *****************************************************************************/
 
 void
-LLDBLink::SendMedicCommandSync
+lldb::Link::SendMedicCommandSync
 	(
 	Command* command
 	)
@@ -1748,7 +1736,7 @@ LLDBLink::SendMedicCommandSync
  *****************************************************************************/
 
 void
-LLDBLink::ProgramStarted
+lldb::Link::ProgramStarted
 	(
 	const pid_t pid
 	)
@@ -1764,17 +1752,17 @@ LLDBLink::ProgramStarted
  *****************************************************************************/
 
 bool
-LLDBLink::ProgramStopped
+lldb::Link::ProgramStopped
 	(
 	JString* msg
 	)
 {
-	lldb::SBTarget t = itsDebugger->GetSelectedTarget();
-	lldb::SBFrame f  = t.GetProcess().GetSelectedThread().GetSelectedFrame();
+	SBTarget t = itsDebugger->GetSelectedTarget();
+	SBFrame f  = t.GetProcess().GetSelectedThread().GetSelectedFrame();
 	if (f.IsValid())
 	{
-		const lldb::SBLineEntry line = f.GetLineEntry();
-		const lldb::SBFileSpec file  = line.GetFileSpec();
+		const SBLineEntry line = f.GetLineEntry();
+		const SBFileSpec file  = line.GetFileSpec();
 		JString fullName;
 		if (file.IsValid())
 		{
@@ -1789,13 +1777,13 @@ LLDBLink::ProgramStopped
 			location.SetFunctionName(JString(f.GetFunctionName(), JString::kNoCopy));
 		}
 
-		const lldb::SBAddress addr = f.GetPCAddress();
+		const SBAddress addr = f.GetPCAddress();
 		if (addr.IsValid())
 		{
 			const JString a = JString(addr.GetLoadAddress(t), JString::kBase16);
 			location.SetMemoryAddress(a);
 		}
-		Broadcast(Link::ProgramStopped(location));
+		Broadcast(::Link::ProgramStopped(location));
 
 		if (msg != nullptr && file.IsValid())
 		{
@@ -1822,7 +1810,7 @@ LLDBLink::ProgramStopped
  *****************************************************************************/
 
 void
-LLDBLink::ProgramFinished1()
+lldb::Link::ProgramFinished1()
 {
 	if (itsIsAttachedFlag)
 	{
@@ -1830,7 +1818,7 @@ LLDBLink::ProgramFinished1()
 		itsIsAttachedFlag = false;
 	}
 
-	lldb::SBProcess p = itsDebugger->GetSelectedTarget().GetProcess();
+	SBProcess p = itsDebugger->GetSelectedTarget().GetProcess();
 	JString reasonStr;
 	if (p.IsValid() && p.GetExitDescription() != nullptr)
 	{
@@ -1857,11 +1845,11 @@ LLDBLink::ProgramFinished1()
  *****************************************************************************/
 
 void
-LLDBLink::StopProgram()
+lldb::Link::StopProgram()
 {
 	Log("stopping program");
 
-	lldb::SBProcess p = itsDebugger->GetSelectedTarget().GetProcess();
+	SBProcess p = itsDebugger->GetSelectedTarget().GetProcess();
 	if (p.IsValid())
 	{
 		p.Stop();
@@ -1874,9 +1862,9 @@ LLDBLink::StopProgram()
  *****************************************************************************/
 
 void
-LLDBLink::KillProgram()
+lldb::Link::KillProgram()
 {
-	lldb::SBProcess p = itsDebugger->GetSelectedTarget().GetProcess();
+	SBProcess p = itsDebugger->GetSelectedTarget().GetProcess();
 	if (p.IsValid())
 	{
 		p.Kill();
@@ -1889,15 +1877,15 @@ LLDBLink::KillProgram()
  *****************************************************************************/
 
 void
-LLDBLink::DetachOrKill
+lldb::Link::DetachOrKill
 	(
 	const bool destroyTarget
 	)
 {
-	lldb::SBTarget t = itsDebugger->GetSelectedTarget();
+	SBTarget t = itsDebugger->GetSelectedTarget();
 	if (t.IsValid())
 	{
-		lldb::SBProcess p = t.GetProcess();
+		SBProcess p = t.GetProcess();
 		if (itsIsAttachedFlag)
 		{
 			p.Detach();
@@ -1922,7 +1910,7 @@ LLDBLink::DetachOrKill
  *****************************************************************************/
 
 bool
-LLDBLink::OKToDetachOrKill()
+lldb::Link::OKToDetachOrKill()
 	const
 {
 	if (itsIsAttachedFlag)
@@ -1945,35 +1933,35 @@ LLDBLink::OKToDetachOrKill()
  *****************************************************************************/
 
 bool
-LLDBLink::StartDebugger
+lldb::Link::StartDebugger
 	(
 	const bool restart
 	)
 {
 	assert( itsDebugger == nullptr );
 
-	itsDebugger = jnew lldb::SBDebugger(lldb::SBDebugger::Create(true, LogLLDBMessage, this));
+	itsDebugger = jnew SBDebugger(SBDebugger::Create(true, LogMessage, this));
 	if (itsDebugger->IsValid())
 	{
-		StartListeningForEvents(itsDebugger->GetCommandInterpreter().GetBroadcaster(), kLLDBEventMask);
-		StartListeningForEventClass(*itsDebugger, lldb::SBThread::GetBroadcasterClassName(), kLLDBEventMask);
+		StartListeningForEvents(itsDebugger->GetCommandInterpreter().GetBroadcaster(), kEventMask);
+		StartListeningForEventClass(*itsDebugger, SBThread::GetBroadcasterClassName(), kEventMask);
 
 		assert( itsStdoutStream == nullptr );
 		assert( itsStderrStream == nullptr );
 
 #ifdef _J_OSX
-		itsStdoutStream = fwopen(this, ReceiveLLDBMessageLine);
+		itsStdoutStream = fwopen(this, ReceiveMessageLine);
 		assert( itsStdoutStream != nullptr );
 
-		itsStderrStream = fwopen(this, ReceiveLLDBErrorLine);
+		itsStderrStream = fwopen(this, ReceiveErrorLine);
 		assert( itsStderrStream != nullptr );
 #else
-		cookie_io_functions_t my_fns = { nullptr, ReceiveLLDBMessageLine, nullptr, nullptr };
+		cookie_io_functions_t my_fns = { nullptr, ReceiveMessageLine, nullptr, nullptr };
 
 		itsStdoutStream = fopencookie(this, "w", my_fns);
 		assert( itsStdoutStream != nullptr );
 
-		my_fns.write    = ReceiveLLDBErrorLine;
+		my_fns.write    = ReceiveErrorLine;
 		itsStderrStream = fopencookie(this, "w", my_fns);
 		assert( itsStderrStream != nullptr );
 #endif
@@ -1990,7 +1978,7 @@ LLDBLink::StartDebugger
 		};
 		const JString msg = JGetString("Welcome::LLDBLink", map, sizeof(map));
 
-		auto* task = jnew LLDBWelcomeTask(msg, restart);
+		auto* task = jnew WelcomeTask(msg, restart);
 		assert( task != nullptr );
 		task->Go();
 
@@ -2009,7 +1997,7 @@ LLDBLink::StartDebugger
  *****************************************************************************/
 
 void
-LLDBLink::StopDebugger()
+lldb::Link::StopDebugger()
 {
 	DetachOrKill(true);
 
@@ -2019,7 +2007,7 @@ LLDBLink::StopDebugger()
 	fclose(itsStderrStream);
 	itsStderrStream = nullptr;
 
-	lldb::SBDebugger::Destroy(*itsDebugger);
+	SBDebugger::Destroy(*itsDebugger);
 	jdelete itsDebugger;
 	itsDebugger = nullptr;
 
@@ -2032,7 +2020,7 @@ LLDBLink::StopDebugger()
  *****************************************************************************/
 
 bool
-LLDBLink::RestartDebugger()
+lldb::Link::RestartDebugger()
 {
 	const bool symbolsWereLoaded = HasLoadedSymbols();
 
@@ -2046,7 +2034,7 @@ LLDBLink::RestartDebugger()
  *****************************************************************************/
 
 bool
-LLDBLink::ChangeDebugger()
+lldb::Link::ChangeDebugger()
 {
 	return true;
 }

@@ -175,51 +175,20 @@ SymbolList::IsUniqueClassName
 
  ******************************************************************************/
 
-class FindSymbolCompare : public JElementComparison<JIndex>
-{
-public:
-
-	FindSymbolCompare(const JArray<SymbolList::SymbolInfo>& data)
-		:
-		itsData(data)
-{ };
-
-	virtual ~FindSymbolCompare() { };
-
-	virtual JListT::CompareResult
-	Compare(const JIndex& s1, const JIndex& s2) const
-{
-		const SymbolList::SymbolInfo* info = itsData.GetCArray();
-		return JCompareStringsCaseInsensitive(info[s1-1].name, info[s2-1].name);
-}
-
-	virtual JElementComparison<JIndex>*
-	Copy() const
-{
-		auto* copy = jnew FindSymbolCompare(itsData);
-		assert( copy != nullptr );
-		return copy;
-}
-
-private:
-
-	const JArray<SymbolList::SymbolInfo>& itsData;
-};
-
 bool
 SymbolList::FindSymbol
 	(
 	const JString&		name,
 	const JFAID_t		contextFileID,
 	const JString&		contextNamespace,
-	const Language	contextLang,
+	const Language		contextLang,
 	JPtrArray<JString>*	cContextNamespaceList,
 	JPtrArray<JString>*	dContextNamespaceList,
 	JPtrArray<JString>*	goContextNamespaceList,
 	JPtrArray<JString>*	javaContextNamespaceList,
 	JPtrArray<JString>*	phpContextNamespaceList,
-	const bool		findDeclaration,
-	const bool		findDefinition,
+	const bool			findDeclaration,
+	const bool			findDefinition,
 	JArray<JIndex>*		matchList
 	)
 	const
@@ -319,9 +288,15 @@ SymbolList::FindSymbol
 
 		// re-sort
 
-		matchList->SetCompareObject(FindSymbolCompare(*itsSymbolList));
+		matchList->SetCompareFunction([this](const JIndex& s1, const JIndex& s2)
+		{
+			const SymbolList::SymbolInfo* info = itsSymbolList->GetCArray();
+			return JCompareStringsCaseInsensitive(info[s1-1].name, info[s2-1].name);
+		});
+
 		matchList->SetSortOrder(itsSymbolList->GetSortOrder());
 		matchList->Sort();
+		matchList->ClearCompareFunction();
 
 		return true;
 	}
@@ -572,52 +547,6 @@ SymbolList::InContext
 
  ******************************************************************************/
 
-class ClosestMatchCompare : public JElementComparison<JIndex>
-{
-public:
-
-	ClosestMatchCompare(const JString& prefix, const JArray<SymbolList::SymbolInfo>& data)
-		:
-		itsPrefix(prefix), itsData(data)
-{ };
-
-	virtual ~ClosestMatchCompare() { };
-
-	virtual JListT::CompareResult
-	Compare(const JIndex& s1, const JIndex& s2) const
-{
-		auto* prefix = const_cast<JString*>(&itsPrefix);
-		if (s1 == 0)
-		{
-			const SymbolList::SymbolInfo& info = (itsData.GetCArray())[s2-1];
-			return JCompareStringsCaseInsensitive(prefix, info.name);
-		}
-		else if (s2 == 0)
-		{
-			const SymbolList::SymbolInfo& info = (itsData.GetCArray())[s1-1];
-			return JCompareStringsCaseInsensitive(info.name, prefix);
-		}
-		else
-		{
-			assert_msg( 0, "SymbolList.cpp:ClosestMatchCompare::Compare() didn't get a zero" );
-			return JListT::kFirstEqualSecond;
-		}
-}
-
-	virtual JElementComparison<JIndex>*
-	Copy() const
-{
-		auto* copy = jnew ClosestMatchCompare(itsPrefix, itsData);
-		assert( copy != nullptr );
-		return copy;
-}
-
-private:
-
-	const JString&							itsPrefix;
-	const JArray<SymbolList::SymbolInfo>&	itsData;
-};
-
 bool
 SymbolList::ClosestMatch
 	(
@@ -627,7 +556,26 @@ SymbolList::ClosestMatch
 	)
 	const
 {
-	visibleList.SetCompareObject(ClosestMatchCompare(prefixStr, *itsSymbolList));
+	visibleList.SetCompareFunction([&](const JIndex& s1, const JIndex& s2)
+	{
+		auto* prefix = const_cast<JString*>(&prefixStr);
+		if (s1 == 0)
+		{
+			const SymbolList::SymbolInfo& info = itsSymbolList->GetCArray()[s2-1];
+			return JCompareStringsCaseInsensitive(prefix, info.name);
+		}
+		else if (s2 == 0)
+		{
+			const SymbolList::SymbolInfo& info = itsSymbolList->GetCArray()[s1-1];
+			return JCompareStringsCaseInsensitive(info.name, prefix);
+		}
+		else
+		{
+			assert_msg( 0, "SymbolList.cpp:ClosestMatchCompare::Compare() didn't get a zero" );
+			return JListT::kFirstEqualSecond;
+		}
+	});
+
 	visibleList.SetSortOrder(itsSymbolList->GetSortOrder());
 
 	bool found;
@@ -636,6 +584,8 @@ SymbolList::ClosestMatch
 	{
 		*index = visibleList.GetElementCount();
 	}
+
+	visibleList.ClearCompareFunction();
 
 	return *index > 0;
 }

@@ -21,10 +21,10 @@ public:
 
 	BreakpointsDir(CommandDirector* supervisor);
 
-	virtual	~BreakpointsDir();
+	~BreakpointsDir();
 
 	const JString&	GetName() const override;
-	bool		GetMenuIcon(const JXImage** icon) const override;
+	bool			GetMenuIcon(const JXImage** icon) const override;
 
 	CommandDirector*	GetCommandDirector();
 	BreakpointTable*	GetBreakpointTable();

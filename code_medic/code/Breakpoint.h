@@ -43,20 +43,20 @@ public:
 	Breakpoint(const JString& fileName, const JIndex lineIndex);
 	Breakpoint(const JString& addr);
 
-	virtual	~Breakpoint();
+	~Breakpoint();
 
-	JIndex				GetDebuggerIndex() const;
+	JIndex			GetDebuggerIndex() const;
 	const Location&	GetLocation() const;
-	const JString&		GetFileName() const;
-	const JFileID&		GetFileID() const;
-	JIndex				GetLineNumber() const;
-	const JString&		GetFunctionName() const;
-	const JString&		GetAddress() const;
+	const JString&	GetFileName() const;
+	const JFileID&	GetFileID() const;
+	JIndex			GetLineNumber() const;
+	const JString&	GetFunctionName() const;
+	const JString&	GetAddress() const;
 	bool			IsEnabled() const;
-	Action				GetAction() const;
+	Action			GetAction() const;
 	bool			HasCondition() const;
 	bool			GetCondition(JString* condition) const;
-	JSize				GetIgnoreCount() const;
+	JSize			GetIgnoreCount() const;
 
 	void	DisplayStatus() const;
 	void	ToggleEnabled();
@@ -73,7 +73,7 @@ private:
 	Location	itsLocation;
 	JString		itsFnName;
 	JString		itsAddr;
-	bool	itsEnabledFlag;
+	bool		itsEnabledFlag;
 	Action		itsAction;
 	JString		itsCondition;
 	JSize		itsIgnoreCount;

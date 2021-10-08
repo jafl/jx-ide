@@ -19,9 +19,9 @@ public:
 
 	InitVarNodeTask(VarNode* node);
 
-	virtual ~InitVarNodeTask();
+	~InitVarNodeTask();
 
-	virtual void	Perform();
+	void	Perform() override;
 
 private:
 

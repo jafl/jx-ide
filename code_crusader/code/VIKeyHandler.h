@@ -18,11 +18,11 @@ public:
 
 	VIKeyHandler(TextEditor* te);
 
-	virtual ~VIKeyHandler();
+	~VIKeyHandler();
 
 	bool	HandleKeyPress(const JUtf8Character& key, const bool selectText,
-									   const JTextEditor::CaretMotion motion,
-									   const bool deleteToTabStop) override;
+						   const JTextEditor::CaretMotion motion,
+						   const bool deleteToTabStop) override;
 
 private:
 

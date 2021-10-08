@@ -26,7 +26,7 @@ public:
 	FileHistoryMenu(const DocumentManager::FileHistoryType type,
 					  JXMenu* owner, const JIndex itemIndex, JXContainer* enclosure);
 
-	virtual ~FileHistoryMenu();
+	~FileHistoryMenu();
 
 protected:
 

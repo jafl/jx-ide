@@ -18,7 +18,7 @@ public:
 	FileNode(std::istream& input, const JFileVersion vers,
 			   ProjectNode* parent);
 
-	virtual ~FileNode();
+	~FileNode();
 
 	void	OpenFile() const override;
 	void	OpenComplementFile() const override;
@@ -26,24 +26,24 @@ public:
 	void	ViewVCSDiffs(const bool silent) const override;
 
 	bool	ParseFiles(FileListTable* parser,
-								   const JPtrArray<JString>& allSuffixList,
-								   SymbolList* symbolList,
-								   CTree* cTree, DTree* dTree, GoTree* goTree,
-								   JavaTree* javaTree, PHPTree* phpTree,
-								   JProgressDisplay& pg) const override;
+					   const JPtrArray<JString>& allSuffixList,
+					   SymbolList* symbolList,
+					   CTree* cTree, DTree* dTree, GoTree* goTree,
+					   JavaTree* javaTree, PHPTree* phpTree,
+					   JProgressDisplay& pg) const override;
 
 	void	CreateFilesForTemplate(std::istream& input,
-										   const JFileVersion vers) const override;
+								   const JFileVersion vers) const override;
 	void	SaveFilesInTemplate(std::ostream& output) const override;
 
 private:
 
 	bool	ParseFile(const JString& fullName, FileListTable* parser,
-						  const JPtrArray<JString>& allSuffixList,
-						  SymbolList* symbolList,
-						  CTree* cTree, DTree* dTree, GoTree* goTree,
-						  JavaTree* javaTree, PHPTree* phpTree,
-						  JProgressDisplay& pg) const;
+					  const JPtrArray<JString>& allSuffixList,
+					  SymbolList* symbolList,
+					  CTree* cTree, DTree* dTree, GoTree* goTree,
+					  JavaTree* javaTree, PHPTree* phpTree,
+					  JProgressDisplay& pg) const;
 };
 
 #endif

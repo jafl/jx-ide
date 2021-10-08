@@ -18,7 +18,7 @@ public:
 
 	TabWidthDialog(JXWindowDirector* supervisor, const JSize tabWidth);
 
-	virtual ~TabWidthDialog();
+	~TabWidthDialog();
 
 	JSize	GetTabCharCount() const;
 

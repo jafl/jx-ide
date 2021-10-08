@@ -25,12 +25,12 @@ public:
 
 	FileListDir(CommandDirector* supervisor);
 
-	virtual	~FileListDir();
+	~FileListDir();
 
 	JXFileListTable*	GetTable();
 
 	const JString&	GetName() const override;
-	bool		GetMenuIcon(const JXImage** icon) const override;
+	bool			GetMenuIcon(const JXImage** icon) const override;
 
 protected:
 

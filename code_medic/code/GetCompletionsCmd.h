@@ -16,7 +16,7 @@ public:
 
 	GetCompletionsCmd(const JString& cmd);
 
-	virtual	~GetCompletionsCmd();
+	~GetCompletionsCmd();
 };
 
 #endif

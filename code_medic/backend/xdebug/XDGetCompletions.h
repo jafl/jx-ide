@@ -19,7 +19,7 @@ public:
 
 	XDGetCompletions(CommandInput* input, CommandOutputDisplay* history);
 
-	virtual	~XDGetCompletions();
+	~XDGetCompletions();
 
 protected:
 

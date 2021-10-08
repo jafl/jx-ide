@@ -25,7 +25,7 @@ public:
 
 	static SearchTextDialog*	Create();
 
-	virtual ~SearchTextDialog();
+	~SearchTextDialog();
 
 	void	Activate() override;
 

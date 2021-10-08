@@ -21,7 +21,7 @@ public:
 
 	GetThreadNameCmd(ThreadNode* node);
 
-	virtual	~GetThreadNameCmd();
+	~GetThreadNameCmd();
 
 	void	Starting() override;
 

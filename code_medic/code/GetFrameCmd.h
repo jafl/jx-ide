@@ -16,7 +16,7 @@ public:
 
 	GetFrameCmd(const JString& cmd);
 
-	virtual	~GetFrameCmd();
+	~GetFrameCmd();
 };
 
 #endif

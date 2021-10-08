@@ -18,7 +18,7 @@ public:
 
 	XDVarCommand(const JString& cmd);
 
-	virtual	~XDVarCommand();
+	~XDVarCommand();
 
 protected:
 

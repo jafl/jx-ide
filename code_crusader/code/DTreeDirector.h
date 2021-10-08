@@ -22,7 +22,7 @@ public:
 					std::istream* symInput, const JFileVersion symVers,
 					ProjectDocument* supervisor, const bool subProject);
 
-	virtual ~DTreeDirector();
+	~DTreeDirector();
 
 	DTree*	GetDTree() const;
 

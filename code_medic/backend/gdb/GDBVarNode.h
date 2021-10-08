@@ -20,7 +20,7 @@ public:
 
 	VarNode(JTreeNode* parent, const JString& name, const JString& value);
 
-	virtual	~VarNode();
+	~VarNode();
 
 	JString	GetFullName(bool* isPointer = nullptr) const override;
 };

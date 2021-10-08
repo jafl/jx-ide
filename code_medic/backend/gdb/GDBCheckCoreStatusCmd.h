@@ -18,7 +18,7 @@ public:
 
 	CheckCoreStatusCmd();
 
-	virtual	~CheckCoreStatusCmd();
+	~CheckCoreStatusCmd();
 
 protected:
 

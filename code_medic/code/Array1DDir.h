@@ -30,9 +30,9 @@ public:
 	Array1DDir(std::istream& input, const JFileVersion vers,
 				 CommandDirector* supervisor);
 
-	virtual	~Array1DDir();
+	~Array1DDir();
 
-	void		Activate() override;
+	void	Activate() override;
 	bool	Deactivate() override;
 	bool	GetMenuIcon(const JXImage** icon) const override;
 
@@ -48,7 +48,7 @@ private:
 	Link*				itsLink;
 	CommandDirector*	itsCommandDir;
 	JTree*				itsTree;			// owned by itsWidget
-	VarTreeWidget*	itsWidget;
+	VarTreeWidget*		itsWidget;
 	JString				itsExpr;
 	JIntRange			itsDisplayRange;
 	JIntRange			itsRequestRange;

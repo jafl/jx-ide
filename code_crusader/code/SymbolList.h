@@ -30,7 +30,7 @@ public:
 
 	SymbolList(ProjectDocument* projDoc);
 
-	virtual ~SymbolList();
+	~SymbolList();
 
 	const JString&	GetSymbol(const JIndex symbolIndex,
 							  Language* lang, Type* type,
@@ -112,9 +112,9 @@ private:
 
 	ProjectDocument*	itsProjDoc;					// not owned
 	JArray<SymbolInfo>*	itsSymbolList;
-	bool			itsReparseAllFlag;			// true => flush all on next update
-	bool			itsChangedDuringParseFlag;
-	bool			itsBeganEmptyFlag;			// true => ignore RemoveFile()
+	bool				itsReparseAllFlag;			// true => flush all on next update
+	bool				itsChangedDuringParseFlag;
+	bool				itsBeganEmptyFlag;			// true => ignore RemoveFile()
 
 private:
 

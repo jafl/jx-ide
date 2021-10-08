@@ -16,7 +16,7 @@ public:
 
 	XDGetBreakpoints();
 
-	virtual	~XDGetBreakpoints();
+	~XDGetBreakpoints();
 
 protected:
 

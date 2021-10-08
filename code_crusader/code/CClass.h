@@ -18,7 +18,7 @@ public:
 			 const JFAID_t fileID, Tree* tree);
 	CClass(std::istream& input, const JFileVersion vers, Tree* tree);
 
-	virtual ~CClass();
+	~CClass();
 
 	void	ViewSource() const override;
 	void	ViewHeader() const override;

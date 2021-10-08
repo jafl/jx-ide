@@ -21,7 +21,7 @@ public:
 
 	RegistersDir(CommandDirector* supervisor);
 
-	virtual	~RegistersDir();
+	~RegistersDir();
 
 	void			Activate() override;
 	bool			Deactivate() override;
@@ -39,7 +39,7 @@ private:
 
 	CommandDirector*	itsCommandDir;
 	JXStaticText*		itsWidget;
-	GetRegistersCmd*		itsCmd;			// can be nullptr
+	GetRegistersCmd*	itsCmd;			// can be nullptr
 	bool				itsShouldUpdateFlag;
 	bool				itsNeedsUpdateFlag;
 

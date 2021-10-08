@@ -20,7 +20,7 @@ public:
 
 	GetSourceFileListCmd(FileListDir* fileList);
 
-	virtual	~GetSourceFileListCmd();
+	~GetSourceFileListCmd();
 
 protected:
 

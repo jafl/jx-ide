@@ -18,7 +18,7 @@ public:
 
 	BreakpointManager(Link* link, GetBreakpointsCmd* cmd);
 
-	virtual	~BreakpointManager();
+	~BreakpointManager();
 
 	const JPtrArray<Breakpoint>&	GetBreakpoints() const;
 	const JPtrArray<Breakpoint>&	GetOtherpoints() const;

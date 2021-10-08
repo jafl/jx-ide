@@ -34,7 +34,7 @@ public:
 
 	RelPathCSF(ProjectDocument* doc);
 
-	virtual ~RelPathCSF();
+	~RelPathCSF();
 
 	PathType	GetPathType() const;
 	void		SetPathType(const PathType type);
@@ -48,18 +48,18 @@ public:
 	static PathType	CalcPathType(const JString& path);
 
 	bool ChooseRelFile(const JString& prompt,
-						   const JString& instructions,
-						   const JString& origName,
-						   JString* name);					// relative
+					   const JString& instructions,
+					   const JString& origName,
+					   JString* name);					// relative
 
 	bool ChooseRelRPath(const JString& prompt,
-							const JString& instructions,
-							const JString& origPath,
-							JString* newPath);				// relative
+						const JString& instructions,
+						const JString& origPath,
+						JString* newPath);				// relative
 	bool ChooseRelRWPath(const JString& prompt,
-							 const JString& instructions,
-							 const JString& origPath,
-							 JString* newPath);				// relative
+						 const JString& instructions,
+						 const JString& origPath,
+						 JString* newPath);				// relative
 
 protected:
 

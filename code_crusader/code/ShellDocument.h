@@ -27,10 +27,10 @@ public:
 
 	static bool	Create(ShellDocument** doc);
 
-	virtual ~ShellDocument();
+	~ShellDocument();
 
 	bool	ProcessRunning() const;
-	void		SendCommand(const JString& cmd);
+	void	SendCommand(const JString& cmd);
 
 protected:
 

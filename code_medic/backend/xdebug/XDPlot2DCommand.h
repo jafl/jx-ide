@@ -16,7 +16,7 @@ public:
 
 	XDPlot2DCommand(Plot2DDir* dir, JArray<JFloat>* x, JArray<JFloat>* y);
 
-	virtual	~XDPlot2DCommand();
+	~XDPlot2DCommand();
 
 protected:
 

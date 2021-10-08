@@ -28,7 +28,7 @@ public:
 	Command(const JString& cmd,
 			  const bool oneShot, const bool background);
 
-	virtual	~Command();
+	~Command();
 
 	// State information
 

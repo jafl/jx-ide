@@ -19,7 +19,7 @@ public:
 	XDVarNode(JTreeNode* parent, const JString& name,
 			  const JString& fullName, const JString& value);
 
-	virtual	~XDVarNode();
+	~XDVarNode();
 
 	JString	GetFullName(bool* isPointer = nullptr) const override;
 

@@ -16,7 +16,7 @@
 
  ******************************************************************************/
 
-LLDBSymbolsLoadedTask::LLDBSymbolsLoadedTask
+lldb::SymbolsLoadedTask::SymbolsLoadedTask
 	(
 	const JString& fileName
 	)
@@ -30,7 +30,7 @@ LLDBSymbolsLoadedTask::LLDBSymbolsLoadedTask
 
  ******************************************************************************/
 
-LLDBSymbolsLoadedTask::~LLDBSymbolsLoadedTask()
+lldb::SymbolsLoadedTask::~SymbolsLoadedTask()
 {
 }
 
@@ -40,9 +40,9 @@ LLDBSymbolsLoadedTask::~LLDBSymbolsLoadedTask()
  ******************************************************************************/
 
 void
-LLDBSymbolsLoadedTask::Perform()
+lldb::SymbolsLoadedTask::Perform()
 {
-	auto* link = dynamic_cast<LLDBLink*>(GetLink());
+	auto* link = dynamic_cast<Link*>(GetLink());
 	if (link != nullptr)
 	{
 		link->SymbolsLoaded(itsFileName);

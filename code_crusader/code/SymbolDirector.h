@@ -31,22 +31,22 @@ public:
 
 	SymbolDirector(ProjectDocument* supervisor);
 	SymbolDirector(std::istream& projInput, const JFileVersion projVers,
-					 std::istream* setInput, const JFileVersion setVers,
-					 std::istream* symInput, const JFileVersion symVers,
-					 ProjectDocument* supervisor, const bool subProject);
+					std::istream* setInput, const JFileVersion setVers,
+					std::istream* symInput, const JFileVersion symVers,
+					ProjectDocument* supervisor, const bool subProject);
 
-	virtual ~SymbolDirector();
+	~SymbolDirector();
 
 	void	EditPrefs();
 	void	SetPrefs(const bool raiseTreeOnRightClick, const bool writePrefs);
 
 	ProjectDocument*	GetProjectDocument() const;
-	SymbolList*		GetSymbolList() const;
-	bool			FindSymbol(const JString& name, const JString& fileName,
+	SymbolList*			GetSymbolList() const;
+	bool				FindSymbol(const JString& name, const JString& fileName,
 								   const JXMouseButton button);
 
 	bool	HasSymbolBrowsers() const;
-	void		CloseSymbolBrowsers();
+	void	CloseSymbolBrowsers();
 
 	void	StreamOut(std::ostream& projOutput,
 					  std::ostream* setOutput, std::ostream* symOutput) const;
@@ -61,7 +61,7 @@ public:
 
 	// called by FileListTable
 
-	void		PrepareForListUpdate(const bool reparseAll, JProgressDisplay& pg);
+	void	PrepareForListUpdate(const bool reparseAll, JProgressDisplay& pg);
 	bool	ListUpdateFinished(const JArray<JFAID_t>& deadFileList, JProgressDisplay& pg);
 
 	// called by SymbolSRDirector

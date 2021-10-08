@@ -19,7 +19,7 @@ class StylerBase : public JSTStyler, public JPrefObject, virtual public JBroadca
 {
 public:
 
-	typedef JStrValue<JFontStyle>	WordStyle;
+	using WordStyle = JStrValue<JFontStyle>;
 
 public:
 
@@ -28,7 +28,7 @@ public:
 				 const JString& editDialogTitle, const JPrefID& prefID,
 				 const TextFileType fileType);
 
-	virtual ~StylerBase();
+	~StylerBase();
 
 	void	EditStyles();
 

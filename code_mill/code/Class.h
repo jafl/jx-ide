@@ -22,7 +22,7 @@ class Class : public JPtrArray<MemberFunction>
 public:
 
 	Class();
-	virtual ~Class();
+	~Class();
 
 	JSize			GetBaseClassCount() const;
 	void			GetBaseClass(const JIndex index, JString* classname, JString* filename) const;

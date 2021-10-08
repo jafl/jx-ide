@@ -22,7 +22,7 @@ public:
 	VarNode(const bool shouldUpdate = true);
 	VarNode(JTreeNode* parent, const JString& name, const JString& value);
 
-	virtual	~VarNode();
+	~VarNode();
 
 	bool			ValueIsValid() const;
 	virtual JString	GetFullName(bool* isPointer = nullptr) const = 0;
@@ -47,12 +47,12 @@ public:
 
 	void	GetLastChild(VarNode** child);
 
-	VarNode*			GetVarParent();
+	VarNode*		GetVarParent();
 	const VarNode*	GetVarParent() const;
-	bool				GetVarParent(VarNode** parent);
-	bool				GetVarParent(const VarNode** parent) const;
+	bool			GetVarParent(VarNode** parent);
+	bool			GetVarParent(const VarNode** parent) const;
 
-	VarNode*			GetVarChild(const JIndex index);
+	VarNode*		GetVarChild(const JIndex index);
 	const VarNode*	GetVarChild(const JIndex index) const;
 
 	static void	TrimExpression(JString* s);

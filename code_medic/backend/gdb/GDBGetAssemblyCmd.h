@@ -20,7 +20,7 @@ public:
 
 	GetAssemblyCmd(SourceDirector* dir);
 
-	virtual	~GetAssemblyCmd();
+	~GetAssemblyCmd();
 
 	void	Starting() override;
 

@@ -23,13 +23,13 @@ public:
 
 	RunTEScriptDialog(JXDirector* supervisor);
 
-	virtual ~RunTEScriptDialog();
+	~RunTEScriptDialog();
 
 	void	Activate() override;
 
 	bool	RunScript();
 	bool	RunSimpleScript(const JString& scriptName, JTextEditor* te,
-								const JString& fileName);
+							const JString& fileName);
 
 protected:
 

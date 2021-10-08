@@ -19,10 +19,10 @@
 
  ******************************************************************************/
 
-LLDBWelcomeTask::LLDBWelcomeTask
+lldb::WelcomeTask::WelcomeTask
 	(
 	const JString&	msg,
-	const bool	restart
+	const bool		restart
 	)
 	:
 	itsMessage(msg),
@@ -35,7 +35,7 @@ LLDBWelcomeTask::LLDBWelcomeTask
 
  ******************************************************************************/
 
-LLDBWelcomeTask::~LLDBWelcomeTask()
+lldb::WelcomeTask::~WelcomeTask()
 {
 }
 
@@ -45,9 +45,9 @@ LLDBWelcomeTask::~LLDBWelcomeTask()
  ******************************************************************************/
 
 void
-LLDBWelcomeTask::Perform()
+lldb::WelcomeTask::Perform()
 {
-	auto* link = dynamic_cast<LLDBLink*>(GetLink());
+	auto* link = dynamic_cast<Link*>(GetLink());
 	if (link != nullptr)
 	{
 		link->BroadcastWelcome(itsMessage, itsRestartFlag);

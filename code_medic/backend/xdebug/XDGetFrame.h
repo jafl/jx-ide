@@ -18,7 +18,7 @@ public:
 
 	XDGetFrame(StackWidget* widget);
 
-	virtual	~XDGetFrame();
+	~XDGetFrame();
 
 protected:
 

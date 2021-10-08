@@ -20,7 +20,7 @@ public:
 
 	GetLocalVarsCmd(VarNode* rootNode);
 
-	virtual	~GetLocalVarsCmd();
+	~GetLocalVarsCmd();
 
 protected:
 

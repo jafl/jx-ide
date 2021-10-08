@@ -19,9 +19,9 @@ public:
 
 	WaitForSymbolUpdateTask(JProcess* p);
 
-	virtual ~WaitForSymbolUpdateTask();
+	~WaitForSymbolUpdateTask();
 
-	virtual void	Perform();
+	void	Perform() override;
 
 	void	StopWaiting();
 

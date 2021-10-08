@@ -18,9 +18,9 @@ public:
 
 	DeselectLineTask(LineIndexTable* table);
 
-	virtual ~DeselectLineTask();
+	~DeselectLineTask();
 
-	virtual void	Perform(const Time delta, Time* maxSleepTime);
+	void	Perform(const Time delta, Time* maxSleepTime) override;
 
 private:
 

@@ -28,7 +28,7 @@ public:
 					  const JCoordinate x, const JCoordinate y,
 					  const JCoordinate w, const JCoordinate h);
 
-	virtual ~BreakpointTable();
+	~BreakpointTable();
 
 	void	SetColTitles(JXColHeaderWidget* widget) const;
 	void	Update();
@@ -37,21 +37,21 @@ public:
 	void	EditCondition(const Breakpoint* bp);
 
 	bool	IsEditable(const JPoint& cell) const override;
-	void		HandleKeyPress(const JUtf8Character& c, const int keySym,
-									   const JXKeyModifiers& modifiers) override;
+	void	HandleKeyPress(const JUtf8Character& c, const int keySym,
+						   const JXKeyModifiers& modifiers) override;
 
 protected:
 
 	void	HandleMouseDown(const JPoint& pt, const JXMouseButton button,
-									const JSize clickCount,
-									const JXButtonStates& buttonStates,
-									const JXKeyModifiers& modifiers) override;
+							const JSize clickCount,
+							const JXButtonStates& buttonStates,
+							const JXKeyModifiers& modifiers) override;
 
 	void			TableDrawCell(JPainter& p, const JPoint& cell, const JRect& rect) override;
 	JXInputField*	CreateXInputField(const JPoint& cell,
-											  const JCoordinate x, const JCoordinate y,
-											  const JCoordinate w, const JCoordinate h) override;
-	bool		ExtractInputData(const JPoint& cell) override;
+									  const JCoordinate x, const JCoordinate y,
+									  const JCoordinate w, const JCoordinate h) override;
+	bool			ExtractInputData(const JPoint& cell) override;
 	void			PrepareDeleteXInputField() override;
 
 	void	ReadPrefs(std::istream& input) override;
@@ -63,9 +63,9 @@ private:
 
 	BreakpointsDir*			itsDir;
 	JPtrArray<Breakpoint>*	itsBPList;
-	JPoint						itsSelectedCell;	// x=col, y=bpIndex
+	JPoint					itsSelectedCell;	// x=col, y=bpIndex
 
-	JXInputField*	itsTextInput;			// nullptr unless editing
+	JXInputField*	itsTextInput;				// nullptr unless editing
 	JFont			itsFont;
 
 private:

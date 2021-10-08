@@ -27,7 +27,7 @@ public:
 						   const JString& updateMakefileCmd,
 						   const JString& subProjectBuildCmd);
 
-	virtual ~ProjectConfigDialog();
+	~ProjectConfigDialog();
 
 	void	GetConfig(BuildManager::MakefileMethod* method,
 					  JString* targetName, JString* depListExpr,
