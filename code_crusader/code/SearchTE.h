@@ -24,7 +24,7 @@ public:
 
 	SearchTE();
 
-	~SearchTE();
+	~SearchTE() override;
 
 	void	SearchFiles(const JPtrArray<JString>& fileList,
 						const JPtrArray<JString>& nameList,

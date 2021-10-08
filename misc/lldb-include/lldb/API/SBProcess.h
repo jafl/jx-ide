@@ -44,7 +44,7 @@ public:
 
     SBProcess (const lldb::ProcessSP &process_sp);
     
-    ~SBProcess();
+    ~SBProcess() override;
 
     static const char *
     GetBroadcasterClassName ();

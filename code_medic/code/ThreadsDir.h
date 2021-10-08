@@ -22,7 +22,7 @@ public:
 
 	ThreadsDir(CommandDirector* supervisor);
 
-	~ThreadsDir();
+	~ThreadsDir() override;
 
 	void			Activate() override;
 	const JString&	GetName() const override;

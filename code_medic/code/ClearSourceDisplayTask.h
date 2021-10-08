@@ -18,7 +18,7 @@ public:
 
 	ClearSourceDisplayTask(SourceDirector* dir);
 
-	~ClearSourceDisplayTask();
+	~ClearSourceDisplayTask() override;
 
 	void	Perform() override;
 

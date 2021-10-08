@@ -27,15 +27,15 @@ public:
 							const DirList& dirList,
 							RelPathCSF* csf);
 
-	~EditSearchPathsDialog();
+	~EditSearchPathsDialog() override;
 
 	void	AddDirectories(const JPtrArray<JString>& list);
 	void	GetPathList(DirList* pathList) const;
 
 protected:
 
-	virtual void	ReadPrefs(std::istream& input);
-	virtual void	WritePrefs(std::ostream& output) const;
+	void	ReadPrefs(std::istream& input) override;
+	void	WritePrefs(std::ostream& output) const override;
 
 private:
 

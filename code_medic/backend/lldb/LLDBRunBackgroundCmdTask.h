@@ -21,7 +21,7 @@ public:
 
 	RunBackgroundCmdTask(Command* cmd);
 
-	~RunBackgroundCmdTask();
+	~RunBackgroundCmdTask() override;
 
 	void	Perform() override;
 

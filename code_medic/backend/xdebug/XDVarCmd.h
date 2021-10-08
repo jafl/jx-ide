@@ -1,26 +1,36 @@
 /******************************************************************************
- XDGetThread.h
+ XDVarCmd.h
 
 	Copyright (C) 2007 by John Lindal.
 
  ******************************************************************************/
 
-#ifndef _H_XDGetThread
-#define _H_XDGetThread
+#ifndef _H_XDVarCmd
+#define _H_XDVarCmd
 
-#include "GetThreadCmd.h"
+#include "VarCmd.h"
 
-class XDGetThread : public GetThreadCmd
+class VarNode;
+
+namespace xdebug {
+
+class VarCmd : public ::VarCmd
 {
 public:
 
-	XDGetThread(ThreadsWidget* widget);
+	VarCmd(const JString& cmd);
 
-	~XDGetThread();
+	~VarCmd() override;
 
 protected:
 
 	void	HandleSuccess(const JString& data) override;
+
+private:
+
+	VarNode*	itsRootNode;
+};
+
 };
 
 #endif

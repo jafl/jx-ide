@@ -60,7 +60,7 @@ public:
 				   const JIndex toolBarPrefID, TreeInitToolBarFn initToolBarFn,
 				   DirList* dirList, const bool readCompileRunDialogs);
 
-	~TreeDirector();
+	~TreeDirector() override;
 
 	ProjectDocument*	GetProjectDoc() const;
 	TreeWidget*			GetTreeWidget() const;

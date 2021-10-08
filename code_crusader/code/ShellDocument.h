@@ -27,7 +27,7 @@ public:
 
 	static bool	Create(ShellDocument** doc);
 
-	~ShellDocument();
+	~ShellDocument() override;
 
 	bool	ProcessRunning() const;
 	void	SendCommand(const JString& cmd);

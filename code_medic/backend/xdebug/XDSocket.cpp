@@ -21,7 +21,7 @@ const time_t kClientDeadTime = 5;	// seconds
 
  ******************************************************************************/
 
-XDSocket::XDSocket()
+xdebug::Socket::Socket()
 	:
 	itsTimerID(-1)
 {
@@ -33,7 +33,7 @@ XDSocket::XDSocket()
 
  ******************************************************************************/
 
-XDSocket::~XDSocket()
+xdebug::Socket::~Socket()
 {
 	SendDisconnect();
 }
@@ -46,7 +46,7 @@ XDSocket::~XDSocket()
  ******************************************************************************/
 
 int
-XDSocket::open
+xdebug::Socket::open
 	(
 	void* data
 	)
@@ -54,7 +54,7 @@ XDSocket::open
 	const int result = JMessageProtocol<ACE_SOCK_STREAM>::open(data);
 	if (result == 0)
 	{
-		dynamic_cast<XDLink*>(GetLink())->ConnectionEstablished(this);
+		dynamic_cast<Link*>(GetLink())->ConnectionEstablished(this);
 	}
 	return result;
 }
@@ -65,14 +65,14 @@ XDSocket::open
  ******************************************************************************/
 
 void
-XDSocket::StartTimer()
+xdebug::Socket::StartTimer()
 {
 	StopTimer();
 
 //	itsTimerID = (reactor())->schedule_timer(this, nullptr, ACE_Time_Value(kClientDeadTime));
 //	if (itsTimerID == -1)
 //		{
-//		std::cerr << "XDSocket::StartTimer() is unable to schedule timeout" << std::endl;
+//		std::cerr << "Socket::StartTimer() is unable to schedule timeout" << std::endl;
 //		}
 }
 
@@ -82,7 +82,7 @@ XDSocket::StartTimer()
  ******************************************************************************/
 
 void
-XDSocket::StopTimer()
+xdebug::Socket::StopTimer()
 {
 	reactor()->cancel_timer(itsTimerID);
 }
@@ -90,12 +90,12 @@ XDSocket::StopTimer()
 /******************************************************************************
  handle_timeout (virtual)
 
-	Notify XDLink that session seems to be closed.
+	Notify Link that session seems to be closed.
 
  ******************************************************************************/
 
 int
-XDSocket::handle_timeout
+xdebug::Socket::handle_timeout
 	(
 	const ACE_Time_Value&	time,
 	const void*				data
@@ -113,12 +113,12 @@ XDSocket::handle_timeout
  ******************************************************************************/
 
 int
-XDSocket::handle_close
+xdebug::Socket::handle_close
 	(
 	ACE_HANDLE			h,
 	ACE_Reactor_Mask	m
 	)
 {
-	dynamic_cast<XDLink*>(GetLink())->ConnectionFinished(this);
+	dynamic_cast<Link*>(GetLink())->ConnectionFinished(this);
 	return JMessageProtocol<ACE_SOCK_STREAM>::handle_close(h, m);
 }

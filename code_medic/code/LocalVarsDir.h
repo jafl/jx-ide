@@ -26,7 +26,7 @@ public:
 
 	LocalVarsDir(CommandDirector* supervisor);
 
-	~LocalVarsDir();
+	~LocalVarsDir() override;
 
 	void			Activate() override;
 	const JString&	GetName() const override;

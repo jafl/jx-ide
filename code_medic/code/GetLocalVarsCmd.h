@@ -16,7 +16,7 @@ public:
 
 	GetLocalVarsCmd(const JString& cmd);
 
-	~GetLocalVarsCmd();
+	~GetLocalVarsCmd() override;
 };
 
 #endif

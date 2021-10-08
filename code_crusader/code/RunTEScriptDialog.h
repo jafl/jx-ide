@@ -23,7 +23,7 @@ public:
 
 	RunTEScriptDialog(JXDirector* supervisor);
 
-	~RunTEScriptDialog();
+	~RunTEScriptDialog() override;
 
 	void	Activate() override;
 

@@ -18,7 +18,7 @@ public:
 
 	CheckCoreStatusCmd();
 
-	~CheckCoreStatusCmd();
+	~CheckCoreStatusCmd() override;
 
 protected:
 

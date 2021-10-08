@@ -31,7 +31,7 @@ public:
 					   SymbolList* symbolList,
 					   const JArray<JIndex>& displayList, const JString& searchStr);
 
-	~SymbolSRDirector();
+	~SymbolSRDirector() override;
 
 	SymbolList*	GetSymbolList() const;
 

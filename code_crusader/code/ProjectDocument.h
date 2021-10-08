@@ -68,7 +68,7 @@ public:
 	static FileStatus	CanReadFile(const JString& fullName);
 	static FileStatus	CanReadFile(std::istream& input, JFileVersion* actualFileVersion);
 
-	~ProjectDocument();
+	~ProjectDocument() override;
 
 	void			Activate() override;
 	const JString&	GetName() const override;

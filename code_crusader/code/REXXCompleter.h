@@ -17,7 +17,7 @@ public:
 	static StringCompleter*	Instance();
 	static void				Shutdown();
 
-	~REXXCompleter();
+	~REXXCompleter() override;
 
 protected:
 

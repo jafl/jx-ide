@@ -25,7 +25,7 @@ public:
 			   const JString& origName, const JString& prompt,
 			   const JString& message = JString::empty);
 
-	~NewProjectSaveFileDialog();
+	~NewProjectSaveFileDialog() override;
 
 	bool							GetProjectTemplate(JString* fullName) const;
 	BuildManager::MakefileMethod	GetMakefileMethod() const;

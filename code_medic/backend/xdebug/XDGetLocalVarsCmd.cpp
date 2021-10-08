@@ -1,5 +1,5 @@
 /******************************************************************************
- XDGetLocalVars.cpp
+ XDGetLocalVarsCmd.cpp
 
 	BASE CLASS = GetLocalVarsCmd
 
@@ -7,8 +7,8 @@
 
  ******************************************************************************/
 
-#include "XDGetLocalVars.h"
-#include "XDGetContextVars.h"
+#include "XDGetLocalVarsCmd.h"
+#include "XDGetContextVarsCmd.h"
 #include "XDLink.h"
 #include "VarNode.h"
 #include "globals.h"
@@ -19,12 +19,12 @@
 
  ******************************************************************************/
 
-XDGetLocalVars::XDGetLocalVars
+xdebug::GetLocalVarsCmd::GetLocalVarsCmd
 	(
 	VarNode* rootNode
 	)
 	:
-	GetLocalVarsCmd(JString("context_names", JString::kNoCopy)),
+	::GetLocalVarsCmd(JString("context_names", JString::kNoCopy)),
 	itsRootNode(rootNode)
 {
 }
@@ -34,7 +34,7 @@ XDGetLocalVars::XDGetLocalVars
 
  ******************************************************************************/
 
-XDGetLocalVars::~XDGetLocalVars()
+xdebug::GetLocalVarsCmd::~GetLocalVarsCmd()
 {
 }
 
@@ -44,12 +44,12 @@ XDGetLocalVars::~XDGetLocalVars()
  ******************************************************************************/
 
 void
-XDGetLocalVars::HandleSuccess
+xdebug::GetLocalVarsCmd::HandleSuccess
 	(
 	const JString& data
 	)
 {
-	auto* link = dynamic_cast<XDLink*>(GetLink());
+	auto* link = dynamic_cast<Link*>(GetLink());
 	xmlNode* root;
 	if (link == nullptr || !link->GetParsedData(&root))
 	{
@@ -66,7 +66,7 @@ XDGetLocalVars::HandleSuccess
 		{
 			id = JGetXMLNodeAttr(node, "id");
 
-			auto* cmd = jnew XDGetContextVars(itsRootNode, id);
+			auto* cmd = jnew GetContextVarsCmd(itsRootNode, id);
 			assert( cmd != nullptr );
 			cmd->Send();
 		}

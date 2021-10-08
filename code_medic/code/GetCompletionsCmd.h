@@ -16,7 +16,7 @@ public:
 
 	GetCompletionsCmd(const JString& cmd);
 
-	~GetCompletionsCmd();
+	~GetCompletionsCmd() override;
 };
 
 #endif

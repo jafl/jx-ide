@@ -24,7 +24,7 @@ public:
 					ProjectDocument* supervisor, const bool subProject,
 					DirList* dirList);
 
-	~CTreeDirector();
+	~CTreeDirector() override;
 
 	CTree*	GetCTree() const;
 

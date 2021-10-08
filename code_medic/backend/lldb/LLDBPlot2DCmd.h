@@ -18,7 +18,7 @@ public:
 
 	Plot2DCmd(Plot2DDir* dir, JArray<JFloat>* x, JArray<JFloat>* y);
 
-	~Plot2DCmd();
+	~Plot2DCmd() override;
 
 	void	UpdateRange(const JIndex curveIndex,
 						const JInteger min,const JInteger max) override;

@@ -32,7 +32,7 @@ public:
 					  const JPtrArray<JString>& dSuffixes,
 					  const JPtrArray<JString>& goSuffixes);
 
-	~EditPrefsDialog();
+	~EditPrefsDialog() override;
 
 	void	GetPrefs(JString* gdbCmd, JString* jdbCmd,
 					 JString* editFileCmd, JString* editFileLineCmd,

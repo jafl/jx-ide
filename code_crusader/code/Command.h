@@ -22,7 +22,7 @@ public:
 	Command(const JString& path, const bool refreshVCSStatusWhenFinished,
 			  const bool beepWhenFinished, ProjectDocument* projDoc);
 
-	~Command();
+	~Command() override;
 
 	void	SetParent(Command* cmd);
 	bool	Add(const JPtrArray<JString>& cmdArgs,

@@ -18,7 +18,7 @@ public:
 
 	DisplaySourceForMainCmd(SourceDirector* sourceDir);
 
-	~DisplaySourceForMainCmd();
+	~DisplaySourceForMainCmd() override;
 
 protected:
 

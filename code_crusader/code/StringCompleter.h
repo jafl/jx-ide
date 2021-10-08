@@ -25,7 +25,7 @@ public:
 					  const JSize keywordCount, const JUtf8Byte** keywordList,
 					  const JString::Case caseSensitive);
 
-	~StringCompleter();
+	~StringCompleter() override;
 
 	void	Reset();
 	void	Add(const JString& str);

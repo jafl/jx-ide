@@ -1,26 +1,30 @@
 /******************************************************************************
- XDDisplaySourceForMain.h
+ XDDisplaySourceForMainCmd.h
 
 	Copyright (C) 2001 by John Lindal.
 
  ******************************************************************************/
 
-#ifndef _H_XDDisplaySourceForMain
-#define _H_XDDisplaySourceForMain
+#ifndef _H_XDDisplaySourceForMainCmd
+#define _H_XDDisplaySourceForMainCmd
 
 #include "DisplaySourceForMainCmd.h"
 
-class XDDisplaySourceForMain : public DisplaySourceForMainCmd
+namespace xdebug {
+
+class DisplaySourceForMainCmd : public ::DisplaySourceForMainCmd
 {
 public:
 
-	XDDisplaySourceForMain(SourceDirector* sourceDir);
+	DisplaySourceForMainCmd(SourceDirector* sourceDir);
 
-	~XDDisplaySourceForMain();
+	~DisplaySourceForMainCmd() override;
 
 protected:
 
 	void	HandleSuccess(const JString& data) override;
+};
+
 };
 
 #endif

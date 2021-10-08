@@ -16,7 +16,7 @@ public:
 
 	GetBreakpointsCmd(const JString& cmd);
 
-	~GetBreakpointsCmd();
+	~GetBreakpointsCmd() override;
 };
 
 #endif

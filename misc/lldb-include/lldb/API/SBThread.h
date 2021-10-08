@@ -39,7 +39,7 @@ public:
     
     SBThread (const lldb::ThreadSP& lldb_object_sp);
 
-   ~SBThread();
+   ~SBThread() override;
 
     lldb::SBQueue
     GetQueue () const;

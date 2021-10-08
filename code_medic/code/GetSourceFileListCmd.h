@@ -19,7 +19,7 @@ public:
 
 	GetSourceFileListCmd(const JString& cmd, FileListDir* fileList);
 
-	~GetSourceFileListCmd();
+	~GetSourceFileListCmd() override;
 
 	FileListDir*	GetFileList();
 

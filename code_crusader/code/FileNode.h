@@ -18,7 +18,7 @@ public:
 	FileNode(std::istream& input, const JFileVersion vers,
 			   ProjectNode* parent);
 
-	~FileNode();
+	~FileNode() override;
 
 	void	OpenFile() const override;
 	void	OpenComplementFile() const override;

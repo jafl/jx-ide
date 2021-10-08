@@ -23,7 +23,7 @@ public:
 
 	EditCPPMacroDialog(JXDirector* supervisor, const CPreprocessor& cpp);
 
-	~EditCPPMacroDialog();
+	~EditCPPMacroDialog() override;
 
 	bool	UpdateMacros(CPreprocessor* cpp) const;
 

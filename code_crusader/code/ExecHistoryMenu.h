@@ -25,7 +25,7 @@ public:
 	ExecHistoryMenu(const JSize historyLength,
 					  JXMenu* owner, const JIndex itemIndex, JXContainer* enclosure);
 
-	~ExecHistoryMenu();
+	~ExecHistoryMenu() override;
 
 private:
 

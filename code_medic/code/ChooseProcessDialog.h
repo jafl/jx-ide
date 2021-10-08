@@ -21,7 +21,7 @@ public:
 						  const bool attachToSelection = true,
 						  const bool stopProgram = false);
 
-	~ChooseProcessDialog();
+	~ChooseProcessDialog() override;
 
 	void	SetProcessID(const JInteger value);
 

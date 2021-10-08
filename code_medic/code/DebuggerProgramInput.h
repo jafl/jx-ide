@@ -19,7 +19,7 @@ public:
 						   const JCoordinate x, const JCoordinate y,
 						   const JCoordinate w, const JCoordinate h);
 
-	~DebuggerProgramInput();
+	~DebuggerProgramInput() override;
 
 	bool	InputValid() override;
 	bool	GetFile(JString* fullName) const override;

@@ -47,7 +47,7 @@ public:
 	DirList();
 	DirList(const DirList& source);
 
-	~DirList();
+	~DirList() override;
 
 	DirList& operator=(const DirList& source);
 

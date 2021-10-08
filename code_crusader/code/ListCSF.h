@@ -19,7 +19,7 @@ public:
 	ListCSF(const JString& replaceListStr,
 			  const JString& appendToListStr);
 
-	~ListCSF();
+	~ListCSF() override;
 
 	bool	ReplaceExisting() const;
 

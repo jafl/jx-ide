@@ -20,7 +20,7 @@ public:
 					   const JString& pageIndex = JString::empty,
 					   const bool apropos = false);
 
-	~ManPageDocument();
+	~ManPageDocument() override;
 
 protected:
 

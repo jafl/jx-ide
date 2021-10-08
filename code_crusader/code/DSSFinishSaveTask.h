@@ -18,9 +18,9 @@ public:
 
 	DSSFinishSaveTask(TextDocument* doc);
 
-	~DSSFinishSaveTask();
+	~DSSFinishSaveTask() override;
 
-	virtual void	Save(const JString& fullName);
+	void	Save(const JString& fullName) override;
 
 private:
 

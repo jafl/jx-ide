@@ -32,7 +32,7 @@ public:
 
 	EditTextPrefsDialog(TextDocument* doc);
 
-	~EditTextPrefsDialog();
+	~EditTextPrefsDialog() override;
 
 protected:
 

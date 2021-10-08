@@ -1,13 +1,17 @@
 /******************************************************************************
- XDPlot2DCommand.cpp
+ XDGetInitArgsCmd.cpp
 
-	BASE CLASS = Plot2DCmd
+	Gets the initial setting for the arguments to the program set by .gdbinit.
+	Unfortunately, we cannot listen for later calls to "set args" because
+	one can only define a hook for single word commands.
+
+	BASE CLASS = GetInitArgsCmd
 
 	Copyright (C) 2007 by John Lindal.
 
  ******************************************************************************/
 
-#include "XDPlot2DCommand.h"
+#include "XDGetInitArgsCmd.h"
 #include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
@@ -15,16 +19,13 @@
 
  ******************************************************************************/
 
-XDPlot2DCommand::XDPlot2DCommand
+xdebug::GetInitArgsCmd::GetInitArgsCmd
 	(
-	Plot2DDir*	dir,
-	JArray<JFloat>*	x,
-	JArray<JFloat>*	y
+	JXInputField* argInput
 	)
 	:
-	Plot2DCmd(dir, x, y)
+	::GetInitArgsCmd(JString("status", JString::kNoCopy))
 {
-	SetCommand("status");
 }
 
 /******************************************************************************
@@ -32,7 +33,7 @@ XDPlot2DCommand::XDPlot2DCommand
 
  ******************************************************************************/
 
-XDPlot2DCommand::~XDPlot2DCommand()
+xdebug::GetInitArgsCmd::~GetInitArgsCmd()
 {
 }
 
@@ -42,7 +43,7 @@ XDPlot2DCommand::~XDPlot2DCommand()
  ******************************************************************************/
 
 void
-XDPlot2DCommand::HandleSuccess
+xdebug::GetInitArgsCmd::HandleSuccess
 	(
 	const JString& data
 	)

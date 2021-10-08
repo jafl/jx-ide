@@ -23,7 +23,7 @@ public:
 
 	GetThreadGroupsCmd(JTreeNode* root, ThreadNode* parent);
 
-	~GetThreadGroupsCmd();
+	~GetThreadGroupsCmd() override;
 
 	void	Starting() override;
 

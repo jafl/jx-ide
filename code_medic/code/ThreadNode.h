@@ -17,7 +17,7 @@ public:
 	ThreadNode(const JUInt64 id, const JString& name,
 				const JString& fileName, const JIndex lineIndex);
 
-	~ThreadNode();
+	~ThreadNode() override;
 
 	JUInt64	GetID() const;
 	bool	GetFile(JString* fileName, JIndex* lineIndex) const;

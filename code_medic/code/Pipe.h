@@ -51,7 +51,7 @@ public:
 	Pipe();
 	Pipe(const ACE_HANDLE fd);
 
-	~Pipe();
+	~Pipe() override;
 
 	void	Read(JString* buffer);
 	void	Write(const JString& buffer);

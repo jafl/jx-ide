@@ -25,7 +25,7 @@ public:
     const lldb::SBFrame &
     operator =(const lldb::SBFrame &rhs);
 
-    ~SBFrame();
+    ~SBFrame() override;
 
     bool
     IsEqual (const lldb::SBFrame &that) const;

@@ -25,7 +25,7 @@ public:
 					const JString& destructor,
 					const JString& function);
 
-	~PrefsDialog();
+	~PrefsDialog() override;
 
 	void	GetValues(JString* header, JString* source,
 					  JString* constructor, JString* destructor,

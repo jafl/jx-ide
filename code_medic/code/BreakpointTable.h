@@ -28,7 +28,7 @@ public:
 					  const JCoordinate x, const JCoordinate y,
 					  const JCoordinate w, const JCoordinate h);
 
-	~BreakpointTable();
+	~BreakpointTable() override;
 
 	void	SetColTitles(JXColHeaderWidget* widget) const;
 	void	Update();

@@ -18,7 +18,7 @@ public:
 
 	DeselectLineTask(LineIndexTable* table);
 
-	~DeselectLineTask();
+	~DeselectLineTask() override;
 
 	void	Perform(const Time delta, Time* maxSleepTime) override;
 

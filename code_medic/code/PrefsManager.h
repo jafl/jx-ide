@@ -123,7 +123,7 @@ public:
 
 	PrefsManager(bool* isNew);
 
-	~PrefsManager();
+	~PrefsManager() override;
 
 	JString	GetMedicVersionStr() const;
 

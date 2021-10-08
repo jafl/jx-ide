@@ -24,7 +24,7 @@ public:
 
 	FindFileDialog(JXDirector* supervisor);
 
-	~FindFileDialog();
+	~FindFileDialog() override;
 
 	void	Activate() override;
 

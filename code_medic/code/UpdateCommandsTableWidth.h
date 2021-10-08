@@ -20,7 +20,7 @@ public:
 
 	UpdateCommandsTableWidth(EditCommandsTable* table);
 
-	~UpdateCommandsTableWidth();
+	~UpdateCommandsTableWidth() override;
 
 	void	Perform() override;
 

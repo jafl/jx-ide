@@ -35,7 +35,7 @@ public:
 					  const JCoordinate x, const JCoordinate y,
 					  const JCoordinate w, const JCoordinate h);
 
-	~Plot2DExprTable();
+	~Plot2DExprTable() override;
 
 	void	ConfigureColHeader(JXColHeaderWidget* colHeader);
 

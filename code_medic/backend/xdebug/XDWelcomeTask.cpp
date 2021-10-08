@@ -19,10 +19,10 @@
 
  ******************************************************************************/
 
-XDWelcomeTask::XDWelcomeTask
+xdebug::WelcomeTask::WelcomeTask
 	(
 	const JString&	msg,
-	const bool	error
+	const bool		error
 	)
 	:
 	itsMessage(msg),
@@ -35,7 +35,7 @@ XDWelcomeTask::XDWelcomeTask
 
  ******************************************************************************/
 
-XDWelcomeTask::~XDWelcomeTask()
+xdebug::WelcomeTask::~WelcomeTask()
 {
 }
 
@@ -45,9 +45,9 @@ XDWelcomeTask::~XDWelcomeTask()
  ******************************************************************************/
 
 void
-XDWelcomeTask::Perform()
+xdebug::WelcomeTask::Perform()
 {
-	auto* link = dynamic_cast<XDLink*>(GetLink());
+	auto* link = dynamic_cast<Link*>(GetLink());
 	if (link != nullptr)
 	{
 		link->BroadcastWelcome(itsMessage, itsErrorFlag);

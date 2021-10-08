@@ -31,7 +31,7 @@ public:
 				   const JCoordinate x, const JCoordinate y,
 				   const JCoordinate w, const JCoordinate h);
 
-	~CommandTable();
+	~CommandTable() override;
 
 	void	GetCommandList(CommandManager::CmdList* cmdList) const;
 

@@ -21,7 +21,7 @@ public:
 
 	PSPrinter(JXDisplay* display);
 
-	~PSPrinter();
+	~PSPrinter() override;
 
 	const JString&	GetHeaderName() const;
 	void			SetPrintInfo(TextEditor* te, const JString& headerName);

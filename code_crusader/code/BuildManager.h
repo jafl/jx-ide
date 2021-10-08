@@ -42,7 +42,7 @@ public:
 				   std::istream* setInput, const JFileVersion setVers,
 				   ProjectDocument* doc);
 
-	~BuildManager();
+	~BuildManager() override;
 
 	void	CreateMakeFiles(const MakefileMethod method);
 	bool	UpdateMakeFiles(const bool reportError = true);

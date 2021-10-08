@@ -47,7 +47,7 @@ public:
 
 	void	CreateWindowsMenu();
 
-	~SourceDirector();
+	~SourceDirector() override;
 
 	CommandDirector*	GetCommandDirector();
 

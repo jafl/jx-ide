@@ -1,26 +1,30 @@
 /******************************************************************************
- XDPlot2DCommand.h
+ XDGetBreakpointsCmd.h
 
 	Copyright (C) 2007 by John Lindal.
 
  ******************************************************************************/
 
-#ifndef _H_XDPlot2DCommand
-#define _H_XDPlot2DCommand
+#ifndef _H_XDGetBreakpointsCmd
+#define _H_XDGetBreakpointsCmd
 
-#include "Plot2DCmd.h"
+#include "GetBreakpointsCmd.h"
 
-class XDPlot2DCommand : public Plot2DCmd
+namespace xdebug {
+
+class GetBreakpointsCmd : public ::GetBreakpointsCmd
 {
 public:
 
-	XDPlot2DCommand(Plot2DDir* dir, JArray<JFloat>* x, JArray<JFloat>* y);
+	GetBreakpointsCmd();
 
-	~XDPlot2DCommand();
+	~GetBreakpointsCmd() override;
 
 protected:
 
 	void	HandleSuccess(const JString& data) override;
+};
+
 };
 
 #endif

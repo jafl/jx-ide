@@ -20,7 +20,7 @@ public:
 
 	GetLocalVarsCmd(VarNode* rootNode);
 
-	~GetLocalVarsCmd();
+	~GetLocalVarsCmd() override;
 
 protected:
 

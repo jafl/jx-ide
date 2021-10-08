@@ -18,7 +18,7 @@ public:
 
 	App(int* argc, char* argv[], bool* displayAbout, JString* prevVersStr);
 
-	~App();
+	~App() override;
 
 	void	EditFile(const JString& fileName, const JIndex lineIndex = 0) const;
 

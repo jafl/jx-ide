@@ -25,9 +25,9 @@ public:
 	App(int* argc, char* argv[], const bool useMDI,
 		  bool* displayAbout, JString* prevVersStr);
 
-	~App();
+	~App() override;
 
-	virtual void	Quit();
+	void	Quit() override;
 
 	static void				InitStrings();
 	static const JUtf8Byte*	GetAppSignature();
@@ -55,11 +55,11 @@ public:
 
 protected:
 
-	virtual void	ReadPrefs(std::istream& input);
-	virtual void	WritePrefs(std::ostream& output) const;
+	void	ReadPrefs(std::istream& input) override;
+	void	WritePrefs(std::ostream& output) const override;
 
-	virtual bool	Close();
-	virtual void	CleanUpBeforeSuddenDeath(const JXDocumentManager::SafetySaveReason reason);
+	bool	Close() override;
+	void	CleanUpBeforeSuddenDeath(const JXDocumentManager::SafetySaveReason reason) override;
 
 private:
 

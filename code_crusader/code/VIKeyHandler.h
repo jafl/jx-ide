@@ -18,7 +18,7 @@ public:
 
 	VIKeyHandler(TextEditor* te);
 
-	~VIKeyHandler();
+	~VIKeyHandler() override;
 
 	bool	HandleKeyPress(const JUtf8Character& key, const bool selectText,
 						   const JTextEditor::CaretMotion motion,

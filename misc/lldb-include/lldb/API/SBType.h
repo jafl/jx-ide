@@ -23,7 +23,7 @@ public:
     
     SBTypeMember (const lldb::SBTypeMember& rhs);
     
-    ~SBTypeMember();
+    ~SBTypeMember() override;
 
     lldb::SBTypeMember&
     operator = (const lldb::SBTypeMember& rhs);
@@ -75,7 +75,7 @@ public:
     
     SBTypeMemberFunction (const lldb::SBTypeMemberFunction& rhs);
     
-    ~SBTypeMemberFunction();
+    ~SBTypeMemberFunction() override;
     
     lldb::SBTypeMemberFunction&
     operator = (const lldb::SBTypeMemberFunction& rhs);
@@ -312,7 +312,7 @@ public:
     
     SBTypeList(const lldb::SBTypeList& rhs);
     
-    ~SBTypeList();
+    ~SBTypeList() override;
 
     lldb::SBTypeList&
     operator = (const lldb::SBTypeList& rhs);

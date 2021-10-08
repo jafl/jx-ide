@@ -20,7 +20,7 @@ public:
 
     SBUnixSignals (const lldb::SBUnixSignals &rhs);
 
-    ~SBUnixSignals();
+    ~SBUnixSignals() override;
 
     const SBUnixSignals &
     operator =(const lldb::SBUnixSignals &rhs);

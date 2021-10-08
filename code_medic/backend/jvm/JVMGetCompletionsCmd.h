@@ -21,7 +21,7 @@ public:
 
 	GetCompletionsCmd(CommandInput* input, CommandOutputDisplay* history);
 
-	~GetCompletionsCmd();
+	~GetCompletionsCmd() override;
 
 protected:
 

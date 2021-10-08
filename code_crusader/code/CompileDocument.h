@@ -20,7 +20,7 @@ public:
 
 	CompileDocument(ProjectDocument* projDoc);
 
-	~CompileDocument();
+	~CompileDocument() override;
 
 	void	SetConnection(JProcess* p, const int inFD, const int outFD,
 						  const JString& windowTitle,

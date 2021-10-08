@@ -21,7 +21,7 @@ public:
 					const JCoordinate x, const JCoordinate y,
 					const JCoordinate w, const JCoordinate h);
 
-	~DiffStyleMenu();
+	~DiffStyleMenu() override;
 
 	const JFontStyle&	GetStyle() const;
 	void				SetStyle(const JFontStyle& style);

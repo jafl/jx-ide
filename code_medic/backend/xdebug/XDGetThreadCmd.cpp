@@ -1,14 +1,14 @@
 /******************************************************************************
- XDGetFrame.cpp
+ XDGetThreadCmd.cpp
 
-	BASE CLASS = GetFrameCmd
+	BASE CLASS = GetThreadCmd
 
 	Copyright (C) 2007 by John Lindal.
 
  ******************************************************************************/
 
-#include "XDGetFrame.h"
-#include "StackWidget.h"
+#include "XDGetThreadCmd.h"
+#include "ThreadsWidget.h"
 #include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
@@ -16,13 +16,12 @@
 
  ******************************************************************************/
 
-XDGetFrame::XDGetFrame
+xdebug::GetThreadCmd::GetThreadCmd
 	(
-	StackWidget* widget
+	ThreadsWidget* widget
 	)
 	:
-	GetFrameCmd(JString("status", JString::kNoCopy)),
-	itsWidget(widget)
+	::GetThreadCmd(JString("status", JString::kNoCopy), widget)
 {
 }
 
@@ -31,7 +30,7 @@ XDGetFrame::XDGetFrame
 
  ******************************************************************************/
 
-XDGetFrame::~XDGetFrame()
+xdebug::GetThreadCmd::~GetThreadCmd()
 {
 }
 
@@ -41,10 +40,10 @@ XDGetFrame::~XDGetFrame()
  ******************************************************************************/
 
 void
-XDGetFrame::HandleSuccess
+xdebug::GetThreadCmd::HandleSuccess
 	(
 	const JString& data
 	)
 {
-	itsWidget->SelectFrame(0);
+	GetWidget()->FinishedLoading(0);
 }

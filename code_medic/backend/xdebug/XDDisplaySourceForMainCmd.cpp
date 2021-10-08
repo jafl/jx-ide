@@ -1,14 +1,13 @@
 /******************************************************************************
- XDGetThreads.cpp
+ XDDisplaySourceForMainCmd.cpp
 
-	BASE CLASS = GetThreadsCmd
+	BASE CLASS = DisplaySourceForMainCmd
 
-	Copyright (C) 2007 by John Lindal.
+	Copyright (C) 2001 by John Lindal.
 
  ******************************************************************************/
 
-#include "XDGetThreads.h"
-#include "ThreadsWidget.h"
+#include "XDDisplaySourceForMainCmd.h"
 #include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
@@ -16,13 +15,12 @@
 
  ******************************************************************************/
 
-XDGetThreads::XDGetThreads
+xdebug::DisplaySourceForMainCmd::DisplaySourceForMainCmd
 	(
-	JTree*				tree,
-	ThreadsWidget*	widget
+	SourceDirector* sourceDir
 	)
 	:
-	GetThreadsCmd(JString("status", JString::kNoCopy), widget)
+	::DisplaySourceForMainCmd(sourceDir, JString("status", JString::kNoCopy))
 {
 }
 
@@ -31,7 +29,7 @@ XDGetThreads::XDGetThreads
 
  ******************************************************************************/
 
-XDGetThreads::~XDGetThreads()
+xdebug::DisplaySourceForMainCmd::~DisplaySourceForMainCmd()
 {
 }
 
@@ -41,10 +39,9 @@ XDGetThreads::~XDGetThreads()
  ******************************************************************************/
 
 void
-XDGetThreads::HandleSuccess
+xdebug::DisplaySourceForMainCmd::HandleSuccess
 	(
 	const JString& data
 	)
 {
-	GetWidget()->FinishedLoading(0);
 }

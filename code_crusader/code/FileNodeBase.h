@@ -19,7 +19,7 @@ public:
 	FileNodeBase(std::istream& input, const JFileVersion vers,
 				   ProjectNode* parent, const ProjectNodeType type);
 
-	~FileNodeBase();
+	~FileNodeBase() override;
 
 	const JString&	GetFileName() const;
 	void			SetFileName(const JString& fileName);

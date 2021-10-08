@@ -10,21 +10,25 @@
 
 #include <jx-af/jx/JXUrgentTask.h>
 
-class XDSocket;
+namespace xdebug {
 
-class XDCloseSocketTask : public JXUrgentTask
+class Socket;
+
+class CloseSocketTask : public JXUrgentTask
 {
 public:
 
-	XDCloseSocketTask(XDSocket* socket);
+	CloseSocketTask(Socket* socket);
 
-	~XDCloseSocketTask();
+	~CloseSocketTask() override;
 
 	void	Perform() override;
 
 private:
 
-	XDSocket*	itsSocket;
+	Socket*	itsSocket;
+};
+
 };
 
 #endif

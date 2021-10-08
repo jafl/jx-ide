@@ -1,27 +1,36 @@
 /******************************************************************************
- XDArray2DCommand.h
+ XDGetFrameCmd.h
 
 	Copyright (C) 2007 by John Lindal.
 
  ******************************************************************************/
 
-#ifndef _H_XDArray2DCommand
-#define _H_XDArray2DCommand
+#ifndef _H_XDGetFrameCmd
+#define _H_XDGetFrameCmd
 
-#include "Array2DCmd.h"
+#include "GetFrameCmd.h"
 
-class XDArray2DCommand : public Array2DCmd
+class StackWidget;
+
+namespace xdebug {
+
+class GetFrameCmd : public ::GetFrameCmd
 {
 public:
 
-	XDArray2DCommand(Array2DDir* dir,
-					 JXStringTable* table, JStringTableData* data);
+	GetFrameCmd(StackWidget* widget);
 
-	~XDArray2DCommand();
+	~GetFrameCmd() override;
 
 protected:
 
 	void	HandleSuccess(const JString& data) override;
+
+private:
+
+	StackWidget*	itsWidget;
+};
+
 };
 
 #endif

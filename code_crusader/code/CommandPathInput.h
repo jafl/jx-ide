@@ -19,11 +19,11 @@ public:
 					   const JCoordinate x, const JCoordinate y,
 					   const JCoordinate w, const JCoordinate h);
 
-	~CommandPathInput();
+	~CommandPathInput() override;
 
-	virtual bool	InputValid();
-	virtual bool	GetPath(JString* path) const;
-	virtual JString	GetTextForChoosePath() const;
+	bool	InputValid() override;
+	bool	GetPath(JString* path) const override;
+	JString	GetTextForChoosePath() const override;
 
 	static JColorID	GetTextColor(const JString& path, const JString& base,
 								 const bool requireWrite);

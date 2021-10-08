@@ -824,65 +824,65 @@ T
 F
 "./backend/xdebug/XDBreakpointManager.cpp"
 T
-2 "XDArray2DCommand.cpp"
+2 "XDArray2DCmd.cpp"
 F
-"./backend/xdebug/XDArray2DCommand.cpp"
+"./backend/xdebug/XDArray2DCmd.cpp"
 T
-2 "XDPlot2DCommand.cpp"
+2 "XDPlot2DCmd.cpp"
 F
-"./backend/xdebug/XDPlot2DCommand.cpp"
+"./backend/xdebug/XDPlot2DCmd.cpp"
 T
-2 "XDDisplaySourceForMain.cpp"
+2 "XDDisplaySourceForMainCmd.cpp"
 F
-"./backend/xdebug/XDDisplaySourceForMain.cpp"
+"./backend/xdebug/XDDisplaySourceForMainCmd.cpp"
 T
-2 "XDGetBreakpoints.cpp"
+2 "XDGetBreakpointsCmd.cpp"
 F
-"./backend/xdebug/XDGetBreakpoints.cpp"
+"./backend/xdebug/XDGetBreakpointsCmd.cpp"
 T
-2 "XDGetCompletions.cpp"
+2 "XDGetCompletionsCmd.cpp"
 F
-"./backend/xdebug/XDGetCompletions.cpp"
+"./backend/xdebug/XDGetCompletionsCmd.cpp"
 T
-2 "XDGetContextVars.cpp"
+2 "XDGetContextVarsCmd.cpp"
 F
-"./backend/xdebug/XDGetContextVars.cpp"
+"./backend/xdebug/XDGetContextVarsCmd.cpp"
 T
-2 "XDGetFrame.cpp"
+2 "XDGetFrameCmd.cpp"
 F
-"./backend/xdebug/XDGetFrame.cpp"
+"./backend/xdebug/XDGetFrameCmd.cpp"
 T
-2 "XDGetFullPath.cpp"
+2 "XDGetFullPathCmd.cpp"
 F
-"./backend/xdebug/XDGetFullPath.cpp"
+"./backend/xdebug/XDGetFullPathCmd.cpp"
 T
-2 "XDGetInitArgs.cpp"
+2 "XDGetInitArgsCmd.cpp"
 F
-"./backend/xdebug/XDGetInitArgs.cpp"
+"./backend/xdebug/XDGetInitArgsCmd.cpp"
 T
-2 "XDGetLocalVars.cpp"
+2 "XDGetLocalVarsCmd.cpp"
 F
-"./backend/xdebug/XDGetLocalVars.cpp"
+"./backend/xdebug/XDGetLocalVarsCmd.cpp"
 T
-2 "XDGetSourceFileList.cpp"
+2 "XDGetSourceFileListCmd.cpp"
 F
-"./backend/xdebug/XDGetSourceFileList.cpp"
+"./backend/xdebug/XDGetSourceFileListCmd.cpp"
 T
-2 "XDGetStack.cpp"
+2 "XDGetStackCmd.cpp"
 F
-"./backend/xdebug/XDGetStack.cpp"
+"./backend/xdebug/XDGetStackCmd.cpp"
 T
-2 "XDGetThread.cpp"
+2 "XDGetThreadCmd.cpp"
 F
-"./backend/xdebug/XDGetThread.cpp"
+"./backend/xdebug/XDGetThreadCmd.cpp"
 T
-2 "XDGetThreads.cpp"
+2 "XDGetThreadsCmd.cpp"
 F
-"./backend/xdebug/XDGetThreads.cpp"
+"./backend/xdebug/XDGetThreadsCmd.cpp"
 T
-2 "XDVarCommand.cpp"
+2 "XDVarCmd.cpp"
 F
-"./backend/xdebug/XDVarCommand.cpp"
+"./backend/xdebug/XDVarCmd.cpp"
 T
 2 "XDVarNode.cpp"
 F

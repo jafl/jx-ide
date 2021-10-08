@@ -153,10 +153,10 @@ App::DisplayAbout
 bool
 App::HandleCustomEvent()
 {
-	auto* link = dynamic_cast<LLDBLink*>(GetLink());
+	auto* link = dynamic_cast<lldb::Link*>(GetLink());
 	if (link != nullptr)
 	{
-		link->HandleLLDBEvent();
+		link->HandleEvent();
 	}
 	return true;
 }

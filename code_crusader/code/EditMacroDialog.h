@@ -28,7 +28,7 @@ public:
 					  const JIndex initialSelection,
 					  const JIndex firstUnusedID);
 
-	~EditMacroDialog();
+	~EditMacroDialog() override;
 
 	bool	ContentsValid() const;
 	bool	GetCurrentMacroSetName(JString* name) const;

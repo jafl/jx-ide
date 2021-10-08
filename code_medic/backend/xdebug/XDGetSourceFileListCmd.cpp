@@ -1,5 +1,5 @@
 /******************************************************************************
- XDGetSourceFileList.cpp
+ XDGetSourceFileListCmd.cpp
 
 	BASE CLASS = GetSourceFileListCmd
 
@@ -7,7 +7,7 @@
 
  ******************************************************************************/
 
-#include "XDGetSourceFileList.h"
+#include "XDGetSourceFileListCmd.h"
 #include "FileListDir.h"
 #include "XDLink.h"
 #include "globals.h"
@@ -20,12 +20,12 @@
 
  ******************************************************************************/
 
-XDGetSourceFileList::XDGetSourceFileList
+xdebug::GetSourceFileListCmd::GetSourceFileListCmd
 	(
 	FileListDir* fileList
 	)
 	:
-	GetSourceFileListCmd(JString("status", JString::kNoCopy), fileList)
+	::GetSourceFileListCmd(JString("status", JString::kNoCopy), fileList)
 {
 }
 
@@ -34,7 +34,7 @@ XDGetSourceFileList::XDGetSourceFileList
 
  ******************************************************************************/
 
-XDGetSourceFileList::~XDGetSourceFileList()
+xdebug::GetSourceFileListCmd::~GetSourceFileListCmd()
 {
 }
 
@@ -44,14 +44,14 @@ XDGetSourceFileList::~XDGetSourceFileList()
  *****************************************************************************/
 
 void
-XDGetSourceFileList::Starting()
+xdebug::GetSourceFileListCmd::Starting()
 {
 	GetSourceFileListCmd::Starting();
 
 	JXFileListTable* table = GetFileList()->GetTable();
 	table->RemoveAllFiles();
 
-	const JPtrArray<JString>& list = dynamic_cast<XDLink*>(GetLink())->GetSourcePathList();
+	const JPtrArray<JString>& list = dynamic_cast<Link*>(GetLink())->GetSourcePathList();
 	const JSize count              = list.GetElementCount();
 	for (JIndex i=1; i<=count; i++)
 	{
@@ -65,7 +65,7 @@ XDGetSourceFileList::Starting()
  *****************************************************************************/
 
 void
-XDGetSourceFileList::ScanDirectory
+xdebug::GetSourceFileListCmd::ScanDirectory
 	(
 	const JString& path
 	)
@@ -106,7 +106,7 @@ XDGetSourceFileList::ScanDirectory
  ******************************************************************************/
 
 void
-XDGetSourceFileList::HandleSuccess
+xdebug::GetSourceFileListCmd::HandleSuccess
 	(
 	const JString& origData
 	)

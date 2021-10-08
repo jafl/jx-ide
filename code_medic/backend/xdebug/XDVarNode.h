@@ -10,16 +10,18 @@
 
 #include "VarNode.h"
 
-class XDVarNode : public VarNode
+namespace xdebug {
+
+class VarNode : public ::VarNode
 {
 public:
 
-	XDVarNode(const bool shouldUpdate = true);
+	VarNode(const bool shouldUpdate = true);
 
-	XDVarNode(JTreeNode* parent, const JString& name,
+	VarNode(JTreeNode* parent, const JString& name,
 			  const JString& fullName, const JString& value);
 
-	~XDVarNode();
+	~VarNode() override;
 
 	JString	GetFullName(bool* isPointer = nullptr) const override;
 
@@ -30,6 +32,8 @@ protected:
 private:
 
 	JString	itsFullName;
+};
+
 };
 
 #endif

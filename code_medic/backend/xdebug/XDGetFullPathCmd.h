@@ -1,28 +1,30 @@
 /******************************************************************************
- XDGetInitArgs.h
+ XDGetFullPathCmd.h
 
 	Copyright (C) 2007 by John Lindal.
 
  ******************************************************************************/
 
-#ifndef _H_XDGetInitArgs
-#define _H_XDGetInitArgs
+#ifndef _H_XDGetFullPathCmd
+#define _H_XDGetFullPathCmd
 
-#include "GetInitArgsCmd.h"
+#include "GetFullPathCmd.h"
 
-class JXInputField;
+namespace xdebug {
 
-class XDGetInitArgs : public GetInitArgsCmd
+class GetFullPathCmd : public ::GetFullPathCmd
 {
 public:
 
-	XDGetInitArgs(JXInputField* argInput);
+	GetFullPathCmd(const JString& fileName, const JIndex lineIndex = 0);
 
-	~XDGetInitArgs();
+	~GetFullPathCmd() override;
 
 protected:
 
 	void	HandleSuccess(const JString& data) override;
+};
+
 };
 
 #endif

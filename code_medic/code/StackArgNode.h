@@ -19,7 +19,7 @@ public:
 	StackArgNode(StackFrameNode* parent,
 				   const JString& name, const JString& value);
 
-	~StackArgNode();
+	~StackArgNode() override;
 
 	const JString&	GetValue() const;
 

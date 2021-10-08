@@ -39,7 +39,7 @@ public:
 					const JCoordinate x, const JCoordinate y,
 					const JCoordinate w, const JCoordinate h);
 
-	~FileListTable();
+	~FileListTable() override;
 
 	bool	Update(std::ostream& link,
 				   ProjectTree* fileTree, const DirList& dirList,

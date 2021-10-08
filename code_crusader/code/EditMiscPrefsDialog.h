@@ -21,7 +21,7 @@ public:
 
 	EditMiscPrefsDialog();
 
-	~EditMiscPrefsDialog();
+	~EditMiscPrefsDialog() override;
 
 protected:
 

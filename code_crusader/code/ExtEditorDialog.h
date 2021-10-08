@@ -27,7 +27,7 @@ public:
 					  const bool editBinaryLocally,
 					  const JString& editBinaryFileCmd);
 
-	~ExtEditorDialog();
+	~ExtEditorDialog() override;
 
 	void	GetPrefs(bool* editTextLocally,
 					 JString* editTextFileCmd,

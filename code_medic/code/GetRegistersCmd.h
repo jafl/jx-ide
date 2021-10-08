@@ -18,7 +18,7 @@ public:
 
 	GetRegistersCmd(const JString& cmd, RegistersDir* dir);
 
-	~GetRegistersCmd();
+	~GetRegistersCmd() override;
 
 	RegistersDir*	GetDirector();
 

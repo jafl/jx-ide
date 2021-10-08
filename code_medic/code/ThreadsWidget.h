@@ -28,7 +28,7 @@ public:
 					  const JCoordinate x, const JCoordinate y,
 					  const JCoordinate w, const JCoordinate h);
 
-	~ThreadsWidget();
+	~ThreadsWidget() override;
 
 	void	Update();
 	void	SelectThread(const JIndex id);

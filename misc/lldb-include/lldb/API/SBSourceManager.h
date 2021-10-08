@@ -23,7 +23,7 @@ public:
     SBSourceManager (const SBTarget &target);
     SBSourceManager (const SBSourceManager &rhs);
     
-    ~SBSourceManager();
+    ~SBSourceManager() override;
 
     const lldb::SBSourceManager &
     operator = (const lldb::SBSourceManager &rhs);

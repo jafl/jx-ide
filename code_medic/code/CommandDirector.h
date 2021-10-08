@@ -46,7 +46,7 @@ public:
 
 	CommandDirector(JXDirector* supervisor);
 
-	~CommandDirector();
+	~CommandDirector() override;
 
 	bool			Close() override;
 	const JString&	GetName() const override;

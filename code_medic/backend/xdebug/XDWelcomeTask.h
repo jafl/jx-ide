@@ -11,13 +11,15 @@
 #include <jx-af/jx/JXUrgentTask.h>
 #include <jx-af/jcore/JString.h>
 
-class XDWelcomeTask : public JXUrgentTask
+namespace xdebug {
+
+class WelcomeTask : public JXUrgentTask
 {
 public:
 
-	XDWelcomeTask(const JString& msg, const bool error);
+	WelcomeTask(const JString& msg, const bool error);
 
-	~XDWelcomeTask();
+	~WelcomeTask() override;
 
 	void	Perform() override;
 
@@ -25,6 +27,8 @@ private:
 
 	JString	itsMessage;
 	bool	itsErrorFlag;
+};
+
 };
 
 #endif

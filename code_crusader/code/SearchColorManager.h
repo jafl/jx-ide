@@ -16,7 +16,7 @@ public:
 
 	SearchColorManager();
 
-	~SearchColorManager();
+	~SearchColorManager() override;
 
 	bool	GetColorID(const JString& name, JColorID* id) const override;
 };

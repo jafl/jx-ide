@@ -20,7 +20,7 @@ public:
 
 	GetSourceFileListCmd(FileListDir* fileList);
 
-	~GetSourceFileListCmd();
+	~GetSourceFileListCmd() override;
 
 protected:
 

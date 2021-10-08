@@ -1,24 +1,26 @@
 /******************************************************************************
- XDGetSourceFileList.h
+ XDGetSourceFileListCmd.h
 
 	Copyright (C) 2007 by John Lindal.
 
  ******************************************************************************/
 
-#ifndef _H_XDGetSourceFileList
-#define _H_XDGetSourceFileList
+#ifndef _H_XDGetSourceFileListCmd
+#define _H_XDGetSourceFileListCmd
 
 #include "GetSourceFileListCmd.h"
 
 class FileListDir;
 
-class XDGetSourceFileList : public GetSourceFileListCmd
+namespace xdebug {
+
+class GetSourceFileListCmd : public ::GetSourceFileListCmd
 {
 public:
 
-	XDGetSourceFileList(FileListDir* fileList);
+	GetSourceFileListCmd(FileListDir* fileList);
 
-	~XDGetSourceFileList();
+	~GetSourceFileListCmd() override;
 
 	void	Starting() override;
 
@@ -29,6 +31,8 @@ protected:
 private:
 
 	void	ScanDirectory(const JString& path);
+};
+
 };
 
 #endif

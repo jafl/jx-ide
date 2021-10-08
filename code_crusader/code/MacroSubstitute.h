@@ -16,7 +16,7 @@ public:
 
 	MacroSubstitute();
 
-	~MacroSubstitute();
+	~MacroSubstitute() override;
 
 protected:
 

@@ -22,7 +22,7 @@ This scanner reads a C/C++ file and creates Class instances.
 
 public:
 
-	virtual	~Scanner();
+	virtual ~Scanner();
 
 private:
 

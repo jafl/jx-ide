@@ -1,32 +1,32 @@
 /******************************************************************************
- XDGetLocalVars.h
+ XDGetInitArgsCmd.h
 
 	Copyright (C) 2007 by John Lindal.
 
  ******************************************************************************/
 
-#ifndef _H_XDGetLocalVars
-#define _H_XDGetLocalVars
+#ifndef _H_XDGetInitArgsCmd
+#define _H_XDGetInitArgsCmd
 
-#include "GetLocalVarsCmd.h"
+#include "GetInitArgsCmd.h"
 
-class VarNode;
+class JXInputField;
 
-class XDGetLocalVars : public GetLocalVarsCmd
+namespace xdebug {
+
+class GetInitArgsCmd : public ::GetInitArgsCmd
 {
 public:
 
-	XDGetLocalVars(VarNode* rootNode);
+	GetInitArgsCmd(JXInputField* argInput);
 
-	~XDGetLocalVars();
+	~GetInitArgsCmd() override;
 
 protected:
 
 	void	HandleSuccess(const JString& data) override;
+};
 
-private:
-
-	VarNode*	itsRootNode;	// not owned
 };
 
 #endif

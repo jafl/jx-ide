@@ -20,7 +20,7 @@ public:
 					   const JCoordinate x, const JCoordinate y,
 					   const JCoordinate w, const JCoordinate h);
 
-	~LineAddressTable();
+	~LineAddressTable() override;
 
 	void	SetLineNumbers(JPtrArray<JString>* list);
 	void	ClearLineNumbers();

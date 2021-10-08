@@ -24,13 +24,13 @@ public:
 					  const JCoordinate x, const JCoordinate y,
 					  const JCoordinate w, const JCoordinate h);
 
-	~TEColIndexInput();
+	~TEColIndexInput() override;
 
 protected:
 
-	virtual void	Act(JXTEBase* te, const JIndex value);
-	virtual JIndex	GetValue(JXTEBase* te) const;
-	virtual JIndex	GetValue(const JTextEditor::CaretLocationChanged& info) const;
+	void	Act(JXTEBase* te, const JIndex value) override;
+	JIndex	GetValue(JXTEBase* te) const override;
+	JIndex	GetValue(const JTextEditor::CaretLocationChanged& info) const override;
 
 private:
 

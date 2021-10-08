@@ -1,24 +1,26 @@
 /******************************************************************************
- XDGetFrame.h
+ XDGetLocalVarsCmd.h
 
 	Copyright (C) 2007 by John Lindal.
 
  ******************************************************************************/
 
-#ifndef _H_XDGetFrame
-#define _H_XDGetFrame
+#ifndef _H_XDGetLocalVarsCmd
+#define _H_XDGetLocalVarsCmd
 
-#include "GetFrameCmd.h"
+#include "GetLocalVarsCmd.h"
 
-class StackWidget;
+class VarNode;
 
-class XDGetFrame : public GetFrameCmd
+namespace xdebug {
+
+class GetLocalVarsCmd : public ::GetLocalVarsCmd
 {
 public:
 
-	XDGetFrame(StackWidget* widget);
+	GetLocalVarsCmd(VarNode* rootNode);
 
-	~XDGetFrame();
+	~GetLocalVarsCmd() override;
 
 protected:
 
@@ -26,7 +28,9 @@ protected:
 
 private:
 
-	StackWidget*	itsWidget;
+	VarNode*	itsRootNode;	// not owned
+};
+
 };
 
 #endif

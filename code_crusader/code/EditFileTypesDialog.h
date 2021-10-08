@@ -29,7 +29,7 @@ public:
 						  const bool execOutputWordWrap,
 						  const bool unknownTypeWordWrap);
 
-	~EditFileTypesDialog();
+	~EditFileTypesDialog() override;
 
 	void	GetFileTypeInfo(JArray<PrefsManager::FileTypeInfo>* fileTypeList,
 							bool* execOutputWordWrap,

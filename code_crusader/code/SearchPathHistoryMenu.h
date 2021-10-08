@@ -24,7 +24,7 @@ public:
 							JXMenu* owner, const JIndex itemIndex,
 							JXContainer* enclosure);
 
-	~SearchPathHistoryMenu();
+	~SearchPathHistoryMenu() override;
 
 	void	AddPath(const JString& fullName, const bool recurse);
 
@@ -33,7 +33,7 @@ public:
 
 protected:
 
-	virtual void	UpdateMenu();		// must call inherited
+	void	UpdateMenu() override;		// must call inherited
 
 private:
 

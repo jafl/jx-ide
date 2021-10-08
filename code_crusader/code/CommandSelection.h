@@ -20,16 +20,16 @@ public:
 	CommandSelection(JXDisplay* display, CommandTable* table,
 					   const CommandManager::CmdInfo& cmdInfo);
 
-	~CommandSelection();
+	~CommandSelection() override;
 
 	static const JUtf8Byte*	GetCommandXAtomName();
 
 protected:
 
-	virtual void	AddTypes(const Atom selectionName);
-	virtual bool	ConvertData(const Atom requestType, Atom* returnType,
-								unsigned char** data, JSize* dataLength,
-								JSize* bitsPerBlock) const;
+	void	AddTypes(const Atom selectionName) override;
+	bool	ConvertData(const Atom requestType, Atom* returnType,
+						unsigned char** data, JSize* dataLength,
+						JSize* bitsPerBlock) const override;
 
 private:
 

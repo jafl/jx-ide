@@ -18,7 +18,7 @@ public:
 
 	SetProgramTask();
 
-	~SetProgramTask();
+	~SetProgramTask() override;
 
 	void	Perform() override;
 };

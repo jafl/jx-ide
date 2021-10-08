@@ -1,13 +1,13 @@
 /******************************************************************************
- XDGetFullPath.cpp
+ XDPlot2DCmd.cpp
 
-	BASE CLASS = GetFullPathCmd
+	BASE CLASS = Plot2DCmd
 
 	Copyright (C) 2007 by John Lindal.
 
  ******************************************************************************/
 
-#include "XDGetFullPath.h"
+#include "XDPlot2DCmd.h"
 #include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
@@ -15,14 +15,16 @@
 
  ******************************************************************************/
 
-XDGetFullPath::XDGetFullPath
+xdebug::Plot2DCmd::Plot2DCmd
 	(
-	const JString&	fileName,
-	const JIndex	lineIndex	// for convenience
+	Plot2DDir*	dir,
+	JArray<JFloat>*	x,
+	JArray<JFloat>*	y
 	)
 	:
-	GetFullPathCmd(JString("status", JString::kNoCopy), fileName, lineIndex)
+	::Plot2DCmd(dir, x, y)
 {
+	SetCommand("status");
 }
 
 /******************************************************************************
@@ -30,7 +32,7 @@ XDGetFullPath::XDGetFullPath
 
  ******************************************************************************/
 
-XDGetFullPath::~XDGetFullPath()
+xdebug::Plot2DCmd::~Plot2DCmd()
 {
 }
 
@@ -40,7 +42,7 @@ XDGetFullPath::~XDGetFullPath()
  ******************************************************************************/
 
 void
-XDGetFullPath::HandleSuccess
+xdebug::Plot2DCmd::HandleSuccess
 	(
 	const JString& data
 	)

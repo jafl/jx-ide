@@ -1,28 +1,30 @@
 /******************************************************************************
- XDGetThreads.h
+ XDGetThreadCmd.h
 
 	Copyright (C) 2007 by John Lindal.
 
  ******************************************************************************/
 
-#ifndef _H_XDGetThreads
-#define _H_XDGetThreads
+#ifndef _H_XDGetThreadCmd
+#define _H_XDGetThreadCmd
 
-#include "GetThreadsCmd.h"
+#include "GetThreadCmd.h"
 
-class JTree;
+namespace xdebug {
 
-class XDGetThreads : public GetThreadsCmd
+class GetThreadCmd : public ::GetThreadCmd
 {
 public:
 
-	XDGetThreads(JTree* tree, ThreadsWidget* widget);
+	GetThreadCmd(ThreadsWidget* widget);
 
-	~XDGetThreads();
+	~GetThreadCmd() override;
 
 protected:
 
 	void	HandleSuccess(const JString& data) override;
+};
+
 };
 
 #endif

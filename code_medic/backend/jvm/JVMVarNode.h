@@ -21,7 +21,7 @@ public:
 	VarNode(JTreeNode* parent, const JString& name,
 			   const JString& fullName, const JString& value);
 
-	~VarNode();
+	~VarNode() override;
 
 	JString	GetFullName(bool* isPointer = nullptr) const override;
 };

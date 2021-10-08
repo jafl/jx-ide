@@ -19,14 +19,14 @@ public:
 
 	AboutDialogIconTask(JXImageWidget* widget);
 
-	~AboutDialogIconTask();
+	~AboutDialogIconTask() override;
 
 protected:
 
-	virtual JSize		GetFrameCount();
-	virtual void		GetFrameTime(const JIndex frameIndex,
-									 Time* tmin, Time* tmax);
-	virtual JXImage*	GetFrame(const JIndex frameIndex);
+	JSize		GetFrameCount() override;
+	void		GetFrameTime(const JIndex frameIndex,
+							 Time* tmin, Time* tmax) override;
+	JXImage*	GetFrame(const JIndex frameIndex) override;
 
 private:
 

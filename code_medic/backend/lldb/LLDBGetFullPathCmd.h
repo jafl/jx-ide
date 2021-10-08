@@ -18,7 +18,7 @@ public:
 
 	GetFullPathCmd(const JString& fileName, const JIndex lineIndex = 0);
 
-	~GetFullPathCmd();
+	~GetFullPathCmd() override;
 
 protected:
 

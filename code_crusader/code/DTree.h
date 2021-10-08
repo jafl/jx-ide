@@ -29,7 +29,7 @@ public:
 			DTreeDirector* director, const JSize marginWidth,
 			DirList* dirList);
 
-	~DTree();
+	~DTree() override;
 
 	void	StreamOut(std::ostream& projOutput, std::ostream* setOutput,
 					  std::ostream* symOutput, const DirList* dirList) const override;

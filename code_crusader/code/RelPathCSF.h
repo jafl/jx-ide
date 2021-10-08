@@ -34,7 +34,7 @@ public:
 
 	RelPathCSF(ProjectDocument* doc);
 
-	~RelPathCSF();
+	~RelPathCSF() override;
 
 	PathType	GetPathType() const;
 	void		SetPathType(const PathType type);

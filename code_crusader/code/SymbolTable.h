@@ -29,7 +29,7 @@ public:
 				  const JCoordinate x, const JCoordinate y,
 				  const JCoordinate w, const JCoordinate h);
 
-	~SymbolTable();
+	~SymbolTable() override;
 
 	bool	HasSelection() const;
 	void		SelectSingleEntry(const JIndex index, const bool scroll = true);

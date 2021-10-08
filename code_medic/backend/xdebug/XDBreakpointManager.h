@@ -10,15 +10,19 @@
 
 #include "BreakpointManager.h"
 
-class XDLink;
+namespace xdebug {
 
-class XDBreakpointManager : public BreakpointManager
+class Link;
+
+class BreakpointManager : public ::BreakpointManager
 {
 public:
 
-	XDBreakpointManager(XDLink* link);
+	BreakpointManager(Link* link);
 
-	~XDBreakpointManager();
+	~BreakpointManager() override;
+};
+
 };
 
 #endif

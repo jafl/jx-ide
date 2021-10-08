@@ -30,7 +30,7 @@ public:
 	Array1DDir(std::istream& input, const JFileVersion vers,
 				 CommandDirector* supervisor);
 
-	~Array1DDir();
+	~Array1DDir() override;
 
 	void	Activate() override;
 	bool	Deactivate() override;

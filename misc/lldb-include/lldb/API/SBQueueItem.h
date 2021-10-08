@@ -22,7 +22,7 @@ public:
 
     SBQueueItem (const lldb::QueueItemSP& queue_item_sp);
     
-   ~SBQueueItem();
+   ~SBQueueItem() override;
 
     bool
     IsValid() const;

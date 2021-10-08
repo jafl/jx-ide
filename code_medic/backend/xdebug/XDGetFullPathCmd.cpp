@@ -1,17 +1,13 @@
 /******************************************************************************
- XDGetInitArgs.cpp
+ XDGetFullPathCmd.cpp
 
-	Gets the initial setting for the arguments to the program set by .gdbinit.
-	Unfortunately, we cannot listen for later calls to "set args" because
-	one can only define a hook for single word commands.
-
-	BASE CLASS = GetInitArgsCmd
+	BASE CLASS = GetFullPathCmd
 
 	Copyright (C) 2007 by John Lindal.
 
  ******************************************************************************/
 
-#include "XDGetInitArgs.h"
+#include "XDGetFullPathCmd.h"
 #include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
@@ -19,12 +15,13 @@
 
  ******************************************************************************/
 
-XDGetInitArgs::XDGetInitArgs
+xdebug::GetFullPathCmd::GetFullPathCmd
 	(
-	JXInputField* argInput
+	const JString&	fileName,
+	const JIndex	lineIndex	// for convenience
 	)
 	:
-	GetInitArgsCmd(JString("status", JString::kNoCopy))
+	::GetFullPathCmd(JString("status", JString::kNoCopy), fileName, lineIndex)
 {
 }
 
@@ -33,7 +30,7 @@ XDGetInitArgs::XDGetInitArgs
 
  ******************************************************************************/
 
-XDGetInitArgs::~XDGetInitArgs()
+xdebug::GetFullPathCmd::~GetFullPathCmd()
 {
 }
 
@@ -43,7 +40,7 @@ XDGetInitArgs::~XDGetInitArgs()
  ******************************************************************************/
 
 void
-XDGetInitArgs::HandleSuccess
+xdebug::GetFullPathCmd::HandleSuccess
 	(
 	const JString& data
 	)

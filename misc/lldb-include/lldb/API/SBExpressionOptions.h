@@ -24,7 +24,7 @@ public:
 
     SBExpressionOptions (const lldb::SBExpressionOptions &rhs);
     
-    ~SBExpressionOptions();
+    ~SBExpressionOptions() override;
 
     const SBExpressionOptions &
     operator = (const lldb::SBExpressionOptions &rhs);

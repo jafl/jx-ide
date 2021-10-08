@@ -18,7 +18,7 @@ public:
 
 	SimpleCmd(const JString& cmd);
 
-	~SimpleCmd();
+	~SimpleCmd() override;
 
 protected:
 

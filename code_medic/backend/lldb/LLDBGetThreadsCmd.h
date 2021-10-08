@@ -20,7 +20,7 @@ public:
 
 	GetThreadsCmd(JTree* tree, ThreadsWidget* widget);
 
-	~GetThreadsCmd();
+	~GetThreadsCmd() override;
 
 protected:
 

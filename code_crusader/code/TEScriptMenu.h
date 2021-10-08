@@ -25,7 +25,7 @@ public:
 	TEScriptMenu(TextEditor* te, const JString& path,
 				   JXMenu* owner, const JIndex itemIndex, JXContainer* enclosure);
 
-	~TEScriptMenu();
+	~TEScriptMenu() override;
 
 protected:
 

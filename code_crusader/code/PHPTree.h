@@ -27,7 +27,7 @@ public:
 			  PHPTreeDirector* director, const JSize marginWidth,
 			  DirList* dirList);
 
-	~PHPTree();
+	~PHPTree() override;
 
 	void	StreamOut(std::ostream& projOutput, std::ostream* setOutput,
 					  std::ostream* symOutput, const DirList* dirList) const override;

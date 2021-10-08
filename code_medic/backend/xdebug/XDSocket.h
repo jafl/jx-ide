@@ -11,13 +11,15 @@
 #include <jx-af/jcore/JMessageProtocol.h>
 #include <ace/SOCK_Stream.h>
 
-class XDSocket : public JMessageProtocol<ACE_SOCK_STREAM>
+namespace xdebug {
+
+class Socket : public JMessageProtocol<ACE_SOCK_STREAM>
 {
 public:
 
-	XDSocket();
+	Socket();
 
-	~XDSocket();
+	~Socket() override;
 
 	void	StartTimer();
 	void	StopTimer();
@@ -29,6 +31,8 @@ public:
 private:
 
 	long	itsTimerID;
+};
+
 };
 
 #endif

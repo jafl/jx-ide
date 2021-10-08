@@ -15,9 +15,9 @@
 
  ******************************************************************************/
 
-XDCloseSocketTask::XDCloseSocketTask
+xdebug::CloseSocketTask::CloseSocketTask
 	(
-	XDSocket* socket
+	Socket* socket
 	)
 	:
 	itsSocket(socket)
@@ -29,7 +29,7 @@ XDCloseSocketTask::XDCloseSocketTask
 
  ******************************************************************************/
 
-XDCloseSocketTask::~XDCloseSocketTask()
+xdebug::CloseSocketTask::~CloseSocketTask()
 {
 }
 
@@ -39,7 +39,7 @@ XDCloseSocketTask::~XDCloseSocketTask()
  ******************************************************************************/
 
 void
-XDCloseSocketTask::Perform()
+xdebug::CloseSocketTask::Perform()
 {
 	itsSocket->close();
 }

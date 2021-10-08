@@ -20,7 +20,7 @@ public:
 
     SBError (const lldb::SBError &rhs);
 
-    ~SBError();
+    ~SBError() override;
 
     const SBError &
     operator =(const lldb::SBError &rhs);

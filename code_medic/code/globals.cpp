@@ -241,7 +241,7 @@ StartDebugger()
 	}
 	else if (type == PrefsManager::kLLDBType)
 	{
-		theLink = jnew LLDBLink;
+		theLink = jnew lldb::Link;
 	}
 	else if (type == PrefsManager::kJavaType)
 	{
@@ -249,7 +249,7 @@ StartDebugger()
 	}
 	else if (type == PrefsManager::kXdebugType)
 	{
-		theLink = jnew XDLink;
+		theLink = jnew xdebug::Link;
 	}
 	assert (theLink != nullptr);
 

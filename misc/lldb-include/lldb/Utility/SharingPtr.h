@@ -154,7 +154,7 @@ public:
     template<class Y>
         SharingPtr(const SharingPtr<Y>& r);
 
-    ~SharingPtr();
+    ~SharingPtr() override;
 
     SharingPtr& operator=(const SharingPtr& r); 
     template<class Y> SharingPtr& operator=(const SharingPtr<Y>& r); 

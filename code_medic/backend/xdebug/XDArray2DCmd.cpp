@@ -1,13 +1,13 @@
 /******************************************************************************
- XDDisplaySourceForMain.cpp
+ XDArray2DCmd.cpp
 
-	BASE CLASS = DisplaySourceForMainCmd
+	BASE CLASS = Array2DCmd
 
-	Copyright (C) 2001 by John Lindal.
+	Copyright (C) 2007 by John Lindal.
 
  ******************************************************************************/
 
-#include "XDDisplaySourceForMain.h"
+#include "XDArray2DCmd.h"
 #include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
@@ -15,13 +15,16 @@
 
  ******************************************************************************/
 
-XDDisplaySourceForMain::XDDisplaySourceForMain
+xdebug::Array2DCmd::Array2DCmd
 	(
-	SourceDirector* sourceDir
+	Array2DDir*			dir,
+	JXStringTable*		table,
+	JStringTableData*	data
 	)
 	:
-	DisplaySourceForMainCmd(sourceDir, JString("status", JString::kNoCopy))
+	::Array2DCmd(dir, table, data)
 {
+	SetCommand("status");
 }
 
 /******************************************************************************
@@ -29,7 +32,7 @@ XDDisplaySourceForMain::XDDisplaySourceForMain
 
  ******************************************************************************/
 
-XDDisplaySourceForMain::~XDDisplaySourceForMain()
+xdebug::Array2DCmd::~Array2DCmd()
 {
 }
 
@@ -39,7 +42,7 @@ XDDisplaySourceForMain::~XDDisplaySourceForMain()
  ******************************************************************************/
 
 void
-XDDisplaySourceForMain::HandleSuccess
+xdebug::Array2DCmd::HandleSuccess
 	(
 	const JString& data
 	)

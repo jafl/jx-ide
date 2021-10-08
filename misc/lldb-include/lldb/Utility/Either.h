@@ -139,10 +139,10 @@ namespace lldb_utility {
             switch (m_selected)
             {
                 case Selected::One:
-                    m_t1.T1::~T1();
+                    m_t1.T1::~T1() override;
                     break;
                 case Selected::Two:
-                    m_t2.T2::~T2();
+                    m_t2.T2::~T2() override;
                     break;
             }
         }

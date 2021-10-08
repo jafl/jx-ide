@@ -23,7 +23,7 @@ public:
 			   const JSize fontSize,
 			   const bool printHeader);
 
-	~PSPrintSetupDialog();
+	~PSPrintSetupDialog() override;
 
 	void	GetSettings(JSize* fontSize, bool* printHeader) const;
 

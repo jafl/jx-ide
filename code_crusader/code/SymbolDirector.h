@@ -35,7 +35,7 @@ public:
 					std::istream* symInput, const JFileVersion symVers,
 					ProjectDocument* supervisor, const bool subProject);
 
-	~SymbolDirector();
+	~SymbolDirector() override;
 
 	void	EditPrefs();
 	void	SetPrefs(const bool raiseTreeOnRightClick, const bool writePrefs);

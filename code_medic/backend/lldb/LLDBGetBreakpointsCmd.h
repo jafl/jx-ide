@@ -18,7 +18,7 @@ public:
 
 	GetBreakpointsCmd();
 
-	~GetBreakpointsCmd();
+	~GetBreakpointsCmd() override;
 
 protected:
 

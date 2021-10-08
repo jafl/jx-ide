@@ -22,7 +22,7 @@ public:
 					 const JCoordinate x, const JCoordinate y,
 					 const JCoordinate w, const JCoordinate h);
 
-	~FileDragSource();
+	~FileDragSource() override;
 
 	void	ProvideDirectSave(JXInputField* nameInput);
 

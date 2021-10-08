@@ -18,9 +18,9 @@ public:
 
 	DelaySymbolUpdateTask(ProjectDocument* projDoc);
 
-	~DelaySymbolUpdateTask();
+	~DelaySymbolUpdateTask() override;
 
-	virtual void	Perform(const Time delta, Time* maxSleepTime);
+	void	Perform(const Time delta, Time* maxSleepTime) override;
 
 private:
 

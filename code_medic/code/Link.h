@@ -80,7 +80,7 @@ public:
 
 	Link(const bool* features);
 
-	~Link();
+	~Link() override;
 
 	bool	GetFeature(const Feature id) const;
 

@@ -17,7 +17,7 @@ public:
 	static StringCompleter*	Instance();
 	static void				Shutdown();
 
-	~RubyCompleter();
+	~RubyCompleter() override;
 
 protected:
 

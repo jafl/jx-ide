@@ -17,7 +17,7 @@ class PrefsDialog : public JXDialogDirector
 public:
 
 	PrefsDialog()
-	~PrefsDialog();
+	~PrefsDialog() override;
 
 protected:
 

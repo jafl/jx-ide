@@ -18,7 +18,7 @@ public:
 
 	GetStopLocationForLinkCmd();
 
-	~GetStopLocationForLinkCmd();
+	~GetStopLocationForLinkCmd() override;
 
 protected:
 

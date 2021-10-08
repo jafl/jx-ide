@@ -29,7 +29,7 @@ public:
 					   std::istream* symInput, const JFileVersion symVers,
 					   ProjectDocument* supervisor, const bool subProject);
 
-	~FileListDirector();
+	~FileListDirector() override;
 
 	FileListTable*	GetFileListTable() const;
 

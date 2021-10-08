@@ -24,7 +24,7 @@ public:
 
     SBValueList (const lldb::SBValueList &rhs);
 
-    ~SBValueList();
+    ~SBValueList() override;
 
     bool
     IsValid() const;

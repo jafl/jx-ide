@@ -1,5 +1,5 @@
 /******************************************************************************
- XDGetCompletions.cpp
+ XDGetCompletionsCmd.cpp
 
 	BASE CLASS = GetCompletionsCmd
 
@@ -7,7 +7,7 @@
 
  ******************************************************************************/
 
-#include "XDGetCompletions.h"
+#include "XDGetCompletionsCmd.h"
 #include "CommandInput.h"
 #include <jx-af/jcore/jAssert.h>
 
@@ -16,13 +16,13 @@
 
  ******************************************************************************/
 
-XDGetCompletions::XDGetCompletions
+xdebug::GetCompletionsCmd::GetCompletionsCmd
 	(
 	CommandInput*			input,
 	CommandOutputDisplay*	history
 	)
 	:
-	GetCompletionsCmd(JString("status", JString::kNoCopy)),
+	::GetCompletionsCmd(JString("status", JString::kNoCopy)),
 	itsPrefix(input->GetText()->GetText()),
 	itsInput(input),
 	itsHistory(history)
@@ -34,7 +34,7 @@ XDGetCompletions::XDGetCompletions
 
  ******************************************************************************/
 
-XDGetCompletions::~XDGetCompletions()
+xdebug::GetCompletionsCmd::~GetCompletionsCmd()
 {
 }
 
@@ -44,7 +44,7 @@ XDGetCompletions::~XDGetCompletions()
  ******************************************************************************/
 
 void
-XDGetCompletions::HandleSuccess
+xdebug::GetCompletionsCmd::HandleSuccess
 	(
 	const JString& data
 	)

@@ -25,7 +25,7 @@ public:
 
 	VarTreeDir(CommandDirector* supervisor);
 
-	~VarTreeDir();
+	~VarTreeDir() override;
 
 	void	DisplayExpression(const JString& expr);
 

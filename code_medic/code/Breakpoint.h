@@ -43,7 +43,7 @@ public:
 	Breakpoint(const JString& fileName, const JIndex lineIndex);
 	Breakpoint(const JString& addr);
 
-	~Breakpoint();
+	~Breakpoint() override;
 
 	JIndex			GetDebuggerIndex() const;
 	const Location&	GetLocation() const;

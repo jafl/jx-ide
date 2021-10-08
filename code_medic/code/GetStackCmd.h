@@ -19,7 +19,7 @@ public:
 
 	GetStackCmd(const JString& cmd, JTree* tree, StackWidget* widget);
 
-	~GetStackCmd();
+	~GetStackCmd() override;
 
 	JTree*			GetTree();
 	StackWidget*	GetWidget();

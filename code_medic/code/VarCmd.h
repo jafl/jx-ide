@@ -19,7 +19,7 @@ public:
 
 	VarCmd();
 
-	~VarCmd();
+	~VarCmd() override;
 
 	const JString&	GetData() const;
 
@@ -27,7 +27,7 @@ protected:
 
 	void	SetData(const JString& data);
 
-	virtual void	HandleFailure();
+	void	HandleFailure() override;
 
 private:
 

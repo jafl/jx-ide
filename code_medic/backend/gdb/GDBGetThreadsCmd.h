@@ -20,7 +20,7 @@ public:
 
 	GetThreadsCmd(JTree* tree, ThreadsWidget* widget);
 
-	~GetThreadsCmd();
+	~GetThreadsCmd() override;
 
 	static bool	ExtractThreadIndex(const JString& line, JIndex* threadIndex);
 	static bool	ExtractLocation(const JString& line,

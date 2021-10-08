@@ -42,7 +42,7 @@ public:
 	MemoryDir(std::istream& input, const JFileVersion vers,
 				CommandDirector* supervisor);
 
-	~MemoryDir();
+	~MemoryDir() override;
 
 	void	Activate() override;
 	bool	Deactivate() override;

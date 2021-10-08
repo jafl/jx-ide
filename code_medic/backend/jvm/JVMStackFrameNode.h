@@ -20,7 +20,7 @@ public:
 				   const JUInt64 id, const JUInt64 classID,
 				   const JUInt64 methodID, const JUInt64 codeOffset);
 
-	~StackFrameNode();
+	~StackFrameNode() override;
 
 protected:
 

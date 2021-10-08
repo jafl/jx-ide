@@ -23,14 +23,14 @@ public:
 					  const JCoordinate x, const JCoordinate y,
 					  const JCoordinate w, const JCoordinate h);
 
-	~StylerTableMenu();
+	~StylerTableMenu() override;
 
 	void	PrepareForPopup(const JPoint& cell);
 
 protected:
 
-	virtual JFontStyle	GetFontStyleForMenuUpdate() const;
-	virtual void		HandleMenuItem(const JIndex menuItem);
+	JFontStyle	GetFontStyleForMenuUpdate() const override;
+	void		HandleMenuItem(const JIndex menuItem) override;
 
 private:
 

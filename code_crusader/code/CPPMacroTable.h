@@ -27,7 +27,7 @@ public:
 					const JCoordinate x, const JCoordinate y,
 					const JCoordinate w, const JCoordinate h);
 
-	~CPPMacroTable();
+	~CPPMacroTable() override;
 
 	bool	ContentsValid() const;
 	bool	UpdateMacros(CPreprocessor* cpp) const;

@@ -18,7 +18,7 @@ public:
 
 	GetRegistersCmd(RegistersDir* dir);
 
-	~GetRegistersCmd();
+	~GetRegistersCmd() override;
 
 protected:
 

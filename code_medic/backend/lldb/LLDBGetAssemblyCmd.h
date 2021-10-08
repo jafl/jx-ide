@@ -20,7 +20,7 @@ public:
 
 	GetAssemblyCmd(SourceDirector* dir);
 
-	~GetAssemblyCmd();
+	~GetAssemblyCmd() override;
 
 protected:
 

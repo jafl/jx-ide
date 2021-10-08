@@ -32,7 +32,7 @@ public:
 
 	void	SetProjectDocument(ProjectDocument* projDoc);
 
-	~CommandMenu();
+	~CommandMenu() override;
 
 protected:
 

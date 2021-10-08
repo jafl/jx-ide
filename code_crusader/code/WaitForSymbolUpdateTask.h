@@ -19,7 +19,7 @@ public:
 
 	WaitForSymbolUpdateTask(JProcess* p);
 
-	~WaitForSymbolUpdateTask();
+	~WaitForSymbolUpdateTask() override;
 
 	void	Perform() override;
 

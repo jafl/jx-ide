@@ -31,7 +31,7 @@ public:
 			CTreeDirector* director, const JSize marginWidth,
 			DirList* dirList);
 
-	~CTree();
+	~CTree() override;
 
 	CPreprocessor*	GetCPreprocessor() const;
 

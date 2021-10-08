@@ -17,7 +17,7 @@ public:
 	static StringCompleter*	Instance();
 	static void					Shutdown();
 
-	~PascalCompleter();
+	~PascalCompleter() override;
 
 protected:
 

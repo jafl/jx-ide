@@ -28,7 +28,7 @@ public:
 	Plot2DDir(std::istream& input, const JFileVersion vers,
 				CommandDirector* supervisor);
 
-	~Plot2DDir();
+	~Plot2DDir() override;
 
 	void	Activate() override;
 	bool	GetMenuIcon(const JXImage** icon) const override;

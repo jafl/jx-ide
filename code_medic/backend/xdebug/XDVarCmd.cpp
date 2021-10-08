@@ -1,5 +1,5 @@
 /******************************************************************************
- XDVarCommand.cpp
+ XDVarCmd.cpp
 
 	BASE CLASS = VarCmd
 
@@ -7,8 +7,8 @@
 
  ******************************************************************************/
 
-#include "XDVarCommand.h"
-#include "XDGetContextVars.h"
+#include "XDVarCmd.h"
+#include "XDGetContextVarsCmd.h"
 #include "XDLink.h"
 #include "VarNode.h"
 #include "globals.h"
@@ -19,12 +19,12 @@
 
  ******************************************************************************/
 
-XDVarCommand::XDVarCommand
+xdebug::VarCmd::VarCmd
 	(
 	const JString& cmd
 	)
 	:
-	VarCmd()
+	::VarCmd()
 {
 	SetCommand(cmd);
 
@@ -37,7 +37,7 @@ XDVarCommand::XDVarCommand
 
  ******************************************************************************/
 
-XDVarCommand::~XDVarCommand()
+xdebug::VarCmd::~VarCmd()
 {
 	jdelete itsRootNode;
 }
@@ -48,19 +48,19 @@ XDVarCommand::~XDVarCommand()
  ******************************************************************************/
 
 void
-XDVarCommand::HandleSuccess
+xdebug::VarCmd::HandleSuccess
 	(
 	const JString& data
 	)
 {
-	auto* link = dynamic_cast<XDLink*>(GetLink());
+	auto* link = dynamic_cast<Link*>(GetLink());
 	xmlNode* root;
 	if (link == nullptr || !link->GetParsedData(&root))
 	{
 		return;
 	}
 
-	XDGetContextVars::BuildTree(1, root, itsRootNode);
+	GetContextVarsCmd::BuildTree(1, root, itsRootNode);
 	if (itsRootNode->HasChildren())
 	{
 		Broadcast(ValueMessage(kValueUpdated, itsRootNode->GetVarChild(1)));

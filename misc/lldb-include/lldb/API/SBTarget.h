@@ -57,7 +57,7 @@ public:
     //------------------------------------------------------------------
     // Destructor
     //------------------------------------------------------------------
-    ~SBTarget();
+    ~SBTarget() override;
 
     const lldb::SBTarget&
     operator = (const lldb::SBTarget& rhs);

@@ -134,7 +134,7 @@ public:
         return Get().operator->();
     }
     
-    ~PriorityPointerPair();
+    ~PriorityPointerPair() override;
     
 private:
 

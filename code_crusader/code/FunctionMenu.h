@@ -30,7 +30,7 @@ public:
 	FunctionMenu(JXFileDocument* doc, const TextFileType type, JXTEBase* te,
 				   JXMenu* owner, const JIndex itemIndex, JXContainer* enclosure);
 
-	~FunctionMenu();
+	~FunctionMenu() override;
 
 	void	TextChanged(const TextFileType type, const JString& fileName);
 

@@ -20,7 +20,7 @@ public:
 
 	GetStackArgumentsCmd(JTree* tree);
 
-	~GetStackArgumentsCmd();
+	~GetStackArgumentsCmd() override;
 
 protected:
 

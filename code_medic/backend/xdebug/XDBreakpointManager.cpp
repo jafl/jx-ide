@@ -8,7 +8,7 @@
  *****************************************************************************/
 
 #include "XDBreakpointManager.h"
-#include "XDGetBreakpoints.h"
+#include "XDGetBreakpointsCmd.h"
 #include "XDLink.h"
 #include <jx-af/jcore/jAssert.h>
 
@@ -17,12 +17,12 @@
 
  *****************************************************************************/
 
-XDBreakpointManager::XDBreakpointManager
+xdebug::BreakpointManager::BreakpointManager
 	(
-	XDLink* link
+	Link* link
 	)
 	:
-	BreakpointManager(link, jnew XDGetBreakpoints())
+	::BreakpointManager(link, jnew GetBreakpointsCmd())
 {
 }
 
@@ -31,6 +31,6 @@ XDBreakpointManager::XDBreakpointManager
 
  *****************************************************************************/
 
-XDBreakpointManager::~XDBreakpointManager()
+xdebug::BreakpointManager::~BreakpointManager()
 {
 }

@@ -34,7 +34,7 @@ public:
 
     SBEvent (lldb_private::Event *event_sp);
 
-    ~SBEvent();
+    ~SBEvent() override;
 
     const SBEvent &
     operator = (const lldb::SBEvent &rhs);

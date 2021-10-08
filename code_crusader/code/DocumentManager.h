@@ -44,7 +44,7 @@ public:
 
 	DocumentManager();
 
-	~DocumentManager();
+	~DocumentManager() override;
 
 	bool	GetTemplateDirectory(const JUtf8Byte* dirName,
 									 const bool create, JString* fullName);

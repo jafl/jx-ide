@@ -30,7 +30,7 @@ public:
 					   const JPtrArray<JString>& fullNameList,
 					   const JArray<JIndex>& lineIndexList);
 
-	~RunCommandDialog();
+	~RunCommandDialog() override;
 
 	void	Activate() override;
 

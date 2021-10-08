@@ -16,7 +16,7 @@ public:
 
 	SearchFontManager();
 
-	~SearchFontManager();
+	~SearchFontManager() override;
 
 	void	GetFontNames(JPtrArray<JString>* fontNames) override;
 	void	GetMonospaceFontNames(JPtrArray<JString>* fontNames) override;

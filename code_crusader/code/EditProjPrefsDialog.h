@@ -26,7 +26,7 @@ public:
 						  const bool rebuildMakefileDaily,
 						  const ProjectTable::DropFileAction dropFileAction);
 
-	~EditProjPrefsDialog();
+	~EditProjPrefsDialog() override;
 
 protected:
 

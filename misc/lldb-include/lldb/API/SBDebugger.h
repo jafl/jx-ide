@@ -37,7 +37,7 @@ public:
 
     SBDebugger(const lldb::DebuggerSP &debugger_sp);
 
-    ~SBDebugger();
+    ~SBDebugger() override;
 
     lldb::SBDebugger &
     operator = (const lldb::SBDebugger &rhs);

@@ -17,7 +17,7 @@ public:
 	static StringCompleter*	Instance();
 	static void				Shutdown();
 
-	~CCompleter();
+	~CCompleter() override;
 
 	static JSize	GetDefaultWordList(const JUtf8Byte*** list);
 

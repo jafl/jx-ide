@@ -18,7 +18,7 @@ public:
 
 	GetStackCmd(JTree* tree, StackWidget* widget);
 
-	~GetStackCmd();
+	~GetStackCmd() override;
 
 protected:
 

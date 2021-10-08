@@ -18,7 +18,7 @@ public:
 
 	GetStopLocationForAsmCmd();
 
-	~GetStopLocationForAsmCmd();
+	~GetStopLocationForAsmCmd() override;
 
 protected:
 

@@ -15,16 +15,18 @@
 #include <ace/SOCK_Acceptor.h>
 #include <ace/INET_Addr.h>
 
-class XDBreakpointManager;
-class XDSocket;
+namespace xdebug {
 
-class XDLink : public Link
+class BreakpointManager;
+class Socket;
+
+class Link : public ::Link
 {
 public:
 
-	XDLink();
+	Link();
 
-	~XDLink();
+	~Link() override;
 
 	bool	DebuggerHasStarted() const override;
 	bool	HasLoadedSymbols() const override;
@@ -55,7 +57,7 @@ public:
 	void	Send(const JUtf8Byte* text);
 	void	Send(const JString& text);
 
-	BreakpointManager*	GetBreakpointManager() override;
+	::BreakpointManager*	GetBreakpointManager() override;
 
 	void	ShowBreakpointInfo(const JIndex debuggerIndex) override;
 	void	SetBreakpoint(const JString& fileName, const JIndex lineIndex,
@@ -97,52 +99,52 @@ public:
 
 	// Command factory
 
-	Array2DCmd*					CreateArray2DCmd(Array2DDir* dir,
+	::Array2DCmd*				CreateArray2DCmd(Array2DDir* dir,
 												 JXStringTable* table,
 												 JStringTableData* data) override;
-	Plot2DCmd*					CreatePlot2DCmd(Plot2DDir* dir,
+	::Plot2DCmd*				CreatePlot2DCmd(Plot2DDir* dir,
 												JArray<JFloat>* x,
 												JArray<JFloat>* y) override;
-	DisplaySourceForMainCmd*	CreateDisplaySourceForMainCmd(SourceDirector* sourceDir) override;
-	GetCompletionsCmd*			CreateGetCompletionsCmd(CommandInput* input,
+	::DisplaySourceForMainCmd*	CreateDisplaySourceForMainCmd(SourceDirector* sourceDir) override;
+	::GetCompletionsCmd*		CreateGetCompletionsCmd(CommandInput* input,
 														CommandOutputDisplay* history) override;
-	GetFrameCmd*				CreateGetFrameCmd(StackWidget* widget) override;
-	GetStackCmd*				CreateGetStackCmd(JTree* tree, StackWidget* widget) override;
-	GetThreadCmd*				CreateGetThreadCmd(ThreadsWidget* widget) override;
-	GetThreadsCmd*				CreateGetThreadsCmd(JTree* tree, ThreadsWidget* widget) override;
-	GetFullPathCmd*				CreateGetFullPathCmd(const JString& fileName,
+	::GetFrameCmd*				CreateGetFrameCmd(StackWidget* widget) override;
+	::GetStackCmd*				CreateGetStackCmd(JTree* tree, StackWidget* widget) override;
+	::GetThreadCmd*				CreateGetThreadCmd(ThreadsWidget* widget) override;
+	::GetThreadsCmd*			CreateGetThreadsCmd(JTree* tree, ThreadsWidget* widget) override;
+	::GetFullPathCmd*			CreateGetFullPathCmd(const JString& fileName,
 													 const JIndex lineIndex = 0) override;
-	GetInitArgsCmd*				CreateGetInitArgsCmd(JXInputField* argInput) override;
-	GetLocalVarsCmd*			CreateGetLocalVarsCmd(VarNode* rootNode) override;
-	GetSourceFileListCmd*		CreateGetSourceFileListCmd(FileListDir* fileList) override;
-	VarCmd*						CreateVarValueCmd(const JString& expr) override;
-	VarCmd*						CreateVarContentCmd(const JString& expr) override;
-	VarNode*					CreateVarNode(const bool shouldUpdate = true) override;
-	VarNode*					CreateVarNode(JTreeNode* parent, const JString& name,
+	::GetInitArgsCmd*			CreateGetInitArgsCmd(JXInputField* argInput) override;
+	::GetLocalVarsCmd*			CreateGetLocalVarsCmd(::VarNode* rootNode) override;
+	::GetSourceFileListCmd*		CreateGetSourceFileListCmd(FileListDir* fileList) override;
+	::VarCmd*					CreateVarValueCmd(const JString& expr) override;
+	::VarCmd*					CreateVarContentCmd(const JString& expr) override;
+	::VarNode*					CreateVarNode(const bool shouldUpdate = true) override;
+	::VarNode*					CreateVarNode(JTreeNode* parent, const JString& name,
 											  const JString& fullName, const JString& value) override;
 	JString						Build1DArrayExpression(const JString& expr,
 													   const JInteger index) override;
 	JString						Build2DArrayExpression(const JString& expr,
 													   const JInteger rowIndex,
 													   const JInteger colIndex) override;
-	GetMemoryCmd*				CreateGetMemoryCmd(MemoryDir* dir) override;
-	GetAssemblyCmd*				CreateGetAssemblyCmd(SourceDirector* dir) override;
-	GetRegistersCmd*			CreateGetRegistersCmd(RegistersDir* dir) override;
+	::GetMemoryCmd*				CreateGetMemoryCmd(MemoryDir* dir) override;
+	::GetAssemblyCmd*			CreateGetAssemblyCmd(SourceDirector* dir) override;
+	::GetRegistersCmd*			CreateGetRegistersCmd(RegistersDir* dir) override;
 
-	// called by XD commands
+	// called by xdebug commands
 
 	bool	GetParsedData(xmlNode** root);
 
-	// called by XDSocket
+	// called by Socket
 
-	void	ConnectionEstablished(XDSocket* socket);
-	void	ConnectionFinished(XDSocket* socket);
+	void	ConnectionEstablished(Socket* socket);
+	void	ConnectionFinished(Socket* socket);
 
-	// called by XDWelcomeTask
+	// called by WelcomeTask
 
 	void	BroadcastWelcome(const JString& msg, const bool error);
 
-	// called by XDSetProgramTask
+	// called by SetProgramTask
 
 	void	BroadcastProgramSet();
 
@@ -158,13 +160,13 @@ protected:
 
 private:
 
-	using XDAcceptor = ACE_Acceptor<XDSocket, ACE_SOCK_ACCEPTOR>;
+	using Acceptor = ACE_Acceptor<Socket, ACE_SOCK_ACCEPTOR>;
 
 private:
 
-	XDAcceptor*				itsAcceptor;
-	XDSocket*				itsLink;		// nullptr if not connected to debugger
-	XDBreakpointManager*	itsBPMgr;
+	Acceptor*			itsAcceptor;
+	Socket*				itsLink;		// nullptr if not connected to debugger
+	BreakpointManager*	itsBPMgr;
 
 	JString	itsIDEKey;
 	JString	itsScriptURI;
@@ -189,6 +191,8 @@ private:
 	void	SendProgramStopped(const Location& location);
 };
 
+};
+
 
 /******************************************************************************
  BroadcastWelcome
@@ -196,7 +200,7 @@ private:
  *****************************************************************************/
 
 inline void
-XDLink::BroadcastWelcome
+xdebug::Link::BroadcastWelcome
 	(
 	const JString&	msg,
 	const bool		error
@@ -212,7 +216,7 @@ XDLink::BroadcastWelcome
  *****************************************************************************/
 
 inline const JPtrArray<JString>&
-XDLink::GetSourcePathList()
+xdebug::Link::GetSourcePathList()
 	const
 {
 	return *itsSourcePathList;
@@ -224,7 +228,7 @@ XDLink::GetSourcePathList()
  *****************************************************************************/
 
 inline bool
-XDLink::GetParsedData
+xdebug::Link::GetParsedData
 	(
 	xmlNode** root
 	)
@@ -239,7 +243,7 @@ XDLink::GetParsedData
  *****************************************************************************/
 
 inline JIndex
-XDLink::GetStackFrameIndex()
+xdebug::Link::GetStackFrameIndex()
 	const
 {
 	return itsStackFrameIndex;
@@ -253,7 +257,7 @@ XDLink::GetStackFrameIndex()
  *****************************************************************************/
 
 inline void
-XDLink::Send
+xdebug::Link::Send
 	(
 	const JString& text
 	)

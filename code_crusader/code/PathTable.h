@@ -30,7 +30,7 @@ public:
 				const JCoordinate x, const JCoordinate y,
 				const JCoordinate w, const JCoordinate h);
 
-	~PathTable();
+	~PathTable() override;
 
 	void	AddDirectories(const JPtrArray<JString>& list);
 	void	GetPathList(DirList* pathList) const;

@@ -66,7 +66,7 @@ public:
 				   const JCoordinate x, const JCoordinate y,
 				   const JCoordinate w, const JCoordinate h);
 
-	~ProjectTable();
+	~ProjectTable() override;
 
 	bool	NewGroup(GroupNode** returnNode = nullptr);
 	void	AddDirectoryTree();

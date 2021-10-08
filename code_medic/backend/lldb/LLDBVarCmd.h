@@ -18,7 +18,7 @@ public:
 
 	VarCmd(const JString& cmd);
 
-	~VarCmd();
+	~VarCmd() override;
 
 protected:
 

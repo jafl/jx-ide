@@ -27,7 +27,7 @@ public:
 			 GoTreeDirector* director, const JSize marginWidth,
 			   DirList* dirList);
 
-	~GoTree();
+	~GoTree() override;
 
 	void	StreamOut(std::ostream& projOutput, std::ostream* setOutput,
 					  std::ostream* symOutput, const DirList* dirList) const override;

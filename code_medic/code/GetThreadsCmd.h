@@ -18,7 +18,7 @@ public:
 
 	GetThreadsCmd(const JString& cmd, ThreadsWidget* widget);
 
-	~GetThreadsCmd();
+	~GetThreadsCmd() override;
 
 	ThreadsWidget*	GetWidget();
 

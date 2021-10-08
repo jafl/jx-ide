@@ -19,7 +19,7 @@ public:
 			   const bool isFinal);
 	PHPClass(std::istream& input, const JFileVersion vers, Tree* tree);
 
-	~PHPClass();
+	~PHPClass() override;
 
 	void	ViewSource() const override;
 	void	ViewHeader() const override;

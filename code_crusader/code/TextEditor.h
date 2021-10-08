@@ -33,7 +33,7 @@ public:
 				 const JCoordinate x, const JCoordinate y,
 				 const JCoordinate w, const JCoordinate h);
 
-	~TextEditor();
+	~TextEditor() override;
 
 	TextDocument*	GetDocument();
 
@@ -125,7 +125,7 @@ protected:
 		StyledText(TextDocument* doc, JFontManager* fontManager,
 				   const bool pasteStyledText);
 
-		~StyledText();
+		~StyledText() override;
 
 		protected:
 

@@ -22,14 +22,14 @@ public:
 					 std::istream* symInput, const JFileVersion symVers,
 					 ProjectDocument* supervisor, const bool subProject);
 
-	~GoTreeDirector();
+	~GoTreeDirector() override;
 
 	GoTree*	GetGoTree() const;
 
 protected:
 
-	virtual void	UpdateTreeMenu();
-	virtual void	HandleTreeMenu(const JIndex index);
+	void	UpdateTreeMenu() override;
+	void	HandleTreeMenu(const JIndex index) override;
 
 private:
 

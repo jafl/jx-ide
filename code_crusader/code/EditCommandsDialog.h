@@ -25,7 +25,7 @@ public:
 
 	EditCommandsDialog(ProjectDocument* projDoc);
 
-	~EditCommandsDialog();
+	~EditCommandsDialog() override;
 
 protected:
 

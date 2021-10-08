@@ -24,7 +24,7 @@ public:
 			   const RelPathCSF::PathType pathType,
 			   const JString& origName, const JString& message);
 
-	~RPChooseFileDialog();
+	~RPChooseFileDialog() override;
 
 	RelPathCSF::PathType	GetPathType() const;
 

@@ -30,7 +30,7 @@ public:
 	ProjectNode(ProjectTree* tree, const ProjectNodeType type,
 				  const JString& name, const bool isOpenable);
 
-	~ProjectNode();
+	~ProjectNode() override;
 
 	ProjectNodeType	GetType() const;
 	virtual bool	IncludedInMakefile() const;

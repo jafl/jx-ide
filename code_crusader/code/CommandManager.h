@@ -95,7 +95,7 @@ public:
 
 	CommandManager(DocumentManager* docMgr = nullptr);
 
-	~CommandManager();
+	~CommandManager() override;
 
 	void	Exec(const JIndex cmdIndex, ProjectDocument* projDoc,
 				 TextDocument* textDoc);

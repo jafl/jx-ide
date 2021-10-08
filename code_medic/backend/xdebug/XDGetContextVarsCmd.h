@@ -1,25 +1,27 @@
 /******************************************************************************
- XDGetContextVars.h
+ XDGetContextVarsCmd.h
 
 	Copyright (C) 2007 by John Lindal.
 
  ******************************************************************************/
 
-#ifndef _H_XDGetContextVars
-#define _H_XDGetContextVars
+#ifndef _H_XDGetContextVarsCmd
+#define _H_XDGetContextVarsCmd
 
 #include "Command.h"
 #include <jx-af/jcore/jXMLUtil.h>	// need defn of xmlNode
 
 class VarNode;
 
-class XDGetContextVars : public Command
+namespace xdebug {
+
+class GetContextVarsCmd : public Command
 {
 public:
 
-	XDGetContextVars(VarNode* rootNode, const JString& contextID);
+	GetContextVarsCmd(VarNode* rootNode, const JString& contextID);
 
-	~XDGetContextVars();
+	~GetContextVarsCmd() override;
 
 	static void	BuildTree(const JSize depth, xmlNode* root, VarNode* varRoot);
 
@@ -30,6 +32,8 @@ protected:
 private:
 
 	VarNode*	itsRootNode;	// not owned
+};
+
 };
 
 #endif

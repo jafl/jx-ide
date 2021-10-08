@@ -21,7 +21,7 @@ public:
 
 	RegistersDir(CommandDirector* supervisor);
 
-	~RegistersDir();
+	~RegistersDir() override;
 
 	void			Activate() override;
 	bool			Deactivate() override;

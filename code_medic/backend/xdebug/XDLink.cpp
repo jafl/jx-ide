@@ -16,19 +16,19 @@
 #include "XDCloseSocketTask.h"
 #include "XDBreakpointManager.h"
 
-#include "XDArray2DCommand.h"
-#include "XDPlot2DCommand.h"
-#include "XDDisplaySourceForMain.h"
-#include "XDGetCompletions.h"
-#include "XDGetFrame.h"
-#include "XDGetStack.h"
-#include "XDGetThread.h"
-#include "XDGetThreads.h"
-#include "XDGetFullPath.h"
-#include "XDGetInitArgs.h"
-#include "XDGetLocalVars.h"
-#include "XDGetSourceFileList.h"
-#include "XDVarCommand.h"
+#include "XDArray2DCmd.h"
+#include "XDPlot2DCmd.h"
+#include "XDDisplaySourceForMainCmd.h"
+#include "XDGetCompletionsCmd.h"
+#include "XDGetFrameCmd.h"
+#include "XDGetStackCmd.h"
+#include "XDGetThreadCmd.h"
+#include "XDGetThreadsCmd.h"
+#include "XDGetFullPathCmd.h"
+#include "XDGetInitArgsCmd.h"
+#include "XDGetLocalVarsCmd.h"
+#include "XDGetSourceFileListCmd.h"
+#include "XDVarCmd.h"
 #include "XDVarNode.h"
 
 #include "CommandDirector.h"
@@ -73,16 +73,16 @@ static const bool kFeatures[]=
 
  *****************************************************************************/
 
-XDLink::XDLink()
+xdebug::Link::Link()
 	:
-	Link(kFeatures),
+	::Link(kFeatures),
 	itsAcceptor(nullptr),
 	itsLink(nullptr),
 	itsParsedDataRoot(nullptr)
 {
 	InitFlags();
 
-	itsBPMgr = jnew XDBreakpointManager(this);
+	itsBPMgr = jnew BreakpointManager(this);
 	assert( itsBPMgr != nullptr );
 
 	itsSourcePathList = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
@@ -96,7 +96,7 @@ XDLink::XDLink()
 
  *****************************************************************************/
 
-XDLink::~XDLink()
+xdebug::Link::~Link()
 {
 	StopDebugger();
 
@@ -113,7 +113,7 @@ XDLink::~XDLink()
  *****************************************************************************/
 
 void
-XDLink::InitFlags()
+xdebug::Link::InitFlags()
 {
 	itsStackFrameIndex      = (JIndex) -1;
 	itsInitFinishedFlag     = false;
@@ -127,7 +127,7 @@ XDLink::InitFlags()
  ******************************************************************************/
 
 const JString&
-XDLink::GetPrompt()
+xdebug::Link::GetPrompt()
 	const
 {
 	return JGetString("Prompt::XDLink");
@@ -139,7 +139,7 @@ XDLink::GetPrompt()
  ******************************************************************************/
 
 const JString&
-XDLink::GetScriptPrompt()
+xdebug::Link::GetScriptPrompt()
 	const
 {
 	return JGetString("ScriptPrompt::XDLink");
@@ -151,7 +151,7 @@ XDLink::GetScriptPrompt()
  ******************************************************************************/
 
 bool
-XDLink::DebuggerHasStarted()
+xdebug::Link::DebuggerHasStarted()
 	const
 {
 	return true;
@@ -163,7 +163,7 @@ XDLink::DebuggerHasStarted()
  ******************************************************************************/
 
 JString
-XDLink::GetChooseProgramInstructions()
+xdebug::Link::GetChooseProgramInstructions()
 	const
 {
 	return JGetString("ChooseProgramInstr::XDLink");
@@ -175,7 +175,7 @@ XDLink::GetChooseProgramInstructions()
  ******************************************************************************/
 
 bool
-XDLink::HasProgram()
+xdebug::Link::HasProgram()
 	const
 {
 	return !itsProgramName.IsEmpty() || itsLink != nullptr;
@@ -187,7 +187,7 @@ XDLink::HasProgram()
  ******************************************************************************/
 
 bool
-XDLink::GetProgram
+xdebug::Link::GetProgram
 	(
 	JString* fullName
 	)
@@ -203,7 +203,7 @@ XDLink::GetProgram
  ******************************************************************************/
 
 bool
-XDLink::HasCore()
+xdebug::Link::HasCore()
 	const
 {
 	return false;
@@ -215,7 +215,7 @@ XDLink::HasCore()
  ******************************************************************************/
 
 bool
-XDLink::GetCore
+xdebug::Link::GetCore
 	(
 	JString* fullName
 	)
@@ -231,7 +231,7 @@ XDLink::GetCore
  ******************************************************************************/
 
 bool
-XDLink::HasLoadedSymbols()
+xdebug::Link::HasLoadedSymbols()
 	const
 {
 	return itsLink != nullptr;
@@ -243,7 +243,7 @@ XDLink::HasLoadedSymbols()
  *****************************************************************************/
 
 bool
-XDLink::IsDebugging()
+xdebug::Link::IsDebugging()
 	const
 {
 	return itsLink != nullptr;
@@ -255,7 +255,7 @@ XDLink::IsDebugging()
  *****************************************************************************/
 
 bool
-XDLink::ProgramIsRunning()
+xdebug::Link::ProgramIsRunning()
 	const
 {
 	return itsLink != nullptr && !itsProgramIsStoppedFlag;
@@ -267,7 +267,7 @@ XDLink::ProgramIsRunning()
  *****************************************************************************/
 
 bool
-XDLink::ProgramIsStopped()
+xdebug::Link::ProgramIsStopped()
 	const
 {
 	return itsLink != nullptr && itsProgramIsStoppedFlag;
@@ -279,7 +279,7 @@ XDLink::ProgramIsStopped()
  *****************************************************************************/
 
 bool
-XDLink::OKToSendCommands
+xdebug::Link::OKToSendCommands
 	(
 	const bool background
 	)
@@ -294,7 +294,7 @@ XDLink::OKToSendCommands
  *****************************************************************************/
 
 bool
-XDLink::IsDefiningScript()
+xdebug::Link::IsDefiningScript()
 	const
 {
 	return false;
@@ -306,7 +306,7 @@ XDLink::IsDefiningScript()
  *****************************************************************************/
 
 void
-XDLink::Receive
+xdebug::Link::Receive
 	(
 	JBroadcaster*	sender,
 	const Message&	message
@@ -328,7 +328,7 @@ XDLink::Receive
  *****************************************************************************/
 
 void
-XDLink::ReceiveMessageFromDebugger()
+xdebug::Link::ReceiveMessageFromDebugger()
 {
 	itsLink->StopTimer();
 
@@ -432,7 +432,7 @@ XDLink::ReceiveMessageFromDebugger()
 			{
 				CancelAllCommands();
 
-				auto* task = jnew XDCloseSocketTask(itsLink);
+				auto* task = jnew CloseSocketTask(itsLink);
 				assert( task != nullptr );
 				task->Go();
 			}
@@ -448,7 +448,7 @@ XDLink::ReceiveMessageFromDebugger()
  *****************************************************************************/
 
 void
-XDLink::SetProgram
+xdebug::Link::SetProgram
 	(
 	const JString& fileName
 	)
@@ -521,7 +521,7 @@ XDLink::SetProgram
 		}
 	}
 
-	auto* task = jnew XDSetProgramTask();
+	auto* task = jnew SetProgramTask();
 	assert( task != nullptr );
 	task->Go();
 }
@@ -532,7 +532,7 @@ XDLink::SetProgram
  *****************************************************************************/
 
 void
-XDLink::BroadcastProgramSet()
+xdebug::Link::BroadcastProgramSet()
 {
 	JString programName;
 	GetProgram(&programName);
@@ -546,7 +546,7 @@ XDLink::BroadcastProgramSet()
  *****************************************************************************/
 
 void
-XDLink::ReloadProgram()
+xdebug::Link::ReloadProgram()
 {
 }
 
@@ -556,7 +556,7 @@ XDLink::ReloadProgram()
  *****************************************************************************/
 
 void
-XDLink::SetCore
+xdebug::Link::SetCore
 	(
 	const JString& fullName
 	)
@@ -569,7 +569,7 @@ XDLink::SetCore
  *****************************************************************************/
 
 void
-XDLink::AttachToProcess
+xdebug::Link::AttachToProcess
 	(
 	const pid_t pid
 	)
@@ -582,7 +582,7 @@ XDLink::AttachToProcess
  *****************************************************************************/
 
 void
-XDLink::RunProgram
+xdebug::Link::RunProgram
 	(
 	const JString& args
 	)
@@ -595,7 +595,7 @@ XDLink::RunProgram
  *****************************************************************************/
 
 BreakpointManager*
-XDLink::GetBreakpointManager()
+xdebug::Link::GetBreakpointManager()
 {
 	return itsBPMgr;
 }
@@ -606,7 +606,7 @@ XDLink::GetBreakpointManager()
  *****************************************************************************/
 
 void
-XDLink::ShowBreakpointInfo
+xdebug::Link::ShowBreakpointInfo
 	(
 	const JIndex debuggerIndex
 	)
@@ -619,11 +619,11 @@ XDLink::ShowBreakpointInfo
  *****************************************************************************/
 
 void
-XDLink::SetBreakpoint
+xdebug::Link::SetBreakpoint
 	(
 	const JString&	fileName,
 	const JIndex	lineIndex,
-	const bool	temporary
+	const bool		temporary
 	)
 {
 	JString cmd("breakpoint_set -t line -f ");
@@ -647,10 +647,10 @@ XDLink::SetBreakpoint
  *****************************************************************************/
 
 void
-XDLink::SetBreakpoint
+xdebug::Link::SetBreakpoint
 	(
 	const JString&	address,
-	const bool	temporary
+	const bool		temporary
 	)
 {
 }
@@ -661,7 +661,7 @@ XDLink::SetBreakpoint
  *****************************************************************************/
 
 void
-XDLink::RemoveBreakpoint
+xdebug::Link::RemoveBreakpoint
 	(
 	const JIndex debuggerIndex
 	)
@@ -679,7 +679,7 @@ XDLink::RemoveBreakpoint
  *****************************************************************************/
 
 void
-XDLink::RemoveAllBreakpointsOnLine
+xdebug::Link::RemoveAllBreakpointsOnLine
 	(
 	const JString&	fileName,
 	const JIndex	lineIndex
@@ -716,7 +716,7 @@ XDLink::RemoveAllBreakpointsOnLine
  *****************************************************************************/
 
 void
-XDLink::RemoveAllBreakpointsAtAddress
+xdebug::Link::RemoveAllBreakpointsAtAddress
 	(
 	const JString& addr
 	)
@@ -729,7 +729,7 @@ XDLink::RemoveAllBreakpointsAtAddress
  *****************************************************************************/
 
 void
-XDLink::RemoveAllBreakpoints()
+xdebug::Link::RemoveAllBreakpoints()
 {
 	bool changed = false;
 
@@ -757,7 +757,7 @@ XDLink::RemoveAllBreakpoints()
  *****************************************************************************/
 
 void
-XDLink::SetBreakpointEnabled
+xdebug::Link::SetBreakpointEnabled
 	(
 	const JIndex	debuggerIndex,
 	const bool	enabled,
@@ -779,7 +779,7 @@ XDLink::SetBreakpointEnabled
  *****************************************************************************/
 
 void
-XDLink::SetBreakpointCondition
+xdebug::Link::SetBreakpointCondition
 	(
 	const JIndex	debuggerIndex,
 	const JString&	condition
@@ -793,7 +793,7 @@ XDLink::SetBreakpointCondition
  *****************************************************************************/
 
 void
-XDLink::RemoveBreakpointCondition
+xdebug::Link::RemoveBreakpointCondition
 	(
 	const JIndex debuggerIndex
 	)
@@ -806,7 +806,7 @@ XDLink::RemoveBreakpointCondition
  *****************************************************************************/
 
 void
-XDLink::SetBreakpointIgnoreCount
+xdebug::Link::SetBreakpointIgnoreCount
 	(
 	const JIndex	debuggerIndex,
 	const JSize		count
@@ -820,7 +820,7 @@ XDLink::SetBreakpointIgnoreCount
  *****************************************************************************/
 
 void
-XDLink::WatchExpression
+xdebug::Link::WatchExpression
 	(
 	const JString& expr
 	)
@@ -833,7 +833,7 @@ XDLink::WatchExpression
  *****************************************************************************/
 
 void
-XDLink::WatchLocation
+xdebug::Link::WatchLocation
 	(
 	const JString& expr
 	)
@@ -846,7 +846,7 @@ XDLink::WatchLocation
  *****************************************************************************/
 
 void
-XDLink::SwitchToThread
+xdebug::Link::SwitchToThread
 	(
 	const JUInt64 id
 	)
@@ -859,7 +859,7 @@ XDLink::SwitchToThread
  *****************************************************************************/
 
 void
-XDLink::SwitchToFrame
+xdebug::Link::SwitchToFrame
 	(
 	const JUInt64 id
 	)
@@ -891,7 +891,7 @@ XDLink::SwitchToFrame
  *****************************************************************************/
 
 void
-XDLink::StepOver()
+xdebug::Link::StepOver()
 {
 	Send("step_over");
 	itsProgramIsStoppedFlag = false;
@@ -904,7 +904,7 @@ XDLink::StepOver()
  *****************************************************************************/
 
 void
-XDLink::StepInto()
+xdebug::Link::StepInto()
 {
 	Send("step_into");
 	itsProgramIsStoppedFlag = false;
@@ -917,7 +917,7 @@ XDLink::StepInto()
  *****************************************************************************/
 
 void
-XDLink::StepOut()
+xdebug::Link::StepOut()
 {
 	Send("step_out");
 	itsProgramIsStoppedFlag = false;
@@ -930,7 +930,7 @@ XDLink::StepOut()
  *****************************************************************************/
 
 void
-XDLink::Continue()
+xdebug::Link::Continue()
 {
 	Send("run");
 	itsProgramIsStoppedFlag = false;
@@ -943,7 +943,7 @@ XDLink::Continue()
  *****************************************************************************/
 
 void
-XDLink::RunUntil
+xdebug::Link::RunUntil
 	(
 	const JString&	fileName,
 	const JIndex	lineIndex
@@ -959,7 +959,7 @@ XDLink::RunUntil
  *****************************************************************************/
 
 void
-XDLink::SetExecutionPoint
+xdebug::Link::SetExecutionPoint
 	(
 	const JString&	fileName,
 	const JIndex	lineIndex
@@ -973,7 +973,7 @@ XDLink::SetExecutionPoint
  *****************************************************************************/
 
 void
-XDLink::SetValue
+xdebug::Link::SetValue
 	(
 	const JString& name,
 	const JString& value
@@ -1000,15 +1000,15 @@ XDLink::SetValue
 
  *****************************************************************************/
 
-Array2DCmd*
-XDLink::CreateArray2DCmd
+::Array2DCmd*
+xdebug::Link::CreateArray2DCmd
 	(
-	Array2DDir*		dir,
+	Array2DDir*			dir,
 	JXStringTable*		table,
 	JStringTableData*	data
 	)
 {
-	Array2DCmd* cmd = jnew XDArray2DCommand(dir, table, data);
+	Array2DCmd* cmd = jnew Array2DCmd(dir, table, data);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1018,15 +1018,15 @@ XDLink::CreateArray2DCmd
 
  *****************************************************************************/
 
-Plot2DCmd*
-XDLink::CreatePlot2DCmd
+::Plot2DCmd*
+xdebug::Link::CreatePlot2DCmd
 	(
-	Plot2DDir*	dir,
+	Plot2DDir*		dir,
 	JArray<JFloat>*	x,
 	JArray<JFloat>*	y
 	)
 {
-	Plot2DCmd* cmd = jnew XDPlot2DCommand(dir, x, y);
+	Plot2DCmd* cmd = jnew Plot2DCmd(dir, x, y);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1036,13 +1036,13 @@ XDLink::CreatePlot2DCmd
 
  *****************************************************************************/
 
-DisplaySourceForMainCmd*
-XDLink::CreateDisplaySourceForMainCmd
+::DisplaySourceForMainCmd*
+xdebug::Link::CreateDisplaySourceForMainCmd
 	(
 	SourceDirector* sourceDir
 	)
 {
-	DisplaySourceForMainCmd* cmd = jnew XDDisplaySourceForMain(sourceDir);
+	DisplaySourceForMainCmd* cmd = jnew DisplaySourceForMainCmd(sourceDir);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1052,14 +1052,14 @@ XDLink::CreateDisplaySourceForMainCmd
 
  *****************************************************************************/
 
-GetCompletionsCmd*
-XDLink::CreateGetCompletionsCmd
+::GetCompletionsCmd*
+xdebug::Link::CreateGetCompletionsCmd
 	(
-	CommandInput*	input,
+	CommandInput*		input,
 	CommandOutputDisplay*	history
 	)
 {
-	GetCompletionsCmd* cmd = jnew XDGetCompletions(input, history);
+	GetCompletionsCmd* cmd = jnew GetCompletionsCmd(input, history);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1069,13 +1069,13 @@ XDLink::CreateGetCompletionsCmd
 
  *****************************************************************************/
 
-GetFrameCmd*
-XDLink::CreateGetFrameCmd
+::GetFrameCmd*
+xdebug::Link::CreateGetFrameCmd
 	(
 	StackWidget* widget
 	)
 {
-	GetFrameCmd* cmd = jnew XDGetFrame(widget);
+	GetFrameCmd* cmd = jnew GetFrameCmd(widget);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1085,14 +1085,14 @@ XDLink::CreateGetFrameCmd
 
  *****************************************************************************/
 
-GetStackCmd*
-XDLink::CreateGetStackCmd
+::GetStackCmd*
+xdebug::Link::CreateGetStackCmd
 	(
 	JTree*			tree,
 	StackWidget*	widget
 	)
 {
-	GetStackCmd* cmd = jnew XDGetStack(tree, widget);
+	GetStackCmd* cmd = jnew GetStackCmd(tree, widget);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1102,13 +1102,13 @@ XDLink::CreateGetStackCmd
 
  *****************************************************************************/
 
-GetThreadCmd*
-XDLink::CreateGetThreadCmd
+::GetThreadCmd*
+xdebug::Link::CreateGetThreadCmd
 	(
 	ThreadsWidget* widget
 	)
 {
-	GetThreadCmd* cmd = jnew XDGetThread(widget);
+	GetThreadCmd* cmd = jnew GetThreadCmd(widget);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1118,14 +1118,14 @@ XDLink::CreateGetThreadCmd
 
  *****************************************************************************/
 
-GetThreadsCmd*
-XDLink::CreateGetThreadsCmd
+::GetThreadsCmd*
+xdebug::Link::CreateGetThreadsCmd
 	(
-	JTree*				tree,
+	JTree*			tree,
 	ThreadsWidget*	widget
 	)
 {
-	GetThreadsCmd* cmd = jnew XDGetThreads(tree, widget);
+	GetThreadsCmd* cmd = jnew GetThreadsCmd(tree, widget);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1135,14 +1135,14 @@ XDLink::CreateGetThreadsCmd
 
  *****************************************************************************/
 
-GetFullPathCmd*
-XDLink::CreateGetFullPathCmd
+::GetFullPathCmd*
+xdebug::Link::CreateGetFullPathCmd
 	(
 	const JString&	fileName,
 	const JIndex	lineIndex
 	)
 {
-	GetFullPathCmd* cmd = jnew XDGetFullPath(fileName, lineIndex);
+	GetFullPathCmd* cmd = jnew GetFullPathCmd(fileName, lineIndex);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1152,13 +1152,13 @@ XDLink::CreateGetFullPathCmd
 
  *****************************************************************************/
 
-GetInitArgsCmd*
-XDLink::CreateGetInitArgsCmd
+::GetInitArgsCmd*
+xdebug::Link::CreateGetInitArgsCmd
 	(
 	JXInputField* argInput
 	)
 {
-	GetInitArgsCmd* cmd = jnew XDGetInitArgs(argInput);
+	GetInitArgsCmd* cmd = jnew GetInitArgsCmd(argInput);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1168,13 +1168,13 @@ XDLink::CreateGetInitArgsCmd
 
  *****************************************************************************/
 
-GetLocalVarsCmd*
-XDLink::CreateGetLocalVarsCmd
+::GetLocalVarsCmd*
+xdebug::Link::CreateGetLocalVarsCmd
 	(
-	VarNode* rootNode
+	::VarNode* rootNode
 	)
 {
-	GetLocalVarsCmd* cmd = jnew XDGetLocalVars(rootNode);
+	GetLocalVarsCmd* cmd = jnew GetLocalVarsCmd(rootNode);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1184,13 +1184,13 @@ XDLink::CreateGetLocalVarsCmd
 
  *****************************************************************************/
 
-GetSourceFileListCmd*
-XDLink::CreateGetSourceFileListCmd
+::GetSourceFileListCmd*
+xdebug::Link::CreateGetSourceFileListCmd
 	(
 	FileListDir* fileList
 	)
 {
-	GetSourceFileListCmd* cmd = jnew XDGetSourceFileList(fileList);
+	GetSourceFileListCmd* cmd = jnew GetSourceFileListCmd(fileList);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1200,8 +1200,8 @@ XDLink::CreateGetSourceFileListCmd
 
  *****************************************************************************/
 
-VarCmd*
-XDLink::CreateVarValueCmd
+::VarCmd*
+xdebug::Link::CreateVarValueCmd
 	(
 	const JString& expr
 	)
@@ -1211,7 +1211,7 @@ XDLink::CreateVarValueCmd
 	s += " -d ";
 	s += JString((JUInt64)itsStackFrameIndex);
 
-	VarCmd* cmd = jnew XDVarCommand(s);
+	VarCmd* cmd = jnew VarCmd(s);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1221,8 +1221,8 @@ XDLink::CreateVarValueCmd
 
  *****************************************************************************/
 
-VarCmd*
-XDLink::CreateVarContentCmd
+::VarCmd*
+xdebug::Link::CreateVarContentCmd
 	(
 	const JString& expr
 	)
@@ -1235,19 +1235,19 @@ XDLink::CreateVarContentCmd
 
  *****************************************************************************/
 
-VarNode*
-XDLink::CreateVarNode
+::VarNode*
+xdebug::Link::CreateVarNode
 	(
 	const bool shouldUpdate		// false for Local Variables
 	)
 {
-	VarNode* node = jnew XDVarNode(shouldUpdate);
+	VarNode* node = jnew VarNode(shouldUpdate);
 	assert( node != nullptr );
 	return node;
 }
 
-VarNode*
-XDLink::CreateVarNode
+::VarNode*
+xdebug::Link::CreateVarNode
 	(
 	JTreeNode*		parent,
 	const JString&	name,
@@ -1255,7 +1255,7 @@ XDLink::CreateVarNode
 	const JString&	value
 	)
 {
-	VarNode* node = jnew XDVarNode(parent, name, fullName, value);
+	VarNode* node = jnew VarNode(parent, name, fullName, value);
 	assert( node != nullptr );
 	return node;
 }
@@ -1266,7 +1266,7 @@ XDLink::CreateVarNode
  *****************************************************************************/
 
 JString
-XDLink::Build1DArrayExpression
+xdebug::Link::Build1DArrayExpression
 	(
 	const JString&	origExpr,
 	const JInteger	index
@@ -1313,7 +1313,7 @@ XDLink::Build1DArrayExpression
  *****************************************************************************/
 
 JString
-XDLink::Build2DArrayExpression
+xdebug::Link::Build2DArrayExpression
 	(
 	const JString&	origExpr,
 	const JInteger	rowIndex,
@@ -1385,8 +1385,8 @@ XDLink::Build2DArrayExpression
 
  *****************************************************************************/
 
-GetMemoryCmd*
-XDLink::CreateGetMemoryCmd
+::GetMemoryCmd*
+xdebug::Link::CreateGetMemoryCmd
 	(
 	MemoryDir* dir
 	)
@@ -1399,8 +1399,8 @@ XDLink::CreateGetMemoryCmd
 
  *****************************************************************************/
 
-GetAssemblyCmd*
-XDLink::CreateGetAssemblyCmd
+::GetAssemblyCmd*
+xdebug::Link::CreateGetAssemblyCmd
 	(
 	SourceDirector* dir
 	)
@@ -1413,8 +1413,8 @@ XDLink::CreateGetAssemblyCmd
 
  *****************************************************************************/
 
-GetRegistersCmd*
-XDLink::CreateGetRegistersCmd
+::GetRegistersCmd*
+xdebug::Link::CreateGetRegistersCmd
 	(
 	RegistersDir* dir
 	)
@@ -1430,7 +1430,7 @@ XDLink::CreateGetRegistersCmd
  *****************************************************************************/
 
 void
-XDLink::Send
+xdebug::Link::Send
 	(
 	const JUtf8Byte* text
 	)
@@ -1468,7 +1468,7 @@ XDLink::Send
  *****************************************************************************/
 
 void
-XDLink::SendRaw
+xdebug::Link::SendRaw
 	(
 	const JString& text
 	)
@@ -1504,7 +1504,7 @@ XDLink::SendRaw
  *****************************************************************************/
 
 void
-XDLink::SendMedicCommand
+xdebug::Link::SendMedicCommand
 	(
 	Command* command
 	)
@@ -1539,7 +1539,7 @@ XDLink::SendMedicCommand
  *****************************************************************************/
 
 void
-XDLink::StopProgram()
+xdebug::Link::StopProgram()
 {
 //	SendRaw("break -i break");
 }
@@ -1550,7 +1550,7 @@ XDLink::StopProgram()
  *****************************************************************************/
 
 void
-XDLink::KillProgram()
+xdebug::Link::KillProgram()
 {
 }
 
@@ -1560,7 +1560,7 @@ XDLink::KillProgram()
  *****************************************************************************/
 
 bool
-XDLink::OKToDetachOrKill()
+xdebug::Link::OKToDetachOrKill()
 	const
 {
 	return true;
@@ -1574,11 +1574,11 @@ XDLink::OKToDetachOrKill()
  *****************************************************************************/
 
 bool
-XDLink::StartDebugger()
+xdebug::Link::StartDebugger()
 {
 	if (itsAcceptor == nullptr)
 	{
-		itsAcceptor = jnew XDAcceptor;
+		itsAcceptor = jnew Acceptor;
 		assert( itsAcceptor != nullptr );
 	}
 
@@ -1594,7 +1594,7 @@ XDLink::StartDebugger()
 		};
 		JString msg = JGetString("ListenError::XDLink", map, sizeof(map));
 
-		auto* task = jnew XDWelcomeTask(msg, true);
+		auto* task = jnew WelcomeTask(msg, true);
 		assert( task != nullptr );
 		task->Go();
 		return false;
@@ -1607,7 +1607,7 @@ XDLink::StartDebugger()
 		};
 		JString msg = JGetString("Welcome::XDLink", map, sizeof(map));
 
-		auto* task = jnew XDWelcomeTask(msg, false);
+		auto* task = jnew WelcomeTask(msg, false);
 		assert( task != nullptr );
 		task->Go();
 		return true;
@@ -1620,7 +1620,7 @@ XDLink::StartDebugger()
  *****************************************************************************/
 
 bool
-XDLink::ChangeDebugger()
+xdebug::Link::ChangeDebugger()
 {
 	return true;
 }
@@ -1631,7 +1631,7 @@ XDLink::ChangeDebugger()
  *****************************************************************************/
 
 bool
-XDLink::RestartDebugger()
+xdebug::Link::RestartDebugger()
 {
 	StopDebugger();
 	const bool ok = StartDebugger();
@@ -1650,7 +1650,7 @@ XDLink::RestartDebugger()
  *****************************************************************************/
 
 void
-XDLink::StopDebugger()
+xdebug::Link::StopDebugger()
 {
 	Send("detach");
 
@@ -1668,9 +1668,9 @@ XDLink::StopDebugger()
  *****************************************************************************/
 
 void
-XDLink::ConnectionEstablished
+xdebug::Link::ConnectionEstablished
 	(
-	XDSocket* socket
+	Socket* socket
 	)
 {
 	InitFlags();
@@ -1692,9 +1692,9 @@ XDLink::ConnectionEstablished
  *****************************************************************************/
 
 void
-XDLink::ConnectionFinished
+xdebug::Link::ConnectionFinished
 	(
-	XDSocket* socket
+	Socket* socket
 	)
 {
 	assert( socket == itsLink );

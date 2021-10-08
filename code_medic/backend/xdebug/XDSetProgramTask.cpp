@@ -19,7 +19,7 @@
 
  ******************************************************************************/
 
-XDSetProgramTask::XDSetProgramTask()
+xdebug::SetProgramTask::SetProgramTask()
 {
 }
 
@@ -28,7 +28,7 @@ XDSetProgramTask::XDSetProgramTask()
 
  ******************************************************************************/
 
-XDSetProgramTask::~XDSetProgramTask()
+xdebug::SetProgramTask::~SetProgramTask()
 {
 }
 
@@ -38,9 +38,9 @@ XDSetProgramTask::~XDSetProgramTask()
  ******************************************************************************/
 
 void
-XDSetProgramTask::Perform()
+xdebug::SetProgramTask::Perform()
 {
-	auto* link = dynamic_cast<XDLink*>(GetLink());
+	auto* link = dynamic_cast<Link*>(GetLink());
 	if (link != nullptr)
 	{
 		link->BroadcastProgramSet();

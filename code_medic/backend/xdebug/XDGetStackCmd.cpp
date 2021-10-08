@@ -1,5 +1,5 @@
 /******************************************************************************
- XDGetStack.cpp
+ XDGetStackCmd.cpp
 
 	BASE CLASS = GetStackCmd
 
@@ -7,7 +7,7 @@
 
  ******************************************************************************/
 
-#include "XDGetStack.h"
+#include "XDGetStackCmd.h"
 #include "StackFrameNode.h"
 #include "StackWidget.h"
 #include "XDLink.h"
@@ -23,13 +23,13 @@ const JSize kFrameIndexWidth = 2;	// width of frame index in characters
 
  ******************************************************************************/
 
-XDGetStack::XDGetStack
+xdebug::GetStackCmd::GetStackCmd
 	(
 	JTree*			tree,
 	StackWidget*	widget
 	)
 	:
-	GetStackCmd(JString("stack_get", JString::kNoCopy), tree, widget)
+	::GetStackCmd(JString("stack_get", JString::kNoCopy), tree, widget)
 {
 }
 
@@ -38,7 +38,7 @@ XDGetStack::XDGetStack
 
  ******************************************************************************/
 
-XDGetStack::~XDGetStack()
+xdebug::GetStackCmd::~GetStackCmd()
 {
 }
 
@@ -48,12 +48,12 @@ XDGetStack::~XDGetStack()
  ******************************************************************************/
 
 void
-XDGetStack::HandleSuccess
+xdebug::GetStackCmd::HandleSuccess
 	(
 	const JString& data
 	)
 {
-	auto* link = dynamic_cast<XDLink*>(GetLink());
+	auto* link = dynamic_cast<Link*>(GetLink());
 	xmlNode* root;
 	if (link == nullptr || !link->GetParsedData(&root))
 	{

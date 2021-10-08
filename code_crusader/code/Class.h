@@ -60,7 +60,7 @@ public:
 
 public:
 
-	~Class();
+	~Class() override;
 
 	const Tree*	GetTree() const;
 

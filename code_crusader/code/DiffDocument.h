@@ -46,7 +46,7 @@ public:
 							  const bool silent = false,
 							  DiffDocument* origDoc = nullptr);
 
-	~DiffDocument();
+	~DiffDocument() override;
 
 protected:
 

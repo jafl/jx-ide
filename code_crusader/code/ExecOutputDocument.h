@@ -37,7 +37,7 @@ public:
 						 const bool focusToCmd = true,
 						 const bool allowStop = true);
 
-	~ExecOutputDocument();
+	~ExecOutputDocument() override;
 
 	void	Activate() override;
 

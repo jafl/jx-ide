@@ -27,7 +27,7 @@ public:
 
     SBBreakpoint (const lldb::SBBreakpoint& rhs);
 
-    ~SBBreakpoint();
+    ~SBBreakpoint() override;
 
     const lldb::SBBreakpoint &
     operator = (const lldb::SBBreakpoint& rhs);

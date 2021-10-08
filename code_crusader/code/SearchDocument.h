@@ -29,7 +29,7 @@ public:
 						   const JRegex& searchRegex,
 						   const JString& replaceStr);
 
-	~SearchDocument();
+	~SearchDocument() override;
 
 	void	OpenPrevListItem() override;
 	void	OpenNextListItem() override;

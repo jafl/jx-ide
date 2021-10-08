@@ -27,7 +27,7 @@ public:
 					const JIndex initialSelection,
 					const JIndex firstUnusedID);
 
-	~EditCRMDialog();
+	~EditCRMDialog() override;
 
 	bool	GetCurrentCRMRuleSetName(JString* name) const;
 

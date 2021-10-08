@@ -18,7 +18,7 @@ public:
 
 	GetAssemblyCmd(SourceDirector* dir, const JString& cmd);
 
-	~GetAssemblyCmd();
+	~GetAssemblyCmd() override;
 
 	SourceDirector*	GetDirector();
 

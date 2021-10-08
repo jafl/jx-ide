@@ -20,7 +20,7 @@ public:
 
 	SymbolTypeList(JXDisplay* display);
 
-	~SymbolTypeList();
+	~SymbolTypeList() override;
 
 //	bool		IsVisible(const SymbolList::Type type) const;
 	Language	GetLanguage(const SymbolList::Type type) const;
@@ -31,8 +31,8 @@ public:
 
 protected:
 
-	virtual void	ReadPrefs(std::istream& input);
-	virtual void	WritePrefs(std::ostream& output) const;
+	void	ReadPrefs(std::istream& input) override;
+	void	WritePrefs(std::ostream& output) const override;
 
 private:
 

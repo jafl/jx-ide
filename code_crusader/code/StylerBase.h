@@ -28,7 +28,7 @@ public:
 				 const JString& editDialogTitle, const JPrefID& prefID,
 				 const TextFileType fileType);
 
-	~StylerBase();
+	~StylerBase() override;
 
 	void	EditStyles();
 

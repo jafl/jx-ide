@@ -18,7 +18,7 @@ public:
 
 	MDIServer();
 
-	~MDIServer();
+	~MDIServer() override;
 
 	static void	UpdateDebuggerType(const JString& program);
 	static bool	IsBinary(const JString& fileName);

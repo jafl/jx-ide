@@ -66,7 +66,7 @@ public:
 
     SBAttachInfo (const SBAttachInfo &rhs);
 
-    ~SBAttachInfo();
+    ~SBAttachInfo() override;
 
     SBAttachInfo &
     operator = (const SBAttachInfo &rhs);

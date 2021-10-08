@@ -21,7 +21,7 @@ public:
 
 	BreakpointsDir(CommandDirector* supervisor);
 
-	~BreakpointsDir();
+	~BreakpointsDir() override;
 
 	const JString&	GetName() const override;
 	bool			GetMenuIcon(const JXImage** icon) const override;

@@ -21,7 +21,7 @@ public:
 
 	BreakpointManager(Link* link);
 
-	~BreakpointManager();
+	~BreakpointManager() override;
 };
 
 };

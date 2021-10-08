@@ -19,7 +19,7 @@ public:
 
 	ExecOutputPostFTCTask(ExecOutputDocument* doc);
 
-	~ExecOutputPostFTCTask();
+	~ExecOutputPostFTCTask() override;
 
 	void	Perform() override;
 

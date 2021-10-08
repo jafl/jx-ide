@@ -17,7 +17,7 @@ class MemberFunction
 public:
 
 	MemberFunction();
-	~MemberFunction();
+	~MemberFunction() override;
 
 	const JString&	GetFnName() const;
 	void			SetFnName(const JString& str);

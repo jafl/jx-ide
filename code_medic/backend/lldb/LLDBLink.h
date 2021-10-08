@@ -36,7 +36,7 @@ public:
 
 	Link();
 
-	~Link();
+	~Link() override;
 
 	bool	DebuggerHasStarted() const override;
 	bool	HasLoadedSymbols() const override;

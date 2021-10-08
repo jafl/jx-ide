@@ -253,7 +253,7 @@ public:
 
 	CtagsUser(const JUtf8Byte* args);
 
-	~CtagsUser();
+	~CtagsUser() override;
 
 	bool		IsActive() const;
 	static bool	HasExuberantCtags();

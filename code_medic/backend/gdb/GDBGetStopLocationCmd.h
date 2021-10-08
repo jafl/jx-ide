@@ -20,7 +20,7 @@ public:
 
 	GetStopLocationCmd();
 
-	~GetStopLocationCmd();
+	~GetStopLocationCmd() override;
 
 protected:
 

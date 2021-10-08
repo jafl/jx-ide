@@ -16,7 +16,7 @@ public:
 
 	QuitTask();
 
-	~QuitTask();
+	~QuitTask() override;
 
 	void	Perform(const Time delta, Time* maxSleepTime) override;
 };

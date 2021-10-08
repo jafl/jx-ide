@@ -20,7 +20,7 @@ public:
 
 	StackDir(CommandDirector* supervisor);
 
-	~StackDir();
+	~StackDir() override;
 
 	void			Activate() override;
 	const JString&	GetName() const override;

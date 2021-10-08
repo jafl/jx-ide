@@ -23,7 +23,7 @@ public:
 					  const JCoordinate x, const JCoordinate y,
 					  const JCoordinate w, const JCoordinate h);
 
-	~FileNameDisplay();
+	~FileNameDisplay() override;
 
 	void	SetTE(JXTEBase* te);
 	void	DiskCopyIsModified(const bool mod);

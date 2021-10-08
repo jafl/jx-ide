@@ -31,7 +31,7 @@ public:
 	ProjectTree(std::istream& input, const JFileVersion vers,
 				  ProjectDocument* doc);
 
-	~ProjectTree();
+	~ProjectTree() override;
 
 	ProjectDocument*	GetProjectDoc() const;
 	ProjectNode*		GetProjectRoot() const;

@@ -19,7 +19,7 @@ public:
 
 	SymbolsLoadedTask(const JString& fileName);
 
-	~SymbolsLoadedTask();
+	~SymbolsLoadedTask() override;
 
 	void	Perform() override;
 

@@ -20,7 +20,7 @@ public:
 
 	NewProjectCSF();
 
-	~NewProjectCSF();
+	~NewProjectCSF() override;
 
 	bool							GetProjectTemplate(JString* fullName) const;
 	BuildManager::MakefileMethod	GetMakefileMethod() const;

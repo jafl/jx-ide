@@ -34,7 +34,7 @@ public:
 	Array2DDir(std::istream& input, const JFileVersion vers,
 				 CommandDirector* supervisor);
 
-	~Array2DDir();
+	~Array2DDir() override;
 
 	const JString&	GetExpression() const;
 	bool			ArrayRowIndexValid(const JInteger index) const;

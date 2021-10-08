@@ -31,7 +31,7 @@ public:
 	Array2DCmd(Array2DDir* dir,
 				JXStringTable* table, JStringTableData* data);
 
-	~Array2DCmd();
+	~Array2DCmd() override;
 
 	virtual void	PrepareToSend(const UpdateType type, const JIndex index,
 								  const JInteger arrayIndex);
@@ -43,7 +43,7 @@ public:
 
 protected:
 
-	virtual void	HandleFailure();
+	void	HandleFailure() override;
 
 	void	HandleFailure(const JIndex startIndex, const JString& value);
 	JPoint	GetCell(const JIndex i) const;

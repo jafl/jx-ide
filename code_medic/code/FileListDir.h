@@ -25,7 +25,7 @@ public:
 
 	FileListDir(CommandDirector* supervisor);
 
-	~FileListDir();
+	~FileListDir() override;
 
 	JXFileListTable*	GetTable();
 

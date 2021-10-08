@@ -18,7 +18,7 @@ public:
 
 	AdjustLineTableToTextTask(LineIndexTable* table);
 
-	~AdjustLineTableToTextTask();
+	~AdjustLineTableToTextTask() override;
 
 	void	Perform() override;
 

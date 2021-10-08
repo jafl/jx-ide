@@ -26,7 +26,7 @@ public:
     const SBBroadcaster &
     operator = (const SBBroadcaster &rhs);
 
-    ~SBBroadcaster();
+    ~SBBroadcaster() override;
 
     bool
     IsValid () const;

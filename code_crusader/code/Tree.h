@@ -46,7 +46,7 @@ public:
 		   TreeDirector* director, const TextFileType fileType,
 		   const JSize marginWidth, DirList* dirList);
 
-	~Tree();
+	~Tree() override;
 
 	void	NextUpdateMustReparseAll();
 	bool	NeedsReparseAll() const;

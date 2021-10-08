@@ -20,7 +20,7 @@ public:
 
 	PTPrinter();
 
-	~PTPrinter();
+	~PTPrinter() override;
 
 	void	SetHeaderName(const JString& name);
 

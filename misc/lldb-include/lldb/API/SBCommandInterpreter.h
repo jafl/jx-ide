@@ -28,7 +28,7 @@ friend class SBCommandInterpreter;
 
 public:
     SBCommandInterpreterRunOptions();
-    ~SBCommandInterpreterRunOptions();
+    ~SBCommandInterpreterRunOptions() override;
 
     bool
     GetStopOnContinue () const;

@@ -37,7 +37,7 @@ public:
     
     SBExecutionContext (const lldb::SBFrame &frame);
     
-    ~SBExecutionContext();
+    ~SBExecutionContext() override;
     
     const SBExecutionContext &
     operator = (const lldb::SBExecutionContext &rhs);

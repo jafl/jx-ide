@@ -18,7 +18,7 @@ public:
 
 	GetThreadCmd(ThreadsWidget* widget);
 
-	~GetThreadCmd();
+	~GetThreadCmd() override;
 
 protected:
 

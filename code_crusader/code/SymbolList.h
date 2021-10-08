@@ -30,7 +30,7 @@ public:
 
 	SymbolList(ProjectDocument* projDoc);
 
-	~SymbolList();
+	~SymbolList() override;
 
 	const JString&	GetSymbol(const JIndex symbolIndex,
 							  Language* lang, Type* type,

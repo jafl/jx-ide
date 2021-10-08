@@ -21,7 +21,7 @@ public:
 
 	GetThreadParentCmd(ThreadNode* node, const bool checkOnly = false);
 
-	~GetThreadParentCmd();
+	~GetThreadParentCmd() override;
 
 	void	Starting() override;
 

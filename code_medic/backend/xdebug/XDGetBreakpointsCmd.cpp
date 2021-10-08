@@ -1,5 +1,5 @@
 /******************************************************************************
- XDGetBreakpoints.cpp
+ XDGetBreakpointsCmd.cpp
 
 	This is the only way to get all the relevant information about each
 	breakpoint.  gdb does not print enough information when "break" is
@@ -11,7 +11,7 @@
 
  ******************************************************************************/
 
-#include "XDGetBreakpoints.h"
+#include "XDGetBreakpointsCmd.h"
 #include "BreakpointManager.h"
 #include "XDLink.h"
 #include "globals.h"
@@ -24,9 +24,9 @@
 
  ******************************************************************************/
 
-XDGetBreakpoints::XDGetBreakpoints()
+xdebug::GetBreakpointsCmd::GetBreakpointsCmd()
 	:
-	GetBreakpointsCmd(JString("breakpoint_list", JString::kNoCopy))
+	::GetBreakpointsCmd(JString("breakpoint_list", JString::kNoCopy))
 {
 }
 
@@ -35,7 +35,7 @@ XDGetBreakpoints::XDGetBreakpoints()
 
  ******************************************************************************/
 
-XDGetBreakpoints::~XDGetBreakpoints()
+xdebug::GetBreakpointsCmd::~GetBreakpointsCmd()
 {
 }
 
@@ -45,12 +45,12 @@ XDGetBreakpoints::~XDGetBreakpoints()
  *****************************************************************************/
 
 void
-XDGetBreakpoints::HandleSuccess
+xdebug::GetBreakpointsCmd::HandleSuccess
 	(
 	const JString& data
 	)
 {
-	auto* link = dynamic_cast<XDLink*>(GetLink());
+	auto* link = dynamic_cast<Link*>(GetLink());
 	xmlNode* root;
 	if (link == nullptr || !link->GetParsedData(&root))
 	{
@@ -60,7 +60,7 @@ XDGetBreakpoints::HandleSuccess
 	(GetLink()->GetBreakpointManager())->SetUpdateWhenStop(false);
 
 	JPtrArray<Breakpoint> bpList(JPtrArrayT::kForgetAll);	// ownership taken by BreakpointManager
-	bpList.SetCompareFunction(BreakpointManager::CompareBreakpointLocations);
+	bpList.SetCompareFunction(::BreakpointManager::CompareBreakpointLocations);
 	bpList.SetSortOrder(JListT::kSortAscending);
 
 	JPtrArray<Breakpoint> otherList(JPtrArrayT::kForgetAll);	// ownership taken by BreakpointManager

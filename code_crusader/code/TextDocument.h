@@ -58,7 +58,7 @@ public:
 				 const bool tmpl = false);
 	TextDocument(std::istream& input, const JFileVersion vers, bool* keep);
 
-	~TextDocument();
+	~TextDocument() override;
 
 	void	Activate() override;
 	bool	GetMenuIcon(const JXImage** icon) const override;

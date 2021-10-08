@@ -26,7 +26,7 @@ class Link : public JBroadcaster
 public:
 
 	Link();
-	~Link();
+	~Link() override;
 
 	bool	StartCTags();
 	void	ParseClass(Class* list, const JString& filename, const JString& classname);

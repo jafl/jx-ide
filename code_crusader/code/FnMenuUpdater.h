@@ -19,7 +19,7 @@ public:
 
 	FnMenuUpdater();
 
-	~FnMenuUpdater();
+	~FnMenuUpdater() override;
 
 	bool	CanCreateMenu(const TextFileType type) const;
 
@@ -40,8 +40,8 @@ public:
 
 protected:
 
-	virtual void	ReadPrefs(std::istream& input);
-	virtual void	WritePrefs(std::ostream& output) const;
+	void	ReadPrefs(std::istream& input) override;
+	void	WritePrefs(std::ostream& output) const override;
 
 private:
 

@@ -116,7 +116,7 @@ public:
 
     SBModuleSpecList (const SBModuleSpecList &rhs);
 
-    ~SBModuleSpecList();
+    ~SBModuleSpecList() override;
 
     SBModuleSpecList &
     operator = (const SBModuleSpecList &rhs);

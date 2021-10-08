@@ -19,7 +19,7 @@ public:
 
 	WelcomeTask(const JString& msg, const bool restart);
 
-	~WelcomeTask();
+	~WelcomeTask() override;
 
 	void	Perform() override;
 

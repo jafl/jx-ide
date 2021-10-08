@@ -16,7 +16,7 @@ public:
 
 	DockManager();
 
-	~DockManager();
+	~DockManager() override;
 
 	bool	CanDockAll() const override;
 	void	DockAll() override;

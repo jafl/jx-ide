@@ -30,7 +30,7 @@ public:
 				const JCoordinate x, const JCoordinate y,
 				const JCoordinate w, const JCoordinate h);
 
-	~SourceText();
+	~SourceText() override;
 
 	void	SetFileType(const TextFileType type);
 
@@ -63,15 +63,15 @@ protected:
 			itsTokenStartList(JSTStyler::NewTokenStartList())
 		{ };
 
-		~StyledText();
+		~StyledText() override;
 
 		protected:
 
-		virtual void	AdjustStylesBeforeBroadcast(const JString& text,
-													JRunArray<JFont>* styles,
-													TextRange* recalcRange,
-													TextRange* redrawRange,
-													const bool deletion);
+		void	AdjustStylesBeforeBroadcast(const JString& text,
+											JRunArray<JFont>* styles,
+											TextRange* recalcRange,
+											TextRange* redrawRange,
+											const bool deletion) override;
 
 		private:
 

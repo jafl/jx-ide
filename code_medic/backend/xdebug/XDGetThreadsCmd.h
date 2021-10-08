@@ -1,26 +1,32 @@
 /******************************************************************************
- XDGetFullPath.h
+ XDGetThreadCmdsCmd.h
 
 	Copyright (C) 2007 by John Lindal.
 
  ******************************************************************************/
 
-#ifndef _H_XDGetFullPath
-#define _H_XDGetFullPath
+#ifndef _H_XDGetThreadCmdsCmd
+#define _H_XDGetThreadCmdsCmd
 
-#include "GetFullPathCmd.h"
+#include "GetThreadsCmd.h"
 
-class XDGetFullPath : public GetFullPathCmd
+class JTree;
+
+namespace xdebug {
+
+class GetThreadsCmd : public ::GetThreadsCmd
 {
 public:
 
-	XDGetFullPath(const JString& fileName, const JIndex lineIndex = 0);
+	GetThreadsCmd(JTree* tree, ThreadsWidget* widget);
 
-	~XDGetFullPath();
+	~GetThreadsCmd() override;
 
 protected:
 
 	void	HandleSuccess(const JString& data) override;
+};
+
 };
 
 #endif

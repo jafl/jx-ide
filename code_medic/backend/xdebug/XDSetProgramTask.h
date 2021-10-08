@@ -10,15 +10,19 @@
 
 #include <jx-af/jx/JXUrgentTask.h>
 
-class XDSetProgramTask : public JXUrgentTask
+namespace xdebug {
+
+class SetProgramTask : public JXUrgentTask
 {
 public:
 
-	XDSetProgramTask();
+	SetProgramTask();
 
-	~XDSetProgramTask();
+	~SetProgramTask() override;
 
 	void	Perform() override;
+};
+
 };
 
 #endif

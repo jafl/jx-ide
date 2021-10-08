@@ -66,7 +66,7 @@ namespace lldb {
         
         SBPlatformShellCommand (const SBPlatformShellCommand &rhs);
         
-        ~SBPlatformShellCommand();
+        ~SBPlatformShellCommand() override;
         
         void
         Clear();
@@ -112,7 +112,7 @@ namespace lldb {
         
         SBPlatform (const char *platform_name);
         
-        ~SBPlatform();
+        ~SBPlatform() override;
         
         bool
         IsValid () const;

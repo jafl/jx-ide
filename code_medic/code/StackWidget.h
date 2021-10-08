@@ -29,7 +29,7 @@ public:
 				  const JCoordinate x, const JCoordinate y,
 				  const JCoordinate w, const JCoordinate h);
 
-	~StackWidget();
+	~StackWidget() override;
 
 	void	Update();
 	void	SelectFrame(const JUInt64 id);

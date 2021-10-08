@@ -20,7 +20,7 @@ public:
 
 	AboutDialog(JXDirector* supervisor, const JString& prevVersStr);
 
-	~AboutDialog();
+	~AboutDialog() override;
 
 protected:
 

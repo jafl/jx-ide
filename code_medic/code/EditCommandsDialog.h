@@ -20,7 +20,7 @@ class EditCommandsDialog : public JXDialogDirector, public JPrefObject
 public:
 
 	EditCommandsDialog();
-	~EditCommandsDialog();
+	~EditCommandsDialog() override;
 
 	JSize						GetStringCount() const;
 	const JPtrArray<JString>&	GetStringList() const;

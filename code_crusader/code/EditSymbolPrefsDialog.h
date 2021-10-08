@@ -21,7 +21,7 @@ public:
 
 	EditSymbolPrefsDialog(const bool raiseTreeOnRightClick);
 
-	~EditSymbolPrefsDialog();
+	~EditSymbolPrefsDialog() override;
 
 protected:
 

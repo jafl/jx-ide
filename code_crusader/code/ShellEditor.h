@@ -24,7 +24,7 @@ public:
 				 const JCoordinate x, const JCoordinate y,
 				 const JCoordinate w, const JCoordinate h);
 
-	~ShellEditor();
+	~ShellEditor() override;
 
 	void	InsertText(const JString& text);
 

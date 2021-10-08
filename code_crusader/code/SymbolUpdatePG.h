@@ -16,7 +16,7 @@ public:
 
 	SymbolUpdatePG(std::ostream& link, const JSize scaleFactor);
 
-	~SymbolUpdatePG();
+	~SymbolUpdatePG() override;
 
 	bool	IncrementProgress(const JString& message = JString::empty) override;
 	bool	IncrementProgress(const JSize delta) override;

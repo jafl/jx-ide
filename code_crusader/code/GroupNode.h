@@ -18,12 +18,12 @@ public:
 	GroupNode(std::istream& input, const JFileVersion vers,
 				ProjectNode* parent);
 
-	~GroupNode();
+	~GroupNode() override;
 
-	virtual void	Print(JString* text) const;
-	virtual void	ShowFileLocation() const;
-	virtual void	ViewPlainDiffs(const bool silent) const;
-	virtual void	ViewVCSDiffs(const bool silent) const;
+	void	Print(JString* text) const override;
+	void	ShowFileLocation() const override;
+	void	ViewPlainDiffs(const bool silent) const override;
+	void	ViewVCSDiffs(const bool silent) const override;
 };
 
 #endif

@@ -18,7 +18,7 @@ public:
 	GetFullPathCmd(const JString& cmd,
 				  const JString& fileName, const JIndex lineIndex);
 
-	~GetFullPathCmd();
+	~GetFullPathCmd() override;
 
 	const JString&	GetFileName() const;
 	JIndex			GetLineIndex() const;

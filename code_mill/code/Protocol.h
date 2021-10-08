@@ -50,7 +50,7 @@ public:
 	Protocol();
 	Protocol(const ACE_HANDLE fd);
 
-	~Protocol();
+	~Protocol() override;
 
 	void	Read(JString* buffer);
 	void	Write(const JCharacter* buffer);

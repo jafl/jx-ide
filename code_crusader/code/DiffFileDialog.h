@@ -29,7 +29,7 @@ public:
 
 	DiffFileDialog(JXDirector* supervisor);
 
-	~DiffFileDialog();
+	~DiffFileDialog() override;
 
 	void	SetFile1(const JString& fullName);
 	void	SetFile2(const JString& fullName);

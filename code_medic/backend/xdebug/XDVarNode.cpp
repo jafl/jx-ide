@@ -19,16 +19,16 @@
 
  *****************************************************************************/
 
-XDVarNode::XDVarNode				// root node
+xdebug::VarNode::VarNode				// root node
 	(
 	const bool shouldUpdate		// false for Local Variables
 	)
 	:
-	VarNode(shouldUpdate)
+	::VarNode(shouldUpdate)
 {
 }
 
-XDVarNode::XDVarNode
+xdebug::VarNode::VarNode
 	(
 	JTreeNode*		parent,
 	const JString&	name,
@@ -36,7 +36,7 @@ XDVarNode::XDVarNode
 	const JString&	value
 	)
 	:
-	VarNode(parent, name, value)
+	::VarNode(parent, name, value)
 {
 	itsFullName = fullName;
 }
@@ -46,7 +46,7 @@ XDVarNode::XDVarNode
 
  *****************************************************************************/
 
-XDVarNode::~XDVarNode()
+xdebug::VarNode::~VarNode()
 {
 }
 
@@ -56,7 +56,7 @@ XDVarNode::~XDVarNode()
  ******************************************************************************/
 
 JString
-XDVarNode::GetFullName
+xdebug::VarNode::GetFullName
 	(
 	bool* isPointer
 	)
@@ -71,7 +71,7 @@ XDVarNode::GetFullName
  ******************************************************************************/
 
 void
-XDVarNode::NameChanged()
+xdebug::VarNode::NameChanged()
 {
 	if (HasTree() && GetDepth() == 1)
 	{

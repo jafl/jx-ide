@@ -18,7 +18,7 @@ public:
 
 	GetClassInfoCmd(const JUInt64 id);
 
-	~GetClassInfoCmd();
+	~GetClassInfoCmd() override;
 
 	void	Starting() override;
 

@@ -18,7 +18,7 @@ public:
 
 	GetProgramNameCmd();
 
-	~GetProgramNameCmd();
+	~GetProgramNameCmd() override;
 
 protected:
 

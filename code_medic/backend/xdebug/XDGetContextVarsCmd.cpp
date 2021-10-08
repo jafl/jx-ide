@@ -1,5 +1,5 @@
 /******************************************************************************
- XDGetContextVars.cpp
+ XDGetContextVarsCmd.cpp
 
 	BASE CLASS = Command
 
@@ -7,7 +7,7 @@
 
  ******************************************************************************/
 
-#include "XDGetContextVars.h"
+#include "XDGetContextVarsCmd.h"
 #include "XDLink.h"
 #include "VarNode.h"
 #include "globals.h"
@@ -19,7 +19,7 @@
 
  ******************************************************************************/
 
-XDGetContextVars::XDGetContextVars
+xdebug::GetContextVarsCmd::GetContextVarsCmd
 	(
 	VarNode*		rootNode,
 	const JString&	contextID
@@ -31,7 +31,7 @@ XDGetContextVars::XDGetContextVars
 	JString cmd("context_get -c ");
 	cmd += contextID;
 	cmd += " -d ";
-	cmd += JString((JUInt64) dynamic_cast<XDLink*>(GetLink())->GetStackFrameIndex());
+	cmd += JString((JUInt64) dynamic_cast<Link*>(GetLink())->GetStackFrameIndex());
 	SetCommand(cmd);
 }
 
@@ -40,7 +40,7 @@ XDGetContextVars::XDGetContextVars
 
  ******************************************************************************/
 
-XDGetContextVars::~XDGetContextVars()
+xdebug::GetContextVarsCmd::~GetContextVarsCmd()
 {
 }
 
@@ -50,12 +50,12 @@ XDGetContextVars::~XDGetContextVars()
  ******************************************************************************/
 
 void
-XDGetContextVars::HandleSuccess
+xdebug::GetContextVarsCmd::HandleSuccess
 	(
 	const JString& data
 	)
 {
-	auto* link = dynamic_cast<XDLink*>(GetLink());
+	auto* link = dynamic_cast<Link*>(GetLink());
 	xmlNode* root;
 	if (link == nullptr || !link->GetParsedData(&root))
 	{
@@ -71,7 +71,7 @@ XDGetContextVars::HandleSuccess
  ******************************************************************************/
 
 void
-XDGetContextVars::BuildTree
+xdebug::GetContextVarsCmd::BuildTree
 	(
 	const JSize	depth,
 	xmlNode*	root,

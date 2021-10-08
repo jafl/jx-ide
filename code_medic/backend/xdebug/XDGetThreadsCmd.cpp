@@ -1,13 +1,14 @@
 /******************************************************************************
- XDArray2DCommand.cpp
+ XDGetThreadCmdsCmd.cpp
 
-	BASE CLASS = Array2DCmd
+	BASE CLASS = GetThreadsCmd
 
 	Copyright (C) 2007 by John Lindal.
 
  ******************************************************************************/
 
-#include "XDArray2DCommand.h"
+#include "XDGetThreadsCmd.h"
+#include "ThreadsWidget.h"
 #include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
@@ -15,16 +16,14 @@
 
  ******************************************************************************/
 
-XDArray2DCommand::XDArray2DCommand
+xdebug::GetThreadsCmd::GetThreadsCmd
 	(
-	Array2DDir*		dir,
-	JXStringTable*		table,
-	JStringTableData*	data
+	JTree*			tree,
+	ThreadsWidget*	widget
 	)
 	:
-	Array2DCmd(dir, table, data)
+	::GetThreadsCmd(JString("status", JString::kNoCopy), widget)
 {
-	SetCommand("status");
 }
 
 /******************************************************************************
@@ -32,7 +31,7 @@ XDArray2DCommand::XDArray2DCommand
 
  ******************************************************************************/
 
-XDArray2DCommand::~XDArray2DCommand()
+xdebug::GetThreadsCmd::~GetThreadsCmd()
 {
 }
 
@@ -42,9 +41,10 @@ XDArray2DCommand::~XDArray2DCommand()
  ******************************************************************************/
 
 void
-XDArray2DCommand::HandleSuccess
+xdebug::GetThreadsCmd::HandleSuccess
 	(
 	const JString& data
 	)
 {
+	GetWidget()->FinishedLoading(0);
 }

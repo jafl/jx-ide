@@ -144,7 +144,7 @@ public:
 
 	PrefsManager(bool* isNew);
 
-	~PrefsManager();
+	~PrefsManager() override;
 
 	JString	GetJCCVersionStr() const;
 

@@ -22,7 +22,7 @@ class LLDB_API SBLaunchInfo
 public:
     SBLaunchInfo (const char **argv);
 
-    ~SBLaunchInfo();
+    ~SBLaunchInfo() override;
 
     lldb::pid_t
     GetProcessID();

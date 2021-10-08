@@ -1,32 +1,31 @@
 /******************************************************************************
- XDVarCommand.h
+ XDArray2DCmd.h
 
 	Copyright (C) 2007 by John Lindal.
 
  ******************************************************************************/
 
-#ifndef _H_XDVarCommand
-#define _H_XDVarCommand
+#ifndef _H_XDArray2DCmd
+#define _H_XDArray2DCmd
 
-#include "VarCmd.h"
+#include "Array2DCmd.h"
 
-class VarNode;
+namespace xdebug {
 
-class XDVarCommand : public VarCmd
+class Array2DCmd : public ::Array2DCmd
 {
 public:
 
-	XDVarCommand(const JString& cmd);
+	Array2DCmd(Array2DDir* dir,
+				JXStringTable* table, JStringTableData* data);
 
-	~XDVarCommand();
+	~Array2DCmd() override;
 
 protected:
 
 	void	HandleSuccess(const JString& data) override;
+};
 
-private:
-
-	VarNode*	itsRootNode;
 };
 
 #endif

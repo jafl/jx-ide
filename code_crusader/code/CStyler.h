@@ -18,7 +18,7 @@ public:
 	static StylerBase*	Instance();
 	static void			Shutdown();
 
-	~CStyler();
+	~CStyler() override;
 
 protected:
 

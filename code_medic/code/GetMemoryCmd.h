@@ -18,7 +18,7 @@ public:
 
 	GetMemoryCmd(MemoryDir* dir);
 
-	~GetMemoryCmd();
+	~GetMemoryCmd() override;
 
 	MemoryDir*	GetDirector();
 

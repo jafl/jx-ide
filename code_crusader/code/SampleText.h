@@ -19,7 +19,7 @@ public:
 				 const JCoordinate x, const JCoordinate y,
 				 const JCoordinate w, const JCoordinate h);
 
-	~SampleText();
+	~SampleText() override;
 
 	void	ShowRightMargin(const bool show, const JColorID color);
 

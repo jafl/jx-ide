@@ -18,7 +18,7 @@ public:
 
 	AnalyzeCoreCmd(const JString& cmd);
 
-	~AnalyzeCoreCmd();
+	~AnalyzeCoreCmd() override;
 
 protected:
 

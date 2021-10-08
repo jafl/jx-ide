@@ -30,7 +30,7 @@ public:
 					const JCoordinate x, const JCoordinate y,
 					const JCoordinate w, const JCoordinate h);
 
-	~MacroSetTable();
+	~MacroSetTable() override;
 
 	bool	ContentsValid() const;
 	bool	GetCurrentMacroSetName(JString* name) const;

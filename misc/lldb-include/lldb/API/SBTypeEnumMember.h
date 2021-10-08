@@ -22,7 +22,7 @@ public:
 
     SBTypeEnumMember (const SBTypeEnumMember& rhs);
 
-    ~SBTypeEnumMember();
+    ~SBTypeEnumMember() override;
 
     SBTypeEnumMember&
     operator = (const SBTypeEnumMember& rhs);
@@ -71,7 +71,7 @@ public:
 
     SBTypeEnumMemberList(const SBTypeEnumMemberList& rhs);
 
-    ~SBTypeEnumMemberList();
+    ~SBTypeEnumMemberList() override;
 
     SBTypeEnumMemberList&
     operator = (const SBTypeEnumMemberList& rhs);

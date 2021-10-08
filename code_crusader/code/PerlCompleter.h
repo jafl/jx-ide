@@ -17,7 +17,7 @@ public:
 	static StringCompleter*	Instance();
 	static void				Shutdown();
 
-	~PerlCompleter();
+	~PerlCompleter() override;
 
 protected:
 

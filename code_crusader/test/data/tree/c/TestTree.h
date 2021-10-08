@@ -35,7 +35,7 @@ public:
 			TestTreeDirector* director, const JSize marginWidth,
 			DirList* dirList);
 
-	~TestTree();
+	~TestTree() override;
 
 	CPreprocessor*	GetCPreprocessor() const;
 

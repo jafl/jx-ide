@@ -18,7 +18,7 @@ public:
 
 	Array2DCmd(Array2DDir* dir, JXStringTable* table, JStringTableData* data);
 
-	~Array2DCmd();
+	~Array2DCmd() override;
 
 protected:
 

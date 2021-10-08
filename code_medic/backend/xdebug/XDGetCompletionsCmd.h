@@ -1,25 +1,27 @@
 /******************************************************************************
- XDGetCompletions.h
+ XDGetCompletionsCmd.h
 
 	Copyright (C) 2007 by Glenn Bach.
 
  ******************************************************************************/
 
-#ifndef _H_XDGetCompletions
-#define _H_XDGetCompletions
+#ifndef _H_XDGetCompletionsCmd
+#define _H_XDGetCompletionsCmd
 
 #include "GetCompletionsCmd.h"
 
 class CommandInput;
 class CommandOutputDisplay;
 
-class XDGetCompletions : public GetCompletionsCmd
+namespace xdebug {
+
+class GetCompletionsCmd : public ::GetCompletionsCmd
 {
 public:
 
-	XDGetCompletions(CommandInput* input, CommandOutputDisplay* history);
+	GetCompletionsCmd(CommandInput* input, CommandOutputDisplay* history);
 
-	~XDGetCompletions();
+	~GetCompletionsCmd() override;
 
 protected:
 
@@ -34,6 +36,8 @@ private:
 private:
 
 	static JString	BuildCommand(const JString& prefix);
+};
+
 };
 
 #endif

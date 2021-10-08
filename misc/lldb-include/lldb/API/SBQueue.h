@@ -29,7 +29,7 @@ public:
     const SBQueue &
     operator= (const lldb::SBQueue& rhs);
 
-   ~SBQueue();
+   ~SBQueue() override;
 
     bool
     IsValid() const;
