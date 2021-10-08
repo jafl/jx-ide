@@ -78,5 +78,5 @@ xdebug::VarNode::NameChanged()
 		itsFullName = GetName();
 	}
 
-	VarNode::NameChanged();
+	::VarNode::NameChanged();
 }

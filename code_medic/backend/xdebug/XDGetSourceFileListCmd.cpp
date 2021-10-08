@@ -46,7 +46,7 @@ xdebug::GetSourceFileListCmd::~GetSourceFileListCmd()
 void
 xdebug::GetSourceFileListCmd::Starting()
 {
-	GetSourceFileListCmd::Starting();
+	::GetSourceFileListCmd::Starting();
 
 	JXFileListTable* table = GetFileList()->GetTable();
 	table->RemoveAllFiles();

@@ -47,7 +47,7 @@ jvm::GetStackCmd::~GetStackCmd()
 void
 jvm::GetStackCmd::Starting()
 {
-	Command::Starting();
+	::GetStackCmd::Starting();
 
 	auto* link       = dynamic_cast<Link*>(GetLink());
 	const JSize length  = link->GetObjectIDSize();

@@ -71,7 +71,7 @@ lldb::VarCmd::HandleSuccess
 	SBValue v = f.EvaluateExpression(itsExpr.GetBytes(), eDynamicDontRunTarget);
 	if (v.IsValid())
 	{
-		Broadcast(ValueMessage(kValueUpdated, lldb::VarNode::BuildTree(f, v)));
+		Broadcast(ValueMessage(kValueUpdated, VarNode::BuildTree(f, v)));
 	}
 	else
 	{

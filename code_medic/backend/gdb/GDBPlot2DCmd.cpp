@@ -52,7 +52,7 @@ gdb::Plot2DCmd::UpdateRange
 	const JInteger	max
 	)
 {
-	Plot2DCmd::UpdateRange(curveIndex, min, max);
+	::Plot2DCmd::UpdateRange(curveIndex, min, max);
 
 	JString cmd("set print pretty off\nset print array off\n"
 				"set print repeats 0\nset width 0\n");

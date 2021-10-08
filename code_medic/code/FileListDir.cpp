@@ -179,7 +179,7 @@ FileListDir::BuildWindow()
 
 	itsFileMenu->SetItemImage(kOpenCmd, jx_file_open);
 
-	itsActionsMenu = menuBar->AppendTextMenu(JGetString("ActionsMenuTitle::Global"));
+	itsActionsMenu = menuBar->AppendTextMenu(JGetString("ActionsMenuTitle::global"));
 	itsActionsMenu->SetMenuItems(kActionMenuStr, "FileListDir");
 	itsActionsMenu->SetUpdateAction(JXMenu::kDisableNone);
 	ListenTo(itsActionsMenu);

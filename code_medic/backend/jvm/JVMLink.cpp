@@ -2081,7 +2081,7 @@ jvm::Link::Send
 	}
 	else
 	{
-		return Link::Send(command);
+		return ::Link::Send(command);
 	}
 }
 

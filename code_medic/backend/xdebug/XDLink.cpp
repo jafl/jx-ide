@@ -51,7 +51,7 @@ const JIndex kXdebugPort = 9000;
 
 static const bool kFeatures[]=
 {
-	true,		// kSetProgram
+	true,	// kSetProgram
 	false,	// kSetArgs
 	false,	// kSetCore
 	false,	// kSetProcess

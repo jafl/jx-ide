@@ -89,7 +89,7 @@ gdb::DisplaySourceForMainCmd::Receive
 	}
 	else
 	{
-		DisplaySourceForMainCmd::Receive(sender, message);
+		::DisplaySourceForMainCmd::Receive(sender, message);
 	}
 }
 

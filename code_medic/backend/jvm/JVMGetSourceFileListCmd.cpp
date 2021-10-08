@@ -46,7 +46,7 @@ jvm::GetSourceFileListCmd::~GetSourceFileListCmd()
 void
 jvm::GetSourceFileListCmd::Starting()
 {
-	GetSourceFileListCmd::Starting();
+	::GetSourceFileListCmd::Starting();
 
 	dynamic_cast<Link*>(GetLink())->FlushClassList();
 

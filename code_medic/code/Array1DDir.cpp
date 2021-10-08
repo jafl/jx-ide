@@ -329,7 +329,7 @@ Array1DDir::BuildWindow()
 	itsStartIndex->ShareEditMenu(te);
 	itsEndIndex->ShareEditMenu(te);
 
-	itsActionMenu = menuBar->AppendTextMenu(JGetString("ActionsMenuTitle::Global"));
+	itsActionMenu = menuBar->AppendTextMenu(JGetString("ActionsMenuTitle::global"));
 	menuBar->InsertMenu(3, itsActionMenu);
 	itsActionMenu->SetMenuItems(kActionMenuStr, "Array1DDir");
 	ListenTo(itsActionMenu);

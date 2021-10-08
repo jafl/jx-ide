@@ -103,7 +103,7 @@ gdb::GetBreakpointsCmd::HandleSuccess
 void
 gdb::GetBreakpointsCmd::ParseBreakpoint
 	(
-	JStringPtrMap<JString>&		map,
+	JStringPtrMap<JString>&	map,
 	JPtrArray<Breakpoint>*	list
 	)
 {
@@ -120,7 +120,7 @@ gdb::GetBreakpointsCmd::ParseBreakpoint
 	JString fileName;
 	JIndex lineIndex;
 	do
-{
+	{
 		if (!map.GetElement("line", &s))
 		{
 			GetLink()->Log("warn: missing breakpoint line");
@@ -138,12 +138,12 @@ gdb::GetBreakpointsCmd::ParseBreakpoint
 			break;
 		}
 		fileName = *s;
-}
+	}
 	while (0);
 
 	JPtrArray<JString> split(JPtrArrayT::kDeleteAll);
 	do
-{
+	{
 		if (!fileName.IsEmpty())
 		{
 			break;
@@ -169,7 +169,7 @@ gdb::GetBreakpointsCmd::ParseBreakpoint
 				fileName = *(split.GetElement(1));
 			}
 		}
-}
+	}
 	while (0);
 
 	if (fileName.IsEmpty())
@@ -210,7 +210,7 @@ gdb::GetBreakpointsCmd::ParseBreakpoint
 void
 gdb::GetBreakpointsCmd::ParseOther
 	(
-	JStringPtrMap<JString>&		map,
+	JStringPtrMap<JString>&	map,
 	JPtrArray<Breakpoint>*	list
 	)
 {

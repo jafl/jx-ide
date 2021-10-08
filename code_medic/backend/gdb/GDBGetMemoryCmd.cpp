@@ -49,7 +49,7 @@ static const JUtf8Byte* kCommandName[] =
 void
 gdb::GetMemoryCmd::Starting()
 {
-	GetMemoryCmd::Starting();
+	::GetMemoryCmd::Starting();
 
 	MemoryDir::DisplayType type;
 	JSize count;

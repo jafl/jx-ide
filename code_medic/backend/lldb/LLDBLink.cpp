@@ -56,21 +56,21 @@ extern char **environ;
 
 static const bool kFeatures[]=
 {
-	true,		// kSetProgram
-	true,		// kSetArgs
-	true,		// kSetCore -- lldb requires program to be chosen first, unlike gdb
-	true,		// kSetProcess -- lldb requires program to be chosen first, unlike gdb
-	true,		// kRunProgram
-	true,		// kStopProgram
-	true,		// kSetExecutionPoint
+	true,	// kSetProgram
+	true,	// kSetArgs
+	true,	// kSetCore -- lldb requires program to be chosen first, unlike gdb
+	true,	// kSetProcess -- lldb requires program to be chosen first, unlike gdb
+	true,	// kRunProgram
+	true,	// kStopProgram
+	true,	// kSetExecutionPoint
 	false,	// kExecuteBackwards
-	true,		// kShowBreakpointInfo
-	true,		// kSetBreakpointCondition
-	true,		// kSetBreakpointIgnoreCount
-	true,		// kWatchExpression
-	true,		// kWatchLocation
-	true,		// kExamineMemory
-	true,		// kDisassembleMemory
+	true,	// kShowBreakpointInfo
+	true,	// kSetBreakpointCondition
+	true,	// kSetBreakpointIgnoreCount
+	true,	// kWatchExpression
+	true,	// kWatchLocation
+	true,	// kExamineMemory
+	true,	// kDisassembleMemory
 };
 
 static const uint32_t kEventMask = 0xFFFFFFFF;

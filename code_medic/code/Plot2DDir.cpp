@@ -351,7 +351,7 @@ Plot2DDir::BuildWindow()
 
 	// menus
 
-	itsActionMenu = menuBar->PrependTextMenu(JGetString("ActionsMenuTitle::Global"));
+	itsActionMenu = menuBar->PrependTextMenu(JGetString("ActionsMenuTitle::global"));
 	itsActionMenu->SetMenuItems(kActionMenuStr, "Plot2DDir");
 	itsActionMenu->SetUpdateAction(JXMenu::kDisableNone);
 	ListenTo(itsActionMenu);

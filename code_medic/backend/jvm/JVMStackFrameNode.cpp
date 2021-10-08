@@ -72,7 +72,7 @@ jvm::StackFrameNode::Receive
 
 	else
 	{
-		StackFrameNode::Receive(sender, message);
+		::StackFrameNode::Receive(sender, message);
 	}
 }
 

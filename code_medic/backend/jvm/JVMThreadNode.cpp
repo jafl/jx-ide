@@ -90,7 +90,7 @@ jvm::ThreadNode::~ThreadNode()
 void
 jvm::ThreadNode::NameChanged()
 {
-	ThreadNode::NameChanged();
+	::ThreadNode::NameChanged();
 
 	if (!HasParent())
 	{

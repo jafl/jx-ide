@@ -57,7 +57,7 @@ lldb::DisplaySourceForMainCmd::Receive
 	const Message&	message
 	)
 {
-	if (sender == GetLink() && message.Is(Link::kSymbolsLoaded))
+	if (sender == GetLink() && message.Is(::Link::kSymbolsLoaded))
 	{
 		const auto* info =
 			dynamic_cast<const ::Link::SymbolsLoaded*>(&message);
@@ -69,7 +69,7 @@ lldb::DisplaySourceForMainCmd::Receive
 	}
 	else
 	{
-		DisplaySourceForMainCmd::Receive(sender, message);
+		::DisplaySourceForMainCmd::Receive(sender, message);
 	}
 }
 
@@ -85,7 +85,7 @@ lldb::DisplaySourceForMainCmd::HandleSuccess
 	)
 {
 	SBTarget t = dynamic_cast<Link*>(GetLink())->GetDebugger()->GetSelectedTarget();
-	bool found   = false;
+	bool found = false;
 	if (t.IsValid())
 	{
 		SBSymbolContextList list = t.FindFunctions("main");

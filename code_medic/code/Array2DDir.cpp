@@ -434,7 +434,7 @@ Array2DDir::BuildWindow()
 	itsColStartIndex->ShareEditMenu(te);
 	itsColEndIndex->ShareEditMenu(te);
 
-	itsActionMenu = menuBar->AppendTextMenu(JGetString("ActionsMenuTitle::Global"));
+	itsActionMenu = menuBar->AppendTextMenu(JGetString("ActionsMenuTitle::global"));
 	itsActionMenu->SetMenuItems(kActionMenuStr, "Array2DDir");
 	ListenTo(itsActionMenu);
 

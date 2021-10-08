@@ -183,7 +183,7 @@ BreakpointsDir::BuildWindow
 
 	itsFileMenu->SetItemImage(kOpenCmd, jx_file_open);
 
-	itsActionMenu = menuBar->AppendTextMenu(JGetString("ActionsMenuTitle::Global"));
+	itsActionMenu = menuBar->AppendTextMenu(JGetString("ActionsMenuTitle::global"));
 	itsActionMenu->SetMenuItems(kActionMenuStr, "BreakpointsDir");
 	ListenTo(itsActionMenu);
 

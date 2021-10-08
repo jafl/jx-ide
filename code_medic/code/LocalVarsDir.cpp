@@ -205,7 +205,7 @@ LocalVarsDir::BuildWindow()
 
 	itsFileMenu->SetItemImage(kOpenCmd, jx_file_open);
 
-	itsActionMenu = menuBar->AppendTextMenu(JGetString("ActionsMenuTitle::Global"));
+	itsActionMenu = menuBar->AppendTextMenu(JGetString("ActionsMenuTitle::global"));
 	menuBar->InsertMenu(3, itsActionMenu);
 	itsActionMenu->SetMenuItems(kActionMenuStr, "LocalVarsDir");
 	ListenTo(itsActionMenu);

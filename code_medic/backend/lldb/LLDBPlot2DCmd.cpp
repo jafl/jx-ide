@@ -56,7 +56,7 @@ lldb::Plot2DCmd::UpdateRange
 	const JInteger	max
 	)
 {
-	Plot2DCmd::UpdateRange(curveIndex, min, max);
+	::Plot2DCmd::UpdateRange(curveIndex, min, max);
 
 	itsCurveIndex = curveIndex;
 }

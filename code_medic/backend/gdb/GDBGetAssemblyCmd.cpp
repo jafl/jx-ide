@@ -49,7 +49,7 @@ gdb::GetAssemblyCmd::~GetAssemblyCmd()
 void
 gdb::GetAssemblyCmd::Starting()
 {
-	GetAssemblyCmd::Starting();
+	::GetAssemblyCmd::Starting();
 
 	const Location& loc = GetDirector()->GetDisassemblyLocation();
 

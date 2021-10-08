@@ -313,7 +313,7 @@ MemoryDir::BuildWindow()
 	itsExprInput->ShareEditMenu(itsWidget);
 	itsItemCountInput->ShareEditMenu(itsWidget);
 
-	itsActionMenu = menuBar->AppendTextMenu(JGetString("ActionsMenuTitle::Global"));
+	itsActionMenu = menuBar->AppendTextMenu(JGetString("ActionsMenuTitle::global"));
 	menuBar->InsertMenu(3, itsActionMenu);
 	itsActionMenu->SetMenuItems(kActionMenuStr, "MemoryDir");
 	ListenTo(itsActionMenu);

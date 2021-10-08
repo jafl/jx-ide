@@ -55,7 +55,7 @@ gdb::Array2DCmd::PrepareToSend
 	const JInteger		arrayIndex
 	)
 {
-	Array2DCmd::PrepareToSend(type, index, arrayIndex);
+	::Array2DCmd::PrepareToSend(type, index, arrayIndex);
 
 	JString cmd("set print pretty off\nset print array off\n"
 				"set print repeats 0\nset width 0\n");
