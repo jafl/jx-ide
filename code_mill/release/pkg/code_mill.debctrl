@@ -1,7 +1,7 @@
 Package: code-mill
 Version: %VERSION%
-Maintainer: New Planet Software <http://www.newplanetsoftware.com/nps/contact.php>
-Homepage: http://www.newplanetsoftware.com/code_mill/
+Maintainer: John Lindal <https://about.me/johnlindal>
+Homepage: https://github.com/jafl/jx-ide
 Section: contrib/devel
 Priority: optional
 Architecture: i386
