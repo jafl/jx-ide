@@ -252,10 +252,10 @@ FileListDirector::StreamOut
 
 #include "jcc_file_list_window.xpm"
 
-#include <jx_file_new.xpm>
-#include <jx_file_open.xpm>
-#include <jx_filter_wildcard.xpm>
-#include <jx_filter_regex.xpm>
+#include <jx-af/image/jx/jx_file_new.xpm>
+#include <jx-af/image/jx/jx_file_open.xpm>
+#include <jx-af/image/jx/jx_filter_wildcard.xpm>
+#include <jx-af/image/jx/jx_filter_regex.xpm>
 #include "jcc_show_symbol_list.xpm"
 #include "jcc_show_c_tree.xpm"
 #include "jcc_show_d_tree.xpm"
@@ -265,7 +265,7 @@ FileListDirector::StreamOut
 #include "jcc_view_man_page.xpm"
 #include "jcc_search_files.xpm"
 #include "jcc_compare_files.xpm"
-#include <jx_file_save_all.xpm>
+#include <jx-af/image/jx/jx_file_save_all.xpm>
 
 void
 FileListDirector::BuildWindow()

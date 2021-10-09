@@ -449,14 +449,14 @@ TextDocument::GetMenuIcon
 
  ******************************************************************************/
 
-#include <jx_file_new.xpm>
-#include <jx_file_open.xpm>
-#include <jx_file_save.xpm>
-#include <jx_file_save_all.xpm>
-#include <jx_file_revert_to_saved.xpm>
-#include <jx_file_print.xpm>
-#include <jx_edit_read_only.xpm>
-#include <jx_show_whitespace.xpm>
+#include <jx-af/image/jx/jx_file_new.xpm>
+#include <jx-af/image/jx/jx_file_open.xpm>
+#include <jx-af/image/jx/jx_file_save.xpm>
+#include <jx-af/image/jx/jx_file_save_all.xpm>
+#include <jx-af/image/jx/jx_file_revert_to_saved.xpm>
+#include <jx-af/image/jx/jx_file_print.xpm>
+#include <jx-af/image/jx/jx_edit_read_only.xpm>
+#include <jx-af/image/jx/jx_show_whitespace.xpm>
 
 #include "jcc_file_print_with_styles.xpm"
 #include "jcc_file_save_copy_as.xpm"

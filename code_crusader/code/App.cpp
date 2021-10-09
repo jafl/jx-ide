@@ -228,8 +228,8 @@ App::EditMiscPrefs()
 
  ******************************************************************************/
 
-#include <jx_help_toc.xpm>
-#include <jx_help_specific.xpm>
+#include <jx-af/image/jx/jx_help_toc.xpm>
+#include <jx-af/image/jx/jx_help_specific.xpm>
 
 JXTextMenu*
 App::CreateHelpMenu

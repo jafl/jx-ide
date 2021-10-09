@@ -72,8 +72,8 @@ enum
 	kCreditsCmd
 };
 
-#include <jx_help_toc.xpm>
-#include <jx_help_specific.xpm>
+#include <jx-af/image/jx/jx_help_toc.xpm>
+#include <jx-af/image/jx/jx_help_specific.xpm>
 
 /******************************************************************************
  Constructor
@@ -110,7 +110,7 @@ BreakpointsDir::~BreakpointsDir()
 
 #include "medic_breakpoints_window.xpm"
 
-#include <jx_file_open.xpm>
+#include <jx-af/image/jx/jx_file_open.xpm>
 
 void
 BreakpointsDir::BuildWindow

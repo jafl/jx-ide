@@ -578,8 +578,8 @@ SymbolDirector::BuildAncestorList
 
 #include "jcc_symbol_window.xpm"
 
-#include <jx_file_new.xpm>
-#include <jx_file_open.xpm>
+#include <jx-af/image/jx/jx_file_new.xpm>
+#include <jx-af/image/jx/jx_file_open.xpm>
 #include "jcc_show_c_tree.xpm"
 #include "jcc_show_d_tree.xpm"
 #include "jcc_show_go_tree.xpm"
@@ -589,7 +589,7 @@ SymbolDirector::BuildAncestorList
 #include "jcc_show_file_list.xpm"
 #include "jcc_search_files.xpm"
 #include "jcc_compare_files.xpm"
-#include <jx_file_save_all.xpm>
+#include <jx-af/image/jx/jx_file_save_all.xpm>
 
 void
 SymbolDirector::BuildWindow

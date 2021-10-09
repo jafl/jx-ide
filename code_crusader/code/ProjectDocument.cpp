@@ -1481,11 +1481,11 @@ ProjectDocument::GetMenuIcon
 
 #include "jcc_project_window.xpm"
 
-#include <jx_file_new.xpm>
-#include <jx_file_open.xpm>
-#include <jx_file_save.xpm>
-#include <jx_file_save_all.xpm>
-#include <jx_file_print.xpm>
+#include <jx-af/image/jx/jx_file_new.xpm>
+#include <jx-af/image/jx/jx_file_open.xpm>
+#include <jx-af/image/jx/jx_file_save.xpm>
+#include <jx-af/image/jx/jx_file_save_all.xpm>
+#include <jx-af/image/jx/jx_file_print.xpm>
 #include "jcc_show_symbol_list.xpm"
 #include "jcc_show_c_tree.xpm"
 #include "jcc_show_d_tree.xpm"

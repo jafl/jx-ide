@@ -89,7 +89,7 @@ const JUtf8Byte kSetupDataEndDelimiter  = '\1';
 
 // Edit menu additions -- can't use AppendMenuItems() because of bar in NMShortcut
 
-#include <jx_run_script.xpm>
+#include <jx-af/image/jx/jx_run_script.xpm>
 
 static const JString kExecScriptAction("ExecScript::TextEditor", JString::kNoCopy);
 
@@ -1025,13 +1025,13 @@ TextEditor::HandleMouseUp
 
  ******************************************************************************/
 
-#include <jx_edit_cut.xpm>
-#include <jx_edit_copy.xpm>
-#include <jx_edit_paste.xpm>
-#include <jx_edit_shift_left.xpm>
-#include <jx_edit_shift_right.xpm>
-#include <jx_find_selection_backwards.xpm>
-#include <jx_find_selection_forward.xpm>
+#include <jx-af/image/jx/jx_edit_cut.xpm>
+#include <jx-af/image/jx/jx_edit_copy.xpm>
+#include <jx-af/image/jx/jx_edit_paste.xpm>
+#include <jx-af/image/jx/jx_edit_shift_left.xpm>
+#include <jx-af/image/jx/jx_edit_shift_right.xpm>
+#include <jx-af/image/jx/jx_find_selection_backwards.xpm>
+#include <jx-af/image/jx/jx_find_selection_forward.xpm>
 
 void
 TextEditor::CreateContextMenu()

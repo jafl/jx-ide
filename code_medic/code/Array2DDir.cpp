@@ -237,10 +237,10 @@ Array2DDir::Activate()
 #include "medic_show_2d_plot.xpm"
 #include "medic_show_2d_array.xpm"
 #include "medic_show_memory.xpm"
-#include <jx_file_open.xpm>
-#include <jx_file_print.xpm>
-#include <jx_help_toc.xpm>
-#include <jx_help_specific.xpm>
+#include <jx-af/image/jx/jx_file_open.xpm>
+#include <jx-af/image/jx/jx_file_print.xpm>
+#include <jx-af/image/jx/jx_help_toc.xpm>
+#include <jx-af/image/jx/jx_help_specific.xpm>
 
 void
 Array2DDir::BuildWindow()

@@ -260,10 +260,10 @@ SourceDirector::GetCurrentExecLine()
 #include "medic_current_source_window.xpm"
 #include "medic_current_asm_window.xpm"
 
-#include <jx_file_open.xpm>
-#include <jx_file_print.xpm>
-#include <jx_help_toc.xpm>
-#include <jx_help_specific.xpm>
+#include <jx-af/image/jx/jx_file_open.xpm>
+#include <jx-af/image/jx/jx_file_print.xpm>
+#include <jx-af/image/jx/jx_help_toc.xpm>
+#include <jx-af/image/jx/jx_help_specific.xpm>
 
 void
 SourceDirector::BuildWindow()

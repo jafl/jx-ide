@@ -496,15 +496,15 @@ TreeDirector::ViewFunctionList
 
  ******************************************************************************/
 
-#include <jx_file_new.xpm>
-#include <jx_file_open.xpm>
-#include <jx_file_print.xpm>
+#include <jx-af/image/jx/jx_file_new.xpm>
+#include <jx-af/image/jx/jx_file_open.xpm>
+#include <jx-af/image/jx/jx_file_print.xpm>
 #include "jcc_view_man_page.xpm"
 #include "jcc_show_symbol_list.xpm"
 #include "jcc_show_file_list.xpm"
 #include "jcc_search_files.xpm"
 #include "jcc_compare_files.xpm"
-#include <jx_file_save_all.xpm>
+#include <jx-af/image/jx/jx_file_save_all.xpm>
 
 JXScrollbarSet*
 TreeDirector::BuildWindow

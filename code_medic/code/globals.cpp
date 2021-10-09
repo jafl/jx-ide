@@ -536,8 +536,8 @@ InUpdateThread()
 #include "medic_show_variables.xpm"
 #include "medic_show_local_variables.xpm"
 #include "medic_show_file_list.xpm"
-#include <jx_source_file_small.xpm>
-#include <jx_binary_file_small.xpm>
+#include <jx-af/image/jx/jx_source_file_small.xpm>
+#include <jx-af/image/jx/jx_binary_file_small.xpm>
 #include "medic_show_1d_array.xpm"
 #include "medic_show_2d_array.xpm"
 #include "medic_show_2d_plot.xpm"

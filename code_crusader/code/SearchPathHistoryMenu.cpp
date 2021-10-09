@@ -17,7 +17,7 @@
 #include <jx-af/jcore/jDirUtil.h>
 #include <jx-af/jcore/jAssert.h>
 
-#include <jx_folder_small.xpm>
+#include <jx-af/image/jx/jx_folder_small.xpm>
 
 static const JString kOldRecurseFlag("(recurse)");
 static const JString kRecurseFlag("(include subdirs)");

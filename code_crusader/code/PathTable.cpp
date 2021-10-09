@@ -28,7 +28,7 @@
 #include <jx-af/jcore/jGlobals.h>
 #include <jx-af/jcore/jAssert.h>
 
-#include <jx_folder_small.xpm>
+#include <jx-af/image/jx/jx_folder_small.xpm>
 
 const JCoordinate kHMarginWidth = 3;
 const JCoordinate kVMarginWidth = 1;

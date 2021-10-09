@@ -454,10 +454,10 @@ CommandDirector::PrepareCommand
 
 #include "medic_command_window.xpm"
 
-#include <jx_file_open.xpm>
-#include <jx_file_print.xpm>
-#include <jx_help_toc.xpm>
-#include <jx_help_specific.xpm>
+#include <jx-af/image/jx/jx_file_open.xpm>
+#include <jx-af/image/jx/jx_file_print.xpm>
+#include <jx-af/image/jx/jx_help_toc.xpm>
+#include <jx-af/image/jx/jx_help_specific.xpm>
 
 JXMenuBar*
 CommandDirector::BuildWindow()
@@ -713,7 +713,7 @@ CommandDirector::GetMenuIcon
 
  ******************************************************************************/
 
-#include <jx_executable_small.xpm>
+#include <jx-af/image/jx/jx_executable_small.xpm>
 #include "medic_choose_core.xpm"
 #include "medic_attach_process.xpm"
 #include "medic_show_1d_array.xpm"
