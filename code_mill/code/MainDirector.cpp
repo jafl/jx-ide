@@ -463,9 +463,9 @@ MainDirector::Write()
 	cname.Print(oh);
 	oh << "();" << std::endl;
 
-	oh << "\tvirtual ~";
+	oh << "\t~";
 	cname.Print(oh);
-	oh << "();" << std::endl << std::endl;
+	oh << "() override;" << std::endl << std::endl;
 
 	itsClass->WritePublic(oh, true);
 
