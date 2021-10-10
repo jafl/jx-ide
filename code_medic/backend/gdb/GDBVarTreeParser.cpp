@@ -65,15 +65,15 @@ gdb::VarTreeParser::yylex
 {
 	int token = itsScanner->NextToken(lvalp);
 	if (token == P_GROUP_OPEN)
-{
+	{
 		itsGroupDepth++;
-}
+	}
 	else if (token == P_GROUP_CLOSE && itsGroupDepth > 0)
-{
+	{
 		itsGroupDepth--;
-}
+	}
 	else if (token == P_EOF && itsGroupDepth > 0)
-{
+	{
 		itsGDBErrorFlag = true;
 
 		token          = P_GROUP_CLOSE;
@@ -81,7 +81,7 @@ gdb::VarTreeParser::yylex
 		assert( lvalp->pString != nullptr );
 
 		itsGroupDepth--;
-}
+	}
 
 	return token;
 }

@@ -1,8 +1,11 @@
-%{
-#include "VarNode.h"
-#include "GDBVarGroupInfo.h"
+%require "3.8"
+
+%code top {
+#include "GDBVarTreeParser.h"
 #include "globals.h"
 #include <jx-af/jcore/JStringIterator.h>
+
+#define yyparse gdb::VarTreeParser::yyparse
 
 // also uncomment yydebug=1; below
 //#define YYERROR_VERBOSE
@@ -17,7 +20,7 @@ isOpenablePointer
 	return s != "0x0";
 }
 
-%}
+}
 
 %union {
 	JString*			pString;
@@ -26,13 +29,7 @@ isOpenablePointer
 	GDBVarGroupInfo*	pGroup;
 }
 
-%{
-#define NOTAB
-#include "GDBVarTreeParser.h"
-
-#define yyparse gdb::VarTreeParser::yyparse
-%}
-
+%header
 %define api.pure
 
 %token<pString>	P_NAME P_NAME_EQ
@@ -50,7 +47,7 @@ isOpenablePointer
 %type<pList>	value_list node_list
 %type<pGroup>	group
 
-%{
+%code {
 
 // debugging output
 
@@ -71,11 +68,9 @@ yyprint
 	}
 }
 
-%}
-
-%{
-#include <jx-af/jcore/jAssert.h>	// must be last
-%}
+// must be last
+#include <jx-af/jcore/jAssert.h>
+}
 
 %initial-action
 {
