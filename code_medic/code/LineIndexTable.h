@@ -32,7 +32,7 @@ public:
 					 const JCoordinate x, const JCoordinate y,
 					 const JCoordinate w, const JCoordinate h);
 
-	virtual ~LineIndexTable();
+	~LineIndexTable() override;
 
 	JCoordinate	GetCurrentLine() const;
 	void		SetCurrentLine(const JIndex line);

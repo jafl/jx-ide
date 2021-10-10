@@ -25,7 +25,7 @@ static const JRegex modulePattern("(?:.+?/)*(.+?)(?:/[vV][.0-9]+)?");
 
 public:
 
-	virtual ~Scanner();
+	~Scanner() override;
 
 private:
 

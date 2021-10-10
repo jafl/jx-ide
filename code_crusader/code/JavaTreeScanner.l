@@ -21,7 +21,7 @@ This scanner reads a Java file and builds a JavaClass.
 
 public:
 
-	virtual ~Scanner();
+	~Scanner() override;
 
 private:
 

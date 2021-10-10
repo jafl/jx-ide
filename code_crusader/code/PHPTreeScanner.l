@@ -21,7 +21,7 @@ This scanner reads a PHP file and builds a PHPClass.
 
 public:
 
-	virtual ~Scanner();
+	~Scanner() override;
 
 private:
 

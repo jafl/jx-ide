@@ -26,7 +26,7 @@ This scanner reads a D file and creates Class instances.
 
 public:
 
-	virtual ~Scanner();
+	~Scanner() override;
 
 private:
 
