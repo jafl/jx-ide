@@ -1,9 +1,9 @@
 Makefile
 *.o
 *.bak
-*Y.hpp
-*Y.cpp
-*/code/*StringData.h
+*Scanner.cpp
+*Scanner.h
+*/code/stringData.h
 */strings/version
 */strings/*_menu_strings
 */.jcc
