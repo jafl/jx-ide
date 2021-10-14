@@ -11,8 +11,6 @@ LIB=$PRE/usr/lib/jxcb
 APP=$PRE/usr/share/applications
 ICON=$PRE/usr/share/pixmaps
 
-MM_DOC=$PRE/usr/share/doc/makemake
-
 if [[ ! -z $PRE ]]; then
 	mkdir -p $BIN $APP $ICON;
 fi
@@ -20,7 +18,6 @@ fi
 # jcc
 
 install -m755 jcc                    $BIN
-install -m755 dirdiff/dirdiff        $BIN
 install -m755 macros/xml-auto-close  $BIN
 install -m755 macros/html-auto-close $BIN
 
@@ -39,17 +36,6 @@ cp -R CPM_rules           $DOC
 
 cp desktop/code_crusader.desktop $APP/
 cp desktop/code_crusader.xpm     $ICON/
-
-# makemake
-
-install -m755 makemake/makemake  $BIN
-install -m755 makemake/makecheck $BIN
-install -m755 makemake/maketouch $BIN
-
-mkdir -p $MM_DOC
-cp makemake/README             $MM_DOC
-cp makemake/Make.header_sample $MM_DOC
-cp makemake/Make.files_sample  $MM_DOC
 
 # post
 

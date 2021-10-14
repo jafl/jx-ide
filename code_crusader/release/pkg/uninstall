@@ -2,7 +2,6 @@
 
 rm -f  /usr/bin/jcc;
 rm -f  /usr/bin/code_crusader;
-rm -f  /usr/bin/dirdiff;
 rm -f  /usr/bin/xml-auto-close;
 rm -f  /usr/bin/html-auto-close;
 rm -rf /usr/lib/jxcb;

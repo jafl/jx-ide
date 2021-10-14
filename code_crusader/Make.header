@@ -1,27 +1,31 @@
 # To use this file, first run "makemake" and then run "make".
 # (makemake is part of the JX distribution)
 
-JX_ROOT := ../../JX
+ifneq ($(shell ls ../../JX/Makefile 2>/dev/null),)
+  JX_ROOT := ../../JX
+else
+  JX_ROOT := /usr/local
+endif
 
 APP_NAME  := jcc
 SIGNATURE := jxcb
 
-J_STRING_FILES := ${filter-out %/jcc_menu_strings, \
-                    ${shell echo strings/*}} strings/version
+J_STRING_FILES := $(filter-out %/jcc_menu_strings, \
+                    $(shell echo strings/*)) strings/version
 
 MAKE_INCLUDE := ${JX_ROOT}/include/jx-af/make
 include ${MAKE_INCLUDE}/jx_config
 include ${MAKE_INCLUDE}/jfs_constants
 
 SEARCHDIRS := -I./code -I./image ${SEARCHDIRS} \
-              ${shell xml2-config --cflags} \
-              ${shell pkg-config --cflags editorconfig}
+              $(shell xml2-config --cflags) \
+              $(shell pkg-config --cflags editorconfig)
 
 # makemake variables
 
 DEPENDFLAGS := ${J_COMPILER_DEPEND_FLAGS} ${SEARCHDIRS} \
                -DCODE_CRUSADER \
-               -DJ_MAKE_BINARY_NAME=\"${firstword ${MAKE}}\"
+               -DJ_MAKE_BINARY_NAME=\"$(firstword ${MAKE})\"
 
 # library dependencies
 
@@ -31,7 +35,7 @@ LIB_DEPS := ${JX_LIB_ROOT}/libjfs.a \
 
 # make variables
 
-LOADLIBES := -lreflex ${shell pkg-config --libs editorconfig} ${J_STD_LIBS}
+LOADLIBES := -lreflex $(shell pkg-config --libs editorconfig) ${J_STD_LIBS}
 LDFLAGS   := 
 
 include make_reflex_target
@@ -57,13 +61,11 @@ test:
 
 .PHONY : init_tarball_extra
 init_tarball_extra::
-	@ln -s ../scripts              ${PROG}/
-	@ln -s ../macros               ${PROG}/
-	@ln -s ../CPM_rules            ${PROG}/
-	@ln -s ../project_templates    ${PROG}/
-	@ln -s ../text_templates       ${PROG}/
-	@cp -r ${JX_ROOT}/misc/dirdiff ${PROG}/
-	@cd ${JX_ROOT}/tools/makemake; ${MAKE} JCC_TAR_DIR=${PROG_TAR_DIR}/${PROG} jcc
+	@ln -s ../scripts           ${PROG}/
+	@ln -s ../macros            ${PROG}/
+	@ln -s ../CPM_rules         ${PROG}/
+	@ln -s ../project_templates ${PROG}/
+	@ln -s ../text_templates    ${PROG}/
 
 .PHONY : clean
 clean::

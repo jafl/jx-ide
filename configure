@@ -2,10 +2,6 @@
 
 set -e;
 
-#
-# main script
-#
-
 SYS=`uname -o || uname -s`;		# Darwin doesn't support -o
 
 if [[ $UID != 0 ]]; then
@@ -34,8 +30,10 @@ elif command -v apt-get; then
 
 	if [[ -z $LGTM_SRC ]]; then
 		$SUDO apt update;
-		$SUDO apt -y install libeditorconfig-dev \
-			llvm liblldb-$LLDB_VERS-dev;
+		$SUDO apt -y install libeditorconfig-dev llvm liblldb-$LLDB_VERS-dev;
+
+		curl -O http://libjx.sourceforge.net/release/jx-application-framework.deb
+		sudo apt install ./jx-application-framework.deb
 	fi
 
 	rm -f code_medic/lldb-include;
@@ -44,51 +42,45 @@ elif command -v apt-get; then
 	rm -f code_medic/liblldb.so;
 	ln -sf /usr/lib/llvm-$LLDB_VERS/lib/liblldb.so.1 code_medic/liblldb.so;
 
-elif command -v dnf; then
+elif command -v dnf || command -v yum; then
 
 	# redhat
 
-	$SUDO dnf -y install editorconfig-devel \
-		lldb-devel llvm-devel;
+	if command -v dnf; then
+		PKGMGR=dnf;
+	else
+		PKGMGR=yum;
+	fi
 
-elif command -v yum; then
-
-	# redhat
-
-	$SUDO yum -y install editorconfig-devel \
-		lldb-devel llvm-devel;
+	$SUDO $PKGMGR -y install editorconfig-devel lldb-devel llvm-devel;
 
 elif command -v zypper; then
 
 	# openSUSE
 
-	$SUDO zypper -in install editorconfig-devel \
-		lldb llvm-devel;
+	$SUDO zypper -in install editorconfig-devel lldb llvm-devel;
 
 	# lldb-devel is missing
 	rm -f code_medic/lldb-include;
 	ln -sf ../misc/lldb-include code_medic;
 
-elif [[ $SYS == Cygwin ]]; then
-
-	ARCH=`uname -i`;
-	if [[ $ARCH == x86_64 ]]; then
-		SETUP=setup-x86_64.exe;
-		echo "Unsupported architecture '$ARCH'.  Please file an issue on github.";
-		exit 1;
-	elif [[ ${ARCH:0:1} == i ]]; then
-		SETUP=setup-x86.exe;
-		SYS_CONFIG=sys/Linux-Intel-cygwin32;
-		ACE_CONFIG=config-cygwin32.h;
-		ACE_MAKE_CONFIG=platform_cygwin32.GNU;
-	else
-		echo "Unknown architecture '$ARCH'.  Please file an issue on github.";
-		exit 1;
-	fi
-
 else
 
 	echo "Unrecognized system!  Please file an issue on github.";
+	exit 1;
+
+fi
+
+if [[ ! -d /usr/local/include/reflex/ ]]; then
+
+	echo "Please install RE/flex library.";
+	exit 1;
+
+fi
+
+if [[ ! -d /usr/local/include/jx-af/ && -z $JX_ROOT ]]; then
+
+	echo "Please install jx-application-framework.";
 	exit 1;
 
 fi

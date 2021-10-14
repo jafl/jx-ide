@@ -1,13 +1,17 @@
 # To use this file, first run "makemake" and then run "make".
 # (makemake is part of the JX distribution)
 
-JX_ROOT  := ../../JX
+ifneq ($(shell ls ../../JX/Makefile 2>/dev/null),)
+  JX_ROOT := ../../JX
+else
+  JX_ROOT := /usr/local
+endif
 
 APP_NAME  := medic
 SIGNATURE := ${APP_NAME}
 
-J_STRING_FILES := ${filter-out %/${APP_NAME}_menu_strings, \
-                    ${shell echo strings/*}} strings/version
+J_STRING_FILES := $(filter-out %/${APP_NAME}_menu_strings, \
+                    $(shell echo strings/*)) strings/version
 
 MAKE_INCLUDE := ${JX_ROOT}/include/jx-af/make
 include ${MAKE_INCLUDE}/jx_config
@@ -54,7 +58,7 @@ ${APP_NAME}:: strings
 
 # force reflex to run first
 ${APP_NAME}:: ./backend/gdb/GDBVarTreeScanner.cpp
-	@if ! test -e VarTreeParserY.hpp; then ${RM} code/VarTreeParserY.o; fi
+	@if [[ ! -e VarTreeParserY.hpp ]]; then ${RM} code/VarTreeParserY.o; fi
 
 .PHONY : post_link
 post_link::

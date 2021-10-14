@@ -1,3 +1,12 @@
+[![Github CI](https://github.com/jafl/jx-ide/actions/workflows/ci.yml/badge.svg)](https://github.com/jafl/jx-ide/actions/workflows/ci.yml)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?branch=main&project=jafl_jx-ide&metric=alert_status)](https://sonarcloud.io/dashboard?id=jafl_jx-ide&branch=main)
+
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?branch=main&project=jafl_jx-ide&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=jafl_jx-ide&branch=main)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?branch=main&project=jafl_jx-ide&metric=security_rating)](https://sonarcloud.io/dashboard?id=jafl_jx-ide&branch=main)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?branch=main&project=jafl_jx-ide&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=jafl_jx-ide&branch=main)
+
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?branch=main&project=jafl_jx-ide&metric=ncloc)](https://sonarcloud.io/dashboard?id=jafl_jx-ide&branch=main)
+
 # JX IDE
 
 Code Crusader, Code Medic, and Code Mill together comprise the IDE built using the JX Application Framework.

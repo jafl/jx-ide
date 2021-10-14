@@ -4,9 +4,9 @@ Maintainer: John Lindal <https://about.me/johnlindal>
 Homepage: https://github.com/jafl/jx-ide
 Section: contrib/devel
 Priority: optional
-Architecture: i386
+Architecture: %ARCH%
 Essential: no
-Depends: liblldb-11, libeditorconfig, libx11, libxinerama, libxpm, libxft, libxml2, libgd, libjpeg, libpng, libace, libicu, libpcre3, universal-ctags
+Depends: universal-ctags, liblldb-11, libeditorconfig, libx11-6, libxext6, libxau6, libxinerama1, libxft2, libfreetype6, libgd3, libpng16-16, libjpeg8, libxpm4, libxml2, libace-6.4.5, libicu66, libpcre3, libstdc++6
 Suggests: code-crusader
 Description: Code Medic is a graphical debugging environment for UNIX.
  Code Medic is a graphical debugging environment for UNIX.
