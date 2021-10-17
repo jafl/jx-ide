@@ -33,7 +33,7 @@ public:
 
 protected:
 
-	virtual bool	OKToDeactivate();
+	bool	OKToDeactivate() override;
 
 private:
 
