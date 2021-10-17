@@ -21,8 +21,8 @@ include ${MAKE_INCLUDE}/j2dplot_constants
 SEARCHDIRS := -I./code -I./image -I./backend -I./shared \
               ${SEARCHDIRS} -I./lldb-include \
               -I/usr/local/opt/llvm/include \
-              ${shell xml2-config --cflags} \
-              ${shell pkg-config --cflags editorconfig}
+              $(shell xml2-config --cflags) \
+              $(shell pkg-config --cflags editorconfig)
 
 # makemake variables
 

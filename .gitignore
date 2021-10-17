@@ -1,4 +1,4 @@
-Makefile
+*/**/Makefile
 *.o
 *.bak
 *Scanner.cpp

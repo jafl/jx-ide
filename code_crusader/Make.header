@@ -53,7 +53,7 @@ ${APP_NAME}:: strings
 
 .PHONY : Makefiles
 Makefiles::
-	@cd test; makemake; ${MAKE} Makefiles
+	@cd test; makemake
 
 .PHONY : test
 test:
