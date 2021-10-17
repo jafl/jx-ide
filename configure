@@ -28,10 +28,10 @@ elif command -v apt-get; then
 
 	LLDB_VERS=11
 
-	if [[ -z $LGTM_SRC ]]; then
-		$SUDO apt update;
-		$SUDO apt -y install libeditorconfig-dev llvm liblldb-$LLDB_VERS-dev;
+	$SUDO apt update;
+	$SUDO apt -y install libeditorconfig-dev llvm liblldb-$LLDB_VERS-dev;
 
+	if [[ -z $CODEQL_ACTION_VERSION ]]; then
 		curl -O http://libjx.sourceforge.net/release/jx-application-framework.deb
 		sudo apt install ./jx-application-framework.deb
 	fi

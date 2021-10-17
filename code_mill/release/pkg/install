@@ -16,7 +16,7 @@ fi
 install -m755 code_mill $BIN
 
 mkdir -p $DOC
-cp README COPYING menu_strings $DOC
+cp README.md COPYING menu_strings $DOC
 
 cp desktop/code_mill.desktop $APP/
 cp desktop/code_mill.xpm     $ICON/

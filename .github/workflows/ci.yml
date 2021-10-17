@@ -1,7 +1,8 @@
-name: Github CI
+name: CI
 on:
   push:
     branches: [ main ]
+  workflow_dispatch:
 jobs:
   build:
     name: Build
@@ -63,13 +64,17 @@ jobs:
           curl -O http://libjx.sourceforge.net/ci/jx-application-framework.deb
           sudo apt install ./jx-application-framework.deb
           ./configure release
-          makemake
+          make Makefiles
 
       - name: Build
         run: |
           export LC_ALL=en_US.UTF-8
           export LANG=en_US.UTF-8
-          build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} make
+          build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} make all
+
+      - name: Run tests
+        continue-on-error: true
+        run: make test
 
       - name: Run sonar-scanner
         env:
@@ -80,3 +85,16 @@ jobs:
 
       - name: Perform CodeQL analysis
         uses: github/codeql-action/analyze@v1
+
+      - name: Build release artifacts
+        run: |
+          make VERBOSE=1 release
+          mv ../*_*.tar.gz ../*_*.deb .
+
+      - name: Store release artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: release
+          path: |
+            *_*.tar.gz
+            *_*.deb
