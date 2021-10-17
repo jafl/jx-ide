@@ -21,8 +21,7 @@ include ${MAKE_INCLUDE}/j2dplot_constants
 SEARCHDIRS := -I./code -I./image -I./backend -I./shared \
               ${SEARCHDIRS} -I./lldb-include \
               -I/usr/local/opt/llvm/include \
-              $(shell xml2-config --cflags) \
-              $(shell pkg-config --cflags editorconfig)
+              $(shell xml2-config --cflags)
 
 # makemake variables
 
@@ -38,8 +37,7 @@ LIB_DEPS := ${JX_LIB_ROOT}/libj2dplot.a \
 
 # make variables
 
-LOADLIBES := ${J_LLDB_LIBS} ${shell pkg-config --libs editorconfig} \
-             -lreflex ${J_STD_LIBS}
+LOADLIBES := ${J_LLDB_LIBS} -leditorconfig -lreflex ${J_STD_LIBS}
 LDFLAGS   := -Xlinker -headerpad_max_install_names
 
 include make_reflex_target

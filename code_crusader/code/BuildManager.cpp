@@ -1612,11 +1612,9 @@ BuildManager::GetMakefileNames
 	JPtrArray<JString>*	list
 	)
 {
-	JString name;
 	for (auto name : kMakefileName)
 	{
-		name = JCombinePathAndName(path, JString(name, JString::kNoCopy));
-		list->Append(name);
+		list->Append(JCombinePathAndName(path, JString(name, JString::kNoCopy)));
 	}
 }
 
