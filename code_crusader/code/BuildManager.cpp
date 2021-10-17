@@ -1613,9 +1613,9 @@ BuildManager::GetMakefileNames
 	)
 {
 	JString name;
-	for (JUnsignedOffset i=0; i<kMakefileNameCount; i++)
+	for (auto name : kMakefileName)
 	{
-		name = JCombinePathAndName(path, JString(kMakefileName[i], JString::kNoCopy));
+		name = JCombinePathAndName(path, JString(name, JString::kNoCopy));
 		list->Append(name);
 	}
 }

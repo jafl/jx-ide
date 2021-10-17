@@ -266,13 +266,6 @@ ProjectConfigDialog::UpdateDisplay()
 		itsDepListExpr->Deactivate();
 		itsUpdateMakefileCmd->Focus();
 	}
-	else if (method == BuildManager::kCMake)
-	{
-		itsTargetName->Activate();
-		itsTargetName->SetIsRequired(true);
-		itsTargetName->Focus();
-		itsDepListExpr->Activate();
-	}
 	else if (method == BuildManager::kQMake)
 	{
 		itsTargetName->Activate();
@@ -280,7 +273,7 @@ ProjectConfigDialog::UpdateDisplay()
 		itsTargetName->Focus();
 		itsDepListExpr->Deactivate();
 	}
-	else
+	else	// kCMake or anything else
 	{
 		itsTargetName->Activate();
 		itsTargetName->SetIsRequired(true);

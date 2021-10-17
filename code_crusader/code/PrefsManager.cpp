@@ -1706,7 +1706,7 @@ PrefsManager::ConvertHTMLSuffixesToFileTypes
 JArray<PrefsManager::FileTypeInfo>*
 PrefsManager::CreateFileTypeList()
 {
-	JArray<FileTypeInfo>* list = jnew JArray<FileTypeInfo>(256);
+	auto* list = jnew JArray<FileTypeInfo>(256);
 	assert( list != nullptr );
 	list->SetSortOrder(JListT::kSortAscending);
 	list->SetCompareFunction(CompareFileTypeSpecAndLength);
@@ -2548,9 +2548,9 @@ PrefsManager::ReadColors()
 	}
 	else
 	{
-		for (JUnsignedOffset i=0; i<kColorCount; i++)
+		for (bool& v : ok)
 		{
-			ok[i] = false;
+			v = false;
 		}
 	}
 
@@ -2582,9 +2582,9 @@ PrefsManager::WriteColors()
 	std::ostringstream data;
 	data << kCurrentTextColorVers;
 
-	for (JUnsignedOffset i=0; i<kColorCount; i++)
+	for (JColorID color : itsColor)
 	{
-		data << ' ' << JColorManager::GetRGB(itsColor[i]);
+		data << ' ' << JColorManager::GetRGB(color);
 	}
 
 	SetData(kTextColorID, data);

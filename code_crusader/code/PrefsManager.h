@@ -388,9 +388,9 @@ public:
 				:
 				JBroadcaster::Message(kFileTypesChanged)
 			{
-				for (JUnsignedOffset i=0; i<kFTCount; i++)
+				for (bool& status : itsStatus)
 					{
-					itsStatus[i] = false;
+					status = false;
 					}
 			};
 
@@ -406,12 +406,12 @@ public:
 				const
 			{
 				for (JUnsignedOffset i=0; i<kFTCount; i++)
-					{
+				{
 					if (itsStatus[i] && typeCheckFn((TextFileType) i))
-						{
+					{
 						return true;
-						}
 					}
+				}
 				return false;
 			}
 
@@ -419,13 +419,13 @@ public:
 			AnyChanged()
 				const
 			{
-				for (JUnsignedOffset i=0; i<kFTCount; i++)
+				for (bool status : itsStatus)
+				{
+					if (status)
 					{
-					if (itsStatus[i])
-						{
 						return true;
-						}
 					}
+				}
 				return false;
 			}
 

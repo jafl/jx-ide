@@ -193,19 +193,11 @@ PrefsDialog::OKToDeactivate()
 		return JXDialogDirector::OKToDeactivate();
 	}
 
-	bool ok	= JXDialogDirector::OKToDeactivate();
-	if (ok)
-	{
-		if (!itsHeaderInput->InputValid() ||
-			!itsSourceInput->InputValid() ||
-			!itsConstructorInput->InputValid() ||
-			!itsDestructorInput->InputValid() ||
-			!itsFunctionInput->InputValid())
-		{
-			ok	= false;
-		}
-	}
-
-	return ok;
+	return (JXDialogDirector::OKToDeactivate() &&
+			(!itsHeaderInput->InputValid()      ||
+			 !itsSourceInput->InputValid()      ||
+			 !itsConstructorInput->InputValid() ||
+			 !itsDestructorInput->InputValid()  ||
+			 !itsFunctionInput->InputValid()));
 }
 

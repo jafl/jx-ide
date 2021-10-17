@@ -341,7 +341,7 @@ CommandManager::Prepare
 			cmdPath = *info.path;
 
 			JPtrArray<JString> subFullNameList(JPtrArrayT::kForgetAll);
-			subFullNameList.Append(const_cast<JString*>(fullNameList.GetElement(i)));
+			subFullNameList.Append(fullNameList.GetElement(i));
 
 			JArray<JIndex> subLineIndexList;
 			if (hasLines)
@@ -1544,18 +1544,18 @@ const JSize kDefCmdCount = sizeof(kDefCmd) / sizeof(DefCmd);
 void
 CommandManager::InitCommandList()
 {
-	for (JUnsignedOffset i=0; i<kDefCmdCount; i++)
+	for (const auto& cmd : kDefCmd)
 	{
-		AppendCommand(JString(kDefCmd[i].path, JString::kNoCopy),
-					  JString(kDefCmd[i].cmd, JString::kNoCopy),
-					  JString(kDefCmd[i].name, JString::kNoCopy),
-					  kDefCmd[i].isMake, kDefCmd[i].isVCS, kDefCmd[i].saveAll,
-					  kDefCmd[i].oneAtATime, kDefCmd[i].useWindow,
-					  kDefCmd[i].raiseWindowWhenStart,
-					  kDefCmd[i].beepWhenFinished,
-					  JGetString(kDefCmd[i].menuTextID),
-					  JGetString(kDefCmd[i].menuShortcutID),
-					  kDefCmd[i].separator);
+		AppendCommand(JString(cmd.path, JString::kNoCopy),
+					  JString(cmd.cmd, JString::kNoCopy),
+					  JString(cmd.name, JString::kNoCopy),
+					  cmd.isMake, cmd.isVCS, cmd.saveAll,
+					  cmd.oneAtATime, cmd.useWindow,
+					  cmd.raiseWindowWhenStart,
+					  cmd.beepWhenFinished,
+					  JGetString(cmd.menuTextID),
+					  JGetString(cmd.menuShortcutID),
+					  cmd.separator);
 	}
 
 	for (JIndex i=1; i<=kDefCmdCount; i++)
@@ -1877,8 +1877,7 @@ CommandManager::GetOutputDoc()
 	const JSize count = theExecDocList.GetElementCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		ExecOutputDocument* doc =
-			dynamic_cast<ExecOutputDocument*>(theExecDocList.GetElement(i));
+		auto* doc = dynamic_cast<ExecOutputDocument*>(theExecDocList.GetElement(i));
 		assert( doc != nullptr );
 		if (!doc->ProcessRunning())
 		{

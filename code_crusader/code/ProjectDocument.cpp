@@ -206,15 +206,15 @@ enum
 
 class ChildAssertHandler : public JAssertBase
 {
-	virtual int Assert(const JUtf8Byte* expr, const JUtf8Byte* file, const int line, const JUtf8Byte* message)
-{
+	int Assert(const JUtf8Byte* expr, const JUtf8Byte* file, const int line, const JUtf8Byte* message) override
+	{
 		return JAssertBase::DefaultAssert(expr, file, line, message);
-}
+	}
 
-	virtual void Abort()
-{
+	void Abort() override
+	{
 		exit(1);
-}
+	}
 };
 
 /******************************************************************************

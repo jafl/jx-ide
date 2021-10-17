@@ -93,7 +93,7 @@ SymbolSRDirector::SymbolSRDirector
 	itsSymbolTable->SetDisplayList(displayList);
 	FitWindowToContent();
 
-	JString title = JGetString("WindowTitlePrefix::SymbolSRDirector");;
+	JString title = JGetString("WindowTitlePrefix::SymbolSRDirector");
 	title += searchStr;
 	GetWindow()->SetTitle(title);
 }

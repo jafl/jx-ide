@@ -145,7 +145,7 @@ SymbolTypeList::IsVisible
 	const
 {
 	const JIndex i = FindType(type);
-	return (itsSymbolTypeList->GetElement(i)).visible;
+	return itsSymbolTypeList->GetElement(i).visible;
 }
 */
 /******************************************************************************

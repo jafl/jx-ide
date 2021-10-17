@@ -888,11 +888,11 @@ ProjectTable::Receive
 		HandleEditMenu(selection->GetIndex());
 	}
 
-	else if (sender == itsContextMenu && message.Is(JXTextMenu::kNeedsUpdate))
+	else if (sender == itsContextMenu && message.Is(JXMenu::kNeedsUpdate))
 	{
 		UpdateContextMenu();
 	}
-	else if (sender == itsContextMenu && message.Is(JXTextMenu::kItemSelected))
+	else if (sender == itsContextMenu && message.Is(JXMenu::kItemSelected))
 	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);

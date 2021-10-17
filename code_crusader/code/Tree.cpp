@@ -1450,7 +1450,7 @@ Tree::FindRoots
 		{
 			ok = root->GetParent(1, &root);
 			assert( ok );
-		};
+		}
 
 		// find the geometry information
 

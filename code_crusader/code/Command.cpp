@@ -344,7 +344,7 @@ Command::Start
 
 		if (itsOutputDoc == nullptr)
 		{
-			itsOutputDoc = mgr->GetOutputDoc();
+			itsOutputDoc = CommandManager::GetOutputDoc();
 			itsOutputDoc->IncrementUseCount();
 		}
 		itsDontCloseMsg = JGetString("RunCloseMsg::Command");

@@ -295,8 +295,6 @@ Class::StreamOut
 	)
 	const
 {
-JIndex i;
-
 	output << ' ' << itsFullName << ' ' << itsName;
 	output << ' ' << itsDeclType << ' ' << itsFileID;
 	output << ' ' << itsHCoord << ' ' << itsVCoord << ' ' << itsFrame;
@@ -313,7 +311,7 @@ JIndex i;
 	const JSize parentCount = GetParentCount();
 	output << ' ' << parentCount;
 
-	for (i=1; i<=parentCount; i++)
+	for (JIndex i=1; i<=parentCount; i++)
 	{
 		const ParentInfo pInfo = itsParentInfo->GetElement(i);
 		output << ' ' << *(pInfo.name);

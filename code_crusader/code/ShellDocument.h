@@ -21,7 +21,7 @@ class ShellDocument : public TextDocument
 {
 public:
 
-	typedef JAsynchDataReceiver<ACE_LSOCK_STREAM>	DataLink;
+	using DataLink = JAsynchDataReceiver<ACE_LSOCK_STREAM>;
 
 public:
 

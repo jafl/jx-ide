@@ -1073,22 +1073,9 @@ TreeDirector::ReceiveWithFeedback
 			JString fullName;
 			for (JIndex i=1; i<=count; i++)
 			{
-				if ((classList.GetElement(i))->GetFileName(&fullName))
+				if (classList.GetElement(i)->GetFileName(&fullName))
 				{
-					// since cmd-; works fine with .h file, no real value
-					// to using source file instead of header file
-
-					JString complName;
-					if (0 && GetDocumentManager()->GetComplementFile(
-							fullName, GetPrefsManager()->GetFileType(fullName),
-							&complName, GetProjectDoc(), true))
-					{
-						info->AddFile(complName);
-					}
-					else
-					{
-						info->AddFile(fullName);
-					}
+					info->AddFile(fullName);
 				}
 			}
 		}
