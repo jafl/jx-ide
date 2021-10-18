@@ -58,6 +58,14 @@ public:
 	static void			Shutdown();
 };
 
+class MakeStyler
+{
+public:
+
+    static StylerBase*  Instance();
+    static void         Shutdown();
+};
+
 class PerlStyler
 {
 public:

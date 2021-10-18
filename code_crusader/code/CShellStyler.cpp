@@ -186,13 +186,6 @@ CShellStyler::Scan
 		{
 			style = GetTypeStyle(kError - kWhitespace);
 		}
-		else if (token.type > kError)	// misc
-		{
-			if (!GetWordStyle(JString(text.GetRawBytes(), token.range.byteRange, JString::kNoCopy), &style))
-			{
-				style = GetDefaultFont().GetStyle();
-			}
-		}
 		else
 		{
 			style = GetStyle(typeIndex, JString(text.GetRawBytes(), token.range.byteRange, JString::kNoCopy));
@@ -244,9 +237,11 @@ static JRegex emptyVariablePattern = "(?<!\\\\)\\$\\{\\}?";
 
 #undef CShellStringID
 
-#define ClassName CShellStyler
+#define ClassName    CShellStyler
+#define VariableType kVariable
 #include "STStylerEmbeddedVariables.th"
 #undef ClassName
+#undef VariableType
 
 /******************************************************************************
  UpgradeTypeList (virtual protected)

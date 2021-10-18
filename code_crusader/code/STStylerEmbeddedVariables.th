@@ -5,9 +5,11 @@
 
 	To use this file:
 
-		#define ClassName ____
+		#define ClassName    ____
+		#define VariableType ____	// optional
 		#include "STStylerEmbeddedVariables.th"
 		#undef ClassName
+		#undef VariableType
 
 	Copyright © 2021 by John Lindal.
 
@@ -30,16 +32,16 @@ ClassName::FunctionName
 
 	JFontStyle varStyle = GetTypeStyle(token.type - kWhitespace);
 	varStyle.underlineCount++;
-#ifndef NoVariableIndex
-	if (varStyle == GetTypeStyle(kVariable - kWhitespace))
+#ifdef VariableType
+	if (varStyle == GetTypeStyle(VariableType - kWhitespace))
 	{
 		varStyle.underlineCount++;
 	}
 #endif
 	JFontStyle errStyle = GetTypeStyle(kError - kWhitespace);
 	errStyle.underlineCount++;
-#ifndef NoVariableIndex
-	if (errStyle == GetTypeStyle(kVariable - kWhitespace))
+#ifdef VariableType
+	if (errStyle == GetTypeStyle(VariableType - kWhitespace))
 	{
 		errStyle.underlineCount++;
 	}

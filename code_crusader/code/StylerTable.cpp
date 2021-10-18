@@ -59,7 +59,7 @@ StylerTable::StylerTable
 
 StylerTable::StylerTable
 	(
-	const TextFileType					fileType,
+	const TextFileType						fileType,
 	const JArray<StylerBase::WordStyle>&	wordList,
 	JXTextButton*							addRowButton,
 	JXTextButton*							removeButton,
@@ -99,8 +99,8 @@ StylerTable::StylerTableX
 	(
 	const TextFileType	fileType,
 	const bool			allowEdit,
-	JXTextButton*			addRowButton,
-	JXTextButton*			removeButton
+	JXTextButton*		addRowButton,
+	JXTextButton*		removeButton
 	)
 {
 	itsFileType      = fileType;

@@ -232,9 +232,7 @@ static JRegex variablePattern =      "(?<!\\\\)\\$\\{.+?\\}";
 static JRegex emptyVariablePattern = "(?<!\\\\)\\$\\{\\}?";
 
 #define ClassName JavaScriptStyler
-#define NoVariableIndex
 #include "STStylerEmbeddedVariables.th"
-#undef NoVariableIndex
 #undef ClassName
 
 /******************************************************************************

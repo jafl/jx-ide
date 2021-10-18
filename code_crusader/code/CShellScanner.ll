@@ -41,9 +41,7 @@ public:
 		kExecString,
 
 		kComment,
-		kError,			// place holder for CShellStyler
-
-		kOtherOperator
+		kError			// place holder for CShellStyler
 	};
 }
 

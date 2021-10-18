@@ -559,6 +559,14 @@ T
 F
 "./code/JavaScriptStyler.cpp"
 T
+2 "MakeScanner.ll"
+F
+"./code/MakeScanner.ll"
+T
+2 "MakeStyler.cpp"
+F
+"./code/MakeStyler.cpp"
+T
 2 "PerlScanner.ll"
 F
 "./code/PerlScanner.ll"

@@ -52,7 +52,7 @@ public:
 		kDocCommentSpecialTag,
 
 		kError			// place holder for JavaScriptStyler
-		};
+	};
 
 public:
 

@@ -52,7 +52,7 @@ public:
 		kDocCommentSpecialTag,
 
 		kError			// place holder for JavaStyler
-		};
+	};
 }
 
 %x DOC_COMMENT_STATE C_COMMENT_STATE STRING_STATE

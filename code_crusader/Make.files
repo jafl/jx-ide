@@ -136,6 +136,8 @@
 .cpp ./code/JavaStyler
 .ll ./code/JavaScriptScanner
 .cpp ./code/JavaScriptStyler
+.ll ./code/MakeScanner
+.cpp ./code/MakeStyler
 .ll ./code/PerlScanner
 .cpp ./code/PerlStyler
 .ll ./code/PropertiesScanner

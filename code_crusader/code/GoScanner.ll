@@ -53,7 +53,7 @@ public:
 		kComment,
 
 		kError			// place holder for GoStyler
-		};
+	};
 }
 
 %x C_COMMENT_STATE STRING_STATE

@@ -1,16 +1,16 @@
 /******************************************************************************
- RubyStyler.cpp
+ MakeStyler.cpp
 
-	Helper object for TextEditor that displays Ruby with styles to hilight
-	keywords, comments, etc.
+	Helper object for TextEditor that displays Makefile with styles to hilight
+	keywords, strings, etc.
 
-	BASE CLASS = StylerBase, TextScanner::Ruby::Scanner
+	BASE CLASS = StylerBase, TextScanner::Make::Scanner
 
-	Copyright © 2003 by John Lindal.
+	Copyright © 2001 by John Lindal.
 
  ******************************************************************************/
 
-#include "RubyStyler.h"
+#include "MakeStyler.h"
 #include "PrefsManager.h"
 #include <jx-af/jcore/JRegex.h>
 #include <jx-af/jcore/JStringIterator.h>
@@ -18,39 +18,31 @@
 #include <jx-af/jcore/jGlobals.h>
 #include <jx-af/jcore/jAssert.h>
 
-RubyStyler* RubyStyler::itsSelf = nullptr;
+MakeStyler* MakeStyler::itsSelf = nullptr;
 
-const JFileVersion kCurrentTypeListVersion = 1;
-
-// version 1 inserts kWordList after kSymbol (11)
+const JFileVersion kCurrentTypeListVersion = 0;
 
 static const JUtf8Byte* kTypeNames[] =
 {
-	"Local variable",
-	"Instance variable",
-	"Global variable",
-	"Symbol",
-	"Reserved keyword",
+	"Identifier",
+	"Make Target",
+	"Special Make Target",
+	"Make Variable",
+	"Make Operator",
 
-	"Operator",
-	"Delimiter",
+	"Shell Variable",
+	"Shell Reserved keyword",
+	"Shell Built-in command",
+
+	"Shell Control operator",
+	"Shell Redirection operator",
+	"Shell History operator",
 
 	"Single quoted string",
 	"Double quoted string",
-	"Heredoc string",
 	"Executed string",
-	"Quoted word list",
-
-	"Floating point constant",
-	"Decimal constant",
-	"Binary constant",
-	"Octal constant",
-	"Hexadecimal constant",
-
-	"Regex",
 
 	"Comment",
-	"Embedded documentation",
 
 	"Detectable error"
 };
@@ -65,13 +57,13 @@ const JSize kTypeCount = sizeof(kTypeNames)/sizeof(JUtf8Byte*);
 static bool recursiveInstance = false;
 
 StylerBase*
-RubyStyler::Instance()
+MakeStyler::Instance()
 {
 	if (itsSelf == nullptr && !recursiveInstance)
 	{
 		recursiveInstance = true;
 
-		itsSelf = jnew RubyStyler;
+		itsSelf = jnew MakeStyler;
 		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
@@ -86,7 +78,7 @@ RubyStyler::Instance()
  ******************************************************************************/
 
 void
-RubyStyler::Shutdown()
+MakeStyler::Shutdown()
 {
 	jdelete itsSelf;
 }
@@ -96,11 +88,11 @@ RubyStyler::Shutdown()
 
  ******************************************************************************/
 
-RubyStyler::RubyStyler()
+MakeStyler::MakeStyler()
 	:
 	StylerBase(kCurrentTypeListVersion, kTypeCount, kTypeNames,
-				 JGetString("EditDialogTitle::RubyStyler"),
-				 kRubyStyleID, kRubyFT)
+				JGetString("EditDialogTitle::MakeStyler"),
+				kMakeStyleID, kMakeFT)
 {
 	JFontStyle blankStyle;
 	for (JIndex i=1; i<=kTypeCount; i++)
@@ -108,20 +100,17 @@ RubyStyler::RubyStyler()
 		SetTypeStyle(i, blankStyle);
 	}
 
-	SetTypeStyle(kReservedKeyword    - kWhitespace, JFontStyle(JColorManager::GetDarkGreenColor()));
-
-	SetTypeStyle(kSingleQuoteString  - kWhitespace, JFontStyle(JColorManager::GetBrownColor()));
-	SetTypeStyle(kDoubleQuoteString  - kWhitespace, JFontStyle(JColorManager::GetDarkRedColor()));
-	SetTypeStyle(kHereDocString      - kWhitespace, JFontStyle(JColorManager::GetDarkRedColor()));
-	SetTypeStyle(kExecString         - kWhitespace, JFontStyle(JColorManager::GetPinkColor()));
-	SetTypeStyle(kWordList           - kWhitespace, JFontStyle(JColorManager::GetDarkRedColor()));
-
-	SetTypeStyle(kRegex              - kWhitespace, JFontStyle(JColorManager::GetDarkGreenColor()));
-
-	SetTypeStyle(kComment            - kWhitespace, JFontStyle(JColorManager::GetGrayColor(50)));
-	SetTypeStyle(kEmbeddedDoc        - kWhitespace, JFontStyle(true, false, 0, false, JColorManager::GetGrayColor(50)));
-
-	SetTypeStyle(kError              - kWhitespace, JFontStyle(JColorManager::GetRedColor()));
+	SetTypeStyle(kMakeTarget          - kWhitespace, JFontStyle(true, false, 0, false));
+	SetTypeStyle(kMakeSpecialTarget   - kWhitespace, JFontStyle(JColorManager::GetGrayColor(50)));
+	SetTypeStyle(kMakeVariable        - kWhitespace, JFontStyle(JColorManager::GetBlueColor()));
+	SetTypeStyle(kShellVariable       - kWhitespace, JFontStyle(JColorManager::GetLightBlueColor()));
+	SetTypeStyle(kShellReservedWord   - kWhitespace, JFontStyle(JColorManager::GetDarkGreenColor()));
+	SetTypeStyle(kShellBuiltInCommand - kWhitespace, JFontStyle(JColorManager::GetDarkGreenColor()));
+	SetTypeStyle(kSingleQuoteString   - kWhitespace, JFontStyle(JColorManager::GetBrownColor()));
+	SetTypeStyle(kDoubleQuoteString   - kWhitespace, JFontStyle(JColorManager::GetDarkRedColor()));
+	SetTypeStyle(kExecString          - kWhitespace, JFontStyle(JColorManager::GetPinkColor()));
+	SetTypeStyle(kComment             - kWhitespace, JFontStyle(JColorManager::GetGrayColor(50)));
+	SetTypeStyle(kError               - kWhitespace, JFontStyle(JColorManager::GetRedColor()));
 
 	JPrefObject::ReadPrefs();
 }
@@ -131,7 +120,7 @@ RubyStyler::RubyStyler()
 
  ******************************************************************************/
 
-RubyStyler::~RubyStyler()
+MakeStyler::~MakeStyler()
 {
 	JPrefObject::WritePrefs();
 	itsSelf = nullptr;
@@ -143,7 +132,7 @@ RubyStyler::~RubyStyler()
  ******************************************************************************/
 
 void
-RubyStyler::Scan
+MakeStyler::Scan
 	(
 	const JStyledText::TextIndex&	startIndex,
 	std::istream&					input,
@@ -165,16 +154,18 @@ RubyStyler::Scan
 			break;
 		}
 
-		// save token starts -- must set itsProbableOperatorFlag
+		// save token starts
 
-		if (token.type == kLocalVariable     ||
-			token.type == kInstanceVariable  ||
-			token.type == kGlobalVariable    ||
-			token.type == kSymbol            ||
-			token.type == kReservedKeyword   ||
+		if (token.type == kID                ||
+			token.type == kMakeTarget        ||
+			token.type == kMakeSpecialTarget ||
+			token.type == kMakeVariable      ||
+			token.type == kShellVariable     ||
+			token.type == kShellReservedWord ||
 			token.type == kSingleQuoteString ||
 			token.type == kDoubleQuoteString ||
-			token.type == kExecString)
+			token.type == kExecString        ||
+			token.type == kComment)
 		{
 			SaveTokenStart(token.range.GetFirst());
 		}
@@ -194,13 +185,10 @@ RubyStyler::Scan
 		{
 			style = GetDefaultFont().GetStyle();
 		}
-		else if (token.type == kSingleQuoteString  ||
-				 token.type == kDoubleQuoteString  ||
-				 token.type == kHereDocString      ||
-				 token.type == kExecString         ||
-				 token.type == kRegex              ||
-				 token.type == kComment            ||
-				 token.type == kEmbeddedDoc)
+		else if (token.type == kSingleQuoteString ||
+				 token.type == kDoubleQuoteString ||
+				 token.type == kExecString        ||
+				 token.type == kComment)
 		{
 			style = GetTypeStyle(typeIndex);
 		}
@@ -236,7 +224,7 @@ RubyStyler::Scan
 
 	There is one case where modifying a string doesn't force a restyling:
 
-	"x"#{x}"
+	"x"$x"
 	  ^
 	Inserting the marked character tricks JTEStyler into not continuing
 	because the style didn't change and it was at a style run boundary.
@@ -244,7 +232,7 @@ RubyStyler::Scan
  ******************************************************************************/
 
 void
-RubyStyler::ExtendCheckRangeForString
+MakeStyler::ExtendCheckRangeForString
 	(
 	const JStyledText::TextRange& tokenRange
 	)
@@ -259,12 +247,20 @@ RubyStyler::ExtendCheckRangeForString
 
  ******************************************************************************/
 
-static JRegex variablePattern =      "(?<!\\\\)#\\{[^}]+\\}";
-static JRegex emptyVariablePattern = "(?<!\\\\)#\\{\\}?";
+#define BourneShellStringID "([[:alpha:]_][[:alnum:]_]*|[0-9]+)"
 
-#define ClassName RubyStyler
+static JRegex variablePattern =
+	"(?<!\\\\)\\$(" BourneShellStringID "|\\{[#!]?" BourneShellStringID "(\\[[^]\n]+\\])?([}:]|#{1,2}|%{1,2}|/{1,2})|[-0-9*@#?$!_])";
+static JRegex emptyVariablePattern =
+	"(?<!\\\\)\\$\\{\\}?";
+
+#undef BourneShellStringID
+
+#define ClassName MakeStyler
+#define VariableType kShellVariable
 #include "STStylerEmbeddedVariables.th"
 #undef ClassName
+#undef VariableType
 
 /******************************************************************************
  UpgradeTypeList (virtual protected)
@@ -272,16 +268,11 @@ static JRegex emptyVariablePattern = "(?<!\\\\)#\\{\\}?";
  ******************************************************************************/
 
 void
-RubyStyler::UpgradeTypeList
+MakeStyler::UpgradeTypeList
 	(
 	const JFileVersion	vers,
 	JArray<JFontStyle>*	typeStyles
 	)
 {
-	if (vers < 1)
-	{
-		typeStyles->InsertElementAtIndex(12, typeStyles->GetElement(9));
-	}
-
 	// set new values after all new slots have been created
 }

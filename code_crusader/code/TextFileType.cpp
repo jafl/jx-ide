@@ -21,6 +21,7 @@
 #include "EiffelStyler.h"
 #include "INIStyler.h"
 #include "JavaScriptStyler.h"
+#include "MakeStyler.h"
 #include "PerlStyler.h"
 #include "PropertiesStyler.h"
 #include "PythonStyler.h"
@@ -87,6 +88,7 @@ LangIsCharacterInWord
 			 type == kPythonFT      ||
 			 type == kBourneShellFT ||
 			 type == kCShellFT      ||
+			 type == kMakeFT        ||
 			 type == kTCLFT)
 	{
 		return c == '$';
@@ -326,7 +328,7 @@ static const Lang2Styler kLang2Styler[] =
 { kVimLang,         nullptr, nullptr },
 { kHTMLLang,        &HTMLStyler::Instance,        &HTMLStyler::Shutdown },
 { kASPLang,         nullptr, nullptr },
-{ kMakeLang,        nullptr, nullptr },
+{ kMakeLang,        &MakeStyler::Instance,        &MakeStyler::Shutdown },
 { kPascalLang,      nullptr, nullptr },
 { kREXXLang,        nullptr, nullptr },
 { kRubyLang,        &RubyStyler::Instance,        &RubyStyler::Shutdown },

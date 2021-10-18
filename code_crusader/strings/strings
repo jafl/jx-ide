@@ -952,6 +952,10 @@ EditDialogTitle::INIStyler	"Edit INI Styles"
 
 EditDialogTitle::JavaScriptStyler	"Edit JavaScript Styles"
 
+# MakeStyler
+
+EditDialogTitle::MakeStyler	"Edit Makefile Styles"
+
 # PerlStyler
 
 EditDialogTitle::PerlStyler	"Edit Perl Styles"

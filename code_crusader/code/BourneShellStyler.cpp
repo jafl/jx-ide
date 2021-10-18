@@ -245,9 +245,11 @@ static JRegex emptyVariablePattern =
 
 #undef BourneShellStringID
 
-#define ClassName BourneShellStyler
+#define ClassName    BourneShellStyler
+#define VariableType kVariable
 #include "STStylerEmbeddedVariables.th"
 #undef ClassName
+#undef VariableType
 
 /******************************************************************************
  UpgradeTypeList (virtual protected)

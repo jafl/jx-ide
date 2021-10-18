@@ -108,6 +108,7 @@ enum
 	kGoTreeToolBarID,
 	kDStyleID,
 	kDTreeToolBarID,
+	kMakeStyleID,
 
 	// 10000-19999 are reserved for action/macro
 

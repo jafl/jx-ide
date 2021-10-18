@@ -698,10 +698,9 @@ static JRegex emptyVariablePattern = "(?<!\\\\)\\$\\{\\}?";
 
 #define ClassName HTMLStyler
 #define FunctionName StyleEmbeddedJSVariables
-#define NoVariableIndex
 #include "STStylerEmbeddedVariables.th"
-#undef NoVariableIndex
 #undef ClassName
+#undef FunctionName
 
 /******************************************************************************
  MatchAt (private)

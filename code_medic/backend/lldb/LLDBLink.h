@@ -21,7 +21,7 @@ using j_lldb_cookie_fn_return = int;
 using j_lldb_cookie_size      = int;
 #else
 using j_lldb_cookie_fn_return = long;
-using long j_lldb_cookie_size = unsigned;
+using j_lldb_cookie_size      = unsigned;
 #endif
 
 namespace lldb {

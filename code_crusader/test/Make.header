@@ -1,7 +1,11 @@
 # To use this file, first run "makemake" and then run "make".
 # (makemake is part of the JX distribution)
 
-JX_ROOT := ../../../JX
+ifneq ($(shell ls ../../JX/Makefile 2>/dev/null),)
+  JX_ROOT := ../../../JX
+else
+  JX_ROOT := /usr/local
+endif
 
 MAKE_INCLUDE := ${JX_ROOT}/include/jx-af/make
 include ${MAKE_INCLUDE}/jx_config

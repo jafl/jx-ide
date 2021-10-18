@@ -33,7 +33,7 @@ EditStylerDialog::EditStylerDialog
 	const JUtf8Byte**						typeNames,
 	const JArray<JFontStyle>&				typeStyles,
 	const JArray<StylerBase::WordStyle>&	wordList,
-	const TextFileType					fileType
+	const TextFileType						fileType
 	)
 	:
 	JXDialogDirector(JXGetApplication(), true)
@@ -63,7 +63,7 @@ EditStylerDialog::BuildWindow
 	const JUtf8Byte**						typeNames,
 	const JArray<JFontStyle>&				typeStyles,
 	const JArray<StylerBase::WordStyle>&	wordList,
-	const TextFileType					fileType
+	const TextFileType						fileType
 	)
 {
 // begin JXLayout
@@ -182,7 +182,7 @@ EditStylerDialog::BuildWindow
 void
 EditStylerDialog::GetData
 	(
-	bool*				active,
+	bool*					active,
 	JArray<JFontStyle>*		typeStyles,
 	JStringMap<JFontStyle>*	wordStyles
 	)

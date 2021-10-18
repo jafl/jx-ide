@@ -60,11 +60,9 @@ test:
 
 .PHONY : init_tarball_extra
 init_tarball_extra::
-	@ln -s ../scripts           ${PROG}/
-	@ln -s ../macros            ${PROG}/
-	@ln -s ../CPM_rules         ${PROG}/
-	@ln -s ../project_templates ${PROG}/
-	@ln -s ../text_templates    ${PROG}/
+	@ln -s -t ${PKG_PATH}/ \
+         ../scripts ../macros ../CPM_rules \
+         ../project_templates ../text_templates
 
 .PHONY : clean
 clean::

@@ -165,6 +165,7 @@ static const JUtf8Byte* kPrefsStylesMenuStr =
 	"| Java"
 	"| Java properties"
 	"| JavaScript"
+	"| Make"
 	"| Perl"
 	"| Python"
 	"| Ruby"
@@ -185,6 +186,7 @@ static const Language kMenuItemToLang[] =
 	kJavaLang,
 	kPropertiesLang,
 	kJavaScriptLang,
+	kMakeLang,
 	kPerlLang,
 	kPythonLang,
 	kRubyLang,
