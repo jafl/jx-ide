@@ -553,7 +553,7 @@ GetVersionStr()
 		"version",   JGetString("VERSION").GetBytes(),
 		"copyright", JGetString("COPYRIGHT").GetBytes()
 	};
-	return JGetString("Description::cbGlobals", map, sizeof(map));
+	return JGetString("Description::global", map, sizeof(map));
 }
 
 /******************************************************************************

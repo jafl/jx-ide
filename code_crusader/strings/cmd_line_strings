@@ -2,10 +2,10 @@
 
 # Copyright © 2000-14 by John Lindal.
 
-# CBMDIServer
+# MDIServer
 #2345678901234567890123456789012345678901234567890123456789012345678901234567890
 
-CommandLineHelp::CBMDIServer
+CommandLineHelp::MDIServer
 
 "Code Crusader $version
 

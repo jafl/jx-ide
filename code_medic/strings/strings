@@ -15,10 +15,6 @@ Code Medic is a trademark of Glenn Bach.
 
 https://sourceforge.net/projects/codemedic/"
 
-CMName	"Code Medic"
-CMURL	"https://sourceforge.net/projects/codemedic/"
-CMEmail	""
-
 HELP_URL		"http://codemedic.sourceforge.net/help.html"
 CHANGE_LOG_URL	"http://codemedic.sourceforge.net/ChangeLog.html"
 VERSION_URL		"http://codemedic.sourceforge.net/VERSION"
@@ -28,7 +24,7 @@ ActionsMenuTitle::global	"Actions"
 
 # MDIServer
 
-CMCommandLineHelp
+CommandLineHelp
 
 "Medic $version
 
@@ -57,7 +53,7 @@ medic [ program_file [ core_file ] ] [ options ]
 -display     display_name : connect to the specified X display
 --quit       same as Quit option on File menu; for switching displays"
 
-CMDescription
+Description
 
 "Medic $version
 

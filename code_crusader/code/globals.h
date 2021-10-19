@@ -5,8 +5,8 @@
 
  ******************************************************************************/
 
-#ifndef _H_cbGlobals
-#define _H_cbGlobals
+#ifndef _H_globals
+#define _H_globals
 
 // we include these for convenience
 

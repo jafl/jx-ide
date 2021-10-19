@@ -36,7 +36,7 @@ App::App
 	(
 	int*		argc,
 	char*		argv[],
-	bool*	displayAbout,
+	bool*		displayAbout,
 	JString*	prevVersStr
 	)
 	:

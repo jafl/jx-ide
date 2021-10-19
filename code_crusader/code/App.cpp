@@ -77,11 +77,11 @@ enum
 
 App::App
 	(
-	int*			argc,
-	char*			argv[],
+	int*		argc,
+	char*		argv[],
 	const bool	useMDI,
 	bool*		displayAbout,
-	JString*		prevVersStr
+	JString*	prevVersStr
 	)
 	:
 	JXApplication(argc, argv, kAppSignature, kDefaultStringData),
