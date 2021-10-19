@@ -64,7 +64,8 @@ post_link::
 
 .PHONY : clean
 clean::
-	@${RM} backend/gdb/GDBVarTreeScanner.cpp backend/gdb/GDBVarTreeScanner.h \
+	@${RM} backend/gdb/GDBVarTreeParserY.cpp backend/gdb/GDBVarTreeParserY.hpp \
+           backend/gdb/GDBVarTreeScanner.cpp backend/gdb/GDBVarTreeScanner.h \
            shared/*Scanner.h
 
 .PRECIOUS : backend/gdb/GDBVarTreeParserY.cpp backend/gdb/GDBVarTreeParserY.hpp

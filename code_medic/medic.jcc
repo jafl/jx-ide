@@ -898,9 +898,9 @@ F
 T
 1 "strings"
 T
-2 "medic_strings"
+2 "strings"
 F
-"./strings/medic_strings"
+"./strings/strings"
 T
 2 "gdb_init_strings"
 F

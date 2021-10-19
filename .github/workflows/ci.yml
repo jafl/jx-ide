@@ -89,7 +89,6 @@ jobs:
       - name: Build release artifacts
         run: |
           make release
-          mv ../*_*.tar.gz ../*_*.deb .
 
       - name: Store release artifacts
         uses: actions/upload-artifact@v2
