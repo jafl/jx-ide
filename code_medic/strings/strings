@@ -39,19 +39,19 @@ as often as you like.
 Usage:
 medic [ program_file [ core_file ] ] [ options ]
 
---help       prints this help
---version    prints version information
---gdb        debug using gdb
---lldb       debug using lldb
---xdebug     debug using xdebug
---java       debug using java
--f           file_name[:line_number]  : opens file to specified line
--f           [+line_number] file_name : opens file to specified line
--b           file_name:line_number    : sets breakpoint in file at specified line
--b           +line_number file_name   : sets breakpoint in file at specified line
--c           core_file                : analyze core file
--display     display_name : connect to the specified X display
---quit       same as Quit option on File menu; for switching displays"
+--help    prints this help
+--version prints version information
+--gdb     debug using gdb
+--lldb    debug using lldb
+--xdebug  debug using xdebug
+--java    debug using java
+-f        file_name[:line_number]  : opens file to specified line
+-f        [+line_number] file_name : opens file to specified line
+-b        file_name:line_number    : sets breakpoint in file at specified line
+-b        +line_number file_name   : sets breakpoint in file at specified line
+-c        core_file                : analyze core file
+-display  display_name : connect to the specified X display
+--quit    same as Quit option on File menu; for switching displays"
 
 Description
 
