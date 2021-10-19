@@ -341,8 +341,6 @@ SourceDirector::BuildWindow()
 		GetPrefsManager()->GetWindowSize(kCodeWindSizeID, window, true);
 	}
 
-	JCoordinate w = window->GetFrameWidth();
-
 	itsFileMenu = itsMenuBar->AppendTextMenu(JGetString("FileMenuTitle::JXGlobal"));
 	itsFileMenu->SetMenuItems(kFileMenuStr, "SourceDirector");
 	itsFileMenu->SetUpdateAction(JXMenu::kDisableNone);

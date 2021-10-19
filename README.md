@@ -16,7 +16,8 @@ Code Crusader, Code Medic, and Code Mill together comprise the IDE built using t
 
 1. Install the [JX Application Framework](https://github.com/jafl/jx_application_framework),  and set the `JX_ROOT` environment variable to point to its `include` directory.
 1. `./configure`
-1. `./make_all`
+1. `./make Makefiles`
+1. `make`
 
 
 ## Requirements

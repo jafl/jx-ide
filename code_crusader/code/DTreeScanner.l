@@ -405,7 +405,7 @@ x\" {
 		bool changed = false;
 		for (const auto* c : *itsAliasKeys)
 			{
-			JString* s1;
+			JString* s1 = nullptr;
 			itsAliasMap->GetElement(*c, &s1);
 
 			if (*c == parentName)

@@ -126,7 +126,7 @@ ManPageDocument::ManPageDocument
 	(
 	const JString&		pageName,
 	const JString&		pageIndex,
-	const bool		apropos,
+	const bool			apropos,
 	ManPageDocument**	trueDoc
 	)
 	:
@@ -183,8 +183,7 @@ ManPageDocument::ManPageDocument
 		JIndex i;
 		if (theManCmdList.SearchSorted(cmd, JListT::kAnyMatch, &i))
 		{
-			ManPageDocument* doc =
-				dynamic_cast<ManPageDocument*>(theManDocList.GetElement(i));
+			auto* doc = dynamic_cast<ManPageDocument*>(theManDocList.GetElement(i));
 			assert( doc != nullptr );
 			*trueDoc = doc;
 			return;

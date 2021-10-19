@@ -1446,8 +1446,8 @@ TextDocument::ReadFromProject
 	JIndex insertionIndex;
 	input >> insertionIndex;
 
-	bool autoIndent, tabInsertsSpaces, showWS, wordWrap, readOnly;
-	JSize tabCharCount;
+	bool autoIndent = true, tabInsertsSpaces = false, showWS = false, wordWrap = false, readOnly = false;
+	JSize tabCharCount = 4;
 	if (vers >= 68)
 	{
 		input >> JBoolFromString(itsOverrideFlag[ kAutoIndentIndex ])     >> JBoolFromString(autoIndent);

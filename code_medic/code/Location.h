@@ -156,7 +156,7 @@ operator!=
 	const Location& rhs
 	)
 {
-	return lhs != rhs;
+	return !(lhs == rhs);
 }
 
 #endif

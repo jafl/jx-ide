@@ -493,7 +493,7 @@ HTMLStyler::ExtendCheckRangeForLanguageStartEnd
 	}
 
 	const JFontStyle& style = GetTypeStyle(tokenType - kWhitespace);
-	if (style != f1.GetStyle() || style != f1.GetStyle())
+	if (style != f1.GetStyle() || style != f2.GetStyle())
 	{
 		ExtendCheckRange(GetText().GetCharacterCount());
 	}

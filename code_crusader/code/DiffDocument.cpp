@@ -25,7 +25,7 @@
 #include <stdio.h>
 #include <jx-af/jcore/jAssert.h>
 
-const JSize kMenuButtonWidth = 70;
+const JCoordinate kMenuButtonWidth = 70;
 
 static const JUtf8Byte* kGitCmdSeparator = "\1";
 

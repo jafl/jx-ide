@@ -371,7 +371,7 @@ lldb::Link::HandleEvent()
 		count = p.GetSTDOUT(buf, 1023);
 		if (count > 0)
 		{
-			buf[ count ]  = '\0';
+			buf[ count ] = '\0';
 			JUtf8Byte* b = buf;
 
 			const JSize len = itsLastProgramInput.GetByteCount();

@@ -23,7 +23,6 @@
 #include <jx-af/jx/JXPSPrinter.h>
 #include <jx-af/j2dplot/JX2DPlotEPSPrinter.h>
 #include <jx-af/jx/JXPTPrinter.h>
-#include <jx-af/jx/JXDisplay.h>
 #include <jx-af/jx/JXColorManager.h>
 #include <jx-af/jx/JXFontManager.h>
 #include <jx-af/jx/JXChooseSaveFile.h>
@@ -320,7 +319,6 @@ PrefsManager::UpgradeData
 		}
 	}
 
-	JXDisplay* display = JXGetApplication()->GetDisplay(1);
 	if (currentVersion < 2)
 	{
 		SetDefaultFont(JFontManager::GetDefaultMonospaceFontName(),
@@ -578,8 +576,6 @@ static const SuffixTypeMap kSuffixTypeMap[] =
 { kPHPSuffixID,     kPHPFT        }
 };
 
-const JSize kSuffixTypeMapCount = sizeof(kSuffixTypeMap) / sizeof(SuffixTypeMap);
-
 TextFileType
 PrefsManager::GetFileType
 	(
@@ -588,16 +584,16 @@ PrefsManager::GetFileType
 	const
 {
 	JPtrArray<JString> suffixList(JPtrArrayT::kDeleteAll);
-	for (JUnsignedOffset i=0; i<kSuffixTypeMapCount; i++)
+	for (const auto& suffix : kSuffixTypeMap)
 	{
-		if (GetSuffixes(kSuffixTypeMap[i].id, &suffixList))
+		if (GetSuffixes(suffix.id, &suffixList))
 		{
 			const JSize count = suffixList.GetElementCount();
 			for (JIndex j=1; j<=count; j++)
 			{
-				if (fileName.EndsWith(*(suffixList.GetElement(j))))
+				if (fileName.EndsWith(*suffixList.GetElement(j)))
 				{
-					return kSuffixTypeMap[i].type;
+					return suffix.type;
 				}
 			}
 		}
@@ -956,9 +952,9 @@ PrefsManager::ReadColors()
 		dataStream >> vers;
 		assert( vers <= kCurrentTextColorVers );
 
-		for (JUnsignedOffset i=0; i<kColorCount; i++)
+		for (auto& c : color)
 		{
-			dataStream >> color[i];
+			dataStream >> c;
 		}
 	}
 
@@ -983,9 +979,9 @@ PrefsManager::SetColorList
 	}
 	else
 	{
-		for (JUnsignedOffset i=0; i<kColorCount; i++)
+		for (auto& b : ok)
 		{
-			ok[i] = false;
+			b = false;
 		}
 	}
 
@@ -1017,9 +1013,9 @@ PrefsManager::WriteColors()
 	std::ostringstream data;
 	data << kCurrentTextColorVers;
 
-	for (JUnsignedOffset i=0; i<kColorCount; i++)
+	for (auto id : itsColor)
 	{
-		data << ' ' << JColorManager::GetRGB(itsColor[i]);
+		data << ' ' << JColorManager::GetRGB(id);
 	}
 
 	SetData(kTextColorID, data);

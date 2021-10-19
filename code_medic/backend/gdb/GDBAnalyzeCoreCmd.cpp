@@ -62,7 +62,7 @@ gdb::AnalyzeCoreCmd::HandleSuccess
 	}
 	else
 	{
-		link->Log("GDBAnalyzeCoreCmd failed to match");
+		Link::Log("GDBAnalyzeCoreCmd failed to match");
 	}
 	iter.Invalidate();
 

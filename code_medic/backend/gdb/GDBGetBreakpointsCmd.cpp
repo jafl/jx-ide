@@ -118,7 +118,7 @@ gdb::GetBreakpointsCmd::ParseBreakpoint
 
 	JString* s;
 	JString fileName;
-	JIndex lineIndex;
+	JIndex lineIndex = 1;
 	do
 	{
 		if (!map.GetElement("line", &s))

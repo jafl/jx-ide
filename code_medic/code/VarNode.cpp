@@ -213,12 +213,13 @@ VarNode::ConvertToBase()
 				vStr += " '";
 
 				bool found = false;
-				for (JUnsignedOffset i=0; i<kSpecialCharCount; i++)
+				for (const auto& info : kSpecialCharInfo)
 				{
-					if (JUtf8Character(v) == kSpecialCharInfo[i].c)
+					if (JUtf8Character(v) == info.c)
 					{
-						vStr += kSpecialCharInfo[i].s;
+						vStr += info.s;
 						found = true;
+						break;
 					}
 				}
 				if (!found)

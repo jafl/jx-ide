@@ -18,7 +18,7 @@
 #include <jx-af/jcore/jSysUtil.h>
 #include <jx-af/jcore/jAssert.h>
 
-const JSize kMenuButtonWidth = 60;
+const JCoordinate kMenuButtonWidth = 60;
 
 /******************************************************************************
  Create (static)

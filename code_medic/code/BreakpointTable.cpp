@@ -144,7 +144,7 @@ BreakpointTable::Update()
 	JSize count = list1.GetElementCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		itsBPList->InsertSorted(const_cast<Breakpoint*>(list1.GetElement(i)));
+		itsBPList->InsertSorted(list1.GetElement(i));
 	}
 
 	const JPtrArray<Breakpoint>& list2 = mgr->GetOtherpoints();
@@ -152,7 +152,7 @@ BreakpointTable::Update()
 	count = list2.GetElementCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		itsBPList->InsertSorted(const_cast<Breakpoint*>(list2.GetElement(i)));
+		itsBPList->InsertSorted(list2.GetElement(i));
 	}
 
 	// adjust table
@@ -634,7 +634,7 @@ BreakpointTable::ExtractInputData
 		const JString& s = itsTextInput->GetText()->GetText();
 
 		JString cond;
-		const bool hasCondition = bp->GetCondition(&cond);
+		bp->GetCondition(&cond);
 		if (s != cond)
 		{
 			GetLink()->SetBreakpointCondition(bp->GetDebuggerIndex(), s);

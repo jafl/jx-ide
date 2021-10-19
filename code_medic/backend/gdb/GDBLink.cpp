@@ -1226,7 +1226,7 @@ gdb::Link::SwitchToThread
 	if (ProgramIsStopped() || HasCore())
 	{
 		itsPrintingOutputFlag = false;
-		Send("thread " + JString((JUInt64) id));
+		Send("thread " + JString(id));
 	}
 }
 
@@ -1244,7 +1244,7 @@ gdb::Link::SwitchToFrame
 	if (ProgramIsStopped() || HasCore())
 	{
 		itsPrintingOutputFlag = false;
-		Send("frame " + JString((JUInt64) id));
+		Send("frame " + JString(id));
 	}
 }
 
