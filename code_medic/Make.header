@@ -38,7 +38,7 @@ LIB_DEPS := ${JX_LIB_ROOT}/libj2dplot.a \
 # make variables
 
 LOADLIBES := ${J_LLDB_LIBS} -leditorconfig -lreflex ${J_STD_LIBS}
-LDFLAGS   := -Xlinker -headerpad_max_install_names
+LDFLAGS   := -Xlinker -headerpad_max_install_names -L.
 
 include make_reflex_target
 
