@@ -1958,7 +1958,7 @@ gdb::Link::ParseMapArray
 		}
 		stream.ignore();
 
-		JStringPtrMap<JString>* map = jnew JStringPtrMap<JString>(JPtrArrayT::kDeleteAll);
+		auto* map = jnew JStringPtrMap<JString>(JPtrArrayT::kDeleteAll);
 		assert( map != nullptr );
 		if (ParseMap(stream, map))
 		{

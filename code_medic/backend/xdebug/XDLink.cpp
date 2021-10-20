@@ -1142,7 +1142,7 @@ xdebug::Link::CreateGetFullPathCmd
 	const JIndex	lineIndex
 	)
 {
-	GetFullPathCmd* cmd = jnew GetFullPathCmd(fileName, lineIndex);
+	auto* cmd = jnew GetFullPathCmd(fileName, lineIndex);
 	assert( cmd != nullptr );
 	return cmd;
 }

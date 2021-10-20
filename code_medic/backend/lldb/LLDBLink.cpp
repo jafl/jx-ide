@@ -1780,7 +1780,7 @@ lldb::Link::ProgramStopped
 		const SBAddress addr = f.GetPCAddress();
 		if (addr.IsValid())
 		{
-			const JString a = JString(addr.GetLoadAddress(t), JString::kBase16);
+			const JString a(addr.GetLoadAddress(t), JString::kBase16);
 			location.SetMemoryAddress(a);
 		}
 		Broadcast(::Link::ProgramStopped(location));
