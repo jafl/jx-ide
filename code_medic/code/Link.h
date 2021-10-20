@@ -33,7 +33,6 @@ class CommandInput;
 class CommandOutputDisplay;
 class StackWidget;
 class ThreadsWidget;
-class VarNode;
 class FileListDir;
 class Array2DCmd;
 class Plot2DCmd;

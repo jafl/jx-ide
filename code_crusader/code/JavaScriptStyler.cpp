@@ -56,8 +56,6 @@ static const JUtf8Byte* kUnusedKeyword[] =
 	"debugger", "goto"
 };
 
-const JSize kUnusedKeywordCount = sizeof(kUnusedKeyword)/sizeof(JUtf8Byte*);
-
 /******************************************************************************
  Instance (static)
 
@@ -123,9 +121,9 @@ JavaScriptStyler::JavaScriptStyler()
 
 	SetTypeStyle(kError                - kWhitespace, JFontStyle(red));
 
-	for (JUnsignedOffset i=0; i<kUnusedKeywordCount; i++)
+	for (auto keyword : kUnusedKeyword)
 	{
-		SetWordStyle(JString(kUnusedKeyword[i], JString::kNoCopy), JFontStyle(red));
+		SetWordStyle(JString(keyword, JString::kNoCopy), JFontStyle(red));
 	}
 
 	JPrefObject::ReadPrefs();

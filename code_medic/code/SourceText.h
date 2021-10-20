@@ -54,7 +54,7 @@ protected:
 
 	class StyledText : public JXStyledText
 	{
-		public:
+	public:
 
 		StyledText(SourceText* owner, JFontManager* fontManager)
 			:
@@ -65,7 +65,7 @@ protected:
 
 		~StyledText() override;
 
-		protected:
+	protected:
 
 		void	AdjustStylesBeforeBroadcast(const JString& text,
 											JRunArray<JFont>* styles,
@@ -73,10 +73,15 @@ protected:
 											TextRange* redrawRange,
 											const bool deletion) override;
 
-		private:
+	private:
 
 		SourceText*						itsOwner;
 		JArray<JSTStyler::TokenData>*	itsTokenStartList;	// nullptr if styling is turned off
+
+	private:
+
+		StyledText(const StyledText&) = delete;
+		StyledText& operator=(const StyledText&) = delete;
 	};
 
 	friend class StyledText;

@@ -227,8 +227,6 @@ StylerBase::WritePrefs
 	)
 	const
 {
-JIndex i;
-
 	output << kCurrentSetupVersion;
 	output << ' ' << JBoolToString(IsActive());
 
@@ -237,7 +235,7 @@ JIndex i;
 	const JSize typeCount = itsTypeStyles->GetElementCount();
 	output << ' ' << typeCount;
 
-	for (i=1; i<=typeCount; i++)
+	for (JIndex i=1; i<=typeCount; i++)
 	{
 		WriteStyle(output, itsTypeStyles->GetElement(i));
 	}
@@ -399,11 +397,9 @@ StylerBase::SetDefaultFontColor
 	const JColorID color
 	)
 {
-JIndex i;
-
 	if (color != itsDefColor)
 	{
-		for (i=1; i<=itsTypeNameCount; i++)
+		for (JIndex i=1; i<=itsTypeNameCount; i++)
 		{
 			JFontStyle style = itsTypeStyles->GetElement(i);
 			if (style.color == itsDefColor)

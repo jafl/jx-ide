@@ -113,7 +113,7 @@ ShellEditor::HandleKeyPress
 	if ((c == kJLeftArrow && metaOn && !controlOn && !shiftOn) ||
 		(c == JXCtrl('A') && controlOn && !metaOn && !shiftOn))
 	{
-		JRunArrayIterator<JFont> iter(
+		JRunArrayIterator iter(
 			GetText()->GetStyles(),
 			kJIteratorStartBefore, GetInsertionIndex().charIndex);
 
@@ -143,7 +143,7 @@ ShellEditor::HandleKeyPress
 
 		JString cmd;
 
-		JRunArrayIterator<JFont> fiter(GetText()->GetStyles(), kJIteratorStartBefore, index);
+		JRunArrayIterator fiter(GetText()->GetStyles(), kJIteratorStartBefore, index);
 		JFont f;
 		if (fiter.Prev(&f) && f == GetText()->GetDefaultFont())
 		{

@@ -498,7 +498,7 @@ NewProjectSaveFileDialog::OKToDeactivate()
 		GetFileName(&projFileName);
 		JSplitRootAndSuffix(projFileName, &projRoot, &projSuffix);
 
-		const JString cmakeInputName = BuildManager::GetCMakeInputName(GetPath(), projRoot);
+		const JString cmakeInputName = BuildManager::GetCMakeInputName(GetPath());
 		if (JFileExists(cmakeInputName) &&
 			!OKToReplaceFile(cmakeInputName, JGetString("Name")))
 		{

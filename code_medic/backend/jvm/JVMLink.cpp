@@ -1712,7 +1712,7 @@ jvm::Link::CreateArray2DCmd
 	JStringTableData*	data
 	)
 {
-	Array2DCmd* cmd = jnew Array2DCmd(dir, table, data);
+	auto* cmd = jnew Array2DCmd(dir, table, data);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1730,7 +1730,7 @@ jvm::Link::CreatePlot2DCmd
 	JArray<JFloat>*	y
 	)
 {
-	Plot2DCmd* cmd = jnew Plot2DCmd(dir, x, y);
+	auto* cmd = jnew Plot2DCmd(dir, x, y);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1746,7 +1746,7 @@ jvm::Link::CreateDisplaySourceForMainCmd
 	SourceDirector* sourceDir
 	)
 {
-	DisplaySourceForMainCmd* cmd = jnew DisplaySourceForMainCmd(sourceDir);
+	auto* cmd = jnew DisplaySourceForMainCmd(sourceDir);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1763,7 +1763,7 @@ jvm::Link::CreateGetCompletionsCmd
 	CommandOutputDisplay*	history
 	)
 {
-	GetCompletionsCmd* cmd = jnew GetCompletionsCmd(input, history);
+	auto* cmd = jnew GetCompletionsCmd(input, history);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1779,7 +1779,7 @@ jvm::Link::CreateGetFrameCmd
 	StackWidget* widget
 	)
 {
-	GetFrameCmd* cmd = jnew GetFrameCmd(widget);
+	auto* cmd = jnew GetFrameCmd(widget);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1796,7 +1796,7 @@ jvm::Link::CreateGetStackCmd
 	StackWidget*	widget
 	)
 {
-	GetStackCmd* cmd = jnew GetStackCmd(tree, widget);
+	auto* cmd = jnew GetStackCmd(tree, widget);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1812,7 +1812,7 @@ jvm::Link::CreateGetThreadCmd
 	ThreadsWidget* widget
 	)
 {
-	GetThreadCmd* cmd = jnew GetThreadCmd(widget);
+	auto* cmd = jnew GetThreadCmd(widget);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1829,7 +1829,7 @@ jvm::Link::CreateGetThreadsCmd
 	ThreadsWidget*	widget
 	)
 {
-	GetThreadsCmd* cmd = jnew GetThreadsCmd(tree, widget);
+	auto* cmd = jnew GetThreadsCmd(tree, widget);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1846,7 +1846,7 @@ jvm::Link::CreateGetFullPathCmd
 	const JIndex	lineIndex
 	)
 {
-	GetFullPathCmd* cmd = jnew GetFullPathCmd(fileName, lineIndex);
+	auto* cmd = jnew GetFullPathCmd(fileName, lineIndex);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1862,7 +1862,7 @@ jvm::Link::CreateGetInitArgsCmd
 	JXInputField* argInput
 	)
 {
-	GetInitArgsCmd* cmd = jnew GetInitArgsCmd(argInput);
+	auto* cmd = jnew GetInitArgsCmd(argInput);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1878,7 +1878,7 @@ jvm::Link::CreateGetLocalVarsCmd
 	::VarNode* rootNode
 	)
 {
-	GetLocalVarsCmd* cmd = jnew GetLocalVarsCmd(rootNode);
+	auto* cmd = jnew GetLocalVarsCmd(rootNode);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1894,7 +1894,7 @@ jvm::Link::CreateGetSourceFileListCmd
 	FileListDir* fileList
 	)
 {
-	GetSourceFileListCmd* cmd = jnew GetSourceFileListCmd(fileList);
+	auto* cmd = jnew GetSourceFileListCmd(fileList);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1913,7 +1913,7 @@ jvm::Link::CreateVarValueCmd
 	JString s("print ");
 	s += expr;
 
-	VarCmd* cmd = jnew VarCmd(s);
+	auto* cmd = jnew VarCmd(s);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1933,7 +1933,7 @@ jvm::Link::CreateVarContentCmd
 	s += expr;
 	s += ")";
 
-	VarCmd* cmd = jnew VarCmd(s);
+	auto* cmd = jnew VarCmd(s);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1949,7 +1949,7 @@ jvm::Link::CreateVarNode
 	const bool shouldUpdate		// false for Local Variables
 	)
 {
-	VarNode* node = jnew VarNode(shouldUpdate);
+	auto* node = jnew VarNode(shouldUpdate);
 	assert( node != nullptr );
 	return node;
 }
@@ -1963,7 +1963,7 @@ jvm::Link::CreateVarNode
 	const JString&	value
 	)
 {
-	VarNode* node = jnew VarNode(parent, name, fullName, value);
+	auto* node = jnew VarNode(parent, name, fullName, value);
 	assert( node != nullptr );
 	return node;
 }

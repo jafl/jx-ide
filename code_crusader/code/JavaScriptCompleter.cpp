@@ -29,7 +29,7 @@ static const JUtf8Byte* kKeywordList[] =
 
 	// methods, classes, etc.
 
-	"alert", "anchor", "anchors", "applet", "applets" "area", "arguments",
+	"alert", "anchor", "anchors", "applet", "applets", "area", "arguments",
 	"array", "assign", "blur", "body", "button", "callee", "caller",
 	"captureEvents", "checkbox", "clearInterval", "clearTimeout", "close",
 	"closed", "confirm", "date", "defaultStatus", "document", "element",

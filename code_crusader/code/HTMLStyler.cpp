@@ -124,14 +124,10 @@ static const JUtf8Byte* kUnusedJavaKeyword[] =
 	"operator", "outer", "rest"
 };
 
-const JSize kUnusedJavaKeywordCount = sizeof(kUnusedJavaKeyword)/sizeof(JUtf8Byte*);
-
 static const JUtf8Byte* kUnusedJSKeyword[] =
 {
 	"debugger", "goto"
 };
-
-const JSize kUnusedJSKeywordCount = sizeof(kUnusedJSKeyword)/sizeof(JUtf8Byte*);
 
 /******************************************************************************
  Instance (static)
@@ -198,13 +194,13 @@ HTMLStyler::HTMLStyler()
 	InitJavaScriptTypeStyles();
 
 	const JColorID red = JColorManager::GetRedColor();
-	for (JUnsignedOffset i=0; i<kUnusedJavaKeywordCount; i++)
+	for (auto keyword : kUnusedJavaKeyword)
 	{
-		SetWordStyle(JString(kUnusedJavaKeyword[i], JString::kNoCopy), JFontStyle(red));
+		SetWordStyle(JString(keyword, JString::kNoCopy), JFontStyle(red));
 	}
-	for (JUnsignedOffset i=0; i<kUnusedJSKeywordCount; i++)
+	for (auto keyword : kUnusedJSKeyword)
 	{
-		SetWordStyle(JString(kUnusedJSKeyword[i], JString::kNoCopy), JFontStyle(red));
+		SetWordStyle(JString(keyword, JString::kNoCopy), JFontStyle(red));
 	}
 
 	JPrefObject::ReadPrefs();

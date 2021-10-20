@@ -153,8 +153,6 @@ static const SpecialCharInfo kSpecialCharInfo[] =
 { '\0', "\\0"  }
 };
 
-const JSize kSpecialCharCount = sizeof(kSpecialCharInfo) / sizeof(SpecialCharInfo);
-
 void
 VarNode::ConvertToBase()
 {

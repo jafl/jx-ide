@@ -120,14 +120,14 @@ protected:
 
 	class StyledText : public JXStyledText
 	{
-		public:
+	public:
 
 		StyledText(TextDocument* doc, JFontManager* fontManager,
 				   const bool pasteStyledText);
 
 		~StyledText() override;
 
-		protected:
+	protected:
 
 		void	AdjustStylesBeforeBroadcast(
 							const JString& text, JRunArray<JFont>* styles,
@@ -135,10 +135,15 @@ protected:
 							JStyledText::TextRange* redrawRange,
 							const bool deletion) override;
 
-		private:
+	private:
 
 		TextDocument*					itsDoc;
 		JArray<JSTStyler::TokenData>*	itsTokenStartList;	// nullptr if styling is turned off
+
+	private:
+
+		StyledText(const StyledText&) = delete;
+		StyledText& operator=(const StyledText&) = delete;
 	};
 
 private:

@@ -70,6 +70,7 @@ jobs:
         run: |
           export LC_ALL=en_US.UTF-8
           export LANG=en_US.UTF-8
+          touch code_medic/backend/gdb/GDBVarTreeParserY.cpp code_medic/backend/gdb/GDBVarTreeParserY.hpp
           build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} make all
 
       - name: Run tests
@@ -88,6 +89,9 @@ jobs:
 
       - name: Build release artifacts
         run: |
+          pushd code_crusader/test
+          make reset
+          popd
           make release
 
       - name: Store release artifacts

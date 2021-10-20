@@ -101,7 +101,7 @@ gdb::VarTreeParser::yyerror
 
 	std::ostringstream log;
 	log << "yyerror() called: " << message;
-	GetLink()->Log(log);
+	Link::Log(log);
 
 	return 0;
 }

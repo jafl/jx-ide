@@ -1543,8 +1543,7 @@ BuildManager::GetCMakeFileNames
 JString
 BuildManager::GetCMakeInputName
 	(
-	const JString& path,
-	const JString& projName
+	const JString& path
 	)
 {
 	return JCombinePathAndName(path, kCMakeInputName);

@@ -103,7 +103,7 @@ gdb::GetAssemblyCmd::HandleSuccess
 		stream.seekg(m.GetUtf8ByteRange().last);
 		if (!Link::ParseMapArray(stream, &list))
 		{
-			GetLink()->Log("invalid data map");
+			Link::Log("invalid data map");
 		}
 		else
 		{
@@ -115,19 +115,19 @@ gdb::GetAssemblyCmd::HandleSuccess
 
 				if (!map->GetElement("address", &addr))
 				{
-					GetLink()->Log("invalid assembly instruction: missing address");
+					Link::Log("invalid assembly instruction: missing address");
 					continue;
 				}
 
 				if (!map->GetElement("offset", &offset))
 				{
-					GetLink()->Log("invalid assembly instruction: missing address");
+					Link::Log("invalid assembly instruction: missing address");
 					continue;
 				}
 
 				if (!map->GetElement("inst", &inst))
 				{
-					GetLink()->Log("invalid assembly instruction: missing inst");
+					Link::Log("invalid assembly instruction: missing inst");
 					continue;
 				}
 

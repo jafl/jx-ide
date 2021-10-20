@@ -70,7 +70,7 @@ gdb::DisplaySourceForMainCmd::Receive
 	const Message&	message
 	)
 {
-	if (sender == GetLink() && message.Is(Link::kSymbolsLoaded))
+	if (sender == GetLink() && message.Is(::Link::kSymbolsLoaded))
 	{
 		const auto* info =
 			dynamic_cast<const Link::SymbolsLoaded*>(&message);
@@ -141,7 +141,7 @@ gdb::DisplaySourceForMainCmd::HandleSuccess
 	}
 	else
 	{
-		GetLink()->Log("GDBDisplaySourceForMainCmd failed to match");
+		Link::Log("GDBDisplaySourceForMainCmd failed to match");
 
 		if (!itsHasCoreFlag)
 		{

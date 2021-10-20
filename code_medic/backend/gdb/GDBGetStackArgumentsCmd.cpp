@@ -91,7 +91,7 @@ gdb::GetStackArgumentsCmd::HandleSuccess
 		stream.seekg(iter.GetLastMatch().GetUtf8ByteRange().last);
 		if (!Link::ParseMapArray(stream, &argList))
 		{
-			GetLink()->Log("invalid stack argument list");
+			Link::Log("invalid stack argument list");
 			break;
 		}
 
@@ -103,7 +103,7 @@ gdb::GetStackArgumentsCmd::HandleSuccess
 			if (!arg->GetElement("name", &name) ||
 				!arg->GetElement("value", &value))
 			{
-				GetLink()->Log("invalid stack argument");
+				Link::Log("invalid stack argument");
 				continue;
 			}
 

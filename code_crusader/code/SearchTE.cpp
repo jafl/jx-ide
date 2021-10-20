@@ -320,8 +320,6 @@ static const JUtf8Byte* kSuffix[] =
 	".zip", ".tar", ".gz", ".tgz", ".bz2", ".rpm"
 };
 
-const JSize kSuffixCount = sizeof(kSuffix) / sizeof(JUtf8Byte*);
-
 bool
 SearchTE::IsKnownBinaryFile
 	(
@@ -334,9 +332,9 @@ SearchTE::IsKnownBinaryFile
 		return true;
 	}
 
-	for (JUnsignedOffset i=0; i<kSuffixCount; i++)
+	for (auto suffix : kSuffix)
 	{
-		if (fileName.EndsWith(kSuffix[i]))
+		if (fileName.EndsWith(suffix))
 		{
 			return true;
 		}

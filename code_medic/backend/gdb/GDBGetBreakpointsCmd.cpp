@@ -71,7 +71,7 @@ gdb::GetBreakpointsCmd::HandleSuccess
 		stream.seekg(iter.GetLastMatch().GetUtf8ByteRange().last);
 		if (!Link::ParseMap(stream, &map))
 		{
-			GetLink()->Log("invalid data map");
+			Link::Log("invalid data map");
 			break;
 		}
 		iter.MoveTo(kJIteratorStartAfter, (std::streamoff) stream.tellg());
@@ -79,7 +79,7 @@ gdb::GetBreakpointsCmd::HandleSuccess
 		JString* s;
 		if (!map.GetElement("type", &s))
 		{
-			GetLink()->Log("missing breakpoint type");
+			Link::Log("missing breakpoint type");
 		}
 		else if (*s == "breakpoint")
 		{
@@ -123,23 +123,23 @@ gdb::GetBreakpointsCmd::ParseBreakpoint
 	{
 		if (!map.GetElement("line", &s))
 		{
-			GetLink()->Log("warn: missing breakpoint line");
+			Link::Log("warn: missing breakpoint line");
 			break;
 		}
 		if (!s->ConvertToUInt(&lineIndex))
 		{
-			GetLink()->Log("warn: line number is not integer");
+			Link::Log("warn: line number is not integer");
 			break;
 		}
 
 		if (!map.GetElement("file", &s))
 		{
-			GetLink()->Log("warn: missing breakpoint filename");
+			Link::Log("warn: missing breakpoint filename");
 			break;
 		}
 		fileName = *s;
 	}
-	while (0);
+	while (false);
 
 	JPtrArray<JString> split(JPtrArrayT::kDeleteAll);
 	do
@@ -153,7 +153,7 @@ gdb::GetBreakpointsCmd::ParseBreakpoint
 		{
 			if (!s->Contains(":"))
 			{
-				GetLink()->Log("warn: missing line number in original-location");
+				Link::Log("warn: missing line number in original-location");
 				break;
 			}
 
@@ -162,7 +162,7 @@ gdb::GetBreakpointsCmd::ParseBreakpoint
 			{
 				if (!split.GetElement(2)->ConvertToUInt(&lineIndex))
 				{
-					GetLink()->Log("warn: line number is not integer in original-location");
+					Link::Log("warn: line number is not integer in original-location");
 					break;
 				}
 
@@ -170,11 +170,11 @@ gdb::GetBreakpointsCmd::ParseBreakpoint
 			}
 		}
 	}
-	while (0);
+	while (false);
 
 	if (fileName.IsEmpty())
 	{
-		GetLink()->Log("unable to parse breakpoint location");
+		Link::Log("unable to parse breakpoint location");
 	}
 
 	JString fn;
@@ -266,18 +266,18 @@ gdb::GetBreakpointsCmd::ParseCommon
 	JString* s;
 	if (!map.GetElement("number", &s))
 	{
-		GetLink()->Log("missing otherpoint number");
+		Link::Log("missing otherpoint number");
 		return false;
 	}
 	if (!s->ConvertToUInt(bpIndex))
 	{
-		GetLink()->Log("otherpoint number is not integer");
+		Link::Log("otherpoint number is not integer");
 		return false;
 	}
 
 	if (!map.GetElement("disp", &s))
 	{
-		GetLink()->Log("missing otherpoint action");
+		Link::Log("missing otherpoint action");
 		return false;
 	}
 	if (JString::Compare(*s, "del", JString::kIgnoreCase) == 0)
@@ -295,7 +295,7 @@ gdb::GetBreakpointsCmd::ParseCommon
 
 	if (!map.GetElement("enabled", &s))
 	{
-		GetLink()->Log("missing otherpoint enable status");
+		Link::Log("missing otherpoint enable status");
 		return false;
 	}
 	*enabled = *s == "y" || *s == "Y";
@@ -304,7 +304,7 @@ gdb::GetBreakpointsCmd::ParseCommon
 	if (map.GetElement("ignore", &s) && !s->IsEmpty() &&
 		!s->ConvertToUInt(ignoreCount))
 	{
-		GetLink()->Log("ignore count is not integer");
+		Link::Log("ignore count is not integer");
 		return false;
 	}
 

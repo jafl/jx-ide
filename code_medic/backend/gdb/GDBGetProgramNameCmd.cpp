@@ -56,7 +56,7 @@ gdb::GetProgramNameCmd::HandleSuccess
 	}
 	else
 	{
-		GetLink()->Log("GDBGetProgramNameCmd failed to match");
+		Link::Log("GDBGetProgramNameCmd failed to match");
 	}
 
 	// Link has to broadcast SymbolsLoaded regardless of whether or not

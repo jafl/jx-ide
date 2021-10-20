@@ -1332,7 +1332,7 @@ lldb::Link::CreateArray2DCmd
 	JStringTableData*	data
 	)
 {
-	Array2DCmd* cmd = jnew Array2DCmd(dir, table, data);
+	auto* cmd = jnew Array2DCmd(dir, table, data);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1350,7 +1350,7 @@ lldb::Link::CreatePlot2DCmd
 	JArray<JFloat>*	y
 	)
 {
-	Plot2DCmd* cmd = jnew Plot2DCmd(dir, x, y);
+	auto* cmd = jnew Plot2DCmd(dir, x, y);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1366,7 +1366,7 @@ lldb::Link::CreateDisplaySourceForMainCmd
 	SourceDirector* sourceDir
 	)
 {
-	DisplaySourceForMainCmd* cmd = jnew DisplaySourceForMainCmd(sourceDir);
+	auto* cmd = jnew DisplaySourceForMainCmd(sourceDir);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1383,7 +1383,7 @@ lldb::Link::CreateGetCompletionsCmd
 	CommandOutputDisplay*	history
 	)
 {
-	GetCompletionsCmd* cmd = jnew GetCompletionsCmd(input, history);
+	auto* cmd = jnew GetCompletionsCmd(input, history);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1399,7 +1399,7 @@ lldb::Link::CreateGetFrameCmd
 	StackWidget* widget
 	)
 {
-	GetFrameCmd* cmd = jnew GetFrameCmd(widget);
+	auto* cmd = jnew GetFrameCmd(widget);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1416,7 +1416,7 @@ lldb::Link::CreateGetStackCmd
 	StackWidget*	widget
 	)
 {
-	GetStackCmd* cmd = jnew GetStackCmd(tree, widget);
+	auto* cmd = jnew GetStackCmd(tree, widget);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1432,7 +1432,7 @@ lldb::Link::CreateGetThreadCmd
 	ThreadsWidget* widget
 	)
 {
-	GetThreadCmd* cmd = jnew GetThreadCmd(widget);
+	auto* cmd = jnew GetThreadCmd(widget);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1445,11 +1445,11 @@ lldb::Link::CreateGetThreadCmd
 ::GetThreadsCmd*
 lldb::Link::CreateGetThreadsCmd
 	(
-	JTree*				tree,
+	JTree*			tree,
 	ThreadsWidget*	widget
 	)
 {
-	GetThreadsCmd* cmd = jnew GetThreadsCmd(tree, widget);
+	auto* cmd = jnew GetThreadsCmd(tree, widget);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1466,7 +1466,7 @@ lldb::Link::CreateGetFullPathCmd
 	const JIndex	lineIndex
 	)
 {
-	GetFullPathCmd* cmd = jnew GetFullPathCmd(fileName, lineIndex);
+	auto* cmd = jnew GetFullPathCmd(fileName, lineIndex);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1482,7 +1482,7 @@ lldb::Link::CreateGetInitArgsCmd
 	JXInputField* argInput
 	)
 {
-	GetInitArgsCmd* cmd = jnew GetInitArgsCmd(argInput);
+	auto* cmd = jnew GetInitArgsCmd(argInput);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1498,7 +1498,7 @@ lldb::Link::CreateGetLocalVarsCmd
 	::VarNode* rootNode
 	)
 {
-	GetLocalVarsCmd* cmd = jnew GetLocalVarsCmd(rootNode);
+	auto* cmd = jnew GetLocalVarsCmd(rootNode);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1514,7 +1514,7 @@ lldb::Link::CreateGetSourceFileListCmd
 	FileListDir* fileList
 	)
 {
-	GetSourceFileListCmd* cmd = jnew GetSourceFileListCmd(fileList);
+	auto* cmd = jnew GetSourceFileListCmd(fileList);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1530,7 +1530,7 @@ lldb::Link::CreateVarValueCmd
 	const JString& expr
 	)
 {
-	VarCmd* cmd = jnew VarCmd(expr);
+	auto* cmd = jnew VarCmd(expr);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1550,7 +1550,7 @@ lldb::Link::CreateVarContentCmd
 	s += expr;
 	s += ")";
 
-	VarCmd* cmd = jnew VarCmd(s);
+	auto* cmd = jnew VarCmd(s);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1566,7 +1566,7 @@ lldb::Link::CreateVarNode
 	const bool shouldUpdate		// false for Local Variables
 	)
 {
-	VarNode* node = jnew VarNode(shouldUpdate);
+	auto* node = jnew VarNode(shouldUpdate);
 	assert( node != nullptr );
 	return node;
 }
@@ -1580,7 +1580,7 @@ lldb::Link::CreateVarNode
 	const JString&	value
 	)
 {
-	VarNode* node = jnew VarNode(parent, name, value);
+	auto* node = jnew VarNode(parent, name, value);
 	assert( node != nullptr );
 	return node;
 }
@@ -1627,7 +1627,7 @@ lldb::Link::CreateGetMemoryCmd
 	MemoryDir* dir
 	)
 {
-	GetMemoryCmd* cmd = jnew GetMemoryCmd(dir);
+	auto* cmd = jnew GetMemoryCmd(dir);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1643,7 +1643,7 @@ lldb::Link::CreateGetAssemblyCmd
 	SourceDirector* dir
 	)
 {
-	GetAssemblyCmd* cmd = jnew GetAssemblyCmd(dir);
+	auto* cmd = jnew GetAssemblyCmd(dir);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1659,7 +1659,7 @@ lldb::Link::CreateGetRegistersCmd
 	RegistersDir* dir
 	)
 {
-	GetRegistersCmd* cmd = jnew GetRegistersCmd(dir);
+	auto* cmd = jnew GetRegistersCmd(dir);
 	assert( cmd != nullptr );
 	return cmd;
 }
@@ -1974,7 +1974,7 @@ lldb::Link::StartDebugger
 
 		const JUtf8Byte* map[] =
 		{
-			"debugger", itsDebugger->GetVersionString()
+			"debugger", SBDebugger::GetVersionString()
 		};
 		const JString msg = JGetString("Welcome::LLDBLink", map, sizeof(map));
 

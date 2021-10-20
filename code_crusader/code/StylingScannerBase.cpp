@@ -94,7 +94,7 @@ StylingScannerBase::Undo
 	const JString&					text
 	)
 {
-	for (JUnsignedOffset i=text.GetByteCount()-1; i>=0; i--)
+	for (JSignedOffset i=text.GetByteCount()-1; i>=0; i--)
 	{
 		matcher().unput(text.GetBytes()[i]);
 	}
@@ -273,12 +273,9 @@ StylingScannerBase::SlurpQuoted
 				remainder--;	// compensate for extra openChar in s(a)(b)g
 			}
 		}
-		else if (c == '\\')
+		else if (c == '\\' && !ReadCharacter(&beyond, &c))
 		{
-			if (!ReadCharacter(&beyond, &c))
-			{
-				break;
-			}
+			break;
 		}
 	}
 

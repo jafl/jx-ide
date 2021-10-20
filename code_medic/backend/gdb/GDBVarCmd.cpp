@@ -80,7 +80,7 @@ gdb::VarCmd::HandleSuccess
 	}
 	else
 	{
-		GetLink()->Log("gdb::VarCmd failed to match");
+		Link::Log("gdb::VarCmd failed to match");
 	}
 
 	if (!success)

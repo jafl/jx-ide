@@ -179,11 +179,8 @@ DClass::AdjustNameStyle
 {
 	Class::AdjustNameStyle(style);
 
-	if (GetDeclareType() != kGhostType)
+	if (GetDeclareType() != kGhostType && itsIsFinalFlag)
 	{
-		if (itsIsFinalFlag)
-		{
-			style->bold = true;
-		}
+		style->bold = true;
 	}
 }

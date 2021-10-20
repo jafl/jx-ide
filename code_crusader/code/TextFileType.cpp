@@ -140,25 +140,23 @@ static const ComplMap kComplMap[] =
 { kVeraSourceFT,    kVeraHeaderFT },
 };
 
-const JSize kComplMapCount = sizeof(kComplMap) / sizeof(ComplMap);
-
 bool
 GetComplementType
 	(
 	const TextFileType	inputType,
-	TextFileType*			outputType
+	TextFileType*		outputType
 	)
 {
-	for (JUnsignedOffset i=0; i<kComplMapCount; i++)
+	for (auto& item : kComplMap)
 	{
-		if (inputType == kComplMap[i].t1)
+		if (inputType == item.t1)
 		{
-			*outputType = kComplMap[i].t2;
+			*outputType = item.t2;
 			return true;
 		}
-		if (inputType == kComplMap[i].t2)
+		if (inputType == item.t2)
 		{
-			*outputType = kComplMap[i].t1;
+			*outputType = item.t1;
 			return true;
 		}
 	}
@@ -185,19 +183,17 @@ static const ComplName kComplName[] =
 { kVeraHeaderFT,       "ComplementSource::global"    },
 };
 
-const JSize kComplNameCount = sizeof(kComplName) / sizeof(ComplName);
-
 const JString&
 GetComplementFileTypeName
 	(
 	const TextFileType type
 	)
 {
-	for (JUnsignedOffset i=0; i<kComplNameCount; i++)
+	for (const auto& item : kComplName)
 	{
-		if (type == kComplName[i].type)
+		if (type == item.type)
 		{
-			return JGetString(kComplName[i].name);
+			return JGetString(item.name);
 		}
 	}
 
@@ -303,9 +299,9 @@ GetLanguage
 
 struct Lang2Styler
 {
-	Language		lang;
+	Language	lang;
 	StylerBase*	(*create)();
-	void			(*destroy)();
+	void		(*destroy)();
 };
 
 static const Lang2Styler kLang2Styler[] =
@@ -363,7 +359,7 @@ bool
 GetStyler
 	(
 	const Language	lang,
-	StylerBase**		styler
+	StylerBase**	styler
 	)
 {
 	assert( kLang2StylerCount == kLangCount );
@@ -384,11 +380,11 @@ GetStyler
 void
 ShutdownStylers()
 {
-	for (JUnsignedOffset i=0; i<kLang2StylerCount; i++)
+	for (auto& item : kLang2Styler)
 	{
-		if (kLang2Styler[i].destroy != nullptr)
+		if (item.destroy != nullptr)
 		{
-			kLang2Styler[i].destroy();
+			item.destroy();
 		}
 	}
 }
@@ -461,7 +457,7 @@ const JSize kLang2CompleterCount = sizeof(kLang2Completer) / sizeof(Lang2Complet
 bool
 GetCompleter
 	(
-	const Language	lang,
+	const Language		lang,
 	StringCompleter**	completer
 	)
 {
@@ -483,11 +479,11 @@ GetCompleter
 void
 ShutdownCompleters()
 {
-	for (JUnsignedOffset i=0; i<kLang2CompleterCount; i++)
+	for (auto& item : kLang2Completer)
 	{
-		if (kLang2Completer[i].destroy != nullptr)
+		if (item.destroy != nullptr)
 		{
-			kLang2Completer[i].destroy();
+			item.destroy();
 		}
 	}
 }

@@ -677,7 +677,7 @@ EditTextPrefsDialog::UpdateSettings()
 	JTextEditor::ShouldCopyWhenSelect(itsCopyWhenSelectCB->IsChecked());
 	JXTEBase::MiddleButtonShouldPaste(itsMiddleButtonPasteCB->IsChecked());
 
-	GetSearchTextDialog()->SetFont(fontMgr->GetFont(fontName, fontSize));
+	GetSearchTextDialog()->SetFont(JFontManager::GetFont(fontName, fontSize));
 
 	itsDoc->JPrefObject::WritePrefs();
 

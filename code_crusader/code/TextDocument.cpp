@@ -311,9 +311,9 @@ TextDocument::TextDocumentX1
 
 	itsTabWidthDialog = nullptr;
 
-	for (JUnsignedOffset i=0; i<kSettingCount; i++)
+	for (bool& v : itsOverrideFlag)
 	{
-		itsOverrideFlag[i] = false;
+		v = false;
 	}
 
 	GetDocumentManager()->TextDocumentCreated(this);
@@ -1461,9 +1461,9 @@ TextDocument::ReadFromProject
 	}
 	if (70 <= vers && vers < 84)
 	{
-		bool override;
-		JString charSet;
-		input >> JBoolFromString(override) >> charSet;
+		bool b;
+		JString s;
+		input >> JBoolFromString(b) >> s;
 	}
 	if (vers >= 82)
 	{

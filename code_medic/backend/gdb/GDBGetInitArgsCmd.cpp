@@ -84,5 +84,5 @@ gdb::GetInitArgsCmd::HandleSuccess
 		return;
 	}
 
-	GetLink()->Log("GDBGetInitArgsCmd failed to match");
+	Link::Log("GDBGetInitArgsCmd failed to match");
 }

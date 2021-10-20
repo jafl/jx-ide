@@ -64,15 +64,15 @@ gdb::GetFrameCmd::HandleSuccess
 		JIndex frameIndex;
 		if (!Link::ParseMap(stream, &map))
 		{
-			GetLink()->Log("invalid data map");
+			Link::Log("invalid data map");
 		}
 		else if (!map.GetElement("level", &s))
 		{
-			GetLink()->Log("missing frame index");
+			Link::Log("missing frame index");
 		}
 		else if (!s->ConvertToUInt(&frameIndex))
 		{
-			GetLink()->Log("frame index is not integer");
+			Link::Log("frame index is not integer");
 		}
 		else
 		{
@@ -81,6 +81,6 @@ gdb::GetFrameCmd::HandleSuccess
 	}
 	else
 	{
-		GetLink()->Log("GDBGetFrameCmd failed to match");
+		Link::Log("GDBGetFrameCmd failed to match");
 	}
 }

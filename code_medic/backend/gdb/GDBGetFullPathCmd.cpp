@@ -118,7 +118,7 @@ gdb::GetFullPathCmd::HandleSuccess
 	}
 	else
 	{
-		GetLink()->Log("GDBGetFullPathCmd failed to match");
+		Link::Log("GDBGetFullPathCmd failed to match");
 	}
 
 	if (!fileOK)

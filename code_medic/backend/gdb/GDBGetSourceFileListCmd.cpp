@@ -92,6 +92,6 @@ gdb::GetSourceFileListCmd::HandleSuccess
 	{
 		std::ostringstream log;
 		log << "GDBGetSourceFileListCmd failed to match";
-		GetLink()->Log(log);
+		Link::Log(log);
 	}
 }

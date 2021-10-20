@@ -87,7 +87,7 @@ public:
 	static JString	GetMakefileMethodName(const MakefileMethod method);
 
 	static JString	GetMakeFilesName(const JString& path);
-	static JString	GetCMakeInputName(const JString& path, const JString& projName);
+	static JString	GetCMakeInputName(const JString& path);
 	static JString	GetQMakeInputName(const JString& path, const JString& projName);
 	static void		GetMakefileNames(const JString& path, JPtrArray<JString>* list);
 

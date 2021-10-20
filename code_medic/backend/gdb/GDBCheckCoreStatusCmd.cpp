@@ -56,7 +56,7 @@ gdb::CheckCoreStatusCmd::HandleSuccess
 	}
 	else
 	{
-		GetLink()->Log("GDBCheckCoreStatusCmd failed to match (ok if there is no core file)");
+		Link::Log("GDBCheckCoreStatusCmd failed to match (ok if there is no core file)");
 	}
 
 	// Link has to broadcast status of core regardless of whether or not

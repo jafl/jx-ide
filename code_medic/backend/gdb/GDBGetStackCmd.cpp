@@ -76,7 +76,7 @@ gdb::GetStackCmd::HandleSuccess
 		stream.seekg(iter.GetLastMatch().GetUtf8ByteRange().last);
 		if (!Link::ParseMap(stream, &map))
 		{
-			GetLink()->Log("invalid data map");
+			Link::Log("invalid data map");
 			break;
 		}
 		iter.MoveTo(kJIteratorStartAfter, (std::streamoff) stream.tellg());
@@ -85,12 +85,12 @@ gdb::GetStackCmd::HandleSuccess
 		JIndex frameIndex;
 		if (!map.GetElement("level", &s))
 		{
-			GetLink()->Log("missing frame index");
+			Link::Log("missing frame index");
 			continue;
 		}
 		if (!s->ConvertToUInt(&frameIndex))
 		{
-			GetLink()->Log("frame index is not integer");
+			Link::Log("frame index is not integer");
 			continue;
 		}
 
@@ -104,7 +104,7 @@ gdb::GetStackCmd::HandleSuccess
 		JString* fnName;
 		if (!map.GetElement("func", &fnName))
 		{
-			GetLink()->Log("missing function name");
+			Link::Log("missing function name");
 			continue;
 		}
 		frameName += *fnName;
@@ -118,7 +118,7 @@ gdb::GetStackCmd::HandleSuccess
 		if (map.GetElement("line", &s) &&
 			!s->ConvertToUInt(&lineIndex))
 		{
-			GetLink()->Log("line number is not integer");
+			Link::Log("line number is not integer");
 			continue;
 		}
 
