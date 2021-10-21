@@ -44,8 +44,6 @@ include make_reflex_target
 EXTRA_MENU_STRING_FILES := \
     ${JX_INCLUDE_ROOT}/jx-af/jfs/*.cpp
 
-J_RPM_GZ_LIBS += /usr/lib64/libeditorconfig.so
-
 include ${MAKE_INCLUDE}/app_targets
 
 ${APP_NAME}:: strings
@@ -61,8 +59,7 @@ test:
 .PHONY : init_tarball_extra
 init_tarball_extra::
 	@ln -s -t ${PKG_PATH}/ \
-         ../scripts ../macros ../CPM_rules \
-         ../project_templates ../text_templates
+         ../scripts ../macros ../CPM_rules ../project_templates
 
 .PHONY : clean
 clean::

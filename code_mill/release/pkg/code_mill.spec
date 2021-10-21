@@ -4,7 +4,7 @@ Version: %pkg_version
 Release: 1
 License: Copyright John Lindal
 Group: Development/Code Generators
-Source: Code_Mill_%pkg_version.tar
+Source: %pkg_name
 Requires: libX11, libXinerama, libXpm, libXft, libxml2, gd, libjpeg, libpng, libicu, pcre
 
 %description
@@ -21,7 +21,7 @@ Code Mill is a Code Crusader plug-in for creating C++ derived classes.
 %define gnome_app_path    /usr/share/applications
 %define gnome_icon_path   /usr/share/pixmaps
 
-./install "$RPM_BUILD_ROOT" nozip
+./install "$RPM_BUILD_ROOT"
 
 %post
 gunzip %code_mill_lib_dir/*.gz

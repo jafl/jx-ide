@@ -3,7 +3,6 @@
 # With no arguments, this script must install from an unpacked tgz.
 
 PRE=$1
-ZIP=$2
 
 BIN=$PRE/usr/bin
 DOC=$PRE/usr/share/doc/code_crusader
@@ -24,9 +23,7 @@ install -m755 macros/html-auto-close $BIN
 ln -sf jcc $BIN/code_crusader
 
 mkdir -p $LIB
-cp lib/*                $LIB
 cp -R project_templates $LIB
-cp -R text_templates    $LIB
 cp -R scripts           $LIB
 
 mkdir -p $DOC
@@ -36,13 +33,3 @@ cp -R CPM_rules           $DOC
 
 cp desktop/code_crusader.desktop $APP/
 cp desktop/code_crusader.xpm     $ICON/
-
-# post
-
-if [[ -z $ZIP ]]; then
-	gunzip $LIB/*.gz;
-fi
-
-# ignore gzip errors
-
-exit 0;

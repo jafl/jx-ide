@@ -3,11 +3,9 @@
 # With no arguments, this script must install from an unpacked tgz.
 
 PRE=$1
-ZIP=$2
 
 BIN=$PRE/usr/bin
 DOC=$PRE/usr/share/doc/code_medic
-LIB=$PRE/usr/lib/medic
 APP=$PRE/usr/share/applications
 ICON=$PRE/usr/share/pixmaps
 
@@ -19,21 +17,10 @@ fi
 
 install -m755 medic $BIN
 
-mkdir -p $LIB
-cp lib/* $LIB
+ln -sf jcc $BIN/code_medic
 
 mkdir -p $DOC
 cp README.md COPYING menu_strings $DOC
 
 cp desktop/code_medic.desktop $APP/
 cp desktop/code_medic.xpm     $ICON/
-
-# post
-
-if [[ -z $ZIP ]]; then
-	gunzip $LIB/*.gz;
-fi
-
-# ignore gzip errors
-
-exit 0;

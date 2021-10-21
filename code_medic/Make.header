@@ -48,8 +48,6 @@ EXTRA_MENU_STRING_FILES := \
     ${JX_INCLUDE_ROOT}/jx-af/jexpr/*.cpp \
     ${JX_INCLUDE_ROOT}/jx-af/j2dplot/*.cpp
 
-J_RPM_GZ_LIBS += /usr/lib64/liblldb.so /usr/lib64/libeditorconfig.so
-
 include ${MAKE_INCLUDE}/app_targets
 
 ${APP_NAME}:: strings
