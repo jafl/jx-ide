@@ -234,9 +234,19 @@ computeErrorRangeFromFirstSubmatch
 void
 CompileDocument::AppendText
 	(
-	const JString& text
+	const JString& origText
 	)
 {
+	JString text = origText;
+
+	JStringIterator iter(&text, kJIteratorStartAtEnd);
+	if (iter.Prev("\r"))
+	{
+		iter.SkipNext();
+		iter.RemoveAllPrev();
+	}
+	iter.Invalidate();
+
 	const bool isJavacError = javacOutputRegex.Match(text);
 
 	const JStringMatch gccMatch         = gccErrorRegex.Match(text, JRegex::kIgnoreSubmatches),
@@ -245,22 +255,22 @@ CompileDocument::AppendText
 	const bool isGCCError = !isJavacError && !gccMatch.IsEmpty();
 
 	const JStringMatch flexMatch = flexErrorRegex.Match(text, JRegex::kIgnoreSubmatches);
-	const bool isFlexError   = !flexMatch.IsEmpty();
+	const bool isFlexError       = !flexMatch.IsEmpty();
 
 	const JStringMatch bisonMatch = bisonErrorRegex.Match(text, JRegex::kIgnoreSubmatches);
-	const bool isBisonError   = !bisonMatch.IsEmpty();
+	const bool isBisonError       = !bisonMatch.IsEmpty();
 
 	const JStringMatch makeMatch = makeErrorRegex.Match(text, JRegex::kIgnoreSubmatches);
-	const bool isMakeError   = !makeMatch.IsEmpty() && !text.EndsWith(makeIgnoreErrorStr);
+	const bool isMakeError       = !makeMatch.IsEmpty() && !text.EndsWith(makeIgnoreErrorStr);
 
 	const JStringMatch absoftMatch = absoftErrorRegex.Match(text, JRegex::kIncludeSubmatches);
-	const bool isAbsoftError   = !absoftMatch.IsEmpty();
+	const bool isAbsoftError       = !absoftMatch.IsEmpty();
 
 	const JStringMatch maven2Match = maven2ErrorRegex.Match(text, JRegex::kIncludeSubmatches);
-	const bool isMaven2Error   = !maven2Match.IsEmpty();
+	const bool isMaven2Error       = !maven2Match.IsEmpty();
 
 	const JStringMatch maven3Match = maven3ErrorRegex.Match(text, JRegex::kIncludeSubmatches);
-	const bool isMaven3Error   = !maven3Match.IsEmpty();
+	const bool isMaven3Error       = !maven3Match.IsEmpty();
 
 	TextEditor* te = GetTextEditor();
 
@@ -268,8 +278,7 @@ CompileDocument::AppendText
 		text.BeginsWith(gccMultilinePrefix) &&
 		text.GetByteCount() > kGCCMultilinePrefixLength)
 	{
-		JString s = text;
-		JStringIterator iter(&s, kJIteratorStartAfterByte, kGCCMultilinePrefixLength);
+		JStringIterator iter(&text, kJIteratorStartAfterByte, kGCCMultilinePrefixLength);
 		JUtf8Character c;
 		if (iter.Next(&c, kJIteratorStay) && !c.IsSpace())
 		{
@@ -277,7 +286,7 @@ CompileDocument::AppendText
 			iter.Invalidate();
 
 			te->SetCaretLocation(te->GetText()->GetText().GetCharacterCount() - (theDoubleSpaceFlag ? 1 : 0));
-			te->Paste(s);
+			te->Paste(text);
 			return;
 		}
 	}
