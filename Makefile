@@ -30,3 +30,15 @@ release:
 	@for d in ${APPS}; do \
          pushd $$d; ${MAKE} release; popd; \
      done
+
+.PHONY : tidy
+tidy:
+	@for d in ${APPS}; do \
+         pushd $$d; ${MAKE} tidy; popd; \
+     done
+
+.PHONY : clean
+clean:
+	@for d in ${APPS}; do \
+         pushd $$d; ${MAKE} clean; popd; \
+     done
