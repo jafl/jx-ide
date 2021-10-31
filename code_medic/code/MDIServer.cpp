@@ -242,7 +242,7 @@ MDIServer::UpdateDebuggerType
 			type != PrefsManager::kLLDBType)
 		{
 			GetPrefsManager()->SetDebuggerType(
-#ifdef _J_OSX
+#ifdef _J_MACOS
 				PrefsManager::kLLDBType
 #else
 				PrefsManager::kGDBType

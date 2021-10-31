@@ -327,7 +327,7 @@ ManPageDocument::GetCmd2
 	const JString& pageName
 	)
 {
-#ifdef _J_OSX
+#ifdef _J_MACOS
 	JString cmd("apropos ");	// need to replace apropos, because default is broken
 #else
 	JString cmd("man -k ");

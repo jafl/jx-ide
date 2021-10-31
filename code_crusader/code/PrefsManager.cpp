@@ -720,7 +720,7 @@ PrefsManager::UpgradeData
 		}
 		else
 		{
-#ifdef _J_OSX
+#ifdef _J_MACOS
 			NewExternalSuffixInfo kImageSuffix[] =
 		{
 			{ ".gif", "open $f", false },
@@ -1110,7 +1110,7 @@ PrefsManager::UpgradeData
 
 	if (currentVersion < 62)
 	{
-#ifdef _J_OSX
+#ifdef _J_MACOS
 		NewExternalSuffixInfo kImageSuffix[] =
 	{
 		{ ".png", "open $f", false }
@@ -1683,7 +1683,7 @@ PrefsManager::ConvertHTMLSuffixesToFileTypes
 
 		if (!found)
 		{
-			#ifdef _J_OSX
+			#ifdef _J_MACOS
 			const JUtf8Byte* cmd = "open $f";
 			#else
 			const JUtf8Byte* cmd = "eog $f";

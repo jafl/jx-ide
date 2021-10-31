@@ -16,7 +16,7 @@
 #include "lldb/API/SBListener.h"
 #include <stdio.h>
 
-#ifdef _J_OSX
+#ifdef _J_MACOS
 using j_lldb_cookie_fn_return = int;
 using j_lldb_cookie_size      = int;
 #else

@@ -749,7 +749,7 @@ ExecOutputDocument::ProcessFinished
 
 		if (reason != kJChildFinished)
 		{
-			#ifdef _J_OSX
+			#ifdef _J_MACOS
 			const JString path("/cores/", JString::kNoCopy);
 			#else
 			const JString path = itsPath;

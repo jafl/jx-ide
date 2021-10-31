@@ -1990,7 +1990,7 @@ gdb::Link::ParseMapArray
 /******************************************************************************
  SendPing
 
-	Pings gdb to see if it is ready.  Used when gdb is in asynch mode (OSX).
+	Pings gdb to see if it is ready.  Used when gdb is in asynch mode (macOS).
 
  *****************************************************************************/
 

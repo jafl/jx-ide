@@ -387,7 +387,7 @@ PrefsManager::UpgradeData
 	if (currentVersion < 8)
 	{
 		std::ostringstream data;
-#ifdef _J_OSX
+#ifdef _J_MACOS
 		data << (long) kLLDBType;
 #else
 		data << (long) kGDBType;

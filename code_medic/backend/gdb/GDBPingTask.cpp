@@ -1,7 +1,7 @@
 /******************************************************************************
  GDBPingTask.cpp
 
-	On OSX, we have to periodically ping gdb to see if it is available,
+	On macOS, we have to periodically ping gdb to see if it is available,
 	because it does not notify us of state changes.
 
 	BASE CLASS = JXIdleTask

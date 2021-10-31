@@ -1949,7 +1949,7 @@ lldb::Link::StartDebugger
 		assert( itsStdoutStream == nullptr );
 		assert( itsStderrStream == nullptr );
 
-#ifdef _J_OSX
+#ifdef _J_MACOS
 		itsStdoutStream = fwopen(this, ReceiveMessageLine);
 		assert( itsStdoutStream != nullptr );
 

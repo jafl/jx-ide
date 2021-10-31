@@ -13,7 +13,7 @@ This scanner reads output from gdb --interpreter=mi2.
 
 #define RETURN(x)	return Token(x, itsData)
 
-// splitting up square brackets protects them from flex 2.5.33 on OSX
+// splitting up square brackets protects them from flex 2.5.33 on macOS
 static const JRegex pidRegex1("(?:child|attached) (?:process|Pid|PID|thread) ([""[:digit:]""]+)");
 static const JRegex pidRegex2("\\(LWP ([""[:digit:]""]+)");
 static const JRegex pidRegex3("process ([""[:digit:]""]+)");
@@ -205,7 +205,7 @@ PROMPT "(gdb) "\n?
 	RETURN(kBeginGetPID);
 	}
 
-	/* OSX prints pid when program starts */
+	/* macOS prints pid when program starts */
 
 ~\""[Switching to process "{INT}.*\]\\n\"\n {
 
@@ -232,7 +232,7 @@ PROMPT "(gdb) "\n?
 	}
 
 	/* result of running gdb with --fullname option: first item is full path + name */
-	/* on OSX, this only works when switch frames */
+	/* on macOS, this only works when switch frames */
 
 ~\"\\032\\032[^:\0]+:{INT}:{INT}:[^:]+:{HEX}\\n\"\n {
 
@@ -260,7 +260,7 @@ PROMPT "(gdb) "\n?
 	RETURN(kProgramStoppedAtLocation);
 	}
 
-	/* OSX result of hitting a breakpoint */
+	/* macOS result of hitting a breakpoint */
 
 <INITIAL,MEDIC_COMMAND>\^done,reason=.+\n {
 

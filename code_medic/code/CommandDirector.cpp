@@ -2058,7 +2058,7 @@ CommandDirector::ChooseCoreFile()
 {
 	JString coreName, origPath;
 
-#ifdef _J_OSX
+#ifdef _J_MACOS
 
 	origPath = "/cores/*";
 

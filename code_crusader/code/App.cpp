@@ -37,7 +37,7 @@ static const JUtf8Byte* kDefaultSysIncludeDir[] =
 
 static const JUtf8Byte* kExtraSysIncludeDir[] =
 {
-#ifdef _J_OSX
+#ifdef _J_MACOS
 	"/usr/X11/include/"
 #endif
 };
