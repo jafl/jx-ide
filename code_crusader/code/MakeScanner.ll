@@ -95,7 +95,7 @@ SHELL_BUILTINCMD     (true|false|source|alias|bg|bind|break|builtin|cd|command|c
 	start(EXEC_STRING_STATE);
 	}
 
-^\s*{MAKE_TARGET}\s*:[^=] {
+^\s*{MAKE_TARGET}\s*::?[^=] {
 	matcher().less(size()-1);
 	StartToken();
 	return ThisToken(kMakeTarget);
