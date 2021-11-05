@@ -8,17 +8,19 @@ if [[ $UID != 0 ]]; then
 	SUDO="sudo";
 fi
 
+if [[ $1 == release || $1 == ci ]]; then
+	echo -n 1 >| 0-RELEASE;
+fi
+
 if [[ $SYS == Darwin ]]; then
 
-	if [[ -z $HOMEBREW_VERSION ]]; then
-		if ! command -v brew; then
-			echo Installing Homebrew...;
-			sudo /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)";
-		else
-			echo Updating Homebrew...;
-			brew update;
-		fi
+	if ! command -v brew; then
+		echo Installing Homebrew...;
+		sudo /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)";
+	fi
 
+	if [[ $1 != ci ]]; then
+		brew tap jafl/jx;
 		brew bundle;
 	fi
 
@@ -31,7 +33,7 @@ elif command -v apt-get; then
 	$SUDO apt update;
 	$SUDO apt -y install libeditorconfig-dev llvm liblldb-$LLDB_VERS-dev;
 
-	if [[ -z $CODEQL_ACTION_VERSION && ! -f ../JX/Makefile && -z $JX_ROOT ]]; then
+	if [[ $1 != ci && ! -f ../JX/Makefile && -z $JX_ROOT ]]; then
 		curl -O http://libjx.sourceforge.net/release/jx-application-framework.deb
 		sudo apt install ./jx-application-framework.deb
 	fi

@@ -1,15 +1,21 @@
 #!/bin/bash
 
-rm -f  /usr/bin/jcc;
-rm -f  /usr/bin/code_crusader;
-rm -f  /usr/bin/xml-auto-close;
-rm -f  /usr/bin/html-auto-close;
-rm -rf /usr/lib/jxcb;
-rm -rf /usr/share/doc/code_crusader;
-rm -f  `find /usr/share/applications -name 'code_crusader*.desktop'`;
-rm -f  `find /usr/share/pixmaps -name 'code_crusader*.xpm'`;
+PRE=$1;
+if [[ -z $PRE ]]; then
+	PRE=/usr;
+fi
 
-rm -f  /usr/bin/makemake;
-rm -f  /usr/bin/makecheck;
-rm -f  /usr/bin/maketouch;
-rm -rf /usr/share/doc/makemake;
+BIN=$PRE/bin;
+DOC=$PRE/share/doc/code_crusader;
+LIB=$PRE/lib/jxcb;
+APP=$PRE/share/applications;
+ICON=$PRE/share/pixmaps;
+
+rm -f  $BIN/jcc;
+rm -f  $BIN/code_crusader;
+rm -f  $BIN/xml-auto-close;
+rm -f  $BIN/html-auto-close;
+rm -rf $LIB;
+rm -rf $DOC;
+rm -f  `find $APP -name 'code_crusader*.desktop'`;
+rm -f  `find $ICON -name 'code_crusader*.xpm'`;

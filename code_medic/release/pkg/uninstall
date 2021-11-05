@@ -1,6 +1,16 @@
 #!/bin/bash
 
-rm -f  /usr/bin/medic;
-rm -rf /usr/share/doc/code_medic;
-rm -f  `find /usr/share/applications -name 'code_medic*.desktop'`;
-rm -f  `find /usr/share/pixmaps -name 'code_medic*.xpm'`;
+PRE=$1;
+if [[ -z $PRE ]]; then
+	PRE=/usr;
+fi
+
+BIN=$PRE/bin;
+DOC=$PRE/share/doc/code_medic;
+APP=$PRE/share/applications;
+ICON=$PRE/share/pixmaps;
+
+rm -f  $BIN/medic $BIN/code_medic;
+rm -rf $DOC;
+rm -f  `find $APP -name 'code_medic*.desktop'`;
+rm -f  `find $ICON -name 'code_medic*.xpm'`;

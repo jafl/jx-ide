@@ -7,11 +7,8 @@ else
   JX_ROOT := /usr/local
 endif
 
-APP_NAME  := medic
-SIGNATURE := ${APP_NAME}
-
-J_STRING_FILES := $(filter-out %/${APP_NAME}_menu_strings, \
-                    $(shell echo strings/*)) strings/version
+APP_NAME := code_medic
+BIN_NAME := medic
 
 MAKE_INCLUDE := ${JX_ROOT}/include/jx-af/make
 include ${MAKE_INCLUDE}/jx_config
@@ -49,8 +46,6 @@ EXTRA_MENU_STRING_FILES := \
     ${JX_INCLUDE_ROOT}/jx-af/j2dplot/*.cpp
 
 include ${MAKE_INCLUDE}/app_targets
-
-${APP_NAME}:: strings
 
 # force reflex to run first
 ${APP_NAME}:: ./backend/gdb/GDBVarTreeScanner.cpp

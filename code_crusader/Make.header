@@ -7,11 +7,9 @@ else
   JX_ROOT := /usr/local
 endif
 
-APP_NAME  := jcc
+APP_NAME  := code_crusader
+BIN_NAME  := jcc
 SIGNATURE := jxcb
-
-J_STRING_FILES := $(filter-out %/jcc_menu_strings, \
-                    $(shell echo strings/*)) strings/version
 
 MAKE_INCLUDE := ${JX_ROOT}/include/jx-af/make
 include ${MAKE_INCLUDE}/jx_config
@@ -45,8 +43,6 @@ EXTRA_MENU_STRING_FILES := \
     ${JX_INCLUDE_ROOT}/jx-af/jfs/*.cpp
 
 include ${MAKE_INCLUDE}/app_targets
-
-${APP_NAME}:: strings
 
 .PHONY : Makefiles
 Makefiles::
