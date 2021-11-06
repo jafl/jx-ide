@@ -178,7 +178,7 @@ yyprint
 {
 	if (value.pString != nullptr)
 	{
-		fprintf(file, "string:  %s", (value.pString)->GetBytes());
+		fprintf(file, "string:  %s", value.pString->GetBytes());
 	}
 }
 
@@ -1276,7 +1276,7 @@ yyreduce:
 #line 128 "backend/gdb/GDBVarTreeParserY.y"
         {
 		itsCurrentNode = (yyval.pNode) = GetLink()->CreateVarNode(nullptr, JString::empty, JString::empty, *(yyvsp[-2].pString));
-		VarNode* child = GetLink()->CreateVarNode(itsCurrentNode, JString::empty, JString::empty, *(yyvsp[-1].pString));
+		::VarNode* child = GetLink()->CreateVarNode(itsCurrentNode, JString::empty, JString::empty, *(yyvsp[-1].pString));
 		child->MakePointer(itsIsPointerFlag);
 		itsIsPointerFlag = false;
 
@@ -1309,7 +1309,7 @@ yyreduce:
   case 8: /* group: P_GROUP_OPEN group P_GROUP_CLOSE  */
 #line 156 "backend/gdb/GDBVarTreeParserY.y"
         {
-		JPtrArray<VarNode>* list = jnew JPtrArray<VarNode>(JPtrArrayT::kForgetAll);
+		auto* list = jnew JPtrArray<::VarNode>(JPtrArrayT::kForgetAll);
 		assert( list != nullptr );
 		AppendAsArrayElement(JString::empty, *((yyvsp[-1].pGroup)->list), list);
 		(yyval.pGroup) = jnew GDBVarGroupInfo(nullptr, list);
@@ -1341,7 +1341,7 @@ yyreduce:
   case 11: /* group: P_SUMMARY P_GROUP_OPEN group P_GROUP_CLOSE  */
 #line 179 "backend/gdb/GDBVarTreeParserY.y"
         {
-		JPtrArray<VarNode>* list = jnew JPtrArray<VarNode>(JPtrArrayT::kForgetAll);
+		auto* list = jnew JPtrArray<::VarNode>(JPtrArrayT::kForgetAll);
 		assert( list != nullptr );
 		AppendAsArrayElement((yyvsp[-1].pGroup)->GetName(), *((yyvsp[-1].pGroup)->list), list);
 		(yyval.pGroup) = jnew GDBVarGroupInfo((yyvsp[-3].pString), list);
@@ -1355,7 +1355,7 @@ yyreduce:
   case 12: /* node_list: node  */
 #line 193 "backend/gdb/GDBVarTreeParserY.y"
         {
-		JPtrArray<VarNode>* list = (yyval.pList) = jnew JPtrArray<VarNode>(JPtrArrayT::kForgetAll);
+		auto* list = (yyval.pList) = jnew JPtrArray<::VarNode>(JPtrArrayT::kForgetAll);
 		assert( list != nullptr );
 		list->Append((yyvsp[0].pNode));
 	}
@@ -1376,8 +1376,8 @@ yyreduce:
         {
 		(yyval.pList) = (yyvsp[-2].pList);
 
-		VarNode* node = GetLink()->CreateVarNode(nullptr, JString::empty, JString::empty, *(yyvsp[0].pString));
-		if ((((yyval.pList)->GetFirstElement())->GetName()).BeginsWith(JString("[", JString::kNoCopy)))
+		::VarNode* node = GetLink()->CreateVarNode(nullptr, JString::empty, JString::empty, *(yyvsp[0].pString));
+		if ((yyval.pList)->GetFirstElement()->GetName().BeginsWith(JString("[", JString::kNoCopy)))
 		{
 			AppendAsArrayElement(node, (yyval.pList));
 		}
@@ -1394,7 +1394,7 @@ yyreduce:
   case 15: /* node_list: group ',' group  */
 #line 223 "backend/gdb/GDBVarTreeParserY.y"
         {
-		JPtrArray<VarNode>* list = (yyval.pList) = jnew JPtrArray<VarNode>(JPtrArrayT::kForgetAll);
+		auto* list = (yyval.pList) = jnew JPtrArray<::VarNode>(JPtrArrayT::kForgetAll);
 		assert( list != nullptr );
 		AppendAsArrayElement((yyvsp[-2].pGroup)->GetName(), *((yyvsp[-2].pGroup)->list), list);
 		AppendAsArrayElement((yyvsp[0].pGroup)->GetName(), *((yyvsp[0].pGroup)->list), list);
@@ -1414,7 +1414,7 @@ yyreduce:
 		}
 		else
 		{
-			JPtrArray<VarNode>* list = (yyval.pList) = jnew JPtrArray<VarNode>(JPtrArrayT::kForgetAll);
+			auto* list = (yyval.pList) = jnew JPtrArray<::VarNode>(JPtrArrayT::kForgetAll);
 			assert( list != nullptr );
 			AppendAsArrayElement(JString::empty, *(yyvsp[-2].pList), list);
 
@@ -1432,7 +1432,7 @@ yyreduce:
 #line 254 "backend/gdb/GDBVarTreeParserY.y"
         {
 		(yyval.pList) = (yyvsp[-3].pList);
-		VarNode* child = GetLink()->CreateVarNode(nullptr, JString("...", JString::kNoCopy), JString::empty, JString::empty);
+		::VarNode* child = GetLink()->CreateVarNode(nullptr, JString("...", JString::kNoCopy), JString::empty, JString::empty);
 		(yyval.pList)->Append(child);
 	}
 #line 1439 "backend/gdb/GDBVarTreeParserY.cpp"
@@ -1562,7 +1562,7 @@ yyreduce:
   case 29: /* value_list: value_node  */
 #line 373 "backend/gdb/GDBVarTreeParserY.y"
         {
-		JPtrArray<VarNode>* list = (yyval.pList) = jnew JPtrArray<VarNode>(JPtrArrayT::kForgetAll);
+		auto* list = (yyval.pList) = jnew JPtrArray<::VarNode>(JPtrArrayT::kForgetAll);
 		assert( list != nullptr );
 		AppendAsArrayElement((yyvsp[0].pNode), (yyval.pList));
 	}
@@ -1582,7 +1582,7 @@ yyreduce:
 #line 386 "backend/gdb/GDBVarTreeParserY.y"
         {
 		(yyval.pList) = (yyvsp[-3].pList);
-		VarNode* child = GetLink()->CreateVarNode(nullptr, JString("...", JString::kNoCopy), JString::empty, JString::empty);
+		::VarNode* child = GetLink()->CreateVarNode(nullptr, JString("...", JString::kNoCopy), JString::empty, JString::empty);
 		(yyval.pList)->Append(child);
 	}
 #line 1589 "backend/gdb/GDBVarTreeParserY.cpp"

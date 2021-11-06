@@ -83,10 +83,10 @@ union YYSTYPE
 {
 #line 25 "backend/gdb/GDBVarTreeParserY.y"
 
-	JString*			pString;
-	::VarNode*			pNode;
-	JPtrArray<VarNode>*	pList;
-	GDBVarGroupInfo*	pGroup;
+	JString*				pString;
+	::VarNode*				pNode;
+	JPtrArray<::VarNode>*	pList;
+	GDBVarGroupInfo*		pGroup;
 
 #line 92 "backend/gdb/GDBVarTreeParserY.hpp"
 

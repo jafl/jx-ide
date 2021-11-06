@@ -6,6 +6,7 @@
  *****************************************************************************/
 
 #include "GDBVarTreeParser.h"
+#include "GDBVarTreeScanner.h"
 #include "VarNode.h"
 #include "globals.h"
 #include <jx-af/jcore/jAssert.h>

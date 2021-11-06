@@ -48,12 +48,12 @@ EXTRA_MENU_STRING_FILES := \
 include ${MAKE_INCLUDE}/app_targets
 
 # force reflex to run first
-${APP_NAME}:: ./backend/gdb/GDBVarTreeScanner.cpp
+${BIN_NAME}:: ./backend/gdb/GDBVarTreeScanner.cpp
 	@if [[ ! -e VarTreeParserY.hpp ]]; then ${RM} code/VarTreeParserY.o; fi
 
 .PHONY : post_link
 post_link::
-	-${J_POST_LINK_LLDB_CMD} ${APP_NAME}
+	-${J_POST_LINK_LLDB_CMD} ${BIN_NAME}
 
 .PHONY : clean
 clean::

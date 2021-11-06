@@ -8,11 +8,16 @@
 
  *****************************************************************************/
 
-#include "GDBVarTreeScanner.h"
+#include "VarNode.h"
+#include "GDBVarGroupInfo.h"
+#include <jx-af/jcore/JString.h>
+#include "GDBVarTreeParserY.hpp"
 
 class VarNode;
 
 namespace gdb {
+
+namespace VarTree { class Scanner; };
 
 class VarTreeParser
 {

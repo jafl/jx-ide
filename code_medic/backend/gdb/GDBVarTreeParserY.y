@@ -23,10 +23,10 @@ isOpenablePointer
 }
 
 %union {
-	JString*			pString;
-	::VarNode*			pNode;
-	JPtrArray<VarNode>*	pList;
-	GDBVarGroupInfo*	pGroup;
+	JString*				pString;
+	::VarNode*				pNode;
+	JPtrArray<::VarNode>*	pList;
+	GDBVarGroupInfo*		pGroup;
 }
 
 %header
@@ -64,7 +64,7 @@ yyprint
 {
 	if (value.pString != nullptr)
 	{
-		fprintf(file, "string:  %s", (value.pString)->GetBytes());
+		fprintf(file, "string:  %s", value.pString->GetBytes());
 	}
 }
 
@@ -127,7 +127,7 @@ top_group :
 	| reference_value value P_EOF
 	{
 		itsCurrentNode = $$ = GetLink()->CreateVarNode(nullptr, JString::empty, JString::empty, *$1);
-		VarNode* child = GetLink()->CreateVarNode(itsCurrentNode, JString::empty, JString::empty, *$2);
+		::VarNode* child = GetLink()->CreateVarNode(itsCurrentNode, JString::empty, JString::empty, *$2);
 		child->MakePointer(itsIsPointerFlag);
 		itsIsPointerFlag = false;
 
@@ -154,7 +154,7 @@ group :
 
 	| P_GROUP_OPEN group P_GROUP_CLOSE
 	{
-		JPtrArray<VarNode>* list = jnew JPtrArray<VarNode>(JPtrArrayT::kForgetAll);
+		auto* list = jnew JPtrArray<::VarNode>(JPtrArrayT::kForgetAll);
 		assert( list != nullptr );
 		AppendAsArrayElement(JString::empty, *($2->list), list);
 		$$ = jnew GDBVarGroupInfo(nullptr, list);
@@ -177,7 +177,7 @@ group :
 
 	| P_SUMMARY P_GROUP_OPEN group P_GROUP_CLOSE
 	{
-		JPtrArray<VarNode>* list = jnew JPtrArray<VarNode>(JPtrArrayT::kForgetAll);
+		auto* list = jnew JPtrArray<::VarNode>(JPtrArrayT::kForgetAll);
 		assert( list != nullptr );
 		AppendAsArrayElement($3->GetName(), *($3->list), list);
 		$$ = jnew GDBVarGroupInfo($1, list);
@@ -191,7 +191,7 @@ node_list :
 
 	node
 	{
-		JPtrArray<VarNode>* list = $$ = jnew JPtrArray<VarNode>(JPtrArrayT::kForgetAll);
+		auto* list = $$ = jnew JPtrArray<::VarNode>(JPtrArrayT::kForgetAll);
 		assert( list != nullptr );
 		list->Append($1);
 	}
@@ -206,8 +206,8 @@ node_list :
 	{
 		$$ = $1;
 
-		VarNode* node = GetLink()->CreateVarNode(nullptr, JString::empty, JString::empty, *$3);
-		if ((($$->GetFirstElement())->GetName()).BeginsWith(JString("[", JString::kNoCopy)))
+		::VarNode* node = GetLink()->CreateVarNode(nullptr, JString::empty, JString::empty, *$3);
+		if ($$->GetFirstElement()->GetName().BeginsWith(JString("[", JString::kNoCopy)))
 		{
 			AppendAsArrayElement(node, $$);
 		}
@@ -221,7 +221,7 @@ node_list :
 
 	| group ',' group
 	{
-		JPtrArray<VarNode>* list = $$ = jnew JPtrArray<VarNode>(JPtrArrayT::kForgetAll);
+		auto* list = $$ = jnew JPtrArray<::VarNode>(JPtrArrayT::kForgetAll);
 		assert( list != nullptr );
 		AppendAsArrayElement($1->GetName(), *($1->list), list);
 		AppendAsArrayElement($3->GetName(), *($3->list), list);
@@ -238,7 +238,7 @@ node_list :
 		}
 		else
 		{
-			JPtrArray<VarNode>* list = $$ = jnew JPtrArray<VarNode>(JPtrArrayT::kForgetAll);
+			auto* list = $$ = jnew JPtrArray<::VarNode>(JPtrArrayT::kForgetAll);
 			assert( list != nullptr );
 			AppendAsArrayElement(JString::empty, *$1, list);
 
@@ -253,7 +253,7 @@ node_list :
 	| node_list '.' '.' '.'
 	{
 		$$ = $1;
-		VarNode* child = GetLink()->CreateVarNode(nullptr, JString("...", JString::kNoCopy), JString::empty, JString::empty);
+		::VarNode* child = GetLink()->CreateVarNode(nullptr, JString("...", JString::kNoCopy), JString::empty, JString::empty);
 		$$->Append(child);
 	}
 	;
@@ -371,7 +371,7 @@ value_list :
 
 	value_node
 	{
-		JPtrArray<VarNode>* list = $$ = jnew JPtrArray<VarNode>(JPtrArrayT::kForgetAll);
+		auto* list = $$ = jnew JPtrArray<::VarNode>(JPtrArrayT::kForgetAll);
 		assert( list != nullptr );
 		AppendAsArrayElement($1, $$);
 	}
@@ -385,7 +385,7 @@ value_list :
 	| value_list '.' '.' '.'
 	{
 		$$ = $1;
-		VarNode* child = GetLink()->CreateVarNode(nullptr, JString("...", JString::kNoCopy), JString::empty, JString::empty);
+		::VarNode* child = GetLink()->CreateVarNode(nullptr, JString("...", JString::kNoCopy), JString::empty, JString::empty);
 		$$->Append(child);
 	}
 	;
