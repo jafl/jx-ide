@@ -14,7 +14,7 @@ class VarNode;
 
 struct GDBVarGroupInfo
 {
-	JString*				name;
+	JString*			name;
 	JPtrArray<VarNode>*	list;
 
 	GDBVarGroupInfo(JString* n, JPtrArray<VarNode>* l)
