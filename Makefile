@@ -31,6 +31,12 @@ release:
          pushd $$d; ${MAKE} release; popd; \
      done
 
+.PHONY : update_homebrew_formula
+update_homebrew_formula:
+	@for d in ${APPS}; do \
+         pushd $$d; ${MAKE} update_homebrew_formula; popd; \
+     done
+
 .PHONY : tidy
 tidy:
 	@for d in ${APPS}; do \
