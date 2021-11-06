@@ -186,7 +186,12 @@ CommandManager::Exec
 {
 	bool onDisk;
 	JString fullName = textDoc->GetFullName(&onDisk);
-	assert( onDisk == JIsAbsolutePath(fullName) );
+	if (!onDisk && JIsAbsolutePath(fullName))
+	{
+		JString p,n;
+		JSplitPathAndName(fullName, &p, &n);
+		fullName = n;
+	}
 
 	JTextEditor* te        = textDoc->GetTextEditor();
 	const JIndex lineIndex = te->VisualLineIndexToCRLineIndex(te->GetLineForChar(te->GetInsertionCharIndex()));
@@ -260,7 +265,7 @@ CommandManager::Prepare
 	const JArray<JIndex>&		lineIndexList,
 	Command**					cmd,
 	CmdInfo**					returnInfo,
-	FunctionStack*			fnStack
+	FunctionStack*				fnStack
 	)
 {
 	*cmd        = nullptr;
@@ -279,8 +284,8 @@ CommandManager::Prepare
 	}
 	else if (this != GetCommandManager())
 	{
-		return (GetCommandManager())->Prepare(cmdName, projDoc, fullNameList,
-												lineIndexList, cmd, returnInfo, fnStack);
+		return GetCommandManager()->Prepare(cmdName, projDoc, fullNameList,
+											lineIndexList, cmd, returnInfo, fnStack);
 	}
 	else
 	{
@@ -304,21 +309,21 @@ CommandManager::Prepare
 	const JPtrArray<JString>&	fullNameList,
 	const JArray<JIndex>&		lineIndexList,
 	Command**					cmd,
-	FunctionStack*			fnStack
+	FunctionStack*				fnStack
 	)
 {
 	const bool hasLines = !lineIndexList.IsEmpty();
 	assert( !hasLines || lineIndexList.GetElementCount() == fullNameList.GetElementCount() );
 
-	const bool usesFiles = info.cmd->Contains("$full_name")        ||
-		info.cmd->Contains("$relative_name")    ||
-		info.cmd->Contains("$file_name")        ||
-		info.cmd->Contains("$file_name_root")   ||
-		info.cmd->Contains("$file_name_suffix") ||
-		info.cmd->Contains("$full_path")        ||
-		info.cmd->Contains("$relative_path")    ||
-		info.cmd->Contains("$line")             ||
-		info.path->GetFirstCharacter() == '@';
+	const bool usesFiles = (info.cmd->Contains("$full_name")        ||
+							info.cmd->Contains("$relative_name")    ||
+							info.cmd->Contains("$file_name")        ||
+							info.cmd->Contains("$file_name_root")   ||
+							info.cmd->Contains("$file_name_suffix") ||
+							info.cmd->Contains("$full_path")        ||
+							info.cmd->Contains("$relative_path")    ||
+							info.cmd->Contains("$line")             ||
+							info.path->GetFirstCharacter() == '@');
 
 	if (usesFiles && fullNameList.IsEmpty())
 	{
