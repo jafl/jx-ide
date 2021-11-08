@@ -14,11 +14,20 @@ Since we use Code Medic for all our development, we guarantee that it will conti
 
 ## Installing a binary
 
-http://sourceforge.net/p/codemedic/
+For macOS, the easiest way to install is via [Homebrew](https://brew.sh):
 
-The easiest way to install from the binary package is to run `sudo ./install`
+* `brew install --cask xquartz`
+* `brew tap jafl/jx`
+* `brew install jafl/jx/code_medic`
 
-Otherwise, the program (medic) should be placed in a directory that is on your execution path.  `/usr/bin` or `~/bin` are usually good choices.  Copy the libraries in `lib/` to a directory on your `LD_LIBRARY_PATH`.
+For all other systems, download a package from:
+
+* https://github.com/jafl/jx-ide/releases
+* http://sourceforge.net/p/codemedic/
+
+If you download the tar, unpack it, cd into the directory, and run `sudo ./install`.
+
+Otherwise, put the program (`medic`) in a directory that is on your execution path.  `~/bin` is typically good choices.
 
 ### Requirements
 
