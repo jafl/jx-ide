@@ -16,14 +16,14 @@ Since we use Code Crusader for all our development, we guarantee that it will co
 
 For macOS, the easiest way to install is via [Homebrew](https://brew.sh):
 
-* `brew install --cask xquartz`
-* `brew tap jafl/jx`
-* `brew install jafl/jx/code_crusader`
+    brew install --cask xquartz
+    brew tap jafl/jx
+    brew install jafl/jx/code_crusader
 
 For all other systems, download a package from:
 
 * https://github.com/jafl/jx-ide/releases
-* http://sourceforge.net/p/codecrusader/
+* http://sourceforge.net/p/codecrusader
 
 If you download the tar, unpack it, cd into the directory, and run `sudo ./install`.
 

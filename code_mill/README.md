@@ -14,14 +14,14 @@ Code Mill is a plug-in for Code Crusader.  Code Mill is invoked by selecting one
 
 For macOS, the easiest way to install is via [Homebrew](https://brew.sh):
 
-* `brew install --cask xquartz`
-* `brew tap jafl/jx`
-* `brew install jafl/jx/code_mill`
+    brew install --cask xquartz
+    brew tap jafl/jx
+    brew install jafl/jx/code_mill
 
 For all other systems, download a package from:
 
 * https://github.com/jafl/jx-ide/releases
-* http://sourceforge.net/p/nps-codemill/
+* http://sourceforge.net/p/nps-codemill
 
 If you download the tar, unpack it, cd into the directory, and run `sudo ./install`.
 
