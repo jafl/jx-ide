@@ -171,7 +171,7 @@ MacroManager::Perform
 		suffix.Prepend(".");
 	}
 
-	const JIndex charIndex = te->GetInsertionCharIndex();
+	const JIndex charIndex = JMin(te->GetInsertionCharIndex(), te->GetText()->GetText().GetCharacterCount());
 	const JIndex lineIndex = te->GetLineForChar(charIndex);
 	const JIndex lineStart = te->GetLineCharStart(lineIndex);
 
