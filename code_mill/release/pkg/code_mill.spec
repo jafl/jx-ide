@@ -1,5 +1,5 @@
 Summary: Code Mill is a Code Crusader plug-in for creating C++ derived classes.
-Name: Code_Mill
+Name: %app_name
 Version: %pkg_version
 Release: 1
 License: Copyright John Lindal
@@ -17,24 +17,16 @@ Code Mill is a Code Crusader plug-in for creating C++ derived classes.
 %install
 
 %define code_mill_doc_dir /usr/share/doc/code_mill
-%define code_mill_lib_dir /usr/lib/code_mill
 %define gnome_app_path    /usr/share/applications
 %define gnome_icon_path   /usr/share/pixmaps
 
-./install "$RPM_BUILD_ROOT"
-
-%post
-gunzip %code_mill_lib_dir/*.gz
-
-%postun
-rm -rf %code_mill_lib_dir
+./install "$RPM_BUILD_ROOT"/usr
 
 %files
 
 %docdir %code_mill_doc_dir
 
 /usr/bin/code_mill
-%code_mill_lib_dir
 %code_mill_doc_dir
 
 %gnome_app_path/code_mill.desktop

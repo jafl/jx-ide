@@ -7,9 +7,11 @@ else
   JX_ROOT := /usr/local
 endif
 
-APP_NAME  := code_crusader
-BIN_NAME  := jcc
-SIGNATURE := jxcb
+APP_NAME   := code_crusader
+BIN_NAME   := jcc
+REPO_NAME  := jx-ide
+FORGE_NAME := codecrusader
+SIGNATURE  := jxcb
 
 MAKE_INCLUDE := ${JX_ROOT}/include/jx-af/make
 include ${MAKE_INCLUDE}/jx_config

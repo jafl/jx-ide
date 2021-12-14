@@ -88,3 +88,5 @@ if [[ ! -d /usr/local/include/jx-af/ && ! -f ../JX/Makefile && -z $JX_ROOT ]]; t
 	exit 1;
 
 fi
+
+make Makefiles;

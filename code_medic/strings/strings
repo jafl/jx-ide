@@ -18,7 +18,7 @@ https://sourceforge.net/projects/codemedic/"
 HELP_URL		"http://codemedic.sourceforge.net/help.html"
 CHANGE_LOG_URL	"http://codemedic.sourceforge.net/ChangeLog.html"
 VERSION_URL		"http://codemedic.sourceforge.net/VERSION"
-DOWNLOAD_URL	"https://sourceforge.net/projects/codemedic/"
+DOWNLOAD_URL	"https://github.com/jafl/jx-ide/releases"
 
 ActionsMenuTitle::global	"Actions"
 

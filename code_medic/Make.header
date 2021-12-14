@@ -7,8 +7,10 @@ else
   JX_ROOT := /usr/local
 endif
 
-APP_NAME := code_medic
-BIN_NAME := medic
+APP_NAME   := code_medic
+BIN_NAME   := medic
+REPO_NAME  := jx-ide
+FORGE_NAME := codemedic
 
 MAKE_INCLUDE := ${JX_ROOT}/include/jx-af/make
 include ${MAKE_INCLUDE}/jx_config

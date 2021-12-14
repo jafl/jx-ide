@@ -1,5 +1,5 @@
 Summary: Code Medic is a graphical debugging environment for UNIX.
-Name: Code_Medic
+Name: %app_name
 Version: %pkg_version
 Release: 1
 License: Copyright New Planet Software, Inc.
@@ -21,7 +21,7 @@ It supports gdb and Xdebug.
 %define gnome_app_path  /usr/share/applications
 %define gnome_icon_path /usr/share/pixmaps
 
-./install "$RPM_BUILD_ROOT"
+./install "$RPM_BUILD_ROOT"/usr
 
 %files
 

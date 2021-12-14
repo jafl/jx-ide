@@ -1,5 +1,5 @@
 Summary: Code Crusader is a UNIX development environment for X.
-Name: Code_Crusader
+Name: %app_name
 Version: %pkg_version
 Release: 1
 License: Copyright John Lindal
@@ -17,11 +17,10 @@ Code Crusader is a graphical development environment for UNIX.
 %install
 
 %define jcc_doc_dir     /usr/share/doc/code_crusader
-%define jcc_lib_dir     /usr/lib/jxcb
 %define gnome_app_path  /usr/share/applications
 %define gnome_icon_path /usr/share/pixmaps
 
-./install "$RPM_BUILD_ROOT"
+./install "$RPM_BUILD_ROOT"/usr
 
 %files
 
@@ -32,7 +31,6 @@ Code Crusader is a graphical development environment for UNIX.
 /usr/bin/dirdiff
 /usr/bin/xml-auto-close
 /usr/bin/html-auto-close
-%jcc_lib_dir
 %jcc_doc_dir
 
 %gnome_app_path/code_crusader.desktop

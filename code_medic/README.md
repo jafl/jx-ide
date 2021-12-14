@@ -23,7 +23,6 @@ For macOS, the easiest way to install is via [Homebrew](https://brew.sh):
 For all other systems, download a package from:
 
 * https://github.com/jafl/jx-ide/releases
-* http://sourceforge.net/p/codemedic
 
 If you download the tar, unpack it, cd into the directory, and run `sudo ./install`.
 

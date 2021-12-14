@@ -911,11 +911,11 @@ T
 T
 2 "help.html"
 F
-"./release/help.html"
+"./release/doc/help.html"
 T
 2 "ChangeLog.html"
 F
-"./release/ChangeLog.html"
+"./release/doc/ChangeLog.html"
 F
 F
 # tasks

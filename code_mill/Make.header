@@ -7,7 +7,9 @@ else
   JX_ROOT := /usr/local
 endif
 
-APP_NAME := code_mill
+APP_NAME   := code_mill
+REPO_NAME  := jx-ide
+FORGE_NAME := nps-codemill
 
 MAKE_INCLUDE := ${JX_ROOT}/include/jx-af/make
 include ${MAKE_INCLUDE}/jx_config
