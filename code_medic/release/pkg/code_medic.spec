@@ -10,18 +10,17 @@ Requires: lldb, editorconfig-libs, libX11, libXinerama, libXpm, libXft, libxml2,
 %description
 Code Medic is a graphical debugging environment for UNIX.
 It supports gdb and Xdebug.
-(http://www.newplanetsoftware.com/medic/)
 
 %prep
 %setup
 
 %install
 
-%define medic_doc_dir   /usr/share/doc/code_medic
+%define medic_doc_dir   /usr/share/doc/code-medic
 %define gnome_app_path  /usr/share/applications
 %define gnome_icon_path /usr/share/pixmaps
 
-./install "$RPM_BUILD_ROOT"/usr
+./install $RPM_BUILD_ROOT
 
 %files
 

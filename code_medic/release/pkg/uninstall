@@ -1,16 +1,13 @@
 #!/bin/bash
 
 PRE=$1;
-if [[ -z $PRE ]]; then
-	PRE=/usr;
-fi
 
-BIN=$PRE/bin;
-DOC=$PRE/share/doc/code_medic;
-APP=$PRE/share/applications;
-ICON=$PRE/share/pixmaps;
+BIN=$PRE/usr/bin;
+DOC=$PRE/usr/share/doc/code-medic;
+APP=$PRE/usr/share/applications;
+ICON=$PRE/usr/share/pixmaps;
 
-rm -f  $BIN/medic $BIN/code_medic;
+rm -f  $BIN/medic $BIN/code-medic;
 rm -rf $DOC;
 rm -f  `find $APP -name 'code_medic*.desktop'`;
 rm -f  `find $ICON -name 'code_medic*.xpm'`;

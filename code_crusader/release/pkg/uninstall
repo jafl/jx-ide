@@ -1,21 +1,19 @@
 #!/bin/bash
 
 PRE=$1;
-if [[ -z $PRE ]]; then
-	PRE=/usr;
-fi
 
-BIN=$PRE/bin;
-DOC=$PRE/share/doc/code_crusader;
-LIB=$PRE/lib/jxcb;
-APP=$PRE/share/applications;
-ICON=$PRE/share/pixmaps;
+BIN=$PRE/usr/bin;
+DOC=$PRE/usr/share/doc/code-crusader;
+LIB=$PRE/usr/lib/jxcb;
+APP=$PRE/usr/share/applications;
+ICON=$PRE/usr/share/pixmaps;
 
 rm -f  $BIN/jcc;
-rm -f  $BIN/code_crusader;
+rm -f  $BIN/code-crusader;
 rm -f  $BIN/xml-auto-close;
 rm -f  $BIN/html-auto-close;
+rm -f  $BIN/java-import;
 rm -rf $LIB;
 rm -rf $DOC;
 rm -f  `find $APP -name 'code_crusader*.desktop'`;
-rm -f  `find $ICON -name 'code_crusader*.xpm'`;
+rm -f  `find $ICON -name 'code_crusader*.png'`;

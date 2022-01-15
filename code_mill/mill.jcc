@@ -1,4 +1,4 @@
-jx_browser_data 89
+jx_browser_data 90
 # project tree
 0 "root"
 T
@@ -89,7 +89,7 @@ F
 # build settings
 1
 F
-"code_mill"
+"code-mill"
 "${LIB_DEPS}"
 "make -k all"
 # search paths

@@ -9,7 +9,9 @@ if [[ $UID != 0 ]]; then
 fi
 
 if [[ $1 == release || $1 == ci ]]; then
-	echo -n 1 >| 0-RELEASE;
+	echo -n 1 >| code_crusader/0-RELEASE;
+	echo -n 1 >| code_medic/0-RELEASE;
+	echo -n 1 >| code_mill/0-RELEASE;
 fi
 
 if [[ $SYS == Darwin ]]; then
@@ -32,13 +34,16 @@ elif command -v apt-get; then
 
 	LLDB_VERS=11
 
-	$SUDO apt update;
-	$SUDO apt -y install libeditorconfig-dev llvm liblldb-$LLDB_VERS-dev;
+	if [[ $1 != ci && -z $SNAPCRAFT_BUILD_ENVIRONMENT ]]; then
+		$SUDO apt update;
 
-	if [[ $1 != ci && ! -f ../JX/Makefile && -z $JX_ROOT ]]; then
-		curl -O http://libjx.sourceforge.net/release/jx-application-framework.deb
-		sudo apt install ./jx-application-framework.deb
-	fi
+		if [[ ! -f ../JX/Makefile && -z $JX_ROOT ]]; then
+			curl -O http://libjx.sourceforge.net/release/jx-application-framework.deb;
+			sudo apt install ./jx-application-framework.deb;
+		fi
+	fi;
+
+	$SUDO apt -y install libeditorconfig-dev llvm liblldb-$LLDB_VERS-dev;
 
 	rm -f code_medic/lldb-include;
 	ln -sf /usr/lib/llvm-$LLDB_VERS/include code_medic/lldb-include;
@@ -75,7 +80,7 @@ else
 
 fi
 
-if [[ ! -d /usr/local/include/reflex/ ]]; then
+if [[ ! -d /usr/local/include/reflex/ && -z $SNAPCRAFT_PART_INSTALL ]]; then
 
 	echo "Please install RE/flex library.";
 	exit 1;

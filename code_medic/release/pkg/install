@@ -3,19 +3,16 @@
 # With no arguments, this script must install from an unpacked tgz.
 
 PRE=$1;
-if [[ -z $PRE ]]; then
-	PRE=/usr;
-fi
 
-BIN=$PRE/bin;
-DOC=$PRE/share/doc/code_medic;
-APP=$PRE/share/applications;
-ICON=$PRE/share/pixmaps;
+BIN=$PRE/usr/bin;
+DOC=$PRE/usr/share/doc/code-medic;
+APP=$PRE/usr/share/applications;
+ICON=$PRE/usr/share/pixmaps;
 
 mkdir -p $BIN;
 install -m755 medic $BIN;
 
-ln -sf medic $BIN/code_medic;
+ln -sf medic $BIN/code-medic;
 
 mkdir -p $DOC;
 cp README.md COPYING menu_strings $DOC;

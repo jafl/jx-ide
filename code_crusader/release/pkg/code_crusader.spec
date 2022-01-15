@@ -9,29 +9,28 @@ Requires: editorconfig-libs, libX11, libXinerama, libXpm, libXft, libxml2, gd, l
 
 %description
 Code Crusader is a graphical development environment for UNIX.
-(http://www.newplanetsoftware.com/jcc/)
 
 %prep
 %setup 
 
 %install
 
-%define jcc_doc_dir     /usr/share/doc/code_crusader
+%define jcc_doc_dir     /usr/share/doc/code-crusader
 %define gnome_app_path  /usr/share/applications
 %define gnome_icon_path /usr/share/pixmaps
 
-./install "$RPM_BUILD_ROOT"/usr
+./install $RPM_BUILD_ROOT
 
 %files
 
 %docdir %jcc_doc_dir
 
-/usr/bin/code_crusader
+/usr/bin/code-crusader
 /usr/bin/jcc
-/usr/bin/dirdiff
 /usr/bin/xml-auto-close
 /usr/bin/html-auto-close
+/usr/bin/java-import
 %jcc_doc_dir
 
 %gnome_app_path/code_crusader.desktop
-%gnome_icon_path/code_crusader.xpm
+%gnome_icon_path/code_crusader.png

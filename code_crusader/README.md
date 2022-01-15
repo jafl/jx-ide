@@ -5,11 +5,9 @@ Code Crusader is a graphical development environment for UNIX.  The [on-line hel
 Since we use Code Crusader for all our development, we guarantee that it will continue to improve.  We have a very long list of features that we intend to implement, so please tell us what features you need, so we will know which ones on our list to implement first.
 
 
-## Building from source
+## Requirements
 
-1. Install the [JX Application Framework](https://github.com/jafl/jx_application_framework),  and set the `JX_ROOT` environment variable to point to its `include` directory.
-1. `makemake`
-1. `make`
+On MacOS, this program requires XQuartz, the X11 server.  Before running this program, you must first start XQuartz.
 
 
 ## Installing a binary
@@ -20,13 +18,17 @@ For macOS, the easiest way to install is via [Homebrew](https://brew.sh):
     brew tap jafl/jx
     brew install jafl/jx/code_crusader
 
-For all other systems, download a package from:
+For all other systems, download a package:
 
-* https://github.com/jafl/jx-ide/releases
+[![Download from Github](http://libjx.sourceforge.net/github.png)](https://github.com/jafl/jx-ide/releases/latest)
 
-If you download the tar, unpack it, cd into the directory, and run `sudo ./install`.
+<a href="https://sourceforge.net/p/codecrusader/"><img alt="Download Code Crusader" src="https://sourceforge.net/sflogo.php?type=17&group_id=170488" width="250"></a>
 
-Otherwise, put the program (`jcc`) in a directory that is on your execution path.  `~/bin` is typically good choices.
+[![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-white.svg)](https://snapcraft.io/jx-ide)
+
+If you download a tar, unpack it, cd into the directory, and run `sudo ./install`.
+
+Otherwise, put the program (`jcc`) in a directory that is on your execution path.  `~/bin` is typically a good choice.
 
 The project_templates and text_templates directories should be copied to `~/.jxcb/`
 
@@ -34,9 +36,12 @@ The macros files can be loaded into Code Crusader by using the "Macros..." item 
 
 The CPM_rules files can be loaded into Code Crusader by using the "Clean paragraph margin rules..." item on the Preferences menu in any Editor window.
 
-### Requirements
 
-On MacOS, this program requires XQuartz, the X11 server.  Before running this program, you must first start XQuartz.
+## Building from source
+
+1. Install the [JX Application Framework](https://github.com/jafl/jx_application_framework),  and set the `JX_ROOT` environment variable to point to its `include` directory.
+1. `makemake`
+1. `make`
 
 
 ## FAQ

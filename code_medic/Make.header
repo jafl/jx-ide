@@ -1,13 +1,15 @@
 # To use this file, first run "makemake" and then run "make".
 # (makemake is part of the JX distribution)
 
-ifneq ($(shell ls ../../JX/Makefile 2>/dev/null),)
-  JX_ROOT := ../../JX
-else
-  JX_ROOT := /usr/local
+ifndef JX_ROOT
+  ifneq ($(shell ls ../../JX/Makefile 2>/dev/null),)
+    JX_ROOT := ../../JX
+  else
+    JX_ROOT := /usr/local
+  endif
 endif
 
-APP_NAME   := code_medic
+APP_NAME   := code-medic
 BIN_NAME   := medic
 REPO_NAME  := jx-ide
 FORGE_NAME := codemedic

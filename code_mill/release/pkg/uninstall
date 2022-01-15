@@ -1,16 +1,11 @@
 #!/bin/bash
 
 PRE=$1;
-if [[ -z $PRE ]]; then
-	PRE=/usr;
-fi
 
-BIN=$PRE/bin;
-DOC=$PRE/share/doc/code_mill;
-APP=$PRE/share/applications;
-ICON=$PRE/share/pixmaps;
+BIN=$PRE/usr/bin;
+DOC=$PRE/usr/share/doc/code-mill;
+APP=$PRE/usr/share/applications;
 
-rm -f  $BIN/code_mill;
+rm -f  $BIN/code-mill;
 rm -rf $DOC;
 rm -f  `find $APP -name 'code_mill*.desktop'`;
-rm -f  `find $ICON -name 'code_mill*.xpm'`;

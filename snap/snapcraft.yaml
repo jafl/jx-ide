@@ -1,0 +1,124 @@
+name: jx-ide
+title: JX IDE
+base: core20
+version: "7.0.0"
+#source-code: https://github.com/jafl/jx-ide
+#issues: https://github.com/jafl/jx-ide/issues
+#contact: https://johnlindal.wixsite.com/aboutme/contact-me
+summary: JX IDE is a graphical development environment for UNIX.
+description: |
+  Code Crusader provides project management, editing, and compiling.
+  Its companion, Code Medic, provides debugging.
+  Code Mill helps create derived C++ classes.
+
+grade: stable
+confinement: classic
+
+architectures:
+  - build-on: amd64
+  - build-on: arm64
+  - build-on: ppc64el
+  - build-on: s390x
+
+apps:
+  code-crusader:
+    command: bin/desktop-launch code-crusader
+    plugs:
+      - x11
+      - desktop-legacy
+      - network
+      - home
+  code-medic:
+    command: bin/desktop-launch code-medic
+    plugs:
+      - x11
+      - desktop-legacy
+      - network
+      - home
+  code-mill:
+    command: bin/desktop-launch code-mill
+    plugs:
+      - x11
+      - desktop-legacy
+      - network
+      - home
+
+parts:
+  jx-ide:
+    plugin: autotools
+    source: .
+    build-environment:
+      - JX_ROOT: /snap/jx-application-framework/current
+      - PATH: $PATH:$JX_ROOT/bin
+      - LD_LIBRARY_PATH: $SNAPCRAFT_PART_INSTALL/lib:$SNAPCRAFT_PART_INSTALL/lib/$SNAPCRAFT_ARCH_TRIPLET:$SNAPCRAFT_PART_INSTALL/usr/lib:$SNAPCRAFT_PART_INSTALL/usr/lib/$SNAPCRAFT_ARCH_TRIPLET
+    override-build: |
+      ./configure release
+      make
+      make install
+      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/lib/jxcb
+      cp -r code_crusader/macros code_crusader/scripts $SNAPCRAFT_PART_INSTALL/usr/lib/jxcb
+    organize:
+      bin/jcc: bin/code-crusader
+      bin/medic: bin/code-medic
+    stage:
+      - bin/code-crusader
+      - bin/code-medic
+      - bin/code-mill
+      - usr/lib/jxcb
+    build-packages:
+      - g++
+      - make
+      - pkg-config
+      - libeditorconfig-dev
+      - liblldb-11-dev
+      - libx11-dev
+      - libxinerama-dev
+      - libxft-dev
+      - libxmu-dev
+      - libxi-dev
+      - libx11-xcb-dev
+      - libxcb-xfixes0-dev
+      - libxcb-dri2-0-dev
+      - libxpm-dev
+      - libjpeg-dev
+      - libpng-dev
+      - libgd-dev
+      - libace-dev
+      - libicu-dev
+      - libpcre3-dev
+      - libxml2-dev
+      - xutils-dev
+      - libdrm-dev
+      - aspell
+    build-snaps:
+      - jx-application-framework
+    after: [ libs ]
+  libs:
+    plugin: nil
+    stage-packages:
+      - libeditorconfig0
+      - liblldb-11
+      - libace-6.4.5
+      - libfontconfig1
+      - libfreetype6
+      - libgd3
+      - libicu66
+      - libjbig0
+      - libjpeg-turbo8
+      - libpng16-16
+      - libtiff5
+      - libwebp6
+      - libx11-6
+      - libxau6
+      - libxcb1
+      - libxdmcp6
+      - libxext6
+      - libxft2
+      - libxinerama1
+      - libxml2
+      - libxpm4
+      - libxrender1
+  launcher:
+    source: https://github.com/ubuntu/snapcraft-desktop-helpers.git
+    source-subdir: glib-only
+    plugin: make

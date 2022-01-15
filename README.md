@@ -11,17 +11,21 @@
 
 Code Crusader, Code Medic, and Code Mill together comprise the IDE built using the JX Application Framework.
 
+[![Download from Github](http://libjx.sourceforge.net/github.png)](https://github.com/jafl/jx-ide/releases/latest)
+
+[![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-white.svg)](https://snapcraft.io/jx-ide)
+
+
+## Requirements
+
+On MacOS, these programs require XQuartz, the X11 server.  Before running this program, you must first start XQuartz.
+
 
 ## Building from source
 
 1. Install the [JX Application Framework](https://github.com/jafl/jx_application_framework),  and set the `JX_ROOT` environment variable to point to its `include` directory.
 1. `./configure`
 1. `make`
-
-
-## Requirements
-
-On MacOS, these programs require XQuartz, the X11 server.  Before running this program, you must first start XQuartz.
 
 
 ## FAQ

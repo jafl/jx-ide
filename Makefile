@@ -1,7 +1,9 @@
-ifneq ($(shell ls ../JX/Makefile 2>/dev/null),)
-  JX_ROOT := ../JX
-else
-  JX_ROOT := /usr/local
+ifndef JX_ROOT
+  ifneq ($(shell ls ../JX/Makefile 2>/dev/null),)
+    JX_ROOT := ../JX
+  else
+    JX_ROOT := /usr/local
+  endif
 endif
 
 MAKE_INCLUDE := ${JX_ROOT}/include/jx-af/make
@@ -24,6 +26,12 @@ Makefiles:
 .PHONY : test
 test:
 	@cd code_crusader; ${MAKE} test
+
+.PHONY : install
+install:
+	@for d in ${APPS}; do \
+         pushd $$d; ${MAKE} install; popd; \
+     done
 
 .PHONY : release
 release:
@@ -48,3 +56,8 @@ clean:
 	@for d in ${APPS}; do \
          pushd $$d; ${MAKE} clean; popd; \
      done
+
+.PHONY : test_snap
+test_snap:
+	@chmod a+r snap/gui/*
+	@snapcraft --debug --shell-after

@@ -10,4 +10,4 @@ Depends: universal-ctags, liblldb-11, libeditorconfig, libx11-6, libxext6, libxa
 Suggests: code-crusader
 Description: Code Medic is a graphical debugging environment for UNIX.
  Code Medic is a graphical debugging environment for UNIX.
- It supports gdb and Xdebug.
+ It supports gdb, lldb, and Xdebug.

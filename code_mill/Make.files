@@ -2,7 +2,7 @@
 # Do not edit it directly!
 # Any changes you make will be silently overwritten.
 
-@code_mill
+@code-mill
 
 .cpp ./code/main
 .cpp ./code/App

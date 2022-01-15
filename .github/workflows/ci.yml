@@ -100,7 +100,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: release
-          path: code_*_*
+          path: code-*_*
 
   build-macos:
     name: Build & Package MacOS
@@ -140,7 +140,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: release
-          path: code_*_*
+          path: code-*_*
 
   release:
     name: Upload releases
@@ -156,6 +156,6 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: code_*_*
+          file: code-*_*
           tag: ${{ github.ref }}
           file_glob: true
