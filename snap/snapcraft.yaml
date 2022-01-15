@@ -22,21 +22,21 @@ architectures:
 
 apps:
   code-crusader:
-    command: bin/desktop-launch code-crusader
+    command: bin/desktop-launch jx-ide.code-crusader
     plugs:
       - x11
       - desktop-legacy
       - network
       - home
   code-medic:
-    command: bin/desktop-launch code-medic
+    command: bin/desktop-launch jx-ide.code-medic
     plugs:
       - x11
       - desktop-legacy
       - network
       - home
   code-mill:
-    command: bin/desktop-launch code-mill
+    command: bin/desktop-launch jx-ide.code-mill
     plugs:
       - x11
       - desktop-legacy
