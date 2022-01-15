@@ -12,7 +12,7 @@ description: |
   Code Mill helps create derived C++ classes.
 
 grade: stable
-confinement: classic
+confinement: strict
 
 architectures:
   - build-on: amd64
