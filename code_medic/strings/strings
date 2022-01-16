@@ -63,7 +63,7 @@ $copyright"
 
 # AboutDialog
 
-WindowTitle::AboutDialog			"About"
+WindowTitle::AboutDialog		"About"
 ChangeButtonLabel::AboutDialog	"Changes"
 
 UpgradeNotice::AboutDialog
@@ -79,14 +79,14 @@ ChooseDebuggerPrompt::EditPrefsDialog	"Choose $name binary:"
 
 # CommandDirector
 
-WindowsMenuText::CommandDirector		"Command line"
+WindowsMenuText::CommandDirector	"Command line"
 WindowTitleSuffix::CommandDirector	" Command Line"
 DebugMenuTitle::CommandDirector		"Debug"
 ChooseSourcePrompt::CommandDirector	"Choose Source Files"
 ChooseConfigPrompt::CommandDirector	"Choose configuration file"
 SaveFilePrompt::CommandDirector		"Choose file name"
 ChooseBinaryPrompt::CommandDirector	"Choose binary"
-ChooseCorePrompt::CommandDirector		"Choose core file"
+ChooseCorePrompt::CommandDirector	"Choose core file"
 
 CannotOpenFile::CommandDirector	"Unable to open $name because it either does not exist or is not readable, or the debugger is being unhelpful."
 
@@ -117,7 +117,7 @@ WindowTitlePrefixMainAsm::SourceDirector	" Current Disassembly - "
 WindowTitleNoAsm::SourceDirector			"(No function)"
 
 InitSourceWindowTitle::SourceDirector	"Current Source - (No source)"
-InitAsmWindowTitle::SourceDirector	"Current Disassembly - (No function)"
+InitAsmWindowTitle::SourceDirector		"Current Disassembly - (No function)"
 
 # VarTreeDir
 
@@ -130,12 +130,12 @@ BaseMenuTitle::VarTreeWidget	"Base"
 
 # LocalVarsDir
 
-WindowsMenuText::LocalVarsDir		"Local variables"
+WindowsMenuText::LocalVarsDir	"Local variables"
 WindowTitleSuffix::LocalVarsDir	" Local Variables"
 
 # ThreadsDir
 
-WindowsMenuText::ThreadsDir	"Threads"
+WindowsMenuText::ThreadsDir		"Threads"
 WindowTitleSuffix::ThreadsDir	" Threads"
 
 # ThreadsWidget
@@ -144,7 +144,7 @@ NoSourceFile::ThreadsWidget	"Unable to determine the source file for this thread
 
 # StackDir
 
-WindowsMenuText::StackDir		"Stack trace"
+WindowsMenuText::StackDir	"Stack trace"
 WindowTitleSuffix::StackDir	" Stack Trace"
 
 # StackWidget
@@ -153,17 +153,17 @@ NoSourceFile::StackWidget	"Unable to determine the source file for this stack fr
 
 # RegistersDir
 
-WindowsMenuText::RegistersDir		"Registers"
+WindowsMenuText::RegistersDir	"Registers"
 WindowTitleSuffix::RegistersDir	" Registers"
 
 # BreakpointsDir
 
-WindowsMenuText::BreakpointsDir	"Breakpoints"
+WindowsMenuText::BreakpointsDir		"Breakpoints"
 WindowTitleSuffix::BreakpointsDir	" Breakpoints"
 
 # FileListDir
 
-WindowsMenuText::FileListDir		"File list"
+WindowsMenuText::FileListDir	"File list"
 WindowTitleSuffix::FileListDir	" Files"
 
 # DebugDir
@@ -177,8 +177,8 @@ WindowTitleSuffix::Plot2DDir	" (2D Plot)"
 
 # Plot2DExprTable
 
-XExprColTitle::Plot2DExprTable	"X"
-YExprColTitle::Plot2DExprTable	"Y"
+XExprColTitle::Plot2DExprTable		"X"
+YExprColTitle::Plot2DExprTable		"Y"
 RangeMinColTitle::Plot2DExprTable	"Start"
 RangeMaxColTitle::Plot2DExprTable	"End"
 
