@@ -3,5 +3,5 @@ Categories=Development;Debugger;X-Red-Hat-Base;
 Name=Code Medic
 Comment=Graphical debugger (integrates with Code Crusader; requires gdb or lldb)
 Icon=${SNAP}/meta/gui/code_medic.png
-Exec=code-medic
+Exec=jx-ide.code-medic
 Type=Application
