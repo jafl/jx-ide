@@ -12,7 +12,7 @@ description: |
   Code Mill helps create derived C++ classes.
 
 grade: stable
-confinement: strict
+confinement: classic
 
 architectures:
   - build-on: amd64
@@ -22,26 +22,11 @@ architectures:
 
 apps:
   code-crusader:
-    command: bin/desktop-launch code-crusader
-    plugs:
-      - x11
-      - desktop-legacy
-      - network
-      - home
+    command: code-crusader
   code-medic:
-    command: bin/desktop-launch code-medic
-    plugs:
-      - x11
-      - desktop-legacy
-      - network
-      - home
+    command: code-medic
   code-mill:
-    command: bin/desktop-launch code-mill
-    plugs:
-      - x11
-      - desktop-legacy
-      - network
-      - home
+    command: code-mill
 
 parts:
   jx-ide:
@@ -119,7 +104,3 @@ parts:
       - libxml2
       - libxpm4
       - libxrender1
-  launcher:
-    source: https://github.com/ubuntu/snapcraft-desktop-helpers.git
-    source-subdir: glib-only
-    plugin: make
