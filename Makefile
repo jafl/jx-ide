@@ -14,8 +14,9 @@ APPS := code_crusader code_medic code_mill
 .PHONY : all
 all:
 	@for d in ${APPS}; do \
-         pushd $$d; ${MAKE}; popd; \
-     done
+         pushd $$d; if ! ${MAKE}; then e=1; fi; popd; \
+     done;
+     if [[ $$e = 1 ]]; then false; fi
 
 .PHONY : Makefiles
 Makefiles:
