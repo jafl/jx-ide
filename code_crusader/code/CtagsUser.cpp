@@ -28,7 +28,7 @@ static const JRegex versionPattern =
 static const JUInt kMinVersion[] = { 5, 8, 0, /* pre */ 0 };
 
 static const JUtf8Byte* kBaseExecCmd =
-	"ctags --filter=yes --filter-terminator=\\\f --fields=kzafimsS ";
+	"ctags --filter=yes --filter-terminator=\\\f --fields=kzafimsS --extras=+g ";
 
 const JUtf8Byte kDelimiter = '\f';
 
@@ -51,7 +51,7 @@ static const FTInfo kFTInfo[] =		// index on TextFileType
 { kCHeaderFT,          kCLang,           "--language-force=c++"        , "FunctionsMenuTitle::CtagsUser"   },
 { kOtherSourceFT,      kOtherLang,       kOtherLangCmd                 , nullptr                           },
 { kDocumentationFT,    kOtherLang,       kOtherLangCmd                 , nullptr                           },
-{ kHTMLFT,             kHTMLLang,        "--language-force=jhtml"      , "IdsMenuTitle::CtagsUser"         },
+{ kHTMLFT,             kHTMLLang,        "--language-force=html"       , "IdsMenuTitle::CtagsUser"         },
 { kEiffelFT,           kEiffelLang,      "--language-force=eiffel"     , "FeaturesMenuTitle::CtagsUser"    },
 { kFortranFT,          kFortranLang,     "--language-force=fortran"    , "FunctionsMenuTitle::CtagsUser"   },
 { kJavaSourceFT,       kJavaLang,        "--language-force=java"       , "FunctionsMenuTitle::CtagsUser"   },
@@ -82,10 +82,10 @@ static const FTInfo kFTInfo[] =		// index on TextFileType
 { kPHPFT,              kPHPLang,         "--language-force=php"        , "FunctionsMenuTitle::CtagsUser"   },
 { kASPFT,              kASPLang,         "--language-force=asp"        , "FunctionsMenuTitle::CtagsUser"   },
 { kSearchOutputFT,     kOtherLang,       kOtherLangCmd                 , nullptr                           },
-{ kMakeFT,             kMakeLang,        "--language-force=jmake"      , "TargetsMenuTitle::CtagsUser"     },
+{ kMakeFT,             kMakeLang,        "--language-force=make"       , "TargetsMenuTitle::CtagsUser"     },
 { kREXXFT,             kREXXLang,        "--language-force=rexx"       , "SubroutinesMenuTitle::CtagsUser" },
 { kRubyFT,             kRubyLang,        "--language-force=ruby"       , "FunctionsMenuTitle::CtagsUser"   },
-{ kLexFT,              kLexLang,         "--language-force=jlex"       , "StatesMenuTitle::CtagsUser"      },
+{ kLexFT,              kLexLang,         "--language-force=lex"        , "StatesMenuTitle::CtagsUser"      },
 { kCShellFT,           kOtherLang,       kOtherLangCmd                 , nullptr                           },
 { kBisonFT,            kBisonLang,       "--language-force=jbison"     , "SymbolsMenuTitle::CtagsUser"     },
 { kBetaFT,             kBetaLang,        "--language-force=beta"       , "FragmentsMenuTitle::CtagsUser"   },
@@ -472,6 +472,9 @@ CtagsUser::ReadExtensionFlags
 		t   derived types
 		v   module variables
 
+	HTML
+		I   identifiers
+
 	Java
 		c   classes
 		e   enum constants
@@ -488,8 +491,9 @@ CtagsUser::ReadExtensionFlags
 		m   methods
 		v   global variables
 
-	Lex (jlex defined in FnMenuUpdater,SymbolList)
-		s   state
+	Lex
+		c   start or exclusive condition
+		r   regular expression
 
 	Lisp
 		f   functions
@@ -497,9 +501,9 @@ CtagsUser::ReadExtensionFlags
 	Lua
 		f	functions
 
-	Makefile (jmake defined in FnMenuUpdater,SymbolList)
+	Makefile
 		t   target
-		v   variable
+		m   macro (variable)
 
 	Matlab
 		f   function
@@ -624,7 +628,7 @@ CtagsUser::ReadExtensionFlags
 CtagsUser::Type
 CtagsUser::DecodeSymbolType
 	(
-	const Language				lang,
+	const Language					lang,
 	const JUtf8Byte					c,
 	const JStringPtrMap<JString>&	flags
 	)
@@ -808,6 +812,14 @@ CtagsUser::DecodeSymbolType
 		}
 	}
 
+	else if (lang == kHTMLLang)
+	{
+		switch (c)
+		{
+			case 'a':  return kHTMLIDST;
+		}
+	}
+
 	else if (lang == kJavaLang || lang == kJSPLang)
 	{
 		const JString* value;
@@ -843,7 +855,8 @@ CtagsUser::DecodeSymbolType
 	{
 		switch (c)
 		{
-			case 's':  return kLexStateST;
+			case 'c':  return kLexStateST;
+			case 'r':  return kLexRegexST;
 		}
 	}
 
@@ -868,7 +881,7 @@ CtagsUser::DecodeSymbolType
 		switch (c)
 		{
 			case 't':  return kMakeTargetST;
-			case 'v':  return kMakeVariableST;
+			case 'm':  return kMakeVariableST;
 		}
 	}
 

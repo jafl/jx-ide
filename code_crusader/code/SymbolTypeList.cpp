@@ -356,6 +356,8 @@ SymbolTypeList::CreateSymTypeList
 	ADD_I (kFortranLocalVariableST,  kFortranLang, itsVariableIcon)
 	ADD_I (kFortranModuleVariableST, kFortranLang, itsVariableIcon)
 
+	ADD(kHTMLIDST, kHTMLLang)
+
 	ADD_SI(kJavaClassST,     kJavaLang, bold, itsJavaClassIcon)
 	ADD_I (kJavaEnumValueST, kJavaLang, itsMemberIcon)
 	ADD_I (kJavaFieldST,     kJavaLang, itsMemberIcon)
@@ -371,6 +373,7 @@ SymbolTypeList::CreateSymTypeList
 	ADD_I (kJavaScriptGlobalVariableST, kJavaScriptLang, itsVariableIcon)
 
 	ADD(kLexStateST, kLexLang)
+	ADD(kLexRegexST, kLexLang)
 
 	ADD_I(kLispFunctionST, kLispLang, itsFunctionIcon)
 

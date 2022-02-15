@@ -137,6 +137,7 @@ public:
 		kPascalProcedureST,
 
 		kLexStateST = 2100,
+		kLexRegexST,
 
 		kBisonNonterminalDefST = 2200,
 		kBisonNonterminalDeclST,
@@ -244,7 +245,9 @@ public:
 		kAdobeFlexClassST,
 		kAdobeFlexMethodST,
 		kAdobeFlexGlobalVariableST,
-		kAdobeFlexMxTagST
+		kAdobeFlexMxTagST,
+
+		kHTMLIDST = 3700
 
 		// When you add new types, be sure to increment the project version!
 	};
@@ -427,8 +430,10 @@ CtagsUser::IsFileScope
 			type == kCVariableST           ||
 			type == kErlangMacroST         ||
 			type == kFortranLabelST        ||
+			type == kHTMLIDST              ||
 			type == kJavaScriptFunctionST  ||
 			type == kLexStateST            ||
+			type == kLexRegexST            ||
 			type == kMakeVariableST        ||
 			type == kMakeTargetST          ||
 			type == kPerlSubroutineST      ||

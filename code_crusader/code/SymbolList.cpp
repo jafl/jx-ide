@@ -23,18 +23,13 @@
 #include <jx-af/jcore/jAssert.h>
 
 static const JUtf8Byte* kCtagsArgs =
-	"--format=2 --excmd=number --sort=no --extras=q "
+	"--format=2 --excmd=number --sort=no --extras=+q "
 	"--c-kinds=+p --php-kinds=-v --ant-kinds=t --javascript-kinds=cfgm "
+	"--html-kinds=I --css-kinds= --make-kinds=tm --pod-kinds= "
 	CtagsBisonDef
 	CtagsBisonNonterminalDef
 	CtagsBisonNonterminalDecl
-	CtagsBisonTerminalDecl
-	CtagsHTMLDef
-	CtagsLexDef
-	CtagsLexState
-	CtagsMakeDef
-	CtagsMakeTarget
-	CtagsMakeVariable;
+	CtagsBisonTerminalDecl;
 
 // JBroadcaster message types
 
@@ -579,7 +574,7 @@ SymbolList::ClosestMatch
 	visibleList.SetSortOrder(itsSymbolList->GetSortOrder());
 
 	bool found;
-	*index = visibleList.SearchSorted1(0, JListT::kFirstMatch, &found);
+	*index = visibleList.SearchSortedOTI(0, JListT::kFirstMatch, &found);
 	if (*index > visibleList.GetElementCount())		// insert beyond end of list
 	{
 		*index = visibleList.GetElementCount();

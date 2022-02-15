@@ -172,8 +172,10 @@ const JFileVersion kCurrentPrefsFileVersion = 68;
 // version 1:
 //	Stores "local text editing" flag in kViewFileCmdID
 
-const JFileVersion kCurrentProjectFileVersion = 89;
+const JFileVersion kCurrentProjectFileVersion = 90;
 
+// version 90:
+//	Added HTML anchor type, lex regex type.
 // version 89:
 //	Added Java method prototype (from interface).
 // version 88:

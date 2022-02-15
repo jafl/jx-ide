@@ -26,7 +26,7 @@
 // sort=no requires so qualified tag comes after unqualified version
 
 static const JUtf8Byte* kCtagsArgs =
-	"--format=1 --excmd=number --sort=no --extras=q "
+	"--format=1 --excmd=number --sort=no --extras=+q "
 	"--ant-kinds=t "
 	"--asm-kinds=l "
 	"--asp-kinds=fs "
@@ -38,18 +38,15 @@ static const JUtf8Byte* kCtagsArgs =
 	"--cobol-kinds=p "
 	"--eiffel-kinds=f "
 	"--fortran-kinds=psfl "
-	CtagsHTMLDef
-	CtagsHTMLID
+	"--html-kinds=I --css-kinds= "
 	"--java-kinds=m "
-	CtagsLexDef
-	CtagsLexState
+	"--lex-types=c "
 	"--lisp-kinds=f "
 	"--lua-kinds=f "
-	CtagsMakeDef
-	CtagsMakeTarget
+	"--make-kinds=t "
 	"--pascal-kinds=fp "
-	"--perl-kinds=s "
-	"--php-kinds=fj "
+	"--perl-kinds=s --pod-kinds= "
+	"--php-kinds=f "
 	"--python-kinds=f "
 	"--rexx-kinds=s "
 	"--ruby-kinds=f "
@@ -111,7 +108,7 @@ void
 FnMenuUpdater::UpdateMenu
 	(
 	const JString&		fileName,
-	const TextFileType	origFileType,
+	const TextFileType	fileType,
 	const bool			sort,
 	const bool			includeNS,
 	const bool			pack,
@@ -143,29 +140,12 @@ FnMenuUpdater::UpdateMenu
 		menu->CompressHeight(false);
 	}
 
-	TextFileType fileType = origFileType == kPHPFT ? kJavaScriptFT : origFileType;
-
 	JString data;
 	Language lang;
 	if (ProcessFile(fileName, fileType, &data, &lang))
 	{
 		icharbufstream input(data.GetRawBytes(), data.GetByteCount());
 		ReadFunctionList(input, GetLanguage(fileType), sort, includeNS,
-						 &fnNameList, lineIndexList, lineLangList);
-
-		if (lang == kHTMLLang)
-		{
-			for (auto* s : fnNameList)
-			{
-				s->Prepend("#");
-			}
-		}
-	}
-
-	if (lang == kHTMLLang && ProcessFile(fileName, kJavaScriptFT, &data, &lang))
-	{
-		icharbufstream input(data.GetRawBytes(), data.GetByteCount());
-		ReadFunctionList(input, kJavaScriptLang, sort, includeNS,
 						 &fnNameList, lineIndexList, lineLangList);
 	}
 
@@ -186,9 +166,9 @@ void
 FnMenuUpdater::ReadFunctionList
 	(
 	std::istream&		input,
-	const Language	lang,
-	const bool		sort,
-	const bool		includeNS,
+	const Language		lang,
+	const bool			sort,
+	const bool			includeNS,
 	JPtrArray<JString>*	fnNameList,
 	JArray<JIndex>*		lineIndexList,
 	JArray<Language>*	lineLangList
