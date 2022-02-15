@@ -288,7 +288,7 @@ ProjectNode::FindFile
 {
 	if (JFileExists(fullName))
 	{
-		return FindFile1(fullName, node);
+		return CalledByFindFile(fullName, node);
 	}
 	else
 	{
@@ -298,14 +298,14 @@ ProjectNode::FindFile
 }
 
 /******************************************************************************
- FindFile1 (virtual protected)
+ CalledByFindFile (virtual protected)
 
 	Derived classes must override to check if they are the specified file.
 
  ******************************************************************************/
 
 bool
-ProjectNode::FindFile1
+ProjectNode::CalledByFindFile
 	(
 	const JString&	fullName,
 	ProjectNode**	node
@@ -317,7 +317,7 @@ ProjectNode::FindFile1
 		auto* child = dynamic_cast<ProjectNode*>(GetChild(i));
 		assert( child != nullptr );
 
-		if (child->FindFile1(fullName, node))
+		if (child->CalledByFindFile(fullName, node))
 		{
 			return true;
 		}

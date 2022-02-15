@@ -191,7 +191,7 @@ Link::ParseLine
 	// marked as pure virtual if nobody implemented it.
 
 	bool found;
-	const JIndex i = itsClassList->SearchSorted1(fn, JListT::kAnyMatch, &found);
+	const JIndex i = itsClassList->SearchSortedOTI(fn, JListT::kAnyMatch, &found);
 	if (found)
 	{
 		itsClassList->DeleteElement(i);

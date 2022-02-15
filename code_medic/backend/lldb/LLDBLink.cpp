@@ -458,7 +458,7 @@ lldb::Link::HandleEvent
 		else if (state == eStateExited ||
 				 state == eStateDetached)
 		{
-			ProgramFinished1();
+			CleanUpAfterProgramFinished();
 		}
 	}
 	else if (SBThread::EventIsThreadEvent(e))
@@ -1805,12 +1805,12 @@ lldb::Link::ProgramStopped
 }
 
 /******************************************************************************
- ProgramFinished1 (private)
+ CleanUpAfterProgramFinished (private)
 
  *****************************************************************************/
 
 void
-lldb::Link::ProgramFinished1()
+lldb::Link::CleanUpAfterProgramFinished()
 {
 	if (itsIsAttachedFlag)
 	{

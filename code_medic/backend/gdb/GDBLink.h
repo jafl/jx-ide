@@ -222,7 +222,7 @@ private:
 
 	void	DetachOrKill();
 
-	void	ProgramFinished1();
+	void	CleanUpAfterProgramFinished();
 
 	void	PrivateSendProgramStopped(const Location& location);
 };

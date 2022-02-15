@@ -146,12 +146,12 @@ FileNodeBase::GetFullName
 }
 
 /******************************************************************************
- FindFile1 (virtual protected)
+ CalledByFindFile (virtual protected)
 
  ******************************************************************************/
 
 bool
-FileNodeBase::FindFile1
+FileNodeBase::CalledByFindFile
 	(
 	const JString&	fullName,
 	ProjectNode**	node

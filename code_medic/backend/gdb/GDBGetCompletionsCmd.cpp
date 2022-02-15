@@ -119,7 +119,7 @@ gdb::GetCompletionsCmd::HandleSuccess
 
 	const JSize stringCount = lines.GetElementCount();
 	bool found;
-	JIndex startIndex = lines.SearchSorted1(&itsPrefix, JListT::kAnyMatch, &found);
+	JIndex startIndex = lines.SearchSortedOTI(&itsPrefix, JListT::kAnyMatch, &found);
 	if (found)
 	{
 		if (stringCount == 1)

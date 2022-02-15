@@ -551,7 +551,7 @@ App::CollectSearchPaths
 
 				bool found;
 				const JIndex index =
-					searchPaths->SearchSorted1(newInfo, JListT::kAnyMatch, &found);
+					searchPaths->SearchSortedOTI(newInfo, JListT::kAnyMatch, &found);
 				if (found)
 				{
 					// compute OR of recurse flags

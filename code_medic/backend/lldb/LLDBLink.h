@@ -192,7 +192,7 @@ private:
 
 	void	ProgramStarted(const pid_t pid);
 	bool	ProgramStopped(JString* msg = nullptr);
-	void	ProgramFinished1();
+	void	CleanUpAfterProgramFinished();
 
 	void	DetachOrKill(const bool destroyTarget);
 

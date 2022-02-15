@@ -48,7 +48,7 @@ public:
 
 	bool	Includes(const JString& fullName) const;
 	bool	FindFile(const JString& fullName,
-						 const ProjectNode** node) const;
+					 const ProjectNode** node) const;
 	bool	FindFile(const JString& fullName, ProjectNode** node);
 
 	virtual void	BuildMakeFiles(JString* text,
@@ -61,32 +61,32 @@ public:
 								   JPtrArray<JTreeNode>* invalidList) const;
 
 	virtual bool	ParseFiles(FileListTable* parser,
-								   const JPtrArray<JString>& allSuffixList,
-								   SymbolList* symbolList,
-								   CTree* cTree, DTree* dTree, GoTree* goTree,
-								   JavaTree* javaTree, PHPTree* phpTree,
-								   JProgressDisplay& pg) const;
+							   const JPtrArray<JString>& allSuffixList,
+							   SymbolList* symbolList,
+							   CTree* cTree, DTree* dTree, GoTree* goTree,
+							   JavaTree* javaTree, PHPTree* phpTree,
+							   JProgressDisplay& pg) const;
 	virtual void	Print(JString* text) const;
 
 	virtual void	FileRenamed(const JString& origFullName, const JString& newFullName);
 
 	static ProjectNode*	StreamIn(std::istream& input, const JFileVersion vers,
-									 ProjectNode* parent);
-	virtual void			StreamOut(std::ostream& output) const;
+								 ProjectNode* parent);
+	virtual void		StreamOut(std::ostream& output) const;
 
 	virtual void	CreateFilesForTemplate(std::istream& input,
 										   const JFileVersion vers) const;
 	virtual void	SaveFilesInTemplate(std::ostream& output) const;
 
-	ProjectTree*			GetProjectTree();
+	ProjectTree*		GetProjectTree();
 	const ProjectTree*	GetProjectTree() const;
 
-	ProjectNode*			GetProjectParent();
+	ProjectNode*		GetProjectParent();
 	const ProjectNode*	GetProjectParent() const;
-	bool					GetProjectParent(ProjectNode** parent);
-	bool					GetProjectParent(const ProjectNode** parent) const;
+	bool				GetProjectParent(ProjectNode** parent);
+	bool				GetProjectParent(const ProjectNode** parent) const;
 
-	ProjectNode*			GetProjectChild(const JIndex index);
+	ProjectNode*		GetProjectChild(const JIndex index);
 	const ProjectNode*	GetProjectChild(const JIndex index) const;
 
 protected:
@@ -95,8 +95,8 @@ protected:
 				  ProjectNode* parent, const ProjectNodeType type,
 				  const bool isOpenable);
 
-	virtual bool	FindFile1(const JString& fullName,
-								  ProjectNode** node);
+	virtual bool	CalledByFindFile(const JString& fullName,
+									 ProjectNode** node);
 
 private:
 

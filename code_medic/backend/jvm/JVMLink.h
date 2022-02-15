@@ -447,7 +447,7 @@ private:
 
 	void	DetachOrKill();
 
-	void	ProgramFinished1(const JProcess::Finished* info);
+	void	CleanUpAfterProgramFinished(const JProcess::Finished* info);
 
 	void	CheckNextThreadGroup();
 

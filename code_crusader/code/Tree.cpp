@@ -45,7 +45,7 @@ const JSize kBlockSize = 1024;
 
 // Code Mill info
 
-static const JString kCodeMillProgramName("code_mill", JString::kNoCopy);
+static const JString kCodeMillProgramName("code-mill", JString::kNoCopy);
 static const JString kCodeMillOptions("--delete --output_path", JString::kNoCopy);
 #ifndef CODE_CRUSADER_UNIT_TEST
 const JFileVersion kCodeMillDataVersion = 0;
@@ -1292,7 +1292,7 @@ Tree::ArrangeRoots
 				subset->content->SetElement(newRootIndex, true);
 
 				bool found;
-				const JIndex i = list2->SearchSorted1(*subset, JListT::kAnyMatch, &found);
+				const JIndex i = list2->SearchSortedOTI(*subset, JListT::kAnyMatch, &found);
 				if (found && newLinkLength < (list2->GetCArray())[i-1].linkLength)
 				{
 					RootSubset foundSubset = list2->GetElement(i);
@@ -1636,7 +1636,7 @@ Tree::ClosestVisibleMatch
 	Class target(prefixStr);
 	bool found;
 	JIndex index =
-		itsVisibleByName->SearchSorted1(&target, JListT::kFirstMatch, &found);
+		itsVisibleByName->SearchSortedOTI(&target, JListT::kFirstMatch, &found);
 	if (index > itsVisibleByName->GetElementCount())		// insert beyond end of list
 	{
 		index = itsVisibleByName->GetElementCount();

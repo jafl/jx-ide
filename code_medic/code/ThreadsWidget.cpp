@@ -99,16 +99,16 @@ ThreadsWidget::SelectThread
 	const JIndex id
 	)
 {
-	SelectThread1(itsTree->GetRoot(), id);
+	CalledBySelectThread(itsTree->GetRoot(), id);
 }
 
 /******************************************************************************
- SelectThread1 (private)
+ CalledBySelectThread (private)
 
  ******************************************************************************/
 
 bool
-ThreadsWidget::SelectThread1
+ThreadsWidget::CalledBySelectThread
 	(
 	const JTreeNode*	root,
 	const JIndex		id
@@ -137,7 +137,7 @@ ThreadsWidget::SelectThread1
 			return true;
 		}
 
-		if (SelectThread1(node, id))
+		if (CalledBySelectThread(node, id))
 		{
 			return true;
 		}
@@ -550,16 +550,16 @@ ThreadsWidget::SaveOpenNodes()
 	}
 
 	itsDisplayState = SaveDisplayState();
-	SaveOpenNodes1(itsTree->GetRoot());
+	CalledBySaveOpenNodes1(itsTree->GetRoot());
 }
 
 /******************************************************************************
- SaveOpenNodes1 (private)
+ CalledBySaveOpenNodes1 (private)
 
  ******************************************************************************/
 
 void
-ThreadsWidget::SaveOpenNodes1
+ThreadsWidget::CalledBySaveOpenNodes1
 	(
 	JTreeNode* root
 	)
@@ -577,7 +577,7 @@ ThreadsWidget::SaveOpenNodes1
 			itsOpenIDList->InsertSorted(threadNode->GetID());
 		}
 
-		SaveOpenNodes1(child);
+		CalledBySaveOpenNodes1(child);
 	}
 }
 

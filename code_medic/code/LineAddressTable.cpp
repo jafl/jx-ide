@@ -134,7 +134,7 @@ LineAddressTable::FindAddressLineNumber
 	JString addr = GetLineTextFromAddress(origAddress);
 
 	bool found;
-	*index = itsLineTextList->SearchSorted1(&addr, JListT::kAnyMatch, &found);
+	*index = itsLineTextList->SearchSortedOTI(&addr, JListT::kAnyMatch, &found);
 	return true;
 }
 
@@ -269,7 +269,7 @@ LineAddressTable::GetBreakpoints
 		target = GetLineTextFromAddress(bp->GetAddress());
 
 		bool found;
-		const JIndex j = itsLineTextList->SearchSorted1(&target, JListT::kAnyMatch, &found);
+		const JIndex j = itsLineTextList->SearchSortedOTI(&target, JListT::kAnyMatch, &found);
 		itsVisualBPIndexList->AppendElement(j);
 	}
 }

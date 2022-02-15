@@ -347,7 +347,7 @@ gdb::Link::Receive
 	}
 	else if (sender == itsChildProcess && message.Is(JProcess::kFinished))
 	{
-		ProgramFinished1();
+		CleanUpAfterProgramFinished();
 	}
 	else
 	{
@@ -576,7 +576,7 @@ gdb::Link::ReadFromDebugger()
 		}
 		else if (token.type == Output::Scanner::kDetachingFromProcess)
 		{
-			ProgramFinished1();
+			CleanUpAfterProgramFinished();
 		}
 
 		else if (token.type == Output::Scanner::kProgramStarting)
@@ -650,7 +650,7 @@ gdb::Link::ReadFromDebugger()
 		}
 		else if (token.type == Output::Scanner::kProgramFinished)
 		{
-			ProgramFinished1();
+			CleanUpAfterProgramFinished();
 
 			if (token.data.pString != nullptr)
 			{
@@ -659,7 +659,7 @@ gdb::Link::ReadFromDebugger()
 		}
 		else if (token.type == Output::Scanner::kProgramKilled)
 		{
-			ProgramFinished1();
+			CleanUpAfterProgramFinished();
 		}
 
 		else if (token.type == Output::Scanner::kDebuggerFinished)
@@ -2157,7 +2157,7 @@ gdb::Link::ProgramStarted
 }
 
 /******************************************************************************
- ProgramFinished1 (private)
+ CleanUpAfterProgramFinished (private)
 
 	It would be nice to detect "program finished" by *only* listening to
 	itsChildProcess, but this doesn't work for remote debugging.
@@ -2165,7 +2165,7 @@ gdb::Link::ProgramStarted
  *****************************************************************************/
 
 void
-gdb::Link::ProgramFinished1()
+gdb::Link::CleanUpAfterProgramFinished()
 {
 	jdelete itsChildProcess;
 	itsChildProcess = nullptr;

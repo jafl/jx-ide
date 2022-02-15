@@ -250,7 +250,7 @@ StringCompleter::Complete
 
 	bool found;
 	const JIndex startIndex =
-		itsStringList->SearchSorted1(const_cast<JString*>(&prefix),
+		itsStringList->SearchSortedOTI(const_cast<JString*>(&prefix),
 									 JListT::kAnyMatch, &found);
 
 	const JSize stringCount = itsStringList->GetElementCount();

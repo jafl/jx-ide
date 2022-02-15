@@ -73,14 +73,14 @@ private:
 private:
 
 	bool	SelectNextThread(const JInteger delta);
-	bool	SelectThread1(const JTreeNode* root, const JIndex id);
+	bool	CalledBySelectThread(const JTreeNode* root, const JIndex id);
 
 	void	FlushOldData();
 	bool	ShouldRebuild() const;
 	void	Rebuild();
 
 	void	SaveOpenNodes();
-	void	SaveOpenNodes1(JTreeNode* root);
+	void	CalledBySaveOpenNodes1(JTreeNode* root);
 	void	RestoreOpenNodes(JTreeNode* root);
 };
 

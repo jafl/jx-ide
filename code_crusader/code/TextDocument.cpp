@@ -271,7 +271,7 @@ TextDocument::TextDocument
 	(
 	std::istream&		input,
 	const JFileVersion	vers,
-	bool*			keep
+	bool*				keep
 	)
 	:
 	JXFileDocument(GetApplication(), JString::empty, false, true, ""),
@@ -1771,11 +1771,11 @@ TextDocument::HandleDiffMenu
 
 	if (index == kDiffAs1Cmd)
 	{
-		(GetDiffFileDialog())->SetFile1(fullName);
+		GetDiffFileDialog()->SetFile1(fullName);
 	}
 	else if (index == kDiffAs2Cmd)
 	{
-		(GetDiffFileDialog())->SetFile2(fullName);
+		GetDiffFileDialog()->SetFile2(fullName);
 	}
 
 	else if (index == kDiffAsVCSCmd)
@@ -1783,15 +1783,15 @@ TextDocument::HandleDiffMenu
 		const JVCSType type = JGetVCSType(GetFilePath());
 		if (type == kJCVSType)
 		{
-			(GetDiffFileDialog())->SetCVSFile(fullName);
+			GetDiffFileDialog()->SetCVSFile(fullName);
 		}
 		else if (type == kJSVNType)
 		{
-			(GetDiffFileDialog())->SetSVNFile(fullName);
+			GetDiffFileDialog()->SetSVNFile(fullName);
 		}
 		else if (type == kJGitType)
 		{
-			(GetDiffFileDialog())->SetGitFile(fullName);
+			GetDiffFileDialog()->SetGitFile(fullName);
 		}
 	}
 }

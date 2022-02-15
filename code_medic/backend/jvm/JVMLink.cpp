@@ -390,7 +390,7 @@ jvm::Link::Receive
 		const auto* info =
 			dynamic_cast<const JProcess::Finished*>(&message);
 		assert( info != nullptr );
-		ProgramFinished1(info);
+		CleanUpAfterProgramFinished(info);
 
 		jdelete itsJVMDeathTask;
 		itsJVMDeathTask = nullptr;
@@ -400,7 +400,7 @@ jvm::Link::Receive
 	}
 	else if (sender == itsJVMDeathTask && message.Is(JXTimerTask::kTimerWentOff))
 	{
-		ProgramFinished1(nullptr);
+		CleanUpAfterProgramFinished(nullptr);
 		itsJVMDeathTask = nullptr;
 	}
 
@@ -2132,7 +2132,7 @@ jvm::Link::Send
 }
 
 /******************************************************************************
- ProgramFinished1 (private)
+ CleanUpAfterProgramFinished (private)
 
 	It would be nice to detect "program finished" by *only* listening to
 	itsProcess, but this doesn't work for remote debugging.
@@ -2140,7 +2140,7 @@ jvm::Link::Send
  *****************************************************************************/
 
 void
-jvm::Link::ProgramFinished1
+jvm::Link::CleanUpAfterProgramFinished
 	(
 	const JProcess::Finished* info
 	)

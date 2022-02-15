@@ -49,7 +49,7 @@ protected:
 	bool	GetFullName(const JString& fileName, JString* fullName) const;
 	void	ReportNotFound() const;
 
-	bool	FindFile1(const JString& fullName, ProjectNode** node) override;
+	bool	CalledByFindFile(const JString& fullName, ProjectNode** node) override;
 
 private:
 

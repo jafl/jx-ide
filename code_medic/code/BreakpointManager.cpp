@@ -104,7 +104,7 @@ BreakpointManager::GetBreakpoints
 		Breakpoint target(fileName, 1);
 		bool found;
 		const JIndex startIndex =
-			itsBPList->SearchSorted1(&target, JListT::kFirstMatch, &found);
+			itsBPList->SearchSortedOTI(&target, JListT::kFirstMatch, &found);
 
 		const JSize count = itsBPList->GetElementCount();
 		for (JIndex i=startIndex; i<=count; i++)
@@ -147,7 +147,7 @@ BreakpointManager::GetBreakpoints
 		Breakpoint target(loc.GetFileName(), loc.GetLineNumber());
 		bool found;
 		const JIndex startIndex =
-			itsBPList->SearchSorted1(&target, JListT::kFirstMatch, &found);
+			itsBPList->SearchSortedOTI(&target, JListT::kFirstMatch, &found);
 
 		const JSize count = itsBPList->GetElementCount();
 		for (JIndex i=startIndex; i<=count; i++)
