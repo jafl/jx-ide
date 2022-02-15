@@ -22,11 +22,11 @@ architectures:
 
 apps:
   code-crusader:
-    command: code-crusader
+    command: bin/code-crusader
   code-medic:
-    command: code-medic
+    command: bin/code-medic
   code-mill:
-    command: code-mill
+    command: bin/code-mill
 
 parts:
   jx-ide:
