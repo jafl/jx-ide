@@ -240,7 +240,13 @@ CompileDocument::AppendText
 	JString text = origText;
 
 	JStringIterator iter(&text, kJIteratorStartAtEnd);
-	if (iter.Prev("\r"))
+	JUtf8Character c;
+	if (iter.Prev(&c) && c == '\r')		// convert DOS \r\n
+	{
+		iter.RemoveNext();
+	}
+
+	if (iter.Prev("\r"))				// in console, this means "overwrite"
 	{
 		iter.SkipNext();
 		iter.RemoveAllPrev();
@@ -279,7 +285,6 @@ CompileDocument::AppendText
 		text.GetByteCount() > kGCCMultilinePrefixLength)
 	{
 		JStringIterator iter(&text, kJIteratorStartAfterByte, kGCCMultilinePrefixLength);
-		JUtf8Character c;
 		if (iter.Next(&c, kJIteratorStay) && !c.IsSpace())
 		{
 			iter.RemoveAllPrev();
@@ -357,7 +362,7 @@ CompileDocument::AppendText
 			JString windowTitle = window->GetTitle();
 
 			JStringIterator iter(&windowTitle);
-			const JUtf8Character c('!');
+			c = '!';
 			iter.SetNext(c);
 			iter.SetNext(c);
 			iter.SetNext(c);
