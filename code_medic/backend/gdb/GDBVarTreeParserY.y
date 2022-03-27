@@ -25,7 +25,7 @@ isOpenablePointer
 %union {
 	JString*				pString;
 	::VarNode*				pNode;
-	JPtrArray<::VarNode>*	pList;
+	JPtrArray< ::VarNode>*	pList;
 	GDBVarGroupInfo*		pGroup;
 }
 
@@ -154,7 +154,7 @@ group :
 
 	| P_GROUP_OPEN group P_GROUP_CLOSE
 	{
-		auto* list = jnew JPtrArray<::VarNode>(JPtrArrayT::kForgetAll);
+		auto* list = jnew JPtrArray< ::VarNode>(JPtrArrayT::kForgetAll);
 		assert( list != nullptr );
 		AppendAsArrayElement(JString::empty, *($2->list), list);
 		$$ = jnew GDBVarGroupInfo(nullptr, list);
@@ -177,7 +177,7 @@ group :
 
 	| P_SUMMARY P_GROUP_OPEN group P_GROUP_CLOSE
 	{
-		auto* list = jnew JPtrArray<::VarNode>(JPtrArrayT::kForgetAll);
+		auto* list = jnew JPtrArray< ::VarNode>(JPtrArrayT::kForgetAll);
 		assert( list != nullptr );
 		AppendAsArrayElement($3->GetName(), *($3->list), list);
 		$$ = jnew GDBVarGroupInfo($1, list);
@@ -191,7 +191,7 @@ node_list :
 
 	node
 	{
-		auto* list = $$ = jnew JPtrArray<::VarNode>(JPtrArrayT::kForgetAll);
+		auto* list = $$ = jnew JPtrArray< ::VarNode>(JPtrArrayT::kForgetAll);
 		assert( list != nullptr );
 		list->Append($1);
 	}
@@ -221,7 +221,7 @@ node_list :
 
 	| group ',' group
 	{
-		auto* list = $$ = jnew JPtrArray<::VarNode>(JPtrArrayT::kForgetAll);
+		auto* list = $$ = jnew JPtrArray< ::VarNode>(JPtrArrayT::kForgetAll);
 		assert( list != nullptr );
 		AppendAsArrayElement($1->GetName(), *($1->list), list);
 		AppendAsArrayElement($3->GetName(), *($3->list), list);
@@ -238,7 +238,7 @@ node_list :
 		}
 		else
 		{
-			auto* list = $$ = jnew JPtrArray<::VarNode>(JPtrArrayT::kForgetAll);
+			auto* list = $$ = jnew JPtrArray< ::VarNode>(JPtrArrayT::kForgetAll);
 			assert( list != nullptr );
 			AppendAsArrayElement(JString::empty, *$1, list);
 
@@ -371,7 +371,7 @@ value_list :
 
 	value_node
 	{
-		auto* list = $$ = jnew JPtrArray<::VarNode>(JPtrArrayT::kForgetAll);
+		auto* list = $$ = jnew JPtrArray< ::VarNode>(JPtrArrayT::kForgetAll);
 		assert( list != nullptr );
 		AppendAsArrayElement($1, $$);
 	}

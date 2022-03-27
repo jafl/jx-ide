@@ -85,7 +85,7 @@ union YYSTYPE
 
 	JString*				pString;
 	::VarNode*				pNode;
-	JPtrArray<::VarNode>*	pList;
+	JPtrArray< ::VarNode>*	pList;
 	GDBVarGroupInfo*		pGroup;
 
 #line 92 "backend/gdb/GDBVarTreeParserY.hpp"
