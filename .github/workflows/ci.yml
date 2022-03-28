@@ -3,6 +3,8 @@ on:
   push:
     branches: [ main ]
     tags: [ v* ]
+  repository_dispatch:
+    types: [ new-jx ]
   workflow_dispatch:
 jobs:
   build-ubuntu:
@@ -62,6 +64,7 @@ jobs:
 
       - name: Configure
         run: |
+          sudo apt update;
           curl -O http://libjx.sourceforge.net/ci/re-flex.deb
           sudo apt install ./re-flex.deb
           curl -O http://libjx.sourceforge.net/ci/jx-application-framework.deb
