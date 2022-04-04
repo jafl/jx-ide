@@ -176,8 +176,8 @@ private:
 	void	HandleCVSRevMenu(JXTextMenu* menu, const JIndex index,
 							 JIndex* cmd, JXInputField* input);
 	bool	BuildCVSDiffCmd(const JString& fullName,
-							const JIndex rev1Cmd, const JString& rev1,
-							const JIndex rev2Cmd, const JString& rev2,
+							const JIndex rev1Cmd, const JString* rev1,
+							const JIndex rev2Cmd, const JString* rev2,
 							JString* getCmd, JString* diffCmd,
 							JString* name1, JString* name2,
 							const bool silent);
@@ -191,8 +191,8 @@ private:
 	void	HandleSVNRevMenu(JXTextMenu* menu, const JIndex index,
 							 JIndex* cmd, JXInputField* input);
 	bool	BuildSVNDiffCmd(const JString& fullName,
-							const JIndex rev1Cmd, const JString& rev1,
-							const JIndex rev2Cmd, const JString& rev2,
+							const JIndex rev1Cmd, const JString* rev1,
+							const JIndex rev2Cmd, const JString* rev2,
 							JString* getCmd, JString* diffCmd,
 							JString* name1, JString* name2,
 							const bool silent,
@@ -205,14 +205,14 @@ private:
 	void	HandleGitRevMenu(JXTextMenu* menu, const JIndex index,
 							 JIndex* cmd, JXInputField* input);
 	bool	BuildGitDiffCmd(const JString& fullName,
-							const JIndex rev1Cmd, const JString& rev1,
-							const JIndex rev2Cmd, const JString& rev2,
+							const JIndex rev1Cmd, const JString* rev1,
+							const JIndex rev2Cmd, const JString* rev2,
 							JString* get1Cmd, JString* get2Cmd, JString* diffCmd,
 							JString* name1, JString* name2,
 							const bool silent);
 	bool	BuildGitDiffDirectoryCmd(const JString& path,
-									 const JIndex rev1Cmd, const JString& rev1,
-									 const JIndex rev2Cmd, const JString& rev2,
+									 const JIndex rev1Cmd, const JString* rev1,
+									 const JIndex rev2Cmd, const JString* rev2,
 									 JString* diffCmd);
 	bool	GetCurrentGitRevision(const JString& fullName, JString* rev);
 	bool	GetPreviousGitRevision(const JString& fullName, JString* rev);

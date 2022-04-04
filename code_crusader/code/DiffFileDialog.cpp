@@ -941,8 +941,8 @@ DiffFileDialog::ViewDiffs()
 		else
 		{
 			JString getCmd, diffCmd, name1, name2;
-			if (BuildCVSDiffCmd(fullName, itsCVSRev1Cmd, itsCVSRev1Input->GetText()->GetText(),
-								itsCVSRev2Cmd, itsCVSRev2Input->GetText()->GetText(),
+			if (BuildCVSDiffCmd(fullName, itsCVSRev1Cmd, &itsCVSRev1Input->GetText()->GetText(),
+								itsCVSRev2Cmd, &itsCVSRev2Input->GetText()->GetText(),
 								&getCmd, &diffCmd, &name1, &name2, false))
 			{
 				const JError err =
@@ -967,9 +967,8 @@ DiffFileDialog::ViewDiffs()
 		{
 			const JString s = JCombinePathAndName(fullName, kDot) + kDot;
 			JString getCmd, diffCmd, name1, name2;
-			if (BuildSVNDiffCmd(s,
-								itsSVNRev1Cmd, itsSVNRev1Input->GetText()->GetText(),
-								itsSVNRev2Cmd, itsSVNRev2Input->GetText()->GetText(),
+			if (BuildSVNDiffCmd(s, itsSVNRev1Cmd, &itsSVNRev1Input->GetText()->GetText(),
+								itsSVNRev2Cmd, &itsSVNRev2Input->GetText()->GetText(),
 								&getCmd, &diffCmd, &name1, &name2, false, true))
 			{
 				DiffDirectory(fullName, diffCmd, itsSVNSummaryCB, JString(" --diff-cmd diff -x --brief", JString::kNoCopy));
@@ -979,8 +978,8 @@ DiffFileDialog::ViewDiffs()
 		{
 			JString getCmd, diffCmd, name1, name2;
 			if (BuildSVNDiffCmd(fullName,
-								itsSVNRev1Cmd, itsSVNRev1Input->GetText()->GetText(),
-								itsSVNRev2Cmd, itsSVNRev2Input->GetText()->GetText(),
+								itsSVNRev1Cmd, &itsSVNRev1Input->GetText()->GetText(),
+								itsSVNRev2Cmd, &itsSVNRev2Input->GetText()->GetText(),
 								&getCmd, &diffCmd, &name1, &name2, false))
 			{
 				const JError err =
@@ -1005,8 +1004,8 @@ DiffFileDialog::ViewDiffs()
 		{
 			JString diffCmd;
 			if (BuildGitDiffDirectoryCmd(fullName,
-										 itsGitRev1Cmd, itsGitRev1Input->GetText()->GetText(),
-										 itsGitRev2Cmd, itsGitRev2Input->GetText()->GetText(),
+										 itsGitRev1Cmd, &itsGitRev1Input->GetText()->GetText(),
+										 itsGitRev2Cmd, &itsGitRev2Input->GetText()->GetText(),
 										 &diffCmd))
 			{
 				if (itsGitSummaryCB->IsChecked())
@@ -1021,16 +1020,16 @@ DiffFileDialog::ViewDiffs()
 		{
 			JString get1Cmd, get2Cmd, diffCmd, name1, name2;
 			if (BuildGitDiffCmd(fullName,
-								itsGitRev1Cmd, itsGitRev1Input->GetText()->GetText(),
-								itsGitRev2Cmd, itsGitRev2Input->GetText()->GetText(),
+								itsGitRev1Cmd, &itsGitRev1Input->GetText()->GetText(),
+								itsGitRev2Cmd, &itsGitRev2Input->GetText()->GetText(),
 								&get1Cmd, &get2Cmd, &diffCmd, &name1, &name2, false))
 			{
 				const JError err =
 					DiffDocument::CreateGit(fullName, get1Cmd, get2Cmd, diffCmd,
-											  itsCommonStyleMenu->GetStyle(),
-											  name1, itsGitOnly1StyleMenu->GetStyle(),
-											  name2, itsGitOnly2StyleMenu->GetStyle(),
-											  false);
+											itsCommonStyleMenu->GetStyle(),
+											name1, itsGitOnly1StyleMenu->GetStyle(),
+											name2, itsGitOnly2StyleMenu->GetStyle(),
+											false);
 				err.ReportIfError();
 			}
 		}
@@ -1100,7 +1099,7 @@ DiffFileDialog::ViewDiffs
 	(
 	const JString&	fullName1,
 	const JString&	fullName2,
-	const bool	silent
+	const bool		silent
 	)
 {
 	if (DocumentManager::WarnFileSize(fullName1) &&
@@ -1161,7 +1160,7 @@ void
 DiffFileDialog::ViewVCSDiffs
 	(
 	const JString&	fullName,
-	const bool	silent
+	const bool		silent
 	)
 {
 	if (!DocumentManager::WarnFileSize(fullName))
@@ -1193,14 +1192,14 @@ void
 DiffFileDialog::ViewCVSDiffs
 	(
 	const JString&	fullName,
-	const bool	silent
+	const bool		silent
 	)
 {
 	itsTabGroup->ShowTab(kCVSDiffTabIndex);
 
 	JString getCmd, diffCmd, name1, name2;
-	if (!BuildCVSDiffCmd(fullName, kCurrentRevCmd, JString::empty,
-						 kCurrentRevCmd, JString::empty,
+	if (!BuildCVSDiffCmd(fullName, kCurrentRevCmd, nullptr,
+						 kCurrentRevCmd, nullptr,
 						 &getCmd, &diffCmd, &name1, &name2, silent))
 	{
 		return;
@@ -1229,7 +1228,7 @@ DiffFileDialog::ViewCVSDiffs
 	const JString&	fullName,
 	const JString&	rev1,
 	const JString&	rev2,
-	const bool	silent
+	const bool		silent
 	)
 {
 	if (!DocumentManager::WarnFileSize(fullName))
@@ -1248,7 +1247,7 @@ DiffFileDialog::ViewCVSDiffs
 	}
 
 	JString getCmd, diffCmd, name1, name2;
-	if (BuildCVSDiffCmd(fullName, rev1Cmd, rev1, rev2Cmd, rev2,
+	if (BuildCVSDiffCmd(fullName, rev1Cmd, &rev1, rev2Cmd, &rev2,
 						&getCmd, &diffCmd, &name1, &name2, silent))
 	{
 		const JError err =
@@ -1271,14 +1270,14 @@ DiffFileDialog::BuildCVSDiffCmd
 	(
 	const JString&	fullName,
 	const JIndex	rev1Cmd,
-	const JString&	origRev1,
+	const JString*	origRev1,
 	const JIndex	rev2Cmd,
-	const JString&	origRev2,
+	const JString*	origRev2,
 	JString*		getCmd,
 	JString*		diffCmd,
 	JString*		name1,
 	JString*		name2,
-	const bool	silent
+	const bool		silent
 	)
 {
 	JString path, name, cvsRoot;
@@ -1294,11 +1293,11 @@ DiffFileDialog::BuildCVSDiffCmd
 
 	*getCmd  = "cvs -d " + JPrepArgForExec(cvsRoot) + " get ";
 	*diffCmd = "cvs -f diff ";
-	if ((rev1Cmd == kPreviousRevCmd && !origRev1.IsEmpty()) ||
-		(!isFixedRevCmd(rev1Cmd) && !origRev1.IsEmpty()))
+	if ((rev1Cmd == kPreviousRevCmd && origRev1 != nullptr) ||
+		(!isFixedRevCmd(rev1Cmd) && !JString::IsEmpty(origRev1)))
 	{
 		JIndex cmd1  = rev1Cmd;
-		JString rev1 = origRev1;
+		JString rev1 = *origRev1;
 		if (cmd1 == kPreviousRevCmd && GetPreviousCVSRevision(fullName, &rev1))
 		{
 			cmd1 = kRevisionNumberCmd;
@@ -1313,7 +1312,7 @@ DiffFileDialog::BuildCVSDiffCmd
 		}
 
 		JIndex cmd2  = rev2Cmd;
-		JString rev2 = origRev2;
+		JString rev2 = *origRev2;
 		if (cmd2 == kPreviousRevCmd && GetCurrentCVSRevision(fullName, &rev2))
 		{
 			cmd2 = kRevisionNumberCmd;
@@ -1468,13 +1467,13 @@ void
 DiffFileDialog::ViewSVNDiffs
 	(
 	const JString&	fullName,
-	const bool	silent
+	const bool		silent
 	)
 {
 	itsTabGroup->ShowTab(kSVNDiffTabIndex);
 
 	JString getCmd, diffCmd, name1, name2;
-	if (!BuildSVNDiffCmd(fullName, kCurrentRevCmd, JString::empty, kCurrentRevCmd, JString::empty,
+	if (!BuildSVNDiffCmd(fullName, kCurrentRevCmd, nullptr, kCurrentRevCmd, nullptr,
 						 &getCmd, &diffCmd, &name1, &name2, silent))
 	{
 		return;
@@ -1503,7 +1502,7 @@ DiffFileDialog::ViewSVNDiffs
 	const JString&	fullName,
 	const JString&	rev1,
 	const JString&	rev2,
-	const bool	silent
+	const bool		silent
 	)
 {
 	if (!DocumentManager::WarnFileSize(fullName))
@@ -1522,7 +1521,7 @@ DiffFileDialog::ViewSVNDiffs
 	}
 
 	JString getCmd, diffCmd, name1, name2;
-	if (BuildSVNDiffCmd(fullName, rev1Cmd, rev1, rev2Cmd, rev2,
+	if (BuildSVNDiffCmd(fullName, rev1Cmd, &rev1, rev2Cmd, &rev2,
 						&getCmd, &diffCmd, &name1, &name2, silent))
 	{
 		const JError err =
@@ -1545,15 +1544,15 @@ DiffFileDialog::BuildSVNDiffCmd
 	(
 	const JString&	fullName,
 	const JIndex	rev1Cmd,
-	const JString&	origRev1,
+	const JString*	origRev1,
 	const JIndex	rev2Cmd,
-	const JString&	origRev2,
+	const JString*	origRev2,
 	JString*		getCmd,
 	JString*		diffCmd,
 	JString*		name1,
 	JString*		name2,
-	const bool	silent,
-	const bool	forDirectory
+	const bool		silent,
+	const bool		forDirectory
 	)
 {
 	JString path, name;
@@ -1567,13 +1566,13 @@ DiffFileDialog::BuildSVNDiffCmd
 
 	*getCmd  = "svn cat ";
 	*diffCmd = (forDirectory ? "svn diff " : "svn diff --diff-cmd diff -x --normal ");
-	if ((rev1Cmd == kPreviousRevCmd && !origRev1.IsEmpty()) ||		// PREV from dialog
-		(rev1Cmd == kTrunkCmd && !origRev1.IsEmpty()) ||			// TRUNK from dialog
-		(!isSVNFixedRevCmd(rev1Cmd) && !origRev1.IsEmpty()))
+	if ((rev1Cmd == kPreviousRevCmd && origRev1 != nullptr) ||		// PREV from dialog
+		(rev1Cmd == kTrunkCmd && origRev1 != nullptr) ||			// TRUNK from dialog
+		(!isSVNFixedRevCmd(rev1Cmd) && !JString::IsEmpty(origRev1)))
 	{
 		JIndex cmd1    = rev1Cmd;
-		JString rev1   = origRev1;
-		JString getRev = origRev1;
+		JString rev1   = *origRev1;
+		JString getRev = *origRev1;
 		JString revName;
 		if (cmd1 == kPreviousRevCmd)
 		{
@@ -1604,7 +1603,7 @@ DiffFileDialog::BuildSVNDiffCmd
 		}
 
 		JIndex cmd2  = rev2Cmd;
-		JString rev2 = origRev2;
+		JString rev2 = *origRev2;
 		if (cmd2 == kPreviousRevCmd)
 		{
 			cmd2   = kRevisionNumberCmd;
@@ -1701,7 +1700,7 @@ DiffFileDialog::BuildSVNRepositoryPath
 	const JIndex	cmd,
 	const JString&	rev,
 	JString*		name,
-	const bool	silent
+	const bool		silent
 	)
 {
 	JString repoPath;
@@ -1755,13 +1754,13 @@ void
 DiffFileDialog::ViewGitDiffs
 	(
 	const JString&	fullName,
-	const bool	silent
+	const bool		silent
 	)
 {
 	itsTabGroup->ShowTab(kGitDiffTabIndex);
 
 	JString get1Cmd, get2Cmd, diffCmd, name1, name2;
-	if (!BuildGitDiffCmd(fullName, kCurrentRevCmd, JString::empty, kCurrentRevCmd, JString::empty,
+	if (!BuildGitDiffCmd(fullName, kCurrentRevCmd, nullptr, kCurrentRevCmd, nullptr,
 						 &get1Cmd, &get2Cmd, &diffCmd, &name1, &name2, silent))
 	{
 		return;
@@ -1790,7 +1789,7 @@ DiffFileDialog::ViewGitDiffs
 	const JString&	fullName,
 	const JString&	rev1,
 	const JString&	rev2,
-	const bool	silent
+	const bool		silent
 	)
 {
 	if (!DocumentManager::WarnFileSize(fullName))
@@ -1810,7 +1809,7 @@ DiffFileDialog::ViewGitDiffs
 	}
 
 	JString get1Cmd, get2Cmd, diffCmd, name1, name2;
-	if (BuildGitDiffCmd(fullName, rev1Cmd, rev1, rev2Cmd, rev2,
+	if (BuildGitDiffCmd(fullName, rev1Cmd, &rev1, rev2Cmd, &rev2,
 						&get1Cmd, &get2Cmd, &diffCmd, &name1, &name2, silent))
 	{
 		const JError err =
@@ -1833,15 +1832,15 @@ DiffFileDialog::BuildGitDiffCmd
 	(
 	const JString&	fullName,
 	const JIndex	rev1Cmd,
-	const JString&	rev1,
+	const JString*	rev1,
 	const JIndex	rev2Cmd,
-	const JString&	rev2,
+	const JString*	rev2,
 	JString*		get1Cmd,
 	JString*		get2Cmd,
 	JString*		diffCmd,
 	JString*		name1,
 	JString*		name2,
-	const bool	silent
+	const bool		silent
 	)
 {
 	JString trueName;
@@ -1873,8 +1872,8 @@ DiffFileDialog::BuildGitDiffCmd
 
 	get1Cmd->Clear();
 	get2Cmd->Clear();
-	if ((rev1Cmd == kPreviousRevCmd && !rev1.IsEmpty()) ||		// PREV from dialog
-		(!isFixedRevCmd(rev1Cmd) && !rev1.IsEmpty()))
+	if ((rev1Cmd == kPreviousRevCmd && rev1 != nullptr) ||		// PREV from dialog
+		(!isFixedRevCmd(rev1Cmd) && !JString::IsEmpty(rev1)))
 	{
 		JString get1Rev;
 		if (rev1Cmd == kPreviousRevCmd)
@@ -1893,15 +1892,15 @@ DiffFileDialog::BuildGitDiffCmd
 		else if (rev1Cmd == kRevisionDateCmd)
 		{
 			get1Rev  = "@{";
-			get1Rev += rev1;
+			get1Rev += *rev1;
 			get1Rev += "}";
 
 			*name1 += get1Rev;
 		}
 		else if (rev1Cmd != kGit1AncestorCmd)
 		{
-			get1Rev = rev1;
-			*name1 += rev1;
+			get1Rev = *rev1;
+			*name1 += *rev1;
 		}
 
 		JString get2Rev;
@@ -1919,20 +1918,20 @@ DiffFileDialog::BuildGitDiffCmd
 		else if (rev2Cmd == kRevisionDateCmd)
 		{
 			get2Rev  = "@{";
-			get2Rev += rev2;
+			get2Rev += *rev2;
 			get2Rev += "}";
 
 			*name2 = get2Rev;
 		}
 		else
 		{
-			get2Rev = rev2;
-			*name2  = rev2;
+			get2Rev = *rev2;
+			*name2  = *rev2;
 		}
 
 		if (rev1Cmd == kGit1AncestorCmd)
 		{
-			get1Rev = rev1;
+			get1Rev = *rev1;
 			if (!GetBestCommonGitAncestor(path, &get1Rev, get2Rev.GetBytes()))
 			{
 				if (!silent)
@@ -1986,9 +1985,9 @@ DiffFileDialog::BuildGitDiffDirectoryCmd
 	(
 	const JString&	path,
 	const JIndex	rev1Cmd,
-	const JString&	rev1,
+	const JString*	rev1,
 	const JIndex	rev2Cmd,
-	const JString&	rev2,
+	const JString*	rev2,
 	JString*		diffCmd
 	)
 {
@@ -2012,8 +2011,8 @@ DiffFileDialog::BuildGitDiffDirectoryCmd
 		*diffCmd += "--ignore-space-change ";
 	}
 
-	if ((rev1Cmd == kPreviousRevCmd && !rev1.IsEmpty()) ||		// PREV from dialog
-		(!isFixedRevCmd(rev1Cmd) && !rev1.IsEmpty()))
+	if ((rev1Cmd == kPreviousRevCmd && rev1 != nullptr) ||		// PREV from dialog
+		(!isFixedRevCmd(rev1Cmd) && !JString::IsEmpty(rev1)))
 	{
 		JString get1Rev;
 		if (rev1Cmd == kPreviousRevCmd)
@@ -2028,12 +2027,12 @@ DiffFileDialog::BuildGitDiffDirectoryCmd
 		else if (rev1Cmd == kRevisionDateCmd)
 		{
 			get1Rev  = "@{";
-			get1Rev += rev1;
+			get1Rev += *rev1;
 			get1Rev += "}";
 		}
 		else
 		{
-			get1Rev = rev1;
+			get1Rev = *rev1;
 		}
 
 		*diffCmd += JPrepArgForExec(get1Rev);
@@ -2056,12 +2055,12 @@ DiffFileDialog::BuildGitDiffDirectoryCmd
 		else if (rev2Cmd == kRevisionDateCmd)
 		{
 			get2Rev  = "@{";
-			get2Rev += rev2;
+			get2Rev += *rev2;
 			get2Rev += "}";
 		}
 		else
 		{
-			get2Rev = rev2;
+			get2Rev = *rev2;
 		}
 
 		*diffCmd += JPrepArgForExec(get2Rev);
@@ -2195,9 +2194,9 @@ DiffFileDialog::GetBestCommonGitAncestor
 const JString&
 DiffFileDialog::GetSmartDiffItemText
 	(
-	const bool	onDisk,
+	const bool		onDisk,
 	const JString&	fullName,
-	bool*		enable
+	bool*			enable
 	)
 	const
 {
@@ -2247,9 +2246,9 @@ DiffFileDialog::GetSmartDiffItemText
 void
 DiffFileDialog::ViewDiffs
 	(
-	const bool	onDisk,
+	const bool		onDisk,
 	const JString&	fullName,
-	const bool	silent
+	const bool		silent
 	)
 {
 	if (!onDisk)
@@ -2295,8 +2294,8 @@ JString
 DiffFileDialog::GetSmartDiffInfo
 	(
 	const JString&	origFileName,
-	bool*		isSafetySave,
-	bool*		isBackup
+	bool*			isSafetySave,
+	bool*			isBackup
 	)
 	const
 {

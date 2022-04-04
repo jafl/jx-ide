@@ -958,7 +958,7 @@ T "./" "echo ====" "" FFFTTFF "" "" "" F
 F
 # build settings
 1
-T
+F
 "jcc"
 "${LIB_DEPS}"
 "make -k all"

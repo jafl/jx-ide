@@ -63,7 +63,7 @@ DiffDocument::CreatePlain
 	const JFontStyle&	removeStyle,
 	const JString&		name2,
 	const JFontStyle&	insertStyle,
-	const bool		silent,
+	const bool			silent,
 	DiffDocument*		origDoc
 	)
 {
@@ -193,7 +193,7 @@ DiffDocument::CreateCVS
 	const JFontStyle&	removeStyle,
 	const JString&		name2,
 	const JFontStyle&	insertStyle,
-	const bool		silent,
+	const bool			silent,
 	DiffDocument*		origDoc
 	)
 {
@@ -403,7 +403,7 @@ DiffDocument::CreateSVN
 	const JFontStyle&	removeStyle,
 	const JString&		name2,
 	const JFontStyle&	insertStyle,
-	const bool		silent,
+	const bool			silent,
 	DiffDocument*		origDoc
 	)
 {
@@ -570,7 +570,7 @@ DiffDocument::CreateGit
 	const JFontStyle&	removeStyle,
 	const JString&		name2,
 	const JFontStyle&	insertStyle,
-	const bool		silent,
+	const bool			silent,
 	DiffDocument*		origDoc
 	)
 {
