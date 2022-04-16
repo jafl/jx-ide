@@ -938,10 +938,9 @@ T "../../JX/include/jx-af/j2dplot" T
 T "../../JX/include/jx-af/jcore" T
 T "../../JX/include/jx-af/jexpr" T
 T "../../JX/include/jx-af/jx" T
-T "./backends" T
+T "./backend" T
 T "./code" T
-T "./jcc-shared" T
-T "./lldb-include" T
+T "./shared" T
 F
 # C preprocessor
 T "CBCFlexLexer" "yyFlexLexer"

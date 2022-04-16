@@ -802,10 +802,10 @@ SymbolList::InitCtags
 void
 SymbolList::ReadSymbolList
 	(
-	std::istream&		input,
+	std::istream&	input,
 	const Language	lang,
-	const JString&		fullName,
-	const JFAID_t		fileID
+	const JString&	fullName,
+	const JFAID_t	fileID
 	)
 {
 	JString path, fileName;

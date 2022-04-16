@@ -199,11 +199,11 @@ void
 FileListTable::ScanAll
 	(
 	ProjectTree*		fileTree,
-	const DirList&	dirList,
-	SymbolList*		symbolList,
-	CTree*			cTree,
-	DTree*			dTree,
-	GoTree*			goTree,
+	const DirList&		dirList,
+	SymbolList*			symbolList,
+	CTree*				cTree,
+	DTree*				dTree,
+	GoTree*				goTree,
 	JavaTree*			javaTree,
 	PHPTree*			phpTree,
 	JProgressDisplay&	pg
@@ -248,12 +248,12 @@ void
 FileListTable::ScanDirectory
 	(
 	const JString&				origPath,
-	const bool				recurse,
+	const bool					recurse,
 	const JPtrArray<JString>&	allSuffixList,
-	SymbolList*				symbolList,
-	CTree*					cTree,
-	DTree*					dTree,
-	GoTree*					goTree,
+	SymbolList*					symbolList,
+	CTree*						cTree,
+	DTree*						dTree,
+	GoTree*						goTree,
 	JavaTree*					javaTree,
 	PHPTree*					phpTree,
 	JProgressDisplay&			pg
@@ -289,6 +289,7 @@ FileListTable::ScanDirectory
 		{
 			JString trueName = entry.GetFullName();
 			time_t modTime   = entry.GetModTime();
+
 			if (entry.IsWorkingLink())
 			{
 				const bool ok = JGetTrueName(entry.GetFullName(), &trueName);
@@ -322,10 +323,10 @@ FileListTable::ParseFile
 	const JString&				fullName,
 	const JPtrArray<JString>&	allSuffixList,
 	const time_t				modTime,
-	SymbolList*				symbolList,
-	CTree*					cTree,
-	DTree*					dTree,
-	GoTree*					goTree,
+	SymbolList*					symbolList,
+	CTree*						cTree,
+	DTree*						dTree,
+	GoTree*						goTree,
 	JavaTree*					javaTree,
 	PHPTree*					phpTree
 	)
@@ -361,10 +362,10 @@ FileListTable::ParseFile
 bool
 FileListTable::AddFile
 	(
-	const JString&			fullName,
+	const JString&		fullName,
 	const TextFileType	fileType,
-	const time_t			modTime,
-	JFAID_t*				id
+	const time_t		modTime,
+	JFAID_t*			id
 	)
 {
 	if (ExcludeFromFileList(fileType))
@@ -374,8 +375,8 @@ FileListTable::AddFile
 
 	JIndex index;
 	const bool isNew = JXFileListTable::AddFile(fullName, &index);
-	FileInfo info        = itsFileInfo->GetElement(index);
-	*id                  = info.id;
+	FileInfo info    = itsFileInfo->GetElement(index);
+	*id              = info.id;
 
 	itsFileUsage->SetElement(index, true);
 	if (isNew)
