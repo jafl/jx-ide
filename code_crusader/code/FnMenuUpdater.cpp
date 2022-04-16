@@ -26,7 +26,7 @@
 // sort=no requires so qualified tag comes after unqualified version
 
 static const JUtf8Byte* kCtagsArgs =
-	"--format=1 --excmd=number --sort=no --extras=+q "
+	"--format=2 --excmd=number --sort=no --extras=+q "
 	"--ant-kinds=t "
 	"--asm-kinds=l "
 	"--asp-kinds=fs "
@@ -61,7 +61,7 @@ static const JUtf8Byte* kCtagsArgs =
 	"--c#-kinds=m "
 	"--erlang-kinds=f "
 	"--sml-kinds=fc "
-	"--javascript-kinds=fm "
+	"--javascript-kinds=fcm "
 	"--basic-kinds=f "
 	"--matlab-kinds=f "
 	"--flex-kinds=fm ";
@@ -178,6 +178,7 @@ FnMenuUpdater::ReadFunctionList
 
 	const bool hasNS = HasNamespace(lang);
 	JString fnName;
+	JStringPtrMap<JString> flags(JPtrArrayT::kDeleteAll);
 	while (true)
 	{
 		input >> std::ws;
@@ -192,6 +193,8 @@ FnMenuUpdater::ReadFunctionList
 		JIndex lineIndex;
 		input >> lineIndex;					// line index
 
+		ReadExtensionFlags(input, &flags);
+
 		if (IgnoreSymbol(fnName))
 		{
 			continue;
@@ -202,6 +205,12 @@ FnMenuUpdater::ReadFunctionList
 		if (hasNS && !includeNS && NameIsQualified(fnName))
 		{
 			continue;
+		}
+
+		JString* type;
+		if (flags.GetElement("kind", &type) && *type == "I")
+		{
+			fnName.Prepend("#");
 		}
 
 		// save symbol
