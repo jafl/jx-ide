@@ -19,13 +19,10 @@
 #include <jx-af/jcore/jStreamUtil.h>
 #include <jx-af/jcore/jAssert.h>
 
-CtagsUser::CtagsStatus CtagsUser::itsHasExuberantCtagsFlag = CtagsUser::kUntested;
+CtagsUser::CtagsStatus CtagsUser::itsHasUniversalCtagsFlag = CtagsUser::kUntested;
 
 static const JString kCheckVersionCmd("ctags --version");
-static const JRegex versionPattern =
-	"^Exuberant Ctags [^0-9]*([0-9]+)(?:\\.([0-9]+))(?:\\.([0-9]+))?(?:pre([0-9]+))?";
-
-static const JUInt kMinVersion[] = { 5, 8, 0, /* pre */ 0 };
+static const JRegex versionPattern = "^Universal Ctags";
 
 static const JUtf8Byte* kBaseExecCmd =
 	"ctags --filter=yes --filter-terminator=\\\f --fields=kzafimsS --extras=+g ";
@@ -128,7 +125,7 @@ CtagsUser::CtagsUser
 	itsArgs(args),
 	itsCmdPipe(nullptr),
 	itsResultFD(ACE_INVALID_HANDLE),
-	itsIsActiveFlag(HasExuberantCtags()),
+	itsIsActiveFlag(HasUniversalCtags()),
 	itsTryRestartFlag(true)
 {
 }
@@ -170,10 +167,10 @@ CtagsUser::SetCtagsArgs
 bool
 CtagsUser::ProcessFile
 	(
-	const JString&			fileName,
+	const JString&		fileName,
 	const TextFileType	fileType,
-	JString*				result,
-	Language*				lang
+	JString*			result,
+	Language*			lang
 	)
 {
 	if (!StartProcess(fileType, lang))
@@ -222,7 +219,7 @@ bool
 CtagsUser::StartProcess
 	(
 	const TextFileType	fileType,
-	Language*				lang
+	Language*			lang
 	)
 {
 	*lang = kOtherLang;
@@ -1098,7 +1095,9 @@ CtagsUser::IgnoreSymbol
 	const JString& s
 	)
 {
-	return s.BeginsWith("::");
+	return (s.BeginsWith("::") ||
+			s.BeginsWith("AnonymousClass") ||
+			s.BeginsWith("AnonymousFunction"));
 }
 
 /******************************************************************************
@@ -1127,7 +1126,7 @@ CtagsUser::Receive
 }
 
 /******************************************************************************
- HasExuberantCtags (static)
+ HasUniversalCtags (static)
 
  ******************************************************************************/
 
@@ -1144,11 +1143,11 @@ void emptyHandler(int sig)
 }
 
 bool
-CtagsUser::HasExuberantCtags()
+CtagsUser::HasUniversalCtags()
 {
-	if (itsHasExuberantCtagsFlag == kUntested)
+	if (itsHasUniversalCtagsFlag == kUntested)
 	{
-		itsHasExuberantCtagsFlag = kFailure;
+		itsHasUniversalCtagsFlag = kFailure;
 
 		// this hack is required on Linux kernel 2.3.x (4/19/2000)
 		j_sig_func origHandler = signal(SIGCHLD, emptyHandler);
@@ -1171,32 +1170,9 @@ CtagsUser::HasExuberantCtags()
 			JString vers;
 			JReadAll(fromFD, &vers);
 
-			const JStringMatch m = versionPattern.Match(vers, JRegex::kIncludeSubmatches);
-			if (!m.IsEmpty())
+			if (versionPattern.Match(vers))
 			{
-				const JSize count = m.GetSubstringCount();
-				JString s;
-				for (JIndex i=1; i<=count; i++)
-				{
-					JUInt v = 0;
-					s       = m.GetSubstring(i);
-					if (!s.IsEmpty())
-					{
-						const bool ok = s.ConvertToUInt(&v);
-						assert( ok );
-					}
-
-					if (v > kMinVersion[i-1] ||
-						(i == count && v == kMinVersion[i-1]))
-					{
-						itsHasExuberantCtagsFlag = kSuccess;
-						break;
-					}
-					else if (v < kMinVersion[i-1])
-					{
-						break;
-					}
-				}
+				itsHasUniversalCtagsFlag = kSuccess;
 			}
 		}
 
@@ -1206,7 +1182,7 @@ CtagsUser::HasExuberantCtags()
 		}
 	}
 
-	return itsHasExuberantCtagsFlag == kSuccess;
+	return itsHasUniversalCtagsFlag == kSuccess;
 }
 
 /******************************************************************************

@@ -259,7 +259,7 @@ public:
 	~CtagsUser() override;
 
 	bool		IsActive() const;
-	static bool	HasExuberantCtags();
+	static bool	HasUniversalCtags();
 	static bool	IsParsed(const TextFileType type);
 	static bool	IsParsedForFunctionMenu(const TextFileType type);
 
@@ -309,7 +309,7 @@ private:
 	bool			itsIsActiveFlag;
 	bool			itsTryRestartFlag;
 
-	static CtagsStatus	itsHasExuberantCtagsFlag;
+	static CtagsStatus	itsHasUniversalCtagsFlag;
 
 private:
 
