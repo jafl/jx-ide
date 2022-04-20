@@ -178,6 +178,7 @@ CompileDocument::ProcessFinished
 	not empty.
 
 	gcc, g++, g77:  $:#:
+	bison3:         $:#.#-#:
 	cc, CC, flex:   "$", line #:
 	bison:          ("$", line #) error:
 	make:           make[#]: *** ... (ignored)
@@ -188,7 +189,7 @@ CompileDocument::ProcessFinished
 
  ******************************************************************************/
 
-static const JRegex gccErrorRegex    = "(?<=.):[0-9]+(:[0-9]+)?: (?:(?:fatal )?error|warning):";
+static const JRegex gccErrorRegex    = "(?<=.):[0-9]+(\\.[0-9]+-[0-9]+)?(:[0-9]+)?: (?:(?:fatal )?error|warning):";
 static const JRegex flexErrorRegex   = "(?<=..)\", line [0-9]+: ";
 static const JRegex bisonErrorRegex  = "(?<=...)\", line [0-9]+\\) error: ";
 static const JRegex makeErrorRegex   = ".(\\[[0-9]+\\])?: \\*\\*\\*";
