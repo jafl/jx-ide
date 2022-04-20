@@ -246,7 +246,7 @@ MacroManager::HighlightErrors
 		}
 		else if (c == '$' && siter.AtEnd())
 		{
-			fiter.SetPrev(red, kJIteratorStay);
+			fiter.SetNext(red, kJIteratorStay);
 		}
 		else if (c == '$' && siter.Next(&c, kJIteratorStay) && c == '(')
 		{
