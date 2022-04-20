@@ -1097,7 +1097,7 @@ CtagsUser::IgnoreSymbol
 {
 	return (s.BeginsWith("::") ||
 			s.BeginsWith("AnonymousClass") ||
-			s.BeginsWith("AnonymousFunction"));
+			s.BeginsWith("anonymousFunction"));
 }
 
 /******************************************************************************
