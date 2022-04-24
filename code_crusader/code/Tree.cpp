@@ -649,9 +649,9 @@ Tree::UpdateFinished
 void
 Tree::FileChanged
 	(
-	const JString&			fileName,
+	const JString&		fileName,
 	const TextFileType	fileType,
-	const JFAID_t			id
+	const JFAID_t		id
 	)
 {
 	if (fileType == itsFileType)
@@ -660,7 +660,15 @@ Tree::FileChanged
 		{
 			RemoveFile(id);
 		}
-		ParseFile(fileName, id);
+
+		try
+		{
+			ParseFile(fileName, id);
+		}
+		catch (const std::exception& e)
+		{
+			std::cerr << fileName << ": " << e.what() << std::endl;
+		}
 	}
 }
 
