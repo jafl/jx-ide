@@ -24,7 +24,7 @@
 
 static const JUtf8Byte* kCtagsArgs =
 	"--format=2 --excmd=number --sort=no --extras=+q "
-	"--c-kinds=+p --php-kinds=-v --ant-kinds=t --javascript-kinds=cfgm "
+	"--c-kinds=+p --php-kinds=-v --ant-kinds=t --javascript-kinds=cfgmGS "
 	"--html-kinds=I --css-kinds= --make-kinds=tm --pod-kinds= "
 	CtagsBisonDef
 	CtagsBisonNonterminalDef
