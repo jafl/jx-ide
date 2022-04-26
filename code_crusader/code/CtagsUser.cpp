@@ -337,6 +337,11 @@ CtagsUser::ReadExtensionFlags
 			key    = *split.GetElement(1);
 			*value = *split.GetElement(2);
 		}
+		else if (data.EndsWith(":"))
+		{
+			key = *split.GetElement(1);
+			value->Clear();
+		}
 		else
 		{
 			key    = "kind";

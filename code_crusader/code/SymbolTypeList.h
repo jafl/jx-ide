@@ -175,7 +175,7 @@ inline JFontStyle
 SymbolTypeList::GetStyle
 	(
 	const SymbolList::Type	type,
-	const JXImage**				icon
+	const JXImage**			icon
 	)
 	const
 {

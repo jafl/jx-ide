@@ -386,12 +386,12 @@ ParseEditorOptions
 	(
 	const JString&	fullName,
 	const JString&	text,
-	bool*		setTabWidth,
+	bool*			setTabWidth,
 	JSize*			tabWidth,
-	bool*		setTabMode,
-	bool*		tabInsertsSpaces,
-	bool*		setAutoIndent,
-	bool*		autoIndent
+	bool*			setTabMode,
+	bool*			tabInsertsSpaces,
+	bool*			setAutoIndent,
+	bool*			autoIndent
 	)
 {
 	// configure patterns

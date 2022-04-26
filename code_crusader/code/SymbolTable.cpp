@@ -401,7 +401,7 @@ SymbolTable::TableDrawCell
 	}
 
 	const JXImage* icon     = nullptr;
-	const JFontStyle& style = (GetSymbolTypeList())->GetStyle(type, &icon);
+	const JFontStyle& style = GetSymbolTypeList()->GetStyle(type, &icon);
 
 	// draw icon
 

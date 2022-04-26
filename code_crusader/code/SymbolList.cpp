@@ -762,9 +762,9 @@ SymbolList::FileChanged
 void
 SymbolList::ParseFile
 	(
-	const JString&			fileName,
+	const JString&		fileName,
 	const TextFileType	fileType,
-	const JFAID_t			id
+	const JFAID_t		id
 	)
 {
 	JString data;
