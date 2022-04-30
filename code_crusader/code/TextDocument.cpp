@@ -1006,7 +1006,7 @@ TextDocument::UpdateFileMenu()
 	itsFileMenu->SetItemEnable(kDiffSmartCmd, enable);
 
 	enable = false;
-	const JString* s;
+	const JString* s = & JGetString("DiffVCSMenuText::TextDocument");
 	if (onDisk)
 	{
 		const JVCSType type = JGetVCSType(GetFilePath());
@@ -1025,15 +1025,6 @@ TextDocument::UpdateFileMenu()
 			enable = true;
 			s = & JGetString("DiffGitMenuText::TextDocument");
 		}
-		else
-		{
-			enable = true;
-			s = & JGetString("DiffVCSMenuText::TextDocument");
-		}
-	}
-	else
-	{
-		s = & JGetString("DiffVCSMenuText::TextDocument");
 	}
 	itsFileMenu->SetItemText(kDiffVCSCmd, *s);
 	itsFileMenu->SetItemEnable(kDiffVCSCmd, enable);
@@ -1122,7 +1113,7 @@ TextDocument::HandleFileMenu
 
 	else if (index == kDiffFilesCmd)
 	{
-		(GetDiffFileDialog())->Activate();
+		GetDiffFileDialog()->Activate();
 	}
 	else if (index == kDiffSmartCmd)
 	{
@@ -1131,7 +1122,7 @@ TextDocument::HandleFileMenu
 		if (onDisk)
 		{
 			Save();
-			(GetDiffFileDialog())->ViewDiffs(onDisk, fullName);
+			GetDiffFileDialog()->ViewDiffs(onDisk, fullName);
 		}
 	}
 	else if (index == kDiffVCSCmd)
@@ -1141,7 +1132,7 @@ TextDocument::HandleFileMenu
 		if (onDisk)
 		{
 			Save();
-			(GetDiffFileDialog())->ViewVCSDiffs(fullName);
+			GetDiffFileDialog()->ViewVCSDiffs(fullName);
 		}
 	}
 
@@ -1151,7 +1142,7 @@ TextDocument::HandleFileMenu
 		const JString fullName = GetFullName(&onDisk);
 		if (onDisk)
 		{
-			(JXGetWebBrowser())->ShowFileLocation(fullName);
+			JXGetWebBrowser()->ShowFileLocation(fullName);
 		}
 	}
 
