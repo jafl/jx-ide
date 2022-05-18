@@ -638,7 +638,15 @@ HTMLStyler::StyleEmbeddedPHPVariables
 		{
 			iter.SkipPrev();
 
-			JCharacterRange r = MatchAt(token, iter, phpVariablePattern);
+			JCharacterRange r = MatchAt(token, iter, emptyPHPVariablePattern);
+			if (!r.IsEmpty())
+			{
+				AdjustStyle(r, errStyle);
+				iter.SkipNext(r.GetCount());
+				continue;
+			}
+
+			r = MatchAt(token, iter, phpVariablePattern);
 			if (!r.IsEmpty())
 			{
 				if (iter.Prev(&c, kJIteratorStay) && c == '{')
@@ -659,12 +667,7 @@ HTMLStyler::StyleEmbeddedPHPVariables
 				continue;
 			}
 
-			r = MatchAt(token, iter, emptyPHPVariablePattern);
-			if (!r.IsEmpty())
-			{
-				AdjustStyle(r, errStyle);
-				iter.SkipNext(r.GetCount());
-			}
+			iter.SkipNext();
 		}
 		else if (c == '{' && iter.Next(&c) && c == '$')
 		{
