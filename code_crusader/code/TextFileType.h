@@ -375,6 +375,7 @@ HasNamespace
 		   lang == kJavaLang       ||
 		   lang == kJavaScriptLang ||
 		   lang == kPerlLang       ||
+		   lang == kPHPLang        ||
 		   lang == kSQLLang;
 }
 
