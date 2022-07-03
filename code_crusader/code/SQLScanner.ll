@@ -12,6 +12,7 @@ This scanner reads a SQL file and returns TextScanner::SQL::Scanner::Tokens.
 %option namespace="TextScanner::SQL" lexer="Scanner"
 %option lex="NextToken" token-type="StylingScannerBase::Token"
 %option unicode nodefault full freespace
+%option case-insensitive
 
 %class {
 
