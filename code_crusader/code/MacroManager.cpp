@@ -182,7 +182,7 @@ MacroManager::Perform
 	{
 		JStringIterator iter(te->GetText()->GetText(), kJIteratorStartBefore, lineStart);
 		iter.BeginMatch();
-		iter.MoveTo(kJIteratorStartAfter, charIndex);
+		iter.MoveTo(kJIteratorStartBefore, charIndex);
 		lineStr = JPrepArgForExec(iter.FinishMatch().GetString());
 	}
 
