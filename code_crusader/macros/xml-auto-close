@@ -9,12 +9,12 @@ $line = $ARGV[0];
 
 if ($line =~ m|<([^?%!/\s<>]+)(\s+[^<>]+)?>$| &&
 	$line !~ m|/\s*>$|)
-	{
+{
 	$s = '</'.$1.'>';
 	print $s;
 
 	foreach (1..length($s))
-		{
+	{
 		print chr(28);
-		}
 	}
+}
