@@ -164,7 +164,7 @@ SearchTextDialog::BuildWindow()
 
 	auto* searchInput =
 		jnew JXInputField(true, false, window,
-					JXWidget::kHElastic, JXWidget::kFixedTop, 20,29, 220,45);
+					JXWidget::kHElastic, JXWidget::kFixedTop, 20,30, 220,45);
 	assert( searchInput != nullptr );
 
 	auto* replaceInput =
@@ -199,12 +199,12 @@ SearchTextDialog::BuildWindow()
 
 	auto* prevReplaceMenu =
 		jnew JXStringHistoryMenu(kHistoryLength, JString::empty, window,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 250,120, 30,20);
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 245,118, 30,20);
 	assert( prevReplaceMenu != nullptr );
 
 	auto* prevSearchMenu =
 		jnew JXStringHistoryMenu(kHistoryLength, JString::empty, window,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 250,50, 30,20);
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 245,43, 30,20);
 	assert( prevSearchMenu != nullptr );
 
 	auto* helpButton =
