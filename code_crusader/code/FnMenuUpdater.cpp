@@ -200,17 +200,16 @@ FnMenuUpdater::ReadFunctionList
 			continue;
 		}
 
-		// toss qualified or unqualified version
-
-		if (hasNS && !includeNS && NameIsQualified(fnName))
-		{
-			continue;
-		}
+		// toss qualified or unqualified version, except for HTML id's
 
 		JString* type;
 		if (flags.GetElement("kind", &type) && *type == "I")
 		{
 			fnName.Prepend("#");
+		}
+		else if (hasNS && !includeNS && NameIsQualified(fnName))
+		{
+			continue;
 		}
 
 		// save symbol

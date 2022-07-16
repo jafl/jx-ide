@@ -372,6 +372,7 @@ HasNamespace
 	return lang == kCLang          ||	// C++, actually
 		   lang == kDLang          ||
 		   lang == kGoLang         ||
+		   lang == kHTMLLang       ||	// for JavaScript
 		   lang == kJavaLang       ||
 		   lang == kJavaScriptLang ||
 		   lang == kPerlLang       ||
@@ -383,7 +384,7 @@ inline bool
 GetStyler
 	(
 	const TextFileType	type,
-	StylerBase**			styler
+	StylerBase**		styler
 	)
 {
 	return GetStyler(GetLanguage(type), styler);
@@ -393,7 +394,7 @@ inline bool
 GetCompleter
 	(
 	const TextFileType	type,
-	StringCompleter**		completer
+	StringCompleter**	completer
 	)
 {
 	return GetCompleter(GetLanguage(type), completer);
