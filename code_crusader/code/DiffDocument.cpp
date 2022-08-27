@@ -611,7 +611,7 @@ DiffDocument::CreateGit
 		getCmd        += get2Cmd;
 
 		doc = jnew DiffDocument(kGitType, fullName, getCmd, diffCmd, defStyle,
-								 name1, removeStyle, name2, insertStyle);
+								name1, removeStyle, name2, insertStyle);
 		assert( doc != nullptr );
 	}
 
@@ -621,7 +621,7 @@ DiffDocument::CreateGit
 	cmd        += JPrepArgForExec(f2);
 
 	err = DiffDocument::CreatePlain(f1, cmd, defStyle, name1, removeStyle,
-									  name2, insertStyle, silent, doc);
+									name2, insertStyle, silent, doc);
 	if ((!err.OK() && origDoc == nullptr) || !doc->IsActive())
 	{
 		doc->Close();

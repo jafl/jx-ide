@@ -89,6 +89,7 @@ DiffEditor::ReadDiff
 		JStyledText* st = GetText();
 
 		const JStyledText::TextIndex pasteIndex =
+			origRange.IsNothing() ? JStyledText::TextIndex(1,1) :
 			GetText()->AdjustTextIndex(GetLineEnd(origRange.last), +1);
 
 		if (cmd != 'a' && st->GetText().CharacterIndexValid(origRange.last))
