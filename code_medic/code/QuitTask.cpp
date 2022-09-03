@@ -10,7 +10,8 @@
  ******************************************************************************/
 
 #include "QuitTask.h"
-#include <jx-af/jx/jXGlobals.h>
+#include "CommandDirector.h"
+#include "globals.h"
 #include <jx-af/jcore/jAssert.h>
 
 const Time kCheckInterval = 1000;	// milliseconds
@@ -58,7 +59,7 @@ QuitTask::Perform
 		const JSize count = list->GetElementCount();
 		for (JIndex i=1; i<=count; i++)
 		{
-			if ((list->GetElement(i))->IsActive())
+			if (list->GetElement(i)->IsActive())
 			{
 				quit = false;
 				break;
@@ -66,7 +67,11 @@ QuitTask::Perform
 		}
 	}
 
-	if (quit)
+	if (quit && GetLink()->ProgramIsRunning())
+	{
+		GetCommandDirector()->Activate();
+	}
+	else if (quit)
 	{
 		JXGetApplication()->Quit();
 		jdelete this;
