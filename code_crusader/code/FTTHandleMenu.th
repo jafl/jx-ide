@@ -45,7 +45,7 @@ FileTypeTable::CreateMenuFn()
 	menu->SetToHiddenPopupMenu();
 	menu->SetUpdateAction(JXMenu::kDisableNone);
 
-	menu->AppendItem(JGetString("NoScript::CBFileTypeTable"), JXMenu::kRadioType);
+	menu->AppendItem(JGetString("NoScript::FileTypeTable"), JXMenu::kRadioType);
 	menu->ShowSeparatorAfter(1);
 	const JSize count = DataList.GetElementCount();
 	for (JIndex i=1; i<=count; i++)
