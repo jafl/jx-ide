@@ -58,13 +58,12 @@ CPreprocessor::Preprocess
 	bool changed = false;
 
 	JStringIterator iter(text);
-	JString pattern;
 	for (const auto& info : *itsMacroList)
 	{
-		pattern = "\\b" + JRegex::BackslashForLiteral(*info.name)  + "\\b";
+		JRegex r("\\b" + JRegex::BackslashForLiteral(*info.name)  + "\\b");
 
 		iter.MoveTo(kJIteratorStartAtBeginning, 0);
-		while (iter.Next(*info.name))
+		while (iter.Next(r))
 		{
 			iter.ReplaceLastMatch(*info.value);
 			changed = true;
