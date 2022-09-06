@@ -409,7 +409,7 @@ ParseEditorOptions
 	*setTabMode    = false;
 	*setAutoIndent = false;
 
-{
+	{
 	editorconfig_handle eh = editorconfig_handle_init();
 	if (editorconfig_parse(fullName.GetBytes(), eh) == 0)
 	{
@@ -446,7 +446,7 @@ ParseEditorOptions
 	}
 
 	editorconfig_handle_destroy(eh);
-}
+	}
 
 	const JStringMatch
 		emacsTopTabWidthMatch = emacsTopTabWidthOption.Match(text, JRegex::kIncludeSubmatches),
@@ -537,7 +537,7 @@ includeScriptComments
 void
 ScrollForDefinition
 	(
-	JXTEBase*			te,
+	JXTEBase*		te,
 	const Language	lang
 	)
 {
@@ -669,7 +669,7 @@ SelectLines
 void
 BalanceFromSelection
 	(
-	JXTEBase*			te,
+	JXTEBase*		te,
 	const Language	lang
 	)
 {
@@ -788,7 +788,7 @@ BalanceFromSelection
 bool
 BalanceForward
 	(
-	const Language	lang,
+	const Language		lang,
 	JStringIterator*	iter,
 	JUtf8Character*		c
 	)
@@ -824,7 +824,7 @@ BalanceForward
 bool
 BalanceBackward
 	(
-	const Language	lang,
+	const Language		lang,
 	JStringIterator*	iter,
 	JUtf8Character*		c
 	)

@@ -16,7 +16,6 @@
 #include "PrefsManager.h"
 #include "sharedUtil.h"
 #include <jx-af/jx/JXDialogDirector.h>
-#include <jx-af/jcore/JStringIterator.h>
 #include <jx-af/jcore/JRegex.h>
 #include <jx-af/jcore/JColorManager.h>
 #include <jx-af/jcore/jGlobals.h>

@@ -313,7 +313,7 @@ ExecOutputDocument::SetConnection
 	const JString&	dontCloseMsg,
 	const JString&	execDir,
 	const JString&	execCmd,
-	const bool	showPID
+	const bool		showPID
 	)
 {
 	assert( !ProcessRunning() && itsRecordLink == nullptr && itsDataLink == nullptr );

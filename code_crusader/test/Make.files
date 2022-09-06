@@ -161,3 +161,8 @@ code/test_PHPTreeScanner
 .cpp ../code/Tree
 .cpp ../code/PHPClass
 .cpp ../code/Class
+
+
+@test_CPreprocessor
+.cpp ../code/CPreprocessor
+code/test_CPreprocessor

@@ -242,7 +242,7 @@ CStyler::PreexpandCheckRange
 	const JString&			text,
 	const JRunArray<JFont>&	styles,
 	const JCharacterRange&	modifiedRange,
-	const bool			deletion,
+	const bool				deletion,
 	JStyledText::TextRange*	checkRange
 	)
 {

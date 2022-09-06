@@ -13,7 +13,6 @@
 #include "CShellStyler.h"
 #include "PrefsManager.h"
 #include <jx-af/jcore/JRegex.h>
-#include <jx-af/jcore/JStringIterator.h>
 #include <jx-af/jcore/JColorManager.h>
 #include <jx-af/jcore/jGlobals.h>
 #include <jx-af/jcore/jAssert.h>

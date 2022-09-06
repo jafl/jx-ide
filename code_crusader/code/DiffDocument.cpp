@@ -15,7 +15,6 @@
 #include <jx-af/jx/JXTextMenu.h>
 #include <jx-af/jx/JXTextButton.h>
 #include <jx-af/jx/JXScrollbarSet.h>
-#include <jx-af/jcore/JStringIterator.h>
 #include <jx-af/jcore/JProcess.h>
 #include <jx-af/jcore/jFStreamUtil.h>
 #include <jx-af/jcore/jStreamUtil.h>

@@ -663,7 +663,7 @@ CommandManager::BuildCmdPath
 	JString*			cmdPath,
 	ProjectDocument*	projDoc,
 	const JString&		fullName,
-	const bool		reportError
+	const bool			reportError
 	)
 {
 	const bool onDisk = !fullName.IsEmpty() && JIsAbsolutePath(fullName);

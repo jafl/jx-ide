@@ -33,7 +33,8 @@ TESTS := \
       test_JavaStyler test_JavaScriptStyler test_PerlStyler test_PropertiesStyler \
       test_PythonStyler test_RubyStyler test_SQLStyler test_TCLStyler \
       test_CTreeScanner test_DTreeScanner test_GoTreeScanner \
-      test_JavaTreeScanner test_PHPTreeScanner
+      test_JavaTreeScanner test_PHPTreeScanner \
+      test_CPreprocessor
 
 include ../make_reflex_target
 

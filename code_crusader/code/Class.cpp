@@ -488,7 +488,7 @@ Class::FindParents
 bool
 Class::FindParent
 	(
-	ParentInfo*		pInfo,
+	ParentInfo*	pInfo,
 	const bool	okToSearchGhosts
 	)
 {

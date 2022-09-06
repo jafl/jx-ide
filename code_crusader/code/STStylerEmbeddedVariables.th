@@ -20,6 +20,7 @@
 #endif
 
 #include <jx-af/jcore/JListUtil.h>
+#include <jx-af/jcore/JStringIterator.h>
 
 void
 ClassName::FunctionName

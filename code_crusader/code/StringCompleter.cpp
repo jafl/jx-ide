@@ -166,7 +166,7 @@ bool
 StringCompleter::Complete
 	(
 	JTextEditor*			te,
-	const bool			includeNS,
+	const bool				includeNS,
 	JXStringCompletionMenu*	menu
 	)
 {

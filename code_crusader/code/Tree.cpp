@@ -1673,7 +1673,7 @@ Tree::FindParent
 	(
 	const JString&	parentName,
 	const Class*	container,
-	Class**		parent,
+	Class**			parent,
 	JString*		nameSpace
 	)
 	const

@@ -1,4 +1,5 @@
 #include <stdio.h>
+# include <stdlib.h>
 
 #if 0	// comment
 abc

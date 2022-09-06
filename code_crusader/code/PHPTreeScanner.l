@@ -7,7 +7,6 @@ This scanner reads a PHP file and builds a PHPClass.
 
 #include "PHPClass.h"
 #include <jx-af/jcore/JString.h>
-#include <jx-af/jcore/JStringIterator.h>
 #include <jx-af/jcore/JFAID.h>
 #include <jx-af/jcore/jAssert.h>
 }
