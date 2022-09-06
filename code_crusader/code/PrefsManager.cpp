@@ -2921,9 +2921,9 @@ PrefsManager::GetFileType
 TextFileType
 PrefsManager::GetFileType
 	(
-	const TextDocument&		doc,
-	CharActionManager**		actionMgr,
-	MacroManager**			macroMgr,
+	const TextDocument&			doc,
+	CharActionManager**			actionMgr,
+	MacroManager**				macroMgr,
 	JStyledText::CRMRuleList**	crmRuleList,
 	JString*					scriptPath,
 	bool*						wordWrap
@@ -3006,11 +3006,11 @@ bool
 PrefsManager::CalcFileType
 	(
 	const TextDocument&	doc,
-	JIndex*					index
+	JIndex*				index
 	)
 	const
 {
-	const JString fileName       = CleanFileName(doc.GetFileName());
+	const JString fileName   = CleanFileName(doc.GetFileName());
 	const bool checkSuffixes = doc.ExistsOnDisk();
 
 	const JSize count = itsFileTypeList->GetElementCount();
@@ -3072,7 +3072,7 @@ PrefsManager::GetLiteralPrefixRange
 		iter.SkipNext();
 	}
 
-	if (c == '?' && iter.GetPrevCharacterIndex() > 2)
+	if (c == '?' && iter.GetPrevCharacterIndex() > 1)
 	{
 		iter.SkipPrev();
 	}
