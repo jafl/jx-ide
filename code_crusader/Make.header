@@ -36,8 +36,7 @@ LIB_DEPS := ${JX_LIB_ROOT}/libjfs.a \
 
 # make variables
 
-LOADLIBES := -lreflex -leditorconfig ${J_STD_LIBS}
-LDFLAGS   := 
+LDLIBS := -lreflex -leditorconfig ${J_STD_LIBS}
 
 include make_reflex_target
 

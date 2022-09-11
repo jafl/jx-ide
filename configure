@@ -14,19 +14,26 @@ if [[ $1 == release || $1 == ci ]]; then
 	echo -n 1 >| code_mill/0-RELEASE;
 fi
 
+INSTALL_ROOT=/usr/local;
+
 if [[ $SYS == Darwin ]]; then
 
-	if ! command -v brew; then
+	if ! command -v brew > /dev/null; then
 		echo Installing Homebrew...;
 		sudo /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)";
 	fi
 
+	brew install -q llvm editorconfig;
 	if [[ $1 != ci ]]; then
-		brew tap jafl/jx;
-		brew bundle;
-	else
-		brew bundle --file Brewfile.ci
+		brew install -q universal-ctags;
+
+		if [[ ! -f ../JX/Makefile && -z $JX_ROOT ]]; then
+			brew tap jafl/jx;
+			brew install jafl/jx/jx-application-framework;
+		fi
 	fi
+
+	INSTALL_ROOT=`brew --prefix`;
 
 elif command -v apt-get; then
 
@@ -80,14 +87,14 @@ else
 
 fi
 
-if [[ ! -d /usr/local/include/reflex/ && -z $SNAPCRAFT_PART_INSTALL ]]; then
+if [[ ! -d $INSTALL_ROOT/include/reflex/ && -z $SNAPCRAFT_PART_INSTALL ]]; then
 
 	echo "Please install RE/flex library.";
 	exit 1;
 
 fi
 
-if [[ ! -d /usr/local/include/jx-af/ && ! -f ../JX/Makefile && -z $JX_ROOT ]]; then
+if [[ ! -d $INSTALL_ROOT/include/jx-af/ && ! -f ../JX/Makefile && -z $JX_ROOT ]]; then
 
 	echo "Please install jx-application-framework.";
 	exit 1;
