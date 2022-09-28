@@ -76,7 +76,7 @@ static const FTInfo kFTInfo[] =		// index on TextFileType
 { kTCLFT,              kTCLLang,         "--language-force=tcl"        , "ProceduresMenuTitle::CtagsUser"  },
 { kVimFT,              kVimLang,         "--language-force=vim"        , "FunctionsMenuTitle::CtagsUser"   },
 { kJavaArchiveFT,      kOtherLang,       kOtherLangCmd                 , nullptr                           },
-{ kPHPFT,              kPHPLang,         "--language-force=php"        , "FunctionsMenuTitle::CtagsUser"   },
+{ kPHPFT,              kPHPLang,         "--language-force=html"       , "FunctionsMenuTitle::CtagsUser"   },
 { kASPFT,              kASPLang,         "--language-force=asp"        , "FunctionsMenuTitle::CtagsUser"   },
 { kSearchOutputFT,     kOtherLang,       kOtherLangCmd                 , nullptr                           },
 { kMakeFT,             kMakeLang,        "--language-force=make"       , "TargetsMenuTitle::CtagsUser"     },
