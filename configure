@@ -8,7 +8,8 @@ if [[ $UID != 0 ]]; then
 	SUDO="sudo";
 fi
 
-if [[ $1 == release || $1 == ci ]]; then
+MODE=$1;
+if [[ $MODE == release || $MODE == ci ]]; then
 	echo -n 1 >| code_crusader/0-RELEASE;
 	echo -n 1 >| code_medic/0-RELEASE;
 	echo -n 1 >| code_mill/0-RELEASE;
@@ -20,11 +21,11 @@ if [[ $SYS == Darwin ]]; then
 
 	if ! command -v brew > /dev/null; then
 		echo Installing Homebrew...;
-		sudo /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)";
+		$SUDO /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)";
 	fi
 
 	brew install -q llvm editorconfig;
-	if [[ $1 != ci ]]; then
+	if [[ $MODE != ci ]]; then
 		brew install -q universal-ctags;
 
 		if [[ ! -f ../JX/Makefile && -z $JX_ROOT ]]; then
@@ -41,12 +42,14 @@ elif command -v apt-get; then
 
 	LLDB_VERS=11
 
-	if [[ $1 != ci && -z $SNAPCRAFT_BUILD_ENVIRONMENT ]]; then
+	if [[ -z $SNAPCRAFT_BUILD_ENVIRONMENT ]]; then
 		$SUDO apt update;
 
 		if [[ ! -f ../JX/Makefile && -z $JX_ROOT ]]; then
-			curl -O http://libjx.sourceforge.net/release/jx-application-framework.deb;
-			sudo apt install ./jx-application-framework.deb;
+			curl -LO https://libjx.sourceforge.net/${MODE:-release}/re-flex.deb
+			curl -LO https://libjx.sourceforge.net/${MODE:-release}/jx-application-framework.deb;
+			$SUDO apt -y remove nginx libgd3;	# hack
+			$SUDO apt install ./re-flex.deb ./jx-application-framework.deb;
 		fi
 	fi;
 
