@@ -55,6 +55,24 @@ Makefiles::
 test:
 	@cd test; make test
 
+.PHONY : install
+install::
+  ifeq (${J_IS_RELEASE_BUILD},1)
+	@mkdir -p ${JX_INSTALL_DATA}/${SIGNATURE}
+	@cp -r code_crusader/macros code_crusader/scripts ${JX_INSTALL_DATA}/${SIGNATURE}
+  else
+	@mkdir -p ~/.${SIGNATURE}
+	@ln -sf $(shell pwd)/code_crusader/macros $(shell pwd)/code_crusader/scripts ~/.${SIGNATURE}
+  endif
+
+.PHONY : uninstall
+uninstall::
+  ifeq (${J_IS_RELEASE_BUILD},1)
+	@${RM} -rf ${JX_INSTALL_DATA}/${SIGNATURE}
+  else
+	@${RM} -rf ~/.${SIGNATURE}
+  endif
+
 .PHONY : init_tarball_extra
 init_tarball_extra::
 	@ln -s -t ${PKG_PATH}/ \

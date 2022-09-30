@@ -105,3 +105,7 @@ if [[ ! -d $INSTALL_ROOT/include/jx-af/ && ! -f ../JX/Makefile && -z $JX_ROOT ]]
 fi
 
 make Makefiles;
+
+if [[ $MODE == release ]]; then
+	touch code_medic/backend/gdb/GDBVarTreeParserY.cpp code_medic/backend/gdb/GDBVarTreeParserY.hpp;
+fi

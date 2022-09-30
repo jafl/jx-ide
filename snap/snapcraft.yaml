@@ -36,13 +36,9 @@ parts:
       - JX_ROOT: /snap/jx-application-framework/current
       - PATH: $PATH:$JX_ROOT/bin
       - LD_LIBRARY_PATH: $SNAPCRAFT_PART_INSTALL/lib:$SNAPCRAFT_PART_INSTALL/lib/$SNAPCRAFT_ARCH_TRIPLET:$SNAPCRAFT_PART_INSTALL/usr/lib:$SNAPCRAFT_PART_INSTALL/usr/lib/$SNAPCRAFT_ARCH_TRIPLET
-    override-build: |
-      ./configure release
-      touch code_medic/backend/gdb/GDBVarTreeParserY.cpp code_medic/backend/gdb/GDBVarTreeParserY.hpp
-      make
-      make install
-      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/lib/jxcb
-      cp -r code_crusader/macros code_crusader/scripts $SNAPCRAFT_PART_INSTALL/usr/lib/jxcb
+      - SNAPCRAFT_PARALLEL_BUILD_COUNT: "1"
+    autotools-configure-parameters:
+      - release
     organize:
       bin/jcc: bin/code-crusader
       bin/medic: bin/code-medic
