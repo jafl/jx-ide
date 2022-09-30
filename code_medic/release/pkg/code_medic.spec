@@ -16,17 +16,17 @@ It supports gdb and Xdebug.
 
 %install
 
-%define medic_doc_dir   /usr/share/doc/code-medic
-%define gnome_app_path  /usr/share/applications
-%define gnome_icon_path /usr/share/pixmaps
+%define medic_doc_dir   /usr/local/share/doc/code-medic
+%define gnome_app_path  /usr/local/share/applications
+%define gnome_icon_path /usr/local/share/pixmaps
 
-./install $RPM_BUILD_ROOT
+./install $RPM_BUILD_ROOT/usr/local
 
 %files
 
 %docdir %medic_doc_dir
 
-/usr/bin/medic
+/usr/local/bin/medic
 %medic_doc_dir
 
 %gnome_app_path/code_medic.desktop

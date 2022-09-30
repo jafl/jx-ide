@@ -3,12 +3,15 @@
 # With no arguments, this script must install from an unpacked tgz.
 
 PRE=$1;
+if [[ -z $PRE ]]; then
+	PRE=/usr/local;
+fi
 
-BIN=$PRE/usr/bin;
-DOC=$PRE/usr/share/doc/code-crusader;
-LIB=$PRE/usr/lib/jxcb;
-APP=$PRE/usr/share/applications;
-ICON=$PRE/usr/share/pixmaps;
+BIN=$PRE/bin;
+DOC=$PRE/share/doc/code-crusader;
+LIB=$PRE/share/jxcb;
+APP=$PRE/share/applications;
+ICON=$PRE/share/pixmaps;
 
 mkdir -p $BIN;
 install -m755 jcc                    $BIN;

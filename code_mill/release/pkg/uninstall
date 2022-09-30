@@ -1,10 +1,13 @@
 #!/bin/bash
 
 PRE=$1;
+if [[ -z $PRE ]]; then
+	PRE=/usr/local;
+fi
 
-BIN=$PRE/usr/bin;
-DOC=$PRE/usr/share/doc/code-mill;
-APP=$PRE/usr/share/applications;
+BIN=$PRE/bin;
+DOC=$PRE/share/doc/code-mill;
+APP=$PRE/share/applications;
 
 rm -f  $BIN/code-mill;
 rm -rf $DOC;

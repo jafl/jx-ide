@@ -3,10 +3,13 @@
 # With no arguments, this script must install from an unpacked tgz.
 
 PRE=$1;
+if [[ -z $PRE ]]; then
+	PRE=/usr/local;
+fi
 
-BIN=$PRE/usr/bin;
-DOC=$PRE/usr/share/doc/code-mill;
-APP=$PRE/usr/share/applications;
+BIN=$PRE/bin;
+DOC=$PRE/share/doc/code-mill;
+APP=$PRE/share/applications;
 
 mkdir -p $BIN;
 install -m755 code-mill $BIN;
