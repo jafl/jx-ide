@@ -1,6 +1,6 @@
 name: jx-ide
 title: JX IDE
-base: core22
+base: core20
 version: "7.0.0"
 #source-code: https://github.com/jafl/jx-ide
 #issues: https://github.com/jafl/jx-ide/issues
@@ -84,7 +84,7 @@ parts:
       - libfontconfig1
       - libfreetype6
       - libgd3
-      - libicu70
+      - libicu66
       - libjbig0
       - libjpeg-turbo8
       - libpng16-16
