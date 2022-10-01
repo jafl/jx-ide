@@ -59,7 +59,7 @@ test:
 install::
   ifeq (${J_IS_RELEASE_BUILD},1)
 	@mkdir -p ${JX_INSTALL_DATA}/${SIGNATURE}
-	@cp -r code_crusader/macros code_crusader/scripts ${JX_INSTALL_DATA}/${SIGNATURE}
+	@cp -r macros scripts ${JX_INSTALL_DATA}/${SIGNATURE}
   else
 	@mkdir -p ~/.${SIGNATURE}
 	@ln -sf $(shell pwd)/code_crusader/macros $(shell pwd)/code_crusader/scripts ~/.${SIGNATURE}

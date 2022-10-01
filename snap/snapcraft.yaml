@@ -1,6 +1,6 @@
 name: jx-ide
 title: JX IDE
-base: core20
+base: core22
 version: "7.0.0"
 #source-code: https://github.com/jafl/jx-ide
 #issues: https://github.com/jafl/jx-ide/issues
@@ -36,7 +36,7 @@ parts:
       - JX_ROOT: /snap/jx-application-framework/current
       - PATH: $PATH:$JX_ROOT/bin
       - LD_LIBRARY_PATH: $SNAPCRAFT_PART_INSTALL/lib:$SNAPCRAFT_PART_INSTALL/lib/$SNAPCRAFT_ARCH_TRIPLET:$SNAPCRAFT_PART_INSTALL/usr/lib:$SNAPCRAFT_PART_INSTALL/usr/lib/$SNAPCRAFT_ARCH_TRIPLET
-      - SNAPCRAFT_PARALLEL_BUILD_COUNT: "1"
+      - CRAFT_PARALLEL_BUILD_COUNT: "1"
     autotools-configure-parameters:
       - release
     organize:
