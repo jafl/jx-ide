@@ -2,9 +2,10 @@ name: jx-ide
 title: JX IDE
 base: core20
 version: "7.0.0"
-#source-code: https://github.com/jafl/jx-ide
-#issues: https://github.com/jafl/jx-ide/issues
-#contact: https://johnlindal.wixsite.com/aboutme/contact-me
+license: LGPL-2.1-or-later
+source-code: https://github.com/jafl/jx-ide
+issues: https://github.com/jafl/jx-ide/issues
+contact: https://johnlindal.wixsite.com/aboutme/contact-me
 summary: JX IDE is a graphical development environment for UNIX.
 description: |
   Code Crusader provides project management, editing, and compiling.
@@ -46,7 +47,7 @@ parts:
       - bin/code-crusader
       - bin/code-medic
       - bin/code-mill
-      - usr/lib/jxcb
+      - share/jxcb
     build-packages:
       - g++
       - make
