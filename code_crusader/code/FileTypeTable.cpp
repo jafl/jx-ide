@@ -1058,7 +1058,7 @@ FileTypeTable::UpdateScriptMenu()
 	itsScriptMenu->SetMenuItems(kScriptMenuStr);
 
 	JPoint cell;
-	const bool ok = (GetTableSelection()).GetFirstSelectedCell(&cell);
+	const bool ok = GetTableSelection().GetFirstSelectedCell(&cell);
 	assert( ok );
 	const PrefsManager::FileTypeInfo info = itsFileTypeList->GetElement(cell.y);
 
@@ -1126,7 +1126,7 @@ void
 FileTypeTable::BuildScriptMenuItems
 	(
 	const JString&		path,
-	const bool		isUserPath,
+	const bool			isUserPath,
 	JPtrArray<JString>*	menuText
 	)
 	const

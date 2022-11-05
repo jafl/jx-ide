@@ -25,7 +25,7 @@ static const JString kCheckVersionCmd("ctags --version");
 static const JRegex versionPattern = "^Universal Ctags";
 
 static const JUtf8Byte* kBaseExecCmd =
-	"ctags --filter=yes --filter-terminator=\\\f --fields=kzafimsS --extras=+g ";
+	"ctags --filter=yes --filter-terminator=\\\f --fields=kzafimsS --extras=+g --extras=-{anonymous} ";
 
 const JUtf8Byte kDelimiter = '\f';
 
@@ -1100,9 +1100,7 @@ CtagsUser::IgnoreSymbol
 	const JString& s
 	)
 {
-	return (s.BeginsWith("::") ||
-			s.BeginsWith("AnonymousClass") ||
-			s.BeginsWith("anonymousFunction"));
+	return s.BeginsWith("::");
 }
 
 /******************************************************************************
