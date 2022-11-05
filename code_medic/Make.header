@@ -56,10 +56,6 @@ include ${MAKE_INCLUDE}/app_targets
 ${BIN_NAME}:: ./backend/gdb/GDBVarTreeScanner.cpp
 	@if [[ ! -e VarTreeParserY.hpp ]]; then ${RM} code/VarTreeParserY.o; fi
 
-.PHONY : post_link
-post_link::
-	-${J_POST_LINK_LLDB_CMD} ${BIN_NAME}
-
 .PHONY : clean
 clean::
 	@${RM} backend/gdb/GDBVarTreeParserY.cpp backend/gdb/GDBVarTreeParserY.hpp \
