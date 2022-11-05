@@ -272,7 +272,7 @@ DiffDocument::CreateCVS
 		if (doc == nullptr)
 		{
 			doc = jnew DiffDocument(kCVSType, fullName, getCmd, diffCmd, defStyle,
-									 name1, removeStyle, name2, insertStyle);
+									name1, removeStyle, name2, insertStyle);
 			assert( doc != nullptr );
 		}
 		doc->Init(startFullName);
@@ -436,7 +436,7 @@ DiffDocument::CreateSVN
 		if (doc == nullptr)
 		{
 			doc = jnew DiffDocument(kSVNType, fullName, getCmd, diffCmd, defStyle,
-									  name1, removeStyle, name2, insertStyle);
+									name1, removeStyle, name2, insertStyle);
 			assert( doc != nullptr );
 		}
 		if (!startFullName.IsEmpty())

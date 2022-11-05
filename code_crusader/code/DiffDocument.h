@@ -61,10 +61,10 @@ protected:
 protected:
 
 	DiffDocument(const Type type, const JString& fullName,
-				   const JString& getCmd,
-				   const JString& diffCmd, const JFontStyle& defStyle,
-				   const JString& name1, const JFontStyle& removeStyle,
-				   const JString& name2, const JFontStyle& insertStyle);
+				 const JString& getCmd,
+				 const JString& diffCmd, const JFontStyle& defStyle,
+				 const JString& name1, const JFontStyle& removeStyle,
+				 const JString& name2, const JFontStyle& insertStyle);
 
 	void	Receive(JBroadcaster* sender, const Message& message) override;
 
@@ -100,11 +100,11 @@ private:
 	void	HandleDiffMenu(const JIndex index);
 
 	static TextEditor*	ConstructDiffEditor(TextDocument* document,
-												const JString& fileName,
-												JXMenuBar* menuBar,
-												TELineIndexInput* lineInput,
-												TEColIndexInput* colInput,
-												JXScrollbarSet* scrollbarSet);
+											const JString& fileName,
+											JXMenuBar* menuBar,
+											TELineIndexInput* lineInput,
+											TEColIndexInput* colInput,
+											JXScrollbarSet* scrollbarSet);
 
 public:
 

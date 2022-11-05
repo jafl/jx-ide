@@ -67,6 +67,12 @@ DiffEditor::ReadDiff
 	itsRemoveStyle = removeStyle;
 	itsInsertStyle = insertStyle;
 
+	if (!GetText()->EndsWithNewline())
+	{
+		SetCaretLocation(GetText()->GetBeyondEnd().charIndex);
+		Paste(JString::newline);
+	}
+
 	JSize lineOffset = 0;
 	while (true)
 	{
