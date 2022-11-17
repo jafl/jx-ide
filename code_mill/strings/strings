@@ -13,9 +13,9 @@ Code Mill is a trademark of John Lindal.
 
 https://sourceforge.net/projects/nps-codemill/"
 
-HELP_URL		"http://nps-codemill.sourceforge.net/help.html"
-CHANGE_LOG_URL	"http://nps-codemill.sourceforge.net/ChangeLog.html"
-VERSION_URL		"http://nps-codemill.sourceforge.net/VERSION"
+HELP_URL		"https://nps-codemill.sourceforge.net/help.html"
+CHANGE_LOG_URL	"https://nps-codemill.sourceforge.net/ChangeLog.html"
+VERSION_URL		"https://nps-codemill.sourceforge.net/VERSION"
 DOWNLOAD_URL	"https://github.com/jafl/jx-ide/releases"
 
 # globals

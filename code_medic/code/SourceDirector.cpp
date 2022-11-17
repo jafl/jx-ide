@@ -703,7 +703,7 @@ SourceDirector::DisplayFile
 	(
 	const JString&	fileName,
 	const JIndex	lineNumber,
-	const bool	markLine
+	const bool		markLine
 	)
 {
 	assert( !fileName.IsEmpty() );

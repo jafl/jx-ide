@@ -312,8 +312,6 @@ PrefsManager::UpgradeData
 		{
 			JStringIterator iter(&cmd, kJIteratorStartAtEnd);
 			iter.RemovePrev(3);
-			iter.Invalidate();
-
 			cmd.TrimWhitespace();	// invalidates iter
 			SetGDBCommand(cmd);
 		}

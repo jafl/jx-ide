@@ -15,12 +15,12 @@ Code Crusader is a trademark of John Lindal.
 
 https://sourceforge.net/projects/codecrusader/"
 
-HELP_URL		"http://codecrusader.sourceforge.net/help.html"
-CHANGE_LOG_URL	"http://codecrusader.sourceforge.net/ChangeLog.html"
-VERSION_URL		"http://codecrusader.sourceforge.net/VERSION"
+HELP_URL		"https://codecrusader.sourceforge.net/help.html"
+CHANGE_LOG_URL	"https://codecrusader.sourceforge.net/ChangeLog.html"
+VERSION_URL		"https://codecrusader.sourceforge.net/VERSION"
 DOWNLOAD_URL	"https://github.com/jafl/jx-ide/releases"
 
-HelpURL::JXSearchTextDialog	"http://codecrusader.sourceforge.net/help.html#CBSearchTextHelp"
+HelpURL::JXSearchTextDialog	"https://codecrusader.sourceforge.net/help.html#CBSearchTextHelp"
 
 # global
 
