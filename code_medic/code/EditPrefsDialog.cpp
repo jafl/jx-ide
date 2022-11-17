@@ -454,7 +454,6 @@ EditPrefsDialog::ChooseDebugger
 		iter.BeginMatch();
 		if (iter.Next(" "))
 		{
-			iter.SkipPrev();
 			iter.FinishMatch();
 			iter.ReplaceLastMatch(fullName);
 		}
