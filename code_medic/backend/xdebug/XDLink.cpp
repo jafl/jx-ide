@@ -1482,6 +1482,7 @@ xdebug::Link::SendRaw
 		while (iter.Next("  "))
 		{
 			iter.RemovePrev();
+			iter.SkipPrev();
 		}
 		iter.Invalidate();
 
