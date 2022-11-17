@@ -78,13 +78,14 @@ DebuggerProgramInput::GetFile
 /******************************************************************************
  InputValid (virtual)
 
+	Allow user to leave it broken, e.g., if gdb isn't installed.
+
  ******************************************************************************/
 
 bool
 DebuggerProgramInput::InputValid()
 {
-	const JString& text = GetText()->GetText();
-	return JProgramAvailable(text);
+	return true;
 }
 
 /******************************************************************************
