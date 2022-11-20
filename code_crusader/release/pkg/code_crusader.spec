@@ -5,7 +5,7 @@ Release: 1
 License: Copyright John Lindal
 Group: Development/Tools/IDE
 Source: %pkg_name
-Requires: editorconfig-libs, libX11, libXinerama, libXpm, libXft, libxml2, gd, libjpeg, libpng, libicu, pcre, ctags
+Requires: editorconfig-libs, libX11, libXinerama, libXpm, libXft, libxml2, gd, libjpeg, libpng, libicu, pcre, ctags, curl
 
 %description
 Code Crusader is a graphical development environment for UNIX.
