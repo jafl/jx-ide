@@ -216,17 +216,14 @@ DocumentManager::AddToFileHistoryMenu
 void
 DocumentManager::RefreshVCSStatus()
 {
-	JSize count = itsProjectDocuments->GetElementCount();
-	JIndex i;
-	for (i=1; i<=count; i++)
+	for (auto* doc : *itsProjectDocuments)
 	{
-		(itsProjectDocuments->GetElement(i))->RefreshVCSStatus();
+		doc->RefreshVCSStatus();
 	}
 
-	count = itsTextDocuments->GetElementCount();
-	for (i=1; i<=count; i++)
+	for (auto* doc : *itsTextDocuments)
 	{
-		(itsTextDocuments->GetElement(i))->RefreshVCSStatus();
+		doc->RefreshVCSStatus();
 	}
 }
 
@@ -353,21 +350,18 @@ DocumentManager::ProjectDocumentIsOpen
 
 	// search for an open ProjectDocument that uses this file
 
-	const JSize count = itsProjectDocuments->GetElementCount();
-	for (JIndex i=1; i<=count; i++)
+	for (auto* d : *itsProjectDocuments)
 	{
-		*doc = itsProjectDocuments->GetElement(i);
-
 		bool onDisk;
-		const JString docName = (**doc).GetFullName(&onDisk);
+		const JString docName = d->GetFullName(&onDisk);
 
 		if (onDisk && JSameDirEntry(fileName, docName))
 		{
+			*doc = d;
 			return true;
 		}
 	}
 
-	*doc = nullptr;
 	return false;
 }
 
@@ -379,10 +373,8 @@ DocumentManager::ProjectDocumentIsOpen
 bool
 DocumentManager::CloseProjectDocuments()
 {
-	const JSize count = itsProjectDocuments->GetElementCount();
-	for (JIndex i=count; i>=1; i--)
+	for (auto* doc : *itsProjectDocuments)
 	{
-		ProjectDocument* doc = itsProjectDocuments->GetElement(i);
 		if (!doc->Close())
 		{
 			break;
@@ -400,10 +392,9 @@ DocumentManager::CloseProjectDocuments()
 void
 DocumentManager::UpdateSymbolDatabases()
 {
-	const JSize count = itsProjectDocuments->GetElementCount();
-	for (JIndex i=1; i<=count; i++)
+	for (auto* doc : *itsProjectDocuments)
 	{
-		(itsProjectDocuments->GetElement(i))->DelayUpdateSymbolDatabase();
+		doc->DelayUpdateSymbolDatabase();
 	}
 }
 
@@ -415,10 +406,9 @@ DocumentManager::UpdateSymbolDatabases()
 void
 DocumentManager::CancelUpdateSymbolDatabases()
 {
-	const JSize count = itsProjectDocuments->GetElementCount();
-	for (JIndex i=1; i<=count; i++)
+	for (auto* doc : *itsProjectDocuments)
 	{
-		(itsProjectDocuments->GetElement(i))->CancelUpdateSymbolDatabase();
+		doc->CancelUpdateSymbolDatabase();
 	}
 }
 
