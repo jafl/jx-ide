@@ -94,6 +94,7 @@ gdb::GetMemoryCmd::HandleSuccess
 	{
 		iter.SetPrev(JUtf8Character(' '));
 	}
+	iter.Invalidate();
 
 	GetDirector()->Update(s);
 }
