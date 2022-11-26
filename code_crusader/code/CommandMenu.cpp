@@ -316,7 +316,7 @@ CommandMenu::UpdateMenu()
 
 	// "Add to" sub-menu
 
-	SetItemEnable(kAddToProjIndex, CanAddToProject());
+	SetItemEnabled(kAddToProjIndex, CanAddToProject());
 
 	JString itemText = JGetString("AddToProjectItemText::CommandMenu");
 	if (projDoc != nullptr)
@@ -331,7 +331,7 @@ CommandMenu::UpdateMenu()
 
 	// "Manage" sub-menu
 
-	SetItemEnable(kManageProjIndex, hasProject);
+	SetItemEnabled(kManageProjIndex, hasProject);
 
 	itemText = JGetString("ManageProjectItemText::CommandMenu");
 	if (projDoc != nullptr)
@@ -499,15 +499,15 @@ CommandMenu::UpdateManageProjectMenu()
 	{
 		itsManageProjMenu->EnableAll();
 
-		itsManageProjMenu->SetItemEnable(kShowCTreeCmd,
+		itsManageProjMenu->SetItemEnabled(kShowCTreeCmd,
 			!projDoc->GetCTreeDirector()->GetTree()->IsEmpty());
-		itsManageProjMenu->SetItemEnable(kShowDTreeCmd,
+		itsManageProjMenu->SetItemEnabled(kShowDTreeCmd,
 			!projDoc->GetDTreeDirector()->GetTree()->IsEmpty());
-		itsManageProjMenu->SetItemEnable(kShowGoTreeCmd,
+		itsManageProjMenu->SetItemEnabled(kShowGoTreeCmd,
 			!projDoc->GetGoTreeDirector()->GetTree()->IsEmpty());
-		itsManageProjMenu->SetItemEnable(kShowJavaTreeCmd,
+		itsManageProjMenu->SetItemEnabled(kShowJavaTreeCmd,
 			!projDoc->GetJavaTreeDirector()->GetTree()->IsEmpty());
-		itsManageProjMenu->SetItemEnable(kShowPHPTreeCmd,
+		itsManageProjMenu->SetItemEnabled(kShowPHPTreeCmd,
 			!projDoc->GetPHPTreeDirector()->GetTree()->IsEmpty());
 	}
 	else

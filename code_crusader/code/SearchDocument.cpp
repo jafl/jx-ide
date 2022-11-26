@@ -607,7 +607,7 @@ SearchDocument::Receive
 void
 SearchDocument::UpdateMatchMenu()
 {
-	itsMatchMenu->SetItemEnable(kOpenFileCmd, GetTextEditor()->HasSelection());
+	itsMatchMenu->SetItemEnabled(kOpenFileCmd, GetTextEditor()->HasSelection());
 }
 
 /******************************************************************************

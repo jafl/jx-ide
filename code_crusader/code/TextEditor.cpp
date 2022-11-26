@@ -743,8 +743,8 @@ void
 TextEditor::UpdateContextMenu()
 {
 	const bool hasSelection = HasSelection();
-	itsContextMenu->SetItemEnable(kContextCutCmd, hasSelection);
-	itsContextMenu->SetItemEnable(kContextCopyCmd, hasSelection);
+	itsContextMenu->SetItemEnabled(kContextCutCmd, hasSelection);
+	itsContextMenu->SetItemEnabled(kContextCopyCmd, hasSelection);
 }
 
 /******************************************************************************

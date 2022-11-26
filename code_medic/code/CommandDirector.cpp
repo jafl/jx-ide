@@ -1259,8 +1259,8 @@ CommandDirector::ShowHistoryCommand
 void
 CommandDirector::UpdateFileMenu()
 {
-	itsFileMenu->SetItemEnable(kCloseCmd, !GetWindow()->IsDocked());
-	itsFileMenu->SetItemEnable(kLoadConfigCmd, itsLink->HasProgram());
+	itsFileMenu->SetItemEnabled(kCloseCmd, !GetWindow()->IsDocked());
+	itsFileMenu->SetItemEnabled(kLoadConfigCmd, itsLink->HasProgram());
 }
 
 /******************************************************************************
@@ -1745,10 +1745,10 @@ CommandDirector::UpdateDebugMenu
 						}
 
 						const bool bkwd = itsLink->GetFeature(Link::kExecuteBackwards);
-						menu->SetItemEnable(kPrevCmd, bkwd);
-						menu->SetItemEnable(kReverseStepCmd, bkwd);
-						menu->SetItemEnable(kReverseFinishCmd, bkwd);
-						menu->SetItemEnable(kReverseContCmd, bkwd);
+						menu->SetItemEnabled(kPrevCmd, bkwd);
+						menu->SetItemEnabled(kReverseStepCmd, bkwd);
+						menu->SetItemEnabled(kReverseFinishCmd, bkwd);
+						menu->SetItemEnabled(kReverseContCmd, bkwd);
 					}
 					else if (itsLink->GetFeature(Link::kStopProgram))
 					{

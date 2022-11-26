@@ -1129,7 +1129,7 @@ CommandTable::UpdateOptionsMenu()
 		changed      = true;
 	}
 
-	itsOptionsMenu->SetItemEnable(kSaveAllCmd, !info.isMake && !info.isVCS);
+	itsOptionsMenu->SetItemEnabled(kSaveAllCmd, !info.isMake && !info.isVCS);
 	if (info.saveAll)
 	{
 		itsOptionsMenu->CheckItem(kSaveAllCmd);
@@ -1140,7 +1140,7 @@ CommandTable::UpdateOptionsMenu()
 		itsOptionsMenu->CheckItem(kOneAtATimeCmd);
 	}
 
-	itsOptionsMenu->SetItemEnable(kUseWindowCmd, !info.isMake);
+	itsOptionsMenu->SetItemEnabled(kUseWindowCmd, !info.isMake);
 	if (info.useWindow)
 	{
 		itsOptionsMenu->CheckItem(kUseWindowCmd);
@@ -1151,7 +1151,7 @@ CommandTable::UpdateOptionsMenu()
 		changed                   = true;
 	}
 
-	itsOptionsMenu->SetItemEnable(kRaisedWhenStartCmd, info.useWindow);
+	itsOptionsMenu->SetItemEnabled(kRaisedWhenStartCmd, info.useWindow);
 	if (info.raiseWindowWhenStart)
 	{
 		itsOptionsMenu->CheckItem(kRaisedWhenStartCmd);

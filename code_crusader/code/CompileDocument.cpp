@@ -530,7 +530,7 @@ CompileDocument::Receive
 void
 CompileDocument::UpdateErrorMenu()
 {
-	itsErrorMenu->SetItemEnable(kOpenFileCmd, GetTextEditor()->HasSelection());
+	itsErrorMenu->SetItemEnabled(kOpenFileCmd, GetTextEditor()->HasSelection());
 }
 
 /******************************************************************************

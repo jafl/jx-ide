@@ -570,8 +570,8 @@ LineIndexTable::UpdateLineMenu()
 	if (itsIsFullLineMenuFlag)
 	{
 		const bool stopped = itsLink->ProgramIsStopped();
-		itsLineMenu->SetItemEnable(offset + kRunUntilCmd, stopped);
-		itsLineMenu->SetItemEnable(offset + kSetExecPtCmd,
+		itsLineMenu->SetItemEnabled(offset + kRunUntilCmd, stopped);
+		itsLineMenu->SetItemEnabled(offset + kSetExecPtCmd,
 			stopped && itsLink->GetFeature(Link::kSetExecutionPoint));
 
 		offset += kLineMenuItemCount;
@@ -587,11 +587,11 @@ LineIndexTable::UpdateLineMenu()
 	{
 		for (JIndex i=itsLineMenuBPRange.first; i<=itsLineMenuBPRange.last; i++)
 		{
-			itsLineMenu->SetItemEnable(offset + kShowBreakpointInfoCmd,
+			itsLineMenu->SetItemEnabled(offset + kShowBreakpointInfoCmd,
 				itsLink->GetFeature(Link::kShowBreakpointInfo));
-			itsLineMenu->SetItemEnable(offset + kSetConditionCmd,
+			itsLineMenu->SetItemEnabled(offset + kSetConditionCmd,
 				itsLink->GetFeature(Link::kSetBreakpointCondition));
-			itsLineMenu->SetItemEnable(offset + kIgnoreNextNCmd,
+			itsLineMenu->SetItemEnabled(offset + kIgnoreNextNCmd,
 				itsLink->GetFeature(Link::kSetBreakpointIgnoreCount));
 
 			const Breakpoint* bp = itsBPList->GetElement(i);

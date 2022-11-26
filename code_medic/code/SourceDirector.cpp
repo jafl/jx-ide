@@ -980,9 +980,9 @@ SourceDirector::UpdateWindowTitle
 void
 SourceDirector::UpdateFileMenu()
 {
-	itsFileMenu->SetItemEnable(kEditCmd, !itsCurrentFile.IsEmpty());
-	itsFileMenu->SetItemEnable(kLoadConfigCmd, itsLink->HasProgram());
-	itsFileMenu->SetItemEnable(kCloseCmd, !GetWindow()->IsDocked());
+	itsFileMenu->SetItemEnabled(kEditCmd, !itsCurrentFile.IsEmpty());
+	itsFileMenu->SetItemEnabled(kLoadConfigCmd, itsLink->HasProgram());
+	itsFileMenu->SetItemEnabled(kCloseCmd, !GetWindow()->IsDocked());
 }
 
 /******************************************************************************

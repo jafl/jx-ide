@@ -2147,8 +2147,8 @@ ProjectTable::UpdateContextMenu()
 		itsContextMenu->EnableItem(kRemoveSelCmd);
 		itsContextMenu->EnableItem(kOpenFilesCmd);
 		itsContextMenu->EnableItem(kOpenComplFilesCmd);
-		itsContextMenu->SetItemEnable(kEditPathCmd, single);
-		itsContextMenu->SetItemEnable(kEditSubprojConfigCmd,
+		itsContextMenu->SetItemEnabled(kEditPathCmd, single);
+		itsContextMenu->SetItemEnabled(kEditSubprojConfigCmd,
 			single && (GetProjectNode(index))->GetType() == kLibraryNT);
 		itsContextMenu->EnableItem(kDiffSmartCmd);
 		itsContextMenu->EnableItem(kDiffVCSCmd);
@@ -2159,7 +2159,7 @@ ProjectTable::UpdateContextMenu()
 		itsContextMenu->SetItemText(kOpenFilesCmd, JGetString("EditGroupNameItemText::ProjectDocument"));
 
 		itsContextMenu->EnableItem(kRemoveSelCmd);
-		itsContextMenu->SetItemEnable(kOpenFilesCmd, single);
+		itsContextMenu->SetItemEnabled(kOpenFilesCmd, single);
 		itsContextMenu->DisableItem(kOpenComplFilesCmd);
 		itsContextMenu->DisableItem(kEditPathCmd);
 		itsContextMenu->DisableItem(kEditSubprojConfigCmd);

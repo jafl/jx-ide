@@ -374,7 +374,7 @@ RegistersDir::Update
 void
 RegistersDir::UpdateFileMenu()
 {
-	itsFileMenu->SetItemEnable(kCloseWindowCmd, !GetWindow()->IsDocked());
+	itsFileMenu->SetItemEnabled(kCloseWindowCmd, !GetWindow()->IsDocked());
 }
 
 /******************************************************************************

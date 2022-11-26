@@ -1922,7 +1922,7 @@ void
 ProjectDocument::UpdateFileMenu()
 {
 	const bool canPrint = itsFileTable->GetRowCount() > 0;
-	itsFileMenu->SetItemEnable(kPrintCmd, canPrint);
+	itsFileMenu->SetItemEnabled(kPrintCmd, canPrint);
 }
 
 /******************************************************************************
@@ -2056,18 +2056,18 @@ ProjectDocument::Print
 void
 ProjectDocument::UpdateProjectMenu()
 {
-	itsProjectMenu->SetItemEnable(kUpdateMakefileCmd,
+	itsProjectMenu->SetItemEnabled(kUpdateMakefileCmd,
 		itsBuildMgr->GetMakefileMethod() != BuildManager::kManual);
 
-	itsProjectMenu->SetItemEnable(kShowCTreeCmd,
+	itsProjectMenu->SetItemEnabled(kShowCTreeCmd,
 		!itsCTreeDirector->GetTree()->IsEmpty());
-	itsProjectMenu->SetItemEnable(kShowDTreeCmd,
+	itsProjectMenu->SetItemEnabled(kShowDTreeCmd,
 		!itsDTreeDirector->GetTree()->IsEmpty());
-	itsProjectMenu->SetItemEnable(kShowGoTreeCmd,
+	itsProjectMenu->SetItemEnabled(kShowGoTreeCmd,
 		!itsGoTreeDirector->GetTree()->IsEmpty());
-	itsProjectMenu->SetItemEnable(kShowJavaTreeCmd,
+	itsProjectMenu->SetItemEnabled(kShowJavaTreeCmd,
 		!itsJavaTreeDirector->GetTree()->IsEmpty());
-	itsProjectMenu->SetItemEnable(kShowPHPTreeCmd,
+	itsProjectMenu->SetItemEnabled(kShowPHPTreeCmd,
 		!itsPHPTreeDirector->GetTree()->IsEmpty());
 }
 
@@ -2192,8 +2192,8 @@ ProjectDocument::UpdateSourceMenu()
 		itsSourceMenu->EnableItem(kRemoveSelCmd);
 		itsSourceMenu->EnableItem(kOpenFilesCmd);
 		itsSourceMenu->EnableItem(kOpenComplFilesCmd);
-		itsSourceMenu->SetItemEnable(kEditPathCmd, single);
-		itsSourceMenu->SetItemEnable(kEditSubprojConfigCmd,
+		itsSourceMenu->SetItemEnabled(kEditPathCmd, single);
+		itsSourceMenu->SetItemEnabled(kEditSubprojConfigCmd,
 			single && (itsFileTable->GetProjectNode(index))->GetType() == kLibraryNT);
 		itsSourceMenu->EnableItem(kDiffSmartCmd);
 		itsSourceMenu->EnableItem(kDiffVCSCmd);
@@ -2204,7 +2204,7 @@ ProjectDocument::UpdateSourceMenu()
 		itsSourceMenu->SetItemText(kOpenFilesCmd, JGetString("EditGroupNameItemText::ProjectDocument"));
 
 		itsSourceMenu->EnableItem(kRemoveSelCmd);
-		itsSourceMenu->SetItemEnable(kOpenFilesCmd, single);
+		itsSourceMenu->SetItemEnabled(kOpenFilesCmd, single);
 		itsSourceMenu->DisableItem(kOpenComplFilesCmd);
 		itsSourceMenu->DisableItem(kEditPathCmd);
 		itsSourceMenu->DisableItem(kEditSubprojConfigCmd);
@@ -2226,9 +2226,9 @@ ProjectDocument::UpdateSourceMenu()
 		itsSourceMenu->DisableItem(kShowLocationCmd);
 	}
 
-	itsSourceMenu->SetItemEnable(kCloseAllTextCmd,
+	itsSourceMenu->SetItemEnabled(kCloseAllTextCmd,
 								 GetDocumentManager()->HasTextDocuments());
-	itsSourceMenu->SetItemEnable(kSaveAllTextCmd,
+	itsSourceMenu->SetItemEnabled(kSaveAllTextCmd,
 								 GetDocumentManager()->TextDocumentsNeedSave());
 }
 

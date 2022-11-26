@@ -272,17 +272,17 @@ SymbolSRDirector::ReceiveWithFeedback
 void
 SymbolSRDirector::UpdateActionsMenu()
 {
-	itsActionsMenu->SetItemEnable(kCopySelNamesCmd, itsSymbolTable->HasSelection());
+	itsActionsMenu->SetItemEnabled(kCopySelNamesCmd, itsSymbolTable->HasSelection());
 
-	itsActionsMenu->SetItemEnable(kShowCTreeCmd,
+	itsActionsMenu->SetItemEnabled(kShowCTreeCmd,
 		!itsProjDoc->GetCTreeDirector()->GetTree()->IsEmpty());
-	itsActionsMenu->SetItemEnable(kShowDTreeCmd,
+	itsActionsMenu->SetItemEnabled(kShowDTreeCmd,
 		!itsProjDoc->GetDTreeDirector()->GetTree()->IsEmpty());
-	itsActionsMenu->SetItemEnable(kShowGoTreeCmd,
+	itsActionsMenu->SetItemEnabled(kShowGoTreeCmd,
 		!itsProjDoc->GetGoTreeDirector()->GetTree()->IsEmpty());
-	itsActionsMenu->SetItemEnable(kShowJavaTreeCmd,
+	itsActionsMenu->SetItemEnabled(kShowJavaTreeCmd,
 		!itsProjDoc->GetJavaTreeDirector()->GetTree()->IsEmpty());
-	itsActionsMenu->SetItemEnable(kShowPHPTreeCmd,
+	itsActionsMenu->SetItemEnabled(kShowPHPTreeCmd,
 		!itsProjDoc->GetPHPTreeDirector()->GetTree()->IsEmpty());
 }
 

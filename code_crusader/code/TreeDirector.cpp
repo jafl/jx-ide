@@ -774,10 +774,10 @@ void
 TreeDirector::UpdateFileMenu()
 {
 	const bool canPrint = !itsTree->IsEmpty();
-	itsFileMenu->SetItemEnable(kPrintPSCmd,  canPrint);
-	itsFileMenu->SetItemEnable(kPrintEPSCmd, canPrint);
+	itsFileMenu->SetItemEnabled(kPrintPSCmd,  canPrint);
+	itsFileMenu->SetItemEnabled(kPrintEPSCmd, canPrint);
 
-	itsFileMenu->SetItemEnable(kCloseCmd, !GetWindow()->IsDocked());
+	itsFileMenu->SetItemEnabled(kCloseCmd, !GetWindow()->IsDocked());
 }
 
 /******************************************************************************
@@ -845,9 +845,9 @@ TreeDirector::HandleFileMenu
 void
 TreeDirector::UpdateProjectMenu()
 {
-	itsProjectMenu->SetItemEnable(kCloseAllTextCmd,
+	itsProjectMenu->SetItemEnabled(kCloseAllTextCmd,
 								  GetDocumentManager()->HasTextDocuments());
-	itsProjectMenu->SetItemEnable(kSaveAllTextCmd,
+	itsProjectMenu->SetItemEnabled(kSaveAllTextCmd,
 								  GetDocumentManager()->TextDocumentsNeedSave());
 }
 

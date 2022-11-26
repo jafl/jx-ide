@@ -991,7 +991,7 @@ Array2DDir::GetExpression
 void
 Array2DDir::UpdateFileMenu()
 {
-	itsFileMenu->SetItemEnable(kPrintCmd, !itsData->IsEmpty());
+	itsFileMenu->SetItemEnabled(kPrintCmd, !itsData->IsEmpty());
 }
 
 /******************************************************************************

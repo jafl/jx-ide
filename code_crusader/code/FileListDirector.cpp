@@ -527,7 +527,7 @@ FileListDirector::OpenSelectedFiles()
 void
 FileListDirector::UpdateFileMenu()
 {
-	itsFileMenu->SetItemEnable(kCloseCmd, !GetWindow()->IsDocked());
+	itsFileMenu->SetItemEnabled(kCloseCmd, !GetWindow()->IsDocked());
 }
 
 /******************************************************************************
@@ -584,8 +584,8 @@ FileListDirector::UpdateListMenu()
 {
 	const bool allowOpen =
 		itsFLTable->HasFocus() && itsFLTable->HasSelection();
-	itsListMenu->SetItemEnable(kOpenSelectionCmd, allowOpen);
-	itsListMenu->SetItemEnable(kShowLocationCmd,  allowOpen);
+	itsListMenu->SetItemEnabled(kOpenSelectionCmd, allowOpen);
+	itsListMenu->SetItemEnabled(kShowLocationCmd,  allowOpen);
 
 	const JXFileListSet::FilterType type = itsFLSet->GetFilterType();
 	if (type == JXFileListSet::kWildcardFilter)
@@ -640,20 +640,20 @@ FileListDirector::HandleListMenu
 void
 FileListDirector::UpdateProjectMenu()
 {
-	itsProjectMenu->SetItemEnable(kShowCTreeCmd,
+	itsProjectMenu->SetItemEnabled(kShowCTreeCmd,
 		!itsProjDoc->GetCTreeDirector()->GetTree()->IsEmpty());
-	itsProjectMenu->SetItemEnable(kShowDTreeCmd,
+	itsProjectMenu->SetItemEnabled(kShowDTreeCmd,
 		!itsProjDoc->GetDTreeDirector()->GetTree()->IsEmpty());
-	itsProjectMenu->SetItemEnable(kShowGoTreeCmd,
+	itsProjectMenu->SetItemEnabled(kShowGoTreeCmd,
 		!itsProjDoc->GetGoTreeDirector()->GetTree()->IsEmpty());
-	itsProjectMenu->SetItemEnable(kShowJavaTreeCmd,
+	itsProjectMenu->SetItemEnabled(kShowJavaTreeCmd,
 		!itsProjDoc->GetJavaTreeDirector()->GetTree()->IsEmpty());
-	itsProjectMenu->SetItemEnable(kShowPHPTreeCmd,
+	itsProjectMenu->SetItemEnabled(kShowPHPTreeCmd,
 		!itsProjDoc->GetPHPTreeDirector()->GetTree()->IsEmpty());
 
-	itsProjectMenu->SetItemEnable(kCloseAllTextCmd,
+	itsProjectMenu->SetItemEnabled(kCloseAllTextCmd,
 								  GetDocumentManager()->HasTextDocuments());
-	itsProjectMenu->SetItemEnable(kSaveAllTextCmd,
+	itsProjectMenu->SetItemEnabled(kSaveAllTextCmd,
 								  GetDocumentManager()->TextDocumentsNeedSave());
 }
 

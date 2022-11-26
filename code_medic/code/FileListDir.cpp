@@ -351,7 +351,7 @@ FileListDir::ReceiveGoingAway
 void
 FileListDir::UpdateFileMenu()
 {
-	itsFileMenu->SetItemEnable(kCloseWindowCmd, !GetWindow()->IsDocked());
+	itsFileMenu->SetItemEnabled(kCloseWindowCmd, !GetWindow()->IsDocked());
 }
 
 /******************************************************************************

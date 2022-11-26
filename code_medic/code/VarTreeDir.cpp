@@ -377,7 +377,7 @@ VarTreeDir::ReceiveGoingAway
 void
 VarTreeDir::UpdateFileMenu()
 {
-	itsFileMenu->SetItemEnable(kCloseWindowCmd, !GetWindow()->IsDocked());
+	itsFileMenu->SetItemEnabled(kCloseWindowCmd, !GetWindow()->IsDocked());
 }
 
 /******************************************************************************

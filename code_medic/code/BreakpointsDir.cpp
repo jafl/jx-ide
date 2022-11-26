@@ -339,7 +339,7 @@ BreakpointsDir::ReceiveGoingAway
 void
 BreakpointsDir::UpdateFileMenu()
 {
-	itsFileMenu->SetItemEnable(kCloseWindowCmd, !GetWindow()->IsDocked());
+	itsFileMenu->SetItemEnabled(kCloseWindowCmd, !GetWindow()->IsDocked());
 }
 
 /******************************************************************************

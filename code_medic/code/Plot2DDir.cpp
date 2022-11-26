@@ -783,8 +783,8 @@ Plot2DDir::RemoveSelectedPlots()
 void
 Plot2DDir::UpdateFileMenu()
 {
-	itsFileMenu->SetItemEnable(kPrintPSCmd, !itsExprData->IsEmpty());
-	itsFileMenu->SetItemEnable(kPrintEPSCmd, !itsExprData->IsEmpty());
+	itsFileMenu->SetItemEnabled(kPrintPSCmd, !itsExprData->IsEmpty());
+	itsFileMenu->SetItemEnabled(kPrintEPSCmd, !itsExprData->IsEmpty());
 }
 
 /******************************************************************************

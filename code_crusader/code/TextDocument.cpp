@@ -994,16 +994,16 @@ TextDocument::Receive
 void
 TextDocument::UpdateFileMenu()
 {
-	itsFileMenu->SetItemEnable(kSaveFileCmd, NeedsSave());
-	itsFileMenu->SetItemEnable(kRevertCmd, CanRevert());
-	itsFileMenu->SetItemEnable(kSaveAllFilesCmd,
+	itsFileMenu->SetItemEnabled(kSaveFileCmd, NeedsSave());
+	itsFileMenu->SetItemEnabled(kRevertCmd, CanRevert());
+	itsFileMenu->SetItemEnabled(kSaveAllFilesCmd,
 							   GetDocumentManager()->TextDocumentsNeedSave());
 
 	bool enable, onDisk;
 	const JString fullName = GetFullName(&onDisk);
 	itsFileMenu->SetItemText(kDiffSmartCmd,
 		(GetDiffFileDialog())->GetSmartDiffItemText(onDisk, fullName, &enable));
-	itsFileMenu->SetItemEnable(kDiffSmartCmd, enable);
+	itsFileMenu->SetItemEnabled(kDiffSmartCmd, enable);
 
 	enable = false;
 	const JString* s = & JGetString("DiffVCSMenuText::TextDocument");
@@ -1027,14 +1027,14 @@ TextDocument::UpdateFileMenu()
 		}
 	}
 	itsFileMenu->SetItemText(kDiffVCSCmd, *s);
-	itsFileMenu->SetItemEnable(kDiffVCSCmd, enable);
+	itsFileMenu->SetItemEnabled(kDiffVCSCmd, enable);
 
 	const bool hasText = !itsTextEditor->GetText()->IsEmpty();
-	itsFileMenu->SetItemEnable(kPrintPTCmd, hasText);
+	itsFileMenu->SetItemEnabled(kPrintPTCmd, hasText);
 
 	const bool isStyled = itsTextEditor->GetText()->GetStyles().GetRunCount() > 1;
-	itsFileMenu->SetItemEnable(kPSPageSetupCmd, isStyled);
-	itsFileMenu->SetItemEnable(kPrintPSCmd, hasText && isStyled);
+	itsFileMenu->SetItemEnabled(kPSPageSetupCmd, isStyled);
+	itsFileMenu->SetItemEnabled(kPrintPSCmd, hasText && isStyled);
 }
 
 /******************************************************************************
@@ -1737,7 +1737,7 @@ TextDocument::UpdateDiffMenu()
 	}
 
 	itsDiffMenu->SetItemText(kDiffAsVCSCmd, s);
-	itsDiffMenu->SetItemEnable(kDiffAsVCSCmd, enable);
+	itsDiffMenu->SetItemEnabled(kDiffAsVCSCmd, enable);
 }
 
 /******************************************************************************

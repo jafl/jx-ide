@@ -300,7 +300,7 @@ StackDir::ReceiveGoingAway
 void
 StackDir::UpdateFileMenu()
 {
-	itsFileMenu->SetItemEnable(kCloseWindowCmd, !GetWindow()->IsDocked());
+	itsFileMenu->SetItemEnabled(kCloseWindowCmd, !GetWindow()->IsDocked());
 }
 
 /******************************************************************************
