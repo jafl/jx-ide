@@ -56,7 +56,7 @@ gdb::GetAssemblyCmd::Starting()
 	JString cmd("-data-disassemble");
 	if (loc.GetFileName().IsEmpty())
 	{
-		cmd += " -s ";
+		cmd += " -a ";
 		cmd += loc.GetFunctionName();
 	}
 	else
