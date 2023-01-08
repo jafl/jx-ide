@@ -666,7 +666,7 @@ LineIndexTable::HandleLineMenu
 			Breakpoint* bp = itsBPList->GetElement(i);
 			if (index == offset + kShowBreakpointInfoCmd)
 			{
-				(itsDirector->GetCommandDirector()->GetBreakpointsDir()->GetBreakpointTable())->Show(bp);
+				itsDirector->GetCommandDirector()->GetBreakpointsDir()->GetBreakpointTable()->Show(bp);
 				return;
 			}
 			else if (index == offset + kRemoveBreakpointCmd)
@@ -676,7 +676,7 @@ LineIndexTable::HandleLineMenu
 			}
 			else if (index == offset + kSetConditionCmd)
 			{
-				(itsDirector->GetCommandDirector()->GetBreakpointsDir()->GetBreakpointTable())->EditCondition(bp);
+				itsDirector->GetCommandDirector()->GetBreakpointsDir()->GetBreakpointTable()->EditCondition(bp);
 				return;
 			}
 			else if (index == offset + kRemoveConditionCmd)

@@ -71,14 +71,14 @@ protected:
 
 private:
 
-	Link*				itsLink;
+	Link*			itsLink;
 	SourceDirector*	itsDirector;
 	SourceText*		itsText;
-	JXScrollbar*		itsVScrollbar;
-	JCoordinate			itsCurrentLineIndex;
+	JXScrollbar*	itsVScrollbar;
+	JCoordinate		itsCurrentLineIndex;
 
 	JPtrArray<Breakpoint>*	itsBPList;			// contents owned by BreakpointManager
-	JIndex						itsBPDrawIndex;		// index of next bp to draw; may be invalid
+	JIndex					itsBPDrawIndex;		// index of next bp to draw; may be invalid
 
 	JXTextMenu*			itsLineMenu;
 	JIndex				itsLineMenuLineIndex;

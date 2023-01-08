@@ -78,6 +78,16 @@ LineAddressTable::SetLineNumbers
 		return;
 	}
 
+	for (auto* s : *itsLineTextList)
+	{
+		JStringIterator iter(s);
+		if (iter.Next(" "))
+		{
+			iter.SkipPrev();
+			iter.RemoveAllNext();
+		}
+	}
+
 	JSize charCount = 0;
 	const JString* s1 = itsLineTextList->GetFirstElement();
 	const JString* sN = itsLineTextList->GetLastElement();
