@@ -1,0 +1,13 @@
+#!/usr/bin/perl
+
+use strict;
+
+my $s = '';
+while (<STDIN>)
+	{
+	$s .= $_;
+	}
+
+$s =~ s/<!--.+?-->\n*//sg;
+
+print $s;
