@@ -48,31 +48,22 @@ gdb::GetSourceFileListCmd::~GetSourceFileListCmd()
 
  ******************************************************************************/
 
-static const JRegex textPattern = "Source files for which symbols[^:]+(:|$)";
-
 void
 gdb::GetSourceFileListCmd::HandleSuccess
 	(
-	const JString& origData
+	const JString& data
 	)
 {
-	if (origData.BeginsWith("Source files for which symbols have been read in:"))
+	JStringIterator iter(data);
+	if (iter.Next("\n\n"))
 	{
 		JXGetApplication()->DisplayBusyCursor();
 
 		JXFileListTable* table = GetFileList()->GetTable();
 		table->RemoveAllFiles();
 
-		JString data = origData;
-
-		JStringIterator iter(&data);
-		while (iter.Next(textPattern))
-		{
-			iter.ReplaceLastMatch(",");
-		}
-		data.TrimWhitespace();		// no comma after last file
-
-		icharbufstream input(data.GetRawBytes(), data.GetByteCount());
+		const JIndex offset = iter.GetPrevByteIndex();
+		icharbufstream input(data.GetRawBytes() + offset, data.GetByteCount() - offset);
 		JString fullName, path, name, s;
 		bool foundDelimiter;
 		do
