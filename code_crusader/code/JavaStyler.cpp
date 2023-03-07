@@ -13,7 +13,7 @@
 #include "JavaStyler.h"
 #include "PrefsManager.h"
 #include "sharedUtil.h"
-#include <jx-af/jx/JXDialogDirector.h>
+#include <jx-af/jx/JXModalDialogDirector.h>
 #include <jx-af/jcore/JColorManager.h>
 #include <jx-af/jcore/jGlobals.h>
 #include <jx-af/jcore/jAssert.h>
@@ -129,6 +129,7 @@ JavaStyler::JavaStyler()
 	}
 
 	JPrefObject::ReadPrefs();
+	ListenTo(this);
 }
 
 /******************************************************************************
@@ -251,15 +252,9 @@ JavaStyler::Receive
 
 #if defined CODE_CRUSADER && ! defined CODE_CRUSADER_UNIT_TEST
 
-	if (message.Is(JXDialogDirector::kDeactivated))
+	if (sender == this && message.Is(kWordListChanged))
 	{
-		const auto* info =
-			dynamic_cast<const JXDialogDirector::Deactivated*>(&message);
-		assert( info != nullptr );
-		if (info->Successful())
-		{
-			WriteSharedPrefs(true);
-		}
+		WriteSharedPrefs(true);
 	}
 
 #endif

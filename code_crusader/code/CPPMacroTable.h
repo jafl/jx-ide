@@ -13,7 +13,6 @@
 class JXTextButton;
 class JXColHeaderWidget;
 class CPreprocessor;
-class ListCSF;
 
 class CPPMacroTable : public JXStringTable
 {
@@ -58,7 +57,6 @@ private:
 	JXTextButton*	itsAddRowButton;
 	JXTextButton*	itsRemoveRowButton;
 
-	ListCSF*		itsCSF;
 	mutable JString	itsFileName;
 	JXTextButton*	itsLoadButton;
 	JXTextButton*	itsSaveButton;

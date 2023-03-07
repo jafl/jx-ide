@@ -32,8 +32,9 @@
 .cpp ./code/EditSearchPathsDialog
 .cpp ./code/PathTable
 .cpp ./code/DirList
-.cpp ./code/NewProjectCSF
-.cpp ./code/NewProjectSaveFileDialog
+.cpp ./code/SaveNewProjectDialog
+.cpp ./code/ChooseRelativeFileDialog
+.cpp ./code/ChooseRelativePathDialog
 .cpp ./code/SymbolUpdatePG
 .cpp ./code/WaitForSymbolUpdateTask
 .cpp ./code/DelaySymbolUpdateTask
@@ -45,9 +46,10 @@
 .cpp ./code/CommandPathInput
 .cpp ./code/CommandSelection
 .cpp ./code/RunCommandDialog
+.cpp ./code/CommandOutputDocument
 .cpp ./code/ExecOutputDocument
 .cpp ./code/CmdLineInput
-.cpp ./code/ExecOutputPostFTCTask
+.cpp ./code/CommandOutputPostFTCTask
 .cpp ./code/BuildManager
 .cpp ./code/CompileDocument
 .cpp ./code/ProjectConfigDialog
@@ -209,11 +211,7 @@
 .cpp ./code/ViewManPageDialog
 .cpp ./code/ManPageDocument
 .cpp ./code/CtagsUser
-.cpp ./code/ListCSF
 .cpp ./code/ListChooseFileDialog
-.cpp ./code/RelPathCSF
-.cpp ./code/RPChooseFileDialog
-.cpp ./code/RPChoosePathDialog
 .cpp ./code/ExecHistoryMenu
 .cpp ./code/sharedUtil
 .cpp ./code/util

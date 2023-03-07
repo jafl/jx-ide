@@ -80,7 +80,7 @@
 
 
 <hr>
-<h2><a name="CBOverviewHelp">Overview</a></h2>
+<h2><a name="OverviewHelp">Overview</a></h2>
 
 <p>Code Crusader provides a powerful UNIX development environment. Its major features are:</p>
 
@@ -100,7 +100,7 @@
 
 
 <hr>
-<h2><a name="CBProjectHelp">Project Window</a></h2>
+<h2><a name="ProjectHelp">Project Window</a></h2>
 
 <p>The Project window is a convenient place to store all the files associated with a project and provides a foundation for the interface to <a href="https://www.gnu.org/software/make/manual/">GNU <code>make</code></a>.  The <a href="#ProjectTutorialHelp">tutorial</a> provides an introduction to this interface.</p>
 
@@ -172,7 +172,7 @@
 
 <p>Since qmake is a generic utility, the default configuration in QMake.header does not include anything specific to Qt.  If you want to use qmake to build Qt programs, you need to add <code>qt</code> to the line that begins with <code>CONFIG</code>.</p>
 
-<h3><a name="CBProjectHelp-Config">Configuring the project</a></h3>
+<h3><a name="ProjectHelp-Config">Configuring the project</a></h3>
 
 <p>The following options can be changed in the Project Configuration dialog:</p>
 
@@ -196,7 +196,7 @@
 	<dd>If project A depends on project B, this command is used to automatically build project B when you ask Code Crusader to build project A.</dd>
 </dl>
 
-<h3><a name="CBProjectHelp-Prefs">Preferences</a></h3>
+<h3><a name="ProjectHelp-Prefs">Preferences</a></h3>
 
 <p>The following options can be changed in the Project Preferences dialog:</p>
 
@@ -217,7 +217,7 @@
 	<dd>If "Ask when files are dropped" is selected, the other options will be presented in a dialog when you drop files on a project.  Otherwise, the selected path type will be used.</dd>
 </dl>
 
-<h3><a name="CBProjectHelp-ExtEditor">Choosing your text and binary editors</a></h3>
+<h3><a name="ProjectHelp-ExtEditor">Choosing your text and binary editors</a></h3>
 
 <p>You can use the "External editors..." item on the Preferences menu to set which text and binary editors to use when displaying files.  For the text editor, the common choices are:</p>
 
@@ -247,7 +247,7 @@ For the binary editor, the choices are:
 
 
 <hr>
-<h2><a name="CBProjectTutorialHelp">Project Tutorial</a></h2>
+<h2><a name="ProjectTutorialHelp">Project Tutorial</a></h2>
 
 <p>This tutorial will walk you through the steps required to create and run the famous Hello World program in C++ using the GNU C++ compiler.  The basic steps are the same for other compilers and languages.  Refer to the end of this tutorial for notes on other languages.</p>
 
@@ -408,7 +408,7 @@ release: my_program
 
 
 <hr>
-<h2><a name="CBFileTemplateHelp">Template files</a></h2>
+<h2><a name="FileTemplateHelp">Template files</a></h2>
 
 <h3>Project templates</h3>
 
@@ -442,7 +442,7 @@ jx_browser_project_wizard
 
 
 <hr>
-<h2><a name="CBCompileHelp">Compiling your program</a></h2>
+<h2><a name="CompileHelp">Compiling your program</a></h2>
 
 <h3>Introduction to compiling under UNIX</h3>
 
@@ -501,7 +501,7 @@ jx_browser_project_wizard
 
 
 <hr>
-<h2><a name="CBRunProgramHelp">Running and debugging your program</a></h2>
+<h2><a name="RunProgramHelp">Running and debugging your program</a></h2>
 
 <p>In order to run anything, you must first create or open a project.  You can create a new project by using the "New project..." item on the File menu.  The <a href="#ProjectTutorialHelp">tutorial</a> walks you through the basics of creating a project and compiling and running a very simple program.  Once you have mastered these basics, you can get as fancy as you want by defining your own tasks on the <a href="#TasksHelp">Tasks menu</a> to run or debug your program with different sets of command line arguments.</p>
 
@@ -543,7 +543,7 @@ jx_browser_project_wizard
 
 
 <hr>
-<h2><a name="CBSymbolHelp">Symbol Browser</a></h2>
+<h2><a name="SymbolHelp">Symbol Browser</a></h2>
 
 <p>If you have <a href="http://ctags.sourceforge.net/">Exuberant <code>ctags</code></a> version 5.0 or later on your execution path, the symbol browser will display a list of all the symbols in all the source files in the <a href="#ProjectHelp">project</a> and on the project's search paths.</p>
 
@@ -571,7 +571,7 @@ jx_browser_project_wizard
 
 <p>If a symbol is defined within a namespace (i.e. not at global scope), both the fully qualified version and the unqualified version will be displayed in the list, though at very different positions since the symbols are alphabetized. If a symbol is defined in more than one namespace, incremental search by typing will find the unqualified version (unless you type the entire namespace, too). To display a list of the fully qualified versions so you can choose the one you want, hold down the Meta key and double click on the unqualified symbol name, just like in the Text Editor window (see above).</p>
 
-<h3><a name="CBSymbolHelp-Prefs">Preferences</a></h3>
+<h3><a name="SymbolHelp-Prefs">Preferences</a></h3>
 
 The following options can be changed in the Symbol Preferences dialog:
 
@@ -582,7 +582,7 @@ The following options can be changed in the Symbol Preferences dialog:
 
 
 <hr>
-<h2><a name="CBFileListHelp">File List Window</a></h2>
+<h2><a name="FileListHelp">File List Window</a></h2>
 
 <p>This window is available via the "Show file list" item on the Project menu in all the windows related to a project.  It displays every file on the project's search paths that matches a suffix type from the list of types in the <a href="#FileTypeHelp">File Types</a> dialog.</p>
 
@@ -594,7 +594,7 @@ The following options can be changed in the Symbol Preferences dialog:
 
 
 <hr>
-<h2><a name="CBCTreeHelp">C++ Class Tree</a></h2>
+<h2><a name="CTreeHelp">C++ Class Tree</a></h2>
 
 <p>The tree displays the inheritance relationships between the C++ classes that are found by parsing header files.  Green indicates public inheritance, yellow is protected inheritance, and red is private inheritance.  For the primary parent, black is used to indicate public inheritance to avoid too many distracting colors and make the protected and private inheritances stand out more.</p>
 
@@ -630,7 +630,7 @@ The following options can be changed in the Symbol Preferences dialog:
 
 <p>There are also several <a href="#EditorHelp-MouseShortcuts">shortcuts</a> in the <a href="#EditorHelp">built-in editor</a> that connect back to the tree.</p>
 
-<h3><a name="CBCTreeHelp-FunctionList">Displaying the functions implemented by a class</a></h3>
+<h3><a name="CTreeHelp-FunctionList">Displaying the functions implemented by a class</a></h3>
 
 <p>To get a list of the functions that a class implements, either click on it and hold for a moment to display a menu or right-double-click to create a new window.
 
@@ -662,7 +662,7 @@ The following options can be changed in the Symbol Preferences dialog:
 
 <p>See the <a href="#TreePrefsHelp">Tree Preferences</a> section.</p>
 
-<h3><a name="CBCTreeHelp-CPP">Defining preprocessor symbols</a></h3>
+<h3><a name="CTreeHelp-CPP">Defining preprocessor symbols</a></h3>
 
 <p>Code Crusader can never automatically know which preprocessor symbols that are defined at compile time.  In order to parse header files correctly, however, it does need to know the definitions of the symbols used in your class definitions.  You can specify these using the "Preprocessor macros..." item on the Preferences menu.</p>
 
@@ -680,7 +680,7 @@ The following options can be changed in the Symbol Preferences dialog:
 
 
 <hr>
-<h2><a name="CBDTreeHelp">D Class Tree</a></h2>
+<h2><a name="DTreeHelp">D Class Tree</a></h2>
 
 <p>The tree displays the inheritance relationships between the D classes and interfaces that are found by parsing source files.</p>
 
@@ -712,7 +712,7 @@ The following options can be changed in the Symbol Preferences dialog:
 
 <p>There are also several <a href="#EditorHelp-MouseShortcuts">shortcuts</a> in the <a href="#EditorHelp">built-in editor</a> that connect back to the tree.</p>
 
-<h3><a name="CBDTreeHelp-FunctionList">Displaying the members in a class or functions in an interface</a></h3>
+<h3><a name="DTreeHelp-FunctionList">Displaying the members in a class or functions in an interface</a></h3>
 
 <p>To get a list of the members that a class contains or functions that an interface defines, either click on it and hold for a moment to display a menu or right-double-click to create a new window.</p>
 
@@ -741,7 +741,7 @@ The following options can be changed in the Symbol Preferences dialog:
 
 
 <hr>
-<h2><a name="CBGoTreeHelp">Go Struct &amp; Interface Tree</a></h2>
+<h2><a name="GoTreeHelp">Go Struct &amp; Interface Tree</a></h2>
 
 <p>The tree displays the composition relationships between the Go structs and interfaces that are found by parsing source files.</p>
 
@@ -773,7 +773,7 @@ The following options can be changed in the Symbol Preferences dialog:
 
 <p>There are also several <a href="#EditorHelp-MouseShortcuts">shortcuts</a> in the <a href="#EditorHelp">built-in editor</a> that connect back to the tree.</p>
 
-<h3><a name="CBGoTreeHelp-FunctionList">Displaying the members in a struct or functions in an interface</a></h3>
+<h3><a name="GoTreeHelp-FunctionList">Displaying the members in a struct or functions in an interface</a></h3>
 
 <p>To get a list of the members that a struct contains or functions that an interface defines, either click on it and hold for a moment to display a menu or right-double-click to create a new window.</p>
 
@@ -802,7 +802,7 @@ The following options can be changed in the Symbol Preferences dialog:
 
 
 <hr>
-<h2><a name="CBJavaTreeHelp">Java Class Tree</a></h2>
+<h2><a name="JavaTreeHelp">Java Class Tree</a></h2>
 
 <p>The tree displays the inheritance relationships between the Java classes that are found by parsing source files.</p>
 
@@ -835,7 +835,7 @@ The following options can be changed in the Symbol Preferences dialog:
 
 <p>There are also several <a href="#EditorHelp-MouseShortcuts">shortcuts</a> in the <a href="#EditorHelp">built-in editor</a> that connect back to the tree.</p>
 
-<h3><a name="CBJavaTreeHelp-FunctionList">Displaying the functions implemented by a class</a></h3>
+<h3><a name="JavaTreeHelp-FunctionList">Displaying the functions implemented by a class</a></h3>
 
 <p>To get a list of the functions that a class implements, either click on it and hold for a moment to display a menu or right-double-click to create a new window.</p>
 
@@ -866,7 +866,7 @@ The following options can be changed in the Symbol Preferences dialog:
 
 
 <hr>
-<h2><a name="CBPHPTreeHelp">PHP Class Tree</a></h2>
+<h2><a name="PHPTreeHelp">PHP Class Tree</a></h2>
 
 <p>The tree displays the inheritance relationships between the PHP classes that are found by parsing source files.</p>
 
@@ -899,7 +899,7 @@ The following options can be changed in the Symbol Preferences dialog:
 
 <p>There are also several <a href="#EditorHelp-MouseShortcuts">shortcuts</a> in the <a href="#EditorHelp">built-in editor</a> that connect back to the tree.</p>
 
-<h3><a name="CBPHPTreeHelp-FunctionList">Displaying the functions implemented by a class</a></h3>
+<h3><a name="PHPTreeHelp-FunctionList">Displaying the functions implemented by a class</a></h3>
 
 <p>To get a list of the functions that a class implements, either click on it and hold for a moment to display a menu or right-double-click to create a new window.</p>
 
@@ -930,7 +930,7 @@ The following options can be changed in the Symbol Preferences dialog:
 
 
 <hr>
-<h2><a name="CBTreePrefsHelp">Class Tree Preferences</a></h2>
+<h2><a name="TreePrefsHelp">Class Tree Preferences</a></h2>
 
 <p>The following options can be changed in the Tree Preferences dialog:</p>
 
@@ -953,7 +953,7 @@ The following options can be changed in the Symbol Preferences dialog:
 
 
 <hr>
-<h2><a name="CBTasksHelp">Task menu reference</a></h2>
+<h2><a name="TasksHelp">Task menu reference</a></h2>
 
 <h3> Performing a task </h3>
 
@@ -1051,7 +1051,7 @@ The following options can be changed in the Symbol Preferences dialog:
 
 
 <hr>
-<h2><a name="CBShellHelp">Running a shell</a></h2>
+<h2><a name="ShellHelp">Running a shell</a></h2>
 
 <p>Shell support is provided to allow easy capturing and editing of program output.  It does not provide any terminal support.  The existing terminals, e.g., <code>xterm</code>, already do an excellent job.</p>
 
@@ -1073,7 +1073,7 @@ The following options can be changed in the Symbol Preferences dialog:
 
 
 <hr>
-<h2><a name="CBManPageHelp">Viewing man pages</a></h2>
+<h2><a name="ManPageHelp">Viewing man pages</a></h2>
 
 <p>The Man Pages dialog lets you specify what function to look up and which section to look in.  If you leave the section blank, the system will search all sections.</p>
 
@@ -1102,7 +1102,7 @@ The following options can be changed in the Symbol Preferences dialog:
 
 
 <hr>
-<h2><a name="CBFileTypeHelp">Specifying File Types</a></h2>
+<h2><a name="FileTypeHelp">Specifying File Types</a></h2>
 
 <p>The "File types..." item on the Preferences menu lets you define how you want to deal with each text file that you open.  A file can be recognized either by the file name suffix (e.g. <code>.txt</code>), a file name pattern (e.g. <code>core.*</code>), or a <a href="http://libjx.sourceforge.net/help/regex.html">regular expression</a> that matches the beginning of the file's contents.  Once the file is recognized, the attributes that you specified in the table are attached to the associated <a href="#EditorHelp">Text Editor</a> window.</p>
 
@@ -1439,7 +1439,7 @@ The following options can be changed in the Symbol Preferences dialog:
 
 
 <hr>
-<h2><a name="CBEditorHelp">Text Editor</a></h2>
+<h2><a name="EditorHelp">Text Editor</a></h2>
 
 <p>Code Crusader can read UNIX, Macintosh, and DOS/Windows text files.  Each file's format is indicated on the "File format" submenu on the File menu.  To convert a file to a different format, simply select the desired format from this menu and then save the file.</p>
 
@@ -1449,7 +1449,7 @@ The following options can be changed in the Symbol Preferences dialog:
 
 <p>By default, Code Crusader follows the Macintosh clipboard model.  This means that text is <em>not</em> automatically copied when it is selected.  Instead, it is only copied when you use the "Copy" item on the Edit menu or Meta-C.  The main advantage of this model is that paste can then replace the selected text.  If you prefer the X clipboard model, the <a href="#EditorHelp-Prefs">Preferences</a> dialog lets you use this instead.  Either way, the clipboard is persistent, so if you copy text in a Text Editor window and then close the window, you can still paste the text later on.</p>
 
-<h3><a name="CBEditorHelp-DND">Drag-And-Drop</a></h3>
+<h3><a name="EditorHelp-DND">Drag-And-Drop</a></h3>
 
 <p>When Drag-And-Drop is enabled in the Text Editor <a href="#EditorHelp-Prefs">Preferences</a> dialog, you can:</p>
 
@@ -1473,7 +1473,7 @@ The following options can be changed in the Symbol Preferences dialog:
 
 <p>The underlying X protocol is <a href="http://johnlindal.wix.com/xdnd">XDND</a>.</p>
 
-<h3><a name="CBEditorHelp-BalanceGrouping">Balancing grouping symbols</a></h3>
+<h3><a name="EditorHelp-BalanceGrouping">Balancing grouping symbols</a></h3>
 
 <p>The "Balance closest grouping symbols" item on the Search menu searches for the closest pair of grouping symbols (<code>()</code>, <code>{}</code>, <code>[]</code>) that enclose either the caret or the current selection and selects the text between this pair of grouping symbols.  Repeated use of this menu item expands the selection outward to the next pair.</p>
 
@@ -1483,11 +1483,11 @@ The following options can be changed in the Symbol Preferences dialog:
 
 <p>Note that the algorithm does not use a lexer to balance the grouping symbols, so it will fail when grouping symbols are used inside character and string constants.</p>
 
-<h3><a name="CBEditorHelp-SourceCode">Editing source code</a></h3>
+<h3><a name="EditorHelp-SourceCode">Editing source code</a></h3>
 
 <p>If you have <a href="http://ctags.sourceforge.net/">Exuberant <code>ctags</code></a> version 5.0 or later on your execution path, Code Crusader will automatically display an additional menu in the menu bar listing all the functions defined in the file.  When you select a function from this menu, the text scrolls to display that function's definition.  In the <a href="#EditorHelp-Prefs">Preferences</a>, you can choose whether to display the function names alphabetically or in the order defined in the file.  With the latter configuration, a horizontal line is drawn on the menu to indicate the location of the caret in the file.  If you want to momentarily display the functions in the opposite order, hold down the Meta key while opening the menu.</p>
 
-<h3><a name="CBEditorHelp-HTML">Editing HTML</a></h3>
+<h3><a name="EditorHelp-HTML">Editing HTML</a></h3>
 
 <p>The Web Browser Preferences dialog lets you specify the commands for viewing files and URL's in the browser of your choice.  The default is to use Firefox:</p>
 
@@ -1501,7 +1501,7 @@ The following options can be changed in the Symbol Preferences dialog:
 
 <p>You can use any other browser, if you can figure out the commands to execute. "$f" is replaced by the full path and file name when it is used in the command to view a file, while "$u" is replaced by the URL name when it is used in the command to view a URL.  If a character is preceded by a backslash, the backslash is removed and any special meaning is ignored.  Thus, use<code>\$</code> to get a dollar character and <code>\\</code> to get a backslash character.</p>
 
-<h3><a name="CBEditorHelp-MouseShortcuts">Mouse shortcuts</a></h3>
+<h3><a name="EditorHelp-MouseShortcuts">Mouse shortcuts</a></h3>
 
 <p>Left clicking positions the insertion caret.  Left clicking and dragging selects the characters that you drag across.  Left double clicking selects the entire word under the cursor.  If you drag instead of releasing after the second click, the selection will extend one word at a time.  Left double clicking while holding down the partial word modifier (adjustable in the <a href="#EditorHelp-Prefs">Preferences</a> dialog) selects the partial word under the cursor and dragging extends the selection by one partial word at a time.  Left triple clicking selects the entire line, and dragging extends the selection by a line at a time.</p>
 
@@ -1525,7 +1525,7 @@ The following options can be changed in the Symbol Preferences dialog:
 
 <p>The double click shortcuts activate when you release the mouse button, so you can select more than a single word.  This is useful for strings like "<code>std::ios</code>".</p>
 
-<h3><a name="CBEditorHelp-KeyShortcuts">Key shortcuts</a></h3>
+<h3><a name="EditorHelp-KeyShortcuts">Key shortcuts</a></h3>
 
 <p>The arrow keys move the caret around inside the text.  Holding down the Control key makes the up and down arrows move the caret to the top and bottom of the visible text, respectively, while the left and right arrows move the caret by one word at a time.  Control-up/down is useful for scrolling the text by one line without having to use the scrollbar:  simply press Control-up/down-arrow and then up/down.  It is also useful for bringing the cursor to the visible text after scrolling.</p>
 
@@ -1541,7 +1541,7 @@ The following options can be changed in the Symbol Preferences dialog:
 
 <p>Meta-comma activates the line number display so you can jump to a different line.  Meta-Shift-comma activates the column number display so you can jump to a particular column on the current line.  Pressing return takes you to the line or column that you have entered and returns you to the text.  Pressing Shift-return in the line number display takes you to the line and activates the column number display.</p>
 
-<h3><a name="CBEditorHelp-ExtScript">External scripts</a></h3>
+<h3><a name="EditorHelp-ExtScript">External scripts</a></h3>
 
 <p>This feature allows you to paste the output of an arbitrary program into an editor window.</p>
 
@@ -1567,7 +1567,7 @@ The following options can be changed in the Symbol Preferences dialog:
 
 <p>If a character is preceded by a backslash, the backslash is removed and any special meaning is ignored.  Thus, use<code>\$</code> to get a dollar character and <code>\\</code> to get a backslash character.</p>
 
-<h3><a name="CBEditorHelp-Prefs">Preferences</a></h3>
+<h3><a name="EditorHelp-Prefs">Preferences</a></h3>
 
 <p>Word wrapping can be adjusted separately for each file type, so this option is in the <a href="#FileTypeHelp">File Types</a> dialog.</p>
 
@@ -1656,7 +1656,7 @@ The following options can be changed in the Symbol Preferences dialog:
 	<dd>If this is checked, the caret follows along when you scroll the text.  You will also lose the selection when it scrolls out of view.  If you use <a href="#MiscHelp-Scrolling">scrolltabs</a>, then turning this option off makes it easier to return to the position where you are editing.</dd>
 </dl>
 
-<h3><a name="CBEditorHelp-Emulators">Emulators</a></h3>
+<h3><a name="EditorHelp-Emulators">Emulators</a></h3>
 
 <h4>vi</h4>
 
@@ -1741,7 +1741,7 @@ The following options can be changed in the Symbol Preferences dialog:
 
 <p>For any command that deletes, yanks, or pastes text, you can prepend a number to specify the number of items, e.g., 5x deletes five characters.  You can also specify a named buffer, e.g., 5"ax deletes five characters and places them in the "a" buffer instead of the default buffer.  "ap will then paste the contents of the "a" buffer.</p>
 
-<h3><a name="CBEditorHelp-Safety">Safety features</a></h3>
+<h3><a name="EditorHelp-Safety">Safety features</a></h3>
 
 <p>Code Crusader has several features to protect you from accidental crashes of both the X Server and Code Crusader itself:</p>
 
@@ -1759,7 +1759,7 @@ The following options can be changed in the Symbol Preferences dialog:
 
 
 <hr>
-<h2><a name="CBSearchTextHelp">Search &amp; Replace</a></h2>
+<h2><a name="SearchTextHelp">Search &amp; Replace</a></h2>
 
 <p>Note:  When performing actions in the dialog window, the Text Editor window that will be affected is the one that was last clicked or typed in.</p>
 
@@ -1792,7 +1792,7 @@ The following options can be changed in the Symbol Preferences dialog:
 
 <p>The "Replace" button has the shortcut Meta-=.  The right "Replace &amp; Find" button has the shortcut Meta-L.  The left "Replace &amp; Find" button has the shortcut Meta-Shift-L.  These are the same shortcuts as in the Text Editor window.</p>
 
-<h3><a name="CBSearchTextHelp-Multifile">Searching for text in multiple files</a></h3>
+<h3><a name="SearchTextHelp-Multifile">Searching for text in multiple files</a></h3>
 
 <p>If "Search directory" is checked, the right "Find" button will search each file that matches the wildcard filter in the specified directory.  If you specify a relative path, it will be relative to the directory containing the active project, if any.  If "Search all subdirectories" is checked, all subdirectories will also be searched, except those specified in the exception list.  The exception list is a wildcard filter, just like the file name filter.  (Symbolic links are not followed to avoid infinite loops.)  If "Invert" is checked next to the wildcard filter, all files that do <em>not</em> match the given filter will be searched.</p>
 
@@ -1840,7 +1840,7 @@ The following options can be changed in the Symbol Preferences dialog:
 
 
 <hr>
-<h2><a name="CBCompleterHelp">Keyword completion</a></h2>
+<h2><a name="CompleterHelp">Keyword completion</a></h2>
 
 <p>Keyword completion allows you to type the beginning of a word and then press Tab, Control-Space, or Control-Shift-Space to complete the word automatically.  As an example, when writing C code, you could type <code>cont</code> and then Tab would complete it to give <code>continue</code>. (<a href="#MacroHelp">Macros</a> provide the complementary functionality of automating specific, repetitive typing tasks.  These are checked before keyword completion so that they can end with ordinary characters.  Control-Shift-Space is provided as a trigger for keyword completion so macros can be ignored if necessary.)</p>
 
@@ -1856,7 +1856,7 @@ The following options can be changed in the Symbol Preferences dialog:
 
 
 <hr>
-<h2><a name="CBMacroHelp">Character Actions &amp; Macros</a></h2>
+<h2><a name="MacroHelp">Character Actions &amp; Macros</a></h2>
 
 <h3>Character Actions</h3>
 
@@ -1971,7 +1971,7 @@ For C/C++, the following actions can be useful:
 
 
 <hr>
-<h2><a name="CBStylerHelp">Context-sensitive Highlighting</a></h2>
+<h2><a name="StylerHelp">Context-sensitive Highlighting</a></h2>
 
 <p>Code Crusader provides context-sensitive highlighting for several <a href="#FileTypeHelp">languages</a>.</p>
 
@@ -2019,7 +2019,7 @@ For C/C++, the following actions can be useful:
 
 
 <hr>
-<h2><a name="CBCRMHelp">Cleaning paragraph margins</a></h2>
+<h2><a name="CRMHelp">Cleaning paragraph margins</a></h2>
 
 <h3>Automatic indentation</h3>
 
@@ -2147,7 +2147,7 @@ For C/C++, the following actions can be useful:
 
 
 <hr>
-<h2><a name="CBDiffHelp">Viewing differences between files</a></h2>
+<h2><a name="DiffHelp">Viewing differences between files</a></h2>
 
 <p>The "Compare files" dialog lets you compare files in various ways:</p>
 
@@ -2180,13 +2180,13 @@ For C/C++, the following actions can be useful:
 
 
 <hr>
-<h2><a name="CBMiscHelp">Miscellaneous notes</a></h2>
+<h2><a name="MiscHelp">Miscellaneous notes</a></h2>
 
 <h3>The Clipboard</h3>
 
 <p>By default, Code Crusader follows the Macintosh clipboard model.  This means that text is <em>not</em> automatically copied when it is selected.  Instead, it is only copied when you use the "Copy" item on the Edit menu or Meta-C.  (Meta-C works in any input area, regardless of whether or not the window contains an Edit menu.)  The main advantage of this model is that paste can then replace the selected text.  If you prefer the X clipboard model, the <a href="#EditorHelp-Prefs">Text Editor Preferences</a> dialog lets you use this instead.</p>
 
-<h3><a name="CBMiscHelp-Shortcuts">Useful Shortcuts</a></h3>
+<h3><a name="MiscHelp-Shortcuts">Useful Shortcuts</a></h3>
 
 <p>On PC's, Meta is normally bound to the Alt key on the keyboard.  Your system's configuration may be different, however.  You can use "<a href="#MiscHelp-ModifierKeys"><code>xmodmap</code></a>" to examine and change this configuration.</p>
 
@@ -2196,7 +2196,7 @@ For C/C++, the following actions can be useful:
 
 <p>To use a shortcut for a button or checkbox, hold down the Meta key and press the underlined character.</p>
 
-<h3><a name="CBMiscHelp-Scrolling">Scrolling</a></h3>
+<h3><a name="MiscHelp-Scrolling">Scrolling</a></h3>
 
 <p>All scrollbars display increment/decrement arrow pairs if there is space.  Coupled with the Shift key which makes the arrows scroll a half page at a time, this conveniently packages all the scrolling functions in one place.</p>
 
@@ -2240,7 +2240,7 @@ For C/C++, the following actions can be useful:
 	<dd>Scroll horizontally instead of vertically</dd>
 </dl>
 
-<h3><a name="CBMiscHelp-FileChooser">The File Chooser</a></h3>
+<h3><a name="MiscHelp-FileChooser">The File Chooser</a></h3>
 
 <p>Tab completion in the Path input field is supported, but only when the caret is at the far right of the text.  (This allows Tab to be used to switch to the next input area in all other situations.)  You don't actually need tab completion, however, because typing in the file list table performs an incremental search, after which you can use the following keys:</p>
 
@@ -2271,7 +2271,7 @@ For C/C++, the following actions can be useful:
 
 <p>The window is resizable, and always remembers its size and position.</p>
 
-<h3><a name="CBMiscHelp-MultiSelect">Selecting more than one item in a list</a></h3>
+<h3><a name="MiscHelp-MultiSelect">Selecting more than one item in a list</a></h3>
 
 <p>If selecting more than one item at a time is possible in a particular list, you can do so with the following actions:</p>
 
@@ -2318,7 +2318,7 @@ For C/C++, the following actions can be useful:
 
 <p>The digits correspond to the appropriate positions on a numeric keypad.</p>
 
-<h3><a name="CBMiscHelp-WindowManagement">How to avoid fiddling with windows</a></h3>
+<h3><a name="MiscHelp-WindowManagement">How to avoid fiddling with windows</a></h3>
 
 <p>Code Crusader's paradigm is to display information in many separate windows instead of trying to cram everything into a single window.  This allows you to easily place windows side by side so you can view more than one at a time and drag information from one to the other.  It also allows you to place different windows on different virtual desktops.  For those who prefer to work with all their windows arranged within a single window, refer to the section on <a href="http://libjx.sourceforge.net/help/dock.html">Window Docks</a>.</p>
 
@@ -2404,7 +2404,7 @@ For C/C++, the following actions can be useful:
 
 <p>The setting for the Compiler Output window allows you to either filter out all text windows with <code>Code_Crusader_Editor*</code> or filter out all other text windows with simply <code>Code_Crusader_Editor</code>.  It is often convenient to display the Compiler Output window on the taskbar because the *** disappears when the compiler is finished.</p>
 
-<h3><a name="CBMiscHelp-ModifierKeys">Remapping modifier keys</a></h3>
+<h3><a name="MiscHelp-ModifierKeys">Remapping modifier keys</a></h3>
 
 <p>You can choose which keys on your keyboard should map to each modifier by using <code>xmodmap</code> in your <code>~/.xinitrc</code> file.  As an example, if you have a PC keyboard with the new Windows key between Ctrl and Alt, you can change the left Windows key to produce the Mod4 modifier as follows:</p>
 

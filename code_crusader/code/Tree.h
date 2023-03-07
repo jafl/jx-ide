@@ -303,157 +303,157 @@ public:
 	static const JUtf8Byte* kAllClassesDeselected;
 
 	class Changed : public JBroadcaster::Message
-		{
-		public:
+	{
+	public:
 
-			Changed()
-				:
-				JBroadcaster::Message(kChanged)
-				{ };
-		};
+		Changed()
+			:
+			JBroadcaster::Message(kChanged)
+			{ };
+	};
 
 	class BoundsChanged : public JBroadcaster::Message
-		{
-		public:
+	{
+	public:
 
-			BoundsChanged()
-				:
-				JBroadcaster::Message(kBoundsChanged)
-				{ };
-		};
+		BoundsChanged()
+			:
+			JBroadcaster::Message(kBoundsChanged)
+			{ };
+	};
 
 	class NeedsRefresh : public JBroadcaster::Message
-		{
-		public:
+	{
+	public:
 
-			NeedsRefresh()
-				:
-				JBroadcaster::Message(kNeedsRefresh)
-				{ };
-		};
+		NeedsRefresh()
+			:
+			JBroadcaster::Message(kNeedsRefresh)
+			{ };
+	};
 
 	class FontSizeChanged : public JBroadcaster::Message
+	{
+	public:
+
+		FontSizeChanged(const JSize origSize, const JSize newSize,
+						const JFloat vScaleFactor)
+			:
+			JBroadcaster::Message(kFontSizeChanged),
+			itsOrigSize(origSize),
+			itsNewSize(newSize),
+			itsVertScaleFactor(vScaleFactor)
+			{ };
+
+		JSize
+		GetOrigSize() const
 		{
-		public:
-
-			FontSizeChanged(const JSize origSize, const JSize newSize,
-							const JFloat vScaleFactor)
-				:
-				JBroadcaster::Message(kFontSizeChanged),
-				itsOrigSize(origSize),
-				itsNewSize(newSize),
-				itsVertScaleFactor(vScaleFactor)
-				{ };
-
-			JSize
-			GetOrigSize() const
-			{
-				return itsOrigSize;
-			};
-
-			JSize
-			GetNewSize() const
-			{
-				return itsNewSize;
-			};
-
-			JFloat
-			GetVertScaleFactor() const
-			{
-				return itsVertScaleFactor;
-			};
-
-		private:
-
-			JSize	itsOrigSize, itsNewSize;
-			JFloat	itsVertScaleFactor;
+			return itsOrigSize;
 		};
+
+		JSize
+		GetNewSize() const
+		{
+			return itsNewSize;
+		};
+
+		JFloat
+		GetVertScaleFactor() const
+		{
+			return itsVertScaleFactor;
+		};
+
+	private:
+
+		JSize	itsOrigSize, itsNewSize;
+		JFloat	itsVertScaleFactor;
+	};
 
 	class PrepareForParse : public JBroadcaster::Message
-		{
-		public:
+	{
+	public:
 
-			PrepareForParse()
-				:
-				JBroadcaster::Message(kPrepareForParse)
-				{ };
-		};
+		PrepareForParse()
+			:
+			JBroadcaster::Message(kPrepareForParse)
+			{ };
+	};
 
 	class ParseFinished : public JBroadcaster::Message
+	{
+	public:
+
+		ParseFinished(const bool changed)
+			:
+			JBroadcaster::Message(kParseFinished),
+			itsChangedFlag(changed)
+			{ };
+
+		bool
+		Changed()
+			const
 		{
-		public:
-
-			ParseFinished(const bool changed)
-				:
-				JBroadcaster::Message(kParseFinished),
-				itsChangedFlag(changed)
-				{ };
-
-			bool
-			Changed()
-				const
-			{
-				return itsChangedFlag;
-			};
-
-		private:
-
-			bool	itsChangedFlag;
+			return itsChangedFlag;
 		};
+
+	private:
+
+		bool	itsChangedFlag;
+	};
 
 	class ClassSelected : public JBroadcaster::Message
+	{
+	public:
+
+		ClassSelected(Class* theClass)
+			:
+			JBroadcaster::Message(kClassSelected),
+			itsClass(theClass)
+			{ };
+
+		Class*
+		GetClass()
+			const
 		{
-		public:
-
-			ClassSelected(Class* theClass)
-				:
-				JBroadcaster::Message(kClassSelected),
-				itsClass(theClass)
-				{ };
-
-			Class*
-			GetClass()
-				const
-			{
-				return itsClass;
-			};
-
-		private:
-
-			Class*	itsClass;
+			return itsClass;
 		};
+
+	private:
+
+		Class*	itsClass;
+	};
 
 	class ClassDeselected : public JBroadcaster::Message
+	{
+	public:
+
+		ClassDeselected(Class* theClass)
+			:
+			JBroadcaster::Message(kClassDeselected),
+			itsClass(theClass)
+			{ };
+
+		Class*
+		GetClass()
+			const
 		{
-		public:
-
-			ClassDeselected(Class* theClass)
-				:
-				JBroadcaster::Message(kClassDeselected),
-				itsClass(theClass)
-				{ };
-
-			Class*
-			GetClass()
-				const
-			{
-				return itsClass;
-			};
-
-		private:
-
-			Class*	itsClass;
+			return itsClass;
 		};
+
+	private:
+
+		Class*	itsClass;
+	};
 
 	class AllClassesDeselected : public JBroadcaster::Message
-		{
-		public:
+	{
+	public:
 
-			AllClassesDeselected()
-				:
-				JBroadcaster::Message(kAllClassesDeselected)
-				{ };
-		};
+		AllClassesDeselected()
+			:
+			JBroadcaster::Message(kAllClassesDeselected)
+			{ };
+	};
 };
 
 

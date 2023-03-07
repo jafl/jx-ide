@@ -9,15 +9,16 @@
 #define _H_InitVarNodeTask
 
 #include <jx-af/jx/JXUrgentTask.h>
-#include <jx-af/jcore/JBroadcaster.h>
 
 class VarNode;
 
-class InitVarNodeTask : public JXUrgentTask, virtual public JBroadcaster
+class InitVarNodeTask : public JXUrgentTask
 {
 public:
 
 	InitVarNodeTask(VarNode* node);
+
+protected:
 
 	~InitVarNodeTask() override;
 

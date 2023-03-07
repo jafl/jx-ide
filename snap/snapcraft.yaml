@@ -70,6 +70,7 @@ parts:
       - libicu-dev
       - libpcre3-dev
       - libxml2-dev
+      - libboost-fiber-dev
       - xutils-dev
       - libdrm-dev
       - aspell
@@ -99,5 +100,6 @@ parts:
       - libxft2
       - libxinerama1
       - libxml2
+      - libboost-fiber-dev
       - libxpm4
       - libxrender1

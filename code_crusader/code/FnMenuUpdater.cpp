@@ -96,7 +96,6 @@ FnMenuUpdater::FnMenuUpdater()
 
 FnMenuUpdater::~FnMenuUpdater()
 {
-	JPrefObject::WritePrefs();
 }
 
 /******************************************************************************

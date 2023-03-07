@@ -1,5 +1,5 @@
 /******************************************************************************
- RPChooseFileDialog.cpp
+ ChooseRelativeFileDialog.cpp
 
 	BASE CLASS = JXChooseFileDialog
 
@@ -7,7 +7,7 @@
 
  ******************************************************************************/
 
-#include "RPChooseFileDialog.h"
+#include "ChooseRelativeFileDialog.h"
 #include <jx-af/jx/JXWindow.h>
 #include <jx-af/jx/JXStaticText.h>
 #include <jx-af/jx/JXPathInput.h>
@@ -27,22 +27,19 @@
 
  ******************************************************************************/
 
-RPChooseFileDialog*
-RPChooseFileDialog::Create
+ChooseRelativeFileDialog*
+ChooseRelativeFileDialog::Create
 	(
-	JXDirector*						supervisor,
-	JDirInfo*						dirInfo,
+	const ProjectTable::PathType	pathType,
+	const SelectType				selectType,
+	const JString&					selectName,
 	const JString&					fileFilter,
-	const bool					allowSelectMultiple,
-	const RelPathCSF::PathType	pathType,
-	const JString&					origName,
 	const JString&					message
 	)
 {
-	auto* dlog =
-		jnew RPChooseFileDialog(supervisor, dirInfo, fileFilter, allowSelectMultiple);
+	auto* dlog = jnew ChooseRelativeFileDialog(fileFilter);
 	assert( dlog != nullptr );
-	dlog->BuildWindow(pathType, origName, message);
+	dlog->BuildWindow(pathType, selectType, selectName, message);
 	return dlog;
 }
 
@@ -51,15 +48,12 @@ RPChooseFileDialog::Create
 
  ******************************************************************************/
 
-RPChooseFileDialog::RPChooseFileDialog
+ChooseRelativeFileDialog::ChooseRelativeFileDialog
 	(
-	JXDirector*		supervisor,
-	JDirInfo*		dirInfo,
-	const JString&	fileFilter,
-	const bool	allowSelectMultiple
+	const JString& fileFilter
 	)
 	:
-	JXChooseFileDialog(supervisor, dirInfo, fileFilter, allowSelectMultiple)
+	JXChooseFileDialog(fileFilter)
 {
 }
 
@@ -68,7 +62,7 @@ RPChooseFileDialog::RPChooseFileDialog
 
  ******************************************************************************/
 
-RPChooseFileDialog::~RPChooseFileDialog()
+ChooseRelativeFileDialog::~ChooseRelativeFileDialog()
 {
 }
 
@@ -77,11 +71,11 @@ RPChooseFileDialog::~RPChooseFileDialog()
 
  ******************************************************************************/
 
-RelPathCSF::PathType
-RPChooseFileDialog::GetPathType()
+ProjectTable::PathType
+ChooseRelativeFileDialog::GetPathType()
 	const
 {
-	return (RelPathCSF::PathType) itsPathTypeRG->GetSelectedItem();
+	return (ProjectTable::PathType) itsPathTypeRG->GetSelectedItem();
 }
 
 /******************************************************************************
@@ -90,10 +84,11 @@ RPChooseFileDialog::GetPathType()
  ******************************************************************************/
 
 void
-RPChooseFileDialog::BuildWindow
+ChooseRelativeFileDialog::BuildWindow
 	(
-	const RelPathCSF::PathType	pathType,
-	const JString&					origName,
+	const ProjectTable::PathType	pathType,
+	const SelectType				selectType,
+	const JString&					selectName,
 	const JString&					message
 	)
 {
@@ -103,23 +98,23 @@ RPChooseFileDialog::BuildWindow
 	assert( window != nullptr );
 
 	auto* openButton =
-		jnew JXTextButton(JGetString("openButton::RPChooseFileDialog::JXLayout"), window,
+		jnew JXTextButton(JGetString("openButton::ChooseRelativeFileDialog::JXLayout"), window,
 					JXWidget::kFixedRight, JXWidget::kFixedBottom, 220,280, 70,20);
 	assert( openButton != nullptr );
-	openButton->SetShortcuts(JGetString("openButton::RPChooseFileDialog::shortcuts::JXLayout"));
+	openButton->SetShortcuts(JGetString("openButton::ChooseRelativeFileDialog::shortcuts::JXLayout"));
 
 	auto* cancelButton =
-		jnew JXTextButton(JGetString("cancelButton::RPChooseFileDialog::JXLayout"), window,
+		jnew JXTextButton(JGetString("cancelButton::ChooseRelativeFileDialog::JXLayout"), window,
 					JXWidget::kFixedRight, JXWidget::kFixedBottom, 220,310, 70,20);
 	assert( cancelButton != nullptr );
 
 	auto* homeButton =
-		jnew JXTextButton(JGetString("homeButton::RPChooseFileDialog::JXLayout"), window,
+		jnew JXTextButton(JGetString("homeButton::ChooseRelativeFileDialog::JXLayout"), window,
 					JXWidget::kFixedRight, JXWidget::kFixedBottom, 250,140, 40,20);
 	assert( homeButton != nullptr );
 
 	auto* pathLabel =
-		jnew JXStaticText(JGetString("pathLabel::RPChooseFileDialog::JXLayout"), window,
+		jnew JXStaticText(JGetString("pathLabel::ChooseRelativeFileDialog::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 20,20, 40,20);
 	assert( pathLabel != nullptr );
 	pathLabel->SetToLabel();
@@ -130,13 +125,13 @@ RPChooseFileDialog::BuildWindow
 	assert( scrollbarSet != nullptr );
 
 	auto* filterLabel =
-		jnew JXStaticText(JGetString("filterLabel::RPChooseFileDialog::JXLayout"), window,
+		jnew JXStaticText(JGetString("filterLabel::ChooseRelativeFileDialog::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 20,50, 40,20);
 	assert( filterLabel != nullptr );
 	filterLabel->SetToLabel();
 
 	auto* showHiddenCB =
-		jnew JXTextCheckbox(JGetString("showHiddenCB::RPChooseFileDialog::JXLayout"), window,
+		jnew JXTextCheckbox(JGetString("showHiddenCB::ChooseRelativeFileDialog::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 60,80, 130,20);
 	assert( showHiddenCB != nullptr );
 
@@ -161,12 +156,12 @@ RPChooseFileDialog::BuildWindow
 	assert( filterHistory != nullptr );
 
 	auto* upButton =
-		jnew JXTextButton(JGetString("upButton::RPChooseFileDialog::JXLayout"), window,
+		jnew JXTextButton(JGetString("upButton::ChooseRelativeFileDialog::JXLayout"), window,
 					JXWidget::kFixedRight, JXWidget::kFixedBottom, 220,140, 30,20);
 	assert( upButton != nullptr );
 
 	auto* selectAllButton =
-		jnew JXTextButton(JGetString("selectAllButton::RPChooseFileDialog::JXLayout"), window,
+		jnew JXTextButton(JGetString("selectAllButton::ChooseRelativeFileDialog::JXLayout"), window,
 					JXWidget::kFixedRight, JXWidget::kFixedBottom, 220,190, 70,20);
 	assert( selectAllButton != nullptr );
 
@@ -176,17 +171,17 @@ RPChooseFileDialog::BuildWindow
 	assert( itsPathTypeRG != nullptr );
 
 	auto* absolutePathRB =
-		jnew JXTextRadioButton(RelPathCSF::kAbsolutePath, JGetString("absolutePathRB::RPChooseFileDialog::JXLayout"), itsPathTypeRG,
+		jnew JXTextRadioButton(ProjectTable::kAbsolutePath, JGetString("absolutePathRB::ChooseRelativeFileDialog::JXLayout"), itsPathTypeRG,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,10, 180,20);
 	assert( absolutePathRB != nullptr );
 
 	auto* projectRelativeRB =
-		jnew JXTextRadioButton(RelPathCSF::kProjectRelative, JGetString("projectRelativeRB::RPChooseFileDialog::JXLayout"), itsPathTypeRG,
+		jnew JXTextRadioButton(ProjectTable::kProjectRelative, JGetString("projectRelativeRB::ChooseRelativeFileDialog::JXLayout"), itsPathTypeRG,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,30, 180,20);
 	assert( projectRelativeRB != nullptr );
 
 	auto* homeDirRB =
-		jnew JXTextRadioButton(RelPathCSF::kHomeRelative, JGetString("homeDirRB::RPChooseFileDialog::JXLayout"), itsPathTypeRG,
+		jnew JXTextRadioButton(ProjectTable::kHomeRelative, JGetString("homeDirRB::ChooseRelativeFileDialog::JXLayout"), itsPathTypeRG,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,50, 180,20);
 	assert( homeDirRB != nullptr );
 
@@ -196,7 +191,7 @@ RPChooseFileDialog::BuildWindow
 	assert( currPathMenu != nullptr );
 
 	auto* desktopButton =
-		jnew JXTextButton(JGetString("desktopButton::RPChooseFileDialog::JXLayout"), window,
+		jnew JXTextButton(JGetString("desktopButton::ChooseRelativeFileDialog::JXLayout"), window,
 					JXWidget::kFixedRight, JXWidget::kFixedBottom, 220,160, 70,20);
 	assert( desktopButton != nullptr );
 
@@ -206,7 +201,8 @@ RPChooseFileDialog::BuildWindow
 			   filterLabel, filterInput, filterHistory,
 			   openButton, cancelButton, upButton, homeButton,
 			   desktopButton, selectAllButton,
-			   showHiddenCB, currPathMenu, origName, message);
+			   showHiddenCB, currPathMenu,
+			   selectType, selectName, message);
 
 	itsPathTypeRG->SelectItem(pathType);
 

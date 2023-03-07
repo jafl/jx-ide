@@ -1,5 +1,5 @@
 /******************************************************************************
- RPChoosePathDialog.cpp
+ ChooseRelativePathDialog.cpp
 
 	BASE CLASS = JXChoosePathDialog
 
@@ -7,7 +7,7 @@
 
  ******************************************************************************/
 
-#include "RPChoosePathDialog.h"
+#include "ChooseRelativePathDialog.h"
 #include <jx-af/jx/JXWindow.h>
 #include <jx-af/jx/JXStaticText.h>
 #include <jx-af/jx/JXPathInput.h>
@@ -28,21 +28,18 @@
 
  ******************************************************************************/
 
-RPChoosePathDialog*
-RPChoosePathDialog::Create
+ChooseRelativePathDialog*
+ChooseRelativePathDialog::Create
 	(
-	JXDirector*						supervisor,
-	JDirInfo*						dirInfo,
+	const ProjectTable::PathType	pathType,
+	const JString&					startPath,
 	const JString&					fileFilter,
-	const bool					selectOnlyWritable,
-	const RelPathCSF::PathType	pathType,
 	const JString&					message
 	)
 {
-	auto* dlog =
-		jnew RPChoosePathDialog(supervisor, dirInfo, fileFilter, selectOnlyWritable);
+	auto* dlog = jnew ChooseRelativePathDialog(fileFilter);
 	assert( dlog != nullptr );
-	dlog->BuildWindow(pathType, message);
+	dlog->BuildWindow(pathType, startPath, message);
 	return dlog;
 }
 
@@ -51,15 +48,12 @@ RPChoosePathDialog::Create
 
  ******************************************************************************/
 
-RPChoosePathDialog::RPChoosePathDialog
+ChooseRelativePathDialog::ChooseRelativePathDialog
 	(
-	JXDirector*		supervisor,
-	JDirInfo*		dirInfo,
-	const JString&	fileFilter,
-	const bool	selectOnlyWritable
+	const JString& fileFilter
 	)
 	:
-	JXChoosePathDialog(supervisor, dirInfo, fileFilter, selectOnlyWritable)
+	JXChoosePathDialog(JXChoosePathDialog::kAcceptReadable, fileFilter)
 {
 }
 
@@ -68,7 +62,7 @@ RPChoosePathDialog::RPChoosePathDialog
 
  ******************************************************************************/
 
-RPChoosePathDialog::~RPChoosePathDialog()
+ChooseRelativePathDialog::~ChooseRelativePathDialog()
 {
 }
 
@@ -77,11 +71,11 @@ RPChoosePathDialog::~RPChoosePathDialog()
 
  ******************************************************************************/
 
-RelPathCSF::PathType
-RPChoosePathDialog::GetPathType()
+ProjectTable::PathType
+ChooseRelativePathDialog::GetPathType()
 	const
 {
-	return (RelPathCSF::PathType) itsPathTypeRG->GetSelectedItem();
+	return (ProjectTable::PathType) itsPathTypeRG->GetSelectedItem();
 }
 
 /******************************************************************************
@@ -90,9 +84,10 @@ RPChoosePathDialog::GetPathType()
  ******************************************************************************/
 
 void
-RPChoosePathDialog::BuildWindow
+ChooseRelativePathDialog::BuildWindow
 	(
-	const RelPathCSF::PathType	pathType,
+	const ProjectTable::PathType	pathType,
+	const JString&					startPath,
 	const JString&					message
 	)
 {
@@ -102,23 +97,23 @@ RPChoosePathDialog::BuildWindow
 	assert( window != nullptr );
 
 	auto* openButton =
-		jnew JXTextButton(JGetString("openButton::RPChoosePathDialog::JXLayout"), window,
+		jnew JXTextButton(JGetString("openButton::ChooseRelativePathDialog::JXLayout"), window,
 					JXWidget::kFixedRight, JXWidget::kFixedBottom, 220,280, 70,20);
 	assert( openButton != nullptr );
-	openButton->SetShortcuts(JGetString("openButton::RPChoosePathDialog::shortcuts::JXLayout"));
+	openButton->SetShortcuts(JGetString("openButton::ChooseRelativePathDialog::shortcuts::JXLayout"));
 
 	auto* cancelButton =
-		jnew JXTextButton(JGetString("cancelButton::RPChoosePathDialog::JXLayout"), window,
+		jnew JXTextButton(JGetString("cancelButton::ChooseRelativePathDialog::JXLayout"), window,
 					JXWidget::kFixedRight, JXWidget::kFixedBottom, 220,310, 70,20);
 	assert( cancelButton != nullptr );
 
 	auto* homeButton =
-		jnew JXTextButton(JGetString("homeButton::RPChoosePathDialog::JXLayout"), window,
+		jnew JXTextButton(JGetString("homeButton::ChooseRelativePathDialog::JXLayout"), window,
 					JXWidget::kFixedRight, JXWidget::kFixedBottom, 250,140, 40,20);
 	assert( homeButton != nullptr );
 
 	auto* pathLabel =
-		jnew JXStaticText(JGetString("pathLabel::RPChoosePathDialog::JXLayout"), window,
+		jnew JXStaticText(JGetString("pathLabel::ChooseRelativePathDialog::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 20,20, 40,20);
 	assert( pathLabel != nullptr );
 	pathLabel->SetToLabel();
@@ -129,7 +124,7 @@ RPChoosePathDialog::BuildWindow
 	assert( scrollbarSet != nullptr );
 
 	auto* selectButton =
-		jnew JXTextButton(JGetString("selectButton::RPChoosePathDialog::JXLayout"), window,
+		jnew JXTextButton(JGetString("selectButton::ChooseRelativePathDialog::JXLayout"), window,
 					JXWidget::kFixedRight, JXWidget::kFixedBottom, 220,250, 70,20);
 	assert( selectButton != nullptr );
 
@@ -139,12 +134,12 @@ RPChoosePathDialog::BuildWindow
 	assert( pathInput != nullptr );
 
 	auto* showHiddenCB =
-		jnew JXTextCheckbox(JGetString("showHiddenCB::RPChoosePathDialog::JXLayout"), window,
+		jnew JXTextCheckbox(JGetString("showHiddenCB::ChooseRelativePathDialog::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 60,80, 130,20);
 	assert( showHiddenCB != nullptr );
 
 	auto* filterLabel =
-		jnew JXStaticText(JGetString("filterLabel::RPChoosePathDialog::JXLayout"), window,
+		jnew JXStaticText(JGetString("filterLabel::ChooseRelativePathDialog::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 20,50, 40,20);
 	assert( filterLabel != nullptr );
 	filterLabel->SetToLabel();
@@ -155,7 +150,7 @@ RPChoosePathDialog::BuildWindow
 	assert( filterInput != nullptr );
 
 	auto* explanText =
-		jnew JXStaticText(JGetString("explanText::RPChoosePathDialog::JXLayout"), window,
+		jnew JXStaticText(JGetString("explanText::ChooseRelativePathDialog::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 20,340, 270,20);
 	assert( explanText != nullptr );
 	explanText->SetToLabel();
@@ -171,7 +166,7 @@ RPChoosePathDialog::BuildWindow
 	assert( filterHistory != nullptr );
 
 	auto* upButton =
-		jnew JXTextButton(JGetString("upButton::RPChoosePathDialog::JXLayout"), window,
+		jnew JXTextButton(JGetString("upButton::ChooseRelativePathDialog::JXLayout"), window,
 					JXWidget::kFixedRight, JXWidget::kFixedBottom, 220,140, 30,20);
 	assert( upButton != nullptr );
 
@@ -186,17 +181,17 @@ RPChoosePathDialog::BuildWindow
 	assert( itsPathTypeRG != nullptr );
 
 	auto* absolutePathRB =
-		jnew JXTextRadioButton(RelPathCSF::kAbsolutePath, JGetString("absolutePathRB::RPChoosePathDialog::JXLayout"), itsPathTypeRG,
+		jnew JXTextRadioButton(ProjectTable::kAbsolutePath, JGetString("absolutePathRB::ChooseRelativePathDialog::JXLayout"), itsPathTypeRG,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,10, 180,20);
 	assert( absolutePathRB != nullptr );
 
 	auto* projectRelativeRB =
-		jnew JXTextRadioButton(RelPathCSF::kProjectRelative, JGetString("projectRelativeRB::RPChoosePathDialog::JXLayout"), itsPathTypeRG,
+		jnew JXTextRadioButton(ProjectTable::kProjectRelative, JGetString("projectRelativeRB::ChooseRelativePathDialog::JXLayout"), itsPathTypeRG,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,30, 180,20);
 	assert( projectRelativeRB != nullptr );
 
 	auto* homeDirRB =
-		jnew JXTextRadioButton(RelPathCSF::kHomeRelative, JGetString("homeDirRB::RPChoosePathDialog::JXLayout"), itsPathTypeRG,
+		jnew JXTextRadioButton(ProjectTable::kHomeRelative, JGetString("homeDirRB::ChooseRelativePathDialog::JXLayout"), itsPathTypeRG,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,50, 180,20);
 	assert( homeDirRB != nullptr );
 
@@ -206,7 +201,7 @@ RPChoosePathDialog::BuildWindow
 	assert( currPathMenu != nullptr );
 
 	auto* desktopButton =
-		jnew JXTextButton(JGetString("desktopButton::RPChoosePathDialog::JXLayout"), window,
+		jnew JXTextButton(JGetString("desktopButton::ChooseRelativePathDialog::JXLayout"), window,
 					JXWidget::kFixedRight, JXWidget::kFixedBottom, 220,160, 70,20);
 	assert( desktopButton != nullptr );
 
@@ -216,7 +211,8 @@ RPChoosePathDialog::BuildWindow
 			   filterLabel, filterInput, filterHistory,
 			   openButton, selectButton, cancelButton, upButton,
 			   homeButton, desktopButton,
-			   newDirButton, showHiddenCB, currPathMenu, message);
+			   newDirButton, showHiddenCB, currPathMenu,
+			   startPath, message);
 
 	itsPathTypeRG->SelectItem(pathType);
 

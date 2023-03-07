@@ -22,16 +22,17 @@
 jvm::WelcomeTask::WelcomeTask
 	(
 	const JString&	msg,
-	const bool	error
+	const bool		error
 	)
 	:
+	JXUrgentTask(GetLink()),
 	itsMessage(msg),
 	itsErrorFlag(error)
 {
 }
 
 /******************************************************************************
- Destructor
+ Destructor (protected)
 
  ******************************************************************************/
 
@@ -40,7 +41,7 @@ jvm::WelcomeTask::~WelcomeTask()
 }
 
 /******************************************************************************
- Perform
+ Perform (virtual protected)
 
  ******************************************************************************/
 

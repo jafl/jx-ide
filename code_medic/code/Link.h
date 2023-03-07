@@ -77,7 +77,8 @@ public:
 
 public:
 
-	Link(const bool* features);
+	Link(const bool* features, const JUtf8Byte* cmdPromptKey,
+		const JUtf8Byte* scriptPromptKey, const JUtf8Byte* chooseProgInstrKey);
 
 	~Link() override;
 
@@ -91,7 +92,7 @@ public:
 	virtual bool	ChangeDebugger() = 0;
 	virtual bool	RestartDebugger() = 0;
 
-	virtual JString	GetChooseProgramInstructions() const = 0;
+	const JString&	GetChooseProgramInstructions() const;
 	virtual bool	HasProgram() const = 0;
 	virtual bool	GetProgram(JString* fullName) const = 0;
 	virtual void	SetProgram(const JString& fullName) = 0;
@@ -161,8 +162,8 @@ public:
 
 	virtual void	SetValue(const JString& name, const JString& value) = 0;
 
-	virtual const JString&	GetPrompt()	const = 0;
-	virtual const JString&	GetScriptPrompt() const = 0;
+	virtual const JString&	GetCommandPrompt() const;
+	virtual const JString&	GetScriptPrompt() const;
 
 	void	RememberFile(const JString& fileName, const JString& fullName);
 	bool	FindFile(const JString& fileName,
@@ -178,23 +179,23 @@ public:
 	virtual Array2DCmd*					CreateArray2DCmd(Array2DDir* dir,
 														 JXStringTable* table,
 														 JStringTableData* data) = 0;
-	virtual Plot2DCmd*				CreatePlot2DCmd(Plot2DDir* dir,
+	virtual Plot2DCmd*					CreatePlot2DCmd(Plot2DDir* dir,
 														JArray<JFloat>* x,
 														JArray<JFloat>* y) = 0;
 	virtual DisplaySourceForMainCmd*	CreateDisplaySourceForMainCmd(SourceDirector* sourceDir) = 0;
-	virtual GetCompletionsCmd*				CreateGetCompletionsCmd(CommandInput* input,
+	virtual GetCompletionsCmd*			CreateGetCompletionsCmd(CommandInput* input,
 																CommandOutputDisplay* history) = 0;
 	virtual GetFrameCmd*				CreateGetFrameCmd(StackWidget* widget) = 0;
-	virtual GetStackCmd*					CreateGetStackCmd(JTree* tree, StackWidget* widget) = 0;
-	virtual GetThreadCmd*					CreateGetThreadCmd(ThreadsWidget* widget) = 0;
-	virtual GetThreadsCmd*					CreateGetThreadsCmd(JTree* tree, ThreadsWidget* widget) = 0;
+	virtual GetStackCmd*				CreateGetStackCmd(JTree* tree, StackWidget* widget) = 0;
+	virtual GetThreadCmd*				CreateGetThreadCmd(ThreadsWidget* widget) = 0;
+	virtual GetThreadsCmd*				CreateGetThreadsCmd(JTree* tree, ThreadsWidget* widget) = 0;
 	virtual GetFullPathCmd*				CreateGetFullPathCmd(const JString& fileName,
 															 const JIndex lineIndex = 0) = 0;
 	virtual GetInitArgsCmd*				CreateGetInitArgsCmd(JXInputField* argInput) = 0;
-	virtual GetLocalVarsCmd*				CreateGetLocalVarsCmd(VarNode* rootNode) = 0;
-	virtual GetSourceFileListCmd*			CreateGetSourceFileListCmd(FileListDir* fileList) = 0;
-	virtual VarCmd*					CreateVarValueCmd(const JString& expr) = 0;
-	virtual VarCmd*					CreateVarContentCmd(const JString& expr) = 0;
+	virtual GetLocalVarsCmd*			CreateGetLocalVarsCmd(VarNode* rootNode) = 0;
+	virtual GetSourceFileListCmd*		CreateGetSourceFileListCmd(FileListDir* fileList) = 0;
+	virtual VarCmd*						CreateVarValueCmd(const JString& expr) = 0;
+	virtual VarCmd*						CreateVarContentCmd(const JString& expr) = 0;
 	virtual VarNode*					CreateVarNode(const bool shouldUpdate = true) = 0;
 	virtual VarNode*					CreateVarNode(JTreeNode* parent, const JString& name,
 													  const JString& fullName, const JString& value) = 0;
@@ -203,9 +204,9 @@ public:
 	virtual JString						Build2DArrayExpression(const JString& expr,
 															   const JInteger rowIndex,
 															   const JInteger colIndex) = 0;
-	virtual GetMemoryCmd*					CreateGetMemoryCmd(MemoryDir* dir) = 0;
+	virtual GetMemoryCmd*				CreateGetMemoryCmd(MemoryDir* dir) = 0;
 	virtual GetAssemblyCmd*				CreateGetAssemblyCmd(SourceDirector* dir) = 0;
-	virtual GetRegistersCmd*				CreateGetRegistersCmd(RegistersDir* dir) = 0;
+	virtual GetRegistersCmd*			CreateGetRegistersCmd(RegistersDir* dir) = 0;
 
 	// only when user types input for program being debugged
 
@@ -237,7 +238,10 @@ protected:
 
 private:
 
-	const bool*	itsFeatures;
+	const bool*			itsFeatures;
+	const JUtf8Byte*	itsCommandPromptKey;
+	const JUtf8Byte*	itsScriptPromptKey;
+	const JUtf8Byte*	itsChooseProgramInstructionsKey;
 
 	Command*		itsRunningCommand;
 	JIndex			itsLastCommandID;

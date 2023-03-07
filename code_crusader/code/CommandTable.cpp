@@ -11,13 +11,15 @@
 #include "CommandSelection.h"
 #include "CommandPathInput.h"
 #include "ProjectDocument.h"
-#include "ListCSF.h"
+#include "ListChooseFileDialog.h"
 #include "globals.h"
 #include <jx-af/jx/JXDisplay.h>
+#include <jx-af/jx/JXWindow.h>
 #include <jx-af/jx/JXTextButton.h>
 #include <jx-af/jx/JXTextMenu.h>
 #include <jx-af/jx/JXColHeaderWidget.h>
 #include <jx-af/jx/JXWindowPainter.h>
+#include <jx-af/jx/JXSaveFileDialog.h>
 #include <jx-af/jcore/JTableSelection.h>
 #include <jx-af/jcore/JFontManager.h>
 #include <jx-af/jcore/JRegex.h>
@@ -140,10 +142,6 @@ CommandTable::CommandTable
 	ListenTo(itsExportButton);
 	ListenTo(itsImportButton);
 
-	itsCSF = jnew ListCSF(JGetString("ReplaceCommandList::CommandTable"),
-						   JGetString("AppendToCommandList::CommandTable"));
-	assert( itsCSF != nullptr );
-
 	// type menu
 
 	itsOptionsMenu = jnew JXTextMenu(JString::empty, this, kFixedLeft, kFixedTop, 0,0, 10,10);
@@ -187,8 +185,6 @@ CommandTable::~CommandTable()
 {
 	itsCmdList->DeleteAll();
 	jdelete itsCmdList;
-
-	jdelete itsCSF;
 }
 
 /******************************************************************************
@@ -335,7 +331,7 @@ CommandTable::TableDrawCell
 				JStringIterator iter(&s);
 				iter.RemoveNext();
 			}
-			p.String(rect, s, JPainter::kHAlignCenter, JPainter::kVAlignCenter);
+			p.String(rect, s, JPainter::HAlign::kCenter, JPainter::VAlign::kCenter);
 		}
 	}
 	else
@@ -372,7 +368,7 @@ CommandTable::TableDrawCell
 
 		JRect r = rect;
 		r.left += kHMarginWidth;
-		p.String(r, *s, JPainter::kHAlignLeft, JPainter::kVAlignCenter);
+		p.String(r, *s, JPainter::HAlign::kLeft, JPainter::VAlign::kCenter);
 	}
 }
 
@@ -991,26 +987,31 @@ CommandTable::DuplicateCommand()
 void
 CommandTable::ExportAllCommands()
 {
-	JString origName, newName;
-	if (!EndEditing() ||
-		!itsCSF->SaveFile(JGetString("ExportPrompt::CommandTable"), JString::empty,
-						  JGetString("ExportFileName::CommandTable"), &newName))
+	if (!EndEditing())
 	{
 		return;
 	}
 
-	std::ofstream output(newName.GetBytes());
-	output << kCommandFileSignature << '\n';
-	output << CommandManager::GetCurrentCmdInfoFileVersion() << '\n';
+	auto* dlog =
+		JXSaveFileDialog::Create(JGetString("ExportPrompt::CommandTable"),
+								 JGetString("ExportFileName::CommandTable"));
 
-	const JSize count = itsCmdList->GetElementCount();
-	for (JIndex i=1; i<=count; i++)
+	if (dlog->DoDialog())
 	{
-		output << JBoolToString(true);
-		CommandManager::WriteCmdInfo(output, itsCmdList->GetElement(i));
-	}
+		const JString fullName = dlog->GetFullName();
 
-	output << JBoolToString(false) << '\n';
+		std::ofstream output(fullName.GetBytes());
+		output << kCommandFileSignature << '\n';
+		output << CommandManager::GetCurrentCmdInfoFileVersion() << '\n';
+
+		for (const auto& c : *itsCmdList)
+		{
+			output << JBoolToString(true);
+			CommandManager::WriteCmdInfo(output, c);
+		}
+
+		output << JBoolToString(false) << '\n';
+	}
 }
 
 /******************************************************************************
@@ -1021,82 +1022,89 @@ CommandTable::ExportAllCommands()
 void
 CommandTable::ImportCommands()
 {
-	JString fileName;
-	if (!EndEditing() ||
-		!itsCSF->ChooseFile(JString::empty, JString::empty,
-							JGetString("ImportFilter::CommandTable"),
-							JString::empty, &fileName))
+	if (!EndEditing())
 	{
 		return;
 	}
 
-	// read file
+	auto* dlog =
+		ListChooseFileDialog::Create(JGetString("ReplaceCommandList::CommandTable"),
+									 JGetString("AppendToCommandList::CommandTable"),
+									 JXChooseFileDialog::kSelectSingleFile,
+									 JString::empty,
+									 JGetString("ImportFilter::CommandTable"));
 
-	std::ifstream input(fileName.GetBytes());
-
-	CommandManager::CmdList cmdList;
-	if (ProjectDocument::ReadTasksFromProjectFile(input, &cmdList))
+	if (dlog->DoDialog())
 	{
-		if (itsCSF->ReplaceExisting())
-		{
-			itsCmdList->DeleteAll();
-		}
+		const JString fullName = dlog->GetFullName();
 
-		const JSize count = cmdList.GetElementCount();
-		for (JIndex i=1; i<=count; i++)
-		{
-			itsCmdList->AppendElement(cmdList.GetElement(i));
-		}
-	}
-	else
-	{
-		const JString signature = JRead(input, strlen(kCommandFileSignature));
-		if (input.fail() || signature != kCommandFileSignature)
-		{
-			JGetUserNotification()->ReportError(JGetString("ImportNotTaskFile::CommandTable"));
-			return;
-		}
+		// read file
 
-		JFileVersion vers;
-		input >> vers;
-		if (input.fail() || vers > CommandManager::GetCurrentCmdInfoFileVersion())
-		{
-			JGetUserNotification()->ReportError(JGetString("ImportNewerVersion::CommandTable"));
-			return;
-		}
+		std::ifstream input(fullName.GetBytes());
 
-		if (itsCSF->ReplaceExisting())
+		CommandManager::CmdList cmdList;
+		if (ProjectDocument::ReadTasksFromProjectFile(input, &cmdList))
 		{
-			itsCmdList->DeleteAll();
-		}
-
-		while (true)
-		{
-			bool keepGoing;
-			input >> JBoolFromString(keepGoing);
-			if (input.fail() || !keepGoing)
+			if (dlog->ReplaceExisting())
 			{
-				break;
+				itsCmdList->DeleteAll();
 			}
 
-			CommandManager::CmdInfo info = CommandManager::ReadCmdInfo(input, vers);
-			itsCmdList->AppendElement(info);
+			for (const auto& c : cmdList)
+			{
+				itsCmdList->AppendElement(c);
+			}
 		}
-	}
+		else
+		{
+			const JString signature = JRead(input, strlen(kCommandFileSignature));
+			if (input.fail() || signature != kCommandFileSignature)
+			{
+				JGetUserNotification()->ReportError(JGetString("ImportNotTaskFile::CommandTable"));
+				return;
+			}
 
-	// adjust table
+			JFileVersion vers;
+			input >> vers;
+			if (input.fail() || vers > CommandManager::GetCurrentCmdInfoFileVersion())
+			{
+				JGetUserNotification()->ReportError(JGetString("ImportNewerVersion::CommandTable"));
+				return;
+			}
 
-	const JSize count = itsCmdList->GetElementCount();
-	if (GetRowCount() < count)
-	{
-		AppendRows(count - GetRowCount());
-	}
-	else if (count < GetRowCount())
-	{
-		RemoveNextRows(count+1, GetRowCount() - count);
-	}
+			if (dlog->ReplaceExisting())
+			{
+				itsCmdList->DeleteAll();
+			}
 
-	Refresh();
+			while (true)
+			{
+				bool keepGoing;
+				input >> JBoolFromString(keepGoing);
+				if (input.fail() || !keepGoing)
+				{
+					break;
+				}
+
+				CommandManager::CmdInfo info = CommandManager::ReadCmdInfo(input, vers);
+				itsCmdList->AppendElement(info);
+			}
+		}
+
+		// adjust table
+
+		const JSize count = itsCmdList->GetElementCount();
+		if (GetRowCount() < count)
+		{
+			AppendRows(count - GetRowCount());
+		}
+		else if (count < GetRowCount())
+		{
+			RemoveNextRows(count+1, GetRowCount() - count);
+		}
+
+		Refresh();
+	}
 }
 
 /******************************************************************************
@@ -1108,7 +1116,7 @@ void
 CommandTable::UpdateOptionsMenu()
 {
 	JPoint cell;
-	const bool ok = (GetTableSelection()).GetFirstSelectedCell(&cell);
+	const bool ok = GetTableSelection().GetFirstSelectedCell(&cell);
 	assert( ok );
 
 	bool changed = false;
@@ -1186,7 +1194,7 @@ CommandTable::HandleOptionsMenu
 	)
 {
 	JPoint cell;
-	const bool ok = (GetTableSelection()).GetFirstSelectedCell(&cell);
+	const bool ok = GetTableSelection().GetFirstSelectedCell(&cell);
 	assert( ok );
 
 	CommandManager::CmdInfo info = itsCmdList->GetElement(cell.y);
@@ -1248,7 +1256,7 @@ CommandTable::HandleOptionsMenu
 void
 CommandTable::UpdateButtons()
 {
-	if ((GetTableSelection()).HasSelection())
+	if (GetTableSelection().HasSelection())
 	{
 		itsRemoveCmdButton->Activate();
 		itsDuplicateCmdButton->Activate();

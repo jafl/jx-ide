@@ -13,7 +13,7 @@
 #include "CStyler.h"
 #include "PrefsManager.h"
 #include "sharedUtil.h"
-#include <jx-af/jx/JXDialogDirector.h>
+#include <jx-af/jx/JXModalDialogDirector.h>
 #include <jx-af/jcore/JStringIterator.h>
 #include <jx-af/jcore/JRegex.h>
 #include <jx-af/jcore/JColorManager.h>
@@ -132,6 +132,7 @@ CStyler::CStyler()
 	SetWordStyle(JString("goto", JString::kNoCopy),          JFontStyle(true, false, 0, false, red));
 
 	JPrefObject::ReadPrefs();
+	ListenTo(this);
 }
 
 /******************************************************************************
@@ -388,15 +389,9 @@ CStyler::Receive
 
 #if defined CODE_CRUSADER && ! defined CODE_CRUSADER_UNIT_TEST
 
-	if (message.Is(JXDialogDirector::kDeactivated))
+	if (sender == this && message.Is(kWordListChanged))
 	{
-		const auto* info =
-			dynamic_cast<const JXDialogDirector::Deactivated*>(&message);
-		assert( info != nullptr );
-		if (info->Successful())
-		{
-			WriteSharedPrefs(true);
-		}
+		WriteSharedPrefs(true);
 	}
 
 #endif

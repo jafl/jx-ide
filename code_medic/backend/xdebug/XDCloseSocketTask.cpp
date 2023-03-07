@@ -20,12 +20,13 @@ xdebug::CloseSocketTask::CloseSocketTask
 	Socket* socket
 	)
 	:
+	JXUrgentTask(socket),
 	itsSocket(socket)
 {
 }
 
 /******************************************************************************
- Destructor
+ Destructor (protected)
 
  ******************************************************************************/
 
@@ -34,7 +35,7 @@ xdebug::CloseSocketTask::~CloseSocketTask()
 }
 
 /******************************************************************************
- Perform
+ Perform (virtual protected)
 
  ******************************************************************************/
 

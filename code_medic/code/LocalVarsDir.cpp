@@ -116,7 +116,10 @@ LocalVarsDir::LocalVarsDir
 
 LocalVarsDir::~LocalVarsDir()
 {
-	GetPrefsManager()->SaveWindowSize(kLocalVarWindSizeID, GetWindow());
+	if (HasPrefsManager())
+	{
+		GetPrefsManager()->SaveWindowSize(kLocalVarWindSizeID, GetWindow());
+	}
 
 	jdelete itsGetLocalsCmd;
 }
@@ -577,7 +580,7 @@ LocalVarsDir::HandleHelpMenu
 {
 	if (index == kAboutCmd)
 	{
-		(GetApplication())->DisplayAbout();
+		GetApplication()->DisplayAbout();
 	}
 	else if (index == kTOCCmd)
 	{

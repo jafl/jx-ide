@@ -190,7 +190,7 @@ private:
 	JString				itsMakeDependCmd;
 	CompileDocument*	itsCompileDoc;		// not owned
 
-	static JPtrArray<TextDocument>	theExecDocList;
+	static JPtrArray<ExecOutputDocument>	theExecDocList;
 
 private:
 

@@ -26,7 +26,7 @@
 #include <jx-af/jcore/jAssert.h>
 
 static const JUtf8Byte* kDefaultMakeDependCmd = "echo Makefile must be updated manually";
-JPtrArray<TextDocument> CommandManager::theExecDocList(JPtrArrayT::kForgetAll);
+JPtrArray<ExecOutputDocument> CommandManager::theExecDocList(JPtrArrayT::kForgetAll);
 
 // setup information
 
@@ -1349,7 +1349,12 @@ static const DefCmd kDefCmd[] =
 		false, false, false, false, true, true, false,
 		"DefCmdRunJavaText::CommandManager", "DefCmdRunJavaShortcut::CommandManager",
 		false },
-{ "./", "medic $program",
+{ "./",
+#ifdef _J_MACOS
+		"xterm -e \"medic $program\"",	// avoid strange python errors
+#else
+		"medic $program",
+#endif
 		"",
 		false, false, false, false, false, false, false,
 		"DefCmdDebugText::CommandManager", "DefCmdDebugShorcut::CommandManager",
@@ -1879,11 +1884,8 @@ CommandManager::GetCompileDoc
 ExecOutputDocument*
 CommandManager::GetOutputDoc()
 {
-	const JSize count = theExecDocList.GetElementCount();
-	for (JIndex i=1; i<=count; i++)
+	for (auto* doc : theExecDocList)
 	{
-		auto* doc = dynamic_cast<ExecOutputDocument*>(theExecDocList.GetElement(i));
-		assert( doc != nullptr );
 		if (!doc->ProcessRunning())
 		{
 			return doc;
@@ -1893,7 +1895,7 @@ CommandManager::GetOutputDoc()
 	auto* doc = jnew ExecOutputDocument();
 	assert( doc != nullptr );
 	theExecDocList.Append(doc);
-	(GetCommandManager())->ListenTo(doc);
+	GetCommandManager()->ListenTo(doc);
 	return doc;
 }
 
@@ -1960,6 +1962,8 @@ CommandManager::DocumentDeleted
 		itsCompileDoc = nullptr;
 		return true;
 	}
+
+	// dynamic_cast won't work, because the object is partially deleted
 
 	const JSize count = theExecDocList.GetElementCount();
 	for (JIndex i=1; i<=count; i++)

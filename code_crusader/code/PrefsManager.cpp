@@ -21,7 +21,7 @@
 #include "fileVersions.h"
 #include <jx-af/jx/JXDisplay.h>
 #include <jx-af/jx/JXWindow.h>
-#include <jx-af/jx/JXChooseSaveFile.h>
+#include <jx-af/jx/JXCSFDialogBase.h>
 #include <jx-af/jx/JXHelpManager.h>
 #include <jx-af/jx/JXFontManager.h>
 #include <jx-af/jx/JXColorManager.h>
@@ -55,24 +55,14 @@ PrefsManager::PrefsManager
 	bool* isNew
 	)
 	:
-	JXPrefsManager(kCurrentPrefsFileVersion, true)
+	JXPrefsManager(kCurrentPrefsFileVersion, true, kgCSFSetupID),
+	itsFileTypeList(nullptr),
+	itsMacroList(nullptr),
+	itsCRMList(nullptr),
+	itsExecOutputWordWrapFlag(true),
+	itsUnknownTypeWordWrapFlag(true)
 {
-	itsFileTypeList = nullptr;
-	itsMacroList    = nullptr;
-	itsCRMList      = nullptr;
-
-	itsExecOutputWordWrapFlag  = true;
-	itsUnknownTypeWordWrapFlag = true;
-
-	itsFileTypesDialog = nullptr;
-	itsMacroDialog     = nullptr;
-	itsCRMDialog       = nullptr;
-
 	*isNew = JPrefsManager::UpgradeData();
-
-	JXChooseSaveFile* csf = JXGetChooseSaveFile();
-	csf->SetPrefInfo(this, kgCSFSetupID);
-	csf->JPrefObject::ReadPrefs();
 
 	ReadColors();
 	ReadStaticGlobalPrefs(kCurrentPrefsFileVersion);
@@ -202,117 +192,45 @@ PrefsManager::SetExpirationTimeStamp
 void
 PrefsManager::EditFileTypes()
 {
-	assert( itsFileTypesDialog == nullptr );
+	auto* dlog =
+		jnew EditFileTypesDialog(*itsFileTypeList, *itsMacroList, *itsCRMList,
+								 itsExecOutputWordWrapFlag, itsUnknownTypeWordWrapFlag);
+	assert( dlog != nullptr );
 
-	itsFileTypesDialog =
-		jnew EditFileTypesDialog(GetApplication(), *itsFileTypeList,
-								  *itsMacroList, *itsCRMList,
-								  itsExecOutputWordWrapFlag,
-								  itsUnknownTypeWordWrapFlag);
-	assert( itsFileTypesDialog != nullptr );
-	itsFileTypesDialog->BeginDialog();
-	ListenTo(itsFileTypesDialog);
-}
-
-/******************************************************************************
- UpdateFileTypes (private)
-
- ******************************************************************************/
-
-void
-PrefsManager::UpdateFileTypes
-	(
-	const EditFileTypesDialog& dlog
-	)
-{
-	JPtrArray< JPtrArray<JString> > origSuffixList(JPtrArrayT::kDeleteAll);
-	for (JUnsignedOffset i=0; i<kFTCount; i++)
+	if (dlog->DoDialog())
 	{
-		auto* list = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
-		assert( list != nullptr );
-		origSuffixList.Append(list);
-
-		GetFileSuffixes((TextFileType) i, list);
-	}
-
-	dlog.GetFileTypeInfo(itsFileTypeList, &itsExecOutputWordWrapFlag,
-						 &itsUnknownTypeWordWrapFlag);
-
-	itsFileTypeList->SetCompareFunction(CompareFileTypeSpecAndLength);
-	itsFileTypeList->Sort();
-
-	FileTypesChanged msg;
-	JPtrArray<JString> suffixes(JPtrArrayT::kDeleteAll);
-	for (JUnsignedOffset i=0; i<kFTCount; i++)
-	{
-		GetFileSuffixes((TextFileType) i, &suffixes);
-
-		msg.SetChanged((TextFileType) i,
-			!JSameStrings(*origSuffixList.GetElement(i+1), suffixes, JString::kCompareCase));
-	}
-
-	Broadcast(msg);
-
-	if (msg.AnyChanged())
-	{
-		WriteSharedPrefs(true);
-	}
-}
-
-/******************************************************************************
- Receive (virtual protected)
-
- ******************************************************************************/
-
-void
-PrefsManager::Receive
-	(
-	JBroadcaster*	sender,
-	const Message&	message
-	)
-{
-	if (sender == itsFileTypesDialog &&
-		message.Is(JXDialogDirector::kDeactivated))
-	{
-		const auto* info =
-			dynamic_cast<const JXDialogDirector::Deactivated*>(&message);
-		assert( info != nullptr );
-		if (info->Successful())
+		JPtrArray< JPtrArray<JString> > origSuffixList(JPtrArrayT::kDeleteAll);
+		for (JUnsignedOffset i=0; i<kFTCount; i++)
 		{
-			UpdateFileTypes(*itsFileTypesDialog);
-		}
-		itsFileTypesDialog = nullptr;
-	}
+			auto* list = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
+			assert( list != nullptr );
+			origSuffixList.Append(list);
 
-	else if (sender == itsMacroDialog &&
-		message.Is(JXDialogDirector::kDeactivated))
-	{
-		const auto* info =
-			dynamic_cast<const JXDialogDirector::Deactivated*>(&message);
-		assert( info != nullptr );
-		if (info->Successful())
+			GetFileSuffixes((TextFileType) i, list);
+		}
+
+		dlog->GetFileTypeInfo(itsFileTypeList, &itsExecOutputWordWrapFlag,
+							  &itsUnknownTypeWordWrapFlag);
+
+		itsFileTypeList->SetCompareFunction(CompareFileTypeSpecAndLength);
+		itsFileTypeList->Sort();
+
+		FileTypesChanged msg;
+		JPtrArray<JString> suffixes(JPtrArrayT::kDeleteAll);
+		for (JUnsignedOffset i=0; i<kFTCount; i++)
 		{
-			UpdateMacros(*itsMacroDialog);
-		}
-		itsMacroDialog = nullptr;
-	}
+			GetFileSuffixes((TextFileType) i, &suffixes);
 
-	else if (sender == itsCRMDialog &&
-		message.Is(JXDialogDirector::kDeactivated))
-	{
-		const auto* info =
-			dynamic_cast<const JXDialogDirector::Deactivated*>(&message);
-		assert( info != nullptr );
-		if (info->Successful())
+			msg.SetChanged((TextFileType) i,
+				!JSameStrings(*origSuffixList.GetElement(i+1), suffixes, JString::kCompareCase));
+		}
+
+		Broadcast(msg);
+
+		if (msg.AnyChanged())
 		{
-			UpdateCRMRuleLists(*itsCRMDialog);
+			WriteSharedPrefs(true);
 		}
-		itsCRMDialog = nullptr;
-	}
-
-	else
-	{
-		JXPrefsManager::Receive(sender, message);
 	}
 }
 
@@ -324,20 +242,20 @@ PrefsManager::Receive
 struct NewSuffixInfo
 {
 	const JUtf8Byte*	suffix;
-	bool			found;
+	bool				found;
 };
 
 void
 addNewSuffixes
 	(
-	const JUtf8Byte*		macroName,		// can be nullptr
-	const JUtf8Byte*		origCRMName,	// can be nullptr -- uses macroName
+	const JUtf8Byte*	macroName,		// can be nullptr
+	const JUtf8Byte*	origCRMName,	// can be nullptr -- uses macroName
 	const TextFileType	type,
 	NewSuffixInfo*		newInfo,
-	const JSize				newSize,
+	const JSize			newSize,
 
-	JArray<PrefsManager::FileTypeInfo>*			fileTypeList,
-	JArray<PrefsManager::MacroSetInfo>*			macroList,
+	JArray<PrefsManager::FileTypeInfo>*				fileTypeList,
+	JArray<PrefsManager::MacroSetInfo>*				macroList,
 	const JArray<PrefsManager::CRMRuleListInfo>&	crmList
 	)
 {
@@ -395,14 +313,14 @@ struct NewExternalSuffixInfo
 {
 	const JUtf8Byte*	suffix;
 	const JUtf8Byte*	cmd;
-	bool			found;
+	bool				found;
 };
 
 void
 addNewExternalSuffixes
 	(
 	NewExternalSuffixInfo*				newInfo,
-	const JSize								newCount,
+	const JSize							newCount,
 	JArray<PrefsManager::FileTypeInfo>*	fileTypeList
 	)
 {
@@ -2002,9 +1920,7 @@ PrefsManager::CompareFileTypeSpecAndLength
 #define EditDataFn    EditMacros
 #define EditDataArg   MacroManager
 #define EditDataSel   macro
-#define UpdateDataFn  UpdateMacros
 #define DialogClass   EditMacroDialog
-#define DialogVar     itsMacroDialog
 #define ExtractDataFn GetMacroList
 #define CopyConstr    jnew CharActionManager(*(origInfo.action)), \
 					  jnew MacroManager(*(origInfo.macro))
@@ -2388,9 +2304,7 @@ PrefsManager::CreateDCRMRuleList()
 #define EditDataFn    EditCRMRuleLists
 #define EditDataArg   JStyledText::CRMRuleList
 #define EditDataSel   list
-#define UpdateDataFn  UpdateCRMRuleLists
 #define DialogClass   EditCRMDialog
-#define DialogVar     itsCRMDialog
 #define ExtractDataFn GetCRMRuleLists
 #define CopyConstr    jnew JStyledText::CRMRuleList(*(origInfo.list))
 #define PtrCheck      newInfo.list != nullptr
@@ -2708,8 +2622,7 @@ PrefsManager::RestoreProgramState()
 		JXWindow::ShouldAutoDockNewWindows(false);
 
 		std::istringstream dataStream(data);
-		const bool restored =
-			GetDocumentManager()->RestoreState(dataStream);
+		const bool restored = GetDocumentManager()->RestoreState(dataStream);
 		RemoveData(kDocMgrStateID);
 
 		JXWindow::ShouldAutoDockNewWindows(saveAutoDock);

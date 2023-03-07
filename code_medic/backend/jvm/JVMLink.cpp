@@ -83,7 +83,7 @@ const JUtf8Byte* jvm::Link::kIDResolved = "IDResolved::JVMLink";
 
 jvm::Link::Link()
 	:
-	::Link(kFeatures),
+	::Link(kFeatures, "CommandPrompt::JVMLink", "ScriptPrompt::JVMLink", "ChooseProgramInstr::JVMLink"),
 	itsAcceptor(nullptr),
 	itsDebugLink(nullptr),
 	itsProcess(nullptr),
@@ -166,30 +166,6 @@ jvm::Link::InitFlags()
 }
 
 /******************************************************************************
- GetPrompt
-
- ******************************************************************************/
-
-const JString&
-jvm::Link::GetPrompt()
-	const
-{
-	return JGetString("Prompt::JVMLink");
-}
-
-/******************************************************************************
- GetScriptPrompt
-
- ******************************************************************************/
-
-const JString&
-jvm::Link::GetScriptPrompt()
-	const
-{
-	return JGetString("ScriptPrompt::JVMLink");
-}
-
-/******************************************************************************
  DebuggerHasStarted
 
  ******************************************************************************/
@@ -199,18 +175,6 @@ jvm::Link::DebuggerHasStarted()
 	const
 {
 	return true;
-}
-
-/******************************************************************************
- GetChooseProgramInstructions
-
- ******************************************************************************/
-
-JString
-jvm::Link::GetChooseProgramInstructions()
-	const
-{
-	return JGetString("ChooseProgramInstr::JVMLink");
 }
 
 /******************************************************************************

@@ -8,7 +8,7 @@
 #ifndef _H_EditCommandsDialog
 #define _H_EditCommandsDialog
 
-#include <jx-af/jx/JXDialogDirector.h>
+#include <jx-af/jx/JXModalDialogDirector.h>
 #include <jx-af/jcore/JPrefObject.h>
 #include "CommandManager.h"	// need defn of CmdInfo
 #include <jx-af/jcore/JString.h>
@@ -19,13 +19,15 @@ class JXInputField;
 class ProjectDocument;
 class CommandTable;
 
-class EditCommandsDialog : public JXDialogDirector, public JPrefObject
+class EditCommandsDialog : public JXModalDialogDirector, public JPrefObject
 {
 public:
 
 	EditCommandsDialog(ProjectDocument* projDoc);
 
 	~EditCommandsDialog() override;
+
+	void	UpdateCommands();
 
 protected:
 

@@ -5,7 +5,6 @@ Internal Form Definition File
 
 Number of forms: 46
 Unit of measure: FL_COORD_PIXEL
-SnapGrid: 5
 
 =============== FORM ===============
 Name: TreeDirector
@@ -4624,7 +4623,7 @@ argument:
 --------------------
 class: FL_FRAME
 type: FL_ENGRAVED_FRAME
-box: 20 340 204 74
+box: 20 340 99 74
 boxtype: FL_NO_BOX
 colors: FL_COL1 FL_COL1
 alignment: FL_ALIGN_CENTER
@@ -4642,7 +4641,7 @@ argument:
 --------------------
 class: FL_CHECKBUTTON
 type: FL_RADIO_BUTTON
-box: 30 350 180 20
+box: 30 350 80 20
 boxtype: FL_NO_BOX
 colors: FL_COL1 FL_YELLOW
 alignment: FL_ALIGN_CENTER
@@ -4660,7 +4659,7 @@ argument: kReplaceCmd
 --------------------
 class: FL_CHECKBUTTON
 type: FL_RADIO_BUTTON
-box: 30 380 180 20
+box: 30 380 80 20
 boxtype: FL_NO_BOX
 colors: FL_COL1 FL_YELLOW
 alignment: FL_ALIGN_CENTER
@@ -6236,7 +6235,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: RPChooseFileDialog
+Name: ChooseRelativeFileDialog
 Width: 310
 Height: 430
 Number of Objects: 20
@@ -6527,7 +6526,7 @@ resize: FL_RESIZE_NONE
 gravity: FL_NorthWest FL_NoGravity
 name: (absolutePathRB)
 callback: 
-argument: RelPathCSF::kAbsolutePath
+argument: ProjectTable::kAbsolutePath
 
 --------------------
 class: FL_CHECKBUTTON
@@ -6545,7 +6544,7 @@ resize: FL_RESIZE_NONE
 gravity: FL_NorthWest FL_NoGravity
 name: (projectRelativeRB)
 callback: 
-argument: RelPathCSF::kProjectRelative
+argument: ProjectTable::kProjectRelative
 
 --------------------
 class: FL_CHECKBUTTON
@@ -6563,7 +6562,7 @@ resize: FL_RESIZE_NONE
 gravity: FL_NorthWest FL_NoGravity
 name: (homeDirRB)
 callback: 
-argument: RelPathCSF::kHomeRelative
+argument: ProjectTable::kHomeRelative
 
 --------------------
 class: FL_BOX
@@ -6602,7 +6601,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: RPChoosePathDialog
+Name: ChooseRelativePathDialog
 Width: 310
 Height: 460
 Number of Objects: 22
@@ -6929,7 +6928,7 @@ resize: FL_RESIZE_NONE
 gravity: FL_NorthWest FL_NoGravity
 name: (absolutePathRB)
 callback: 
-argument: RelPathCSF::kAbsolutePath
+argument: ProjectTable::kAbsolutePath
 
 --------------------
 class: FL_CHECKBUTTON
@@ -6947,7 +6946,7 @@ resize: FL_RESIZE_NONE
 gravity: FL_NorthWest FL_NoGravity
 name: (projectRelativeRB)
 callback: 
-argument: RelPathCSF::kProjectRelative
+argument: ProjectTable::kProjectRelative
 
 --------------------
 class: FL_CHECKBUTTON
@@ -6965,7 +6964,7 @@ resize: FL_RESIZE_NONE
 gravity: FL_NorthWest FL_NoGravity
 name: (homeDirRB)
 callback: 
-argument: RelPathCSF::kHomeRelative
+argument: ProjectTable::kHomeRelative
 
 --------------------
 class: FL_BOX
@@ -7535,7 +7534,7 @@ resize: FL_RESIZE_NONE
 gravity: FL_NorthWest FL_NoGravity
 name: (dndAskLabel)
 callback: 
-argument: ProjectTable::kAskPathType
+argument: ProjectTable::kDropAskPathType
 
 --------------------
 class: FL_CHECKBUTTON
@@ -8012,7 +8011,7 @@ callback:
 argument: 
 
 =============== FORM ===============
-Name: NewProjectSaveFileDialog
+Name: SaveNewProjectDialog
 Width: 310
 Height: 500
 Number of Objects: 25

@@ -9,10 +9,10 @@
 
 #include "FileNodeBase.h"
 #include "ProjectDocument.h"
+#include "ProjectTable.h"
 #include "ProjectTree.h"
 #include "FileNode.h"
 #include "LibraryNode.h"
-#include "RelPathCSF.h"
 #include "globals.h"
 #include <jx-af/jx/JXWebBrowser.h>
 #include <jx-af/jcore/jFileUtil.h>
@@ -269,9 +269,9 @@ FileNodeBase::BuildCMakeData
 										  GetProjectDoc(), false) &&
 					!(GetProjectTree()->GetProjectRoot())->Includes(complName))
 				{
-					const RelPathCSF::PathType pathType =
-						RelPathCSF::CalcPathType(itsFileName);
-					complName = RelPathCSF::ConvertToRelativePath(
+					const ProjectTable::PathType pathType =
+						ProjectTable::CalcPathType(itsFileName);
+					complName = ProjectTable::ConvertToRelativePath(
 									complName, GetProjectDoc()->GetFilePath(), pathType);
 
 					hdr->Append(" ");
@@ -339,9 +339,9 @@ FileNodeBase::BuildQMakeData
 										  GetProjectDoc(), false) &&
 					!(GetProjectTree()->GetProjectRoot())->Includes(complName))
 				{
-					const RelPathCSF::PathType pathType =
-						RelPathCSF::CalcPathType(itsFileName);
-					complName = RelPathCSF::ConvertToRelativePath(
+					const ProjectTable::PathType pathType =
+						ProjectTable::CalcPathType(itsFileName);
+					complName = ProjectTable::ConvertToRelativePath(
 									complName, GetProjectDoc()->GetFilePath(), pathType);
 
 					hdr->Append(" ");
@@ -394,25 +394,25 @@ FileNodeBase::FileRenamed
 	const JString& newFullName
 	)
 {
-	const RelPathCSF::PathType type = RelPathCSF::CalcPathType(itsFileName);
-	if (type == RelPathCSF::kAbsolutePath && itsFileName == origFullName)
+	const ProjectTable::PathType type = ProjectTable::CalcPathType(itsFileName);
+	if (type == ProjectTable::kAbsolutePath && itsFileName == origFullName)
 	{
 		SetFileName(newFullName);
 	}
-	else if (type == RelPathCSF::kHomeRelative)
+	else if (type == ProjectTable::kHomeRelative)
 	{
 		JString s;
 		const bool ok = JExpandHomeDirShortcut(itsFileName, &s);
 		assert( ok );
 		if (s == origFullName)
 		{
-			s = RelPathCSF::ConvertToRelativePath(newFullName, JString::empty, type);
+			s = ProjectTable::ConvertToRelativePath(newFullName, JString::empty, type);
 			SetFileName(s);
 		}
 	}
 	else
 	{
-		assert( type == RelPathCSF::kProjectRelative );
+		assert( type == ProjectTable::kProjectRelative );
 
 		const auto* projTree = dynamic_cast<const ProjectTree*>(GetTree());
 		assert( projTree != nullptr );
@@ -421,7 +421,7 @@ FileNodeBase::FileRenamed
 		JString s               = JConvertToRelativePath(origFullName, basePath);
 		if (itsFileName == s)
 		{
-			s = RelPathCSF::ConvertToRelativePath(newFullName, basePath, type);
+			s = ProjectTable::ConvertToRelativePath(newFullName, basePath, type);
 			SetFileName(s);
 		}
 	}

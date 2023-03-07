@@ -22,12 +22,14 @@ AdjustLineTableToTextTask::AdjustLineTableToTextTask
 	(
 	LineIndexTable* table
 	)
+	:
+	JXUrgentTask(table),
+	itsTable(table)
 {
-	itsTable = table;
 }
 
 /******************************************************************************
- Destructor
+ Destructor (protected)
 
  ******************************************************************************/
 
@@ -36,7 +38,7 @@ AdjustLineTableToTextTask::~AdjustLineTableToTextTask()
 }
 
 /******************************************************************************
- Perform
+ Perform (virtual protected)
 
  ******************************************************************************/
 

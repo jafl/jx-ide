@@ -57,7 +57,7 @@
 
 
 <hr>
-<h2><a name="CMOverviewHelp">Overview</a></h2>
+<h2><a name="OverviewHelp">Overview</a></h2>
 
 <p>Code Medic is a graphical front-end for various debuggers:  gdb, xdebug, Java.  It was designed to work with <a href="http://sourceforge.net/p/codecrusader/">Code Crusader</a> but can also be used alone.</p>
 
@@ -81,7 +81,7 @@
 
 
 <hr>
-<h2><a name="CMGettingStartedHelp">Getting Started with Code Medic</a></h2>
+<h2><a name="GettingStartedHelp">Getting Started with Code Medic</a></h2>
 
 <p>When invoking Code Medic, you can include as arguments the program to be debugged, the core file (if any) to debug, and any source files that you want to display, in that order.  The formats for specifying source files are the following:</p>
 
@@ -137,7 +137,7 @@
 
 
 <hr>
-<h2><a name="CMSourceWindowHelp">Source View Window</a></h2>
+<h2><a name="SourceWindowHelp">Source View Window</a></h2>
 
 <p>When the program is paused, the Current Source window displays the source file corresponding to the <a href="#StackHelp">stack frame</a> that is currently being debugged.  If a cyan colored arrow is visible to the left of the line numbers, this indicates the line at which the program is paused.</p>
 
@@ -147,7 +147,7 @@
 
 <p>Since one cannot edit the files, all keypresses (except menu shortcuts) are sent to the <a href="#CommandDirHelp">Command Line</a>.</p>
 
-<h3><a name="CMSourceWindowHelp-FileList">Opening source files</a></h3>
+<h3><a name="SourceWindowHelp-FileList">Opening source files</a></h3>
 
 <p>The Files window displays a list of all the source files that are used by the program being debugged.  (Unfortunately, <code>gdb</code> does not report files used by shared libraries until after the program has been started, and <code>lldb</code> does not provide any way to list the source files.)</p>
 
@@ -155,7 +155,7 @@
 
 <p>To locate a file, simply type the first few letters in its name, and the first file name that matches will be selected.  You can search for groups of files by using the wildcard or the <a href="http://libjx.sourceforge.net/help/regex.html">regular expression</a> filter on the Actions menu.</p>
 
-<h3><a name="CMSourceWindowHelp-Execution">Controlling execution</a></h3>
+<h3><a name="SourceWindowHelp-Execution">Controlling execution</a></h3>
 
 <p>The basic commands are provided on the Debug menu:  Next, Step, Finish, and Continue.</p>
 
@@ -167,7 +167,7 @@
 
 
 <hr>
-<h2><a name="CMBreakpointsHelp">Breakpoints Window</a></h2>
+<h2><a name="BreakpointsHelp">Breakpoints Window</a></h2>
 
 <p>To set a breakpoint, either click on the line number in a <a href="#SourceWindowHelp">Source View</a> window or use the <code>break</code> or <code>tbreak</code> commands in the <a href="#CommandDirHelp">Command Line</a> window.</p>
 
@@ -187,7 +187,7 @@
 
 
 <hr>
-<h2><a name="CMVarTreeHelp">Variables Window</a></h2>
+<h2><a name="VarTreeHelp">Variables Window</a></h2>
 
 <p>The Variables window displays the values of variables and expressions and the contents of structures and objects.  Structures, objects, and pointers have an arrow to the left of their names.  Clicking on this arrow displays the variable's contents below its name.</p>
 
@@ -239,17 +239,17 @@
 
 <p>The keyboard shortcuts obviously only work when one or more items are <a href="#MiscHelp-MultiSelect">selected</a>.</p>
 
-<h3><a name="CMVarTreeHelp-Local">Local variables</a></h3>
+<h3><a name="VarTreeHelp-Local">Local variables</a></h3>
 
 <p>Examining the variables that are local to the current function is such a common task that a separate window is used to display the values of all the currently defined local variables.  This window works exactly the same way as the Variables window, except that double clicking on a variable name always transfers it to the Variables window instead of allowing you to edit in place.</p>
 
 <p>There is one caveat when using the Local Variables window.  Variables from enclosing blocks are displayed below the variables defined in the current block.  This is very useful for integers and other simple values.  However, if the same variable name is re-used, and it is a pointer in the outer block, then you will not be able to display the contents of the pointer while executing code in the inner block.
 
-<h3><a name="CMVarTreeHelp-Registers">Registers</a></h3>
+<h3><a name="VarTreeHelp-Registers">Registers</a></h3>
 
 <p>The Registers window displays the current values in all the registers.  It updates automatically as you step through code.</p>
 
-<h3><a name="CMVarTreeHelp-Array1D">Examining a one dimensional array</a></h3>
+<h3><a name="VarTreeHelp-Array1D">Examining a one dimensional array</a></h3>
 
 <p>To examine the contents of a one dimensional array, select its name and then use the "Display as 1D array" item on the Debug menu in any Source window or the Actions menu in any Variables window.</p>
 
@@ -261,7 +261,7 @@
 
 <p>Instructions for plotting are provided in a <a href="#2DPlotHelp">separate section</a>.</p>
 
-<h3><a name="CMVarTreeHelp-Array2D">Examining a two dimensional array</a></h3>
+<h3><a name="VarTreeHelp-Array2D">Examining a two dimensional array</a></h3>
 
 <p>To examine the contents of a two dimensional array, select its name and then use the "Display as 2D array" item on the Debug menu in any Source window or the Actions menu in any Variables window.</p>
 
@@ -275,7 +275,7 @@
 
 <p>You can change the widths of the columns by dragging the boundary between two columns in the column header.  If you hold down the Meta key while dragging, all the columns will be set to the new width.</p>
 
-<h3><a name="CMVarTreeHelp-Memory">Examining memory</a></h3>
+<h3><a name="VarTreeHelp-Memory">Examining memory</a></h3>
 
 <p>To examine memory, select either "Examine memory" or "Disassemble memory" from the Debug menu in any Source window or the Actions menu in any Variables window.  If you have selected an expression, it will automatically be copied to the Memory window.</p>
 
@@ -283,7 +283,7 @@
 
 
 <hr>
-<h2><a name="CM2DPlotHelp">2D Plot Window</a></h2>
+<h2><a name="2DPlotHelp">2D Plot Window</a></h2>
 
 <p>To plot the contents of a one dimensional array, select its name and then use the "Plot as 1D array" item on the Debug menu in any Source window or the Actions menu in any Variables window.</p>
 
@@ -313,7 +313,7 @@
 
 
 <hr>
-<h2><a name="CMThreadsHelp">Threads Window</a></h2>
+<h2><a name="ThreadsHelp">Threads Window</a></h2>
 
 <p>When a program that uses threads is paused, the Threads window displays the list of threads that are currently executing.  You can switch between the threads by clicking on the items in the list or by using the up and down arrow keys to move by one thread at a time.  The execution stack for the currently selected thread is displayed in the <a href="#StackHelp">Stack Trace</a> window.</p>
 
@@ -321,7 +321,7 @@
 
 
 <hr>
-<h2><a name="CMStackHelp">Stack Trace Window</a></h2>
+<h2><a name="StackHelp">Stack Trace Window</a></h2>
 
 <p>When the program is paused, the Stack Trace window displays the current execution stack.  You can navigate between the frames by clicking on the function name or by using the up and down arrow keys to move by one frame at a time.  The source code for the currently selected frame is displayed in the <a href="#SourceWindowHelp">Current Source View</a> window.</p>
 
@@ -333,7 +333,7 @@
 
 
 <hr>
-<h2><a name="CMCommandDirHelp">Command Line Window</a></h2>
+<h2><a name="CommandDirHelp">Command Line Window</a></h2>
 
 <p>When using gdb, the Command Line window is used to interact directly with the underlying gdb process.  The main area of the window displays the results of this interaction.  You can save this text with the "Save history" command on the File menu.</p>
 
@@ -351,7 +351,7 @@
 
 
 <hr>
-<h2><a name="CMJavaConfigFileHelp">Java Configuration File</a></h2>
+<h2><a name="JavaConfigFileHelp">Java Configuration File</a></h2>
 
 <p>In Java, the program to run is specified as a command line argument to the JVM, and the JVM does not know where the source files are.  Choosing a program therefore means selecting a configuration file that defines everything needed for debugging.  This configuration file is a simple text file with one configuration key-value pair on each line.</p>
 
@@ -378,7 +378,7 @@
 
 
 <hr>
-<h2><a name="CMXdebugConfigFileHelp">Xdebug Configuration File</a></h2>
+<h2><a name="XdebugConfigFileHelp">Xdebug Configuration File</a></h2>
 
 <p>Choosing a program in Xdebug means selecting a configuration file that defines everything needed for debugging.  This configuration file is a simple text file with one configuration key-value pair on each line.</p>
 
@@ -393,13 +393,13 @@
 
 
 <hr>
-<h2><a name="CMMiscHelp">Miscellaneous notes</a></h2>
+<h2><a name="MiscHelp">Miscellaneous notes</a></h2>
 
 <h3>The Clipboard</h3>
 
 <p>By default, Code Medic follows the Macintosh clipboard model.  This means that text is <em>not</em> automatically copied when it is selected.  Instead, it is only copied when you use the "Copy" item on the Edit menu or Meta-C.  (Meta-C works in any input area, regardless of whether or not the window contains an Edit menu.)  The main advantage of this model is that paste can then replace the selected text.  If you prefer the X clipboard model, the "Mac/Win/X Emulation" preferences dialog lets you use this instead.</p>
 
-<h3><a name="CMMiscHelp-Shortcuts">Useful Shortcuts</a></h3>
+<h3><a name="MiscHelp-Shortcuts">Useful Shortcuts</a></h3>
 
 <p>On PC's, Meta is normally bound to the Alt key on the keyboard.  Your system's configuration may be different, however.  You can use "<a href="#MiscHelp-ModifierKeys"><code>xmodmap</code></a>" to examine and change this configuration.</p>
 
@@ -409,7 +409,7 @@
 
 <p>To use a shortcut for a button or checkbox, hold down the Meta key and press the underlined character.</p>
 
-<h3><a name="CMMiscHelp-Scrolling">Scrolling</a></h3>
+<h3><a name="MiscHelp-Scrolling">Scrolling</a></h3>
 
 <p>All scrollbars display increment/decrement arrow pairs if there is space.  Coupled with the Shift key which makes the arrows scroll a half page at a time, this conveniently packages all the scrolling functions in one place.</p>
 
@@ -453,7 +453,7 @@
 	<dd>Scroll horizontally instead of vertically</dd>
 </dl>
 
-<h3><a name="CMMiscHelp-FileChooser">The File Chooser</a></h3>
+<h3><a name="MiscHelp-FileChooser">The File Chooser</a></h3>
 
 <p>Tab completion in the Path input field is supported, but only when the caret is at the far right of the text.  (This allows Tab to be used to switch to the next input area in all other situations.)  You don't actually need tab completion, however, because typing in the file list table performs an incremental search, after which you can use the following keys:</p>
 
@@ -484,7 +484,7 @@
 
 <p>The window is resizable, and always remembers its size and position.</p>
 
-<h3><a name="CMMiscHelp-MultiSelect">Selecting more than one item in a list</a></h3>
+<h3><a name="MiscHelp-MultiSelect">Selecting more than one item in a list</a></h3>
 
 <p>If selecting more than one item at a time is possible in a particular list, you can do so with the following actions:</p>
 
@@ -531,7 +531,7 @@
 
 <p>The digits correspond to the appropriate positions on a numeric keypad.</p>
 
-<h3><a name="CMMiscHelp-WindowManagement">How to avoid fiddling with windows</a></h3>
+<h3><a name="MiscHelp-WindowManagement">How to avoid fiddling with windows</a></h3>
 
 <p>Code Medic's paradigm is to display information in many separate windows instead of trying to cram everything into a single window.  This allows you to easily place windows side by side so you can view more than one at a time and drag information from one to the other.  It also allows you to place different windows on different virtual desktops.  For those who prefer to work with all their windows arranged within a single window, refer to the section on <a href="http://libjx.sourceforge.net/help/dock.html">Window Docks</a>.</p>
 
@@ -621,7 +621,7 @@
 	<dd>JX_Dock</dd>
 </dl>
 
-<h3><a name="CMMiscHelp-ModifierKeys">Remapping modifier keys</a></h3>
+<h3><a name="MiscHelp-ModifierKeys">Remapping modifier keys</a></h3>
 
 <p>You can choose which keys on your keyboard should map to each modifier by using <code>xmodmap</code> in your <code>~/.xinitrc</code> file.  As an example, if you have a PC keyboard with the new Windows key between Ctrl and Alt, you can change the left Windows key to produce the Mod4 modifier as follows:</p>
 

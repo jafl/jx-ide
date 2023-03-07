@@ -20,6 +20,8 @@ public:
 
 	UpdateCommandsTableWidth(EditCommandsTable* table);
 
+protected:
+
 	~UpdateCommandsTableWidth() override;
 
 	void	Perform() override;

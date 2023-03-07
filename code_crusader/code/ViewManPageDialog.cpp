@@ -18,7 +18,7 @@
 #include <jx-af/jx/JXTextCheckbox.h>
 #include <jx-af/jx/JXStringHistoryMenu.h>
 #include <jx-af/jx/JXDocumentMenu.h>
-#include <jx-af/jx/JXChooseSaveFile.h>
+#include <jx-af/jx/JXCSFDialogBase.h>
 #include <jx-af/jcore/JStringIterator.h>
 #include <jx-af/jcore/jAssert.h>
 
@@ -156,7 +156,7 @@ ViewManPageDialog::BuildWindow()
 	ListenTo(itsHelpButton);
 	ListenTo(itsFnHistoryMenu);
 
-	itsFnName->GetText()->SetCharacterInWordFunction(JXChooseSaveFile::IsCharacterInWord);
+	itsFnName->GetText()->SetCharacterInWordFunction(JXCSFDialogBase::IsCharacterInWord);
 	ListenTo(itsFnName);
 
 	itsManIndex->SetIsRequired(false);

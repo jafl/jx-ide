@@ -91,7 +91,10 @@ RegistersDir::RegistersDir
 
 RegistersDir::~RegistersDir()
 {
-	GetPrefsManager()->SaveWindowSize(kRegistersWindowSizeID, GetWindow());
+	if (HasPrefsManager())
+	{
+		GetPrefsManager()->SaveWindowSize(kRegistersWindowSizeID, GetWindow());
+	}
 
 	jdelete itsCmd;
 }
@@ -416,7 +419,7 @@ RegistersDir::HandleHelpMenu
 {
 	if (index == kAboutCmd)
 	{
-		(GetApplication())->DisplayAbout();
+		GetApplication()->DisplayAbout();
 	}
 
 	else if (index == kTOCCmd)

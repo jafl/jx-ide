@@ -24,13 +24,13 @@ lldb::RunBackgroundCmdTask::RunBackgroundCmdTask
 	Command* cmd
 	)
 	:
+	JXUrgentTask(cmd),
 	itsCmd(cmd)
 {
-	ClearWhenGoingAway(itsCmd, &itsCmd);
 }
 
 /******************************************************************************
- Destructor
+ Destructor (protected)
 
  ******************************************************************************/
 
@@ -39,7 +39,7 @@ lldb::RunBackgroundCmdTask::~RunBackgroundCmdTask()
 }
 
 /******************************************************************************
- Perform
+ Perform (virtual protected)
 
  ******************************************************************************/
 
@@ -47,7 +47,7 @@ void
 lldb::RunBackgroundCmdTask::Perform()
 {
 	auto* link = dynamic_cast<Link*>(GetLink());
-	if (link != nullptr && itsCmd != nullptr)
+	if (link != nullptr)
 	{
 		link->SendMedicCommandSync(itsCmd);
 	}

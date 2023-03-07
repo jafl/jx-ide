@@ -11,7 +11,6 @@
 #include "TreeDirector.h"
 
 class CTree;
-class EditCPPMacroDialog;
 
 class CTreeDirector : public TreeDirector
 {
@@ -33,12 +32,9 @@ protected:
 	void	UpdateTreeMenu() override;
 	void	HandleTreeMenu(const JIndex index) override;
 
-	void	Receive(JBroadcaster* sender, const Message& message) override;
-
 private:
 
-	CTree*				itsCTree;			// not owned
-	EditCPPMacroDialog*	itsEditCPPDialog;	// nullptr unless editing
+	CTree*	itsCTree;	// not owned
 
 private:
 

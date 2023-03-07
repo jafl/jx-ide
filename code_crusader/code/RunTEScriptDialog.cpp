@@ -19,7 +19,7 @@
 #include <jx-af/jx/JXStaticText.h>
 #include <jx-af/jx/JXDocumentMenu.h>
 #include <jx-af/jx/JXHelpManager.h>
-#include <jx-af/jx/JXChooseSaveFile.h>
+#include <jx-af/jx/JXCSFDialogBase.h>
 #include <jx-af/jcore/JOutPipeStream.h>
 #include <jx-af/jcore/jProcessUtil.h>
 #include <jx-af/jcore/jStreamUtil.h>
@@ -145,7 +145,7 @@ RunTEScriptDialog::BuildWindow()
 	ListenTo(itsHelpButton);
 	ListenTo(itsHistoryMenu);
 
-	itsCmdInput->GetText()->SetCharacterInWordFunction(JXChooseSaveFile::IsCharacterInWord);
+	itsCmdInput->GetText()->SetCharacterInWordFunction(JXCSFDialogBase::IsCharacterInWord);
 	ListenTo(itsCmdInput);
 
 	itsStayOpenCB->SetState(true);

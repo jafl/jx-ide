@@ -29,6 +29,7 @@ namespace lldb {
 class BreakpointManager;
 class GetStopLocationForLink;
 class GetStopLocationForAsm;
+class EventTask;
 
 class Link : public ::Link, public SBListener
 {
@@ -46,7 +47,6 @@ public:
 	bool	ChangeDebugger() override;
 	bool	RestartDebugger() override;
 
-	JString	GetChooseProgramInstructions() const override;
 	bool	HasProgram() const override;
 	bool	GetProgram(JString* fullName) const override;
 	void	SetProgram(const JString& fullName) override;
@@ -106,8 +106,7 @@ public:
 
 	void	SetValue(const JString& name, const JString& value) override;
 
-	const JString&	GetPrompt()	const override;
-	const JString&	GetScriptPrompt() const override;
+	const JString&	GetCommandPrompt() const override;
 
 	// Command factory
 
@@ -174,13 +173,14 @@ protected:
 private:
 
 	SBDebugger*	itsDebugger;
-	FILE*				itsStdoutStream;
-	FILE*				itsStderrStream;
-	JString				itsLastProgramInput;	// to avoid printing echo
+	FILE*		itsStdoutStream;
+	FILE*		itsStderrStream;
+	JString		itsLastProgramInput;	// to avoid printing echo
 
 	BreakpointManager*	itsBPMgr;
+	EventTask*			itsEventTask;
 
-	JString	itsPrompt;			// to allow GetPrompt() to return JString&
+	JString	itsPrompt;			// to allow GetCommandPrompt() to return JString&
 	JString	itsCoreName;
 	bool	itsIsAttachedFlag;	// debugging pre-existing process
 

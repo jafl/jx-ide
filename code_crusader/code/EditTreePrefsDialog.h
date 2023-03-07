@@ -10,22 +10,24 @@
 #ifndef _H_EditTreePrefsDialog
 #define _H_EditTreePrefsDialog
 
-#include <jx-af/jx/JXDialogDirector.h>
+#include <jx-af/jx/JXModalDialogDirector.h>
 
 class JXTextButton;
 class JXTextCheckbox;
 class JXRadioGroup;
 class JXFontSizeMenu;
 
-class EditTreePrefsDialog : public JXDialogDirector
+class EditTreePrefsDialog : public JXModalDialogDirector
 {
 public:
 
 	EditTreePrefsDialog(const JSize fontSize, const bool showInheritedFns,
-						  const bool autoMinMILinks, const bool drawMILinksOnTop,
-						  const bool raiseWhenSingleMatch);
+						const bool autoMinMILinks, const bool drawMILinksOnTop,
+						const bool raiseWhenSingleMatch);
 
 	~EditTreePrefsDialog() override;
+
+	void	UpdateSettings();
 
 protected:
 
@@ -57,7 +59,6 @@ private:
 	void	BuildWindow(const JSize fontSize, const bool showInheritedFns,
 						const bool autoMinMILinks, const bool drawMILinksOnTop,
 						const bool raiseWhenSingleMatch);
-	void	UpdateSettings();
 };
 
 #endif

@@ -56,6 +56,8 @@ CompileDocument::CompileDocument
 	ExecOutputDocument(kExecOutputFT, "CompileHelp", false),
 	itsHasErrorsFlag(false)
 {
+	GetWindow()->SetWMClass(GetWMClassInstance(), GetCompileOutputWindowClass());
+
 	itsErrorMenu = InsertTextMenu(JGetString("ErrorMenuTitle::CompileDocument"));
 	itsErrorMenu->SetMenuItems(kErrorMenuStr, "CompileDocument");
 	itsErrorMenu->SetUpdateAction(JXMenu::kDisableNone);
@@ -68,8 +70,6 @@ CompileDocument::CompileDocument
 	JXKeyModifiers modifiers(GetDisplay());
 	modifiers.SetState(kJXMetaKeyIndex, true);
 	GetWindow()->InstallMenuShortcut(itsErrorMenu, kPrevErrorCmd, '_', modifiers);
-
-	GetWindow()->SetWMClass(GetWMClassInstance(), GetCompileOutputWindowClass());
 
 	Activate();
 }

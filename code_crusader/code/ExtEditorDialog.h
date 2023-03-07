@@ -10,22 +10,21 @@
 #ifndef _H_ExtEditorDialog
 #define _H_ExtEditorDialog
 
-#include <jx-af/jx/JXDialogDirector.h>
+#include <jx-af/jx/JXModalDialogDirector.h>
 
 class JString;
 class JXTextCheckbox;
 class JXInputField;
 
-class ExtEditorDialog : public JXDialogDirector
+class ExtEditorDialog : public JXModalDialogDirector
 {
 public:
 
-	ExtEditorDialog(JXDirector* supervisor,
-					  const bool editLocally,
-					  const JString& editFileCmd,
-					  const JString& editFileLineCmd,
-					  const bool editBinaryLocally,
-					  const JString& editBinaryFileCmd);
+	ExtEditorDialog(const bool editLocally,
+					const JString& editFileCmd,
+					const JString& editFileLineCmd,
+					const bool editBinaryLocally,
+					const JString& editBinaryFileCmd);
 
 	~ExtEditorDialog() override;
 

@@ -8,14 +8,14 @@
 #ifndef _H_EditCommandsDialog
 #define _H_EditCommandsDialog
 
-#include <jx-af/jx/JXDialogDirector.h>
+#include <jx-af/jx/JXModalDialogDirector.h>
 #include <jx-af/jcore/JPrefObject.h>
 #include <jx-af/jcore/JPtrArray-JString.h>
 
 class JXTextButton;
 class EditCommandsTable;
 
-class EditCommandsDialog : public JXDialogDirector, public JPrefObject
+class EditCommandsDialog : public JXModalDialogDirector, public JPrefObject
 {
 public:
 

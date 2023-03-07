@@ -30,11 +30,9 @@ const JFileVersion kCurrentSetupVersion = 1;
 PTPrinter::PTPrinter()
 	:
 	JXPTPrinter(),
-	JPrefObject(GetPrefsManager(), kPrintPlainTextID)
+	JPrefObject(GetPrefsManager(), kPrintPlainTextID),
+	itsPrintHeaderFlag(true)
 {
-	itsPrintHeaderFlag    = true;
-	itsCBPrintSetupDialog = nullptr;
-
 	JPrefObject::ReadPrefs();
 }
 
@@ -45,7 +43,6 @@ PTPrinter::PTPrinter()
 
 PTPrinter::~PTPrinter()
 {
-	JPrefObject::WritePrefs();
 }
 
 /******************************************************************************
@@ -64,47 +61,26 @@ PTPrinter::CreatePrintSetupDialog
 	const bool		printLineNumbers
 	)
 {
-	assert( itsCBPrintSetupDialog == nullptr );
-
-	itsCBPrintSetupDialog =
-		PTPrintSetupDialog::Create(destination, printCmd, fileName,
-									 printLineNumbers, itsPrintHeaderFlag);
-	return itsCBPrintSetupDialog;
+	return PTPrintSetupDialog::Create(destination, printCmd, fileName,
+									  printLineNumbers, itsPrintHeaderFlag);
 }
 
 /******************************************************************************
- EndUserPrintSetup (virtual protected)
-
-	Returns true if caller should continue the printing process.
-	Derived classes can override this to extract extra information.
+ ShouldPrintHeader
 
  ******************************************************************************/
 
-bool
-PTPrinter::EndUserPrintSetup
+void
+PTPrinter::ShouldPrintHeader
 	(
-	const JBroadcaster::Message&	message,
-	bool*						changed
+	const bool print
 	)
 {
-	assert( itsCBPrintSetupDialog != nullptr );
-
-	const bool ok = JXPTPrinter::EndUserPrintSetup(message, changed);
-	if (ok)
+	itsPrintHeaderFlag = print;
+	if (GetPageHeight() <= GetHeaderLineCount())
 	{
-		*changed = *changed ||
-			itsCBPrintSetupDialog->ShouldPrintHeader() != itsPrintHeaderFlag;
-
-		itsPrintHeaderFlag = itsCBPrintSetupDialog->ShouldPrintHeader();
-		if (GetPageHeight() <= GetHeaderLineCount())
-		{
-			SetPageHeight(GetHeaderLineCount() + 1);
-			*changed = true;
-		}
+		SetPageHeight(GetHeaderLineCount() + 1);
 	}
-
-	itsCBPrintSetupDialog = nullptr;
-	return ok;
 }
 
 /******************************************************************************

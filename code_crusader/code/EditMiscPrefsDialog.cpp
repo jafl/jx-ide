@@ -1,7 +1,7 @@
 /******************************************************************************
  EditMiscPrefsDialog.cpp
 
-	BASE CLASS = JXDialogDirector
+	BASE CLASS = JXModalDialogDirector
 
 	Copyright © 1998 by John Lindal.
 
@@ -30,10 +30,9 @@
 
 EditMiscPrefsDialog::EditMiscPrefsDialog()
 	:
-	JXDialogDirector(GetApplication(), true)
+	JXModalDialogDirector()
 {
 	BuildWindow();
-	ListenTo(this);
 }
 
 /******************************************************************************
@@ -43,6 +42,37 @@ EditMiscPrefsDialog::EditMiscPrefsDialog()
 
 EditMiscPrefsDialog::~EditMiscPrefsDialog()
 {
+}
+
+/******************************************************************************
+ UpdateSettings
+
+ ******************************************************************************/
+
+void
+EditMiscPrefsDialog::UpdateSettings()
+{
+	JXMenu::SetDisplayStyle(itsMacStyleCB->IsChecked() ?
+							JXMenu::kMacintoshStyle : JXMenu::kWindowsStyle);
+	JTextEditor::ShouldCopyWhenSelect(itsCopyWhenSelectCB->IsChecked());
+	JXTEBase::MiddleButtonShouldPaste(itsMiddleButtonPasteCB->IsChecked());
+	JXWindow::ShouldFocusFollowCursorInDock(itsFocusInDockCB->IsChecked());
+	JXFileDocument::ShouldAskOKToClose(itsCloseUnsavedCB->IsChecked());
+	ProjectDocument::ShouldAskOKToOpenOldVersion(itsOpenOldProjCB->IsChecked());
+
+	GetDocumentManager()->SetWarnings(itsSaveAllCB->IsChecked(),
+										  itsCloseAllCB->IsChecked());
+
+	GetApplication()->SetWarnings(itsQuitCB->IsChecked());
+
+	MDIServer* mdi;
+	if (GetMDIServer(&mdi))
+	{
+		mdi->SetStartupOptions(itsNewEditorCB->IsChecked(),
+							   itsNewProjectCB->IsChecked(),
+							   itsReopenLastCB->IsChecked(),
+							   itsChooseFileCB->IsChecked());
+	}
 }
 
 /******************************************************************************
@@ -199,64 +229,4 @@ EditMiscPrefsDialog::BuildWindow()
 		jnew JXAtLeastOneCBGroup(4, itsNewEditorCB, itsNewProjectCB,
 								itsReopenLastCB, itsChooseFileCB);
 	assert( group != nullptr );
-}
-
-/******************************************************************************
- Receive (virtual protected)
-
- ******************************************************************************/
-
-void
-EditMiscPrefsDialog::Receive
-	(
-	JBroadcaster*	sender,
-	const Message&	message
-	)
-{
-	if (sender == this && message.Is(JXDialogDirector::kDeactivated))
-	{
-		const auto* info =
-			dynamic_cast<const JXDialogDirector::Deactivated*>(&message);
-		assert( info != nullptr );
-		if (info->Successful())
-		{
-			UpdateSettings();
-		}
-	}
-
-	else
-	{
-		JXDialogDirector::Receive(sender, message);
-	}
-}
-
-/******************************************************************************
- UpdateSettings (private)
-
- ******************************************************************************/
-
-void
-EditMiscPrefsDialog::UpdateSettings()
-{
-	JXMenu::SetDisplayStyle(itsMacStyleCB->IsChecked() ?
-							JXMenu::kMacintoshStyle : JXMenu::kWindowsStyle);
-	JTextEditor::ShouldCopyWhenSelect(itsCopyWhenSelectCB->IsChecked());
-	JXTEBase::MiddleButtonShouldPaste(itsMiddleButtonPasteCB->IsChecked());
-	JXWindow::ShouldFocusFollowCursorInDock(itsFocusInDockCB->IsChecked());
-	JXFileDocument::ShouldAskOKToClose(itsCloseUnsavedCB->IsChecked());
-	ProjectDocument::ShouldAskOKToOpenOldVersion(itsOpenOldProjCB->IsChecked());
-
-	GetDocumentManager()->SetWarnings(itsSaveAllCB->IsChecked(),
-										  itsCloseAllCB->IsChecked());
-
-	GetApplication()->SetWarnings(itsQuitCB->IsChecked());
-
-	MDIServer* mdi;
-	if (GetMDIServer(&mdi))
-	{
-		mdi->SetStartupOptions(itsNewEditorCB->IsChecked(),
-							   itsNewProjectCB->IsChecked(),
-							   itsReopenLastCB->IsChecked(),
-							   itsChooseFileCB->IsChecked());
-	}
 }

@@ -9,21 +9,22 @@
 #define _H_WaitForSymbolUpdateTask
 
 #include <jx-af/jx/JXUrgentTask.h>
-#include <jx-af/jcore/JBroadcaster.h>
 
 class JProcess;
 
-class WaitForSymbolUpdateTask : public JXUrgentTask, virtual public JBroadcaster
+class WaitForSymbolUpdateTask : public JXUrgentTask
 {
 public:
 
 	WaitForSymbolUpdateTask(JProcess* p);
 
+	void	StopWaiting();
+
+protected:
+
 	~WaitForSymbolUpdateTask() override;
 
 	void	Perform() override;
-
-	void	StopWaiting();
 
 private:
 

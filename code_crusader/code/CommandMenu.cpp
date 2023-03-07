@@ -25,7 +25,6 @@
 #include "FileListDirector.h"
 #include "TextDocument.h"
 #include "Tree.h"
-#include "RelPathCSF.h"
 #include "globals.h"
 #include "actionDefs.h"
 #include <jx-af/jcore/jAssert.h>
@@ -307,11 +306,11 @@ CommandMenu::UpdateMenu()
 	ProjectDocument* projDoc;
 	const bool hasProject = GetProjectDocument(&projDoc);
 
-	(GetCommandManager())->AppendMenuItems(this, hasProject);
+	GetCommandManager()->AppendMenuItems(this, hasProject);
 
 	if (projDoc != nullptr)
 	{
-		(projDoc->GetCommandManager())->AppendMenuItems(this, hasProject);
+		projDoc->GetCommandManager()->AppendMenuItems(this, hasProject);
 	}
 
 	// "Add to" sub-menu
@@ -369,23 +368,25 @@ CommandMenu::HandleSelection
 
 	if (index == kRunCmd)
 	{
-		RunCommandDialog* dlog;
-		if (itsTextDoc != nullptr)
-		{
-			dlog = jnew RunCommandDialog(projDoc, itsTextDoc);
-		}
-		else
-		{
-			dlog = jnew RunCommandDialog(projDoc, info.GetFileList(), info.GetLineIndexList());
-		}
+		auto* dlog = itsTextDoc != nullptr ?
+			jnew RunCommandDialog(projDoc, itsTextDoc) :
+			jnew RunCommandDialog(projDoc, info.GetFileList(), info.GetLineIndexList());
+
 		assert( dlog != nullptr );
-		dlog->BeginDialog();
+		if (dlog->DoDialog())
+		{
+			dlog->Exec();
+			dlog->JPrefObject::WritePrefs();
+		}
 	}
 	else if (index == kEditCmd)
 	{
 		auto* dlog = jnew EditCommandsDialog(projDoc);
 		assert( dlog != nullptr );
-		dlog->BeginDialog();
+		if (dlog->DoDialog())
+		{
+			dlog->UpdateCommands();
+		}
 	}
 
 	else if (index > kInitCmdCount)
@@ -453,19 +454,19 @@ CommandMenu::HandleAddToProjectMenu
 	const JString fullName = itsTextDoc->GetFullName(&onDisk);
 	assert( onDisk );
 
-	RelPathCSF::PathType pathType;
+	ProjectTable::PathType pathType;
 	if (index == kAddToProjAbsoluteCmd)
 	{
-		pathType = RelPathCSF::kAbsolutePath;
+		pathType = ProjectTable::kAbsolutePath;
 	}
 	else if (index == kAddToProjProjRelativeCmd)
 	{
-		pathType = RelPathCSF::kProjectRelative;
+		pathType = ProjectTable::kProjectRelative;
 	}
 	else
 	{
 		assert( index == kAddToProjHomeRelativeCmd );
-		pathType = RelPathCSF::kHomeRelative;
+		pathType = ProjectTable::kHomeRelative;
 	}
 
 	projDoc->AddFile(fullName, pathType);

@@ -25,7 +25,7 @@ public:
 
 	~PSPrintSetupDialog() override;
 
-	void	GetSettings(JSize* fontSize, bool* printHeader) const;
+	bool	SetParameters(JXPSPrinter* p) const override;
 
 protected:
 

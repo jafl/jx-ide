@@ -28,21 +28,21 @@
 
 static App*				theApplication       = nullptr;	// owns itself
 static DocumentManager*	theDocManager        = nullptr;	// owned by JX
-static PrefsManager*		thePrefsManager      = nullptr;
-static MDIServer*			theMDIServer         = nullptr;	// owned by JX
+static PrefsManager*	thePrefsManager      = nullptr;
+static MDIServer*		theMDIServer         = nullptr;	// owned by JX
 
 static SearchTextDialog*	theSearchTextDialog  = nullptr;	// owned by JXGetPersistentWindowOwner()
 static RunTEScriptDialog*	theRunTEScriptDialog = nullptr;	// owned by JXGetPersistentWindowOwner()
 static ViewManPageDialog*	theViewManPageDialog = nullptr;	// owned by JXGetPersistentWindowOwner()
-static FindFileDialog*	theFindFileDialog    = nullptr;	// owned by JXGetPersistentWindowOwner()
-static DiffFileDialog*	theDiffFileDialog    = nullptr;	// owned by JXGetPersistentWindowOwner()
+static FindFileDialog*		theFindFileDialog    = nullptr;	// owned by JXGetPersistentWindowOwner()
+static DiffFileDialog*		theDiffFileDialog    = nullptr;	// owned by JXGetPersistentWindowOwner()
 
 static CommandManager*	theCmdManager        = nullptr;
-static FnMenuUpdater*		theFnMenuUpdater     = nullptr;
+static FnMenuUpdater*	theFnMenuUpdater     = nullptr;
 static SymbolTypeList*	theSymbolTypeList    = nullptr;
 
-static PTPrinter*			thePTTextPrinter     = nullptr;
-static PSPrinter*			thePSTextPrinter     = nullptr;
+static PTPrinter*	thePTTextPrinter     = nullptr;
+static PSPrinter*	thePSTextPrinter     = nullptr;
 
 static const JUtf8Byte* kProjectWindowClass       = "Code_Crusader_Project";
 static const JUtf8Byte* kSymbolWindowClass        = "Code_Crusader_Symbol_List";
@@ -81,7 +81,7 @@ void	DeleteIcons();
 bool
 CreateGlobals
 	(
-	App*			app,
+	App*		app,
 	const bool	useMDI
 	)
 {
@@ -171,17 +171,20 @@ CreateGlobals
 void
 DeleteGlobals()
 {
-	theDocManager->JPrefObject::WritePrefs();
-
-	JXDockManager* dockMgr;
-	if (JXGetDockManager(&dockMgr))
+	if (thePrefsManager != nullptr)
 	{
-		dockMgr->JPrefObject::WritePrefs();
-	}
+		theDocManager->JPrefObject::WritePrefs();
 
-	if (theMDIServer != nullptr)
-	{
-		theMDIServer->JPrefObject::WritePrefs();
+		JXDockManager* dockMgr;
+		if (JXGetDockManager(&dockMgr))
+		{
+			dockMgr->JPrefObject::WritePrefs();
+		}
+
+		if (theMDIServer != nullptr)
+		{
+			theMDIServer->JPrefObject::WritePrefs();
+		}
 	}
 
 	DeleteIcons();
@@ -190,7 +193,14 @@ DeleteGlobals()
 	theDocManager  = nullptr;
 	theMDIServer   = nullptr;
 
-	theCmdManager->JPrefObject::WritePrefs();
+	if (thePrefsManager != nullptr)
+	{
+		theCmdManager->JPrefObject::WritePrefs();
+		theFnMenuUpdater->JPrefObject::WritePrefs();
+		theSymbolTypeList->JPrefObject::WritePrefs();
+		thePTTextPrinter->JPrefObject::WritePrefs();
+		thePSTextPrinter->JPrefObject::WritePrefs();
+	}
 	jdelete theCmdManager;
 	theCmdManager = nullptr;
 
@@ -200,24 +210,28 @@ DeleteGlobals()
 	jdelete theSymbolTypeList;
 	theSymbolTypeList = nullptr;
 
-	// printers
-
 	jdelete thePTTextPrinter;
 	thePTTextPrinter = nullptr;
 
 	jdelete thePSTextPrinter;
 	thePSTextPrinter = nullptr;
 
-	ShutdownCompleters();
-	ShutdownStylers();
+	if (thePrefsManager != nullptr)
+	{
+		ShutdownCompleters();
+		ShutdownStylers();
+	}
 
 	// windows closed by JXGetPersistentWindowOwner()
 
-	theSearchTextDialog->JPrefObject::WritePrefs();
-	theRunTEScriptDialog->JPrefObject::WritePrefs();
-	theViewManPageDialog->JPrefObject::WritePrefs();
-	theFindFileDialog->JPrefObject::WritePrefs();
-	theDiffFileDialog->JPrefObject::WritePrefs();
+	if (thePrefsManager != nullptr)
+	{
+		theSearchTextDialog->JPrefObject::WritePrefs();
+		theRunTEScriptDialog->JPrefObject::WritePrefs();
+		theViewManPageDialog->JPrefObject::WritePrefs();
+		theFindFileDialog->JPrefObject::WritePrefs();
+		theDiffFileDialog->JPrefObject::WritePrefs();
+	}
 
 	theSearchTextDialog  = nullptr;
 	theRunTEScriptDialog = nullptr;
@@ -318,6 +332,17 @@ GetDocumentManager()
 }
 
 /******************************************************************************
+ HasPrefsManager
+
+ ******************************************************************************/
+
+bool
+HasPrefsManager()
+{
+	return thePrefsManager != nullptr;
+}
+
+/******************************************************************************
  GetPrefsManager
 
  ******************************************************************************/
@@ -327,6 +352,19 @@ GetPrefsManager()
 {
 	assert( thePrefsManager != nullptr );
 	return thePrefsManager;
+}
+
+/******************************************************************************
+ ForgetPrefsManager
+
+	Called when license is not accepted, to avoid writing prefs file.
+
+ ******************************************************************************/
+
+void
+ForgetPrefsManager()
+{
+	thePrefsManager = nullptr;
 }
 
 /******************************************************************************

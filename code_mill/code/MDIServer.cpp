@@ -13,7 +13,6 @@
 #include "MainDirector.h"
 #include "App.h"
 #include "globals.h"
-#include <jx-af/jx/JXChooseSaveFile.h>
 #include <jx-af/jcore/jFileUtil.h>
 #include <jx-af/jcore/jAssert.h>
 
@@ -52,7 +51,10 @@ MDIServer::HandleMDIRequest
 	const JSize count = argList.GetElementCount();
 	if (count <= 1)
 	{
-		JGetUserNotification()->ReportError(JGetString("MissingTemplate::MDIServer"));
+		JScheduleTask([]()
+		{
+			JGetUserNotification()->ReportError(JGetString("MissingTemplate::MDIServer"));
+		});
 		return;
 	}
 

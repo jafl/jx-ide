@@ -16,7 +16,7 @@
 #include <jx-af/jx/JXStringHistoryMenu.h>
 #include <jx-af/jx/JXStaticText.h>
 #include <jx-af/jx/JXDocumentMenu.h>
-#include <jx-af/jx/JXChooseSaveFile.h>
+#include <jx-af/jx/JXCSFDialogBase.h>
 #include <jx-af/jcore/JString.h>
 #include <jx-af/jcore/jFileUtil.h>
 #include <jx-af/jcore/jAssert.h>
@@ -137,7 +137,7 @@ FindFileDialog::BuildWindow()
 	ListenTo(itsCloseButton);
 	ListenTo(itsFileHistoryMenu);
 
-	itsFileName->GetText()->SetCharacterInWordFunction(JXChooseSaveFile::IsCharacterInWord);
+	itsFileName->GetText()->SetCharacterInWordFunction(JXCSFDialogBase::IsCharacterInWord);
 	ListenTo(itsFileName);
 
 	itsIgnoreCaseCB->SetState(true);

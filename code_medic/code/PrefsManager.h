@@ -23,7 +23,6 @@ class JXPSPrinter;
 class JX2DPlotEPSPrinter;
 class JXPTPrinter;
 class Link;
-class EditPrefsDialog;
 class CBCStyler;
 
 enum
@@ -186,18 +185,13 @@ protected:
 
 	void	UpgradeData(const bool isNew, const JFileVersion currentVersion) override;
 	void	SaveAllBeforeDestruct() override;
-	void	Receive(JBroadcaster* sender, const Message& message) override;
 
 private:
-
-	EditPrefsDialog* itsEditPrefsDialog;
 
 	// these were taken from CBPrefsManager for compatibility with shared files
 	JColorID	itsColor [ kColorCount ];
 
 private:
-
-	void	UpdatePrefs(const EditPrefsDialog* dlog);
 
 	bool	GetSuffixes(const JPrefID& id, JPtrArray<JString>* suffixList) const;
 	void	SetSuffixes(const JPrefID& id, const JPtrArray<JString>& suffixList);

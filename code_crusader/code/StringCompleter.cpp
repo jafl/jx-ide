@@ -25,7 +25,7 @@
 
 StringCompleter::StringCompleter
 	(
-	const Language	lang,
+	const Language		lang,
 	const JSize			keywordCount,
 	const JUtf8Byte**	keywordList,
 	const JString::Case	caseSensitive

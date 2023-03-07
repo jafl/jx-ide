@@ -1128,7 +1128,7 @@ JIndex i,j;
 	JPtrArray<Class> newByGeom(*itsVisibleByGeom, JPtrArrayT::kForgetAll);
 
 	JLatentPG pg(1000);
-	pg.VariableLengthProcessBeginning(JGetString("MinMILengthsProgress::Tree"), true, false);
+	pg.VariableLengthProcessBeginning(JGetString("MinMILengthsProgress::Tree"), true, true);
 	pg.DisplayBusyCursor();
 
 	for (i=1; i<=classCount; i++)

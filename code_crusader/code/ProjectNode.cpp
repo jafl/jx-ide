@@ -270,7 +270,7 @@ ProjectNode::ViewVCSDiffs
 bool
 ProjectNode::FindFile
 	(
-	const JString&			fullName,
+	const JString&		fullName,
 	const ProjectNode**	node
 	)
 	const

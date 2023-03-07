@@ -631,18 +631,6 @@ Array2DDir::Receive
 		itsTable->AdjustSize(-dw,0);
 	}
 
-	else if (sender == GetPSPrinter() &&
-			 message.Is(JPrinter::kPrintSetupFinished))
-	{
-		const auto* info =
-			dynamic_cast<const JPrinter::PrintSetupFinished*>(&message);
-		assert( info != nullptr );
-		if (info->Successful())
-		{
-			itsTable->Print(*(GetPSPrinter()));
-		}
-	}
-
 	else
 	{
 		JXWindowDirector::Receive(sender, message);
@@ -1012,13 +1000,15 @@ Array2DDir::HandleFileMenu
 
 	else if (index == kPageSetupCmd)
 	{
-		(GetPSPrinter())->BeginUserPageSetup();
+		GetPSPrinter()->EditUserPageSetup();
 	}
 	else if (index == kPrintCmd && itsTable->EndEditing())
 	{
 		JXPSPrinter* p = GetPSPrinter();
-		p->BeginUserPrintSetup();
-		ListenTo(p);
+		if (p->ConfirmUserPrintSetup())
+		{
+			itsTable->Print(*p);
+		}
 	}
 
 	else if (index == kCloseWindowCmd)
@@ -1039,7 +1029,7 @@ Array2DDir::HandleFileMenu
 void
 Array2DDir::UpdateActionMenu()
 {
-	if ((itsTable->GetTableSelection()).HasSelection())
+	if (itsTable->GetTableSelection().HasSelection())
 	{
 		itsActionMenu->EnableItem(kDisplay1DArrayCmd);
 		itsActionMenu->EnableItem(kPlot1DArrayCmd);
@@ -1245,7 +1235,7 @@ Array2DDir::HandleHelpMenu
 {
 	if (index == kAboutCmd)
 	{
-		(GetApplication())->DisplayAbout();
+		GetApplication()->DisplayAbout();
 	}
 
 	else if (index == kTOCCmd)

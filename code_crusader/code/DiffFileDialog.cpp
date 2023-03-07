@@ -25,7 +25,8 @@
 #include <jx-af/jx/JXDocumentMenu.h>
 #include <jx-af/jx/JXHelpManager.h>
 #include <jx-af/jx/JXColorManager.h>
-#include <jx-af/jx/JXChooseSaveFile.h>
+#include <jx-af/jx/JXChooseFileDialog.h>
+#include <jx-af/jx/JXChoosePathDialog.h>
 #include <jx-af/jcore/JProcess.h>
 #include <jx-af/jcore/JRegex.h>
 #include <jx-af/jcore/JStringIterator.h>
@@ -541,12 +542,12 @@ DiffFileDialog::BuildWindow()
 
 	itsPlainFile1Input->ShouldAllowInvalidFile(true);
 	itsPlainFile1Input->ShouldRequireWritable(false);
-	itsPlainFile1Input->GetText()->SetCharacterInWordFunction(JXChooseSaveFile::IsCharacterInWord);
+	itsPlainFile1Input->GetText()->SetCharacterInWordFunction(JXCSFDialogBase::IsCharacterInWord);
 	ListenTo(itsPlainFile1Input);
 
 	itsPlainFile2Input->ShouldAllowInvalidFile(true);
 	itsPlainFile2Input->ShouldRequireWritable(false);
-	itsPlainFile2Input->GetText()->SetCharacterInWordFunction(JXChooseSaveFile::IsCharacterInWord);
+	itsPlainFile2Input->GetText()->SetCharacterInWordFunction(JXCSFDialogBase::IsCharacterInWord);
 	ListenTo(itsPlainFile2Input);
 
 	itsPlainOnly1StyleMenu->SetStyle(
@@ -578,7 +579,7 @@ DiffFileDialog::BuildWindow()
 
 	itsCVSFileInput->ShouldAllowInvalidFile(true);
 	itsCVSFileInput->ShouldRequireWritable(false);
-	itsCVSFileInput->GetText()->SetCharacterInWordFunction(JXChooseSaveFile::IsCharacterInWord);
+	itsCVSFileInput->GetText()->SetCharacterInWordFunction(JXCSFDialogBase::IsCharacterInWord);
 	ListenTo(itsCVSFileInput);
 
 	itsCVSChooseButton->SetHint(JGetString("ChoseButtonHint::DiffFileDialog"));
@@ -605,7 +606,7 @@ DiffFileDialog::BuildWindow()
 
 	itsSVNFileInput->ShouldAllowInvalidFile(true);
 	itsSVNFileInput->ShouldRequireWritable(false);
-	itsSVNFileInput->GetText()->SetCharacterInWordFunction(JXChooseSaveFile::IsCharacterInWord);
+	itsSVNFileInput->GetText()->SetCharacterInWordFunction(JXCSFDialogBase::IsCharacterInWord);
 	ListenTo(itsSVNFileInput);
 
 	itsSVNChooseButton->SetHint(JGetString("ChoseButtonHint::DiffFileDialog"));
@@ -632,7 +633,7 @@ DiffFileDialog::BuildWindow()
 
 	itsGitFileInput->ShouldAllowInvalidFile(true);
 	itsGitFileInput->ShouldRequireWritable(false);
-	itsGitFileInput->GetText()->SetCharacterInWordFunction(JXChooseSaveFile::IsCharacterInWord);
+	itsGitFileInput->GetText()->SetCharacterInWordFunction(JXCSFDialogBase::IsCharacterInWord);
 	ListenTo(itsGitFileInput);
 
 	itsGitChooseButton->SetHint(JGetString("ChoseButtonHint::DiffFileDialog"));
@@ -2360,12 +2361,11 @@ DiffFileDialog::ChooseFile
 	JXFileInput* widget
 	)
 {
-	const JString origName = widget->GetTextForChooseFile();
-	JString newName;
-	if (JGetChooseSaveFile()->ChooseFile(JString::empty, JString::empty, origName, &newName))
+	auto* dlog = JXChooseFileDialog::Create(JXChooseFileDialog::kSelectSingleFile, widget->GetTextForChooseFile());
+	if (dlog->DoDialog())
 	{
 		widget->Focus();
-		widget->GetText()->SetText(newName);
+		widget->GetText()->SetText(dlog->GetFullName());
 	}
 }
 
@@ -2380,12 +2380,11 @@ DiffFileDialog::ChoosePath
 	JXFileInput* widget
 	)
 {
-	const JString origPath = widget->GetTextForChooseFile();
-	JString newPath;
-	if (JGetChooseSaveFile()->ChooseRPath(JString::empty, JString::empty, origPath, &newPath))
+	auto* dlog = JXChoosePathDialog::Create(JXChoosePathDialog::kAcceptReadable, widget->GetTextForChooseFile());
+	if (dlog->DoDialog())
 	{
 		widget->Focus();
-		widget->GetText()->SetText(newPath);
+		widget->GetText()->SetText(dlog->GetPath());
 	}
 }
 

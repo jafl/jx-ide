@@ -108,7 +108,7 @@ bool
 GoCompleter::IsWordCharacter
 	(
 	const JUtf8Character&	c,
-	const bool			includeNS
+	const bool				includeNS
 	)
 	const
 {

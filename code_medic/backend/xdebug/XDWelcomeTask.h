@@ -19,6 +19,8 @@ public:
 
 	WelcomeTask(const JString& msg, const bool error);
 
+protected:
+
 	~WelcomeTask() override;
 
 	void	Perform() override;

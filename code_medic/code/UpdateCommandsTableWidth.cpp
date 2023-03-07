@@ -20,12 +20,14 @@ UpdateCommandsTableWidth::UpdateCommandsTableWidth
 	(
 	EditCommandsTable* table
 	)
+	:
+	JXUrgentTask(table),
+	itsTable(table)
 {
-	itsTable = table;
 }
 
 /******************************************************************************
- Destructor
+ Destructor (protected)
 
  ******************************************************************************/
 
@@ -34,7 +36,7 @@ UpdateCommandsTableWidth::~UpdateCommandsTableWidth()
 }
 
 /******************************************************************************
- Perform
+ Perform (virtual protected)
 
  ******************************************************************************/
 

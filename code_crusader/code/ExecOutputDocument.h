@@ -10,7 +10,7 @@
 #ifndef _H_ExecOutputDocument
 #define _H_ExecOutputDocument
 
-#include "TextDocument.h"
+#include "CommandOutputDocument.h"
 #include <jx-af/jcore/JProcess.h>			// need definition of JProcess::Finished
 #include <ace/LSOCK_Stream.h>
 #include <ace/UNIX_Addr.h>
@@ -21,7 +21,7 @@ class JOutPipeStream;
 class JXStaticText;
 class CmdLineInput;
 
-class ExecOutputDocument : public TextDocument
+class ExecOutputDocument : public CommandOutputDocument
 {
 	friend class ExecOutputPostFTCTask;
 
@@ -34,15 +34,11 @@ public:
 
 	ExecOutputDocument(const TextFileType fileType = kExecOutputFT,
 						 const JUtf8Byte* helpSectionName = "RunProgramHelp",
-						 const bool focusToCmd = true,
-						 const bool allowStop = true);
+						 const bool focusToCmd = true);
 
 	~ExecOutputDocument() override;
 
 	void	Activate() override;
-
-	void	IncrementUseCount();
-	void	DecrementUseCount();
 
 	virtual void	SetConnection(JProcess* p, const int inFD, const int outFD,
 								  const JString& windowTitle,
@@ -51,23 +47,25 @@ public:
 								  const JString& execCmd,
 								  const bool showPID);
 
+	bool	CommandRunning() const override;
 	bool	ProcessRunning() const;
 	void	SendText(const JString& text);
 
-	virtual void	OpenPrevListItem();
-	virtual void	OpenNextListItem();
+	void	OpenPrevListItem() override;
+	void	OpenNextListItem() override;
 
 	void	ConvertSelectionToFullPath(JString* fileName) const override;
 
 protected:
 
+	void	UseCountUpdated(const JSize count) override;
 	bool	ShouldClearWhenStart() const;
 
 	void	ToggleProcessRunning();
 	void	StopProcess();
 	void	KillProcess();
 
-	virtual void	PlaceCmdLineWidgets();
+	void			PlaceCustomWidgets() override;
 	virtual void	AppendText(const JString& text);
 	virtual bool	ProcessFinished(const JProcess::Finished& info);
 	virtual bool	NeedsFormattedData() const;
@@ -75,7 +73,6 @@ protected:
 	bool	GetRecordLink(RecordLink** link) const;
 	bool	GetDataLink(DataLink** link) const;
 
-	bool	OKToClose() override;
 	void	Receive(JBroadcaster* sender, const Message& message) override;
 
 private:
@@ -84,17 +81,15 @@ private:
 	JString		itsPath;
 	bool		itsReceivedDataFlag;
 	bool		itsProcessPausedFlag;
-	JString		itsDontCloseMsg;
 	bool		itsClearWhenStartFlag;
-	JSize		itsUseCount;
 
-	RecordLink*		itsRecordLink;			// can be nullptr
-	DataLink*		itsDataLink;			// can be nullptr
-	JOutPipeStream*	itsCmdStream;			// can be nullptr
-	JString			itsLastPrompt;			// latest cmd line prompt (partial message)
+	RecordLink*		itsRecordLink;		// can be nullptr
+	DataLink*		itsDataLink;		// can be nullptr
+	JOutPipeStream*	itsCmdStream;		// can be nullptr
+	JString			itsLastPrompt;		// latest cmd line prompt (partial message)
 
 	JXTextButton*	itsPauseButton;
-	JXTextButton*	itsStopButton;			// can be nullptr
+	JXTextButton*	itsStopButton;
 	JXTextButton*	itsKillButton;
 	JXStaticText*	itsCmdPrompt;
 	CmdLineInput*	itsCmdInput;
@@ -107,64 +102,20 @@ private:
 	void	ReceiveData(const Message& message);
 	void	UpdateButtons();
 	void	CloseOutFD();
-
-	static TextEditor*	ConstructTextEditor(TextDocument* document,
-											const JString& fileName,
-											JXMenuBar* menuBar,
-											TELineIndexInput* lineInput,
-											TEColIndexInput* colInput,
-											JXScrollbarSet* scrollbarSet);
-
-public:
-
-	// JBroadcaster messages
-
-	static const JUtf8Byte* kFinished;
-
-	class Finished : public JBroadcaster::Message
-		{
-		public:
-
-			Finished(const bool success, const bool cancelled)
-				:
-				JBroadcaster::Message(kFinished),
-				itsSuccessFlag(success && !cancelled),
-				itsCancelledFlag(cancelled),
-				itsSomebodyIsWaitingFlag(false)
-				{ };
-
-			bool
-			Successful() const
-			{
-				return itsSuccessFlag;
-			};
-
-			bool
-			Cancelled() const
-			{
-				return itsCancelledFlag;
-			};
-
-			bool
-			SomebodyIsWaiting()
-			{
-				return itsSomebodyIsWaitingFlag;
-			};
-
-			void
-			SetSomebodyIsWaiting()
-			{
-				itsSomebodyIsWaitingFlag = true;
-			};
-
-		private:
-
-			bool	itsSuccessFlag;
-			bool	itsCancelledFlag;
-			bool	itsSomebodyIsWaitingFlag;
-		};
 };
 
+
+/******************************************************************************
+ CommandRunning (virtual)
+
+ ******************************************************************************/
+
+inline bool
+ExecOutputDocument::CommandRunning()
+	const
+{
+	return ProcessRunning() || itsRecordLink != nullptr || itsDataLink != nullptr;
+}
 
 /******************************************************************************
  ProcessRunning

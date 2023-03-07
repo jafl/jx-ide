@@ -60,9 +60,9 @@ CTreeDirector::CTreeDirector
 	)
 	:
 	TreeDirector(supervisor, NewCTree, "WindowTitleSuffix::CTreeDirector",
-				   "CTreeHelp", jcc_c_tree_window,
-				   kTreeMenuStr, "CTreeDirector",
-				   kCTreeToolBarID, InitCTreeToolBar)
+				 "CTreeHelp", jcc_c_tree_window,
+				 kTreeMenuStr, "CTreeDirector",
+				 kCTreeToolBarID, InitCTreeToolBar)
 {
 	CTreeDirectorX();
 }
@@ -76,17 +76,17 @@ CTreeDirector::CTreeDirector
 	std::istream*		symInput,
 	const JFileVersion	symVers,
 	ProjectDocument*	supervisor,
-	const bool		subProject,
+	const bool			subProject,
 	DirList*			dirList
 	)
 	:
 	TreeDirector(projInput, projVers, setInput, setVers, symInput, symVers,
-				   supervisor, subProject, StreamInCTree,
-				   "WindowTitleSuffix::CTreeDirector",
-				   "CTreeHelp", jcc_c_tree_window,
-				   kTreeMenuStr, "CTreeDirector",
-				   kCTreeToolBarID, InitCTreeToolBar,
-				   dirList, true)
+				 supervisor, subProject, StreamInCTree,
+				 "WindowTitleSuffix::CTreeDirector",
+				 "CTreeHelp", jcc_c_tree_window,
+				 kTreeMenuStr, "CTreeDirector",
+				 kCTreeToolBarID, InitCTreeToolBar,
+				 dirList, true)
 {
 	CTreeDirectorX();
 }
@@ -98,8 +98,6 @@ CTreeDirector::CTreeDirectorX()
 {
 	itsCTree = dynamic_cast<CTree*>(GetTree());
 	assert( itsCTree != nullptr );
-
-	itsEditCPPDialog = nullptr;
 }
 
 /******************************************************************************
@@ -109,38 +107,6 @@ CTreeDirector::CTreeDirectorX()
 
 CTreeDirector::~CTreeDirector()
 {
-}
-
-/******************************************************************************
- Receive (virtual protected)
-
- ******************************************************************************/
-
-void
-CTreeDirector::Receive
-	(
-	JBroadcaster*	sender,
-	const Message&	message
-	)
-{
-	if (sender == itsEditCPPDialog && message.Is(JXDialogDirector::kDeactivated))
-	{
-		const auto* info =
-			dynamic_cast<const JXDialogDirector::Deactivated*>(&message);
-		assert( info != nullptr );
-		if (info->Successful() &&
-			itsEditCPPDialog->UpdateMacros(itsCTree->GetCPreprocessor()))
-		{
-			itsCTree->NextUpdateMustReparseAll();
-			GetProjectDoc()->UpdateSymbolDatabase();
-		}
-		itsEditCPPDialog = nullptr;
-	}
-
-	else
-	{
-		TreeDirector::Receive(sender, message);
-	}
 }
 
 /******************************************************************************
@@ -205,16 +171,18 @@ CTreeDirector::HandleTreeMenu
 
 	if (index == kEditCPPMacrosCmd)
 	{
-		assert( itsEditCPPDialog == nullptr );
-		itsEditCPPDialog =
-			jnew EditCPPMacroDialog(this, *(itsCTree->GetCPreprocessor()));
-		assert( itsEditCPPDialog != nullptr );
-		itsEditCPPDialog->BeginDialog();
-		ListenTo(itsEditCPPDialog);
+		auto* dlog = jnew EditCPPMacroDialog(*itsCTree->GetCPreprocessor());
+		assert( dlog != nullptr );
+		if (dlog->DoDialog() &&
+			dlog->UpdateMacros(itsCTree->GetCPreprocessor()))
+		{
+			itsCTree->NextUpdateMustReparseAll();
+			GetProjectDoc()->UpdateSymbolDatabase();
+		}
 	}
 	else if (index == kEditSearchPathsCmd)
 	{
-		GetProjectDoc()->EditSearchPaths(this);
+		GetProjectDoc()->EditSearchPaths();
 	}
 	else if (index == kUpdateCurrentCmd)
 	{

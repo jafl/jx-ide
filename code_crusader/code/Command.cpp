@@ -38,8 +38,8 @@ const JUtf8Byte* Command::kFinished = "Finished::Command";
 Command::Command
 	(
 	const JString&		path,
-	const bool		refreshVCSStatusWhenFinished,
-	const bool		beepWhenFinished,
+	const bool			refreshVCSStatusWhenFinished,
+	const bool			beepWhenFinished,
 	ProjectDocument*	projDoc
 	)
 	:
@@ -350,7 +350,7 @@ Command::Start
 		itsDontCloseMsg = JGetString("RunCloseMsg::Command");
 
 		itsWindowTitle = JGetString("RunWindowTitlePrefix::Command");
-		if (!(info.menuText)->IsEmpty())
+		if (!info.menuText->IsEmpty())
 		{
 			itsWindowTitle += *(info.menuText);
 		}
@@ -384,7 +384,7 @@ Command::Start
 	if (info.isMake && itsProjDoc != nullptr)
 	{
 		waitForMakeDepend =
-			(itsProjDoc->GetBuildManager())->UpdateMakefile(itsOutputDoc, &itsMakeDependCmd);
+			itsProjDoc->GetBuildManager()->UpdateMakefile(itsOutputDoc, &itsMakeDependCmd);
 	}
 
 	if (waitForMakeDepend)
@@ -470,9 +470,9 @@ Command::StartProcess()
 {
 	// check if we are finished
 
-	while (!itsCmdList->IsEmpty() && (itsCmdList->GetElement(1)).IsEndOfSequence())
+	while (!itsCmdList->IsEmpty() && itsCmdList->GetFirstElement().IsEndOfSequence())
 	{
-		CmdInfo info = itsCmdList->GetElement(1);
+		CmdInfo info = itsCmdList->GetFirstElement();
 		info.Free(true);
 		itsCmdList->RemoveElement(1);
 	}
@@ -480,7 +480,7 @@ Command::StartProcess()
 	{
 		if (itsBeepFlag && itsParent == nullptr)
 		{
-			(JXGetApplication()->GetCurrentDisplay())->Beep();
+			JXGetApplication()->GetCurrentDisplay()->Beep();
 		}
 		DeleteThis();
 		return false;
@@ -502,7 +502,7 @@ Command::StartProcess()
 	if (info.cmdObj != nullptr)
 	{
 		StopListening(itsOutputDoc);	// wait for Command to notify us
-		const bool result = (info.cmdObj)->Start(*(info.cmdInfo));
+		const bool result = info.cmdObj->Start(*info.cmdInfo);
 		info.Free(false);
 		itsCmdList->RemoveElement(1);
 		return result;
@@ -519,7 +519,7 @@ Command::StartProcess()
 	JError execErr = JNoError();
 	if (itsOutputDoc != nullptr)
 	{
-		execErr = JProcess::Create(&p, itsCmdPath, *(info.cmd),
+		execErr = JProcess::Create(&p, itsCmdPath, *info.cmd,
 								   kJCreatePipe, &toFD,
 								   kJCreatePipe, &fromFD,
 								   kJAttachToFromFD, nullptr);

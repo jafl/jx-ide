@@ -22,15 +22,14 @@ public:
 
 	void	EditFile(const JString& fileName, const JIndex lineIndex = 0) const;
 
-	void	DisplayAbout(const JString& prevVersStr = JString::empty,
-						 const bool init = false);
+	void	DisplayAbout(const bool showLicense = false,
+						 const JString& prevVersStr = JString::empty);
 
 	static void				InitStrings();
 	static const JUtf8Byte*	GetAppSignature();
 
 protected:
 
-	bool	HandleCustomEvent() override;
 	void	CleanUpBeforeSuddenDeath(const JXDocumentManager::SafetySaveReason reason) override;
 };
 

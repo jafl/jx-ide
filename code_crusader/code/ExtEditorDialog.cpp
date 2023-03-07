@@ -1,7 +1,7 @@
 /******************************************************************************
  ExtEditorDialog.cpp
 
-	BASE CLASS = JXDialogDirector
+	BASE CLASS = JXModalDialogDirector
 
 	Copyright © 1998 by John Lindal.
 
@@ -13,7 +13,7 @@
 #include <jx-af/jx/JXStaticText.h>
 #include <jx-af/jx/JXTextCheckbox.h>
 #include <jx-af/jx/JXInputField.h>
-#include <jx-af/jx/JXChooseSaveFile.h>
+#include <jx-af/jx/JXCSFDialogBase.h>
 #include <jx-af/jcore/JFontManager.h>
 #include <jx-af/jcore/jGlobals.h>
 #include <jx-af/jcore/jAssert.h>
@@ -25,15 +25,14 @@
 
 ExtEditorDialog::ExtEditorDialog
 	(
-	JXDirector*		supervisor,
-	const bool	editTextLocally,
+	const bool		editTextLocally,
 	const JString&	editTextFileCmd,
 	const JString&	editTextFileLineCmd,
-	const bool	editBinaryLocally,
+	const bool		editBinaryLocally,
 	const JString&	editBinaryFileCmd
 	)
 	:
-	JXDialogDirector(supervisor, true)
+	JXModalDialogDirector()
 {
 	BuildWindow(editTextLocally, editTextFileCmd, editTextFileLineCmd,
 				editBinaryLocally, editBinaryFileCmd);
@@ -143,13 +142,13 @@ ExtEditorDialog::BuildWindow
 
 	itsExtTextEditorCB->SetState(!editTextLocally);
 	itsEditTextFileCmdInput->GetText()->SetText(editTextFileCmd);
-	itsEditTextFileCmdInput->GetText()->SetCharacterInWordFunction(JXChooseSaveFile::IsCharacterInWord);
+	itsEditTextFileCmdInput->GetText()->SetCharacterInWordFunction(JXCSFDialogBase::IsCharacterInWord);
 	itsEditTextFileLineCmdInput->GetText()->SetText(editTextFileLineCmd);
-	itsEditTextFileLineCmdInput->GetText()->SetCharacterInWordFunction(JXChooseSaveFile::IsCharacterInWord);
+	itsEditTextFileLineCmdInput->GetText()->SetCharacterInWordFunction(JXCSFDialogBase::IsCharacterInWord);
 
 	itsExtBinaryEditorCB->SetState(!editBinaryLocally);
 	itsEditBinaryFileCmdInput->GetText()->SetText(editBinaryFileCmd);
-	itsEditBinaryFileCmdInput->GetText()->SetCharacterInWordFunction(JXChooseSaveFile::IsCharacterInWord);
+	itsEditBinaryFileCmdInput->GetText()->SetCharacterInWordFunction(JXCSFDialogBase::IsCharacterInWord);
 
 	// until we have a built-in one
 	itsExtBinaryEditorCB->SetState(true);
@@ -203,7 +202,7 @@ ExtEditorDialog::Receive
 	}
 	else
 	{
-		JXDialogDirector::Receive(sender, message);
+		JXModalDialogDirector::Receive(sender, message);
 	}
 }
 

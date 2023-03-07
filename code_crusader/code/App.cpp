@@ -16,15 +16,16 @@
 #include "stringData.h"
 #include "sharedUtil.h"
 #include <jx-af/jx/JXHelpManager.h>
+#include <jx-af/jx/JXDockManager.h>
 #include <jx-af/jx/JXMenuBar.h>
 #include <jx-af/jx/JXTextMenu.h>
 #include <jx-af/jx/JXToolBar.h>
 #include <jx-af/jx/JXTipOfTheDayDialog.h>
-#include <jx-af/jx/JXAskInitDockAll.h>
 #include <jx-af/jx/jXActionDefs.h>
 #include <jx-af/jcore/JLatentPG.h>
 #include <jx-af/jcore/jFileUtil.h>
 #include <jx-af/jcore/jStreamUtil.h>
+#include <jx-af/jcore/jWebUtil.h>
 #include <jx-af/jcore/jAssert.h>
 
 static const JUtf8Byte* kDefaultSysIncludeDir[] =
@@ -38,7 +39,8 @@ static const JUtf8Byte* kDefaultSysIncludeDir[] =
 static const JUtf8Byte* kExtraSysIncludeDir[] =
 {
 #ifdef _J_MACOS
-	"/usr/X11/include/"
+	"/usr/X11/include/",
+	HOMEBREW_INCLUDE_ROOT,
 #endif
 };
 
@@ -92,7 +94,7 @@ App::App
 	itsSystemIncludeDirs = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
 	assert( itsSystemIncludeDirs != nullptr );
 
-	*displayAbout = CreateGlobals(this, useMDI);
+	*displayAbout = CreateGlobals(this, useMDI) && useMDI;	// ensure CreateGlobals() is always called
 	SetPrefInfo(GetPrefsManager(), kAppID);
 	JPrefObject::ReadPrefs();
 
@@ -130,7 +132,10 @@ App::~App()
 {
 	jdelete itsSystemIncludeDirs;
 
-	JPrefObject::WritePrefs();
+	if (HasPrefsManager())
+	{
+		JPrefObject::WritePrefs();
+	}
 	DeleteGlobals();
 }
 
@@ -142,31 +147,13 @@ App::~App()
 bool
 App::Close()
 {
-	// --man with no args must leave window open
-
-	if ((GetViewManPageDialog())->IsActive())
+	if (GetViewManPageDialog()->IsActive())
 	{
+		// --man with no args must leave window open
 		return false;
 	}
 
-	GetPrefsManager()->SaveProgramState();
-
-	// close these first so they remember all open text documents
-
-	if (!GetDocumentManager()->CloseProjectDocuments())
-	{
-		return false;
-	}
-
-	// close everything else
-
-	const bool success = JXApplication::Close();	// deletes us if successful
-	if (!success)
-	{
-		GetPrefsManager()->ForgetProgramState();
-	}
-
-	return success;
+	return JXApplication::Close();
 }
 
 /******************************************************************************
@@ -177,10 +164,21 @@ App::Close()
 void
 App::Quit()
 {
-	if (!itsWarnBeforeQuitFlag ||
+	if (!HasPrefsManager() ||
+		!itsWarnBeforeQuitFlag ||
 		JGetUserNotification()->AskUserNo(JGetString("AskQuit::App")))
 	{
-		JXApplication::Quit();
+		if (!IsQuitting() && HasPrefsManager())
+		{
+			GetPrefsManager()->SaveProgramState();
+		}
+
+		// close these first so they remember all open text documents
+
+		if (GetDocumentManager()->CloseProjectDocuments())
+		{
+			JXApplication::Quit();
+		}
 	}
 }
 
@@ -194,20 +192,33 @@ App::Quit()
 void
 App::DisplayAbout
 	(
-	const JString&	prevVersStr,
-	const bool	init
+	const bool		showLicense,
+	const JString&	prevVersStr
 	)
 {
-	auto* dlog = jnew AboutDialog(this, prevVersStr);
-	assert( dlog != nullptr );
-	dlog->BeginDialog();
-
-	if (init && prevVersStr.IsEmpty())
+	StartFiber([showLicense, prevVersStr]()
 	{
-		auto* task = jnew JXAskInitDockAll(dlog);
-		assert( task != nullptr );
-		task->Start();
-	}
+		if (!showLicense || JGetUserNotification()->AcceptLicense())
+		{
+			auto* dlog = jnew AboutDialog(prevVersStr);
+			assert( dlog != nullptr );
+			dlog->DoDialog();
+
+			if (showLicense && prevVersStr.IsEmpty() &&
+				JGetUserNotification()->AskUserYes(
+					JGetString("StartupTips::JXAskInitDockAll")))
+			{
+				JXGetDockManager()->DockAll();
+			}
+
+			JCheckForNewerVersion(GetPrefsManager(), kVersionCheckID);
+		}
+		else
+		{
+			ForgetPrefsManager();
+			JXGetApplication()->Quit();
+		}
+	});
 }
 
 /******************************************************************************
@@ -220,7 +231,10 @@ App::EditMiscPrefs()
 {
 	auto* dlog = jnew EditMiscPrefsDialog();
 	assert( dlog != nullptr );
-	dlog->BeginDialog();
+	if (dlog->DoDialog())
+	{
+		dlog->UpdateSettings();
+	}
 }
 
 /******************************************************************************
@@ -317,7 +331,7 @@ App::HandleHelpMenu
 	{
 		auto* dlog = jnew JXTipOfTheDayDialog;
 		assert( dlog != nullptr );
-		dlog->BeginDialog();
+		dlog->DoDialog();
 	}
 
 	else if (index == kHelpChangeLogCmd)
@@ -366,11 +380,11 @@ App::FindFile
 		JLatentPG pg;
 
 		const JUtf8Byte* map[] =
-	{
+		{
 			"name", fileName.GetBytes()
-	};
+		};
 		const JString msg = JGetString("FileSearch::App", map, sizeof(map));
-		pg.FixedLengthProcessBeginning(dirCount+sysCount, msg, true, false);
+		pg.FixedLengthProcessBeginning(dirCount+sysCount, msg, true, true);
 
 		JString path, newName;
 		for (JIndex i=1; i<=dirCount; i++)
@@ -540,7 +554,7 @@ App::CollectSearchPaths
 	{
 		ProjectDocument* doc   = docList->GetElement(j);
 		const DirList& dirList = doc->GetDirectories();
-		const JSize count        = dirList.GetElementCount();
+		const JSize count      = dirList.GetElementCount();
 		for (JIndex i=1; i<=count; i++)
 		{
 			if (dirList.GetTruePath(i, &truePath, &recurse))

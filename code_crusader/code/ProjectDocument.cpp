@@ -34,8 +34,7 @@
 #include "FindFileDialog.h"
 #include "DiffFileDialog.h"
 #include "SearchTextDialog.h"
-#include "RelPathCSF.h"
-#include "NewProjectCSF.h"
+#include "SaveNewProjectDialog.h"
 #include "PTPrinter.h"
 #include "DirList.h"
 #include "DocumentMenu.h"
@@ -51,7 +50,7 @@
 #include <jx-af/jx/JXScrollbarSet.h>
 #include <jx-af/jx/JXMenuBar.h>
 #include <jx-af/jx/JXToolBar.h>
-#include <jx-af/jx/JXChooseSaveFile.h>
+#include <jx-af/jx/JXSaveFileDialog.h>
 #include <jx-af/jx/JXProgressDisplay.h>
 #include <jx-af/jx/JXProgressIndicator.h>
 #include <jx-af/jx/JXWebBrowser.h>
@@ -70,6 +69,7 @@
 #include <jx-af/jcore/jFStreamUtil.h>
 #include <jx-af/jcore/jSysUtil.h>
 #include <sstream>
+#include <cstdlib>
 #include <sys/time.h>
 #include <signal.h>
 #include <jx-af/jcore/jErrno.h>
@@ -206,14 +206,9 @@ enum
 
 class ChildAssertHandler : public JAssertBase
 {
-	int Assert(const JUtf8Byte* expr, const JUtf8Byte* file, const int line, const JUtf8Byte* message) override
+	int Assert(const JUtf8Byte* expr, const JUtf8Byte* file, const int line, const JUtf8Byte* message, const JUtf8Byte* function) override
 	{
-		return JAssertBase::DefaultAssert(expr, file, line, message);
-	}
-
-	void Abort() override
-	{
-		exit(1);
+		return JAssertBase::DefaultAssert(expr, file, line, message, function);
 	}
 };
 
@@ -222,63 +217,55 @@ class ChildAssertHandler : public JAssertBase
 
  ******************************************************************************/
 
-bool
-ProjectDocument::Create
-	(
-	ProjectDocument** doc
-	)
+void
+ProjectDocument::Create()
 {
-	*doc = nullptr;
-
-	NewProjectCSF csf;
-	JString fullName;
-	if (!csf.SaveFile(JGetString("SaveFilePrompt::ProjectDocument"),
-					  JString::empty,
-					  JGetString("NewFileName::ProjectDocument"),
-					  &fullName))
+	auto* dlog =
+		SaveNewProjectDialog::Create(JGetString("SaveFilePrompt::ProjectDocument"),
+									 JGetString("NewFileName::ProjectDocument"));
+	if (!dlog->DoDialog())
 	{
-		return false;
+		return;
 	}
 
 	JString tmplFile, tmplType;
-	const bool fromTemplate = csf.GetProjectTemplate(&tmplFile);
+	const bool fromTemplate = dlog->GetProjectTemplate(&tmplFile);
 	if (fromTemplate)
 	{
 		const bool ok = GetProjectTemplateType(tmplFile, &tmplType);
 		assert( ok );
 	}
 
-	JString path, name;
-	JSplitPathAndName(fullName, &path, &name);
-	const JString meta = JCombinePathAndName(path, kDataDirectory);
+	const JString meta = JCombinePathAndName(dlog->GetPath(), kDataDirectory);
 	if (!JKillDirectory(meta))
 	{
-		(JGetUserNotification())->ReportError(JGetString("MetaDirectoryAlreadyExists::ProjectDocument"));
-		return false;
+		JGetUserNotification()->ReportError(JGetString("MetaDirectoryAlreadyExists::ProjectDocument"));
+		return;
 	}
 
 	if (!fromTemplate || tmplType == kTmplFileSignature)
 	{
+		const JString fullName = dlog->GetFullName();
 		std::ofstream temp(fullName.GetBytes());
 		if (!temp.good())
 		{
 			JGetUserNotification()->ReportError(JGetString("FileCreateFailed::ProjectDocument"));
-			return false;
+			return;
 		}
 		temp.close();
 
-		*doc = jnew ProjectDocument(fullName, csf.GetMakefileMethod(),
-									 fromTemplate, tmplFile);
-		assert( *doc != nullptr );
-		(**doc).SaveInCurrentFile();
-		(**doc).Activate();
-		return true;
+		auto* doc = jnew ProjectDocument(fullName, dlog->GetMakefileMethod(),
+										 fromTemplate, tmplFile);
+		assert( doc != nullptr );
+		doc->SaveInCurrentFile();
+		doc->Activate();
 	}
 	else
 	{
 		assert( tmplType == kWizardFileSignature );
 
-		if (fullName.EndsWith(kProjectFileSuffix))
+		JString name = dlog->GetFileName();
+		if (dlog->GetFullName().EndsWith(kProjectFileSuffix))
 		{
 			JString root, suffix;
 			JSplitRootAndSuffix(name, &root, &suffix);
@@ -298,7 +285,7 @@ ProjectDocument::Create
 
 		const JUtf8Byte* map[] =
 		{
-			"path", path.GetBytes(),
+			"path", dlog->GetPath().GetBytes(),
 			"name", name.GetBytes()
 		};
 		JGetStringManager()->Replace(&cmd, map, sizeof(map));
@@ -309,7 +296,6 @@ ProjectDocument::Create
 		{
 			JGetStringManager()->ReportError("WizardExecError::ProjectDocument", err);
 		}
-		return false;
 	}
 }
 
@@ -317,7 +303,7 @@ JXFileDocument::FileStatus
 ProjectDocument::Create
 	(
 	const JString&		fullName,
-	const bool		silent,
+	const bool			silent,
 	ProjectDocument**	doc
 	)
 {
@@ -781,9 +767,6 @@ ProjectDocument::ProjectDocumentX
 	assert( itsDirList != nullptr );
 	itsDirList->SetBasePath(GetFilePath());
 
-	itsCSF = jnew RelPathCSF(this);
-	assert( itsCSF != nullptr );
-
 	itsCmdMgr = jnew CommandManager;
 	assert( itsCmdMgr != nullptr );
 
@@ -800,7 +783,6 @@ ProjectDocument::ProjectDocumentX
 	itsUpdatePG              = nullptr;
 	itsWaitForUpdateTask     = nullptr;
 	itsDelaySymbolUpdateTask = nullptr;
-	itsEditPathsDialog       = nullptr;
 
 	SetSaveNewFilePrompt(JGetString("SaveFilePrompt::ProjectDocument"));
 
@@ -819,8 +801,8 @@ ProjectDocument::~ProjectDocument()
 	DeleteUpdateLink();
 	jdelete itsUpdateStream;
 	jdelete itsUpdateProcess;
-	jdelete itsWaitForUpdateTask;
 	jdelete itsDelaySymbolUpdateTask;
+	// cannot delete itsWaitForUpdateTask
 
 	if (itsUpdatePG->ProcessRunning())
 	{
@@ -832,7 +814,6 @@ ProjectDocument::~ProjectDocument()
 	jdelete itsBuildMgr;
 	jdelete itsFileTree;
 	jdelete itsDirList;
-	jdelete itsCSF;
 	jdelete itsSaveTask;
 }
 
@@ -1307,7 +1288,7 @@ void
 ProjectDocument::AddFile
 	(
 	const JString&					fullName,
-	const RelPathCSF::PathType	pathType
+	const ProjectTable::PathType	pathType
 	)
 {
 	JString name = fullName;
@@ -1755,44 +1736,6 @@ ProjectDocument::Receive
 											 selection->GetIndex());
 	}
 
-	else if (sender == itsEditPathsDialog &&
-			 message.Is(JXDialogDirector::kDeactivated))
-	{
-		const auto* info =
-			dynamic_cast<const JXDialogDirector::Deactivated*>(&message);
-		assert( info != nullptr );
-		if (info->Successful())
-		{
-			DirList pathList;
-			itsEditPathsDialog->GetPathList(&pathList);
-			if (pathList != *itsDirList)
-			{
-				*itsDirList = pathList;
-				UpdateSymbolDatabase();
-			}
-		}
-		itsEditPathsDialog = nullptr;
-	}
-
-	else if (sender == GetPTTextPrinter() &&
-			 message.Is(JPrinter::kPrintSetupFinished))
-	{
-		const auto* info =
-			dynamic_cast<const JPrinter::PrintSetupFinished*>(&message);
-		assert( info != nullptr );
-		PTPrinter* p = GetPTTextPrinter();
-		if (info->Successful())
-		{
-			bool onDisk;
-			const JString fullName = GetFullName(&onDisk);
-			p->SetHeaderName(fullName);
-
-			itsPrintName = p->GetFileName();
-			Print(*p);
-		}
-		StopListening(p);
-	}
-
 	else if (sender == GetPrefsManager() &&
 			 message.Is(PrefsManager::kFileTypesChanged))
 	{
@@ -1981,14 +1924,21 @@ ProjectDocument::HandleFileMenu
 
 	else if (index == kPageSetupCmd)
 	{
-		GetPTTextPrinter()->BeginUserPageSetup();
+		GetPTTextPrinter()->EditUserPageSetup();
 	}
 	else if (index == kPrintCmd)
 	{
-		JXPTPrinter* p = GetPTTextPrinter();
+		PTPrinter* p = GetPTTextPrinter();
 		p->SetFileName(itsPrintName);
-		p->BeginUserPrintSetup();
-		ListenTo(p);
+		if (p->ConfirmUserPrintSetup())
+		{
+			bool onDisk;
+			const JString fullName = GetFullName(&onDisk);
+			p->SetHeaderName(fullName);
+
+			itsPrintName = p->GetFileName();
+			Print(*p);
+		}
 	}
 
 	else if (index == kCloseCmd)
@@ -2011,16 +1961,16 @@ ProjectDocument::SaveAsTemplate()
 	const
 {
 	JString origName;
-	if (GetDocumentManager()->GetTemplateDirectory(kProjTemplateDir, true, &origName))
+	if (!GetDocumentManager()->GetTemplateDirectory(kProjTemplateDir, true, &origName))
 	{
-		origName = JCombinePathAndName(origName, GetFileName());
+		return;
+	}
+	origName = JCombinePathAndName(origName, GetFileName());
 
-		JString tmplName;
-		if (JGetChooseSaveFile()->SaveFile(JGetString("SaveTmplPrompt::ProjectDocument"),
-										   JString::empty, origName, &tmplName))
-		{
-			WriteTemplate(tmplName);
-		}
+	auto* dlog = JXSaveFileDialog::Create(JGetString("SaveTmplPrompt::ProjectDocument"), origName);
+	if (dlog->DoDialog())
+	{
+		WriteTemplate(dlog->GetFullName());
 	}
 }
 
@@ -2037,10 +1987,10 @@ ProjectDocument::Print
 	const
 {
 	const JUtf8Byte* map[] =
-{
+	{
 		"name", GetFileName().GetBytes(),
 		"path", GetFilePath().GetBytes()
-};
+	};
 	JString s = JGetString("PrintHeader::ProjectDocument", map, sizeof(map));
 
 	itsFileTree->Print(&s);
@@ -2133,7 +2083,7 @@ ProjectDocument::HandleProjectMenu
 
 	else if (index == kEditSearchPathsCmd)
 	{
-		EditSearchPaths(this);
+		EditSearchPaths();
 	}
 	else if (index == kShowFileListCmd)
 	{
@@ -2158,19 +2108,30 @@ ProjectDocument::HandleProjectMenu
 
  ******************************************************************************/
 
-EditSearchPathsDialog*
+void
 ProjectDocument::EditSearchPaths
 	(
-	JXDirector* owner
+	const JPtrArray<JString>* dirList
 	)
 {
-	assert( itsEditPathsDialog == nullptr );
+	auto* dlog = jnew EditSearchPathsDialog(*itsDirList);
+	assert( dlog != nullptr );
 
-	itsEditPathsDialog = jnew EditSearchPathsDialog(owner, *itsDirList, itsCSF);
-	assert( itsEditPathsDialog != nullptr );
-	itsEditPathsDialog->BeginDialog();
-	ListenTo(itsEditPathsDialog);
-	return itsEditPathsDialog;
+	if (dirList != nullptr)
+	{
+		dlog->AddDirectories(*dirList);
+	}
+
+	if (dlog->DoDialog())
+	{
+		DirList pathList;
+		dlog->GetPathList(&pathList);
+		if (pathList != *itsDirList)
+		{
+			*itsDirList = pathList;
+			UpdateSymbolDatabase();
+		}
+	}
 }
 
 /******************************************************************************
@@ -2370,11 +2331,14 @@ ProjectDocument::EditProjectPrefs()
 {
 	auto* dlog =
 		jnew EditProjPrefsDialog(theReopenTextFilesFlag,
-								  CompileDocument::WillDoubleSpace(),
-								  BuildManager::WillRebuildMakefileDaily(),
-								  ProjectTable::GetDropFileAction());
+								 CompileDocument::WillDoubleSpace(),
+								 BuildManager::WillRebuildMakefileDaily(),
+								 ProjectTable::GetDropFileAction());
 	assert( dlog != nullptr );
-	dlog->BeginDialog();
+	if (dlog->DoDialog())
+	{
+		dlog->UpdateSettings();
+	}
 }
 
 /******************************************************************************
@@ -2582,7 +2546,7 @@ ProjectDocument::SymbolUpdateProgress()
 		input >> msg;
 
 		itsUpdateLabel->Show();
-		itsUpdatePG->FixedLengthProcessBeginning(count, msg, false, true);
+		itsUpdatePG->FixedLengthProcessBeginning(count, msg, false, false);
 	}
 	else if (type == kVariableLengthStart)
 	{
@@ -2595,7 +2559,7 @@ ProjectDocument::SymbolUpdateProgress()
 		input >> msg;
 
 		itsUpdateLabel->Show();
-		itsUpdatePG->VariableLengthProcessBeginning(msg, false, true);
+		itsUpdatePG->VariableLengthProcessBeginning(msg, false, false);
 	}
 	else if (type == kProgressIncrement)
 	{
@@ -2643,7 +2607,10 @@ ProjectDocument::SymbolUpdateProgress()
 
 		*itsUpdateStream << kSymbolTableLocked << std::endl;
 
-		jdelete itsWaitForUpdateTask;
+		if (itsWaitForUpdateTask != nullptr)
+		{
+			itsWaitForUpdateTask->Cancel();
+		}
 		itsWaitForUpdateTask = jnew WaitForSymbolUpdateTask(itsUpdateProcess);
 		assert( itsWaitForUpdateTask != nullptr );
 		ClearWhenGoingAway(itsWaitForUpdateTask, &itsWaitForUpdateTask);
@@ -2840,7 +2807,7 @@ ProjectDocument::UpdateSymbolDatabase()
 			output.close();
 
 			JWait(15);	// give last message a chance to be received
-			exit(0);
+			abort();	// prevent other fibers from executing
 		}
 
 		// tell parent to do it if it takes less time than last full read
@@ -2853,7 +2820,7 @@ ProjectDocument::UpdateSymbolDatabase()
 			output.close();
 
 			JWait(15);	// give last message a chance to be received
-			exit(0);
+			abort();	// prevent other fibers from executing
 		}
 
 		// no need to clear itimer, since we will soon exit
@@ -2864,7 +2831,7 @@ ProjectDocument::UpdateSymbolDatabase()
 
 		if (!JWaitForInput(fd[1][0], 5*60))		// 5 minutes; in case of blocking dialog
 		{
-			exit(jerrno());
+			abort();	// prevent other fibers from executing
 		}
 
 		JReadUntil(fd[1][0], '\n');
@@ -2886,7 +2853,7 @@ ProjectDocument::UpdateSymbolDatabase()
 		output.close();
 
 		JWait(15);	// give last message a chance to be received
-		exit(0);
+		abort();	// prevent other fibers from executing
 	}
 
 	// parent

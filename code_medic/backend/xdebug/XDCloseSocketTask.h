@@ -20,6 +20,8 @@ public:
 
 	CloseSocketTask(Socket* socket);
 
+protected:
+
 	~CloseSocketTask() override;
 
 	void	Perform() override;

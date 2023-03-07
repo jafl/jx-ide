@@ -117,7 +117,10 @@ VarTreeDir::VarTreeDir
 
 VarTreeDir::~VarTreeDir()
 {
-	GetPrefsManager()->SaveWindowSize(kVarTreeWindSizeID, GetWindow());
+	if (HasPrefsManager())
+	{
+		GetPrefsManager()->SaveWindowSize(kVarTreeWindSizeID, GetWindow());
+	}
 }
 
 /******************************************************************************
@@ -521,7 +524,7 @@ VarTreeDir::HandleHelpMenu
 {
 	if (index == kAboutCmd)
 	{
-		(GetApplication())->DisplayAbout();
+		GetApplication()->DisplayAbout();
 	}
 	else if (index == kTOCCmd)
 	{

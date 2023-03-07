@@ -223,15 +223,15 @@ SourceDirector::SourceViewDirectorX
 
 SourceDirector::~SourceDirector()
 {
-	if (itsType == kMainSourceType)
+	if (itsType == kMainSourceType && HasPrefsManager())
 	{
 		GetPrefsManager()->SaveWindowSize(kMainCodeWindSizeID, GetWindow());
 	}
-	else if (itsType == kMainAsmType)
+	else if (itsType == kMainAsmType && HasPrefsManager())
 	{
 		GetPrefsManager()->SaveWindowSize(kMainAsmWindSizeID, GetWindow());
 	}
-	else
+	else if (itsType != kMainSourceType && itsType != kMainAsmType)
 	{
 		itsCommandDir->SourceWindowClosed(this);
 	}
@@ -637,11 +637,14 @@ SourceDirector::Receive
 		HandleHelpMenu(selection->GetIndex());
 	}
 
-	else if (sender == GetPrefsManager() && message.Is(PrefsManager::kFileTypesChanged))
+	// Do not check sender == GetPrefsManager(), because that will be null
+	// if license is not accepted.
+
+	else if (message.Is(PrefsManager::kFileTypesChanged))
 	{
 		UpdateFileType();
 	}
-	else if (sender == GetPrefsManager() && message.Is(PrefsManager::kCustomCommandsChanged))
+	else if (message.Is(PrefsManager::kCustomCommandsChanged))
 	{
 		itsCommandDir->AdjustDebugMenu(itsDebugMenu);
 	}
@@ -1008,7 +1011,7 @@ SourceDirector::HandleFileMenu
 				itsText->GetLineForChar(r.first) :
 				itsTable->GetCurrentLine();
 
-		(GetApplication())->
+		GetApplication()->
 			EditFile(itsCurrentFile,
 				visualIndex > 0 ?
 					itsText->VisualLineIndexToCRLineIndex(visualIndex) :
@@ -1104,7 +1107,7 @@ SourceDirector::HandlePrefsMenu
 	{
 		auto* dlog = jnew EditCommandsDialog;
 		assert(dlog != nullptr);
-		dlog->BeginDialog();
+		dlog->DoDialog();
 	}
 	else if (index == kEditMacWinPrefsCmd)
 	{
@@ -1137,7 +1140,7 @@ SourceDirector::HandleHelpMenu
 {
 	if (index == kAboutCmd)
 	{
-		(GetApplication())->DisplayAbout();
+		GetApplication()->DisplayAbout();
 	}
 	else if (index == kTOCCmd)
 	{

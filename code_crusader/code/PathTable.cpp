@@ -9,7 +9,8 @@
 
 #include "PathTable.h"
 #include "DirList.h"
-#include "RelPathCSF.h"
+#include "ProjectTable.h"
+#include "ChooseRelativePathDialog.h"
 #include <jx-af/jx/JXDisplay.h>
 #include <jx-af/jx/JXTextButton.h>
 #include <jx-af/jx/JXPathInput.h>
@@ -47,11 +48,10 @@ static const JString kFlagOffStr;		// must be empty
 
 PathTable::PathTable
 	(
-	const DirList&	pathList,
+	const DirList&		pathList,
 	JXTextButton*		addPathButton,
 	JXTextButton*		removePathButton,
 	JXTextButton*		choosePathButton,
-	RelPathCSF*		csf,
 	JXScrollbarSet*		scrollbarSet,
 	JXContainer*		enclosure,
 	const HSizingOption	hSizing,
@@ -75,7 +75,6 @@ PathTable::PathTable
 	itsAddPathButton    = addPathButton;
 	itsRemovePathButton = removePathButton;
 	itsChoosePathButton = choosePathButton;
-	itsCSF              = csf;
 
 	ListenTo(itsAddPathButton);
 	ListenTo(itsRemovePathButton);
@@ -213,7 +212,7 @@ PathTable::TableDrawCell
 
 		JRect r = rect;
 		r.left += kHMarginWidth;
-		p.String(r, str, JPainter::kHAlignCenter, JPainter::kVAlignCenter);
+		p.String(r, str, JPainter::HAlign::kCenter, JPainter::VAlign::kCenter);
 	}
 	else if (cell.x == kIconColumn)
 	{
@@ -229,7 +228,7 @@ PathTable::TableDrawCell
 
 		JRect r = rect;
 		r.left += kHMarginWidth;
-		p.String(r, str, JPainter::kHAlignLeft, JPainter::kVAlignCenter);
+		p.String(r, str, JPainter::HAlign::kLeft, JPainter::VAlign::kCenter);
 	}
 }
 
@@ -411,14 +410,24 @@ void
 PathTable::ChoosePath()
 {
 	JPoint cell;
-	if (itsPathInput != nullptr && GetEditedCell(&cell))
+	if (itsPathInput == nullptr || !GetEditedCell(&cell))
 	{
-		JString path      = itsPathInput->GetText()->GetText();
-		const bool ok = itsCSF->ChooseRelRPath(JString::empty, JString::empty, path, &path);	// kills itsPathInput
-		if (BeginEditing(cell) && ok && itsPathInput != nullptr)
-		{
-			itsPathInput->GetText()->SetText(path);
-		}
+		return;
+	}
+
+	ProjectTable::PathType pathType;
+	JString path =
+		ProjectTable::ConvertToAbsolutePath(
+			itsPathInput->GetText()->GetText(), itsBasePath, &pathType);
+
+	auto* dlog = ChooseRelativePathDialog::Create(pathType, path);
+
+	if (dlog->DoDialog() &&		// kills itsPathInput
+		BeginEditing(cell) && itsPathInput != nullptr)
+	{
+		itsPathInput->GetText()->SetText(
+			ProjectTable::ConvertToRelativePath(
+				dlog->GetPath(), itsBasePath, dlog->GetPathType()));
 	}
 }
 

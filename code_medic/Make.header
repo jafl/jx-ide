@@ -19,7 +19,8 @@ include ${MAKE_INCLUDE}/jx_config
 include ${MAKE_INCLUDE}/jexpr_constants
 include ${MAKE_INCLUDE}/j2dplot_constants
 
-SEARCHDIRS := -I./code -I./image -I./backend -I./shared \
+SEARCHDIRS := -I./code -I./image -I./shared \
+              $(foreach d, $(wildcard ./backend/*), -I${d}) \
               ${SEARCHDIRS} -I./lldb-include \
               -I/usr/local/opt/llvm/include \
               -I/opt/homebrew/opt/llvm/include \

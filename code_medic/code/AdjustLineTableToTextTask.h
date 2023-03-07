@@ -18,6 +18,8 @@ public:
 
 	AdjustLineTableToTextTask(LineIndexTable* table);
 
+protected:
+
 	~AdjustLineTableToTextTask() override;
 
 	void	Perform() override;

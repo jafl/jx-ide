@@ -23,7 +23,7 @@ class App : public JXApplication, public JPrefObject
 public:
 
 	App(int* argc, char* argv[], const bool useMDI,
-		  bool* displayAbout, JString* prevVersStr);
+		bool* displayAbout, JString* prevVersStr);
 
 	~App() override;
 
@@ -32,8 +32,8 @@ public:
 	static void				InitStrings();
 	static const JUtf8Byte*	GetAppSignature();
 
-	void	DisplayAbout(const JString& prevVersStr = JString::empty,
-						 const bool init = false);
+	void	DisplayAbout(const bool showLicense = false,
+						 const JString& prevVersStr = JString::empty);
 	void	EditMiscPrefs();
 
 	JXTextMenu*	CreateHelpMenu(JXMenuBar* menuBar, const JUtf8Byte* idNamespace);

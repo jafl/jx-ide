@@ -8,7 +8,7 @@
 #ifndef _H_RunCommandDialog
 #define _H_RunCommandDialog
 
-#include <jx-af/jx/JXDialogDirector.h>
+#include <jx-af/jx/JXModalDialogDirector.h>
 #include <jx-af/jcore/JPrefObject.h>
 
 class JXInputField;
@@ -21,16 +21,18 @@ class TextDocument;
 class CommandManager;
 class CommandPathInput;
 
-class RunCommandDialog : public JXDialogDirector, public JPrefObject
+class RunCommandDialog : public JXModalDialogDirector, public JPrefObject
 {
 public:
 
 	RunCommandDialog(ProjectDocument* projDoc, TextDocument* textDoc);
 	RunCommandDialog(ProjectDocument* projDoc,
-					   const JPtrArray<JString>& fullNameList,
-					   const JArray<JIndex>& lineIndexList);
+					 const JPtrArray<JString>& fullNameList,
+					 const JArray<JIndex>& lineIndexList);
 
 	~RunCommandDialog() override;
+
+	void	Exec();
 
 	void	Activate() override;
 
@@ -72,7 +74,6 @@ private:
 
 	void	BuildWindow();
 	void	UpdateDisplay();
-	void	Exec();
 
 	void	UpdateSaveCmdMenu();
 	void	HandleSaveCmdMenu(const JIndex item);

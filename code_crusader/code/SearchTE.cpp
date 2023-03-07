@@ -10,28 +10,25 @@
  ******************************************************************************/
 
 #include "SearchTE.h"
+#include "SearchDocument.h"
 #include "SearchFontManager.h"
-#include "SearchColorManager.h"
 #include "SearchTextDialog.h"
 #include "sharedUtil.h"
 #include "globals.h"
-#include <jx-af/jx/JXColorManager.h>
 #include <jx-af/jcore/JStringIterator.h>
 #include <jx-af/jcore/jFileUtil.h>
-#include <jx-af/jcore/jFStreamUtil.h>
 #include <stdio.h>
 #include <jx-af/jcore/jAssert.h>
 
 const JSize kMaxQuoteCharCount = 500;
 
-static const JUtf8Byte* kDisconnectStr         = "\0";
-const JUtf8Byte kDisconnect                    = '\0';
-static const JUtf8Byte* kRecordTerminatorStr   = "\1";
-const JUtf8Byte kRecordTerminator              = '\1';
-const JUtf8Byte SearchTE::kNewMatchLine      = '\2';
-const JUtf8Byte SearchTE::kRepeatMatchLine   = '\3';
-const JUtf8Byte SearchTE::kIncrementProgress = '\4';
-const JUtf8Byte SearchTE::kError             = '\5';
+// JBroadcaster message types
+
+const JUtf8Byte* SearchTE::kIncrementProgress = "IncrementProgress::SearchTE";
+const JUtf8Byte* SearchTE::kSearchResult      = "SearchResult::SearchTE";
+const JUtf8Byte* SearchTE::kAdditionalMatch   = "AdditionalMatch::SearchTE";
+const JUtf8Byte* SearchTE::kFileName          = "FileName::SearchTE";
+const JUtf8Byte* SearchTE::kError             = "Error::SearchTE";
 
 /******************************************************************************
  Constructor
@@ -42,7 +39,8 @@ SearchTE::SearchTE()
 	:
 	JTextEditor(kFullEditor, jnew JStyledText(false, false), true,
 				jnew SearchFontManager, true,
-				1,1,1,1, 1000000)
+				1,1,1,1, 1000000),
+	itsCancelledFlag(false)
 {
 	assert( TEGetFontManager() != nullptr );
 
@@ -60,20 +58,6 @@ SearchTE::~SearchTE()
 }
 
 /******************************************************************************
- SetProtocol (static)
-
- ******************************************************************************/
-
-void
-SearchTE::SetProtocol
-	(
-	SearchDocument::RecordLink* link
-	)
-{
-	link->SetProtocol(kRecordTerminatorStr, 1, kDisconnectStr, 1);
-}
-
-/******************************************************************************
  SearchFiles
 
  ******************************************************************************/
@@ -83,11 +67,13 @@ SearchTE::SearchFiles
 	(
 	const JPtrArray<JString>&	fileList,
 	const JPtrArray<JString>&	nameList,
-	const bool				onlyListFiles,
-	const bool				listFilesWithoutMatch,
-	std::ostream&				output
+	const bool					onlyListFiles,
+	const bool					listFilesWithoutMatch,
+	SearchDocument*				doc
 	)
 {
+	doc->SetSearchTE(this);
+
 	JRegex* searchRegex;
 	JString replaceStr;
 	JInterpolate* interpolator;
@@ -105,13 +91,17 @@ SearchTE::SearchFiles
 	{
 		const JString* file = fileList.GetElement(i);
 		const JString* name = nameList.GetElement(i);
-		SearchFile(*file, *name, onlyListFiles, listFilesWithoutMatch,
-				   output, *searchRegex, entireWord);
 
-		// increment progress
+		if (!itsCancelledFlag)
+		{
+			SearchFile(*file, *name, onlyListFiles, listFilesWithoutMatch,
+					   *searchRegex, entireWord, doc);
 
-		output << kIncrementProgress << kRecordTerminator;
-		output.flush();
+			auto* msg = jnew IncrementProgress();
+			assert( msg != nullptr );
+
+			doc->QueueMessage(msg);
+		}
 
 		// toss temp files once we are done
 
@@ -121,8 +111,7 @@ SearchTE::SearchFiles
 		}
 	}
 
-	output << kDisconnect;
-	output.flush();
+	doc->SearchFinished();
 }
 
 /******************************************************************************
@@ -135,25 +124,27 @@ SearchTE::SearchFile
 	(
 	const JString&	fileName,
 	const JString&	printName,		// so we display it correctly to the user
-	const bool	onlyListFiles,
-	const bool	listFilesWithoutMatch,
-	std::ostream&	output,
-
+	const bool		onlyListFiles,
+	const bool		listFilesWithoutMatch,
 	const JRegex&	searchRegex,
-	const bool	entireWord
+	const bool		entireWord,
+	SearchDocument*	doc
 	)
 {
+	const JUtf8Byte* map[] =
+	{
+		"n", fileName.GetBytes()
+	};
+
 	if (!JFileExists(fileName))
 	{
-		output << kError << "Not found:  ";
-		fileName.Print(output);
-		output << kRecordTerminator;
+		QueueErrorMessage(doc, "NotFound::SearchTE", map, sizeof(map));
+		return;
 	}
 	else if (!JFileReadable(fileName))
 	{
-		output << kError << "Not readable:  ";
-		fileName.Print(output);
-		output << kRecordTerminator;
+		QueueErrorMessage(doc, "NotReadable::SearchTE", map, sizeof(map));
+		return;
 	}
 
 	const bool ignore = JUtf8Character::IgnoreBadUtf8();
@@ -165,11 +156,7 @@ SearchTE::SearchFile
 	{
 		// don't search binary files (cleaning is too slow and pointless)
 
-		output << kError;
-		JGetString("NotSearchedBinary::SearchTE").Print(output);
-		fileName.Print(output);
-		output << kRecordTerminator;
-
+		QueueErrorMessage(doc, "NotSearchedBinary::SearchTE", map, sizeof(map));
 		JUtf8Character::SetIgnoreBadUtf8(ignore);
 		return;
 	}
@@ -194,8 +181,7 @@ SearchTE::SearchFile
 		{
 			if (!listFilesWithoutMatch)
 			{
-				output << printName;
-				output << kRecordTerminator;
+				QueueFileNameMessage(doc, printName);
 			}
 			break;
 		}
@@ -205,7 +191,7 @@ SearchTE::SearchFile
 		const JStyledText::TextRange origMatchRange(
 			m.GetCharacterRange(), m.GetUtf8ByteRange());
 
-		JStyledText::TextRange matchRange = origMatchRange;
+		auto matchRange = origMatchRange;
 		if (matchRange.charRange.GetCount() > kMaxQuoteCharCount)
 		{
 			matchRange.charRange.last = matchRange.charRange.first + kMaxQuoteCharCount - 1;
@@ -260,9 +246,11 @@ SearchTE::SearchFile
 				matchRange.charRange += 3;
 				matchRange.byteRange += 3;
 			}
-			output << kRepeatMatchLine;
-			output << ' ' << matchRange.charRange;
-			output << ' ' << matchRange.byteRange;
+
+			auto* msg = jnew AdditionalMatch(matchRange);
+			assert( msg != nullptr );
+
+			doc->QueueMessage(msg);
 		}
 		else
 		{
@@ -271,18 +259,20 @@ SearchTE::SearchFile
 			iter.UnsafeMoveTo(kJIteratorStartBefore, quoteRange.charRange.first, quoteRange.byteRange.first);
 			iter.BeginMatch();
 			iter.UnsafeMoveTo(kJIteratorStartAfter, quoteRange.charRange.last, quoteRange.byteRange.last);
-			JString quoteText = iter.FinishMatch().GetString();
+
+			auto* quoteText = jnew JString(iter.FinishMatch().GetString());
+			assert( quoteText != nullptr );
 
 			if (quoteRange.charRange.first != origQuoteRange.charRange.first)
 			{
-				quoteText.Prepend("...");
+				quoteText->Prepend("...");
 				matchRange.charRange += 3;
 				matchRange.byteRange += 3;
 				prevQuoteTruncated = true;
 			}
 			if (quoteRange.charRange.last != origQuoteRange.charRange.last)
 			{
-				quoteText.Append("...");
+				quoteText->Append("...");
 			}
 			if (matchRange.charRange.GetCount() != origMatchRange.charRange.GetCount())
 			{
@@ -290,23 +280,67 @@ SearchTE::SearchFile
 				matchRange.byteRange.last += 3;
 			}
 
-			output << kNewMatchLine;
-			output << ' ' << printName;
-			output << ' ' << GetLineForChar(quoteRange.charRange.first);
-			output << ' ' << quoteText;
-			output << ' ' << matchRange.charRange;
-			output << ' ' << matchRange.byteRange;
+			auto* n = jnew JString(printName);
+			assert( n != nullptr );
+
+			auto* msg = jnew SearchResult(n, GetLineForChar(quoteRange.charRange.first),
+										  quoteText, matchRange);
+			assert( msg != nullptr );
+
+			doc->QueueMessage(msg);
 		}
-		output << kRecordTerminator;
 
 		prevQuoteRange = quoteRange;
 	}
 
 	if (listFilesWithoutMatch && !foundMatch)
 	{
-		output << printName;
-		output << kRecordTerminator;
+		QueueFileNameMessage(doc, printName);
 	}
+}
+
+/******************************************************************************
+ QueueErrorMessage (private)
+
+ ******************************************************************************/
+
+void
+SearchTE::QueueErrorMessage
+	(
+	SearchDocument*		doc,
+	const JUtf8Byte*	key,
+	const JUtf8Byte*	map[],
+	const JSize			size
+	)
+{
+	auto* e = jnew JString(JGetString(key, map, size));
+	assert( e != nullptr );
+
+	auto* msg = jnew Error(e);
+	assert( msg != nullptr );
+
+	doc->QueueMessage(msg);
+}
+
+/******************************************************************************
+ QueueFileNameMessage (private)
+
+ ******************************************************************************/
+
+void
+SearchTE::QueueFileNameMessage
+	(
+	SearchDocument*	doc,
+	const JString&	name
+	)
+{
+	auto* n = jnew JString(name);
+	assert( n != nullptr );
+
+	auto* msg = jnew FileName(n);
+	assert( msg != nullptr );
+
+	doc->QueueMessage(msg);
 }
 
 /******************************************************************************
@@ -444,7 +478,7 @@ bool
 SearchTE::TEScrollToRect
 	(
 	const JRect&	rect,
-	const bool	centerInDisplay
+	const bool		centerInDisplay
 	)
 {
 	return true;

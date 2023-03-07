@@ -241,7 +241,7 @@ LineIndexTable::TableDrawCell
 		r.right -= kMarginWidth;
 
 		const JString str = GetLineText(cell.y);
-		p.String(r, str, JPainter::kHAlignRight);
+		p.String(r, str, JPainter::HAlign::kRight);
 	}
 }
 

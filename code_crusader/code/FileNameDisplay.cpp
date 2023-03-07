@@ -12,6 +12,7 @@
 #include "TextDocument.h"
 #include "util.h"
 #include <jx-af/jx/JXMenu.h>
+#include <jx-af/jx/JXSaveFileDialog.h>
 #include <jx-af/jx/JXColorManager.h>
 #include <jx-af/jcore/jFileUtil.h>
 #include <jx-af/jcore/jVCSUtil.h>
@@ -152,10 +153,17 @@ FileNameDisplay::HandleUnfocusEvent()
 	if (itsUnfocusAction != kCancel &&
 		JExpandHomeDirShortcut(GetText()->GetText(), &fullName))
 	{
-		if (JIsRelativePath(fullName) &&
-			!JGetChooseSaveFile()->SaveFile(JGetString("SaveAsPrompt::FileNameDisplay"), JString::empty, fullName, &fullName))
+		if (JIsRelativePath(fullName))
 		{
-			fullName.Clear();
+			auto* dlog = JXSaveFileDialog::Create(JGetString("SaveAsPrompt::FileNameDisplay"), fullName);
+			if (dlog->DoDialog())
+			{
+				fullName = dlog->GetFullName();
+			}
+			else
+			{
+				fullName.Clear();
+			}
 		}
 
 		if (!fullName.IsEmpty() &&

@@ -205,7 +205,7 @@ FunctionTable::TableDrawCell
 	}
 
 	JFontStyle style;
-	JPainter::HAlignment halign	= JPainter::kHAlignLeft;
+	JPainter::HAlign halign	= JPainter::HAlign::kLeft;
 
 	if (fn->IsRequired())
 	{
@@ -231,7 +231,7 @@ FunctionTable::TableDrawCell
 		if (fn->IsConst())
 		{
 			str	= "const";
-			halign	= JPainter::kHAlignCenter;
+			halign	= JPainter::HAlign::kCenter;
 		}
 	}
 	else if (cell.x == kFArgs)
@@ -246,7 +246,7 @@ FunctionTable::TableDrawCell
 	JFont font = JFontManager::GetDefaultMonospaceFont();
 	font.SetStyle(style);
 	p.SetFont(font);
-	p.JPainter::String(r, str, halign, JPainter::kVAlignCenter);
+	p.JPainter::String(r, str, halign, JPainter::VAlign::kCenter);
 }
 
 /******************************************************************************

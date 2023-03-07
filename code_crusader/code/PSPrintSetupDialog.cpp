@@ -8,6 +8,9 @@
  ******************************************************************************/
 
 #include "PSPrintSetupDialog.h"
+#include "PSPrinter.h"
+#include "PTPrinter.h"
+#include "globals.h"
 #include <jx-af/jx/JXWindow.h>
 #include <jx-af/jx/JXTextButton.h>
 #include <jx-af/jx/JXStaticText.h>
@@ -17,7 +20,6 @@
 #include <jx-af/jx/JXTextRadioButton.h>
 #include <jx-af/jx/JXFontSizeMenu.h>
 #include <jx-af/jcore/JFontManager.h>
-#include <jx-af/jcore/jGlobals.h>
 #include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
@@ -31,10 +33,10 @@ PSPrintSetupDialog::Create
 	const JXPSPrinter::Destination	dest,
 	const JString&					printCmd,
 	const JString&					fileName,
-	const bool					collate,
-	const bool					bw,
+	const bool						collate,
+	const bool						bw,
 	const JSize						fontSize,
-	const bool					printHeader
+	const bool						printHeader
 	)
 {
 	auto* dlog = jnew PSPrintSetupDialog;
@@ -64,23 +66,6 @@ PSPrintSetupDialog::~PSPrintSetupDialog()
 }
 
 /******************************************************************************
- GetSettings
-
- ******************************************************************************/
-
-void
-PSPrintSetupDialog::GetSettings
-	(
-	JSize*		fontSize,
-	bool*	printHeader
-	)
-	const
-{
-	*fontSize    = itsFontSizeMenu->GetFontSize();
-	*printHeader = itsPrintHeaderCB->IsChecked();
-}
-
-/******************************************************************************
  BuildWindow (private)
 
  ******************************************************************************/
@@ -91,10 +76,10 @@ PSPrintSetupDialog::BuildWindow
 	const JXPSPrinter::Destination	dest,
 	const JString&					printCmd,
 	const JString&					fileName,
-	const bool					collate,
-	const bool					bw,
+	const bool						collate,
+	const bool						bw,
 	const JSize						fontSize,
-	const bool					printHeader
+	const bool						printHeader
 	)
 {
 // begin JXLayout
@@ -224,4 +209,35 @@ PSPrintSetupDialog::BuildWindow
 	itsFontSizeMenu->SetToPopupChoice();
 
 	itsPrintHeaderCB->SetState(printHeader);
+}
+
+/******************************************************************************
+ SetParameters (virtual)
+
+ ******************************************************************************/
+
+bool
+PSPrintSetupDialog::SetParameters
+	(
+	JXPSPrinter* p
+	)
+	const
+{
+	bool changed = JXPSPrintSetupDialog::SetParameters(p);
+
+	auto* p1 = dynamic_cast<PSPrinter*>(p);
+	if (p1 != nullptr)
+	{
+		const JSize fontSize   = itsFontSizeMenu->GetFontSize();
+		const bool printHeader = itsPrintHeaderCB->IsChecked();
+
+		changed = changed ||
+			fontSize    != p1->GetFontSize() ||
+			printHeader != GetPTTextPrinter()->WillPrintHeader();
+
+		p1->SetFontSize(fontSize);
+		GetPTTextPrinter()->ShouldPrintHeader(printHeader);
+	}
+
+	return changed;
 }

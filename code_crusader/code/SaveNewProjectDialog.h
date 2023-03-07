@@ -1,5 +1,5 @@
 /******************************************************************************
- NewProjectSaveFileDialog.h
+ SaveNewProjectDialog.h
 
 	Copyright © 2000 by John Lindal.
 
@@ -9,39 +9,42 @@
 #define _H_NewProjectSaveFileDialog
 
 #include <jx-af/jx/JXSaveFileDialog.h>
+#include <jx-af/jcore/JPrefObject.h>
 #include "BuildManager.h"		// need defn of MakefileMethod
 
 class JXRadioGroup;
 class JXTextMenu;
 
-class NewProjectSaveFileDialog : public JXSaveFileDialog
+class SaveNewProjectDialog : public JXSaveFileDialog, public JPrefObject
 {
 public:
 
-	static NewProjectSaveFileDialog*
-		Create(JXDirector* supervisor, JDirInfo* dirInfo,
-			   const JString& fileFilter, const JString& templateFile,
-			   const BuildManager::MakefileMethod method,
-			   const JString& origName, const JString& prompt,
+	static SaveNewProjectDialog*
+		Create(const JString& prompt,
+			   const JString& startName = JString::empty,
+			   const JString& fileFilter = JString::empty,
 			   const JString& message = JString::empty);
 
-	~NewProjectSaveFileDialog() override;
+	~SaveNewProjectDialog() override;
 
 	bool							GetProjectTemplate(JString* fullName) const;
 	BuildManager::MakefileMethod	GetMakefileMethod() const;
 
 protected:
 
-	NewProjectSaveFileDialog(JXDirector* supervisor, JDirInfo* dirInfo,
-							   const JString& fileFilter,
-							   const BuildManager::MakefileMethod method);
+	SaveNewProjectDialog(const JString& fileFilter);
+
+	void	ReadPrefs(std::istream& input) override;
+	void	WritePrefs(std::ostream& output) const override;
 
 	bool	OKToDeactivate() override;
 	void	Receive(JBroadcaster* sender, const Message& message) override;
 
 private:
 
-	JIndex							itsTemplateIndex;
+	JIndex	itsTemplateIndex;
+
+	JString							itsProjectTemplate;
 	BuildManager::MakefileMethod	itsMakefileMethod;
 
 // begin JXLayout
@@ -53,14 +56,14 @@ private:
 
 private:
 
-	void	BuildWindow(const JString& origName, const JString& prompt,
-						const JString& message = JString::empty);
+	void	BuildWindow(const JString& startName,
+						const JString& prompt,
+						const JString& message);
 	void	UpdateMakefileMethod();
 
-	void	BuildTemplateMenu(const JString& templateFile);
+	void	BuildTemplateMenu();
 	void	BuildTemplateMenuItems(const JString& path, const bool isUserPath,
 								   JPtrArray<JString>* menuText,
-								   const JString& templateFile,
 								   JString** menuTextStr) const;
 
 	bool	OKToReplaceFile(const JString& fullName,

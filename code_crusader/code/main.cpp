@@ -50,40 +50,36 @@ main
 	auto* app = jnew App(&argc, argv, useMDI, &displayAbout, &prevVersStr);
 	assert( app != nullptr );
 
-	if (displayAbout &&
-		!JGetUserNotification()->AcceptLicense())
+	JXApplication::StartFiber([argc, argv, commitFile]()
 	{
-		return 0;
-	}
-
-	if (useMDI)
-	{
-		JCheckForNewerVersion(GetPrefsManager(), kVersionCheckID);
-	}
-
-	MDIServer* mdi;
-	if (GetMDIServer(&mdi))
-	{
-		mdi->HandleCmdLineOptions(argc, argv);
-	}
-
-	if (!commitFile.IsEmpty())
-	{
-		JXWindow::ShouldAutoDockNewWindows(false);
-
-		DocumentManager* docMgr = GetDocumentManager();
-		docMgr->OpenSomething(commitFile);
-
-		JPtrArray<TextDocument>* docList = docMgr->GetTextDocList();
-		if (!docList->IsEmpty())
+		MDIServer* mdi;
+		if (GetMDIServer(&mdi))
 		{
-			(docList->GetFirstElement())->ShouldMakeBackupFile(false);
+			mdi->HandleCmdLineOptions(argc, argv);
 		}
-	}
+
+		if (!commitFile.IsEmpty())
+		{
+			JXWindow::ShouldAutoDockNewWindows(false);
+
+			DocumentManager* docMgr = GetDocumentManager();
+			docMgr->OpenSomething(commitFile);
+
+			JPtrArray<TextDocument>* docList = docMgr->GetTextDocList();
+			if (!docList->IsEmpty())
+			{
+				docList->GetFirstElement()->ShouldMakeBackupFile(false);
+			}
+		}
+	});
 
 	if (displayAbout)
 	{
-		app->DisplayAbout(prevVersStr, true);
+		app->DisplayAbout(true, prevVersStr);
+	}
+	else if (useMDI)
+	{
+		JCheckForNewerVersion(GetPrefsManager(), kVersionCheckID);
 	}
 
 	app->Run();

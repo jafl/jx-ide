@@ -15,7 +15,6 @@
 class Command;
 class ProjectDocument;
 class ExecOutputDocument;
-class ProjectConfigDialog;
 class ProjectNode;
 
 class BuildManager : virtual public JBroadcaster
@@ -35,12 +34,12 @@ public:
 public:
 
 	BuildManager(ProjectDocument* doc, const MakefileMethod method = kMakemake,
-				   const bool needWriteMakeFiles = true,
-				   const JString& targetName = JString::empty,
-				   const JString& depListExpr = JString::empty);
+				 const bool needWriteMakeFiles = true,
+				 const JString& targetName = JString::empty,
+				 const JString& depListExpr = JString::empty);
 	BuildManager(std::istream& projInput, const JFileVersion projVers,
-				   std::istream* setInput, const JFileVersion setVers,
-				   ProjectDocument* doc);
+				 std::istream* setInput, const JFileVersion setVers,
+				 ProjectDocument* doc);
 
 	~BuildManager() override;
 
@@ -134,13 +133,10 @@ private:
 
 	ProjectDocument*		itsProjDoc;			// owns us
 	Command*				itsMakeDependCmd;	// not owned; nullptr unless running
-	ProjectConfigDialog*	itsProjectConfigDialog;
 
 	static bool	itsRebuildMakefileDailyFlag;
 
 private:
-
-	void	UpdateProjectConfig();
 
 	void	PrintTargetName(std::ostream& output) const;
 	bool	SaveOpenFile(const JString& fileName);

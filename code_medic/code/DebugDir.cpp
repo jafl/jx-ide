@@ -44,7 +44,10 @@ DebugDir::DebugDir
 
 DebugDir::~DebugDir()
 {
-	GetPrefsManager()->SaveWindowSize(kDebugWindSizeID, GetWindow());
+	if (HasPrefsManager())
+	{
+		GetPrefsManager()->SaveWindowSize(kDebugWindSizeID, GetWindow());
+	}
 }
 
 /******************************************************************************
@@ -129,8 +132,8 @@ DebugDir::Receive
 			if (type == Link::kCommandType)
 			{
 				itsText->SetCurrentFontColor(JColorManager::GetLightBlueColor());
-				itsText->Paste(itsLink->GetPrompt() + " ");
-				itsFile << itsLink->GetPrompt() << " ";
+				itsText->Paste(itsLink->GetCommandPrompt() + " ");
+				itsFile << itsLink->GetCommandPrompt() << " ";
 			}
 			else if (type == Link::kOutputType)
 			{

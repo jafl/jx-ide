@@ -305,7 +305,6 @@ TreeDirector::TreeDirectorX
 	ListenTo(itsProjDoc);
 
 	itsShowInheritedFnsFlag = true;
-	itsFindFnDialog         = nullptr;
 
 	JXScrollbarSet* sbarSet = BuildWindow(windowIcon, treeMenuItems,
 										  treeMenuNamespace,
@@ -315,11 +314,9 @@ TreeDirector::TreeDirectorX
 
 	itsPSPrinter = jnew JXPSPrinter(GetDisplay());
 	assert( itsPSPrinter != nullptr );
-	ListenTo(itsPSPrinter);
 
 	itsEPSPrinter = jnew JXEPSPrinter(GetDisplay());
 	assert( itsEPSPrinter != nullptr );
-	ListenTo(itsEPSPrinter);
 
 	itsFnListPrinter = jnew JXPSPrinter(GetDisplay());
 	assert( itsFnListPrinter != nullptr );
@@ -449,15 +446,15 @@ TreeDirector::TreeUpdateFinished
 void
 TreeDirector::AskForFunctionToFind()
 {
-	assert( itsFindFnDialog == nullptr );
+	auto* dlog =
+		jnew JXGetStringDialog(JGetString("FindFunctionTitle::TreeDirector"),
+							   JGetString("FindFunctionPrompt::TreeDirector"));
+	assert( dlog != nullptr );
 
-	itsFindFnDialog =
-		jnew JXGetStringDialog(this, JGetString("FindFunctionTitle::TreeDirector"),
-							  JGetString("FindFunctionPrompt::TreeDirector"));
-	assert( itsFindFnDialog != nullptr );
-
-	itsFindFnDialog->BeginDialog();
-	ListenTo(itsFindFnDialog);
+	if (dlog->DoDialog())
+	{
+		itsTreeWidget->FindFunction(dlog->GetString(), true, kJXLeftButton);
+	}
 }
 
 /******************************************************************************
@@ -717,43 +714,6 @@ TreeDirector::Receive
 											 selection->GetIndex());
 	}
 
-	else if (sender == itsFindFnDialog && message.Is(JXDialogDirector::kDeactivated))
-	{
-		const auto* info =
-			dynamic_cast<const JXDialogDirector::Deactivated*>(&message);
-		assert( info != nullptr );
-		if (info->Successful())
-		{
-			itsTreeWidget->FindFunction(itsFindFnDialog->GetString(), true,
-										kJXLeftButton);
-		}
-		itsFindFnDialog = nullptr;
-	}
-
-	else if (sender == itsPSPrinter &&
-			 message.Is(JPrinter::kPrintSetupFinished))
-	{
-		const auto* info =
-			dynamic_cast<const JPrinter::PrintSetupFinished*>(&message);
-		assert( info != nullptr );
-		if (info->Successful())
-		{
-			itsTreeWidget->Print(*itsPSPrinter);
-		}
-	}
-
-	else if (sender == itsEPSPrinter &&
-			 message.Is(JPrinter::kPrintSetupFinished))
-	{
-		const auto* info =
-			dynamic_cast<const JPrinter::PrintSetupFinished*>(&message);
-		assert( info != nullptr );
-		if (info->Successful())
-		{
-			itsTreeWidget->Print(*itsEPSPrinter);
-		}
-	}
-
 	else if (sender == itsProjDoc && message.Is(JXFileDocument::kNameChanged))
 	{
 		AdjustWindowTitle();
@@ -816,15 +776,21 @@ TreeDirector::HandleFileMenu
 
 	else if (index == kPSPageSetupCmd)
 	{
-		itsPSPrinter->BeginUserPageSetup();
+		itsPSPrinter->EditUserPageSetup();
 	}
 	else if (index == kPrintPSCmd)
 	{
-		itsPSPrinter->BeginUserPrintSetup();
+		if (itsPSPrinter->ConfirmUserPrintSetup())
+		{
+			itsTreeWidget->Print(*itsPSPrinter);
+		}
 	}
 	else if (index == kPrintEPSCmd)
 	{
-		itsEPSPrinter->BeginUserPrintSetup();
+		if (itsEPSPrinter->ConfirmUserPrintSetup())
+		{
+			itsTreeWidget->Print(*itsEPSPrinter);
+		}
 	}
 
 	else if (index == kCloseCmd)
@@ -958,11 +924,14 @@ TreeDirector::EditTreePrefs()
 {
 	auto* dlog =
 		jnew EditTreePrefsDialog(itsTree->GetFontSize(), itsShowInheritedFnsFlag,
-								  itsTree->WillAutoMinimizeMILinks(),
-								  itsTree->WillDrawMILinksOnTop(),
-								  itsTreeWidget->WillRaiseWindowWhenSingleMatch());
+								 itsTree->WillAutoMinimizeMILinks(),
+								 itsTree->WillDrawMILinksOnTop(),
+								 itsTreeWidget->WillRaiseWindowWhenSingleMatch());
 	assert( dlog != nullptr );
-	dlog->BeginDialog();
+	if (dlog->DoDialog())
+	{
+		dlog->UpdateSettings();
+	}
 }
 
 /******************************************************************************

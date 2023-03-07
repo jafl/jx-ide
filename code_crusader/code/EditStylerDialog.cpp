@@ -1,7 +1,7 @@
 /******************************************************************************
  EditStylerDialog.cpp
 
-	BASE CLASS = JXDialogDirector
+	BASE CLASS = JXModalDialogDirector
 
 	Copyright © 1998 by John Lindal.
 
@@ -36,7 +36,7 @@ EditStylerDialog::EditStylerDialog
 	const TextFileType						fileType
 	)
 	:
-	JXDialogDirector(JXGetApplication(), true)
+	JXModalDialogDirector(true)
 {
 	BuildWindow(windowTitle, active, typeNames, typeStyles, wordList, fileType);
 }
@@ -122,6 +122,7 @@ EditStylerDialog::BuildWindow
 // end JXLayout
 
 	window->SetTitle(windowTitle);
+	window->LockCurrentMinSize();
 	SetButtons(okButton, cancelButton);
 
 	itsActiveCB->SetState(active);
@@ -166,10 +167,6 @@ EditStylerDialog::BuildWindow
 
 	newWordButton->SetSizing(JXWidget::kFixedRight, JXWidget::kFixedTop);
 	removeButton->SetSizing(JXWidget::kFixedRight, JXWidget::kFixedTop);
-
-	UseModalPlacement(false);
-	window->PlaceAsDialogWindow();
-	window->LockCurrentMinSize();
 }
 
 /******************************************************************************
@@ -214,6 +211,6 @@ EditStylerDialog::Receive
 	}
 	else
 	{
-		JXDialogDirector::Receive(sender, message);
+		JXModalDialogDirector::Receive(sender, message);
 	}
 }

@@ -100,7 +100,10 @@ BreakpointsDir::BreakpointsDir
 
 BreakpointsDir::~BreakpointsDir()
 {
-	GetPrefsManager()->SaveWindowSize(kBreakpointsWindowSizeID, GetWindow());
+	if (HasPrefsManager())
+	{
+		GetPrefsManager()->SaveWindowSize(kBreakpointsWindowSizeID, GetWindow());
+	}
 }
 
 /******************************************************************************
@@ -424,7 +427,7 @@ BreakpointsDir::HandleHelpMenu
 {
 	if (index == kAboutCmd)
 	{
-		(GetApplication())->DisplayAbout();
+		GetApplication()->DisplayAbout();
 	}
 	else if (index == kTOCCmd)
 	{

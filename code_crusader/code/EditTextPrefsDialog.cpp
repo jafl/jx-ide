@@ -1,7 +1,7 @@
 /******************************************************************************
  EditTextPrefsDialog.cpp
 
-	BASE CLASS = JXDialogDirector
+	BASE CLASS = JXModalDialogDirector
 
 	Copyright © 1996-98 by John Lindal.
 
@@ -68,17 +68,14 @@ EditTextPrefsDialog::EditTextPrefsDialog
 	TextDocument* doc
 	)
 	:
-	JXDialogDirector(GetApplication(), true)
+	JXModalDialogDirector(),
+	itsDoc(doc)
 {
-	itsDoc               = doc;
-	itsChooseColorDialog = nullptr;
-
 	itsOrigEmulatorIndex =
 		itsEmulatorIndex = kEmulatorToMenuIndex[
 			GetPrefsManager()->GetEmulator() ];
 
 	BuildWindow(doc);
-	ListenTo(this);
 }
 
 /******************************************************************************
@@ -461,18 +458,7 @@ EditTextPrefsDialog::Receive
 	const Message&	message
 	)
 {
-	if (sender == this && message.Is(JXDialogDirector::kDeactivated))
-	{
-		const auto* info =
-			dynamic_cast<const JXDialogDirector::Deactivated*>(&message);
-		assert( info != nullptr );
-		if (info->Successful())
-		{
-			UpdateSettings();
-		}
-	}
-
-	else if (sender == itsHelpButton && message.Is(JXButton::kPushed))
+	if (sender == itsHelpButton && message.Is(JXButton::kPushed))
 	{
 		JXGetHelpManager()->ShowSection("EditorHelp-Prefs");
 	}
@@ -497,19 +483,6 @@ EditTextPrefsDialog::Receive
 		// function did all the work
 	}
 
-	else if (sender == itsChooseColorDialog &&
-			 message.Is(JXDialogDirector::kDeactivated))
-	{
-		const auto* info =
-			dynamic_cast<const JXDialogDirector::Deactivated*>(&message);
-		assert( info != nullptr );
-		if (info->Successful())
-		{
-			ChangeColor(itsChooseColorIndex, itsChooseColorDialog->GetColor());
-		}
-		itsChooseColorDialog = nullptr;
-	}
-
 	else if (sender == itsDefColorsButton && message.Is(JXButton::kPushed))
 	{
 		SetDefaultColors();
@@ -529,12 +502,12 @@ EditTextPrefsDialog::Receive
 
 	else
 	{
-		JXDialogDirector::Receive(sender, message);
+		JXModalDialogDirector::Receive(sender, message);
 	}
 }
 
 /******************************************************************************
- UpdateSettings (private)
+ UpdateSettings
 
  ******************************************************************************/
 
@@ -592,7 +565,7 @@ EditTextPrefsDialog::UpdateSettings()
 	const JSize docCount = docList->GetElementCount();
 
 	JProgressDisplay* pg = JNewPG();
-	pg->FixedLengthProcessBeginning(docCount, JGetString("UpdatingPrefs::EditTextPrefsDialog"), false, false);
+	pg->FixedLengthProcessBeginning(docCount, JGetString("UpdatingPrefs::EditTextPrefsDialog"), false, true);
 
 	for (JIndex i=1; i<=docCount; i++)
 	{
@@ -705,29 +678,28 @@ EditTextPrefsDialog::HandleColorButton
 	JBroadcaster* sender
 	)
 {
-	itsChooseColorIndex = 0;
+	JIndex colorIndex = 0;
 	for (JUnsignedOffset i=0; i<PrefsManager::kColorCount; i++)
 	{
 		if (sender == itsColorButton[i])
 		{
-			itsChooseColorIndex = i+1;
+			colorIndex = i+1;
 			break;
 		}
 	}
 
-	if (itsChooseColorIndex == 0)
+	if (colorIndex == 0)
 	{
 		return false;
 	}
 
-	assert( itsChooseColorDialog == nullptr );
+	auto* dlog = jnew JXChooseColorDialog(itsColor[colorIndex-1]);
+	assert( dlog != nullptr );
 
-	itsChooseColorDialog =
-		jnew JXChooseColorDialog(this, itsColor[itsChooseColorIndex-1]);
-	assert( itsChooseColorDialog != nullptr );
-
-	ListenTo(itsChooseColorDialog);
-	itsChooseColorDialog->BeginDialog();
+	if (dlog->DoDialog())
+	{
+		ChangeColor(colorIndex, dlog->GetColor());
+	}
 
 	return true;
 }

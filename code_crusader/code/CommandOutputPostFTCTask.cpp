@@ -1,53 +1,49 @@
 /******************************************************************************
- ExecOutputPostFTCTask.cpp
+ CommandOutputPostFTCTask.cpp
 
-	This creates additional widgets in ExecOutputDocument *after* FTC, to
+	This creates additional widgets in CommandOutputDocument *after* FTC, to
 	keep everything aligned.
 
-	BASE CLASS = JXUrgentTask, virtual JBroadcaster
+	BASE CLASS = JXUrgentTask
 
 	Copyright © 2017 by John Lindal.
 
  ******************************************************************************/
 
-#include "ExecOutputPostFTCTask.h"
-#include "ExecOutputDocument.h"
-#include <jx-af/jcore/jAssert.h>
+#include "CommandOutputPostFTCTask.h"
+#include "CommandOutputDocument.h"
 
 /******************************************************************************
  Constructor
 
  ******************************************************************************/
 
-ExecOutputPostFTCTask::ExecOutputPostFTCTask
+CommandOutputPostFTCTask::CommandOutputPostFTCTask
 	(
-	ExecOutputDocument* doc
+	CommandOutputDocument* doc
 	)
 	:
+	JXUrgentTask(doc),
 	itsDoc(doc)
 {
-	ClearWhenGoingAway(itsDoc, &itsDoc);
 }
 
 /******************************************************************************
- Destructor
+ Destructor (protected)
 
  ******************************************************************************/
 
-ExecOutputPostFTCTask::~ExecOutputPostFTCTask()
+CommandOutputPostFTCTask::~CommandOutputPostFTCTask()
 {
 }
 
 /******************************************************************************
- Perform
+ Perform (virtual protected)
 
  ******************************************************************************/
 
 void
-ExecOutputPostFTCTask::Perform()
+CommandOutputPostFTCTask::Perform()
 {
-	if (itsDoc != nullptr)
-	{
-		itsDoc->PlaceCmdLineWidgets();
-	}
+	itsDoc->PlaceCustomWidgets();
 }

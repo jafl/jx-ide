@@ -177,7 +177,6 @@ public:
 	bool	ChangeDebugger() override;
 	bool	RestartDebugger() override;
 
-	JString	GetChooseProgramInstructions() const override;
 	bool	HasProgram() const override;
 	bool	GetProgram(JString* fullName) const override;
 	void	SetProgram(const JString& fullName) override;
@@ -229,9 +228,6 @@ public:
 	void	SetExecutionPoint(const JString& fileName, const JIndex lineIndex) override;
 
 	void	SetValue(const JString& name, const JString& value) override;
-
-	const JString&	GetPrompt()	const override;
-	const JString&	GetScriptPrompt() const override;
 
 	JSize	GetFieldIDSize() const;
 	JSize	GetMethodIDSize() const;

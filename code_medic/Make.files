@@ -137,6 +137,7 @@
 .cpp ./backend/gdb/GDBVarCmd
 .cpp ./backend/gdb/GDBVarNode
 .cpp ./backend/lldb/LLDBLink
+.cpp ./backend/lldb/LLDBEventTask
 .cpp ./backend/lldb/LLDBWelcomeTask
 .cpp ./backend/lldb/LLDBSymbolsLoadedTask
 .cpp ./backend/lldb/LLDBRunBackgroundCmdTask

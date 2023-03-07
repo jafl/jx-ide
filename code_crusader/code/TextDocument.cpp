@@ -309,8 +309,6 @@ TextDocument::TextDocumentX1
 	itsMacroMgr    = nullptr;
 	itsCRMRuleList = nullptr;
 
-	itsTabWidthDialog = nullptr;
-
 	for (bool& v : itsOverrideFlag)
 	{
 		v = false;
@@ -363,8 +361,8 @@ TextDocument::ConstructTextEditor
 {
 	auto* te =
 		jnew TextEditor(document, fileName, menuBar, lineInput, colInput, false,
-						  scrollbarSet, scrollbarSet->GetScrollEnclosure(),
-						  JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 10,10);
+						scrollbarSet, scrollbarSet->GetScrollEnclosure(),
+						JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 10,10);
 	assert( te != nullptr );
 
 	return te;
@@ -440,9 +438,9 @@ TextDocument::GetMenuIcon
 	)
 	const
 {
-	ExecOutputDocument* doc;
+	CommandOutputDocument* doc;
 	*icon = GetTextFileIcon(GetDocumentManager()->GetActiveListDocument(&doc) &&
-								   doc == const_cast<TextDocument*>(this));
+							doc == const_cast<TextDocument*>(this));
 	return true;
 }
 
@@ -957,18 +955,6 @@ TextDocument::Receive
 	else if (sender == itsTextEditor && message.Is(JTextEditor::kTypeChanged))
 	{
 		UpdateReadOnlyDisplay();
-	}
-
-	else if (sender == itsTabWidthDialog && message.Is(JXDialogDirector::kDeactivated))
-	{
-		const auto* info =
-			dynamic_cast<const JXDialogDirector::Deactivated*>(&message);
-		assert( info != nullptr );
-		if (info->Successful())
-		{
-			OverrideTabWidth(itsTabWidthDialog->GetTabCharCount());
-		}
-		itsTabWidthDialog = nullptr;
 	}
 
 	else
@@ -1932,11 +1918,12 @@ TextDocument::HandleSettingsMenu
 {
 	if (index == kTabWidthCmd)
 	{
-		assert( itsTabWidthDialog == nullptr );
-		itsTabWidthDialog = jnew TabWidthDialog(this, itsTextEditor->GetTabCharCount());
-		assert( itsTabWidthDialog != nullptr );
-		itsTabWidthDialog->BeginDialog();
-		ListenTo(itsTabWidthDialog);
+		auto* dlog = jnew TabWidthDialog(itsTextEditor->GetTabCharCount());
+		assert( dlog != nullptr );
+		if (dlog->DoDialog())
+		{
+			OverrideTabWidth(dlog->GetTabCharCount());
+		}
 	}
 
 	else if (index == kToggleAutoIndentCmd)
@@ -2330,7 +2317,10 @@ TextDocument::EditPrefs()
 {
 	auto* dlog = jnew EditTextPrefsDialog(this);
 	assert( dlog != nullptr );
-	dlog->BeginDialog();
+	if (dlog->DoDialog())
+	{
+		dlog->UpdateSettings();
+	}
 }
 
 /******************************************************************************

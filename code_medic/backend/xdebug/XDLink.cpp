@@ -75,7 +75,7 @@ static const bool kFeatures[]=
 
 xdebug::Link::Link()
 	:
-	::Link(kFeatures),
+	::Link(kFeatures, "CommandPrompt::XDLink", "ScriptPrompt::XDLink", "ChooseProgramInstr::XDLink"),
 	itsAcceptor(nullptr),
 	itsLink(nullptr),
 	itsParsedDataRoot(nullptr)
@@ -122,30 +122,6 @@ xdebug::Link::InitFlags()
 }
 
 /******************************************************************************
- GetPrompt
-
- ******************************************************************************/
-
-const JString&
-xdebug::Link::GetPrompt()
-	const
-{
-	return JGetString("Prompt::XDLink");
-}
-
-/******************************************************************************
- GetScriptPrompt
-
- ******************************************************************************/
-
-const JString&
-xdebug::Link::GetScriptPrompt()
-	const
-{
-	return JGetString("ScriptPrompt::XDLink");
-}
-
-/******************************************************************************
  DebuggerHasStarted
 
  ******************************************************************************/
@@ -155,18 +131,6 @@ xdebug::Link::DebuggerHasStarted()
 	const
 {
 	return true;
-}
-
-/******************************************************************************
- GetChooseProgramInstructions
-
- ******************************************************************************/
-
-JString
-xdebug::Link::GetChooseProgramInstructions()
-	const
-{
-	return JGetString("ChooseProgramInstr::XDLink");
 }
 
 /******************************************************************************

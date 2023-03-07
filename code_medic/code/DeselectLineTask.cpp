@@ -49,14 +49,12 @@ DeselectLineTask::~DeselectLineTask()
 void
 DeselectLineTask::Perform
 	(
-	const Time	delta,
-	Time*		maxSleepTime
+	const Time delta
 	)
 {
-	if (TimeToPerform(delta, maxSleepTime) &&
-		!(itsTable->itsLineMenu)->IsOpen())
+	if (!itsTable->itsLineMenu->IsOpen())
 	{
-		(itsTable->GetTableSelection()).ClearSelection();
+		itsTable->GetTableSelection().ClearSelection();
 		itsTable->itsDeselectTask = nullptr;
 		jdelete this;
 	}

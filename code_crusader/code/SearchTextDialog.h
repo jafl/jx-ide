@@ -10,14 +10,12 @@
 
 #include <jx-af/jx/JXSearchTextDialog.h>
 #include <jx-af/jcore/JPrefObject.h>
-#include <jx-af/jcore/JString.h>
 
 class JProgressDisplay;
 class JXFileListTable;
 class JXPathInput;
 class SearchPathHistoryMenu;
 class SearchFilterHistoryMenu;
-class ListCSF;
 
 class SearchTextDialog : public JXSearchTextDialog, public JPrefObject
 {
@@ -47,7 +45,6 @@ protected:
 private:
 
 	JXFileListTable*	itsFileList;
-	ListCSF*			itsCSF;
 
 	mutable JString	itsFileSetName;
 	bool			itsOnlyListFilesFlag;

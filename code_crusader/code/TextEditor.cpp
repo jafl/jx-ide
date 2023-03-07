@@ -615,7 +615,7 @@ TextEditor::UpdateCustomSearchMenuItems()
 		searchMenu->SetItemText(itsFirstSearchMenuItem + kFindSelectionAsSymbolCmd, JGetString("FindSymbol::TextEditor"));
 	}
 
-	ExecOutputDocument* listDoc;
+	CommandOutputDocument* listDoc;
 	if (GetDocumentManager()->GetActiveListDocument(&listDoc))
 	{
 		searchMenu->EnableItem(itsFirstSearchMenuItem + kOpenPrevListItemCmd);
@@ -697,7 +697,7 @@ TextEditor::HandleCustomSearchMenuItems
 
 	else if (index == kOpenPrevListItemCmd)
 	{
-		ExecOutputDocument* listDoc;
+		CommandOutputDocument* listDoc;
 		if (GetDocumentManager()->GetActiveListDocument(&listDoc))
 		{
 			listDoc->OpenPrevListItem();
@@ -706,7 +706,7 @@ TextEditor::HandleCustomSearchMenuItems
 	}
 	else if (index == kOpenNextListItemCmd)
 	{
-		ExecOutputDocument* listDoc;
+		CommandOutputDocument* listDoc;
 		if (GetDocumentManager()->GetActiveListDocument(&listDoc))
 		{
 			listDoc->OpenNextListItem();
@@ -1447,11 +1447,10 @@ TextEditor::OpenSelection()
 				if (c.IsSpace() || c == '"' || c == '\'' || c == '<' || c == '>' ||
 					c == '=' || c == '(' || c == '[' || c == '{')
 				{
+					iter->SkipNext();
 					break;
 				}
 			}
-
-			iter->SkipNext();
 		}
 
 		start =
@@ -1903,6 +1902,6 @@ TextEditor::DrawPrintHeader
 
 		JString pageStr(p.GetPageIndex(), 0);
 		pageStr.Prepend("Page ");
-		p.String(pageRect, pageStr, JPainter::kHAlignRight);
+		p.String(pageRect, pageStr, JPainter::HAlign::kRight);
 	}
 }

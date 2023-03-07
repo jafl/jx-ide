@@ -119,13 +119,17 @@ T
 F
 "./code/DirList.cpp"
 T
-2 "NewProjectCSF.cpp"
+2 "SaveNewProjectDialog.cpp"
 F
-"./code/NewProjectCSF.cpp"
+"./code/SaveNewProjectDialog.cpp"
 T
-2 "NewProjectSaveFileDialog.cpp"
+2 "ChooseRelativeFileDialog.cpp"
 F
-"./code/NewProjectSaveFileDialog.cpp"
+"./code/ChooseRelativeFileDialog.cpp"
+T
+2 "ChooseRelativePathDialog.cpp"
+F
+"./code/ChooseRelativePathDialog.cpp"
 T
 2 "SymbolUpdatePG.cpp"
 F
@@ -174,6 +178,10 @@ T
 F
 "./code/RunCommandDialog.cpp"
 T
+2 "CommandOutputDocument.cpp"
+F
+"./code/CommandOutputDocument.cpp"
+T
 2 "ExecOutputDocument.cpp"
 F
 "./code/ExecOutputDocument.cpp"
@@ -182,9 +190,9 @@ T
 F
 "./code/CmdLineInput.cpp"
 T
-2 "ExecOutputPostFTCTask.cpp"
+2 "CommandOutputPostFTCTask.cpp"
 F
-"./code/ExecOutputPostFTCTask.cpp"
+"./code/CommandOutputPostFTCTask.cpp"
 F
 T
 1 "build"
@@ -875,25 +883,9 @@ T
 F
 "./code/CtagsUser.cpp"
 T
-2 "ListCSF.cpp"
-F
-"./code/ListCSF.cpp"
-T
 2 "ListChooseFileDialog.cpp"
 F
 "./code/ListChooseFileDialog.cpp"
-T
-2 "RelPathCSF.cpp"
-F
-"./code/RelPathCSF.cpp"
-T
-2 "RPChooseFileDialog.cpp"
-F
-"./code/RPChooseFileDialog.cpp"
-T
-2 "RPChoosePathDialog.cpp"
-F
-"./code/RPChoosePathDialog.cpp"
 T
 2 "ExecHistoryMenu.cpp"
 F

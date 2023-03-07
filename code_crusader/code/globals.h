@@ -29,7 +29,9 @@ class PSPrinter;
 
 App*				GetApplication();
 DocumentManager*	GetDocumentManager();
+bool				HasPrefsManager();
 PrefsManager*		GetPrefsManager();
+void				ForgetPrefsManager();
 bool				GetMDIServer(MDIServer** mdi);
 
 SearchTextDialog*	GetSearchTextDialog();

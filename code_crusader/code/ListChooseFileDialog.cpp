@@ -32,20 +32,17 @@ const JIndex kAppendCmd  = 2;
 ListChooseFileDialog*
 ListChooseFileDialog::Create
 	(
-	JXDirector*		supervisor,
-	JDirInfo*		dirInfo,
-	const JString&	fileFilter,
-	const bool	allowSelectMultiple,
-	const JString&	replaceListStr,
-	const JString&	appendToListStr,
-	const JString&	origName,
-	const JString&	message
+	const JString&		replaceListStr,
+	const JString&		appendToListStr,
+	const SelectType	selectType,
+	const JString&		selectName,
+	const JString&		fileFilter,
+	const JString&		message
 	)
 {
-	auto* dlog =
-		jnew ListChooseFileDialog(supervisor, dirInfo, fileFilter, allowSelectMultiple);
+	auto* dlog = jnew ListChooseFileDialog(fileFilter);
 	assert( dlog != nullptr );
-	dlog->BuildWindow(replaceListStr, appendToListStr, origName, message);
+	dlog->BuildWindow(replaceListStr, appendToListStr, selectType, selectName, message);
 	return dlog;
 }
 
@@ -56,13 +53,10 @@ ListChooseFileDialog::Create
 
 ListChooseFileDialog::ListChooseFileDialog
 	(
-	JXDirector*		supervisor,
-	JDirInfo*		dirInfo,
-	const JString&	fileFilter,
-	const bool	allowSelectMultiple
+	const JString& fileFilter
 	)
 	:
-	JXChooseFileDialog(supervisor, dirInfo, fileFilter, allowSelectMultiple)
+	JXChooseFileDialog(fileFilter)
 {
 }
 
@@ -95,10 +89,11 @@ ListChooseFileDialog::ReplaceExisting()
 void
 ListChooseFileDialog::BuildWindow
 	(
-	const JString& replaceListStr,
-	const JString& appendToListStr,
-	const JString& origName,
-	const JString& message
+	const JString&		replaceListStr,
+	const JString&		appendToListStr,
+	const SelectType	selectType,
+	const JString&		selectName,
+	const JString&		message
 	)
 {
 // begin JXLayout
@@ -176,17 +171,17 @@ ListChooseFileDialog::BuildWindow
 
 	itsAppendReplaceRG =
 		jnew JXRadioGroup(window,
-					JXWidget::kHElastic, JXWidget::kFixedBottom, 20,340, 204,74);
+					JXWidget::kHElastic, JXWidget::kFixedBottom, 20,340, 99,74);
 	assert( itsAppendReplaceRG != nullptr );
 
 	auto* replaceRB =
 		jnew JXTextRadioButton(kReplaceCmd, JGetString("replaceRB::ListChooseFileDialog::JXLayout"), itsAppendReplaceRG,
-					JXWidget::kHElastic, JXWidget::kFixedTop, 10,10, 180,20);
+					JXWidget::kHElastic, JXWidget::kFixedTop, 10,10, 80,20);
 	assert( replaceRB != nullptr );
 
 	auto* appendRB =
 		jnew JXTextRadioButton(kAppendCmd, JGetString("appendRB::ListChooseFileDialog::JXLayout"), itsAppendReplaceRG,
-					JXWidget::kHElastic, JXWidget::kFixedTop, 10,40, 180,20);
+					JXWidget::kHElastic, JXWidget::kFixedTop, 10,40, 80,20);
 	assert( appendRB != nullptr );
 
 	auto* currPathMenu =
@@ -205,7 +200,7 @@ ListChooseFileDialog::BuildWindow
 			   filterLabel, filterInput, filterHistory,
 			   openButton, cancelButton, upButton, homeButton,
 			   desktopButton, selectAllButton,
-			   showHiddenCB, currPathMenu, origName, message);
+			   showHiddenCB, currPathMenu, selectType, selectName, message);
 
 	itsAppendReplaceRG->SelectItem(kAppendCmd);
 	replaceRB->SetLabel(replaceListStr);

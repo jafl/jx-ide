@@ -10,22 +10,19 @@
 #ifndef _H_EditSearchPathsDialog
 #define _H_EditSearchPathsDialog
 
-#include <jx-af/jx/JXDialogDirector.h>
+#include <jx-af/jx/JXModalDialogDirector.h>
 #include <jx-af/jcore/JPrefObject.h>
 
 class JString;
 class JXTextButton;
 class PathTable;
 class DirList;
-class RelPathCSF;
 
-class EditSearchPathsDialog : public JXDialogDirector, public JPrefObject
+class EditSearchPathsDialog : public JXModalDialogDirector, public JPrefObject
 {
 public:
 
-	EditSearchPathsDialog(JXDirector* supervisor,
-							const DirList& dirList,
-							RelPathCSF* csf);
+	EditSearchPathsDialog(const DirList& dirList);
 
 	~EditSearchPathsDialog() override;
 
@@ -48,7 +45,7 @@ private:
 
 private:
 
-	void	BuildWindow(const DirList& dirList, RelPathCSF* csf);
+	void	BuildWindow(const DirList& dirList);
 };
 
 #endif

@@ -87,7 +87,10 @@ ThreadsDir::ThreadsDir
 
 ThreadsDir::~ThreadsDir()
 {
-	GetPrefsManager()->SaveWindowSize(kThreadWindowSizeID, GetWindow());
+	if (HasPrefsManager())
+	{
+		GetPrefsManager()->SaveWindowSize(kThreadWindowSizeID, GetWindow());
+	}
 }
 
 /******************************************************************************
@@ -343,7 +346,7 @@ ThreadsDir::HandleHelpMenu
 {
 	if (index == kAboutCmd)
 	{
-		(GetApplication())->DisplayAbout();
+		GetApplication()->DisplayAbout();
 	}
 	else if (index == kTOCCmd)
 	{

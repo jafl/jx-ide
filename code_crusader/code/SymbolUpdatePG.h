@@ -30,7 +30,7 @@ protected:
 
 	void	ProcessBeginning(const ProcessType processType, const JSize stepCount,
 							 const JString& message, const bool allowCancel,
-							 const bool allowBackground) override;
+							 const bool modal) override;
 
 	bool	CheckForCancel() override;
 

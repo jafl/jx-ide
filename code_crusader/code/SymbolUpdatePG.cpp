@@ -52,12 +52,12 @@ SymbolUpdatePG::ProcessBeginning
 	const ProcessType	processType,
 	const JSize			stepCount,
 	const JString&		message,
-	const bool		allowCancel,
-	const bool		allowBackground
+	const bool			allowCancel,
+	const bool			modal
 	)
 {
 	JProgressDisplay::ProcessBeginning(processType, stepCount, message,
-									   allowCancel, allowBackground);
+									   allowCancel, modal);
 
 	if (processType == kVariableLengthProcess)
 	{

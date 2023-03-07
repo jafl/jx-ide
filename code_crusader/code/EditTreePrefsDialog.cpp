@@ -1,7 +1,7 @@
 /******************************************************************************
  EditTreePrefsDialog.cpp
 
-	BASE CLASS = JXDialogDirector
+	BASE CLASS = JXModalDialogDirector
 
 	Copyright © 1998 by John Lindal.
 
@@ -28,18 +28,17 @@
 
 EditTreePrefsDialog::EditTreePrefsDialog
 	(
-	const JSize		fontSize,
+	const JSize	fontSize,
 	const bool	showInheritedFns,
 	const bool	autoMinMILinks,
 	const bool	drawMILinksOnTop,
 	const bool	raiseWhenSingleMatch
 	)
 	:
-	JXDialogDirector(GetApplication(), true)
+	JXModalDialogDirector()
 {
 	BuildWindow(fontSize, showInheritedFns, autoMinMILinks, drawMILinksOnTop,
 				raiseWhenSingleMatch);
-	ListenTo(this);
 }
 
 /******************************************************************************
@@ -158,30 +157,19 @@ EditTreePrefsDialog::Receive
 	const Message&	message
 	)
 {
-	if (sender == this && message.Is(JXDialogDirector::kDeactivated))
-	{
-		const auto* info =
-			dynamic_cast<const JXDialogDirector::Deactivated*>(&message);
-		assert( info != nullptr );
-		if (info->Successful())
-		{
-			UpdateSettings();
-		}
-	}
-
-	else if (sender == itsHelpButton && message.Is(JXButton::kPushed))
+	if (sender == itsHelpButton && message.Is(JXButton::kPushed))
 	{
 		JXGetHelpManager()->ShowSection("TreePrefsHelp");
 	}
 
 	else
 	{
-		JXDialogDirector::Receive(sender, message);
+		JXModalDialogDirector::Receive(sender, message);
 	}
 }
 
 /******************************************************************************
- UpdateSettings (private)
+ UpdateSettings
 
  ******************************************************************************/
 
@@ -192,23 +180,23 @@ EditTreePrefsDialog::UpdateSettings()
 
 	JPtrArray<ProjectDocument>* docList =
 		GetDocumentManager()->GetProjectDocList();
-	const JSize docCount = docList->GetElementCount();
 
 	JProgressDisplay* pg = JNewPG();
-	pg->FixedLengthProcessBeginning(docCount, JGetString("UpdatingPrefs::EditTreePrefsDialog"),
-									false, false);
+	pg->FixedLengthProcessBeginning(docList->GetElementCount(),
+		JGetString("UpdatingPrefs::EditTreePrefsDialog"), false, true);
 
-	for (JIndex i=1; i<=docCount; i++)
+	JIndex i = 1;
+	for (auto* doc : *docList)
 	{
-		(docList->GetElement(i))->
-			SetTreePrefs(itsFontSizeMenu->GetFontSize(),
-						 itsShowInheritedFnsCB->IsChecked(),
-						 itsAutoMinMILinkCB->IsChecked(),
-						 itsMILinkStyleRG->GetSelectedItem() == kDrawMILinksAbove,
-						 itsRaiseSingleMatchCB->IsChecked(),
-						 i==1);
+		doc->SetTreePrefs(itsFontSizeMenu->GetFontSize(),
+						  itsShowInheritedFnsCB->IsChecked(),
+						  itsAutoMinMILinkCB->IsChecked(),
+						  itsMILinkStyleRG->GetSelectedItem() == kDrawMILinksAbove,
+						  itsRaiseSingleMatchCB->IsChecked(),
+						  i==1);
 
 		pg->IncrementProgress();
+		i++;
 	}
 
 	pg->ProcessFinished();

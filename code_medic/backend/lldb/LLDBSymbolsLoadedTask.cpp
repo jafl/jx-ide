@@ -21,12 +21,13 @@ lldb::SymbolsLoadedTask::SymbolsLoadedTask
 	const JString& fileName
 	)
 	:
+	JXUrgentTask(GetLink()),
 	itsFileName(fileName)
 {
 }
 
 /******************************************************************************
- Destructor
+ Destructor (protected)
 
  ******************************************************************************/
 
@@ -35,7 +36,7 @@ lldb::SymbolsLoadedTask::~SymbolsLoadedTask()
 }
 
 /******************************************************************************
- Perform
+ Perform (virtual protected)
 
  ******************************************************************************/
 

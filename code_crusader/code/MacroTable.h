@@ -11,7 +11,6 @@
 #include "KeyScriptTableBase.h"
 
 class MacroManager;
-class ListCSF;
 
 class MacroTable : public KeyScriptTableBase
 {
@@ -40,7 +39,6 @@ protected:
 
 private:
 
-	ListCSF*		itsCSF;
 	JXTextButton*	itsLoadButton;
 	JXTextButton*	itsSaveButton;
 

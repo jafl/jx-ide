@@ -25,7 +25,6 @@
 #include <jx-af/jx/JXPTPrinter.h>
 #include <jx-af/jx/JXColorManager.h>
 #include <jx-af/jx/JXFontManager.h>
-#include <jx-af/jx/JXChooseSaveFile.h>
 #include <jx-af/jx/JXSearchTextDialog.h>
 #include <jx-af/jx/JXWebBrowser.h>
 
@@ -54,15 +53,9 @@ PrefsManager::PrefsManager
 	bool* isNew
 	)
 	:
-	JXPrefsManager(kCurrentPrefsFileVersion, true)
+	JXPrefsManager(kCurrentPrefsFileVersion, true, kgCSFSetupID)
 {
-	itsEditPrefsDialog = nullptr;
-
 	*isNew = JPrefsManager::UpgradeData();
-
-	JXChooseSaveFile* csf = JXGetChooseSaveFile();
-	csf->SetPrefInfo(this, kgCSFSetupID);
-	csf->JPrefObject::ReadPrefs();
 
 	ReadColors();
 }
@@ -163,10 +156,8 @@ PrefsManager::SetExpirationTimeStamp
 void
 PrefsManager::EditPrefs()
 {
-	assert( itsEditPrefsDialog == nullptr );
-
-	const JString gdbCmd = GetGDBCommand();
-	const JString jvmCmd = GetJVMCommand();
+	JString gdbCmd = GetGDBCommand();
+	JString jvmCmd = GetJVMCommand();
 
 	JString editFileCmd, editFileLineCmd;
 	GetEditFileCmds(&editFileCmd, &editFileLineCmd);
@@ -186,85 +177,35 @@ PrefsManager::EditPrefs()
 	GetSuffixes(kDSuffixID, &dSuffixes);
 	GetSuffixes(kGoSuffixID, &goSuffixes);
 
-	itsEditPrefsDialog =
-		jnew EditPrefsDialog(JXGetApplication(),
-							  gdbCmd, jvmCmd, editFileCmd, editFileLineCmd,
-							  cSourceSuffixes, cHeaderSuffixes,
-							  javaSuffixes, phpSuffixes, fortranSuffixes,
-							  dSuffixes, goSuffixes);
-	assert( itsEditPrefsDialog != nullptr );
-	itsEditPrefsDialog->BeginDialog();
-	ListenTo(itsEditPrefsDialog);
-}
-
-/******************************************************************************
- UpdatePrefs (private)
-
- ******************************************************************************/
-
-void
-PrefsManager::UpdatePrefs
-	(
-	const EditPrefsDialog* dlog
-	)
-{
-	JString gdbCmd, jvmCmd, editFileCmd, editFileLineCmd;
-	JPtrArray<JString> cSourceSuffixes(JPtrArrayT::kDeleteAll),
-					   cHeaderSuffixes(JPtrArrayT::kDeleteAll),
-					   javaSuffixes(JPtrArrayT::kDeleteAll),
-					   phpSuffixes(JPtrArrayT::kDeleteAll),
-					   fortranSuffixes(JPtrArrayT::kDeleteAll),
-					   dSuffixes(JPtrArrayT::kDeleteAll),
-					   goSuffixes(JPtrArrayT::kDeleteAll);
-	dlog->GetPrefs(&gdbCmd, &jvmCmd,
-				   &editFileCmd, &editFileLineCmd,
-				   &cSourceSuffixes, &cHeaderSuffixes,
-				   &javaSuffixes, &phpSuffixes, &fortranSuffixes,
-				   &dSuffixes, &goSuffixes);
-
-	SetGDBCommand(gdbCmd);
-	SetJVMCommand(jvmCmd);
-	GetLink()->ChangeDebugger();
-
-	SetEditFileCmds(editFileCmd, editFileLineCmd);
-
-	SetSuffixes(kCSourceSuffixID, cSourceSuffixes);
-	SetSuffixes(kCHeaderSuffixID, cHeaderSuffixes);
-	SetSuffixes(kJavaSuffixID, javaSuffixes);
-	SetSuffixes(kPHPSuffixID, phpSuffixes);
-	SetSuffixes(kFortranSuffixID, fortranSuffixes);
-	SetSuffixes(kDSuffixID, dSuffixes);
-	SetSuffixes(kGoSuffixID, goSuffixes);
-
-	Broadcast(FileTypesChanged());
-}
-
-/******************************************************************************
- Receive (virtual protected)
-
- ******************************************************************************/
-
-void
-PrefsManager::Receive
-	(
-	JBroadcaster*	sender,
-	const Message&	message
-	)
-{
-	if (sender == itsEditPrefsDialog && message.Is(JXDialogDirector::kDeactivated))
+	auto* dlog =
+		jnew EditPrefsDialog(gdbCmd, jvmCmd, editFileCmd, editFileLineCmd,
+							 cSourceSuffixes, cHeaderSuffixes,
+							 javaSuffixes, phpSuffixes, fortranSuffixes,
+							 dSuffixes, goSuffixes);
+	assert( dlog != nullptr );
+	if (dlog->DoDialog())
 	{
-		const auto* info =
-			dynamic_cast<const JXDialogDirector::Deactivated*>(&message);
-		assert( info != nullptr );
-		if (info->Successful())
-		{
-			UpdatePrefs(itsEditPrefsDialog);
-		}
-		itsEditPrefsDialog = nullptr;
-	}
-	else
-	{
-		JXPrefsManager::Receive(sender, message);
+		dlog->GetPrefs(&gdbCmd, &jvmCmd,
+					   &editFileCmd, &editFileLineCmd,
+					   &cSourceSuffixes, &cHeaderSuffixes,
+					   &javaSuffixes, &phpSuffixes, &fortranSuffixes,
+					   &dSuffixes, &goSuffixes);
+
+		SetGDBCommand(gdbCmd);
+		SetJVMCommand(jvmCmd);
+		GetLink()->ChangeDebugger();
+
+		SetEditFileCmds(editFileCmd, editFileLineCmd);
+
+		SetSuffixes(kCSourceSuffixID, cSourceSuffixes);
+		SetSuffixes(kCHeaderSuffixID, cHeaderSuffixes);
+		SetSuffixes(kJavaSuffixID, javaSuffixes);
+		SetSuffixes(kPHPSuffixID, phpSuffixes);
+		SetSuffixes(kFortranSuffixID, fortranSuffixes);
+		SetSuffixes(kDSuffixID, dSuffixes);
+		SetSuffixes(kGoSuffixID, goSuffixes);
+
+		Broadcast(FileTypesChanged());
 	}
 }
 
@@ -276,7 +217,7 @@ PrefsManager::Receive
 void
 PrefsManager::UpgradeData
 	(
-	const bool		isNew,
+	const bool			isNew,
 	const JFileVersion	currentVersion
 	)
 {

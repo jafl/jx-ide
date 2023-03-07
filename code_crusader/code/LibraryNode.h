@@ -10,8 +10,6 @@
 
 #include "FileNodeBase.h"
 
-class SubprojectConfigDialog;
-
 class LibraryNode : public FileNodeBase
 {
 public:
@@ -35,22 +33,15 @@ public:
 						   JPtrArray<JString>* libFileList,
 						   JPtrArray<JString>* libProjPathList) const override;
 
-protected:
-
-	void	Receive(JBroadcaster* sender, const Message& message) override;
-
 private:
 
 	bool	itsIncludeInDepListFlag;	// true => include in Make.files
 	JString	itsProjFileName;			// can be relative
 	bool	itsShouldBuildFlag;			// true => open and build sub-project
 
-	SubprojectConfigDialog*	itsSubprojDialog;
-
 private:
 
 	void	LibraryNodeX();
-	void	UpdateSubprojectConfig();
 };
 
 #endif

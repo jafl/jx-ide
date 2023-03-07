@@ -34,12 +34,10 @@ PSPrinter::PSPrinter
 	)
 	:
 	JXPSPrinter(display),
-	JPrefObject(GetPrefsManager(), kPrintStyledTextID)
+	JPrefObject(GetPrefsManager(), kPrintStyledTextID),
+	itsFontSize(kUnsetFontSize),
+	itsTE(nullptr)
 {
-	itsFontSize           = kUnsetFontSize;
-	itsTE                 = nullptr;
-	itsCBPrintSetupDialog = nullptr;
-
 	JPrefObject::ReadPrefs();
 }
 
@@ -50,7 +48,6 @@ PSPrinter::PSPrinter
 
 PSPrinter::~PSPrinter()
 {
-	JPrefObject::WritePrefs();
 }
 
 /******************************************************************************
@@ -68,12 +65,10 @@ PSPrinter::CreatePrintSetupDialog
 	const Destination	destination,
 	const JString&		printCmd,
 	const JString&		fileName,
-	const bool		collate,
-	const bool		bw
+	const bool			collate,
+	const bool			bw
 	)
 {
-	assert( itsCBPrintSetupDialog == nullptr );
-
 	if (itsFontSize == kUnsetFontSize)
 	{
 		JString fontName;
@@ -89,47 +84,9 @@ PSPrinter::CreatePrintSetupDialog
 		}
 	}
 
-	itsCBPrintSetupDialog =
-		PSPrintSetupDialog::Create(destination, printCmd, fileName,
-									 collate, bw, itsFontSize,
-									 GetPTTextPrinter()->WillPrintHeader());
-	return itsCBPrintSetupDialog;
-}
-
-/******************************************************************************
- EndUserPrintSetup (virtual protected)
-
-	Returns true if caller should continue the printing process.
-	Derived classes can override this to extract extra information.
-
- ******************************************************************************/
-
-bool
-PSPrinter::EndUserPrintSetup
-	(
-	const JBroadcaster::Message&	message,
-	bool*						changed
-	)
-{
-	assert( itsCBPrintSetupDialog != nullptr );
-
-	const bool ok = JXPSPrinter::EndUserPrintSetup(message, changed);
-	if (ok)
-	{
-		JSize fontSize;
-		bool printHeader;
-		itsCBPrintSetupDialog->GetSettings(&fontSize, &printHeader);
-
-		*changed = *changed ||
-			fontSize    != itsFontSize ||
-			printHeader != GetPTTextPrinter()->WillPrintHeader();
-
-		itsFontSize = fontSize;
-		GetPTTextPrinter()->ShouldPrintHeader(printHeader);
-	}
-
-	itsCBPrintSetupDialog = nullptr;
-	return ok;
+	return PSPrintSetupDialog::Create(destination, printCmd, fileName,
+									  collate, bw, itsFontSize,
+									  GetPTTextPrinter()->WillPrintHeader());
 }
 
 /******************************************************************************

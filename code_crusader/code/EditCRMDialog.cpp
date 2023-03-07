@@ -1,7 +1,7 @@
 /******************************************************************************
  EditCRMDialog.cpp
 
-	BASE CLASS = JXDialogDirector, JPrefObject
+	BASE CLASS = JXModalDialogDirector, JPrefObject
 
 	Copyright © 1998 by John Lindal.
 
@@ -32,11 +32,11 @@ const JFileVersion kCurrentSetupVersion = 0;
 EditCRMDialog::EditCRMDialog
 	(
 	JArray<PrefsManager::CRMRuleListInfo>*	crmList,
-	const JIndex								initialSelection,
-	const JIndex								firstUnusedID
+	const JIndex							initialSelection,
+	const JIndex							firstUnusedID
 	)
 	:
-	JXDialogDirector(JXGetApplication(), true),
+	JXModalDialogDirector(true),
 	JPrefObject(GetPrefsManager(), kEditCRMDialogID)
 {
 	BuildWindow(crmList, initialSelection, firstUnusedID);
@@ -78,8 +78,8 @@ void
 EditCRMDialog::BuildWindow
 	(
 	JArray<PrefsManager::CRMRuleListInfo>*	crmList,
-	const JIndex								initialSelection,
-	const JIndex								firstUnusedID
+	const JIndex							initialSelection,
+	const JIndex							firstUnusedID
 	)
 {
 	JArray<JCoordinate> heights(2);
@@ -121,10 +121,8 @@ EditCRMDialog::BuildWindow
 // end JXLayout
 
 	window->SetTitle(JGetString("WindowTitle::EditCRMDialog"));
-	SetButtons(okButton, cancelButton);
-	UseModalPlacement(false);
-	window->PlaceAsDialogWindow();
 	window->LockCurrentMinSize();
+	SetButtons(okButton, cancelButton);
 
 	ListenTo(itsHelpButton);
 
@@ -271,7 +269,7 @@ EditCRMDialog::Receive
 	}
 	else
 	{
-		JXDialogDirector::Receive(sender, message);
+		JXModalDialogDirector::Receive(sender, message);
 	}
 }
 

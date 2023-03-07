@@ -313,8 +313,8 @@ TreeWidget::Print
 
 			const JString pageNumberStr = "Page " + JString((JUInt64) i);
 			p.String(pageRect.left, pageRect.bottom - footerHeight, pageNumberStr,
-					 pageRect.width(), JPainter::kHAlignCenter,
-					 footerHeight, JPainter::kVAlignBottom);
+					 pageRect.width(), JPainter::HAlign::kCenter,
+					 footerHeight, JPainter::VAlign::kBottom);
 			p.LockFooter(pageRect.height() - drawHeight);
 
 			p.SetPenColor(JColorManager::GetYellowColor());
@@ -719,9 +719,7 @@ TreeWidget::HandleDNDDrop
 	}
 	else
 	{
-		EditSearchPathsDialog* dlog =
-			itsDirector->GetProjectDoc()->EditSearchPaths(itsDirector);
-		dlog->AddDirectories(dirList);
+		itsDirector->GetProjectDoc()->EditSearchPaths(&dirList);
 	}
 
 	selMgr->DeleteData(&data, delMethod);

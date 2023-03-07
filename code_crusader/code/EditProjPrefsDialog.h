@@ -10,23 +10,25 @@
 #ifndef _H_EditProjPrefsDialog
 #define _H_EditProjPrefsDialog
 
-#include <jx-af/jx/JXDialogDirector.h>
+#include <jx-af/jx/JXModalDialogDirector.h>
 #include "ProjectTable.h"		// need definition of DropFileAction
 
 class JXTextButton;
 class JXTextCheckbox;
 class JXRadioGroup;
 
-class EditProjPrefsDialog : public JXDialogDirector
+class EditProjPrefsDialog : public JXModalDialogDirector
 {
 public:
 
 	EditProjPrefsDialog(const bool reopenTextFiles,
-						  const bool doubleSpaceCompile,
-						  const bool rebuildMakefileDaily,
-						  const ProjectTable::DropFileAction dropFileAction);
+						const bool doubleSpaceCompile,
+						const bool rebuildMakefileDaily,
+						const ProjectTable::DropFileAction dropFileAction);
 
 	~EditProjPrefsDialog() override;
+
+	void	UpdateSettings();
 
 protected:
 
@@ -50,7 +52,6 @@ private:
 						const bool doubleSpaceCompile,
 						const bool rebuildMakefileDaily,
 						const ProjectTable::DropFileAction dropFileAction);
-	void	UpdateSettings();
 };
 
 #endif

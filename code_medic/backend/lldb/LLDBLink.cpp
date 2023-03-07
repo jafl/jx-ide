@@ -43,6 +43,7 @@
 #include "lldb/API/SBListener.h"
 #include "lldb/API/SBEvent.h"
 
+#include "LLDBEventTask.h"
 #include "globals.h"
 
 #include <jx-af/jx/JXAssert.h>
@@ -82,11 +83,12 @@ static const uint32_t kEventMask = 0xFFFFFFFF;
 
 lldb::Link::Link()
 	:
-	::Link(kFeatures),
+	::Link(kFeatures, "", "ScriptPrompt::LLDBLink", "ChooseProgramInstr::LLDBLink"),
 	SBListener("LLDBLink"),		// without a name, the listener is invalid
 	itsDebugger(nullptr),
 	itsStdoutStream(nullptr),
 	itsStderrStream(nullptr),
+	itsEventTask(nullptr),
 	itsPrompt(nullptr)
 {
 	InitFlags();
@@ -123,28 +125,16 @@ lldb::Link::InitFlags()
 }
 
 /******************************************************************************
- GetPrompt
+ GetCommandPrompt (virtual)
 
  ******************************************************************************/
 
 const JString&
-lldb::Link::GetPrompt()
+lldb::Link::GetCommandPrompt()
 	const
 {
 	const_cast<Link*>(this)->itsPrompt = itsDebugger->GetPrompt();
 	return itsPrompt;
-}
-
-/******************************************************************************
- GetScriptPrompt
-
- ******************************************************************************/
-
-const JString&
-lldb::Link::GetScriptPrompt()
-	const
-{
-	return JGetString("ScriptPrompt::LLDBLink");
 }
 
 /******************************************************************************
@@ -157,18 +147,6 @@ lldb::Link::DebuggerHasStarted()
 	const
 {
 	return true;
-}
-
-/******************************************************************************
- GetChooseProgramInstructions
-
- ******************************************************************************/
-
-JString
-lldb::Link::GetChooseProgramInstructions()
-	const
-{
-	return JGetString("ChooseProgramInstr::LLDBLink");
 }
 
 /******************************************************************************
@@ -1978,9 +1956,13 @@ lldb::Link::StartDebugger
 		};
 		const JString msg = JGetString("Welcome::LLDBLink", map, sizeof(map));
 
-		auto* task = jnew WelcomeTask(msg, restart);
-		assert( task != nullptr );
-		task->Go();
+		auto* welcomeTask = jnew WelcomeTask(msg, restart);
+		assert( welcomeTask != nullptr );
+		welcomeTask->Go();
+
+		itsEventTask = jnew EventTask(this);
+		assert( itsEventTask != nullptr );
+		itsEventTask->Start();
 
 		return true;
 	}
@@ -2006,6 +1988,9 @@ lldb::Link::StopDebugger()
 
 	fclose(itsStderrStream);
 	itsStderrStream = nullptr;
+
+	jdelete itsEventTask;
+	itsEventTask = nullptr;
 
 	SBDebugger::Destroy(*itsDebugger);
 	jdelete itsDebugger;

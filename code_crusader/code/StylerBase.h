@@ -13,8 +13,6 @@
 #include <jx-af/jcore/JStringMap.h>
 #include "TextFileType.h"
 
-class EditStylerDialog;
-
 class StylerBase : public JSTStyler, public JPrefObject, virtual public JBroadcaster
 {
 public:
@@ -69,7 +67,6 @@ private:
 	JStringMap<JFontStyle>*	itsWordStyles;
 
 	const JString&			itsDialogTitle;
-	EditStylerDialog*		itsEditDialog;			// can be nullptr
 	JString					itsDialogGeom;
 
 private:
@@ -81,7 +78,6 @@ private:
 	JFontStyle	ReadStyle(std::istream& input);
 	void		WriteStyle(std::ostream& output, const JFontStyle& style) const;
 
-	void	ExtractStyles();
 	bool	TypeStylesChanged(const JArray<JFontStyle>& newTypeStyles) const;
 	bool	WordStylesChanged(const JStringMap<JFontStyle>& newWordStyles) const;
 

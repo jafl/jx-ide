@@ -83,12 +83,12 @@ FileNode::OpenFile()
 bool
 FileNode::ParseFiles
 	(
-	FileListTable*			parser,
+	FileListTable*				parser,
 	const JPtrArray<JString>&	allSuffixList,
-	SymbolList*				symbolList,
-	CTree*					cTree,
-	DTree*					dTree,
-	GoTree*					goTree,
+	SymbolList*					symbolList,
+	CTree*						cTree,
+	DTree*						dTree,
+	GoTree*						goTree,
 	JavaTree*					javaTree,
 	PHPTree*					phpTree,
 	JProgressDisplay&			pg
@@ -124,12 +124,12 @@ bool
 FileNode::ParseFile
 	(
 	const JString&				fullName,
-	FileListTable*			parser,
+	FileListTable*				parser,
 	const JPtrArray<JString>&	allSuffixList,
-	SymbolList*				symbolList,
-	CTree*					cTree,
-	DTree*					dTree,
-	GoTree*					goTree,
+	SymbolList*					symbolList,
+	CTree*						cTree,
+	DTree*						dTree,
+	GoTree*						goTree,
 	JavaTree*					javaTree,
 	PHPTree*					phpTree,
 	JProgressDisplay&			pg

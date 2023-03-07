@@ -10,7 +10,7 @@
 #ifndef _H_EditCRMDialog
 #define _H_EditCRMDialog
 
-#include <jx-af/jx/JXDialogDirector.h>
+#include <jx-af/jx/JXModalDialogDirector.h>
 #include <jx-af/jcore/JPrefObject.h>
 #include "PrefsManager.h"		// need definition of CRMRuleListInfo
 
@@ -19,7 +19,7 @@ class JXVertPartition;
 class CRMRuleListTable;
 class CRMRuleTable;
 
-class EditCRMDialog : public JXDialogDirector, public JPrefObject
+class EditCRMDialog : public JXModalDialogDirector, public JPrefObject
 {
 public:
 

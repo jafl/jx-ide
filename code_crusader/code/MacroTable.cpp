@@ -10,9 +10,10 @@
 #include "MacroTable.h"
 #include "MacroManager.h"
 #include "EditMacroDialog.h"
-#include "ListCSF.h"
+#include "ListChooseFileDialog.h"
+#include <jx-af/jx/JXWindow.h>
 #include <jx-af/jx/JXTextButton.h>
-#include <jx-af/jx/JXChooseSaveFile.h>
+#include <jx-af/jx/JXSaveFileDialog.h>
 #include <jx-af/jcore/JStringTableData.h>
 #include <jx-af/jcore/jStreamUtil.h>
 #include <jx-af/jcore/jGlobals.h>
@@ -49,10 +50,6 @@ MacroTable::MacroTable
 	itsSaveButton = saveButton;
 	ListenTo(itsSaveButton);
 
-	itsCSF = jnew ListCSF(JGetString("ReplaceMacroList::MacroTable"),
-						   JGetString("AppendToMacroList::MacroTable"));
-	assert( itsCSF != nullptr );
-
 	SetColWidth(kMacroColumn, 60);
 	// script column set automatically
 }
@@ -64,7 +61,6 @@ MacroTable::MacroTable
 
 MacroTable::~MacroTable()
 {
-	jdelete itsCSF;
 }
 
 /******************************************************************************
@@ -166,11 +162,17 @@ MacroTable::Receive
 void
 MacroTable::LoadMacros()
 {
-	JString fileName;
-	if (GetDialog()->ContentsValid() &&
-		itsCSF->ChooseFile(JString::empty, JString::empty, &fileName))
+	if (GetDialog()->ContentsValid())
 	{
-		ReadData(fileName, itsCSF->ReplaceExisting());
+		auto* dlog =
+			ListChooseFileDialog::Create(JGetString("ReplaceMacroList::MacroTable"),
+										 JGetString("AppendToMacroList::MacroTable"),
+										 JXChooseFileDialog::kSelectSingleFile);
+
+		if (dlog->DoDialog())
+		{
+			ReadData(dlog->GetFullName(), dlog->ReplaceExisting());
+		}
 	}
 }
 
@@ -185,7 +187,7 @@ void
 MacroTable::ReadData
 	(
 	const JString&	fileName,
-	const bool	replace
+	const bool		replace
 	)
 {
 	JStringTableData* data = GetStringData();
@@ -247,10 +249,10 @@ MacroTable::SaveMacros()
 	if (GetDialog()->ContentsValid() &&
 		GetDialog()->GetCurrentMacroSetName(&origName))
 	{
-		JString newName;
-		if (itsCSF->SaveFile(JGetString("SaveMacroListPrompt::MacroTable"), JString::empty, origName, &newName))
+		auto* dlog = JXSaveFileDialog::Create(JGetString("SaveMacroListPrompt::MacroTable"), origName);
+		if (dlog->DoDialog())
 		{
-			WriteData(newName);
+			WriteData(dlog->GetFullName());
 		}
 	}
 }

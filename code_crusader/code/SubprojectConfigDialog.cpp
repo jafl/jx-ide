@@ -1,7 +1,7 @@
 /******************************************************************************
  SubprojectConfigDialog.cpp
 
-	BASE CLASS = JXDialogDirector
+	BASE CLASS = JXModalDialogDirector
 
 	Copyright © 1999 by John Lindal.
 
@@ -9,8 +9,8 @@
 
 #include "SubprojectConfigDialog.h"
 #include "ProjectFileInput.h"
-#include "RelPathCSF.h"
 #include "ProjectDocument.h"
+#include "ChooseRelativeFileDialog.h"
 #include <jx-af/jx/JXWindow.h>
 #include <jx-af/jx/JXTextButton.h>
 #include <jx-af/jx/JXStaticText.h>
@@ -28,18 +28,15 @@
 SubprojectConfigDialog::SubprojectConfigDialog
 	(
 	ProjectDocument*	supervisor,
-	const bool		includeInDepList,
+	const bool			includeInDepList,
 	const JString&		subProjName,
-	const bool		shouldBuild,
-	RelPathCSF*		csf
+	const bool			shouldBuild
 	)
 	:
-	JXDialogDirector(supervisor, true)
+	JXModalDialogDirector()
 {
-	itsCSF = csf;
-
 	BuildWindow(supervisor, includeInDepList, subProjName, shouldBuild,
-				itsCSF->GetProjectPath());
+				supervisor->GetFilePath());
 }
 
 /******************************************************************************
@@ -60,9 +57,9 @@ void
 SubprojectConfigDialog::BuildWindow
 	(
 	ProjectDocument*	supervisor,
-	const bool		includeInDepList,
+	const bool			includeInDepList,
 	const JString&		subProjName,
-	const bool		shouldBuild,
+	const bool			shouldBuild,
 	const JString&		basePath
 	)
 {
@@ -165,9 +162,9 @@ SubprojectConfigDialog::UpdateDisplay()
 void
 SubprojectConfigDialog::GetConfig
 	(
-	bool*	includeInDepList,
+	bool*		includeInDepList,
 	JString*	subProjName,
-	bool*	shouldBuild
+	bool*		shouldBuild
 	)
 	const
 {
@@ -199,7 +196,7 @@ SubprojectConfigDialog::Receive
 	}
 	else
 	{
-		JXDialogDirector::Receive(sender, message);
+		JXModalDialogDirector::Receive(sender, message);
 	}
 }
 
@@ -211,16 +208,24 @@ SubprojectConfigDialog::Receive
 void
 SubprojectConfigDialog::ChooseProjectFile()
 {
-	const JString origName = itsSubProjName->GetTextForChooseFile();
-	JString newName;
-	if (itsCSF->ChooseRelFile(JString::empty, JGetString("ChooseProjectFile::SubprojectConfigDialog"),
-							  origName, &newName))
+	auto* dlog =
+		ChooseRelativeFileDialog::Create(
+			ProjectTable::CalcPathType(itsSubProjName->GetText()->GetText()),
+			JXChooseFileDialog::kSelectSingleFile,
+			itsSubProjName->GetTextForChooseFile(),
+			JString::empty, JGetString("ChooseProjectFile::SubprojectConfigDialog"));
+
+	if (dlog->DoDialog())
 	{
-		JString fullName;
-		if (JConvertToAbsolutePath(newName, itsCSF->GetProjectPath(), &fullName) &&
-			ProjectDocument::CanReadFile(fullName) == JXFileDocument::kFileReadable)
+		const JString fullName = dlog->GetFullName();
+		if (ProjectDocument::CanReadFile(fullName) == JXFileDocument::kFileReadable)
 		{
-			itsSubProjName->GetText()->SetText(newName);
+			JString basePath;
+			const bool ok = itsSubProjName->GetBasePath(&basePath);
+			assert( ok );
+
+			itsSubProjName->GetText()->SetText(
+				ProjectTable::ConvertToRelativePath(fullName, basePath, dlog->GetPathType()));
 		}
 		else
 		{

@@ -8,15 +8,15 @@
 #ifndef _H_TabWidthDialog
 #define _H_TabWidthDialog
 
-#include <jx-af/jx/JXDialogDirector.h>
+#include <jx-af/jx/JXModalDialogDirector.h>
 
 class JXIntegerInput;
 
-class TabWidthDialog : public JXDialogDirector
+class TabWidthDialog : public JXModalDialogDirector
 {
 public:
 
-	TabWidthDialog(JXWindowDirector* supervisor, const JSize tabWidth);
+	TabWidthDialog(const JSize tabWidth);
 
 	~TabWidthDialog() override;
 

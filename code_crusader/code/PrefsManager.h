@@ -15,18 +15,12 @@
 
 class JRegex;
 class JPoint;
-
 class JXWindow;
 class JXChooseSaveFile;
-
 class TextDocument;
 class TextEditor;
 class CharActionManager;
 class MacroManager;
-
-class EditFileTypesDialog;
-class EditMacroDialog;
-class EditCRMDialog;
 
 const JUtf8Byte kContentRegexMarker = '^';
 
@@ -203,7 +197,6 @@ protected:
 
 	void	UpgradeData(const bool isNew, const JFileVersion currentVersion) override;
 	void	SaveAllBeforeDestruct() override;
-	void	Receive(JBroadcaster* sender, const Message& message) override;
 
 public:
 
@@ -252,10 +245,10 @@ public:
 
 	struct MacroSetInfo
 	{
-		JIndex					id;
-		JString*				name;
+		JIndex				id;
+		JString*			name;
 		CharActionManager*	action;
-		MacroManager*			macro;
+		MacroManager*		macro;
 
 		MacroSetInfo()
 			:
@@ -317,15 +310,7 @@ private:
 
 	JColorID	itsColor [ kColorCount ];
 
-	EditFileTypesDialog*	itsFileTypesDialog;
-	EditMacroDialog*		itsMacroDialog;
-	EditCRMDialog*		itsCRMDialog;
-
 private:
-
-	void	UpdateFileTypes(const EditFileTypesDialog& dlog);
-	void	UpdateMacros(const EditMacroDialog& dlog);
-	void	UpdateCRMRuleLists(const EditCRMDialog& dlog);
 
 	void	GetStringList(const JPrefID& id, JPtrArray<JString>* list) const;
 	void	SetStringList(const JPrefID& id, const JPtrArray<JString>& list);

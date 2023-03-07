@@ -1,7 +1,7 @@
 /******************************************************************************
  EditPrefsDialog.cpp
 
-	BASE CLASS = JXDialogDirector
+	BASE CLASS = JXModalDialogDirector
 
 	Copyright (C) 2001-10 by John Lindal.
 
@@ -13,6 +13,7 @@
 #include <jx-af/jx/JXWindow.h>
 #include <jx-af/jx/JXTextButton.h>
 #include <jx-af/jx/JXStaticText.h>
+#include <jx-af/jx/JXChooseFileDialog.h>
 #include <jx-af/jcore/JFontManager.h>
 #include <jx-af/jcore/JRegex.h>
 #include <jx-af/jcore/JStringIterator.h>
@@ -26,7 +27,6 @@
 
 EditPrefsDialog::EditPrefsDialog
 	(
-	JXDirector*					supervisor,
 	const JString&				gdbCmd,
 	const JString&				jdbCmd,
 	const JString&				editFileCmd,
@@ -40,7 +40,7 @@ EditPrefsDialog::EditPrefsDialog
 	const JPtrArray<JString>&	goSuffixes
 	)
 	:
-	JXDialogDirector(supervisor, true)
+	JXModalDialogDirector()
 {
 	BuildWindow(gdbCmd, jdbCmd, editFileCmd, editFileLineCmd,
 				cSourceSuffixes, cHeaderSuffixes,
@@ -354,7 +354,7 @@ EditPrefsDialog::GetSuffixList
 	)
 	const
 {
-	list->DeleteAll();
+	list->CleanOut();
 
 	JString text = inputField->GetText()->GetText();
 	text.TrimWhitespace();
@@ -423,7 +423,7 @@ EditPrefsDialog::Receive
 	}
 	else
 	{
-		JXDialogDirector::Receive(sender, message);
+		JXModalDialogDirector::Receive(sender, message);
 	}
 }
 
@@ -439,14 +439,8 @@ EditPrefsDialog::ChooseDebugger
 	JXInputField*	input
 	)
 {
-	const JUtf8Byte* map[] =
-	{
-		"name", name.GetBytes()
-	};
-	const JString prompt = JGetString("ChooseDebuggerPrompt::EditPrefsDialog", map, sizeof(map));
-
-	JString fullName;
-	if (JGetChooseSaveFile()->ChooseFile(prompt, JString::empty, &fullName))
+	auto* dlog = JXChooseFileDialog::Create(JXChooseFileDialog::kSelectSingleFile);
+	if (dlog->DoDialog())
 	{
 		JString text = input->GetText()->GetText();
 
@@ -455,11 +449,11 @@ EditPrefsDialog::ChooseDebugger
 		if (iter.Next(" "))
 		{
 			iter.FinishMatch();
-			iter.ReplaceLastMatch(fullName);
+			iter.ReplaceLastMatch(dlog->GetFullName());
 		}
 		else
 		{
-			text = fullName;
+			text = dlog->GetFullName();
 		}
 		iter.Invalidate();
 

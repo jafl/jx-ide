@@ -1,14 +1,13 @@
 /******************************************************************************
  PrefsDialog.cpp
 
-	BASE CLASS = JXDialogDirector
+	BASE CLASS = JXModalDialogDirector
 
 	Copyright (C) 2002 by Glenn W. Bach.
 
  ******************************************************************************/
 
 #include "PrefsDialog.h"
-#include <jx-af/jx/JXChooseSaveFile.h>
 #include <jx-af/jx/JXHelpManager.h>
 #include <jx-af/jx/JXInputField.h>
 #include <jx-af/jx/JXStaticText.h>
@@ -25,7 +24,6 @@
 
 PrefsDialog::PrefsDialog
 	(
-	JXDirector*	supervisor,
 	const JString& header,
 	const JString& source,
 	const JString& constructor,
@@ -33,7 +31,7 @@ PrefsDialog::PrefsDialog
 	const JString& function
 	)
 	:
-	JXDialogDirector(supervisor, true)
+	JXModalDialogDirector()
 {
 	BuildWindow(header, source, constructor, destructor, function);
 }
@@ -155,7 +153,6 @@ PrefsDialog::BuildWindow
 	itsConstructorInput->GetText()->SetText(constructor);
 	itsDestructorInput->GetText()->SetText(destructor);
 	itsFunctionInput->GetText()->SetText(function);
-
 }
 
 /******************************************************************************
@@ -190,10 +187,10 @@ PrefsDialog::OKToDeactivate()
 {
 	if (Cancelled())
 	{
-		return JXDialogDirector::OKToDeactivate();
+		return JXModalDialogDirector::OKToDeactivate();
 	}
 
-	return (JXDialogDirector::OKToDeactivate() &&
+	return (JXModalDialogDirector::OKToDeactivate() &&
 			(!itsHeaderInput->InputValid()      ||
 			 !itsSourceInput->InputValid()      ||
 			 !itsConstructorInput->InputValid() ||

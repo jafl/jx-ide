@@ -74,19 +74,14 @@ You have just upgraded from version $vers"
 
 # EditPrefsDialog
 
-WindowTitle::EditPrefsDialog			"Edit preferences"
-ChooseDebuggerPrompt::EditPrefsDialog	"Choose $name binary:"
+WindowTitle::EditPrefsDialog	"Edit preferences"
 
 # CommandDirector
 
 WindowsMenuText::CommandDirector	"Command line"
 WindowTitleSuffix::CommandDirector	" Command Line"
 DebugMenuTitle::CommandDirector		"Debug"
-ChooseSourcePrompt::CommandDirector	"Choose Source Files"
-ChooseConfigPrompt::CommandDirector	"Choose configuration file"
 SaveFilePrompt::CommandDirector		"Choose file name"
-ChooseBinaryPrompt::CommandDirector	"Choose binary"
-ChooseCorePrompt::CommandDirector	"Choose core file"
 
 CannotOpenFile::CommandDirector	"Unable to open $name because it either does not exist or is not readable, or the debugger is being unhelpful."
 
@@ -208,7 +203,7 @@ WindowTitle::ChooseProcessDialog	"Choose process"
 
 # xdebug::Link
 
-Prompt::XDLink			"(xdb)"
+CommandPrompt::XDLink	"(xdb)"
 ScriptPrompt::XDLink	"    >"
 
 ListenError::XDLink
@@ -241,7 +236,7 @@ ConfigFileWrongLanguage::XDLink	"The file you specified is not for PHP.
 
 # jvm::Link
 
-Prompt::JVMLink			""
+CommandPrompt::JVMLink	""
 ScriptPrompt::JVMLink	""
 
 ListenError::JVMLink
@@ -292,7 +287,7 @@ CannotFindMain::LLDBDisplaySourceForMain
 
 # gdb::Link
 
-Prompt::GDBLink			"(gdb)"
+CommandPrompt::GDBLink	"(gdb)"
 ScriptPrompt::GDBLink	"    >"
 
 UnableToStartDebugger::GDBLink
@@ -335,7 +330,6 @@ echo \\032\\032:Medic command done:0:
 
 # gdb::AnalyzeCoreCmd
 
-Prompt::GDBAnalyzeCoreCmd		"Name of program"
 FindProgram::GDBAnalyzeCoreCmd	"Please locate \"$name\""
 
 # GDBVarTreeParser

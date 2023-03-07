@@ -15,7 +15,6 @@ class JXTextButton;
 class JXTextMenu;
 class JXInputField;
 class JXColHeaderWidget;
-class JXGetNewDirDialog;
 
 class FileTypeTable : public JXEditTable
 {
@@ -76,8 +75,6 @@ private:
 	JXTextButton*	itsRemoveTypeButton;
 	JXTextButton*	itsDuplicateTypeButton;
 
-	JXGetNewDirDialog*	itsNewDirDialog;
-
 private:
 
 	void	CleanOutFileTypeList(JArray<PrefsManager::FileTypeInfo>* fileTypeList) const;
@@ -101,7 +98,6 @@ private:
 								 JPtrArray<JString>* menuText) const;
 
 	void	GetNewScriptDirectory();
-	void	CreateNewScriptDirectory();
 	bool	CreateDirectory(const JString& path) const;
 
 	JXTextMenu*	CreateCRMMenu();

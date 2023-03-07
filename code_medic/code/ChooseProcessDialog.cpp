@@ -1,7 +1,7 @@
 /******************************************************************************
  ChooseProcessDialog.cpp
 
-	BASE CLASS = JXDialogDirector
+	BASE CLASS = JXModalDialogDirector
 
 	Copyright (C) 1999 by Glenn W. Bach.
 
@@ -9,7 +9,6 @@
 
 #include "ChooseProcessDialog.h"
 #include "ProcessText.h"
-#include "gdb/GDBLink.h"
 #include "globals.h"
 
 #include <jx-af/jx/JXWindow.h>
@@ -18,10 +17,12 @@
 #include <jx-af/jx/JXStaticText.h>
 #include <jx-af/jx/JXScrollbarSet.h>
 #include <jx-af/jx/JXFontManager.h>
-
 #include <jx-af/jx/JXColorManager.h>
+#include <jx-af/jcore/JRegex.h>
+#include <jx-af/jcore/JStringMatch.h>
 #include <jx-af/jcore/jProcessUtil.h>
 #include <jx-af/jcore/jStreamUtil.h>
+#include <jx-af/jcore/jDirUtil.h>
 #include <jx-af/jcore/jAssert.h>
 
 #ifdef _J_CYGWIN
@@ -35,16 +36,9 @@ static const JString kCmdStr("ps xco pid,stat,command", JString::kNoCopy);
 
  ******************************************************************************/
 
-ChooseProcessDialog::ChooseProcessDialog
-	(
-	JXDirector*	supervisor,
-	const bool	attachToSelection,
-	const bool	stopProgram
-	)
+ChooseProcessDialog::ChooseProcessDialog()
 	:
-	JXDialogDirector(supervisor, true),
-	itsAttachToSelectionFlag(attachToSelection),
-	itsStopProgramFlag(stopProgram)
+	JXModalDialogDirector()
 {
 	BuildWindow();
 
@@ -58,9 +52,34 @@ ChooseProcessDialog::ChooseProcessDialog
 		JReadAll(inFD, &text);
 		text.TrimWhitespace();
 		itsText->GetText()->SetText(text);
-	}
 
-	ListenTo(this);
+		JString fullName;
+		if (GetLink()->GetProgram(&fullName))
+		{
+			JString path, name;
+			JSplitPathAndName(fullName, &path, &name);
+
+			JRegex p(JRegex::BackslashForLiteral(name));
+
+			JStyledText::TextIndex i(1,1);
+			bool wrapped;
+			while (true)
+			{
+				const JStringMatch m = itsText->GetText()->SearchForward(i, p, true, false, &wrapped);
+				if (m.IsEmpty())
+				{
+					break;
+				}
+
+				const JStyledText::TextRange r(m.GetCharacterRange(), m.GetUtf8ByteRange());
+
+				itsText->GetText()->SetFontStyle(r,
+					JFontStyle(true, false, 0, false), true);
+
+				i = r.GetAfter();
+			}
+		}
+	}
 }
 
 /******************************************************************************
@@ -70,6 +89,21 @@ ChooseProcessDialog::ChooseProcessDialog
 
 ChooseProcessDialog::~ChooseProcessDialog()
 {
+}
+
+/******************************************************************************
+ GetProcessID
+
+ ******************************************************************************/
+
+bool
+ChooseProcessDialog::GetProcessID
+	(
+	JInteger* pid
+	)
+	const
+{
+	return itsProcessIDInput->GetValue(pid);
 }
 
 /******************************************************************************
@@ -139,49 +173,8 @@ ChooseProcessDialog::BuildWindow()
 
 	itsText =
 		jnew ProcessText(this, scrollbarSet, scrollbarSet->GetScrollEnclosure(),
-						   JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 10,10);
+						 JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 10,10);
 	assert( itsText != nullptr );
 	itsText->FitToEnclosure();
 	itsText->GetText()->SetDefaultFont(JFontManager::GetDefaultMonospaceFont());
-}
-
-/******************************************************************************
- Receive (virtual protected)
-
- ******************************************************************************/
-
-void
-ChooseProcessDialog::Receive
-	(
-	JBroadcaster*	sender,
-	const Message&	message
-	)
-{
-	if (sender == this && message.Is(JXDialogDirector::kDeactivated))
-	{
-		const auto* info =
-			dynamic_cast<const JXDialogDirector::Deactivated*>(&message);
-		assert( info != nullptr );
-		if (info->Successful())
-		{
-			JInteger pid;
-			const bool ok = itsProcessIDInput->GetValue(&pid);
-			assert(ok);
-			if (itsAttachToSelectionFlag)
-			{
-				GetLink()->AttachToProcess(pid);
-			}
-			else
-			{
-				dynamic_cast<gdb::Link*>(GetLink())->ProgramStarted(pid);
-			}
-
-			if (itsStopProgramFlag)
-			{
-				GetLink()->StopProgram();
-			}
-		}
-	}
-
-	JXDialogDirector::Receive(sender, message);
 }

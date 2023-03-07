@@ -554,7 +554,7 @@ VarTreeWidget::TableDrawCell
 		JFont font = GetFont();
 		font.SetStyle(node->GetFontStyle());
 		p.SetFont(font);
-		p.String(rect, node->GetValue(), JPainter::kHAlignLeft, JPainter::kVAlignCenter);
+		p.String(rect, node->GetValue(), JPainter::HAlign::kLeft, JPainter::VAlign::kCenter);
 	}
 	else
 	{

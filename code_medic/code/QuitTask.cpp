@@ -37,29 +37,26 @@ QuitTask::~QuitTask()
 }
 
 /******************************************************************************
- Perform
+ Perform (virtual protected)
 
  ******************************************************************************/
 
 void
 QuitTask::Perform
 	(
-	const Time	delta,
-	Time*		maxSleepTime
+	const Time delta
 	)
 {
 	bool quit = false;
 
 	const JPtrArray<JXDirector>* list;
-	if (TimeToPerform(delta, maxSleepTime) &&
-		JXGetApplication()->GetSubdirectors(&list))
+	if (JXGetApplication()->GetSubdirectors(&list))
 	{
 		quit = true;
 
-		const JSize count = list->GetElementCount();
-		for (JIndex i=1; i<=count; i++)
+		for (auto* d : *list)
 		{
-			if (list->GetElement(i)->IsActive())
+			if (d->IsActive())
 			{
 				quit = false;
 				break;

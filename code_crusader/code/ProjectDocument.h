@@ -13,9 +13,8 @@
 #include <jx-af/jx/JXFileDocument.h>
 #include "DirList.h"
 #include "TextFileType.h"
-#include "ProjectTable.h"			// need defn of DropFileAction
-#include "RelPathCSF.h"			// need defn of PathType
-#include "BuildManager.h"			// need defn of MakefileMethod
+#include "ProjectTable.h"		// need defn of PathType, DropFileAction
+#include "BuildManager.h"		// need defn of MakefileMethod
 #include "ExecOutputDocument.h"	// need defn of RecordLink
 #include "CommandManager.h"		// need defn of CmdList
 
@@ -40,8 +39,6 @@ class PHPTreeDirector;
 class CommandMenu;
 class FileListDirector;
 class FileListTable;
-class RelPathCSF;
-class EditSearchPathsDialog;
 class WaitForSymbolUpdateTask;
 class DelaySymbolUpdateTask;
 
@@ -62,7 +59,7 @@ public:
 
 public:
 
-	static bool			Create(ProjectDocument** doc);
+	static void			Create();
 	static FileStatus	Create(const JString& fullName, const bool silent,
 							   ProjectDocument** doc);
 	static FileStatus	CanReadFile(const JString& fullName);
@@ -78,7 +75,7 @@ public:
 	ProjectTree*	GetFileTree() const;
 	ProjectTable*	GetFileTable() const;
 	void			AddFile(const JString& fullName,
-							const RelPathCSF::PathType pathType);
+							const ProjectTable::PathType pathType);
 	void			EditMakeConfig();
 
 	CommandManager*		GetCommandManager() const;
@@ -92,11 +89,10 @@ public:
 	GoTreeDirector*		GetGoTreeDirector() const;
 	JavaTreeDirector*	GetJavaTreeDirector() const;
 	PHPTreeDirector*	GetPHPTreeDirector() const;
-	RelPathCSF*			GetRelPathCSF() const;
 
-	bool					HasDirectories() const;
-	const DirList&			GetDirectories() const;
-	EditSearchPathsDialog*	EditSearchPaths(JXDirector* owner);
+	bool			HasDirectories() const;
+	const DirList&	GetDirectories() const;
+	void			EditSearchPaths(const JPtrArray<JString>* dirList = nullptr);
 
 	void	DelayUpdateSymbolDatabase();
 	void	UpdateSymbolDatabase();
@@ -160,31 +156,30 @@ private:
 
 	ProjectTree*	itsFileTree;
 	ProjectTable*	itsFileTable;
-	bool		itsProcessNodeMessageFlag;		// true => process messages from itsFileTree
+	bool			itsProcessNodeMessageFlag;		// true => process messages from itsFileTree
 
-	CommandManager*	itsCmdMgr;
+	CommandManager*		itsCmdMgr;
 	BuildManager*		itsBuildMgr;
-	RelPathCSF*		itsCSF;
 	JXTimerTask*		itsSaveTask;
 	JString				itsPrintName;
 	mutable JString		itsDocName;					// so GetName() can return JString&
 
 	DirList*			itsDirList;
 	FileListDirector*	itsAllFileDirector;
-	SymbolDirector*	itsSymbolDirector;
-	CTreeDirector*	itsCTreeDirector;
-	DTreeDirector*	itsDTreeDirector;
-	GoTreeDirector*	itsGoTreeDirector;
+	SymbolDirector*		itsSymbolDirector;
+	CTreeDirector*		itsCTreeDirector;
+	DTreeDirector*		itsDTreeDirector;
+	GoTreeDirector*		itsGoTreeDirector;
 	JavaTreeDirector*	itsJavaTreeDirector;
 	PHPTreeDirector*	itsPHPTreeDirector;
 
-	JProcess*							itsUpdateProcess;
+	JProcess*						itsUpdateProcess;
 	ExecOutputDocument::RecordLink*	itsUpdateLink;
-	std::ostream*						itsUpdateStream;
-	JXProgressDisplay*					itsUpdatePG;
-	WaitForSymbolUpdateTask*			itsWaitForUpdateTask;
+	std::ostream*					itsUpdateStream;
+	JXProgressDisplay*				itsUpdatePG;
+	WaitForSymbolUpdateTask*		itsWaitForUpdateTask;
 	DelaySymbolUpdateTask*			itsDelaySymbolUpdateTask;
-	JFloat								itsLastSymbolLoadTime;
+	JFloat							itsLastSymbolLoadTime;
 
 	JXTextMenu*		itsFileMenu;
 	JXTextMenu*		itsTreeMenu;
@@ -193,8 +188,6 @@ private:
 	CommandMenu*	itsCmdMenu;
 	JXTextMenu*		itsPrefsMenu;
 	JXTextMenu*		itsHelpMenu;
-
-	EditSearchPathsDialog*	itsEditPathsDialog;
 
 	static bool	theReopenTextFilesFlag;
 	static bool	theWarnOpenOldVersionFlag;
@@ -429,18 +422,6 @@ ProjectDocument::GetPHPTreeDirector()
 	const
 {
 	return itsPHPTreeDirector;
-}
-
-/******************************************************************************
- GetRelPathCSF
-
- ******************************************************************************/
-
-inline RelPathCSF*
-ProjectDocument::GetRelPathCSF()
-	const
-{
-	return itsCSF;
 }
 
 /******************************************************************************

@@ -12,7 +12,6 @@
 #include "PrefsManager.h"
 #include "PrefsDialog.h"
 #include "globals.h"
-#include <jx-af/jx/JXChooseSaveFile.h>
 #include <time.h>
 #include <jx-af/jcore/jAssert.h>
 
@@ -28,14 +27,9 @@ PrefsManager::PrefsManager
 	bool* isNew
 	)
 	:
-	JXPrefsManager(kCurrentPrefsFileVersion, true)
+	JXPrefsManager(kCurrentPrefsFileVersion, true, kgCSFSetupID)
 {
-	itsDialog = nullptr;
-	*isNew    = JPrefsManager::UpgradeData();
-
-	JXChooseSaveFile* csf = JXGetChooseSaveFile();
-	csf->SetPrefInfo(this, kgCSFSetupID);
-	csf->JPrefObject::ReadPrefs();
+	*isNew = JPrefsManager::UpgradeData();
 }
 
 /******************************************************************************
@@ -102,67 +96,32 @@ PrefsManager::GetPrevVersionStr()
 void
 PrefsManager::EditPrefs()
 {
-	assert( itsDialog == nullptr );
-
-	// replace with whatever is appropriate
-	JString data;
-
-	itsDialog = 
-		jnew PrefsDialog(JXGetApplication(), 
+	auto* dlog =
+		jnew PrefsDialog(
 			GetHeaderComment(),
 			GetSourceComment(),
 			GetConstructorComment(),
 			GetDestructorComment(),
 			GetFunctionComment());
-	assert( itsDialog != nullptr );
-	ListenTo(itsDialog);
-	itsDialog->BeginDialog();
-}
+	assert( dlog != nullptr );
 
-/******************************************************************************
- Receive (virtual protected)
-
- ******************************************************************************/
-
-void
-PrefsManager::Receive
-	(
-	JBroadcaster*	sender,
-	const Message&	message
-	)
-{
-	if (sender == itsDialog && message.Is(JXDialogDirector::kDeactivated))
+	if (dlog->DoDialog())
 	{
-		const auto* info =
-			dynamic_cast<const JXDialogDirector::Deactivated*>(&message);
-		assert( info != nullptr );
-		if (info->Successful())
-		{
-			// replace with whatever is appropriate
-			JString header;
-			JString source;
-			JString constructor;
-			JString destructor;
-			JString function;
+		JString header;
+		JString source;
+		JString constructor;
+		JString destructor;
+		JString function;
 
-			itsDialog->GetValues(&header, &source,
-					  &constructor, &destructor,
-					  &function);
+		dlog->GetValues(&header, &source,
+				  &constructor, &destructor,
+				  &function);
 
-			SetHeaderComment(header);
-			SetSourceComment(source);
-			SetConstructorComment(constructor);
-			SetDestructorComment(destructor);
-			SetFunctionComment(function);
-
-			// store data somehow
-		}
-		itsDialog = nullptr;
-	}
-
-	else
-	{
-		JXPrefsManager::Receive(sender, message);
+		SetHeaderComment(header);
+		SetSourceComment(source);
+		SetConstructorComment(constructor);
+		SetDestructorComment(destructor);
+		SetFunctionComment(function);
 	}
 }
 

@@ -17,9 +17,7 @@
 		#define EditDataFn    ____
 		#define EditDataArg   ____
 		#define EditDataSel   ____
-		#define UpdateDataFn  ____
 		#define DialogClass   ____
-		#define DialogVar     ____
 		#define ExtractDataFn ____
 		#define CopyConstr    ____
 		#define PtrCheck      ____
@@ -37,9 +35,7 @@
 		#undef EditDataFn
 		#undef EditDataArg
 		#undef EditDataSel
-		#undef UpdateDataFn
 		#undef DialogClass
-		#undef DialogVar
 		#undef ExtractDataFn
 		#undef CopyConstr
 		#undef PtrCheck
@@ -185,8 +181,6 @@ PrefsManager::EditDataFn
 	EditDataArg* initialSelection
 	)
 {
-	assert( DialogVar == nullptr );
-
 	JArray<DataType>* list = CreateListFn();
 	JIndex firstUnusedID   = FirstDataID;
 	JIndex initialIndex    = 1;
@@ -211,89 +205,77 @@ PrefsManager::EditDataFn
 		}
 	}
 
-	DialogVar = jnew DialogClass(list, initialIndex, firstUnusedID);
-	assert( DialogVar != nullptr );
-	DialogVar->BeginDialog();
-	ListenTo(DialogVar);
-}
-
-/******************************************************************************
- UpdateDataFn (private)
-
- ******************************************************************************/
-
-void
-PrefsManager::UpdateDataFn
-	(
-	const DialogClass& dlog
-	)
-{
-	JIndex firstNewID, lastNewID;
-	JArray<DataType>* newList =
-		dlog.ExtractDataFn(&firstNewID, &lastNewID);
-
-	const JSize origCount = ListVar->GetElementCount();
-	const JSize ftCount   = itsFileTypeList->GetElementCount();
-
-	// throw out old objects and update file type->data links
-
-	for (JIndex i=1; i<=origCount; i++)
+	auto* dlog = jnew DialogClass(list, initialIndex, firstUnusedID);
+	assert( dlog != nullptr );
+	if (dlog->DoDialog())
 	{
-		DataType info = ListVar->GetElement(i);
-		jdelete info.name;
-		Destr;
+		JIndex firstNewID, lastNewID;
+		JArray<DataType>* newList =
+			dlog->ExtractDataFn(&firstNewID, &lastNewID);
 
-		JIndex k;
-		if (!FindIDFn(*newList, info.id, &k))
+		const JSize origCount = ListVar->GetElementCount();
+		const JSize ftCount   = itsFileTypeList->GetElementCount();
+
+		// throw out old objects and update file type->data links
+
+		for (JIndex i=1; i<=origCount; i++)
 		{
-			for (JIndex j=1; j<=ftCount; j++)
+			DataType info = ListVar->GetElement(i);
+			jdelete info.name;
+			Destr;
+
+			JIndex k;
+			if (!FindIDFn(*newList, info.id, &k))
 			{
-				FileTypeInfo ftInfo = itsFileTypeList->GetElement(j);
-				if (ftInfo.FTStructIDVar == info.id)
+				for (JIndex j=1; j<=ftCount; j++)
 				{
-					ftInfo.FTStructIDVar = EmptyDataID;
-					itsFileTypeList->SetElement(j, ftInfo);
+					FileTypeInfo ftInfo = itsFileTypeList->GetElement(j);
+					if (ftInfo.FTStructIDVar == info.id)
+					{
+						ftInfo.FTStructIDVar = EmptyDataID;
+						itsFileTypeList->SetElement(j, ftInfo);
+					}
 				}
 			}
 		}
-	}
 
-	// replace list with the new one
+		// replace list with the new one
 
-	jdelete ListVar;
-	ListVar = newList;
-	ListVar->Sort();
+		jdelete ListVar;
+		ListVar = newList;
+		ListVar->Sort();
 
-	// compact to fill in unused id's
+		// compact to fill in unused id's
 
-	for (JIndex id=lastNewID; id>=firstNewID; id--)
-	{
-		JIndex index;
-		const bool found = FindIDFn(*ListVar, id, &index);
-		assert( found );
-
-		bool foundEmptySlot = false;
-		for (JIndex i=FirstDataID; i<firstNewID; i++)
+		for (JIndex id=lastNewID; id>=firstNewID; id--)
 		{
-			JIndex j;
-			if (!FindIDFn(*ListVar, i, &j))
-			{
-				DataType info = ListVar->GetElement(index);
-				info.id       = i;
-				ListVar->SetElement(index, info);
+			JIndex index;
+			const bool found = FindIDFn(*ListVar, id, &index);
+			assert( found );
 
-				foundEmptySlot = true;
+			bool foundEmptySlot = false;
+			for (JIndex i=FirstDataID; i<firstNewID; i++)
+			{
+				JIndex j;
+				if (!FindIDFn(*ListVar, i, &j))
+				{
+					DataType info = ListVar->GetElement(index);
+					info.id       = i;
+					ListVar->SetElement(index, info);
+
+					foundEmptySlot = true;
+					break;
+				}
+			}
+
+			if (!foundEmptySlot)
+			{
 				break;
 			}
 		}
 
-		if (!foundEmptySlot)
-		{
-			break;
-		}
+		// update open text documents in case a data set was deleted
+
+		Broadcast(FileTypesChanged());
 	}
-
-	// update open text documents in case a data set was deleted
-
-	Broadcast(FileTypesChanged());
 }

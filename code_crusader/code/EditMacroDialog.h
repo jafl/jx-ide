@@ -10,7 +10,7 @@
 #ifndef _H_EditMacroDialog
 #define _H_EditMacroDialog
 
-#include <jx-af/jx/JXDialogDirector.h>
+#include <jx-af/jx/JXModalDialogDirector.h>
 #include <jx-af/jcore/JPrefObject.h>
 #include "PrefsManager.h"		// need definition of MacroSetInfo
 
@@ -20,13 +20,13 @@ class MacroSetTable;
 class CharActionTable;
 class MacroTable;
 
-class EditMacroDialog : public JXDialogDirector, public JPrefObject
+class EditMacroDialog : public JXModalDialogDirector, public JPrefObject
 {
 public:
 
 	EditMacroDialog(JArray<PrefsManager::MacroSetInfo>* macroList,
-					  const JIndex initialSelection,
-					  const JIndex firstUnusedID);
+					const JIndex initialSelection,
+					const JIndex firstUnusedID);
 
 	~EditMacroDialog() override;
 

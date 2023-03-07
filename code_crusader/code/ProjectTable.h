@@ -9,7 +9,6 @@
 #define _H_ProjectTable
 
 #include <jx-af/jx/JXNamedTreeListWidget.h>
-#include "RelPathCSF.h"		// need definition of PathType
 
 class JXImage;
 class JXMenuBar;
@@ -41,12 +40,22 @@ public:
 	// Do not change these values once they are assigned because
 	// they are stored in the prefs file.
 
+	enum PathType
+	{
+		kAbsolutePath = 1,	// avoid conflict with X atom None when calling ChooseDropAction()
+		kProjectRelative,
+		kHomeRelative
+	};
+
+	// Do not change these values once they are assigned because
+	// they are stored in the prefs file.
+
 	enum DropFileAction
 	{
-		kAskPathType     = 0,
-		kAbsolutePath    = RelPathCSF::kAbsolutePath,
-		kProjectRelative = RelPathCSF::kProjectRelative,
-		kHomeRelative    = RelPathCSF::kHomeRelative
+		kDropAskPathType     = 0,
+		kDropAbsolutePath    = kAbsolutePath,
+		kDropProjectRelative = kProjectRelative,
+		kDropHomeRelative    = kHomeRelative
 	};
 
 	// action to take after file path/name has been edited
@@ -70,13 +79,20 @@ public:
 
 	bool	NewGroup(GroupNode** returnNode = nullptr);
 	void	AddDirectoryTree();
-	void	AddDirectoryTree(const JString& fullPath,
-							 const RelPathCSF::PathType pathType);
+	void	AddDirectoryTree(const JString& fullPath, const PathType pathType);
 	void	AddFiles();
 	bool	AddFiles(const JPtrArray<JString>& fullNameList,
-					 const RelPathCSF::PathType pathType,
+					 const PathType pathType,
 					 const bool updateProject = true,
 					 const bool silent = false);
+
+	static JString	ConvertToAbsolutePath(const JString& origName,
+										  const JString& projPath,
+										  PathType* pathType);
+	static JString	ConvertToRelativePath(const JString& fullPath,
+										  const JString& projPath,
+										  const PathType pathType);
+	static PathType	CalcPathType(const JString& path);
 
 	bool	HasSelection() const;
 	bool	GetSelectionType(SelType* type, bool* single, JIndex* index) const;
@@ -189,14 +205,10 @@ private:
 	JXTextMenu*			itsContextMenu;		// not owned
 	JXImageButton*		itsCSFButton;		// nullptr unless editing FileNodeBase
 
-	JSize		itsSelDepth;				// depth of items that can be selected
+	JSize	itsSelDepth;				// depth of items that can be selected
 	bool	itsIgnoreSelChangesFlag;	// true while cleaning selection
 	bool	itsMarkWritableFlag;		// true if mark writable files (e.g. CVS)
 	bool	itsLockedSelDepthFlag;		// true if don't change the selection depth
-
-	JXGetStringDialog*		itsAddFilesFilterDialog;
-	JString					itsAddPath;
-	RelPathCSF::PathType	itsAddPathType;
 
 	// used after editing
 
@@ -234,13 +246,13 @@ private:
 	void	AppendFileSelectionToGroup(JTreeNode* group);
 	void	InsertGroupSelectionBefore(JTreeNode* before);
 	void	InsertExtDroppedFiles(const JPtrArray<JString>& fileNameList,
-								  const RelPathCSF::PathType pathType);
+								  const PathType pathType);
 
 	void	AddDirectoryTree(const JString& fullPath, const JString& filterStr,
-							 const RelPathCSF::PathType pathType);
+							 const PathType pathType);
 	void	AddDirectoryTree(const JString& fullPath, const JString& relPath,
 							 const JString& filterStr,
-							 const RelPathCSF::PathType pathType,
+							 const PathType pathType,
 							 bool* changed);
 };
 

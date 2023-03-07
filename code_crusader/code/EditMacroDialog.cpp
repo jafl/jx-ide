@@ -1,7 +1,7 @@
 /******************************************************************************
  EditMacroDialog.cpp
 
-	BASE CLASS = JXDialogDirector, JPrefObject
+	BASE CLASS = JXModalDialogDirector, JPrefObject
 
 	Copyright © 1998 by John Lindal.
 
@@ -33,11 +33,11 @@ const JFileVersion kCurrentSetupVersion = 0;
 EditMacroDialog::EditMacroDialog
 	(
 	JArray<PrefsManager::MacroSetInfo>*	macroList,
-	const JIndex							initialSelection,
-	const JIndex							firstUnusedID
+	const JIndex						initialSelection,
+	const JIndex						firstUnusedID
 	)
 	:
-	JXDialogDirector(JXGetApplication(), true),
+	JXModalDialogDirector(true),
 	JPrefObject(GetPrefsManager(), kEditMacroDialogID)
 {
 	BuildWindow(macroList, initialSelection, firstUnusedID);
@@ -124,10 +124,8 @@ EditMacroDialog::BuildWindow
 // end JXLayout
 
 	window->SetTitle(JGetString("WindowTitle::EditMacroDialog"));
-	SetButtons(okButton, cancelButton);
-	UseModalPlacement(false);
-	window->PlaceAsDialogWindow();
 	window->LockCurrentMinSize();
+	SetButtons(okButton, cancelButton);
 
 	ListenTo(itsHelpButton);
 
@@ -342,7 +340,7 @@ bool
 EditMacroDialog::OKToDeactivate()
 {
 	return Cancelled() ||
-		(JXDialogDirector::OKToDeactivate() && ContentsValid());
+		(JXModalDialogDirector::OKToDeactivate() && ContentsValid());
 }
 
 /******************************************************************************
@@ -363,7 +361,7 @@ EditMacroDialog::Receive
 	}
 	else
 	{
-		JXDialogDirector::Receive(sender, message);
+		JXModalDialogDirector::Receive(sender, message);
 	}
 }
 

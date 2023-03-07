@@ -369,7 +369,7 @@ BreakpointTable::TableDrawCell
 	else
 	{
 		JString s;
-		JPainter::HAlignment hAlign = JPainter::kHAlignLeft;
+		JPainter::HAlign hAlign = JPainter::HAlign::kLeft;
 		if (cell.x == kFileNameColumn)
 		{
 			s.Set(bp->GetFileName().GetBytes() + fileNameOffset(bp));
@@ -380,7 +380,7 @@ BreakpointTable::TableDrawCell
 			if (line > 0)
 			{
 				s      = JString((JUInt64) line);
-				hAlign = JPainter::kHAlignRight;
+				hAlign = JPainter::HAlign::kRight;
 			}
 		}
 		else if (cell.x == kFunctionColumn)
@@ -394,7 +394,7 @@ BreakpointTable::TableDrawCell
 		else if (cell.x == kIgnoreCountColumn)
 		{
 			s      = JString((JUInt64) bp->GetIgnoreCount());
-			hAlign = JPainter::kHAlignRight;
+			hAlign = JPainter::HAlign::kRight;
 		}
 		else if (cell.x == kConditionColumn)
 		{
@@ -405,7 +405,7 @@ BreakpointTable::TableDrawCell
 
 		JRect r = rect;
 		r.left += kHMarginWidth;
-		p.String(r, s, hAlign, JPainter::kVAlignCenter);
+		p.String(r, s, hAlign, JPainter::VAlign::kCenter);
 	}
 }
 

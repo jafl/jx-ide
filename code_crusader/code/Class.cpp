@@ -975,12 +975,12 @@ Class::DrawText
 		{
 			const JString drawName = GetDrawName();
 			p.String(itsFrame, drawName,
-					 JPainter::kHAlignCenter, JPainter::kVAlignCenter);
+					 JPainter::HAlign::kCenter, JPainter::VAlign::kCenter);
 		}
 		else
 		{
 			p.String(itsFrame, itsFullName,
-					 JPainter::kHAlignCenter, JPainter::kVAlignCenter);
+					 JPainter::HAlign::kCenter, JPainter::VAlign::kCenter);
 		}
 	}
 }

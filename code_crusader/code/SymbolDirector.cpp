@@ -401,7 +401,6 @@ SymbolDirector::ListUpdateFinished
 	if (ok && !InUpdateThread())
 	{
 		CloseSymbolBrowsers();
-//		UpdateSymbolBrowsers();
 	}
 	return ok;
 }
@@ -913,7 +912,7 @@ SymbolDirector::HandleSymbolMenu
 
 	if (index == kEditSearchPathsCmd)
 	{
-		itsProjDoc->EditSearchPaths(this);
+		itsProjDoc->EditSearchPaths();
 	}
 	else if (index == kUpdateCurrentCmd)
 	{
@@ -1088,10 +1087,13 @@ SymbolDirector::HandlePrefsMenu
 void
 SymbolDirector::EditPrefs()
 {
-	auto* dlog =
-		jnew EditSymbolPrefsDialog(itsRaiseTreeOnRightClickFlag);
+	auto* dlog = jnew EditSymbolPrefsDialog(itsRaiseTreeOnRightClickFlag);
 	assert( dlog != nullptr );
-	dlog->BeginDialog();
+
+	if (dlog->DoDialog())
+	{
+		dlog->UpdateSettings();
+	}
 }
 
 /******************************************************************************

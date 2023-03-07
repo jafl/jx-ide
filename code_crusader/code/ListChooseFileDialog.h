@@ -17,11 +17,12 @@ class ListChooseFileDialog : public JXChooseFileDialog
 public:
 
 	static ListChooseFileDialog*
-		Create(JXDirector* supervisor, JDirInfo* dirInfo,
-			   const JString& fileFilter,
-			   const bool allowSelectMultiple,
-			   const JString& replaceListStr, const JString& appendToListStr,
-			   const JString& origName, const JString& message);
+		Create(const JString& replaceListStr,
+			   const JString& appendToListStr,
+			   const SelectType selectType,
+			   const JString& selectName = JString::empty,
+			   const JString& fileFilter = JString::empty,
+			   const JString& message = JString::empty);
 
 	~ListChooseFileDialog() override;
 
@@ -29,9 +30,7 @@ public:
 
 protected:
 
-	ListChooseFileDialog(JXDirector* supervisor, JDirInfo* dirInfo,
-						   const JString& fileFilter,
-						   const bool allowSelectMultiple);
+	ListChooseFileDialog(const JString& fileFilter);
 
 private:
 
@@ -45,7 +44,8 @@ private:
 
 	void	BuildWindow(const JString& replaceListStr,
 						const JString& appendToListStr,
-						const JString& origName,
+						const SelectType selectType,
+						const JString& selectName,
 						const JString& message);
 };
 

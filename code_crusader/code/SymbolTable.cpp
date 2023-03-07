@@ -418,12 +418,12 @@ SymbolTable::TableDrawCell
 
 	JRect r = rect;
 	r.left += kIconWidth + kHMarginWidth;
-	p.String(r, symbolName, JPainter::kHAlignLeft, JPainter::kVAlignCenter);
+	p.String(r, symbolName, JPainter::HAlign::kLeft, JPainter::VAlign::kCenter);
 
 	if (signature != nullptr)
 	{
 		r.left += JFontManager::GetDefaultFont().GetStringWidth(GetFontManager(), symbolName);
-		p.String(r, *signature, JPainter::kHAlignLeft, JPainter::kVAlignCenter);
+		p.String(r, *signature, JPainter::HAlign::kLeft, JPainter::VAlign::kCenter);
 	}
 }
 

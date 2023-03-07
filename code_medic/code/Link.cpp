@@ -57,10 +57,16 @@ const JUtf8Byte* Link::kPlugInMessage          = "PlugInMessage::Link";
 
 Link::Link
 	(
-	const bool* features
+	const bool*			features,
+	const JUtf8Byte*	cmdPromptKey,
+	const JUtf8Byte*	scriptPromptKey,
+	const JUtf8Byte*	chooseProgInstrKey
 	)
 	:
-	itsFeatures(features)
+	itsFeatures(features),
+	itsCommandPromptKey(cmdPromptKey),
+	itsScriptPromptKey(scriptPromptKey),
+	itsChooseProgramInstructionsKey(chooseProgInstrKey)
 {
 	// commands are often owned by other objects, who can delete them more reliably
 	itsForegroundQ = jnew JPtrArray<Command>(JPtrArrayT::kForgetAll);
@@ -88,6 +94,42 @@ Link::~Link()
 	jdelete itsBackgroundQ;
 
 	jdelete itsFileNameMap;
+}
+
+/******************************************************************************
+ GetCommandPrompt (virtual)
+
+ ******************************************************************************/
+
+const JString&
+Link::GetCommandPrompt()
+	const
+{
+	return JGetString(itsCommandPromptKey);
+}
+
+/******************************************************************************
+ GetScriptPrompt (virtual)
+
+ ******************************************************************************/
+
+const JString&
+Link::GetScriptPrompt()
+	const
+{
+	return JGetString(itsScriptPromptKey);
+}
+
+/******************************************************************************
+ GetChooseProgramInstructions
+
+ ******************************************************************************/
+
+const JString&
+Link::GetChooseProgramInstructions()
+	const
+{
+	return JGetString(itsChooseProgramInstructionsKey);
 }
 
 /******************************************************************************

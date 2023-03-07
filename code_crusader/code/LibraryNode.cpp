@@ -60,7 +60,6 @@ LibraryNode::LibraryNodeX()
 {
 	itsIncludeInDepListFlag = true;
 	itsShouldBuildFlag      = true;
-	itsSubprojDialog        = nullptr;
 }
 
 /******************************************************************************
@@ -182,44 +181,30 @@ LibraryNode::BuildMakeFiles
 void
 LibraryNode::EditSubprojectConfig()
 {
-	assert( itsSubprojDialog == nullptr );
-
 	ProjectDocument* doc = GetProjectDoc();
 
-	itsSubprojDialog =
+	auto* dlog =
 		jnew SubprojectConfigDialog(doc, itsIncludeInDepListFlag,
-									 itsProjFileName, itsShouldBuildFlag,
-									 doc->GetRelPathCSF());
-	assert( itsSubprojDialog != nullptr );
-	itsSubprojDialog->BeginDialog();
-	ListenTo(itsSubprojDialog);
-}
-
-/******************************************************************************
- UpdateSubprojectConfig (private)
-
- ******************************************************************************/
-
-void
-LibraryNode::UpdateSubprojectConfig()
-{
-	assert( itsSubprojDialog != nullptr );
-
-	bool include, build;
-	itsSubprojDialog->GetConfig(&include, &itsProjFileName, &build);
-
-	const bool changed =
-		include != itsIncludeInDepListFlag ||
-			  build   != itsShouldBuildFlag;
-
-	JTree* tree;
-	if (changed && GetTree(&tree))
+									itsProjFileName, itsShouldBuildFlag);
+	assert( dlog != nullptr );
+	if (dlog->DoDialog())
 	{
-		itsIncludeInDepListFlag = true;		// force rebuild
-		tree->BroadcastChange(this);
+		bool include, build;
+		dlog->GetConfig(&include, &itsProjFileName, &build);
+
+		const bool changed =
+			include != itsIncludeInDepListFlag ||
+			build   != itsShouldBuildFlag;
+
+		JTree* tree;
+		if (changed && GetTree(&tree))
+		{
+			itsIncludeInDepListFlag = true;		// force rebuild
+			tree->BroadcastChange(this);
+		}
+		itsIncludeInDepListFlag = include;
+		itsShouldBuildFlag      = build;
 	}
-	itsIncludeInDepListFlag = include;
-	itsShouldBuildFlag      = build;
 }
 
 /******************************************************************************
@@ -243,36 +228,5 @@ LibraryNode::OpenProject
 	else
 	{
 		return false;
-	}
-}
-
-/******************************************************************************
- Receive (virtual protected)
-
- ******************************************************************************/
-
-void
-LibraryNode::Receive
-	(
-	JBroadcaster*	sender,
-	const Message&	message
-	)
-{
-	if (sender == itsSubprojDialog &&
-		message.Is(JXDialogDirector::kDeactivated))
-	{
-		const auto* info =
-			dynamic_cast<const JXDialogDirector::Deactivated*>(&message);
-		assert( info != nullptr );
-		if (info->Successful())
-		{
-			UpdateSubprojectConfig();
-		}
-		itsSubprojDialog = nullptr;
-	}
-
-	else
-	{
-		FileNodeBase::Receive(sender, message);
 	}
 }

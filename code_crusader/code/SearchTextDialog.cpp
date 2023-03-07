@@ -12,7 +12,7 @@
 #include "TextEditor.h"
 #include "SearchPathHistoryMenu.h"
 #include "SearchFilterHistoryMenu.h"
-#include "ListCSF.h"
+#include "ListChooseFileDialog.h"
 #include "ProjectDocument.h"
 #include "sharedUtil.h"
 #include "globals.h"
@@ -30,7 +30,8 @@
 #include <jx-af/jx/JXStringHistoryMenu.h>
 #include <jx-af/jx/JXDocumentMenu.h>
 #include <jx-af/jx/JXDownRect.h>
-#include <jx-af/jx/JXChooseSaveFile.h>
+#include <jx-af/jx/JXChooseFileDialog.h>
+#include <jx-af/jx/JXSaveFileDialog.h>
 #include <jx-af/jx/JXFontManager.h>
 #include <jx-af/jcore/JDirInfo.h>
 #include <jx-af/jcore/JRegex.h>
@@ -100,10 +101,6 @@ SearchTextDialog::SearchTextDialog()
 	JPrefObject(GetPrefsManager(), kSearchTextID),
 	itsFileSetName("Untitled")
 {
-	itsCSF = jnew ListCSF(JGetString("ReplaceFileList::SearchTextDialog"),
-							JGetString("AppendToFileList::SearchTextDialog"));
-	assert( itsCSF != nullptr );
-
 	itsOnlyListFilesFlag         = false;
 	itsListFilesWithoutMatchFlag = false;
 }
@@ -116,8 +113,6 @@ SearchTextDialog::SearchTextDialog()
 SearchTextDialog::~SearchTextDialog()
 {
 	// prefs written by DeleteGlobals()
-
-	jdelete itsCSF;
 }
 
 /******************************************************************************
@@ -679,18 +674,20 @@ SearchTextDialog::SearchFiles()
 	JInterpolate* interpolator;
 	bool entireWord, wrapSearch, preserveCase;
 
-	JPtrArray<JString> fileList(JPtrArrayT::kDeleteAll),
-					   nameList(JPtrArrayT::kDeleteAll);
+	auto* fileList = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
+	assert( fileList != nullptr );
+
+	auto* nameList = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
+	assert( nameList != nullptr );
 
 	if (GetSearchParameters(&searchRegex, &entireWord, &wrapSearch,
 							&replaceStr, &interpolator, &preserveCase) &&
-		BuildSearchFileList(&fileList, &nameList))
+		BuildSearchFileList(fileList, nameList))
 	{
-		const JError err =
-			SearchDocument::Create(fileList, nameList,
-									 *searchRegex, itsOnlyListFilesFlag,
-									 itsListFilesWithoutMatchFlag);
-		err.ReportIfError();
+		// takes ownership of fileList & nameList
+		SearchDocument::Create(fileList, nameList,
+							   *searchRegex, itsOnlyListFilesFlag,
+							   itsListFilesWithoutMatchFlag);
 	}
 }
 
@@ -707,17 +704,19 @@ SearchTextDialog::SearchFilesAndReplace()
 	JInterpolate* interpolator;
 	bool entireWord, wrapSearch, preserveCase;
 
-	JPtrArray<JString> fileList(JPtrArrayT::kDeleteAll),
-					   nameList(JPtrArrayT::kDeleteAll);
+	auto* fileList = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
+	assert( fileList != nullptr );
+
+	auto* nameList = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
+	assert( nameList != nullptr );
 
 	if (GetSearchParameters(&searchRegex, &entireWord, &wrapSearch,
 							&replaceStr, &interpolator, &preserveCase) &&
-		BuildSearchFileList(&fileList, &nameList))
+		BuildSearchFileList(fileList, nameList))
 	{
-		const JError err =
-			SearchDocument::Create(fileList, nameList,
-									 *searchRegex, replaceStr);
-		err.ReportIfError();
+		// takes ownership of fileList & nameList
+		SearchDocument::Create(fileList, nameList,
+							   *searchRegex, replaceStr);
 	}
 }
 
@@ -779,7 +778,7 @@ SearchTextDialog::BuildSearchFileList
 		}
 
 		JLatentPG pg(100);
-		pg.VariableLengthProcessBeginning(JGetString("CollectingFiles::SearchTextDialog"), true, false);
+		pg.VariableLengthProcessBeginning(JGetString("CollectingFiles::SearchTextDialog"), true, true);
 		ok = SearchDirectory(path, fileRegex, pathRegex, fileList, nameList, pg);
 		pg.ProcessFinished();
 
@@ -976,14 +975,19 @@ SearchTextDialog::GetSearchDirectory
 void
 SearchTextDialog::LoadFileSet()
 {
-	JString fullName;
-	if (itsCSF->ChooseFile(JString::empty, JString::empty, &fullName))
+	auto* dlog =
+		ListChooseFileDialog::Create(JGetString("ReplaceFileList::SearchTextDialog"),
+									 JGetString("AppendToFileList::SearchTextDialog"),
+									 JXChooseFileDialog::kSelectSingleFile);
+
+	if (dlog->DoDialog())
 	{
-		if (itsCSF->ReplaceExisting())
+		if (dlog->ReplaceExisting())
 		{
 			itsFileList->RemoveAllFiles();
 		}
 
+		const JString fullName = dlog->GetFullName();
 		std::ifstream input(fullName.GetBytes());
 		JString file;
 		while (!input.eof() && !input.fail())
@@ -1006,11 +1010,10 @@ void
 SearchTextDialog::SaveFileSet()
 	const
 {
-	JString newName;
-	if (JGetChooseSaveFile()->SaveFile(JGetString("SaveFileSet::SearchTextDialog"),
-									   JString::empty, itsFileSetName, &newName))
+	auto* dlog = JXSaveFileDialog::Create(JGetString("SaveFileSet::SearchTextDialog"), itsFileSetName);
+	if (dlog->DoDialog())
 	{
-		itsFileSetName = newName;
+		itsFileSetName = dlog->GetFullName();
 
 		std::ofstream output(itsFileSetName.GetBytes());
 		const JPtrArray<JString>& fullNameList = itsFileList->GetFullNameList();
@@ -1031,13 +1034,15 @@ SearchTextDialog::SaveFileSet()
 void
 SearchTextDialog::AddSearchFiles()
 {
-	JPtrArray<JString> fileList(JPtrArrayT::kDeleteAll);
-	if (JXGetChooseSaveFile()->ChooseFiles(JString::empty, JString::empty, &fileList))
+	auto* dlog = JXChooseFileDialog::Create(JXChooseFileDialog::kSelectMultipleFiles);
+	if (dlog->DoDialog())
 	{
-		const JSize count = fileList.GetElementCount();
-		for (JIndex i=1; i<=count; i++)
+		JPtrArray<JString> fileList(JPtrArrayT::kDeleteAll);
+		dlog->GetFullNames(&fileList);
+
+		for (const auto* f : fileList)
 		{
-			itsFileList->AddFile(*(fileList.GetElement(i)));
+			itsFileList->AddFile(*f);
 		}
 	}
 }

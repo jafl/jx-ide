@@ -8,24 +8,21 @@
 #ifndef _H_SubprojectConfigDialog
 #define _H_SubprojectConfigDialog
 
-#include <jx-af/jx/JXDialogDirector.h>
+#include <jx-af/jx/JXModalDialogDirector.h>
 
-class JString;
 class JXTextButton;
 class JXTextCheckbox;
 class ProjectDocument;
 class ProjectFileInput;
-class RelPathCSF;
 
-class SubprojectConfigDialog : public JXDialogDirector
+class SubprojectConfigDialog : public JXModalDialogDirector
 {
 public:
 
 	SubprojectConfigDialog(ProjectDocument* supervisor,
-							 const bool includeInDepList,
-							 const JString& subProjName,
-							 const bool shouldBuild,
-							 RelPathCSF* csf);
+						   const bool includeInDepList,
+						   const JString& subProjName,
+						   const bool shouldBuild);
 
 	~SubprojectConfigDialog() override;
 
@@ -37,8 +34,6 @@ protected:
 	void	Receive(JBroadcaster* sender, const Message& message) override;
 
 private:
-
-	RelPathCSF*	itsCSF;			// not owned
 
 // begin JXLayout
 

@@ -805,7 +805,7 @@ Plot2DDir::HandleFileMenu
 
 	else if (index == kPSPageSetupCmd)
 	{
-		(GetPSPrinter())->BeginUserPageSetup();
+		GetPSPrinter()->EditUserPageSetup();
 	}
 	else if (index == kPrintPSCmd && itsExprTable->EndEditing())
 	{
@@ -866,7 +866,7 @@ Plot2DDir::HandleHelpMenu
 {
 	if (index == kAboutCmd)
 	{
-		(GetApplication())->DisplayAbout();
+		GetApplication()->DisplayAbout();
 	}
 
 	else if (index == kTOCCmd)

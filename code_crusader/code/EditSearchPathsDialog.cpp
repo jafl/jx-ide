@@ -1,7 +1,7 @@
 /******************************************************************************
  EditSearchPathsDialog.cpp
 
-	BASE CLASS = JXDialogDirector
+	BASE CLASS = JXModalDialogDirector
 
 	Copyright © 1998 by John Lindal.
 
@@ -28,15 +28,13 @@ const JFileVersion kCurrentSetupVersion = 0;
 
 EditSearchPathsDialog::EditSearchPathsDialog
 	(
-	JXDirector*			supervisor,
-	const DirList&	dirList,
-	RelPathCSF*		csf
+	const DirList& dirList
 	)
 	:
-	JXDialogDirector(supervisor, true),
+	JXModalDialogDirector(true),
 	JPrefObject(GetPrefsManager(), kEditSearchPathsDialogID)
 {
-	BuildWindow(dirList, csf);
+	BuildWindow(dirList);
 	JPrefObject::ReadPrefs();
 	ListenTo(this);
 }
@@ -88,8 +86,7 @@ EditSearchPathsDialog::GetPathList
 void
 EditSearchPathsDialog::BuildWindow
 	(
-	const DirList&	dirList,
-	RelPathCSF*		csf
+	const DirList& dirList
 	)
 {
 // begin JXLayout
@@ -137,6 +134,10 @@ EditSearchPathsDialog::BuildWindow
 
 // end JXLayout
 
+	window->SetTitle(JGetString("WindowTitle::EditSearchPathsDialog"));
+	window->LockCurrentMinSize();
+	SetButtons(okButton, cancelButton);
+
 	instrText->GetText()->SetText(JGetString("Instructions::EditSearchPathsDialog"));
 	window->AdjustSize(0, instrText->GetBoundsHeight() - instrText->GetFrameHeight());
 	instrText->SetSizing(JXWidget::kHElastic, JXWidget::kFixedTop);
@@ -145,15 +146,8 @@ EditSearchPathsDialog::BuildWindow
 	removePathButton->SetSizing(JXWidget::kFixedRight, JXWidget::kFixedTop);
 	choosePathButton->SetSizing(JXWidget::kFixedRight, JXWidget::kFixedTop);
 
-	window->SetTitle(JGetString("WindowTitle::EditSearchPathsDialog"));
-	window->PlaceAsDialogWindow();
-	window->LockCurrentMinSize();
-	UseModalPlacement(false);
-	SetButtons(okButton, cancelButton);
-
 	itsTable =
-		jnew PathTable(dirList, addPathButton, removePathButton,
-						choosePathButton, csf,
+		jnew PathTable(dirList, addPathButton, removePathButton, choosePathButton,
 						scrollbarSet, scrollbarSet->GetScrollEnclosure(),
 						JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 10,10);
 	assert( itsTable != nullptr );

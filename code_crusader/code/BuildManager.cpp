@@ -56,7 +56,7 @@ BuildManager::BuildManager
 	(
 	ProjectDocument*		doc,
 	const MakefileMethod	method,
-	const bool			needWriteMakeFiles,
+	const bool				needWriteMakeFiles,
 	const JString&			targetName,
 	const JString&			depListExpr
 	)
@@ -68,8 +68,7 @@ BuildManager::BuildManager
 	itsSubProjectBuildCmd(kDefaultSubProjectBuildCmd),
 	itsLastMakefileUpdateTime(0),
 	itsProjDoc(doc),
-	itsMakeDependCmd(nullptr),
-	itsProjectConfigDialog(nullptr)
+	itsMakeDependCmd(nullptr)
 {
 	if (itsTargetName.IsEmpty())
 	{
@@ -80,9 +79,9 @@ BuildManager::BuildManager
 
 BuildManager::BuildManager
 	(
-	std::istream&			projInput,
+	std::istream&		projInput,
 	const JFileVersion	projVers,
-	std::istream*			setInput,
+	std::istream*		setInput,
 	const JFileVersion	setVers,
 	ProjectDocument*	doc
 	)
@@ -92,8 +91,7 @@ BuildManager::BuildManager
 	itsSubProjectBuildCmd(kDefaultSubProjectBuildCmd),
 	itsLastMakefileUpdateTime(0),
 	itsProjDoc(doc),
-	itsMakeDependCmd(nullptr),
-	itsProjectConfigDialog(nullptr)
+	itsMakeDependCmd(nullptr)
 {
 	ReadSetup(projInput, projVers, setInput, setVers, doc->GetFilePath());
 }
@@ -576,19 +574,6 @@ BuildManager::Receive
 		}
 	}
 
-	else if (sender == itsProjectConfigDialog &&
-			 message.Is(JXDialogDirector::kDeactivated))
-	{
-		const auto* info =
-			dynamic_cast<const JXDialogDirector::Deactivated*>(&message);
-		assert( info != nullptr );
-		if (info->Successful())
-		{
-			UpdateProjectConfig();
-		}
-		itsProjectConfigDialog = nullptr;
-	}
-
 	else
 	{
 		JBroadcaster::Receive(sender, message);
@@ -625,45 +610,33 @@ BuildManager::ProjectChanged
 void
 BuildManager::EditProjectConfig()
 {
-	assert( itsProjectConfigDialog == nullptr );
+	auto* dlog =
+		jnew ProjectConfigDialog(itsMakefileMethod,
+								 itsTargetName, itsDepListExpr,
+								 itsProjDoc->GetCommandManager()->GetMakeDependCommand(),
+								 itsSubProjectBuildCmd);
+	assert( dlog != nullptr );
 
-	itsProjectConfigDialog =
-		jnew ProjectConfigDialog(itsProjDoc, itsMakefileMethod,
-								  itsTargetName, itsDepListExpr,
-								  (itsProjDoc->GetCommandManager())->GetMakeDependCommand(),
-								  itsSubProjectBuildCmd);
-	assert( itsProjectConfigDialog != nullptr );
-	itsProjectConfigDialog->BeginDialog();
-	ListenTo(itsProjectConfigDialog);
-}
-
-/******************************************************************************
- UpdateProjectConfig (private)
-
- ******************************************************************************/
-
-void
-BuildManager::UpdateProjectConfig()
-{
-	assert( itsProjectConfigDialog != nullptr );
-
-	MakefileMethod method;
-	JString targetName, depListExpr, updateMakefileCmd;
-	itsProjectConfigDialog->GetConfig(&method, &targetName, &depListExpr,
-									  &updateMakefileCmd, &itsSubProjectBuildCmd);
-
-	if (method      != itsMakefileMethod ||
-		targetName  != itsTargetName     ||
-		depListExpr != itsDepListExpr)
+	if (dlog->DoDialog())
 	{
-		itsNeedWriteMakeFilesFlag = true;
+		MakefileMethod method;
+		JString targetName, depListExpr, updateMakefileCmd;
+		dlog->GetConfig(&method, &targetName, &depListExpr,
+						&updateMakefileCmd, &itsSubProjectBuildCmd);
 
-		itsMakefileMethod = method;
-		itsTargetName     = targetName;
-		itsDepListExpr    = depListExpr;
+		if (method      != itsMakefileMethod ||
+			targetName  != itsTargetName     ||
+			depListExpr != itsDepListExpr)
+		{
+			itsNeedWriteMakeFilesFlag = true;
+
+			itsMakefileMethod = method;
+			itsTargetName     = targetName;
+			itsDepListExpr    = depListExpr;
+		}
+
+		itsProjDoc->GetCommandManager()->SetMakeDependCommand(updateMakefileCmd);
 	}
-
-	(itsProjDoc->GetCommandManager())->SetMakeDependCommand(updateMakefileCmd);
 }
 
 /******************************************************************************

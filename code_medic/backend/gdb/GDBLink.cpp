@@ -75,7 +75,7 @@ static const bool kFeatures[]=
 
 gdb::Link::Link()
 	:
-	::Link(kFeatures),
+	::Link(kFeatures, "CommandPrompt::GDBLink", "ScriptPrompt::GDBLink", "ChooseProgramInstr::GDBLink"),
 	itsDebuggerProcess(nullptr),
 	itsChildProcess(nullptr),
 	itsOutputLink(nullptr),
@@ -143,30 +143,6 @@ gdb::Link::InitFlags()
 }
 
 /******************************************************************************
- GetPrompt
-
- ******************************************************************************/
-
-const JString&
-gdb::Link::GetPrompt()
-	const
-{
-	return JGetString("Prompt::GDBLink");
-}
-
-/******************************************************************************
- GetScriptPrompt
-
- ******************************************************************************/
-
-const JString&
-gdb::Link::GetScriptPrompt()
-	const
-{
-	return JGetString("ScriptPrompt::GDBLink");
-}
-
-/******************************************************************************
  DebuggerHasStarted
 
  ******************************************************************************/
@@ -176,18 +152,6 @@ gdb::Link::DebuggerHasStarted()
 	const
 {
 	return itsHasStartedFlag;
-}
-
-/******************************************************************************
- GetChooseProgramInstructions
-
- ******************************************************************************/
-
-JString
-gdb::Link::GetChooseProgramInstructions()
-	const
-{
-	return JGetString("ChooseProgramInstr::GDBLink");
 }
 
 /******************************************************************************
@@ -598,10 +562,16 @@ gdb::Link::ReadFromDebugger()
 		{
 			if (itsChildProcess == nullptr)	// ask user for PID
 			{
-				auto* dialog =
-					jnew ChooseProcessDialog(JXGetApplication(), false);
-				assert( dialog != nullptr );
-				dialog->BeginDialog();
+				auto* dlog = jnew ChooseProcessDialog();
+				assert( dlog != nullptr );
+				if (dlog->DoDialog())
+				{
+					JInteger pid;
+					const bool ok = dlog->GetProcessID(&pid);
+					assert( ok );
+
+					ProgramStarted(pid);
+				}
 			}
 		}
 
@@ -2206,10 +2176,17 @@ gdb::Link::StopProgram()
 //	}
 	else
 	{
-		auto* dlog =
-			jnew ChooseProcessDialog(JXGetApplication(), false, true);
+		auto* dlog = jnew ChooseProcessDialog();
 		assert( dlog != nullptr );
-		dlog->BeginDialog();
+		if (dlog->DoDialog())
+		{
+			JInteger pid;
+			const bool ok = dlog->GetProcessID(&pid);
+			assert( ok );
+
+			ProgramStarted(pid);
+			StopProgram();
+		}
 	}
 }
 

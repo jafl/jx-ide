@@ -8,10 +8,10 @@
 #include "globals.h"
 #include "DockManager.h"
 #include "FnMenuUpdater.h"
-#include "gdb/GDBLink.h"
-#include "lldb/LLDBLink.h"
-#include "jvm/JVMLink.h"
-#include "xdebug/XDLink.h"
+#include "GDBLink.h"
+#include "LLDBLink.h"
+#include "JVMLink.h"
+#include "XDLink.h"
 #include "CommandDirector.h"
 #include <jx-af/jx/JXWDManager.h>
 #include <jx-af/jx/JXPSPrinter.h>
@@ -32,7 +32,7 @@ static JXPSPrinter*			thePSPrinter		= nullptr;
 static JX2DPlotEPSPrinter*	thePlotEPSPrinter	= nullptr;
 static FnMenuUpdater*		theFnMenuUpdater	= nullptr;
 
-static Link*				theLink   = nullptr;
+static Link*			theLink   = nullptr;
 static CommandDirector*	theCmdDir = nullptr;
 
 // owned by JXImageCache
@@ -167,15 +167,24 @@ DeleteGlobals()
 
 	JXGetDockManager()->JPrefObject::WritePrefs();
 
-	thePrefsManager->WritePrinterSetup(theTextPrinter);
+	if (thePrefsManager != nullptr)
+	{
+		thePrefsManager->WritePrinterSetup(theTextPrinter);
+	}
 	jdelete theTextPrinter;
 	theTextPrinter = nullptr;
 
-	thePrefsManager->WritePrinterSetup(thePSPrinter);
+	if (thePrefsManager != nullptr)
+	{
+		thePrefsManager->WritePrinterSetup(thePSPrinter);
+	}
 	jdelete thePSPrinter;
 	thePSPrinter = nullptr;
 
-	thePrefsManager->WritePrinterSetup(thePlotEPSPrinter);
+	if (thePrefsManager != nullptr)
+	{
+		thePrefsManager->WritePrinterSetup(thePlotEPSPrinter);
+	}
 	jdelete thePlotEPSPrinter;
 	thePlotEPSPrinter = nullptr;
 
@@ -288,6 +297,17 @@ GetApplication()
 }
 
 /******************************************************************************
+ HasPrefsManager
+
+ ******************************************************************************/
+
+bool
+HasPrefsManager()
+{
+	return thePrefsManager != nullptr;
+}
+
+/******************************************************************************
  GetPrefsManager
 
  ******************************************************************************/
@@ -297,6 +317,19 @@ GetPrefsManager()
 {
 	assert( thePrefsManager != nullptr );
 	return thePrefsManager;
+}
+
+/******************************************************************************
+ ForgetPrefsManager
+
+	Called when license is not accepted, to avoid writing prefs file.
+
+ ******************************************************************************/
+
+void
+ForgetPrefsManager()
+{
+	thePrefsManager = nullptr;
 }
 
 /******************************************************************************

@@ -38,20 +38,19 @@ RunProgramTask::~RunProgramTask()
 }
 
 /******************************************************************************
- Perform
+ Perform (virtual protected)
 
  ******************************************************************************/
 
 void
 RunProgramTask::Perform
 	(
-	const Time	delta,
-	Time*		maxSleepTime
+	const Time delta
 	)
 {
 	if (!GetLink()->HasPendingCommands())
 	{
-		(GetCommandDirector())->RunProgram();
+		GetCommandDirector()->RunProgram();
 		jdelete this;
 	}
 }

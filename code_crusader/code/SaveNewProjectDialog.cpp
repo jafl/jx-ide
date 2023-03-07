@@ -1,15 +1,16 @@
 /******************************************************************************
- NewProjectSaveFileDialog.cpp
+ SaveNewProjectDialog.cpp
 
-	BASE CLASS = JXSaveFileDialog
+	BASE CLASS = JXSaveFileDialog, JPrefObject
 
 	Copyright © 2000 by John Lindal.
 
  ******************************************************************************/
 
-#include "NewProjectSaveFileDialog.h"
+#include "SaveNewProjectDialog.h"
 #include "ProjectDocument.h"
 #include "BuildManager.h"
+#include "globals.h"
 #include <jx-af/jx/JXWindow.h>
 #include <jx-af/jx/JXStaticText.h>
 #include <jx-af/jx/JXSaveFileInput.h>
@@ -22,7 +23,6 @@
 #include <jx-af/jx/JXCurrentPathMenu.h>
 #include <jx-af/jx/JXScrollbarSet.h>
 #include <jx-af/jx/JXNewDirButton.h>
-#include <jx-af/jx/jXGlobals.h>
 #include <jx-af/jcore/JDirInfo.h>
 #include <jx-af/jcore/jDirUtil.h>
 #include <jx-af/jcore/jFileUtil.h>
@@ -37,29 +37,30 @@ enum
 	kNoTemplateCmd = 1
 };
 
+// setup information
+
+const JFileVersion kCurrentSetupVersion = 1;
+
+	// version  1 stores itsProjectTemplate
+
 /******************************************************************************
  Constructor function (static)
 
  ******************************************************************************/
 
-NewProjectSaveFileDialog*
-NewProjectSaveFileDialog::Create
+SaveNewProjectDialog*
+SaveNewProjectDialog::Create
 	(
-	JXDirector*								supervisor,
-	JDirInfo*								dirInfo,
-	const JString&							fileFilter,
-	const JString&							templateFile,
-	const BuildManager::MakefileMethod	method,
-	const JString&							origName,
-	const JString&							prompt,
-	const JString&							message
+	const JString&	prompt,
+	const JString&	startName,
+	const JString&	fileFilter,
+	const JString&	message
 	)
 {
-	auto* dlog =
-		jnew NewProjectSaveFileDialog(supervisor, dirInfo, fileFilter, method);
+	auto* dlog = jnew SaveNewProjectDialog(fileFilter);
 	assert( dlog != nullptr );
-	dlog->BuildWindow(origName, prompt, message);
-	dlog->BuildTemplateMenu(templateFile);
+	dlog->BuildWindow(startName, prompt, message);
+	dlog->BuildTemplateMenu();
 	return dlog;
 }
 
@@ -68,17 +69,16 @@ NewProjectSaveFileDialog::Create
 
  ******************************************************************************/
 
-NewProjectSaveFileDialog::NewProjectSaveFileDialog
+SaveNewProjectDialog::SaveNewProjectDialog
 	(
-	JXDirector*								supervisor,
-	JDirInfo*								dirInfo,
-	const JString&							fileFilter,
-	const BuildManager::MakefileMethod	method
+	const JString& fileFilter
 	)
 	:
-	JXSaveFileDialog(supervisor, dirInfo, fileFilter)
+	JXSaveFileDialog(fileFilter),
+	JPrefObject(GetPrefsManager(), kNewProjectCSFID),
+	itsMakefileMethod(BuildManager::kMakemake)
 {
-	itsMakefileMethod = method;
+	JPrefObject::ReadPrefs();
 }
 
 /******************************************************************************
@@ -86,19 +86,18 @@ NewProjectSaveFileDialog::NewProjectSaveFileDialog
 
  ******************************************************************************/
 
-NewProjectSaveFileDialog::~NewProjectSaveFileDialog()
+SaveNewProjectDialog::~SaveNewProjectDialog()
 {
+	JPrefObject::WritePrefs();
 }
 
 /******************************************************************************
  GetMakefileMethod
 
-	itsMakefileMethod is only stored for use by BuildWindow().
-
  ******************************************************************************/
 
 BuildManager::MakefileMethod
-NewProjectSaveFileDialog::GetMakefileMethod()
+SaveNewProjectDialog::GetMakefileMethod()
 	const
 {
 	return (BuildManager::MakefileMethod) itsMethodRG->GetSelectedItem();
@@ -110,11 +109,11 @@ NewProjectSaveFileDialog::GetMakefileMethod()
  ******************************************************************************/
 
 void
-NewProjectSaveFileDialog::BuildWindow
+SaveNewProjectDialog::BuildWindow
 	(
-	const JString& origName,
-	const JString& prompt,
-	const JString& message
+	const JString&	startName,
+	const JString&	prompt,
+	const JString&	message
 	)
 {
 // begin JXLayout
@@ -128,23 +127,23 @@ NewProjectSaveFileDialog::BuildWindow
 	assert( scrollbarSet != nullptr );
 
 	auto* saveButton =
-		jnew JXTextButton(JGetString("saveButton::NewProjectSaveFileDialog::JXLayout"), window,
+		jnew JXTextButton(JGetString("saveButton::SaveNewProjectDialog::JXLayout"), window,
 					JXWidget::kFixedRight, JXWidget::kFixedBottom, 220,280, 70,20);
 	assert( saveButton != nullptr );
-	saveButton->SetShortcuts(JGetString("saveButton::NewProjectSaveFileDialog::shortcuts::JXLayout"));
+	saveButton->SetShortcuts(JGetString("saveButton::SaveNewProjectDialog::shortcuts::JXLayout"));
 
 	auto* cancelButton =
-		jnew JXTextButton(JGetString("cancelButton::NewProjectSaveFileDialog::JXLayout"), window,
+		jnew JXTextButton(JGetString("cancelButton::SaveNewProjectDialog::JXLayout"), window,
 					JXWidget::kFixedRight, JXWidget::kFixedBottom, 220,310, 70,20);
 	assert( cancelButton != nullptr );
 
 	auto* homeButton =
-		jnew JXTextButton(JGetString("homeButton::NewProjectSaveFileDialog::JXLayout"), window,
+		jnew JXTextButton(JGetString("homeButton::SaveNewProjectDialog::JXLayout"), window,
 					JXWidget::kFixedRight, JXWidget::kFixedBottom, 250,140, 40,20);
 	assert( homeButton != nullptr );
 
 	auto* pathLabel =
-		jnew JXStaticText(JGetString("pathLabel::NewProjectSaveFileDialog::JXLayout"), window,
+		jnew JXStaticText(JGetString("pathLabel::SaveNewProjectDialog::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 20,20, 40,20);
 	assert( pathLabel != nullptr );
 	pathLabel->SetToLabel();
@@ -160,18 +159,18 @@ NewProjectSaveFileDialog::BuildWindow
 	assert( pathInput != nullptr );
 
 	auto* showHiddenCB =
-		jnew JXTextCheckbox(JGetString("showHiddenCB::NewProjectSaveFileDialog::JXLayout"), window,
+		jnew JXTextCheckbox(JGetString("showHiddenCB::SaveNewProjectDialog::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 60,80, 130,20);
 	assert( showHiddenCB != nullptr );
 
 	auto* promptLabel =
-		jnew JXStaticText(JGetString("promptLabel::NewProjectSaveFileDialog::JXLayout"), window,
+		jnew JXStaticText(JGetString("promptLabel::SaveNewProjectDialog::JXLayout"), window,
 					JXWidget::kHElastic, JXWidget::kFixedBottom, 20,290, 180,20);
 	assert( promptLabel != nullptr );
 	promptLabel->SetToLabel();
 
 	auto* filterLabel =
-		jnew JXStaticText(JGetString("filterLabel::NewProjectSaveFileDialog::JXLayout"), window,
+		jnew JXStaticText(JGetString("filterLabel::SaveNewProjectDialog::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 20,50, 40,20);
 	assert( filterLabel != nullptr );
 	filterLabel->SetToLabel();
@@ -182,7 +181,7 @@ NewProjectSaveFileDialog::BuildWindow
 	assert( filterInput != nullptr );
 
 	auto* makefileTitle =
-		jnew JXStaticText(JGetString("makefileTitle::NewProjectSaveFileDialog::JXLayout"), window,
+		jnew JXStaticText(JGetString("makefileTitle::SaveNewProjectDialog::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 20,420, 140,20);
 	assert( makefileTitle != nullptr );
 	makefileTitle->SetToLabel();
@@ -193,17 +192,17 @@ NewProjectSaveFileDialog::BuildWindow
 	assert( itsMethodRG != nullptr );
 
 	auto* manualRB =
-		jnew JXTextRadioButton(BuildManager::kManual, JGetString("manualRB::NewProjectSaveFileDialog::JXLayout"), itsMethodRG,
+		jnew JXTextRadioButton(BuildManager::kManual, JGetString("manualRB::SaveNewProjectDialog::JXLayout"), itsMethodRG,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,10, 110,20);
 	assert( manualRB != nullptr );
 
 	auto* qmakeRB =
-		jnew JXTextRadioButton(BuildManager::kQMake, JGetString("qmakeRB::NewProjectSaveFileDialog::JXLayout"), itsMethodRG,
+		jnew JXTextRadioButton(BuildManager::kQMake, JGetString("qmakeRB::SaveNewProjectDialog::JXLayout"), itsMethodRG,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,70, 110,20);
 	assert( qmakeRB != nullptr );
 
 	auto* makemakeRB =
-		jnew JXTextRadioButton(BuildManager::kMakemake, JGetString("makemakeRB::NewProjectSaveFileDialog::JXLayout"), itsMethodRG,
+		jnew JXTextRadioButton(BuildManager::kMakemake, JGetString("makemakeRB::SaveNewProjectDialog::JXLayout"), itsMethodRG,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,30, 110,20);
 	assert( makemakeRB != nullptr );
 
@@ -218,7 +217,7 @@ NewProjectSaveFileDialog::BuildWindow
 	assert( filterHistory != nullptr );
 
 	auto* upButton =
-		jnew JXTextButton(JGetString("upButton::NewProjectSaveFileDialog::JXLayout"), window,
+		jnew JXTextButton(JGetString("upButton::SaveNewProjectDialog::JXLayout"), window,
 					JXWidget::kFixedRight, JXWidget::kFixedBottom, 220,140, 30,20);
 	assert( upButton != nullptr );
 
@@ -233,28 +232,28 @@ NewProjectSaveFileDialog::BuildWindow
 	assert( currPathMenu != nullptr );
 
 	itsTemplateMenu =
-		jnew JXTextMenu(JGetString("itsTemplateMenu::NewProjectSaveFileDialog::JXLayout"), window,
+		jnew JXTextMenu(JGetString("itsTemplateMenu::SaveNewProjectDialog::JXLayout"), window,
 					JXWidget::kHElastic, JXWidget::kFixedBottom, 20,350, 270,30);
 	assert( itsTemplateMenu != nullptr );
 
 	auto* cmakeRB =
-		jnew JXTextRadioButton(BuildManager::kCMake, JGetString("cmakeRB::NewProjectSaveFileDialog::JXLayout"), itsMethodRG,
+		jnew JXTextRadioButton(BuildManager::kCMake, JGetString("cmakeRB::SaveNewProjectDialog::JXLayout"), itsMethodRG,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,50, 110,20);
 	assert( cmakeRB != nullptr );
 
 	auto* desktopButton =
-		jnew JXTextButton(JGetString("desktopButton::NewProjectSaveFileDialog::JXLayout"), window,
+		jnew JXTextButton(JGetString("desktopButton::SaveNewProjectDialog::JXLayout"), window,
 					JXWidget::kFixedRight, JXWidget::kFixedBottom, 220,160, 70,20);
 	assert( desktopButton != nullptr );
 
 // end JXLayout
 
-	SetObjects(scrollbarSet, promptLabel, prompt, fileNameInput, origName,
+	SetObjects(scrollbarSet, promptLabel, prompt, fileNameInput,
 			   pathLabel, pathInput, pathHistory,
 			   filterLabel, filterInput, filterHistory,
 			   saveButton, cancelButton, upButton, homeButton,
 			   desktopButton, newDirButton,
-			   showHiddenCB, currPathMenu, message);
+			   showHiddenCB, currPathMenu, startName, message);
 
 	itsMethodRG->SelectItem(itsMakefileMethod);
 }
@@ -265,10 +264,7 @@ NewProjectSaveFileDialog::BuildWindow
  ******************************************************************************/
 
 void
-NewProjectSaveFileDialog::BuildTemplateMenu
-	(
-	const JString& templateFile
-	)
+SaveNewProjectDialog::BuildTemplateMenu()
 {
 	itsTemplateIndex = kNoTemplateCmd;
 
@@ -285,8 +281,8 @@ NewProjectSaveFileDialog::BuildTemplateMenu
 									&sysDir, &userDir))
 	{
 		JString* menuTextStr = nullptr;
-		BuildTemplateMenuItems(sysDir,  false, &menuText, templateFile, &menuTextStr);
-		BuildTemplateMenuItems(userDir, true,  &menuText, templateFile, &menuTextStr);
+		BuildTemplateMenuItems(sysDir,  false, &menuText, &menuTextStr);
+		BuildTemplateMenuItems(userDir, true,  &menuText, &menuTextStr);
 
 		const JSize count = menuText.GetElementCount();
 		JString itemText, nmShortcut;
@@ -332,12 +328,11 @@ NewProjectSaveFileDialog::BuildTemplateMenu
  ******************************************************************************/
 
 void
-NewProjectSaveFileDialog::BuildTemplateMenuItems
+SaveNewProjectDialog::BuildTemplateMenuItems
 	(
 	const JString&		path,
-	const bool		isUserPath,
+	const bool			isUserPath,
 	JPtrArray<JString>*	menuText,
-	const JString&		templateFile,
 	JString**			menuTextStr
 	)
 	const
@@ -359,18 +354,18 @@ NewProjectSaveFileDialog::BuildTemplateMenuItems
 
 				if (isUserPath)
 				{
-					*s += JGetString("UserTemplateMarker::NewProjectSaveFileDialog");
+					*s += JGetString("UserTemplateMarker::SaveNewProjectDialog");
 				}
 				else
 				{
-					*s += JGetString("SysTemplateMarker::NewProjectSaveFileDialog");
+					*s += JGetString("SysTemplateMarker::SaveNewProjectDialog");
 				}
 
 				menuText->InsertSorted(s);
 
 				// save item corresponding to initial template selection
 
-				if (JSameDirEntry(templateFile, fullName))
+				if (JSameDirEntry(itsProjectTemplate, fullName))
 				{
 					*menuTextStr = s;
 				}
@@ -385,7 +380,7 @@ NewProjectSaveFileDialog::BuildTemplateMenuItems
  ******************************************************************************/
 
 bool
-NewProjectSaveFileDialog::GetProjectTemplate
+SaveNewProjectDialog::GetProjectTemplate
 	(
 	JString* fullName
 	)
@@ -407,7 +402,7 @@ NewProjectSaveFileDialog::GetProjectTemplate
 									&sysDir, &userDir);
 
 		*fullName = JCombinePathAndName(
-			nmShortcut == JGetString("UserTemplateMarker::NewProjectSaveFileDialog") ? userDir : sysDir,
+			nmShortcut == JGetString("UserTemplateMarker::SaveNewProjectDialog") ? userDir : sysDir,
 			itsTemplateMenu->GetItemText(itsTemplateIndex));
 		return true;
 	}
@@ -419,7 +414,7 @@ NewProjectSaveFileDialog::GetProjectTemplate
  ******************************************************************************/
 
 void
-NewProjectSaveFileDialog::Receive
+SaveNewProjectDialog::Receive
 	(
 	JBroadcaster*	sender,
 	const Message&	message
@@ -450,7 +445,7 @@ NewProjectSaveFileDialog::Receive
  ******************************************************************************/
 
 void
-NewProjectSaveFileDialog::UpdateMakefileMethod()
+SaveNewProjectDialog::UpdateMakefileMethod()
 {
 	itsMethodRG->SetActive(itsTemplateIndex == kNoTemplateCmd );
 }
@@ -461,7 +456,7 @@ NewProjectSaveFileDialog::UpdateMakefileMethod()
  ******************************************************************************/
 
 bool
-NewProjectSaveFileDialog::OKToDeactivate()
+SaveNewProjectDialog::OKToDeactivate()
 {
 	if (!JXSaveFileDialog::OKToDeactivate())
 	{
@@ -494,9 +489,8 @@ NewProjectSaveFileDialog::OKToDeactivate()
 
 	if (method == BuildManager::kCMake)
 	{
-		JString projFileName, projRoot, projSuffix;
-		GetFileName(&projFileName);
-		JSplitRootAndSuffix(projFileName, &projRoot, &projSuffix);
+		JString projRoot, projSuffix;
+		JSplitRootAndSuffix(GetFileName(), &projRoot, &projSuffix);
 
 		const JString cmakeInputName = BuildManager::GetCMakeInputName(GetPath());
 		if (JFileExists(cmakeInputName) &&
@@ -510,9 +504,8 @@ NewProjectSaveFileDialog::OKToDeactivate()
 
 	if (method == BuildManager::kQMake)
 	{
-		JString projFileName, projRoot, projSuffix;
-		GetFileName(&projFileName);
-		JSplitRootAndSuffix(projFileName, &projRoot, &projSuffix);
+		JString projRoot, projSuffix;
+		JSplitRootAndSuffix(GetFileName(), &projRoot, &projSuffix);
 
 		const JString qmakeInputName = BuildManager::GetQMakeInputName(GetPath(), projRoot);
 		if (JFileExists(qmakeInputName) &&
@@ -547,7 +540,7 @@ NewProjectSaveFileDialog::OKToDeactivate()
  ******************************************************************************/
 
 bool
-NewProjectSaveFileDialog::OKToReplaceFile
+SaveNewProjectDialog::OKToReplaceFile
 	(
 	const JString& fullName,
 	const JString& programName
@@ -561,7 +554,53 @@ NewProjectSaveFileDialog::OKToReplaceFile
 		"file",   name.GetBytes(),
 		"method", programName.GetBytes()
 	};
-	const JString msg = JGetString("WarnFileExists::NewProjectSaveFileDialog", map, sizeof(map));
+	const JString msg = JGetString("WarnFileExists::SaveNewProjectDialog", map, sizeof(map));
 
 	return JGetUserNotification()->AskUserNo(msg);
+}
+
+/******************************************************************************
+ ReadPrefs (virtual)
+
+	Intentional override of JXChooseSaveFile::ReadPrefs().
+
+ ******************************************************************************/
+
+void
+SaveNewProjectDialog::ReadPrefs
+	(
+	std::istream& input
+	)
+{
+	JFileVersion vers;
+	input >> vers;
+	if (vers <= kCurrentSetupVersion)
+	{
+		if (vers >= 1)
+		{
+			input >> itsProjectTemplate;
+		}
+
+		input >> itsMakefileMethod;
+	}
+}
+
+/******************************************************************************
+ WritePrefs (virtual)
+
+	Intentional override of JXChooseSaveFile::WritePrefs().
+
+ ******************************************************************************/
+
+void
+SaveNewProjectDialog::WritePrefs
+	(
+	std::ostream& output
+	)
+	const
+{
+	output << ' ' << kCurrentSetupVersion;
+	output << ' ' << itsProjectTemplate;
+	output << ' ' << itsMakefileMethod;
+	output << ' ';
 }

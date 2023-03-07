@@ -1,7 +1,7 @@
 /******************************************************************************
  TabWidthDialog.cpp
 
-	BASE CLASS = JXDialogDirector
+	BASE CLASS = JXModalDialogDirector
 
 	Copyright © 2004 by John Lindal.
 
@@ -22,11 +22,10 @@
 
 TabWidthDialog::TabWidthDialog
 	(
-	JXWindowDirector*	supervisor,
-	const JSize			tabWidth
+	const JSize tabWidth
 	)
 	:
-	JXDialogDirector(supervisor, true)
+	JXModalDialogDirector()
 {
 	BuildWindow(tabWidth);
 }

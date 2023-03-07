@@ -20,12 +20,14 @@ ClearSourceDisplayTask::ClearSourceDisplayTask
 	(
 	SourceDirector* dir
 	)
+	:
+	JXUrgentTask(dir),
+	itsDirector(dir)
 {
-	itsDirector = dir;
 }
 
 /******************************************************************************
- Destructor
+ Destructor (protected)
 
  ******************************************************************************/
 
@@ -34,7 +36,7 @@ ClearSourceDisplayTask::~ClearSourceDisplayTask()
 }
 
 /******************************************************************************
- Perform
+ Perform (virtual protected)
 
  ******************************************************************************/
 

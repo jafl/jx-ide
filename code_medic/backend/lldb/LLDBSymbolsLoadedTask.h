@@ -19,6 +19,8 @@ public:
 
 	SymbolsLoadedTask(const JString& fileName);
 
+protected:
+
 	~SymbolsLoadedTask() override;
 
 	void	Perform() override;

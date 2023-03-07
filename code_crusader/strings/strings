@@ -81,7 +81,6 @@ CannotReadFile::DocumentManager			"You do not have permission to read \"$f\""
 
 WarnFileTooLarge::DocumentManager	"\"$f\" is larger than 5MB, so it may take a while to open it, and syntax hilighting may be disabled.  Do you wish to proceed?"
 
-OpenFilesPrompt::DocumentManager		"Files to open:"
 OpeningFilesProgress::DocumentManager	"Opening files..."
 NewFilePrompt::DocumentManager			"Name of new file:"
 SaveNewFilePrompt::DocumentManager		"Save file as:"
@@ -223,12 +222,12 @@ PrintHeader::ProjectDocument
 Project path:  $path
 "
 
-# NewProjectSaveFileDialog
+# SaveNewProjectDialog
 
-UserTemplateMarker::NewProjectSaveFileDialog	" (personal)"
-SysTemplateMarker::NewProjectSaveFileDialog		" (global)"
+UserTemplateMarker::SaveNewProjectDialog	" (personal)"
+SysTemplateMarker::SaveNewProjectDialog		" (global)"
 
-WarnFileExists::NewProjectSaveFileDialog
+WarnFileExists::SaveNewProjectDialog
 "$file already exists.  Are you sure you want to have it overwritten by $method?"
 
 # EditProjPrefsDialog
@@ -989,7 +988,9 @@ InvertFlag::SearchFilterHistoryMenu	"(invert)"
 
 # SearchTE
 
-NotSearchedBinary::SearchTE	"Not searched (binary):  "
+NotFound::SearchTE			"Not found:  $n"
+NotReadable::SearchTE		"Not readable:  $n"
+NotSearchedBinary::SearchTE	"Not searched (binary):  $n"
 
 # ExtEditorDialog
 

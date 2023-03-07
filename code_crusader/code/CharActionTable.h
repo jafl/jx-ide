@@ -11,7 +11,6 @@
 #include "KeyScriptTableBase.h"
 
 class CharActionManager;
-class ListCSF;
 
 class CharActionTable : public KeyScriptTableBase
 {
@@ -46,7 +45,6 @@ protected:
 
 private:
 
-	ListCSF*		itsCSF;
 	JXTextButton*	itsLoadButton;
 	JXTextButton*	itsSaveButton;
 

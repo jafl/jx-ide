@@ -1,7 +1,7 @@
 /******************************************************************************
  EditCommandsDialog.cpp
 
-	BASE CLASS = JXDialogDirector, JPrefObject
+	BASE CLASS = JXModalDialogDirector, JPrefObject
 
 	Copyright © 2001 by John Lindal.
 
@@ -38,13 +38,12 @@ EditCommandsDialog::EditCommandsDialog
 	ProjectDocument* projDoc
 	)
 	:
-	JXDialogDirector(JXGetApplication(), true),
+	JXModalDialogDirector(true),
 	JPrefObject(GetPrefsManager(), kEditCommandsDialogID),
 	itsCmdMgr(projDoc == nullptr ? nullptr : projDoc->GetCommandManager())
 {
 	BuildWindow(projDoc);
 	JPrefObject::ReadPrefs();
-	ListenTo(this);
 }
 
 /******************************************************************************
@@ -55,6 +54,29 @@ EditCommandsDialog::EditCommandsDialog
 EditCommandsDialog::~EditCommandsDialog()
 {
 	JPrefObject::WritePrefs();
+}
+
+/******************************************************************************
+ UpdateCommands
+
+ ******************************************************************************/
+
+void
+EditCommandsDialog::UpdateCommands()
+{
+	itsAllTable->GetCommandList(GetCommandManager()->GetCommandList());
+	GetCommandManager()->UpdateMenuIDs();
+
+	if (itsCmdMgr != nullptr)
+	{
+		assert( itsMakeDependCmd != nullptr );
+		itsCmdMgr->SetMakeDependCommand(itsMakeDependCmd->GetText()->GetText());
+
+		assert( itsThisTable != nullptr );
+		itsThisTable->GetCommandList(itsCmdMgr->GetCommandList());
+	}
+
+	GetCommandManager()->UpdateAllCommandMenus();
 }
 
 /******************************************************************************
@@ -111,10 +133,8 @@ EditCommandsDialog::BuildWindow
 // end JXLayout
 
 	window->SetTitle(JGetString("WindowTitle::EditCommandsDialog"));
-	SetButtons(okButton, cancelButton);
-	UseModalPlacement(false);
-	window->PlaceAsDialogWindow();
 	window->LockCurrentMinSize();
+	SetButtons(okButton, cancelButton);
 
 	ListenTo(itsHelpButton);
 
@@ -322,37 +342,14 @@ EditCommandsDialog::Receive
 	const Message&	message
 	)
 {
-	if (sender == this && message.Is(JXDialogDirector::kDeactivated))
-	{
-		const auto* info =
-			dynamic_cast<const JXDialogDirector::Deactivated*>(&message);
-		assert( info != nullptr );
-		if (info->Successful())
-		{
-			itsAllTable->GetCommandList((GetCommandManager())->GetCommandList());
-			(GetCommandManager())->UpdateMenuIDs();
-
-			if (itsCmdMgr != nullptr)
-			{
-				assert( itsMakeDependCmd != nullptr );
-				itsCmdMgr->SetMakeDependCommand(itsMakeDependCmd->GetText()->GetText());
-
-				assert( itsThisTable != nullptr );
-				itsThisTable->GetCommandList(itsCmdMgr->GetCommandList());
-			}
-
-			(GetCommandManager())->UpdateAllCommandMenus();
-		}
-	}
-
-	else if (sender == itsHelpButton && message.Is(JXButton::kPushed))
+	if (sender == itsHelpButton && message.Is(JXButton::kPushed))
 	{
 		JXGetHelpManager()->ShowSection("TasksHelp");
 	}
 
 	else
 	{
-		JXDialogDirector::Receive(sender, message);
+		JXModalDialogDirector::Receive(sender, message);
 	}
 }
 

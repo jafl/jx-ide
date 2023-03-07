@@ -25,13 +25,14 @@ lldb::WelcomeTask::WelcomeTask
 	const bool		restart
 	)
 	:
+	JXUrgentTask(GetApplication()),
 	itsMessage(msg),
 	itsRestartFlag(restart)
 {
 }
 
 /******************************************************************************
- Destructor
+ Destructor (protected)
 
  ******************************************************************************/
 
@@ -40,7 +41,7 @@ lldb::WelcomeTask::~WelcomeTask()
 }
 
 /******************************************************************************
- Perform
+ Perform (virtual protected)
 
  ******************************************************************************/
 

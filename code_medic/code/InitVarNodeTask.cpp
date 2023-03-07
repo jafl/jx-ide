@@ -1,7 +1,7 @@
 /******************************************************************************
  InitVarNodeTask.cpp
 
-	BASE CLASS = JXUrgentTask, virtual JBroadcaster
+	BASE CLASS = JXUrgentTask
 
 	Copyright (C) 2008 by John Lindal.
 
@@ -9,7 +9,6 @@
 
 #include "InitVarNodeTask.h"
 #include "VarNode.h"
-#include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
  Constructor
@@ -20,13 +19,14 @@ InitVarNodeTask::InitVarNodeTask
 	(
 	VarNode* node
 	)
+	:
+	JXUrgentTask(node),
+	itsNode(node)
 {
-	itsNode = node;
-	ClearWhenGoingAway(itsNode, &itsNode);
 }
 
 /******************************************************************************
- Destructor
+ Destructor (protected)
 
  ******************************************************************************/
 
@@ -35,15 +35,12 @@ InitVarNodeTask::~InitVarNodeTask()
 }
 
 /******************************************************************************
- Perform
+ Perform (virtual protected)
 
  ******************************************************************************/
 
 void
 InitVarNodeTask::Perform()
 {
-	if (itsNode != nullptr)
-	{
-		itsNode->NameChanged();
-	}
+	itsNode->NameChanged();
 }

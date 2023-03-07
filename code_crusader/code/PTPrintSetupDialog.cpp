@@ -8,6 +8,7 @@
  ******************************************************************************/
 
 #include "PTPrintSetupDialog.h"
+#include "PTPrinter.h"
 #include <jx-af/jx/JXWindow.h>
 #include <jx-af/jx/JXTextButton.h>
 #include <jx-af/jx/JXStaticText.h>
@@ -57,18 +58,6 @@ PTPrintSetupDialog::PTPrintSetupDialog()
 
 PTPrintSetupDialog::~PTPrintSetupDialog()
 {
-}
-
-/******************************************************************************
- ShouldPrintHeader
-
- ******************************************************************************/
-
-bool
-PTPrintSetupDialog::ShouldPrintHeader()
-	const
-{
-	return itsPrintHeaderCB->IsChecked();
 }
 
 /******************************************************************************
@@ -201,4 +190,30 @@ PTPrintSetupDialog::BuildWindow
 			   printLineNumbersCB, printLineNumbers);
 
 	itsPrintHeaderCB->SetState(printHeader);
+}
+
+/******************************************************************************
+ SetParameters (virtual)
+
+ ******************************************************************************/
+
+bool
+PTPrintSetupDialog::SetParameters
+	(
+	JXPTPrinter* p
+	)
+	const
+{
+	bool changed = JXPTPrintSetupDialog::SetParameters(p);
+
+	auto* p1 = dynamic_cast<PTPrinter*>(p);
+	if (p1 != nullptr)
+	{
+		const bool printHeader = itsPrintHeaderCB->IsChecked();
+
+		changed = changed || p1->WillPrintHeader() != printHeader;
+		p1->ShouldPrintHeader(printHeader);
+	}
+
+	return changed;
 }

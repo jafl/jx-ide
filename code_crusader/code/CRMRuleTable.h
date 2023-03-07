@@ -16,7 +16,6 @@
 class JXTextButton;
 class JXColHeaderWidget;
 class EditCRMDialog;
-class ListCSF;
 
 class CRMRuleTable : public JXStringTable
 {
@@ -74,7 +73,6 @@ private:
 	JXTextButton*	itsAddRowButton;
 	JXTextButton*	itsRemoveRowButton;
 
-	ListCSF*		itsCSF;
 	JXTextButton*	itsLoadButton;
 	JXTextButton*	itsSaveButton;
 

@@ -4,16 +4,17 @@
 	We cannot do this inside ProjectDocument::SymbolUpdateProgress()
 	because the ACE reactor is not re-entrant.
 
-	BASE CLASS = JXUrgentTask, virtual JBroadcaster
+	BASE CLASS = JXUrgentTask
 
 	Copyright © 2007 by John Lindal.
 
  ******************************************************************************/
 
 #include "WaitForSymbolUpdateTask.h"
-#include <jx-af/jx/JXApplication.h>
-#include <jx-af/jcore/JProcess.h>
+#include <jx-af/jcore/JThisProcess.h>
 #include <jx-af/jcore/jTime.h>
+#include <boost/fiber/operations.hpp>
+#include <chrono>
 #include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
@@ -26,14 +27,14 @@ WaitForSymbolUpdateTask::WaitForSymbolUpdateTask
 	JProcess* p
 	)
 	:
-	itsProcess(p)
+	JXUrgentTask(p),
+	itsProcess(p),
+	itsKeepWaitingFlag(true)
 {
-	itsKeepWaitingFlag = true;
-	ClearWhenGoingAway(itsProcess, &itsProcess);
 }
 
 /******************************************************************************
- Destructor
+ Destructor (protected)
 
  ******************************************************************************/
 
@@ -42,24 +43,26 @@ WaitForSymbolUpdateTask::~WaitForSymbolUpdateTask()
 }
 
 /******************************************************************************
- Perform
+ Perform (virtual protected)
 
  ******************************************************************************/
 
 void
 WaitForSymbolUpdateTask::Perform()
 {
-	const time_t start = time(nullptr);
+	const auto start = time(nullptr);
+	const auto delta = std::chrono::duration<long, std::deci>(1);
+
 	while (itsKeepWaitingFlag && itsProcess != nullptr)
 	{
+		JThisProcess::CheckACEReactor();
+		JProcess::CheckForFinishedChild(false);
+		boost::this_fiber::sleep_for(delta);
+
 		if (time(nullptr) - start > 30)
 		{
 			itsProcess->Kill();
 			break;
 		}
-
-		JWait(0.1);
-		JXApplication::CheckACEReactor();
-		JProcess::CheckForFinishedChild(false);
 	}
 }

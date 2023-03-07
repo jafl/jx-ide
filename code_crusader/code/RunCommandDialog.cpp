@@ -1,7 +1,7 @@
 /******************************************************************************
  RunCommandDialog.cpp
 
-	BASE CLASS = JXDialogDirector, JPrefObject
+	BASE CLASS = JXModalDialogDirector, JPrefObject
 
 	Copyright © 2002 by John Lindal.
 
@@ -19,7 +19,7 @@
 #include <jx-af/jx/JXTextCheckbox.h>
 #include <jx-af/jx/JXDocumentMenu.h>
 #include <jx-af/jx/JXPathHistoryMenu.h>
-#include <jx-af/jx/JXChooseSaveFile.h>
+#include <jx-af/jx/JXCSFDialogBase.h>
 #include <jx-af/jfs/JXFSRunFileDialog.h>
 #include <jx-af/jx/JXFontManager.h>
 #include <jx-af/jcore/jStreamUtil.h>
@@ -57,7 +57,7 @@ RunCommandDialog::RunCommandDialog
 	TextDocument*		textDoc
 	)
 	:
-	JXDialogDirector(JXGetApplication(), true),
+	JXModalDialogDirector(true),
 	JPrefObject(GetPrefsManager(), kRunCommandDialogID),
 	itsProjDoc(projDoc),
 	itsTextDoc(textDoc),
@@ -68,7 +68,6 @@ RunCommandDialog::RunCommandDialog
 
 	BuildWindow();
 	JPrefObject::ReadPrefs();
-	ListenTo(this);
 }
 
 RunCommandDialog::RunCommandDialog
@@ -78,7 +77,7 @@ RunCommandDialog::RunCommandDialog
 	const JArray<JIndex>&		lineIndexList
 	)
 	:
-	JXDialogDirector(JXGetApplication(), true),
+	JXModalDialogDirector(true),
 	JPrefObject(GetPrefsManager(), kRunCommandDialogID),
 	itsProjDoc(projDoc),
 	itsTextDoc(nullptr)
@@ -91,7 +90,6 @@ RunCommandDialog::RunCommandDialog
 
 	BuildWindow();
 	JPrefObject::ReadPrefs();
-	ListenTo(this);
 }
 
 /******************************************************************************
@@ -113,7 +111,7 @@ RunCommandDialog::~RunCommandDialog()
 void
 RunCommandDialog::Activate()
 {
-	JXDialogDirector::Activate();
+	JXModalDialogDirector::Activate();
 
 	if (IsActive())
 	{
@@ -239,10 +237,8 @@ RunCommandDialog::BuildWindow()
 // end JXLayout
 
 	window->SetTitle(JGetString("WindowTitle::RunCommandDialog"));
-	SetButtons(itsRunButton, cancelButton);
-	UseModalPlacement(false);
-	window->PlaceAsDialogWindow();
 	window->LockCurrentMinSize();
+	SetButtons(itsRunButton, cancelButton);
 
 	ListenTo(itsHelpButton);
 	ListenTo(itsChoosePathButton);
@@ -261,7 +257,7 @@ RunCommandDialog::BuildWindow()
 		itsPathInput->SetBasePath(itsProjDoc->GetFilePath());
 	}
 
-	itsCmdInput->GetText()->SetCharacterInWordFunction(JXChooseSaveFile::IsCharacterInWord);
+	itsCmdInput->GetText()->SetCharacterInWordFunction(JXCSFDialogBase::IsCharacterInWord);
 	ListenTo(itsCmdInput);
 
 	itsCmdInput->SetFont(JFontManager::GetDefaultMonospaceFont());
@@ -341,19 +337,7 @@ RunCommandDialog::Receive
 	const Message&	message
 	)
 {
-	if (sender == this && message.Is(JXDialogDirector::kDeactivated))
-	{
-		const auto* info =
-			dynamic_cast<const JXDialogDirector::Deactivated*>(&message);
-		assert( info != nullptr );
-		if (info->Successful())
-		{
-			Exec();
-			JPrefObject::WritePrefs();
-		}
-	}
-
-	else if (sender == itsHelpButton && message.Is(JXButton::kPushed))
+	if (sender == itsHelpButton && message.Is(JXButton::kPushed))
 	{
 		JXGetHelpManager()->ShowSection("TasksHelp");
 	}
@@ -401,7 +385,7 @@ RunCommandDialog::Receive
 
 	else
 	{
-		JXDialogDirector::Receive(sender, message);
+		JXModalDialogDirector::Receive(sender, message);
 	}
 }
 

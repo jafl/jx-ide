@@ -1,7 +1,7 @@
 /******************************************************************************
  EditFileTypesDialog.cpp
 
-	BASE CLASS = JXDialogDirector, JPrefObject
+	BASE CLASS = JXModalDialogDirector, JPrefObject
 
 	Copyright © 1998 by John Lindal.
 
@@ -30,15 +30,14 @@ const JFileVersion kCurrentSetupVersion = 0;
 
 EditFileTypesDialog::EditFileTypesDialog
 	(
-	JXDirector*										supervisor,
 	const JArray<PrefsManager::FileTypeInfo>&		fileTypeList,
 	const JArray<PrefsManager::MacroSetInfo>&		macroList,
 	const JArray<PrefsManager::CRMRuleListInfo>&	crmList,
-	const bool									execOutputWordWrap,
-	const bool									unknownTypeWordWrap
+	const bool										execOutputWordWrap,
+	const bool										unknownTypeWordWrap
 	)
 	:
-	JXDialogDirector(supervisor, true),
+	JXModalDialogDirector(true),
 	JPrefObject(GetPrefsManager(), kEditFileTypesDialogID)
 {
 	BuildWindow(fileTypeList, macroList, crmList,
@@ -67,8 +66,8 @@ EditFileTypesDialog::BuildWindow
 	const JArray<PrefsManager::FileTypeInfo>&		fileTypeList,
 	const JArray<PrefsManager::MacroSetInfo>&		macroList,
 	const JArray<PrefsManager::CRMRuleListInfo>&	crmList,
-	const bool									execOutputWordWrap,
-	const bool									unknownTypeWordWrap
+	const bool										execOutputWordWrap,
+	const bool										unknownTypeWordWrap
 	)
 {
 // begin JXLayout
@@ -128,10 +127,8 @@ EditFileTypesDialog::BuildWindow
 // end JXLayout
 
 	window->SetTitle(JGetString("WindowTitle::EditFileTypesDialog"));
-	SetButtons(okButton, cancelButton);
-	UseModalPlacement(false);
-	window->PlaceAsDialogWindow();
 	window->LockCurrentMinSize();
+	SetButtons(okButton, cancelButton);
 
 	ListenTo(itsHelpButton);
 
@@ -198,7 +195,7 @@ EditFileTypesDialog::Receive
 	}
 	else
 	{
-		JXDialogDirector::Receive(sender, message);
+		JXModalDialogDirector::Receive(sender, message);
 	}
 }
 

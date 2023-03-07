@@ -192,7 +192,7 @@ StackWidget::TableDrawCell
 			const auto* argNode =
 				dynamic_cast<const StackArgNode*>(node);
 			assert( argNode != nullptr );
-			p.String(rect, argNode->GetValue(), JPainter::kHAlignLeft, JPainter::kVAlignCenter);
+			p.String(rect, argNode->GetValue(), JPainter::HAlign::kLeft, JPainter::VAlign::kCenter);
 		}
 	}
 }

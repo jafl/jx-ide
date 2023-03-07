@@ -18,7 +18,7 @@
 #include "globals.h"
 #include "actionDefs.h"
 
-#include <jx-af/jx/JXChooseSaveFile.h>
+#include <jx-af/jx/JXChoosePathDialog.h>
 #include <jx-af/jx/JXColHeaderWidget.h>
 #include <jx-af/jx/JXColorManager.h>
 #include <jx-af/jx/JXHelpManager.h>
@@ -300,16 +300,18 @@ MainDirector::Receive
 {
 	if (sender == itsChooseButton && message.Is(JXButton::kPushed))
 	{
-		JString path;
-		if (itsDirInput != nullptr &&
-			JGetChooseSaveFile()->ChooseRWPath(JString::empty, JString::empty, itsDirInput->GetText()->GetText(), &path))
+		if (itsDirInput != nullptr)
 		{
-			itsDirInput->GetText()->SetText(path);
+			auto* dlog = JXChoosePathDialog::Create(JXChoosePathDialog::kAcceptReadable, itsDirInput->GetText()->GetText());
+			if (dlog->DoDialog())
+			{
+				itsDirInput->GetText()->SetText(dlog->GetPath());
+			}
 		}
 	}
 	else if (sender == itsHelpButton && message.Is(JXButton::kPushed))
 	{
-		(JXGetHelpManager())->ShowTOC();
+		JXGetHelpManager()->ShowTOC();
 	}
 	else if (sender == itsCancelButton && message.Is(JXButton::kPushed))
 	{
@@ -334,8 +336,6 @@ MainDirector::Receive
 		JXWindowDirector::Receive(sender, message);
 	}
 }
-
-
 
 /******************************************************************************
  ReadPrefs (virtual protected)

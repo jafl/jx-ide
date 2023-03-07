@@ -1,7 +1,7 @@
 /******************************************************************************
  EditProjPrefsDialog.cpp
 
-	BASE CLASS = JXDialogDirector
+	BASE CLASS = JXModalDialogDirector
 
 	Copyright © 1998 by John Lindal.
 
@@ -32,11 +32,10 @@ EditProjPrefsDialog::EditProjPrefsDialog
 	const ProjectTable::DropFileAction	dropFileAction
 	)
 	:
-	JXDialogDirector(GetApplication(), true)
+	JXModalDialogDirector()
 {
 	BuildWindow(reopenTextFiles, doubleSpaceCompile, rebuildMakefileDaily,
 				dropFileAction);
-	ListenTo(this);
 }
 
 /******************************************************************************
@@ -116,7 +115,7 @@ EditProjPrefsDialog::BuildWindow
 	dndPathLabel->SetToLabel();
 
 	auto* dndAskLabel =
-		jnew JXTextRadioButton(ProjectTable::kAskPathType, JGetString("dndAskLabel::EditProjPrefsDialog::JXLayout"), itsDropFileActionRG,
+		jnew JXTextRadioButton(ProjectTable::kDropAskPathType, JGetString("dndAskLabel::EditProjPrefsDialog::JXLayout"), itsDropFileActionRG,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,80, 180,20);
 	assert( dndAskLabel != nullptr );
 
@@ -155,30 +154,19 @@ EditProjPrefsDialog::Receive
 	const Message&	message
 	)
 {
-	if (sender == this && message.Is(JXDialogDirector::kDeactivated))
-	{
-		const auto* info =
-			dynamic_cast<const JXDialogDirector::Deactivated*>(&message);
-		assert( info != nullptr );
-		if (info->Successful())
-		{
-			UpdateSettings();
-		}
-	}
-
-	else if (sender == itsHelpButton && message.Is(JXButton::kPushed))
+	if (sender == itsHelpButton && message.Is(JXButton::kPushed))
 	{
 		JXGetHelpManager()->ShowSection("ProjectHelp-Prefs");
 	}
 
 	else
 	{
-		JXDialogDirector::Receive(sender, message);
+		JXModalDialogDirector::Receive(sender, message);
 	}
 }
 
 /******************************************************************************
- UpdateSettings (private)
+ UpdateSettings
 
  ******************************************************************************/
 
@@ -194,14 +182,9 @@ EditProjPrefsDialog::UpdateSettings()
 	const auto dropFileAction =
 		(ProjectTable::DropFileAction) itsDropFileActionRG->GetSelectedItem();
 
-	DocumentManager* docMgr             = GetDocumentManager();
-	JPtrArray<ProjectDocument>* docList = docMgr->GetProjectDocList();
-	const JSize docCount = docList->GetElementCount();
-
-	for (JIndex i=1; i<=docCount; i++)
+	for (auto* doc : *GetDocumentManager()->GetProjectDocList())
 	{
-		(docList->GetElement(i))->
-			SetProjectPrefs(reopenTextFiles, doubleSpaceCompile,
-							rebuildMakefileDaily, dropFileAction);
+		doc->SetProjectPrefs(reopenTextFiles, doubleSpaceCompile,
+							 rebuildMakefileDaily, dropFileAction);
 	}
 }

@@ -50,8 +50,6 @@ SymbolTypeList::SymbolTypeList
 
 SymbolTypeList::~SymbolTypeList()
 {
-	JPrefObject::WritePrefs();
-
 	jdelete itsSymbolTypeList;
 }
 

@@ -10,9 +10,6 @@
 
 #include <jx-af/jx/JXPTPrinter.h>
 #include <jx-af/jcore/JPrefObject.h>
-#include <jx-af/jcore/JString.h>
-
-class PTPrintSetupDialog;
 
 class PTPrinter : public JXPTPrinter, public JPrefObject
 {
@@ -42,15 +39,10 @@ protected:
 							   const JString& printCmd, const JString& fileName,
 							   const bool printLineNumbers) override;
 
-	bool	EndUserPrintSetup(const JBroadcaster::Message& message,
-							  bool* changed) override;
-
 private:
 
 	bool	itsPrintHeaderFlag;
 	JString	itsHeaderName;
-
-	PTPrintSetupDialog*	itsCBPrintSetupDialog;
 };
 
 
@@ -69,7 +61,7 @@ PTPrinter::SetHeaderName
 }
 
 /******************************************************************************
- SetHeaderName
+ WillPrintHeader
 
  ******************************************************************************/
 
@@ -78,15 +70,6 @@ PTPrinter::WillPrintHeader()
 	const
 {
 	return itsPrintHeaderFlag;
-}
-
-inline void
-PTPrinter::ShouldPrintHeader
-	(
-	const bool print
-	)
-{
-	itsPrintHeaderFlag = print;
 }
 
 #endif

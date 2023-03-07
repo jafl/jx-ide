@@ -1,7 +1,7 @@
 /******************************************************************************
  ExecOutputDocument.cpp
 
-	BASE CLASS = TextDocument
+	BASE CLASS = CommandOutputDocument
 
 	Copyright © 1997 by John Lindal.
 
@@ -10,7 +10,6 @@
 #include "ExecOutputDocument.h"
 #include "TextEditor.h"
 #include "CmdLineInput.h"
-#include "ExecOutputPostFTCTask.h"
 #include "globals.h"
 #include <jx-af/jx/JXDisplay.h>
 #include <jx-af/jx/JXWindow.h>
@@ -20,6 +19,7 @@
 #include <jx-af/jx/JXScrollbarSet.h>
 #include <jx-af/jcore/JOutPipeStream.h>
 #include <jx-af/jcore/JStringIterator.h>
+#include <jx-af/jcore/JThisProcess.h>
 #include <jx-af/jcore/jTextUtil.h>
 #include <jx-af/jcore/jDirUtil.h>
 #include <jx-af/jcore/jSignal.h>
@@ -29,10 +29,6 @@
 
 const JSize kMenuButtonWidth = 60;
 
-// JBroadcaster message types
-
-const JUtf8Byte* ExecOutputDocument::kFinished = "Finished::ExecOutputDocument";
-
 /******************************************************************************
  Constructor
 
@@ -41,58 +37,46 @@ const JUtf8Byte* ExecOutputDocument::kFinished = "Finished::ExecOutputDocument";
 ExecOutputDocument::ExecOutputDocument
 	(
 	const TextFileType	fileType,
-	const JUtf8Byte*		helpSectionName,
-	const bool			focusToCmd,
-	const bool			allowStop
+	const JUtf8Byte*	helpSectionName,
+	const bool			focusToCmd
 	)
 	:
-	TextDocument(fileType, helpSectionName, false, ConstructTextEditor),
+	CommandOutputDocument(fileType, helpSectionName, JGetString("WaitCloseMsg::ExecOutputDocument")),
+	itsProcess(nullptr),
+	itsReceivedDataFlag(false),
+	itsProcessPausedFlag(false),
+	itsClearWhenStartFlag(true),
+	itsRecordLink(nullptr),
+	itsDataLink(nullptr),
+	itsCmdStream(nullptr),
 	itsFocusToCmdFlag(focusToCmd)
 {
-	itsProcess            = nullptr;
-	itsRecordLink         = nullptr;
-	itsDataLink           = nullptr;
-	itsCmdStream          = nullptr;
-	itsReceivedDataFlag   = false;
-	itsProcessPausedFlag  = false;
-	itsClearWhenStartFlag = true;
-	itsUseCount           = 0;
-	itsDontCloseMsg       = JGetString("WaitCloseMsg::ExecOutputDocument");
+	JXWindow* window = GetWindow();
+	window->SetWMClass(GetWMClassInstance(), GetExecOutputWindowClass());
 
 	// buttons in upper right
 
-	JXWindow* window = GetWindow();
-	const JRect rect = window->GetBounds();
-
 	JXMenuBar* menuBar = GetMenuBar();
+	const JRect rect   = window->GetBounds();
 	const JSize h      = menuBar->GetFrameHeight();
-
-	const JCoordinate x = (allowStop ? 3 : 2) * kMenuButtonWidth;
 
 	itsPauseButton =
 		jnew JXTextButton(JGetString("PauseLabel::ExecOutputDocument"), window,
 						  JXWidget::kFixedRight, JXWidget::kFixedTop,
-						  rect.right - x,0, kMenuButtonWidth,h);
+						  rect.right - 3*kMenuButtonWidth,0, kMenuButtonWidth,h);
 	assert( itsPauseButton != nullptr );
 	ListenTo(itsPauseButton);
 	itsPauseButton->SetShortcuts(JString("^Z", JString::kNoCopy));
 	itsPauseButton->SetHint(JGetString("PauseButtonHint::ExecOutputDocument"));
 
-	if (allowStop)
-	{
-		itsStopButton =
-			jnew JXTextButton(JGetString("StopLabel::ExecOutputDocument"), window,
-							  JXWidget::kFixedRight, JXWidget::kFixedTop,
-							  rect.right - 2*kMenuButtonWidth,0, kMenuButtonWidth,h);
-		assert( itsStopButton != nullptr );
-		ListenTo(itsStopButton);
-		itsStopButton->SetShortcuts(JString("^C#.", JString::kNoCopy));
-		itsStopButton->SetHint(JGetString("StopButtonHint::ExecOutputDocument"));
-	}
-	else
-	{
-		itsStopButton = nullptr;
-	}
+	itsStopButton =
+		jnew JXTextButton(JGetString("StopLabel::ExecOutputDocument"), window,
+						  JXWidget::kFixedRight, JXWidget::kFixedTop,
+						  rect.right - 2*kMenuButtonWidth,0, kMenuButtonWidth,h);
+	assert( itsStopButton != nullptr );
+	ListenTo(itsStopButton);
+	itsStopButton->SetShortcuts(JString("^C#.", JString::kNoCopy));
+	itsStopButton->SetHint(JGetString("StopButtonHint::ExecOutputDocument"));
 
 	itsKillButton =
 		jnew JXTextButton(JGetString("KillLabel::ExecOutputDocument"), window,
@@ -101,13 +85,7 @@ ExecOutputDocument::ExecOutputDocument
 	assert( itsKillButton != nullptr );
 	ListenTo(itsKillButton);
 
-	if (!allowStop)
-	{
-		itsKillButton->SetShortcuts(JString("^C#.", JString::kNoCopy));
-		itsKillButton->SetHint(JGetString("StopButtonHint::ExecOutputDocument"));
-	}
-
-	menuBar->AdjustSize(-x, 0);
+	menuBar->AdjustSize(-3*kMenuButtonWidth, 0);
 
 	// command line input
 
@@ -138,37 +116,6 @@ ExecOutputDocument::ExecOutputDocument
 	itsEOFButton->SetShortcuts(JString("^D", JString::kNoCopy));
 	itsEOFButton->Hide();
 	ListenTo(itsEOFButton);
-
-	JXUrgentTask* task = jnew ExecOutputPostFTCTask(this);
-	assert( task != nullptr );
-	task->Go();
-
-	GetTextEditor()->SetWritable(false);
-	JXGetDocumentManager()->DocumentMustStayOpen(this, true);
-
-	window->SetWMClass(GetWMClassInstance(), GetExecOutputWindowClass());
-}
-
-// static private
-
-TextEditor*
-ExecOutputDocument::ConstructTextEditor
-	(
-	TextDocument*		document,
-	const JString&		fileName,
-	JXMenuBar*			menuBar,
-	TELineIndexInput*	lineInput,
-	TEColIndexInput*	colInput,
-	JXScrollbarSet*		scrollbarSet
-	)
-{
-	auto* te =
-		jnew TextEditor(document, fileName, menuBar, lineInput, colInput, true,
-						  scrollbarSet, scrollbarSet->GetScrollEnclosure(),
-						  JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 10,10);
-	assert( te != nullptr );
-
-	return te;
 }
 
 /******************************************************************************
@@ -197,7 +144,7 @@ ExecOutputDocument::~ExecOutputDocument()
 const JCoordinate kMinCmdInputWidth = 20;
 
 void
-ExecOutputDocument::PlaceCmdLineWidgets()
+ExecOutputDocument::PlaceCustomWidgets()
 {
 	JXWindow* window = GetWindow();
 
@@ -242,7 +189,7 @@ ExecOutputDocument::PlaceCmdLineWidgets()
 void
 ExecOutputDocument::Activate()
 {
-	TextDocument::Activate();
+	CommandOutputDocument::Activate();
 
 	if (IsActive() && itsFocusToCmdFlag)
 	{
@@ -251,45 +198,17 @@ ExecOutputDocument::Activate()
 }
 
 /******************************************************************************
- OKToClose (virtual protected)
-
- ******************************************************************************/
-
-bool
-ExecOutputDocument::OKToClose()
-{
-	if (itsUseCount > 0 || itsRecordLink != nullptr || itsDataLink != nullptr)
-	{
-		Activate();
-		JGetUserNotification()->ReportError(itsDontCloseMsg);
-		return false;
-	}
-	else
-	{
-		return TextDocument::OKToClose();
-	}
-}
-
-/******************************************************************************
- Use count
-
-	Not inline because we use assert().
+ UseCountUpdated
 
  ******************************************************************************/
 
 void
-ExecOutputDocument::IncrementUseCount()
+ExecOutputDocument::UseCountUpdated
+	(
+	const JSize count
+	)
 {
-	itsUseCount++;
-}
-
-void
-ExecOutputDocument::DecrementUseCount()
-{
-	assert( itsUseCount > 0 );
-	itsUseCount--;
-
-	if (itsUseCount == 0)
+	if (count == 0)
 	{
 		itsClearWhenStartFlag = !ProcessRunning();
 	}
@@ -392,7 +311,7 @@ ExecOutputDocument::SetConnection
 	itsPath              = execDir;
 	itsReceivedDataFlag  = false;
 	itsProcessPausedFlag = false;
-	itsDontCloseMsg      = dontCloseMsg;
+	SetDontCloseMessage(dontCloseMsg);
 	FileChanged(windowTitle, false);
 
 	UpdateButtons();
@@ -463,9 +382,9 @@ ExecOutputDocument::Receive
 		itsClearWhenStartFlag = false;	// in case they call SetConnection() in ReceiveWithFeedback()
 		Finished msg(info->Successful(), info->GetReason() != kJChildFinished);
 		BroadcastWithFeedback(&msg);
-		itsClearWhenStartFlag = itsUseCount == 0 && !msg.SomebodyIsWaiting();
+		itsClearWhenStartFlag = GetUseCount() == 0 && !msg.SomebodyIsWaiting();
 
-		if (itsUseCount == 0 && !stayOpen && !ProcessRunning())
+		if (GetUseCount() == 0 && !stayOpen && !ProcessRunning())
 		{
 			Close();
 		}
@@ -497,7 +416,7 @@ ExecOutputDocument::Receive
 
 	else
 	{
-		TextDocument::Receive(sender, message);
+		CommandOutputDocument::Receive(sender, message);
 	}
 }
 
@@ -690,7 +609,7 @@ ExecOutputDocument::ProcessFinished
 	do
 	{
 		itsReceivedDataFlag = false;
-		JXApplication::CheckACEReactor();
+		JThisProcess::CheckACEReactor();
 	}
 		while (itsReceivedDataFlag);
 
@@ -916,7 +835,7 @@ ExecOutputDocument::ConvertSelectionToFullPath
 	}
 	else
 	{
-		TextDocument::ConvertSelectionToFullPath(fileName);
+		CommandOutputDocument::ConvertSelectionToFullPath(fileName);
 	}
 }
 

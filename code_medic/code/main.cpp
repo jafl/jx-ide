@@ -49,25 +49,24 @@ main
 	auto* app = jnew App(&argc, argv, &displayAbout, &prevVersStr);
 	assert( app != nullptr );
 
-	if (displayAbout &&
-		!JGetUserNotification()->AcceptLicense())
-	{
-		return 0;
-	}
-
-	JCheckForNewerVersion(GetPrefsManager(), kVersionCheckID);
-
 	CreateCommandDirector();	// so dock appears after JCheckForNewerVersion()
 
-	JXMDIServer* mdi;
-	if (JXGetMDIServer(&mdi))
+	JXApplication::StartFiber([argc, argv]()
 	{
-		mdi->HandleCmdLineOptions(argc, argv);
-	}
+		JXMDIServer* mdi;
+		if (JXGetMDIServer(&mdi))
+		{
+			mdi->HandleCmdLineOptions(argc, argv);
+		}
+	});
 
 	if (displayAbout)
 	{
-		app->DisplayAbout(prevVersStr, true);
+		app->DisplayAbout(true, prevVersStr);
+	}
+	else
+	{
+		JCheckForNewerVersion(GetPrefsManager(), kVersionCheckID);
 	}
 
 	app->Run();

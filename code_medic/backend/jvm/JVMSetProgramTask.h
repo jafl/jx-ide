@@ -18,6 +18,8 @@ public:
 
 	SetProgramTask();
 
+protected:
+
 	~SetProgramTask() override;
 
 	void	Perform() override;

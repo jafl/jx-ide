@@ -261,13 +261,12 @@ CanDebug
 }
 
 inline bool
-IsExecOutput
+IsCommandOutput
 	(
 	const TextFileType type
 	)
 {
-	return type == kExecOutputFT ||
-				 type == kSearchOutputFT;
+	return type == kExecOutputFT || type == kSearchOutputFT;
 }
 
 inline bool
@@ -276,7 +275,7 @@ DrawRightMargin
 	const TextFileType type
 	)
 {
-	return !( IsExecOutput(type)    ||
+	return !( IsCommandOutput(type) ||
 			  type == kManPageFT    ||
 			  type == kDiffOutputFT ||
 			  type == kShellOutputFT );

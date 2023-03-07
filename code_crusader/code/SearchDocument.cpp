@@ -1,7 +1,7 @@
 /******************************************************************************
  SearchDocument.cpp
 
-	BASE CLASS = ExecOutputDocument
+	BASE CLASS = CommandOutputDocument
 
 	Copyright © 1998 by John Lindal.
 
@@ -17,18 +17,16 @@
 #include <jx-af/jx/JXProgressIndicator.h>
 #include <jx-af/jx/JXMenuBar.h>
 #include <jx-af/jx/JXTextMenu.h>
+#include <jx-af/jx/JXTextButton.h>
 #include <jx-af/jx/JXColorManager.h>
-#include <jx-af/jcore/JThisProcess.h>
-#include <jx-af/jcore/JOutPipeStream.h>
-#include <jx-af/jcore/JMemoryManager.h>
 #include <jx-af/jcore/jFileUtil.h>
-#include <jx-af/jcore/jStreamUtil.h>
-#include <jx-af/jcore/jSysUtil.h>
-#include <sstream>
-#include <stdlib.h>
+#include <thread>
 #include <jx-af/jcore/jAssert.h>
 
+const JSize kMenuButtonWidth       = 60;
 const JCoordinate kIndicatorHeight = 10;
+
+static const JString kDoubleNewline("\n\n", JString::kNoCopy);
 
 // Match menu
 
@@ -52,82 +50,41 @@ enum
 
  ******************************************************************************/
 
-JError
+void
 SearchDocument::Create
 	(
-	const JPtrArray<JString>&	fileList,
-	const JPtrArray<JString>&	nameList,
-	const JRegex&				searchRegex,
-	const bool				onlyListFiles,
-	const bool				listFilesWithoutMatch
+	JPtrArray<JString>*	fileList,
+	JPtrArray<JString>*	nameList,
+	const JRegex&		searchRegex,
+	const bool			onlyListFiles,
+	const bool			listFilesWithoutMatch
 	)
 {
-	assert( !fileList.IsEmpty() );
-	assert( fileList.GetElementCount() == nameList.GetElementCount() );
+	assert( !fileList->IsEmpty() );
+	assert( fileList->GetElementCount() == nameList->GetElementCount() );
 
-	int fd[2];
-	JError err = JCreatePipe(fd);
-	if (!err.OK())
+	const JUtf8Byte* map[] =
 	{
-		return err;
-	}
+		"s", GetSearchTextDialog()->GetSearchText().GetBytes()
+	};
+	const JString windowTitle = JGetString("SearchTitle::SearchDocument", map, sizeof(map));
 
-	pid_t pid;
-	err = JThisProcess::Fork(&pid);
-	if (!err.OK())
+	auto* doc =
+		jnew SearchDocument(false, onlyListFiles || listFilesWithoutMatch,
+							fileList->GetElementCount(), windowTitle);
+	assert( doc != nullptr );
+	doc->Activate();
+
+	std::thread t([fileList, nameList, onlyListFiles, listFilesWithoutMatch, doc]()
 	{
-		return err;
-	}
-
-	// child
-
-	else if (pid == 0)
-	{
-		close(fd[0]);
-		JMemoryManager::Instance()->SetPrintExitStats(false);
-
-		// get rid of JXCreatePG, since we must not use X connection
-		// (binary files may trigger it)
-		JInitCore();
-
 		SearchTE te;
-		JOutPipeStream output(fd[1], true);
-		te.SearchFiles(fileList, nameList,
-					   onlyListFiles, listFilesWithoutMatch,
-					   output);
-		output.close();
-		exit(0);
-	}
+		te.SearchFiles(*fileList, *nameList, onlyListFiles, listFilesWithoutMatch, doc);
+		jdelete fileList;
+		jdelete nameList;
+	});
+	t.detach();
 
-	// parent
-
-	else
-	{
-		close(fd[1]);
-
-		auto* process = jnew JProcess(pid);
-		assert( process != nullptr );
-
-		const JUtf8Byte* map[] =
-		{
-			"s", GetSearchTextDialog()->GetSearchText().GetBytes()
-		};
-		const JString windowTitle = JGetString("SearchTitle::SearchDocument", map, sizeof(map));
-
-		auto* doc =
-			jnew SearchDocument(false, onlyListFiles || listFilesWithoutMatch,
-								 fileList.GetElementCount(),
-								 process, fd[0], windowTitle);
-		assert( doc != nullptr );
-		doc->Activate();
-
-		RecordLink* link;
-		const bool ok = doc->GetRecordLink(&link);
-		assert( ok );
-		SearchTE::SetProtocol(link);
-	}
-
-	return JNoError();
+	doc->RecvFromChannel();
 }
 
 /******************************************************************************
@@ -137,80 +94,41 @@ SearchDocument::Create
 
  ******************************************************************************/
 
-JError
+void
 SearchDocument::Create
 	(
-	const JPtrArray<JString>&	fileList,
-	const JPtrArray<JString>&	nameList,
-	const JRegex&				searchRegex,
-	const JString&				replaceStr
+	JPtrArray<JString>*	fileList,
+	JPtrArray<JString>*	nameList,
+	const JRegex&		searchRegex,
+	const JString&		replaceStr
 	)
 {
-	assert( !fileList.IsEmpty() );
-	assert( fileList.GetElementCount() == nameList.GetElementCount() );
+	assert( !fileList->IsEmpty() );
+	assert( fileList->GetElementCount() == nameList->GetElementCount() );
 
-	int fd[2];
-	JError err = JCreatePipe(fd);
-	if (!err.OK())
+	const JUtf8Byte* map[] =
 	{
-		return err;
-	}
+		"s", GetSearchTextDialog()->GetSearchText().GetBytes(),
+		"r", replaceStr.GetBytes()
+	};
+	const JString windowTitle = JGetString("ReplaceTitle::SearchDocument", map, sizeof(map));
 
-	pid_t pid;
-	err = JThisProcess::Fork(&pid);
-	if (!err.OK())
+	auto* doc = jnew SearchDocument(true, true, fileList->GetElementCount(), windowTitle);
+	assert( doc != nullptr );
+
+	JXGetApplication()->Suspend();	// do this first so result window is active
+	doc->Activate();
+
+	std::thread t([fileList, nameList, doc]()
 	{
-		return err;
-	}
-
-	// child
-
-	else if (pid == 0)
-	{
-		close(fd[0]);
-
-		// get rid of JXCreatePG, since we must not use X connection
-		// (binary files may trigger it)
-		JInitCore();
-
 		SearchTE te;
-		JOutPipeStream output(fd[1], true);
-		te.SearchFiles(fileList, nameList, true, false, output);
-		output.close();
-		exit(0);
-	}
+		te.SearchFiles(*fileList, *nameList, true, false, doc);
+		jdelete fileList;
+		jdelete nameList;
+	});
+	t.detach();
 
-	// parent
-
-	else
-	{
-		close(fd[1]);
-
-		auto* process = jnew JProcess(pid);
-		assert( process != nullptr );
-
-		const JUtf8Byte* map[] =
-		{
-			"s", GetSearchTextDialog()->GetSearchText().GetBytes(),
-			"r", replaceStr.GetBytes()
-		};
-		const JString windowTitle = JGetString("ReplaceTitle::SearchDocument", map, sizeof(map));
-
-		auto* doc =
-			jnew SearchDocument(true, true, fileList.GetElementCount(),
-								 process, fd[0], windowTitle);
-		assert( doc != nullptr );
-
-		JXGetApplication()->Suspend();	// do this first so result window is active
-		doc->Activate();
-
-		RecordLink* link;
-		const bool ok = doc->GetRecordLink(&link);
-		assert( ok );
-		SearchTE::SetProtocol(link);
-	}
-
-	return JNoError();
+	doc->RecvFromChannel();
 }
 
 /******************************************************************************
@@ -222,18 +140,42 @@ SearchDocument::SearchDocument
 	(
 	const bool		isReplace,
 	const bool		onlyListFiles,
-	const JSize			fileCount,
-	JProcess*			p,
-	const int			fd,
-	const JString&		windowTitle
+	const JSize		fileCount,
+	const JString&	windowTitle
 	)
 	:
-	ExecOutputDocument(kSearchOutputFT, "SearchTextHelp-Multifile", false, false),
+	CommandOutputDocument(kSearchOutputFT, "SearchTextHelp-Multifile", JGetString("NoCloseWhileSearching::SearchDocument")),
 	itsIsReplaceFlag(isReplace),
 	itsOnlyListFilesFlag(onlyListFiles),
-	itsReplaceTE(nullptr)
+	itsFoundFlag(false),
+	itsReplaceTE(nullptr),
+	itsSearchTE(nullptr)
 {
-	itsFoundFlag = false;
+	JXWindow* window = GetWindow();
+	window->SetWMClass(GetWMClassInstance(), GetSearchOutputWindowClass());
+
+	itsChannel = jnew boost::fibers::buffered_channel<JBroadcaster::Message*>(1024);
+	assert( itsChannel != nullptr );
+
+	// button in upper right
+
+	JXMenuBar* menuBar = GetMenuBar();
+	const JRect rect   = window->GetBounds();
+	const JSize h      = menuBar->GetFrameHeight();
+
+	itsStopButton =
+		jnew JXTextButton(JGetString("StopLabel::ExecOutputDocument"), window,
+						  JXWidget::kFixedRight, JXWidget::kFixedTop,
+						  rect.right - kMenuButtonWidth,0, kMenuButtonWidth,h);
+	assert( itsStopButton != nullptr );
+	ListenTo(itsStopButton);
+	itsStopButton->SetShortcuts(JString("^C#.", JString::kNoCopy));
+	itsStopButton->SetHint(JGetString("StopButtonHint::ExecOutputDocument"));
+	ListenTo(itsStopButton);
+
+	menuBar->AdjustSize(-kMenuButtonWidth, 0);
+
+	// progress indicator
 
 	JXWidget::HSizingOption hSizing;
 	JXWidget::VSizingOption vSizing;
@@ -257,12 +199,6 @@ SearchDocument::SearchDocument
 	modifiers.SetState(kJXMetaKeyIndex, true);
 	GetWindow()->InstallMenuShortcut(itsMatchMenu, kPrevMatchCmd, '_', modifiers);
 
-	GetWindow()->SetWMClass(GetWMClassInstance(), GetSearchOutputWindowClass());
-
-	SetConnection(p, fd, ACE_INVALID_HANDLE,
-				  windowTitle, JGetString("NoCloseWhileSearching::SearchDocument"),
-				  JString("/", JString::kNoCopy), windowTitle, false);
-
 	GetDocumentManager()->SetActiveListDocument(this);
 
 	if (itsIsReplaceFlag)
@@ -270,6 +206,10 @@ SearchDocument::SearchDocument
 		itsReplaceTE = jnew SearchTE;
 		assert( itsReplaceTE != nullptr );
 	}
+
+	FileChanged(windowTitle, false);
+	UpdateButtons();
+	GetTextEditor()->SetWritable(false);
 }
 
 /******************************************************************************
@@ -280,53 +220,45 @@ SearchDocument::SearchDocument
 SearchDocument::~SearchDocument()
 {
 	jdelete itsReplaceTE;
+	jdelete itsChannel;
 }
 
 /******************************************************************************
- PlaceCmdLineWidgets (virtual protected)
+ PlaceCustomWidgets (virtual protected)
 
  ******************************************************************************/
 
 void
-SearchDocument::PlaceCmdLineWidgets()
+SearchDocument::PlaceCustomWidgets()
 {
-	ExecOutputDocument::PlaceCmdLineWidgets();
-
 	JXWidget::HSizingOption hSizing;
 	JXWidget::VSizingOption vSizing;
 	const JRect frame = GetFileDisplayInfo(&hSizing, &vSizing);
 
 	itsIndicator->Place(frame.left, frame.ycenter() - kIndicatorHeight/2);
 	itsIndicator->SetSize(frame.width(), kIndicatorHeight);
+
+	UpdateButtons();
 }
 
 /******************************************************************************
- NeedsFormattedData (virtual protected)
+ RecvFromChannel (private)
 
  ******************************************************************************/
 
-bool
-SearchDocument::NeedsFormattedData()
-	const
+void
+SearchDocument::RecvFromChannel()
 {
-	return true;
-}
-
-/******************************************************************************
- ProcessFinished (virtual protected)
-
- ******************************************************************************/
-
-bool
-SearchDocument::ProcessFinished
-	(
-	const JProcess::Finished& info
-	)
-{
-	if (!ExecOutputDocument::ProcessFinished(info))
+	JBroadcaster::Message* m;
+	while (itsChannel->pop(m) == boost::fibers::channel_op_status::success)
 	{
-		return false;
+		Receive(nullptr, *m);
+		jdelete m;
 	}
+
+	// finished
+
+	itsSearchTE = nullptr;
 
 	if (itsIsReplaceFlag)
 	{
@@ -336,15 +268,17 @@ SearchDocument::ProcessFinished
 		JXGetApplication()->Resume();
 	}
 
+	jdelete itsChannel;
+	itsChannel = nullptr;
+
 	jdelete itsIndicator;
 	itsIndicator = nullptr;
 
-	SetFileDisplayVisible(true);
+	UpdateButtons();
 
 	if (!itsFoundFlag)
 	{
-		ExecOutputDocument::AppendText(JGetString("NoMatches::SearchDocument"));
-		DataReverted();
+		AppendText(JGetString("NoMatches::SearchDocument"));
 		GetTextEditor()->GetText()->ClearUndo();
 	}
 	else if (!GetTextEditor()->HasSelection())
@@ -352,15 +286,156 @@ SearchDocument::ProcessFinished
 		ShowFirstMatch();
 	}
 
-	return true;
+	DataReverted();
 }
 
 /******************************************************************************
- AppendText (virtual protected)
+ QueueMessage (protected)
 
  ******************************************************************************/
 
-static const JString kDoubleNewline("\n\n", JString::kNoCopy);
+void
+SearchDocument::QueueMessage
+	(
+	JBroadcaster::Message* m
+	)
+{
+	itsChannel->push(m);
+}
+
+/******************************************************************************
+ AppendSearchResult (private)
+
+ ******************************************************************************/
+
+void
+SearchDocument::AppendSearchResult
+	(
+	const SearchTE::SearchResult& msg
+	)
+{
+	itsFoundFlag = true;
+
+	auto* te = GetTextEditor();
+	auto* st = te->GetText();
+
+	JStyledText::TextIndex start = st->GetBeyondEnd();
+	te->SetCaretLocation(start.charIndex);
+
+	// display file name in bold
+
+	te->Paste(msg.GetFileName());
+	st->SetFontStyle(JStyledText::TextRange(start, st->GetBeyondEnd()),
+					 GetFileNameStyle(), true);
+
+	// line number
+
+	start = st->GetBeyondEnd();
+	te->SetCurrentFont(st->GetDefaultFont());
+
+	te->Paste(JString(":", JString::kNoCopy));
+	te->Paste(JString((JUInt64) msg.GetLineIndex()));
+	te->Paste(kDoubleNewline);
+
+	start = st->GetBeyondEnd();
+
+	JStyledText::TextRange r = msg.GetRange();
+	r.charRange += start.charIndex - 1;
+	r.byteRange += start.byteIndex - 1;
+
+	te->Paste(msg.GetQuotedText());
+	te->Paste(kDoubleNewline);
+
+	// underline match
+
+	st->SetFontStyle(r, GetMatchStyle(), true);
+
+	// save text range in case of multiple matches
+
+	itsPrevQuoteIndex = start;
+
+	itsMatchMenu->Activate();
+}
+
+/******************************************************************************
+ MarkAdditionalMatch (private)
+
+ ******************************************************************************/
+
+void
+SearchDocument::MarkAdditionalMatch
+	(
+	const JStyledText::TextRange& range
+	)
+{
+	itsFoundFlag = true;
+
+	auto* te = GetTextEditor();
+	auto* st = te->GetText();
+
+	assert( itsPrevQuoteIndex.charIndex > 1 );
+
+	// underline match
+
+	JStyledText::TextRange r(range);
+	r.charRange += itsPrevQuoteIndex.charIndex - 1;
+	r.byteRange += itsPrevQuoteIndex.byteIndex - 1;
+	st->SetFontStyle(r, GetMatchStyle(), true);
+
+	itsMatchMenu->Activate();
+}
+
+/******************************************************************************
+ AppendFileName (private)
+
+ ******************************************************************************/
+
+void
+SearchDocument::AppendFileName
+	(
+	const JString& fileName
+	)
+{
+	itsFoundFlag = true;
+
+	AppendText(fileName);
+
+	if (itsIsReplaceFlag)
+	{
+		ReplaceAll(fileName);
+	}
+}
+
+/******************************************************************************
+ AppendError (private)
+
+ ******************************************************************************/
+
+void
+SearchDocument::AppendError
+	(
+	const JString& text
+	)
+{
+	auto* te = GetTextEditor();
+	auto* st = te->GetText();
+
+	const auto start = st->GetBeyondEnd();
+	te->SetCaretLocation(start.charIndex);
+	te->Paste(text);
+	st->SetFontStyle(JStyledText::TextRange(start, st->GetBeyondEnd()),
+					 GetErrorStyle(), true);
+
+	te->Paste(itsOnlyListFilesFlag ? JString::newline : kDoubleNewline);
+}
+
+/******************************************************************************
+ AppendText (private)
+
+	Append the text to our text editor.  Derived classes can override
+	to filter or otherwise process the text.
+
+ ******************************************************************************/
 
 void
 SearchDocument::AppendText
@@ -368,116 +443,21 @@ SearchDocument::AppendText
 	const JString& text
 	)
 {
-	if (text.IsEmpty())
-	{
-		return;
-	}
-	else if (text.GetFirstCharacter() == SearchTE::kIncrementProgress)
-	{
-		itsIndicator->IncrementValue();
-		return;
-	}
-
 	TextEditor* te = GetTextEditor();
+	te->SetCaretLocation(te->GetText()->GetBeyondEnd().charIndex);
+	te->Paste(text);
+	te->Paste(JString::newline);
+}
 
-	itsFoundFlag = true;
-	const std::string s(text.GetBytes(), text.GetByteCount());
-	std::istringstream input(s);
+/******************************************************************************
+ SearchFinished (protected)
 
-	JStyledText* st = te->GetText();
+ ******************************************************************************/
 
-	if (text.GetFirstCharacter() == SearchTE::kError)
-	{
-		input.ignore();
-		JString msg;
-		JReadAll(input, &msg);
-
-		const JStyledText::TextIndex start = st->GetBeyondEnd();
-		te->SetCaretLocation(start.charIndex);
-		te->Paste(msg);
-		st->SetFontStyle(JStyledText::TextRange(start, st->GetBeyondEnd()),
-						 GetErrorStyle(), true);
-
-		te->Paste(itsOnlyListFilesFlag ? JString::newline : kDoubleNewline);
-	}
-	else if (itsOnlyListFilesFlag)
-	{
-		JString fileName;
-		input >> fileName;
-		ExecOutputDocument::AppendText(fileName);
-
-		if (itsIsReplaceFlag)
-		{
-			ReplaceAll(fileName);
-		}
-	}
-	else
-	{
-		JUtf8Byte mode;
-		input.get(mode);
-
-		if (mode == SearchTE::kNewMatchLine)
-		{
-			JString fileName;
-			JUInt64 lineIndex;
-			JString text1;
-			JCharacterRange matchCharRange;
-			JUtf8ByteRange matchByteRange;
-			input >> fileName >> lineIndex >> text1 >> matchCharRange >> matchByteRange;
-
-			JStyledText::TextIndex start = st->GetBeyondEnd();
-			te->SetCaretLocation(start.charIndex);
-
-			// display file name in bold
-
-			te->Paste(fileName);
-			st->SetFontStyle(JStyledText::TextRange(start, st->GetBeyondEnd()),
-							 GetFileNameStyle(), true);
-
-			// line number
-
-			start = st->GetBeyondEnd();
-			te->SetCurrentFont(st->GetDefaultFont());
-
-			te->Paste(JString(":", JString::kNoCopy));
-			te->Paste(JString(lineIndex));
-			te->Paste(kDoubleNewline);
-
-			start           = st->GetBeyondEnd();
-			matchCharRange += start.charIndex - 1;
-			matchByteRange += start.byteIndex - 1;
-
-			te->Paste(text1);
-			te->Paste(kDoubleNewline);
-
-			// underline match
-
-			st->SetFontStyle(JStyledText::TextRange(matchCharRange, matchByteRange),
-							 GetMatchStyle(), true);
-
-			// save text range in case of multiple matches
-
-			itsPrevQuoteIndex = start;
-		}
-		else
-		{
-			assert( mode == SearchTE::kRepeatMatchLine &&
-					itsPrevQuoteIndex.charIndex > 1 );
-
-			JCharacterRange matchCharRange;
-			JUtf8ByteRange matchByteRange;
-			input >> matchCharRange >> matchByteRange;
-
-			// underline match
-
-			matchCharRange += itsPrevQuoteIndex.charIndex - 1;
-			matchByteRange += itsPrevQuoteIndex.byteIndex - 1;
-			st->SetFontStyle(JStyledText::TextRange(matchCharRange, matchByteRange),
-							 GetMatchStyle(), true);
-		}
-
-		itsMatchMenu->Activate();
-	}
+void
+SearchDocument::SearchFinished()
+{
+	itsChannel->close();
 }
 
 /******************************************************************************
@@ -550,6 +530,28 @@ SearchDocument::OpenNextListItem()
 }
 
 /******************************************************************************
+ UpdateButtons (private)
+
+ ******************************************************************************/
+
+void
+SearchDocument::UpdateButtons()
+{
+	if (CommandRunning())
+	{
+		itsStopButton->Activate();
+		SetFileDisplayVisible(false);
+	}
+	else
+	{
+		itsStopButton->Deactivate();
+		SetFileDisplayVisible(true);
+	}
+
+	GetTextEditor()->Focus();
+}
+
+/******************************************************************************
  ConvertSelectionToFullPath (virtual)
 
 	Find the preceding "Entering directory" or "Leaving directory" statement
@@ -566,7 +568,7 @@ SearchDocument::ConvertSelectionToFullPath
 {
 	GetDocumentManager()->SetActiveListDocument(const_cast<SearchDocument*>(this));
 
-	ExecOutputDocument::ConvertSelectionToFullPath(fileName);
+	CommandOutputDocument::ConvertSelectionToFullPath(fileName);
 }
 
 /******************************************************************************
@@ -587,15 +589,48 @@ SearchDocument::Receive
 	}
 	else if (sender == itsMatchMenu && message.Is(JXMenu::kItemSelected))
 	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
+		const auto* selection = dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleMatchMenu(selection->GetIndex());
 	}
 
+	else if (sender == itsStopButton && message.Is(JXButton::kPushed))
+	{
+		itsSearchTE->Cancel();
+	}
+
+	else if (message.Is(SearchTE::kIncrementProgress))
+	{
+		itsIndicator->IncrementValue();
+	}
+	else if (message.Is(SearchTE::kSearchResult))
+	{
+		const auto* result = dynamic_cast<const SearchTE::SearchResult*>(&message);
+		assert( result != nullptr );
+		AppendSearchResult(*result);
+	}
+	else if (message.Is(SearchTE::kAdditionalMatch))
+	{
+		const auto* result = dynamic_cast<const SearchTE::AdditionalMatch*>(&message);
+		assert( result != nullptr );
+		MarkAdditionalMatch(result->GetRange());
+	}
+	else if (message.Is(SearchTE::kFileName))
+	{
+		const auto* result = dynamic_cast<const SearchTE::FileName*>(&message);
+		assert( result != nullptr );
+		AppendFileName(result->GetFileName());
+	}
+	else if (message.Is(SearchTE::kError))
+	{
+		const auto* result = dynamic_cast<const SearchTE::Error*>(&message);
+		assert( result != nullptr );
+		AppendError(result->GetMessage());
+	}
+
 	else
 	{
-		ExecOutputDocument::Receive(sender, message);
+		CommandOutputDocument::Receive(sender, message);
 	}
 }
 

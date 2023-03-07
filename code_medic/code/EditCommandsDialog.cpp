@@ -1,7 +1,7 @@
 /******************************************************************************
  EditCommandsDialog.cpp
 
-	BASE CLASS = public JXDialogDirector, JPrefObject
+	BASE CLASS = public JXModalDialogDirector, JPrefObject
 
 	Copyright (C) 1999 by Glenn W. Bach.
 
@@ -27,7 +27,7 @@ const JFileVersion kCurrentSetupVersion = 0;
 
 EditCommandsDialog::EditCommandsDialog()
 	:
-	JXDialogDirector(JXGetApplication(), true),
+	JXModalDialogDirector(true),
 	JPrefObject(GetPrefsManager(), kEditCommandsDialogID)
 {
 	itsCommands	= jnew JPtrArray<JString>(JPtrArrayT::kForgetAll);
@@ -109,9 +109,6 @@ EditCommandsDialog::BuildWindow()
 // end JXLayout
 
 	window->SetTitle(JGetString("WindowTitle::EditCommandsDialog"));
-	window->PlaceAsDialogWindow();
-	window->LockCurrentMinSize();
-	UseModalPlacement(false);
 	SetButtons(okButton, cancelButton);
 
 	ListenTo(itsNewButton);
@@ -150,7 +147,7 @@ EditCommandsDialog::Receive
 	}
 	else
 	{
-		JXDialogDirector::Receive(sender, message);
+		JXModalDialogDirector::Receive(sender, message);
 	}
 }
 
@@ -180,7 +177,7 @@ EditCommandsDialog::SetString
 	const JString&	str
 	)
 {
-	*(itsCommands->GetElement(index)) = str;
+	*itsCommands->GetElement(index) = str;
 }
 
 /******************************************************************************

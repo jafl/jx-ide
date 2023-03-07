@@ -12,6 +12,8 @@
 #include "TEScriptMenu.h"
 #include "TextEditor.h"
 #include "globals.h"
+#include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXSaveFileDialog.h>
 #include <jx-af/jx/JXWebBrowser.h>
 #include <jx-af/jcore/JDirInfo.h>
 #include <jx-af/jcore/jDirUtil.h>
@@ -185,10 +187,11 @@ TEScriptMenu::HandleSelection
 			JString origName = info->GetDirectory();
 			origName         = JCombinePathAndName(origName, JString("script", JString::kNoCopy));
 
-			JString fullName;
-			if (JGetChooseSaveFile()->SaveFile(JGetString("SavePrompt::TEScriptMenu"), JString::empty,
-												 origName, &fullName))
+			auto* dlog = JXSaveFileDialog::Create(JGetString("SavePrompt::TEScriptMenu"), origName);
+			if (dlog->DoDialog())
 			{
+				const JString fullName = dlog->GetFullName();
+
 				std::ofstream output(fullName.GetBytes());
 				output.close();
 				JSetPermissions(fullName, 0744);

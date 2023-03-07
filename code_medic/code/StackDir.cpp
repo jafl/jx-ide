@@ -83,7 +83,10 @@ StackDir::StackDir
 
 StackDir::~StackDir()
 {
-	GetPrefsManager()->SaveWindowSize(kStackWindowSizeID, GetWindow());
+	if (HasPrefsManager())
+	{
+		GetPrefsManager()->SaveWindowSize(kStackWindowSizeID, GetWindow());
+	}
 }
 
 /******************************************************************************
@@ -342,7 +345,7 @@ StackDir::HandleHelpMenu
 {
 	if (index == kAboutCmd)
 	{
-		(GetApplication())->DisplayAbout();
+		GetApplication()->DisplayAbout();
 	}
 	else if (index == kTOCCmd)
 	{

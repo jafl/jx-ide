@@ -591,6 +591,10 @@ T
 F
 "./backend/lldb/LLDBLink.cpp"
 T
+2 "LLDBEventTask.cpp"
+F
+"./backend/lldb/LLDBEventTask.cpp"
+T
 2 "LLDBWelcomeTask.cpp"
 F
 "./backend/lldb/LLDBWelcomeTask.cpp"

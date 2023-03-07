@@ -38,19 +38,15 @@ DelaySymbolUpdateTask::~DelaySymbolUpdateTask()
 }
 
 /******************************************************************************
- Perform
+ Perform (virtual protected)
 
  ******************************************************************************/
 
 void
 DelaySymbolUpdateTask::Perform
 	(
-	const Time	delta,
-	Time*		maxSleepTime
+	const Time delta
 	)
 {
-	if (TimeToPerform(delta, maxSleepTime))
-	{
-		itsProjDoc->UpdateSymbolDatabase();		// deletes us
-	}
+	itsProjDoc->UpdateSymbolDatabase();		// deletes us
 }

@@ -10,22 +10,22 @@
 #ifndef _H_EditStylerDialog
 #define _H_EditStylerDialog
 
-#include <jx-af/jx/JXDialogDirector.h>
+#include <jx-af/jx/JXModalDialogDirector.h>
 #include "StylerBase.h"		// need definition of WordStyle
 
 class JXTextButton;
 class JXTextCheckbox;
 class StylerTable;
 
-class EditStylerDialog : public JXDialogDirector
+class EditStylerDialog : public JXModalDialogDirector
 {
 public:
 
 	EditStylerDialog(const JString& windowTitle, const bool active,
-					   const JUtf8Byte** typeNames,
-					   const JArray<JFontStyle>& typeStyles,
-					   const JArray<StylerBase::WordStyle>& wordList,
-					   const TextFileType fileType);
+					 const JUtf8Byte** typeNames,
+					 const JArray<JFontStyle>& typeStyles,
+					 const JArray<StylerBase::WordStyle>& wordList,
+					 const TextFileType fileType);
 
 	~EditStylerDialog() override;
 

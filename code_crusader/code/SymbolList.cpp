@@ -551,7 +551,7 @@ SymbolList::ClosestMatch
 	)
 	const
 {
-	visibleList.SetCompareFunction([&](const JIndex& s1, const JIndex& s2)
+	visibleList.SetCompareFunction([this, prefixStr](const JIndex& s1, const JIndex& s2)
 	{
 		auto* prefix = const_cast<JString*>(&prefixStr);
 		if (s1 == 0)
@@ -664,7 +664,7 @@ SymbolList::UpdateFinished
 	const JSize fileCount = deadFileList.GetElementCount();
 	if (fileCount > 0)
 	{
-		pg.FixedLengthProcessBeginning(fileCount, JGetString("CleaningUp::SymbolList"), false, true);
+		pg.FixedLengthProcessBeginning(fileCount, JGetString("CleaningUp::SymbolList"), false, false);
 
 		for (JIndex i=1; i<=fileCount; i++)
 		{

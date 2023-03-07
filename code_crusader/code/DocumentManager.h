@@ -21,8 +21,7 @@ class JXWindow;
 class ProjectDocument;
 class TextDocument;
 class ShellDocument;
-class ExecOutputDocument;
-class ExtEditorDialog;
+class CommandOutputDocument;
 class FileHistoryMenu;
 
 class DocumentManager : public JXDocumentManager, public JPrefObject
@@ -50,7 +49,7 @@ public:
 									 const bool create, JString* fullName);
 	bool	GetTextTemplateDirectory(const bool create, JString* tmplDir);
 
-	bool	NewProjectDocument(ProjectDocument** doc = nullptr);
+	void	NewProjectDocument();
 	void	NewTextDocument();
 	void	NewTextDocumentFromTemplate();
 	void	NewShellDocument();
@@ -102,8 +101,8 @@ public:
 	void	SetActiveTextDocument(TextDocument* doc);
 	void	TextDocumentNeedsSave();
 
-	bool	GetActiveListDocument(ExecOutputDocument** doc) const;
-	void		SetActiveListDocument(ExecOutputDocument* doc);
+	bool	GetActiveListDocument(CommandOutputDocument** doc) const;
+	void	SetActiveListDocument(CommandOutputDocument* doc);
 
 	bool	OpenComplementFile(const JString& fullName, const TextFileType type,
 							   ProjectDocument* projDoc = nullptr,
@@ -161,7 +160,7 @@ private:
 	JPtrArray<ProjectDocument>*	itsProjectDocuments;
 
 	JPtrArray<TextDocument>*	itsTextDocuments;
-	ExecOutputDocument*			itsListDocument;
+	CommandOutputDocument*		itsListDocument;
 	bool						itsTextNeedsSaveFlag;
 
 	bool	itsWarnBeforeSaveAllFlag;
@@ -180,8 +179,6 @@ private:
 
 	bool	itsEditBinaryLocalFlag;
 	JString	itsEditBinaryFileCmd;
-
-	ExtEditorDialog*	itsExtEditorDialog;
 
 private:
 

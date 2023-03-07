@@ -13,7 +13,6 @@
 #include <jx-af/jcore/JString.h>
 
 class TextEditor;
-class PSPrintSetupDialog;
 
 class PSPrinter : public JXPSPrinter, public JPrefObject
 {
@@ -25,6 +24,9 @@ public:
 
 	const JString&	GetHeaderName() const;
 	void			SetPrintInfo(TextEditor* te, const JString& headerName);
+
+	JSize	GetFontSize() const;
+	void	SetFontSize(const JSize size);
 
 	bool	OpenDocument() override;
 	void	CloseDocument() override;
@@ -40,16 +42,11 @@ protected:
 							   const JString& printCmd, const JString& fileName,
 							   const bool collate, const bool bw) override;
 
-	bool	EndUserPrintSetup(const JBroadcaster::Message& message,
-							  bool* changed) override;
-
 private:
 
 	JSize		itsFontSize;
 	TextEditor*	itsTE;			// nullptr unless printing; not owned
 	JString		itsHeaderName;	// only used during printing
-
-	PSPrintSetupDialog*	itsCBPrintSetupDialog;
 };
 
 
@@ -73,12 +70,33 @@ PSPrinter::GetHeaderName()
 inline void
 PSPrinter::SetPrintInfo
 	(
-	TextEditor*	te,
+	TextEditor*		te,
 	const JString&	headerName
 	)
 {
 	itsTE         = te;
 	itsHeaderName = headerName;
+}
+
+/******************************************************************************
+ Font size
+
+ ******************************************************************************/
+
+inline JSize
+PSPrinter::GetFontSize()
+	const
+{
+	return itsFontSize;
+}
+
+inline void
+PSPrinter::SetFontSize
+	(
+	const JSize size
+	)
+{
+	itsFontSize = size;
 }
 
 #endif

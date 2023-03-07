@@ -37,19 +37,15 @@ gdb::PingTask::~PingTask()
 }
 
 /******************************************************************************
- Perform
+ Perform (virtual protected)
 
  ******************************************************************************/
 
 void
 gdb::PingTask::Perform
 	(
-	const Time	delta,
-	Time*		maxSleepTime
+	const Time delta
 	)
 {
-	if (TimeToPerform(delta, maxSleepTime))
-	{
-		dynamic_cast<gdb::Link*>(GetLink())->SendPing();
-	}
+	dynamic_cast<gdb::Link*>(GetLink())->SendPing();
 }

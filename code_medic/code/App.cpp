@@ -11,15 +11,14 @@
 #include "MDIServer.h"
 #include "AboutDialog.h"
 #include "QuitTask.h"
-#include "lldb/LLDBLink.h"
 #include "globals.h"
 #include "stringData.h"
 #include <jx-af/jx/JXWindow.h>
-#include <jx-af/jx/JXAskInitDockAll.h>
+#include <jx-af/jx/JXDockManager.h>
 #include <jx-af/jcore/JSimpleProcess.h>
 #include <jx-af/jcore/JSubstitute.h>
-#include <jx-af/jcore/jFileUtil.h>
 #include <jx-af/jcore/jDirUtil.h>
+#include <jx-af/jcore/jWebUtil.h>
 #include <jx-af/jcore/jGlobals.h>
 #include <jx-af/jcore/jAssert.h>
 
@@ -129,36 +128,33 @@ App::EditFile
 void
 App::DisplayAbout
 	(
-	const JString&	prevVersStr,
-	const bool	init
+	const bool		showLicense,
+	const JString&	prevVersStr
 	)
 {
-	auto* dlog = jnew AboutDialog(this, prevVersStr);
-	assert( dlog != nullptr );
-	dlog->BeginDialog();
-
-	if (init && prevVersStr.IsEmpty())
+	StartFiber([showLicense, prevVersStr]()
 	{
-		auto* task = jnew JXAskInitDockAll(dlog);
-		assert( task != nullptr );
-		task->Start();
-	}
-}
+		if (!showLicense || JGetUserNotification()->AcceptLicense())
+		{
+			auto* dlog = jnew AboutDialog(prevVersStr);
+			assert( dlog != nullptr );
+			dlog->DoDialog();
 
-/******************************************************************************
- HandleCustomEvent (virtual protected)
+			if (showLicense && prevVersStr.IsEmpty() &&
+				JGetUserNotification()->AskUserYes(
+					JGetString("StartupTips::JXAskInitDockAll")))
+			{
+				JXGetDockManager()->DockAll();
+			}
 
- ******************************************************************************/
-
-bool
-App::HandleCustomEvent()
-{
-	auto* link = dynamic_cast<lldb::Link*>(GetLink());
-	if (link != nullptr)
-	{
-		link->HandleEvent();
-	}
-	return true;
+			JCheckForNewerVersion(GetPrefsManager(), kVersionCheckID);
+		}
+		else
+		{
+			ForgetPrefsManager();
+			JXGetApplication()->Quit();
+		}
+	});
 }
 
 /******************************************************************************

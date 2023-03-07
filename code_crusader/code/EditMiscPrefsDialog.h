@@ -10,12 +10,12 @@
 #ifndef _H_EditMiscPrefsDialog
 #define _H_EditMiscPrefsDialog
 
-#include <jx-af/jx/JXDialogDirector.h>
+#include <jx-af/jx/JXModalDialogDirector.h>
 
 class JXRadioGroup;
 class JXTextCheckbox;
 
-class EditMiscPrefsDialog : public JXDialogDirector
+class EditMiscPrefsDialog : public JXModalDialogDirector
 {
 public:
 
@@ -23,9 +23,7 @@ public:
 
 	~EditMiscPrefsDialog() override;
 
-protected:
-
-	void	Receive(JBroadcaster* sender, const Message& message) override;
+	void	UpdateSettings();
 
 private:
 
@@ -50,7 +48,6 @@ private:
 private:
 
 	void	BuildWindow();
-	void	UpdateSettings();
 };
 
 #endif

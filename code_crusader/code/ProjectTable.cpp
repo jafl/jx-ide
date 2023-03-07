@@ -14,8 +14,9 @@
 #include "GroupNode.h"
 #include "LibraryNode.h"
 #include "ProjectDocument.h"
-#include "RelPathCSF.h"
 #include "ProjectTableInput.h"
+#include "ChooseRelativeFileDialog.h"
+#include "ChooseRelativePathDialog.h"
 #include "globals.h"
 #include "util.h"
 #include <jx-af/jx/JXDisplay.h>
@@ -35,6 +36,7 @@
 #include <jx-af/jx/jXUtil.h>
 #include <jx-af/jcore/JNamedTreeList.h>
 #include <jx-af/jcore/JTableSelection.h>
+#include <jx-af/jcore/JStringIterator.h>
 #include <jx-af/jcore/JSimpleProcess.h>
 #include <jx-af/jcore/JLatentPG.h>
 #include <jx-af/jcore/JDirInfo.h>
@@ -45,7 +47,7 @@
 #include <jx-af/jcore/jAssert.h>
 
 ProjectTable::DropFileAction
-	ProjectTable::itsDropFileAction = ProjectTable::kProjectRelative;
+	ProjectTable::itsDropFileAction = ProjectTable::kDropProjectRelative;
 
 static const JUtf8Byte* kSelectionDataID = "ProjectTable";
 
@@ -112,12 +114,11 @@ ProjectTable::ProjectTable
 	itsEditMenu = GetEditMenuHandler()->AppendEditMenu(menuBar);
 	ListenTo(itsEditMenu);
 
-	itsContextMenu          = nullptr;
-	itsAddFilesFilterDialog = nullptr;
+	itsContextMenu = nullptr;
 
 	itsMarkWritableFlag =
 		getenv("CVSREAD") != nullptr &&
-			 JGetVCSType(doc->GetFilePath()) == kJCVSType;
+		JGetVCSType(doc->GetFilePath()) == kJCVSType;
 
 	WantInput(true, false, true);
 }
@@ -226,39 +227,35 @@ ProjectTable::NewGroup
 void
 ProjectTable::AddDirectoryTree()
 {
-	if (!EndEditing())
+	if (EndEditing())
 	{
-		return;
-	}
-
-	RelPathCSF* csf = itsDoc->GetRelPathCSF();
-
-	JString path;
-	if (csf->ChooseRPath(JString::empty, JString::empty, JString::empty, &path))
-	{
-		AddDirectoryTree(path, csf->GetPathType());
+		auto* dlog = ChooseRelativePathDialog::Create(kProjectRelative, itsDoc->GetFilePath());
+		if (dlog->DoDialog())
+		{
+			AddDirectoryTree(dlog->GetPath(), dlog->GetPathType());
+		}
 	}
 }
 
 void
 ProjectTable::AddDirectoryTree
 	(
-	const JString&					fullPath,
-	const RelPathCSF::PathType	pathType
+	const JString&	fullPath,
+	const PathType	pathType
 	)
 {
-	itsAddPath     = fullPath;
-	itsAddPathType = pathType;
+	auto* dlog =
+		jnew JXGetStringDialog(JGetString("AddFilesTitle::ProjectTable"),
+							   JGetString("AddFilesPrompt::ProjectTable"),
+							   ProjectDocument::GetAddFilesFilter());
+	assert( dlog != nullptr );
 
-	assert( itsAddFilesFilterDialog == nullptr );
-	itsAddFilesFilterDialog =
-		jnew JXGetStringDialog(GetWindow()->GetDirector(),
-							  JGetString("AddFilesTitle::ProjectTable"),
-							  JGetString("AddFilesPrompt::ProjectTable"),
-							  ProjectDocument::GetAddFilesFilter());
-	assert( itsAddFilesFilterDialog != nullptr );
-	itsAddFilesFilterDialog->BeginDialog();
-	ListenTo(itsAddFilesFilterDialog);
+	if (dlog->DoDialog())
+	{
+		const JString& filter = dlog->GetString();
+		ProjectDocument::SetAddFilesFilter(filter);
+		AddDirectoryTree(fullPath, filter, pathType);
+	}
 }
 
 // private
@@ -266,9 +263,9 @@ ProjectTable::AddDirectoryTree
 void
 ProjectTable::AddDirectoryTree
 	(
-	const JString&					fullPath,
-	const JString&					filterStr,
-	const RelPathCSF::PathType	pathType
+	const JString&	fullPath,
+	const JString&	filterStr,
+	const PathType	pathType
 	)
 {
 	JString f = fullPath, p, n;
@@ -287,11 +284,11 @@ ProjectTable::AddDirectoryTree
 void
 ProjectTable::AddDirectoryTree
 	(
-	const JString&					fullPath,
-	const JString&					relPath,
-	const JString&					filterStr,
-	const RelPathCSF::PathType	pathType,
-	bool*						changed
+	const JString&	fullPath,
+	const JString&	relPath,
+	const JString&	filterStr,
+	const PathType	pathType,
+	bool*			changed
 	)
 {
 	JDirInfo* info;
@@ -362,25 +359,28 @@ ProjectTable::AddDirectoryTree
 void
 ProjectTable::AddFiles()
 {
-	if (!EndEditing())
+	if (EndEditing())
 	{
-		return;
-	}
+		auto* dlog =
+			ChooseRelativeFileDialog::Create(
+				kProjectRelative, JXChooseFileDialog::kSelectMultipleFiles,
+				itsDoc->GetFilePath());
 
-	RelPathCSF* csf = itsDoc->GetRelPathCSF();
+		if (dlog->DoDialog())
+		{
+			JPtrArray<JString> list(JPtrArrayT::kDeleteAll);
+			dlog->GetFullNames(&list);
 
-	JPtrArray<JString> fullNameList(JPtrArrayT::kDeleteAll);
-	if (csf->ChooseFiles(JString::empty, JString::empty, &fullNameList))
-	{
-		AddFiles(fullNameList, csf->GetPathType());
+			AddFiles(list, dlog->GetPathType());
+		}
 	}
 }
 
 bool
 ProjectTable::AddFiles
 	(
-	const JPtrArray<JString>&		fullNameList,
-	const RelPathCSF::PathType	pathType,
+	const JPtrArray<JString>&	fullNameList,
+	const PathType				pathType,
 	const bool					updateProject,
 	const bool					silent
 	)
@@ -430,20 +430,19 @@ ProjectTable::AddFiles
 	ProjectNode* firstNew = nullptr;
 	ProjectNode* lastNew  = nullptr;
 
-	const JSize count = fullNameList.GetElementCount();
-
 	JLatentPG pg(10);
-	pg.FixedLengthProcessBeginning(count, JGetString("ParsingFilesProgress::ProjectDocument"), true, false);
+	pg.FixedLengthProcessBeginning(
+		fullNameList.GetElementCount(),
+		JGetString("ParsingFilesProgress::ProjectDocument"), true, true);
 
-	for (JIndex i=1; i<=count; i++)
+	for (const auto* fullName : fullNameList)
 	{
-		const JString* fullName = fullNameList.GetElement(i);
 		if (!fullName->EndsWith("~")  &&
 			!fullName->EndsWith("#")  &&
 			!root->Includes(*fullName))
 		{
 			const JString fileName =
-				RelPathCSF::ConvertToRelativePath(
+				ConvertToRelativePath(
 					*fullName, itsDoc->GetFilePath(), pathType);
 
 			FileNodeBase* newNode = FileNodeBase::New(tree, fileName);
@@ -525,6 +524,110 @@ ProjectTable::AddFiles
 }
 
 /******************************************************************************
+ ConvertToAbsolutePath (static)
+
+ ******************************************************************************/
+
+JString
+ProjectTable::ConvertToAbsolutePath
+	(
+	const JString&	origName,
+	const JString&	projPath,
+	PathType*		pathType
+	)
+{
+	JString startPath;
+	if (origName.IsEmpty())
+	{
+		startPath = projPath;
+	}
+	else if (!origName.IsEmpty() &&
+			 !JConvertToAbsolutePath(origName, projPath, &startPath))
+	{
+		startPath = origName;
+		if (JIsRelativePath(startPath))
+		{
+			startPath.Prepend(projPath);
+		}
+	}
+
+	*pathType = origName.IsEmpty() ? kProjectRelative : CalcPathType(origName);
+	return startPath;
+}
+
+/******************************************************************************
+ ConvertToRelativePath (static)
+
+ ******************************************************************************/
+
+JString
+ProjectTable::ConvertToRelativePath
+	(
+	const JString& fullPath,
+	const JString& projPath,
+	const PathType pathType
+	)
+{
+	if (!JFileExists(fullPath) && !JDirectoryExists(fullPath))
+	{
+		return fullPath;
+	}
+
+	if (pathType == kProjectRelative)
+	{
+		return JConvertToRelativePath(fullPath, projPath);
+	}
+	else if (pathType == kHomeRelative)
+	{
+		JString path, trueHome;
+		if (JGetHomeDirectory(&path) &&
+			JGetTrueName(path, &trueHome))
+		{
+			path = JConvertToRelativePath(fullPath, trueHome);
+			if (path.BeginsWith("." ACE_DIRECTORY_SEPARATOR_STR))
+			{
+				JStringIterator iter(&path);
+				iter.SetNext(JUtf8Character('~'));
+			}
+			else if (JIsRelativePath(path))
+			{
+				path.Prepend("~" ACE_DIRECTORY_SEPARATOR_STR);
+			}
+			return path;
+		}
+	}
+
+	return fullPath;
+}
+
+/******************************************************************************
+ CalcPathType
+
+ ******************************************************************************/
+
+ProjectTable::PathType
+ProjectTable::CalcPathType
+	(
+	const JString& path
+	)
+{
+	assert( !path.IsEmpty() );
+
+	if (path.GetFirstCharacter() == '~')
+	{
+		return kHomeRelative;
+	}
+	else if (JIsAbsolutePath(path))
+	{
+		return kAbsolutePath;
+	}
+	else
+	{
+		return kProjectRelative;
+	}
+}
+
+/******************************************************************************
  GetDepth (protected)
 
  ******************************************************************************/
@@ -536,7 +639,7 @@ ProjectTable::GetDepth
 	)
 	const
 {
-	return (GetTreeList()->GetNode(index))->GetDepth();
+	return GetTreeList()->GetNode(index)->GetDepth();
 }
 
 /******************************************************************************
@@ -548,7 +651,7 @@ bool
 ProjectTable::HasSelection()
 	const
 {
-	return (GetTableSelection()).HasSelection();
+	return GetTableSelection().HasSelection();
 }
 
 /******************************************************************************
@@ -562,7 +665,7 @@ bool
 ProjectTable::GetSelectionType
 	(
 	SelType*	type,
-	bool*	single,
+	bool*		single,
 	JIndex*		index
 	)
 	const
@@ -644,10 +747,8 @@ ProjectTable::SelectFileNodes
 	JTableSelection& s  = GetTableSelection();
 
 	const JIndex colIndex = GetNodeColIndex();
-	const JSize count     = nodeList.GetElementCount();
-	for (JIndex i=1; i<=count; i++)
+	for (auto* node : nodeList)
 	{
-		const JTreeNode* node = nodeList.GetElement(i);
 		treeList->Open(node->GetParent());
 
 		JIndex rowIndex;
@@ -683,7 +784,7 @@ ProjectTable::OpenSelection()
 		JTableSelectionIterator iter(&s);
 		while (iter.Next(&cell))
 		{
-			(GetProjectNode(cell.y))->OpenFile();
+			GetProjectNode(cell.y)->OpenFile();
 		}
 	}
 
@@ -708,7 +809,7 @@ ProjectTable::OpenComplementFiles()
 	JPoint cell;
 	while (iter.Next(&cell))
 	{
-		(GetProjectNode(cell.y))->OpenComplementFile();
+		GetProjectNode(cell.y)->OpenComplementFile();
 	}
 
 	ClearIncrementalSearchBuffer();
@@ -727,7 +828,7 @@ ProjectTable::RemoveSelection()
 	if (HasSelection() &&
 		JGetUserNotification()->AskUserNo(JGetString("OKToRemove::ProjectTable")))
 	{
-		JTableSelectionIterator iter(&(GetTableSelection()));
+		JTableSelectionIterator iter(&GetTableSelection());
 		JTreeList* treeList = GetTreeList();
 
 		itsLockedSelDepthFlag = true;
@@ -758,14 +859,14 @@ ProjectTable::PlainDiffSelection()
 	}
 
 	const JTableSelection& s = GetTableSelection();
-	const bool silent    = s.GetSelectedCellCount() > 1;
+	const bool silent        = s.GetSelectedCellCount() > 1;
 
 	JTableSelectionIterator iter(&s);
 
 	JPoint cell;
 	while (iter.Next(&cell))
 	{
-		(GetProjectNode(cell.y))->ViewPlainDiffs(silent);
+		GetProjectNode(cell.y)->ViewPlainDiffs(silent);
 	}
 
 	ClearIncrementalSearchBuffer();
@@ -785,14 +886,14 @@ ProjectTable::VCSDiffSelection()
 	}
 
 	const JTableSelection& s = GetTableSelection();
-	const bool silent    = s.GetSelectedCellCount() > 1;
+	const bool silent        = s.GetSelectedCellCount() > 1;
 
 	JTableSelectionIterator iter(&s);
 
 	JPoint cell;
 	while (iter.Next(&cell))
 	{
-		(GetProjectNode(cell.y))->ViewVCSDiffs(silent);
+		GetProjectNode(cell.y)->ViewVCSDiffs(silent);
 	}
 
 	ClearIncrementalSearchBuffer();
@@ -817,13 +918,13 @@ ProjectTable::ShowSelectedFileLocations()
 	JPoint cell;
 	while (iter.Next(&cell))
 	{
-		if ((GetProjectNode(cell.y))->GetFullName(&fullName))
+		if (GetProjectNode(cell.y)->GetFullName(&fullName))
 		{
 			list.Append(fullName);
 		}
 	}
 
-	(JXGetWebBrowser())->ShowFileLocations(list);
+	JXGetWebBrowser()->ShowFileLocations(list);
 	ClearIncrementalSearchBuffer();
 }
 
@@ -836,7 +937,7 @@ void
 ProjectTable::EditFilePath()
 {
 	JPoint cell;
-	if ((GetTableSelection()).GetSingleSelectedCell(&cell) &&
+	if (GetTableSelection().GetSingleSelectedCell(&cell) &&
 		GetDepth(cell.y) == kFileDepth)
 	{
 		BeginEditing(cell);
@@ -852,7 +953,7 @@ void
 ProjectTable::EditSubprojectConfig()
 {
 	JPoint cell;
-	if ((GetTableSelection()).GetSingleSelectedCell(&cell))
+	if (GetTableSelection().GetSingleSelectedCell(&cell))
 	{
 		ProjectNode* node = GetProjectNode(cell.y);
 		if (node->GetType() == kLibraryNT)
@@ -910,32 +1011,26 @@ ProjectTable::Receive
 		ok = GetEditedCell(&cell);
 		assert( ok );
 
-		JString newName = inputField->GetText()->GetText();
+		PathType pathType;
+		const JString newName =
+			ConvertToAbsolutePath(
+				inputField->GetText()->GetText(), itsDoc->GetFilePath(), &pathType);
 
-		ok = (itsDoc->GetRelPathCSF())->ChooseRelFile(JString::empty, JString::empty, newName, &newName);	// kills inputField
-		if (BeginEditing(cell) && ok && GetXInputField(&inputField))
+		auto* dlog = ChooseRelativeFileDialog::Create(pathType, JXChooseFileDialog::kSelectSingleFile, newName);
+		if (dlog->DoDialog())
 		{
-			inputField->GetText()->SetText(newName);
+			JXInputField* inputField;
+			if (BeginEditing(cell) && GetXInputField(&inputField))
+			{
+				inputField->GetText()->SetText(
+					ConvertToRelativePath(dlog->GetFullName(), itsDoc->GetFilePath(), dlog->GetPathType()));
+			}
 		}
-	}
-
-	else if (sender == itsAddFilesFilterDialog && message.Is(JXDialogDirector::kDeactivated))
-	{
-		const auto* info =
-			dynamic_cast<const JXDialogDirector::Deactivated*>(&message);
-		assert( info != nullptr );
-		if (info->Successful())
-		{
-			const JString& filter = itsAddFilesFilterDialog->GetString();
-			ProjectDocument::SetAddFilesFilter(filter);
-			AddDirectoryTree(itsAddPath, filter, itsAddPathType);
-		}
-		itsAddFilesFilterDialog = nullptr;
 	}
 
 	else
 	{
-		if (sender == &(GetTableSelection()) && !itsIgnoreSelChangesFlag)
+		if (sender == &GetTableSelection() && !itsIgnoreSelChangesFlag)
 		{
 			CleanSelection();
 		}
@@ -1834,38 +1929,36 @@ ProjectTable::HandleDNDDrop
 				{
 					JXReportUnreachableHosts(urlList);
 				}
-				else if (itsDropFileAction == kAskPathType)
+				else if (itsDropFileAction == kDropAskPathType)
 				{
 					JArray<Atom> actionList;
-					actionList.AppendElement(RelPathCSF::kAbsolutePath);
-					actionList.AppendElement(RelPathCSF::kProjectRelative);
-					actionList.AppendElement(RelPathCSF::kHomeRelative);
+					actionList.AppendElement(kAbsolutePath);
+					actionList.AppendElement(kProjectRelative);
+					actionList.AppendElement(kHomeRelative);
 
 					JPtrArray<JString> descriptionList(JPtrArrayT::kForgetAll);
 					descriptionList.Append(const_cast<JString*>(&JGetString("AddFilesAbsPath::ProjectDocument")));
 					descriptionList.Append(const_cast<JString*>(&JGetString("AddFilesRelProj::ProjectDocument")));
 					descriptionList.Append(const_cast<JString*>(&JGetString("AddFilesRelHome::ProjectDocument")));
 
-					Atom action1 = RelPathCSF::kProjectRelative;
+					Atom action1 = kProjectRelative;
 					if (dndMgr->ChooseDropAction(actionList, descriptionList, &action1))
 					{
-						InsertExtDroppedFiles(fileNameList, (RelPathCSF::PathType) action1);
+						InsertExtDroppedFiles(fileNameList, (PathType) action1);
 
-						const JSize pathCount = pathList.GetElementCount();
-						for (JIndex i=1; i<=pathCount; i++)
+						for (auto* p : pathList)
 						{
-							AddDirectoryTree(*(pathList.GetElement(i)), (RelPathCSF::PathType) action1);
+							AddDirectoryTree(*p, (PathType) action1);
 						}
 					}
 				}
 				else
 				{
-					InsertExtDroppedFiles(fileNameList, (RelPathCSF::PathType) itsDropFileAction);
+					InsertExtDroppedFiles(fileNameList, (PathType) itsDropFileAction);
 
-					const JSize pathCount = pathList.GetElementCount();
-					for (JIndex i=1; i<=pathCount; i++)
+					for (auto* p : pathList)
 					{
-						AddDirectoryTree(*(pathList.GetElement(i)), (RelPathCSF::PathType) itsDropFileAction);
+						AddDirectoryTree(*p, (PathType) itsDropFileAction);
 					}
 				}
 			}
@@ -1968,8 +2061,8 @@ ProjectTable::InsertGroupSelectionBefore
 void
 ProjectTable::InsertExtDroppedFiles
 	(
-	const JPtrArray<JString>&		fileNameList,
-	const RelPathCSF::PathType	pathType
+	const JPtrArray<JString>&	fileNameList,
+	const PathType				pathType
 	)
 {
 	if (fileNameList.IsEmpty())
@@ -2452,8 +2545,11 @@ ProjectTable::PrepareDeleteXInputField()
 {
 	JXNamedTreeListWidget::PrepareDeleteXInputField();
 
-	JXDeleteObjectTask<JBroadcaster>::Delete(itsCSFButton);
-	itsCSFButton = nullptr;
+	if (itsCSFButton != nullptr)
+	{
+		JXDeleteObjectTask<JBroadcaster>::Delete(itsCSFButton);
+		itsCSFButton = nullptr;
+	}
 }
 
 /******************************************************************************
@@ -2578,24 +2674,24 @@ ProjectTable::WriteSetup
 std::istream&
 operator>>
 	(
-	std::istream&						input,
+	std::istream&					input,
 	ProjectTable::DropFileAction&	action
 	)
 {
 	long temp;
 	input >> temp;
 	action = (ProjectTable::DropFileAction) temp;
-	assert( action == ProjectTable::kAskPathType ||
-			action == ProjectTable::kAbsolutePath ||
-			action == ProjectTable::kProjectRelative ||
-			action == ProjectTable::kHomeRelative );
+	assert( action == ProjectTable::kDropAskPathType ||
+			action == ProjectTable::kDropAbsolutePath ||
+			action == ProjectTable::kDropProjectRelative ||
+			action == ProjectTable::kDropHomeRelative );
 	return input;
 }
 
 std::ostream&
 operator<<
 	(
-	std::ostream&								output,
+	std::ostream&						output,
 	const ProjectTable::DropFileAction	action
 	)
 {

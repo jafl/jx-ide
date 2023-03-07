@@ -85,7 +85,7 @@ MDIServer::HandleMDIRequest
 	if (argCount > 4)
 	{
 		pg.FixedLengthProcessBeginning(argCount-1,
-			JGetString("OpeningFiles::MDIServer"), true, false);
+			JGetString("OpeningFiles::MDIServer"), true, true);
 	}
 
 	JIndexRange lineRange;
@@ -96,7 +96,7 @@ MDIServer::HandleMDIRequest
 	bool restore = IsFirstTime();
 	for (JIndex i=2; i<=argCount; i++)
 	{
-		const JString& arg = *(argList.GetElement(i));
+		const JString& arg = *argList.GetElement(i);
 		if (arg.IsEmpty())
 		{
 			continue;
@@ -306,19 +306,21 @@ MDIServer::HandleMDIRequest
 
 	if (restore || argCount == 1)
 	{
+		DocumentManager* docMgr = GetDocumentManager();
 		if (itsCreateProjectFlag)
 		{
-			projectCreated = GetDocumentManager()->NewProjectDocument();
+			docMgr->NewProjectDocument();
+			projectCreated = docMgr->HasProjectDocuments();
 		}
 		if (itsCreateEditorFlag ||
 			(!stateRestored && !projectCreated &&
 			 !itsCreateEditorFlag && !itsChooseFileFlag))
 		{
-			GetDocumentManager()->NewTextDocument();
+			docMgr->NewTextDocument();
 		}
 		if (itsChooseFileFlag)
 		{
-			GetDocumentManager()->OpenSomething();
+			docMgr->OpenSomething();
 		}
 	}
 

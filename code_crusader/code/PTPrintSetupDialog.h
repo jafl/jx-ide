@@ -21,7 +21,7 @@ public:
 
 	~PTPrintSetupDialog() override;
 
-	bool	ShouldPrintHeader() const;
+	bool	SetParameters(JXPTPrinter* p) const override;
 
 protected:
 

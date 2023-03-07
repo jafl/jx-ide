@@ -1,7 +1,7 @@
 /******************************************************************************
  EditCPPMacroDialog.cpp
 
-	BASE CLASS = JXDialogDirector
+	BASE CLASS = JXModalDialogDirector
 
 	Copyright © 1998 by John Lindal.
 
@@ -29,11 +29,10 @@ const JFileVersion kCurrentSetupVersion = 0;
 
 EditCPPMacroDialog::EditCPPMacroDialog
 	(
-	JXDirector*				supervisor,
-	const CPreprocessor&	cpp
+	const CPreprocessor& cpp
 	)
 	:
-	JXDialogDirector(supervisor, true),
+	JXModalDialogDirector(true),
 	JPrefObject(GetPrefsManager(), kEditCPPMacroDialogID)
 {
 	BuildWindow(cpp);
@@ -137,9 +136,7 @@ EditCPPMacroDialog::BuildWindow
 // end JXLayout
 
 	window->SetTitle(JGetString("WindowTitle::EditCPPMacroDialog"));
-	window->PlaceAsDialogWindow();
 	window->LockCurrentMinSize();
-	UseModalPlacement(false);
 	SetButtons(okButton, cancelButton);
 
 	ListenTo(itsHelpButton);
@@ -178,7 +175,7 @@ EditCPPMacroDialog::Receive
 	}
 	else
 	{
-		JXDialogDirector::Receive(sender, message);
+		JXModalDialogDirector::Receive(sender, message);
 	}
 }
 
@@ -193,7 +190,7 @@ bool
 EditCPPMacroDialog::OKToDeactivate()
 {
 	return Cancelled() ||
-		(JXDialogDirector::OKToDeactivate() && itsTable->ContentsValid());
+		(JXModalDialogDirector::OKToDeactivate() && itsTable->ContentsValid());
 }
 
 /******************************************************************************

@@ -8,7 +8,7 @@
 #ifndef _H_ProjectConfigDialog
 #define _H_ProjectConfigDialog
 
-#include <jx-af/jx/JXDialogDirector.h>
+#include <jx-af/jx/JXModalDialogDirector.h>
 #include "BuildManager.h"		// need defn on MakefileMethod
 
 class JString;
@@ -16,16 +16,15 @@ class JXTextButton;
 class JXRadioGroup;
 class JXInputField;
 
-class ProjectConfigDialog : public JXDialogDirector
+class ProjectConfigDialog : public JXModalDialogDirector
 {
 public:
 
-	ProjectConfigDialog(JXDirector* supervisor,
-						   const BuildManager::MakefileMethod method,
-						   const JString& targetName,
-						   const JString& depListExpr,
-						   const JString& updateMakefileCmd,
-						   const JString& subProjectBuildCmd);
+	ProjectConfigDialog(const BuildManager::MakefileMethod method,
+						const JString& targetName,
+						const JString& depListExpr,
+						const JString& updateMakefileCmd,
+						const JString& subProjectBuildCmd);
 
 	~ProjectConfigDialog() override;
 

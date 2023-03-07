@@ -227,7 +227,7 @@ Array2DTable::DrawPrintHeader
 
 	const JString dateStr = JGetTimeStamp();
 	p.String(pageRect.left, pageRect.top, dateStr,
-			 pageRect.width(), JPainter::kHAlignRight);
+			 pageRect.width(), JPainter::HAlign::kRight);
 }
 
 /******************************************************************************

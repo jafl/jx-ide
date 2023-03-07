@@ -8,29 +8,28 @@
 #ifndef _H_EditPrefsDialog
 #define _H_EditPrefsDialog
 
-#include <jx-af/jx/JXDialogDirector.h>
+#include <jx-af/jx/JXModalDialogDirector.h>
 #include <jx-af/jcore/JPtrArray-JString.h>
 
 class JXInputField;
 class JXTextButton;
 class DebuggerProgramInput;
 
-class EditPrefsDialog : public JXDialogDirector
+class EditPrefsDialog : public JXModalDialogDirector
 {
 public:
 
-	EditPrefsDialog(JXDirector* supervisor,
-					  const JString& gdbCmd,
-					  const JString& jdbCmd,
-					  const JString& editFileCmd,
-					  const JString& editFileLineCmd,
-					  const JPtrArray<JString>& cSourceSuffixes,
-					  const JPtrArray<JString>& cHeaderSuffixes,
-					  const JPtrArray<JString>& javaSuffixes,
-					  const JPtrArray<JString>& phpSuffixes,
-					  const JPtrArray<JString>& fortranSuffixes,
-					  const JPtrArray<JString>& dSuffixes,
-					  const JPtrArray<JString>& goSuffixes);
+	EditPrefsDialog(const JString& gdbCmd,
+					const JString& jdbCmd,
+					const JString& editFileCmd,
+					const JString& editFileLineCmd,
+					const JPtrArray<JString>& cSourceSuffixes,
+					const JPtrArray<JString>& cHeaderSuffixes,
+					const JPtrArray<JString>& javaSuffixes,
+					const JPtrArray<JString>& phpSuffixes,
+					const JPtrArray<JString>& fortranSuffixes,
+					const JPtrArray<JString>& dSuffixes,
+					const JPtrArray<JString>& goSuffixes);
 
 	~EditPrefsDialog() override;
 

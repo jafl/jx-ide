@@ -9,12 +9,14 @@
 
 #include "CPPMacroTable.h"
 #include "CPreprocessor.h"
-#include "ListCSF.h"
+#include "ListChooseFileDialog.h"
 #include "globals.h"
 #include "sharedUtil.h"
+#include <jx-af/jx/JXWindow.h>
 #include <jx-af/jx/JXTextButton.h>
 #include <jx-af/jx/JXInputField.h>
 #include <jx-af/jx/JXColHeaderWidget.h>
+#include <jx-af/jx/JXSaveFileDialog.h>
 #include <jx-af/jcore/JStringTableData.h>
 #include <jx-af/jcore/JTableSelection.h>
 #include <jx-af/jcore/jStreamUtil.h>
@@ -72,9 +74,6 @@ CPPMacroTable::CPPMacroTable
 	itsSaveButton = saveButton;
 	ListenTo(itsSaveButton);
 
-	itsCSF = jnew ListCSF(JGetString("ReplaceList::CPPMacroTable"), JGetString("AppendToList::CPPMacroTable"));
-	assert( itsCSF != nullptr );
-
 	JString fontName;
 	JSize fontSize;
 	GetPrefsManager()->GetDefaultFont(&fontName, &fontSize);
@@ -105,7 +104,6 @@ CPPMacroTable::CPPMacroTable
 CPPMacroTable::~CPPMacroTable()
 {
 	jdelete GetStringData();
-	jdelete itsCSF;
 }
 
 /******************************************************************************
@@ -366,11 +364,17 @@ CPPMacroTable::PrepareDeleteXInputField()
 void
 CPPMacroTable::LoadMacros()
 {
-	JString fileName;
-	if (EndEditing() &&
-		itsCSF->ChooseFile(JString::empty, JString::empty, &fileName))
+	if (EndEditing())
 	{
-		ReadData(fileName, itsCSF->ReplaceExisting());
+		auto* dlog =
+			ListChooseFileDialog::Create(JGetString("ReplaceList::CPPMacroTable"),
+										 JGetString("AppendToList::CPPMacroTable"),
+										 JXChooseFileDialog::kSelectSingleFile);
+
+		if (dlog->DoDialog())
+		{
+			ReadData(dlog->GetFullName(), dlog->ReplaceExisting());
+		}
 	}
 }
 
@@ -417,7 +421,7 @@ CPPMacroTable::ReadData
 
 	if (firstNewRow != 0)
 	{
-		ScrollTo((GetBounds()).bottomLeft());
+		ScrollTo(GetBounds().bottomLeft());
 		BeginEditing(JPoint(kNameColumn, firstNewRow));
 	}
 }
@@ -431,12 +435,14 @@ void
 CPPMacroTable::SaveMacros()
 	const
 {
-	JString newName;
-	if (const_cast<CPPMacroTable*>(this)->EndEditing() &&
-		itsCSF->SaveFile(JGetString("SavePrompt::CPPMacroTable"), JString::empty, itsFileName, &newName))
+	if (const_cast<CPPMacroTable*>(this)->EndEditing())
 	{
-		itsFileName = newName;
-		WriteData(newName);
+		auto* dlog = JXSaveFileDialog::Create(JGetString("SavePrompt::CPPMacroTable"), itsFileName);
+		if (dlog->DoDialog())
+		{
+			itsFileName = dlog->GetFullName();
+			WriteData(itsFileName);
+		}
 	}
 }
 

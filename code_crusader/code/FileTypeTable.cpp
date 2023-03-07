@@ -352,8 +352,7 @@ FileTypeTable::FileTypeTable
 	itsCRMList(crmList),
 	itsFont(JFontManager::GetDefaultFont())
 {
-	itsTextInput    = nullptr;
-	itsNewDirDialog = nullptr;
+	itsTextInput = nullptr;
 
 	// font
 
@@ -560,45 +559,45 @@ FileTypeTable::TableDrawCell
 
 		JRect r = rect;
 		r.left += kHMarginWidth;
-		p.String(r, *(info.suffix), JPainter::kHAlignLeft, JPainter::kVAlignCenter);
+		p.String(r, *(info.suffix), JPainter::HAlign::kLeft, JPainter::VAlign::kCenter);
 
 		p.SetFont(JFontManager::GetDefaultFont());
 	}
 	else if (cell.x == kTypeColumn)
 	{
 		const JString& str = itsTypeMenu->GetItemText(kFileTypeToMenuIndex[ info.type ]);
-		p.String(rect, str, JPainter::kHAlignCenter, JPainter::kVAlignCenter);
+		p.String(rect, str, JPainter::HAlign::kCenter, JPainter::VAlign::kCenter);
 	}
 	else if (cell.x == kMacroColumn &&
 			 info.type != kBinaryFT && info.type != kExternalFT)
 	{
 		const JString& str = itsMacroMenu->GetItemText(MacroIDToMenuIndex(info.macroID));
-		p.String(rect, str, JPainter::kHAlignCenter, JPainter::kVAlignCenter);
+		p.String(rect, str, JPainter::HAlign::kCenter, JPainter::VAlign::kCenter);
 	}
 	else if (cell.x == kScriptColumn &&
 			 info.type != kBinaryFT && info.type != kExternalFT)
 	{
 		if (info.scriptPath == nullptr)
 		{
-			p.String(rect, JGetString("NoScript::FileTypeTable"), JPainter::kHAlignCenter, JPainter::kVAlignCenter);
+			p.String(rect, JGetString("NoScript::FileTypeTable"), JPainter::HAlign::kCenter, JPainter::VAlign::kCenter);
 		}
 		else
 		{
-			p.String(rect, *(info.scriptPath), JPainter::kHAlignCenter, JPainter::kVAlignCenter);
+			p.String(rect, *(info.scriptPath), JPainter::HAlign::kCenter, JPainter::VAlign::kCenter);
 		}
 	}
 	else if (cell.x == kCRMColumn &&
 			 info.type != kBinaryFT && info.type != kExternalFT)
 	{
 		const JString& str = itsCRMMenu->GetItemText(CRMIDToMenuIndex(info.crmID));
-		p.String(rect, str, JPainter::kHAlignCenter, JPainter::kVAlignCenter);
+		p.String(rect, str, JPainter::HAlign::kCenter, JPainter::VAlign::kCenter);
 	}
 	else if (cell.x == kWrapColumn &&
 			 info.type != kBinaryFT && info.type != kExternalFT)
 	{
 		p.String(rect,
 			JGetString(info.wordWrap ? "WordWrapOn::FileTypeTable" : "WordWrapOff::FileTypeTable"),
-			JPainter::kHAlignCenter, JPainter::kVAlignCenter);
+			JPainter::HAlign::kCenter, JPainter::VAlign::kCenter);
 	}
 	else if (cell.x == kEditCmdColumn && info.editCmd != nullptr)
 	{
@@ -606,7 +605,7 @@ FileTypeTable::TableDrawCell
 
 		JRect r = rect;
 		r.left += kHMarginWidth;
-		p.String(r, *(info.editCmd), JPainter::kHAlignLeft, JPainter::kVAlignCenter);
+		p.String(r, *(info.editCmd), JPainter::HAlign::kLeft, JPainter::VAlign::kCenter);
 
 		p.SetFont(JFontManager::GetDefaultFont());
 	}
@@ -880,18 +879,6 @@ FileTypeTable::Receive
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleCRMMenu(selection->GetIndex());
-	}
-
-	else if (sender == itsNewDirDialog && message.Is(JXDialogDirector::kDeactivated))
-	{
-		const auto* info =
-			dynamic_cast<const JXDialogDirector::Deactivated*>(&message);
-		assert( info != nullptr );
-		if (info->Successful())
-		{
-			CreateNewScriptDirectory();
-		}
-		itsNewDirDialog = nullptr;
 	}
 
 	else
@@ -1213,8 +1200,6 @@ FileTypeTable::HandleScriptMenu
 void
 FileTypeTable::GetNewScriptDirectory()
 {
-	assert( itsNewDirDialog == nullptr );
-
 	JString sysDir, userDir;
 	if (!PrefsManager::GetScriptPaths(&sysDir, &userDir))
 	{
@@ -1227,49 +1212,39 @@ FileTypeTable::GetNewScriptDirectory()
 		return;
 	}
 
-	itsNewDirDialog =
-		jnew JXGetNewDirDialog(JXGetApplication(), JGetString("NewDirTitle::FileTypeTable"),
+	auto* dlog =
+		jnew JXGetNewDirDialog(JGetString("NewDirTitle::FileTypeTable"),
 							  JGetString("NewDirPrompt::FileTypeTable"), JString::empty, userDir);
-	assert( itsNewDirDialog != nullptr );
-	itsNewDirDialog->BeginDialog();
-	ListenTo(itsNewDirDialog);
-}
+	assert( dlog != nullptr );
 
-/******************************************************************************
- CreateNewScriptDirectory (private)
-
- ******************************************************************************/
-
-void
-FileTypeTable::CreateNewScriptDirectory()
-{
-	assert( itsNewDirDialog != nullptr );
-
-	const JString fullName = itsNewDirDialog->GetNewDirName();
-	CreateDirectory(fullName);
-
-	JPoint cell;
-	const bool ok = (GetTableSelection()).GetFirstSelectedCell(&cell);
-	assert( ok );
-
-	PrefsManager::FileTypeInfo info = itsFileTypeList->GetElement(cell.y);
-
-	JString path, name;
-	JSplitPathAndName(fullName, &path, &name);
-	if (info.scriptPath == nullptr)
+	if (dlog->DoDialog())
 	{
-		info.scriptPath = jnew JString(name);
-		assert( info.scriptPath != nullptr );
-	}
-	else
-	{
-		*(info.scriptPath) = name;
-	}
+		const JString fullName = dlog->GetNewDirName();
+		CreateDirectory(fullName);
 
-	info.isUserScript = true;
+		JPoint cell;
+		const bool ok = GetTableSelection().GetFirstSelectedCell(&cell);
+		assert( ok );
 
-	itsFileTypeList->SetElement(cell.y, info);
-	TableRefreshRow(cell.y);
+		PrefsManager::FileTypeInfo info = itsFileTypeList->GetElement(cell.y);
+
+		JString path, name;
+		JSplitPathAndName(fullName, &path, &name);
+		if (info.scriptPath == nullptr)
+		{
+			info.scriptPath = jnew JString(name);
+			assert( info.scriptPath != nullptr );
+		}
+		else
+		{
+			*info.scriptPath = name;
+		}
+
+		info.isUserScript = true;
+
+		itsFileTypeList->SetElement(cell.y, info);
+		TableRefreshRow(cell.y);
+	}
 }
 
 /******************************************************************************

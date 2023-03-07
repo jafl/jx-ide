@@ -10,18 +10,20 @@
 #ifndef _H_EditSymbolPrefsDialog
 #define _H_EditSymbolPrefsDialog
 
-#include <jx-af/jx/JXDialogDirector.h>
+#include <jx-af/jx/JXModalDialogDirector.h>
 
 class JXTextButton;
 class JXTextCheckbox;
 
-class EditSymbolPrefsDialog : public JXDialogDirector
+class EditSymbolPrefsDialog : public JXModalDialogDirector
 {
 public:
 
 	EditSymbolPrefsDialog(const bool raiseTreeOnRightClick);
 
 	~EditSymbolPrefsDialog() override;
+
+	void	UpdateSettings();
 
 protected:
 
@@ -39,7 +41,6 @@ private:
 private:
 
 	void	BuildWindow(const bool raiseTreeOnRightClick);
-	void	UpdateSettings();
 };
 
 #endif

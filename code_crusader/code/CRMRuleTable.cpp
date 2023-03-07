@@ -9,13 +9,14 @@
 
 #include "CRMRuleTable.h"
 #include "EditCRMDialog.h"
-#include "ListCSF.h"
+#include "ListChooseFileDialog.h"
 #include "globals.h"
 #include <jx-af/jx/JXWindow.h>
 #include <jx-af/jx/JXTextButton.h>
 #include <jx-af/jx/JXRegexInput.h>
 #include <jx-af/jx/JXRegexReplaceInput.h>
 #include <jx-af/jx/JXColHeaderWidget.h>
+#include <jx-af/jx/JXSaveFileDialog.h>
 #include <jx-af/jcore/JStringTableData.h>
 #include <jx-af/jcore/JTableSelection.h>
 #include <jx-af/jcore/JRegex.h>
@@ -42,7 +43,7 @@ const JUtf8Byte kGeometryDataEndDelimiter      = '\1';
 
 CRMRuleTable::CRMRuleTable
 	(
-	EditCRMDialog*	dialog,
+	EditCRMDialog*		dialog,
 	JXTextButton*		addRowButton,
 	JXTextButton*		removeRowButton,
 	JXTextButton*		loadButton,
@@ -75,11 +76,6 @@ CRMRuleTable::CRMRuleTable
 	itsSaveButton = saveButton;
 	ListenTo(itsSaveButton);
 
-	itsCSF = jnew ListCSF(
-		JGetString("ReplaceList::CRMRuleTable"),
-		JGetString("AppendToList::CRMRuleTable"));
-	assert( itsCSF != nullptr );
-
 	itsFirstRegex          = JStyledText::CRMRule::CreateRegex(JString(".", JString::kNoCopy));
 	itsRestRegex           = JStyledText::CRMRule::CreateRegex(JString(".", JString::kNoCopy));
 	itsReplaceInterpolator = JStyledText::CRMRule::CreateInterpolator();
@@ -107,7 +103,6 @@ CRMRuleTable::CRMRuleTable
 CRMRuleTable::~CRMRuleTable()
 {
 	jdelete GetStringData();
-	jdelete itsCSF;
 	jdelete itsFirstRegex;
 	jdelete itsRestRegex;
 }
@@ -373,11 +368,17 @@ CRMRuleTable::PrepareDeleteXInputField()
 void
 CRMRuleTable::LoadRules()
 {
-	JString fileName;
-	if (GetWindow()->OKToUnfocusCurrentWidget() &&
-		itsCSF->ChooseFile(JString::empty, JString::empty, &fileName))
+	if (GetWindow()->OKToUnfocusCurrentWidget())
 	{
-		ReadData(fileName, itsCSF->ReplaceExisting());
+		auto* dlog =
+			ListChooseFileDialog::Create(JGetString("ReplaceList::CRMRuleTable"),
+										 JGetString("AppendToList::CRMRuleTable"),
+										 JXChooseFileDialog::kSelectSingleFile);
+
+		if (dlog->DoDialog())
+		{
+			ReadData(dlog->GetFullName(), dlog->ReplaceExisting());
+		}
 	}
 }
 
@@ -463,10 +464,10 @@ CRMRuleTable::SaveRules()
 	if (GetWindow()->OKToUnfocusCurrentWidget() &&
 		itsDialog->GetCurrentCRMRuleSetName(&origName))
 	{
-		JString newName;
-		if (itsCSF->SaveFile(JGetString("SaveAsPrompt::CRMRuleTable"), JString::empty, origName, &newName))
+		auto* dlog = JXSaveFileDialog::Create(JGetString("SaveAsPrompt::CRMRuleTable"), origName);
+		if (dlog->DoDialog())
 		{
-			WriteData(newName);
+			WriteData(dlog->GetFullName());
 		}
 	}
 }

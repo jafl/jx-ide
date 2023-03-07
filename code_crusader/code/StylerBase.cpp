@@ -62,8 +62,7 @@ StylerBase::StylerBase
 	itsTypeNameCount(typeCount),
 	itsTypeNames(typeNames),
 	itsFileType(fileType),
-	itsDialogTitle(editDialogTitle),
-	itsEditDialog(nullptr)
+	itsDialogTitle(editDialogTitle)
 {
 	itsTypeStyles = jnew JArray<JFontStyle>(64);
 	assert( itsTypeStyles != nullptr );
@@ -363,18 +362,6 @@ StylerBase::Receive
 		SetDefaultFontColor(GetPrefsManager()->GetColor(PrefsManager::kTextColorIndex));
 	}
 
-	else if (sender == itsEditDialog && message.Is(JXDialogDirector::kDeactivated))
-	{
-		const auto* info = dynamic_cast<const JXDialogDirector::Deactivated*>(&message);
-		assert( info != nullptr );
-		if (info->Successful())
-		{
-			ExtractStyles();
-		}
-		itsEditDialog->GetWindow()->WriteGeometry(&itsDialogGeom);
-		itsEditDialog = nullptr;
-	}
-
 	else
 	{
 		JBroadcaster::Receive(sender, message);
@@ -434,54 +421,43 @@ StylerBase::SetDefaultFontColor
 void
 StylerBase::EditStyles()
 {
-	assert( itsEditDialog == nullptr );
-
 	JArray<WordStyle> wordList;
 	GetWordList(*itsWordStyles, &wordList, true);
 
-	itsEditDialog = jnew EditStylerDialog(itsDialogTitle, IsActive(),
-										   itsTypeNames, *itsTypeStyles,
-										   wordList, itsFileType);
-	assert( itsEditDialog != nullptr );
+	auto* dlog = jnew EditStylerDialog(itsDialogTitle, IsActive(),
+									   itsTypeNames, *itsTypeStyles,
+									   wordList, itsFileType);
+	assert( dlog != nullptr );
 
 	for (auto& ws : wordList)
 	{
 		jdelete ws.key;
 	}
 
-	JXWindow* window = itsEditDialog->GetWindow();
+	JXWindow* window = dlog->GetWindow();
 	window->ReadGeometry(itsDialogGeom);
 	window->Deiconify();
 
-	itsEditDialog->BeginDialog();
-	ListenTo(itsEditDialog);
-}
-
-/******************************************************************************
- ExtractStyles (private)
-
- ******************************************************************************/
-
-void
-StylerBase::ExtractStyles()
-{
-	assert( itsEditDialog != nullptr );
-
-	bool active;
-	JArray<JFontStyle> newTypeStyles = *itsTypeStyles;
-	JStringMap<JFontStyle> newWordStyles;
-	itsEditDialog->GetData(&active, &newTypeStyles, &newWordStyles);
-	if (active != IsActive() ||
-		TypeStylesChanged(newTypeStyles) ||
-		WordStylesChanged(newWordStyles))
+	if (dlog->DoDialog())
 	{
-		itsEditDialog->GetData(&active, itsTypeStyles, itsWordStyles);
+		bool active;
+		JArray<JFontStyle> newTypeStyles = *itsTypeStyles;
+		JStringMap<JFontStyle> newWordStyles;
+		dlog->GetData(&active, &newTypeStyles, &newWordStyles);
+		if (active != IsActive() ||
+			TypeStylesChanged(newTypeStyles) ||
+			WordStylesChanged(newWordStyles))
+		{
+			dlog->GetData(&active, itsTypeStyles, itsWordStyles);
 
-		SetActive(active);
-		GetDocumentManager()->StylerChanged(this);
+			SetActive(active);
+			GetDocumentManager()->StylerChanged(this);
 
-		Broadcast(WordListChanged(*itsWordStyles));
+			Broadcast(WordListChanged(*itsWordStyles));
+		}
 	}
+
+	dlog->GetWindow()->WriteGeometry(&itsDialogGeom);
 }
 
 #endif

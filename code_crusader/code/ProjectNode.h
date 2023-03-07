@@ -92,8 +92,8 @@ public:
 protected:
 
 	ProjectNode(std::istream& input, const JFileVersion vers,
-				  ProjectNode* parent, const ProjectNodeType type,
-				  const bool isOpenable);
+				ProjectNode* parent, const ProjectNodeType type,
+				const bool isOpenable);
 
 	virtual bool	CalledByFindFile(const JString& fullName,
 									 ProjectNode** node);

@@ -20,7 +20,9 @@ public:
 
 	~DelaySymbolUpdateTask() override;
 
-	void	Perform(const Time delta, Time* maxSleepTime) override;
+protected:
+
+	void	Perform(const Time delta) override;
 
 private:
 

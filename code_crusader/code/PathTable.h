@@ -16,7 +16,6 @@ class JXImage;
 class JXTextButton;
 class JXPathInput;
 class DirList;
-class RelPathCSF;
 
 class PathTable : public JXEditTable
 {
@@ -24,7 +23,7 @@ public:
 
 	PathTable(const DirList& pathList,
 				JXTextButton* addPathButton, JXTextButton* removePathButton,
-				JXTextButton* choosePathButton, RelPathCSF* csf,
+				JXTextButton* choosePathButton,
 				JXScrollbarSet* scrollbarSet, JXContainer* enclosure,
 				const HSizingOption hSizing, const VSizingOption vSizing,
 				const JCoordinate x, const JCoordinate y,
@@ -40,9 +39,9 @@ public:
 protected:
 
 	void	HandleMouseDown(const JPoint& pt, const JXMouseButton button,
-									const JSize clickCount,
-									const JXButtonStates& buttonStates,
-									const JXKeyModifiers& modifiers) override;
+							const JSize clickCount,
+							const JXButtonStates& buttonStates,
+							const JXKeyModifiers& modifiers) override;
 
 	void			TableDrawCell(JPainter& p, const JPoint& cell, const JRect& rect) override;
 	JXInputField*	CreateXInputField(const JPoint& cell,
@@ -71,7 +70,6 @@ private:
 	JXTextButton*		itsAddPathButton;		// not owned
 	JXTextButton*		itsRemovePathButton;	// not owned
 	JXTextButton*		itsChoosePathButton;	// not owned
-	RelPathCSF*			itsCSF;					// not owned
 
 private:
 

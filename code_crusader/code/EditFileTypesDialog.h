@@ -10,7 +10,7 @@
 #ifndef _H_EditFileTypesDialog
 #define _H_EditFileTypesDialog
 
-#include <jx-af/jx/JXDialogDirector.h>
+#include <jx-af/jx/JXModalDialogDirector.h>
 #include <jx-af/jcore/JPrefObject.h>
 #include "PrefsManager.h"		// need definition of FileTypeInfo
 
@@ -18,16 +18,15 @@ class JXTextButton;
 class JXTextCheckbox;
 class FileTypeTable;
 
-class EditFileTypesDialog : public JXDialogDirector, public JPrefObject
+class EditFileTypesDialog : public JXModalDialogDirector, public JPrefObject
 {
 public:
 
-	EditFileTypesDialog(JXDirector* supervisor,
-						  const JArray<PrefsManager::FileTypeInfo>& fileTypeList,
-						  const JArray<PrefsManager::MacroSetInfo>& macroList,
-						  const JArray<PrefsManager::CRMRuleListInfo>& crmList,
-						  const bool execOutputWordWrap,
-						  const bool unknownTypeWordWrap);
+	EditFileTypesDialog(const JArray<PrefsManager::FileTypeInfo>& fileTypeList,
+						const JArray<PrefsManager::MacroSetInfo>& macroList,
+						const JArray<PrefsManager::CRMRuleListInfo>& crmList,
+						const bool execOutputWordWrap,
+						const bool unknownTypeWordWrap);
 
 	~EditFileTypesDialog() override;
 

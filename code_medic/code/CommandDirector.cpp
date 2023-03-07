@@ -53,7 +53,8 @@
 #include <jx-af/jx/JXHelpManager.h>
 #include <jx-af/jx/JXWDManager.h>
 #include <jx-af/jx/JXWDMenu.h>
-#include <jx-af/jx/JXChooseSaveFile.h>
+#include <jx-af/jx/JXChooseFileDialog.h>
+#include <jx-af/jx/JXSaveFileDialog.h>
 #include <jx-af/jx/JXImage.h>
 #include <jx-af/jx/JXColorManager.h>
 #include <jx-af/jx/JXMacWinPrefsDialog.h>
@@ -307,7 +308,7 @@ CommandDirector::CommandDirector
 
 	ListenTo(GetPrefsManager());
 
-	itsFakePrompt->GetText()->SetText(itsLink->GetPrompt());
+	itsFakePrompt->GetText()->SetText(itsLink->GetCommandPrompt());
 	itsFakePrompt->SetFontStyle(
 		GetPrefsManager()->GetColor(PrefsManager::kRightMarginColorIndex));
 }
@@ -321,7 +322,10 @@ CommandDirector::~CommandDirector()
 {
 	CloseDynamicDirectors();
 
-	GetPrefsManager()->SaveWindowSize(kCmdWindSizeID, GetWindow());
+	if (HasPrefsManager())
+	{
+		GetPrefsManager()->SaveWindowSize(kCmdWindSizeID, GetWindow());
+	}
 
 	jdelete itsSourceDirs;
 	jdelete itsAsmDirs;
@@ -342,7 +346,10 @@ CommandDirector::Close()
 {
 	CloseDynamicDirectors();
 
-	GetPrefsManager()->WriteHistoryMenuSetup(itsHistoryMenu);
+	if (HasPrefsManager())
+	{
+		GetPrefsManager()->WriteHistoryMenuSetup(itsHistoryMenu);
+	}
 	return JXWindowDirector::Close();		// deletes us if successful
 }
 
@@ -542,7 +549,7 @@ CommandDirector::BuildWindow()
 	itsProgramButton->SetPaddingBeforeFTC(p);
 
 	TextDisplayBase::AdjustFont(itsArgInput);
-	itsArgInput->GetText()->SetCharacterInWordFunction(JXChooseSaveFile::IsCharacterInWord);
+	itsArgInput->GetText()->SetCharacterInWordFunction(JXCSFDialogBase::IsCharacterInWord);
 
 	// menus
 
@@ -936,7 +943,7 @@ CommandDirector::Receive
 	}
 	else if (sender == itsLink && message.Is(Link::kDebuggerReadyForInput))
 	{
-		itsFakePrompt->GetText()->SetText(itsLink->GetPrompt());
+		itsFakePrompt->GetText()->SetText(itsLink->GetCommandPrompt());
 		itsFakePrompt->SetFontStyle(
 			GetPrefsManager()->GetColor(PrefsManager::kTextColorIndex));
 	}
@@ -1142,7 +1149,7 @@ CommandDirector::ReceiveGoingAway
 		itsWaitingToRunFlag = false;
 
 		UpdateWindowTitle(JString::empty);
-		itsFakePrompt->GetText()->SetText(itsLink->GetPrompt());
+		itsFakePrompt->GetText()->SetText(itsLink->GetCommandPrompt());
 		itsFakePrompt->SetFontStyle(
 			GetPrefsManager()->GetColor(PrefsManager::kRightMarginColorIndex));
 
@@ -1174,7 +1181,7 @@ CommandDirector::HandleUserInput()
 	{
 		itsCommandOutput->PlaceCursorAtEnd();
 		itsCommandOutput->SetCurrentFontStyle(itsCommandOutput->GetText()->GetDefaultFont().GetStyle());
-		itsCommandOutput->Paste("\n" + itsLink->GetPrompt() + " ");
+		itsCommandOutput->Paste("\n" + itsLink->GetCommandPrompt() + " ");
 	}
 	else
 	{
@@ -1324,13 +1331,15 @@ CommandDirector::HandleFileMenu
 void
 CommandDirector::OpenSourceFiles()
 {
-	JPtrArray<JString> list(JPtrArrayT::kDeleteAll);
-	if (JGetChooseSaveFile()->ChooseFiles(JGetString("ChooseSourcePrompt::CommandDirector"), JString::empty, &list))
+	auto* dlog = JXChooseFileDialog::Create(JXChooseFileDialog::kSelectMultipleFiles);
+	if (dlog->DoDialog())
 	{
-		const JSize count = list.GetElementCount();
-		for (JIndex i=1; i<=count; i++)
+		JPtrArray<JString> list(JPtrArrayT::kDeleteAll);
+		dlog->GetFullNames(&list);
+
+		for (auto* s : list)
 		{
-			OpenSourceFile(*(list.GetElement(i)));
+			OpenSourceFile(*s);
 		}
 	}
 }
@@ -1345,7 +1354,7 @@ CommandDirector::OpenSourceFile
 	(
 	const JString&	fileName,
 	const JSize		lineIndex,
-	const bool	askDebuggerWhenRelPath
+	const bool		askDebuggerWhenRelPath
 	)
 {
 	JString fullName;
@@ -1480,9 +1489,11 @@ CommandDirector::ReportUnreadableSourceFile
 void
 CommandDirector::LoadConfig()
 {
-	JString fullName;
-	if (JGetChooseSaveFile()->ChooseFile(JString("ChooseConfigPrompt::CommandDirector"), JString::empty, &fullName))
+	auto* dlog = JXChooseFileDialog::Create(JXChooseFileDialog::kSelectSingleFile);
+	if (dlog->DoDialog())
 	{
+		const JString fullName = dlog->GetFullName();
+
 		std::ifstream input(fullName.GetBytes());
 
 		JFileVersion vers;
@@ -1562,44 +1573,46 @@ CommandDirector::SaveConfig()
 		origName = "debug_config";
 	}
 
-	if (JGetChooseSaveFile()->SaveFile(JGetString("SaveFilePrompt::CommandDirector"), JString::empty, origName, &fullName))
+	auto* dlog = JXSaveFileDialog::Create(JGetString("SaveFilePrompt::CommandDirector"));
+	if (dlog->DoDialog())
 	{
+		fullName = dlog->GetFullName();
 		std::ofstream output(fullName.GetBytes());
 
 		output << kCurrentConfigVersion;
-		(itsLink->GetBreakpointManager())->WriteSetup(output);
+		itsLink->GetBreakpointManager()->WriteSetup(output);
 		itsVarTreeDir->WriteSetup(output);
 
 		JSize count = itsArray1DDirs->GetElementCount();
 		output << ' ' << count;
 
-		for (JIndex i=1; i<=count; i++)
+		for (auto* d: *itsArray1DDirs)
 		{
-			(itsArray1DDirs->GetElement(i))->StreamOut(output);
+			d->StreamOut(output);
 		}
 
 		count = itsArray2DDirs->GetElementCount();
 		output << ' ' << count;
 
-		for (JIndex i=1; i<=count; i++)
+		for (auto* d: *itsArray2DDirs)
 		{
-			(itsArray2DDirs->GetElement(i))->StreamOut(output);
+			d->StreamOut(output);
 		}
 
 		count = itsPlot2DDirs->GetElementCount();
 		output << ' ' << count;
 
-		for (JIndex i=1; i<=count; i++)
+		for (auto* d: *itsPlot2DDirs)
 		{
-			(itsPlot2DDirs->GetElement(i))->StreamOut(output);
+			d->StreamOut(output);
 		}
 
 		count = itsMemoryDirs->GetElementCount();
 		output << ' ' << count;
 
-		for (JIndex i=1; i<=count; i++)
+		for (auto* d: *itsMemoryDirs)
 		{
-			(itsMemoryDirs->GetElement(i))->StreamOut(output);
+			d->StreamOut(output);
 		}
 	}
 }
@@ -1630,8 +1643,10 @@ CommandDirector::SaveInCurrentFile()
 void
 CommandDirector::SaveInNewFile()
 {
-	if (JGetChooseSaveFile()->SaveFile(JGetString("SaveFilePrompt::CommandDirector"), JString::empty, JString::empty,  &itsCurrentHistoryFile))
+	auto* dlog = JXSaveFileDialog::Create(JGetString("SaveFilePrompt::CommandDirector"));
+	if (dlog->DoDialog())
 	{
+		itsCurrentHistoryFile = dlog->GetFullName();
 		SaveInCurrentFile();
 	}
 }
@@ -2024,13 +2039,17 @@ CommandDirector::RunProgram()
 void
 CommandDirector::ChangeProgram()
 {
-	JString fullName;
-	const JString instr = itsLink->GetChooseProgramInstructions();
-	if (itsLink->OKToDetachOrKill() &&
-		JGetChooseSaveFile()->ChooseFile(JGetString("ChooseBinaryPrompt::CommandDirector"), instr, &fullName))
+	if (itsLink->OKToDetachOrKill())
 	{
-		MDIServer::UpdateDebuggerType(fullName);
-		itsLink->SetProgram(fullName);
+		auto* dlog = JXChooseFileDialog::Create(
+			JXChooseFileDialog::kSelectSingleFile, JString::empty, JString::empty,
+			itsLink->GetChooseProgramInstructions());
+		if (dlog->DoDialog())
+		{
+			const JString fullName = dlog->GetFullName();
+			MDIServer::UpdateDebuggerType(fullName);
+			itsLink->SetProgram(fullName);
+		}
 	}
 }
 
@@ -2056,7 +2075,7 @@ CommandDirector::ReloadProgram()
 void
 CommandDirector::ChooseCoreFile()
 {
-	JString coreName, origPath;
+	JString origPath;
 
 #ifdef _J_MACOS
 
@@ -2064,10 +2083,13 @@ CommandDirector::ChooseCoreFile()
 
 #endif
 
-	if (itsLink->OKToDetachOrKill() &&
-		JGetChooseSaveFile()->ChooseFile(JGetString("ChooseCorePrompt::CommandDirector"), JString::empty, origPath, &coreName))
+	if (itsLink->OKToDetachOrKill())
 	{
-		itsLink->SetCore(coreName);
+		auto* dlog = JXChooseFileDialog::Create(JXChooseFileDialog::kSelectSingleFile, origPath);
+		if (dlog->DoDialog())
+		{
+			itsLink->SetCore(dlog->GetFullName());
+		}
 	}
 }
 
@@ -2081,9 +2103,16 @@ CommandDirector::ChooseProcess()
 {
 	if (itsLink->OKToDetachOrKill())
 	{
-		auto* dialog = jnew ChooseProcessDialog(this);
-		assert( dialog != nullptr );
-		dialog->BeginDialog();
+		auto* dlog = jnew ChooseProcessDialog();
+		assert( dlog != nullptr );
+		if (dlog->DoDialog())
+		{
+			JInteger pid;
+			const bool ok = dlog->GetProcessID(&pid);
+			assert( ok );
+
+			GetLink()->AttachToProcess(pid);
+		}
 	}
 }
 
@@ -2204,7 +2233,7 @@ CommandDirector::HandlePrefsMenu
 	{
 		auto* dlog = jnew EditCommandsDialog;
 		assert( dlog != nullptr );
-		dlog->BeginDialog();
+		dlog->DoDialog();
 	}
 	else if (index == kEditMacWinPrefsCmd)
 	{
@@ -2225,7 +2254,7 @@ CommandDirector::HandleHelpMenu
 {
 	if (index == kAboutCmd)
 	{
-		(GetApplication())->DisplayAbout();
+		GetApplication()->DisplayAbout();
 	}
 	else if (index == kTOCCmd)
 	{

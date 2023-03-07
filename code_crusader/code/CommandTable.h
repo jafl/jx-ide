@@ -16,7 +16,6 @@ class JXTextButton;
 class JXTextMenu;
 class JXInputField;
 class JXColHeaderWidget;
-class ListCSF;
 
 class CommandTable : public JXEditTable
 {
@@ -96,7 +95,6 @@ private:
 	JXTextButton*	itsDuplicateCmdButton;
 	JXTextButton*	itsExportButton;
 	JXTextButton*	itsImportButton;
-	ListCSF*		itsCSF;
 
 	JPoint	itsStartPt;
 	JIndex	itsDNDRowIndex;

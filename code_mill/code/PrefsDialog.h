@@ -8,22 +8,21 @@
 #ifndef _H_PrefsDialog
 #define _H_PrefsDialog
 
-#include <jx-af/jx/JXDialogDirector.h>
+#include <jx-af/jx/JXModalDialogDirector.h>
 #include <jx-af/jcore/JString.h>
 
 class JXInputField;
 class JXTextButton;
 
-class PrefsDialog : public JXDialogDirector
+class PrefsDialog : public JXModalDialogDirector
 {
 public:
 
-	PrefsDialog(JXDirector* supervisor, 
-					const JString& header,
-					const JString& source,
-					const JString& constructor,
-					const JString& destructor,
-					const JString& function);
+	PrefsDialog(const JString& header,
+				const JString& source,
+				const JString& constructor,
+				const JString& destructor,
+				const JString& function);
 
 	~PrefsDialog() override;
 

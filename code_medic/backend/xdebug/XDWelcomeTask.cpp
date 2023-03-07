@@ -25,13 +25,14 @@ xdebug::WelcomeTask::WelcomeTask
 	const bool		error
 	)
 	:
+	JXUrgentTask(GetApplication()),
 	itsMessage(msg),
 	itsErrorFlag(error)
 {
 }
 
 /******************************************************************************
- Destructor
+ Destructor (protected)
 
  ******************************************************************************/
 
@@ -40,7 +41,7 @@ xdebug::WelcomeTask::~WelcomeTask()
 }
 
 /******************************************************************************
- Perform
+ Perform (virtual protected)
 
  ******************************************************************************/
 

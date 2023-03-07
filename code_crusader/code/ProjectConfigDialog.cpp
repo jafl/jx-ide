@@ -1,7 +1,7 @@
 /******************************************************************************
  ProjectConfigDialog.cpp
 
-	BASE CLASS = JXDialogDirector
+	BASE CLASS = JXModalDialogDirector
 
 	Copyright © 1999 by John Lindal.
 
@@ -15,7 +15,7 @@
 #include <jx-af/jx/JXRadioGroup.h>
 #include <jx-af/jx/JXTextRadioButton.h>
 #include <jx-af/jx/JXInputField.h>
-#include <jx-af/jx/JXChooseSaveFile.h>
+#include <jx-af/jx/JXCSFDialogBase.h>
 #include <jx-af/jx/JXHelpManager.h>
 #include <jx-af/jx/jXGlobals.h>
 #include <jx-af/jcore/JFontManager.h>
@@ -28,15 +28,14 @@
 
 ProjectConfigDialog::ProjectConfigDialog
 	(
-	JXDirector*								supervisor,
 	const BuildManager::MakefileMethod	method,
-	const JString&							targetName,
-	const JString&							depListExpr,
-	const JString&							updateMakefileCmd,
-	const JString&							subProjectBuildCmd
+	const JString&						targetName,
+	const JString&						depListExpr,
+	const JString&						updateMakefileCmd,
+	const JString&						subProjectBuildCmd
 	)
 	:
-	JXDialogDirector(supervisor, true)
+	JXModalDialogDirector()
 {
 	BuildWindow(method, targetName, depListExpr, updateMakefileCmd, subProjectBuildCmd);
 }
@@ -59,10 +58,10 @@ void
 ProjectConfigDialog::BuildWindow
 	(
 	const BuildManager::MakefileMethod	method,
-	const JString&							targetName,
-	const JString&							depListExpr,
-	const JString&							updateMakefileCmd,
-	const JString&							subProjectBuildCmd
+	const JString&						targetName,
+	const JString&						depListExpr,
+	const JString&						updateMakefileCmd,
+	const JString&						subProjectBuildCmd
 	)
 {
 // begin JXLayout
@@ -175,17 +174,17 @@ ProjectConfigDialog::BuildWindow
 	itsMethodRG->SelectItem(method);
 
 	itsTargetName->GetText()->SetText(targetName);
-	itsTargetName->GetText()->SetCharacterInWordFunction(JXChooseSaveFile::IsCharacterInWord);
+	itsTargetName->GetText()->SetCharacterInWordFunction(JXCSFDialogBase::IsCharacterInWord);
 
 	itsDepListExpr->GetText()->SetText(depListExpr);
-	itsDepListExpr->GetText()->SetCharacterInWordFunction(JXChooseSaveFile::IsCharacterInWord);
+	itsDepListExpr->GetText()->SetCharacterInWordFunction(JXCSFDialogBase::IsCharacterInWord);
 
 	itsUpdateMakefileCmd->GetText()->SetText(updateMakefileCmd);
-	itsUpdateMakefileCmd->GetText()->SetCharacterInWordFunction(JXChooseSaveFile::IsCharacterInWord);
+	itsUpdateMakefileCmd->GetText()->SetCharacterInWordFunction(JXCSFDialogBase::IsCharacterInWord);
 	itsUpdateMakefileCmd->SetIsRequired();
 
 	itsSubProjectBuildCmd->GetText()->SetText(subProjectBuildCmd);
-	itsSubProjectBuildCmd->GetText()->SetCharacterInWordFunction(JXChooseSaveFile::IsCharacterInWord);
+	itsSubProjectBuildCmd->GetText()->SetCharacterInWordFunction(JXCSFDialogBase::IsCharacterInWord);
 	itsSubProjectBuildCmd->SetIsRequired();
 
 	UpdateDisplay();
@@ -237,7 +236,7 @@ ProjectConfigDialog::Receive
 	}
 	else
 	{
-		JXDialogDirector::Receive(sender, message);
+		JXModalDialogDirector::Receive(sender, message);
 	}
 }
 

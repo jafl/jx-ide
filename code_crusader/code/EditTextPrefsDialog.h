@@ -10,7 +10,7 @@
 #ifndef _H_EditTextPrefsDialog
 #define _H_EditTextPrefsDialog
 
-#include <jx-af/jx/JXDialogDirector.h>
+#include <jx-af/jx/JXModalDialogDirector.h>
 #include "PrefsManager.h"		// need definition of kColorCount
 
 class TextDocument;
@@ -24,15 +24,16 @@ class JXIntegerInput;
 class JXCharInput;
 class JXRadioGroup;
 class JXChooseMonoFont;
-class JXChooseColorDialog;
 
-class EditTextPrefsDialog : public JXDialogDirector
+class EditTextPrefsDialog : public JXModalDialogDirector
 {
 public:
 
 	EditTextPrefsDialog(TextDocument* doc);
 
 	~EditTextPrefsDialog() override;
+
+	void	UpdateSettings();
 
 protected:
 
@@ -45,11 +46,6 @@ private:
 	JXTextButton*	itsColorButton [ PrefsManager::kColorCount ];
 	JIndex			itsEmulatorIndex;
 	JIndex			itsOrigEmulatorIndex;
-
-	// used when selecting custom color
-
-	JXChooseColorDialog*	itsChooseColorDialog;	// can be nullptr
-	JIndex					itsChooseColorIndex;
 
 // begin JXLayout
 
@@ -90,7 +86,6 @@ private:
 private:
 
 	void	BuildWindow(TextDocument* doc);
-	void	UpdateSettings();
 
 	bool	HandleColorButton(JBroadcaster* sender);
 	void	SetDefaultColors();

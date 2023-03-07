@@ -22,7 +22,8 @@
 #include <jx-af/jx/JXWindow.h>
 #include <jx-af/jx/JXStandAlonePG.h>
 #include <jx-af/jx/JXWebBrowser.h>
-#include <jx-af/jx/JXChooseSaveFile.h>
+#include <jx-af/jx/JXChooseFileDialog.h>
+#include <jx-af/jx/JXSaveFileDialog.h>
 #include <jx-af/jx/JXSearchTextDialog.h>
 #include <jx-af/jcore/JRegex.h>
 #include <jx-af/jcore/JSubstitute.h>
@@ -112,8 +113,6 @@ DocumentManager::DocumentManager()
 
 	itsRecentProjectMenu = nullptr;
 	itsRecentTextMenu    = nullptr;
-
-	itsExtEditorDialog = nullptr;
 
 	PrefsManager* prefsMgr = GetPrefsManager();
 	ListenTo(prefsMgr);
@@ -234,29 +233,10 @@ DocumentManager::RefreshVCSStatus()
 
  ******************************************************************************/
 
-bool
-DocumentManager::NewProjectDocument
-	(
-	ProjectDocument** doc
-	)
+void
+DocumentManager::NewProjectDocument()
 {
-	ProjectDocument* d;
-	if (ProjectDocument::Create(&d))
-	{
-		if (doc != nullptr)
-		{
-			*doc = d;
-		}
-		return true;
-	}
-	else
-	{
-		if (doc != nullptr)
-		{
-			*doc = nullptr;
-		}
-		return false;
-	}
+	ProjectDocument::Create();
 }
 
 /******************************************************************************
@@ -420,20 +400,22 @@ DocumentManager::CancelUpdateSymbolDatabases()
 void
 DocumentManager::NewTextDocument()
 {
-	JString newName;
 	if (itsEditTextLocalFlag)
 	{
 		auto* doc = jnew TextDocument;
 		assert( doc != nullptr );
 		doc->Activate();
+		return;
 	}
-	else if ((JXGetChooseSaveFile())->SaveFile(
-				JGetString("NewFilePrompt::DocumentManager"),
-				JString::empty, JString::empty, &newName))
+
+	auto* dlog = JXSaveFileDialog::Create(JGetString("NewFilePrompt::DocumentManager"));
+	if (dlog->DoDialog())
 	{
-		std::ofstream output(newName.GetBytes());
+		const JString fullName = dlog->GetFullName();
+
+		std::ofstream output(fullName.GetBytes());
 		output.close();
-		OpenTextDocument(newName);
+		OpenTextDocument(fullName);
 	}
 }
 
@@ -450,9 +432,9 @@ DocumentManager::NewTextDocumentFromTemplate()
 	if (!exists)
 	{
 		const JUtf8Byte* map[] =
-	{
+		{
 			"name", kTextTemplateDir
-	};
+		};
 		const JString msg = JGetString("NoTextTemplates::DocumentManager", map, sizeof(map));
 		JGetUserNotification()->ReportError(msg);
 		return;
@@ -460,26 +442,27 @@ DocumentManager::NewTextDocumentFromTemplate()
 
 	tmplDir += ACE_DIRECTORY_SEPARATOR_STR "*";		// make ChooseFile() happy
 
-	JXChooseSaveFile* csf = JXGetChooseSaveFile();
-	JString tmplName;
-	if (csf->ChooseFile(JString::empty, JString::empty, tmplDir, &tmplName))
+	auto* dlog = JXChooseFileDialog::Create(JXChooseFileDialog::kSelectSingleFile, tmplDir);
+	if (dlog->DoDialog())
 	{
-		JString newName;
 		if (itsEditTextLocalFlag)
 		{
-			auto* doc = jnew TextDocument(tmplName, kUnknownFT, true);
+			auto* doc = jnew TextDocument(dlog->GetFullName(), kUnknownFT, true);
 			assert( doc != nullptr );
 			doc->Activate();
+			return;
 		}
-		else if (csf->SaveFile(JGetString("NewFilePrompt::DocumentManager"),
-							   JString::empty, JString::empty, &newName))
+
+		auto* dlog = JXSaveFileDialog::Create(JGetString("NewFilePrompt::DocumentManager"));
+		if (dlog->DoDialog())
 		{
+			const JString fullName = dlog->GetFullName();
 			JString tmplText;
-			JReadFile(tmplName, &tmplText);
-			std::ofstream output(newName.GetBytes());
+			JReadFile(fullName, &tmplText);
+			std::ofstream output(fullName.GetBytes());
 			tmplText.Print(output);
 			output.close();
-			OpenTextDocument(newName);
+			OpenTextDocument(fullName);
 		}
 	}
 }
@@ -679,7 +662,7 @@ DocumentManager::SetActiveTextDocument
 bool
 DocumentManager::GetActiveListDocument
 	(
-	ExecOutputDocument** doc
+	CommandOutputDocument** doc
 	)
 	const
 {
@@ -697,7 +680,7 @@ DocumentManager::GetActiveListDocument
 void
 DocumentManager::SetActiveListDocument
 	(
-	ExecOutputDocument* doc
+	CommandOutputDocument* doc
 	)
 {
 	itsListDocument = doc;
@@ -730,8 +713,8 @@ DocumentManager::OpenSomething
 	(
 	const JString&		fileName,
 	const JIndexRange	lineRange,		// not reference because of default value
-	const bool		iconify,
-	const bool		forceReload
+	const bool			iconify,
+	const bool			forceReload
 	)
 {
 	if (!fileName.IsEmpty())
@@ -743,9 +726,9 @@ DocumentManager::OpenSomething
 		else if (!JFileExists(fileName))
 		{
 			const JUtf8Byte* map[] =
-		{
+			{
 				"f", fileName.GetBytes()
-		};
+			};
 			const JString msg = JGetString("FileDoesNotExist::DocumentManager", map, sizeof(map));
 			JGetUserNotification()->ReportError(msg);
 		}
@@ -761,12 +744,12 @@ DocumentManager::OpenSomething
 	}
 	else
 	{
-		JPtrArray<JString> fullNameList(JPtrArrayT::kDeleteAll);
-		if (JGetChooseSaveFile()->ChooseFiles(
-					JGetString("OpenFilesPrompt::DocumentManager"),
-					JString::empty, &fullNameList))
+		auto* dlog = JXChooseFileDialog::Create(JXChooseFileDialog::kSelectMultipleFiles);
+		if (dlog->DoDialog())
 		{
-			OpenSomething(fullNameList);
+			JPtrArray<JString> list(JPtrArrayT::kDeleteAll);
+			dlog->GetFullNames(&list);
+			OpenSomething(list);
 		}
 	}
 }
@@ -782,7 +765,7 @@ DocumentManager::OpenSomething
 	{
 		JXStandAlonePG pg;
 		pg.RaiseWhenUpdate();
-		pg.FixedLengthProcessBeginning(count, JGetString("OpeningFilesProgress::DocumentManager"), true, false);
+		pg.FixedLengthProcessBeginning(count, JGetString("OpeningFilesProgress::DocumentManager"), true, true);
 
 		for (JIndex i=1; i<=count; i++)
 		{
@@ -811,8 +794,8 @@ DocumentManager::PrivateOpenSomething
 	(
 	const JString&		fileName,
 	const JIndexRange&	lineRange,
-	const bool		iconify,
-	const bool		forceReload
+	const bool			iconify,
+	const bool			forceReload
 	)
 {
 	ProjectDocument* doc;
@@ -836,7 +819,7 @@ DocumentManager::PrivateOpenSomething
 	}
 	else if (doc != nullptr && iconify)
 	{
-		(doc->GetWindow())->Iconify();
+		doc->GetWindow()->Iconify();
 	}
 }
 
@@ -854,8 +837,8 @@ DocumentManager::PrivateOpenSomething
 bool
 DocumentManager::OpenTextDocument
 	(
-	const JString&		fileName,
-	const JIndex		lineIndex,
+	const JString&	fileName,
+	const JIndex	lineIndex,
 	TextDocument**	doc,
 	const bool		iconify,
 	const bool		forceReload
@@ -1058,16 +1041,13 @@ DocumentManager::SaveTextDocuments
 	{
 		itsTextNeedsSaveFlag = false;
 
-		const JSize count = itsTextDocuments->GetElementCount();
-		for (JIndex i=1; i<=count; i++)
+		for (auto* doc : *itsTextDocuments)
 		{
-			TextDocument* doc = itsTextDocuments->GetElement(i);
-			if (IsExecOutput(doc->GetFileType()))
+			if (IsCommandOutput(doc->GetFileType()))
 			{
-				auto* execDoc =
-					dynamic_cast<ExecOutputDocument*>(doc);
-				assert( execDoc != nullptr );
-				if (execDoc->ProcessRunning())
+				auto* cmdDoc = dynamic_cast<CommandOutputDocument*>(doc);
+				assert( cmdDoc != nullptr );
+				if (cmdDoc->CommandRunning())
 				{
 					continue;
 				}
@@ -1119,12 +1099,11 @@ DocumentManager::CloseTextDocuments()
 		while (i <= itsTextDocuments->GetElementCount())
 		{
 			TextDocument* doc = itsTextDocuments->GetElement(i);
-			if (IsExecOutput(doc->GetFileType()))
+			if (IsCommandOutput(doc->GetFileType()))
 			{
-				auto* execDoc =
-					dynamic_cast<ExecOutputDocument*>(doc);
-				assert( execDoc != nullptr );
-				if (execDoc->ProcessRunning())
+				auto* cmdDoc = dynamic_cast<CommandOutputDocument*>(doc);
+				assert( cmdDoc != nullptr );
+				if (cmdDoc->CommandRunning())
 				{
 					i++;
 					continue;
@@ -1176,7 +1155,7 @@ DocumentManager::StylerChanged
 	const JSize count = itsTextDocuments->GetElementCount();
 
 	JLatentPG pg;
-	pg.FixedLengthProcessBeginning(count, JGetString("AdjustStylesProgress::DocumentManager"), false, false);
+	pg.FixedLengthProcessBeginning(count, JGetString("AdjustStylesProgress::DocumentManager"), false, true);
 
 	for (JIndex i=1; i<=count; i++)
 	{
@@ -1255,9 +1234,9 @@ DocumentManager::PrivateOpenBinaryDocument
 bool
 DocumentManager::OpenComplementFile
 	(
-	const JString&			fullName,
+	const JString&		fullName,
 	const TextFileType	type,
-	ProjectDocument*		projDoc,
+	ProjectDocument*	projDoc,
 	const bool			searchDirs
 	)
 {
@@ -1272,26 +1251,25 @@ DocumentManager::OpenComplementFile
 		JSplitPathAndName(fullName, &path, &fileName);
 
 		const JUtf8Byte* map[] =
-	{
+		{
 			"name", fileName.GetBytes()
-	};
+		};
 		const JString msg = JGetString("ComplFileNotFound::DocumentManager", map, sizeof(map));
 
-		PrefsManager* prefsMgr = GetPrefsManager();
+		auto* prefsMgr = GetPrefsManager();
 		JIndex suffixIndex;
 		const JString origName =
 			prefsMgr->GetDefaultComplementSuffix(fullName, type, &suffixIndex);
 
-		JString newFullName;
-		if (JGetChooseSaveFile()->
-				SaveFile(JGetString("SaveNewFilePrompt::DocumentManager"),
-						 msg, origName, &newFullName))
+		auto* dlog = JXSaveFileDialog::Create(JGetString("SaveNewFilePrompt::DocumentManager"), origName, JString::empty, msg);
+		if (dlog->DoDialog())
 		{
-			prefsMgr->SetDefaultComplementSuffix(suffixIndex, newFullName);
+			prefsMgr->SetDefaultComplementSuffix(suffixIndex, fullName);
 
-			std::ofstream temp(newFullName.GetBytes());
+			const JString fullName = dlog->GetFullName();
+			std::ofstream temp(fullName.GetBytes());
 			temp.close();
-			return OpenTextDocument(newFullName);
+			return OpenTextDocument(fullName);
 		}
 	}
 
@@ -1309,9 +1287,9 @@ DocumentManager::OpenComplementFile
 bool
 DocumentManager::GetOpenComplementFile
 	(
-	const JString&			inputName,
+	const JString&		inputName,
 	const TextFileType	inputType,
-	JXFileDocument**		doc
+	JXFileDocument**	doc
 	)
 	const
 {
@@ -1532,7 +1510,7 @@ JIndex i;
 		"name", origFileName.GetBytes()
 };
 	const JString msg = JGetString("ComplFileProgress::DocumentManager", map, sizeof(map));
-	pg.FixedLengthProcessBeginning(suffixCount * dirCount, msg, true, false);
+	pg.FixedLengthProcessBeginning(suffixCount * dirCount, msg, true, true);
 
 	JString searchName, newPath, newName;
 	for (i=1; i<=suffixCount; i++)
@@ -1629,7 +1607,7 @@ DocumentManager::ReadFromProject
 	{
 		JXStandAlonePG pg;
 		pg.RaiseWhenUpdate();
-		pg.FixedLengthProcessBeginning(textCount, JGetString("OpeningFiles::MDIServer"), true, false);
+		pg.FixedLengthProcessBeginning(textCount, JGetString("OpeningFiles::MDIServer"), true, true);
 
 		for (JIndex i=1; i<=textCount; i++)
 		{
@@ -1878,7 +1856,7 @@ DocumentManager::Receive
 		{
 			JLatentPG pg;
 			pg.FixedLengthProcessBeginning(count, JGetString("UpdateTypesProgress::DocumentManager"),
-										   false, false);
+										   false, true);
 
 			for (JIndex i=1; i<=count; i++)
 			{
@@ -1888,21 +1866,6 @@ DocumentManager::Receive
 
 			pg.ProcessFinished();
 		}
-	}
-
-	else if (sender == itsExtEditorDialog &&
-		message.Is(JXDialogDirector::kDeactivated))
-	{
-		const auto* info =
-			dynamic_cast<const JXDialogDirector::Deactivated*>(&message);
-		assert( info != nullptr );
-		if (info->Successful())
-		{
-			itsExtEditorDialog->GetPrefs(&itsEditTextLocalFlag, &itsEditTextFileCmd,
-										 &itsEditTextFileLineCmd,
-										 &itsEditBinaryLocalFlag, &itsEditBinaryFileCmd);
-		}
-		itsExtEditorDialog = nullptr;
 	}
 
 	else
@@ -2024,13 +1987,16 @@ DocumentManager::WritePrefs
 void
 DocumentManager::ChooseEditors()
 {
-	assert( itsExtEditorDialog == nullptr );
+	auto* dlog =
+		jnew ExtEditorDialog(itsEditTextLocalFlag,
+							 itsEditTextFileCmd, itsEditTextFileLineCmd,
+							 itsEditBinaryLocalFlag, itsEditBinaryFileCmd);
+	assert( dlog != nullptr );
 
-	itsExtEditorDialog =
-		jnew ExtEditorDialog(GetApplication(), itsEditTextLocalFlag,
-							  itsEditTextFileCmd, itsEditTextFileLineCmd,
-							  itsEditBinaryLocalFlag, itsEditBinaryFileCmd);
-	assert( itsExtEditorDialog != nullptr );
-	itsExtEditorDialog->BeginDialog();
-	ListenTo(itsExtEditorDialog);
+	if (dlog->DoDialog())
+	{
+		dlog->GetPrefs(&itsEditTextLocalFlag, &itsEditTextFileCmd,
+					   &itsEditTextFileLineCmd,
+					   &itsEditBinaryLocalFlag, &itsEditBinaryFileCmd);
+	}
 }

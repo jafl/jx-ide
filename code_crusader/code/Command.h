@@ -20,7 +20,7 @@ class Command : virtual public JBroadcaster
 public:
 
 	Command(const JString& path, const bool refreshVCSStatusWhenFinished,
-			  const bool beepWhenFinished, ProjectDocument* projDoc);
+			const bool beepWhenFinished, ProjectDocument* projDoc);
 
 	~Command() override;
 
@@ -63,7 +63,7 @@ private:
 
 		bool	IsEndOfSequence() const;
 		bool	IsSubroutine() const;
-		void		Free(const bool deleteCmdObj);
+		void	Free(const bool deleteCmdObj);
 	};
 
 private:

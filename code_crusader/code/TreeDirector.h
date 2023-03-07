@@ -19,7 +19,6 @@ class JXToolBar;
 class JXScrollbarSet;
 class JXPSPrinter;
 class JXEPSPrinter;
-class JXGetStringDialog;
 class DirList;
 class Class;
 class Tree;
@@ -122,8 +121,6 @@ private:
 	CommandMenu*	itsCmdMenu;
 	JXTextMenu*		itsPrefsMenu;
 	JXTextMenu*		itsHelpMenu;
-
-	JXGetStringDialog*	itsFindFnDialog;	// usually nullptr
 
 	const JString		itsWindowTitleSuffix;
 	const JUtf8Byte*	itsWindowHelpName;

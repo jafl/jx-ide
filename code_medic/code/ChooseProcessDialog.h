@@ -8,32 +8,25 @@
 #ifndef _H_ChooseProcessDialog
 #define _H_ChooseProcessDialog
 
-#include <jx-af/jx/JXDialogDirector.h>
+#include <jx-af/jx/JXModalDialogDirector.h>
 
 class JXIntegerInput;
 class ProcessText;
 
-class ChooseProcessDialog : public JXDialogDirector
+class ChooseProcessDialog : public JXModalDialogDirector
 {
 public:
 
-	ChooseProcessDialog(JXDirector* supervisor,
-						  const bool attachToSelection = true,
-						  const bool stopProgram = false);
+	ChooseProcessDialog();
 
 	~ChooseProcessDialog() override;
 
+	bool	GetProcessID(JInteger* pid) const;
 	void	SetProcessID(const JInteger value);
-
-protected:
-
-	void	Receive(JBroadcaster* sender, const Message& message) override;
 
 private:
 
 	ProcessText*	itsText;
-	const bool		itsAttachToSelectionFlag;
-	const bool		itsStopProgramFlag;
 
 // begin JXLayout
 

@@ -9,6 +9,7 @@
 
 #include "GDBAnalyzeCoreCmd.h"
 #include "globals.h"
+#include <jx-af/jx/JXChooseFileDialog.h>
 #include <jx-af/jcore/JStringIterator.h>
 #include <jx-af/jcore/JRegex.h>
 #include <jx-af/jcore/jFileUtil.h>
@@ -97,19 +98,6 @@ gdb::AnalyzeCoreCmd::HandleSuccess
 		}
 		iter.Invalidate();
 
-		// if all else fails, ask user
-
-		if (!found)
-		{
-			const JUtf8Byte* map[] =
-			{
-				"name", programName.GetBytes()
-			};
-			const JString instr = JGetString("FindProgram::GDBAnalyzeCoreCmd", map, sizeof(map));
-			found = JGetChooseSaveFile()->ChooseFile(JGetString("Prompt::GDBAnalyzeCoreCmd"),
-													 instr, &programFullName);
-		}
-
 		// must load core after program so shared libs get loaded
 		// and source file gets displayed
 
@@ -117,6 +105,24 @@ gdb::AnalyzeCoreCmd::HandleSuccess
 		{
 			link->SetProgram(programFullName);
 			link->SetCore(coreFullName);
+		}
+
+		// if all else fails, ask user
+
+		else
+		{
+			const JUtf8Byte* map[] =
+			{
+				"name", programName.GetBytes()
+			};
+			const JString instr = JGetString("FindProgram::GDBAnalyzeCoreCmd", map, sizeof(map));
+
+			auto* dlog = JXChooseFileDialog::Create(JXChooseFileDialog::kSelectSingleFile, JString::empty, JString::empty, instr);
+			if (dlog->DoDialog())
+			{
+				link->SetProgram(dlog->GetFullName());
+				link->SetCore(coreFullName);
+			}
 		}
 	}
 }

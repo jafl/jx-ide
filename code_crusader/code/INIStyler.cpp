@@ -12,7 +12,7 @@
 
 #include "INIStyler.h"
 #include "PrefsManager.h"
-#include <jx-af/jx/JXDialogDirector.h>
+#include <jx-af/jx/JXModalDialogDirector.h>
 #include <jx-af/jcore/JRegex.h>
 #include <jx-af/jcore/JColorManager.h>
 #include <jx-af/jcore/jGlobals.h>

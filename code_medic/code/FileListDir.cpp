@@ -106,8 +106,11 @@ FileListDir::FileListDir
 
 FileListDir::~FileListDir()
 {
-	JPrefObject::WritePrefs();
-	GetPrefsManager()->SaveWindowSize(kFileWindSizeID, GetWindow());
+	if (HasPrefsManager())
+	{
+		JPrefObject::WritePrefs();
+		GetPrefsManager()->SaveWindowSize(kFileWindSizeID, GetWindow());
+	}
 
 	jdelete itsCmd;
 }
@@ -449,7 +452,7 @@ FileListDir::HandleHelpMenu
 {
 	if (index == kAboutCmd)
 	{
-		(GetApplication())->DisplayAbout();
+		GetApplication()->DisplayAbout();
 	}
 	else if (index == kTOCCmd)
 	{

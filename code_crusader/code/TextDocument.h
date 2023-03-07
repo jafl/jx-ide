@@ -24,7 +24,6 @@ class StylerBase;
 class StringCompleter;
 class CharActionManager;
 class MacroManager;
-class TabWidthDialog;
 class CommandMenu;
 
 class JXWidget;
@@ -167,8 +166,6 @@ private:
 	bool				itsOverrideFlag[ kSettingCount ];
 
 	JStyledText::PlainTextFormat	itsFileFormat;
-
-	TabWidthDialog*	itsTabWidthDialog;
 
 // begin JXLayout
 

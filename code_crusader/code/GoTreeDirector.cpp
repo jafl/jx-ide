@@ -162,7 +162,7 @@ GoTreeDirector::HandleTreeMenu
 
 	if (index == kEditSearchPathsCmd)
 	{
-		GetProjectDoc()->EditSearchPaths(this);
+		GetProjectDoc()->EditSearchPaths();
 	}
 	else if (index == kUpdateCurrentCmd)
 	{
