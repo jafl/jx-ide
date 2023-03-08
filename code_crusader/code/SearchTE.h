@@ -105,7 +105,9 @@ public:
 			itsRange(r)
 		{ };
 
-		~SearchResult()
+		SearchResult(const SearchResult&) = delete;
+
+		~SearchResult() override
 		{
 			jdelete itsFileName;
 			jdelete itsQuotedText;
@@ -179,7 +181,9 @@ public:
 			itsFileName(n)
 		{ };
 
-		~FileName()
+		FileName(const FileName&) = delete;
+
+		~FileName() override
 		{
 			jdelete itsFileName;
 		};
@@ -206,7 +210,9 @@ public:
 			itsMessage(m)
 		{ };
 
-		~Error()
+		Error(const Error&) = delete;
+
+		~Error() override
 		{
 			jdelete itsMessage;
 		};

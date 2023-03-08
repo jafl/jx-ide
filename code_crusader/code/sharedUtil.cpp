@@ -431,12 +431,8 @@ ParseEditorOptions
 			for (int i=0; i<nvCount; i++)
 			{
 				editorconfig_handle_get_name_value(eh, i, &name, &value);
-				if (*tabInsertsSpaces && strcmp(name, "indent_size") == 0)
-				{
-					*setTabWidth = JString::ConvertToUInt(value, tabWidth);
-					break;
-				}
-				else if (!*tabInsertsSpaces && strcmp(name, "tab_width") == 0)
+				if (( *tabInsertsSpaces && strcmp(name, "indent_size") == 0) ||
+					(!*tabInsertsSpaces && strcmp(name, "tab_width") == 0))
 				{
 					*setTabWidth = JString::ConvertToUInt(value, tabWidth);
 					break;

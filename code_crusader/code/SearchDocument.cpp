@@ -55,7 +55,6 @@ SearchDocument::Create
 	(
 	JPtrArray<JString>*	fileList,
 	JPtrArray<JString>*	nameList,
-	const JRegex&		searchRegex,
 	const bool			onlyListFiles,
 	const bool			listFilesWithoutMatch
 	)
@@ -99,7 +98,6 @@ SearchDocument::Create
 	(
 	JPtrArray<JString>*	fileList,
 	JPtrArray<JString>*	nameList,
-	const JRegex&		searchRegex,
 	const JString&		replaceStr
 	)
 {

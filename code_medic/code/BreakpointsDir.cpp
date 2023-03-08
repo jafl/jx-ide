@@ -88,7 +88,7 @@ BreakpointsDir::BreakpointsDir
 	JXWindowDirector(JXGetApplication()),
 	itsCommandDir(supervisor)
 {
-	BuildWindow(supervisor);
+	BuildWindow();
 	ListenTo(GetLink());
 	ListenTo(GetLink()->GetBreakpointManager());
 }
@@ -116,10 +116,7 @@ BreakpointsDir::~BreakpointsDir()
 #include <jx-af/image/jx/jx_file_open.xpm>
 
 void
-BreakpointsDir::BuildWindow
-	(
-	CommandDirector* dir
-	)
+BreakpointsDir::BuildWindow()
 {
 // begin JXLayout
 

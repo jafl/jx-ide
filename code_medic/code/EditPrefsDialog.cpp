@@ -439,7 +439,7 @@ EditPrefsDialog::ChooseDebugger
 	JXInputField*	input
 	)
 {
-	auto* dlog = JXChooseFileDialog::Create(JXChooseFileDialog::kSelectSingleFile);
+	auto* dlog = JXChooseFileDialog::Create(JXChooseFileDialog::kSelectSingleFile, JString::empty, name);
 	if (dlog->DoDialog())
 	{
 		JString text = input->GetText()->GetText();

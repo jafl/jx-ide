@@ -685,8 +685,7 @@ SearchTextDialog::SearchFiles()
 		BuildSearchFileList(fileList, nameList))
 	{
 		// takes ownership of fileList & nameList
-		SearchDocument::Create(fileList, nameList,
-							   *searchRegex, itsOnlyListFilesFlag,
+		SearchDocument::Create(fileList, nameList, itsOnlyListFilesFlag,
 							   itsListFilesWithoutMatchFlag);
 	}
 }
@@ -715,8 +714,7 @@ SearchTextDialog::SearchFilesAndReplace()
 		BuildSearchFileList(fileList, nameList))
 	{
 		// takes ownership of fileList & nameList
-		SearchDocument::Create(fileList, nameList,
-							   *searchRegex, replaceStr);
+		SearchDocument::Create(fileList, nameList, replaceStr);
 	}
 }
 

@@ -148,7 +148,7 @@ gdb::VarTreeParser::AppendAsArrayElement
 	const JSize count = data.GetElementCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		node->Append(const_cast<VarNode*>(data.GetElement(i)));
+		node->Append(data.GetElement(i));
 	}
 }
 

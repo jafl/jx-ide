@@ -670,7 +670,7 @@ Command::ReceiveWithFeedback
 	Message*		message
 	)
 {
-	if (sender == itsOutputDoc && message->Is(ExecOutputDocument::kFinished))
+	if (sender == itsOutputDoc && message->Is(CommandOutputDocument::kFinished))
 	{
 		auto* info =
 			dynamic_cast<ExecOutputDocument::Finished*>(message);

@@ -19,7 +19,7 @@ class DebugDir : public JXWindowDirector
 {
 public:
 
-	DebugDir(JXDirector* supervisor);
+	DebugDir();
 
 	~DebugDir() override;
 

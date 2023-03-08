@@ -259,7 +259,7 @@ CommandDirector::CommandDirector
 	itsFileListDir = jnew FileListDir(this);
 	assert(itsFileListDir != nullptr);
 
-	itsDebugDir = jnew DebugDir(this);
+	itsDebugDir = jnew DebugDir();
 	assert(itsDebugDir!=nullptr);
 
 	JXWDManager* wdMgr = GetDisplay()->GetWDManager();

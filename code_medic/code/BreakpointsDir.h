@@ -56,7 +56,7 @@ private:
 
 private:
 
-	void	BuildWindow(CommandDirector* supervisor);
+	void	BuildWindow();
 	void	UpdateWindowTitle(const JString& binaryName);
 
 	void	UpdateFileMenu();

@@ -23,10 +23,7 @@
 
  ******************************************************************************/
 
-DebugDir::DebugDir
-	(
-	JXDirector* supervisor
-	)
+DebugDir::DebugDir()
 	:
 	JXWindowDirector(JXGetApplication()),
 	itsFile("/tmp/code_medic_log")

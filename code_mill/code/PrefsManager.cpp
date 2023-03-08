@@ -240,9 +240,10 @@ PrefsManager::GetYear()
 		time_t now;
 		time(&now);
 
-		struct tm* local_time	= localtime(&now);
+		struct tm local_time;
+		localtime_r(&now, &local_time);
 
-		return JString((JUInt64) local_time->tm_year + 1900);
+		return JString((JUInt64) local_time.tm_year + 1900);
 	}
 }
 
