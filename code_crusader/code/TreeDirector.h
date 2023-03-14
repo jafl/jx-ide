@@ -65,8 +65,7 @@ public:
 	TreeWidget*			GetTreeWidget() const;
 	Tree*				GetTree() const;
 
-	void	AskForFunctionToFind();
-	bool	ShowInheritedFns() const;
+	void	FindFunction();
 
 	void	ViewFunctionList(const Class* theClass);
 
@@ -88,7 +87,7 @@ public:
 
 	// called by ProjectDocument
 
-	void	SetTreePrefs(const JSize fontSize, const bool showInheritedFns,
+	void	SetTreePrefs(const JSize fontSize,
 						 const bool autoMinMILinks, const bool drawMILinksOnTop,
 						 const bool raiseWhenSingleMatch);
 
@@ -107,13 +106,12 @@ protected:
 private:
 
 	ProjectDocument*	itsProjDoc;
-	TreeWidget*		itsTreeWidget;
+	TreeWidget*			itsTreeWidget;
 	Tree*				itsTree;
-	bool			itsShowInheritedFnsFlag;
 
-	JXPSPrinter*		itsPSPrinter;
-	JXEPSPrinter*		itsEPSPrinter;
-	JXPSPrinter*		itsFnListPrinter;		// shared by all FnListDirectors
+	JXPSPrinter*	itsPSPrinter;
+	JXEPSPrinter*	itsEPSPrinter;
+	JXPSPrinter*	itsFnListPrinter;		// shared by all FnListDirectors
 
 	JXTextMenu*		itsFileMenu;
 	JXTextMenu*		itsTreeMenu;
@@ -201,18 +199,6 @@ TreeDirector::GetProjectDoc()
 	const
 {
 	return itsProjDoc;
-}
-
-/******************************************************************************
- ShowInheritedFns
-
- ******************************************************************************/
-
-inline bool
-TreeDirector::ShowInheritedFns()
-	const
-{
-	return itsShowInheritedFnsFlag;
 }
 
 #endif

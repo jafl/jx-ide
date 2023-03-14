@@ -26,6 +26,32 @@ public:
 		kBlockSize = 2048
 	};
 
+	struct ContextNamespace
+	{
+		Language			lang;
+		JPtrArray<JString>*	list;
+
+		ContextNamespace()	// keep JArray happy
+			:
+			lang(kOtherLang),
+			list(nullptr)
+		{ }
+
+		ContextNamespace(const Language _lang, JPtrArray<JString>* _list)
+			:
+			lang(_lang),
+			list(_list)
+		{ }
+
+		void CleanOut()
+		{
+			// tree is not owned
+
+			jdelete list;
+			list = nullptr;
+		}
+	};
+
 public:
 
 	SymbolList(ProjectDocument* projDoc);
@@ -41,12 +67,7 @@ public:
 
 	bool	IsUniqueClassName(const JString& name, Language* lang) const;
 	bool	FindSymbol(const JString& name, const JFAID_t contextFileID,
-					   const JString& contextNamespace, const Language contextLang,
-					   JPtrArray<JString>* cContextNamespaceList,
-					   JPtrArray<JString>* dContextNamespaceList,
-					   JPtrArray<JString>* goContextNamespaceList,
-					   JPtrArray<JString>* javaContextNamespaceList,
-					   JPtrArray<JString>* phpContextNamespaceList,
+					   const JArray<ContextNamespace>& contextNamespaceList,
 					   const bool findDeclaration, const bool findDefinition,
 					   JArray<JIndex>* matchList) const;
 	bool	ClosestMatch(const JString& prefixStr,
@@ -128,21 +149,7 @@ private:
 
 	bool	ConvertToFullNames(JArray<JIndex>* noContextList,
 							   JArray<JIndex>* contextList,
-							   const JString& contextNamespace1,
-							   const JString& contextNamespace2,
-							   const Language contextLang,
-							   const JPtrArray<JString>& cContextNamespace,
-							   const JPtrArray<JString>& dContextNamespace,
-							   const JPtrArray<JString>& goContextNamespace,
-							   const JPtrArray<JString>& javaContextNamespaceList,
-							   const JPtrArray<JString>& phpContextNamespaceList) const;
-	void	PrepareContextNamespace(const JString& contextNamespace, const Language lang,
-									JString* ns1, JString* ns2) const;
-	void	PrepareCContextNamespaceList(JPtrArray<JString>* contextNamespace) const;
-	void	PrepareDContextNamespaceList(JPtrArray<JString>* contextNamespace) const;
-	void	PrepareGoContextNamespaceList(JPtrArray<JString>* contextNamespace) const;
-	void	PrepareJavaContextNamespaceList(JPtrArray<JString>* contextNamespace) const;
-	void	PreparePHPContextNamespaceList(JPtrArray<JString>* contextNamespace) const;
+							   const JArray<ContextNamespace>& contextNamespaceList) const;
 	void	PrepareContextNamespaceList(JPtrArray<JString>* contextNamespace,
 										const JUtf8Byte* namespaceOp) const;
 	bool	InContext(const JString& fullName,

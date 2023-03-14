@@ -36,15 +36,15 @@ class Tree : public JContainer
 
 public:
 
-	Tree(ClassStreamInFn streamInFn,
-		   TreeDirector* director, const TextFileType fileType,
-		   const JSize marginWidth);
+	Tree(ClassStreamInFn streamInFn, TreeDirector* director,
+		 const Language lang, const TextFileType fileType,
+		 const JSize marginWidth);
 	Tree(std::istream& projInput, const JFileVersion projVers,
-		   std::istream* setInput, const JFileVersion setVers,
-		   std::istream* symInput, const JFileVersion symVers,
-		   ClassStreamInFn streamInFn,
-		   TreeDirector* director, const TextFileType fileType,
-		   const JSize marginWidth, DirList* dirList);
+		 std::istream* setInput, const JFileVersion setVers,
+		 std::istream* symInput, const JFileVersion symVers,
+		 ClassStreamInFn streamInFn, TreeDirector* director,
+		 const Language lang, const TextFileType fileType,
+		 const JSize marginWidth, DirList* dirList);
 
 	~Tree() override;
 
@@ -66,9 +66,8 @@ public:
 	void	DeselectAll();
 	bool	GetSelectedClasses(JPtrArray<Class>* classList) const;
 	bool	GetSelectionCoverage(JRect* coverage, JSize* count) const;
-	void	SelectClasses(const JString& name, const bool deselectAll = true);
-	void	SelectImplementors(const JString& fnName, const bool caseSensitive,
-							   const bool deselectAll = true);
+	void	SelectClasses(const JString& name, const bool deselectAll = true,
+						  const bool useFullName = false);
 	void	SelectParents();
 	void	SelectDescendants();
 	void	CollapseExpandSelectedClasses(const bool collapse);
@@ -107,6 +106,7 @@ public:
 
 	ProjectDocument*	GetProjectDoc() const;
 	TreeDirector*		GetTreeDirector() const;
+	Language			GetLanguage() const;
 	TextFileType		GetFileType() const;
 
 	// for loading updated symbols
@@ -213,6 +213,7 @@ private:
 	JPtrArray<Class>*	itsVisibleByGeom;			// doesn't own objects
 	JPtrArray<Class>*	itsVisibleByName;			// doesn't own objects
 
+	const Language		itsLanguage;
 	const TextFileType	itsFileType;
 	JPtrArray<JString>*	itsSuffixList;
 	JPtrArray<JString>*	itsCollapsedList;			// nullptr unless updating files
@@ -509,6 +510,18 @@ Tree::GetTreeDirector()
 	const
 {
 	return itsDirector;
+}
+
+/******************************************************************************
+ GetLanguage
+
+ ******************************************************************************/
+
+inline Language
+Tree::GetLanguage()
+	const
+{
+	return itsLanguage;
 }
 
 /******************************************************************************

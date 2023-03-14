@@ -15,7 +15,6 @@
 #include <jx-af/jcore/JRegex.h>
 #include <jx-af/jcore/jAssert.h>
 
-static const JUtf8Byte* kNamespaceOperator = ".";
 
 /******************************************************************************
  Constructor
@@ -31,7 +30,7 @@ DClass::DClass
 	const bool			isFinal
 	)
 	:
-	Class(name, declType, fileID, tree, kNamespaceOperator),
+	Class(name, declType, fileID, tree),
 	itsIsFinalFlag(isFinal)
 {
 }
@@ -43,7 +42,7 @@ DClass::DClass
 	Tree*				tree
 	)
 	:
-	Class(input, vers, tree, kNamespaceOperator),
+	Class(input, vers, tree),
 	itsIsFinalFlag(false)
 {
 	if (vers >= 88)

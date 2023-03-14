@@ -14,8 +14,6 @@
 #include "globals.h"
 #include <jx-af/jcore/jAssert.h>
 
-static const JUtf8Byte* kNamespaceOperator = "::";
-
 /******************************************************************************
  Constructor
 
@@ -29,18 +27,18 @@ CClass::CClass
 	Tree*				tree
 	)
 	:
-	Class(name, declType, fileID, tree, kNamespaceOperator)
+	Class(name, declType, fileID, tree)
 {
 }
 
 CClass::CClass
 	(
-	std::istream&			input,
+	std::istream&		input,
 	const JFileVersion	vers,
 	Tree*				tree
 	)
 	:
-	Class(input, vers, tree, kNamespaceOperator)
+	Class(input, vers, tree)
 {
 }
 

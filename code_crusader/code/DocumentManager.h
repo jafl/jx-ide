@@ -191,9 +191,9 @@ private:
 									const bool iconify,
 									const bool forceReload,
 									TextDocument** doc) const;
-	void		PrivateOpenBinaryDocument(const JString& fullName,
-										  const bool iconify,
-										  const bool forceReload) const;
+	void	PrivateOpenBinaryDocument(const JString& fullName,
+									  const bool iconify,
+									  const bool forceReload) const;
 
 	bool	FindComplementFile(const JString& inputName,
 							   const TextFileType outputType,

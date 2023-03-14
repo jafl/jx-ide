@@ -122,6 +122,56 @@ NameIsQualified
 }
 
 /******************************************************************************
+ GetNamespaceOperator
+
+	Returns the namespace operator for the given language.  Explodes if
+	the language doesn't support namespaces, i.e., !HasNamespace(lang).
+
+ ******************************************************************************/
+
+const JUtf8Byte*
+GetNamespaceOperator
+	(
+	const Language lang
+	)
+{
+	if (lang == kCLang    ||
+		lang == kPerlLang ||
+		lang == kTCLLang)
+	{
+		return "::";
+	}
+	else if (lang == kCSharpLang     ||
+			 lang == kDLang          ||
+			 lang == kEiffelLang     ||
+			 lang == kGoLang         ||
+			 lang == kHTMLLang       ||	// for JavaScript
+			 lang == kJavaLang       ||
+			 lang == kJavaScriptLang ||
+			 lang == kLuaLang        ||
+			 lang == kPascalLang     ||
+			 lang == kPythonLang     ||
+			 lang == kRubyLang       ||
+			 lang == kSchemeLang)
+	{
+		return ".";
+	}
+	else if (lang == kPHPLang)
+	{
+		return "\\";
+	}
+	else if (lang == kSQLLang)
+	{
+		return ":";
+	}
+	else
+	{
+		assert( false );
+		return "";
+	}
+}
+
+/******************************************************************************
  Complement file mapping
 
  ******************************************************************************/

@@ -10,6 +10,7 @@
 #ifndef _H_Class
 #define _H_Class
 
+#include "TextFileType.h"		// need defn of Language
 #include <jx-af/jcore/JBroadcaster.h>
 #include <jx-af/jcore/JPtrArray-JString.h>
 #include <jx-af/jcore/JFontStyle.h>
@@ -93,8 +94,6 @@ public:
 	bool	HasPrimaryChildren() const;
 	bool	HasSecondaryChildren() const;
 
-	bool	Implements(const JString& name, const bool caseSensitive) const;
-
 	void	Draw(JPainter& p, const JRect& rect) const;
 	void	DrawMILinks(JPainter& p, const JRect& rect) const;
 	void	DrawText(JPainter& p, const JRect& rect) const;
@@ -130,15 +129,12 @@ public:
 protected:
 
 	Class(const JString& fullName, const DeclareType declType,
-			const JFAID_t fileID, Tree* tree,
-			const JUtf8Byte* namespaceOperator);
-	Class(std::istream& input, const JFileVersion vers, Tree* tree,
-			const JUtf8Byte* namespaceOperator);
+		  const JFAID_t fileID, Tree* tree);
+	Class(std::istream& input, const JFileVersion vers, Tree* tree);
 	Class(const JString& name);	// search target
 
-	virtual Class*		NewGhost(const JString& name, Tree* tree);
-	const JUtf8Byte*	GetNamespaceOperator() const;
-	JString				RemoveNamespace(const JString& fullName);
+	virtual Class*	NewGhost(const JString& name, Tree* tree);
+	JString			RemoveNamespace(const JString& fullName);
 
 	virtual void	AdjustNameStyle(JFontStyle* style) const;
 
@@ -172,24 +168,22 @@ private:
 
 private:
 
-	const JUtf8Byte* const	itsNamespaceOperator;	// must be first, to use when construction itsName
-
-	JString		itsFullName;					// namespace + class name
-	JString		itsName;						// class name
+	Tree*		itsTree;				// our owner; first to allow constructing itsName
+	JString		itsFullName;			// namespace + class name
+	JString		itsName;				// class name
 	DeclareType	itsDeclType;
 	JFAID_t		itsFileID;
-	bool		itsIsAbstractFlag;				// true if contains pure virtual functions
+	bool		itsIsAbstractFlag;		// true if contains pure virtual functions
 	bool		itsIsTemplateFlag;
 
-	JCoordinate	itsHCoord;						// coordinates in class tree
+	JCoordinate	itsHCoord;				// coordinates in class tree
 	JCoordinate	itsVCoord;
 	JRect		itsFrame;
 
 	bool	itsVisibleFlag;
-	bool	itsCollapsedFlag;				// true => children are invisible
+	bool	itsCollapsedFlag;			// true => children are invisible
 	bool	itsIsSelectedFlag;
 
-	Tree*				itsTree;				// our owner
 	JArray<ParentInfo>*	itsParentInfo;
 
 	bool	itsHasPrimaryChildrenFlag;
@@ -199,7 +193,7 @@ private:
 
 private:
 
-	void	ClassX(Tree* tree);
+	void	ClassX();
 	bool	FindParent(ParentInfo* pInfo, const bool okToSearchGhosts);
 	void	AddChild(Class* child, const bool primary);
 
@@ -552,20 +546,6 @@ Class::GetTree()
 	const
 {
 	return itsTree;
-}
-
-/******************************************************************************
- GetNamespaceOperator (protected)
-
-	Returns the languages's namespace operator.
-
- ******************************************************************************/
-
-inline const JUtf8Byte*
-Class::GetNamespaceOperator()
-	const
-{
-	return itsNamespaceOperator;
 }
 
 /******************************************************************************

@@ -31,7 +31,7 @@ GoTree::GoTree
 	const JSize			marginWidth
 	)
 	:
-	Tree(StreamInGoClass, director, kGoFT, marginWidth),
+	Tree(StreamInGoClass, director, kGoLang, kGoFT, marginWidth),
 	itsClassNameLexer(nullptr)
 {
 }
@@ -52,7 +52,7 @@ GoTree::GoTree
 	)
 	:
 	Tree(projInput, projVers, setInput, setVers, symInput, symVers,
-		   StreamInGoClass, director, kGoFT, marginWidth, dirList),
+		   StreamInGoClass, director, kGoLang, kGoFT, marginWidth, dirList),
 	itsClassNameLexer(nullptr)
 {
 }

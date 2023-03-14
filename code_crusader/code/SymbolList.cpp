@@ -116,7 +116,7 @@ SymbolList::GetFile
 {
 	const SymbolInfo info = itsSymbolList->GetElement(symbolIndex);
 	*lineIndex            = info.lineIndex;
-	return (itsProjDoc->GetAllFileList())->GetFileName(info.fileID);
+	return itsProjDoc->GetAllFileList()->GetFileName(info.fileID);
 }
 
 /******************************************************************************
@@ -166,25 +166,19 @@ SymbolList::IsUniqueClassName
 	If contextFileID is valid, it is used for context.
 	If contextNamespace is not empty, the names are used for context.
 
-	*** The contents of *ContextNamespaceList are altered.
+	*** The contents of contextNamespaceList are altered.
 
  ******************************************************************************/
 
 bool
 SymbolList::FindSymbol
 	(
-	const JString&		name,
-	const JFAID_t		contextFileID,
-	const JString&		contextNamespace,
-	const Language		contextLang,
-	JPtrArray<JString>*	cContextNamespaceList,
-	JPtrArray<JString>*	dContextNamespaceList,
-	JPtrArray<JString>*	goContextNamespaceList,
-	JPtrArray<JString>*	javaContextNamespaceList,
-	JPtrArray<JString>*	phpContextNamespaceList,
-	const bool			findDeclaration,
-	const bool			findDefinition,
-	JArray<JIndex>*		matchList
+	const JString&					name,
+	const JFAID_t					contextFileID,
+	const JArray<ContextNamespace>&	contextNamespaceList,
+	const bool						findDeclaration,
+	const bool						findDefinition,
+	JArray<JIndex>*					matchList
 	)
 	const
 {
@@ -210,7 +204,7 @@ SymbolList::FindSymbol
 				break;
 			}
 
-			if (!IsCaseSensitive(info.lang) || *(info.name) == s)
+			if (!IsCaseSensitive(info.lang) || *info.name == s)
 			{
 				if (contextFileID == info.fileID &&		// automatically fails if context is kInvalidID
 					IsFileScope(info.type))
@@ -241,20 +235,21 @@ SymbolList::FindSymbol
 
 	if (!matchList->IsEmpty())
 	{
-		JString ns1, ns2;
-		PrepareContextNamespace(contextNamespace, contextLang, &ns1, &ns2);
-		PrepareCContextNamespaceList(cContextNamespaceList);
-		PrepareDContextNamespaceList(dContextNamespaceList);
-		PrepareGoContextNamespaceList(goContextNamespaceList);
-		PrepareJavaContextNamespaceList(javaContextNamespaceList);
-		PreparePHPContextNamespaceList(phpContextNamespaceList);
+		for (const auto cns : contextNamespaceList)
+		{
+			if (HasNamespace(cns.lang))
+			{
+				PrepareContextNamespaceList(cns.list, GetNamespaceOperator(cns.lang));
+			}
+			else
+			{
+				cns.list->CleanOut();
+			}
+		}
 
 		JArray<JIndex> noContextList = *matchList;
 		if (!ConvertToFullNames(&noContextList, matchList,
-								ns1, ns2, contextLang,
-								*cContextNamespaceList, *dContextNamespaceList,
-								*goContextNamespaceList, *javaContextNamespaceList,
-								*phpContextNamespaceList))
+								contextNamespaceList))
 		{
 			if (!usedAllList && !findDeclaration && findDefinition)
 			{
@@ -263,10 +258,7 @@ SymbolList::FindSymbol
 
 				JArray<JIndex> allNoContextList = allMatchList;
 				if (ConvertToFullNames(&allNoContextList, &allMatchList,
-									   ns1, ns2, contextLang,
-									   *cContextNamespaceList, *dContextNamespaceList,
-									   *goContextNamespaceList, *javaContextNamespaceList,
-									   *phpContextNamespaceList))
+									   contextNamespaceList))
 				{
 					*matchList = allMatchList;
 				}
@@ -312,26 +304,12 @@ SymbolList::FindSymbol
 bool
 SymbolList::ConvertToFullNames
 	(
-	JArray<JIndex>*				noContextList,
-	JArray<JIndex>*				contextList,
-	const JString&				contextNamespace1,
-	const JString&				contextNamespace2,
-	const Language			contextLang,
-	const JPtrArray<JString>&	cContextNamespaceList,
-	const JPtrArray<JString>&	dContextNamespaceList,
-	const JPtrArray<JString>&	goContextNamespaceList,
-	const JPtrArray<JString>&	javaContextNamespaceList,
-	const JPtrArray<JString>&	phpContextNamespaceList
+	JArray<JIndex>*					noContextList,
+	JArray<JIndex>*					contextList,
+	const JArray<ContextNamespace>&	contextNamespaceList
 	)
 	const
 {
-	const bool useLangNSContext = !contextNamespace1.IsEmpty();
-	const bool useCNSContext    = !cContextNamespaceList.IsEmpty();
-	const bool useDNSContext    = !dContextNamespaceList.IsEmpty();
-	const bool useGoNSContext   = !goContextNamespaceList.IsEmpty();
-	const bool useJavaNSContext = !javaContextNamespaceList.IsEmpty();
-	const bool usePHPNSContext  = !phpContextNamespaceList.IsEmpty();
-
 	// substitute indicies of fully qualified symbols
 	// and filter based on namespace context
 
@@ -339,40 +317,41 @@ SymbolList::ConvertToFullNames
 	const SymbolInfo* sym = itsSymbolList->GetCArray();
 
 	const JSize count = noContextList->GetElementCount();
-	JString s1, s2;
+	JString s1, s2, s3;
 	for (JIndex i=count; i>=1; i--)
 	{
 		const JIndex j               = noContextList->GetElement(i) - 1;
 		const SymbolInfo& info       = sym[j];
 		const JString::Case caseSens = IsCaseSensitive(info.lang);
 
-		s1 = "." + *(info.name);
-		s2 = ":" + *(info.name);
+		s1 = "."  + *(info.name);
+		s2 = ":"  + *(info.name);
+		s3 = "\\" + *(info.name);
 		for (JIndex k=0; k<symCount; k++)
 		{
 			if (k != j &&
 				sym[k].fileID    == info.fileID &&
 				sym[k].lineIndex == info.lineIndex &&
-				((sym[k].name)->EndsWith(s1, caseSens) ||
-				 (sym[k].name)->EndsWith(s2, caseSens)))
+				(sym[k].name->EndsWith(s1, caseSens) ||
+				 sym[k].name->EndsWith(s2, caseSens) ||
+				 sym[k].name->EndsWith(s3, caseSens)))
 			{
-				if ((info.lang == kCLang && useCNSContext &&
-					 !InContext(*(sym[k].name), cContextNamespaceList, JString::kCompareCase)) ||
-					(info.lang == kDLang && useDNSContext &&
-					 !InContext(*(sym[k].name), dContextNamespaceList, JString::kCompareCase)) ||
-					(info.lang == kGoLang && useGoNSContext &&
-					 !InContext(*(sym[k].name), goContextNamespaceList, JString::kCompareCase)) ||
-					(info.lang == kJavaLang && useJavaNSContext &&
-					 !InContext(*(sym[k].name), javaContextNamespaceList, JString::kCompareCase)) ||
-					(info.lang == kPHPLang && usePHPNSContext &&
-					 !InContext(*(sym[k].name), phpContextNamespaceList, JString::kCompareCase)) ||
-					(info.lang == contextLang && useLangNSContext &&
-					 !(sym[k].name)->BeginsWith(contextNamespace1, caseSens) &&
-					 !(sym[k].name)->Contains(contextNamespace2, caseSens)))
+				bool removed = false;
+				for (const auto cns : contextNamespaceList)
 				{
-					contextList->RemoveElement(i);
+					if (info.lang == cns.lang)
+					{
+						if (!cns.list->IsEmpty() &&
+							!InContext(*sym[k].name, *cns.list, caseSens))
+						{
+							contextList->RemoveElement(i);
+							removed = true;
+						}
+						break;
+					}
 				}
-				else
+
+				if (!removed)
 				{
 					contextList->SetElement(i, k+1);
 				}
@@ -387,95 +366,9 @@ SymbolList::ConvertToFullNames
 }
 
 /******************************************************************************
- PrepareContextNamespace (private)
-
- ******************************************************************************/
-
-void
-SymbolList::PrepareContextNamespace
-	(
-	const JString&		contextNamespace,
-	const Language	lang,
-	JString*			ns1,
-	JString*			ns2
-	)
-	const
-{
-	if (!contextNamespace.IsEmpty() &&
-		(lang == kDLang          ||
-		 lang == kGoLang         ||
-		 lang == kJavaLang       ||
-		 lang == kJavaScriptLang ||
-		 lang == kEiffelLang     ||
-		 lang == kCSharpLang))
-	{
-		*ns1  = contextNamespace;	// name.
-		*ns1 += ".";
-
-		*ns2 = *ns1;				// .name.
-		ns2->Prepend(".");
-	}
-	else
-	{
-		ns1->Clear();
-		ns2->Clear();
-	}
-}
-
-/******************************************************************************
  PrepareContextNamespaceList (private)
 
  ******************************************************************************/
-
-void
-SymbolList::PrepareCContextNamespaceList
-	(
-	JPtrArray<JString>* contextNamespace
-	)
-	const
-{
-	PrepareContextNamespaceList(contextNamespace, "::");
-}
-
-void
-SymbolList::PrepareDContextNamespaceList
-	(
-	JPtrArray<JString>* contextNamespace
-	)
-	const
-{
-	PrepareContextNamespaceList(contextNamespace, ".");
-}
-
-void
-SymbolList::PrepareGoContextNamespaceList
-	(
-	JPtrArray<JString>* contextNamespace
-	)
-	const
-{
-	PrepareContextNamespaceList(contextNamespace, ".");
-}
-
-void
-SymbolList::PrepareJavaContextNamespaceList
-	(
-	JPtrArray<JString>* contextNamespace
-	)
-	const
-{
-	PrepareContextNamespaceList(contextNamespace, ".");
-}
-
-void
-SymbolList::PreparePHPContextNamespaceList
-	(
-	JPtrArray<JString>* contextNamespace
-	)
-	const
-{
-	PrepareContextNamespaceList(contextNamespace, "\\");
-}
 
 void
 SymbolList::PrepareContextNamespaceList
@@ -485,19 +378,16 @@ SymbolList::PrepareContextNamespaceList
 	)
 	const
 {
-	if (!contextNamespace->IsEmpty())
+	const JSize count = contextNamespace->GetElementCount();
+	for (JIndex i=count; i>=1; i--)
 	{
-		const JSize count = contextNamespace->GetElementCount();
-		for (JIndex i=count; i>=1; i--)
-		{
-			JString* cns1 = contextNamespace->GetElement(i);	// name::
-			*cns1 += namespaceOp;
+		JString* cns1 = contextNamespace->GetElement(i);	// name::
+		*cns1 += namespaceOp;
 
-			auto* cns2 = jnew JString(*cns1);					// ::name::
-			assert( cns2 != nullptr );
-			cns2->Prepend(namespaceOp);
-			contextNamespace->InsertAtIndex(i+1, cns2);
-		}
+		auto* cns2 = jnew JString(*cns1);					// ::name::
+		assert( cns2 != nullptr );
+		cns2->Prepend(namespaceOp);
+		contextNamespace->InsertAtIndex(i+1, cns2);
 	}
 }
 

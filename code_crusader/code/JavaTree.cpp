@@ -31,7 +31,7 @@ JavaTree::JavaTree
 	const JSize			marginWidth
 	)
 	:
-	Tree(StreamInJavaClass, director, kJavaSourceFT, marginWidth),
+	Tree(StreamInJavaClass, director, kJavaLang, kJavaSourceFT, marginWidth),
 	itsClassNameLexer(nullptr)
 {
 }
@@ -52,7 +52,7 @@ JavaTree::JavaTree
 	)
 	:
 	Tree(projInput, projVers, setInput, setVers, symInput, symVers,
-		   StreamInJavaClass, director, kJavaSourceFT, marginWidth, dirList),
+		   StreamInJavaClass, director, kJavaLang, kJavaSourceFT, marginWidth, dirList),
 	itsClassNameLexer(nullptr)
 {
 	if (projVers < 88 && !IsEmpty())	// new parser

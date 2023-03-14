@@ -16,16 +16,8 @@
 #include "DirList.h"
 #include "SymbolDirector.h"
 #include "SymbolList.h"
-#include "CTreeDirector.h"
-#include "CTree.h"
-#include "DTreeDirector.h"
-#include "DTree.h"
-#include "GoTreeDirector.h"
-#include "GoTree.h"
-#include "JavaTreeDirector.h"
-#include "JavaTree.h"
-#include "PHPTreeDirector.h"
-#include "PHPTree.h"
+#include "TreeDirector.h"
+#include "Tree.h"
 #include "globals.h"
 #include <jx-af/jcore/JDirInfo.h>
 #include <jx-af/jcore/jVCSUtil.h>
@@ -84,15 +76,11 @@ FileListTable::~FileListTable()
 bool
 FileListTable::Update
 	(
-	std::ostream&		link,
-	ProjectTree*		fileTree,
-	const DirList&	dirList,
-	SymbolDirector*	symbolDir,
-	CTreeDirector*	cTreeDir,
-	DTreeDirector*	dTreeDir,
-	GoTreeDirector*	goTreeDir,
-	JavaTreeDirector*	javaTreeDir,
-	PHPTreeDirector*	phpTreeDir
+	std::ostream&					link,
+	ProjectTree*					fileTree,
+	const DirList&					dirList,
+	SymbolDirector*					symbolDir,
+	const JPtrArray<TreeDirector>&	treeDirList
 	)
 {
 JIndex i;
@@ -102,30 +90,27 @@ JIndex i;
 	SymbolUpdatePG pg(link, 10);
 
 	SymbolList* symbolList = symbolDir->GetSymbolList();
-	CTree* cTree           = cTreeDir->GetCTree();
-	DTree* dTree           = dTreeDir->GetDTree();
-	GoTree* goTree         = goTreeDir->GetGoTree();
-	JavaTree* javaTree     = javaTreeDir->GetJavaTree();
-	PHPTree* phpTree       = phpTreeDir->GetPHPTree();
+
+	JPtrArray<Tree> treeList(JPtrArrayT::kForgetAll);
+	for (auto* dir : treeDirList)
+	{
+		treeList.Append(dir->GetTree());
+	}
 
 	const bool reparseAll = itsReparseAllFlag             ||
 							symbolList->NeedsReparseAll() ||
-							cTree->NeedsReparseAll()      ||
-							dTree->NeedsReparseAll()      ||
-							goTree->NeedsReparseAll()     ||
-							javaTree->NeedsReparseAll()   ||
-							phpTree->NeedsReparseAll();
+							std::any_of(begin(treeList), end(treeList),
+								[](Tree* tree){ return tree->NeedsReparseAll(); });
 
 	if (reparseAll)
 	{
 		RemoveAllFiles();
 	}
 	symbolDir->PrepareForListUpdate(reparseAll, pg);
-	cTreeDir->PrepareForTreeUpdate(reparseAll);
-	dTreeDir->PrepareForTreeUpdate(reparseAll);
-	goTreeDir->PrepareForTreeUpdate(reparseAll);
-	javaTreeDir->PrepareForTreeUpdate(reparseAll);
-	phpTreeDir->PrepareForTreeUpdate(reparseAll);
+	for (auto* dir : treeDirList)
+	{
+		dir->PrepareForTreeUpdate(reparseAll);
+	}
 
 	itsChangedDuringParseFlag = reparseAll;
 
@@ -142,7 +127,7 @@ JIndex i;
 
 	// process each file
 
-	ScanAll(fileTree, dirList, symbolList, cTree, dTree, goTree, javaTree, phpTree, pg);
+	ScanAll(fileTree, dirList, symbolList, treeList, pg);
 
 	// collect files that no longer exist
 
@@ -156,8 +141,8 @@ JIndex i;
 	{
 		if (!fileUsage.GetElement(i))
 		{
-			deadFileNameList.Append(*(fileNameList.GetElement(i)));
-			deadFileIDList.AppendElement((itsFileInfo->GetElement(i)).id);
+			deadFileNameList.Append(*fileNameList.GetElement(i));
+			deadFileIDList.AppendElement(itsFileInfo->GetElement(i).id);
 		}
 	}
 
@@ -167,11 +152,10 @@ JIndex i;
 
 	RemoveFiles(deadFileNameList);
 	symbolDir->ListUpdateFinished(deadFileIDList, pg);
-	cTreeDir->TreeUpdateFinished(deadFileIDList);
-	dTreeDir->TreeUpdateFinished(deadFileIDList);
-	goTreeDir->TreeUpdateFinished(deadFileIDList);
-	javaTreeDir->TreeUpdateFinished(deadFileIDList);
-	phpTreeDir->TreeUpdateFinished(deadFileIDList);
+	for (auto* dir : treeDirList)
+	{
+		dir->TreeUpdateFinished(deadFileIDList);
+	}
 
 	if (!deadFileIDList.IsEmpty())
 	{
@@ -198,15 +182,11 @@ JIndex i;
 void
 FileListTable::ScanAll
 	(
-	ProjectTree*		fileTree,
-	const DirList&		dirList,
-	SymbolList*			symbolList,
-	CTree*				cTree,
-	DTree*				dTree,
-	GoTree*				goTree,
-	JavaTree*			javaTree,
-	PHPTree*			phpTree,
-	JProgressDisplay&	pg
+	ProjectTree*			fileTree,
+	const DirList&			dirList,
+	SymbolList*				symbolList,
+	const JPtrArray<Tree>&	treeList,
+	JProgressDisplay&		pg
 	)
 {
 	const JSize dirCount = dirList.GetElementCount();
@@ -225,13 +205,11 @@ FileListTable::ScanAll
 			{
 				ScanDirectory(fullPath, recurse,
 							  allSuffixList, symbolList,
-							  cTree, dTree, goTree, javaTree, phpTree,
-							  pg);
+							  treeList, pg);
 			}
 		}
 
-		fileTree->ParseFiles(this, allSuffixList, symbolList,
-							 cTree, dTree, goTree, javaTree, phpTree, pg);
+		fileTree->ParseFiles(this, allSuffixList, symbolList, treeList, pg);
 
 		pg.ProcessFinished();
 	}
@@ -251,11 +229,7 @@ FileListTable::ScanDirectory
 	const bool					recurse,
 	const JPtrArray<JString>&	allSuffixList,
 	SymbolList*					symbolList,
-	CTree*						cTree,
-	DTree*						dTree,
-	GoTree*						goTree,
-	JavaTree*					javaTree,
-	PHPTree*					phpTree,
+	const JPtrArray<Tree>&		treeList,
 	JProgressDisplay&			pg
 	)
 {
@@ -279,8 +253,7 @@ FileListTable::ScanDirectory
 		{
 			ScanDirectory(entry.GetFullName(), recurse,
 						  allSuffixList, symbolList,
-						  cTree, dTree, goTree, javaTree, phpTree,
-						  pg);
+						  treeList, pg);
 		}
 
 		// If it's a file ending in one of the suffixes, parse it.
@@ -298,8 +271,7 @@ FileListTable::ScanDirectory
 				assert_ok( err );
 			}
 
-			ParseFile(trueName, allSuffixList, modTime,
-					  symbolList, cTree, dTree, goTree, javaTree, phpTree);
+			ParseFile(trueName, allSuffixList, modTime,  symbolList, treeList);
 		}
 
 		pg.IncrementProgress();
@@ -324,11 +296,7 @@ FileListTable::ParseFile
 	const JPtrArray<JString>&	allSuffixList,
 	const time_t				modTime,
 	SymbolList*					symbolList,
-	CTree*						cTree,
-	DTree*						dTree,
-	GoTree*						goTree,
-	JavaTree*					javaTree,
-	PHPTree*					phpTree
+	const JPtrArray<Tree>&		treeList
 	)
 {
 	if (PrefsManager::FileMatchesSuffix(fullName, allSuffixList))
@@ -340,11 +308,10 @@ FileListTable::ParseFile
 			itsChangedDuringParseFlag = true;
 
 			symbolList->FileChanged(fullName, fileType, id);
-			cTree->FileChanged(fullName, fileType, id);
-			dTree->FileChanged(fullName, fileType, id);
-			goTree->FileChanged(fullName, fileType, id);
-			javaTree->FileChanged(fullName, fileType, id);
-			phpTree->FileChanged(fullName, fileType, id);
+			for (auto* tree : treeList)
+			{
+				tree->FileChanged(fullName, fileType, id);
+			}
 		}
 	}
 }

@@ -154,20 +154,15 @@ ProjectTree::BuildQMakeData
 void
 ProjectTree::ParseFiles
 	(
-	FileListTable*			parser,
+	FileListTable*				parser,
 	const JPtrArray<JString>&	allSuffixList,
-	SymbolList*				symbolList,
-	CTree*					cTree,
-	DTree*					dTree,
-	GoTree*					goTree,
-	JavaTree*					javaTree,
-	PHPTree*					phpTree,
+	SymbolList*					symbolList,
+	const JPtrArray<Tree>&		treeList,
 	JProgressDisplay&			pg
 	)
 	const
 {
-	GetProjectRoot()->ParseFiles(parser, allSuffixList, symbolList,
-								 cTree, dTree, goTree, javaTree, phpTree, pg);
+	GetProjectRoot()->ParseFiles(parser, allSuffixList, symbolList, treeList, pg);
 }
 
 /******************************************************************************

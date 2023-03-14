@@ -86,11 +86,7 @@ FileNode::ParseFiles
 	FileListTable*				parser,
 	const JPtrArray<JString>&	allSuffixList,
 	SymbolList*					symbolList,
-	CTree*						cTree,
-	DTree*						dTree,
-	GoTree*						goTree,
-	JavaTree*					javaTree,
-	PHPTree*					phpTree,
+	const JPtrArray<Tree>&		treeList,
 	JProgressDisplay&			pg
 	)
 	const
@@ -98,7 +94,7 @@ FileNode::ParseFiles
 	JString fullName, trueName;
 	if (GetFullName(&fullName) && JGetTrueName(fullName, &trueName))
 	{
-		if (!ParseFile(trueName, parser, allSuffixList, symbolList, cTree, dTree, goTree, javaTree, phpTree, pg))
+		if (!ParseFile(trueName, parser, allSuffixList, symbolList, treeList, pg))
 		{
 			return false;
 		}
@@ -107,12 +103,12 @@ FileNode::ParseFiles
 		if (GetDocumentManager()->GetComplementFile(trueName, type, &fullName,
 														GetProjectDoc(), false) &&
 			JGetTrueName(fullName, &trueName) &&
-			!ParseFile(trueName, parser, allSuffixList, symbolList, cTree, dTree, goTree, javaTree, phpTree, pg))
+			!ParseFile(trueName, parser, allSuffixList, symbolList, treeList, pg))
 		{
 			return false;
 		}
 	}
-	return FileNodeBase::ParseFiles(parser, allSuffixList, symbolList, cTree, dTree, goTree, javaTree, phpTree, pg);
+	return FileNodeBase::ParseFiles(parser, allSuffixList, symbolList, treeList, pg);
 }
 
 /******************************************************************************
@@ -127,18 +123,14 @@ FileNode::ParseFile
 	FileListTable*				parser,
 	const JPtrArray<JString>&	allSuffixList,
 	SymbolList*					symbolList,
-	CTree*						cTree,
-	DTree*						dTree,
-	GoTree*						goTree,
-	JavaTree*					javaTree,
-	PHPTree*					phpTree,
+	const JPtrArray<Tree>&		treeList,
 	JProgressDisplay&			pg
 	)
 	const
 {
 	time_t t;
 	JGetModificationTime(fullName, &t);
-	parser->ParseFile(fullName, allSuffixList, t, symbolList, cTree, dTree, goTree, javaTree, phpTree);
+	parser->ParseFile(fullName, allSuffixList, t, symbolList, treeList);
 
 	return pg.IncrementProgress();
 }

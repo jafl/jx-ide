@@ -171,7 +171,7 @@ ListChooseFileDialog::BuildWindow
 
 	itsAppendReplaceRG =
 		jnew JXRadioGroup(window,
-					JXWidget::kHElastic, JXWidget::kFixedBottom, 20,340, 99,74);
+					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 20,340, 99,74);
 	assert( itsAppendReplaceRG != nullptr );
 
 	auto* replaceRB =

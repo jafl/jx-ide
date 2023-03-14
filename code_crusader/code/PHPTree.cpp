@@ -31,7 +31,7 @@ PHPTree::PHPTree
 	const JSize			marginWidth
 	)
 	:
-	Tree(StreamInPHPClass, director, kPHPFT, marginWidth),
+	Tree(StreamInPHPClass, director, kPHPLang, kPHPFT, marginWidth),
 	itsClassNameLexer(nullptr)
 {
 }
@@ -52,7 +52,7 @@ PHPTree::PHPTree
 	)
 	:
 	Tree(projInput, projVers, setInput, setVers, symInput, symVers,
-		   StreamInPHPClass, director, kPHPFT, marginWidth, dirList),
+		   StreamInPHPClass, director, kPHPLang, kPHPFT, marginWidth, dirList),
 	itsClassNameLexer(nullptr)
 {
 	if (projVers < 81 && !IsEmpty())

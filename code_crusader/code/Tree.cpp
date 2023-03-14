@@ -76,11 +76,13 @@ Tree::Tree
 	(
 	ClassStreamInFn		streamInFn,
 	TreeDirector*		director,
+	const Language		lang,
 	const TextFileType	fileType,
 	const JSize			marginWidth
 	)
 	:
 	JContainer(),
+	itsLanguage(lang),
 	itsFileType(fileType),
 	itsMarginWidth(marginWidth)
 {
@@ -99,12 +101,14 @@ Tree::Tree
 	const JFileVersion	origSymVers,
 	ClassStreamInFn		streamInFn,
 	TreeDirector*		director,
+	const Language		lang,
 	const TextFileType	fileType,
 	const JSize			marginWidth,
 	DirList*			dirList
 	)
 	:
 	JContainer(),
+	itsLanguage(lang),
 	itsFileType(fileType),
 	itsMarginWidth(marginWidth)
 {
@@ -1557,7 +1561,7 @@ bool
 Tree::FindClass
 	(
 	const JString&	fullName,
-	Class**		theClass
+	Class**			theClass
 	)
 	const
 {
@@ -1678,7 +1682,7 @@ Tree::FindParent
 	)
 	const
 {
-	const JUtf8Byte* namespaceOp = container->GetNamespaceOperator();
+	const JUtf8Byte* namespaceOp = GetNamespaceOperator(itsLanguage);
 
 	JString parentSuffix(namespaceOp);
 	parentSuffix += parentName;
@@ -1865,7 +1869,7 @@ Tree::GetSelectionCoverage
 /******************************************************************************
  SelectClasses
 
-	Selects all the classes with the given name, not full name.
+	Selects all the classes with the given name or the full name.
 
  ******************************************************************************/
 
@@ -1873,7 +1877,8 @@ void
 Tree::SelectClasses
 	(
 	const JString&	name,
-	const bool	deselectAll
+	const bool		deselectAll,
+	const bool		useFullName
 	)
 {
 	if (deselectAll)
@@ -1881,18 +1886,17 @@ Tree::SelectClasses
 		DeselectAll();
 	}
 
-	bool changed       = false;
-	const JSize classCount = itsClassesByFull->GetElementCount();
-	for (JIndex i=1; i<=classCount; i++)
+	bool changed = false;
+	for (auto* c : *itsClassesByFull)
 	{
-		Class* theClass = itsClassesByFull->GetElement(i);
-		if (theClass->GetName() == name)
+		if (( useFullName && c->GetFullName() == name) ||
+			(!useFullName && c->GetName() == name))
 		{
-			theClass->SetSelected(true);
-			if (!theClass->IsVisible())
+			c->SetSelected(true);
+			if (!c->IsVisible())
 			{
 				changed = true;
-				theClass->ForceVisible();
+				c->ForceVisible();
 			}
 		}
 	}
@@ -1902,51 +1906,6 @@ Tree::SelectClasses
 		RecalcVisible(true);		// ForceVisible() can uncollapse
 		Broadcast(Changed());
 	}
-}
-
-/******************************************************************************
- SelectImplementors
-
-	Selects all the classes that implement the given function.
-
- ******************************************************************************/
-
-void
-Tree::SelectImplementors
-	(
-	const JString&	fnName,
-	const bool	caseSensitive,
-	const bool	deselectAll
-	)
-{
-/*
-	if (deselectAll)
-	{
-		DeselectAll();
-	}
-
-	bool changed       = false;
-	const JSize classCount = itsClassesByFull->GetElementCount();
-	for (JIndex i=1; i<=classCount; i++)
-	{
-		Class* theClass = itsClassesByFull->GetElement(i);
-		if (theClass->Implements(fnName, caseSensitive))
-		{
-			theClass->SetSelected(true);
-			if (!theClass->IsVisible())
-			{
-				changed = true;
-				theClass->ForceVisible();
-			}
-		}
-	}
-
-	if (changed)
-	{
-		RecalcVisible(true);		// ForceVisible() can uncollapse
-		Broadcast(Changed());
-	}
-*/
 }
 
 /******************************************************************************
@@ -1962,11 +1921,9 @@ Tree::SelectParents()
 	JPtrArray<Class> classList(JPtrArrayT::kForgetAll);
 	if (GetSelectedClasses(&classList))
 	{
-		bool changed       = false;
-		const JSize classCount = classList.GetElementCount();
-		for (JIndex i=1; i<=classCount; i++)
+		bool changed = false;
+		for (auto* c : classList)
 		{
-			Class* c = classList.GetElement(i);
 			const JSize parentCount = c->GetParentCount();
 			for (JIndex j=1; j<=parentCount; j++)
 			{
@@ -2003,15 +1960,11 @@ Tree::SelectDescendants()
 	JPtrArray<Class> classList(JPtrArrayT::kForgetAll);
 	if (GetSelectedClasses(&classList))
 	{
-		bool changed       = false;
-		const JSize classCount = classList.GetElementCount();
-		const JSize totalCount = itsClassesByFull->GetElementCount();
-		for (JIndex i=1; i<=classCount; i++)
+		bool changed = false;
+		for (auto* c : classList)
 		{
-			Class* c = classList.GetElement(i);
-			for (JIndex j=1; j<=totalCount; j++)
+			for (auto* c1 : *itsClassesByFull)
 			{
-				Class* c1 = itsClassesByFull->GetElement(j);
 				if (c->IsAncestor(c1))
 				{
 					c1->SetSelected(true);
@@ -2046,10 +1999,9 @@ Tree::ViewSelectedSources()
 	JPtrArray<Class> classList(JPtrArrayT::kForgetAll);
 	if (GetSelectedClasses(&classList))
 	{
-		const JSize classCount = classList.GetElementCount();
-		for (JIndex i=1; i<=classCount; i++)
+		for (auto* c : classList)
 		{
-			(classList.GetElement(i))->ViewSource();
+			c->ViewSource();
 		}
 	}
 }
@@ -2068,10 +2020,9 @@ Tree::ViewSelectedHeaders()
 	JPtrArray<Class> classList(JPtrArrayT::kForgetAll);
 	if (GetSelectedClasses(&classList))
 	{
-		const JSize classCount = classList.GetElementCount();
-		for (JIndex i=1; i<=classCount; i++)
+		for (auto* c : classList)
 		{
-			(classList.GetElement(i))->ViewHeader();
+			c->ViewHeader();
 		}
 	}
 }
@@ -2092,10 +2043,9 @@ Tree::ViewSelectedFunctionLists()
 	JPtrArray<Class> classList(JPtrArrayT::kForgetAll);
 	if (GetSelectedClasses(&classList))
 	{
-		const JSize classCount = classList.GetElementCount();
-		for (JIndex i=1; i<=classCount; i++)
+		for (auto* c : classList)
 		{
-			itsDirector->ViewFunctionList(classList.GetElement(i));
+			itsDirector->ViewFunctionList(c);
 		}
 	}
 }
@@ -2118,13 +2068,11 @@ Tree::CopySelectedClassNames()
 	JPtrArray<JString> nameList(JPtrArrayT::kForgetAll);
 
 	const JPtrArray<Class>& classList = GetVisibleClasses();
-	const JSize classCount              = classList.GetElementCount();
-	for (JIndex i=1; i<=classCount; i++)
+	for (auto* c : classList)
 	{
-		const Class* theClass = classList.GetElement(i);
-		if (theClass->IsSelected())
+		if (c->IsSelected())
 		{
-			const JString& name = theClass->GetFullName();
+			const JString& name = c->GetFullName();
 			nameList.Append(const_cast<JString*>(&name));
 		}
 	}

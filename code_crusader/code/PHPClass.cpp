@@ -15,8 +15,6 @@
 #include <jx-af/jcore/JRegex.h>
 #include <jx-af/jcore/jAssert.h>
 
-static const JUtf8Byte* kNamespaceOperator = "\\";
-
 /******************************************************************************
  Constructor
 
@@ -31,7 +29,7 @@ PHPClass::PHPClass
 	const bool		isFinal
 	)
 	:
-	Class(name, declType, fileID, tree, kNamespaceOperator),
+	Class(name, declType, fileID, tree),
 	itsIsFinalFlag(isFinal)
 {
 }
@@ -43,7 +41,7 @@ PHPClass::PHPClass
 	Tree*				tree
 	)
 	:
-	Class(input, vers, tree, kNamespaceOperator)
+	Class(input, vers, tree)
 {
 	input >> JBoolFromString(itsIsFinalFlag);
 }

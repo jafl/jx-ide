@@ -168,7 +168,7 @@ Command::Add
 	const JPtrArray<JString>&	cmdArgs,
 	const JPtrArray<JString>&	fullNameList,
 	const JArray<JIndex>&		lineIndexList,
-	FunctionStack*			fnStack
+	FunctionStack*				fnStack
 	)
 {
 	const JString* firstArg = cmdArgs.GetFirstElement();
@@ -232,7 +232,7 @@ Command::Add
 void
 Command::Add
 	(
-	Command*							subCmd,
+	Command*						subCmd,
 	const CommandManager::CmdInfo&	cmdInfo
 	)
 {

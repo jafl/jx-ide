@@ -35,7 +35,7 @@ CTree::CTree
 	const JSize			marginWidth
 	)
 	:
-	Tree(StreamInCClass, director, kCHeaderFT, marginWidth),
+	Tree(StreamInCClass, director, kCLang, kCHeaderFT, marginWidth),
 	CtagsUser(kCtagsArgs),
 	itsClassNameLexer(nullptr)
 {
@@ -58,7 +58,7 @@ CTree::CTree
 	)
 	:
 	Tree(projInput, projVers, setInput, setVers, symInput, symVers,
-		   StreamInCClass, director, kCHeaderFT, marginWidth, dirList),
+		   StreamInCClass, director, kCLang, kCHeaderFT, marginWidth, dirList),
 	CtagsUser(kCtagsArgs),
 	itsClassNameLexer(nullptr)
 {

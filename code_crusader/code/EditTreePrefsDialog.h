@@ -21,7 +21,7 @@ class EditTreePrefsDialog : public JXModalDialogDirector
 {
 public:
 
-	EditTreePrefsDialog(const JSize fontSize, const bool showInheritedFns,
+	EditTreePrefsDialog(const JSize fontSize,
 						const bool autoMinMILinks, const bool drawMILinksOnTop,
 						const bool raiseWhenSingleMatch);
 
@@ -45,7 +45,6 @@ private:
 
 // begin JXLayout
 
-	JXTextCheckbox* itsShowInheritedFnsCB;
 	JXFontSizeMenu* itsFontSizeMenu;
 	JXTextCheckbox* itsAutoMinMILinkCB;
 	JXRadioGroup*   itsMILinkStyleRG;
@@ -56,7 +55,7 @@ private:
 
 private:
 
-	void	BuildWindow(const JSize fontSize, const bool showInheritedFns,
+	void	BuildWindow(const JSize fontSize,
 						const bool autoMinMILinks, const bool drawMILinksOnTop,
 						const bool raiseWhenSingleMatch);
 };

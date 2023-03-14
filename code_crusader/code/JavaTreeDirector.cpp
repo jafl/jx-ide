@@ -210,7 +210,7 @@ JavaTreeDirector::HandleTreeMenu
 
 	else if (index == kFindFnCmd)
 	{
-		AskForFunctionToFind();
+		FindFunction();
 	}
 }
 

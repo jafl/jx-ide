@@ -16,8 +16,6 @@
 #include <jx-af/jcore/JRegex.h>
 #include <jx-af/jcore/jAssert.h>
 
-static const JUtf8Byte* kNamespaceOperator = ".";
-
 /******************************************************************************
  Constructor
 
@@ -33,7 +31,7 @@ JavaClass::JavaClass
 	const bool		isFinal
 	)
 	:
-	Class(name, declType, fileID, tree, kNamespaceOperator),
+	Class(name, declType, fileID, tree),
 	itsIsPublicFlag(isPublic),
 	itsIsFinalFlag(isFinal)
 {
@@ -46,7 +44,7 @@ JavaClass::JavaClass
 	Tree*				tree
 	)
 	:
-	Class(input, vers, tree, kNamespaceOperator),
+	Class(input, vers, tree),
 	itsIsPublicFlag(true),
 	itsIsFinalFlag(false)
 {

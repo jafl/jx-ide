@@ -93,8 +93,8 @@ F
 "${LIB_DEPS}"
 "make -k all"
 # search paths
-T "../../JX/include/jcore" T
-T "../../JX/include/jx" T
+T "../../JX/include/jx-af/jcore" T
+T "../../JX/include/jx-af/jx" T
 T "./code" T
 F
 # C preprocessor

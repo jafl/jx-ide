@@ -27,9 +27,7 @@ public:
 
 	bool	ParseFiles(FileListTable* parser,
 					   const JPtrArray<JString>& allSuffixList,
-					   SymbolList* symbolList,
-					   CTree* cTree, DTree* dTree, GoTree* goTree,
-					   JavaTree* javaTree, PHPTree* phpTree,
+					   SymbolList* symbolList, const JPtrArray<Tree>& treeList,
 					   JProgressDisplay& pg) const override;
 
 	void	CreateFilesForTemplate(std::istream& input,
@@ -40,9 +38,7 @@ private:
 
 	bool	ParseFile(const JString& fullName, FileListTable* parser,
 					  const JPtrArray<JString>& allSuffixList,
-					  SymbolList* symbolList,
-					  CTree* cTree, DTree* dTree, GoTree* goTree,
-					  JavaTree* javaTree, PHPTree* phpTree,
+					  SymbolList* symbolList, const JPtrArray<Tree>& treeList,
 					  JProgressDisplay& pg) const;
 };
 

@@ -3291,13 +3291,13 @@ argument:
 =============== FORM ===============
 Name: EditTreePrefsDialog
 Width: 320
-Height: 290
-Number of Objects: 12
+Height: 270
+Number of Objects: 11
 
 --------------------
 class: FL_BOX
 type: FL_FLAT_BOX
-box: 0 0 320 290
+box: 0 0 320 270
 boxtype: FL_FLAT_BOX
 colors: FL_COL1 FL_COL1
 alignment: FL_ALIGN_CENTER
@@ -3315,7 +3315,7 @@ argument:
 --------------------
 class: FL_BUTTON
 type: FL_NORMAL_BUTTON
-box: 30 260 70 20
+box: 30 240 70 20
 boxtype: FL_UP_BOX
 colors: FL_COL1 FL_COL1
 alignment: FL_ALIGN_CENTER
@@ -3333,7 +3333,7 @@ argument:
 --------------------
 class: FL_BUTTON
 type: FL_RETURN_BUTTON
-box: 220 260 70 20
+box: 220 240 70 20
 boxtype: FL_UP_BOX
 colors: FL_COL1 FL_COL1
 alignment: FL_ALIGN_CENTER
@@ -3345,24 +3345,6 @@ shortcut: ^M
 resize: FL_RESIZE_ALL
 gravity: FL_NorthWest FL_NoGravity
 name: (okButton)
-callback: 
-argument: 
-
---------------------
-class: FL_CHECKBUTTON
-type: FL_PUSH_BUTTON
-box: 20 70 280 20
-boxtype: FL_NO_BOX
-colors: FL_COL1 FL_YELLOW
-alignment: FL_ALIGN_CENTER
-style: FL_NORMAL_STYLE
-size: FL_NORMAL_SIZE
-lcol: FL_BLACK
-label: Show inherited functions in lists
-shortcut: 
-resize: FL_RESIZE_ALL
-gravity: FL_NorthWest FL_NoGravity
-name: itsShowInheritedFnsCB
 callback: 
 argument: 
 
@@ -3387,7 +3369,7 @@ argument: JFontManager::GetDefaultFontName(), JGetString("FontSize::EditTreePref
 --------------------
 class: FL_CHECKBUTTON
 type: FL_PUSH_BUTTON
-box: 20 130 280 20
+box: 20 110 280 20
 boxtype: FL_NO_BOX
 colors: FL_COL1 FL_YELLOW
 alignment: FL_ALIGN_CENTER
@@ -3405,7 +3387,7 @@ argument:
 --------------------
 class: FL_FRAME
 type: FL_ENGRAVED_FRAME
-box: 140 160 134 74
+box: 140 140 134 74
 boxtype: FL_NO_BOX
 colors: FL_COL1 FL_COL1
 alignment: FL_ALIGN_CENTER
@@ -3423,7 +3405,7 @@ argument:
 --------------------
 class: FL_TEXT
 type: FL_NORMAL_TEXT
-box: 45 190 90 20
+box: 45 170 90 20
 boxtype: FL_FLAT_BOX
 colors: FL_COL1 FL_MCOL
 alignment: FL_ALIGN_LEFT|FL_ALIGN_INSIDE
@@ -3441,7 +3423,7 @@ argument:
 --------------------
 class: FL_CHECKBUTTON
 type: FL_RADIO_BUTTON
-box: 150 170 110 20
+box: 150 150 110 20
 boxtype: FL_NO_BOX
 colors: FL_COL1 FL_YELLOW
 alignment: FL_ALIGN_CENTER
@@ -3459,7 +3441,7 @@ argument: 1
 --------------------
 class: FL_CHECKBUTTON
 type: FL_RADIO_BUTTON
-box: 150 200 110 20
+box: 150 180 110 20
 boxtype: FL_NO_BOX
 colors: FL_COL1 FL_YELLOW
 alignment: FL_ALIGN_CENTER
@@ -3477,7 +3459,7 @@ argument: 2
 --------------------
 class: FL_BUTTON
 type: FL_NORMAL_BUTTON
-box: 125 260 70 20
+box: 125 240 70 20
 boxtype: FL_UP_BOX
 colors: FL_COL1 FL_COL1
 alignment: FL_ALIGN_CENTER
@@ -3495,7 +3477,7 @@ argument:
 --------------------
 class: FL_CHECKBUTTON
 type: FL_PUSH_BUTTON
-box: 20 90 280 20
+box: 20 70 280 20
 boxtype: FL_NO_BOX
 colors: FL_COL1 FL_YELLOW
 alignment: FL_ALIGN_CENTER
@@ -4633,7 +4615,7 @@ lcol: FL_BLACK
 label: 
 shortcut: 
 resize: FL_RESIZE_ALL
-gravity: FL_South FL_NoGravity
+gravity: FL_SouthWest FL_NoGravity
 name: itsAppendReplaceRG
 callback: 
 argument: 

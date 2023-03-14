@@ -1340,7 +1340,7 @@ void
 TextEditor::FindSelectedSymbol
 	(
 	const JXMouseButton button,
-	const bool		useContext
+	const bool			useContext
 	)
 {
 	JString str;

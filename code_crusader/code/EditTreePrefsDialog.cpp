@@ -29,7 +29,6 @@
 EditTreePrefsDialog::EditTreePrefsDialog
 	(
 	const JSize	fontSize,
-	const bool	showInheritedFns,
 	const bool	autoMinMILinks,
 	const bool	drawMILinksOnTop,
 	const bool	raiseWhenSingleMatch
@@ -37,8 +36,7 @@ EditTreePrefsDialog::EditTreePrefsDialog
 	:
 	JXModalDialogDirector()
 {
-	BuildWindow(fontSize, showInheritedFns, autoMinMILinks, drawMILinksOnTop,
-				raiseWhenSingleMatch);
+	BuildWindow(fontSize, autoMinMILinks, drawMILinksOnTop, raiseWhenSingleMatch);
 }
 
 /******************************************************************************
@@ -58,8 +56,7 @@ EditTreePrefsDialog::~EditTreePrefsDialog()
 void
 EditTreePrefsDialog::BuildWindow
 	(
-	const JSize		fontSize,
-	const bool	showInheritedFns,
+	const JSize	fontSize,
 	const bool	autoMinMILinks,
 	const bool	drawMILinksOnTop,
 	const bool	raiseWhenSingleMatch
@@ -67,24 +64,19 @@ EditTreePrefsDialog::BuildWindow
 {
 // begin JXLayout
 
-	auto* window = jnew JXWindow(this, 320,290, JString::empty);
+	auto* window = jnew JXWindow(this, 320,270, JString::empty);
 	assert( window != nullptr );
 
 	auto* cancelButton =
 		jnew JXTextButton(JGetString("cancelButton::EditTreePrefsDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 30,260, 70,20);
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 30,240, 70,20);
 	assert( cancelButton != nullptr );
 
 	auto* okButton =
 		jnew JXTextButton(JGetString("okButton::EditTreePrefsDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 220,260, 70,20);
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 220,240, 70,20);
 	assert( okButton != nullptr );
 	okButton->SetShortcuts(JGetString("okButton::EditTreePrefsDialog::shortcuts::JXLayout"));
-
-	itsShowInheritedFnsCB =
-		jnew JXTextCheckbox(JGetString("itsShowInheritedFnsCB::EditTreePrefsDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,70, 280,20);
-	assert( itsShowInheritedFnsCB != nullptr );
 
 	itsFontSizeMenu =
 		jnew JXFontSizeMenu(JFontManager::GetDefaultFontName(), JGetString("FontSize::EditTreePrefsDialog"), window,
@@ -93,17 +85,17 @@ EditTreePrefsDialog::BuildWindow
 
 	itsAutoMinMILinkCB =
 		jnew JXTextCheckbox(JGetString("itsAutoMinMILinkCB::EditTreePrefsDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,130, 280,20);
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,110, 280,20);
 	assert( itsAutoMinMILinkCB != nullptr );
 
 	itsMILinkStyleRG =
 		jnew JXRadioGroup(window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 140,160, 134,74);
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 140,140, 134,74);
 	assert( itsMILinkStyleRG != nullptr );
 
 	auto* miLinksLabel =
 		jnew JXStaticText(JGetString("miLinksLabel::EditTreePrefsDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 45,190, 90,20);
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 45,170, 90,20);
 	assert( miLinksLabel != nullptr );
 	miLinksLabel->SetToLabel();
 
@@ -119,13 +111,13 @@ EditTreePrefsDialog::BuildWindow
 
 	itsHelpButton =
 		jnew JXTextButton(JGetString("itsHelpButton::EditTreePrefsDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 125,260, 70,20);
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 125,240, 70,20);
 	assert( itsHelpButton != nullptr );
 	itsHelpButton->SetShortcuts(JGetString("itsHelpButton::EditTreePrefsDialog::shortcuts::JXLayout"));
 
 	itsRaiseSingleMatchCB =
 		jnew JXTextCheckbox(JGetString("itsRaiseSingleMatchCB::EditTreePrefsDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,90, 280,20);
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,70, 280,20);
 	assert( itsRaiseSingleMatchCB != nullptr );
 
 // end JXLayout
@@ -138,7 +130,6 @@ EditTreePrefsDialog::BuildWindow
 	itsFontSizeMenu->SetFontSize(fontSize);
 	itsFontSizeMenu->SetToPopupChoice();
 
-	itsShowInheritedFnsCB->SetState(showInheritedFns);
 	itsAutoMinMILinkCB->SetState(autoMinMILinks);
 	itsRaiseSingleMatchCB->SetState(raiseWhenSingleMatch);
 
@@ -189,7 +180,6 @@ EditTreePrefsDialog::UpdateSettings()
 	for (auto* doc : *docList)
 	{
 		doc->SetTreePrefs(itsFontSizeMenu->GetFontSize(),
-						  itsShowInheritedFnsCB->IsChecked(),
 						  itsAutoMinMILinkCB->IsChecked(),
 						  itsMILinkStyleRG->GetSelectedItem() == kDrawMILinksAbove,
 						  itsRaiseSingleMatchCB->IsChecked(),

@@ -26,7 +26,7 @@ DTree::DTree
 	const JSize			marginWidth
 	)
 	:
-	Tree(StreamInCClass, director, kDFT, marginWidth),
+	Tree(StreamInCClass, director, kDLang, kDFT, marginWidth),
 	itsClassNameLexer(nullptr)
 {
 }
@@ -47,7 +47,7 @@ DTree::DTree
 	)
 	:
 	Tree(projInput, projVers, setInput, setVers, symInput, symVers,
-		   StreamInCClass, director, kDFT, marginWidth, dirList),
+		   StreamInCClass, director, kDLang, kDFT, marginWidth, dirList),
 	itsClassNameLexer(nullptr)
 {
 }

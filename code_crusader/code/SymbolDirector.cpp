@@ -410,6 +410,12 @@ SymbolDirector::ListUpdateFinished
 
 	If fileName is not empty, it is used for context.
 
+	If there is a single match, button determines what to open:
+
+		kJXLeftButton:   definition
+		kJXMiddleButton: declaration
+		kJXRightButton:  both
+
  ******************************************************************************/
 
 bool
@@ -422,20 +428,14 @@ SymbolDirector::FindSymbol
 {
 	JXGetApplication()->DisplayBusyCursor();
 
-	Tree* cTree    = itsProjDoc->GetCTreeDirector()->GetTree();
-	Tree* dTree    = itsProjDoc->GetDTreeDirector()->GetTree();
-	Tree* goTree   = itsProjDoc->GetGoTreeDirector()->GetTree();
-	Tree* javaTree = itsProjDoc->GetJavaTreeDirector()->GetTree();
-	Tree* phpTree  = itsProjDoc->GetPHPTreeDirector()->GetTree();
+	JPtrArray<Tree> treeList(JPtrArrayT::kForgetAll);
+	for (auto* director : itsProjDoc->GetTreeDirectorList())
+	{
+		treeList.Append(director->GetTree());
+	}
 
 	JFAID_t contextFileID = JFAID::kInvalidID;
-	JString contextNamespace;
-	Language contextLang = kOtherLang;
-	JPtrArray<JString> cContextNamespaceList(JPtrArrayT::kDeleteAll);
-	JPtrArray<JString> dContextNamespaceList(JPtrArrayT::kDeleteAll);
-	JPtrArray<JString> goContextNamespaceList(JPtrArrayT::kDeleteAll);
-	JPtrArray<JString> javaContextNamespaceList(JPtrArrayT::kDeleteAll);
-	JPtrArray<JString> phpContextNamespaceList(JPtrArrayT::kDeleteAll);
+	JArray<SymbolList::ContextNamespace> cnList;
 	if (!fileName.IsEmpty())
 	{
 		itsProjDoc->GetAllFileList()->GetFileID(fileName, &contextFileID);
@@ -445,68 +445,61 @@ SymbolDirector::FindSymbol
 		JSplitRootAndSuffix(name1, &className, &suffix);
 
 		const Class* theClass;
-		if (cTree->IsUniqueClassName(className, &theClass))
+		for (auto* tree : treeList)
 		{
-			BuildAncestorList(*theClass, &cContextNamespaceList);
+			if (tree->IsUniqueClassName(className, &theClass))
+			{
+				auto* list = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
+				assert( list != nullptr );
+
+				BuildAncestorList(*theClass, list);
+				if (!list->IsEmpty())
+				{
+					cnList.AppendElement(
+						SymbolList::ContextNamespace(tree->GetLanguage(), list));
+				}
+				else
+				{
+					jdelete list;
+				}
+			}
 		}
-		if (dTree->IsUniqueClassName(className, &theClass))
+
+		Language lang;
+		if (cnList.IsEmpty() &&
+			itsSymbolList->IsUniqueClassName(className, &lang))
 		{
-			BuildAncestorList(*theClass, &dContextNamespaceList);
-		}
-		if (goTree->IsUniqueClassName(className, &theClass))
-		{
-			BuildAncestorList(*theClass, &goContextNamespaceList);
-		}
-		if (javaTree->IsUniqueClassName(className, &theClass))
-		{
-			BuildAncestorList(*theClass, &javaContextNamespaceList);
-		}
-		if (phpTree->IsUniqueClassName(className, &theClass))
-		{
-			BuildAncestorList(*theClass, &phpContextNamespaceList);
-		}
-		if (cContextNamespaceList.IsEmpty()    &&
-			javaContextNamespaceList.IsEmpty() &&
-			phpContextNamespaceList.IsEmpty()  &&
-			itsSymbolList->IsUniqueClassName(className, &contextLang))
-		{
-			contextNamespace = className;
+			auto* list = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
+			assert( list != nullptr );
+			list->Append(className);
+
+			cnList.AppendElement(SymbolList::ContextNamespace(lang, list));
 		}
 	}
 
 	JArray<JIndex> symbolList;
 	const bool foundSymbol =
-		itsSymbolList->FindSymbol(name,
-			contextFileID, contextNamespace, contextLang,
-			&cContextNamespaceList, &dContextNamespaceList,
-			&goContextNamespaceList, &javaContextNamespaceList,
-			&phpContextNamespaceList,
+		itsSymbolList->FindSymbol(name, contextFileID, cnList,
 			button == kJXMiddleButton || button == kJXRightButton,
 			button == kJXLeftButton   || button == kJXRightButton,
 			&symbolList);
 
+	for (auto cns : cnList)
+	{
+		cns.CleanOut();
+	}
+	cnList.RemoveAll();
+
 	const bool raiseTree =
 		!foundSymbol || (button == kJXRightButton && itsRaiseTreeOnRightClickFlag);
 
-	TreeWidget* treeWidget = itsProjDoc->GetCTreeDirector()->GetTreeWidget();
-	const bool cc = treeWidget->FindClass(name, button, raiseTree, false, raiseTree, true);
-	const bool cf = treeWidget->FindFunction(name, true, button, raiseTree, false, raiseTree, false);
-
-	treeWidget = itsProjDoc->GetDTreeDirector()->GetTreeWidget();
-	const bool dc = treeWidget->FindClass(name, button, raiseTree, false, raiseTree, true);
-	const bool df = treeWidget->FindFunction(name, true, button, raiseTree, false, raiseTree, false);
-
-	treeWidget = itsProjDoc->GetGoTreeDirector()->GetTreeWidget();
-	const bool gc = treeWidget->FindClass(name, button, raiseTree, false, raiseTree, true);
-	const bool gf = treeWidget->FindFunction(name, true, button, raiseTree, false, raiseTree, false);
-
-	treeWidget = itsProjDoc->GetJavaTreeDirector()->GetTreeWidget();
-	const bool jc = treeWidget->FindClass(name, button, raiseTree, false, raiseTree, true);
-	const bool jf = treeWidget->FindFunction(name, true, button, raiseTree, false, raiseTree, false);
-
-	treeWidget = itsProjDoc->GetPHPTreeDirector()->GetTreeWidget();
-	const bool pc = treeWidget->FindClass(name, button, raiseTree, false, raiseTree, true);
-	const bool pf = treeWidget->FindFunction(name, true, button, raiseTree, false, raiseTree, false);
+	bool foundInAnyTree = false;
+	for (auto* director : itsProjDoc->GetTreeDirectorList())
+	{
+		auto* treeWidget = director->GetTreeWidget();
+		foundInAnyTree   = treeWidget->FindClass(name, button, raiseTree, false, !foundSymbol, true) || foundInAnyTree;
+		foundInAnyTree   = treeWidget->FindFunction(symbolList, button, raiseTree, false, !foundSymbol, false) || foundInAnyTree;
+	}
 
 	if (symbolList.GetElementCount() == 1 && button != kJXRightButton)
 	{
@@ -524,7 +517,7 @@ SymbolDirector::FindSymbol
 		if (GetDocumentManager()->OpenTextDocument(fileName1, lineIndex, &doc) &&
 			SymbolList::ShouldSmartScroll(type))
 		{
-			(doc->GetTextEditor())->ScrollForDefinition(lang);
+			doc->GetTextEditor()->ScrollForDefinition(lang);
 		}
 		return true;
 	}
@@ -540,7 +533,7 @@ SymbolDirector::FindSymbol
 	}
 	else
 	{
-		return cc || cf || dc || df || gc || gf || jc || jf || pc || pf;
+		return foundInAnyTree;
 	}
 }
 

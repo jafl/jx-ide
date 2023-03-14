@@ -17,11 +17,7 @@ class ProjectDocument;
 class ProjectNode;
 class FileListTable;
 class SymbolList;
-class CTree;
-class DTree;
-class GoTree;
-class JavaTree;
-class PHPTree;
+class Tree;
 
 class ProjectTree : public JTree
 {
@@ -46,9 +42,7 @@ public:
 						   JPtrArray<JTreeNode>* invalidList) const;
 	void	ParseFiles(FileListTable* parser,
 					   const JPtrArray<JString>& allSuffixList,
-					   SymbolList* symbolList,
-					   CTree* cTree, DTree* dTree, GoTree* goTree,
-					   JavaTree* javaTree, PHPTree* phpTree,
+					   SymbolList* symbolList, const JPtrArray<Tree>& treeList,
 					   JProgressDisplay& pg) const;
 	void	Print(JString* text) const;
 

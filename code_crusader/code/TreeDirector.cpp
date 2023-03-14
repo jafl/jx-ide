@@ -39,10 +39,11 @@
 
 // setup information
 
-const JFileVersion kCurrentPrefsVersion = 2;
+const JFileVersion kCurrentPrefsVersion = 3;
 
 	// version 1 saves autoMinMILinks, drawMILinksOnTop
 	// version 2 saves TreeWidget::itsRaiseWhenSingleMatchFlag
+	// version 3 removed itsShowInheritedFnsFlag
 
 // File menu
 
@@ -304,8 +305,6 @@ TreeDirector::TreeDirectorX
 	itsProjDoc = doc;
 	ListenTo(itsProjDoc);
 
-	itsShowInheritedFnsFlag = true;
-
 	JXScrollbarSet* sbarSet = BuildWindow(windowIcon, treeMenuItems,
 										  treeMenuNamespace,
 										  toolBarPrefID, initToolBarFn);
@@ -439,12 +438,12 @@ TreeDirector::TreeUpdateFinished
 }
 
 /******************************************************************************
- AskForFunctionToFind
+ FindFunction
 
  ******************************************************************************/
 
 void
-TreeDirector::AskForFunctionToFind()
+TreeDirector::FindFunction()
 {
 	auto* dlog =
 		jnew JXGetStringDialog(JGetString("FindFunctionTitle::TreeDirector"),
@@ -453,7 +452,7 @@ TreeDirector::AskForFunctionToFind()
 
 	if (dlog->DoDialog())
 	{
-		itsTreeWidget->FindFunction(dlog->GetString(), true, kJXLeftButton);
+		itsTreeWidget->FindFunction(dlog->GetString(), kJXLeftButton);
 	}
 }
 
@@ -469,23 +468,12 @@ TreeDirector::ViewFunctionList
 	)
 {
 /*
-	const JSize count = itsFnBrowsers->GetElementCount();
-	for (JIndex i=1; i<=count; i++)
-	{
-		FnListDirector* dir = itsFnBrowsers->GetElement(i);
-		if (dir->IsShowingClass(theClass))
-		{
-			dir->Activate();
-			return;
-		}
-	}
+	provide contextNamespaceList filled with class and all ancestors
+		(already implemented in SymbolDirector, move here?)
 
-	FnListDirector* dir = jnew FnListDirector(this, itsFnListPrinter,
-												 theClass, itsTreeWidget,
-												 itsShowInheritedFnsFlag);
-	assert( dir != nullptr );
-	dir->Activate();
+	find all symbols that start with any of these classes
 */
+//	itsProjDoc->GetSymbolDirector()->GetSymboList()->FindSymbols(
 }
 
 /******************************************************************************
@@ -923,7 +911,7 @@ void
 TreeDirector::EditTreePrefs()
 {
 	auto* dlog =
-		jnew EditTreePrefsDialog(itsTree->GetFontSize(), itsShowInheritedFnsFlag,
+		jnew EditTreePrefsDialog(itsTree->GetFontSize(),
 								 itsTree->WillAutoMinimizeMILinks(),
 								 itsTree->WillDrawMILinksOnTop(),
 								 itsTreeWidget->WillRaiseWindowWhenSingleMatch());
@@ -942,15 +930,12 @@ TreeDirector::EditTreePrefs()
 void
 TreeDirector::SetTreePrefs
 	(
-	const JSize		fontSize,
-	const bool	showInheritedFns,
+	const JSize	fontSize,
 	const bool	autoMinMILinks,
 	const bool	drawMILinksOnTop,
 	const bool	raiseWhenSingleMatch
 	)
 {
-	itsShowInheritedFnsFlag = showInheritedFns;
-
 	itsTree->SetFontSize(fontSize);
 	itsTree->ShouldAutoMinimizeMILinks(autoMinMILinks);
 	itsTree->ShouldDrawMILinksOnTop(drawMILinksOnTop);
@@ -977,8 +962,14 @@ TreeDirector::ReadPrefs
 	}
 
 	JSize fontSize;
-	input >> fontSize >> JBoolFromString(itsShowInheritedFnsFlag);
+	input >> fontSize;
 	itsTree->SetFontSize(fontSize);
+
+	if (vers < 3)
+	{
+		bool showInheritedFns;
+		input >> JBoolFromString(showInheritedFns);
+	}
 
 	if (vers >= 1)
 	{
@@ -1011,7 +1002,6 @@ TreeDirector::WritePrefs
 	output << kCurrentPrefsVersion;
 
 	output << ' ' << itsTree->GetFontSize();
-	output << ' ' << JBoolToString(itsShowInheritedFnsFlag);
 	output << ' ' << JBoolToString(itsTree->WillAutoMinimizeMILinks());
 	output << ' ' << JBoolToString(itsTree->WillDrawMILinksOnTop());
 	output << ' ' << JBoolToString(itsTreeWidget->WillRaiseWindowWhenSingleMatch());

@@ -11,6 +11,8 @@
 #include "Tree.h"
 #include "Class.h"
 #include "ProjectDocument.h"
+#include "SymbolDirector.h"
+#include "SymbolList.h"
 #include "TreeDirector.h"
 #include "EditSearchPathsDialog.h"
 #include "globals.h"
@@ -29,7 +31,7 @@
 
 #include <jx-af/jcore/JPagePrinter.h>
 #include <jx-af/jcore/JEPSPrinter.h>
-#include <jx-af/jcore/JString.h>
+#include <jx-af/jcore/JStringIterator.h>
 #include <jx-af/jcore/jASCIIConstants.h>
 #include <jx-af/jcore/jDirUtil.h>
 #include <jx-af/jcore/jMouseUtil.h>
@@ -37,7 +39,7 @@
 #include <jx-af/jcore/jAssert.h>
 
 bool TreeWidget::itsRaiseWhenSingleMatchFlag = false;
-const JSize TreeWidget::kBorderWidth             = 5;
+const JSize TreeWidget::kBorderWidth         = 5;
 
 static const JUtf8Byte* kSelectionDataID = "TreeWidget";
 
@@ -66,12 +68,6 @@ TreeWidget::TreeWidget
 
 	itsDirector = director;
 	itsTree     = tree;
-
-	itsFnMenu = jnew JXTextMenu(JString::empty, this, kFixedLeft, kFixedTop, 0,0, 10,10);
-	assert( itsFnMenu != nullptr );
-	itsFnMenu->Hide();
-	itsFnMenu->SetToHiddenPopupMenu(true);
-	itsFnMenu->CompressHeight();
 
 	WantInput(true, false, true);	// need Ctrl-Tab
 
@@ -118,58 +114,28 @@ TreeWidget::FindClass
 	(
 	const JString&		name,
 	const JXMouseButton	button,
-	const bool		raiseTreeWindow,
-	const bool		reportNotFound,
-	const bool		openFileIfSingleMatch,
-	const bool		deselectAll
+	const bool			raiseTreeWindow,
+	const bool			reportNotFound,
+	const bool			openFileIfSingleMatch,
+	const bool			deselectAll
 	)
 	const
 {
 	itsTree->SelectClasses(name, deselectAll);
 
-	JRect selRect;
-	JSize selCount;
-	if (itsTree->GetSelectionCoverage(&selRect, &selCount))
+	return ShowSearchResults([button](Class* c)
 	{
-		const_cast<TreeWidget*>(this)->ScrollToRectCentered(selRect, true);
-
-		if (raiseTreeWindow &&
-			(selCount > 1 || button == kJXRightButton ||
-			 itsRaiseWhenSingleMatchFlag))
+		if (button == kJXLeftButton)
 		{
-			GetWindow()->GetDirector()->Activate();
+			c->ViewSource();
 		}
-
-		if (openFileIfSingleMatch && button != kJXRightButton)
+		else if (button == kJXMiddleButton)
 		{
-			JPtrArray<Class> classList(JPtrArrayT::kForgetAll);
-			const bool ok = itsTree->GetSelectedClasses(&classList);
-			assert( ok );
-			if (classList.GetElementCount() == 1)
-			{
-				Class* theClass = classList.GetFirstElement();
-				if (button == kJXLeftButton)
-				{
-					theClass->ViewSource();
-				}
-				else if (button == kJXMiddleButton)
-				{
-					theClass->ViewHeader();
-				}
-			}
+			c->ViewHeader();
 		}
-
-		return true;
-	}
-	else
-	{
-		if (reportNotFound)
-		{
-			JGetUserNotification()->ReportError(
-				JGetString("ClassNotFound::TreeWidget"));
-		}
-		return false;
-	}
+	},
+	button, raiseTreeWindow, reportNotFound, openFileIfSingleMatch, deselectAll,
+	"ClassNotFound::TreeWidget");
 }
 
 /******************************************************************************
@@ -192,17 +158,116 @@ bool
 TreeWidget::FindFunction
 	(
 	const JString&		fnName,
-	const bool		caseSensitive,
 	const JXMouseButton	button,
-	const bool		raiseTreeWindow,
-	const bool		reportNotFound,
-	const bool		openFileIfSingleMatch,
-	const bool		deselectAll
+	const bool			raiseTreeWindow,
+	const bool			reportNotFound,
+	const bool			openFileIfSingleMatch,
+	const bool			deselectAll
 	)
 	const
 {
-	itsTree->SelectImplementors(fnName, caseSensitive, deselectAll);
-/*
+	auto* symbolList = itsDirector->GetProjectDoc()->GetSymbolDirector()->GetSymbolList();
+
+	JArray<JIndex> matchList;
+	const bool found =
+		symbolList->FindSymbol(
+			fnName, JFAID::kInvalidID, JArray<SymbolList::ContextNamespace>(),
+			button == kJXMiddleButton || button == kJXRightButton,
+			button == kJXLeftButton   || button == kJXRightButton,
+			&matchList);
+
+	if (found)
+	{
+		return FindFunction(matchList, button, raiseTreeWindow,
+							reportNotFound, openFileIfSingleMatch, deselectAll);
+	}
+	else
+	{
+		if (reportNotFound)
+		{
+			JGetUserNotification()->ReportError(
+				JGetString("FunctionNotFound::TreeWidget"));
+		}
+		return false;
+	}
+}
+
+// optimize for SymbolDirector's call
+
+bool
+TreeWidget::FindFunction
+	(
+	const JArray<JIndex>&	matchList,
+	const JXMouseButton		button,
+	const bool				raiseTreeWindow,
+	const bool				reportNotFound,
+	const bool				openFileIfSingleMatch,
+	const bool				deselectAll
+	)
+	const
+{
+	auto* symbolList = itsDirector->GetProjectDoc()->GetSymbolDirector()->GetSymbolList();
+
+	if (deselectAll)
+	{
+		itsTree->DeselectAll();
+	}
+
+	for (const JIndex i : matchList)
+	{
+		Language lang;
+		CtagsUser::Type type;
+		JString s = symbolList->GetSymbol(i, &lang, &type);
+
+		if (HasNamespace(lang))
+		{
+			JStringIterator iter(&s, kJIteratorStartAtEnd);
+			if (iter.Prev(GetNamespaceOperator(lang)))
+			{
+				iter.RemoveAllNext();
+			}
+		}
+
+		itsTree->SelectClasses(s, false, true);
+	}
+
+	return ShowSearchResults([button](Class* c)
+	{
+		if (button == kJXLeftButton)
+		{
+//			c->ViewSource();
+		}
+		else if (button == kJXMiddleButton)
+		{
+//			c->ViewHeader();
+		}
+	},
+	button, raiseTreeWindow, reportNotFound, openFileIfSingleMatch, deselectAll,
+	"FunctionNotFound::TreeWidget");
+}
+
+/******************************************************************************
+ ShowSearchResults (private)
+
+	If raiseTreeWindow, the Tree window is raised -before- opening the source
+	or header file.
+
+ ******************************************************************************/
+
+bool
+TreeWidget::ShowSearchResults
+	(
+	const std::function<void(Class*)>&	singleResultAction,
+
+	const JXMouseButton	button,
+	const bool			raiseTreeWindow,
+	const bool			reportNotFound,
+	const bool			openFileIfSingleMatch,
+	const bool			deselectAll,
+	const JUtf8Byte*	notFoundID
+	)
+	const
+{
 	JRect selRect;
 	JSize selCount;
 	if (itsTree->GetSelectionCoverage(&selRect, &selCount))
@@ -223,15 +288,7 @@ TreeWidget::FindFunction
 			assert( ok );
 			if (classList.GetElementCount() == 1)
 			{
-				Class* theClass = classList.GetFirstElement();
-				if (button == kJXLeftButton)
-				{
-					theClass->ViewDefinition(fnName, caseSensitive, false);
-				}
-				else if (button == kJXMiddleButton)
-				{
-					theClass->ViewDeclaration(fnName, caseSensitive, false);
-				}
+				singleResultAction(classList.GetFirstElement());
 			}
 		}
 
@@ -241,13 +298,10 @@ TreeWidget::FindFunction
 	{
 		if (reportNotFound)
 		{
-			JGetUserNotification()->ReportError(
-				JGetString("FunctionNotFound::TreeWidget"));
+			JGetUserNotification()->ReportError(JGetString(notFoundID));
 		}
 		return false;
 	}
-*/
-	return false;
 }
 
 /******************************************************************************
@@ -393,7 +447,7 @@ TreeWidget::HandleMouseDown
 	GetDocumentManager()->SetActiveProjectDocument(itsDirector->GetProjectDoc());
 
 	itsKeyBuffer.Clear();
-	itsDragType = kInvalidDrag;
+	itsExpectDragFlag = false;
 
 	Class* theClass = nullptr;
 	if (ScrollForWheel(button, modifiers))
@@ -407,17 +461,16 @@ TreeWidget::HandleMouseDown
 		{
 			theClass->ToggleSelected();
 		}
-		else if (!theClass->IsSelected())
-		{
-			itsTree->DeselectAll();
-			theClass->SetSelected(true);
-			ExpectPopupFnMenu(pt, button, theClass);
-		}
 		else if (clickCount == 1)
 		{
-			ExpectPopupFnMenu(pt, button, theClass);
+			if (!theClass->IsSelected())
+			{
+				itsTree->DeselectAll();
+				theClass->SetSelected(true);
+			}
+			itsExpectDragFlag = true;
+			itsStartPt        = pt;
 		}
-
 		else if (button == kJXLeftButton && clickCount == 2)
 		{
 			theClass->ViewSource();
@@ -456,51 +509,14 @@ TreeWidget::HandleMouseDrag
 	const JXKeyModifiers&	modifiers
 	)
 {
-	if (itsDragType == kWaitForPopupFnMenuDrag &&
-		!JMouseMoved(itsStartPt, pt) &&
-		JXGetApplication()->GetCurrentTime() >= itsMouseDownTime + kJXDoubleClickTime)
-	{
-/*
-		itsFnMenuDir = jnew FnListDirector(itsDirector, nullptr, itsFnMenuClass, this,
-											itsDirector->ShowInheritedFns(), true);
-
-		assert( itsFnMenuDir != nullptr );
-
-		FnListWidget* fnList = itsFnMenuDir->GetFnListWidget();
-		fnList->PrepareFunctionMenu(itsFnMenu);
-		fnList->SetMenuButton(itsFnMenuButton);
-*/
-		itsFnMenu->PopUp(this, pt, buttonStates, modifiers);
-		itsDragType = kInvalidDrag;
-	}
-	else if (itsDragType == kWaitForPopupFnMenuDrag && JMouseMoved(itsStartPt, pt))
+	if (itsExpectDragFlag && JMouseMoved(itsStartPt, pt))
 	{
 		auto* data = jnew JXFileSelection(this, kSelectionDataID);
 		assert( data != nullptr );
 
 		BeginDND(pt, buttonStates, modifiers, data);
-		itsDragType = kInvalidDrag;
+		itsExpectDragFlag = false;
 	}
-}
-
-/******************************************************************************
- ExpectPopupFnMenu (private)
-
- ******************************************************************************/
-
-void
-TreeWidget::ExpectPopupFnMenu
-	(
-	const JPoint&		pt,
-	const JXMouseButton	button,
-	Class*			theClass
-	)
-{
-	itsDragType      = kWaitForPopupFnMenuDrag;
-	itsStartPt       = pt;
-	itsFnMenuButton  = button;
-	itsMouseDownTime = JXGetApplication()->GetCurrentTime();
-	itsFnMenuClass   = theClass;
 }
 
 /******************************************************************************

@@ -450,10 +450,10 @@ ProjectDocument::GetProjectTemplateType
 
 ProjectDocument::ProjectDocument
 	(
-	const JString&							fullName,
+	const JString&						fullName,
 	const BuildManager::MakefileMethod	makefileMethod,
 	const bool							fromTemplate,
-	const JString&							tmplFile
+	const JString&						tmplFile
 	)
 	:
 	JXFileDocument(GetApplication(),
@@ -493,18 +493,23 @@ ProjectDocument::ProjectDocument
 
 	itsCTreeDirector = jnew CTreeDirector(this);
 	assert( itsCTreeDirector != nullptr );
+	itsTreeDirectorList->Append(itsCTreeDirector);
 
 	itsDTreeDirector = jnew DTreeDirector(this);
 	assert( itsDTreeDirector != nullptr );
+	itsTreeDirectorList->Append(itsDTreeDirector);
 
 	itsGoTreeDirector = jnew GoTreeDirector(this);
 	assert( itsGoTreeDirector != nullptr );
+	itsTreeDirectorList->Append(itsGoTreeDirector);
 
 	itsJavaTreeDirector = jnew JavaTreeDirector(this);
 	assert( itsJavaTreeDirector != nullptr );
+	itsTreeDirectorList->Append(itsJavaTreeDirector);
 
 	itsPHPTreeDirector = jnew PHPTreeDirector(this);
 	assert( itsPHPTreeDirector != nullptr );
+	itsTreeDirectorList->Append(itsPHPTreeDirector);
 
 	if (fromTemplate)
 	{
@@ -534,7 +539,7 @@ ProjectDocument::ProjectDocument
 	const JString&	projName,
 	const JString&	setName,
 	const JString&	symName,
-	const bool	silent
+	const bool		silent
 	)
 	:
 	JXFileDocument(GetApplication(),
@@ -659,6 +664,7 @@ ProjectDocument::ProjectDocument
 											symInput, symVers, this, silent, itsDirList);
 	assert( itsCTreeDirector != nullptr );
 	// activates itself
+	itsTreeDirectorList->Append(itsCTreeDirector);
 
 	// read D & Go class trees
 
@@ -684,6 +690,8 @@ ProjectDocument::ProjectDocument
 		assert( itsGoTreeDirector != nullptr );
 		itsGoTreeDirector->GetTree()->NextUpdateMustReparseAll();
 	}
+	itsTreeDirectorList->Append(itsDTreeDirector);
+	itsTreeDirectorList->Append(itsGoTreeDirector);
 
 	// read Java class tree
 
@@ -700,6 +708,7 @@ ProjectDocument::ProjectDocument
 		assert( itsJavaTreeDirector != nullptr );
 		itsJavaTreeDirector->GetTree()->NextUpdateMustReparseAll();
 	}
+	itsTreeDirectorList->Append(itsJavaTreeDirector);
 
 	// read PHP class tree
 
@@ -716,6 +725,7 @@ ProjectDocument::ProjectDocument
 		assert( itsPHPTreeDirector != nullptr );
 		itsPHPTreeDirector->GetTree()->NextUpdateMustReparseAll();
 	}
+	itsTreeDirectorList->Append(itsPHPTreeDirector);
 
 	StopSymbolLoadTimer(timerStatus);
 
@@ -777,6 +787,9 @@ ProjectDocument::ProjectDocumentX
 	ListenTo(itsSaveTask);
 	itsSaveTask->Start();
 
+	itsTreeDirectorList = jnew JPtrArray<TreeDirector>(JPtrArrayT::kForgetAll);
+	assert( itsTreeDirectorList != nullptr );
+
 	itsUpdateProcess         = nullptr;
 	itsUpdateLink            = nullptr;
 	itsUpdateStream          = nullptr;
@@ -815,6 +828,7 @@ ProjectDocument::~ProjectDocument()
 	jdelete itsFileTree;
 	jdelete itsDirList;
 	jdelete itsSaveTask;
+	jdelete itsTreeDirectorList;
 }
 
 /******************************************************************************
@@ -1328,61 +1342,23 @@ ProjectDocument::RefreshVCSStatus()
 void
 ProjectDocument::SetTreePrefs
 	(
-	const JSize		fontSize,
-	const bool	showInheritedFns,
+	const JSize	fontSize,
 	const bool	autoMinMILinks,
 	const bool	drawMILinksOnTop,
 	const bool	raiseWhenSingleMatch,
 	const bool	writePrefs
 	)
 {
-	SetTreePrefs(itsCTreeDirector,
-				 fontSize, showInheritedFns,
-				 autoMinMILinks, drawMILinksOnTop,
-				 raiseWhenSingleMatch, writePrefs);
-
-	SetTreePrefs(itsDTreeDirector,
-				 fontSize, showInheritedFns,
-				 autoMinMILinks, drawMILinksOnTop,
-				 raiseWhenSingleMatch, writePrefs);
-
-	SetTreePrefs(itsGoTreeDirector,
-				 fontSize, showInheritedFns,
-				 autoMinMILinks, drawMILinksOnTop,
-				 raiseWhenSingleMatch, writePrefs);
-
-	SetTreePrefs(itsJavaTreeDirector,
-				 fontSize, showInheritedFns,
-				 autoMinMILinks, drawMILinksOnTop,
-				 raiseWhenSingleMatch, writePrefs);
-
-	SetTreePrefs(itsPHPTreeDirector,
-				 fontSize, showInheritedFns,
-				 autoMinMILinks, drawMILinksOnTop,
-				 raiseWhenSingleMatch, writePrefs);
-}
-
-// private
-
-void
-ProjectDocument::SetTreePrefs
-	(
-	TreeDirector*	director,
-	const JSize		fontSize,
-	const bool	showInheritedFns,
-	const bool	autoMinMILinks,
-	const bool	drawMILinksOnTop,
-	const bool	raiseWhenSingleMatch,
-	const bool	writePrefs
-	)
-{
-	director->SetTreePrefs(fontSize, showInheritedFns,
-						   autoMinMILinks, drawMILinksOnTop,
-						   raiseWhenSingleMatch);
-
-	if (writePrefs)
+	for (auto* director : *itsTreeDirectorList)
 	{
-		director->JPrefObject::WritePrefs();
+		director->SetTreePrefs(fontSize,
+							   autoMinMILinks, drawMILinksOnTop,
+							   raiseWhenSingleMatch);
+
+		if (writePrefs)
+		{
+			director->JPrefObject::WritePrefs();
+		}
 	}
 }
 
@@ -1747,11 +1723,10 @@ ProjectDocument::Receive
 		{
 			itsBuildMgr->ProjectChanged();
 			itsSymbolDirector->FileTypesChanged(*info);
-			itsCTreeDirector->FileTypesChanged(*info);
-			itsDTreeDirector->FileTypesChanged(*info);
-			itsGoTreeDirector->FileTypesChanged(*info);
-			itsJavaTreeDirector->FileTypesChanged(*info);
-			itsPHPTreeDirector->FileTypesChanged(*info);
+			for (auto* director : *itsTreeDirectorList)
+			{
+				director->FileTypesChanged(*info);
+			}
 			UpdateSymbolDatabase();
 
 			itsFileTable->Refresh();	// update icons
@@ -1809,11 +1784,10 @@ ProjectDocument::Receive
 	else if (sender == itsUpdateLink && message.Is(JMessageProtocolT::kReceivedDisconnect))
 	{
 		SymbolUpdateFinished();
-		itsCTreeDirector->GetTree()->RebuildLayout();
-		itsDTreeDirector->GetTree()->RebuildLayout();
-		itsGoTreeDirector->GetTree()->RebuildLayout();
-		itsJavaTreeDirector->GetTree()->RebuildLayout();
-		itsPHPTreeDirector->GetTree()->RebuildLayout();
+		for (auto* director : *itsTreeDirectorList)
+		{
+			director->GetTree()->RebuildLayout();
+		}
 	}
 
 	else if (sender == itsUpdateProcess && message.Is(JProcess::kFinished))
@@ -2585,8 +2559,7 @@ ProjectDocument::SymbolUpdateProgress()
 		std::ostringstream pgOutput;
 		itsAllFileDirector->GetFileListTable()->Update(
 			pgOutput, itsFileTree, *itsDirList, itsSymbolDirector,
-			itsCTreeDirector, itsDTreeDirector, itsGoTreeDirector,
-			itsJavaTreeDirector, itsPHPTreeDirector);
+			*itsTreeDirectorList);
 
 		itsAllFileDirector->GetFileListTable()->UpdateFinished();
 	}
@@ -2636,11 +2609,10 @@ ProjectDocument::SymbolUpdateProgress()
 			itsAllFileDirector->GetFileListTable()->UpdateFinished();
 			itsAllFileDirector->GetFileListTable()->ReadSetup(symInput, symVers);
 			itsSymbolDirector->ReadSetup(symInput, symVers);
-			itsCTreeDirector->ReloadSetup(symInput, symVers);
-			itsDTreeDirector->ReloadSetup(symInput, symVers);
-			itsGoTreeDirector->ReloadSetup(symInput, symVers);
-			itsJavaTreeDirector->ReloadSetup(symInput, symVers);
-			itsPHPTreeDirector->ReloadSetup(symInput, symVers);
+			for (auto* director : *itsTreeDirectorList)
+			{
+				director->ReloadSetup(symInput, symVers);
+			}
 
 			StopSymbolLoadTimer(timerStatus);
 		}
@@ -2800,8 +2772,7 @@ ProjectDocument::UpdateSymbolDatabase()
 
 		if (!itsAllFileDirector->GetFileListTable()->Update(
 				output, itsFileTree, *itsDirList, itsSymbolDirector,
-				itsCTreeDirector, itsDTreeDirector, itsGoTreeDirector,
-				itsJavaTreeDirector, itsPHPTreeDirector))
+				*itsTreeDirectorList))
 		{
 			output.write(JMessageProtocolT::kStdDisconnectStr, JMessageProtocolT::kStdDisconnectByteCount);
 			output.close();

@@ -90,6 +90,8 @@ public:
 	JavaTreeDirector*	GetJavaTreeDirector() const;
 	PHPTreeDirector*	GetPHPTreeDirector() const;
 
+	const JPtrArray<TreeDirector>&	GetTreeDirectorList() const;
+
 	bool			HasDirectories() const;
 	const DirList&	GetDirectories() const;
 	void			EditSearchPaths(const JPtrArray<JString>* dirList = nullptr);
@@ -128,7 +130,7 @@ public:
 
 	// called by EditTreePrefsDialog
 
-	void	SetTreePrefs(const JSize fontSize, const bool showInheritedFns,
+	void	SetTreePrefs(const JSize fontSize,
 						 const bool autoMinMILinks, const bool drawMILinksOnTop,
 						 const bool raiseWhenSingleMatch, const bool writePrefs);
 
@@ -164,14 +166,15 @@ private:
 	JString				itsPrintName;
 	mutable JString		itsDocName;					// so GetName() can return JString&
 
-	DirList*			itsDirList;
-	FileListDirector*	itsAllFileDirector;
-	SymbolDirector*		itsSymbolDirector;
-	CTreeDirector*		itsCTreeDirector;
-	DTreeDirector*		itsDTreeDirector;
-	GoTreeDirector*		itsGoTreeDirector;
-	JavaTreeDirector*	itsJavaTreeDirector;
-	PHPTreeDirector*	itsPHPTreeDirector;
+	DirList*					itsDirList;
+	FileListDirector*			itsAllFileDirector;
+	SymbolDirector*				itsSymbolDirector;
+	CTreeDirector*				itsCTreeDirector;
+	DTreeDirector*				itsDTreeDirector;
+	GoTreeDirector*				itsGoTreeDirector;
+	JavaTreeDirector*			itsJavaTreeDirector;
+	PHPTreeDirector*			itsPHPTreeDirector;
+	JPtrArray<TreeDirector>*	itsTreeDirectorList;
 
 	JProcess*						itsUpdateProcess;
 	ExecOutputDocument::RecordLink*	itsUpdateLink;
@@ -240,11 +243,6 @@ private:
 	void	UpdatePrefsMenu();
 	void	HandlePrefsMenu(const JIndex index);
 	void	EditProjectPrefs();
-
-	void	SetTreePrefs(TreeDirector* director,
-						 const JSize fontSize, const bool showInheritedFns,
-						 const bool autoMinMILinks, const bool drawMILinksOnTop,
-						 const bool raiseWhenSingleMatch, const bool writePrefs);
 
 	void	SymbolUpdateProgress();
 	void	SymbolUpdateFinished();
@@ -422,6 +420,18 @@ ProjectDocument::GetPHPTreeDirector()
 	const
 {
 	return itsPHPTreeDirector;
+}
+
+/******************************************************************************
+ GetTreeDirectorList
+
+ ******************************************************************************/
+
+inline const JPtrArray<TreeDirector>&
+ProjectDocument::GetTreeDirectorList()
+	const
+{
+	return *itsTreeDirectorList;
 }
 
 /******************************************************************************

@@ -349,7 +349,8 @@ bool	GetCompleter(const Language lang, StringCompleter** completer);
 void	ShutdownStylers();
 void	ShutdownCompleters();
 
-bool	NameIsQualified(const JString& s);
+bool				NameIsQualified(const JString& s);
+const JUtf8Byte*	GetNamespaceOperator(const Language lang);
 
 inline JString::Case
 IsCaseSensitive
@@ -357,9 +358,8 @@ IsCaseSensitive
 	const Language lang
 	)
 {
-	return (lang != kEiffelLang  &&
-			lang != kFortranLang &&
-			lang != kJavaScriptLang ? JString::kCompareCase : JString::kIgnoreCase);
+	return (lang == kEiffelLang ||
+			lang == kFortranLang ? JString::kIgnoreCase : JString::kCompareCase);
 }
 
 inline bool
@@ -368,15 +368,23 @@ HasNamespace
 	const Language lang
 	)
 {
-	return lang == kCLang          ||	// C++, actually
-		   lang == kDLang          ||
-		   lang == kGoLang         ||
-		   lang == kHTMLLang       ||	// for JavaScript
-		   lang == kJavaLang       ||
-		   lang == kJavaScriptLang ||
-		   lang == kPerlLang       ||
-		   lang == kPHPLang        ||
-		   lang == kSQLLang;
+	return (lang == kCLang          ||	// C++, actually
+			lang == kCSharpLang     ||
+			lang == kDLang          ||
+			lang == kEiffelLang     ||
+			lang == kGoLang         ||
+			lang == kHTMLLang       ||	// for JavaScript
+			lang == kJavaLang       ||
+			lang == kJavaScriptLang ||
+			lang == kLuaLang        ||
+			lang == kPascalLang     ||
+			lang == kPerlLang       ||
+			lang == kPHPLang        ||
+			lang == kPythonLang     ||
+			lang == kRubyLang       ||
+			lang == kSchemeLang     ||
+			lang == kSQLLang        ||
+			lang == kTCLLang);
 }
 
 inline bool

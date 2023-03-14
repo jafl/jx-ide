@@ -19,16 +19,8 @@ class ProjectTree;
 class DirList;
 class SymbolDirector;
 class SymbolList;
-class CTreeDirector;
-class CTree;
-class DTreeDirector;
-class DTree;
-class GoTreeDirector;
-class GoTree;
-class JavaTreeDirector;
-class JavaTree;
-class PHPTreeDirector;
-class PHPTree;
+class TreeDirector;
+class Tree;
 
 class FileListTable : public JXFileListTable
 {
@@ -44,9 +36,7 @@ public:
 	bool	Update(std::ostream& link,
 				   ProjectTree* fileTree, const DirList& dirList,
 				   SymbolDirector* symbolDir,
-				   CTreeDirector* cTreeDir, DTreeDirector* dTreeDir,
-				   GoTreeDirector* goTreeDir, JavaTreeDirector* javaTreeDir,
-				   PHPTreeDirector* phpTreeDir);
+				   const JPtrArray<TreeDirector>& treeDirList);
 	void	UpdateFinished();
 
 	const JString&	GetFileName(const JFAID_t id) const;
@@ -64,8 +54,7 @@ public:
 
 	void	ParseFile(const JString& fullName, const JPtrArray<JString>& allSuffixList,
 					  const time_t modTime,
-					  SymbolList* symbolList, CTree* cTree, DTree* dTree,
-					  GoTree* goTree, JavaTree* javaTree, PHPTree* phpTree);
+					  SymbolList* symbolList, const JPtrArray<Tree>& treeList);
 
 protected:
 
@@ -92,23 +81,19 @@ private:
 private:
 
 	JArray<FileInfo>*	itsFileInfo;
-	JArray<bool>*	itsFileUsage;		// nullptr unless updating files; on stack
-	bool			itsReparseAllFlag;	// true => flush all on next update
-	bool			itsChangedDuringParseFlag;
+	JArray<bool>*		itsFileUsage;		// nullptr unless updating files; on stack
+	bool				itsReparseAllFlag;	// true => flush all on next update
+	bool				itsChangedDuringParseFlag;
 	mutable JFAID_t		itsLastUniqueID;
 
 private:
 
 	void	ScanAll(ProjectTree* fileTree, const DirList& dirList,
-					SymbolList* symbolList,
-					CTree* cTree, DTree* dTree, GoTree* goTree,
-					JavaTree* javaTree, PHPTree* phpTree,
+					SymbolList* symbolList, const JPtrArray<Tree>& treeList,
 					JProgressDisplay& pg);
 	void	ScanDirectory(const JString& path, const bool recurse,
 						  const JPtrArray<JString>& allSuffixList,
-						  SymbolList* symbolList,
-						  CTree* cTree, DTree* dTree, GoTree* goTree,
-						  JavaTree* javaTree, PHPTree* phpTree,
+						  SymbolList* symbolList, const JPtrArray<Tree>& treeList,
 						  JProgressDisplay& pg);
 	bool	AddFile(const JString& fullName, const TextFileType fileType,
 					const time_t modTime, JFAID_t* id);

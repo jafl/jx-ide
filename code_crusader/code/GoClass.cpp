@@ -16,8 +16,6 @@
 #include <jx-af/jcore/JRegex.h>
 #include <jx-af/jcore/jAssert.h>
 
-static const JUtf8Byte* kNamespaceOperator = ".";
-
 /******************************************************************************
  Constructor
 
@@ -29,10 +27,10 @@ GoClass::GoClass
 	const DeclareType	declType,
 	const JFAID_t		fileID,
 	Tree*				tree,
-	const bool		isPublic
+	const bool			isPublic
 	)
 	:
-	Class(name, declType, fileID, tree, kNamespaceOperator),
+	Class(name, declType, fileID, tree),
 	itsIsPublicFlag(isPublic)
 {
 }
@@ -44,7 +42,7 @@ GoClass::GoClass
 	Tree*				tree
 	)
 	:
-	Class(input, vers, tree, kNamespaceOperator),
+	Class(input, vers, tree),
 	itsIsPublicFlag(true)
 {
 	if (vers >= 88)

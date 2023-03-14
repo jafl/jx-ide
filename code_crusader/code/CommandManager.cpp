@@ -1351,7 +1351,7 @@ static const DefCmd kDefCmd[] =
 		false },
 { "./",
 #ifdef _J_MACOS
-		"xterm -e \"medic $program\"",	// avoid strange python errors
+		"xterm -e \"medic $program\"",	// lldb: python requires working stdin
 #else
 		"medic $program",
 #endif
@@ -1377,7 +1377,12 @@ static const DefCmd kDefCmd[] =
 		false, false, false, false, true, false, false,
 		"DefCmdBuildRunText::CommandManager", "DefCmdBuildRunShortcut::CommandManager",
 		false },
-{ "./", "&make_default ; medic $program",
+{ "./",
+#ifdef _J_MACOS
+		"&make_default ; xterm -e \"medic $program\"",	// lldb: python requires working stdin
+#else
+		"&make_default ; medic $program",
+#endif
 		"",
 		false, false, false, false, false, false, false,
 		"DefCmdBuildDebugText::CommandManager", "DefCmdBuildDebugShortcut::CommandManager",

@@ -82,16 +82,15 @@ Class::Class
 	const JString&		fullName,
 	const DeclareType	declType,
 	const JFAID_t		fileID,
-	Tree*				tree,
-	const JUtf8Byte*	namespaceOperator
+	Tree*				tree
 	)
 	:
-	itsNamespaceOperator(namespaceOperator),
+	itsTree(tree),
 	itsFullName(fullName),
 	itsName(RemoveNamespace(fullName)),
 	itsFileID(fileID)
 {
-	ClassX(tree);
+	ClassX();
 
 	itsDeclType       = declType;
 	itsIsAbstractFlag = false;
@@ -105,15 +104,14 @@ Class::Class
 	(
 	std::istream&		input,
 	const JFileVersion	vers,
-	Tree*				tree,
-	const JUtf8Byte*	namespaceOperator
+	Tree*				tree
 	)
 	:
-	itsNamespaceOperator(namespaceOperator)
+	itsTree(tree)
 {
 JIndex i;
 
-	ClassX(tree);
+	ClassX();
 
 	if (vers < 30)
 	{
@@ -232,10 +230,9 @@ Class::Class
 	const JString& name
 	)
 	:
-	itsNamespaceOperator(""),
+	itsTree(nullptr),
 	itsFullName(name),
 	itsName(name),
-	itsTree(nullptr),
 	itsParentInfo(nullptr)
 {
 }
@@ -243,13 +240,8 @@ Class::Class
 // private
 
 void
-Class::ClassX
-	(
-	Tree* tree
-	)
+Class::ClassX()
 {
-	itsTree = tree;
-
 	itsParentInfo = jnew JArray<ParentInfo>;
 	assert( itsParentInfo != nullptr );
 
@@ -453,19 +445,19 @@ Class::FindParents
 	const JSize parentCount = GetParentCount();
 	for (JIndex i=1; i<=parentCount; i++)
 	{
-		ParentInfo pInfo             = itsParentInfo->GetElement(i);
+		ParentInfo pInfo         = itsParentInfo->GetElement(i);
 		const bool parentWasNull = pInfo.parent == nullptr;
 
 		if (parentWasNull &&
 			!FindParent(&pInfo, okToCreateGhost) && okToCreateGhost)
 		{
-			pInfo.parent = NewGhost(*(pInfo.name), itsTree);
+			pInfo.parent = NewGhost(*pInfo.name, itsTree);
 		}
 
 		if (parentWasNull && pInfo.parent != nullptr)
 		{
 			foundAnotherParent = true;
-			(pInfo.parent)->AddChild(this, i==1);
+			pInfo.parent->AddChild(this, i==1);
 			itsParentInfo->SetElement(i, pInfo);
 		}
 	}
@@ -494,16 +486,16 @@ Class::FindParent
 {
 	// check for exact match that isn't a ghost
 
-	if (itsTree->FindClass(*(pInfo->name), &(pInfo->parent)) &&
+	if (itsTree->FindClass(*pInfo->name, &pInfo->parent) &&
 		pInfo->parent != this &&
-		!(pInfo->parent)->IsGhost())
+		!pInfo->parent->IsGhost())
 	{
 		return true;
 	}
 
 	// try all possible namespaces to look for existing parent
 
-	const JUtf8Byte* namespaceOp = GetNamespaceOperator();
+	const JUtf8Byte* namespaceOp = GetNamespaceOperator(itsTree->GetLanguage());
 
 	JString nameSpace = itsFullName;
 	JString prefixStr, testName;
@@ -517,11 +509,11 @@ Class::FindParent
 
 		testName  = nameSpace;
 		testName += namespaceOp;
-		testName += *(pInfo->name);
+		testName += *pInfo->name;
 		if (itsTree->FindClass(testName, &pInfo->parent) &&
 			pInfo->parent != this)
 		{
-			*(pInfo->name) = testName;
+			*pInfo->name = testName;
 			return true;
 		}
 
@@ -532,7 +524,7 @@ Class::FindParent
 			itsTree->FindParent(*pInfo->name, nsClass, &pInfo->parent, &prefixStr) &&
 			pInfo->parent != this)
 		{
-			(pInfo->name)->Prepend(prefixStr);
+			pInfo->name->Prepend(prefixStr);
 			return true;
 		}
 	}
@@ -578,10 +570,11 @@ Class::RemoveNamespace
 {
 	JString name = fullName;
 
+	const JUtf8Byte* nso = GetNamespaceOperator(itsTree->GetLanguage());
 	JStringIterator iter(&name, kJIteratorStartAtEnd);
-	if (iter.Prev(GetNamespaceOperator()))
+	if (iter.Prev(nso))
 	{
-		iter.Next(GetNamespaceOperator());
+		iter.Next(nso);
 		iter.RemoveAllPrev();
 	}
 
