@@ -417,7 +417,7 @@ x\" {
 
 			s  = *c;
 			s += ".";
-			if (parentName.BeginsWith(s))
+			if (parentName.StartsWith(s))
 				{
 				JStringIterator iter(&parentName);
 				iter.Next(*c);

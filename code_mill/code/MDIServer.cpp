@@ -76,7 +76,7 @@ MDIServer::HandleMDIRequest
 		for (JIndex i=2; i <= count; i++)
 		{
 			const JString& arg	= *(argList.GetElement(i));
-			if (!arg.BeginsWith("-"))
+			if (!arg.StartsWith("-"))
 			{
 				JRemoveFile(arg);
 			}

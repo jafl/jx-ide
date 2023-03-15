@@ -152,14 +152,14 @@ SymbolDirector::SymbolDirector
 
 SymbolDirector::SymbolDirector
 	(
-	std::istream&			projInput,
+	std::istream&		projInput,
 	const JFileVersion	projVers,
-	std::istream*			setInput,
+	std::istream*		setInput,
 	const JFileVersion	setVers,
-	std::istream*			symInput,
+	std::istream*		symInput,
 	const JFileVersion	symVers,
 	ProjectDocument*	supervisor,
-	const bool		subProject
+	const bool			subProject
 	)
 	:
 	JXWindowDirector(supervisor),
@@ -452,7 +452,7 @@ SymbolDirector::FindSymbol
 				auto* list = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
 				assert( list != nullptr );
 
-				BuildAncestorList(*theClass, list);
+				theClass->GetAncestorList(list);
 				if (!list->IsEmpty())
 				{
 					cnList.AppendElement(
@@ -538,28 +538,34 @@ SymbolDirector::FindSymbol
 }
 
 /******************************************************************************
- BuildAncestorList (private)
+ FindAllSymbols
+
+	Displays all the symbols for the class and its ancestors.
 
  ******************************************************************************/
 
-void
-SymbolDirector::BuildAncestorList
+bool
+SymbolDirector::FindAllSymbols
 	(
-	const Class&		theClass,
-	JPtrArray<JString>*	list
+	const Class*	theClass,
+	const bool		findDeclaration,
+	const bool		findDefinition
 	)
-	const
 {
-	list->Append(theClass.GetFullName());
-
-	const JSize count = theClass.GetParentCount();
-	for (JIndex i=1; i<=count; i++)
+	JArray<JIndex> symbolList;
+	if (itsSymbolList->FindAllSymbols(theClass, findDeclaration, findDefinition, &symbolList))
 	{
-		const Class* p;
-		if (theClass.GetParent(i, &p))
-		{
-			BuildAncestorList(*p, list);
-		}
+		auto* dir =
+			jnew SymbolSRDirector(this, itsProjDoc, itsSymbolList,
+									symbolList, theClass->GetFullName());
+		assert( dir != nullptr );
+		dir->Activate();
+		itsSRList->Append(dir);
+		return true;
+	}
+	else
+	{
+		return false;
 	}
 }
 

@@ -268,7 +268,7 @@ StringCompleter::Complete
 	for (JIndex i=startIndex; i<=stringCount; i++)
 	{
 		const JString* s = itsStringList->GetElement(i);
-		if (!s->BeginsWith(prefix, itsCaseSensitiveFlag))
+		if (!s->StartsWith(prefix, itsCaseSensitiveFlag))
 		{
 			break;
 		}

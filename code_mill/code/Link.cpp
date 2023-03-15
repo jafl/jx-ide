@@ -166,7 +166,7 @@ Link::ParseLine
 	iter.Invalidate();
 
 	JString name = m.GetSubstring(1);
-	if (name.BeginsWith("~"))
+	if (name.StartsWith("~"))
 	{
 		return;
 	}

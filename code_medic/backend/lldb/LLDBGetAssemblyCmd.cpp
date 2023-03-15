@@ -94,7 +94,7 @@ lldb::GetAssemblyCmd::HandleSuccess
 			if (!line.EndsWith(":") && iter.Next(":"))
 			{
 				s = iter.FinishMatch().GetString();
-				if (s.BeginsWith("->") && s.GetCharacterCount() > 2)
+				if (s.StartsWith("->") && s.GetCharacterCount() > 2)
 				{
 					JStringIterator i2(&s);
 					i2.RemoveNext(2);

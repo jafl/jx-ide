@@ -44,6 +44,8 @@ public:
 	SymbolList*			GetSymbolList() const;
 	bool				FindSymbol(const JString& name, const JString& fileName,
 								   const JXMouseButton button);
+	bool				FindAllSymbols(const Class* theClass, const bool findDeclaration,
+									   const bool findDefinition);
 
 	bool	HasSymbolBrowsers() const;
 	void	CloseSymbolBrowsers();
@@ -115,9 +117,6 @@ private:
 
 	void	UpdatePrefsMenu();
 	void	HandlePrefsMenu(const JIndex index);
-
-	void	BuildAncestorList(const Class& theClass,
-							  JPtrArray<JString>* list) const;
 };
 
 

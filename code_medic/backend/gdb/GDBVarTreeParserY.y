@@ -207,7 +207,7 @@ node_list :
 		$$ = $1;
 
 		::VarNode* node = GetLink()->CreateVarNode(nullptr, JString::empty, JString::empty, *$3);
-		if ($$->GetFirstElement()->GetName().BeginsWith(JString("[", JString::kNoCopy)))
+		if ($$->GetFirstElement()->GetName().StartsWith(JString("[", JString::kNoCopy)))
 		{
 			AppendAsArrayElement(node, $$);
 		}
@@ -232,7 +232,7 @@ node_list :
 
 	| node_list ',' group
 	{
-		if ((($1->GetFirstElement())->GetName()).BeginsWith(JString("[", JString::kNoCopy)))
+		if ((($1->GetFirstElement())->GetName()).StartsWith(JString("[", JString::kNoCopy)))
 		{
 			$$ = $1;
 		}
@@ -269,7 +269,7 @@ node :
 			$1->TrimWhitespace();
 		}
 		itsCurrentNode = $$ = GetLink()->CreateVarNode(nullptr, *$1, JString::empty, *$2);
-		if (!$1->BeginsWith("_vptr.") && !$1->BeginsWith("_vb."))
+		if (!$1->StartsWith("_vptr.") && !$1->StartsWith("_vb."))
 		{
 			itsCurrentNode->MakePointer(itsIsPointerFlag);
 		}

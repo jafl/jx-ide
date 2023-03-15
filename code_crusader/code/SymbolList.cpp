@@ -15,6 +15,7 @@
 #include "CTreeDirector.h"
 #include "CTree.h"
 #include "CPreprocessor.h"
+#include "Class.h"
 #include "globals.h"
 #include "ctagsRegex.h"
 #include <jx-af/jcore/jStreamUtil.h>
@@ -189,9 +190,8 @@ SymbolList::FindSymbol
 
 	JArray<JIndex> allMatchList(50);
 
-	JString s = name;
 	SymbolInfo target;
-	target.name = &s;
+	target.name = const_cast<JString*>(&name);
 	JIndex startIndex;
 	if (itsSymbolList->SearchSorted(target, JListT::kFirstMatch, &startIndex))
 	{
@@ -204,7 +204,7 @@ SymbolList::FindSymbol
 				break;
 			}
 
-			if (!IsCaseSensitive(info.lang) || *info.name == s)
+			if (!IsCaseSensitive(info.lang) || *info.name == name)
 			{
 				if (contextFileID == info.fileID &&		// automatically fails if context is kInvalidID
 					IsFileScope(info.type))
@@ -273,18 +273,7 @@ SymbolList::FindSymbol
 			}
 		}
 
-		// re-sort
-
-		matchList->SetCompareFunction([this](const JIndex& s1, const JIndex& s2)
-		{
-			const SymbolList::SymbolInfo* info = itsSymbolList->GetCArray();
-			return JCompareStringsCaseInsensitive(info[s1-1].name, info[s2-1].name);
-		});
-
-		matchList->SetSortOrder(itsSymbolList->GetSortOrder());
-		matchList->Sort();
-		matchList->ClearCompareFunction();
-
+		Sort(matchList);
 		return true;
 	}
 	else
@@ -410,7 +399,7 @@ SymbolList::InContext
 	{
 		const JString* cns1 = contextNamespace.GetElement(i);
 		const JString* cns2 = contextNamespace.GetElement(i+1);
-		if (fullName.BeginsWith(*cns1, caseSensitive) ||
+		if (fullName.StartsWith(*cns1, caseSensitive) ||
 			fullName.Contains(*cns2, caseSensitive))
 		{
 			return true;
@@ -418,6 +407,95 @@ SymbolList::InContext
 	}
 
 	return false;
+}
+
+/******************************************************************************
+ FindAllSymbols
+
+	Fills matchList with all the symbols for the class and its ancestors.
+
+ ******************************************************************************/
+
+bool
+SymbolList::FindAllSymbols
+	(
+	const Class*	theClass,
+	const bool		findDeclaration,
+	const bool		findDefinition,
+	JArray<JIndex>*	matchList
+	)
+	const
+{
+	JPtrArray<JString> list(JPtrArrayT::kDeleteAll);
+	theClass->GetAncestorList(&list);
+
+	const Language lang               = theClass->GetLanguage();
+	const bool hasNamespace           = HasNamespace(lang);
+	const JString::Case caseSensitive = IsCaseSensitive(lang);
+
+	// find all symbols that match
+
+	matchList->RemoveAll();
+	matchList->SetBlockSize(50);
+
+	JString prefix;
+	for (const auto* name : list)
+	{
+		SymbolInfo target;
+		target.name = const_cast<JString*>(name);
+		JIndex startIndex;
+		if (itsSymbolList->SearchSorted(target, JListT::kFirstMatch, &startIndex))
+		{
+			if (hasNamespace)
+			{
+				prefix = *name + GetNamespaceOperator(lang);
+			}
+			else
+			{
+				prefix.Clear();
+			}
+
+			const JSize count = itsSymbolList->GetElementCount();
+			for (JIndex i=startIndex; i<=count; i++)
+			{
+				const SymbolInfo info = itsSymbolList->GetElement(i);
+				if (info.lang == lang &&
+					(findDeclaration || !IsPrototype(info.type)) &&
+					(findDefinition  || !IsFunction(info.type)) &&
+					(JString::Compare(*info.name, *name, caseSensitive) == 0 ||
+					 (hasNamespace && info.name->StartsWith(prefix, caseSensitive))))
+				{
+					matchList->AppendElement(i);
+				}
+			}
+		}
+	}
+
+	Sort(matchList);
+	return !matchList->IsEmpty();
+}
+
+/******************************************************************************
+ Sort (private)
+
+ ******************************************************************************/
+
+void
+SymbolList::Sort
+	(
+	JArray<JIndex>* list
+	)
+	const
+{
+	list->SetCompareFunction([this](const JIndex& s1, const JIndex& s2)
+	{
+		const SymbolList::SymbolInfo* info = itsSymbolList->GetCArray();
+		return JCompareStringsCaseInsensitive(info[s1-1].name, info[s2-1].name);
+	});
+
+	list->SetSortOrder(itsSymbolList->GetSortOrder());
+	list->Sort();
+	list->ClearCompareFunction();
 }
 
 /******************************************************************************
@@ -729,6 +807,12 @@ SymbolList::ReadSymbolList
 
 		ReadExtensionFlags(input, &flags);
 
+		if (IgnoreSymbol(*name))
+		{
+			jdelete name;
+			continue;
+		}
+
 		JUtf8Character typeChar(' ');
 		JString* value;
 		if (flags.GetElement("kind", &value) && !value->IsEmpty())
@@ -744,44 +828,37 @@ SymbolList::ReadSymbolList
 			signature->Prepend(" ");
 		}
 
-		if (IgnoreSymbol(*name))
+		const Type type = DecodeSymbolType(lang, typeChar.GetBytes()[0], flags);
+		if (signature == nullptr &&
+			(IsFunction(type) || IsPrototype(type)))
 		{
-			jdelete name;
+			signature = jnew JString(" ( )");
+			assert( signature != nullptr );
 		}
-		else
+
+		const SymbolInfo info(name, signature, lang, type,
+							  false, fileID, lineIndex);
+		itsSymbolList->InsertSorted(info);
+
+		// add file:name
+
+		if (IsFileScope(type))
 		{
-			const Type type = DecodeSymbolType(lang, typeChar.GetBytes()[0], flags);
-			if (signature == nullptr &&
-				(IsFunction(type) || IsPrototype(type)))
+			auto* name1 = jnew JString(fileName);
+			assert( name1 != nullptr );
+			*name1 += ":";
+			*name1 += *name;
+
+			JString* sig1 = nullptr;
+			if (signature != nullptr)
 			{
-				signature = jnew JString(" ( )");
-				assert( signature != nullptr );
+				sig1 = jnew JString(*signature);
+				assert( sig1 != nullptr );
 			}
 
-			const SymbolInfo info(name, signature, lang, type,
-								  false, fileID, lineIndex);
-			itsSymbolList->InsertSorted(info);
-
-			// add file:name
-
-			if (IsFileScope(type))
-			{
-				auto* name1 = jnew JString(fileName);
-				assert( name1 != nullptr );
-				*name1 += ":";
-				*name1 += *name;
-
-				JString* sig1 = nullptr;
-				if (signature != nullptr)
-				{
-					sig1 = jnew JString(*signature);
-					assert( sig1 != nullptr );
-				}
-
-				const SymbolInfo info1(name1, sig1, lang, type,
-									   true, fileID, lineIndex);
-				itsSymbolList->InsertSorted(info1);
-			}
+			const SymbolInfo info1(name1, sig1, lang, type,
+								   true, fileID, lineIndex);
+			itsSymbolList->InsertSorted(info1);
 		}
 	}
 }

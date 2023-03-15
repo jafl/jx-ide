@@ -1377,7 +1377,7 @@ yyreduce:
 		(yyval.pList) = (yyvsp[-2].pList);
 
 		::VarNode* node = GetLink()->CreateVarNode(nullptr, JString::empty, JString::empty, *(yyvsp[0].pString));
-		if ((yyval.pList)->GetFirstElement()->GetName().BeginsWith(JString("[", JString::kNoCopy)))
+		if ((yyval.pList)->GetFirstElement()->GetName().StartsWith(JString("[", JString::kNoCopy)))
 		{
 			AppendAsArrayElement(node, (yyval.pList));
 		}
@@ -1408,7 +1408,7 @@ yyreduce:
   case 16: /* node_list: node_list ',' group  */
 #line 234 "backend/gdb/GDBVarTreeParserY.y"
         {
-		if ((((yyvsp[-2].pList)->GetFirstElement())->GetName()).BeginsWith(JString("[", JString::kNoCopy)))
+		if ((((yyvsp[-2].pList)->GetFirstElement())->GetName()).StartsWith(JString("[", JString::kNoCopy)))
 		{
 			(yyval.pList) = (yyvsp[-2].pList);
 		}
@@ -1448,7 +1448,7 @@ yyreduce:
 			(yyvsp[-1].pString)->TrimWhitespace();
 		}
 		itsCurrentNode = (yyval.pNode) = GetLink()->CreateVarNode(nullptr, *(yyvsp[-1].pString), JString::empty, *(yyvsp[0].pString));
-		if (!(yyvsp[-1].pString)->BeginsWith("_vptr.") && !(yyvsp[-1].pString)->BeginsWith("_vb."))
+		if (!(yyvsp[-1].pString)->StartsWith("_vptr.") && !(yyvsp[-1].pString)->StartsWith("_vb."))
 		{
 			itsCurrentNode->MakePointer(itsIsPointerFlag);
 		}

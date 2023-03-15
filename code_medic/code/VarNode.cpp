@@ -941,14 +941,14 @@ VarNode::GetFullNameForCFamilyLanguage
 		const bool found = parent->FindChild(this, &i);
 		assert( found );
 		str = parent->GetFullName(isPointer);
-		if (!str.BeginsWith("(") || !str.EndsWith(")"))
+		if (!str.StartsWith("(") || !str.EndsWith(")"))
 		{
 			str.Prepend("(");
 			str.Append(")");
 		}
 		str += "[" + JString((JUInt64) i-1) + "]";
 	}
-	else if (name.BeginsWith("<"))
+	else if (name.StartsWith("<"))
 	{
 		if (isPointer != nullptr)
 		{
@@ -956,18 +956,18 @@ VarNode::GetFullNameForCFamilyLanguage
 		}
 		str = parent->GetFullName(isPointer);
 	}
-	else if (name.BeginsWith("["))
+	else if (name.StartsWith("["))
 	{
 		str = parent->GetFullName(isPointer) + name;
 	}
-	else if (name.BeginsWith("*"))
+	else if (name.StartsWith("*"))
 	{
 		str = parent->GetPathForCFamilyLanguage() + "(" + name + ")";
 	}
 	else
 	{
 		str = name;
-		if (str.BeginsWith("static "))
+		if (str.StartsWith("static "))
 		{
 			JStringIterator iter(&str);
 			iter.RemoveNext(7);

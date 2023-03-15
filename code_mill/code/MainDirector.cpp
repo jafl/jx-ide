@@ -70,7 +70,7 @@ MainDirector::MainDirector
 			outputPath = *(argList.GetElement(i+1));
 			i++;
 		}
-		else if (!argName->BeginsWith("-"))
+		else if (!argName->StartsWith("-"))
 		{
 			std::ifstream is(argName->GetBytes());
 			if (is.good())

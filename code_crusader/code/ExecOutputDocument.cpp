@@ -436,7 +436,7 @@ ExecOutputDocument::ReceiveRecord()
 
 	// remove text that has already been printed
 
-	if (!itsLastPrompt.IsEmpty() && text.BeginsWith(itsLastPrompt))
+	if (!itsLastPrompt.IsEmpty() && text.StartsWith(itsLastPrompt))
 	{
 		JStringIterator iter(&text, kJIteratorStartAfter, itsLastPrompt.GetCharacterCount());
 		iter.RemoveAllPrev();

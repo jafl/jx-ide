@@ -81,7 +81,7 @@ xdebug::GetBreakpointsCmd::HandleSuccess
 			bool ok = idStr.ConvertToUInt(&bpIndex);
 			assert( ok );
 
-			if (fileName.BeginsWith("file://"))
+			if (fileName.StartsWith("file://"))
 			{
 				JStringIterator iter(&fileName);
 				iter.RemoveNext(7);

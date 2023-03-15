@@ -47,18 +47,6 @@ public:
 		kInheritJavaDefault
 	};
 
-	enum FnAccessLevel
-	{
-		kPublicAccess = 0,
-		kProtectedAccess,
-		kPrivateAccess,
-		kJavaDefaultAccess,
-		kUnusedQtSignalAccess,
-		kUnusedQtPublicSlotAccess,
-		kUnusedQtProtectedSlotAccess,
-		kUnusedQtPrivateSlotAccess
-	};
-
 public:
 
 	~Class() override;
@@ -73,6 +61,7 @@ public:
 	virtual void	ViewSource() const;
 	virtual void	ViewHeader() const;
 
+	Language	GetLanguage() const;
 	DeclareType	GetDeclareType() const;
 	bool		IsAbstract() const;
 	void		SetAbstract(const bool abstract = true);
@@ -89,6 +78,7 @@ public:
 	bool			GetParent(const JIndex index, Class** parent) const;
 	bool			GetParent(const JIndex index, const Class** parent) const;
 	bool			IsAncestor(const Class* child) const;
+	void			GetAncestorList(JPtrArray<JString>* fullNameList) const;
 
 	bool	HasChildren() const;
 	bool	HasPrimaryChildren() const;
@@ -224,9 +214,6 @@ std::ostream& operator<<(std::ostream& output, const Class::DeclareType type);
 
 std::istream& operator>>(std::istream& input, Class::InheritType& type);
 std::ostream& operator<<(std::ostream& output, const Class::InheritType type);
-
-std::istream& operator>>(std::istream& input, Class::FnAccessLevel& access);
-std::ostream& operator<<(std::ostream& output, const Class::FnAccessLevel access);
 
 
 /******************************************************************************

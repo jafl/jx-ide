@@ -321,7 +321,7 @@ MDIServer::GetLanguage
 	JUtf8Character::SetIgnoreBadUtf8(ignore);
 
 	line.TrimWhitespace();
-	if (line.BeginsWith("code-medic:"))
+	if (line.StartsWith("code-medic:"))
 	{
 		JStringIterator iter(&line);
 		iter.RemoveNext(11);

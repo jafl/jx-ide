@@ -316,7 +316,7 @@ FileNode::SaveFilesInTemplate
 
 	const JString& relName = GetFileName();
 	JString fullName;
-	if (relName.BeginsWith(kPathPrefix) && GetFullName(&fullName))
+	if (relName.StartsWith(kPathPrefix) && GetFullName(&fullName))
 	{
 		JString data;
 		JReadFile(fullName, &data);

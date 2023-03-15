@@ -1169,28 +1169,28 @@ jvm::Link::SetProgram
 		line = JReadLine(input);
 		line.TrimWhitespace();
 
-		if (line.BeginsWith("main-class:"))
+		if (line.StartsWith("main-class:"))
 		{
 			JStringIterator iter(&line);
 			iter.RemoveNext(11);
 			line.TrimWhitespace();
 			itsMainClassName = line;
 		}
-		else if (line.BeginsWith("java-path:"))
+		else if (line.StartsWith("java-path:"))
 		{
 			JStringIterator iter(&line);
 			iter.RemoveNext(10);
 			line.TrimWhitespace();
 			itsJVMCWD = line;
 		}
-		else if (line.BeginsWith("java-exec:"))
+		else if (line.StartsWith("java-exec:"))
 		{
 			JStringIterator iter(&line);
 			iter.RemoveNext(10);
 			line.TrimWhitespace();
 			itsJVMExecArgs = line;
 		}
-		else if (line.BeginsWith("source-path:"))
+		else if (line.StartsWith("source-path:"))
 		{
 			JStringIterator iter(&line);
 			iter.RemoveNext(12);
@@ -1199,7 +1199,7 @@ jvm::Link::SetProgram
 			name = JCombinePathAndName(path, line);
 			itsSourcePathList->Append(name);
 		}
-		else if (line.BeginsWith("source-jar:"))
+		else if (line.StartsWith("source-jar:"))
 		{
 			JStringIterator iter(&line);
 			iter.RemoveNext(11);
@@ -1208,7 +1208,7 @@ jvm::Link::SetProgram
 			// add to itsJarPathList (for deletion)
 			// add to itsSourcePathList
 		}
-		else if (!line.IsEmpty() && !line.BeginsWith("code-medic:"))
+		else if (!line.IsEmpty() && !line.StartsWith("code-medic:"))
 		{
 			line.Prepend("Unknown option: ");
 			line.Append("\n");

@@ -467,13 +467,7 @@ TreeDirector::ViewFunctionList
 	const Class* theClass
 	)
 {
-/*
-	provide contextNamespaceList filled with class and all ancestors
-		(already implemented in SymbolDirector, move here?)
-
-	find all symbols that start with any of these classes
-*/
-//	itsProjDoc->GetSymbolDirector()->GetSymboList()->FindSymbols(
+	itsProjDoc->GetSymbolDirector()->FindAllSymbols(theClass, false, true);
 }
 
 /******************************************************************************
@@ -800,9 +794,9 @@ void
 TreeDirector::UpdateProjectMenu()
 {
 	itsProjectMenu->SetItemEnabled(kCloseAllTextCmd,
-								  GetDocumentManager()->HasTextDocuments());
+								   GetDocumentManager()->HasTextDocuments());
 	itsProjectMenu->SetItemEnabled(kSaveAllTextCmd,
-								  GetDocumentManager()->TextDocumentsNeedSave());
+								   GetDocumentManager()->TextDocumentsNeedSave());
 }
 
 /******************************************************************************
@@ -820,28 +814,28 @@ TreeDirector::HandleProjectMenu
 
 	if (index == kShowSymbolBrowserCmd)
 	{
-		(itsProjDoc->GetSymbolDirector())->Activate();
+		itsProjDoc->GetSymbolDirector()->Activate();
 	}
 	else if (index == kViewManPageCmd)
 	{
-		(GetViewManPageDialog())->Activate();
+		GetViewManPageDialog()->Activate();
 	}
 
 	else if (index == kShowFileListCmd)
 	{
-		(itsProjDoc->GetFileListDirector())->Activate();
+		itsProjDoc->GetFileListDirector()->Activate();
 	}
 	else if (index == kFindFileCmd)
 	{
-		(GetFindFileDialog())->Activate();
+		GetFindFileDialog()->Activate();
 	}
 	else if (index == kSearchFilesCmd)
 	{
-		(GetSearchTextDialog())->Activate();
+		GetSearchTextDialog()->Activate();
 	}
 	else if (index == kDiffFilesCmd)
 	{
-		(GetDiffFileDialog())->Activate();
+		GetDiffFileDialog()->Activate();
 	}
 
 	else if (index == kSaveAllTextCmd)

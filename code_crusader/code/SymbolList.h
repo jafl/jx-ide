@@ -16,6 +16,7 @@
 
 class JProgressDisplay;
 class ProjectDocument;
+class Class;
 
 class SymbolList : public JContainer, public CtagsUser
 {
@@ -70,6 +71,8 @@ public:
 					   const JArray<ContextNamespace>& contextNamespaceList,
 					   const bool findDeclaration, const bool findDefinition,
 					   JArray<JIndex>* matchList) const;
+	bool	FindAllSymbols(const Class* theClass, const bool findDeclaration,
+						   const bool findDefinition, JArray<JIndex>* matchList) const;
 	bool	ClosestMatch(const JString& prefixStr,
 						 JArray<JIndex>& visibleList, JIndex* index) const;
 
@@ -155,6 +158,8 @@ private:
 	bool	InContext(const JString& fullName,
 					  const JPtrArray<JString>& contextNamespace,
 					  const JString::Case caseSensitive) const;
+
+	void	Sort(JArray<JIndex>* list) const;
 
 	static JListT::CompareResult
 	CompareSymbols(const SymbolInfo& s1, const SymbolInfo& s2);

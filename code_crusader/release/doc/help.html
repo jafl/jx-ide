@@ -545,11 +545,11 @@ jx_browser_project_wizard
 <hr>
 <h2><a name="SymbolHelp">Symbol Browser</a></h2>
 
-<p>If you have <a href="http://ctags.sourceforge.net/">Exuberant <code>ctags</code></a> version 5.0 or later on your execution path, the symbol browser will display a list of all the symbols in all the source files in the <a href="#ProjectHelp">project</a> and on the project's search paths.</p>
+<p>If you have <a href="https://ctags.io/">Universal <code>ctags</code></a> on your execution path, the symbol browser will display a list of all the symbols in all the source files in the <a href="#ProjectHelp">project</a> and on the project's search paths.</p>
 
 <h3>Purpose of the Symbol Browser</h3>
 
-<p>The Symbol Browser is primarily intended to work behind the scenes.  Unlike the C++ and Java class inheritance trees, the display itself does not provide useful information because it is simply an alphabetized list of all symbols that have been defined. The real power of the Symbol Browser lies in its connection to the <a href="#EditorHelp">Text Editor</a>.  When you <a href="#EditorHelp-MouseShortcuts">Meta-double-click</a> on a symbol in a Text Editor window, Code Crusader searches the list of symbols:</p>
+<p>The Symbol Browser is primarily intended to work behind the scenes because it is simply an alphabetized list of all symbols that have been defined. The real power of the Symbol Browser lies in its connection to the <a href="#EditorHelp">Text Editor</a>.  When you <a href="#EditorHelp-MouseShortcuts">Meta-double-click</a> on a symbol in a Text Editor window, Code Crusader searches the list of symbols:</p>
 
 <ul>
 	<li>If a single class or function name is matched, and you used the left mouse button, the file containing the definition will be opened.</li>
@@ -565,7 +565,7 @@ jx_browser_project_wizard
 
 <h3>Using the Symbol Browser</h3>
 
-<p>To locate a particular symbol, press the space bar and then type the first few letters in its name.  This search is case-insensitive.  To open the file to show the symbol's definition, press Return.  You do not have to de-iconify the window before typing.</p>
+<p>To locate a particular symbol, press the space bar and then type the first few letters in its name.  This search is case-insensitive.  To open the file to show the symbol's definition, press Return or double-click it.  You do not have to de-iconify the window before typing.</p>
 
 <p>Since both a function's declaration and its definition are included in the list of symbols, the declaration is italicized so you can tell the difference.</p>
 
@@ -606,6 +606,8 @@ The following options can be changed in the Symbol Preferences dialog:
 
 <p>To locate a particular class, press the space bar and then type the first few letters in its name.  This search is case-insensitive and ignores the namespaces.  To then open the source file, press Return.  To open the header file, press Ctrl-Tab.  You do not have to de-iconify the window before typing.</p>
 
+<p>To display a list of all the functions implemented by a class, right-double-click the name or first select the name and then select "Open function list" from the Tree menu.</p>
+
 <p>To locate all classes that implement a particular function, select "Find function" from the Tree menu and then enter the name of the function to search for.  This is case sensitive.  If a single function is found, its definition will automatically be displayed.</p>
 
 <p>If you click on a class in the Tree window:</p>
@@ -629,34 +631,6 @@ The following options can be changed in the Symbol Preferences dialog:
 </dl>
 
 <p>There are also several <a href="#EditorHelp-MouseShortcuts">shortcuts</a> in the <a href="#EditorHelp">built-in editor</a> that connect back to the tree.</p>
-
-<h3><a name="CTreeHelp-FunctionList">Displaying the functions implemented by a class</a></h3>
-
-<p>To get a list of the functions that a class implements, either click on it and hold for a moment to display a menu or right-double-click to create a new window.
-
-<p>The function names are colored to indicate whether they are public (black), protected (brown, since yellow text on a white background is very difficult to read), or private (red).  Italic indicates a pure virtual function.  Qt signals are indicated by an icon showing an arrow leaving an object.  Qt slots are indicated by an icon showing an arrow entering an object.</p>
-
-<p>The setting in the Tree Preferences dialog controls whether or not the menu and each new window also displays the functions inherited from base classes.  If this is turned on, functions implemented by the class itself are boldfaced to make them easy to find. Changing the setting in the Tree Preferences dialog does not affect existing windows. In these windows, there is a menu item on the Options menu that controls the display.</p>
-
-<p>To locate a particular function, press the space bar and then type the first few letters in its name.  This search is case-insensitive. To then open the file containing the function's code, press Return.  To open the header file, press Ctrl-Tab.  You do not have to de-iconify the window before typing.</p>
-
-<p>If you click on a function name in a Function List window:</p>
-
-<dl>
-	<dt>Any button once (or type the first few characters of the name)</dt>
-	<dd>Select the function</dd>
-
-	<dt>Left button twice (or Return)</dt>
-	<dd>Display source for the function</dd>
-
-	<dt>Middle button twice (or Ctrl-Tab)</dt>
-	<dd>Display prototype for the function</dd>
-
-	<dt>Right button twice</dt>
-	<dd>Search the tree for all classes that implement the function</dd>
-</dl>
-
-<p>When using the menu, the mouse button that was pressed determines the action, just like when double clicking in the window.</p>
 
 <h3>Preferences</h3>
 
@@ -692,6 +666,8 @@ The following options can be changed in the Symbol Preferences dialog:
 
 <p>To locate a particular class or interface, press the space bar and then type the first few letters in its name.  This search is case-insensitive and ignores the namespaces.  To then open the source file, press Return.  You do not have to de-iconify the window before typing.</p>
 
+<p>To display a list of all the members in a class or functions in an interface, right-double-click the name or first select the name and then select "Open function list" from the Tree menu.</p>
+
 <p>To locate all classes and interfaces that include a particular function, select "Find function" from the Tree menu and then enter the name of the function to search for.  This is case sensitive.  If a single function is found, its definition will automatically be displayed.</p>
 
 <p>If you click on a class or interface in the Tree window:</p>
@@ -712,29 +688,6 @@ The following options can be changed in the Symbol Preferences dialog:
 
 <p>There are also several <a href="#EditorHelp-MouseShortcuts">shortcuts</a> in the <a href="#EditorHelp">built-in editor</a> that connect back to the tree.</p>
 
-<h3><a name="DTreeHelp-FunctionList">Displaying the members in a class or functions in an interface</a></h3>
-
-<p>To get a list of the members that a class contains or functions that an interface defines, either click on it and hold for a moment to display a menu or right-double-click to create a new window.</p>
-
-<p>The setting in the Tree Preferences dialog controls whether or not the menu and each new window also displays the items inherited from base classes or interfaces.  If this is turned on, items defined by the class or interface itself are boldfaced to make them easy to find.</p>
-
-<p>To locate a particular function, press the space bar and then type the first few letters in its name.  This search is case-insensitive.  To then open the file containing the function's code, press Return.  You do not have to de-iconify the window before typing.</p>
-
-<p>If you click on a function name in a Function List window:</p>
-
-<dl>
-	<dt>Any button once (or type the first few characters of the name)</dt>
-	<dd>Select the function</dd>
-
-	<dt>Left button twice (or Return)</dt>
-	<dd>Display source for the function</dd>
-
-	<dt>Right button twice</dt>
-	<dd>Search the tree for all classes and interfaces that include the function</dd>
-</dl>
-
-<p>When using the menu, the mouse button that was pressed determines the action, just like when double clicking in the window.</p>
-
 <h3>Preferences</h3>
 
 <p>See the <a href="#TreePrefsHelp">Tree Preferences</a> section.</p>
@@ -752,6 +705,8 @@ The following options can be changed in the Symbol Preferences dialog:
 <p>To add structs and interfaces to the tree, use the "Add structs/interfaces..." item on the Tree menu.  (Structs and interfaces in project files are always included in the tree.)  To update the current tree without quitting, use the "Update" item.  The <a href="#FileTypeHelp">"Edit file types..."</a> item lets you set the suffixes for source files.</p>
 
 <p>To locate a particular struct or interface, press the space bar and then type the first few letters in its name.  This search is case-insensitive and ignores the namespaces.  To then open the source file, press Return.  You do not have to de-iconify the window before typing.</p>
+
+<p>To display a list of all the members in a struct or functions in an interface, right-double-click the name or first select the name and then select "Open function list" from the Tree menu.</p>
 
 <p>To locate all interfaces that include a particular function, select "Find function" from the Tree menu and then enter the name of the function to search for.  This is case sensitive.  If a single function is found, its definition will automatically be displayed.</p>
 
@@ -773,29 +728,6 @@ The following options can be changed in the Symbol Preferences dialog:
 
 <p>There are also several <a href="#EditorHelp-MouseShortcuts">shortcuts</a> in the <a href="#EditorHelp">built-in editor</a> that connect back to the tree.</p>
 
-<h3><a name="GoTreeHelp-FunctionList">Displaying the members in a struct or functions in an interface</a></h3>
-
-<p>To get a list of the members that a struct contains or functions that an interface defines, either click on it and hold for a moment to display a menu or right-double-click to create a new window.</p>
-
-<p>The setting in the Tree Preferences dialog controls whether or not the menu and each new window also displays the items inherited from base structs or interfaces.  If this is turned on, items defined by the struct or interface itself are boldfaced to make them easy to find.</p>
-
-<p>To locate a particular function, press the space bar and then type the first few letters in its name.  This search is case-insensitive.  To then open the file containing the function's code, press Return.  You do not have to de-iconify the window before typing.</p>
-
-<p>If you click on a function name in a Function List window:</p>
-
-<dl>
-	<dt>Any button once (or type the first few characters of the name)</dt>
-	<dd>Select the function</dd>
-
-	<dt>Left button twice (or Return)</dt>
-	<dd>Display source for the function</dd>
-
-	<dt>Right button twice</dt>
-	<dd>Search the tree for all interfaces that include the function</dd>
-</dl>
-
-<p>When using the menu, the mouse button that was pressed determines the action, just like when double clicking in the window.</p>
-
 <h3>Preferences</h3>
 
 <p>See the <a href="#TreePrefsHelp">Tree Preferences</a> section.</p>
@@ -813,6 +745,8 @@ The following options can be changed in the Symbol Preferences dialog:
 <p>To add classes to the tree, use the "Add classes..." item on the Tree menu.  (Classes in the Project window are always included in the tree.)  To update the current tree without quitting, use the "Update" item.  The <a href="#FileTypeHelp">"Edit file types..."</a> item lets you set the suffixes for source files.  It is a good idea to add all the directories that contain source files, not just those that contain classes.  This way, when Code Crusader searches for a file (e.g. when you use "Open selection" in a Text Editor window), it is more likely to find it.</p>
 
 <p>To locate a particular class, press the space bar and then type the first few letters in its name.  This search is case-insensitive and ignores the namespaces.  To then open the source file, press Return.  You do not have to de-iconify the window before typing.</p>
+
+<p>To display a list of all the functions implemented by a class, right-double-click the name or first select the name and then select "Open function list" from the Tree menu.</p>
 
 <p>To locate all classes that implement a particular function, select "Find function" from the Tree menu and then enter the name of the function to search for.  This is case sensitive.  If a single function is found, its definition will automatically be displayed.</p>
 
@@ -834,31 +768,6 @@ The following options can be changed in the Symbol Preferences dialog:
 </dl>
 
 <p>There are also several <a href="#EditorHelp-MouseShortcuts">shortcuts</a> in the <a href="#EditorHelp">built-in editor</a> that connect back to the tree.</p>
-
-<h3><a name="JavaTreeHelp-FunctionList">Displaying the functions implemented by a class</a></h3>
-
-<p>To get a list of the functions that a class implements, either click on it and hold for a moment to display a menu or right-double-click to create a new window.</p>
-
-<p>The function names are colored to indicate whether they are public (black), default (dark green), protected (brown, since yellow text on a white background is very difficult to read), or private (red).  Italic indicates an abstract function.</p>
-
-<p>The setting in the Tree Preferences dialog controls whether or not the menu and each new window also displays the functions inherited from base classes.  If this is turned on, functions implemented by the class itself are boldfaced to make them easy to find. Changing the setting in the Tree Preferences dialog does not affect existing windows. In these windows, there is a menu item on the Options menu that controls the display.</p>
-
-<p>To locate a particular function, press the space bar and then type the first few letters in its name.  This search is case-insensitive. To then open the file containing the function's code, press Return.  You do not have to de-iconify the window before typing.</p>
-
-<p>If you click on a function name in a Function List window:</p>
-
-<dl>
-	<dt>Any button once (or type the first few characters of the name)</dt>
-	<dd>Select the function</dd>
-
-	<dt>Left button twice (or Return)</dt>
-	<dd>Display source for the function</dd>
-
-	<dt>Right button twice</dt>
-	<dd>Search the tree for all classes that implement the function</dd>
-</dl>
-
-<p>When using the menu, the mouse button that was pressed determines the action, just like when double clicking in the window.</p>
 
 <h3>Preferences</h3>
 
@@ -878,6 +787,8 @@ The following options can be changed in the Symbol Preferences dialog:
 
 <p>To locate a particular class, press the space bar and then type the first few letters in its name.  This search is case-insensitive and ignores the namespaces.  To then open the source file, press Return.  You do not have to de-iconify the window before typing.</p>
 
+<p>To display a list of all the functions implemented by a class, right-double-click the name or first select the name and then select "Open function list" from the Tree menu.</p>
+
 <p>To locate all classes that implement a particular function, select "Find function" from the Tree menu and then enter the name of the function to search for.  This is case sensitive.  If a single function is found, its definition will automatically be displayed.</p>
 
 <p>If you click on a class in the Tree window:</p>
@@ -899,31 +810,6 @@ The following options can be changed in the Symbol Preferences dialog:
 
 <p>There are also several <a href="#EditorHelp-MouseShortcuts">shortcuts</a> in the <a href="#EditorHelp">built-in editor</a> that connect back to the tree.</p>
 
-<h3><a name="PHPTreeHelp-FunctionList">Displaying the functions implemented by a class</a></h3>
-
-<p>To get a list of the functions that a class implements, either click on it and hold for a moment to display a menu or right-double-click to create a new window.</p>
-
-<p>The function names are colored to indicate whether they are public (black), default (dark green), protected (brown, since yellow text on a white background is very difficult to read), or private (red).  Italic indicates an abstract function.</p>
-
-<p>The setting in the Tree Preferences dialog controls whether or not the menu and each new window also displays the functions inherited from base classes.  If this is turned on, functions implemented by the class itself are boldfaced to make them easy to find. Changing the setting in the Tree Preferences dialog does not affect existing windows. In these windows, there is a menu item on the Options menu that controls the display.</p>
-
-<p>To locate a particular function, press the space bar and then type the first few letters in its name.  This search is case-insensitive. To then open the file containing the function's code, press Return.  You do not have to de-iconify the window before typing.</p>
-
-<p>If you click on a function name in a Function List window:</p>
-
-<dl>
-	<dt>Any button once (or type the first few characters of the name)</dt>
-	<dd>Select the function</dd>
-
-	<dt>Left button twice (or Return)</dt>
-	<dd>Display source for the function</dd>
-
-	<dt>Right button twice</dt>
-	<dd>Search the tree for all classes that implement the function</dd>
-</dl>
-
-<p>When using the menu, the mouse button that was pressed determines the action, just like when double clicking in the window.</p>
-
 <h3>Preferences</h3>
 
 <p>See the <a href="#TreePrefsHelp">Tree Preferences</a> section.</p>
@@ -937,9 +823,6 @@ The following options can be changed in the Symbol Preferences dialog:
 <dl>
 	<dt>Font size</dt>
 	<dd>This menu lets you change the font size used in the Tree and Function List windows.</dd>
-
-	<dt>Show inherited functions in lists</dt>
-	<dd>If this is checked, the popup menu and all newly created windows will display both the functions implemented by the class and the functions inherited from all base classes.  The functions implemented by the class will be boldfaced to make them easy to find.</dd>
 
 	<dt>Raise window if search matches single class</dt>
 	<dd>If there is only one match when you <a href="#EditorHelp-MouseShortcuts">Meta-dbl-click</a> in an editor window, it is usually less disruptive if only the source file containing what you are looking for is displayed.  This will be the case if this item is not checked.</dd>
@@ -1485,7 +1368,7 @@ The following options can be changed in the Symbol Preferences dialog:
 
 <h3><a name="EditorHelp-SourceCode">Editing source code</a></h3>
 
-<p>If you have <a href="http://ctags.sourceforge.net/">Exuberant <code>ctags</code></a> version 5.0 or later on your execution path, Code Crusader will automatically display an additional menu in the menu bar listing all the functions defined in the file.  When you select a function from this menu, the text scrolls to display that function's definition.  In the <a href="#EditorHelp-Prefs">Preferences</a>, you can choose whether to display the function names alphabetically or in the order defined in the file.  With the latter configuration, a horizontal line is drawn on the menu to indicate the location of the caret in the file.  If you want to momentarily display the functions in the opposite order, hold down the Meta key while opening the menu.</p>
+<p>If you have <a href="https://ctags.io/">Universal <code>ctags</code></a> on your execution path, Code Crusader will automatically display an additional menu in the menu bar listing all the functions defined in the file.  When you select a function from this menu, the text scrolls to display that function's definition.  In the <a href="#EditorHelp-Prefs">Preferences</a>, you can choose whether to display the function names alphabetically or in the order defined in the file.  With the latter configuration, a horizontal line is drawn on the menu to indicate the location of the caret in the file.  If you want to momentarily display the functions in the opposite order, hold down the Meta key while opening the menu.</p>
 
 <h3><a name="EditorHelp-HTML">Editing HTML</a></h3>
 

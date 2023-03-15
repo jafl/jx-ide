@@ -282,7 +282,7 @@ CompileDocument::AppendText
 	TextEditor* te = GetTextEditor();
 
 	if (!isJavacError && !isGCCError && !gccPrevLineMatch.IsEmpty() &&
-		text.BeginsWith(gccMultilinePrefix) &&
+		text.StartsWith(gccMultilinePrefix) &&
 		text.GetByteCount() > kGCCMultilinePrefixLength)
 	{
 		JStringIterator iter(&text, kJIteratorStartAfterByte, kGCCMultilinePrefixLength);

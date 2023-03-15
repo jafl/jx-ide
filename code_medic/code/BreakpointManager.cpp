@@ -172,7 +172,7 @@ BreakpointManager::GetBreakpoints
 		{
 			Breakpoint* bp = itsBPList->GetElement(i);
 			if (bp->GetFunctionName() == loc.GetFunctionName() ||
-				bp->GetFunctionName().BeginsWith(fn))
+				bp->GetFunctionName().StartsWith(fn))
 			{
 				list->Append(bp);
 			}

@@ -251,7 +251,7 @@ implements	/* ignore */
 		}
 
 	JString parentName(text(), size());
-	if (parentName.BeginsWith("\\"))
+	if (parentName.StartsWith("\\"))
 		{
 		parentName.Set(text()+1, size()-1);
 		}

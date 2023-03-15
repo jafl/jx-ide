@@ -91,8 +91,8 @@ LineAddressTable::SetLineNumbers
 	JSize charCount = 0;
 	const JString* s1 = itsLineTextList->GetFirstElement();
 	const JString* sN = itsLineTextList->GetLastElement();
-	if (s1->BeginsWith("0x") && s1->GetCharacterCount() > 2 &&
-		sN->BeginsWith("0x") && sN->GetCharacterCount() > 2)
+	if (s1->StartsWith("0x") && s1->GetCharacterCount() > 2 &&
+		sN->StartsWith("0x") && sN->GetCharacterCount() > 2)
 	{
 		charCount = 2;
 
@@ -382,7 +382,7 @@ LineAddressTable::GetLineTextFromAddress
 {
 	JString s = addr;
 	JStringIterator iter(&s);
-	if (s.BeginsWith("0x"))
+	if (s.StartsWith("0x"))
 	{
 		iter.RemoveNext(2);
 	}

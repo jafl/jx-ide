@@ -156,25 +156,25 @@ ShellEditor::HandleKeyPress
 			SetCaretLocation(endIndex);
 			siter.Invalidate();
 
-			if (cmd.BeginsWith("man "))
+			if (cmd.StartsWith("man "))
 			{
 				JStringIterator iter(&cmd);
 				iter.RemoveNext(3);
 				cmd.Prepend("jcc --man");
 			}
-			else if (cmd.BeginsWith("apropos "))
+			else if (cmd.StartsWith("apropos "))
 			{
 				JStringIterator iter(&cmd);
 				iter.RemoveNext(7);
 				cmd.Prepend("jcc --apropos");
 			}
-			else if (cmd.BeginsWith("vi "))
+			else if (cmd.StartsWith("vi "))
 			{
 				JStringIterator iter(&cmd);
 				iter.RemoveNext(2);
 				cmd.Prepend("jcc");
 			}
-			else if (cmd.BeginsWith("less ") || cmd.BeginsWith("more "))
+			else if (cmd.StartsWith("less ") || cmd.StartsWith("more "))
 			{
 				JStringIterator iter(&cmd);
 				iter.RemoveNext(4);

@@ -584,7 +584,7 @@ ProjectTable::ConvertToRelativePath
 			JGetTrueName(path, &trueHome))
 		{
 			path = JConvertToRelativePath(fullPath, trueHome);
-			if (path.BeginsWith("." ACE_DIRECTORY_SEPARATOR_STR))
+			if (path.StartsWith("." ACE_DIRECTORY_SEPARATOR_STR))
 			{
 				JStringIterator iter(&path);
 				iter.SetNext(JUtf8Character('~'));

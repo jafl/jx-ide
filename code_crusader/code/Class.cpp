@@ -358,6 +358,20 @@ Class::ForceVisible()
 }
 
 /******************************************************************************
+ GetLanguage
+
+	Returns the language of the class.
+
+ ******************************************************************************/
+
+Language
+Class::GetLanguage()
+	const
+{
+	return itsTree->GetLanguage();
+}
+
+/******************************************************************************
  GetFileName
 
  ******************************************************************************/
@@ -648,6 +662,33 @@ Class::IsAncestor
 	}
 
 	return false;
+}
+
+/******************************************************************************
+ GetAncestorList
+
+ ******************************************************************************/
+
+void
+Class::GetAncestorList
+	(
+	JPtrArray<JString>* list
+	)
+	const
+{
+	list->Append(GetFullName());
+
+	for (const auto info : *itsParentInfo)
+	{
+		if (info.parent != nullptr)
+		{
+			info.parent->GetAncestorList(list);
+		}
+		else if (info.name != nullptr)
+		{
+			list->Append(*info.name);
+		}
+	}
 }
 
 /******************************************************************************
@@ -1185,53 +1226,5 @@ operator<<
 	)
 {
 	output << (long) type;
-	return output;
-}
-
-/******************************************************************************
- Global functions for Class::FnAccessLevel
-
- ******************************************************************************/
-
-std::istream&
-operator>>
-	(
-	std::istream&			input,
-	Class::FnAccessLevel&	access
-	)
-{
-	long temp;
-	input >> temp;
-
-	if (temp == Class::kUnusedQtSignalAccess ||
-		temp == Class::kUnusedQtPublicSlotAccess)
-	{
-		temp = Class::kPublicAccess;
-	}
-	else if (temp == Class::kUnusedQtProtectedSlotAccess)
-	{
-		temp = Class::kProtectedAccess;
-	}
-	else if (temp == Class::kUnusedQtPrivateSlotAccess)
-	{
-		temp = Class::kPrivateAccess;
-	}
-
-	access = (Class::FnAccessLevel) temp;
-	assert( access == Class::kPublicAccess     ||
-			access == Class::kProtectedAccess  ||
-			access == Class::kPrivateAccess    ||
-			access == Class::kJavaDefaultAccess);
-	return input;
-}
-
-std::ostream&
-operator<<
-	(
-	std::ostream&					output,
-	const Class::FnAccessLevel	access
-	)
-{
-	output << (long) access;
 	return output;
 }

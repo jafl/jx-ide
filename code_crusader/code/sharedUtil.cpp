@@ -492,7 +492,7 @@ ParseEditorOptions
 	{
 		const JString s = viAutoIndentMatch.GetSubstring(1);
 		*setAutoIndent  = true;
-		*autoIndent     = !s.BeginsWith("no");
+		*autoIndent     = !s.StartsWith("no");
 	}
 }
 

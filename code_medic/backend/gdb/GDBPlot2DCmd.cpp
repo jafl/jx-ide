@@ -87,7 +87,7 @@ gdb::Plot2DCmd::HandleSuccess
 	JArray<JFloat>* x = GetX();
 	JArray<JFloat>* y = GetY();
 
-	if (GetLastResult().BeginsWith("error,msg=\"No symbol"))
+	if (GetLastResult().StartsWith("error,msg=\"No symbol"))
 	{
 		x->RemoveAll();
 		y->RemoveAll();

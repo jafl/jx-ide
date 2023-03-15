@@ -469,7 +469,7 @@ MDIServer::DisplayFileDiffs
 	if (count == 1)
 	{
 		file2 = *argList.GetElement(*index+1);
-		if (file2.BeginsWith("#"))	// allows empty argument
+		if (file2.StartsWith("#"))	// allows empty argument
 		{
 			file1 = file2;
 

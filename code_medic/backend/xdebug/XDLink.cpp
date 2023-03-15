@@ -461,7 +461,7 @@ xdebug::Link::SetProgram
 		line = JReadLine(input);
 		line.TrimWhitespace();
 
-		if (line.BeginsWith("source-path:"))
+		if (line.StartsWith("source-path:"))
 		{
 			JStringIterator iter(&line);
 			iter.RemoveNext(12);
@@ -472,7 +472,7 @@ xdebug::Link::SetProgram
 			name = JCombinePathAndName(path, line);
 			itsSourcePathList->Append(name);
 		}
-		else if (!line.IsEmpty() && !line.BeginsWith("code-medic:"))
+		else if (!line.IsEmpty() && !line.StartsWith("code-medic:"))
 		{
 			line.Prepend("Unknown option: ");
 			line.Append("\n");
@@ -840,7 +840,7 @@ xdebug::Link::SwitchToFrame
 	if (GetCommandDirector()->GetStackDir()->GetStackWidget()->GetStackFrame(id, &frame) &&
 		frame->GetFile(&fileName, &lineIndex))
 	{
-		if (fileName.BeginsWith("file://"))
+		if (fileName.StartsWith("file://"))
 		{
 			JStringIterator iter(&fileName);
 			iter.RemoveNext(7);

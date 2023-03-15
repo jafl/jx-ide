@@ -1862,7 +1862,7 @@ DiffFileDialog::BuildGitDiffCmd
 	}
 
 	JString gitFile = JConvertToRelativePath(trueName, gitRoot);
-	if (gitFile.BeginsWith("." ACE_DIRECTORY_SEPARATOR_STR))
+	if (gitFile.StartsWith("." ACE_DIRECTORY_SEPARATOR_STR))
 	{
 		JStringIterator iter(&gitFile);
 		iter.RemoveNext(2);		// ACE_DIRECTORY_SEPARATOR_CHAR guarantees length 1
@@ -2305,7 +2305,7 @@ DiffFileDialog::GetSmartDiffInfo
 	JStringIterator iter(&fileName);
 
 	*isSafetySave = false;
-	while (fileName.BeginsWith("#") && fileName.EndsWith("#"))
+	while (fileName.StartsWith("#") && fileName.EndsWith("#"))
 	{
 		iter.MoveTo(kJIteratorStartAtBeginning, 0);
 		iter.RemoveNext();

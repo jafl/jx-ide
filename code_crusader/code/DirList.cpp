@@ -231,7 +231,7 @@ DirList::Contains
 	for (JIndex i=1; i<=count; i++)
 	{
 		if (GetTruePath(i, &truePath, &recurse) &&
-			(( recurse && path.BeginsWith(truePath)) ||
+			(( recurse && path.StartsWith(truePath)) ||
 			 (!recurse && path == truePath)))
 		{
 			return true;

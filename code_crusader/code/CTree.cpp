@@ -22,7 +22,8 @@
 #include <jx-af/jcore/jAssert.h>
 
 static const JUtf8Byte* kCtagsArgs =
-	"--format=2 --excmd=number --sort=no --c-kinds=f";
+	"--format=2 --excmd=number --sort=no "
+	"--c-kinds=fp --fields-C++=+{properties} --extras=+q";
 
 /******************************************************************************
  Constructor
@@ -69,7 +70,7 @@ CTree::CTree
 		itsCPP->ReadSetup(projInput, projVers);
 	}
 
-	if (projVers < 88 && !IsEmpty())		// new parser
+	if (projVers < 91 && !IsEmpty())		// new parser
 	{
 		NextUpdateMustReparseAll();
 	}
@@ -234,29 +235,24 @@ CTree::ParseFile
 
 			ReadExtensionFlags(input, &flags);		// skips file name and line number
 
-			JString* impl;
-			if (!flags.GetElement("implementation", &impl) || *impl != "abstract")
+			JString* props;
+			if (name.Contains("::") && flags.GetElement("properties", &props) &&
+				props->Contains("pure") && props->Contains("virtual"))
 			{
-				continue;
-			}
-
-			JStringIterator iter(&name, kJIteratorStartAtEnd);
-			if (iter.Prev("::"))
-			{
-				iter.RemoveAllNext();
-				iter.Invalidate();
-			}
-			else
-			{
-				continue;
-			}
-
-			for (auto* c : classList)
-			{
-				if (name == c->GetFullName())
+				JStringIterator iter(&name, kJIteratorStartAtEnd);
+				if (iter.Prev("::"))
 				{
-					c->SetAbstract();
-					break;
+					iter.RemoveAllNext();
+					iter.Invalidate();
+
+					for (auto* c : classList)
+					{
+						if (name == c->GetFullName())
+						{
+							c->SetAbstract();
+							break;
+						}
+					}
 				}
 			}
 		}
