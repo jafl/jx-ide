@@ -106,6 +106,9 @@ public:
 		{ };
 
 		SearchResult(const SearchResult&) = delete;
+		SearchResult& operator=(const SearchResult&) = delete;
+		SearchResult(SearchResult &&) = delete;
+		SearchResult const & operator=(SearchResult &&) = delete;
 
 		~SearchResult() override
 		{
@@ -182,6 +185,9 @@ public:
 		{ };
 
 		FileName(const FileName&) = delete;
+		FileName& operator=(const FileName&) = delete;
+		FileName(FileName &&) = delete;
+		FileName const & operator=(FileName &&) = delete;
 
 		~FileName() override
 		{
@@ -211,6 +217,9 @@ public:
 		{ };
 
 		Error(const Error&) = delete;
+		Error& operator=(const Error&) = delete;
+		Error(Error &&) = delete;
+		Error const & operator=(Error &&) = delete;
 
 		~Error() override
 		{

@@ -1205,12 +1205,10 @@ DocumentManager::PrivateOpenBinaryDocument
 	if (GetPrefsManager()->EditWithOtherProgram(fullName, &cmd))
 	{
 		JSimpleProcess::Create(cmd, true);
-//		return false;
 	}
 /*	else if (itsEditBinaryLocalFlag)
 	{
 		// some day...
-//		return true;
 	}
 */	else
 	{
@@ -1222,7 +1220,6 @@ DocumentManager::PrivateOpenBinaryDocument
 		sub.Substitute(&cmd);
 
 		JSimpleProcess::Create(cmd, true);
-//		return false;
 	}
 }
 

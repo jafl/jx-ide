@@ -392,7 +392,7 @@ FileListTable::GetFileName
 	JIndex index;
 	const bool found = IDToIndex(id, &index);
 	assert( found );
-	return *((GetFullNameList()).GetElement(index));
+	return *GetFullNameList().GetElement(index);
 }
 
 /******************************************************************************
@@ -410,9 +410,9 @@ FileListTable::GetFileID
 {
 	JString target(trueName);
 	JIndex index;
-	if ((GetFullNameList()).SearchSorted(&target, JListT::kAnyMatch, &index))
+	if (GetFullNameList().SearchSorted(&target, JListT::kAnyMatch, &index))
 	{
-		*id = (itsFileInfo->GetElement(index)).id;
+		*id = itsFileInfo->GetElement(index).id;
 		return true;
 	}
 	else

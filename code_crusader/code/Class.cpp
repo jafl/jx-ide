@@ -678,7 +678,7 @@ Class::GetAncestorList
 {
 	list->Append(GetFullName());
 
-	for (const auto info : *itsParentInfo)
+	for (const auto& info : *itsParentInfo)
 	{
 		if (info.parent != nullptr)
 		{
