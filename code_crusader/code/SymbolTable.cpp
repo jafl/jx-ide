@@ -157,25 +157,10 @@ SymbolTable::DisplaySelectedSymbols()
 		while (iter.Next(&cell))
 		{
 			const JIndex symbolIndex = CellToSymbolIndex(cell);
-			JIndex lineIndex;
-			const JString& fileName =
-				itsSymbolList->GetFile(symbolIndex, &lineIndex);
-
-			TextDocument* doc;
-			if (GetDocumentManager()->OpenTextDocument(fileName, lineIndex, &doc))
+			if (!itsSymbolDirector->ViewSymbol(symbolIndex))
 			{
-				Language lang;
-				SymbolList::Type type;
-				itsSymbolList->GetSymbol(symbolIndex, &lang, &type);
-
-				if (SymbolList::ShouldSmartScroll(type))
-				{
-					(doc->GetTextEditor())->ScrollForDefinition(lang);
-				}
-			}
-			else
-			{
-				missingFiles += fileName;
+				JIndex lineIndex;
+				missingFiles += itsSymbolList->GetFile(symbolIndex, &lineIndex);
 				missingFiles += "\n";
 			}
 		}

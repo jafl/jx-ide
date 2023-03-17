@@ -80,7 +80,6 @@ static const JUtf8Byte* kSymbolMenuStr =
 	"  | Update                 %k Meta-U                   %i" kUpdateClassTreeAction
 	"%l| Open file              %k Left-dbl-click or Return %i" kOpenSelectedFilesAction
 	"  | Copy selected names    %k Meta-C                   %i" kCopySymbolNameAction
-//	"%l| Find symbol...         %k Meta-F                   %i" kFindFunctionAction
 	"%l| Find selected symbols  %k Meta-dbl-click           %i" kFindSelectionInProjectAction
 	"  | Close symbol browsers                              %i" kCloseAllSymSRAction;
 
@@ -88,7 +87,6 @@ enum
 {
 	kEditSearchPathsCmd = 1, kUpdateCurrentCmd,
 	kOpenFileCmd, kCopySelNamesCmd,
-//	kFindSymbolCmd,
 	kFindSelectedSymbolCmd,
 	kCloseAllSymSRCmd
 };
@@ -503,22 +501,7 @@ SymbolDirector::FindSymbol
 
 	if (symbolList.GetElementCount() == 1 && button != kJXRightButton)
 	{
-		const JIndex symbolIndex = symbolList.GetFirstElement();
-
-		Language lang;
-		SymbolList::Type type;
-		itsSymbolList->GetSymbol(symbolIndex, &lang, &type);
-
-		JIndex lineIndex;
-		const JString& fileName1 =
-			itsSymbolList->GetFile(symbolIndex, &lineIndex);
-
-		TextDocument* doc = nullptr;
-		if (GetDocumentManager()->OpenTextDocument(fileName1, lineIndex, &doc) &&
-			SymbolList::ShouldSmartScroll(type))
-		{
-			doc->GetTextEditor()->ScrollForDefinition(lang);
-		}
+		ViewSymbol(symbolList.GetFirstElement());
 		return true;
 	}
 	else if (foundSymbol)
@@ -534,6 +517,42 @@ SymbolDirector::FindSymbol
 	else
 	{
 		return foundInAnyTree;
+	}
+}
+
+/******************************************************************************
+ ViewSymbol
+
+	Displays all the symbols for the class and its ancestors.
+
+ ******************************************************************************/
+
+bool
+SymbolDirector::ViewSymbol
+	(
+	const JIndex symbolIndex
+	)
+	const
+{
+	JIndex lineIndex;
+	const JString& fileName = itsSymbolList->GetFile(symbolIndex, &lineIndex);
+
+	TextDocument* doc = nullptr;
+	if (GetDocumentManager()->OpenTextDocument(fileName, lineIndex, &doc))
+	{
+		Language lang;
+		SymbolList::Type type;
+		itsSymbolList->GetSymbol(symbolIndex, &lang, &type);
+
+		if (SymbolList::ShouldSmartScroll(type))
+		{
+			doc->GetTextEditor()->ScrollForDefinition(lang);
+		}
+		return true;
+	}
+	else
+	{
+		return false;
 	}
 }
 
@@ -878,11 +897,6 @@ SymbolDirector::UpdateSymbolMenu()
 	itsSymbolMenu->EnableItem(kEditSearchPathsCmd);
 	itsSymbolMenu->EnableItem(kUpdateCurrentCmd);
 
-	if (!itsSymbolList->IsEmpty())
-	{
-//		itsSymbolMenu->EnableItem(kFindSymbolCmd);
-	}
-
 	if (itsSymbolTable->HasSelection())
 	{
 		itsSymbolMenu->EnableItem(kOpenFileCmd);
@@ -927,9 +941,6 @@ SymbolDirector::HandleSymbolMenu
 		itsSymbolTable->CopySelectedSymbolNames();
 	}
 
-//	else if (index == kFindSymbolCmd)
-//		{
-//		}
 	else if (index == kFindSelectedSymbolCmd)
 	{
 		itsSymbolTable->FindSelectedSymbols(kJXRightButton);

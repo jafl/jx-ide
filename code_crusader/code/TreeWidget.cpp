@@ -231,15 +231,11 @@ TreeWidget::FindFunction
 		itsTree->SelectClasses(s, false, true);
 	}
 
-	return ShowSearchResults([button](Class* c)
+	return ShowSearchResults([this, matchList](Class* c)
 	{
-		if (button == kJXLeftButton)
+		if (matchList.GetElementCount() == 1)
 		{
-//			c->ViewSource();
-		}
-		else if (button == kJXMiddleButton)
-		{
-//			c->ViewHeader();
+			itsDirector->GetProjectDoc()->GetSymbolDirector()->ViewSymbol(matchList.GetFirstElement());
 		}
 	},
 	button, raiseTreeWindow, reportNotFound, openFileIfSingleMatch, deselectAll,

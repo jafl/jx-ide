@@ -44,6 +44,7 @@ public:
 	SymbolList*			GetSymbolList() const;
 	bool				FindSymbol(const JString& name, const JString& fileName,
 								   const JXMouseButton button);
+	bool				ViewSymbol(const JIndex symbolIndex) const;
 	bool				FindAllSymbols(const Class* theClass, const bool findDeclaration,
 									   const bool findDefinition);
 
