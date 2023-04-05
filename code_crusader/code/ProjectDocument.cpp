@@ -1427,7 +1427,7 @@ ProjectDocument::GetMenuIcon
 {
 	ProjectDocument* doc;
 	*icon = GetProjectFileIcon(GetDocumentManager()->GetActiveProjectDocument(&doc) &&
-									  doc == const_cast<ProjectDocument*>(this));
+							   doc == const_cast<ProjectDocument*>(this));
 	return true;
 }
 

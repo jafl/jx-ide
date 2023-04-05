@@ -676,17 +676,21 @@ Class::GetAncestorList
 	)
 	const
 {
-	list->Append(GetFullName());
+	for (const auto* s : *list)
+	{
+		if (*s == itsFullName)
+		{
+			return;
+		}
+	}
+
+	list->Append(itsFullName);
 
 	for (const auto& info : *itsParentInfo)
 	{
 		if (info.parent != nullptr)
 		{
 			info.parent->GetAncestorList(list);
-		}
-		else if (info.name != nullptr)
-		{
-			list->Append(*info.name);
 		}
 	}
 }
