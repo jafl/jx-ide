@@ -15,7 +15,7 @@
 #include <jx-af/jx/JXWindow.h>
 #include <jx-af/jx/JXColorManager.h>
 #include <jx-af/jx/jXGlobals.h>
-#include <jx-af/jcore/jFontManager.h>
+#include <jx-af/jcore/JFontManager.h>
 #include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
@@ -132,12 +132,6 @@ PrefsDialog::BuildWindow
 					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 330,500, 70,20);
 	assert( okButton != nullptr );
 
-	itsHelpButton =
-		jnew JXTextButton(JGetString("itsHelpButton::PrefsDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 220,500, 70,20);
-	assert( itsHelpButton != nullptr );
-	itsHelpButton->SetShortcuts(JGetString("itsHelpButton::PrefsDialog::shortcuts::JXLayout"));
-
 // end JXLayout
 
 	window->SetTitle(JGetString("WindowTitle::PrefsDialog"));
@@ -184,25 +178,3 @@ PrefsDialog::GetValues
 	*destructor		= itsDestructorInput->GetText()->GetText();
 	*function		= itsFunctionInput->GetText()->GetText();
 }
-
-/******************************************************************************
- OKToDeactivate (virtual protected)
-
- *****************************************************************************/
-
-bool
-PrefsDialog::OKToDeactivate()
-{
-	if (Cancelled())
-	{
-		return JXModalDialogDirector::OKToDeactivate();
-	}
-
-	return (JXModalDialogDirector::OKToDeactivate() &&
-			(!itsHeaderInput->InputValid()      ||
-			 !itsSourceInput->InputValid()      ||
-			 !itsConstructorInput->InputValid() ||
-			 !itsDestructorInput->InputValid()  ||
-			 !itsFunctionInput->InputValid()));
-}
-

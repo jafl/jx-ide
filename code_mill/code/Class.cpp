@@ -296,12 +296,14 @@ Class::WriteFunction
 		access = "protected";
 	}
 
-	const JString s = GetPrefsManager()->GetFunctionComment(fn->GetFnName(), access);
+	JString s = GetPrefsManager()->GetFunctionComment(fn->GetFnName(), access);
+	s.TrimWhitespace();
 	s.Print(os);
+	os << std::endl << std::endl;
 
 	fn->GetReturnType().Print(os);
 	os << std::endl;
-	
+
 	itsClassName.Print(os);
 	os << "::";
 	fn->GetFnName().Print(os);

@@ -16,7 +16,6 @@
 #include "FunctionTable.h"
 
 #include "globals.h"
-#include "actionDefs.h"
 
 #include <jx-af/jx/JXChoosePathDialog.h>
 #include <jx-af/jx/JXColHeaderWidget.h>

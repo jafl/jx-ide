@@ -11,7 +11,7 @@ SnapGrid: 5
 Name: PrefsDialog
 Width: 510
 Height: 530
-Number of Objects: 14
+Number of Objects: 13
 
 --------------------
 class: FL_BOX
@@ -244,24 +244,6 @@ shortcut:
 resize: FL_RESIZE_ALL
 gravity: FL_SouthWest FL_NoGravity
 name: (okButton)
-callback: 
-argument: 
-
---------------------
-class: FL_BUTTON
-type: FL_NORMAL_BUTTON
-box: 220 500 70 20
-boxtype: FL_UP_BOX
-colors: FL_COL1 FL_COL1
-alignment: FL_ALIGN_CENTER
-style: FL_NORMAL_STYLE
-size: FL_NORMAL_SIZE
-lcol: FL_BLACK
-label: Help
-shortcut: F1
-resize: FL_RESIZE_ALL
-gravity: FL_SouthWest FL_NoGravity
-name: itsHelpButton
 callback: 
 argument: 
 

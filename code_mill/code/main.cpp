@@ -31,15 +31,6 @@ main
 {
 	ParseTextOptions(argc, argv);
 
-#ifdef USE_MDI
-
-	if (!MDIServer::WillBeMDIServer(App::GetAppSignature(), argc, argv))
-	{
-		return 0;
-	}
-
-#endif
-
 	bool displayAbout;
 	JString prevVersStr;
 	auto* app = jnew App(&argc, argv, &displayAbout, &prevVersStr);

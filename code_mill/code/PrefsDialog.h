@@ -30,10 +30,6 @@ public:
 					  JString* constructor, JString* destructor,
 					  JString* function);
 
-protected:
-
-	bool	OKToDeactivate() override;
-
 private:
 
 // begin JXLayout
@@ -43,7 +39,6 @@ private:
 	JXInputField* itsConstructorInput;
 	JXInputField* itsDestructorInput;
 	JXInputField* itsFunctionInput;
-	JXTextButton* itsHelpButton;
 
 // end JXLayout
 
