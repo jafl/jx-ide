@@ -37,13 +37,6 @@ The macros files can be loaded into Code Crusader by using the "Macros..." item 
 The CPM_rules files can be loaded into Code Crusader by using the "Clean paragraph margin rules..." item on the Preferences menu in any Editor window.
 
 
-## Building from source
-
-1. Install the [JX Application Framework](https://github.com/jafl/jx_application_framework),  and set the `JX_ROOT` environment variable to point to its `include` directory.
-1. `makemake`
-1. `make`
-
-
 ## FAQ
 
 For general questions, refer to the [Programs FAQ](https://github.com/jafl/jx_application_framework/blob/master/APPS.md).

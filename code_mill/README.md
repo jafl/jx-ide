@@ -29,13 +29,6 @@ If you download a tar, unpack it, cd into the directory, and run `sudo ./install
 Otherwise, put the program (`code_mill`) in a directory that is on your execution path.  `~/bin` is typically a good choice.
 
 
-## Building from source
-
-1. Install the [JX Application Framework](https://github.com/jafl/jx_application_framework),  and set the `JX_ROOT` environment variable to point to its `include` directory.
-1. `makemake`
-1. `make`
-
-
 ## FAQ
 
 For general questions, refer to the [Programs FAQ](https://github.com/jafl/jx_application_framework/blob/master/APPS.md).
