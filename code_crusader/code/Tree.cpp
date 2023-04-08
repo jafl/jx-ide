@@ -2195,7 +2195,7 @@ Tree::DeriveFromSelected()
 void
 Tree::CollectAncestors
 	(
-	Class* 			cbClass,
+	Class* 				cbClass,
 	JPtrArray<Class>*	list
 	)
 	const

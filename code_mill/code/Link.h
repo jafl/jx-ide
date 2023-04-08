@@ -4,49 +4,33 @@
 	Interface for the Link class
 
 	Copyright (C) 2002 by Glenn W. Bach.
+	Copyright (C) 2023 by John Lindal.
 	
  *****************************************************************************/
 
 #ifndef _H_Link
 #define _H_Link
 
-// Superclass Header
-#include <ace/LSOCK_Stream.h>
-#include <ace/UNIX_Addr.h>
-#include <jx-af/jcore/JMessageProtocol.h>
-
-class JOutPipeStream;
-class JProcess;
+#include "CtagsUser.h"
 
 class Class;
 class MemberFunction;
 
-class Link : public JBroadcaster
+class Link : public CtagsUser
 {
 public:
 
 	Link();
+
 	~Link() override;
 
-	bool	StartCTags();
-	void	ParseClass(Class* list, const JString& filename, const JString& classname);
-	
-private:
-
-	JProcess*		itsCTagsProcess;			// can be nullptr
-
-	JOutPipeStream*	itsOutputLink;				// nullptr if process not started
-	int				itsInputFD;					// -1 if process not started
-
-	Class*	itsClassList;
-	JString	itsCurrentClass;
-	JString	itsCurrentFile;
+	void	ParseClass(Class* list, const JString& fileName, const JString& className);
 
 private:
 
-	void	StopCTags();
-	void	ParseLine(const JString& data);
-	void	ParseInterface(MemberFunction* fn, const JIndex line);
+	void	ReadFile(const JString& fullName, JPtrArray<JString>* lines) const;
+	JString	GetReturnType(const JString& name, const JIndex lineIndex,
+						  const JPtrArray<JString>& lines) const;
 
 	// not allowed
 
@@ -58,15 +42,14 @@ public:
 	static const JUtf8Byte* kFileParsed;
 
 	class FileParsed : public JBroadcaster::Message
-		{
-		public:
+	{
+	public:
 
-			FileParsed()
-				:
-				JBroadcaster::Message(kFileParsed)
-				{ };
-		};
-
+		FileParsed()
+			:
+			JBroadcaster::Message(kFileParsed)
+		{ };
+	};
 };
 
 #endif

@@ -56,11 +56,10 @@ MissingClassName::MainDirector	"Please provide a class name."
 InvalidDestPath::MainDirector	"Please provide a valid destination directory."
 CreateFileFailed::MainDirector	"There was an error creating the files."
 
-UseLabel::MainDirector		"Override"
-RTLabel::MainDirector		"Return Type"
-FNLabel::MainDirector		"Function Name"
-ConstLabel::MainDirector	"Const"
-ArgsLabel::MainDirector		"Arguments"
+UseLabel::MainDirector			"Override"
+ReturnTypeLabel::MainDirector	"Return Type"
+FunctionLabel::MainDirector		"Function Name"
+SignatureLabel::MainDirector	"Signature"
 
 # PrefsDialog
 
@@ -77,15 +76,6 @@ UpgradeNotice::AboutDialog
 
 You have just upgraded from version $vers"
 
-FUNCTION_COMMENT
-
-"/******************************************************************************
- $function (virtual $access)
-
- *****************************************************************************/
-
-"
-
 CLASS_COPYRIGHT
 
 "Copyright (C) $year by $author."
@@ -94,8 +84,6 @@ CLASS_HEADER_COMMENT
 
 "/******************************************************************************
  $class.h
-
-	Interface for the $class class
 
 	$copyright
 	
@@ -106,8 +94,6 @@ CLASS_SOURCE_COMMENT
 
 "/******************************************************************************
  $class.cpp
-
-	<Description>
 
 	BASE CLASS = $base
 
@@ -141,9 +127,10 @@ CLASS_FUNCTION_COMMENT
 
 "
 
-CLASS_HEADER_START
+CLASS_HEADER
 
-"
+"$comment
+
 #ifndef _H_$class
 #define _H_$class
 
@@ -153,24 +140,41 @@ class $class : $base
 {
 public:
 
+	$class();
+
+	~$class() override;
+
+$public
+protected:
+
+$protected
+private:
+
+	$class(const $class& source) = delete;
+	$class& operator=(const $class& source) = delete;
+};
+
+#endif
 "
 
-CLASS_CONSTRUCTOR_DATA
+CLASS_SOURCE
 
-"
+"$comment
+
+#include \"$class.h\"
+
+$ctor
+
 $class::$class()
 	:
-$constructs
+$base
 {
 }
 
-"
+$dtor
 
-CLASS_DESTRUCTOR_DATA
-
-"
 $class::~$class()
 {
 }
 
-"
+$public$protected"

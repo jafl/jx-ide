@@ -314,7 +314,7 @@ CtagsUser::ReadExtensionFlags
 	)
 	const
 {
-	flags->DeleteAll();
+	flags->CleanOut();
 
 	JIgnoreUntil(input, ";\"\t");			// fluff
 

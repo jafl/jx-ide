@@ -22,11 +22,12 @@ class Class : public JPtrArray<MemberFunction>
 public:
 
 	Class();
+
 	~Class() override;
 
-	JSize			GetBaseClassCount() const;
-	void			GetBaseClass(const JIndex index, JString* classname, JString* filename) const;
-	void			AddBaseClass(const JString& classname, const JString& filename);
+	JSize	GetBaseClassCount() const;
+	void	GetBaseClass(const JIndex index, JString* classname, JString* filename) const;
+	void	AddBaseClass(const JString& classname, const JString& filename);
 
 	const JString&	GetClassName() const;
 	void			SetClassName(const JString& classname);
@@ -44,20 +45,16 @@ public:
 	void	WriteProtectedInterface(std::ostream& os);
 	void	WritePublic(std::ostream& os, const bool interface = false);
 	void	WriteProtected(std::ostream& os, const bool interface = false);
-	
-protected:
 
-	void	Receive(JBroadcaster* sender, const Message& message) override;
-	
 private:
 
 	Link*	itsLink;
 
-	JPtrArray<JString>*		itsBaseClasses;
-	JPtrArray<JString>*		itsBaseClassFiles;
+	JPtrArray<JString>*	itsBaseClasses;
+	JPtrArray<JString>*	itsBaseClassFiles;
 
-	JPtrArray<JString>*		itsAncestors;
-	JPtrArray<JString>*		itsAncestorFiles;
+	JPtrArray<JString>*	itsAncestors;
+	JPtrArray<JString>*	itsAncestorFiles;
 
 	JString itsFileName;
 	JString	itsClassName;

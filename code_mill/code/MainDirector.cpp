@@ -67,7 +67,7 @@ MainDirector::MainDirector
 		const JString* argName = argList.GetElement(i);
 		if (*argName == "--output_path" && i < count)
 		{
-			outputPath = *(argList.GetElement(i+1));
+			outputPath = *argList.GetElement(i+1);
 			i++;
 		}
 		else if (!argName->StartsWith("-"))
@@ -254,8 +254,8 @@ MainDirector::BuildWindow
 	assert( image != nullptr );
 	window->SetIcon(image);
 
-	itsTable	=
-		FunctionTable::Create(itsClass,
+	itsTable =
+		jnew FunctionTable(itsClass,
 			scrollbarSet, scrollbarSet->GetScrollEnclosure(),
 			JXWidget::kHElastic, JXWidget::kVElastic,
 			0,kColHeaderHeight, 100,
@@ -273,10 +273,9 @@ MainDirector::BuildWindow
 	widget->FitToEnclosure(true, false);
 
 	widget->SetColTitle(FunctionTable::kFUsed, JGetString("UseLabel::MainDirector"));
-	widget->SetColTitle(FunctionTable::kFReturnType, JGetString("RTLabel::MainDirector"));
-	widget->SetColTitle(FunctionTable::kFFunctionName, JGetString("FNLabel::MainDirector"));
-	widget->SetColTitle(FunctionTable::kFConst, JGetString("ConstLabel::MainDirector"));
-	widget->SetColTitle(FunctionTable::kFArgs, JGetString("ArgsLabel::MainDirector"));
+	widget->SetColTitle(FunctionTable::kFReturnType, JGetString("ReturnTypeLabel::MainDirector"));
+	widget->SetColTitle(FunctionTable::kFFunctionName, JGetString("FunctionLabel::MainDirector"));
+	widget->SetColTitle(FunctionTable::kFSignature, JGetString("SignatureLabel::MainDirector"));
 
 	itsClassInput->SetIsRequired();
 	itsDirInput->GetText()->SetText(outputPath);
@@ -413,18 +412,10 @@ MainDirector::Write()
 		sourcefile	= JCombinePathAndName(dir, sourcename);
 	}
 
-	std::ofstream oh(headerfile.GetBytes());
-	if (!oh.good())
-	{
-		JGetUserNotification()->ReportError(JGetString("CreateFileFailed::MainDirector"));
-		return false;
-	}
-
 	JString bcname, bfname;
-	JString bases;
-	JString basefiles;
-	JString baseconstructors;
-	const JSize count	= itsClass->GetBaseClassCount();
+	JString bases, basefiles, baseconstructors;
+
+	const JSize count = itsClass->GetBaseClassCount();
 	for (JIndex i = 1; i <= count; i++)
 	{
 		itsClass->GetBaseClass(i, &bcname, &bfname);
@@ -446,51 +437,40 @@ MainDirector::Write()
 		}
 	}
 
-	JString s	= GetPrefsManager()->GetHeaderComment(cname);
-	s.Print(oh);
+	// header file
 
-	const JUtf8Byte* map[] =
+	std::ofstream oh(headerfile.GetBytes());
+	if (!oh.good())
 	{
-		"class",    cname.GetBytes(),
-		"basefile", basefiles.GetBytes(),
-		"base",     bases.GetBytes()
+		JGetUserNotification()->ReportError(JGetString("CreateFileFailed::MainDirector"));
+		return false;
+	}
+
+	JString comment = GetPrefsManager()->GetHeaderComment(cname);
+	comment.TrimWhitespace();
+
+	std::ostringstream publicHStream;
+	itsClass->WritePublic(publicHStream, true);
+	std::string publicHFns = publicHStream.str();
+
+	std::ostringstream protectedHStream;
+	itsClass->WriteProtected(protectedHStream, true);
+	std::string protectedHFns = protectedHStream.str();
+
+	const JUtf8Byte* hmap[] =
+	{
+		"comment",   comment.GetBytes(),
+		"class",     cname.GetBytes(),
+		"basefile",  basefiles.GetBytes(),
+		"base",      bases.GetBytes(),
+		"public",    publicHFns.c_str(),
+		"protected", protectedHFns.c_str()
 	};
-	s = JGetString("CLASS_HEADER_START", map, sizeof(map));
-
-	s.Print(oh);
-
-	oh << "\t";
-	cname.Print(oh);
-	oh << "();" << std::endl;
-
-	oh << "\t~";
-	cname.Print(oh);
-	oh << "() override;" << std::endl << std::endl;
-
-	itsClass->WritePublic(oh, true);
-
-	oh << std::endl << std::endl;
-	oh << "protected:" << std::endl << std::endl;
-
-	itsClass->WriteProtected(oh, true);
-
-	oh << std::endl << std::endl << "private:" << std::endl << std::endl;
-
-	oh << "\t";
-	cname.Print(oh);
-	oh << "(const ";
-	cname.Print(oh);
-	oh << "& source);" << std::endl;
-
-	oh << "\tconst ";
-	cname.Print(oh);
-	oh << "& operator=(const ";
-	cname.Print(oh);
-	oh << "& source);" << std::endl;
-
-	oh << std::endl << std::endl << "};" << std::endl << std::endl << "#endif" << std::endl;
+	JGetString("CLASS_HEADER", hmap, sizeof(hmap)).Print(oh);
 
 	oh.close();
+
+	// source file
 
 	std::ofstream os(sourcefile.GetBytes());
 	if (!os.good())
@@ -499,42 +479,34 @@ MainDirector::Write()
 		return false;
 	}
 
-	s	= GetPrefsManager()->GetSourceComment(cname, bases);
-	s.Print(os);
+	comment = GetPrefsManager()->GetSourceComment(cname, bases);
+	comment.TrimWhitespace();
 
-	os << std::endl;
-	os << "#include <";
-	cname.Print(os);
-	os << ".h>" << std::endl << std::endl;
+	JString ctor = GetPrefsManager()->GetConstructorComment();
+	ctor.TrimWhitespace();
 
-	s	= GetPrefsManager()->GetConstructorComment();
-	s.Print(os);
+	JString dtor = GetPrefsManager()->GetDestructorComment();
+	dtor.TrimWhitespace();
 
-	const JUtf8Byte* map2[] =
+	std::ostringstream publicSStream;
+	itsClass->WritePublic(publicSStream);
+	std::string publicSFns = publicSStream.str();
+
+	std::ostringstream protectedSStream;
+	itsClass->WriteProtected(protectedSStream);
+	std::string protectedSFns = protectedSStream.str();
+
+	const JUtf8Byte* smap[] =
 	{
-		"class",      cname.GetBytes(),
-		"constructs", baseconstructors.GetBytes()
+		"comment",   comment.GetBytes(),
+		"class",     cname.GetBytes(),
+		"ctor",      ctor.GetBytes(),
+		"base",      baseconstructors.GetBytes(),
+		"dtor",      dtor.GetBytes(),
+		"public",    publicSFns.c_str(),
+		"protected", protectedSFns.c_str()
 	};
-
-	s = JGetString("CLASS_CONSTRUCTOR_DATA", map2, sizeof(map2));
-
-	s.Print(os);
-
-	s	= GetPrefsManager()->GetDestructorComment();
-	s.Print(os);
-
-	const JUtf8Byte* map3[] =
-	{
-		"class",      cname.GetBytes(),
-		"constructs", baseconstructors.GetBytes()
-	};
-
-	s = JGetString("CLASS_DESTRUCTOR_DATA", map3, sizeof(map3));
-
-	s.Print(os);
-
-	itsClass->WritePublic(os);
-	itsClass->WriteProtected(os);
+	JGetString("CLASS_SOURCE", smap, sizeof(smap)).Print(os);
 
 	os.close();
 

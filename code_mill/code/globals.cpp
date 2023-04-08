@@ -162,3 +162,14 @@ GetVersionStr()
 	};
 	return JGetString("Description::globals", map, sizeof(map));
 }
+
+/******************************************************************************
+ InUpdateThread
+
+ ******************************************************************************/
+
+bool
+InUpdateThread()
+{
+	return false;
+}

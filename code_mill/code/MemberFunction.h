@@ -31,19 +31,14 @@ public:
 	bool			IsUsed() const;
 	void			ShouldBeUsed(const bool use);
 
-	const JString&	GetInterface() const;
-	void			SetInterface(const JString& str);
+	const JString&	GetSignature() const;
+	void			SetSignature(const JString& str);
 
 	const JString&	GetReturnType() const;
 	void			SetReturnType(const JString& type);
 
 	bool			IsConst() const;
 	void			ShouldBeConst(const bool isConst);
-
-	JSize			GetArgCount() const;
-	const JString&	GetArg(const JIndex index) const;
-	const JString&	GetArgString() const;
-	void			AddArg(const JString& arg);
 
 	static JListT::CompareResult
 		CompareFunction(MemberFunction* const & f1, MemberFunction* const & f2);
@@ -56,13 +51,10 @@ private:
 	bool	itsIsProtected;
 	bool	itsIsRequired;	// if base class has pure virtual function
 	bool	itsIsUsed;
-	JString	itsInterface;
+	JString	itsSignature;
 	JString	itsReturnType;
 	bool	itsIsConst;
-	
-	JPtrArray<JString>*	itsArgs;
-	JString				itsArgString;
-	
+
 private:
 
 	// not allowed
@@ -177,15 +169,15 @@ MemberFunction::ShouldBeUsed
 }
 
 /******************************************************************************
- GetInterface (public)
+ GetSignature (public)
 
  ******************************************************************************/
 
 inline const JString&
-MemberFunction::GetInterface()
+MemberFunction::GetSignature()
 	const
 {
-	return itsInterface;
+	return itsSignature;
 }
 
 /******************************************************************************
@@ -238,35 +230,6 @@ MemberFunction::ShouldBeConst
 	)
 {
 	itsIsConst = isConst;
-}
-
-/******************************************************************************
- GetArgCount (public)
-
- ******************************************************************************/
-
-inline JSize
-MemberFunction::GetArgCount()
-	const
-{
-	if (itsArgs == nullptr)
-		{
-		return 0;
-		}
-
-	return itsArgs->GetElementCount();
-}
-
-/******************************************************************************
- GetArgString (public)
-
- ******************************************************************************/
-
-inline const JString&
-MemberFunction::GetArgString()
-	const
-{
-	return itsArgString;
 }
 
 #endif

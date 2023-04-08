@@ -21,16 +21,15 @@ public:
 
 enum
 {
-	kFUsed	= 1,
+	kFUsed = 1,
 	kFReturnType,
 	kFFunctionName,
-	kFConst,
-	kFArgs
+	kFSignature
 };
 
 public:
 
-	static FunctionTable* Create(Class* list,
+	FunctionTable(Class* list,
 			JXScrollbarSet* scrollbarSet, JXContainer* enclosure,
 			const HSizingOption hSizing, const VSizingOption vSizing,
 			const JCoordinate x, const JCoordinate y,
@@ -42,12 +41,6 @@ public:
 
 protected:
 
-	FunctionTable(Class* list,
-			JXScrollbarSet* scrollbarSet, JXContainer* enclosure,
-			const HSizingOption hSizing, const VSizingOption vSizing,
-			const JCoordinate x, const JCoordinate y,
-			const JCoordinate w, const JCoordinate h);
-
 	void	Receive(JBroadcaster* sender, const Message& message) override;
 	void	HandleMouseDown(const JPoint& pt, const JXMouseButton button,
 							const JSize clickCount,
@@ -58,11 +51,10 @@ protected:
 private:
 
 	Class*	itsList;	// we don't own this.
-	bool		itsNeedsAdjustment;
+	bool	itsNeedsAdjustment;
 
 private:
 
-	void	FunctionTableX();
 	void	AdjustColumnWidths();
 };
 #endif

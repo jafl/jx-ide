@@ -9,9 +9,10 @@
 	
  *****************************************************************************/
 
-#include <Class.h>
+#include "Class.h"
 #include "Link.h"
 #include "globals.h"
+#include <jx-af/jcore/JStringIterator.h>
 #include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
@@ -154,8 +155,8 @@ Class::GetAncestor
 	assert(itsAncestorFiles != nullptr);
 	assert(itsAncestorFiles->IndexValid(index));
 	
-	*classname	= *(itsAncestors->GetElement(index));
-	*filename	= *(itsAncestorFiles->GetElement(index));
+	*classname	= *itsAncestors->GetElement(index);
+	*filename	= *itsAncestorFiles->GetElement(index);
 }
 
 /******************************************************************************
@@ -229,14 +230,12 @@ Class::Populate()
 void
 Class::WritePublic
 	(
-	std::ostream& 		os,
-	const bool	interface
+	std::ostream&	os,
+	const bool		interface
 	)
 {
-	const JSize count	= GetElementCount();
-	for (JIndex i = 1; i <= count; i++)
+	for (auto* fn : *this)
 	{
-		MemberFunction* fn	= GetElement(i);
 		if (fn->IsUsed() &&
 			!fn->IsProtected())
 		{
@@ -253,14 +252,12 @@ Class::WritePublic
 void
 Class::WriteProtected
 	(
-	std::ostream& 		os,
-	const bool	interface
+	std::ostream&	os,
+	const bool		interface
 	)
 {
-	const JSize count	= GetElementCount();
-	for (JIndex i = 1; i <= count; i++)
+	for (auto* fn : *this)
 	{
-		MemberFunction* fn	= GetElement(i);
 		if (fn->IsUsed() &&
 			fn->IsProtected())
 		{
@@ -277,15 +274,19 @@ Class::WriteProtected
 void
 Class::WriteFunction
 	(
-	std::ostream& 			os,
+	std::ostream& 	os,
 	MemberFunction*	fn,
 	const bool		interface
 	)
 {
 	if (interface)
 	{
-		fn->GetInterface().Print(os);
-		os << std::endl;
+		os << "\t";
+		fn->GetReturnType().Print(os);
+		os << ' ';
+		fn->GetFnName().Print(os);
+		fn->GetSignature().Print(os);
+		os << " override;" << std::endl;
 		return;
 	}
 
@@ -304,66 +305,58 @@ Class::WriteFunction
 	itsClassName.Print(os);
 	os << "::";
 	fn->GetFnName().Print(os);
-	const JSize count	= fn->GetArgCount();
-	if (count == 0)
+
+	JString sig = fn->GetSignature();
+	JStringIterator iter(&sig);
+	if (!sig.StartsWith("()"))
 	{
-		os << "()" << std::endl;
-	}
-	else
-	{
-		os << "\n\t(\n";
-		for (JIndex i = 1; i <= count; i++)
+		// format arguments
+
+		bool ok = iter.Next("(");
+		assert( ok );
+		iter.Insert("\n\t");
+
+		iter.MoveTo(kJIteratorStartAtEnd, 0);
+		ok = iter.Prev(")");
+		assert( ok );
+		iter.Insert("\n\t");
+
+		ok = iter.Next(")");
+		assert( ok );
+		if (!iter.AtEnd())
 		{
-			os << "\t";
-			fn->GetArg(i).Print(os);
-			if (i != count)
+			JUtf8Character c;
+			while (iter.Next(&c, kJIteratorStay) && c.IsSpace())
 			{
-				os << ",";
+				iter.RemoveNext();
 			}
-			os << std::endl;
+			iter.Insert("\n\t");
 		}
-		os << "\t)" << std::endl;
-	}
-	if (fn->IsConst())
-	{
-		os << "\tconst" << std::endl;
-	}
-	os << "{\n\n}" << std::endl << std::endl;
-}
 
-/******************************************************************************
- Receive (virtual protected)
-
- ******************************************************************************/
-
-void
-Class::Receive
-	(
-	JBroadcaster*	sender,
-	const Message&	message
-	)
-{
-	if (sender == itsLink && message.Is(Link::kFileParsed))
-	{
-/*		const JSize count	= GetElementCount();
-		for (JIndex i = 1; i <= count; i++)
+		iter.MoveTo(kJIteratorStartAtBeginning, 0);
+		while (iter.Next(","))
 		{
-			MemberFunction* fn	= GetElement(i);
-			std::cout << "#########################" << std::endl;
-			std::cout << fn->GetFnName() << '\t' << fn->IsProtected() << '\t' << fn->IsRequired() << '\t' << fn->IsConst() << std::endl;
-			std::cout << "-------------------------" << std::endl;
-			std::cout << fn->GetInterface() << std::endl;
-			std::cout << "-------------------------" << std::endl;
-			const JSize acount	= fn->GetArgCount();
-			for (JIndex i = 1; i <= acount; i++)
-			{
-				std::cout << fn->GetArg(i) << std::endl;
-			}
+			iter.Insert("\n\t");
 		}
-*/		
+
+		// print
+
+		os << "\n\t";
 	}
-	else
+
+	iter.MoveTo(kJIteratorStartAtBeginning, 0);
+	const bool ok = iter.Next(")");
+	assert( ok );
+	if (!iter.AtEnd())
 	{
-		JPtrArray<MemberFunction>::Receive(sender, message);
+		JUtf8Character c;
+		while (iter.Next(&c, kJIteratorStay) && c.IsSpace())
+		{
+			iter.RemoveNext();
+		}
+		iter.Insert("\n\t");
 	}
+
+	sig.Print(os);
+	os << "\n{\n\n}" << std::endl << std::endl;
 }

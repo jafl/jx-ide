@@ -11,10 +11,11 @@
 .cpp ./code/PrefsDialog
 .cpp ./code/MDIServer
 .cpp ./code/AboutDialog
-.cpp ./code/Link
 .cpp ./code/MainDirector
-.cpp ./code/MemberFunction
-.cpp ./code/Class
 .cpp ./code/FunctionTable
+.cpp ./code/Link
+.cpp ./code/Class
+.cpp ./code/MemberFunction
+.cpp ./shared/CtagsUser
 
 literal: ${LIB_DEPS}

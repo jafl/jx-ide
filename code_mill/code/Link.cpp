@@ -7,24 +7,20 @@
 	
  *****************************************************************************/
 
-#include <Link.h>
-#include <MemberFunction.h>
-#include <Class.h>
+#include "Link.h"
+#include "MemberFunction.h"
+#include "Class.h"
 #include "globals.h"
 
-#include <jx-af/jcore/JOutPipeStream.h>
-#include <jx-af/jcore/JProcess.h>
-#include <jx-af/jcore/JRegex.h>
 #include <jx-af/jcore/JStringIterator.h>
-#include <jx-af/jcore/JStringMatch.h>
-
+#include <jx-af/jcore/JRegex.h>
 #include <jx-af/jcore/jDirUtil.h>
 #include <jx-af/jcore/jStreamUtil.h>
-#include <jx-af/jcore/jTime.h>
 #include <jx-af/jcore/jAssert.h>
 
-const JString kCTagsCmd("ctags --filter=yes --filter-terminator=\a -n --fields=kzafimns --format=2 --c-types=p");
-const JUtf8Byte kDelimiter = '\a';
+static const JUtf8Byte* kCtagsArgs =
+	"--format=2 --excmd=number --sort=no "
+	"--c-kinds=p --fields=+a --fields-C++=+{properties}";
 
 // JBroadcaster messages
 
@@ -37,10 +33,8 @@ const JUtf8Byte* Link::kFileParsed = "FileParsed::Link";
 
 Link::Link()
 	:
-	itsCTagsProcess(nullptr),
-	itsClassList(nullptr)
+	CtagsUser(kCtagsArgs)
 {
-	StartCTags();
 }
 
 /******************************************************************************
@@ -50,284 +44,216 @@ Link::Link()
 
 Link::~Link()
 {
-	StopCTags();
 }
 
 /******************************************************************************
- ParseClass (public)
+ ParseClass
 
  ******************************************************************************/
 
 void
 Link::ParseClass
 	(
-	Class*		list,
-	const JString&	filename, 
-	const JString&	classname
+	Class*			list,
+	const JString&	fileName, 
+	const JString&	className
 	)
 {
-	bool ok	= true;
-	if (itsCTagsProcess == nullptr)
+	JString fullName;
+	JConvertToAbsolutePath(fileName, JString::empty, &fullName);
+
+	JString data;
+	Language lang;
+	if (!ProcessFile(fullName, kCHeaderFT, &data, &lang))
 	{
-		ok = StartCTags();
+		return;
 	}
 
-	if (ok)
+	JPtrArray<JString> lines(JPtrArrayT::kDeleteAll);
+	ReadFile(fullName, &lines);
+
+	icharbufstream input(data.GetBytes(), data.GetByteCount());
+
+	input >> std::ws;
+	while (input.peek() == '!')
 	{
-		itsClassList	= list;
-		itsCurrentClass	= classname;
-		itsCurrentFile	= filename;
+		JIgnoreLine(input);
+		input >> std::ws;
+	}
 
-		JConvertToAbsolutePath(filename, JString::empty, &itsCurrentFile);
-
-		itsCurrentFile.Print(*itsOutputLink);
-		*itsOutputLink << std::endl;
-		itsOutputLink->flush();
-
-		bool found = false;
-		JString result = JReadUntil(itsInputFD, kDelimiter, &found);
-
-		if (found)
+	JString name;
+	JStringPtrMap<JString> flags(JPtrArrayT::kDeleteAll);
+	while (true)
+	{
+		input >> std::ws;
+		name = JReadUntil(input, '\t');			// function name
+		if (input.eof() || input.fail())
 		{
-			JPtrArray<JString> lines(JPtrArrayT::kDeleteAll);
-			result.Split("\n", &lines);
+			break;
+		}
 
-			for (const auto* line : lines)
+		JIgnoreUntil(input, '\t');				// file name
+
+		JIndex lineIndex;
+		input >> lineIndex;						// line index
+
+		ReadExtensionFlags(input, &flags);
+
+		if (name == className || name.StartsWith("~"))	// ctor or dtor
+		{
+			continue;
+		}
+
+		JString* s;
+		if (!flags.GetElement("class", &s) || *s != className)
+		{
+			continue;
+		}
+
+		bool required = false, isConst = false;
+
+		if (flags.GetElement("properties", &s))
+		{
+			if (s->Contains("virtual"))
 			{
-				ParseLine(*line);
+				required = s->Contains("pure");
+			}
+			else
+			{
+				continue;
 			}
 
-			Broadcast(FileParsed());
+			if (s->Contains("const"))
+			{
+				isConst = true;
+			}
 		}
+		else
+		{
+			continue;
+		}
+
+		auto* fn = jnew MemberFunction;
+		assert( fn != nullptr );
+
+		fn->SetFnName(name);
+		fn->ShouldBeRequired(required);
+		fn->ShouldBeConst(isConst);
+
+		if (flags.GetElement("access", &s) && *s == "protected")
+		{
+			fn->ShouldBeProtected(true);
+		}
+
+		if (flags.GetElement("signature", &s) && !s->IsEmpty())
+		{
+			fn->SetSignature(*s);
+		}
+
+		fn->SetReturnType(GetReturnType(name, lineIndex, lines));
+
+		// Override entry from base class so function will only be
+		// marked as pure virtual if nobody implemented it.
+
+		bool found;
+		const JIndex i = list->SearchSortedOTI(fn, JListT::kAnyMatch, &found);
+		if (found)
+		{
+			list->DeleteElement(i);
+		}
+		list->InsertAtIndex(i, fn);
+
+		Broadcast(FileParsed());
 	}
 }
 
 /******************************************************************************
- StopCTags (private)
+ ReadFile (private)
 
  *****************************************************************************/
 
 void
-Link::StopCTags()
-{
-	jdelete itsCTagsProcess;
-	itsCTagsProcess = nullptr;
-
-	jdelete itsOutputLink;
-	itsOutputLink	= nullptr;
-	
-	close(itsInputFD);
-	itsInputFD = ACE_INVALID_HANDLE;
-}
-
-/******************************************************************************
- ParseLine (private)
-
- ******************************************************************************/
-
-static const JRegex linePattern("([^[:space:]]+)[[:space:]]+[^[:space:]]+[[:space:]]+[^[:space:]]+[[:space:]]+[^[:space:]]+[[:space:]]+line:([[:digit:]]+)[[:space:]]+class:([^[:space:]]+)[[:space:]]+access:([^[:space:]]+)");
-// index
-// 0 = whole line
-// 1 = class name
-// 2 = line number
-// 3 = base class
-// 4 = access
-
-void
-Link::ParseLine
+Link::ReadFile
 	(
-	const JString& data
+	const JString&		fullName,
+	JPtrArray<JString>*	lines
 	)
+	const
 {
-	// we only care about virtual functions
+	JString data;
+	JReadFile(fullName, &data);
 
-	bool required = false;
-	if (data.Contains("implementation:pure virtual"))
-	{
-		required = true;
-	}
-	else if (!data.Contains("implementation:virtual"))
-	{
-		return;
-	}
-
-	JStringIterator iter(data);
-	if (!iter.Next(linePattern))
-	{
-		return;
-	}
-
-	const JStringMatch& m = iter.GetLastMatch();
-	if (m.GetSubstring(3) != itsCurrentClass)
-	{
-		return;
-	}
-
-	iter.Invalidate();
-
-	JString name = m.GetSubstring(1);
-	if (name.StartsWith("~"))
-	{
-		return;
-	}
-
-	auto* fn = jnew MemberFunction;
-	assert( fn != nullptr );
-
-	fn->SetFnName(name);
-	fn->ShouldBeRequired(required);
-
-	JIndex line;
-	m.GetSubstring(2).ConvertToUInt(&line);
-
-	if (m.GetSubstring(4) == "protected")
-	{
-		fn->ShouldBeProtected(true);
-	}
-
-	ParseInterface(fn, line);
-
-	// Override entry from base class so function will only be
-	// marked as pure virtual if nobody implemented it.
-
-	bool found;
-	const JIndex i = itsClassList->SearchSortedOTI(fn, JListT::kAnyMatch, &found);
-	if (found)
-	{
-		itsClassList->DeleteElement(i);
-	}
-	itsClassList->InsertAtIndex(i, fn);
+	data.Split("\n", lines);
 }
 
 /******************************************************************************
- ParseInterface (private)
-
- ******************************************************************************/
-
-static const JRegex commentPattern("//.*?\n");
-
-void
-Link::ParseInterface
-	(
-	MemberFunction* 	fn,
-	const JIndex 		line
-	)
-{
-	std::ifstream is(itsCurrentFile.GetBytes());
-	if (!is.good())
-	{
-		return;
-	}
-
-	// skip to the function's line
-
-	for (JIndex i=1; i<line; i++)
-	{
-		JIgnoreLine(is);
-	}
-
-	JSize p1 = JTellg(is);
-
-	is >> std::ws;
-	JString str = JReadUntilws(is);
-	if (str != "virtual")
-	{
-		return;
-	}
-
-	is >> std::ws;
-
-	// return type
-	str	= JReadUntilws(is);
-	if (str	== "const")
-	{
-		str	+= " " + JReadUntilws(is);
-	}
-	fn->SetReturnType(str);
-
-	is >> std::ws;
-
-	// this should be the function name
-	str	= JReadUntil(is, '(');
-	str.TrimWhitespace();
-	if (str != fn->GetFnName())
-	{
-		return;
-	}
-
-	// get arguments
-	JUtf8Byte delim;
-	do
-	{
-		if (!JReadUntil(is, 2, ",)", &str, &delim))
-		{
-			return;
-		}
-
-		JStringIterator iter(&str);
-		while (iter.Next(commentPattern))
-		{
-			iter.RemoveLastMatch();
-		}
-		iter.Invalidate();
-
-		str.TrimWhitespace();
-		if (!str.IsEmpty())
-		{
-			fn->AddArg(str);
-		}
-	}
-		while (delim == ',');
-
-	is >> std::ws;
-
-	// is it const;
-	str = JReadUntil(is, ';');
-	if (str.Contains("const"))
-	{
-		fn->ShouldBeConst(true);
-	}
-
-	JSize p2 = JTellg(is);
-	JSeekg(is, p1);
-
-	str = JRead(is, p2 - p1);
-	fn->SetInterface(str);
-}
-
-
-/******************************************************************************
- StartCTags (private)
-
-	We cannot send anything to CTags until it has successfully started.
+ GetReturnType (private)
 
  *****************************************************************************/
 
-bool
-Link::StartCTags()
+static const JRegex startPattern   = "[;:{]";
+static const JRegex commentPattern = "(/\\*(.|\n)+?\\*/)|(//.+?(?=\n))";
+static const JRegex spacePattern   = "[[:space:]]+";
+
+JString
+Link::GetReturnType
+	(
+	const JString&				name,
+	const JIndex				lineIndex,
+	const JPtrArray<JString>&	lines
+	)
+	const
 {
-	assert( itsCTagsProcess == nullptr );
-
-	int toFD, fromFD;
-	const JError err = JProcess::Create(&itsCTagsProcess, kCTagsCmd,
-										kJCreatePipe, &toFD,
-										kJCreatePipe, &fromFD,
-										kJAttachToFromFD, nullptr);
-	if (err.OK())
+	JIndex i = lineIndex;
+	while (i > 1)
 	{
-		itsOutputLink = jnew JOutPipeStream(toFD, true);
-		assert( itsOutputLink != nullptr );
+		i--;
 
-		itsInputFD = fromFD;
-		assert( itsInputFD != ACE_INVALID_HANDLE );
-
-		ListenTo(itsCTagsProcess);
-
-		return true;
+		if (startPattern.Match(*lines.GetElement(i)))
+		{
+			break;
+		}
 	}
-	else
+
+	JString s = *lines.GetElement(i);
 	{
-		JGetStringManager()->ReportError("UnableToStartCTags::Link", err);
-		return false;
+	JStringIterator iter(&s, kJIteratorStartAtEnd);
+	if (iter.Prev(startPattern))
+	{
+		iter.SkipNext();
+		iter.RemoveAllPrev();
 	}
+	}
+
+	for (JIndex j=i+1; j<=lineIndex; j++)
+	{
+		s += "\n";
+		s += *lines.GetElement(j);
+	}
+
+	JStringIterator iter(&s, kJIteratorStartAtEnd);
+	const bool ok = iter.Prev(name);
+	assert( ok );
+	iter.RemoveAllNext();
+
+	iter.MoveTo(kJIteratorStartAtBeginning, 0);
+	while (iter.Next(commentPattern))
+	{
+		iter.RemoveLastMatch();
+	}
+
+	iter.MoveTo(kJIteratorStartAtBeginning, 0);
+	if (iter.Next("virtual"))
+	{
+		iter.RemoveLastMatch();
+	}
+
+	iter.MoveTo(kJIteratorStartAtBeginning, 0);
+	while (iter.Next(spacePattern))
+	{
+		iter.ReplaceLastMatch(" ");
+	}
+
+	s.TrimWhitespace();
+	return s;
 }

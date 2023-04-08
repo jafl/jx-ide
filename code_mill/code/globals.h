@@ -32,4 +32,8 @@ bool	CreateGlobals(App* app);
 void	DeleteGlobals();
 void	CleanUpBeforeSuddenDeath(const JXDocumentManager::SafetySaveReason reason);
 
+	// for code borrowed from code crusader
+
+bool	InUpdateThread();
+
 #endif

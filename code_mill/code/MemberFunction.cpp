@@ -7,10 +7,7 @@
 	
  *****************************************************************************/
 
-#include <MemberFunction.h>
-#include <jx-af/jcore/JPtrArray-JString.h>
-#include <jx-af/jcore/JRegex.h>
-#include <jx-af/jcore/JStringIterator.h>
+#include "MemberFunction.h"
 #include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
@@ -20,12 +17,11 @@
 
 MemberFunction::MemberFunction()
 	:	
-	itsArgs(nullptr)
+	itsIsProtected(false),
+	itsIsRequired(false),
+	itsIsUsed(false),
+	itsIsConst(false)
 {
-	itsIsProtected	= false;
-	itsIsRequired	= false;
-	itsIsUsed		= false;
-	itsIsConst		= false;
 }
 
 /******************************************************************************
@@ -35,7 +31,6 @@ MemberFunction::MemberFunction()
 
 MemberFunction::~MemberFunction()
 {
-	jdelete itsArgs;
 }
 
 /******************************************************************************
@@ -43,64 +38,13 @@ MemberFunction::~MemberFunction()
 
  ******************************************************************************/
 
-static const JRegex pureVirtualPattern = "[[:space:]]*=[[:space:]]*0;$";
-
 void
-MemberFunction::SetInterface
+MemberFunction::SetSignature
 	(
-	const JString& interface
+	const JString& signature
 	)
 {
-	itsInterface = interface;
-
-	JStringIterator iter(&itsInterface);
-	if (iter.Next(pureVirtualPattern))
-	{
-		iter.ReplaceLastMatch(";");
-	}
-}
-
-/******************************************************************************
- GetArg (public)
-
- ******************************************************************************/
-
-const JString&
-MemberFunction::GetArg
-	(
-	const JIndex index
-	)
-	const
-{
-	assert(itsArgs != nullptr);
-	assert(itsArgs->IndexValid(index));
-	return *(itsArgs->GetElement(index));
-}
-
-/******************************************************************************
- AddArg (public)
-
- ******************************************************************************/
-
-void
-MemberFunction::AddArg
-	(
-	const JString& arg
-	)
-{
-	if (itsArgs == nullptr)
-	{
-		itsArgs = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
-		assert(itsArgs != nullptr);
-	}
-
-	itsArgs->Append(arg);
-
-	if (!itsArgString.IsEmpty())
-	{
-		itsArgString += ", ";
-	}
-	itsArgString += arg;
+	itsSignature = signature;
 }
 
 /******************************************************************************
@@ -119,7 +63,8 @@ MemberFunction::CompareFunction
 	const JString& name2 = f2->GetFnName();
 	JListT::CompareResult r =
 		JCompareStringsCaseInsensitive(
-			const_cast<JString*>(&name1), const_cast<JString*>(&name2));
+			const_cast<JString*>(&name1),
+			const_cast<JString*>(&name2));
 	if (r != JListT::kFirstEqualSecond)
 	{
 		return r;
@@ -143,6 +88,6 @@ MemberFunction::CompareFunction
 		return r;
 	}
 
-	return JCompareStringsCaseInsensitive(const_cast<JString*>(&(f1->GetArgString())),
-										  const_cast<JString*>(&(f2->GetArgString())));
+	return JCompareStringsCaseInsensitive(const_cast<JString*>(&f1->GetSignature()),
+										  const_cast<JString*>(&f2->GetSignature()));
 }

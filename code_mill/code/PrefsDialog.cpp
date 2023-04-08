@@ -15,6 +15,7 @@
 #include <jx-af/jx/JXWindow.h>
 #include <jx-af/jx/JXColorManager.h>
 #include <jx-af/jx/jXGlobals.h>
+#include <jx-af/jcore/jFontManager.h>
 #include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
@@ -147,6 +148,13 @@ PrefsDialog::BuildWindow
 	itsConstructorInput->SetIsRequired();
 	itsDestructorInput->SetIsRequired();
 	itsFunctionInput->SetIsRequired();
+
+	const JFont f = JFontManager::GetDefaultMonospaceFont();
+	itsHeaderInput->GetText()->SetDefaultFont(f);
+	itsSourceInput->GetText()->SetDefaultFont(f);
+	itsConstructorInput->GetText()->SetDefaultFont(f);
+	itsDestructorInput->GetText()->SetDefaultFont(f);
+	itsFunctionInput->GetText()->SetDefaultFont(f);
 
 	itsHeaderInput->GetText()->SetText(header);
 	itsSourceInput->GetText()->SetText(source);

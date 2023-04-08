@@ -9,11 +9,11 @@
 
  *****************************************************************************/
 
-#include <FunctionTable.h>
+#include "FunctionTable.h"
 #include "MemberFunction.h"
 #include "Class.h"
 
-#include <globals.h>
+#include "globals.h"
 
 #include <jx-af/jx/JXColHeaderWidget.h>
 #include <jx-af/jx/JXColorManager.h>
@@ -26,41 +26,12 @@
 #include <signal.h>
 #include <jx-af/jcore/jAssert.h>
 
-const JCoordinate kDefColWidth   = 100;
-const JCoordinate kUsedColWidth  = 60;
-const JCoordinate kConstColWidth = 50;
-const JCoordinate kDefRowHeight  = 20;
-const JCoordinate kHMarginWidth  = 5;
-const JCoordinate kBulletRadius  = 4;
-
-/******************************************************************************
- Create (static public)
-
- ******************************************************************************/
-
-FunctionTable*
-FunctionTable::Create
-	(
-	Class* 			list,
-	JXScrollbarSet*		scrollbarSet,
-	JXContainer*		enclosure,
-	const HSizingOption	hSizing,
-	const VSizingOption	vSizing,
-	const JCoordinate	x,
-	const JCoordinate	y,
-	const JCoordinate	w,
-	const JCoordinate	h
-	)
-{
-	auto* table =
-		jnew FunctionTable(list, scrollbarSet, enclosure,
-			hSizing, vSizing, x,y, w,h);
-	assert(table != nullptr);
-
-	table->FunctionTableX();
-
-	return table;
-}
+const JCoordinate kDefColWidth       = 100;
+const JCoordinate kUsedColWidth      = 60;
+const JCoordinate kSignatureColWidth = 200;
+const JCoordinate kDefRowHeight      = 20;
+const JCoordinate kHMarginWidth      = 5;
+const JCoordinate kBulletRadius      = 4;
 
 /******************************************************************************
  Constructor (protected)
@@ -69,7 +40,7 @@ FunctionTable::Create
 
 FunctionTable::FunctionTable
 	(
-	Class* 			list,
+	Class* 				list,
 	JXScrollbarSet*		scrollbarSet,
 	JXContainer*		enclosure,
 	const HSizingOption	hSizing,
@@ -82,23 +53,18 @@ FunctionTable::FunctionTable
 	:
 	JXTable(kDefRowHeight, kDefColWidth, scrollbarSet,
 			enclosure, hSizing, vSizing, x,y, w,h),
-	itsList(list)
+	itsList(list),
+	itsNeedsAdjustment(true)
 {
 	ListenTo(itsList);
-}
 
-void
-FunctionTable::FunctionTableX()
-{
-	itsNeedsAdjustment	= true;
-	
 	SetRowBorderInfo(0, JColorManager::GetBlackColor());
 	SetColBorderInfo(0, JColorManager::GetBlackColor());
-	AppendCols(kFArgs);
+	AppendCols(kFSignature);
 	AppendRows(itsList->GetElementCount());
 	
 	SetColWidth(kFUsed, kUsedColWidth);
-	SetColWidth(kFConst, kConstColWidth);
+	SetColWidth(kFSignature, kSignatureColWidth);
 }
 
 /******************************************************************************
@@ -226,17 +192,9 @@ FunctionTable::TableDrawCell
 	{
 		str	= fn->GetFnName();
 	}
-	else if (cell.x == kFConst)
+	else if (cell.x == kFSignature)
 	{
-		if (fn->IsConst())
-		{
-			str	= "const";
-			halign	= JPainter::HAlign::kCenter;
-		}
-	}
-	else if (cell.x == kFArgs)
-	{
-		str = fn->GetArgString();
+		str = fn->GetSignature();
 	}
 
 	JRect r = rect;
@@ -307,11 +265,11 @@ FunctionTable::AdjustColumnWidths()
 			SetColWidth(kFFunctionName, adjWidth);
 		}
 
-		width    = font.GetStringWidth(fontMgr, fn->GetArgString());
+		width    = font.GetStringWidth(fontMgr, fn->GetSignature());
 		adjWidth = width + 2 * kHMarginWidth;
-		if (adjWidth > GetColWidth(kFArgs))
+		if (adjWidth > GetColWidth(kFSignature))
 		{
-			SetColWidth(kFArgs, adjWidth);
+			SetColWidth(kFSignature, adjWidth);
 		}
 	}
 }
