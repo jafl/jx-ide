@@ -79,7 +79,7 @@ DOCTAG       (async|attribute|author|beta|broadcast|bubbles|category|class|chain
 
 
 
-IDCAR        (_|\p{L})
+IDCAR        (_|\p{L}|#)
 IDCDR        (_|\p{L}|\d)
 
 ID           ({IDCAR}{IDCDR}*)
