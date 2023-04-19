@@ -54,7 +54,7 @@
 #include <jx-af/jx/JXProgressDisplay.h>
 #include <jx-af/jx/JXProgressIndicator.h>
 #include <jx-af/jx/JXWebBrowser.h>
-#include <jx-af/jx/JXTimerTask.h>
+#include <jx-af/jx/JXFunctionTask.h>
 #include <jx-af/jx/JXImage.h>
 
 #include <jx-af/jcore/JNamedTreeList.h>
@@ -782,9 +782,18 @@ ProjectDocument::ProjectDocumentX
 
 	ListenTo(GetPrefsManager());
 
-	itsSaveTask = jnew JXTimerTask(kSafetySavePeriod);
+	itsSaveTask = jnew JXFunctionTask(kSafetySavePeriod, [this]()
+	{
+		bool onDisk;
+		const JString fullName = GetFullName(&onDisk);
+		if (onDisk && !JFileWritable(fullName))
+		{
+			JEditVCS(fullName);
+		}
+		WriteFile(fullName, false);		// always save .jst/.jup, even if .jcc not writable
+		DataReverted(false);			// update file modification time
+	});
 	assert( itsSaveTask != nullptr );
-	ListenTo(itsSaveTask);
 	itsSaveTask->Start();
 
 	itsTreeDirectorList = jnew JPtrArray<TreeDirector>(JPtrArrayT::kForgetAll);
@@ -1763,18 +1772,6 @@ ProjectDocument::Receive
 	else if (sender == itsConfigButton && message.Is(JXButton::kPushed))
 	{
 		EditMakeConfig();
-	}
-
-	else if (sender == itsSaveTask && message.Is(JXTimerTask::kTimerWentOff))
-	{
-		bool onDisk;
-		const JString fullName = GetFullName(&onDisk);
-		if (onDisk && !JFileWritable(fullName))
-		{
-			JEditVCS(fullName);
-		}
-		WriteFile(fullName, false);	// always save .jst/.jup, even if .jcc not writable
-		DataReverted(false);			// update file modification time
 	}
 
 	else if (sender == itsUpdateLink && message.Is(JMessageProtocolT::kMessageReady))

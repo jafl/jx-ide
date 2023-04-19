@@ -21,7 +21,7 @@
 #include "Pipe.h"
 
 class JProcess;
-class JXTimerTask;
+class JXFunctionTask;
 
 namespace jvm {
 
@@ -424,12 +424,12 @@ private:
 	ThreadNode*				itsThreadRoot;
 	JUInt64					itsCurrentThreadID;
 	JPtrArray<ThreadNode>*	itsThreadList;
-	JXTimerTask*			itsCullThreadGroupsTask;
+	JXFunctionTask*			itsCullThreadGroupsTask;
 	JIndex					itsCullThreadGroupIndex;
 
 	JArray<FrameInfo>*	itsFrameList;
 
-	JXTimerTask*	itsJVMDeathTask;
+	JXFunctionTask*	itsJVMDeathTask;
 
 private:
 
@@ -443,6 +443,7 @@ private:
 
 	void	DetachOrKill();
 
+	void	WaitForJVMDeath();
 	void	CleanUpAfterProgramFinished(const JProcess::Finished* info);
 
 	void	CheckNextThreadGroup();

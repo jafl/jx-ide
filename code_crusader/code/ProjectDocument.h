@@ -25,7 +25,7 @@ class JXTextButton;
 class JXToolBar;
 class JXWidgetSet;
 class JXPTPrinter;
-class JXTimerTask;
+class JXFunctionTask;
 class JXProgressDisplay;
 class JXProgressIndicator;
 class ProjectTree;
@@ -162,7 +162,7 @@ private:
 
 	CommandManager*		itsCmdMgr;
 	BuildManager*		itsBuildMgr;
-	JXTimerTask*		itsSaveTask;
+	JXFunctionTask*		itsSaveTask;
 	JString				itsPrintName;
 	mutable JString		itsDocName;					// so GetName() can return JString&
 

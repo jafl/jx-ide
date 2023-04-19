@@ -41,7 +41,7 @@
 #include "MDIServer.h"
 #include "globals.h"
 
-#include <jx-af/jx/JXTimerTask.h>
+#include <jx-af/jx/JXFunctionTask.h>
 #include <jx-af/jx/JXAssert.h>
 #include <jx-af/jcore/JTreeNode.h>
 #include <jx-af/jcore/JStringIterator.h>
@@ -117,10 +117,9 @@ jvm::Link::Link()
 	assert( itsThreadList != nullptr );
 	itsThreadList->SetCompareFunction(ThreadNode::CompareID);
 
-	itsCullThreadGroupsTask = jnew JXTimerTask(10000);
+	itsCullThreadGroupsTask = jnew JXFunctionTask(10000, std::bind(&Link::CheckNextThreadGroup, this));
 	assert( itsCullThreadGroupsTask != nullptr );
 	itsCullThreadGroupsTask->Start();
-	ListenTo(itsCullThreadGroupsTask);
 	itsCullThreadGroupIndex = 1;
 
 	itsFrameList = jnew JArray<FrameInfo>();
@@ -362,19 +361,10 @@ jvm::Link::Receive
 		jdelete itsProcess;
 		itsProcess = nullptr;
 	}
-	else if (sender == itsJVMDeathTask && message.Is(JXTimerTask::kTimerWentOff))
-	{
-		CleanUpAfterProgramFinished(nullptr);
-		itsJVMDeathTask = nullptr;
-	}
 
 	else if (sender == itsThreadTree)
 	{
 		Broadcast(ThreadListChanged());
-	}
-	else if (sender == itsCullThreadGroupsTask && message.Is(JXTimerTask::kTimerWentOff))
-	{
-		CheckNextThreadGroup();
 	}
 
 	else
@@ -457,10 +447,7 @@ jvm::Link::DispatchEventsFromJVM
 
 		if (type == kVMDeathEvent)
 		{
-			itsJVMDeathTask = jnew JXTimerTask(1000, true);
-			assert( itsJVMDeathTask != nullptr );
-			itsJVMDeathTask->Start();
-			ListenTo(itsJVMDeathTask);
+			WaitForJVMDeath();
 		}
 		else if (type == kClassUnloadEvent)
 		{
@@ -2096,6 +2083,26 @@ jvm::Link::Send
 }
 
 /******************************************************************************
+ WaitForJVMDeath
+
+ ******************************************************************************/
+
+void
+jvm::Link::WaitForJVMDeath()
+{
+	assert( itsJVMDeathTask != nullptr );
+
+	itsJVMDeathTask = jnew JXFunctionTask(1000, [this]()
+	{
+		CleanUpAfterProgramFinished(nullptr);
+		itsJVMDeathTask = nullptr;
+	},
+	true);
+	assert( itsJVMDeathTask != nullptr );
+	itsJVMDeathTask->Start();
+}
+
+/******************************************************************************
  CleanUpAfterProgramFinished (private)
 
 	It would be nice to detect "program finished" by *only* listening to
@@ -2169,10 +2176,7 @@ jvm::Link::KillProgram()
 		Socket::Pack4(1, data);
 		itsDebugLink->Send(GetNextTransactionID(), kVirtualMachineCmdSet, kVMExitCmd, data, sizeof(data));
 
-		itsJVMDeathTask = jnew JXTimerTask(1000, true);
-		assert( itsJVMDeathTask != nullptr );
-		itsJVMDeathTask->Start();
-		ListenTo(itsJVMDeathTask);
+		WaitForJVMDeath();
 	}
 }
 
