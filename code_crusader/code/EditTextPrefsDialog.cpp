@@ -37,8 +37,8 @@
 // emulators
 
 static const JUtf8Byte* kEmulatorMenuStr =
-	"  None"
-	"| vi";
+	"  None %r"
+	"| vi   %r";
 
 enum
 {
@@ -492,6 +492,10 @@ EditTextPrefsDialog::Receive
 		SetReverseVideoColors();
 	}
 
+	else if (sender == itsEmulatorMenu && message.Is(JXMenu::kNeedsUpdate))
+	{
+		itsEmulatorMenu->CheckItem(itsEmulatorIndex);
+	}
 	else if (sender == itsEmulatorMenu && message.Is(JXMenu::kItemSelected))
 	{
 		const auto* info =
