@@ -13,10 +13,10 @@
 #include <jx-af/jx/JXFileDocument.h>
 #include "DirList.h"
 #include "TextFileType.h"
-#include "ProjectTable.h"		// need defn of PathType, DropFileAction
-#include "BuildManager.h"		// need defn of MakefileMethod
-#include "ExecOutputDocument.h"	// need defn of RecordLink
-#include "CommandManager.h"		// need defn of CmdList
+#include "ProjectTable.h"		// for PathType, DropFileAction
+#include "BuildManager.h"		// for MakefileMethod
+#include "ExecOutputDocument.h"	// for RecordLink
+#include "CommandManager.h"		// for CmdList
 
 class JProcess;
 class JPTPrinter;

@@ -12,7 +12,7 @@
 
 #include <jx-af/jx/JXModalDialogDirector.h>
 #include <jx-af/jcore/JPrefObject.h>
-#include "PrefsManager.h"		// need definition of CRMRuleListInfo
+#include "PrefsManager.h"		// for CRMRuleListInfo
 
 class JXTextButton;
 class JXVertPartition;

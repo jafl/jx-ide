@@ -12,7 +12,7 @@
 
 #include <jx-af/jx/JXWindowDirector.h>
 #include <jx-af/jcore/JPrefObject.h>
-#include "PrefsManager.h"		// need definition of FileTypesChanged
+#include "PrefsManager.h"		// for FileTypesChanged
 #include <jx-af/jx/JXButtonStates.h>
 
 class JProgressDisplay;

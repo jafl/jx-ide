@@ -192,7 +192,7 @@ gdb::GetThreadsCmd::ExtractLocation
 
  ******************************************************************************/
 
-JListT::CompareResult
+std::weak_ordering
 gdb::GetThreadsCmd::CompareThreadIndices
 	(
 	JString* const & l1,
@@ -203,7 +203,7 @@ gdb::GetThreadsCmd::CompareThreadIndices
 	if (!ExtractThreadIndex(*l1, &i1) ||
 		!ExtractThreadIndex(*l2, &i1))
 	{
-		return JListT::kFirstLessSecond;
+		return std::weak_ordering::less;
 	}
 	else
 	{

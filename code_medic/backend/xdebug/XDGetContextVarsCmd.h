@@ -9,7 +9,7 @@
 #define _H_XDGetContextVarsCmd
 
 #include "Command.h"
-#include <jx-af/jcore/jXMLUtil.h>	// need defn of xmlNode
+#include <jx-af/jcore/jXMLUtil.h>	// for xmlNode
 
 class VarNode;
 

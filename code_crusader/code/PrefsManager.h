@@ -11,7 +11,7 @@
 #include <jx-af/jx/JXPrefsManager.h>
 #include "TextFileType.h"
 #include "Emulator.h"
-#include <jx-af/jcore/JStyledText.h>		// need definition of CRMRule
+#include <jx-af/jcore/JStyledText.h>		// for CRMRule
 
 class JRegex;
 class JPoint;
@@ -240,7 +240,7 @@ public:
 
 	static JUtf8ByteRange	GetLiteralPrefixRange(const JString& regexStr);
 
-	static JListT::CompareResult
+	static std::weak_ordering
 		CompareFileTypeSpec(const FileTypeInfo& i1, const FileTypeInfo& i2);
 
 	struct MacroSetInfo
@@ -352,11 +352,11 @@ private:
 	void	ReadStaticGlobalPrefs(const JFileVersion vers) const;
 	void	WriteStaticGlobalPrefs();
 
-	static JListT::CompareResult
+	static std::weak_ordering
 		CompareFileTypeSpecAndLength(const FileTypeInfo& i1, const FileTypeInfo& i2);
-	static JListT::CompareResult
+	static std::weak_ordering
 		CompareMacroNames(const MacroSetInfo& i1, const MacroSetInfo& i2);
-	static JListT::CompareResult
+	static std::weak_ordering
 		CompareCRMNames(const CRMRuleListInfo& i1, const CRMRuleListInfo& i2);
 
 public:

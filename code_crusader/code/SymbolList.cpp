@@ -199,7 +199,7 @@ SymbolList::FindSymbol
 		for (JIndex i=startIndex; i<=count; i++)
 		{
 			const SymbolInfo info = itsSymbolList->GetElement(i);
-			if (CompareSymbols(target, info) != JListT::kFirstEqualSecond)
+			if (CompareSymbols(target, info) != std::weak_ordering::equivalent)
 			{
 				break;
 			}
@@ -535,7 +535,7 @@ SymbolList::ClosestMatch
 		else
 		{
 			assert_msg( 0, "SymbolList.cpp:ClosestMatchCompare::Compare() didn't get a zero" );
-			return JListT::kFirstEqualSecond;
+			return std::weak_ordering::equivalent;
 		}
 	});
 
@@ -1023,7 +1023,7 @@ SymbolList::Receive
 
  ******************************************************************************/
 
-JListT::CompareResult
+std::weak_ordering
 SymbolList::CompareSymbols
 	(
 	const SymbolInfo& s1,
@@ -1038,34 +1038,31 @@ SymbolList::CompareSymbols
 
  ******************************************************************************/
 
-JListT::CompareResult
+std::weak_ordering
 SymbolList::CompareSymbolsAndTypes
 	(
 	const SymbolInfo& s1,
 	const SymbolInfo& s2
 	)
 {
-	const JListT::CompareResult result =
+	const std::weak_ordering result =
 		JCompareStringsCaseInsensitive(s1.name, s2.name);
 
-	if (result == JListT::kFirstEqualSecond)
+	if (result != std::weak_ordering::equivalent)
 	{
-		if (s1.type < s2.type)
-		{
-			return JListT::kFirstLessSecond;
-		}
-		else if (s1.type == s2.type)
-		{
-			return JListT::kFirstEqualSecond;
-		}
-		else
-		{
-			return JListT::kFirstGreaterSecond;
-		}
+		return result;
+	}
+	else if (s1.type < s2.type)
+	{
+		return std::weak_ordering::less;
+	}
+	else if (s1.type > s2.type)
+	{
+		return std::weak_ordering::greater;
 	}
 	else
 	{
-		return result;
+		return std::weak_ordering::equivalent;
 	}
 }
 

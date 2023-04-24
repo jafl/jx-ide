@@ -40,7 +40,7 @@ public:
 	bool			IsConst() const;
 	void			ShouldBeConst(const bool isConst);
 
-	static JListT::CompareResult
+	static std::weak_ordering
 		CompareFunction(MemberFunction* const & f1, MemberFunction* const & f2);
 
 protected:

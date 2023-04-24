@@ -77,6 +77,8 @@ yyprint
 	itsGroupDepth   = 0;
 	itsGDBErrorFlag = false;
 //	yydebug         = 1;
+
+if (yynerrs) ;	// keep C++20 happy
 }
 
 %%

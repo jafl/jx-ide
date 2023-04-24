@@ -2212,7 +2212,7 @@ Tree::CollectAncestors
 			for (JIndex j=1; j<=count; j++)
 			{
 				if (CompareClassFullNames(parent, list->GetElement(j)) ==
-					JListT::kFirstEqualSecond)
+					std::weak_ordering::equivalent)
 				{
 					found = true;
 				}
@@ -2544,7 +2544,7 @@ Tree::GetLineHeight()
 
  ******************************************************************************/
 
-JListT::CompareResult
+std::weak_ordering
 Tree::CompareClassFullNames
 	(
 	Class* const & c1,
@@ -2561,7 +2561,7 @@ Tree::CompareClassFullNames
 
  ******************************************************************************/
 
-JListT::CompareResult
+std::weak_ordering
 Tree::CompareClassNames
 	(
 	Class* const & c1,
@@ -2580,7 +2580,7 @@ Tree::CompareClassNames
 
  ******************************************************************************/
 
-JListT::CompareResult
+std::weak_ordering
 Tree::CompareRGClassPtrs
 	(
 	const RootGeom& i1,
@@ -2589,15 +2589,15 @@ Tree::CompareRGClassPtrs
 {
 	if (i1.root < i2.root)
 	{
-		return JListT::kFirstLessSecond;
+		return std::weak_ordering::less;
 	}
-	else if (i1.root == i2.root)
+	else if (i1.root > i2.root)
 	{
-		return JListT::kFirstEqualSecond;
+		return std::weak_ordering::greater;
 	}
 	else
 	{
-		return JListT::kFirstGreaterSecond;
+		return std::weak_ordering::equivalent;
 	}
 }
 
@@ -2608,7 +2608,7 @@ Tree::CompareRGClassPtrs
 
  ******************************************************************************/
 
-JListT::CompareResult
+std::weak_ordering
 Tree::CompareRSContent
 	(
 	const RootSubset& s1,
@@ -2621,15 +2621,15 @@ Tree::CompareRSContent
 	const JSize count = (s1.content)->GetElementCount();
 	for (JIndex i=1; i<=count; i++, b1++, b2++)
 	{
-		if (!(*b1) && *b2)
+		if (!*b1 && *b2)
 		{
-			return JListT::kFirstLessSecond;
+			return std::weak_ordering::less;
 		}
-		else if (*b1 && !(*b2))
+		else if (*b1 && !*b2)
 		{
-			return JListT::kFirstGreaterSecond;
+			return std::weak_ordering::greater;
 		}
 	}
 
-	return JListT::kFirstEqualSecond;
+	return std::weak_ordering::equivalent;
 }

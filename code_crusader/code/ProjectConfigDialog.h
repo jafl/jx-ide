@@ -9,7 +9,7 @@
 #define _H_ProjectConfigDialog
 
 #include <jx-af/jx/JXModalDialogDirector.h>
-#include "BuildManager.h"		// need defn on MakefileMethod
+#include "BuildManager.h"		// need definition on MakefileMethod
 
 class JString;
 class JXTextButton;

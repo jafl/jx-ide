@@ -10,7 +10,7 @@
 
 #include <jx-af/jcore/JContainer.h>
 #include "CtagsUser.h"
-#include "PrefsManager.h"		// need definition of FileTypesChanged
+#include "PrefsManager.h"		// for FileTypesChanged
 #include <jx-af/jcore/JFAID.h>
 #include <jx-af/jcore/JArray.h>
 
@@ -22,10 +22,7 @@ class SymbolList : public JContainer, public CtagsUser
 {
 public:
 
-	enum
-	{
-		kBlockSize = 2048
-	};
+	static const JSize kBlockSize = 2048;
 
 	struct ContextNamespace
 	{
@@ -161,10 +158,10 @@ private:
 
 	void	Sort(JArray<JIndex>* list) const;
 
-	static JListT::CompareResult
+	static std::weak_ordering
 	CompareSymbols(const SymbolInfo& s1, const SymbolInfo& s2);
 
-	static JListT::CompareResult
+	static std::weak_ordering
 	CompareSymbolsAndTypes(const SymbolInfo& s1, const SymbolInfo& s2);
 
 	// not allowed

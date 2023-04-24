@@ -84,7 +84,7 @@ CRMRuleListTable::CRMRuleListTable
 	}
 }
 
-JListT::CompareResult
+std::weak_ordering
 CRMRuleListTable::CompareNames
 	(
 	const PrefsManager::CRMRuleListInfo& i1,

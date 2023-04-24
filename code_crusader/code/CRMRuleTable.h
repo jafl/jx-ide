@@ -11,7 +11,7 @@
 #define _H_CRMRuleTable
 
 #include <jx-af/jx/JXStringTable.h>
-#include <jx-af/jcore/JStyledText.h>		// need definition of CRMRuleList
+#include <jx-af/jcore/JStyledText.h>		// for CRMRuleList
 
 class JXTextButton;
 class JXColHeaderWidget;

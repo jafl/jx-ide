@@ -736,7 +736,7 @@ BreakpointTable::SetColTitles
 
  ******************************************************************************/
 
-JListT::CompareResult
+std::weak_ordering
 BreakpointTable::CompareBreakpointLocations
 	(
 	Breakpoint* const & bp1,
@@ -746,26 +746,26 @@ BreakpointTable::CompareBreakpointLocations
 	int r = JString::Compare(
 		bp1->GetFileName().GetBytes() + fileNameOffset(bp1),
 		bp2->GetFileName().GetBytes() + fileNameOffset(bp2), JString::kIgnoreCase);
-	if (r > 0)
+	if (r < 0)
 	{
-		return JListT::kFirstGreaterSecond;
+		return std::weak_ordering::less;
 	}
-	else if (r < 0)
+	else if (r > 0)
 	{
-		return JListT::kFirstLessSecond;
+		return std::weak_ordering::greater;
 	}
 
-	JListT::CompareResult r1 =
+	std::weak_ordering r1 =
 		JCompareIndices(bp1->GetLineNumber(), bp2->GetLineNumber());
 
-	if (r1 == JListT::kFirstEqualSecond)
+	if (r1 == std::weak_ordering::equivalent)
 	{
 		r1 = JCompareStringsCaseInsensitive(
 				const_cast<JString*>(&(bp1->GetFunctionName())),
 				const_cast<JString*>(&(bp2->GetFunctionName())));
 	}
 
-	if (r1 == JListT::kFirstEqualSecond)
+	if (r1 == std::weak_ordering::equivalent)
 	{
 		JString c1, c2;
 		bp1->GetCondition(&c1);

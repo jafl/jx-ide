@@ -38,7 +38,7 @@ protected:
 
 private:
 
-	static JListT::CompareResult
+	static std::weak_ordering
 		CompareBreakpointLines(Breakpoint* const & bp1, Breakpoint* const & bp2);
 };
 

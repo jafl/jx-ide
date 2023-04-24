@@ -11,7 +11,7 @@
 #include <jx-af/jx/JXWindowDirector.h>
 #include <jx-af/jcore/JPrefObject.h>
 #include <jx-af/jcore/JFAID.h>
-#include "PrefsManager.h"		// need definition of FileTypesChanged
+#include "PrefsManager.h"		// for FileTypesChanged
 
 struct JXPM;
 class JXTextMenu;

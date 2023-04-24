@@ -8,7 +8,7 @@
 #ifndef _H_Command
 #define _H_Command
 
-#include "CommandManager.h"	// need defn of CmdInfo
+#include "CommandManager.h"	// for CmdInfo
 #include <jx-af/jcore/JPtrArray-JString.h>
 
 class JProcess;

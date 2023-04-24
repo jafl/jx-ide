@@ -52,7 +52,7 @@ MemberFunction::SetSignature
 
  ******************************************************************************/
 
-JListT::CompareResult
+std::weak_ordering
 MemberFunction::CompareFunction
 	(
 	MemberFunction* const & f1,
@@ -61,11 +61,11 @@ MemberFunction::CompareFunction
 {
 	const JString& name1 = f1->GetFnName();
 	const JString& name2 = f2->GetFnName();
-	JListT::CompareResult r =
+	std::weak_ordering r =
 		JCompareStringsCaseInsensitive(
 			const_cast<JString*>(&name1),
 			const_cast<JString*>(&name2));
-	if (r != JListT::kFirstEqualSecond)
+	if (r != std::weak_ordering::equivalent)
 	{
 		return r;
 	}
@@ -74,16 +74,16 @@ MemberFunction::CompareFunction
 	{
 		if (f1->IsConst())
 		{
-			return JListT::kFirstLessSecond;
+			return std::weak_ordering::less;
 		}
-		return JListT::kFirstGreaterSecond;
+		return std::weak_ordering::greater;
 	}
 
 	const JString& type1 = f1->GetReturnType();
 	const JString& type2 = f2->GetReturnType();
 	r = JCompareStringsCaseInsensitive(const_cast<JString*>(&type1),
 									   const_cast<JString*>(&type2));
-	if (r != JListT::kFirstEqualSecond)
+	if (r != std::weak_ordering::equivalent)
 	{
 		return r;
 	}

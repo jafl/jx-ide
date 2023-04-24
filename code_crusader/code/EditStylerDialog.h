@@ -11,7 +11,7 @@
 #define _H_EditStylerDialog
 
 #include <jx-af/jx/JXModalDialogDirector.h>
-#include "StylerBase.h"		// need definition of WordStyle
+#include "StylerBase.h"		// for WordStyle
 
 class JXTextButton;
 class JXTextCheckbox;

@@ -27,9 +27,9 @@ struct DirInfo
 		path(p), recurse(r), projIndex(0)
 	{ };
 
-	static JListT::CompareResult
+	static std::weak_ordering
 		ComparePathNames(const DirInfo& i1, const DirInfo& i2);
-	static JListT::CompareResult
+	static std::weak_ordering
 		CompareProjIndex(const DirInfo& i1, const DirInfo& i2);
 };
 
@@ -83,7 +83,7 @@ private:
 
 // global functions for working with DirList
 
-int operator==(const DirList& l1, const DirList& l2);
+bool operator==(const DirList& l1, const DirList& l2);
 
 
 /******************************************************************************
@@ -107,21 +107,6 @@ DirList::GetBasePath()
 	const
 {
 	return itsBasePath;
-}
-
-/******************************************************************************
- operator!=
-
- ******************************************************************************/
-
-inline int
-operator!=
-	(
-	const DirList& l1,
-	const DirList& l2
-	)
-{
-	return !(l1 == l2);
 }
 
 #endif

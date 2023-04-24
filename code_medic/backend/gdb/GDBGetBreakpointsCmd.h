@@ -9,7 +9,7 @@
 #define _H_GDBGetBreakpointsCmd
 
 #include "GetBreakpointsCmd.h"
-#include "Breakpoint.h"		// need defn of Action
+#include "Breakpoint.h"		// for Action
 #include <jx-af/jcore/JStringPtrMap.h>
 
 namespace gdb {

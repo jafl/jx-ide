@@ -9,7 +9,7 @@
 #define _H_FileTypeTable
 
 #include <jx-af/jx/JXEditTable.h>
-#include "PrefsManager.h"		// need definition of FileTypeInfo
+#include "PrefsManager.h"		// for FileTypeInfo
 
 class JXTextButton;
 class JXTextMenu;

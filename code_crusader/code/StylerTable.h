@@ -12,7 +12,7 @@
 
 #include <jx-af/jx/JXStringTable.h>
 #include <jx-af/jcore/JStringMap.h>
-#include "StylerBase.h"		// need definition of WordStyle
+#include "StylerBase.h"		// for WordStyle
 
 class JXTextButton;
 class StylerTableMenu;

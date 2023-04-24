@@ -452,9 +452,9 @@ private:
 	bool	FindSourceForClass(const JString& signature, JString* fullName);
 	bool	GetFrame(const JUInt64 id, JIndex* index) const;
 
-	static JListT::CompareResult	CompareClassIDs(const ClassInfo& c1, const ClassInfo& c2);
-	static JListT::CompareResult	CompareClassNames(const ClassInfo& c1, const ClassInfo& c2);
-	static JListT::CompareResult	CompareMethodIDs(const MethodInfo& m1, const MethodInfo& m2);
+	static std::weak_ordering	CompareClassIDs(const ClassInfo& c1, const ClassInfo& c2);
+	static std::weak_ordering	CompareClassNames(const ClassInfo& c1, const ClassInfo& c2);
+	static std::weak_ordering	CompareMethodIDs(const MethodInfo& m1, const MethodInfo& m2);
 
 public:
 

@@ -36,7 +36,7 @@ private:
 
 private:
 
-	static JListT::CompareResult
+	static std::weak_ordering
 		CompareThreadIndices(JString* const & l1, JString* const & l2);
 };
 

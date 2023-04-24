@@ -11,7 +11,7 @@
 #define _H_ExecOutputDocument
 
 #include "CommandOutputDocument.h"
-#include <jx-af/jcore/JProcess.h>			// need definition of JProcess::Finished
+#include <jx-af/jcore/JProcess.h>			// for JProcess::Finished
 #include <ace/LSOCK_Stream.h>
 #include <ace/UNIX_Addr.h>
 #include <jx-af/jcore/JMessageProtocol.h>	// template; requires ace includes

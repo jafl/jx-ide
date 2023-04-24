@@ -10,7 +10,7 @@
 
 #include <jx-af/jx/JXEditTable.h>
 #include <jx-af/jcore/JFont.h>
-#include "CommandManager.h"	// need defn of CmdInfo
+#include "CommandManager.h"	// for CmdInfo
 
 class JXTextButton;
 class JXTextMenu;

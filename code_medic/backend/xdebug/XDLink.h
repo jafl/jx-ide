@@ -9,7 +9,7 @@
 #define _H_XDLink
 
 #include "Link.h"
-#include <jx-af/jcore/jXMLUtil.h>	// need defn of xmlNode
+#include <jx-af/jcore/jXMLUtil.h>	// for xmlNode
 
 #include <ace/Acceptor.h>
 #include <ace/SOCK_Acceptor.h>

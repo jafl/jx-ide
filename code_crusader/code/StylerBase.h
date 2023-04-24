@@ -83,7 +83,7 @@ private:
 
 	void	SetDefaultFontColor(const JColorID color);
 
-	static JListT::CompareResult
+	static std::weak_ordering
 		CompareWords(const WordStyle& w1, const WordStyle& w2);
 
 public:

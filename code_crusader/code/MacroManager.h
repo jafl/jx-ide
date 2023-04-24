@@ -66,7 +66,7 @@ private:
 
 	void	MacroManagerX();
 
-	static JListT::CompareResult
+	static std::weak_ordering
 		CompareMacros(const MacroInfo& m1, const MacroInfo& m2);
 
 	// not allowed

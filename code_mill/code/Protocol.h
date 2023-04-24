@@ -17,10 +17,7 @@ class ProtocolT
 {
 public:
 
-	enum
-		{
-		kDefaultBufferSize = 10000
-		};
+	static const JSize kDefaultBufferSize = 10000;
 
 public:
 

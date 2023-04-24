@@ -10,7 +10,7 @@
 
 #include <jx-af/jx/JXModalDialogDirector.h>
 #include <jx-af/jcore/JPrefObject.h>
-#include "CommandManager.h"	// need defn of CmdInfo
+#include "CommandManager.h"	// for CmdInfo
 #include <jx-af/jcore/JString.h>
 
 class JXTextButton;

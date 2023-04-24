@@ -44,7 +44,7 @@ public:
 	void	BreakpointFileNameResolved(Breakpoint* bp);
 	void	BreakpointFileNameInvalid(Breakpoint* bp);
 
-	static JListT::CompareResult
+	static std::weak_ordering
 		CompareBreakpointLocations(Breakpoint* const & bp1,
 								   Breakpoint* const & bp2);
 

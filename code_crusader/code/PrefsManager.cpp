@@ -1837,7 +1837,7 @@ PrefsManager::FileTypeInfo::Free()
 
  ******************************************************************************/
 
-JListT::CompareResult
+std::weak_ordering
 PrefsManager::CompareFileTypeSpec
 	(
 	const FileTypeInfo& i1,
@@ -1849,11 +1849,11 @@ PrefsManager::CompareFileTypeSpec
 
 	if (c1 == kContentRegexMarker && c2 != kContentRegexMarker)
 	{
-		return JListT::kFirstLessSecond;
+		return std::weak_ordering::less;
 	}
 	else if (c1 != kContentRegexMarker && c2 == kContentRegexMarker)
 	{
-		return JListT::kFirstGreaterSecond;
+		return std::weak_ordering::greater;
 	}
 	else
 	{
@@ -1869,7 +1869,7 @@ PrefsManager::CompareFileTypeSpec
 
  ******************************************************************************/
 
-JListT::CompareResult
+std::weak_ordering
 PrefsManager::CompareFileTypeSpecAndLength
 	(
 	const FileTypeInfo& i1,
@@ -1881,21 +1881,21 @@ PrefsManager::CompareFileTypeSpecAndLength
 
 	if (c1 == kContentRegexMarker && c2 != kContentRegexMarker)
 	{
-		return JListT::kFirstLessSecond;
+		return std::weak_ordering::less;
 	}
 	else if (c1 != kContentRegexMarker && c2 == kContentRegexMarker)
 	{
-		return JListT::kFirstGreaterSecond;
+		return std::weak_ordering::greater;
 	}
 	else if (i1.suffix->Contains(kNameRegexMarker) &&
 			 !i2.suffix->Contains(kNameRegexMarker))
 	{
-		return JListT::kFirstLessSecond;
+		return std::weak_ordering::less;
 	}
 	else if (!i1.suffix->Contains(kNameRegexMarker) &&
 			 i2.suffix->Contains(kNameRegexMarker))
 	{
-		return JListT::kFirstGreaterSecond;
+		return std::weak_ordering::greater;
 	}
 	else
 	{

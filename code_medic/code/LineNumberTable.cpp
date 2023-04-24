@@ -234,7 +234,7 @@ LineNumberTable::SetExecutionPoint
 
  ******************************************************************************/
 
-JListT::CompareResult
+std::weak_ordering
 LineNumberTable::CompareBreakpointLines
 	(
 	Breakpoint* const & bp1,

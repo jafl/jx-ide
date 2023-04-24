@@ -11,7 +11,7 @@
 #define _H_EditProjPrefsDialog
 
 #include <jx-af/jx/JXModalDialogDirector.h>
-#include "ProjectTable.h"		// need definition of DropFileAction
+#include "ProjectTable.h"		// for DropFileAction
 
 class JXTextButton;
 class JXTextCheckbox;

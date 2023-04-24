@@ -72,7 +72,7 @@ private:
 
 	bool	FindBreakpointByDebuggerIndex(const Breakpoint* bp, JIndex* index) const;
 
-	static JListT::CompareResult
+	static std::weak_ordering
 		CompareBreakpointLocations(Breakpoint* const & bp1,
 								   Breakpoint* const & bp2);
 };

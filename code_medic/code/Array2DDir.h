@@ -9,7 +9,7 @@
 #define _H_Array2DDir
 
 #include <jx-af/jx/JXWindowDirector.h>
-#include "MemoryDir.h"	// need defn of DisplayType
+#include "MemoryDir.h"	// for DisplayType
 #include <jx-af/jcore/JString.h>
 #include <jx-af/jcore/JRange.h>
 #include <jx-af/jcore/JPoint.h>

@@ -127,7 +127,7 @@ jvm::ThreadNode::FindParent
 
  ******************************************************************************/
 
-JListT::CompareResult
+std::weak_ordering
 jvm::ThreadNode::CompareID
 	(
 	ThreadNode* const & t1,

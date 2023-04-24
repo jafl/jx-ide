@@ -9,7 +9,7 @@
 #define _H_ChooseRelativeFileDialog
 
 #include <jx-af/jx/JXChooseFileDialog.h>
-#include "ProjectTable.h"		// need definition of PathType
+#include "ProjectTable.h"		// for PathType
 
 class JXRadioGroup;
 

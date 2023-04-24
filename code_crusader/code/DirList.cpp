@@ -345,7 +345,7 @@ DirList::WriteDirectories
 
  ******************************************************************************/
 
-int
+bool
 operator==
 	(
 	const DirList& l1,
@@ -400,7 +400,7 @@ DirInfoList::DeleteAll()
 
  ******************************************************************************/
 
-JListT::CompareResult
+std::weak_ordering
 DirInfo::ComparePathNames
 	(
 	const DirInfo& i1,
@@ -415,7 +415,7 @@ DirInfo::ComparePathNames
 
  ******************************************************************************/
 
-JListT::CompareResult
+std::weak_ordering
 DirInfo::CompareProjIndex
 	(
 	const DirInfo& i1,
@@ -424,11 +424,11 @@ DirInfo::CompareProjIndex
 {
 	if (i1.projIndex < i2.projIndex)
 	{
-		return JListT::kFirstLessSecond;
+		return std::weak_ordering::less;
 	}
 	else if (i1.projIndex > i2.projIndex)
 	{
-		return JListT::kFirstGreaterSecond;
+		return std::weak_ordering::greater;
 	}
 	else
 	{

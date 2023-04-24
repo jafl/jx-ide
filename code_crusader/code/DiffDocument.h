@@ -9,7 +9,7 @@
 #define _H_DiffDocument
 
 #include "TextDocument.h"
-#include "DiffFileDialog.h"	// need defn of DiffType
+#include "DiffFileDialog.h"	// for DiffType
 #include <jx-af/jcore/JError.h>
 
 class JXTextMenu;

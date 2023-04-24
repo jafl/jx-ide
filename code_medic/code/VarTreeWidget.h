@@ -9,7 +9,7 @@
 #define _H_VarTreeWidget
 
 #include <jx-af/jx/JXNamedTreeListWidget.h>
-#include "MemoryDir.h"	// need defn of DisplayType
+#include "MemoryDir.h"	// for DisplayType
 
 class JTree;
 class JNamedTreeList;

@@ -13,8 +13,8 @@
 #include <jx-af/jx/JXFileDocument.h>
 #include <jx-af/jcore/JPrefObject.h>
 #include "TextFileType.h"
-#include <jx-af/jx/JXWidget.h>			// need defn of H/VSizing
-#include <jx-af/jcore/JStyledText.h>	// need defn of PlainTextFormat, CRMRuleList
+#include <jx-af/jx/JXWidget.h>			// for H/VSizing
+#include <jx-af/jcore/JStyledText.h>	// for PlainTextFormat, CRMRuleList
 
 class JSTStyler;
 class TextEditor;

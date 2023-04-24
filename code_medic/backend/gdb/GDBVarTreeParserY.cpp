@@ -568,13 +568,13 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,    85,    85,    99,   116,   127,   143,   149,   155,   166,
-     172,   178,   192,   199,   205,   222,   233,   253,   263,   282,
-     301,   309,   326,   328,   337,   339,   348,   356,   367,   372,
-     379,   385,   397,   409,   411,   413,   415,   417,   423,   430,
-     440,   442,   444,   453,   465,   475,   484,   493,   502,   511,
-     513,   524,   533,   542,   551,   553,   562,   564,   573,   578,
-     588
+       0,    87,    87,   101,   118,   129,   145,   151,   157,   168,
+     174,   180,   194,   201,   207,   224,   235,   255,   265,   284,
+     303,   311,   328,   330,   339,   341,   350,   358,   369,   374,
+     381,   387,   399,   411,   413,   415,   417,   419,   425,   432,
+     442,   444,   446,   455,   467,   477,   486,   495,   504,   513,
+     515,   526,   535,   544,   553,   555,   564,   566,   575,   580,
+     590
 };
 #endif
 
@@ -1021,9 +1021,11 @@ YYSTYPE yylval YY_INITIAL_VALUE (= yyval_default);
 	itsGroupDepth   = 0;
 	itsGDBErrorFlag = false;
 //	yydebug         = 1;
+
+if (yynerrs) ;	// keep C++20 happy
 }
 
-#line 1027 "backend/gdb/GDBVarTreeParserY.cpp"
+#line 1029 "backend/gdb/GDBVarTreeParserY.cpp"
 
   goto yysetstate;
 
@@ -1224,7 +1226,7 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* top_group: group P_EOF  */
-#line 86 "backend/gdb/GDBVarTreeParserY.y"
+#line 88 "backend/gdb/GDBVarTreeParserY.y"
         {
 		itsCurrentNode = (yyval.pNode) = GetLink()->CreateVarNode(nullptr, JString::empty, JString::empty, (yyvsp[-1].pGroup)->GetName());
 		for (JIndex i=1; i<=(yyvsp[-1].pGroup)->list->GetElementCount(); i++)
@@ -1237,11 +1239,11 @@ yyreduce:
 
 		YYACCEPT;
 	}
-#line 1241 "backend/gdb/GDBVarTreeParserY.cpp"
+#line 1243 "backend/gdb/GDBVarTreeParserY.cpp"
     break;
 
   case 3: /* top_group: reference_value group P_EOF  */
-#line 100 "backend/gdb/GDBVarTreeParserY.y"
+#line 102 "backend/gdb/GDBVarTreeParserY.y"
         {
 		itsCurrentNode = (yyval.pNode) = GetLink()->CreateVarNode(nullptr, JString::empty, JString::empty, *(yyvsp[-2].pString));
 		for (JIndex i=1; i<=(yyvsp[-1].pGroup)->list->GetElementCount(); i++)
@@ -1255,11 +1257,11 @@ yyreduce:
 
 		YYACCEPT;
 	}
-#line 1259 "backend/gdb/GDBVarTreeParserY.cpp"
+#line 1261 "backend/gdb/GDBVarTreeParserY.cpp"
     break;
 
   case 4: /* top_group: value P_EOF  */
-#line 117 "backend/gdb/GDBVarTreeParserY.y"
+#line 119 "backend/gdb/GDBVarTreeParserY.y"
         {
 		itsCurrentNode = (yyval.pNode) = GetLink()->CreateVarNode(nullptr, JString::empty, JString::empty, *(yyvsp[-1].pString));
 		itsCurrentNode->MakePointer(itsIsPointerFlag);
@@ -1269,11 +1271,11 @@ yyreduce:
 
 		YYACCEPT;
 	}
-#line 1273 "backend/gdb/GDBVarTreeParserY.cpp"
+#line 1275 "backend/gdb/GDBVarTreeParserY.cpp"
     break;
 
   case 5: /* top_group: reference_value value P_EOF  */
-#line 128 "backend/gdb/GDBVarTreeParserY.y"
+#line 130 "backend/gdb/GDBVarTreeParserY.y"
         {
 		itsCurrentNode = (yyval.pNode) = GetLink()->CreateVarNode(nullptr, JString::empty, JString::empty, *(yyvsp[-2].pString));
 		::VarNode* child = GetLink()->CreateVarNode(itsCurrentNode, JString::empty, JString::empty, *(yyvsp[-1].pString));
@@ -1285,29 +1287,29 @@ yyreduce:
 
 		YYACCEPT;
 	}
-#line 1289 "backend/gdb/GDBVarTreeParserY.cpp"
+#line 1291 "backend/gdb/GDBVarTreeParserY.cpp"
     break;
 
   case 6: /* group: P_GROUP_OPEN node_list P_GROUP_CLOSE  */
-#line 144 "backend/gdb/GDBVarTreeParserY.y"
+#line 146 "backend/gdb/GDBVarTreeParserY.y"
         {
 		(yyval.pGroup) = jnew GDBVarGroupInfo(nullptr, (yyvsp[-1].pList));
 		assert( (yyval.pGroup) != nullptr );
 	}
-#line 1298 "backend/gdb/GDBVarTreeParserY.cpp"
+#line 1300 "backend/gdb/GDBVarTreeParserY.cpp"
     break;
 
   case 7: /* group: P_GROUP_OPEN value_list P_GROUP_CLOSE  */
-#line 150 "backend/gdb/GDBVarTreeParserY.y"
+#line 152 "backend/gdb/GDBVarTreeParserY.y"
         {
 		(yyval.pGroup) = jnew GDBVarGroupInfo(nullptr, (yyvsp[-1].pList));
 		assert( (yyval.pGroup) != nullptr );
 	}
-#line 1307 "backend/gdb/GDBVarTreeParserY.cpp"
+#line 1309 "backend/gdb/GDBVarTreeParserY.cpp"
     break;
 
   case 8: /* group: P_GROUP_OPEN group P_GROUP_CLOSE  */
-#line 156 "backend/gdb/GDBVarTreeParserY.y"
+#line 158 "backend/gdb/GDBVarTreeParserY.y"
         {
 		auto* list = jnew JPtrArray< ::VarNode>(JPtrArrayT::kForgetAll);
 		assert( list != nullptr );
@@ -1317,29 +1319,29 @@ yyreduce:
 
 		jdelete (yyvsp[-1].pGroup);
 	}
-#line 1321 "backend/gdb/GDBVarTreeParserY.cpp"
+#line 1323 "backend/gdb/GDBVarTreeParserY.cpp"
     break;
 
   case 9: /* group: P_SUMMARY P_GROUP_OPEN node_list P_GROUP_CLOSE  */
-#line 167 "backend/gdb/GDBVarTreeParserY.y"
+#line 169 "backend/gdb/GDBVarTreeParserY.y"
         {
 		(yyval.pGroup) = jnew GDBVarGroupInfo((yyvsp[-3].pString), (yyvsp[-1].pList));
 		assert( (yyval.pGroup) != nullptr );
 	}
-#line 1330 "backend/gdb/GDBVarTreeParserY.cpp"
+#line 1332 "backend/gdb/GDBVarTreeParserY.cpp"
     break;
 
   case 10: /* group: P_SUMMARY P_GROUP_OPEN value_list P_GROUP_CLOSE  */
-#line 173 "backend/gdb/GDBVarTreeParserY.y"
+#line 175 "backend/gdb/GDBVarTreeParserY.y"
         {
 		(yyval.pGroup) = jnew GDBVarGroupInfo((yyvsp[-3].pString), (yyvsp[-1].pList));
 		assert( (yyval.pGroup) != nullptr );
 	}
-#line 1339 "backend/gdb/GDBVarTreeParserY.cpp"
+#line 1341 "backend/gdb/GDBVarTreeParserY.cpp"
     break;
 
   case 11: /* group: P_SUMMARY P_GROUP_OPEN group P_GROUP_CLOSE  */
-#line 179 "backend/gdb/GDBVarTreeParserY.y"
+#line 181 "backend/gdb/GDBVarTreeParserY.y"
         {
 		auto* list = jnew JPtrArray< ::VarNode>(JPtrArrayT::kForgetAll);
 		assert( list != nullptr );
@@ -1349,30 +1351,30 @@ yyreduce:
 
 		jdelete (yyvsp[-1].pGroup);
 	}
-#line 1353 "backend/gdb/GDBVarTreeParserY.cpp"
+#line 1355 "backend/gdb/GDBVarTreeParserY.cpp"
     break;
 
   case 12: /* node_list: node  */
-#line 193 "backend/gdb/GDBVarTreeParserY.y"
+#line 195 "backend/gdb/GDBVarTreeParserY.y"
         {
 		auto* list = (yyval.pList) = jnew JPtrArray< ::VarNode>(JPtrArrayT::kForgetAll);
 		assert( list != nullptr );
 		list->Append((yyvsp[0].pNode));
 	}
-#line 1363 "backend/gdb/GDBVarTreeParserY.cpp"
+#line 1365 "backend/gdb/GDBVarTreeParserY.cpp"
     break;
 
   case 13: /* node_list: node_list ',' node  */
-#line 200 "backend/gdb/GDBVarTreeParserY.y"
+#line 202 "backend/gdb/GDBVarTreeParserY.y"
         {
 		(yyval.pList) = (yyvsp[-2].pList);
 		(yyval.pList)->Append((yyvsp[0].pNode));
 	}
-#line 1372 "backend/gdb/GDBVarTreeParserY.cpp"
+#line 1374 "backend/gdb/GDBVarTreeParserY.cpp"
     break;
 
   case 14: /* node_list: node_list ',' P_EMPTY_SUMMARY  */
-#line 206 "backend/gdb/GDBVarTreeParserY.y"
+#line 208 "backend/gdb/GDBVarTreeParserY.y"
         {
 		(yyval.pList) = (yyvsp[-2].pList);
 
@@ -1388,11 +1390,11 @@ yyreduce:
 
 		jdelete (yyvsp[0].pString);
 	}
-#line 1392 "backend/gdb/GDBVarTreeParserY.cpp"
+#line 1394 "backend/gdb/GDBVarTreeParserY.cpp"
     break;
 
   case 15: /* node_list: group ',' group  */
-#line 223 "backend/gdb/GDBVarTreeParserY.y"
+#line 225 "backend/gdb/GDBVarTreeParserY.y"
         {
 		auto* list = (yyval.pList) = jnew JPtrArray< ::VarNode>(JPtrArrayT::kForgetAll);
 		assert( list != nullptr );
@@ -1402,11 +1404,11 @@ yyreduce:
 		jdelete (yyvsp[-2].pGroup);
 		jdelete (yyvsp[0].pGroup);
 	}
-#line 1406 "backend/gdb/GDBVarTreeParserY.cpp"
+#line 1408 "backend/gdb/GDBVarTreeParserY.cpp"
     break;
 
   case 16: /* node_list: node_list ',' group  */
-#line 234 "backend/gdb/GDBVarTreeParserY.y"
+#line 236 "backend/gdb/GDBVarTreeParserY.y"
         {
 		if ((((yyvsp[-2].pList)->GetFirstElement())->GetName()).StartsWith(JString("[", JString::kNoCopy)))
 		{
@@ -1425,21 +1427,21 @@ yyreduce:
 
 		jdelete (yyvsp[0].pGroup);
 	}
-#line 1429 "backend/gdb/GDBVarTreeParserY.cpp"
+#line 1431 "backend/gdb/GDBVarTreeParserY.cpp"
     break;
 
   case 17: /* node_list: node_list '.' '.' '.'  */
-#line 254 "backend/gdb/GDBVarTreeParserY.y"
+#line 256 "backend/gdb/GDBVarTreeParserY.y"
         {
 		(yyval.pList) = (yyvsp[-3].pList);
 		::VarNode* child = GetLink()->CreateVarNode(nullptr, JString("...", JString::kNoCopy), JString::empty, JString::empty);
 		(yyval.pList)->Append(child);
 	}
-#line 1439 "backend/gdb/GDBVarTreeParserY.cpp"
+#line 1441 "backend/gdb/GDBVarTreeParserY.cpp"
     break;
 
   case 18: /* node: name_eq value  */
-#line 264 "backend/gdb/GDBVarTreeParserY.y"
+#line 266 "backend/gdb/GDBVarTreeParserY.y"
         {
 		if ((yyvsp[-1].pString)->EndsWith("="))
 		{
@@ -1457,11 +1459,11 @@ yyreduce:
 		jdelete (yyvsp[-1].pString);
 		jdelete (yyvsp[0].pString);
 	}
-#line 1461 "backend/gdb/GDBVarTreeParserY.cpp"
+#line 1463 "backend/gdb/GDBVarTreeParserY.cpp"
     break;
 
   case 19: /* node: name_eq group  */
-#line 283 "backend/gdb/GDBVarTreeParserY.y"
+#line 285 "backend/gdb/GDBVarTreeParserY.y"
         {
 		if ((yyvsp[-1].pString)->EndsWith("="))
 		{
@@ -1479,22 +1481,22 @@ yyreduce:
 		jdelete (yyvsp[-1].pString);
 		jdelete (yyvsp[0].pGroup);
 	}
-#line 1483 "backend/gdb/GDBVarTreeParserY.cpp"
+#line 1485 "backend/gdb/GDBVarTreeParserY.cpp"
     break;
 
   case 20: /* node: P_NO_DATA_FIELDS  */
-#line 302 "backend/gdb/GDBVarTreeParserY.y"
+#line 304 "backend/gdb/GDBVarTreeParserY.y"
         {
 		itsCurrentNode = (yyval.pNode) = GetLink()->CreateVarNode(nullptr, *(yyvsp[0].pString), JString::empty, JString::empty);
 		itsIsPointerFlag = false;
 
 		jdelete (yyvsp[0].pString);
 	}
-#line 1494 "backend/gdb/GDBVarTreeParserY.cpp"
+#line 1496 "backend/gdb/GDBVarTreeParserY.cpp"
     break;
 
   case 21: /* node: name_eq  */
-#line 310 "backend/gdb/GDBVarTreeParserY.y"
+#line 312 "backend/gdb/GDBVarTreeParserY.y"
         {
 		if ((yyvsp[0].pString)->EndsWith("="))
 		{
@@ -1507,11 +1509,11 @@ yyreduce:
 
 		jdelete (yyvsp[0].pString);
 	}
-#line 1511 "backend/gdb/GDBVarTreeParserY.cpp"
+#line 1513 "backend/gdb/GDBVarTreeParserY.cpp"
     break;
 
   case 23: /* name_eq: P_STATIC P_NAME_EQ  */
-#line 329 "backend/gdb/GDBVarTreeParserY.y"
+#line 331 "backend/gdb/GDBVarTreeParserY.y"
         {
 		(yyval.pString) = (yyvsp[-1].pString);
 		(yyval.pString)->Append(" ");
@@ -1519,11 +1521,11 @@ yyreduce:
 
 		jdelete (yyvsp[0].pString);
 	}
-#line 1523 "backend/gdb/GDBVarTreeParserY.cpp"
+#line 1525 "backend/gdb/GDBVarTreeParserY.cpp"
     break;
 
   case 25: /* name_eq: P_STATIC P_BRACKET_EQ  */
-#line 340 "backend/gdb/GDBVarTreeParserY.y"
+#line 342 "backend/gdb/GDBVarTreeParserY.y"
         {
 		(yyval.pString) = (yyvsp[-1].pString);
 		(yyval.pString)->Append(" ");
@@ -1531,22 +1533,22 @@ yyreduce:
 
 		jdelete (yyvsp[0].pString);
 	}
-#line 1535 "backend/gdb/GDBVarTreeParserY.cpp"
+#line 1537 "backend/gdb/GDBVarTreeParserY.cpp"
     break;
 
   case 26: /* name_eq: P_NAME P_BRACKET_EQ  */
-#line 349 "backend/gdb/GDBVarTreeParserY.y"
+#line 351 "backend/gdb/GDBVarTreeParserY.y"
         {
 		(yyval.pString) = (yyvsp[-1].pString);
 		(yyval.pString)->Append(*(yyvsp[0].pString));
 
 		jdelete (yyvsp[0].pString);
 	}
-#line 1546 "backend/gdb/GDBVarTreeParserY.cpp"
+#line 1548 "backend/gdb/GDBVarTreeParserY.cpp"
     break;
 
   case 27: /* name_eq: P_STATIC P_NAME P_BRACKET_EQ  */
-#line 357 "backend/gdb/GDBVarTreeParserY.y"
+#line 359 "backend/gdb/GDBVarTreeParserY.y"
         {
 		(yyval.pString) = (yyvsp[-2].pString);
 		(yyval.pString)->Append(" ");
@@ -1556,40 +1558,40 @@ yyreduce:
 		jdelete (yyvsp[-1].pString);
 		jdelete (yyvsp[0].pString);
 	}
-#line 1560 "backend/gdb/GDBVarTreeParserY.cpp"
+#line 1562 "backend/gdb/GDBVarTreeParserY.cpp"
     break;
 
   case 29: /* value_list: value_node  */
-#line 373 "backend/gdb/GDBVarTreeParserY.y"
+#line 375 "backend/gdb/GDBVarTreeParserY.y"
         {
 		auto* list = (yyval.pList) = jnew JPtrArray< ::VarNode>(JPtrArrayT::kForgetAll);
 		assert( list != nullptr );
 		AppendAsArrayElement((yyvsp[0].pNode), (yyval.pList));
 	}
-#line 1570 "backend/gdb/GDBVarTreeParserY.cpp"
+#line 1572 "backend/gdb/GDBVarTreeParserY.cpp"
     break;
 
   case 30: /* value_list: value_list ',' value_node  */
-#line 380 "backend/gdb/GDBVarTreeParserY.y"
+#line 382 "backend/gdb/GDBVarTreeParserY.y"
         {
 		(yyval.pList) = (yyvsp[-2].pList);
 		AppendAsArrayElement((yyvsp[0].pNode), (yyval.pList));
 	}
-#line 1579 "backend/gdb/GDBVarTreeParserY.cpp"
+#line 1581 "backend/gdb/GDBVarTreeParserY.cpp"
     break;
 
   case 31: /* value_list: value_list '.' '.' '.'  */
-#line 386 "backend/gdb/GDBVarTreeParserY.y"
+#line 388 "backend/gdb/GDBVarTreeParserY.y"
         {
 		(yyval.pList) = (yyvsp[-3].pList);
 		::VarNode* child = GetLink()->CreateVarNode(nullptr, JString("...", JString::kNoCopy), JString::empty, JString::empty);
 		(yyval.pList)->Append(child);
 	}
-#line 1589 "backend/gdb/GDBVarTreeParserY.cpp"
+#line 1591 "backend/gdb/GDBVarTreeParserY.cpp"
     break;
 
   case 32: /* value_node: value  */
-#line 398 "backend/gdb/GDBVarTreeParserY.y"
+#line 400 "backend/gdb/GDBVarTreeParserY.y"
         {
 		itsCurrentNode = (yyval.pNode) = GetLink()->CreateVarNode(nullptr, JString::empty, JString::empty, *(yyvsp[0].pString));
 		itsCurrentNode->MakePointer(itsIsPointerFlag);
@@ -1597,30 +1599,30 @@ yyreduce:
 
 		jdelete (yyvsp[0].pString);
 	}
-#line 1601 "backend/gdb/GDBVarTreeParserY.cpp"
+#line 1603 "backend/gdb/GDBVarTreeParserY.cpp"
     break;
 
   case 37: /* value: P_HEX  */
-#line 418 "backend/gdb/GDBVarTreeParserY.y"
+#line 420 "backend/gdb/GDBVarTreeParserY.y"
         {
 		itsIsPointerFlag = isOpenablePointer(*(yyvsp[0].pString));
 		(yyval.pString) = (yyvsp[0].pString);
 	}
-#line 1610 "backend/gdb/GDBVarTreeParserY.cpp"
+#line 1612 "backend/gdb/GDBVarTreeParserY.cpp"
     break;
 
   case 38: /* value: '@' P_HEX  */
-#line 424 "backend/gdb/GDBVarTreeParserY.y"
+#line 426 "backend/gdb/GDBVarTreeParserY.y"
         {
 		itsIsPointerFlag = isOpenablePointer(*(yyvsp[0].pString));
 		(yyval.pString) = (yyvsp[0].pString);
 		(yyval.pString)->Prepend("@");
 	}
-#line 1620 "backend/gdb/GDBVarTreeParserY.cpp"
+#line 1622 "backend/gdb/GDBVarTreeParserY.cpp"
     break;
 
   case 39: /* value: P_PAREN_EXPR P_HEX  */
-#line 431 "backend/gdb/GDBVarTreeParserY.y"
+#line 433 "backend/gdb/GDBVarTreeParserY.y"
         {
 		itsIsPointerFlag = isOpenablePointer(*(yyvsp[0].pString));
 		(yyval.pString) = (yyvsp[-1].pString);
@@ -1629,11 +1631,11 @@ yyreduce:
 
 		jdelete (yyvsp[0].pString);
 	}
-#line 1633 "backend/gdb/GDBVarTreeParserY.cpp"
+#line 1635 "backend/gdb/GDBVarTreeParserY.cpp"
     break;
 
   case 42: /* value: P_HEX P_STRING  */
-#line 445 "backend/gdb/GDBVarTreeParserY.y"
+#line 447 "backend/gdb/GDBVarTreeParserY.y"
         {
 		(yyval.pString) = (yyvsp[-1].pString);
 		(yyval.pString)->Append(" ");
@@ -1641,11 +1643,11 @@ yyreduce:
 
 		jdelete (yyvsp[0].pString);
 	}
-#line 1645 "backend/gdb/GDBVarTreeParserY.cpp"
+#line 1647 "backend/gdb/GDBVarTreeParserY.cpp"
     break;
 
   case 43: /* value: P_PAREN_EXPR P_HEX P_STRING  */
-#line 454 "backend/gdb/GDBVarTreeParserY.y"
+#line 456 "backend/gdb/GDBVarTreeParserY.y"
         {
 		(yyval.pString) = (yyvsp[-2].pString);
 		(yyval.pString)->Append(" ");
@@ -1656,11 +1658,11 @@ yyreduce:
 		jdelete (yyvsp[-1].pString);
 		jdelete (yyvsp[0].pString);
 	}
-#line 1660 "backend/gdb/GDBVarTreeParserY.cpp"
+#line 1662 "backend/gdb/GDBVarTreeParserY.cpp"
     break;
 
   case 44: /* value: P_HEX P_BRACKET  */
-#line 466 "backend/gdb/GDBVarTreeParserY.y"
+#line 468 "backend/gdb/GDBVarTreeParserY.y"
         {
 		itsIsPointerFlag = isOpenablePointer(*(yyvsp[-1].pString));
 		(yyval.pString) = (yyvsp[-1].pString);
@@ -1669,11 +1671,11 @@ yyreduce:
 
 		jdelete (yyvsp[0].pString);
 	}
-#line 1673 "backend/gdb/GDBVarTreeParserY.cpp"
+#line 1675 "backend/gdb/GDBVarTreeParserY.cpp"
     break;
 
   case 45: /* value: P_NAME P_BRACKET  */
-#line 476 "backend/gdb/GDBVarTreeParserY.y"
+#line 478 "backend/gdb/GDBVarTreeParserY.y"
         {
 		(yyval.pString) = (yyvsp[-1].pString);
 		(yyval.pString)->Append(" ");
@@ -1681,11 +1683,11 @@ yyreduce:
 
 		jdelete (yyvsp[0].pString);
 	}
-#line 1685 "backend/gdb/GDBVarTreeParserY.cpp"
+#line 1687 "backend/gdb/GDBVarTreeParserY.cpp"
     break;
 
   case 46: /* value: P_INTEGER P_BRACKET  */
-#line 485 "backend/gdb/GDBVarTreeParserY.y"
+#line 487 "backend/gdb/GDBVarTreeParserY.y"
         {
 		(yyval.pString) = (yyvsp[-1].pString);
 		(yyval.pString)->Append(" ");
@@ -1693,11 +1695,11 @@ yyreduce:
 
 		jdelete (yyvsp[0].pString);
 	}
-#line 1697 "backend/gdb/GDBVarTreeParserY.cpp"
+#line 1699 "backend/gdb/GDBVarTreeParserY.cpp"
     break;
 
   case 47: /* value: P_FLOAT P_BRACKET  */
-#line 494 "backend/gdb/GDBVarTreeParserY.y"
+#line 496 "backend/gdb/GDBVarTreeParserY.y"
         {
 		(yyval.pString) = (yyvsp[-1].pString);
 		(yyval.pString)->Append(" ");
@@ -1705,11 +1707,11 @@ yyreduce:
 
 		jdelete (yyvsp[0].pString);
 	}
-#line 1709 "backend/gdb/GDBVarTreeParserY.cpp"
+#line 1711 "backend/gdb/GDBVarTreeParserY.cpp"
     break;
 
   case 48: /* value: P_CHAR P_BRACKET  */
-#line 503 "backend/gdb/GDBVarTreeParserY.y"
+#line 505 "backend/gdb/GDBVarTreeParserY.y"
         {
 		(yyval.pString) = (yyvsp[-1].pString);
 		(yyval.pString)->Append(" ");
@@ -1717,11 +1719,11 @@ yyreduce:
 
 		jdelete (yyvsp[0].pString);
 	}
-#line 1721 "backend/gdb/GDBVarTreeParserY.cpp"
+#line 1723 "backend/gdb/GDBVarTreeParserY.cpp"
     break;
 
   case 50: /* value: P_HEX name P_PAREN_EXPR  */
-#line 514 "backend/gdb/GDBVarTreeParserY.y"
+#line 516 "backend/gdb/GDBVarTreeParserY.y"
         {
 		(yyval.pString) = (yyvsp[-2].pString);
 		(yyval.pString)->Append(" ");
@@ -1731,11 +1733,11 @@ yyreduce:
 		jdelete (yyvsp[-1].pString);
 		jdelete (yyvsp[0].pString);
 	}
-#line 1735 "backend/gdb/GDBVarTreeParserY.cpp"
+#line 1737 "backend/gdb/GDBVarTreeParserY.cpp"
     break;
 
   case 51: /* value: P_NAME P_PAREN_EXPR  */
-#line 525 "backend/gdb/GDBVarTreeParserY.y"
+#line 527 "backend/gdb/GDBVarTreeParserY.y"
         {
 		(yyval.pString) = (yyvsp[-1].pString);
 		(yyval.pString)->Append(" ");
@@ -1743,11 +1745,11 @@ yyreduce:
 
 		jdelete (yyvsp[0].pString);
 	}
-#line 1747 "backend/gdb/GDBVarTreeParserY.cpp"
+#line 1749 "backend/gdb/GDBVarTreeParserY.cpp"
     break;
 
   case 52: /* value: P_INTEGER P_CHAR  */
-#line 534 "backend/gdb/GDBVarTreeParserY.y"
+#line 536 "backend/gdb/GDBVarTreeParserY.y"
         {
 		(yyval.pString) = (yyvsp[-1].pString);
 		(yyval.pString)->Append(" ");
@@ -1755,20 +1757,20 @@ yyreduce:
 
 		jdelete (yyvsp[0].pString);
 	}
-#line 1759 "backend/gdb/GDBVarTreeParserY.cpp"
+#line 1761 "backend/gdb/GDBVarTreeParserY.cpp"
     break;
 
   case 53: /* value: P_GROUP_OPEN P_GROUP_CLOSE  */
-#line 543 "backend/gdb/GDBVarTreeParserY.y"
+#line 545 "backend/gdb/GDBVarTreeParserY.y"
         {
 		(yyval.pString) = jnew JString("{}");
 		assert( (yyval.pString) != nullptr );
 	}
-#line 1768 "backend/gdb/GDBVarTreeParserY.cpp"
+#line 1770 "backend/gdb/GDBVarTreeParserY.cpp"
     break;
 
   case 55: /* name: P_STATIC P_NAME  */
-#line 554 "backend/gdb/GDBVarTreeParserY.y"
+#line 556 "backend/gdb/GDBVarTreeParserY.y"
         {
 		(yyval.pString) = (yyvsp[-1].pString);
 		(yyval.pString)->Append(" ");
@@ -1776,11 +1778,11 @@ yyreduce:
 
 		jdelete (yyvsp[0].pString);
 	}
-#line 1780 "backend/gdb/GDBVarTreeParserY.cpp"
+#line 1782 "backend/gdb/GDBVarTreeParserY.cpp"
     break;
 
   case 57: /* name: P_STATIC P_BRACKET  */
-#line 565 "backend/gdb/GDBVarTreeParserY.y"
+#line 567 "backend/gdb/GDBVarTreeParserY.y"
         {
 		(yyval.pString) = (yyvsp[-1].pString);
 		(yyval.pString)->Append(" ");
@@ -1788,11 +1790,11 @@ yyreduce:
 
 		jdelete (yyvsp[0].pString);
 	}
-#line 1792 "backend/gdb/GDBVarTreeParserY.cpp"
+#line 1794 "backend/gdb/GDBVarTreeParserY.cpp"
     break;
 
   case 59: /* reference_value: P_PAREN_EXPR '@' P_HEX ':'  */
-#line 579 "backend/gdb/GDBVarTreeParserY.y"
+#line 581 "backend/gdb/GDBVarTreeParserY.y"
         {
 		(yyval.pString) = (yyvsp[-3].pString);
 		(yyval.pString)->Append(" ");
@@ -1801,20 +1803,20 @@ yyreduce:
 
 		jdelete (yyvsp[-1].pString);
 	}
-#line 1805 "backend/gdb/GDBVarTreeParserY.cpp"
+#line 1807 "backend/gdb/GDBVarTreeParserY.cpp"
     break;
 
   case 60: /* reference_value: '@' P_HEX ':'  */
-#line 589 "backend/gdb/GDBVarTreeParserY.y"
+#line 591 "backend/gdb/GDBVarTreeParserY.y"
         {
 		(yyval.pString) = (yyvsp[-1].pString);
 		(yyval.pString)->Prepend("@");
 	}
-#line 1814 "backend/gdb/GDBVarTreeParserY.cpp"
+#line 1816 "backend/gdb/GDBVarTreeParserY.cpp"
     break;
 
 
-#line 1818 "backend/gdb/GDBVarTreeParserY.cpp"
+#line 1820 "backend/gdb/GDBVarTreeParserY.cpp"
 
       default: break;
     }
@@ -2007,5 +2009,5 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 595 "backend/gdb/GDBVarTreeParserY.y"
+#line 597 "backend/gdb/GDBVarTreeParserY.y"
 

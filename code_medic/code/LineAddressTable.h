@@ -50,7 +50,7 @@ private:
 	static JString	BuildAddress(const JString& addr);
 	JString			GetLineTextFromAddress(const JString& addr) const;
 
-	static JListT::CompareResult
+	static std::weak_ordering
 		CompareBreakpointAddresses(Breakpoint* const & bp1, Breakpoint* const & bp2);
 };
 

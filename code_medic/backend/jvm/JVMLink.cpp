@@ -958,24 +958,24 @@ jvm::Link::ClassSignatureToFile
 
  ******************************************************************************/
 
-JListT::CompareResult
+std::weak_ordering
 jvm::Link::CompareClassIDs
 	(
 	const ClassInfo& c1,
 	const ClassInfo& c2
 	)
 {
-	if (c1.id > c2.id)
+	if (c1.id < c2.id)
 	{
-		return JListT::kFirstGreaterSecond;
+		return std::weak_ordering::less;
 	}
-	else if (c1.id < c2.id)
+	else if (c1.id > c2.id)
 	{
-		return JListT::kFirstLessSecond;
+		return std::weak_ordering::greater;
 	}
 	else
 	{
-		return JListT::kFirstEqualSecond;
+		return std::weak_ordering::equivalent;
 	}
 }
 
@@ -984,7 +984,7 @@ jvm::Link::CompareClassIDs
 
  ******************************************************************************/
 
-JListT::CompareResult
+std::weak_ordering
 jvm::Link::CompareClassNames
 	(
 	const ClassInfo& c1,
@@ -999,24 +999,24 @@ jvm::Link::CompareClassNames
 
  ******************************************************************************/
 
-JListT::CompareResult
+std::weak_ordering
 jvm::Link::CompareMethodIDs
 	(
 	const MethodInfo& m1,
 	const MethodInfo& m2
 	)
 {
-	if (m1.id > m2.id)
+	if (m1.id < m2.id)
 	{
-		return JListT::kFirstGreaterSecond;
+		return std::weak_ordering::less;
 	}
-	else if (m1.id < m2.id)
+	else if (m1.id > m2.id)
 	{
-		return JListT::kFirstLessSecond;
+		return std::weak_ordering::greater;
 	}
 	else
 	{
-		return JListT::kFirstEqualSecond;
+		return std::weak_ordering::equivalent;
 	}
 }
 

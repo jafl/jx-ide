@@ -11,7 +11,7 @@
 #define _H_MacroSetTable
 
 #include <jx-af/jx/JXStringTable.h>
-#include "PrefsManager.h"		// need definition of MacroSetInfo
+#include "PrefsManager.h"		// for MacroSetInfo
 
 class JXTextButton;
 class CharActionTable;

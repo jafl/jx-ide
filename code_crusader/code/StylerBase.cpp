@@ -319,27 +319,14 @@ StylerBase::GetWordList
 
  ******************************************************************************/
 
-JListT::CompareResult
+std::weak_ordering
 StylerBase::CompareWords
 	(
 	const WordStyle& w1,
 	const WordStyle& w2
 	)
 {
-	const int result = JString::Compare(*w1.key, *w2.key, JString::kIgnoreCase);
-
-	if (result < 0)
-	{
-		return JListT::kFirstLessSecond;
-	}
-	else if (result == 0)
-	{
-		return JListT::kFirstEqualSecond;
-	}
-	else
-	{
-		return JListT::kFirstGreaterSecond;
-	}
+	return JIntToWeakOrdering(JString::Compare(*w1.key, *w2.key, JString::kIgnoreCase));
 }
 
 /******************************************************************************

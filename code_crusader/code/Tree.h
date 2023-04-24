@@ -12,7 +12,7 @@
 
 #include <jx-af/jcore/JContainer.h>
 #include "TextFileType.h"
-#include "PrefsManager.h"		// need definition of FileTypesChanged
+#include "PrefsManager.h"		// for FileTypesChanged
 #include <jx-af/jcore/JPtrArray.h>
 #include <jx-af/jcore/JRect.h>
 #include <jx-af/jcore/JFAID.h>
@@ -130,8 +130,8 @@ protected:
 	struct RootGeom
 	{
 		Class*	root;	// not owned
-		JSize		top;
-		JSize		h;
+		JSize	top;
+		JSize	h;
 
 		RootGeom()
 			:
@@ -263,14 +263,14 @@ private:
 
 	void	CollectAncestors(Class* cbClass, JPtrArray<Class>* list) const;
 
-	static JListT::CompareResult
+	static std::weak_ordering
 		CompareClassFullNames(Class* const & c1, Class* const & c2);
-	static JListT::CompareResult
+	static std::weak_ordering
 		CompareClassNames(Class* const & c1, Class* const & c2);
 
-	static JListT::CompareResult
+	static std::weak_ordering
 		CompareRGClassPtrs(const RootGeom& i1, const RootGeom& i2);
-	static JListT::CompareResult
+	static std::weak_ordering
 		CompareRSContent(const RootSubset& i1, const RootSubset& i2);
 
 	// called by Class
@@ -310,7 +310,7 @@ public:
 		Changed()
 			:
 			JBroadcaster::Message(kChanged)
-			{ };
+		{ };
 	};
 
 	class BoundsChanged : public JBroadcaster::Message
@@ -320,7 +320,7 @@ public:
 		BoundsChanged()
 			:
 			JBroadcaster::Message(kBoundsChanged)
-			{ };
+		{ };
 	};
 
 	class NeedsRefresh : public JBroadcaster::Message
@@ -330,7 +330,7 @@ public:
 		NeedsRefresh()
 			:
 			JBroadcaster::Message(kNeedsRefresh)
-			{ };
+		{ };
 	};
 
 	class FontSizeChanged : public JBroadcaster::Message
@@ -344,7 +344,7 @@ public:
 			itsOrigSize(origSize),
 			itsNewSize(newSize),
 			itsVertScaleFactor(vScaleFactor)
-			{ };
+		{ };
 
 		JSize
 		GetOrigSize() const
@@ -377,7 +377,7 @@ public:
 		PrepareForParse()
 			:
 			JBroadcaster::Message(kPrepareForParse)
-			{ };
+		{ };
 	};
 
 	class ParseFinished : public JBroadcaster::Message
@@ -388,7 +388,7 @@ public:
 			:
 			JBroadcaster::Message(kParseFinished),
 			itsChangedFlag(changed)
-			{ };
+		{ };
 
 		bool
 		Changed()
@@ -410,7 +410,7 @@ public:
 			:
 			JBroadcaster::Message(kClassSelected),
 			itsClass(theClass)
-			{ };
+		{ };
 
 		Class*
 		GetClass()
@@ -432,7 +432,7 @@ public:
 			:
 			JBroadcaster::Message(kClassDeselected),
 			itsClass(theClass)
-			{ };
+		{ };
 
 		Class*
 		GetClass()
@@ -453,7 +453,7 @@ public:
 		AllClassesDeselected()
 			:
 			JBroadcaster::Message(kAllClassesDeselected)
-			{ };
+		{ };
 	};
 };
 

@@ -18,10 +18,7 @@ class PipeT
 {
 public:
 
-	enum
-		{
-		kDefaultBufferSize = 524288		// 512KB
-		};
+	static const JSize kDefaultBufferSize = 524288;		// 512KB
 
 public:
 

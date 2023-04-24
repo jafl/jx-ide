@@ -139,7 +139,7 @@ CPreprocessor::DefineMacro
 
  ******************************************************************************/
 
-JListT::CompareResult
+std::weak_ordering
 CPreprocessor::CompareMacros
 	(
 	const MacroInfo& m1,

@@ -65,7 +65,7 @@ PrefsManager::CreateListFn()
 
  ******************************************************************************/
 
-JListT::CompareResult
+std::weak_ordering
 PrefsManager::CompareNameFn
 	(
 	const DataType& i1,

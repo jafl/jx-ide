@@ -10,7 +10,7 @@
 
 #include <jx-af/jx/JXSaveFileDialog.h>
 #include <jx-af/jcore/JPrefObject.h>
-#include "BuildManager.h"		// need defn of MakefileMethod
+#include "BuildManager.h"		// for MakefileMethod
 
 class JXRadioGroup;
 class JXTextMenu;

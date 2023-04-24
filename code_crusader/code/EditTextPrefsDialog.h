@@ -11,7 +11,7 @@
 #define _H_EditTextPrefsDialog
 
 #include <jx-af/jx/JXModalDialogDirector.h>
-#include "PrefsManager.h"		// need definition of kColorCount
+#include "PrefsManager.h"		// for kColorCount
 
 class TextDocument;
 class SampleText;

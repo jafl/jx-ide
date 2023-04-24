@@ -10,7 +10,7 @@
 #ifndef _H_Class
 #define _H_Class
 
-#include "TextFileType.h"		// need defn of Language
+#include "TextFileType.h"		// for Language
 #include <jx-af/jcore/JBroadcaster.h>
 #include <jx-af/jcore/JPtrArray-JString.h>
 #include <jx-af/jcore/JFontStyle.h>

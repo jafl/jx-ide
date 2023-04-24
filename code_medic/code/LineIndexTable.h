@@ -25,7 +25,7 @@ class LineIndexTable : public JXTable
 
 public:
 
-	LineIndexTable(JListT::CompareResult (*bpCcompareFn)(Breakpoint *const &, Breakpoint *const &),
+	LineIndexTable(std::weak_ordering (*bpCcompareFn)(Breakpoint *const &, Breakpoint *const &),
 					 SourceDirector* dir, SourceText* text,
 					 JXScrollbarSet* scrollbarSet, JXContainer* enclosure,
 					 const HSizingOption hSizing, const VSizingOption vSizing,

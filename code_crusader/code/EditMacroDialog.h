@@ -12,7 +12,7 @@
 
 #include <jx-af/jx/JXModalDialogDirector.h>
 #include <jx-af/jcore/JPrefObject.h>
-#include "PrefsManager.h"		// need definition of MacroSetInfo
+#include "PrefsManager.h"		// for MacroSetInfo
 
 class JXTextButton;
 class JXVertPartition;

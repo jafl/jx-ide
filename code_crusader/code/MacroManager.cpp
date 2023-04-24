@@ -285,7 +285,7 @@ MacroManager::AddMacro
 
  ******************************************************************************/
 
-JListT::CompareResult
+std::weak_ordering
 MacroManager::CompareMacros
 	(
 	const MacroInfo& m1,

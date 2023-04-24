@@ -100,7 +100,7 @@ const JSize kBreakpointMenuItemCount = kIgnoreNextNCmd;
 
 LineIndexTable::LineIndexTable
 	(
-	JListT::CompareResult (*bpCcompareFn)(Breakpoint *const &, Breakpoint *const &),
+	std::weak_ordering (*bpCcompareFn)(Breakpoint *const &, Breakpoint *const &),
 
 	SourceDirector*	dir,
 	SourceText*		text,

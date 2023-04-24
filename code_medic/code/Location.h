@@ -14,7 +14,6 @@
 class Location
 {
 	friend bool operator==(const Location& lhs, const Location& rhs);
-	friend bool operator!=(const Location& lhs, const Location& rhs);
 
 public:
 
@@ -142,21 +141,6 @@ Location::SetMemoryAddress
 	)
 {
 	itsMemoryAddress = addr;
-}
-
-/******************************************************************************
- Comparison
-
- *****************************************************************************/
-
-inline bool
-operator!=
-	(
-	const Location& lhs,
-	const Location& rhs
-	)
-{
-	return !(lhs == rhs);
 }
 
 #endif

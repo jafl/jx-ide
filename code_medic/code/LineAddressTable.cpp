@@ -406,7 +406,7 @@ LineAddressTable::GetLineTextFromAddress
 
  ******************************************************************************/
 
-JListT::CompareResult
+std::weak_ordering
 LineAddressTable::CompareBreakpointAddresses
 	(
 	Breakpoint* const & bp1,
@@ -414,6 +414,6 @@ LineAddressTable::CompareBreakpointAddresses
 	)
 {
 	return JCompareStringsCaseInsensitive(
-		const_cast<JString*>(&(bp1->GetAddress())),
-		const_cast<JString*>(&(bp2->GetAddress())));
+		const_cast<JString*>(&bp1->GetAddress()),
+		const_cast<JString*>(&bp2->GetAddress()));
 }

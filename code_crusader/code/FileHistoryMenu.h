@@ -11,7 +11,7 @@
 #define _H_FileHistoryMenu
 
 #include <jx-af/jx/JXFileHistoryMenu.h>
-#include "DocumentManager.h"	// need definition of FileHistoryType
+#include "DocumentManager.h"	// for FileHistoryType
 
 class FileHistoryMenu : public JXFileHistoryMenu
 {

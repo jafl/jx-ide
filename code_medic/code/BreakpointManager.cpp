@@ -454,15 +454,15 @@ BreakpointManager::BreakpointFileNameInvalid
 
  ******************************************************************************/
 
-JListT::CompareResult
+std::weak_ordering
 BreakpointManager::CompareBreakpointLocations
 	(
 	Breakpoint* const & bp1,
 	Breakpoint* const & bp2
 	)
 {
-	JListT::CompareResult r = JFileID::Compare(bp1->GetFileID(), bp2->GetFileID());
-	if (r == JListT::kFirstEqualSecond)
+	std::weak_ordering r = JFileID::Compare(bp1->GetFileID(), bp2->GetFileID());
+	if (r == std::weak_ordering::equivalent)
 	{
 		r = JCompareIndices(bp1->GetLineNumber(), bp2->GetLineNumber());
 	}

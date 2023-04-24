@@ -8,6 +8,7 @@
 #ifndef _H_Command
 #define _H_Command
 
+#include <jx-af/jcore/JBroadcaster.h>
 #include <jx-af/jcore/JString.h>
 
 class Command : virtual public JBroadcaster

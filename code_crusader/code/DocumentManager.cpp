@@ -35,6 +35,7 @@
 #include <jx-af/jcore/JDirInfo.h>
 #include <jx-af/jcore/JSimpleProcess.h>
 #include <jx-af/jcore/JStringIterator.h>
+#include <jx-af/jcore/JListUtil.h>
 #include <jx-af/jcore/jAssert.h>
 
 static const JUtf8Byte* kTextTemplateDir = "text_templates";
@@ -1433,11 +1434,11 @@ DocumentManager::FindComplementFile
 struct DirMatchInfo
 {
 	JString*	path;
-	bool	recurse;
+	bool		recurse;
 	JSize		matchLength;
 };
 
-static JListT::CompareResult
+static std::weak_ordering
 	CompareMatchLengths(const DirMatchInfo& i1, const DirMatchInfo& i2);
 
 bool
@@ -1503,9 +1504,9 @@ JIndex i;
 	JSplitPathAndName(origFullName, &origFilePath, &origFileName);
 
 	const JUtf8Byte* map[] =
-{
+	{
 		"name", origFileName.GetBytes()
-};
+	};
 	const JString msg = JGetString("ComplFileProgress::DocumentManager", map, sizeof(map));
 	pg.FixedLengthProcessBeginning(suffixCount * dirCount, msg, true, true);
 
@@ -1562,25 +1563,14 @@ JIndex i;
 
 // static
 
-JListT::CompareResult
+std::weak_ordering
 CompareMatchLengths
 	(
 	const DirMatchInfo& i1,
 	const DirMatchInfo& i2
 	)
 {
-	if (i1.matchLength < i2.matchLength)
-	{
-		return JListT::kFirstLessSecond;
-	}
-	else if (i1.matchLength == i2.matchLength)
-	{
-		return JListT::kFirstEqualSecond;
-	}
-	else
-	{
-		return JListT::kFirstGreaterSecond;
-	}
+	return JCompareSizes(i1.matchLength, i2.matchLength);
 }
 
 /******************************************************************************
@@ -1593,7 +1583,7 @@ CompareMatchLengths
 void
 DocumentManager::ReadFromProject
 	(
-	std::istream&			input,
+	std::istream&		input,
 	const JFileVersion	vers
 	)
 {

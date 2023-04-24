@@ -215,25 +215,25 @@ private:
 	// JBroadcaster message base class
 
 	class ProjectDocumentMessage : public JBroadcaster::Message
+	{
+	public:
+
+		ProjectDocumentMessage(const JUtf8Byte* type, ProjectDocument* doc)
+			:
+			JBroadcaster::Message(type),
+			itsDoc(doc)
+			{ };
+
+		ProjectDocument*
+		GetProjectDocument() const
 		{
-		public:
+			return itsDoc;
+		}
 
-			ProjectDocumentMessage(const JUtf8Byte* type, ProjectDocument* doc)
-				:
-				JBroadcaster::Message(type),
-				itsDoc(doc)
-				{ };
+	private:
 
-			ProjectDocument*
-			GetProjectDocument() const
-			{
-				return itsDoc;
-			}
-
-		private:
-
-			ProjectDocument*	itsDoc;
-		};
+		ProjectDocument*	itsDoc;
+	};
 
 public:
 
@@ -245,71 +245,71 @@ public:
 	static const JUtf8Byte* kAddFileToHistory;
 
 	class ProjectDocumentCreated : public ProjectDocumentMessage
-		{
-		public:
+	{
+	public:
 
-			ProjectDocumentCreated(ProjectDocument* doc)
-				:
-				ProjectDocumentMessage(kProjectDocumentCreated, doc)
-				{ };
-		};
+		ProjectDocumentCreated(ProjectDocument* doc)
+			:
+			ProjectDocumentMessage(kProjectDocumentCreated, doc)
+			{ };
+	};
 
 	class ProjectDocumentDeleted : public ProjectDocumentMessage
-		{
-		public:
+	{
+	public:
 
-			ProjectDocumentDeleted(ProjectDocument* doc)
-				:
-				ProjectDocumentMessage(kProjectDocumentDeleted, doc)
-				{ };
-		};
+		ProjectDocumentDeleted(ProjectDocument* doc)
+			:
+			ProjectDocumentMessage(kProjectDocumentDeleted, doc)
+			{ };
+	};
 
 	class ProjectDocumentActivated : public ProjectDocumentMessage
-		{
-		public:
+	{
+	public:
 
-			ProjectDocumentActivated(ProjectDocument* doc)
-				:
-				ProjectDocumentMessage(kProjectDocumentActivated, doc)
-				{ };
+		ProjectDocumentActivated(ProjectDocument* doc)
+			:
+			ProjectDocumentMessage(kProjectDocumentActivated, doc)
+			{ };
 
-			ProjectDocumentActivated(JPtrArray<ProjectDocument>* list)
-				:
-				ProjectDocumentMessage(kProjectDocumentActivated,
-									   list->IsEmpty() ?
-											(ProjectDocument*) nullptr :
-											list->GetFirstElement())
-				{ };
-		};
+		ProjectDocumentActivated(JPtrArray<ProjectDocument>* list)
+			:
+			ProjectDocumentMessage(kProjectDocumentActivated,
+								   list->IsEmpty() ?
+										(ProjectDocument*) nullptr :
+										list->GetFirstElement())
+			{ };
+	};
 
 	class AddFileToHistory : public JBroadcaster::Message
+	{
+	public:
+
+		AddFileToHistory(const FileHistoryType type,
+						 const JString& fullName)
+			:
+			JBroadcaster::Message(kAddFileToHistory),
+			itsType(type), itsFullName(fullName)
+			{ };
+
+		FileHistoryType
+		GetFileHistoryType() const
 		{
-		public:
+			return itsType;
+		}
 
-			AddFileToHistory(const FileHistoryType type,
-							 const JString& fullName)
-				:
-				JBroadcaster::Message(kAddFileToHistory),
-				itsType(type), itsFullName(fullName)
-				{ };
+		const JString&
+		GetFullName() const
+		{
+			return itsFullName;
+		}
 
-			FileHistoryType
-			GetFileHistoryType() const
-			{
-				return itsType;
-			}
+	private:
 
-			const JString&
-			GetFullName() const
-			{
-				return itsFullName;
-			}
-
-		private:
-
-			const FileHistoryType	itsType;
-			const JString&			itsFullName;
-		};
+		const FileHistoryType	itsType;
+		const JString&			itsFullName;
+	};
 };
 
 

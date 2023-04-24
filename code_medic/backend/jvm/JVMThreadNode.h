@@ -38,7 +38,7 @@ public:
 	Type	GetType() const;
 	void	FindParent(const JUInt64 id);
 
-	static JListT::CompareResult
+	static std::weak_ordering
 		CompareID(ThreadNode* const & t1, ThreadNode* const & t2);
 
 protected:

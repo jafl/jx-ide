@@ -12,7 +12,7 @@
 
 #include <jx-af/jx/JXModalDialogDirector.h>
 #include <jx-af/jcore/JPrefObject.h>
-#include "PrefsManager.h"		// need definition of FileTypeInfo
+#include "PrefsManager.h"		// for FileTypeInfo
 
 class JXTextButton;
 class JXTextCheckbox;

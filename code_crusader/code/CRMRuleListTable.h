@@ -11,7 +11,7 @@
 #define _H_CRMRuleListTable
 
 #include <jx-af/jx/JXStringTable.h>
-#include "PrefsManager.h"		// need definition of CRMRuleListInfo
+#include "PrefsManager.h"		// for CRMRuleListInfo
 
 class JXTextButton;
 class CRMRuleTable;
@@ -72,7 +72,7 @@ private:
 	void	RemoveRow();
 	void	SwitchDisplay();
 
-	static JListT::CompareResult
+	static std::weak_ordering
 		CompareNames(
 			const PrefsManager::CRMRuleListInfo& i1,
 			const PrefsManager::CRMRuleListInfo& i2);
