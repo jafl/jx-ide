@@ -160,6 +160,7 @@ MemoryDir::MemoryDirX
 MemoryDir::~MemoryDir()
 {
 	itsCommandDir->DirectorDeleted(this);
+	jdelete itsCmd;
 }
 
 /******************************************************************************
@@ -557,11 +558,7 @@ MemoryDir::Update()
 	if (itsShouldUpdateFlag && itsNeedsUpdateFlag)
 	{
 		itsNeedsUpdateFlag = false;
-
-		if (itsCmd != nullptr)
-		{
-			itsCmd->Command::Send();
-		}
+		itsCmd->Command::Send();
 	}
 }
 
