@@ -20,6 +20,7 @@
 #include <jx-af/jcore/jFileUtil.h>
 #include <jx-af/jcore/jStreamUtil.h>
 #include <jx-af/jcore/jProcessUtil.h>
+#include <jx-af/jcore/jTextUtil.h>
 #include <sstream>
 #include <jx-af/jcore/jAssert.h>
 
@@ -89,7 +90,13 @@ lldb::GetAssemblyCmd::HandleSuccess
 		{
 			line = JReadLine(input);
 
-			JStringIterator iter(line);
+			JStringIterator iter(&line);
+			while (iter.Next(theUNIXTerminalFormatPattern))
+			{
+				iter.RemoveLastMatch();
+			}
+
+			iter.MoveTo(kJIteratorStartAtBeginning, 0);
 			iter.BeginMatch();
 			if (!line.EndsWith(":") && iter.Next(":"))
 			{
