@@ -33,6 +33,9 @@ parts:
   jx-ide:
     plugin: autotools
     source: .
+    override-pull: |
+      snapcraftctl pull
+      sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 10
     build-environment:
       - JX_ROOT: /snap/jx-application-framework/current
       - PATH: $PATH:$JX_ROOT/bin
@@ -49,7 +52,7 @@ parts:
       - bin/code-mill
       - share/jxcb
     build-packages:
-      - g++
+      - g++-10
       - make
       - pkg-config
       - libeditorconfig-dev
