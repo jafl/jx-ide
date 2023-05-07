@@ -56,7 +56,15 @@ FunctionTable::FunctionTable
 	itsList(list),
 	itsNeedsAdjustment(true)
 {
-	ListenTo(itsList);
+	ListenTo(itsList, std::function([this](const JListT::ElementsInserted&)
+	{
+		const JSize delta = itsList->GetElementCount() - GetRowCount();
+		if (delta != 0)
+		{
+			AppendCols(delta);
+			itsNeedsAdjustment = true;
+		}
+	}));
 
 	SetRowBorderInfo(0, JColorManager::GetBlackColor());
 	SetColBorderInfo(0, JColorManager::GetBlackColor());
@@ -74,33 +82,6 @@ FunctionTable::FunctionTable
 
 FunctionTable::~FunctionTable()
 {
-}
-
-/******************************************************************************
- Receive (virtual protected)
-
- ******************************************************************************/
-
-void
-FunctionTable::Receive
-	(
-	JBroadcaster*	sender,
-	const Message&	message
-	)
-{
-	if (sender == itsList && message.Is(JListT::kElementsInserted))
-	{
-		const JSize delta = itsList->GetElementCount() - GetRowCount();
-		if (delta != 0)
-		{
-			AppendCols(delta);
-			itsNeedsAdjustment	= true;
-		}
-	}
-	else
-	{
-		JXTable::Receive(sender, message);
-	}
 }
 
 /******************************************************************************

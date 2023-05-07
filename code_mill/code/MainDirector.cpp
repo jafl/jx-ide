@@ -228,11 +228,43 @@ MainDirector::BuildWindow
 	window->SetTitle(JGetString("WindowTitle::MainDirector"));
 	window->LockCurrentMinSize();
 
-	ListenTo(itsChooseButton);
-	ListenTo(itsCancelButton);
-	ListenTo(itsHelpButton);
-	ListenTo(itsGenerateButton);
-	ListenTo(itsStringsButton);
+	ListenTo(itsChooseButton, std::function([this](const JXButton::Pushed&)
+	{
+		if (itsDirInput != nullptr)
+		{
+			auto* dlog = JXChoosePathDialog::Create(JXChoosePathDialog::kAcceptReadable, itsDirInput->GetText()->GetText());
+			if (dlog->DoDialog())
+			{
+				itsDirInput->GetText()->SetText(dlog->GetPath());
+			}
+		}
+	}));
+
+	ListenTo(itsCancelButton, std::function([this](const JXButton::Pushed&)
+	{
+		Close();
+	}));
+
+	ListenTo(itsHelpButton, std::function([](const JXButton::Pushed&)
+	{
+		JXGetHelpManager()->ShowTOC();
+	}));
+
+	ListenTo(itsGenerateButton, std::function([this](const JXButton::Pushed&)
+	{
+		GetPrefsManager()->SetAuthor(itsAuthorInput->GetText()->GetText());
+		GetPrefsManager()->SetCopyright(itsCopyrightInput->GetText()->GetText());
+
+		if (Write())
+		{
+			//Close();
+		}
+	}));
+
+	ListenTo(itsStringsButton, std::function([](const JXButton::Pushed&)
+	{
+		GetPrefsManager()->EditPrefs();
+	}));
 
 	JString cname, fname;
 	JString bases;
@@ -282,57 +314,6 @@ MainDirector::BuildWindow
 	itsCopyrightInput->GetText()->SetText(GetPrefsManager()->GetCopyright());
 
 	JPrefObject::ReadPrefs();
-}
-
-/******************************************************************************
- Receive (virtual protected)
-
- ******************************************************************************/
-
-void
-MainDirector::Receive
-	(
-	JBroadcaster*	sender,
-	const Message&	message
-	)
-{
-	if (sender == itsChooseButton && message.Is(JXButton::kPushed))
-	{
-		if (itsDirInput != nullptr)
-		{
-			auto* dlog = JXChoosePathDialog::Create(JXChoosePathDialog::kAcceptReadable, itsDirInput->GetText()->GetText());
-			if (dlog->DoDialog())
-			{
-				itsDirInput->GetText()->SetText(dlog->GetPath());
-			}
-		}
-	}
-	else if (sender == itsHelpButton && message.Is(JXButton::kPushed))
-	{
-		JXGetHelpManager()->ShowTOC();
-	}
-	else if (sender == itsCancelButton && message.Is(JXButton::kPushed))
-	{
-		Close();
-	}
-	else if (sender == itsGenerateButton && message.Is(JXButton::kPushed))
-	{
-		GetPrefsManager()->SetAuthor(itsAuthorInput->GetText()->GetText());
-		GetPrefsManager()->SetCopyright(itsCopyrightInput->GetText()->GetText());
-
-		if (Write())
-		{
-			//Close();
-		}
-	}
-	else if (sender == itsStringsButton && message.Is(JXButton::kPushed))
-	{
-		GetPrefsManager()->EditPrefs();
-	}
-	else
-	{
-		JXWindowDirector::Receive(sender, message);
-	}
 }
 
 /******************************************************************************

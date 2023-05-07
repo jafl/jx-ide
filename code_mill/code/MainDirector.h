@@ -37,8 +37,6 @@ protected:
 	void	ReadPrefs(std::istream& input) override;
 	void	WritePrefs(std::ostream& output) const override;
 
-	void	Receive(JBroadcaster* sender, const Message& message) override;
-
 private:
 
 	Class*			itsClass;
