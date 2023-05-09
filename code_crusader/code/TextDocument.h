@@ -154,7 +154,6 @@ private:
 	JXTextMenu*		itsWindowMenu;
 	JXTextMenu*		itsPrefsMenu;
 	JXTextMenu*		itsPrefsStylesMenu;
-	JXTextMenu*		itsHelpMenu;
 
 	TextFileType				itsFileType;
 	CharActionManager*			itsActionMgr;		// not owned; can be nullptr
@@ -197,10 +196,8 @@ private:
 	void	UpdateDiffMenu();
 	void	HandleDiffMenu(const JIndex item);
 
-	void	UpdatePrefsMenu();
 	void	HandlePrefsMenu(const JIndex index);
 
-	void	UpdatePrefsStylesMenu();
 	void	HandlePrefsStylesMenu(const JIndex index);
 
 	void	UpdateSettingsMenu();

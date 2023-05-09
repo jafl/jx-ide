@@ -47,8 +47,6 @@ protected:
 	JCoordinate	GetPrintHeaderHeight(JPagePrinter& p) const override;
 	void		DrawPrintHeader(JPagePrinter& p, const JCoordinate headerHeight) override;
 
-	void	Receive(JBroadcaster* sender, const Message& message) override;
-
 private:
 
 	CommandDirector*	itsCmdDir;

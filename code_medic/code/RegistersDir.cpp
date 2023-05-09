@@ -21,7 +21,6 @@
 #include <jx-af/jx/JXTextButton.h>
 #include <jx-af/jx/JXStaticText.h>
 #include <jx-af/jx/JXScrollbarSet.h>
-#include <jx-af/jx/JXHelpManager.h>
 #include <jx-af/jx/JXWDManager.h>
 #include <jx-af/jx/JXWDMenu.h>
 #include <jx-af/jx/JXImage.h>
@@ -41,26 +40,6 @@ enum
 	kOpenCmd = 1,
 	kCloseWindowCmd,
 	kQuitCmd
-};
-
-// Help menu
-
-static const JUtf8Byte* kHelpMenuStr =
-	"    About"
-	"%l| Table of Contents"
-	"  | Overview"
-	"  | This window %k F1"
-	"%l| Changes"
-	"  | Credits";
-
-enum
-{
-	kAboutCmd = 1,
-	kTOCCmd,
-	kOverviewCmd,
-	kThisWindowCmd,
-	kChangesCmd,
-	kCreditsCmd
 };
 
 /******************************************************************************
@@ -132,8 +111,6 @@ RegistersDir::Deactivate()
 #include "medic_registers_window.xpm"
 
 #include <jx-af/image/jx/jx_file_open.xpm>
-#include <jx-af/image/jx/jx_help_toc.xpm>
-#include <jx-af/image/jx/jx_help_specific.xpm>
 
 void
 RegistersDir::BuildWindow()
@@ -184,7 +161,9 @@ RegistersDir::BuildWindow()
 	itsFileMenu = menuBar->PrependTextMenu(JGetString("FileMenuTitle::JXGlobal"));
 	itsFileMenu->SetMenuItems(kFileMenuStr, "ThreadsDir");
 	itsFileMenu->SetUpdateAction(JXMenu::kDisableNone);
-	ListenTo(itsFileMenu);
+	itsFileMenu->AttachHandlers(this,
+		&RegistersDir::UpdateFileMenu,
+		&RegistersDir::HandleFileMenu);
 
 	itsFileMenu->SetItemImage(kOpenCmd, jx_file_open);
 
@@ -196,13 +175,7 @@ RegistersDir::BuildWindow()
 	assert( wdMenu != nullptr );
 	menuBar->AppendMenu(wdMenu);
 
-	itsHelpMenu = menuBar->AppendTextMenu(JGetString("HelpMenuTitle::JXGlobal"));
-	itsHelpMenu->SetMenuItems(kHelpMenuStr, "RegistersDir");
-	itsHelpMenu->SetUpdateAction(JXMenu::kDisableNone);
-	ListenTo(itsHelpMenu);
-
-	itsHelpMenu->SetItemImage(kTOCCmd,        jx_help_toc);
-	itsHelpMenu->SetItemImage(kThisWindowCmd, jx_help_specific);
+	GetApplication()->CreateHelpMenu(menuBar, "RegistersDir", "VarTreeHelp-Registers");
 }
 
 /******************************************************************************
@@ -282,26 +255,6 @@ RegistersDir::Receive
 			dynamic_cast<const Link::SymbolsLoaded*>(&message);
 		assert( info != nullptr );
 		UpdateWindowTitle(info->GetProgramName());
-	}
-
-	else if (sender == itsFileMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		UpdateFileMenu();
-	}
-	else if (sender == itsFileMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleFileMenu(selection->GetIndex());
-	}
-
-	else if (sender == itsHelpMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleHelpMenu(selection->GetIndex());
 	}
 
 	else
@@ -403,44 +356,5 @@ RegistersDir::HandleFileMenu
 	else if (index == kQuitCmd)
 	{
 		JXGetApplication()->Quit();
-	}
-}
-
-/******************************************************************************
- HandleHelpMenu (private)
-
- ******************************************************************************/
-
-void
-RegistersDir::HandleHelpMenu
-	(
-	const JIndex index
-	)
-{
-	if (index == kAboutCmd)
-	{
-		GetApplication()->DisplayAbout();
-	}
-
-	else if (index == kTOCCmd)
-	{
-		JXGetHelpManager()->ShowTOC();
-	}
-	else if (index == kOverviewCmd)
-	{
-		JXGetHelpManager()->ShowSection("OverviewHelp");
-	}
-	else if (index == kThisWindowCmd)
-	{
-		JXGetHelpManager()->ShowSection("VarTreeHelp-Registers");
-	}
-
-	else if (index == kChangesCmd)
-	{
-		JXGetHelpManager()->ShowChangeLog();
-	}
-	else if (index == kCreditsCmd)
-	{
-		JXGetHelpManager()->ShowCredits();
 	}
 }

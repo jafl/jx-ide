@@ -190,7 +190,6 @@ private:
 	JXTextMenu*		itsSourceMenu;
 	CommandMenu*	itsCmdMenu;
 	JXTextMenu*		itsPrefsMenu;
-	JXTextMenu*		itsHelpMenu;
 
 	static bool	theReopenTextFilesFlag;
 	static bool	theWarnOpenOldVersionFlag;

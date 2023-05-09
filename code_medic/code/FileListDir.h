@@ -47,8 +47,7 @@ private:
 	GetSourceFileListCmd*	itsCmd;
 
 	JXTextMenu*	itsFileMenu;
-	JXTextMenu*	itsActionsMenu;
-	JXTextMenu*	itsHelpMenu;
+	JXTextMenu*	itsActionMenu;
 
 // begin JXLayout
 
@@ -64,10 +63,8 @@ private:
 	void	UpdateFileMenu();
 	void	HandleFileMenu(const JIndex index);
 
-	void	UpdateActionsMenu();
-	void	HandleActionsMenu(const JIndex index);
-
-	void	HandleHelpMenu(const JIndex index);
+	void	UpdateActionMenu();
+	void	HandleActionMenu(const JIndex index);
 };
 
 #endif

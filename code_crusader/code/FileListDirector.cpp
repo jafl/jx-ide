@@ -204,7 +204,10 @@ FileListDirector::FileListDirectorX
 	)
 {
 	itsProjDoc = projDoc;
-	ListenTo(itsProjDoc);
+	ListenTo(itsProjDoc, std::function([this](const JXFileDocument::NameChanged&)
+	{
+		AdjustWindowTitle();
+	}));
 
 	BuildWindow();
 }
@@ -318,12 +321,18 @@ FileListDirector::BuildWindow()
 							JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 10,10);
 	assert( itsFLTable != nullptr );
 	itsFLSet->SetTable(itsFLTable);
-	ListenTo(itsFLTable);
+
+	ListenTo(itsFLTable, std::function([this](const JXFileListTable::ProcessSelection&)
+	{
+		OpenSelectedFiles();
+	}));
 
 	itsFileMenu = menuBar->AppendTextMenu(JGetString("FileMenuTitle::JXGlobal"));
 	itsFileMenu->SetMenuItems(kFileMenuStr, "FileListDirector");
 	itsFileMenu->SetUpdateAction(JXMenu::kDisableNone);
-	ListenTo(itsFileMenu);
+	itsFileMenu->AttachHandlers(this,
+		&FileListDirector::UpdateFileMenu,
+		&FileListDirector::HandleFileMenu);
 
 	itsFileMenu->SetItemImage(kNewTextEditorCmd, jx_file_new);
 	itsFileMenu->SetItemImage(kOpenSomethingCmd, jx_file_open);
@@ -341,7 +350,9 @@ FileListDirector::BuildWindow()
 	itsListMenu = menuBar->AppendTextMenu(JGetString("ListMenuTitle::FileListDirector"));
 	itsListMenu->SetMenuItems(kListMenuStr, "FileListDirector");
 	itsListMenu->SetUpdateAction(JXMenu::kDisableNone);
-	ListenTo(itsListMenu);
+	itsListMenu->AttachHandlers(this,
+		&FileListDirector::UpdateListMenu,
+		&FileListDirector::HandleListMenu);
 
 	itsListMenu->SetItemImage(kUseWildcardCmd, jx_filter_wildcard);
 	itsListMenu->SetItemImage(kUseRegexCmd,    jx_filter_regex);
@@ -351,7 +362,9 @@ FileListDirector::BuildWindow()
 	itsProjectMenu = menuBar->AppendTextMenu(JGetString("ProjectMenuTitle::global"));
 	itsProjectMenu->SetMenuItems(kProjectMenuStr, "FileListDirector");
 	itsProjectMenu->SetUpdateAction(JXMenu::kDisableNone);
-	ListenTo(itsProjectMenu);
+	itsProjectMenu->AttachHandlers(this,
+		&FileListDirector::UpdateProjectMenu,
+		&FileListDirector::HandleProjectMenu);
 
 	itsProjectMenu->SetItemImage(kShowSymbolBrowserCmd, jcc_show_symbol_list);
 	itsProjectMenu->SetItemImage(kShowCTreeCmd,         jcc_show_c_tree);
@@ -380,10 +393,11 @@ FileListDirector::BuildWindow()
 	itsPrefsMenu = menuBar->AppendTextMenu(JGetString("PrefsMenuTitle::JXGlobal"));
 	itsPrefsMenu->SetMenuItems(kPrefsMenuStr, "FileListDirector");
 	itsPrefsMenu->SetUpdateAction(JXMenu::kDisableNone);
-	ListenTo(itsPrefsMenu);
+	itsPrefsMenu->AttachHandlers(this,
+		&FileListDirector::UpdatePrefsMenu,
+		&FileListDirector::HandlePrefsMenu);
 
-	itsHelpMenu = GetApplication()->CreateHelpMenu(menuBar, "FileListDirector");
-	ListenTo(itsHelpMenu);
+	JXTextMenu* helpMenu = GetApplication()->CreateHelpMenu(menuBar, "FileListDirector", "FileListHelp");
 
 	// must do this after creating menus
 
@@ -398,7 +412,7 @@ FileListDirector::BuildWindow()
 		itsToolBar->NewGroup();
 		itsToolBar->AppendButton(itsProjectMenu, kSearchFilesCmd);
 
-		GetApplication()->AppendHelpMenuToToolBar(itsToolBar, itsHelpMenu);
+		GetApplication()->AppendHelpMenuToToolBar(itsToolBar, helpMenu);
 	}
 }
 
@@ -412,95 +426,6 @@ FileListDirector::AdjustWindowTitle()
 {
 	const JString title = itsProjDoc->GetName() + JGetString("WindowTitleSuffix::FileListDirector");
 	GetWindow()->SetTitle(title);
-}
-
-/******************************************************************************
- Receive (virtual protected)
-
- ******************************************************************************/
-
-void
-FileListDirector::Receive
-	(
-	JBroadcaster*	sender,
-	const Message&	message
-	)
-{
-	if (sender == itsFLTable && message.Is(JXFileListTable::kProcessSelection))
-	{
-		OpenSelectedFiles();
-	}
-
-	else if (sender == itsFileMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		UpdateFileMenu();
-	}
-	else if (sender == itsFileMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleFileMenu(selection->GetIndex());
-	}
-
-	else if (sender == itsListMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		UpdateListMenu();
-	}
-	else if (sender == itsListMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleListMenu(selection->GetIndex());
-	}
-
-	else if (sender == itsProjectMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		UpdateProjectMenu();
-	}
-	else if (sender == itsProjectMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleProjectMenu(selection->GetIndex());
-	}
-
-	else if (sender == itsPrefsMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		UpdatePrefsMenu();
-	}
-	else if (sender == itsPrefsMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandlePrefsMenu(selection->GetIndex());
-	}
-
-	else if (sender == itsHelpMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		GetApplication()->UpdateHelpMenu(itsHelpMenu);
-	}
-	else if (sender == itsHelpMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		GetApplication()->HandleHelpMenu(itsHelpMenu, "FileListHelp",
-											 selection->GetIndex());
-	}
-
-	else if (sender == itsProjDoc && message.Is(JXFileDocument::kNameChanged))
-	{
-		AdjustWindowTitle();
-	}
-
-	else
-	{
-		JXWindowDirector::Receive(sender, message);
-	}
 }
 
 /******************************************************************************
@@ -784,8 +709,7 @@ FileListDirector::ReceiveWithFeedback
 {
 	if (sender == itsCmdMenu && message->Is(CommandMenu::kGetTargetInfo))
 	{
-		auto* info =
-			dynamic_cast<CommandMenu::GetTargetInfo*>(message);
+		auto* info = dynamic_cast<CommandMenu::GetTargetInfo*>(message);
 		assert( info != nullptr );
 		itsFLTable->GetSelection(info->GetFileList());
 	}

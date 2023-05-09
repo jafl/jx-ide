@@ -61,7 +61,9 @@ CompileDocument::CompileDocument
 	itsErrorMenu = InsertTextMenu(JGetString("ErrorMenuTitle::CompileDocument"));
 	itsErrorMenu->SetMenuItems(kErrorMenuStr, "CompileDocument");
 	itsErrorMenu->SetUpdateAction(JXMenu::kDisableNone);
-	ListenTo(itsErrorMenu);
+	itsErrorMenu->AttachHandlers(this,
+		&CompileDocument::UpdateErrorMenu,
+		&CompileDocument::HandleErrorMenu);
 
 	GetCommandMenu()->SetProjectDocument(projDoc);
 
@@ -490,36 +492,6 @@ CompileDocument::ConvertSelectionToFullPath
 	iter.Invalidate();
 
 	ExecOutputDocument::ConvertSelectionToFullPath(fileName);
-}
-
-/******************************************************************************
- Receive (virtual protected)
-
- ******************************************************************************/
-
-void
-CompileDocument::Receive
-	(
-	JBroadcaster*	sender,
-	const Message&	message
-	)
-{
-	if (sender == itsErrorMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		UpdateErrorMenu();
-	}
-	else if (sender == itsErrorMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleErrorMenu(selection->GetIndex());
-	}
-
-	else
-	{
-		ExecOutputDocument::Receive(sender, message);
-	}
 }
 
 /******************************************************************************

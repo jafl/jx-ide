@@ -50,7 +50,6 @@
 #include <jx-af/jx/JXStaticText.h>
 #include <jx-af/jx/JXDockWidget.h>
 #include <jx-af/jx/JXStringHistoryMenu.h>
-#include <jx-af/jx/JXHelpManager.h>
 #include <jx-af/jx/JXWDManager.h>
 #include <jx-af/jx/JXWDMenu.h>
 #include <jx-af/jx/JXChooseFileDialog.h>
@@ -194,26 +193,6 @@ static const JIndex kDebuggerTypeToMenuIndex[] =
 	kUseLLDBCmd
 };
 
-// Help menu
-
-static const JUtf8Byte* kHelpMenuStr =
-	"    About"
-	"%l| Table of Contents       %i" kJXHelpTOCAction
-	"  | Overview"
-	"  | This window       %k F1 %i" kJXHelpSpecificAction
-	"%l| Changes"
-	"  | Credits";
-
-enum
-{
-	kAboutCmd = 1,
-	kTOCCmd,
-	kOverviewCmd,
-	kThisWindowCmd,
-	kChangesCmd,
-	kCreditsCmd
-};
-
 /******************************************************************************
  Constructor
 
@@ -276,8 +255,7 @@ CommandDirector::CommandDirector
 	wdMgr->PermanentDirectorCreated(itsDebugDir,         JString::empty,                            kShowDebugInfoAction);
 
 	CreateWindowsMenuAndToolBar(menuBar, itsToolBar, false, false, true,
-								itsDebugMenu, itsPrefsMenu,
-								itsHelpMenu, kTOCCmd, kThisWindowCmd);
+								itsDebugMenu, itsPrefsMenu, itsHelpMenu);
 	itsCurrentSourceDir->CreateWindowsMenu();
 	itsCurrentAsmDir->CreateWindowsMenu();
 
@@ -463,8 +441,6 @@ CommandDirector::PrepareCommand
 
 #include <jx-af/image/jx/jx_file_open.xpm>
 #include <jx-af/image/jx/jx_file_print.xpm>
-#include <jx-af/image/jx/jx_help_toc.xpm>
-#include <jx-af/image/jx/jx_help_specific.xpm>
 
 JXMenuBar*
 CommandDirector::BuildWindow()
@@ -556,7 +532,9 @@ CommandDirector::BuildWindow()
 	itsFileMenu = menuBar->AppendTextMenu(JGetString("FileMenuTitle::JXGlobal"));
 	itsFileMenu->SetMenuItems(kFileMenuStr, "CommandDirector");
 	itsFileMenu->SetUpdateAction(JXMenu::kDisableNone);
-	ListenTo(itsFileMenu);
+	itsFileMenu->AttachHandlers(this,
+		&CommandDirector::UpdateFileMenu,
+		&CommandDirector::HandleFileMenu);
 
 	itsFileMenu->SetItemImage(kOpenCmd,  jx_file_open);
 	itsFileMenu->SetItemImage(kPrintCmd, jx_file_print);
@@ -587,15 +565,11 @@ CommandDirector::BuildWindow()
 	itsPrefsMenu = menuBar->AppendTextMenu(JGetString("PrefsMenuTitle::JXGlobal"));
 	itsPrefsMenu->SetMenuItems(kPrefsMenuStr, "CommandDirector");
 	itsPrefsMenu->SetUpdateAction(JXMenu::kDisableNone);
-	ListenTo(itsPrefsMenu);
+	itsPrefsMenu->AttachHandlers(this,
+		&CommandDirector::UpdatePrefsMenu,
+		&CommandDirector::HandlePrefsMenu);
 
-	itsHelpMenu = menuBar->AppendTextMenu(JGetString("HelpMenuTitle::JXGlobal"));
-	itsHelpMenu->SetMenuItems(kHelpMenuStr, "CommandDirector");
-	itsHelpMenu->SetUpdateAction(JXMenu::kDisableNone);
-	ListenTo(itsHelpMenu);
-
-	itsHelpMenu->SetItemImage(kTOCCmd,        jx_help_toc);
-	itsHelpMenu->SetItemImage(kThisWindowCmd, jx_help_specific);
+	itsHelpMenu = GetApplication()->CreateHelpMenu(menuBar, "CommandDirector", "CommandDirHelp");
 
 	return menuBar;
 }
@@ -775,22 +749,22 @@ CommandDirector::CreateDebugMenu
 
 	JXKeyModifiers m(menu->GetDisplay());
 	m.SetState(kJXMetaKeyIndex, true);
-	(menu->GetWindow())->InstallMenuShortcut(menu, kStopCmd, '.', m);
+	menu->GetWindow()->InstallMenuShortcut(menu, kStopCmd, '.', m);
 
 	AdjustDebugMenu(menu);
 	return menu;
 }
 
 /******************************************************************************
- AddDebugMenuItemsToToolBar
+ AddDebugMenuItemsToToolBar (static)
 
  ******************************************************************************/
 
 void
 CommandDirector::AddDebugMenuItemsToToolBar
 	(
-	JXToolBar*		toolBar,
-	JXTextMenu*		debugMenu,
+	JXToolBar*	toolBar,
+	JXTextMenu*	debugMenu,
 	const bool	includeStepAsm
 	)
 {
@@ -840,7 +814,7 @@ CommandDirector::AdjustDebugMenu
 }
 
 /******************************************************************************
- CreateWindowsMenuAndToolBar
+ CreateWindowsMenuAndToolBar (static)
 
  ******************************************************************************/
 
@@ -849,14 +823,12 @@ CommandDirector::CreateWindowsMenuAndToolBar
 	(
 	JXMenuBar*		menuBar,
 	JXToolBar*		toolBar,
-	const bool	includeStepAsm,
-	const bool	includeCmdLine,
-	const bool	includeCurrSrc,
+	const bool		includeStepAsm,
+	const bool		includeCmdLine,
+	const bool		includeCurrSrc,
 	JXTextMenu*		debugMenu,
 	JXTextMenu*		prefsMenu,
-	JXTextMenu*		helpMenu,
-	const JIndex	tocCmd,
-	const JIndex	thisWindowCmd
+	JXTextMenu*		helpMenu
 	)
 {
 	auto* wdMenu =
@@ -871,22 +843,20 @@ CommandDirector::CreateWindowsMenuAndToolBar
 		AddDebugMenuItemsToToolBar(toolBar, debugMenu, includeStepAsm);
 		toolBar->NewGroup();
 		AddWindowsMenuItemsToToolBar(toolBar, wdMenu, includeCmdLine, includeCurrSrc);
-		toolBar->NewGroup();
-		toolBar->AppendButton(helpMenu, tocCmd);
-		toolBar->AppendButton(helpMenu, thisWindowCmd);
+		GetApplication()->AppendHelpMenuToToolBar(toolBar, helpMenu);
 	}
 }
 
 /******************************************************************************
- AddWindowsMenuItemsToToolBar
+ AddWindowsMenuItemsToToolBar (static)
 
  ******************************************************************************/
 
 void
 CommandDirector::AddWindowsMenuItemsToToolBar
 	(
-	JXToolBar*		toolBar,
-	JXTextMenu*		windowsMenu,
+	JXToolBar*	toolBar,
+	JXTextMenu*	windowsMenu,
 	const bool	includeCmdLine,
 	const bool	includeCurrSrc
 	)
@@ -1039,18 +1009,6 @@ CommandDirector::Receive
 
 	// menus
 
-	else if (sender == itsFileMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		UpdateFileMenu();
-	}
-	else if (sender == itsFileMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleFileMenu(selection->GetIndex());
-	}
-
 	else if (sender == itsDebugMenu && message.Is(JXMenu::kNeedsUpdate))
 	{
 		UpdateDebugMenu(itsDebugMenu, itsCommandOutput, itsCommandInput);
@@ -1066,26 +1024,6 @@ CommandDirector::Receive
 	else if (sender == GetPrefsManager() && message.Is(PrefsManager::kCustomCommandsChanged))
 	{
 		AdjustDebugMenu(itsDebugMenu);
-	}
-
-	else if (sender == itsPrefsMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		UpdatePrefsMenu();
-	}
-	else if (sender == itsPrefsMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandlePrefsMenu(selection->GetIndex());
-	}
-
-	else if (sender == itsHelpMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleHelpMenu(selection->GetIndex());
 	}
 
 	else if (sender == itsHistoryMenu && message.Is(JXMenu::kItemSelected))
@@ -2238,42 +2176,5 @@ CommandDirector::HandlePrefsMenu
 	else if (index == kEditMacWinPrefsCmd)
 	{
 		JXMacWinPrefsDialog::EditPrefs();
-	}
-}
-
-/******************************************************************************
- HandleHelpMenu
-
- ******************************************************************************/
-
-void
-CommandDirector::HandleHelpMenu
-	(
-	const JIndex index
-	)
-{
-	if (index == kAboutCmd)
-	{
-		GetApplication()->DisplayAbout();
-	}
-	else if (index == kTOCCmd)
-	{
-		JXGetHelpManager()->ShowTOC();
-	}
-	else if (index == kOverviewCmd)
-	{
-		JXGetHelpManager()->ShowSection("OverviewHelp");
-	}
-	else if (index == kThisWindowCmd)
-	{
-		JXGetHelpManager()->ShowSection("CommandDirHelp");
-	}
-	else if (index == kChangesCmd)
-	{
-		JXGetHelpManager()->ShowChangeLog();
-	}
-	else if (index == kCreditsCmd)
-	{
-		JXGetHelpManager()->ShowCredits();
 	}
 }

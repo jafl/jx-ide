@@ -24,7 +24,6 @@
 #include <jx-af/jx/JXScrollbarSet.h>
 #include <jx-af/jx/JXColHeaderWidget.h>
 #include <jx-af/j2dplot/JX2DPlotWidget.h>
-#include <jx-af/jx/JXHelpManager.h>
 #include <jx-af/jx/JXWDManager.h>
 #include <jx-af/jx/JXWDMenu.h>
 #include <jx-af/jx/JXImage.h>
@@ -64,26 +63,6 @@ static const JUtf8Byte* kActionMenuStr =
 enum
 {
 	kSavePrefsCmd = 1
-};
-
-// Help menu
-
-static const JUtf8Byte* kHelpMenuStr =
-	"    About"
-	"%l| Table of Contents"
-	"  | Overview"
-	"  | This window %k F1"
-	"%l| Changes"
-	"  | Credits";
-
-enum
-{
-	kAboutCmd = 1,
-	kTOCCmd,
-	kOverviewCmd,
-	kThisWindowCmd,
-	kChangesCmd,
-	kCreditsCmd
 };
 
 /******************************************************************************
@@ -266,8 +245,6 @@ Plot2DDir::Activate()
 
 #include <jx-af/image/jx/jx_file_open.xpm>
 #include <jx-af/image/jx/jx_file_print.xpm>
-#include <jx-af/image/jx/jx_help_toc.xpm>
-#include <jx-af/image/jx/jx_help_specific.xpm>
 
 void
 Plot2DDir::BuildWindow()
@@ -354,7 +331,9 @@ Plot2DDir::BuildWindow()
 	itsActionMenu = menuBar->PrependTextMenu(JGetString("ActionsMenuTitle::global"));
 	itsActionMenu->SetMenuItems(kActionMenuStr, "Plot2DDir");
 	itsActionMenu->SetUpdateAction(JXMenu::kDisableNone);
-	ListenTo(itsActionMenu);
+	itsActionMenu->AttachHandlers(this,
+		&Plot2DDir::UpdateActionMenu,
+		&Plot2DDir::HandleActionMenu);
 
 	JXTextMenu* editMenu;
 	const bool hasEditMenu = (itsExprTable->GetEditMenuHandler())->GetEditMenu(&editMenu);
@@ -364,7 +343,9 @@ Plot2DDir::BuildWindow()
 	itsFileMenu = menuBar->PrependTextMenu(JGetString("FileMenuTitle::JXGlobal"));
 	itsFileMenu->SetMenuItems(kFileMenuStr, "ThreadsDir");
 	itsFileMenu->SetUpdateAction(JXMenu::kDisableNone);
-	ListenTo(itsFileMenu);
+	itsFileMenu->AttachHandlers(this,
+		&Plot2DDir::UpdateFileMenu,
+		&Plot2DDir::HandleFileMenu);
 
 	itsFileMenu->SetItemImage(kOpenCmd,    jx_file_open);
 	itsFileMenu->SetItemImage(kPrintPSCmd, jx_file_print);
@@ -375,15 +356,9 @@ Plot2DDir::BuildWindow()
 	assert( wdMenu != nullptr );
 	menuBar->AppendMenu(wdMenu);
 
-	itsHelpMenu = menuBar->AppendTextMenu(JGetString("HelpMenuTitle::JXGlobal"));
-	itsHelpMenu->SetMenuItems(kHelpMenuStr, "Plot2DDir");
-	itsHelpMenu->SetUpdateAction(JXMenu::kDisableNone);
-	ListenTo(itsHelpMenu);
+	GetApplication()->CreateHelpMenu(menuBar, "Plot2DDir", "2DPlotHelp");
 
-	itsHelpMenu->SetItemImage(kTOCCmd,        jx_help_toc);
-	itsHelpMenu->SetItemImage(kThisWindowCmd, jx_help_specific);
-
-	(GetDisplay()->GetWDManager())->DirectorCreated(this);
+	GetDisplay()->GetWDManager()->DirectorCreated(this);
 }
 
 /******************************************************************************
@@ -482,7 +457,7 @@ Plot2DDir::Receive
 		Update(r.top, r.bottom-1);
 	}
 
-	else if (sender == &(itsExprTable->GetTableSelection()))
+	else if (sender == &itsExprTable->GetTableSelection())
 	{
 		UpdateButtons();
 	}
@@ -536,38 +511,6 @@ Plot2DDir::Receive
 			JXCloseDirectorTask::Close(this);	// close after bcast is finished
 		}
 		itsWaitingForReloadFlag = false;
-	}
-
-	else if (sender == itsFileMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		UpdateFileMenu();
-	}
-	else if (sender == itsFileMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleFileMenu(selection->GetIndex());
-	}
-
-	else if (sender == itsActionMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		UpdateActionMenu();
-	}
-	else if (sender == itsActionMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleActionMenu(selection->GetIndex());
-	}
-
-	else if (sender == itsHelpMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleHelpMenu(selection->GetIndex());
 	}
 
 	else if (sender == GetWindow() && message.Is(JXWindow::kIconified))
@@ -850,44 +793,5 @@ Plot2DDir::HandleActionMenu
 	if (index == kSavePrefsCmd)
 	{
 		GetPrefsManager()->SaveWindowSize(kPlot2DWindSizeID, GetWindow());
-	}
-}
-
-/******************************************************************************
- HandleHelpMenu (private)
-
- ******************************************************************************/
-
-void
-Plot2DDir::HandleHelpMenu
-	(
-	const JIndex index
-	)
-{
-	if (index == kAboutCmd)
-	{
-		GetApplication()->DisplayAbout();
-	}
-
-	else if (index == kTOCCmd)
-	{
-		JXGetHelpManager()->ShowTOC();
-	}
-	else if (index == kOverviewCmd)
-	{
-		JXGetHelpManager()->ShowSection("OverviewHelp");
-	}
-	else if (index == kThisWindowCmd)
-	{
-		JXGetHelpManager()->ShowSection("2DPlotHelp");
-	}
-
-	else if (index == kChangesCmd)
-	{
-		JXGetHelpManager()->ShowChangeLog();
-	}
-	else if (index == kCreditsCmd)
-	{
-		JXGetHelpManager()->ShowCredits();
 	}
 }

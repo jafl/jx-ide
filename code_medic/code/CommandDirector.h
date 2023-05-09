@@ -75,23 +75,23 @@ public:
 	void	CloseDynamicDirectors();
 
 	JXTextMenu*	CreateDebugMenu(JXMenuBar* menuBar);
-	void		AddDebugMenuItemsToToolBar(JXToolBar* toolBar, JXTextMenu* debugMenu,
-										   const bool includeStepAsm);
 	void		AdjustDebugMenu(JXTextMenu* menu);
 	void		UpdateDebugMenu(JXTextMenu* menu, JXTEBase* te1, JXTEBase* te2);
 	void		HandleDebugMenu(JXTextMenu* menu, const JIndex index, JXTEBase* te1, JXTEBase* te2);
 
-	void		CreateWindowsMenuAndToolBar(JXMenuBar* menuBar, JXToolBar* toolBar,
-											const bool includeStepAsm,
-											const bool includeCmdLine,
-											const bool includeCurrSrc,
-											JXTextMenu* debugMenu, JXTextMenu* prefsMenu,
-											JXTextMenu* helpMenu, const JIndex tocCmd,
-											const JIndex thisWindowCmd);
-	void		AddWindowsMenuItemsToToolBar(JXToolBar* toolBar,
-											 JXTextMenu* windowsMenu,
-											 const bool includeCmdLine,
-											 const bool includeCurrSrc);
+	static void		CreateWindowsMenuAndToolBar(JXMenuBar* menuBar, JXToolBar* toolBar,
+												const bool includeStepAsm,
+												const bool includeCmdLine,
+												const bool includeCurrSrc,
+												JXTextMenu* debugMenu,
+												JXTextMenu* prefsMenu,
+												JXTextMenu* helpMenu);
+	static void		AddWindowsMenuItemsToToolBar(JXToolBar* toolBar,
+												 JXTextMenu* windowsMenu,
+												 const bool includeCmdLine,
+												 const bool includeCurrSrc);
+	static void		AddDebugMenuItemsToToolBar(JXToolBar* toolBar, JXTextMenu* debugMenu,
+											   const bool includeStepAsm);
 
 	SourceDirector*	GetCurrentSourceDir();
 	ThreadsDir*		GetThreadsDir();

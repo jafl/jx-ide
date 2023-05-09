@@ -69,7 +69,7 @@ const JSize kBaseCount                = sizeof(kMenuIndexToBase) / sizeof(JSize)
 VarTreeWidget::VarTreeWidget
 	(
 	CommandDirector*	dir,
-	const bool		mainDisplay,
+	const bool			mainDisplay,
 	JXMenuBar*			menuBar,
 	JTree*				tree,
 	JNamedTreeList*		treeList,
@@ -95,14 +95,16 @@ VarTreeWidget::VarTreeWidget
 
 	// custom Edit menu
 
-	JXTEBase* te         = GetEditMenuHandler();
-	itsEditMenu          = te->AppendEditMenu(menuBar);
+	JXTEBase* te     = GetEditMenuHandler();
+	itsEditMenu      = te->AppendEditMenu(menuBar);
 	const bool found = te->EditMenuCmdToIndex(JTextEditor::kCopyCmd, &itsCopyPathCmdIndex);
 	assert( found );
 	itsCopyPathCmdIndex++;
 	itsCopyValueCmdIndex = itsCopyPathCmdIndex+1;
 	itsEditMenu->InsertMenuItems(itsCopyPathCmdIndex, kEditMenuAddStr, "VarTreeWidget");
-	ListenTo(itsEditMenu);
+	itsEditMenu->AttachHandlers(this,
+		&VarTreeWidget::UpdateEditMenu,
+		&VarTreeWidget::HandleEditMenu);
 
 	// Base conversion menus
 
@@ -904,24 +906,6 @@ VarTreeWidget::Receive
 		itsWaitingForReloadFlag = false;
 	}
 
-	else if (sender == itsEditMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		if (HasFocus())
-		{
-			UpdateEditMenu();
-		}
-	}
-	else if (sender == itsEditMenu && message.Is(JXMenu::kItemSelected))
-	{
-		if (HasFocus())
-		{
-			const auto* selection =
-				dynamic_cast<const JXMenu::ItemSelected*>(&message);
-			assert( selection != nullptr );
-			HandleEditMenu(selection->GetIndex());
-		}
-	}
-
 	else if (sender == itsBaseMenu && message.Is(JXMenu::kNeedsUpdate))
 	{
 		UpdateBaseMenu(itsBaseMenu);
@@ -1029,6 +1013,11 @@ VarTreeWidget::FlushOldData()
 void
 VarTreeWidget::UpdateEditMenu()
 {
+	if (!HasFocus())
+	{
+		return;
+	}
+
 	JXTEBase* te = GetEditMenuHandler();
 
 	JIndex index;
@@ -1059,6 +1048,11 @@ VarTreeWidget::HandleEditMenu
 	const JIndex index
 	)
 {
+	if (!HasFocus())
+	{
+		return;
+	}
+
 	ClearIncrementalSearchBuffer();
 
 	JTextEditor::CmdIndex cmd;

@@ -19,7 +19,6 @@
 #include <jx-af/jx/JXTextButton.h>
 #include <jx-af/jx/JXFileListSet.h>
 #include <jx-af/jx/JXFileListTable.h>
-#include <jx-af/jx/JXHelpManager.h>
 #include <jx-af/jx/JXWDMenu.h>
 #include <jx-af/jx/JXImage.h>
 #include <jx-af/jcore/JTableSelection.h>
@@ -49,26 +48,6 @@ enum
 {
 	kShowFilterCmd = 1,
 	kShowRegexCmd
-};
-
-// Help menu
-
-static const JUtf8Byte* kHelpMenuStr =
-	"    About"
-	"%l| Table of Contents"
-	"  | Overview"
-	"  | This window %k F1"
-	"%l| Changes"
-	"  | Credits";
-
-enum
-{
-	kAboutCmd = 1,
-	kTOCCmd,
-	kOverviewCmd,
-	kThisWindowCmd,
-	kChangesCmd,
-	kCreditsCmd
 };
 
 // setup information
@@ -136,8 +115,6 @@ FileListDir::GetTable()
 #include <jx-af/image/jx/jx_file_open.xpm>
 #include <jx-af/image/jx/jx_filter_wildcard.xpm>
 #include <jx-af/image/jx/jx_filter_regex.xpm>
-#include <jx-af/image/jx/jx_help_toc.xpm>
-#include <jx-af/image/jx/jx_help_specific.xpm>
 
 void
 FileListDir::BuildWindow()
@@ -178,17 +155,21 @@ FileListDir::BuildWindow()
 	itsFileMenu = menuBar->PrependTextMenu(JGetString("FileMenuTitle::JXGlobal"));
 	itsFileMenu->SetMenuItems(kFileMenuStr, "ThreadsDir");
 	itsFileMenu->SetUpdateAction(JXMenu::kDisableNone);
-	ListenTo(itsFileMenu);
+	itsFileMenu->AttachHandlers(this,
+		&FileListDir::UpdateFileMenu,
+		&FileListDir::HandleFileMenu);
 
 	itsFileMenu->SetItemImage(kOpenCmd, jx_file_open);
 
-	itsActionsMenu = menuBar->AppendTextMenu(JGetString("ActionsMenuTitle::global"));
-	itsActionsMenu->SetMenuItems(kActionMenuStr, "FileListDir");
-	itsActionsMenu->SetUpdateAction(JXMenu::kDisableNone);
-	ListenTo(itsActionsMenu);
+	itsActionMenu = menuBar->AppendTextMenu(JGetString("ActionsMenuTitle::global"));
+	itsActionMenu->SetMenuItems(kActionMenuStr, "FileListDir");
+	itsActionMenu->SetUpdateAction(JXMenu::kDisableNone);
+	itsActionMenu->AttachHandlers(this,
+		&FileListDir::UpdateActionMenu,
+		&FileListDir::HandleActionMenu);
 
-	itsActionsMenu->SetItemImage(kShowFilterCmd, jx_filter_wildcard);
-	itsActionsMenu->SetItemImage(kShowRegexCmd,  jx_filter_regex);
+	itsActionMenu->SetItemImage(kShowFilterCmd, jx_filter_wildcard);
+	itsActionMenu->SetItemImage(kShowRegexCmd,  jx_filter_regex);
 
 	auto* wdMenu =
 		jnew JXWDMenu(JGetString("WindowsMenuTitle::JXGlobal"), menuBar,
@@ -196,13 +177,7 @@ FileListDir::BuildWindow()
 	assert( wdMenu != nullptr );
 	menuBar->AppendMenu(wdMenu);
 
-	itsHelpMenu = menuBar->AppendTextMenu(JGetString("HelpMenuTitle::JXGlobal"));
-	itsHelpMenu->SetMenuItems(kHelpMenuStr, "FileListDir");
-	itsHelpMenu->SetUpdateAction(JXMenu::kDisableNone);
-	ListenTo(itsHelpMenu);
-
-	itsHelpMenu->SetItemImage(kTOCCmd,        jx_help_toc);
-	itsHelpMenu->SetItemImage(kThisWindowCmd, jx_help_specific);
+	GetApplication()->CreateHelpMenu(menuBar, "FileListDir", "SourceWindowHelp-FileList");
 }
 
 /******************************************************************************
@@ -283,38 +258,6 @@ FileListDir::Receive
 		UpdateWindowTitle(info->GetProgramName());
 	}
 
-	else if (sender == itsFileMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		UpdateFileMenu();
-	}
-	else if (sender == itsFileMenu && message.Is(JXMenu::kItemSelected))
-	{
-		 const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleFileMenu(selection->GetIndex());
-	}
-
-	else if (sender == itsActionsMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		UpdateActionsMenu();
-	}
-	else if (sender == itsActionsMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleActionsMenu(selection->GetIndex());
-	}
-
-	else if (sender == itsHelpMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleHelpMenu(selection->GetIndex());
-	}
-
 	else
 	{
 		JXWindowDirector::Receive(sender, message);
@@ -389,16 +332,16 @@ FileListDir::HandleFileMenu
  ******************************************************************************/
 
 void
-FileListDir::UpdateActionsMenu()
+FileListDir::UpdateActionMenu()
 {
 	const JXFileListSet::FilterType type = itsFileListSet->GetFilterType();
 	if (type == JXFileListSet::kWildcardFilter)
 	{
-		itsActionsMenu->CheckItem(kShowFilterCmd);
+		itsActionMenu->CheckItem(kShowFilterCmd);
 	}
 	else if (type == JXFileListSet::kRegexFilter)
 	{
-		itsActionsMenu->CheckItem(kShowRegexCmd);
+		itsActionMenu->CheckItem(kShowRegexCmd);
 	}
 }
 
@@ -408,7 +351,7 @@ FileListDir::UpdateActionsMenu()
  ******************************************************************************/
 
 void
-FileListDir::HandleActionsMenu
+FileListDir::HandleActionMenu
 	(
 	const JIndex index
 	)
@@ -436,43 +379,6 @@ FileListDir::HandleActionsMenu
 		{
 			itsFileListSet->SetFilterType(JXFileListSet::kRegexFilter);
 		}
-	}
-}
-
-/******************************************************************************
- HandleHelpMenu
-
- ******************************************************************************/
-
-void
-FileListDir::HandleHelpMenu
-	(
-	const JIndex index
-	)
-{
-	if (index == kAboutCmd)
-	{
-		GetApplication()->DisplayAbout();
-	}
-	else if (index == kTOCCmd)
-	{
-		JXGetHelpManager()->ShowTOC();
-	}
-	else if (index == kOverviewCmd)
-	{
-		JXGetHelpManager()->ShowSection("OverviewHelp");
-	}
-	else if (index == kThisWindowCmd)
-	{
-		JXGetHelpManager()->ShowSection("SourceWindowHelp-FileList");
-	}
-	else if (index == kChangesCmd)
-	{
-		JXGetHelpManager()->ShowChangeLog();
-	}
-	else if (index == kCreditsCmd)
-	{
-		JXGetHelpManager()->ShowCredits();
 	}
 }
 

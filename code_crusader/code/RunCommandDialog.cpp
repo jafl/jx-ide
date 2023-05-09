@@ -263,7 +263,9 @@ RunCommandDialog::BuildWindow()
 	itsCmdInput->SetFont(JFontManager::GetDefaultMonospaceFont());
 
 	itsSaveCmdMenu->SetMenuItems(kSaveCmdMenuStr, "RunCommandDialog");
-	ListenTo(itsSaveCmdMenu);
+	itsSaveCmdMenu->AttachHandlers(this,
+		&RunCommandDialog::UpdateSaveCmdMenu,
+		&RunCommandDialog::HandleSaveCmdMenu);
 
 	// create hidden JXDocument so Meta-# shortcuts work
 
@@ -340,18 +342,6 @@ RunCommandDialog::Receive
 	if (sender == itsHelpButton && message.Is(JXButton::kPushed))
 	{
 		JXGetHelpManager()->ShowSection("TasksHelp");
-	}
-
-	else if (sender == itsSaveCmdMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		UpdateSaveCmdMenu();
-	}
-	else if (sender == itsSaveCmdMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleSaveCmdMenu(selection->GetIndex());
 	}
 
 	else if (sender == itsPathHistoryMenu && message.Is(JXMenu::kItemSelected))

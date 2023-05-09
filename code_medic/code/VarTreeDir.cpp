@@ -21,7 +21,6 @@
 #include <jx-af/jx/JXScrollbarSet.h>
 #include <jx-af/jx/JXInputField.h>
 #include <jx-af/jx/JXTextButton.h>
-#include <jx-af/jx/JXHelpManager.h>
 #include <jx-af/jx/JXWDMenu.h>
 #include <jx-af/jx/JXImage.h>
 
@@ -69,26 +68,6 @@ enum
 	kWatchLocCmd,
 	kExamineMemCmd,
 	kDisassembleMemCmd
-};
-
-// Help menu
-
-static const JUtf8Byte* kHelpMenuStr =
-	"    About"
-	"%l| Table of Contents"
-	"  | Overview"
-	"  | This window %k F1"
-	"%l| Changes"
-	"  | Credits";
-
-enum
-{
-	kAboutCmd = 1,
-	kTOCCmd,
-	kOverviewCmd,
-	kThisWindowCmd,
-	kChangesCmd,
-	kCreditsCmd
 };
 
 /******************************************************************************
@@ -159,8 +138,6 @@ VarTreeDir::Deactivate()
 #include "medic_show_2d_array.xpm"
 #include "medic_show_memory.xpm"
 #include <jx-af/image/jx/jx_file_open.xpm>
-#include <jx-af/image/jx/jx_help_toc.xpm>
-#include <jx-af/image/jx/jx_help_specific.xpm>
 
 void
 VarTreeDir::BuildWindow()
@@ -213,14 +190,18 @@ VarTreeDir::BuildWindow()
 	itsFileMenu = menuBar->PrependTextMenu(JGetString("FileMenuTitle::JXGlobal"));
 	itsFileMenu->SetMenuItems(kFileMenuStr, "ThreadsDir");
 	itsFileMenu->SetUpdateAction(JXMenu::kDisableNone);
-	ListenTo(itsFileMenu);
+	itsFileMenu->AttachHandlers(this,
+		&VarTreeDir::UpdateFileMenu,
+		&VarTreeDir::HandleFileMenu);
 
 	itsFileMenu->SetItemImage(kOpenCmd, jx_file_open);
 
 	itsActionMenu = menuBar->AppendTextMenu(JGetString("ActionsMenuTitle::global"));
 	menuBar->InsertMenu(3, itsActionMenu);
 	itsActionMenu->SetMenuItems(kActionMenuStr, "VarTreeDir");
-	ListenTo(itsActionMenu);
+	itsActionMenu->AttachHandlers(this,
+		&VarTreeDir::UpdateActionMenu,
+		&VarTreeDir::HandleActionMenu);
 
 	itsActionMenu->SetItemImage(kDisplay1DArrayCmd, medic_show_1d_array);
 	itsActionMenu->SetItemImage(kPlot1DArrayCmd,    medic_show_2d_plot);
@@ -233,13 +214,7 @@ VarTreeDir::BuildWindow()
 	assert( wdMenu != nullptr );
 	menuBar->AppendMenu(wdMenu);
 
-	itsHelpMenu = menuBar->AppendTextMenu(JGetString("HelpMenuTitle::JXGlobal"));
-	itsHelpMenu->SetMenuItems(kHelpMenuStr, "VarTreeDir");
-	itsHelpMenu->SetUpdateAction(JXMenu::kDisableNone);
-	ListenTo(itsHelpMenu);
-
-	itsHelpMenu->SetItemImage(kTOCCmd,        jx_help_toc);
-	itsHelpMenu->SetItemImage(kThisWindowCmd, jx_help_specific);
+	GetApplication()->CreateHelpMenu(menuBar, "VarTreeDir", "VarTreeHelp");
 }
 
 /******************************************************************************
@@ -298,39 +273,7 @@ VarTreeDir::Receive
 	const Message&	message
 	)
 {
-	if (sender == itsFileMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		UpdateFileMenu();
-	}
-	else if (sender == itsFileMenu && message.Is(JXMenu::kItemSelected))
-	{
-		 const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleFileMenu(selection->GetIndex());
-	}
-
-	else if (sender == itsActionMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		UpdateActionMenu();
-	}
-	else if (sender == itsActionMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleActionMenu(selection->GetIndex());
-	}
-
-	else if (sender == itsHelpMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleHelpMenu(selection->GetIndex());
-	}
-
-	else if (sender == itsLink && message.Is(Link::kSymbolsLoaded))
+	if (sender == itsLink && message.Is(Link::kSymbolsLoaded))
 	{
 		const auto* info =
 			dynamic_cast<const Link::SymbolsLoaded*>(&message);
@@ -509,43 +452,6 @@ VarTreeDir::DisplayExpression
 	)
 {
 	itsWidget->DisplayExpression(expr);
-}
-
-/******************************************************************************
- HandleHelpMenu
-
- ******************************************************************************/
-
-void
-VarTreeDir::HandleHelpMenu
-	(
-	const JIndex index
-	)
-{
-	if (index == kAboutCmd)
-	{
-		GetApplication()->DisplayAbout();
-	}
-	else if (index == kTOCCmd)
-	{
-		JXGetHelpManager()->ShowTOC();
-	}
-	else if (index == kOverviewCmd)
-	{
-		JXGetHelpManager()->ShowSection("OverviewHelp");
-	}
-	else if (index == kThisWindowCmd)
-	{
-		JXGetHelpManager()->ShowSection("VarTreeHelp");
-	}
-	else if (index == kChangesCmd)
-	{
-		JXGetHelpManager()->ShowChangeLog();
-	}
-	else if (index == kCreditsCmd)
-	{
-		JXGetHelpManager()->ShowCredits();
-	}
 }
 
 /******************************************************************************

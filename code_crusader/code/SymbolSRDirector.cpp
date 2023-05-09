@@ -178,7 +178,9 @@ SymbolSRDirector::BuildWindow
 	itsActionsMenu = menuBar->AppendTextMenu(JGetString("ActionsMenuTitle::SymbolSRDirector"));
 	itsActionsMenu->SetMenuItems(kActionsMenuStr, "SymbolSRDirector");
 	itsActionsMenu->SetUpdateAction(JXMenu::kDisableNone);
-	ListenTo(itsActionsMenu);
+	itsActionsMenu->AttachHandlers(this,
+		&SymbolSRDirector::UpdateActionsMenu,
+		&SymbolSRDirector::HandleActionsMenu);
 
 	itsActionsMenu->SetItemImage(kShowCTreeCmd,    jcc_show_c_tree);
 	itsActionsMenu->SetItemImage(kShowDTreeCmd,    jcc_show_d_tree);
@@ -206,36 +208,6 @@ SymbolSRDirector::FitWindowToContent()
 		itsSymbolTable->GetBoundsWidth() - itsSymbolTable->GetApertureWidth(),
 		JMin(itsSymbolTable->GetBoundsHeight() - itsSymbolTable->GetApertureHeight(),
 			 (JCoordinate) 300));
-}
-
-/******************************************************************************
- Receive (virtual protected)
-
- ******************************************************************************/
-
-void
-SymbolSRDirector::Receive
-	(
-	JBroadcaster*	sender,
-	const Message&	message
-	)
-{
-	if (sender == itsActionsMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		UpdateActionsMenu();
-	}
-	else if (sender == itsActionsMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleActionsMenu(selection->GetIndex());
-	}
-
-	else
-	{
-		JXWindowDirector::Receive(sender, message);
-	}
 }
 
 /******************************************************************************

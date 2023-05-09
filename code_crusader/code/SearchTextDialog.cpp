@@ -387,7 +387,9 @@ SearchTextDialog::BuildWindow()
 	ListenTo(itsFileList);
 
 	itsFileListMenu->SetMenuItems(kFileListMenuStr, "SearchTextDialog");
-	ListenTo(itsFileListMenu);
+	itsFileListMenu->AttachHandlers(this,
+		&SearchTextDialog::UpdateFileListMenu,
+		&SearchTextDialog::HandleFileListMenu);
 
 	ListenTo(itsChooseDirButton);
 	ListenTo(itsDirHistory);
@@ -507,18 +509,6 @@ SearchTextDialog::Receive
 			  message.Is(JTable::kRowsRemoved)))
 	{
 		UpdateDisplay();
-	}
-
-	else if (sender == itsFileListMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		UpdateFileListMenu();
-	}
-	else if (sender == itsFileListMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleFileListMenu(selection->GetIndex());
 	}
 
 	else if (sender == itsSearchDirCB && message.Is(JXCheckbox::kPushed))

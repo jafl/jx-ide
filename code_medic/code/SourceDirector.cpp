@@ -32,7 +32,6 @@
 #include <jx-af/jx/JXScrollbarSet.h>
 #include <jx-af/jx/JXFileNameDisplay.h>
 #include <jx-af/jx/JXToolBar.h>
-#include <jx-af/jx/JXHelpManager.h>
 #include <jx-af/jx/JXWDManager.h>
 #include <jx-af/jx/JXImage.h>
 #include <jx-af/jx/JXColorManager.h>
@@ -101,26 +100,6 @@ static const JIndex kDebuggerTypeToMenuIndex[] =
 	kUseXdebugCmd,
 	kUseJavaCmd,
 	kUseLLDBCmd
-};
-
-// Help menu
-
-static const JUtf8Byte* kHelpMenuStr =
-	"    About"
-	"%l| Table of Contents       %i" kJXHelpTOCAction
-	"  | Overview"
-	"  | This window       %k F1 %i" kJXHelpSpecificAction
-	"%l| Changes"
-	"  | Credits";
-
-enum
-{
-	kAboutCmd = 1,
-	kTOCCmd,
-	kOverviewCmd,
-	kThisWindowCmd,
-	kChangesCmd,
-	kCreditsCmd
 };
 
 /******************************************************************************
@@ -262,8 +241,6 @@ SourceDirector::GetCurrentExecLine()
 
 #include <jx-af/image/jx/jx_file_open.xpm>
 #include <jx-af/image/jx/jx_file_print.xpm>
-#include <jx-af/image/jx/jx_help_toc.xpm>
-#include <jx-af/image/jx/jx_help_specific.xpm>
 
 void
 SourceDirector::BuildWindow()
@@ -344,7 +321,9 @@ SourceDirector::BuildWindow()
 	itsFileMenu = itsMenuBar->AppendTextMenu(JGetString("FileMenuTitle::JXGlobal"));
 	itsFileMenu->SetMenuItems(kFileMenuStr, "SourceDirector");
 	itsFileMenu->SetUpdateAction(JXMenu::kDisableNone);
-	ListenTo(itsFileMenu);
+	itsFileMenu->AttachHandlers(this,
+		&SourceDirector::UpdateFileMenu,
+		&SourceDirector::HandleFileMenu);
 
 	itsFileMenu->SetItemImage(kOpenCmd,  jx_file_open);
 	itsFileMenu->SetItemImage(kPrintCmd, jx_file_print);
@@ -406,19 +385,15 @@ SourceDirector::BuildWindow()
 	{
 		itsPrefsMenu->RemoveItem(kWindowSizeCmd);
 	}
-	ListenTo(itsPrefsMenu);
+	itsPrefsMenu->AttachHandlers(this,
+		&SourceDirector::UpdateFileMenu,
+		&SourceDirector::HandleFileMenu);
 
-	itsHelpMenu = itsMenuBar->AppendTextMenu(JGetString("HelpMenuTitle::JXGlobal"));
-	itsHelpMenu->SetMenuItems(kHelpMenuStr, "SourceDirector");
-	itsHelpMenu->SetUpdateAction(JXMenu::kDisableNone);
-	ListenTo(itsHelpMenu);
-
-	itsHelpMenu->SetItemImage(kTOCCmd,        jx_help_toc);
-	itsHelpMenu->SetItemImage(kThisWindowCmd, jx_help_specific);
+	itsHelpMenu = GetApplication()->CreateHelpMenu(itsMenuBar, "SourceDirector", "SourceWindowHelp");
 
 	if (!IsMainSourceWindow())
 	{
-		(GetDisplay()->GetWDManager())->DirectorCreated(this);
+		GetDisplay()->GetWDManager()->DirectorCreated(this);
 	}
 }
 
@@ -436,7 +411,7 @@ SourceDirector::CreateWindowsMenu()
 			itsMenuBar, itsToolBar,
 			itsType == kMainAsmType || itsType == kAsmType,
 			true, itsType != kMainSourceType,
-			itsDebugMenu, itsPrefsMenu, itsHelpMenu, kTOCCmd, kThisWindowCmd);
+			itsDebugMenu, itsPrefsMenu, itsHelpMenu);
 }
 
 /******************************************************************************
@@ -593,18 +568,6 @@ SourceDirector::Receive
 		}
 	}
 
-	else if (sender == itsFileMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		UpdateFileMenu();
-	}
-	else if (sender == itsFileMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleFileMenu(selection->GetIndex());
-	}
-
 	else if (sender == itsDebugMenu && message.Is(JXMenu::kNeedsUpdate))
 	{
 		itsCommandDir->UpdateDebugMenu(itsDebugMenu, itsText, nullptr);
@@ -615,26 +578,6 @@ SourceDirector::Receive
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		itsCommandDir->HandleDebugMenu(itsDebugMenu, selection->GetIndex(), itsText, nullptr);
-	}
-
-	else if (sender == itsPrefsMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		UpdatePrefsMenu();
-	}
-	else if (sender == itsPrefsMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandlePrefsMenu(selection->GetIndex());
-	}
-
-	else if (sender == itsHelpMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleHelpMenu(selection->GetIndex());
 	}
 
 	// Do not check sender == GetPrefsManager(), because that will be null
@@ -1124,42 +1067,5 @@ SourceDirector::HandlePrefsMenu
 		{
 			GetPrefsManager()->SaveWindowSize(kAsmWindSizeID, GetWindow());
 		}
-	}
-}
-
-/******************************************************************************
- HandleHelpMenu
-
- ******************************************************************************/
-
-void
-SourceDirector::HandleHelpMenu
-	(
-	const JIndex index
-	)
-{
-	if (index == kAboutCmd)
-	{
-		GetApplication()->DisplayAbout();
-	}
-	else if (index == kTOCCmd)
-	{
-		JXGetHelpManager()->ShowTOC();
-	}
-	else if (index == kOverviewCmd)
-	{
-		JXGetHelpManager()->ShowSection("OverviewHelp");
-	}
-	else if (index == kThisWindowCmd)
-	{
-		JXGetHelpManager()->ShowSection("SourceWindowHelp");
-	}
-	else if (index == kChangesCmd)
-	{
-		JXGetHelpManager()->ShowChangeLog();
-	}
-	else if (index == kCreditsCmd)
-	{
-		JXGetHelpManager()->ShowCredits();
 	}
 }

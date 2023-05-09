@@ -107,12 +107,14 @@ ProjectTable::ProjectTable
 
 	itsIgnoreSelChangesFlag = false;
 	SetSelectionBehavior(true, true);
-	ListenTo(&(GetTableSelection()));
+	ListenTo(&GetTableSelection());
 
 	itsLockedSelDepthFlag = false;
 
 	itsEditMenu = GetEditMenuHandler()->AppendEditMenu(menuBar);
-	ListenTo(itsEditMenu);
+	itsEditMenu->AttachHandlers(this,
+		&ProjectTable::UpdateEditMenu,
+		&ProjectTable::HandleEditMenu);
 
 	itsContextMenu = nullptr;
 
@@ -977,79 +979,25 @@ ProjectTable::Receive
 	const Message&	message
 	)
 {
-	if (sender == itsEditMenu && message.Is(JXMenu::kNeedsUpdate))
+	if (sender == &GetTableSelection() && !itsIgnoreSelChangesFlag)
 	{
-		UpdateEditMenu();
-	}
-	else if (sender == itsEditMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleEditMenu(selection->GetIndex());
+		CleanSelection();
 	}
 
-	else if (sender == itsContextMenu && message.Is(JXMenu::kNeedsUpdate))
+	// JXTreeListWidget preserves the current, valid selection
+
+	else if (sender == GetTreeList()->GetTree() &&
+			 message.Is(JTree::kPrepareForNodeMove))
 	{
-		UpdateContextMenu();
+		itsIgnoreSelChangesFlag = true;
 	}
-	else if (sender == itsContextMenu && message.Is(JXMenu::kItemSelected))
+	else if (sender == GetTreeList()->GetTree() &&
+			 message.Is(JTree::kNodeMoveFinished))
 	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleContextMenu(selection->GetIndex());
-	}
-
-	else if (sender == itsCSFButton && message.Is(JXButton::kPushed))
-	{
-		JXInputField* inputField;
-		bool ok = GetXInputField(&inputField);
-		assert( ok );
-
-		JPoint cell;
-		ok = GetEditedCell(&cell);
-		assert( ok );
-
-		PathType pathType;
-		const JString newName =
-			ConvertToAbsolutePath(
-				inputField->GetText()->GetText(), itsDoc->GetFilePath(), &pathType);
-
-		auto* dlog = ChooseRelativeFileDialog::Create(pathType, JXChooseFileDialog::kSelectSingleFile, newName);
-		if (dlog->DoDialog())
-		{
-			JXInputField* inputField;
-			if (BeginEditing(cell) && GetXInputField(&inputField))
-			{
-				inputField->GetText()->SetText(
-					ConvertToRelativePath(dlog->GetFullName(), itsDoc->GetFilePath(), dlog->GetPathType()));
-			}
-		}
+		itsIgnoreSelChangesFlag = false;
 	}
 
-	else
-	{
-		if (sender == &GetTableSelection() && !itsIgnoreSelChangesFlag)
-		{
-			CleanSelection();
-		}
-
-		// JXTreeListWidget preserves the current, valid selection
-
-		else if (sender == GetTreeList()->GetTree() &&
-				 message.Is(JTree::kPrepareForNodeMove))
-		{
-			itsIgnoreSelChangesFlag = true;
-		}
-		else if (sender == GetTreeList()->GetTree() &&
-				 message.Is(JTree::kNodeMoveFinished))
-		{
-			itsIgnoreSelChangesFlag = false;
-		}
-
-		JXNamedTreeListWidget::Receive(sender, message);
-	}
+	JXNamedTreeListWidget::Receive(sender, message);
 }
 
 /******************************************************************************
@@ -2214,7 +2162,9 @@ ProjectTable::CreateContextMenu()
 		itsContextMenu->SetMenuItems(kContextMenuStr, "ProjectTable");
 		itsContextMenu->SetUpdateAction(JXMenu::kDisableNone);
 		itsContextMenu->SetToHiddenPopupMenu();
-		ListenTo(itsContextMenu);
+		itsContextMenu->AttachHandlers(this,
+			&ProjectTable::UpdateContextMenu,
+			&ProjectTable::HandleContextMenu);
 
 		itsContextMenu->SetItemImage(kDiffSmartCmd, jcc_compare_backup);
 		itsContextMenu->SetItemImage(kDiffVCSCmd,   jcc_compare_vcs);
@@ -2387,7 +2337,33 @@ ProjectTable::CreateXInputField
 		itsCSFButton->SetImage(const_cast<JXImage*>(image), false);
 
 		itsCSFButton->SetHint(JGetString("CSFButtonHint::ProjectTable"));
-		ListenTo(itsCSFButton);
+
+		ListenTo(itsCSFButton, std::function([this](const JXButton::Pushed&)
+		{
+			JXInputField* inputField;
+			bool ok = GetXInputField(&inputField);
+			assert( ok );
+
+			JPoint cell;
+			ok = GetEditedCell(&cell);
+			assert( ok );
+
+			PathType pathType;
+			const JString newName =
+				ConvertToAbsolutePath(
+					inputField->GetText()->GetText(), itsDoc->GetFilePath(), &pathType);
+
+			auto* dlog = ChooseRelativeFileDialog::Create(pathType, JXChooseFileDialog::kSelectSingleFile, newName);
+			if (dlog->DoDialog())
+			{
+				JXInputField* inputField;
+				if (BeginEditing(cell) && GetXInputField(&inputField))
+				{
+					inputField->GetText()->SetText(
+						ConvertToRelativePath(dlog->GetFullName(), itsDoc->GetFilePath(), dlog->GetPathType()));
+				}
+			}
+		}));
 	}
 
 	return inputField;

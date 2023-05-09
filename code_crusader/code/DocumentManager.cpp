@@ -354,9 +354,10 @@ DocumentManager::ProjectDocumentIsOpen
 bool
 DocumentManager::CloseProjectDocuments()
 {
-	for (auto* doc : *itsProjectDocuments)
+	const JSize count = itsProjectDocuments->GetElementCount();
+	for (JIndex i=count; i>=1; i--)
 	{
-		if (!doc->Close())
+		if (!itsProjectDocuments->GetElement(i)->Close())
 		{
 			break;
 		}

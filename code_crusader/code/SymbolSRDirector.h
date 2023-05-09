@@ -37,7 +37,6 @@ public:
 
 protected:
 
-	void	Receive(JBroadcaster* sender, const Message& message) override;
 	void	ReceiveWithFeedback(JBroadcaster* sender, Message* message) override;
 
 private:

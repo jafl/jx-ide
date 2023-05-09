@@ -577,7 +577,11 @@ TextDocument::BuildWindow
 	UpdateReadOnlyDisplay();
 
 	ListenTo(itsTextEditor);
-	ListenTo(itsActionButton);
+
+	ListenTo(itsActionButton, std::function([this](const JXButton::Pushed&)
+	{
+		HandleActionButton();
+	}));
 	itsActionButton->SetHint(JGetString("ConfigButtonHint::TextDocument"));
 
 	itsFileDisplay->SetTE(itsTextEditor);
@@ -588,7 +592,9 @@ TextDocument::BuildWindow
 		window->GetFrameGlobal().right - itsSettingsMenu->GetFrameGlobal().right, 0);
 	itsSettingsMenu->SetMenuItems(kSettingsMenuStr, "TextDocument");
 	itsSettingsMenu->SetUpdateAction(JXMenu::kDisableNone);
-	ListenTo(itsSettingsMenu);
+	itsSettingsMenu->AttachHandlers(this,
+		&TextDocument::UpdateSettingsMenu,
+		&TextDocument::HandleSettingsMenu);
 
 	itsSettingsMenu->SetItemImage(kToggleAutoIndentCmd,       jcc_auto_indent);
 	itsSettingsMenu->SetItemImage(kToggleTabInsertsSpacesCmd, jcc_tab_inserts_spaces);
@@ -599,7 +605,9 @@ TextDocument::BuildWindow
 	itsFileMenu = itsMenuBar->PrependTextMenu(JGetString("FileMenuTitle::JXGlobal"));
 	itsFileMenu->SetMenuItems(kFileMenuStr, "TextDocument");
 	itsFileMenu->SetUpdateAction(JXMenu::kDisableNone);
-	ListenTo(itsFileMenu);
+	itsFileMenu->AttachHandlers(this,
+		&TextDocument::UpdateFileMenu,
+		&TextDocument::HandleFileMenu);
 
 	itsFileMenu->SetItemImage(kNewTextEditorCmd, jx_file_new);
 	itsFileMenu->SetItemImage(kOpenSomethingCmd, jx_file_open);
@@ -627,7 +635,9 @@ TextDocument::BuildWindow
 	assert( itsFileFormatMenu != nullptr );
 	itsFileFormatMenu->SetMenuItems(kFileFormatMenuStr, "TextDocument");
 	itsFileFormatMenu->SetUpdateAction(JXMenu::kDisableNone);
-	ListenTo(itsFileFormatMenu);
+	itsFileFormatMenu->AttachHandlers(this,
+		&TextDocument::UpdateFileFormatMenu,
+		&TextDocument::HandleFileFormatMenu);
 
 	itsFileFormatMenu->SetItemImage(kUNIXFmtCmd, jcc_unix_format);
 	itsFileFormatMenu->SetItemImage(kMacFmtCmd,  jcc_mac_format);
@@ -636,7 +646,9 @@ TextDocument::BuildWindow
 	itsDiffMenu = jnew JXTextMenu(itsFileMenu, kDiffMenuIndex, itsMenuBar);
 	assert( itsDiffMenu != nullptr );
 	itsDiffMenu->SetMenuItems(kDiffMenuStr, "TextDocument");
-	ListenTo(itsDiffMenu);
+	itsDiffMenu->AttachHandlers(this,
+		&TextDocument::UpdateDiffMenu,
+		&TextDocument::HandleDiffMenu);
 
 	itsDiffMenu->SetItemImage(kDiffAs1Cmd,   jcc_compare_files_1);
 	itsDiffMenu->SetItemImage(kDiffAs2Cmd,   jcc_compare_files_2);
@@ -657,16 +669,15 @@ TextDocument::BuildWindow
 	itsPrefsMenu = itsMenuBar->AppendTextMenu(JGetString("PrefsMenuTitle::JXGlobal"));
 	itsPrefsMenu->SetMenuItems(kPrefsMenuStr, "TextDocument");
 	itsPrefsMenu->SetUpdateAction(JXMenu::kDisableNone);
-	ListenTo(itsPrefsMenu);
+	itsPrefsMenu->AttachHandler(this, &TextDocument::HandlePrefsMenu);
 
 	itsPrefsStylesMenu = jnew JXTextMenu(itsPrefsMenu, kEditStylesSubmenuIndex, itsMenuBar);
 	assert( itsPrefsStylesMenu != nullptr );
 	itsPrefsStylesMenu->SetMenuItems(kPrefsStylesMenuStr, "TextDocument");
 	itsPrefsStylesMenu->SetUpdateAction(JXMenu::kDisableNone);
-	ListenTo(itsPrefsStylesMenu);
+	itsPrefsStylesMenu->AttachHandler(this, &TextDocument::HandlePrefsStylesMenu);
 
-	itsHelpMenu = GetApplication()->CreateHelpMenu(itsMenuBar, "TextDocument");
-	ListenTo(itsHelpMenu);
+	JXTextMenu* helpMenu = GetApplication()->CreateHelpMenu(itsMenuBar, "TextDocument", itsHelpSectionName);
 
 	// must do this after creating widgets
 
@@ -714,7 +725,7 @@ TextDocument::BuildWindow
 		itsToolBar->AppendButton(editMenu, left);
 		itsToolBar->AppendButton(editMenu, right);
 
-		GetApplication()->AppendHelpMenuToToolBar(itsToolBar, itsHelpMenu);
+		GetApplication()->AppendHelpMenuToToolBar(itsToolBar, helpMenu);
 	}
 }
 
@@ -848,98 +859,8 @@ TextDocument::Receive
 	const Message&	message
 	)
 {
-	if (sender == itsFileMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		UpdateFileMenu();
-	}
-	else if (sender == itsFileMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleFileMenu(selection->GetIndex());
-	}
-
-	else if (sender == itsFileFormatMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		UpdateFileFormatMenu();
-	}
-	else if (sender == itsFileFormatMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleFileFormatMenu(selection->GetIndex());
-	}
-
-	else if (sender == itsDiffMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		UpdateDiffMenu();
-	}
-	else if (sender == itsDiffMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleDiffMenu(selection->GetIndex());
-	}
-
-	else if (sender == itsPrefsMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		UpdatePrefsMenu();
-	}
-	else if (sender == itsPrefsMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandlePrefsMenu(selection->GetIndex());
-	}
-
-	else if (sender == itsPrefsStylesMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		UpdatePrefsStylesMenu();
-	}
-	else if (sender == itsPrefsStylesMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandlePrefsStylesMenu(selection->GetIndex());
-	}
-
-	else if (sender == itsHelpMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		GetApplication()->UpdateHelpMenu(itsHelpMenu);
-	}
-	else if (sender == itsHelpMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		GetApplication()->HandleHelpMenu(itsHelpMenu, itsHelpSectionName,
-											 selection->GetIndex());
-	}
-
-	else if (sender == itsSettingsMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		UpdateSettingsMenu();
-	}
-	else if (sender == itsSettingsMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleSettingsMenu(selection->GetIndex());
-	}
-
-	else if (sender == itsActionButton && message.Is(JXButton::kPushed))
-	{
-		HandleActionButton();
-	}
-
-	else if (sender == itsTextEditor &&
-			 message.Is(JStyledText::kTextChanged))
+	if (sender == itsTextEditor &&
+		 message.Is(JStyledText::kTextChanged))
 	{
 		if (itsTextEditor->GetText()->IsAtLastSaveLocation())
 		{
@@ -1774,16 +1695,6 @@ TextDocument::HandleDiffMenu
 }
 
 /******************************************************************************
- UpdatePrefsMenu (private)
-
- ******************************************************************************/
-
-void
-TextDocument::UpdatePrefsMenu()
-{
-}
-
-/******************************************************************************
  HandlePrefsMenu (private)
 
  ******************************************************************************/
@@ -1832,16 +1743,6 @@ TextDocument::HandlePrefsMenu
 	{
 		SaveWindowSize();
 	}
-}
-
-/******************************************************************************
- UpdatePrefsStylesMenu (private)
-
- ******************************************************************************/
-
-void
-TextDocument::UpdatePrefsStylesMenu()
-{
 }
 
 /******************************************************************************

@@ -76,15 +76,14 @@ protected:
 	void	ReadPrefs(std::istream& input) override;
 	void	WritePrefs(std::ostream& output) const override;
 
-	void	Receive(JBroadcaster* sender, const Message& message) override;
 	void	ReceiveWithFeedback(JBroadcaster* sender, Message* message) override;
 
 private:
 
 	ProjectDocument*	itsProjDoc;				// not owned
-	SymbolList*		itsSymbolList;
+	SymbolList*			itsSymbolList;
 	SymbolTable*		itsSymbolTable;
-	bool			itsRaiseTreeOnRightClickFlag;
+	bool				itsRaiseTreeOnRightClickFlag;
 
 	JPtrArray<SymbolSRDirector>*	itsSRList;	// contents not owned
 
@@ -93,7 +92,6 @@ private:
 	JXTextMenu*		itsProjectMenu;
 	CommandMenu*	itsCmdMenu;
 	JXTextMenu*		itsPrefsMenu;
-	JXTextMenu*		itsHelpMenu;
 
 // begin JXLayout
 

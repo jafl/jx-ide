@@ -23,7 +23,6 @@
 #include <jx-af/jx/JXTextButton.h>
 #include <jx-af/jx/JXStaticText.h>
 #include <jx-af/jx/JXScrollbarSet.h>
-#include <jx-af/jx/JXHelpManager.h>
 #include <jx-af/jx/JXWDManager.h>
 #include <jx-af/jx/JXWDMenu.h>
 #include <jx-af/jx/JXImage.h>
@@ -71,26 +70,6 @@ enum
 	kExamineMemCmd,
 	kDisassembleMemCmd,
 	kSavePrefsCmd
-};
-
-// Help menu
-
-static const JUtf8Byte* kHelpMenuStr =
-	"    About"
-	"%l| Table of Contents"
-	"  | Overview"
-	"  | This window %k F1"
-	"%l| Changes"
-	"  | Credits";
-
-enum
-{
-	kAboutCmd = 1,
-	kTOCCmd,
-	kOverviewCmd,
-	kThisWindowCmd,
-	kChangesCmd,
-	kCreditsCmd
 };
 
 /******************************************************************************
@@ -213,8 +192,6 @@ Array1DDir::Deactivate()
 #include "medic_show_2d_array.xpm"
 #include "medic_show_memory.xpm"
 #include <jx-af/image/jx/jx_file_open.xpm>
-#include <jx-af/image/jx/jx_help_toc.xpm>
-#include <jx-af/image/jx/jx_help_specific.xpm>
 
 void
 Array1DDir::BuildWindow()
@@ -320,7 +297,7 @@ Array1DDir::BuildWindow()
 	itsFileMenu = menuBar->PrependTextMenu(JGetString("FileMenuTitle::JXGlobal"));
 	itsFileMenu->SetMenuItems(kFileMenuStr, "ThreadsDir");
 	itsFileMenu->SetUpdateAction(JXMenu::kDisableNone);
-	ListenTo(itsFileMenu);
+	itsFileMenu->AttachHandler(this, &Array1DDir::HandleFileMenu);
 
 	itsFileMenu->SetItemImage(kOpenCmd, jx_file_open);
 
@@ -332,7 +309,9 @@ Array1DDir::BuildWindow()
 	itsActionMenu = menuBar->AppendTextMenu(JGetString("ActionsMenuTitle::global"));
 	menuBar->InsertMenu(3, itsActionMenu);
 	itsActionMenu->SetMenuItems(kActionMenuStr, "Array1DDir");
-	ListenTo(itsActionMenu);
+	itsActionMenu->AttachHandlers(this,
+		&Array1DDir::UpdateActionMenu,
+		&Array1DDir::HandleActionMenu);
 
 	itsActionMenu->SetItemImage(kDisplay1DArrayCmd, medic_show_1d_array);
 	itsActionMenu->SetItemImage(kPlot1DArrayCmd,    medic_show_2d_plot);
@@ -345,15 +324,9 @@ Array1DDir::BuildWindow()
 	assert( wdMenu != nullptr );
 	menuBar->AppendMenu(wdMenu);
 
-	itsHelpMenu = menuBar->AppendTextMenu(JGetString("HelpMenuTitle::JXGlobal"));
-	itsHelpMenu->SetMenuItems(kHelpMenuStr, "Array1DDir");
-	itsHelpMenu->SetUpdateAction(JXMenu::kDisableNone);
-	ListenTo(itsHelpMenu);
+	GetApplication()->CreateHelpMenu(menuBar, "Array1DDir", "VarTreeHelp-Array1D");
 
-	itsHelpMenu->SetItemImage(kTOCCmd,        jx_help_toc);
-	itsHelpMenu->SetItemImage(kThisWindowCmd, jx_help_specific);
-
-	(GetDisplay()->GetWDManager())->DirectorCreated(this);
+	GetDisplay()->GetWDManager()->DirectorCreated(this);
 }
 
 /******************************************************************************
@@ -463,34 +436,6 @@ Array1DDir::Receive
 			JXCloseDirectorTask::Close(this);	// close after bcast is finished
 		}
 		itsWaitingForReloadFlag = false;
-	}
-
-	else if (sender == itsFileMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleFileMenu(selection->GetIndex());
-	}
-
-	else if (sender == itsActionMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		UpdateActionMenu();
-	}
-	else if (sender == itsActionMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleActionMenu(selection->GetIndex());
-	}
-
-	else if (sender == itsHelpMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleHelpMenu(selection->GetIndex());
 	}
 
 	else
@@ -743,44 +688,5 @@ Array1DDir::HandleActionMenu
 	else if (index == kSavePrefsCmd)
 	{
 		GetPrefsManager()->SaveWindowSize(kArray1DWindSizeID, GetWindow());
-	}
-}
-
-/******************************************************************************
- HandleHelpMenu (private)
-
- ******************************************************************************/
-
-void
-Array1DDir::HandleHelpMenu
-	(
-	const JIndex index
-	)
-{
-	if (index == kAboutCmd)
-	{
-		GetApplication()->DisplayAbout();
-	}
-
-	else if (index == kTOCCmd)
-	{
-		JXGetHelpManager()->ShowTOC();
-	}
-	else if (index == kOverviewCmd)
-	{
-		JXGetHelpManager()->ShowSection("OverviewHelp");
-	}
-	else if (index == kThisWindowCmd)
-	{
-		JXGetHelpManager()->ShowSection("VarTreeHelp-Array1D");
-	}
-
-	else if (index == kChangesCmd)
-	{
-		JXGetHelpManager()->ShowChangeLog();
-	}
-	else if (index == kCreditsCmd)
-	{
-		JXGetHelpManager()->ShowCredits();
 	}
 }

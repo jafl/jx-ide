@@ -100,7 +100,6 @@ protected:
 	void	ReadPrefs(std::istream& input) override;
 	void	WritePrefs(std::ostream& output) const override;
 
-	void	Receive(JBroadcaster* sender, const Message& message) override;
 	void	ReceiveWithFeedback(JBroadcaster* sender, Message* message) override;
 
 private:
@@ -118,7 +117,6 @@ private:
 	JXTextMenu*		itsProjectMenu;
 	CommandMenu*	itsCmdMenu;
 	JXTextMenu*		itsPrefsMenu;
-	JXTextMenu*		itsHelpMenu;
 
 	const JString		itsWindowTitleSuffix;
 	const JUtf8Byte*	itsWindowHelpName;
@@ -147,7 +145,6 @@ private:
 	void	UpdateProjectMenu();
 	void	HandleProjectMenu(const JIndex index);
 
-	void	UpdatePrefsMenu();
 	void	HandlePrefsMenu(const JIndex index);
 	void	EditTreePrefs();
 };

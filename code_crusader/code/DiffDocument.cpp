@@ -826,7 +826,9 @@ DiffDocument::DiffDocument
 	itsDiffMenu = menuBar->InsertTextMenu(menuBar->GetMenuCount(), JGetString("DiffMenuTitle::DiffDocument"));
 	itsDiffMenu->SetMenuItems(kDiffMenuStr, "DiffDocument");
 	itsDiffMenu->SetUpdateAction(JXMenu::kDisableNone);
-	ListenTo(itsDiffMenu);
+	itsDiffMenu->AttachHandlers(this,
+		&DiffDocument::UpdateDiffMenu,
+		&DiffDocument::HandleDiffMenu);
 
 	// allow Meta-_ to parallel Shift key required for Meta-plus
 
@@ -845,7 +847,43 @@ DiffDocument::DiffDocument
 						 rect.right - kMenuButtonWidth,0,
 						 kMenuButtonWidth, menuBar->GetFrameHeight());
 	assert( itsDiffButton != nullptr );
-	ListenTo(itsDiffButton);
+
+	ListenTo(itsDiffButton, std::function([this](const JXButton::Pushed&)
+	{
+		JError err = JNoError();
+		if (itsType == kPlainType)
+		{
+			err = CreatePlain(itsFullName, itsDiffCmd, itsDefaultStyle,
+							  itsName1, itsRemoveStyle, itsName2, itsInsertStyle,
+							  false, this);
+		}
+		else if (itsType == kCVSType)
+		{
+			err = CreateCVS(itsFullName, itsGetCmd, itsDiffCmd, itsDefaultStyle, 
+							itsName1, itsRemoveStyle, itsName2, itsInsertStyle,
+							false, this);
+		}
+		else if (itsType == kSVNType)
+		{
+			err = CreateSVN(itsFullName, itsGetCmd, itsDiffCmd, itsDefaultStyle, 
+							itsName1, itsRemoveStyle, itsName2, itsInsertStyle,
+							false, this);
+		}
+		else
+		{
+			assert( itsType == kGitType );
+
+			JPtrArray<JString> s(JPtrArrayT::kDeleteAll);
+			itsGetCmd.Split(kGitCmdSeparator, &s, 2);
+			assert( s.GetElementCount() == 2 );
+
+			err = CreateGit(itsFullName, *s.GetElement(1), *s.GetElement(2),
+							itsDiffCmd, itsDefaultStyle, 
+							itsName1, itsRemoveStyle, itsName2, itsInsertStyle,
+							false, this);
+		}
+		err.ReportIfError();
+	}));
 
 	menuBar->AdjustSize(-kMenuButtonWidth, 0);
 }
@@ -953,73 +991,6 @@ DiffDocument::ReadDiff
 	}
 
 	itsDiffEditor->ShowFirstDiff();
-}
-
-/******************************************************************************
- Receive (virtual protected)
-
- ******************************************************************************/
-
-void
-DiffDocument::Receive
-	(
-	JBroadcaster*	sender,
-	const Message&	message
-	)
-{
-	if (sender == itsDiffMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		UpdateDiffMenu();
-	}
-	else if (sender == itsDiffMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleDiffMenu(selection->GetIndex());
-	}
-
-	else if (sender == itsDiffButton && message.Is(JXButton::kPushed))
-	{
-		JError err = JNoError();
-		if (itsType == kPlainType)
-		{
-			err = CreatePlain(itsFullName, itsDiffCmd, itsDefaultStyle,
-							  itsName1, itsRemoveStyle, itsName2, itsInsertStyle,
-							  false, this);
-		}
-		else if (itsType == kCVSType)
-		{
-			err = CreateCVS(itsFullName, itsGetCmd, itsDiffCmd, itsDefaultStyle, 
-							itsName1, itsRemoveStyle, itsName2, itsInsertStyle,
-							false, this);
-		}
-		else if (itsType == kSVNType)
-		{
-			err = CreateSVN(itsFullName, itsGetCmd, itsDiffCmd, itsDefaultStyle, 
-							itsName1, itsRemoveStyle, itsName2, itsInsertStyle,
-							false, this);
-		}
-		else
-		{
-			assert( itsType == kGitType );
-
-			JPtrArray<JString> s(JPtrArrayT::kDeleteAll);
-			itsGetCmd.Split(kGitCmdSeparator, &s, 2);
-			assert( s.GetElementCount() == 2 );
-
-			err = CreateGit(itsFullName, *s.GetElement(1), *s.GetElement(2),
-							itsDiffCmd, itsDefaultStyle, 
-							itsName1, itsRemoveStyle, itsName2, itsInsertStyle,
-							false, this);
-		}
-		err.ReportIfError();
-	}
-
-	else
-	{
-		TextDocument::Receive(sender, message);
-	}
 }
 
 /******************************************************************************

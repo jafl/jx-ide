@@ -169,7 +169,11 @@ SearchDocument::SearchDocument
 	ListenTo(itsStopButton);
 	itsStopButton->SetShortcuts(JString("^C#.", JString::kNoCopy));
 	itsStopButton->SetHint(JGetString("StopButtonHint::ExecOutputDocument"));
-	ListenTo(itsStopButton);
+
+	ListenTo(itsStopButton, std::function([this](const JXButton::Pushed&)
+	{
+		itsSearchTE->Cancel();
+	}));
 
 	menuBar->AdjustSize(-kMenuButtonWidth, 0);
 
@@ -189,7 +193,9 @@ SearchDocument::SearchDocument
 	itsMatchMenu->SetMenuItems(kMatchMenuStr, "SearchDocument");
 	itsMatchMenu->SetUpdateAction(JXMenu::kDisableNone);
 	itsMatchMenu->Deactivate();
-	ListenTo(itsMatchMenu);
+	itsMatchMenu->AttachHandlers(this,
+		&SearchDocument::UpdateMatchMenu,
+		&SearchDocument::HandleMatchMenu);
 
 	// allow Meta-_ to parallel Shift key required for Meta-plus
 
@@ -581,23 +587,7 @@ SearchDocument::Receive
 	const Message&	message
 	)
 {
-	if (sender == itsMatchMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		UpdateMatchMenu();
-	}
-	else if (sender == itsMatchMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection = dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleMatchMenu(selection->GetIndex());
-	}
-
-	else if (sender == itsStopButton && message.Is(JXButton::kPushed))
-	{
-		itsSearchTE->Cancel();
-	}
-
-	else if (message.Is(SearchTE::kIncrementProgress))
+	if (message.Is(SearchTE::kIncrementProgress))
 	{
 		itsIndicator->IncrementValue();
 	}

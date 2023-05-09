@@ -36,11 +36,9 @@ public:
 						 const JString& prevVersStr = JString::empty);
 	void	EditMiscPrefs();
 
-	JXTextMenu*	CreateHelpMenu(JXMenuBar* menuBar, const JUtf8Byte* idNamespace);
+	JXTextMenu*	CreateHelpMenu(JXMenuBar* menuBar, const JUtf8Byte* idNamespace,
+							   const JUtf8Byte* sectionName);
 	void		AppendHelpMenuToToolBar(JXToolBar* toolBar, JXTextMenu* menu);
-	void		UpdateHelpMenu(JXTextMenu* menu);
-	void		HandleHelpMenu(JXTextMenu* menu, const JUtf8Byte* windowSectionName,
-							   const JIndex index);
 
 	bool	FindFile(const JString& fileName, const JString::Case caseSensitive,
 					 JString* fullName) const;
@@ -70,6 +68,8 @@ private:
 
 	void	GetSystemIncludeDirectories();
 	void	CollectSearchPaths(DirInfoList* searchPaths) const;
+
+	void	HandleHelpMenu(const JUtf8Byte* windowSectionName, const JIndex index);
 };
 
 

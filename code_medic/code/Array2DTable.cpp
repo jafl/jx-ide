@@ -30,7 +30,7 @@
 Array2DTable::Array2DTable
 	(
 	CommandDirector*	cmdDir,
-	Array2DDir*		arrayDir,
+	Array2DDir*			arrayDir,
 	JXMenuBar*			menuBar,
 	JStringTableData*	data,
 	JXScrollbarSet*		scrollbarSet,
@@ -51,7 +51,9 @@ Array2DTable::Array2DTable
 
 	JXTEBase* te = GetEditMenuHandler();
 	itsEditMenu  = te->AppendEditMenu(menuBar);
-	ListenTo(itsEditMenu);
+	itsEditMenu->AttachHandlers(this,
+		&Array2DTable::UpdateEditMenu,
+		&Array2DTable::HandleEditMenu);
 }
 
 /******************************************************************************
@@ -231,42 +233,6 @@ Array2DTable::DrawPrintHeader
 }
 
 /******************************************************************************
- Receive (virtual protected)
-
- ******************************************************************************/
-
-void
-Array2DTable::Receive
-	(
-	JBroadcaster*	sender,
-	const Message&	message
-	)
-{
-	if (sender == itsEditMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		if (HasFocus())
-		{
-			UpdateEditMenu();
-		}
-	}
-	else if (sender == itsEditMenu && message.Is(JXMenu::kItemSelected))
-	{
-		if (HasFocus())
-		{
-			const auto* selection =
-				dynamic_cast<const JXMenu::ItemSelected*>(&message);
-			assert( selection != nullptr );
-			HandleEditMenu(selection->GetIndex());
-		}
-	}
-
-	else
-	{
-		JXStringTable::Receive(sender, message);
-	}
-}
-
-/******************************************************************************
  UpdateEditMenu (private)
 
  ******************************************************************************/
@@ -274,6 +240,11 @@ Array2DTable::Receive
 void
 Array2DTable::UpdateEditMenu()
 {
+	if (!HasFocus())
+	{
+		return;
+	}
+
 	JXTEBase* te = GetEditMenuHandler();
 
 	JIndex index;
@@ -295,6 +266,11 @@ Array2DTable::HandleEditMenu
 	const JIndex index
 	)
 {
+	if (!HasFocus())
+	{
+		return;
+	}
+
 	JTextEditor::CmdIndex cmd;
 	JPoint cell;
 	if (GetEditMenuHandler()->EditMenuIndexToCmd(index, &cmd) &&

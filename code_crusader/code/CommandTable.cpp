@@ -136,11 +136,30 @@ CommandTable::CommandTable
 	itsExportButton       = exportButton;
 	itsImportButton       = importButton;
 
-	ListenTo(itsAddCmdButton);
-	ListenTo(itsRemoveCmdButton);
-	ListenTo(itsDuplicateCmdButton);
-	ListenTo(itsExportButton);
-	ListenTo(itsImportButton);
+	ListenTo(itsAddCmdButton, std::function([this](const JXButton::Pushed&)
+	{
+		AddCommand();
+	}));
+
+	ListenTo(itsRemoveCmdButton, std::function([this](const JXButton::Pushed&)
+	{
+		RemoveCommand();
+	}));
+
+	ListenTo(itsDuplicateCmdButton, std::function([this](const JXButton::Pushed&)
+	{
+		DuplicateCommand();
+	}));
+
+	ListenTo(itsExportButton, std::function([this](const JXButton::Pushed&)
+	{
+		ExportAllCommands();
+	}));
+
+	ListenTo(itsImportButton, std::function([this](const JXButton::Pushed&)
+	{
+		ImportCommands();
+	}));
 
 	// type menu
 
@@ -149,7 +168,9 @@ CommandTable::CommandTable
 	itsOptionsMenu->SetToHiddenPopupMenu();
 	itsOptionsMenu->SetMenuItems(kOptionsMenuStr);
 	itsOptionsMenu->SetUpdateAction(JXMenu::kDisableNone);
-	ListenTo(itsOptionsMenu);
+	itsOptionsMenu->AttachHandlers(this,
+		&CommandTable::UpdateOptionsMenu,
+		&CommandTable::HandleOptionsMenu);
 
 	// base path
 
@@ -875,50 +896,12 @@ CommandTable::Receive
 	const Message&	message
 	)
 {
-	if (sender == itsAddCmdButton && message.Is(JXButton::kPushed))
+	if (sender == &(GetTableSelection()))
 	{
-		AddCommand();
-	}
-	else if (sender == itsRemoveCmdButton && message.Is(JXButton::kPushed))
-	{
-		RemoveCommand();
-	}
-	else if (sender == itsDuplicateCmdButton && message.Is(JXButton::kPushed))
-	{
-		DuplicateCommand();
+		UpdateButtons();
 	}
 
-	else if (sender == itsExportButton && message.Is(JXButton::kPushed))
-	{
-		ExportAllCommands();
-	}
-	else if (sender == itsImportButton && message.Is(JXButton::kPushed))
-	{
-		ImportCommands();
-	}
-
-
-	else if (sender == itsOptionsMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		UpdateOptionsMenu();
-	}
-	else if (sender == itsOptionsMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleOptionsMenu(selection->GetIndex());
-	}
-
-	else
-	{
-		if (sender == &(GetTableSelection()))
-		{
-			UpdateButtons();
-		}
-
-		JXEditTable::Receive(sender, message);
-	}
+	JXEditTable::Receive(sender, message);
 }
 
 /******************************************************************************

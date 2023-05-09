@@ -249,7 +249,8 @@ JXTextMenu*
 App::CreateHelpMenu
 	(
 	JXMenuBar*			menuBar,
-	const JUtf8Byte*	idNamespace
+	const JUtf8Byte*	idNamespace,
+	const JUtf8Byte*	sectionName
 	)
 {
 	JXTextMenu* menu = menuBar->AppendTextMenu(JGetString("HelpMenuTitle::JXGlobal"));
@@ -258,6 +259,11 @@ App::CreateHelpMenu
 
 	menu->SetItemImage(kHelpTOCCmd,    jx_help_toc);
 	menu->SetItemImage(kHelpWindowCmd, jx_help_specific);
+
+	ListenTo(menu, std::function([this, sectionName](const JXMenu::ItemSelected& msg)
+	{
+		HandleHelpMenu(sectionName, msg.GetIndex());
+	}));
 
 	return menu;
 }
@@ -280,27 +286,13 @@ App::AppendHelpMenuToToolBar
 }
 
 /******************************************************************************
- UpdateHelpMenu
-
- ******************************************************************************/
-
-void
-App::UpdateHelpMenu
-	(
-	JXTextMenu* menu
-	)
-{
-}
-
-/******************************************************************************
- HandleHelpMenu
+ HandleHelpMenu (private)
 
  ******************************************************************************/
 
 void
 App::HandleHelpMenu
 	(
-	JXTextMenu*			menu,
 	const JUtf8Byte*	windowSectionName,
 	const JIndex		index
 	)

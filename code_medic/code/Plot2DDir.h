@@ -58,7 +58,6 @@ private:
 
 	JXTextMenu*	itsFileMenu;
 	JXTextMenu*	itsActionMenu;
-	JXTextMenu*	itsHelpMenu;
 
 // begin JXLayout
 
@@ -82,8 +81,6 @@ private:
 
 	void	UpdateActionMenu();
 	void	HandleActionMenu(const JIndex index);
-
-	void	HandleHelpMenu(const JIndex index);
 
 	void	ShouldUpdate(const bool update);
 	void	UpdateAll();

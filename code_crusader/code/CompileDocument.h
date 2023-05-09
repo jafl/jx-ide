@@ -43,8 +43,6 @@ protected:
 	bool	ProcessFinished(const JProcess::Finished& info) override;
 	bool	NeedsFormattedData() const override;
 
-	void	Receive(JBroadcaster* sender, const Message& message) override;
-
 private:
 
 	JString		itsPrevLine;

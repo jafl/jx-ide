@@ -495,7 +495,9 @@ LineIndexTable::OpenLineMenu
 		assert( itsLineMenu != nullptr );
 		itsLineMenu->SetToHiddenPopupMenu(true);
 		itsLineMenu->SetUpdateAction(JXMenu::kDisableNone);
-		ListenTo(itsLineMenu);
+		itsLineMenu->AttachHandlers(this,
+			&LineIndexTable::UpdateLineMenu,
+			&LineIndexTable::HandleLineMenu);
 	}
 
 	itsLineMenuLineIndex  = lineIndex;
@@ -736,18 +738,6 @@ LineIndexTable::Receive
 			 message.Is(BreakpointManager::kBreakpointsChanged))
 	{
 		UpdateBreakpoints();
-	}
-
-	else if (sender == itsLineMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		UpdateLineMenu();
-	}
-	else if (sender == itsLineMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleLineMenu(selection->GetIndex());
 	}
 
 	else

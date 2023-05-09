@@ -372,9 +372,20 @@ FileTypeTable::FileTypeTable
 	itsRemoveTypeButton    = removeTypeButton;
 	itsDuplicateTypeButton = duplicateTypeButton;
 
-	ListenTo(itsAddTypeButton);
-	ListenTo(itsRemoveTypeButton);
-	ListenTo(itsDuplicateTypeButton);
+	ListenTo(itsAddTypeButton, std::function([this](const JXButton::Pushed&)
+	{
+		AddType();
+	}));
+
+	ListenTo(itsRemoveTypeButton, std::function([this](const JXButton::Pushed&)
+	{
+		RemoveType();
+	}));
+
+	ListenTo(itsDuplicateTypeButton, std::function([this](const JXButton::Pushed&)
+	{
+		DuplicateType();
+	}));
 
 	// type menu
 
@@ -383,12 +394,16 @@ FileTypeTable::FileTypeTable
 	itsTypeMenu->SetToHiddenPopupMenu();
 	itsTypeMenu->SetMenuItems(kTypeMenuStr);
 	itsTypeMenu->SetUpdateAction(JXMenu::kDisableNone);
-	ListenTo(itsTypeMenu);
+	itsTypeMenu->AttachHandlers(this,
+		&FileTypeTable::UpdateTypeMenu,
+		&FileTypeTable::HandleTypeMenu);
 
 	// macro menu
 
 	itsMacroMenu = CreateMacroMenu();
-	ListenTo(itsMacroMenu);
+	itsMacroMenu->AttachHandlers(this,
+		&FileTypeTable::UpdateMacroMenu,
+		&FileTypeTable::HandleMacroMenu);
 
 	// script menu
 
@@ -397,12 +412,16 @@ FileTypeTable::FileTypeTable
 	itsScriptMenu->SetToHiddenPopupMenu();
 	itsScriptMenu->SetMenuItems(kScriptMenuStr);	// ensure non-empty
 	itsScriptMenu->SetUpdateAction(JXMenu::kDisableNone);
-	ListenTo(itsScriptMenu);
+	itsScriptMenu->AttachHandlers(this,
+		&FileTypeTable::UpdateScriptMenu,
+		&FileTypeTable::HandleScriptMenu);
 
 	// CRM menu
 
 	itsCRMMenu = CreateCRMMenu();
-	ListenTo(itsCRMMenu);
+	itsCRMMenu->AttachHandlers(this,
+		&FileTypeTable::UpdateCRMMenu,
+		&FileTypeTable::HandleCRMMenu);
 
 	// regex for testing
 
@@ -820,76 +839,12 @@ FileTypeTable::Receive
 	const Message&	message
 	)
 {
-	if (sender == itsAddTypeButton && message.Is(JXButton::kPushed))
+	if (sender == &(GetTableSelection()))
 	{
-		AddType();
-	}
-	else if (sender == itsRemoveTypeButton && message.Is(JXButton::kPushed))
-	{
-		RemoveType();
-	}
-	else if (sender == itsDuplicateTypeButton && message.Is(JXButton::kPushed))
-	{
-		DuplicateType();
+		UpdateButtons();
 	}
 
-	else if (sender == itsTypeMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		UpdateTypeMenu();
-	}
-	else if (sender == itsTypeMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleTypeMenu(selection->GetIndex());
-	}
-
-	else if (sender == itsMacroMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		UpdateMacroMenu();
-	}
-	else if (sender == itsMacroMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleMacroMenu(selection->GetIndex());
-	}
-
-	else if (sender == itsScriptMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		UpdateScriptMenu();
-	}
-	else if (sender == itsScriptMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleScriptMenu(selection->GetIndex());
-	}
-
-	else if (sender == itsCRMMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		UpdateCRMMenu();
-	}
-	else if (sender == itsCRMMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleCRMMenu(selection->GetIndex());
-	}
-
-	else
-	{
-		if (sender == &(GetTableSelection()))
-		{
-			UpdateButtons();
-		}
-
-		JXEditTable::Receive(sender, message);
-	}
+	JXEditTable::Receive(sender, message);
 }
 
 /******************************************************************************

@@ -156,7 +156,11 @@ CommandMenu::CommandMenuX
 	SetMenuItems(kMenuStr);
 	SetUpdateAction(kDisableNone);
 	ListenTo(this);
-	ListenTo(GetCommandManager());
+
+	ListenTo(GetCommandManager(), std::function([this](const CommandManager::UpdateCommandMenu&)
+	{
+		UpdateMenu();
+	}));
 
 	if (itsTextDoc != nullptr)
 	{
@@ -164,14 +168,18 @@ CommandMenu::CommandMenuX
 		assert( itsAddToProjMenu != nullptr );
 		itsAddToProjMenu->SetMenuItems(kAddToProjMenuStr, "CommandMenu");
 		itsAddToProjMenu->SetUpdateAction(JXMenu::kDisableNone);
-		ListenTo(itsAddToProjMenu);
+		itsAddToProjMenu->AttachHandlers(this,
+			&CommandMenu::UpdateAddToProjectMenu,
+			&CommandMenu::HandleAddToProjectMenu);
 	}
 
 	itsManageProjMenu = jnew JXTextMenu(this, kManageProjIndex, GetEnclosure());
 	assert( itsManageProjMenu != nullptr );
 	itsManageProjMenu->SetMenuItems(kManageProjMenuStr, "CommandMenu");
 	itsManageProjMenu->SetUpdateAction(JXMenu::kDisableNone);
-	ListenTo(itsManageProjMenu);
+	itsManageProjMenu->AttachHandlers(this,
+		&CommandMenu::UpdateManageProjectMenu,
+		&CommandMenu::HandleManageProjectMenu);
 
 	itsManageProjMenu->SetItemImage(kShowSymbolBrowserCmd, jcc_show_symbol_list);
 	itsManageProjMenu->SetItemImage(kShowCTreeCmd,         jcc_show_c_tree);
@@ -236,35 +244,6 @@ CommandMenu::Receive
 		GetTargetInfo info;
 		BuildTargetInfo(&info);
 		HandleSelection(selection->GetIndex(), info);
-	}
-
-	else if (sender == itsAddToProjMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		UpdateAddToProjectMenu();
-	}
-	else if (sender == itsAddToProjMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleAddToProjectMenu(selection->GetIndex());
-	}
-
-	else if (sender == itsManageProjMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		UpdateManageProjectMenu();
-	}
-	else if (sender == itsManageProjMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleManageProjectMenu(selection->GetIndex());
-	}
-
-	else if (sender == GetCommandManager() && message.Is(CommandManager::kUpdateCommandMenu))
-	{
-		UpdateMenu();
 	}
 
 	else

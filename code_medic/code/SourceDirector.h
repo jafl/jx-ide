@@ -122,8 +122,6 @@ private:
 
 	void	UpdatePrefsMenu();
 	void	HandlePrefsMenu(const JIndex index);
-
-	void	HandleHelpMenu(const JIndex index);
 };
 
 

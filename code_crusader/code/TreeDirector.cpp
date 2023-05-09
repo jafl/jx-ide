@@ -303,7 +303,10 @@ TreeDirector::TreeDirectorX
 	)
 {
 	itsProjDoc = doc;
-	ListenTo(itsProjDoc);
+	ListenTo(itsProjDoc, std::function([this](const JXFileDocument::NameChanged&)
+	{
+		AdjustWindowTitle();
+	}));
 
 	JXScrollbarSet* sbarSet = BuildWindow(windowIcon, treeMenuItems,
 										  treeMenuNamespace,
@@ -539,7 +542,9 @@ TreeDirector::BuildWindow
 	itsFileMenu = menuBar->AppendTextMenu(JGetString("FileMenuTitle::JXGlobal"));
 	itsFileMenu->SetMenuItems(kFileMenuStr, "TreeDirector");
 	itsFileMenu->SetUpdateAction(JXMenu::kDisableNone);
-	ListenTo(itsFileMenu);
+	itsFileMenu->AttachHandlers(this,
+		&TreeDirector::UpdateFileMenu,
+		&TreeDirector::HandleFileMenu);
 
 	itsFileMenu->SetItemImage(kNewTextEditorCmd, jx_file_new);
 	itsFileMenu->SetItemImage(kOpenSomethingCmd, jx_file_open);
@@ -557,12 +562,16 @@ TreeDirector::BuildWindow
 
 	itsTreeMenu = menuBar->AppendTextMenu(JGetString("TreeMenuTitle::TreeDirector"));
 	itsTreeMenu->SetMenuItems(treeMenuItems, treeMenuNamespace);
-	ListenTo(itsTreeMenu);
+	itsTreeMenu->AttachHandlers(this,
+		&TreeDirector::UpdateTreeMenu,
+		&TreeDirector::HandleTreeMenu);
 
 	itsProjectMenu = menuBar->AppendTextMenu(JGetString("ProjectMenuTitle::global"));
 	itsProjectMenu->SetMenuItems(kProjectMenuStr, "TreeDirector");
 	itsProjectMenu->SetUpdateAction(JXMenu::kDisableNone);
-	ListenTo(itsProjectMenu);
+	itsProjectMenu->AttachHandlers(this,
+		&TreeDirector::UpdateProjectMenu,
+		&TreeDirector::HandleProjectMenu);
 
 	itsProjectMenu->SetItemImage(kViewManPageCmd,       jcc_view_man_page);
 	itsProjectMenu->SetItemImage(kShowSymbolBrowserCmd, jcc_show_symbol_list);
@@ -587,10 +596,9 @@ TreeDirector::BuildWindow
 	itsPrefsMenu = menuBar->AppendTextMenu(JGetString("PrefsMenuTitle::JXGlobal"));
 	itsPrefsMenu->SetMenuItems(kPrefsMenuStr, "TreeDirector");
 	itsPrefsMenu->SetUpdateAction(JXMenu::kDisableNone);
-	ListenTo(itsPrefsMenu);
+	itsPrefsMenu->AttachHandler(this, &TreeDirector::HandlePrefsMenu);
 
-	itsHelpMenu = GetApplication()->CreateHelpMenu(menuBar, "TreeDirector");
-	ListenTo(itsHelpMenu);
+	JXTextMenu* helpMenu = GetApplication()->CreateHelpMenu(menuBar, "TreeDirector", itsWindowHelpName);
 
 	// must do this after creating menus
 
@@ -605,7 +613,7 @@ TreeDirector::BuildWindow
 
 		initToolBarFn(itsToolBar, itsTreeMenu);
 
-		GetApplication()->AppendHelpMenuToToolBar(itsToolBar, itsHelpMenu);
+		GetApplication()->AppendHelpMenuToToolBar(itsToolBar, helpMenu);
 	}
 
 	return scrollbarSet;
@@ -621,90 +629,6 @@ TreeDirector::AdjustWindowTitle()
 {
 	const JString title = itsProjDoc->GetName() + itsWindowTitleSuffix;
 	GetWindow()->SetTitle(title);
-}
-
-/******************************************************************************
- Receive (virtual protected)
-
- ******************************************************************************/
-
-void
-TreeDirector::Receive
-	(
-	JBroadcaster*	sender,
-	const Message&	message
-	)
-{
-	if (sender == itsFileMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		UpdateFileMenu();
-	}
-	else if (sender == itsFileMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleFileMenu(selection->GetIndex());
-	}
-
-	else if (sender == itsTreeMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		UpdateTreeMenu();
-	}
-	else if (sender == itsTreeMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleTreeMenu(selection->GetIndex());
-	}
-
-	else if (sender == itsProjectMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		UpdateProjectMenu();
-	}
-	else if (sender == itsProjectMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleProjectMenu(selection->GetIndex());
-	}
-
-	else if (sender == itsPrefsMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		UpdatePrefsMenu();
-	}
-	else if (sender == itsPrefsMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandlePrefsMenu(selection->GetIndex());
-	}
-
-	else if (sender == itsHelpMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		GetApplication()->UpdateHelpMenu(itsHelpMenu);
-	}
-	else if (sender == itsHelpMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		GetApplication()->HandleHelpMenu(itsHelpMenu, itsWindowHelpName,
-											 selection->GetIndex());
-	}
-
-	else if (sender == itsProjDoc && message.Is(JXFileDocument::kNameChanged))
-	{
-		AdjustWindowTitle();
-	}
-
-	else
-	{
-		JXWindowDirector::Receive(sender, message);
-	}
 }
 
 /******************************************************************************
@@ -846,16 +770,6 @@ TreeDirector::HandleProjectMenu
 	{
 		GetDocumentManager()->CloseTextDocuments();
 	}
-}
-
-/******************************************************************************
- UpdatePrefsMenu (private)
-
- ******************************************************************************/
-
-void
-TreeDirector::UpdatePrefsMenu()
-{
 }
 
 /******************************************************************************

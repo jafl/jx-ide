@@ -221,7 +221,10 @@ SymbolDirector::SymbolDirectorX
 	)
 {
 	itsProjDoc = projDoc;
-	ListenTo(itsProjDoc);
+	ListenTo(itsProjDoc, std::function([this](const JXFileDocument::NameChanged&)
+	{
+		AdjustWindowTitle();
+	}));
 
 	itsSymbolList = jnew SymbolList(projDoc);
 	assert( itsSymbolList != nullptr );
@@ -665,7 +668,9 @@ SymbolDirector::BuildWindow
 	itsFileMenu = menuBar->AppendTextMenu(JGetString("FileMenuTitle::JXGlobal"));
 	itsFileMenu->SetMenuItems(kFileMenuStr, "SymbolDirector");
 	itsFileMenu->SetUpdateAction(JXMenu::kDisableNone);
-	ListenTo(itsFileMenu);
+	itsFileMenu->AttachHandlers(this,
+		&SymbolDirector::UpdateFileMenu,
+		&SymbolDirector::HandleFileMenu);
 
 	itsFileMenu->SetItemImage(kNewTextEditorCmd, jx_file_new);
 	itsFileMenu->SetItemImage(kOpenSomethingCmd, jx_file_open);
@@ -682,12 +687,16 @@ SymbolDirector::BuildWindow
 
 	itsSymbolMenu = menuBar->AppendTextMenu(JGetString("SymbolMenuTitle::SymbolDirector"));
 	itsSymbolMenu->SetMenuItems(kSymbolMenuStr, "SymbolDirector");
-	ListenTo(itsSymbolMenu);
+	itsSymbolMenu->AttachHandlers(this,
+		&SymbolDirector::UpdateSymbolMenu,
+		&SymbolDirector::HandleSymbolMenu);
 
 	itsProjectMenu = menuBar->AppendTextMenu(JGetString("ProjectMenuTitle::global"));
 	itsProjectMenu->SetMenuItems(kProjectMenuStr, "SymbolDirector");
 	itsProjectMenu->SetUpdateAction(JXMenu::kDisableNone);
-	ListenTo(itsProjectMenu);
+	itsProjectMenu->AttachHandlers(this,
+		&SymbolDirector::UpdateProjectMenu,
+		&SymbolDirector::HandleProjectMenu);
 
 	itsProjectMenu->SetItemImage(kShowCTreeCmd,    jcc_show_c_tree);
 	itsProjectMenu->SetItemImage(kShowDTreeCmd,    jcc_show_d_tree);
@@ -716,10 +725,11 @@ SymbolDirector::BuildWindow
 	itsPrefsMenu = menuBar->AppendTextMenu(JGetString("PrefsMenuTitle::JXGlobal"));
 	itsPrefsMenu->SetMenuItems(kPrefsMenuStr, "SymbolDirector");
 	itsPrefsMenu->SetUpdateAction(JXMenu::kDisableNone);
-	ListenTo(itsPrefsMenu);
+	itsPrefsMenu->AttachHandlers(this,
+		&SymbolDirector::UpdatePrefsMenu,
+		&SymbolDirector::HandlePrefsMenu);
 
-	itsHelpMenu = GetApplication()->CreateHelpMenu(menuBar, "SymbolDirector");
-	ListenTo(itsHelpMenu);
+	JXTextMenu* helpMenu = GetApplication()->CreateHelpMenu(menuBar, "SymbolDirector", "SymbolHelp");
 
 	// must do this after creating menus
 
@@ -731,7 +741,7 @@ SymbolDirector::BuildWindow
 		itsToolBar->NewGroup();
 		itsToolBar->AppendButton(itsSymbolMenu, kEditSearchPathsCmd);
 
-		GetApplication()->AppendHelpMenuToToolBar(itsToolBar, itsHelpMenu);
+		GetApplication()->AppendHelpMenuToToolBar(itsToolBar, helpMenu);
 	}
 }
 
@@ -745,90 +755,6 @@ SymbolDirector::AdjustWindowTitle()
 {
 	const JString title = itsProjDoc->GetName() + JGetString("WindowTitleSuffix::SymbolDirector");
 	GetWindow()->SetTitle(title);
-}
-
-/******************************************************************************
- Receive (virtual protected)
-
- ******************************************************************************/
-
-void
-SymbolDirector::Receive
-	(
-	JBroadcaster*	sender,
-	const Message&	message
-	)
-{
-	if (sender == itsFileMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		UpdateFileMenu();
-	}
-	else if (sender == itsFileMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleFileMenu(selection->GetIndex());
-	}
-
-	else if (sender == itsSymbolMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		UpdateSymbolMenu();
-	}
-	else if (sender == itsSymbolMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleSymbolMenu(selection->GetIndex());
-	}
-
-	else if (sender == itsProjectMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		UpdateProjectMenu();
-	}
-	else if (sender == itsProjectMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleProjectMenu(selection->GetIndex());
-	}
-
-	else if (sender == itsPrefsMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		UpdatePrefsMenu();
-	}
-	else if (sender == itsPrefsMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandlePrefsMenu(selection->GetIndex());
-	}
-
-	else if (sender == itsHelpMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		GetApplication()->UpdateHelpMenu(itsHelpMenu);
-	}
-	else if (sender == itsHelpMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		GetApplication()->HandleHelpMenu(itsHelpMenu, "SymbolHelp",
-											 selection->GetIndex());
-	}
-
-	else if (sender == itsProjDoc && message.Is(JXFileDocument::kNameChanged))
-	{
-		AdjustWindowTitle();
-	}
-
-	else
-	{
-		JXWindowDirector::Receive(sender, message);
-	}
 }
 
 /******************************************************************************

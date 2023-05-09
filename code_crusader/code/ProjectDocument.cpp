@@ -1561,7 +1561,9 @@ ProjectDocument::BuildWindow
 	itsFileMenu = menuBar->PrependTextMenu(JGetString("FileMenuTitle::JXGlobal"));
 	itsFileMenu->SetMenuItems(kFileMenuStr, "ProjectDocument");
 	itsFileMenu->SetUpdateAction(JXMenu::kDisableNone);
-	ListenTo(itsFileMenu);
+	itsFileMenu->AttachHandlers(this,
+		&ProjectDocument::UpdateFileMenu,
+		&ProjectDocument::HandleFileMenu);
 
 	itsFileMenu->SetItemImage(kNewTextEditorCmd, jx_file_new);
 	itsFileMenu->SetItemImage(kOpenSomethingCmd, jx_file_open);
@@ -1581,7 +1583,9 @@ ProjectDocument::BuildWindow
 	itsProjectMenu = menuBar->AppendTextMenu(JGetString("ProjectMenuTitle::global"));
 	itsProjectMenu->SetMenuItems(kProjectMenuStr, "ProjectDocument");
 	itsProjectMenu->SetUpdateAction(JXMenu::kDisableNone);
-	ListenTo(itsProjectMenu);
+	itsProjectMenu->AttachHandlers(this,
+		&ProjectDocument::UpdateProjectMenu,
+		&ProjectDocument::HandleProjectMenu);
 
 	itsProjectMenu->SetItemImage(kShowSymbolBrowserCmd, jcc_show_symbol_list);
 	itsProjectMenu->SetItemImage(kShowCTreeCmd,         jcc_show_c_tree);
@@ -1597,7 +1601,9 @@ ProjectDocument::BuildWindow
 	itsSourceMenu = menuBar->AppendTextMenu(JGetString("SourceMenuTitle::ProjectDocument"));
 	itsSourceMenu->SetMenuItems(kSourceMenuStr, "ProjectDocument");
 	itsSourceMenu->SetUpdateAction(JXMenu::kDisableNone);
-	ListenTo(itsSourceMenu);
+	itsSourceMenu->AttachHandlers(this,
+		&ProjectDocument::UpdateSourceMenu,
+		&ProjectDocument::HandleSourceMenu);
 
 	itsSourceMenu->SetItemImage(kSaveAllTextCmd, jx_file_save_all);
 	itsSourceMenu->SetItemImage(kDiffSmartCmd,   jcc_compare_backup);
@@ -1619,10 +1625,11 @@ ProjectDocument::BuildWindow
 	itsPrefsMenu = menuBar->AppendTextMenu(JGetString("PrefsMenuTitle::JXGlobal"));
 	itsPrefsMenu->SetMenuItems(kPrefsMenuStr, "ProjectDocument");
 	itsPrefsMenu->SetUpdateAction(JXMenu::kDisableNone);
-	ListenTo(itsPrefsMenu);
+	itsSourceMenu->AttachHandlers(this,
+		&ProjectDocument::UpdatePrefsMenu,
+		&ProjectDocument::HandlePrefsMenu);
 
-	itsHelpMenu = GetApplication()->CreateHelpMenu(menuBar, "ProjectDocument");
-	ListenTo(itsHelpMenu);
+	JXTextMenu* helpMenu = GetApplication()->CreateHelpMenu(menuBar, "ProjectDocument", "ProjectHelp");
 
 	// must do this after creating widgets
 
@@ -1636,7 +1643,7 @@ ProjectDocument::BuildWindow
 		itsToolBar->NewGroup();
 		itsToolBar->AppendButton(itsProjectMenu, kSearchFilesCmd);
 
-		GetApplication()->AppendHelpMenuToToolBar(itsToolBar, itsHelpMenu);
+		GetApplication()->AppendHelpMenuToToolBar(itsToolBar, helpMenu);
 	}
 
 	// update pg
@@ -1660,69 +1667,8 @@ ProjectDocument::Receive
 	const Message&	message
 	)
 {
-	if (sender == itsFileMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		UpdateFileMenu();
-	}
-	else if (sender == itsFileMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleFileMenu(selection->GetIndex());
-	}
-
-	else if (sender == itsProjectMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		UpdateProjectMenu();
-	}
-	else if (sender == itsProjectMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleProjectMenu(selection->GetIndex());
-	}
-
-	else if (sender == itsSourceMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		UpdateSourceMenu();
-	}
-	else if (sender == itsSourceMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleSourceMenu(selection->GetIndex());
-	}
-
-	else if (sender == itsPrefsMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		UpdatePrefsMenu();
-	}
-	else if (sender == itsPrefsMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandlePrefsMenu(selection->GetIndex());
-	}
-
-	else if (sender == itsHelpMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		GetApplication()->UpdateHelpMenu(itsHelpMenu);
-	}
-	else if (sender == itsHelpMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		GetApplication()->HandleHelpMenu(itsHelpMenu, "ProjectHelp",
-											 selection->GetIndex());
-	}
-
-	else if (sender == GetPrefsManager() &&
-			 message.Is(PrefsManager::kFileTypesChanged))
+	if (sender == GetPrefsManager() &&
+		 message.Is(PrefsManager::kFileTypesChanged))
 	{
 		const auto* info =
 			dynamic_cast<const PrefsManager::FileTypesChanged*>(&message);

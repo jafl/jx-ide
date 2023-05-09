@@ -184,7 +184,10 @@ TextEditor::TextEditor
 	itsLastModifiers(GetDisplay())
 {
 	itsDoc = document;
-	ListenTo(itsDoc);
+	ListenTo(itsDoc, std::function([this](const JXFileDocument::NameChanged& msg)
+	{
+		UpdateWritable(msg.GetFullName());
+	}));
 
 	UpdateWritable(fileName);
 
@@ -430,27 +433,7 @@ TextEditor::Receive
 	const Message&	message
 	)
 {
-	if (sender == itsDoc && message.Is(JXFileDocument::kNameChanged))
-	{
-		const auto* info =
-			dynamic_cast<const JXFileDocument::NameChanged*>(&message);
-		assert( info != nullptr );
-		UpdateWritable(info->GetFullName());
-	}
-
-	else if (sender == itsContextMenu && message.Is(JXMenu::kNeedsUpdate))
-	{
-		UpdateContextMenu();
-	}
-	else if (sender == itsContextMenu && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleContextMenu(selection->GetIndex());
-	}
-
-	else if (message.Is(JXFSDirMenu::kFileSelected))
+	if (message.Is(JXFSDirMenu::kFileSelected))
 	{
 		const auto* info =
 			dynamic_cast<const JXFSDirMenu::FileSelected*>(&message);
@@ -1043,7 +1026,9 @@ TextEditor::CreateContextMenu()
 		itsContextMenu->SetMenuItems(kContextMenuStr, "TextEditor");
 		itsContextMenu->SetUpdateAction(JXMenu::kDisableNone);
 		itsContextMenu->SetToHiddenPopupMenu();
-		ListenTo(itsContextMenu);
+		itsContextMenu->AttachHandlers(this,
+			&TextEditor::UpdateContextMenu,
+			&TextEditor::HandleContextMenu);
 
 		CreateScriptMenu(itsContextMenu, kContextScriptSubmenuIndex);
 

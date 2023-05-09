@@ -44,7 +44,6 @@ private:
 	bool				itsNeedsUpdateFlag;
 
 	JXTextMenu*			itsFileMenu;
-	JXTextMenu*			itsHelpMenu;
 
 // begin JXLayout
 
@@ -59,8 +58,6 @@ private:
 
 	void	UpdateFileMenu();
 	void	HandleFileMenu(const JIndex index);
-
-	void	HandleHelpMenu(const JIndex index);
 };
 
 #endif
