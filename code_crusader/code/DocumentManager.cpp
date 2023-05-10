@@ -36,6 +36,7 @@
 #include <jx-af/jcore/JSimpleProcess.h>
 #include <jx-af/jcore/JStringIterator.h>
 #include <jx-af/jcore/JListUtil.h>
+#include <ranges>
 #include <jx-af/jcore/jAssert.h>
 
 static const JUtf8Byte* kTextTemplateDir = "text_templates";
@@ -354,10 +355,9 @@ DocumentManager::ProjectDocumentIsOpen
 bool
 DocumentManager::CloseProjectDocuments()
 {
-	const JSize count = itsProjectDocuments->GetElementCount();
-	for (JIndex i=count; i>=1; i--)
+	for (auto* doc : std::views::reverse(*itsProjectDocuments))
 	{
-		if (!itsProjectDocuments->GetElement(i)->Close())
+		if (!doc->Close())
 		{
 			break;
 		}

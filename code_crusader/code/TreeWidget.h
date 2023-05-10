@@ -115,7 +115,6 @@ private:
 							  const bool raiseTreeWindow,
 							  const bool reportNotFound,
 							  const bool openFileIfSingleMatch,
-							  const bool deselectAll,
 							  const JUtf8Byte* notFoundID) const;
 };
 

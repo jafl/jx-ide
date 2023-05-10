@@ -42,8 +42,7 @@ protected:
 
 private:
 
-	void	HandleHelpMenu(JXTextMenu* menu, const JUtf8Byte* windowSectionName,
-						   const JIndex index);
+	void	HandleHelpMenu(const JUtf8Byte* windowSectionName, const JIndex index);
 };
 
 #endif

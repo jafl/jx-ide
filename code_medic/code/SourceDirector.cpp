@@ -407,7 +407,7 @@ SourceDirector::BuildWindow()
 void
 SourceDirector::CreateWindowsMenu()
 {
-	itsCommandDir->CreateWindowsMenuAndToolBar(
+	CommandDirector::CreateWindowsMenuAndToolBar(
 			itsMenuBar, itsToolBar,
 			itsType == kMainAsmType || itsType == kAsmType,
 			true, itsType != kMainSourceType,

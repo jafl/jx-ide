@@ -202,9 +202,9 @@ App::CreateHelpMenu
 	menu->SetItemImage(kHelpTOCCmd,    jx_help_toc);
 	menu->SetItemImage(kHelpWindowCmd, jx_help_specific);
 
-	ListenTo(menu, std::function([this, menu, sectionName](const JXMenu::ItemSelected& msg)
+	ListenTo(menu, std::function([this, sectionName](const JXMenu::ItemSelected& msg)
 	{
-		HandleHelpMenu(menu, sectionName, msg.GetIndex());
+		HandleHelpMenu(sectionName, msg.GetIndex());
 	}));
 
 	return menu;
@@ -235,7 +235,6 @@ App::AppendHelpMenuToToolBar
 void
 App::HandleHelpMenu
 	(
-	JXTextMenu*			menu,
 	const JUtf8Byte*	windowSectionName,
 	const JIndex		index
 	)

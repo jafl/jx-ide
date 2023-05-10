@@ -335,44 +335,38 @@ CommandDirector::Close()
  CloseDynamicDirectors
 
  ******************************************************************************/
-
+#include <ranges>
 void
 CommandDirector::CloseDynamicDirectors()
 {
-	JSize count = itsSourceDirs->GetElementCount();
-	for (JIndex i=count; i>=1; i--)
+	for (auto* dir : std::views::reverse(*itsSourceDirs))
 	{
-		(itsSourceDirs->GetElement(i))->Close();
+		dir->Close();
 	}
 
-	count = itsAsmDirs->GetElementCount();
-	for (JIndex i=count; i>=1; i--)
+	for (auto* dir : std::views::reverse(*itsAsmDirs))
 	{
-		(itsAsmDirs->GetElement(i))->Close();
+		dir->Close();
 	}
 
-	count = itsArray1DDirs->GetElementCount();
-	for (JIndex i=count; i>=1; i--)
+	for (auto* dir : std::views::reverse(*itsArray1DDirs))
 	{
-		(itsArray1DDirs->GetElement(i))->Close();
+		dir->Close();
 	}
 
-	count = itsArray2DDirs->GetElementCount();
-	for (JIndex i=count; i>=1; i--)
+	for (auto* dir : std::views::reverse(*itsArray2DDirs))
 	{
-		(itsArray2DDirs->GetElement(i))->Close();
+		dir->Close();
 	}
 
-	count = itsPlot2DDirs->GetElementCount();
-	for (JIndex i=count; i>=1; i--)
+	for (auto* dir : std::views::reverse(*itsPlot2DDirs))
 	{
-		(itsPlot2DDirs->GetElement(i))->Close();
+		dir->Close();
 	}
 
-	count = itsMemoryDirs->GetElementCount();
-	for (JIndex i=count; i>=1; i--)
+	for (auto* dir : std::views::reverse(*itsMemoryDirs))
 	{
-		(itsMemoryDirs->GetElement(i))->Close();
+		dir->Close();
 	}
 }
 
@@ -805,10 +799,8 @@ CommandDirector::AdjustDebugMenu
 	JPtrArray<JString> cmds(JPtrArrayT::kDeleteAll);
 	GetPrefsManager()->GetCmdList(&cmds);
 
-	const JSize count = cmds.GetElementCount();
-	for (JIndex i=1; i<=count; i++)
+	for (const auto* cmd : cmds)
 	{
-		const JString* cmd = cmds.GetElement(i);
 		menu->AppendItem(*cmd, JXMenu::kPlainType, JString::empty, JString::empty, *cmd);
 	}
 }

@@ -144,7 +144,7 @@ Pipe<ACE_PEER_STREAM_2>::handle_input
 		(ACE_Svc_Handler<ACE_PEER_STREAM_2,ACE_SYNCH>::peer()).recv(itsRecvBuffer, itsRecvBufferSize);
 	if (count > 0)
 	{
-		itsByteBuffer.Append(itsRecvBuffer, count);
+		itsByteBuffer.Append(std::span(itsRecvBuffer, count));
 		itsRecvData += itsByteBuffer.ExtractCharacters();
 		if (!itsRecvData.IsEmpty())
 	{

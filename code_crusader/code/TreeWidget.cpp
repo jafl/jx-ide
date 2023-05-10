@@ -134,7 +134,7 @@ TreeWidget::FindClass
 			c->ViewHeader();
 		}
 	},
-	button, raiseTreeWindow, reportNotFound, openFileIfSingleMatch, deselectAll,
+	button, raiseTreeWindow, reportNotFound, openFileIfSingleMatch,
 	"ClassNotFound::TreeWidget");
 }
 
@@ -231,14 +231,14 @@ TreeWidget::FindFunction
 		itsTree->SelectClasses(s, false, true);
 	}
 
-	return ShowSearchResults([this, matchList](Class* c)
+	return ShowSearchResults([this, matchList](Class*)
 	{
 		if (matchList.GetElementCount() == 1)
 		{
 			itsDirector->GetProjectDoc()->GetSymbolDirector()->ViewSymbol(matchList.GetFirstElement());
 		}
 	},
-	button, raiseTreeWindow, reportNotFound, openFileIfSingleMatch, deselectAll,
+	button, raiseTreeWindow, reportNotFound, openFileIfSingleMatch,
 	"FunctionNotFound::TreeWidget");
 }
 
@@ -259,7 +259,6 @@ TreeWidget::ShowSearchResults
 	const bool			raiseTreeWindow,
 	const bool			reportNotFound,
 	const bool			openFileIfSingleMatch,
-	const bool			deselectAll,
 	const JUtf8Byte*	notFoundID
 	)
 	const
