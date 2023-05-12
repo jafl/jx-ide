@@ -13,7 +13,6 @@ jobs:
     if: ${{ !startsWith(github.ref, 'refs/tags/') }}
     env:
       SONAR_SCANNER_VERSION: 4.4.0.2170
-      SONAR_SERVER_URL: "https://sonarcloud.io"
       BUILD_WRAPPER_OUT_DIR: sonar_output
       LC_ALL: en_US.UTF-8
       LANG: en_US.UTF-8
@@ -24,7 +23,7 @@ jobs:
 
       - name: Set environment variables
         run: |
-          echo SONAR_CACHE_PATH=$HOME/sonar_output >> $GITHUB_ENV
+          echo SONAR_CACHE_PATH=$HOME/$BUILD_WRAPPER_OUT_DIR >> $GITHUB_ENV
           echo FORCE_CACHE_UPDATE=${RANDOM}${RANDOM} >> $GITHUB_ENV
 
       - name: Sonar data cache
@@ -36,28 +35,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-sonar-cache-
 
-      - name: Set up JDK 11
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'zulu'
-          java-version: 11
-
-      - name: Download and set up sonar-scanner
-        env:
-          SONAR_SCANNER_DOWNLOAD_URL: https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-${{ env.SONAR_SCANNER_VERSION }}-linux.zip
-        run: |
-          mkdir -p $HOME/.sonar
-          curl -sSLo $HOME/.sonar/sonar-scanner.zip ${{ env.SONAR_SCANNER_DOWNLOAD_URL }}
-          unzip -o $HOME/.sonar/sonar-scanner.zip -d $HOME/.sonar/
-          echo "$HOME/.sonar/sonar-scanner-${{ env.SONAR_SCANNER_VERSION }}-linux/bin" >> $GITHUB_PATH
-
-      - name: Download and set up build-wrapper
-        env:
-          BUILD_WRAPPER_DOWNLOAD_URL: ${{ env.SONAR_SERVER_URL }}/static/cpp/build-wrapper-linux-x86.zip
-        run: |
-          curl -sSLo $HOME/.sonar/build-wrapper-linux-x86.zip ${{ env.BUILD_WRAPPER_DOWNLOAD_URL }}
-          unzip -o $HOME/.sonar/build-wrapper-linux-x86.zip -d $HOME/.sonar/
-          echo "$HOME/.sonar/build-wrapper-linux-x86" >> $GITHUB_PATH
+      - name: Install sonar-scanner and build-wrapper
+        uses: sonarsource/sonarcloud-github-c-cpp@v1
 
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v2
@@ -85,7 +64,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: sonar-scanner --define sonar.host.url="${{ env.SONAR_SERVER_URL }}" --define sonar.cfamily.build-wrapper-output="${{ env.BUILD_WRAPPER_OUT_DIR }}"
+        run: sonar-scanner --define sonar.cfamily.build-wrapper-output="${{ env.BUILD_WRAPPER_OUT_DIR }}"
 
       - name: Perform CodeQL analysis
         uses: github/codeql-action/analyze@v2
@@ -121,7 +100,7 @@ jobs:
 
   build-macos:
     name: Build & Package MacOS
-    runs-on: macos-11
+    runs-on: macos-13
     env:
       PKG_CONFIG_PATH: /usr/local/opt/icu4c/lib/pkgconfig
       LC_ALL: en_US.UTF-8
