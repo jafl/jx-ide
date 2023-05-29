@@ -18,6 +18,7 @@
 #include "TabWidthDialog.h"
 #include "ProjectDocument.h"
 #include "DiffFileDialog.h"
+#include "OKToOverwriteModifiedFileDialog.h"
 #include "StylerBase.h"
 #include "PTPrinter.h"
 #include "PSPrinter.h"
@@ -826,6 +827,44 @@ TextDocument::HandleFileModifiedByOthers
 	if (onDisk && JFileWritable(fullName))
 	{
 		itsTextEditor->UpdateWritable(fullName);
+	}
+}
+
+/******************************************************************************
+ AskOverwriteFileModifiedByOthers (virtual protected)
+
+ ******************************************************************************/
+
+bool
+TextDocument::AskOverwriteFileModifiedByOthers()
+	const
+{
+	auto* dlog = jnew OKToOverwriteModifiedFileDialog(GetFileName());
+	assert( dlog != nullptr );
+	if (!dlog->DoDialog())
+	{
+		return false;
+	}
+
+	const OKToOverwriteModifiedFileDialog::CloseAction action = dlog->GetCloseAction();
+	if (action == OKToOverwriteModifiedFileDialog::kCompareData)
+	{
+		bool onDisk;
+		const JString fullName = GetFullName(&onDisk);
+		assert( onDisk );
+
+		const_cast<TextDocument*>(this)->SafetySave(JXDocumentManager::kTimer);
+
+		JString safetyName;
+		if (GetSafetySaveFileName(&safetyName))
+		{
+			GetDiffFileDialog()->ViewDiffs(safetyName, fullName);
+		}
+		return false;
+	}
+	else
+	{
+		return true;
 	}
 }
 

@@ -1,0 +1,7 @@
+0
+saveButton::OKToOverwriteModifiedFileDialog::JXLayout "Save"
+cancelButton::OKToOverwriteModifiedFileDialog::JXLayout "Cancel"
+itsCompareButton::OKToOverwriteModifiedFileDialog::JXLayout "Compare"
+itsCompareButton::OKToOverwriteModifiedFileDialog::shortcuts::JXLayout "#C"
+saveButton::OKToOverwriteModifiedFileDialog::shortcuts::JXLayout "#S^M"
+text::OKToOverwriteModifiedFileDialog::JXLayout ""

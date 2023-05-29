@@ -123,6 +123,7 @@ protected:
 
 	void	HandleFileModifiedByOthers(const bool modTimeChanged,
 									   const bool permsChanged) override;
+	bool	AskOverwriteFileModifiedByOthers() const override;
 
 	void	ReadPrefs(std::istream& input) override;
 	void	WritePrefs(std::ostream& output) const override;

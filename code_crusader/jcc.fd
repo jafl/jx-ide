@@ -3,7 +3,7 @@ Magic: 15000
 Internal Form Definition File
     (do not change)
 
-Number of forms: 46
+Number of forms: 47
 Unit of measure: FL_COORD_PIXEL
 
 =============== FORM ===============
@@ -10143,6 +10143,120 @@ shortcut:
 resize: FL_RESIZE_ALL
 gravity: FL_NorthEast FL_NoGravity
 name: itsGitSummaryCB
+callback: 
+argument: 
+
+=============== FORM ===============
+Name: OKToOverwriteModifiedFileDialog
+Width: 330
+Height: 110
+Number of Objects: 6
+
+--------------------
+class: FL_BOX
+type: FL_FLAT_BOX
+box: 0 0 330 110
+boxtype: FL_FLAT_BOX
+colors: FL_COL1 FL_COL1
+alignment: FL_ALIGN_CENTER
+style: FL_NORMAL_STYLE
+size: FL_DEFAULT_SIZE
+lcol: FL_BLACK
+label: 
+shortcut: 
+resize: FL_RESIZE_ALL
+gravity: FL_NoGravity FL_NoGravity
+name: 
+callback: 
+argument: 
+
+--------------------
+class: FL_BOX
+type: FL_NO_BOX
+box: 20 20 40 40
+boxtype: FL_NO_BOX
+colors: FL_COL1 FL_COL1
+alignment: FL_ALIGN_CENTER
+style: FL_NORMAL_STYLE
+size: FL_NORMAL_SIZE
+lcol: FL_BLACK
+label: JXImageWidget
+shortcut: 
+resize: FL_RESIZE_ALL
+gravity: FL_NorthWest FL_NoGravity
+name: (icon)
+callback: 
+argument: 
+
+--------------------
+class: FL_TEXT
+type: FL_NORMAL_TEXT
+box: 60 20 250 50
+boxtype: FL_FLAT_BOX
+colors: FL_COL1 FL_MCOL
+alignment: FL_ALIGN_LEFT|FL_ALIGN_INSIDE
+style: FL_NORMAL_STYLE
+size: FL_NORMAL_SIZE
+lcol: FL_BLACK
+label: 
+shortcut: 
+resize: FL_RESIZE_ALL
+gravity: FL_NoGravity FL_NoGravity
+name: (text)
+callback: 
+argument: 
+
+--------------------
+class: FL_BUTTON
+type: FL_NORMAL_BUTTON
+box: 170 80 60 20
+boxtype: FL_UP_BOX
+colors: FL_COL1 FL_COL1
+alignment: FL_ALIGN_CENTER
+style: FL_NORMAL_STYLE
+size: FL_NORMAL_SIZE
+lcol: FL_BLACK
+label: Cancel
+shortcut: 
+resize: FL_RESIZE_ALL
+gravity: FL_SouthEast FL_NoGravity
+name: (cancelButton)
+callback: 
+argument: 
+
+--------------------
+class: FL_BUTTON
+type: FL_NORMAL_BUTTON
+box: 250 80 60 20
+boxtype: FL_UP_BOX
+colors: FL_COL1 FL_COL1
+alignment: FL_ALIGN_CENTER
+style: FL_NORMAL_STYLE
+size: FL_NORMAL_SIZE
+lcol: FL_BLACK
+label: Save
+shortcut: #S^M
+resize: FL_RESIZE_ALL
+gravity: FL_SouthEast FL_NoGravity
+name: (saveButton)
+callback: 
+argument: 
+
+--------------------
+class: FL_BUTTON
+type: FL_NORMAL_BUTTON
+box: 50 80 60 20
+boxtype: FL_UP_BOX
+colors: FL_COL1 FL_COL1
+alignment: FL_ALIGN_CENTER
+style: FL_NORMAL_STYLE
+size: FL_NORMAL_SIZE
+lcol: FL_BLACK
+label: Compare
+shortcut: #C
+resize: FL_RESIZE_ALL
+gravity: FL_SouthWest FL_NoGravity
+name: itsCompareButton
 callback: 
 argument: 
 

@@ -1043,3 +1043,8 @@ SavePrompt::CPPMacroTable	"Save macros as:"
 # EditCPPMacroDialog
 
 WindowTitle::EditCPPMacroDialog	"C Preprocessor"
+
+# OKToOverwriteModifiedFileDialog
+
+WindowTitle::OKToOverwriteModifiedFileDialog				"Warning"
+OverwriteChangedFilePrompt::OKToOverwriteModifiedFileDialog	"The copy of \"$name\" on disk has been modified by another program.  Do you want to overwrite the changes?"

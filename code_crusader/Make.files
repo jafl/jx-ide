@@ -107,6 +107,7 @@
 .cpp ./code/TEScriptMenu
 .cpp ./code/TabWidthDialog
 .cpp ./code/ExtEditorDialog
+.cpp ./code/OKToOverwriteModifiedFileDialog
 .cpp ./code/SearchTextDialog
 .cpp ./code/SearchPathHistoryMenu
 .cpp ./code/SearchFilterHistoryMenu
