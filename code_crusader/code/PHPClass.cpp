@@ -147,3 +147,38 @@ PHPClass::AdjustNameStyle
 		style->bold = true;
 	}
 }
+
+/******************************************************************************
+ GetAncestorList (virtual)
+
+	We must not include the package.
+
+ ******************************************************************************/
+
+void
+PHPClass::GetAncestorList
+	(
+	JPtrArray<JString>* list
+	)
+	const
+{
+	for (const auto* s : *list)
+	{
+		if (*s == GetName())
+		{
+			return;
+		}
+	}
+
+	list->Append(GetName());
+
+	const JSize count = GetParentCount();
+	const Class* parent;
+	for (JIndex i=1; i<=count; i++)
+	{
+		if (GetParent(i, &parent))
+		{
+			parent->GetAncestorList(list);
+		}
+	}
+}

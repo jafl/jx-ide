@@ -26,6 +26,8 @@ public:
 
 	void	StreamOut(std::ostream& output) const override;
 
+	void	GetAncestorList(JPtrArray<JString>* fullNameList) const override;
+
 protected:
 
 	Class*	NewGhost(const JString& name, Tree* tree) override;
