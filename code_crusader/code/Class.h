@@ -78,7 +78,7 @@ public:
 	bool			GetParent(const JIndex index, Class** parent) const;
 	bool			GetParent(const JIndex index, const Class** parent) const;
 	bool			IsAncestor(const Class* child) const;
-	void			GetAncestorList(JPtrArray<JString>* fullNameList) const;
+	virtual void	GetAncestorList(JPtrArray<JString>* fullNameList) const;
 
 	bool	HasChildren() const;
 	bool	HasPrimaryChildren() const;
@@ -358,7 +358,7 @@ Class::GetParentName
 	)
 	const
 {
-	return *((itsParentInfo->GetElement(index)).name);
+	return *itsParentInfo->GetElement(index).name;
 }
 
 /******************************************************************************
@@ -373,7 +373,7 @@ Class::GetParentType
 	)
 	const
 {
-	return (itsParentInfo->GetElement(index)).inheritance;
+	return itsParentInfo->GetElement(index).inheritance;
 }
 
 /******************************************************************************

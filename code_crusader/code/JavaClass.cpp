@@ -27,8 +27,8 @@ JavaClass::JavaClass
 	const DeclareType	declType,
 	const JFAID_t		fileID,
 	Tree*				tree,
-	const bool		isPublic,
-	const bool		isFinal
+	const bool			isPublic,
+	const bool			isFinal
 	)
 	:
 	Class(name, declType, fileID, tree),
@@ -193,6 +193,41 @@ JavaClass::AdjustNameStyle
 		if (itsIsFinalFlag)
 		{
 			style->bold = true;
+		}
+	}
+}
+
+/******************************************************************************
+ GetAncestorList (virtual)
+
+	We must not include the package.
+
+ ******************************************************************************/
+
+void
+JavaClass::GetAncestorList
+	(
+	JPtrArray<JString>* list
+	)
+	const
+{
+	for (const auto* s : *list)
+	{
+		if (*s == GetName())
+		{
+			return;
+		}
+	}
+
+	list->Append(GetName());
+
+	const JSize count = GetParentCount();
+	const Class* parent;
+	for (JIndex i=1; i<=count; i++)
+	{
+		if (GetParent(i, &parent))
+		{
+			parent->GetAncestorList(list);
 		}
 	}
 }

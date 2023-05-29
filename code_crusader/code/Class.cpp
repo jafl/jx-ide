@@ -665,7 +665,9 @@ Class::IsAncestor
 }
 
 /******************************************************************************
- GetAncestorList
+ GetAncestorList (virtual)
+
+	Java must use name instead of full name.
 
  ******************************************************************************/
 
