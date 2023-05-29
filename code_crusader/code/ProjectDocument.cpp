@@ -864,7 +864,7 @@ JError
 ProjectDocument::WriteFile
 	(
 	const JString&	fullName,
-	const bool	safetySave
+	const bool		safetySave
 	)
 	const
 {
@@ -907,7 +907,7 @@ void
 ProjectDocument::WriteTextFile
 	(
 	std::ostream&	projOutput,
-	const bool	safetySave
+	const bool		safetySave
 	)
 	const
 {

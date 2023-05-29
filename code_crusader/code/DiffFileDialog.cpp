@@ -297,7 +297,6 @@ DiffFileDialog::BuildWindow()
 
 // begin plainLayout
 
-	const JRect plainLayout_Frame    = plainCard->GetFrame();
 	const JRect plainLayout_Aperture = plainCard->GetAperture();
 	plainCard->AdjustSize(530 - plainLayout_Aperture.width(), 70 - plainLayout_Aperture.height());
 
@@ -343,13 +342,12 @@ DiffFileDialog::BuildWindow()
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 350,40, 60,20);
 	assert( itsPlainChoose2Button != nullptr );
 
-	plainCard->SetSize(plainLayout_Frame.width(), plainLayout_Frame.height());
+	plainCard->SetSize(plainLayout_Aperture.width(), plainLayout_Aperture.height());
 
 // end plainLayout
 
 // begin cvsLayout
 
-	const JRect cvsLayout_Frame    = cvsCard->GetFrame();
 	const JRect cvsLayout_Aperture = cvsCard->GetAperture();
 	cvsCard->AdjustSize(510 - cvsLayout_Aperture.width(), 90 - cvsLayout_Aperture.height());
 
@@ -398,13 +396,12 @@ DiffFileDialog::BuildWindow()
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 420,10, 80,20);
 	assert( itsCVSSummaryCB != nullptr );
 
-	cvsCard->SetSize(cvsLayout_Frame.width(), cvsLayout_Frame.height());
+	cvsCard->SetSize(cvsLayout_Aperture.width(), cvsLayout_Aperture.height());
 
 // end cvsLayout
 
 // begin svnLayout
 
-	const JRect svnLayout_Frame    = svnCard->GetFrame();
 	const JRect svnLayout_Aperture = svnCard->GetAperture();
 	svnCard->AdjustSize(510 - svnLayout_Aperture.width(), 90 - svnLayout_Aperture.height());
 
@@ -453,13 +450,12 @@ DiffFileDialog::BuildWindow()
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 420,10, 80,20);
 	assert( itsSVNSummaryCB != nullptr );
 
-	svnCard->SetSize(svnLayout_Frame.width(), svnLayout_Frame.height());
+	svnCard->SetSize(svnLayout_Aperture.width(), svnLayout_Aperture.height());
 
 // end svnLayout
 
 // begin gitLayout
 
-	const JRect gitLayout_Frame    = gitCard->GetFrame();
 	const JRect gitLayout_Aperture = gitCard->GetAperture();
 	gitCard->AdjustSize(510 - gitLayout_Aperture.width(), 90 - gitLayout_Aperture.height());
 
@@ -508,7 +504,7 @@ DiffFileDialog::BuildWindow()
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 420,10, 80,20);
 	assert( itsGitSummaryCB != nullptr );
 
-	gitCard->SetSize(gitLayout_Frame.width(), gitLayout_Frame.height());
+	gitCard->SetSize(gitLayout_Aperture.width(), gitLayout_Aperture.height());
 
 // end gitLayout
 

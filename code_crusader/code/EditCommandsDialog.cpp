@@ -157,7 +157,6 @@ EditCommandsDialog::BuildWindow
 
 // begin allProjectsLayout
 
-	const JRect allProjectsLayout_Frame    = compartment->GetFrame();
 	const JRect allProjectsLayout_Aperture = compartment->GetAperture();
 	compartment->AdjustSize(580 - allProjectsLayout_Aperture.width(), 210 - allProjectsLayout_Aperture.height());
 
@@ -197,7 +196,7 @@ EditCommandsDialog::BuildWindow
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 520,190, 60,20);
 	assert( allImportButton != nullptr );
 
-	compartment->SetSize(allProjectsLayout_Frame.width(), allProjectsLayout_Frame.height());
+	compartment->SetSize(allProjectsLayout_Aperture.width(), allProjectsLayout_Aperture.height());
 
 // end allProjectsLayout
 
@@ -241,7 +240,6 @@ EditCommandsDialog::BuildWindow
 
 // begin thisProjectLayout
 
-	const JRect thisProjectLayout_Frame    = compartment->GetFrame();
 	const JRect thisProjectLayout_Aperture = compartment->GetAperture();
 	compartment->AdjustSize(580 - thisProjectLayout_Aperture.width(), 240 - thisProjectLayout_Aperture.height());
 
@@ -292,7 +290,7 @@ EditCommandsDialog::BuildWindow
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 520,220, 60,20);
 	assert( thisImportButton != nullptr );
 
-	compartment->SetSize(thisProjectLayout_Frame.width(), thisProjectLayout_Frame.height());
+	compartment->SetSize(thisProjectLayout_Aperture.width(), thisProjectLayout_Aperture.height());
 
 // end thisProjectLayout
 

@@ -135,7 +135,6 @@ EditMacroDialog::BuildWindow
 
 // begin actionLayout
 
-	const JRect actionLayout_Frame    = compartment->GetFrame();
 	const JRect actionLayout_Aperture = compartment->GetAperture();
 	compartment->AdjustSize(310 - actionLayout_Aperture.width(), 150 - actionLayout_Aperture.height());
 
@@ -169,7 +168,7 @@ EditMacroDialog::BuildWindow
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 250,130, 60,20);
 	assert( saveActionFileButton != nullptr );
 
-	compartment->SetSize(actionLayout_Frame.width(), actionLayout_Frame.height());
+	compartment->SetSize(actionLayout_Aperture.width(), actionLayout_Aperture.height());
 
 // end actionLayout
 
@@ -195,7 +194,6 @@ EditMacroDialog::BuildWindow
 
 // begin macroLayout
 
-	const JRect macroLayout_Frame    = compartment->GetFrame();
 	const JRect macroLayout_Aperture = compartment->GetAperture();
 	compartment->AdjustSize(310 - macroLayout_Aperture.width(), 150 - macroLayout_Aperture.height());
 
@@ -229,7 +227,7 @@ EditMacroDialog::BuildWindow
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 250,130, 60,20);
 	assert( saveMacroFileButton != nullptr );
 
-	compartment->SetSize(macroLayout_Frame.width(), macroLayout_Frame.height());
+	compartment->SetSize(macroLayout_Aperture.width(), macroLayout_Aperture.height());
 
 // end macroLayout
 
@@ -255,7 +253,6 @@ EditMacroDialog::BuildWindow
 
 // begin macroSetLayout
 
-	const JRect macroSetLayout_Frame    = compartment->GetFrame();
 	const JRect macroSetLayout_Aperture = compartment->GetAperture();
 	compartment->AdjustSize(310 - macroSetLayout_Aperture.width(), 150 - macroSetLayout_Aperture.height());
 
@@ -279,7 +276,7 @@ EditMacroDialog::BuildWindow
 					JXWidget::kHElastic, JXWidget::kFixedTop, 0,0, 240,20);
 	assert( macroSetColHeaderEncl != nullptr );
 
-	compartment->SetSize(macroSetLayout_Frame.width(), macroSetLayout_Frame.height());
+	compartment->SetSize(macroSetLayout_Aperture.width(), macroSetLayout_Aperture.height());
 
 // end macroSetLayout
 

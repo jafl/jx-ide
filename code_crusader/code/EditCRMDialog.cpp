@@ -132,7 +132,6 @@ EditCRMDialog::BuildWindow
 
 // begin ruleLayout
 
-	const JRect ruleLayout_Frame    = compartment->GetFrame();
 	const JRect ruleLayout_Aperture = compartment->GetAperture();
 	compartment->AdjustSize(500 - ruleLayout_Aperture.width(), 150 - ruleLayout_Aperture.height());
 
@@ -161,7 +160,7 @@ EditCRMDialog::BuildWindow
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 440,130, 60,20);
 	assert( saveRuleFileButton != nullptr );
 
-	compartment->SetSize(ruleLayout_Frame.width(), ruleLayout_Frame.height());
+	compartment->SetSize(ruleLayout_Aperture.width(), ruleLayout_Aperture.height());
 
 // end ruleLayout
 
@@ -192,7 +191,6 @@ EditCRMDialog::BuildWindow
 
 // begin crmLayout
 
-	const JRect crmLayout_Frame    = compartment->GetFrame();
 	const JRect crmLayout_Aperture = compartment->GetAperture();
 	compartment->AdjustSize(500 - crmLayout_Aperture.width(), 150 - crmLayout_Aperture.height());
 
@@ -216,7 +214,7 @@ EditCRMDialog::BuildWindow
 					JXWidget::kHElastic, JXWidget::kFixedTop, 0,0, 430,20);
 	assert( crmColHeaderEncl != nullptr );
 
-	compartment->SetSize(crmLayout_Frame.width(), crmLayout_Frame.height());
+	compartment->SetSize(crmLayout_Aperture.width(), crmLayout_Aperture.height());
 
 // end crmLayout
 
