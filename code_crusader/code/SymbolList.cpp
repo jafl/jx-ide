@@ -18,6 +18,7 @@
 #include "Class.h"
 #include "globals.h"
 #include "ctagsRegex.h"
+#include <jx-af/jcore/JStringIterator.h>
 #include <jx-af/jcore/jStreamUtil.h>
 #include <jx-af/jcore/jDirUtil.h>
 #include <sstream>
@@ -586,7 +587,7 @@ SymbolList::FileTypesChanged
 void
 SymbolList::PrepareForUpdate
 	(
-	const bool		reparseAll,
+	const bool			reparseAll,
 	JProgressDisplay&	pg
 	)
 {
@@ -779,13 +780,6 @@ SymbolList::ReadSymbolList
 	JString path, fileName;
 	JSplitPathAndName(fullName, &path, &fileName);
 
-	input >> std::ws;
-	while (input.peek() == '!')
-	{
-		JIgnoreLine(input);
-		input >> std::ws;
-	}
-
 	JStringPtrMap<JString> flags(JPtrArrayT::kDeleteAll);
 	while (true)
 	{
@@ -793,12 +787,25 @@ SymbolList::ReadSymbolList
 		assert( name != nullptr );
 
 		input >> std::ws;
+		while (input.peek() == '!')
+		{
+			JIgnoreLine(input);
+			input >> std::ws;
+		}
+
 		*name = JReadUntil(input, '\t');		// symbol name
 		if (input.eof() || input.fail())
 		{
 			jdelete name;
 			break;
 		}
+
+		JStringIterator nameIter(name);
+		while (nameIter.Next("\\\\"))
+		{
+			nameIter.ReplaceLastMatch("\\");
+		}
+		nameIter.Invalidate();
 
 		JIgnoreUntil(input, '\t');				// file name
 
@@ -883,7 +890,7 @@ SymbolList::ReadSetup
 	{
 		ReadSetup(*input, vers);
 
-		itsReparseAllFlag = vers < 89 || (itsSymbolList->IsEmpty() && IsActive());
+		itsReparseAllFlag = vers < 92 || (itsSymbolList->IsEmpty() && IsActive());
 	}
 }
 

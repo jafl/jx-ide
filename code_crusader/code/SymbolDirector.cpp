@@ -379,7 +379,7 @@ SymbolDirector::FileTypesChanged
 void
 SymbolDirector::PrepareForListUpdate
 	(
-	const bool		reparseAll,
+	const bool			reparseAll,
 	JProgressDisplay&	pg
 	)
 {

@@ -215,18 +215,17 @@ CTree::ParseFile
 
 		icharbufstream input(data.GetBytes(), data.GetByteCount());
 
-		input >> std::ws;
-		while (input.peek() == '!')
-		{
-			JIgnoreLine(input);
-			input >> std::ws;
-		}
-
 		JString name;
 		JStringPtrMap<JString> flags(JPtrArrayT::kDeleteAll);
 		while (true)
 		{
 			input >> std::ws;
+			while (input.peek() == '!')
+			{
+				JIgnoreLine(input);
+				input >> std::ws;
+			}
+
 			name = JReadUntil(input, '\t');			// function name
 			if (input.eof() || input.fail())
 			{
