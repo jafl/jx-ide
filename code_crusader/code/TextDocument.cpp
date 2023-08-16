@@ -245,7 +245,7 @@ TextDocument::TextDocument
 
 TextDocument::TextDocument
 	(
-	const JString&			fileName,
+	const JString&		fileName,
 	const TextFileType	type,
 	const bool			tmpl
 	)

@@ -179,7 +179,7 @@ TextEditor::TextEditor
 	const JCoordinate	h
 	)
 	:
-	JXTEBase(kFullEditor, jnew StyledText(document, enclosure->GetFontManager(), pasteStyledText), true,
+	JXTEBase(kFullEditor, jnew StyledText(document, pasteStyledText), true,
 			 false, scrollbarSet, enclosure, hSizing, vSizing, x,y, w,h),
 	itsLastModifiers(GetDisplay())
 {
@@ -1687,11 +1687,10 @@ TextEditor::SetTabCharCount
 TextEditor::StyledText::StyledText
 	(
 	TextDocument*	doc,
-	JFontManager*	fontManager,
 	const bool		pasteStyledText
 	)
 	:
-	JXStyledText(true, pasteStyledText, fontManager),
+	JStyledText(true, pasteStyledText),
 	itsDoc(doc)
 {
 	itsTokenStartList = JSTStyler::NewTokenStartList();

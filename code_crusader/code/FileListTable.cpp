@@ -190,7 +190,7 @@ FileListTable::ScanAll
 	)
 {
 	const JSize dirCount = dirList.GetElementCount();
-	if (dirCount > 0 || (fileTree->GetProjectRoot())->HasChildren())
+	if (dirCount > 0 || fileTree->GetProjectRoot()->HasChildren())
 	{
 		pg.VariableLengthProcessBeginning(JGetString("ParsingFiles::FileListTable"), false, false);
 

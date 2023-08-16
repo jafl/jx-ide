@@ -26,12 +26,12 @@ class TextEditor : public JXTEBase
 public:
 
 	TextEditor(TextDocument* document, const JString& fileName,
-				 JXMenuBar* menuBar, TELineIndexInput* lineInput,
-				 TEColIndexInput* colInput, const bool pasteStyledText,
-				 JXScrollbarSet* scrollbarSet, JXContainer* enclosure,
-				 const HSizingOption hSizing, const VSizingOption vSizing,
-				 const JCoordinate x, const JCoordinate y,
-				 const JCoordinate w, const JCoordinate h);
+				JXMenuBar* menuBar, TELineIndexInput* lineInput,
+				TEColIndexInput* colInput, const bool pasteStyledText,
+				JXScrollbarSet* scrollbarSet, JXContainer* enclosure,
+				const HSizingOption hSizing, const VSizingOption vSizing,
+				const JCoordinate x, const JCoordinate y,
+				const JCoordinate w, const JCoordinate h);
 
 	~TextEditor() override;
 
@@ -118,12 +118,11 @@ protected:
 
 protected:
 
-	class StyledText : public JXStyledText
+	class StyledText : public JStyledText
 	{
 	public:
 
-		StyledText(TextDocument* doc, JFontManager* fontManager,
-				   const bool pasteStyledText);
+		StyledText(TextDocument* doc, const bool pasteStyledText);
 
 		~StyledText() override;
 
