@@ -2,7 +2,8 @@
 # post-process output of reflex
 
  %.cpp : %.ll
-	${LEX} ${LFLAGS} --outfile=$@ --header-file=$(subst .ll,.h,$<) $<
+	${LEX} ${LFLAGS} --outfile=$@ --header-file=$(notdir $(subst .ll,.h,$<)) $<
+	@mv $(notdir $(subst .ll,.h,$<)) $(subst .ll,.h,$<)
 	@perl -n -e 's/reflex::AbstractLexer<reflex::Matcher>/StylingScannerBase/;' \
            -e 'print;' < $@ > $@.new
 	@mv $@.new $@
