@@ -13,7 +13,7 @@ This scanner reads output from gdb --interpreter=mi2.
 
 #define RETURN(x)	return Token(x, itsData)
 
-#ifdef IN_HEADER
+#ifndef IN_HEADER
 // splitting up square brackets protects them from flex 2.5.33 on macOS
 static const JRegex pidRegex1("(?:child|attached) (?:process|Pid|PID|thread) ([""[:digit:]""]+)");
 static const JRegex pidRegex2("\\(LWP ([""[:digit:]""]+)");

@@ -13,7 +13,7 @@ This scanner reads a GoLang file and creates GoClass instances.
 #include <jx-af/jcore/JFAID.h>
 #include <jx-af/jcore/jAssert.h>
 
-#ifdef IN_HEADER
+#ifndef IN_HEADER
 static const JRegex modulePattern("(?:.+?/)*(.+?)(?:/[vV][.0-9]+)?");
 #endif
 }
