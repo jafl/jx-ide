@@ -248,7 +248,7 @@ implements	/* ignore */
 				}
 
 			JString s1 = *c;
-			JStringIterator iter(&s1, kJIteratorStartAtEnd);
+			JStringIterator iter(&s1, JStringIterator::kStartAtEnd);
 			iter.RemovePrev(s.GetCharacterCount());
 			iter.Invalidate();
 
@@ -260,7 +260,7 @@ implements	/* ignore */
 			break;
 			}
 
-		JStringIterator iter(&s, kJIteratorStartAtEnd);
+		JStringIterator iter(&s, JStringIterator::kStartAtEnd);
 		if (!found && iter.Prev(".") && !iter.AtBeginning())
 			{
 			iter.RemoveAllNext();

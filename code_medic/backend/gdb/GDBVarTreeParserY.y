@@ -266,7 +266,7 @@ node :
 	{
 		if ($1->EndsWith("="))
 		{
-			JStringIterator iter($1, kJIteratorStartAtEnd);
+			JStringIterator iter($1, JStringIterator::kStartAtEnd);
 			iter.RemovePrev();
 			$1->TrimWhitespace();
 		}
@@ -285,7 +285,7 @@ node :
 	{
 		if ($1->EndsWith("="))
 		{
-			JStringIterator iter($1, kJIteratorStartAtEnd);
+			JStringIterator iter($1, JStringIterator::kStartAtEnd);
 			iter.RemovePrev();
 			$1->TrimWhitespace();
 		}
@@ -312,7 +312,7 @@ node :
 	{
 		if ($1->EndsWith("="))
 		{
-			JStringIterator iter($1, kJIteratorStartAtEnd);
+			JStringIterator iter($1, JStringIterator::kStartAtEnd);
 			iter.RemovePrev();
 			$1->TrimWhitespace();
 		}

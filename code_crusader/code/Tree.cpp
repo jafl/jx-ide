@@ -1693,7 +1693,7 @@ Tree::FindParent
 			parentSuffix.GetCharacterCount() < cName.GetCharacterCount())
 		{
 			JString prefixClassName = cName;
-			JStringIterator iter(&prefixClassName, kJIteratorStartAtEnd);
+			JStringIterator iter(&prefixClassName, JStringIterator::kStartAtEnd);
 			iter.Prev(parentSuffix);
 			iter.RemoveAllNext();
 			iter.Invalidate();

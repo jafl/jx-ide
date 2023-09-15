@@ -672,14 +672,14 @@ BalanceFromSelection
 	JCharacterRange sel;
 	bool hasSelection = te->GetSelection(&sel);
 
-	JStringIterator openIter(te->GetText()->GetText(), kJIteratorStartBefore, te->GetInsertionCharIndex());
+	JStringIterator openIter(te->GetText()->GetText(), JStringIterator::kStartBeforeChar, te->GetInsertionCharIndex());
 
 	// If a single grouping symbol is enclosed, balance it.
 
 	JUtf8Character c;
 	if (hasSelection && sel.first == sel.last)
 	{
-		openIter.Next(&c, kJIteratorStay);
+		openIter.Next(&c, JStringIterator::kStay);
 		if (IsOpenGroup(lang, c))
 		{
 			hasSelection = false;
@@ -690,16 +690,16 @@ BalanceFromSelection
 			hasSelection = false;
 		}
 	}
-	else if (openIter.Next(&c, kJIteratorStay) && IsOpenGroup(lang, c) &&
+	else if (openIter.Next(&c, JStringIterator::kStay) && IsOpenGroup(lang, c) &&
 			 (openIter.AtBeginning() ||
-			  (openIter.Prev(&c, kJIteratorStay) &&
+			  (openIter.Prev(&c, JStringIterator::kStay) &&
 			   !IsOpenGroup(lang, c) && !IsCloseGroup(lang, c))))
 	{
 		openIter.SkipNext();
 	}
-	else if (openIter.Prev(&c, kJIteratorStay) && IsCloseGroup(lang, c) &&
+	else if (openIter.Prev(&c, JStringIterator::kStay) && IsCloseGroup(lang, c) &&
 			 (openIter.AtEnd() ||
-			  (openIter.Next(&c, kJIteratorStay) &&
+			  (openIter.Next(&c, JStringIterator::kStay) &&
 			   !IsOpenGroup(lang, c) && !IsCloseGroup(lang, c))))
 	{
 		openIter.SkipPrev();
@@ -712,7 +712,7 @@ BalanceFromSelection
 	}
 
 	const JString s(te->GetText()->GetText(), JString::kNoCopy);
-	JStringIterator closeIter(s, kJIteratorStartBefore, openIter.GetNextCharacterIndex());
+	JStringIterator closeIter(s, JStringIterator::kStartBeforeChar, openIter.GetNextCharacterIndex());
 
 	// balance groupers until the selection is enclosed or we get an error
 

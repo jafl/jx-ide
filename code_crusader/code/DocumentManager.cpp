@@ -1878,7 +1878,7 @@ trimBkgdFlag
 	str->TrimWhitespace();
 	if (str->EndsWith("&"))
 	{
-		JStringIterator iter(str, kJIteratorStartAtEnd);
+		JStringIterator iter(str, JStringIterator::kStartAtEnd);
 		iter.RemovePrev();
 
 		str->TrimWhitespace();	// invalidates iter

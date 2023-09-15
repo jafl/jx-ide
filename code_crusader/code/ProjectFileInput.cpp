@@ -68,7 +68,7 @@ ProjectFileInput::StyledText::ComputeErrorLength
 
 	if (ProjectDocument::CanReadFile(fullName) != JXFileDocument::kFileReadable)
 	{
-		JStringIterator iter(fullName, kJIteratorStartAtEnd);
+		JStringIterator iter(fullName, JStringIterator::kStartAtEnd);
 		if (iter.Prev(ACE_DIRECTORY_SEPARATOR_STR))
 		{
 			return fullName.GetCharacterCount() - iter.GetNextCharacterIndex();

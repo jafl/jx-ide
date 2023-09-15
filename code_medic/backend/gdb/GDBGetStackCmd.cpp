@@ -79,7 +79,7 @@ gdb::GetStackCmd::HandleSuccess
 			Link::Log("invalid data map");
 			break;
 		}
-		iter.MoveTo(kJIteratorStartAfter, (std::streamoff) stream.tellg());
+		iter.MoveTo(JStringIterator::kStartAfterChar, (std::streamoff) stream.tellg());
 
 		JString* s;
 		JIndex frameIndex;

@@ -1247,7 +1247,7 @@ xdebug::Link::Build1DArrayExpression
 		JUtf8Character c;
 		while (iter.Next("$"))
 		{
-			if (!iter.Next(&c, kJIteratorStay) || c != 'i')
+			if (!iter.Next(&c, JStringIterator::kStay) || c != 'i')
 			{
 				iter.Insert("$");
 				iter.SkipNext();
@@ -1302,7 +1302,7 @@ xdebug::Link::Build2DArrayExpression
 		JUtf8Character c;
 		while (iter.Next("$"))
 		{
-			if (!iter.Next(&c, kJIteratorStay) || (c != 'i' && c != 'j'))
+			if (!iter.Next(&c, JStringIterator::kStay) || (c != 'i' && c != 'j'))
 			{
 				iter.Insert("$");
 				iter.SkipNext();

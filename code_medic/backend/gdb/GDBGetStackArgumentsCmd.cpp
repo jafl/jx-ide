@@ -75,7 +75,7 @@ gdb::GetStackArgumentsCmd::HandleSuccess
 	JUtf8Character c;
 	while (iter.Next(framePattern))
 	{
-		if (iter.Next(&c, kJIteratorStay) && c == ']')
+		if (iter.Next(&c, JStringIterator::kStay) && c == ']')
 		{
 			continue;
 		}

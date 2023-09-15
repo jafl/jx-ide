@@ -98,7 +98,7 @@ LineAddressTable::SetLineNumbers
 
 		if (s1->GetCharacterCount() == sN->GetCharacterCount())
 		{
-			JStringIterator iter(*sN, kJIteratorStartAfter, charCount);
+			JStringIterator iter(*sN, JStringIterator::kStartAfterChar, charCount);
 			JUtf8Character c;
 			while (iter.Next(&c) && c == '0')
 			{

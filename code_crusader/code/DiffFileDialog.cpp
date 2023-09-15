@@ -1419,7 +1419,7 @@ DiffFileDialog::GetPreviousCVSRevision
 		return false;
 	}
 
-	JStringIterator iter(rev, kJIteratorStartAtEnd);
+	JStringIterator iter(rev, JStringIterator::kStartAtEnd);
 	iter.BeginMatch();
 	if (!iter.Prev("."))
 	{
@@ -2303,16 +2303,16 @@ DiffFileDialog::GetSmartDiffInfo
 	*isSafetySave = false;
 	while (fileName.StartsWith("#") && fileName.EndsWith("#"))
 	{
-		iter.MoveTo(kJIteratorStartAtBeginning, 0);
+		iter.MoveTo(JStringIterator::kStartAtBeginning, 0);
 		iter.RemoveNext();
 
-		iter.MoveTo(kJIteratorStartAtEnd, 0);
+		iter.MoveTo(JStringIterator::kStartAtEnd, 0);
 		iter.RemovePrev();
 
 		*isSafetySave = true;
 	}
 
-	iter.MoveTo(kJIteratorStartAtEnd, 0);
+	iter.MoveTo(JStringIterator::kStartAtEnd, 0);
 
 	*isBackup = false;
 	while (!(*isSafetySave) && fileName.EndsWith("~"))		// don't strip if safety save

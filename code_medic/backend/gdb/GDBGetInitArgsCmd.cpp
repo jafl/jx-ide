@@ -72,10 +72,10 @@ gdb::GetInitArgsCmd::HandleSuccess
 	if (iter.Next("\"") && !iter.AtEnd())
 	{
 		iter.BeginMatch();
-		iter.MoveTo(kJIteratorStartAtEnd, 0);
+		iter.MoveTo(JStringIterator::kStartAtEnd, 0);
 		if (!iter.Prev("\"."))
 		{
-			iter.MoveTo(kJIteratorStartAtEnd, 0);
+			iter.MoveTo(JStringIterator::kStartAtEnd, 0);
 		}
 
 		JString args = iter.FinishMatch().GetString();

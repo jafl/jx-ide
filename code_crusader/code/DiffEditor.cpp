@@ -260,7 +260,7 @@ DiffEditor::ReadNewText
 		{
 			JIgnoreLine(input);
 
-			JStringIterator iter(&text, kJIteratorStartAtEnd);
+			JStringIterator iter(&text, JStringIterator::kStartAtEnd);
 			iter.RemovePrev();
 		}
 	}

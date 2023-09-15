@@ -248,10 +248,10 @@ CStyler::PreexpandCheckRange
 	)
 {
 	JStringIterator iter(text);
-	iter.UnsafeMoveTo(kJIteratorStartBefore, checkRange->charRange.first, checkRange->byteRange.first);
+	iter.UnsafeMoveTo(JStringIterator::kStartBeforeChar, checkRange->charRange.first, checkRange->byteRange.first);
 
 	JUtf8Character c;
-	while (iter.Prev(&c, kJIteratorStay) && c.IsSpace())
+	while (iter.Prev(&c, JStringIterator::kStay) && c.IsSpace())
 	{
 		iter.SkipPrev();
 	}

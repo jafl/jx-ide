@@ -208,7 +208,7 @@ jvm::Link::GetProgram
 	{
 		*fullName = itsMainClassName;
 
-		JStringIterator iter(fullName, kJIteratorStartAtEnd);
+		JStringIterator iter(fullName, JStringIterator::kStartAtEnd);
 		if (iter.Prev("."))
 		{
 			iter.SkipNext();
@@ -871,7 +871,7 @@ jvm::Link::ClassSignatureToResourcePath
 	}
 	else if (path.GetLastCharacter() == ';')
 	{
-		iter.MoveTo(kJIteratorStartAtEnd, 0);
+		iter.MoveTo(JStringIterator::kStartAtEnd, 0);
 		iter.RemovePrev();
 	}
 

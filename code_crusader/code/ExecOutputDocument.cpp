@@ -268,9 +268,9 @@ ExecOutputDocument::SetConnection
 	else if (!te->GetText()->IsEmpty())
 	{
 		const JString& text = te->GetText()->GetText();
-		JStringIterator iter(text, kJIteratorStartAtEnd);
+		JStringIterator iter(text, JStringIterator::kStartAtEnd);
 		JUtf8Character c;
-		while (iter.Prev(&c, kJIteratorStay) && c == '\n')
+		while (iter.Prev(&c, JStringIterator::kStay) && c == '\n')
 		{
 			iter.SkipPrev();
 		}
@@ -438,7 +438,7 @@ ExecOutputDocument::ReceiveRecord()
 
 	if (!itsLastPrompt.IsEmpty() && text.StartsWith(itsLastPrompt))
 	{
-		JStringIterator iter(&text, kJIteratorStartAfter, itsLastPrompt.GetCharacterCount());
+		JStringIterator iter(&text, JStringIterator::kStartAfterChar, itsLastPrompt.GetCharacterCount());
 		iter.RemoveAllPrev();
 	}
 	itsLastPrompt.Clear();

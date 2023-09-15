@@ -115,7 +115,7 @@ ShellEditor::HandleKeyPress
 	{
 		JRunArrayIterator iter(
 			GetText()->GetStyles(),
-			kJIteratorStartBefore, GetInsertionIndex().charIndex);
+			JListT::kStartBefore, GetInsertionIndex().charIndex);
 
 		JFont f;
 		if (iter.Prev(&f) && f == GetText()->GetDefaultFont())
@@ -143,15 +143,15 @@ ShellEditor::HandleKeyPress
 
 		JString cmd;
 
-		JRunArrayIterator fiter(GetText()->GetStyles(), kJIteratorStartBefore, index);
+		JRunArrayIterator fiter(GetText()->GetStyles(), JListT::kStartBefore, index);
 		JFont f;
 		if (fiter.Prev(&f) && f == GetText()->GetDefaultFont())
 		{
 			const JIndex endIndex = fiter.GetRunEnd();
 
-			JStringIterator siter(GetText()->GetText(), kJIteratorStartBefore, fiter.GetRunStart());
+			JStringIterator siter(GetText()->GetText(), JStringIterator::kStartBeforeChar, fiter.GetRunStart());
 			siter.BeginMatch();
-			siter.MoveTo(kJIteratorStartBefore, endIndex);
+			siter.MoveTo(JStringIterator::kStartBeforeChar, endIndex);
 			cmd = siter.FinishMatch().GetString();
 			SetCaretLocation(endIndex);
 			siter.Invalidate();

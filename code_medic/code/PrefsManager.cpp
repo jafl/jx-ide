@@ -251,7 +251,7 @@ PrefsManager::UpgradeData
 		JString cmd = GetGDBCommand();
 		if (cmd.EndsWith(" -f"))
 		{
-			JStringIterator iter(&cmd, kJIteratorStartAtEnd);
+			JStringIterator iter(&cmd, JStringIterator::kStartAtEnd);
 			iter.RemovePrev(3);
 			cmd.TrimWhitespace();	// invalidates iter
 			SetGDBCommand(cmd);

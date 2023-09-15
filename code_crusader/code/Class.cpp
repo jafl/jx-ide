@@ -514,7 +514,7 @@ Class::FindParent
 	JString nameSpace = itsFullName;
 	JString prefixStr, testName;
 
-	JStringIterator iter(&nameSpace, kJIteratorStartAtEnd);
+	JStringIterator iter(&nameSpace, JStringIterator::kStartAtEnd);
 	while (iter.Prev(namespaceOp) && !iter.AtBeginning())
 	{
 		iter.RemoveAllNext();
@@ -585,7 +585,7 @@ Class::RemoveNamespace
 	JString name = fullName;
 
 	const JUtf8Byte* nso = GetNamespaceOperator(itsTree->GetLanguage());
-	JStringIterator iter(&name, kJIteratorStartAtEnd);
+	JStringIterator iter(&name, JStringIterator::kStartAtEnd);
 	if (iter.Prev(nso))
 	{
 		iter.Next(nso);

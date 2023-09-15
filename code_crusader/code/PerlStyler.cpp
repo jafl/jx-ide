@@ -272,9 +272,9 @@ PerlStyler::PreexpandCheckRange
 	//		= 2 ? ... ?
 	//		Delete 2 and then undo.  Forces restyling of range to not be regex.
 
-	JStringIterator iter(text, kJIteratorStartBefore, checkRange->charRange.last);
+	JStringIterator iter(text, JStringIterator::kStartBeforeChar, checkRange->charRange.last);
 	JUtf8Character c;
-	const bool ok = iter.Next(&c, kJIteratorStay);
+	const bool ok = iter.Next(&c, JStringIterator::kStay);
 	assert( ok );
 
 	if (!c.IsSpace())
@@ -283,7 +283,7 @@ PerlStyler::PreexpandCheckRange
 	}
 
 	bool foundSpace = false;
-	while (iter.Next(&c, kJIteratorStay) && c.IsSpace())
+	while (iter.Next(&c, JStringIterator::kStay) && c.IsSpace())
 	{
 		iter.SkipNext();
 		foundSpace = true;

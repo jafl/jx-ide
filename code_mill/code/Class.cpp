@@ -318,7 +318,7 @@ Class::WriteFunction
 		assert( ok );
 		iter.Insert("\n\t");
 
-		iter.MoveTo(kJIteratorStartAtEnd, 0);
+		iter.MoveTo(JStringIterator::kStartAtEnd, 0);
 		ok = iter.Prev(")");
 		assert( ok );
 		iter.Insert("\n\t");
@@ -328,14 +328,14 @@ Class::WriteFunction
 		if (!iter.AtEnd())
 		{
 			JUtf8Character c;
-			while (iter.Next(&c, kJIteratorStay) && c.IsSpace())
+			while (iter.Next(&c, JStringIterator::kStay) && c.IsSpace())
 			{
 				iter.RemoveNext();
 			}
 			iter.Insert("\n\t");
 		}
 
-		iter.MoveTo(kJIteratorStartAtBeginning, 0);
+		iter.MoveTo(JStringIterator::kStartAtBeginning, 0);
 		while (iter.Next(","))
 		{
 			iter.Insert("\n\t");
@@ -346,13 +346,13 @@ Class::WriteFunction
 		os << "\n\t";
 	}
 
-	iter.MoveTo(kJIteratorStartAtBeginning, 0);
+	iter.MoveTo(JStringIterator::kStartAtBeginning, 0);
 	const bool ok = iter.Next(")");
 	assert( ok );
 	if (!iter.AtEnd())
 	{
 		JUtf8Character c;
-		while (iter.Next(&c, kJIteratorStay) && c.IsSpace())
+		while (iter.Next(&c, JStringIterator::kStay) && c.IsSpace())
 		{
 			iter.RemoveNext();
 		}

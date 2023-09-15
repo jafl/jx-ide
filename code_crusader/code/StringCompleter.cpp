@@ -52,7 +52,7 @@ StringCompleter::StringCompleter
 	}
 
 	GetStyler(lang, &itsStyler);
-	UpdateWordList();			// lgtm[cpp/virtual-call-in-constructor]
+	UpdateWordList();
 	if (itsStyler != nullptr)
 	{
 		ListenTo(itsStyler);
@@ -180,10 +180,10 @@ StringCompleter::Complete
 
 	const JString& text = te->GetText()->GetText();
 
-	JStringIterator iter(text, kJIteratorStartBefore, caretIndex);
+	JStringIterator iter(text, JStringIterator::kStartBeforeChar, caretIndex);
 	iter.BeginMatch();
 	JUtf8Character c;
-	while (iter.Prev(&c, kJIteratorStay) && IsWordCharacter(c, includeNS))
+	while (iter.Prev(&c, JStringIterator::kStay) && IsWordCharacter(c, includeNS))
 	{
 		iter.SkipPrev();
 	}
@@ -279,7 +279,7 @@ StringCompleter::Complete
 			const JSize prefixLength = maxPrefix->GetCharacterCount();
 			if (matchLength < prefixLength)
 			{
-				JStringIterator iter(maxPrefix, kJIteratorStartAtEnd);
+				JStringIterator iter(maxPrefix, JStringIterator::kStartAtEnd);
 				iter.RemovePrev(prefixLength - matchLength);
 			}
 		}

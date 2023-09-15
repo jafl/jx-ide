@@ -480,7 +480,7 @@ MDIServer::DisplayFileDiffs
 				iter.RemovePrev();
 			}
 
-			iter.MoveTo(kJIteratorStartAtEnd, 0);
+			iter.MoveTo(JStringIterator::kStartAtEnd, 0);
 			while (iter.Prev(&c) && c == '#')
 			{
 				iter.RemoveNext();

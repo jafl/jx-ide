@@ -50,7 +50,7 @@ ClassName::FunctionName
 	JArray<JIndex> varIndexList;
 	varIndexList.SetCompareFunction(JCompareIndices);
 
-	JStringIterator iter(GetText(), kJIteratorStartBefore, token.range.charRange.first);
+	JStringIterator iter(GetText(), JStringIterator::kStartBeforeChar, token.range.charRange.first);
 	JUtf8Character c;
 	while (iter.Next(variablePattern) && iter.GetPrevCharacterIndex() <= token.range.charRange.last)
 	{
@@ -59,7 +59,7 @@ ClassName::FunctionName
 		varIndexList.AppendElement(m.GetCharacterRange().first);
 	}
 
-	iter.MoveTo(kJIteratorStartBefore, token.range.charRange.first);
+	iter.MoveTo(JStringIterator::kStartBeforeChar, token.range.charRange.first);
 	JIndex i;
 	while (iter.Next(emptyVariablePattern) && iter.GetPrevCharacterIndex() <= token.range.charRange.last)
 	{

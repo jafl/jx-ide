@@ -221,7 +221,7 @@ TreeWidget::FindFunction
 
 		if (HasNamespace(lang))
 		{
-			JStringIterator iter(&s, kJIteratorStartAtEnd);
+			JStringIterator iter(&s, JStringIterator::kStartAtEnd);
 			if (iter.Prev(GetNamespaceOperator(lang)))
 			{
 				iter.RemoveAllNext();

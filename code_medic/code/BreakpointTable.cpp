@@ -314,7 +314,7 @@ fileNameOffset
 	const Breakpoint* bp
 	)
 {
-	JStringIterator iter(bp->GetFileName(), kJIteratorStartAtEnd);
+	JStringIterator iter(bp->GetFileName(), JStringIterator::kStartAtEnd);
 	iter.Prev(ACE_DIRECTORY_SEPARATOR_STR);
 	return iter.GetNextCharacterIndex();
 }

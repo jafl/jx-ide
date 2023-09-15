@@ -242,7 +242,7 @@ CompileDocument::AppendText
 {
 	JString text = origText;
 
-	JStringIterator iter(&text, kJIteratorStartAtEnd);
+	JStringIterator iter(&text, JStringIterator::kStartAtEnd);
 	JUtf8Character c;
 	if (iter.Prev(&c) && c == '\r')		// convert DOS \r\n
 	{
@@ -287,8 +287,8 @@ CompileDocument::AppendText
 		text.StartsWith(gccMultilinePrefix) &&
 		text.GetByteCount() > kGCCMultilinePrefixLength)
 	{
-		JStringIterator iter(&text, kJIteratorStartAfterByte, kGCCMultilinePrefixLength);
-		if (iter.Next(&c, kJIteratorStay) && !c.IsSpace())
+		JStringIterator iter(&text, JStringIterator::kStartAfterByte, kGCCMultilinePrefixLength);
+		if (iter.Next(&c, JStringIterator::kStay) && !c.IsSpace())
 		{
 			iter.RemoveAllPrev();
 			iter.Invalidate();
@@ -474,7 +474,7 @@ CompileDocument::ConvertSelectionToFullPath
 
 	if (dirStack.Peek(&i))
 	{
-		iter.MoveTo(kJIteratorStartBefore, i);
+		iter.MoveTo(JStringIterator::kStartBeforeChar, i);
 		iter.BeginMatch();
 		JUtf8Character c;
 		if (iter.Next(&c) && c != '`' && c != '\'' && iter.Next(endMarkerPattern))

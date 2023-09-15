@@ -217,7 +217,7 @@ Link::GetReturnType
 
 	JString s = *lines.GetElement(i);
 	{
-	JStringIterator iter(&s, kJIteratorStartAtEnd);
+	JStringIterator iter(&s, JStringIterator::kStartAtEnd);
 	if (iter.Prev(startPattern))
 	{
 		iter.SkipNext();
@@ -231,24 +231,24 @@ Link::GetReturnType
 		s += *lines.GetElement(j);
 	}
 
-	JStringIterator iter(&s, kJIteratorStartAtEnd);
+	JStringIterator iter(&s, JStringIterator::kStartAtEnd);
 	const bool ok = iter.Prev(name);
 	assert( ok );
 	iter.RemoveAllNext();
 
-	iter.MoveTo(kJIteratorStartAtBeginning, 0);
+	iter.MoveTo(JStringIterator::kStartAtBeginning, 0);
 	while (iter.Next(commentPattern))
 	{
 		iter.RemoveLastMatch();
 	}
 
-	iter.MoveTo(kJIteratorStartAtBeginning, 0);
+	iter.MoveTo(JStringIterator::kStartAtBeginning, 0);
 	if (iter.Next("virtual"))
 	{
 		iter.RemoveLastMatch();
 	}
 
-	iter.MoveTo(kJIteratorStartAtBeginning, 0);
+	iter.MoveTo(JStringIterator::kStartAtBeginning, 0);
 	while (iter.Next(spacePattern))
 	{
 		iter.ReplaceLastMatch(" ");

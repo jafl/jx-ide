@@ -89,7 +89,7 @@ gdb::GetMemoryCmd::HandleSuccess
 		iter.RemoveNext(count);
 	}
 
-	iter.MoveTo(kJIteratorStartAtBeginning, 0);
+	iter.MoveTo(JStringIterator::kStartAtBeginning, 0);
 	while (iter.Next("\t"))
 	{
 		iter.SetPrev(JUtf8Character(' '));

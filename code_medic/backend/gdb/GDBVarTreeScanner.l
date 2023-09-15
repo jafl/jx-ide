@@ -119,7 +119,7 @@ static {
 {STDWRAP}*{STDCLASS}" with "[+-]?{INT}" elements"{WS}=                  |
 {STDWRAP}*{STDCLASS}{WS}=                                               {
 	NEW_TOKEN(text());
-	JStringIterator iter(lvalp->pString, kJIteratorStartAtEnd);
+	JStringIterator iter(lvalp->pString, JStringIterator::kStartAtEnd);
 	iter.RemovePrev();
 	return P_SUMMARY;
 	}

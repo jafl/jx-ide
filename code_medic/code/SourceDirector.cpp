@@ -670,9 +670,9 @@ SourceDirector::DisplayFile
 		// source code, too.
 
 		const JString& text = itsText->GetText()->GetText();
-		JStringIterator iter(text, kJIteratorStartAtEnd);
+		JStringIterator iter(text, JStringIterator::kStartAtEnd);
 		JUtf8Character c;
-		while (iter.Prev(&c, kJIteratorStay) && c == '\n')
+		while (iter.Prev(&c, JStringIterator::kStay) && c == '\n')
 		{
 			iter.SkipPrev();
 		}

@@ -2973,9 +2973,9 @@ PrefsManager::GetLiteralPrefixRange
 {
 	assert( regexStr.GetFirstCharacter() == kContentRegexMarker );
 
-	JStringIterator iter(regexStr, kJIteratorStartAfter, 1);
+	JStringIterator iter(regexStr, JStringIterator::kStartAfterChar, 1);
 	JUtf8Character c;
-	while (iter.Next(&c, kJIteratorStay) && c != '\0' && c != '\\' &&
+	while (iter.Next(&c, JStringIterator::kStay) && c != '\0' && c != '\\' &&
 		   !JRegex::NeedsBackslashToBeLiteral(c))
 	{
 		iter.SkipNext();
@@ -3257,7 +3257,7 @@ PrefsManager::CleanFileName
 	{
 		JSplitPathAndName(name, &p, &n);
 
-		JStringIterator iter(&n, kJIteratorStartAtEnd);
+		JStringIterator iter(&n, JStringIterator::kStartAtEnd);
 		JUtf8Character c;
 		while (iter.Prev(&c) && (c == '~' || c == '#'))
 		{

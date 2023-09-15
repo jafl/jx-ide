@@ -567,7 +567,7 @@ gdb::Output::Scanner::AppendInput
 		}
 	else
 		{
-		JStringIterator iter(string, kJIteratorStartAtEnd);
+		JStringIterator iter(string, JStringIterator::kStartAtEnd);
 		JUtf8ByteRange r;
 		if (iter.Prev("\n"))
 			{

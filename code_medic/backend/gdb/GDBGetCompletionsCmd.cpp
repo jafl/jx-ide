@@ -94,7 +94,7 @@ gdb::GetCompletionsCmd::HandleSuccess
 
 	if (!iter.AtEnd())
 	{
-		iter.MoveTo(kJIteratorStartAtEnd, 0);
+		iter.MoveTo(JStringIterator::kStartAtEnd, 0);
 		const JStringMatch& m = iter.FinishMatch();
 
 		auto* s = jnew JString(m.GetString());

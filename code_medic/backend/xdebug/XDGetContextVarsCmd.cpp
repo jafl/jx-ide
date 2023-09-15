@@ -99,7 +99,7 @@ xdebug::GetContextVarsCmd::BuildTree
 
 			if (type == "string")
 			{
-				JStringIterator iter(&value, kJIteratorStartAtEnd);
+				JStringIterator iter(&value, JStringIterator::kStartAtEnd);
 				JUtf8Character c;
 				while (iter.Prev(&c))
 				{

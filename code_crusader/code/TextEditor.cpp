@@ -1398,7 +1398,7 @@ TextEditor::OpenSelection()
 		return;
 	}
 
-	JStringIterator* iter = GetText()->GetConstIterator(kJIteratorStartAtBeginning, JStyledText::TextIndex(1,1));
+	JStringIterator* iter = GetText()->GetConstIterator(JStringIterator::kStartAtBeginning, JStyledText::TextIndex(1,1));
 
 	JString str;
 	JIndex lineIndex;
@@ -1412,7 +1412,7 @@ TextEditor::OpenSelection()
 		JStyledText::TextIndex start = GetText()->GetWordStart(sel.GetLast(*GetText()));
 		JStyledText::TextIndex end   = GetText()->GetWordEnd(start);
 
-		iter->UnsafeMoveTo(kJIteratorStartBefore, start.charIndex, start.byteIndex);
+		iter->UnsafeMoveTo(JStringIterator::kStartBeforeChar, start.charIndex, start.byteIndex);
 		if (!iter->AtBeginning())
 		{
 			while (iter->Prev(&c))
@@ -1443,7 +1443,7 @@ TextEditor::OpenSelection()
 				iter->GetNextCharacterIndex(),
 				iter->GetNextByteIndex());
 
-		iter->UnsafeMoveTo(kJIteratorStartAfter, end.charIndex, end.byteIndex);
+		iter->UnsafeMoveTo(JStringIterator::kStartAfterChar, end.charIndex, end.byteIndex);
 		while (iter->Next(&c))
 		{
 			// catch "http://junk/>"
@@ -1463,7 +1463,7 @@ TextEditor::OpenSelection()
 			{
 				break;
 			}
-			else if (c == ':' && iter->Next(&c, kJIteratorStay) && c.IsDigit())
+			else if (c == ':' && iter->Next(&c, JStringIterator::kStay) && c.IsDigit())
 			{
 				lineIndex = GetLineIndex(
 					JStyledText::TextIndex(
@@ -1482,9 +1482,9 @@ TextEditor::OpenSelection()
 					iter->GetNextCharacterIndex(),
 					iter->GetNextByteIndex()));
 
-		iter->UnsafeMoveTo(kJIteratorStartBefore, sel.charRange.first, sel.byteRange.first);
+		iter->UnsafeMoveTo(JStringIterator::kStartBeforeChar, sel.charRange.first, sel.byteRange.first);
 		iter->BeginMatch();
-		iter->UnsafeMoveTo(kJIteratorStartAfter, sel.charRange.last, sel.byteRange.last);
+		iter->UnsafeMoveTo(JStringIterator::kStartAfterChar, sel.charRange.last, sel.byteRange.last);
 		str = iter->FinishMatch().GetString();
 	}
 
@@ -1525,7 +1525,7 @@ TextEditor::GetLineIndex
 	)
 	const
 {
-	JStringIterator* iter = GetText().GetConstIterator(kJIteratorStartBefore, startIndex);
+	JStringIterator* iter = GetText().GetConstIterator(JStringIterator::kStartBeforeChar, startIndex);
 	JUtf8Character c;
 
 	iter->BeginMatch();
@@ -1620,9 +1620,9 @@ TextEditor::IsNonstdError
 	const JStyledText::TextIndex startIndex = GetText().GetParagraphStart(caretIndex);
 	const JStyledText::TextIndex endIndex   = GetText().GetParagraphEnd(caretIndex);
 
-	JStringIterator* iter = GetText().GetConstIterator(kJIteratorStartBefore, startIndex);
+	JStringIterator* iter = GetText().GetConstIterator(JStringIterator::kStartBeforeChar, startIndex);
 	iter->BeginMatch();
-	iter->UnsafeMoveTo(kJIteratorStartAfter, endIndex.charIndex, endIndex.byteIndex);
+	iter->UnsafeMoveTo(JStringIterator::kStartAfterChar, endIndex.charIndex, endIndex.byteIndex);
 	const JString line = iter->FinishMatch().GetString();
 	GetText().DisposeConstIterator(iter);
 	iter = nullptr;
@@ -1770,7 +1770,7 @@ TextEditor::ShowBalancingOpenGroup()
 
 	const JStyledText::TextIndex origCaretIndex = GetInsertionIndex();
 
-	JStringIterator* iter = GetText()->GetConstIterator(kJIteratorStartBefore, origCaretIndex);
+	JStringIterator* iter = GetText()->GetConstIterator(JStringIterator::kStartBeforeChar, origCaretIndex);
 
 	JUtf8Character openChar, closeChar;
 	if (!iter->Prev(&closeChar) ||	// paranoia: must be the case unless something fails

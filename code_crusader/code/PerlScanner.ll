@@ -759,7 +759,7 @@ __DATA__ {
 			{
 			return ThisToken(kUnterminatedString);
 			}
-		iter.MoveTo(kJIteratorStartAtEnd, 0);
+		iter.MoveTo(JStringIterator::kStartAtEnd, 0);
 		iter.RemovePrev();
 		}
 

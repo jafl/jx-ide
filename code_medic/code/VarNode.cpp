@@ -237,7 +237,7 @@ VarNode::ConvertToBase()
 			}
 
 			const JCharacterRange r = m.GetCharacterRange(1);
-			JStringIterator iter(&itsValue, kJIteratorStartBefore, r.first);
+			JStringIterator iter(&itsValue, JStringIterator::kStartBeforeChar, r.first);
 			iter.BeginMatch();
 			iter.SkipNext(r.GetCount());
 			iter.FinishMatch();
@@ -532,16 +532,16 @@ VarNode::TrimExpression
 		   s->GetFirstCharacter() == '(' &&
 		   s->GetLastCharacter()  == ')')
 	{
-		JStringIterator iter(s, kJIteratorStartAfter, 1);
+		JStringIterator iter(s, JStringIterator::kStartAfterChar, 1);
 		JUtf8Character c;
 		if (!BalanceForward(kCLang, &iter, &c) || !iter.AtEnd())
 		{
 			break;
 		}
 
-		iter.MoveTo(kJIteratorStartAtBeginning, 0);
+		iter.MoveTo(JStringIterator::kStartAtBeginning, 0);
 		iter.RemoveNext();
-		iter.MoveTo(kJIteratorStartAtEnd, 0);
+		iter.MoveTo(JStringIterator::kStartAtEnd, 0);
 		iter.RemovePrev();
 
 		s->TrimWhitespace();

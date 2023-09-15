@@ -238,7 +238,7 @@ CTree::ParseFile
 			if (name.Contains("::") && flags.GetElement("properties", &props) &&
 				props->Contains("pure") && props->Contains("virtual"))
 			{
-				JStringIterator iter(&name, kJIteratorStartAtEnd);
+				JStringIterator iter(&name, JStringIterator::kStartAtEnd);
 				if (iter.Prev("::"))
 				{
 					iter.RemoveAllNext();

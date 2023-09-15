@@ -1028,7 +1028,7 @@ FileTypeTable::UpdateScriptMenu()
 
 			itemText = *menuText.GetElement(i);
 
-			JStringIterator iter(&itemText, kJIteratorStartAtEnd);
+			JStringIterator iter(&itemText, JStringIterator::kStartAtEnd);
 			iter.BeginMatch();
 			const bool found = iter.Prev(" (");
 			assert( found );

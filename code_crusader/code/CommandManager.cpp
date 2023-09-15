@@ -1839,7 +1839,7 @@ void
 CommandManager::UpdateFileMarkers
 	(
 	const bool	convertFromAncient,
-	JString*		s
+	JString*	s
 	)
 {
 	if (convertFromAncient)
@@ -1852,7 +1852,7 @@ CommandManager::UpdateFileMarkers
 	JStringIterator iter(s);
 	for (JUnsignedOffset i=0; i<kVarCount; i++)
 	{
-		iter.MoveTo(kJIteratorStartAtBeginning, 0);
+		iter.MoveTo(JStringIterator::kStartAtBeginning, 0);
 		while (iter.Next(kOldVar[i]))
 		{
 			iter.ReplaceLastMatch(kNewVar[i]);

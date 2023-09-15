@@ -79,7 +79,7 @@ gdb::AnalyzeCoreCmd::HandleSuccess
 		}
 
 		bool found = false;
-		JStringIterator iter(&programFullName, kJIteratorStartAtEnd);
+		JStringIterator iter(&programFullName, JStringIterator::kStartAtEnd);
 		while (true)
 		{
 			if (JFileExecutable(programFullName))

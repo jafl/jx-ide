@@ -62,7 +62,7 @@ CPreprocessor::Preprocess
 	{
 		JRegex r("\\b" + JRegex::BackslashForLiteral(*info.name)  + "\\b");
 
-		iter.MoveTo(kJIteratorStartAtBeginning, 0);
+		iter.MoveTo(JStringIterator::kStartAtBeginning, 0);
 		while (iter.Next(r))
 		{
 			iter.ReplaceLastMatch(*info.value);

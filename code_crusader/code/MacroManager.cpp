@@ -126,12 +126,12 @@ MacroManager::Perform
 										  info.macro->GetByteCount()) == 0)
 			{
 				JStringIterator iter(st->GetText());
-				iter.UnsafeMoveTo(kJIteratorStartBefore, j.charIndex, j.byteIndex);
+				iter.UnsafeMoveTo(JStringIterator::kStartBeforeChar, j.charIndex, j.byteIndex);
 
 				JUtf8Character c;
 				if (iter.AtBeginning() ||
-					(iter.Next(&c, kJIteratorStay) && !IsCharacterInWord(c)) ||
-					(iter.Prev(&c, kJIteratorStay) && !IsCharacterInWord(c)))
+					(iter.Next(&c, JStringIterator::kStay) && !IsCharacterInWord(c)) ||
+					(iter.Prev(&c, JStringIterator::kStay) && !IsCharacterInWord(c)))
 				{
 					iter.Invalidate();
 					Perform(*info.script, doc);
@@ -180,9 +180,9 @@ MacroManager::Perform
 	JString lineStr;
 	if (charIndex > lineStart)
 	{
-		JStringIterator iter(te->GetText()->GetText(), kJIteratorStartBefore, lineStart);
+		JStringIterator iter(te->GetText()->GetText(), JStringIterator::kStartBeforeChar, lineStart);
 		iter.BeginMatch();
-		iter.MoveTo(kJIteratorStartBefore, charIndex);
+		iter.MoveTo(JStringIterator::kStartBeforeChar, charIndex);
 		lineStr = JPrepArgForExec(iter.FinishMatch().GetString());
 	}
 
@@ -246,9 +246,9 @@ MacroManager::HighlightErrors
 		}
 		else if (c == '$' && siter.AtEnd())
 		{
-			fiter.SetNext(red, kJIteratorStay);
+			fiter.SetNext(red, JListT::kStay);
 		}
-		else if (c == '$' && siter.Next(&c, kJIteratorStay) && c == '(')
+		else if (c == '$' && siter.Next(&c, JStringIterator::kStay) && c == '(')
 		{
 			siter.SkipNext();
 			const bool ok = BalanceForward(kCLang, &siter, &c);

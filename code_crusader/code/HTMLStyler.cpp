@@ -479,12 +479,12 @@ HTMLStyler::ExtendCheckRangeForLanguageStartEnd
 {
 	JFont f1, f2;
 
-	JRunArrayIterator iter(GetStyles(), kJIteratorStartBefore, tokenRange.first);
+	JRunArrayIterator iter(GetStyles(), JListT::kStartBefore, tokenRange.first);
 	if (!iter.Next(&f1))
 	{
 		return;
 	}
-	iter.MoveTo(kJIteratorStartBefore, tokenRange.last);
+	iter.MoveTo(JListT::kStartBefore, tokenRange.last);
 	if (!iter.Next(&f2))
 	{
 		return;
@@ -576,7 +576,7 @@ HTMLStyler::GetXMLStyle
 	}
 
 	iter.BeginMatch();
-	iter.MoveTo(kJIteratorStartAtEnd, 0);
+	iter.MoveTo(JStringIterator::kStartAtEnd, 0);
 	const JStringMatch m = iter.FinishMatch();
 	if (GetWordStyle(m.GetString(), style))
 	{
@@ -651,11 +651,11 @@ HTMLStyler::StyleEmbeddedPHPVariables
 			r = MatchAt(token, iter, phpVariablePattern);
 			if (!r.IsEmpty())
 			{
-				if (iter.Prev(&c, kJIteratorStay) && c == '{')
+				if (iter.Prev(&c, JStringIterator::kStay) && c == '{')
 				{
 					r.first--;
 					iter.SkipNext(r.GetCount()-1);
-					if (iter.Next(&c, kJIteratorStay) && c == '}')
+					if (iter.Next(&c, JStringIterator::kStay) && c == '}')
 					{
 						iter.SkipNext();
 						r.last++;
@@ -673,7 +673,7 @@ HTMLStyler::StyleEmbeddedPHPVariables
 		}
 		else if (c == '{' && iter.Next(&c) && c == '$')
 		{
-			if (iter.Next(&c, kJIteratorStay) && c == '}')
+			if (iter.Next(&c, JStringIterator::kStay) && c == '}')
 			{
 				iter.SkipNext();
 				const JIndex i = token.range.charRange.first - 1 + iter.GetPrevCharacterIndex();
@@ -719,11 +719,11 @@ HTMLStyler::MatchAt
 	const JIndex orig = iter.GetNextCharacterIndex();
 
 	iter.BeginMatch();
-	iter.MoveTo(kJIteratorStartAtEnd, 0);
+	iter.MoveTo(JStringIterator::kStartAtEnd, 0);
 	const JStringMatch& m1 = iter.FinishMatch();
 	const JStringMatch m2  = pattern.Match(m1.GetString(), JRegex::kIncludeSubmatches);
 
-	iter.MoveTo(kJIteratorStartBefore, orig);
+	iter.MoveTo(JStringIterator::kStartBeforeChar, orig);
 
 	return m2.IsEmpty() ? JCharacterRange() :
 		JCharacterRange(

@@ -96,7 +96,7 @@ lldb::GetAssemblyCmd::HandleSuccess
 				iter.RemoveLastMatch();
 			}
 
-			iter.MoveTo(kJIteratorStartAtBeginning, 0);
+			iter.MoveTo(JStringIterator::kStartAtBeginning, 0);
 			iter.BeginMatch();
 			if (!line.EndsWith(":") && iter.Next(":"))
 			{
@@ -121,7 +121,7 @@ lldb::GetAssemblyCmd::HandleSuccess
 				}
 
 				iter.BeginMatch();
-				iter.MoveTo(kJIteratorStartAtEnd, 0);
+				iter.MoveTo(JStringIterator::kStartAtEnd, 0);
 				s = iter.FinishMatch().GetString();
 				s.TrimWhitespace();
 				instText.Append(s);

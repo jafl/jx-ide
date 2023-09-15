@@ -196,8 +196,8 @@ SearchTE::SearchFile
 		{
 			matchRange.charRange.last = matchRange.charRange.first + kMaxQuoteCharCount - 1;
 
-			iter.UnsafeMoveTo(kJIteratorStartBefore, matchRange.charRange.first, matchRange.byteRange.first);
-			iter.MoveTo(kJIteratorStartAfter, matchRange.charRange.last);
+			iter.UnsafeMoveTo(JStringIterator::kStartBeforeChar, matchRange.charRange.first, matchRange.byteRange.first);
+			iter.MoveTo(JStringIterator::kStartAfterChar, matchRange.charRange.last);
 			matchRange.byteRange.last = iter.GetPrevByteIndex();
 		}
 
@@ -220,8 +220,8 @@ SearchTE::SearchFile
 
 			if (quoteRange.charRange.first < first)
 			{
-				iter.UnsafeMoveTo(kJIteratorStartBefore, quoteRange.charRange.first, quoteRange.byteRange.first);
-				iter.MoveTo(kJIteratorStartBefore, first);
+				iter.UnsafeMoveTo(JStringIterator::kStartBeforeChar, quoteRange.charRange.first, quoteRange.byteRange.first);
+				iter.MoveTo(JStringIterator::kStartBeforeChar, first);
 				quoteRange.charRange.first = first;
 				quoteRange.byteRange.first = iter.GetNextByteIndex();
 			}
@@ -229,8 +229,8 @@ SearchTE::SearchFile
 			const JIndex last = matchRange.charRange.last + extraCount;
 			if (last < quoteRange.charRange.last)
 			{
-				iter.UnsafeMoveTo(kJIteratorStartAfter, quoteRange.charRange.last, quoteRange.byteRange.last);
-				iter.MoveTo(kJIteratorStartAfter, last);
+				iter.UnsafeMoveTo(JStringIterator::kStartAfterChar, quoteRange.charRange.last, quoteRange.byteRange.last);
+				iter.MoveTo(JStringIterator::kStartAfterChar, last);
 				quoteRange.charRange.last = last;
 				quoteRange.byteRange.last = iter.GetPrevByteIndex();
 			}
@@ -256,9 +256,9 @@ SearchTE::SearchFile
 		{
 			prevQuoteTruncated = false;
 
-			iter.UnsafeMoveTo(kJIteratorStartBefore, quoteRange.charRange.first, quoteRange.byteRange.first);
+			iter.UnsafeMoveTo(JStringIterator::kStartBeforeChar, quoteRange.charRange.first, quoteRange.byteRange.first);
 			iter.BeginMatch();
-			iter.UnsafeMoveTo(kJIteratorStartAfter, quoteRange.charRange.last, quoteRange.byteRange.last);
+			iter.UnsafeMoveTo(JStringIterator::kStartAfterChar, quoteRange.charRange.last, quoteRange.byteRange.last);
 
 			auto* quoteText = jnew JString(iter.FinishMatch().GetString());
 			assert( quoteText != nullptr );

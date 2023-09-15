@@ -308,7 +308,7 @@ ViewManPageDialog::SetFunction
 	JUtf8Character manIndex;
 	if (fnName.GetLastCharacter() == ')')
 	{
-		JStringIterator iter(&fnName, kJIteratorStartAtEnd);
+		JStringIterator iter(&fnName, JStringIterator::kStartAtEnd);
 		iter.SkipPrev();
 		iter.Prev(&manIndex);
 		iter.SkipPrev(2);

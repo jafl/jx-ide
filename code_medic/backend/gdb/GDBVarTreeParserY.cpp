@@ -1445,7 +1445,7 @@ yyreduce:
         {
 		if ((yyvsp[-1].pString)->EndsWith("="))
 		{
-			JStringIterator iter((yyvsp[-1].pString), kJIteratorStartAtEnd);
+			JStringIterator iter((yyvsp[-1].pString), JStringIterator::kStartAtEnd);
 			iter.RemovePrev();
 			(yyvsp[-1].pString)->TrimWhitespace();
 		}
@@ -1467,7 +1467,7 @@ yyreduce:
         {
 		if ((yyvsp[-1].pString)->EndsWith("="))
 		{
-			JStringIterator iter((yyvsp[-1].pString), kJIteratorStartAtEnd);
+			JStringIterator iter((yyvsp[-1].pString), JStringIterator::kStartAtEnd);
 			iter.RemovePrev();
 			(yyvsp[-1].pString)->TrimWhitespace();
 		}
@@ -1500,7 +1500,7 @@ yyreduce:
         {
 		if ((yyvsp[0].pString)->EndsWith("="))
 		{
-			JStringIterator iter((yyvsp[0].pString), kJIteratorStartAtEnd);
+			JStringIterator iter((yyvsp[0].pString), JStringIterator::kStartAtEnd);
 			iter.RemovePrev();
 			(yyvsp[0].pString)->TrimWhitespace();
 		}

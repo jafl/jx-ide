@@ -56,7 +56,7 @@ MacroSubstitute::Evaluate
 	const
 {
 	JUtf8Character c;
-	if (iter.Next(&c, kJIteratorStay) && c == '(')
+	if (iter.Next(&c, JStringIterator::kStay) && c == '(')
 	{
 		iter.SkipNext();
 		iter.BeginMatch();

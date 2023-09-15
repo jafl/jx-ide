@@ -157,7 +157,7 @@ gdb::GetAssemblyCmd::HandleSuccess
 		{
 			const JSize pad = maxOffsetLength - m2.GetCharacterRange().GetCount();
 
-			JStringIterator iter(s, kJIteratorStartBefore, m2.GetCharacterRange().first + 2);
+			JStringIterator iter(s, JStringIterator::kStartBeforeChar, m2.GetCharacterRange().first + 2);
 			for (JUnsignedOffset j=0; j<pad; j++)
 			{
 				iter.Insert("0");
