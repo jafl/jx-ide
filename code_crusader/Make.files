@@ -205,8 +205,6 @@
 .cpp ./code/PSPrintSetupDialog
 .cpp ./code/PTPrinter
 .cpp ./code/PTPrintSetupDialog
-.cpp ./code/ShellDocument
-.cpp ./code/ShellEditor
 .cpp ./code/FileHistoryMenu
 .cpp ./code/FindFileDialog
 .cpp ./code/ViewManPageDialog

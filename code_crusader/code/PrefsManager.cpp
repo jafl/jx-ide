@@ -2846,7 +2846,7 @@ PrefsManager::GetFileType
 	scriptPath->Clear();
 
 	const TextFileType origType = doc.GetFileType();
-	if (origType == kExecOutputFT || origType == kShellOutputFT)
+	if (origType == kExecOutputFT)
 	{
 		*wordWrap = itsExecOutputWordWrapFlag;
 		return origType;

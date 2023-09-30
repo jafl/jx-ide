@@ -100,7 +100,7 @@ static const FTInfo kFTInfo[] =		// index on TextFileType
 { kJSPFT,              kJSPLang,         "--language-force=javascript" , "FunctionsMenuTitle::CtagsUser"   },
 { kXMLFT,              kXMLLang,         kOtherLangCmd                 , nullptr                           },
 { kBasicFT,            kBasicLang,       "--language-force=basic"      , "FunctionsMenuTitle::CtagsUser"   },
-{ kShellOutputFT,      kOtherLang,       kOtherLangCmd                 , nullptr                           },
+{ kUnused1FT,          kOtherLang,       kOtherLangCmd                 , nullptr                           },
 { kMatlabFT,           kMatlabLang,      "--language-force=matlab"     , "FunctionsMenuTitle::CtagsUser"   },
 { kAdobeFlexFT,        kAdobeFlexLang,   "--language-force=flex"       , "FunctionsMenuTitle::CtagsUser"   },
 { kINIFT,              kOtherLang,       kOtherLangCmd                 , nullptr                           },

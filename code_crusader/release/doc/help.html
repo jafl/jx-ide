@@ -33,7 +33,6 @@
 		<li><a href="#JavaTreeHelp">Java class inheritance tree</a></li>
 		<li><a href="#PHPTreeHelp">PHP class inheritance tree</a></li>
 		<li><a href="#TasksHelp">Defining custom tasks for version control, etc.</a></li>
-		<li><a href="#ShellHelp">Running a shell</a></li>
 		<li><a href="https://github.com/jafl/jx_application_framework/tree/utf8/programs/makemake#readme">makemake</a></li>
 		</ul>
 
@@ -931,28 +930,6 @@ The following options can be changed in the Symbol Preferences dialog:
 <p>The name of the task is the name that can be used to call the task from other tasks via the &amp; notation, e.g., the task <code>&make_default</code> calls the task whose name is "make_default".  You cannot specify arguments when you call another task.</p>
 
 <p>The command to rebuild dependencies cannot invoke subroutines with the &amp; notation.  This command is the same one displayed in the Edit Project Configuration dialog.  You can manually invoke this command via the "Update Makefile" item on the Project menu in the Project window.</p>
-
-
-<hr>
-<h2><a name="ShellHelp">Running a shell</a></h2>
-
-<p>Shell support is provided to allow easy capturing and editing of program output.  It does not provide any terminal support.  The existing terminals, e.g., <code>xterm</code>, already do an excellent job.</p>
-
-<p>To start a shell window, select "New shell..." on the File menu.  Your default command shell, set via <code>chsh</code>, is used when you open the window.</p>
-
-<p>Text that you type is displayed bold to make it easy to find.  Pressing return sends the bold text <em>containing the caret</em> to the shell as a command.</p>
-
-<p>While annotating output, press Shift-Return to insert a line break without sending your comments to the shell.</p>
-
-<p>Since there is no terminal support, the following commands invoke Code Crusader:</p>
-
-<ul class="code-terms">
-	<li>more</li>
-	<li>less</li>
-	<li>vi</li>
-	<li>man</li>
-	<li>apropos</li>
-</ul>
 
 
 <hr>

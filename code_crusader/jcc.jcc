@@ -854,17 +854,6 @@ F
 "./code/PTPrintSetupDialog.cpp"
 F
 T
-1 "shell"
-T
-2 "ShellDocument.cpp"
-F
-"./code/ShellDocument.cpp"
-T
-2 "ShellEditor.cpp"
-F
-"./code/ShellEditor.cpp"
-F
-T
 1 "misc"
 T
 2 "FileHistoryMenu.cpp"

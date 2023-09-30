@@ -302,7 +302,7 @@ static const JIndex kFileTypeToMenuIndex[] =
 	kJSPTypeCmd,
 	kXMLTypeCmd,
 	kBasicTypeCmd,
-	0,					// kShellOutputFT
+	0,					// kUnused1FT
 	kMatlabTypeCmd,
 	kAdobeFlexTypeCmd,
 	kINITypeCmd,

@@ -20,7 +20,6 @@ class JSTStyler;
 class JXWindow;
 class ProjectDocument;
 class TextDocument;
-class ShellDocument;
 class CommandOutputDocument;
 class FileHistoryMenu;
 
@@ -52,7 +51,6 @@ public:
 	void	NewProjectDocument();
 	void	NewTextDocument();
 	void	NewTextDocumentFromTemplate();
-	void	NewShellDocument();
 	bool	OpenTextDocument(const JString& fileName,
 							 const JIndex lineIndex = 0,
 							 TextDocument** doc = nullptr,

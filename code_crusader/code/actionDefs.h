@@ -19,7 +19,6 @@
 #define kNewTextFileAction         "CBNewTextFile"
 #define kNewTextFileFromTmplAction "CBNewTextFileFromTmpl"
 #define kNewProjectAction          "CBNewProject"
-#define kNewShellAction            "CBNewShell"
 #define kOpenSomethingAction       "CBOpenSomething"
 #define kSaveFileAction            "CBSaveFile"
 #define kSaveFileAsAction          "CBSaveFileAs"

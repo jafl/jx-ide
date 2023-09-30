@@ -139,9 +139,8 @@ DockManager::DockAll()
 		TextDocument* textDoc = textList->GetElement(i);
 
 		const TextFileType type = textDoc->GetFileType();
-		if (type == kExecOutputFT   ||
-			type == kSearchOutputFT ||
-			type == kShellOutputFT)
+		if (type == kExecOutputFT ||
+			type == kSearchOutputFT)
 		{
 			dock3->Dock(textDoc);
 		}

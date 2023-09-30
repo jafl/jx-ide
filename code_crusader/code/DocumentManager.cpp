@@ -12,7 +12,6 @@
 #include "ProjectTree.h"
 #include "ProjectNode.h"
 #include "ExecOutputDocument.h"
-#include "ShellDocument.h"
 #include "TextEditor.h"
 #include "ExtEditorDialog.h"
 #include "FileHistoryMenu.h"
@@ -686,18 +685,6 @@ DocumentManager::SetActiveListDocument
 	)
 {
 	itsListDocument = doc;
-}
-
-/******************************************************************************
- NewShellDocument
-
- ******************************************************************************/
-
-void
-DocumentManager::NewShellDocument()
-{
-	ShellDocument* doc;
-	ShellDocument::Create(&doc);
 }
 
 /******************************************************************************

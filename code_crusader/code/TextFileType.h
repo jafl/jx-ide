@@ -35,7 +35,7 @@ enum TextFileType
 	kAssemblyFT,
 	kPascalFT,
 	kRatforFT,
-	kExternalFT,			// use other program
+	kExternalFT,		// use other program
 	kBinaryFT,			// use binary file editor
 	kModula2ModuleFT,
 	kModula2InterfaceFT,
@@ -75,7 +75,7 @@ enum TextFileType
 	kJSPFT,
 	kXMLFT,
 	kBasicFT,
-	kShellOutputFT,
+	kUnused1FT,			// unused (kShellOutputFT)
 	kMatlabFT,
 	kAdobeFlexFT,
 	kINIFT,
@@ -277,8 +277,7 @@ DrawRightMargin
 {
 	return !( IsCommandOutput(type) ||
 			  type == kManPageFT    ||
-			  type == kDiffOutputFT ||
-			  type == kShellOutputFT );
+			  type == kDiffOutputFT);
 }
 
 

@@ -46,7 +46,6 @@ static const JUtf8Byte* kFileMenuStr =
 	"    New text file                  %k Meta-N       %i" kNewTextFileAction
 	"  | New text file from template... %k Meta-Shift-N %i" kNewTextFileFromTmplAction
 	"  | New project...                                 %i" kNewProjectAction
-	"  | New shell...                                   %i" kNewShellAction
 	"%l| Open...                        %k Meta-O       %i" kOpenSomethingAction
 	"  | Recent projects"
 	"  | Recent text files"
@@ -55,7 +54,7 @@ static const JUtf8Byte* kFileMenuStr =
 
 enum
 {
-	kNewTextEditorCmd = 1, kNewTextTemplateCmd, kNewProjectCmd, kNewShellCmd,
+	kNewTextEditorCmd = 1, kNewTextTemplateCmd, kNewProjectCmd,
 	kOpenSomethingCmd,
 	kRecentProjectMenuCmd, kRecentTextMenuCmd,
 	kCloseCmd, kQuitCmd
@@ -480,10 +479,7 @@ FileListDirector::HandleFileMenu
 	{
 		GetDocumentManager()->NewProjectDocument();
 	}
-	else if (index == kNewShellCmd)
-	{
-		GetDocumentManager()->NewShellDocument();
-	}
+
 	else if (index == kOpenSomethingCmd)
 	{
 		GetDocumentManager()->OpenSomething();

@@ -320,7 +320,7 @@ static const FT2Lang kFT2Lang[] =
 { kJSPFT,              kJSPLang         },
 { kXMLFT,              kXMLLang         },
 { kBasicFT,            kBasicLang       },
-{ kShellOutputFT,      kOtherLang       },
+{ kUnused1FT,          kOtherLang       },
 { kMatlabFT,           kMatlabLang      },
 { kAdobeFlexFT,        kAdobeFlexLang   },
 { kINIFT,              kINILang         },
