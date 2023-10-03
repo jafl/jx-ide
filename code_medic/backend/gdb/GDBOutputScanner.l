@@ -133,7 +133,7 @@ WS     ([[:space:]]+)
 INT    ([[:digit:]]+)
 HEX    (0x[[:xdigit:]]+)
 PROMPT "(gdb) "\n?
-CMDPFX \cZ\cZ
+CMDPFX \\032\\032
 
 %%
 

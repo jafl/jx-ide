@@ -103,7 +103,7 @@ gdb::DisplaySourceForMainCmd::Receive
 static const JRegex infoPattern =
 	"Line [[:digit:]]+ of \"[^\"]*\" starts at address";
 static const JRegex locationPattern =
-	GDB_COMMAND_PREFIX "(.+):([[:digit:]]+):[[:digit:]]+:[^:]+:0x[[:xdigit:]]+";
+	"032032(.+):([[:digit:]]+):[[:digit:]]+:[^:]+:0x[[:xdigit:]]+";
 
 void
 gdb::DisplaySourceForMainCmd::HandleSuccess
