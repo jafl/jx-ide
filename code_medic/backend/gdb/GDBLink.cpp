@@ -1975,7 +1975,8 @@ gdb::Link::SendPing()
 	const JString idStr((JUInt64) itsPingID);
 	const JUtf8Byte* map[] =
 	{
-		"id", idStr.GetBytes()
+		"id",     idStr.GetBytes(),
+		"cmdpfx", GDB_COMMAND_PREFIX
 	};
 	const JString cmd = JGetString("PingCommand::GDBLink", map, sizeof(map));
 	SendRaw(cmd);
@@ -2086,7 +2087,8 @@ gdb::Link::SendMedicCommand
 
 	const JUtf8Byte* map[] =
 	{
-		"id", id.GetBytes()
+		"id",     id.GetBytes(),
+		"cmdpfx", GDB_COMMAND_PREFIX
 	};
 	JString cmd = JGetString(startId, map, sizeof(map));
 	Send(cmd);	// switching this to SendRaw() will cripple opening of source files while the program is running
@@ -2296,7 +2298,12 @@ gdb::Link::StartDebugger()
 void
 gdb::Link::InitDebugger()
 {
-	Send(JGetString("InitCommands::GDBLink"));
+	const JUtf8Byte* map[] =
+	{
+		"cmdpfx", GDB_COMMAND_PREFIX
+	};
+	const JString cmd = JGetString("InitCommands::GDBLink", map, sizeof(map));
+	Send(cmd);
 
 	itsHasStartedFlag = true;
 	Broadcast(DebuggerStarted());

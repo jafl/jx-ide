@@ -26,6 +26,8 @@ class PingTask;
 
 namespace Output { class Scanner; }
 
+#define GDB_COMMAND_PREFIX "\x26\x26"
+
 class Link : public ::Link
 {
 public:

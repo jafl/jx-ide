@@ -103,7 +103,7 @@ gdb::DisplaySourceForMainCmd::Receive
 static const JRegex infoPattern =
 	"Line [[:digit:]]+ of \"[^\"]*\" starts at address";
 static const JRegex locationPattern =
-	"032032(.+):([[:digit:]]+):[[:digit:]]+:[^:]+:0x[[:xdigit:]]+";
+	GDB_COMMAND_PREFIX "(.+):([[:digit:]]+):[[:digit:]]+:[^:]+:0x[[:xdigit:]]+";
 
 void
 gdb::DisplaySourceForMainCmd::HandleSuccess
@@ -128,7 +128,8 @@ gdb::DisplaySourceForMainCmd::HandleSuccess
 
 		const JUtf8Byte* map[] =
 		{
-			"tbreak_cmd", kBreakCommand[ itsNextCmdIndex-1 ]
+			"tbreak_cmd", kBreakCommand[ itsNextCmdIndex-1 ],
+			"cmdpfx",     GDB_COMMAND_PREFIX
 		};
 		const JString cmd = JGetString("RunCommand::GDBDisplaySourceForMainCmd", map, sizeof(map));
 		dynamic_cast<Link*>(GetLink())->SendWhenStopped(cmd);
@@ -152,7 +153,8 @@ gdb::DisplaySourceForMainCmd::HandleSuccess
 
 		const JUtf8Byte* map[] =
 		{
-			"tbreak_cmd", ""
+			"tbreak_cmd", "",
+			"cmdpfx",     GDB_COMMAND_PREFIX
 		};
 		const JString cmd = JGetString("RunCommand::GDBDisplaySourceForMainCmd", map, sizeof(map));
 		dynamic_cast<Link*>(GetLink())->SendWhenStopped(cmd);

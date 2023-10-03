@@ -133,6 +133,7 @@ WS     ([[:space:]]+)
 INT    ([[:digit:]]+)
 HEX    (0x[[:xdigit:]]+)
 PROMPT "(gdb) "\n?
+CMDPFX \cZ\cZ
 
 %%
 
@@ -147,7 +148,7 @@ PROMPT "(gdb) "\n?
 	RETURN(kReadyForInput);
 	}
 
-(&\""echo "\\\\032\\\\032:"Medic debugger ready":{INT}:\\n\"\n)?~\"\\032\\032:"Medic debugger ready":{INT}:\"\n(\^done\n)? {
+(&\""echo "{CMDPFX}:"Medic debugger ready":{INT}:\\n\"\n)?~\"{CMDPFX}:"Medic debugger ready":{INT}:\"\n(\^done\n)? {
 
 	const JString s(text(), size(), JString::kNoCopy);
 	const JStringMatch m = pingRegex.Match(s, JRegex::kIncludeSubmatches);
@@ -158,7 +159,7 @@ PROMPT "(gdb) "\n?
 	}
 
 <INITIAL,MEDIC_COMMAND>\^exit\n |
-~\"\\032\\032:"Medic debugger quit":\"\n {
+~\"{CMDPFX}:"Medic debugger quit":\"\n {
 	RETURN(kDebuggerFinished);
 	}
 
@@ -180,29 +181,29 @@ PROMPT "(gdb) "\n?
 	RETURN(kProgramFinished);
 	}
 
-~\"\\032\\032:"Medic loading file":\"\n {
+~\"{CMDPFX}:"Medic loading file":\"\n {
 	start(READING_SYMBOLS);
 	RETURN(kPrepareToLoadSymbols);
 	}
 
-~\"\\032\\032:"Medic loading core":\"\n {
+~\"{CMDPFX}:"Medic loading core":\"\n {
 	RETURN(kCoreChanged);
 	}
 
-~\"\\032\\032:"Medic attaching":\"\n {
+~\"{CMDPFX}:"Medic attaching":\"\n {
 	start(ATTACHING_TO_PROCESS);
 	RETURN(kDebugOutput);
 	}
 
-~\"\\032\\032:"Medic detaching":\"\n {
+~\"{CMDPFX}:"Medic detaching":\"\n {
 	RETURN(kDetachingFromProcess);
 	}
 
-~\"\\032\\032:"Medic program starting":\"\n {
+~\"{CMDPFX}:"Medic program starting":\"\n {
 	RETURN(kProgramStarting);
 	}
 
-~\"\\032\\032:"Medic acquire pid":\"\n {
+~\"{CMDPFX}:"Medic acquire pid":\"\n {
 	start(ACQUIRE_PID);
 	RETURN(kBeginGetPID);
 	}
@@ -221,7 +222,7 @@ PROMPT "(gdb) "\n?
 	RETURN(kProgramPID);
 	}
 
-~\"\\032\\032:"Medic program running":\"\n {
+~\"{CMDPFX}:"Medic program running":\"\n {
 	RETURN(kProgramRunning);
 	}
 
@@ -229,14 +230,14 @@ PROMPT "(gdb) "\n?
 	RETURN(kSymbolsReloaded);
 	}
 
-~\"\\032\\032:"Medic program killed":\"\n {
+~\"{CMDPFX}:"Medic program killed":\"\n {
 	RETURN(kProgramKilled);
 	}
 
 	/* result of running gdb with --fullname option: first item is full path + name */
 	/* on macOS, this only works when switch frames */
 
-~\"\\032\\032[^:\0]+:{INT}:{INT}:[^:]+:{HEX}\\n\"\n {
+~\"{CMDPFX}[^:\0]+:{INT}:{INT}:[^:]+:{HEX}\\n\"\n {
 
 	JIndexRange r(11,11);
 	while (text()[r.last-1] != ':')
@@ -272,51 +273,51 @@ PROMPT "(gdb) "\n?
 	RETURN(kProgramStoppedAtLocation);
 	}
 
-~\"\\032\\032:"Medic breakpoints changed":\"\n {
+~\"{CMDPFX}:"Medic breakpoints changed":\"\n {
 	RETURN(kBreakpointsChanged);
 	}
 
 	/* frame changed to function that doesn't have a source file */
 
-~\"\\032\\032:"Medic frame changed":\"\n/("^done,frame="|~.+\n^done\n) {
+~\"{CMDPFX}:"Medic frame changed":\"\n/("^done,frame="|~.+\n^done\n) {
 	RETURN(kFrameChangedAndProgramStoppedAtLocation);
 	}
 
-~\"\\032\\032:"Medic frame changed":\"\n {
+~\"{CMDPFX}:"Medic frame changed":\"\n {
 	RETURN(kFrameChanged);
 	}
 
-~\"\\032\\032:"Medic thread changed":\"\n {
+~\"{CMDPFX}:"Medic thread changed":\"\n {
 	RETURN(kThreadChanged);
 	}
 
-~\"\\032\\032:"Medic value changed":\"\n {
+~\"{CMDPFX}:"Medic value changed":\"\n {
 	RETURN(kValueChanged);
 	}
 
-~\"\\032\\032:"Medic defining script":\"\n {
+~\"{CMDPFX}:"Medic defining script":\"\n {
 	RETURN(kBeginScriptDefinition);
 	}
 
-~\"\\032\\032:"Medic command":{INT}:\"\n {
+~\"{CMDPFX}:"Medic command":{INT}:\"\n {
 	ExtractCommandId(text(), size());
 	start(MEDIC_COMMAND);
 	RETURN(kBeginMedicCmd);
 	}
 
-~\"\\032\\032:"Medic ignore command":{INT}:\"\n {
+~\"{CMDPFX}:"Medic ignore command":{INT}:\"\n {
 	ExtractCommandId(text(), size());
 	RETURN(kBeginMedicIgnoreCmd);
 	}
 
-~\"\\032\\032:"Medic ignore command done":{INT}:\"\n {
+~\"{CMDPFX}:"Medic ignore command done":{INT}:\"\n {
 	ExtractCommandId(text(), size());
 	RETURN(kEndMedicIgnoreCmd);
 	}
 
 	/* hook set by plug-in */
 
-~\"\\032\\034:.+:\"\n {
+~\"\cZ\cY:.+:\"\n {
 
 	itsString.Set(text() + 11, size() - 14);
 	TranslateMIOutput(&itsString);
@@ -454,7 +455,7 @@ PROMPT "(gdb) "\n?
 	RETURN(kProgramPID);
 	}
 
-~\"\\032\\032:"Medic acquire pid end":\"\n {
+~\"{CMDPFX}:"Medic acquire pid end":\"\n {
 	start(INITIAL);
 	RETURN(kEndGetPID);
 	}
@@ -500,7 +501,7 @@ PROMPT "(gdb) "\n?
 
 <MEDIC_COMMAND>{
 
-~\"\\032\\032:"Medic command done":{INT}:\"\n {
+~\"{CMDPFX}:"Medic command done":{INT}:\"\n {
 	ExtractCommandId(text(), size());
 	start(INITIAL);
 	RETURN(kEndMedicCmd);

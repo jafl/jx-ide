@@ -92,7 +92,7 @@ NoSelection::CommandDirector
 
 Welcome::CommandDirector
 "Welcome to Code Medic $vers
-(requires: gdb 7.4 or newer, Xdebug 2.0 or newer)
+(requires: gdb 12.0 or newer, Xdebug 2.0 or newer)
 
 Running on top of:
 "
@@ -309,23 +309,23 @@ Do you wish to restart it?  Your breakpoints will be restored, but the program s
 
 You can restart gdb manually by selecting \"Restart debugger\" on the Debug menu.  To use a different gdb binary, select \"Preferences...\" from the Preferences menu."
 
-StartCommand::GDBLink				"echo \\032\\032:Medic command:$id:"
-EndCommand::GDBLink					"echo \\032\\032:Medic command done:$id:"
-StartIgnoreResultCommand::GDBLink	"echo \\032\\032:Medic ignore command:$id:"
-EndIgnoreResultCommand::GDBLink		"echo \\032\\032:Medic ignore command done:$id:"
-PingCommand::GDBLink				"echo \\032\\032:Medic debugger ready:$id:"
+StartCommand::GDBLink				"echo $cmdpfx:Medic command:$id:"
+EndCommand::GDBLink					"echo $cmdpfx:Medic command done:$id:"
+StartIgnoreResultCommand::GDBLink	"echo $cmdpfx:Medic ignore command:$id:"
+EndIgnoreResultCommand::GDBLink		"echo $cmdpfx:Medic ignore command done:$id:"
+PingCommand::GDBLink				"echo $cmdpfx:Medic debugger ready:$id:"
 
 # gdb::DisplaySourceForMainCmd
 
 RunCommand::GDBDisplaySourceForMainCmd
-"echo \\032\\032:Medic command:0:
+"echo $cmdpfx:Medic command:0:
 define hook-run
-echo \\032\\032:Medic program starting:
+echo $cmdpfx:Medic program starting:
 $tbreak_cmd
 set $$medic_first_stop=1
-echo \\032\\032:Medic program running:
+echo $cmdpfx:Medic program running:
 end
-echo \\032\\032:Medic command done:0:
+echo $cmdpfx:Medic command done:0:
 "
 
 # gdb::AnalyzeCoreCmd
