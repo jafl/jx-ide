@@ -308,7 +308,7 @@ private:
 	bool						itsExecOutputWordWrapFlag;
 	bool						itsUnknownTypeWordWrapFlag;
 
-	JColorID	itsColor [ kColorCount ];
+	JColorID	itsColor [ kColorCount+1 ];		// +1 to keep stupid -Werror=array-bounds happy
 
 private:
 

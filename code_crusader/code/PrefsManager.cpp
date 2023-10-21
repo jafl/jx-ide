@@ -2408,7 +2408,7 @@ PrefsManager::GetColor
 void
 PrefsManager::SetColor
 	(
-	const JIndex		index,
+	const JIndex	index,
 	const JColorID	color
 	)
 {
