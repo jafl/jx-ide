@@ -106,8 +106,8 @@ jobs:
           file: code-*.*
           file_glob: true
 
-  update-sourceforge:
-    name: Update SourceForge
+  update-sourceforge-code-crusader:
+    name: Update SourceForge Crusader
     needs: [ release ]
     if: ${{ startsWith(github.ref, 'refs/tags/') }}
     uses: jafl/jx_application_framework/.github/workflows/app-mirror-sourceforge.yml@main
@@ -118,8 +118,8 @@ jobs:
       api-key: ${{ secrets.SOURCEFORGE_API_KEY }}
       ssh-key: ${{ secrets.SOURCEFORGE_SSH_KEY }}
 
-  update-sourceforge:
-    name: Update SourceForge
+  update-sourceforge-code-medic:
+    name: Update SourceForge Medic
     needs: [ release ]
     if: ${{ startsWith(github.ref, 'refs/tags/') }}
     uses: jafl/jx_application_framework/.github/workflows/app-mirror-sourceforge.yml@main
@@ -130,8 +130,8 @@ jobs:
       api-key: ${{ secrets.SOURCEFORGE_API_KEY }}
       ssh-key: ${{ secrets.SOURCEFORGE_SSH_KEY }}
 
-  update-sourceforge:
-    name: Update SourceForge
+  update-sourceforge-code-mill:
+    name: Update SourceForge Mill
     needs: [ release ]
     if: ${{ startsWith(github.ref, 'refs/tags/') }}
     uses: jafl/jx_application_framework/.github/workflows/app-mirror-sourceforge.yml@main
