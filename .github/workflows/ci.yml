@@ -7,7 +7,7 @@ on:
     types: [ new-jx ]
   workflow_dispatch:
 jobs:
-  build-ubuntu:
+  analyze-ubuntu:
     name: Build & Analyze Ubuntu
     runs-on: ubuntu-latest
     if: ${{ !startsWith(github.ref, 'refs/tags/') }}
