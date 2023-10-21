@@ -560,7 +560,7 @@ SourceDirector::Receive
 	{
 		if (itsSrcMainCmd != nullptr)
 		{
-			itsSrcMainCmd->Command::Send();
+			itsSrcMainCmd->Send();
 		}
 		else if (itsType == kMainAsmType)
 		{

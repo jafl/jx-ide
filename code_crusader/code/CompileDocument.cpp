@@ -574,7 +574,7 @@ CompileDocument::ShowPrevError()
 	te->Focus();
 
 	bool wrapped;
-	if (te->JTextEditor::SearchBackward(jMatchErrorStyle, false, &wrapped))
+	if (te->SearchBackward(jMatchErrorStyle, false, &wrapped))
 	{
 		te->TEScrollToSelection(true);
 		return true;
@@ -598,7 +598,7 @@ CompileDocument::ShowNextError()
 	te->Focus();
 
 	bool wrapped;
-	if (te->JTextEditor::SearchForward(jMatchErrorStyle, false, &wrapped))
+	if (te->SearchForward(jMatchErrorStyle, false, &wrapped))
 	{
 		te->TEScrollToSelection(true);
 		return true;

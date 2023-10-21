@@ -602,7 +602,7 @@ VarNode::UpdateValue()
 		ListenTo(itsValueCommand);
 
 		SetValid(false);
-		itsValueCommand->Command::Send();
+		itsValueCommand->Send();
 	}
 	else
 	{
@@ -755,7 +755,7 @@ VarNode::UpdateContent()
 	itsContentCommand = GetLink()->CreateVarContentCmd(expr);
 	ListenTo(itsContentCommand);
 
-	itsContentCommand->Command::Send();
+	itsContentCommand->Send();
 }
 
 /******************************************************************************

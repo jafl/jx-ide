@@ -285,6 +285,10 @@ WarnDetachProgram::LLDBLink		"Are you sure you want to detach from the current p
 CannotFindMain::LLDBDisplaySourceForMain
 "Unable to find function main().  Does the binary contain debugging information?"
 
+# lldb::DisplaySourceForMainCmd
+
+CannotFindMain::LLDBDisplaySourceForMainCmd	"Unable to find source file for \"main\""
+
 # gdb::Link
 
 CommandPrompt::GDBLink	"(gdb)"

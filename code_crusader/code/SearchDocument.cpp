@@ -700,7 +700,7 @@ SearchDocument::ShowPrevMatch()
 	te->Focus();
 
 	bool wrapped;
-	if (te->JTextEditor::SearchBackward(jMatchFileName, false, &wrapped))
+	if (te->SearchBackward(jMatchFileName, false, &wrapped))
 	{
 		te->TEScrollToSelection(true);
 		return true;
@@ -724,7 +724,7 @@ SearchDocument::ShowNextMatch()
 	te->Focus();
 
 	bool wrapped;
-	if (te->JTextEditor::SearchForward(jMatchFileName, false, &wrapped))
+	if (te->SearchForward(jMatchFileName, false, &wrapped))
 	{
 		te->TEScrollToSelection(true);
 		return true;

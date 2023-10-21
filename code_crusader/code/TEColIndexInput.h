@@ -26,6 +26,8 @@ public:
 
 	~TEColIndexInput() override;
 
+	using JXIntegerInput::GetValue;
+
 protected:
 
 	void	Act(JXTEBase* te, const JIndex value) override;

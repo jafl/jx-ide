@@ -28,6 +28,8 @@ public:
 	void	HandleKeyPress(const JUtf8Character& c,
 						   const int keySym, const JXKeyModifiers& modifiers) override;
 
+	using JXIntegerInput::GetValue;
+
 protected:
 
 	void	Act(JXTEBase* te, const JIndex value) override;

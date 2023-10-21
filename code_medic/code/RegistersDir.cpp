@@ -301,7 +301,7 @@ RegistersDir::Update()
 
 		if (itsCmd != nullptr)
 		{
-			itsCmd->Command::Send();
+			itsCmd->Send();
 		}
 	}
 }

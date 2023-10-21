@@ -60,8 +60,6 @@
 
 // Windows menu
 
-#define kBringAllFrontAction      "GDBBringAllFront"
-#define kCloseAllSourceAction     "GDBCloseAllSource"
 #define kShowCommandLineAction    "GDBShowCommandLine"
 #define kShowCurrentSourceAction  "GDBShowCurrentSource"
 #define kShowThreadsAction        "GDBShowThreads"

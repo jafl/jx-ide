@@ -337,7 +337,7 @@ TreeWidget::Print
 		}
 
 		const JCoordinate lineHeight   = itsTree->GetLineHeight();
-		const JCoordinate footerHeight = JRound(1.5 * p.JPainter::GetLineHeight());
+		const JCoordinate footerHeight = JRound(1.5 * p.GetLineHeight());
 
 		const JRect bounds    = GetBounds();
 		const JSize lineCount = (bounds.height() - 2*kBorderWidth) / lineHeight;
@@ -367,7 +367,7 @@ TreeWidget::Print
 			p.LockFooter(pageRect.height() - drawHeight);
 
 			p.SetPenColor(JColorManager::GetYellowColor());
-			p.JPainter::Rect(p.GetPageRect());
+			p.Rect(p.GetPageRect());
 			p.SetPenColor(JColorManager::GetBlackColor());
 
 			const JCoordinate top = (i-1)*drawHeight;

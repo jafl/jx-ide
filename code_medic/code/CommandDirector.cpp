@@ -543,8 +543,8 @@ CommandDirector::BuildWindow()
 
 	itsCommandOutput =
 		jnew CommandOutputDisplay(menuBar,
-							 scrollbarSet, scrollbarSet->GetScrollEnclosure(),
-							 JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 100,100);
+								  scrollbarSet, scrollbarSet->GetScrollEnclosure(),
+								  JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 100,100);
 	assert( itsCommandOutput != nullptr );
 	itsCommandOutput->FitToEnclosure(true, true);
 
@@ -895,6 +895,10 @@ CommandDirector::Receive
 		font.SetColor(output->IsError() ? JColorManager::GetDarkRedColor() : JColorManager::GetBlackColor());
 		itsCommandOutput->SetCurrentFont(font);
 		itsCommandOutput->Paste(output->GetText());
+		if (output->GetText().GetLastCharacter() != '\n')
+		{
+			itsCommandOutput->Paste(JString::newline);
+		}
 		itsCommandOutput->GetText()->ClearUndo();
 	}
 
@@ -1176,7 +1180,7 @@ CommandDirector::ShowHistoryCommand
 	if (0 < i && i <= (JInteger) itsHistoryMenu->GetItemCount())
 	{
 		itsHistoryIndex     += delta;
-		const JString& input = itsHistoryMenu->JXTextMenu::GetItemText(i);
+		const JString& input = itsHistoryMenu->GetItemText(i);
 		itsCommandInput->GetText()->SetText(input);
 	}
 	else if (i > (JInteger) itsHistoryMenu->GetItemCount())

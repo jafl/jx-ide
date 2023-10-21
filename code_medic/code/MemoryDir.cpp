@@ -503,7 +503,7 @@ MemoryDir::Update()
 	if (itsShouldUpdateFlag && itsNeedsUpdateFlag)
 	{
 		itsNeedsUpdateFlag = false;
-		itsCmd->Command::Send();
+		itsCmd->Send();
 	}
 }
 

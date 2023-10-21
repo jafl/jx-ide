@@ -58,7 +58,7 @@ TEColIndexInput::Act
 	)
 {
 	JInteger lineIndex;
-	const bool ok = itsLineInput->JXIntegerInput::GetValue(&lineIndex);
+	const bool ok = itsLineInput->GetValue(&lineIndex);
 	assert( ok );
 
 	te->GoToColumn(lineIndex, value);

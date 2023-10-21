@@ -185,7 +185,7 @@ FunctionTable::TableDrawCell
 	JFont font = JFontManager::GetDefaultMonospaceFont();
 	font.SetStyle(style);
 	p.SetFont(font);
-	p.JPainter::String(r, str, halign, JPainter::VAlign::kCenter);
+	p.String(r, str, halign, JPainter::VAlign::kCenter);
 }
 
 /******************************************************************************
