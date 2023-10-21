@@ -8,6 +8,7 @@ endif
 
 MAKE_INCLUDE := ${JX_ROOT}/include/jx-af/make
 include ${MAKE_INCLUDE}/jx_config
+include ${MAKE_INCLUDE}/app_targets
 
 APPS := code_crusader code_medic code_mill
 
