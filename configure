@@ -61,17 +61,20 @@ elif command -v apt-get; then
 	rm -f code_medic/liblldb.so;
 	ln -sf /usr/lib/llvm-$LLDB_VERS/lib/liblldb.so.1 code_medic/liblldb.so;
 
-elif command -v dnf || command -v yum; then
+elif command -v dnf; then
 
 	# redhat
 
-	if command -v dnf; then
-		PKGMGR=dnf;
-	else
-		PKGMGR=yum;
+	if [[ -z $SNAPCRAFT_BUILD_ENVIRONMENT ]]; then
+		if [[ ! -f ../JX/Makefile && -z $JX_ROOT ]]; then
+			$SUDO dnf install -y \
+				https://libjx.sourceforge.net/ci/jx-application-framework-fedora.rpm \
+				https://libjx.sourceforge.net/ci/re-flex-fedora.rpm \
+				https://libjx.sourceforge.net/ci/ace-fedora.rpm;
+		fi
 	fi
 
-	$SUDO $PKGMGR -y install editorconfig-devel lldb-devel llvm-devel;
+	$SUDO dnf -y install editorconfig-devel lldb-devel llvm-devel;
 
 elif command -v zypper; then
 
