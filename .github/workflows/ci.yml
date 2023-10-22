@@ -136,7 +136,7 @@ jobs:
     if: ${{ startsWith(github.ref, 'refs/tags/') }}
     uses: jafl/jx_application_framework/.github/workflows/app-mirror-sourceforge.yml@main
     with:
-      forge-name: codemill
+      forge-name: nps-codemill
       filter: code-mill*
     secrets:
       api-key: ${{ secrets.SOURCEFORGE_API_KEY }}
