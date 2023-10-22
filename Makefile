@@ -21,7 +21,6 @@ all:
 .PHONY : Makefiles
 Makefiles:
 	@for d in ${APPS}; do \
-         echo $$d; \
          pushd $$d; makemake; make Makefiles; popd; \
      done
 
