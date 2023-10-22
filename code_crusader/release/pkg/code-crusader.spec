@@ -30,7 +30,9 @@ Code Crusader is a graphical development environment for UNIX.
 /usr/local/bin/xml-auto-close
 /usr/local/bin/html-auto-close
 /usr/local/bin/java-import
+
+/usr/local/share/jxcb
 %jcc_doc_dir
 
-%gnome_app_path/code_crusader.desktop
-%gnome_icon_path/code_crusader.png
+%gnome_app_path/code-crusader.desktop
+%gnome_icon_path/code-crusader.png

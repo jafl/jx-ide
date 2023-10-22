@@ -32,6 +32,6 @@ cp -R CPM_rules           $DOC;
 
 if [[ -d desktop ]]; then
 	mkdir -p $APP $ICON;
-	cp desktop/code_crusader.desktop $APP/;
-	cp desktop/code_crusader.png     $ICON/;
+	cp desktop/code-crusader.desktop $APP/;
+	cp desktop/code-crusader.png     $ICON/;
 fi

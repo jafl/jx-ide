@@ -2,7 +2,7 @@
 Categories=Development;IDE;X-Red-Hat-Base;
 Name=Code Crusader
 Comment=Integrated Development Environment for C,C++,Java,Perl,PHP,etc.
-Icon=code_crusader.png
+Icon=code-crusader.png
 Exec=jcc
 Type=Application
 Protocols=file;

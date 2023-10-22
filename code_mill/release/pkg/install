@@ -16,8 +16,3 @@ install -m755 code-mill $BIN;
 
 mkdir -p $DOC;
 cp README.md COPYING menu_strings $DOC;
-
-if [[ -d desktop ]]; then
-	mkdir -p $APP;
-	cp desktop/code_mill.desktop $APP/;
-fi

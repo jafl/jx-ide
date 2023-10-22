@@ -7,8 +7,6 @@ fi
 
 BIN=$PRE/bin;
 DOC=$PRE/share/doc/code-mill;
-APP=$PRE/share/applications;
 
 rm -f  $BIN/code-mill;
 rm -rf $DOC;
-rm -f  `find $APP -name 'code_mill*.desktop'`;

@@ -18,5 +18,5 @@ rm -f  $BIN/html-auto-close;
 rm -f  $BIN/java-import;
 rm -rf $LIB;
 rm -rf $DOC;
-rm -f  `find $APP -name 'code_crusader*.desktop'`;
-rm -f  `find $ICON -name 'code_crusader*.png'`;
+rm -f  `find $APP -name 'code-crusader*.desktop'`;
+rm -f  `find $ICON -name 'code-crusader*.png'`;
