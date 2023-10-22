@@ -24,7 +24,7 @@ if [[ $SYS == Darwin ]]; then
 		$SUDO /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)";
 	fi
 
-	brew install -q --force python@3.11;
+	brew install -q --overwrite --force python@3.11;
 	brew install -q llvm editorconfig;
 	if [[ $MODE != ci ]]; then
 		brew install -q universal-ctags;
