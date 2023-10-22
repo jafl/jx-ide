@@ -113,7 +113,7 @@ jobs:
     uses: jafl/jx_application_framework/.github/workflows/app-mirror-sourceforge.yml@main
     with:
       forge-name: codecrusader
-      filter: code_crusader*
+      filter: code-crusader*
     secrets:
       api-key: ${{ secrets.SOURCEFORGE_API_KEY }}
       ssh-key: ${{ secrets.SOURCEFORGE_SSH_KEY }}
@@ -125,7 +125,7 @@ jobs:
     uses: jafl/jx_application_framework/.github/workflows/app-mirror-sourceforge.yml@main
     with:
       forge-name: codemedic
-      filter: code_medic*
+      filter: code-medic*
     secrets:
       api-key: ${{ secrets.SOURCEFORGE_API_KEY }}
       ssh-key: ${{ secrets.SOURCEFORGE_SSH_KEY }}
@@ -137,7 +137,7 @@ jobs:
     uses: jafl/jx_application_framework/.github/workflows/app-mirror-sourceforge.yml@main
     with:
       forge-name: codemill
-      filter: code_mill*
+      filter: code-mill*
     secrets:
       api-key: ${{ secrets.SOURCEFORGE_API_KEY }}
       ssh-key: ${{ secrets.SOURCEFORGE_SSH_KEY }}
