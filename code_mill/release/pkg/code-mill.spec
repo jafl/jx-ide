@@ -23,5 +23,5 @@ Code Mill is a Code Crusader plug-in for creating C++ derived classes.
 
 %docdir %code_mill_doc_dir
 
-/usr/local/bin/code_mill
+/usr/local/bin/code-mill
 %code_mill_doc_dir

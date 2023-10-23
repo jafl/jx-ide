@@ -27,6 +27,7 @@ It supports gdb and Xdebug.
 %docdir %medic_doc_dir
 
 /usr/local/bin/medic
+/usr/local/bin/code-medic
 %medic_doc_dir
 
 %gnome_app_path/code-medic.desktop
