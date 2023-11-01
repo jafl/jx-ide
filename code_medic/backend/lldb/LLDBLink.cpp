@@ -365,7 +365,10 @@ lldb::Link::HandleEvent()
 			}
 			itsLastProgramInput.Clear();
 
-			Broadcast(UserOutput(JString(b, JString::kNoCopy), false, true));
+			if (*b != 0)
+			{
+				Broadcast(UserOutput(JString(b, JString::kNoCopy), false, true));
+			}
 		}
 
 		count = p.GetSTDERR(buf, 1023);
@@ -492,8 +495,11 @@ lldb::Link::ReceiveMessageLine
 	j_lldb_cookie_size	count
 	)
 {
-	const JString msg(line, count);
-	static_cast<Link*>(baton)->Broadcast(UserOutput(msg, false));
+	if (count > 0)
+	{
+		const JString msg(line, count, JString::kNoCopy);
+		static_cast<Link*>(baton)->Broadcast(UserOutput(msg, false));
+	}
 	return count;
 }
 
@@ -510,8 +516,11 @@ lldb::Link::ReceiveErrorLine
 	j_lldb_cookie_size	count
 	)
 {
-	const JString msg(line, count);
-	static_cast<Link*>(baton)->Broadcast(UserOutput(msg, true));
+	if (count > 0)
+	{
+		const JString msg(line, count, JString::kNoCopy);
+		static_cast<Link*>(baton)->Broadcast(UserOutput(msg, true));
+	}
 	return count;
 }
 

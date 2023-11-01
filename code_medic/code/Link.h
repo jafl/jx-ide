@@ -331,8 +331,8 @@ public:
 		private:
 
 			const JString	itsText;
-			const bool	itsFromTargetFlag;
-			const bool	itsErrorFlag;
+			const bool		itsFromTargetFlag;
+			const bool		itsErrorFlag;
 		};
 
 	enum DebugType
