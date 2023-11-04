@@ -207,7 +207,7 @@ ManPageDocument::ManPageDocument
 			if (JConvertToStream(fromFD, &input, &tempName))
 			{
 				input >> std::ws;
-				text.SetBlockSize(1000);
+				text.SetMinLgSize(12);
 				while (!input.eof() && !input.fail())
 				{
 					text += JReadLine(input);
