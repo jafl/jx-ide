@@ -36,18 +36,18 @@ public:
 		JString*	cmd;
 		JString*	name;
 
-		bool	isMake;
-		bool	isVCS;
-		bool	saveAll;
-		bool	oneAtATime;
-		bool	useWindow;
-		bool	raiseWindowWhenStart;
-		bool	beepWhenFinished;
+		bool		isMake;
+		bool		isVCS;
+		bool		saveAll;
+		bool		oneAtATime;
+		bool		useWindow;
+		bool		raiseWindowWhenStart;
+		bool		beepWhenFinished;
 
 		JString*	menuText;
 		JString*	menuShortcut;
 		JString*	menuID;
-		bool	separator;
+		bool		separator;
 
 		CmdInfo()
 			:

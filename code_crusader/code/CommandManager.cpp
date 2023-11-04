@@ -832,14 +832,14 @@ CommandManager::UsesFile
 	const JString& arg
 	)
 {
-	return arg.Contains("$full_name")        ||
-		arg.Contains("$relative_name")    ||
-		arg.Contains("$file_name")        ||
-		arg.Contains("$file_name_root")   ||
-		arg.Contains("$file_name_suffix") ||
-		arg.Contains("$full_path")        ||
-		arg.Contains("$relative_path")    ||
-		arg.Contains("$line");
+	return (arg.Contains("$full_name")        ||
+			arg.Contains("$relative_name")    ||
+			arg.Contains("$file_name")        ||
+			arg.Contains("$file_name_root")   ||
+			arg.Contains("$file_name_suffix") ||
+			arg.Contains("$full_path")        ||
+			arg.Contains("$relative_path")    ||
+			arg.Contains("$line"));
 }
 
 /******************************************************************************
@@ -859,7 +859,7 @@ CommandManager::FindCommandName
 	for (JIndex i=1; i<=count; i++)
 	{
 		*info = itsCmdList->GetElement(i);
-		if (*(info->name) == name)
+		if (*info->name == name)
 		{
 			return true;
 		}
@@ -926,16 +926,14 @@ CommandManager::AppendCommand
 void
 CommandManager::AppendMenuItems
 	(
-	JXTextMenu*		menu,
+	JXTextMenu*	menu,
 	const bool	hasProject
 	)
 	const
 {
-	const JSize count = itsCmdList->GetElementCount();
-	for (JIndex i=1; i<=count; i++)
+	for (const CmdInfo info : *itsCmdList)
 	{
-		const CmdInfo info = itsCmdList->GetElement(i);
-		menu->AppendItem((info.menuText)->IsEmpty() ? *info.cmd : *info.menuText);
+		menu->AppendItem(info.menuText->IsEmpty() ? *info.cmd : *info.menuText);
 		menu->SetItemNMShortcut(menu->GetItemCount(), *info.menuShortcut);
 		menu->SetItemID(menu->GetItemCount(), *info.menuID);
 		if (info.separator)
