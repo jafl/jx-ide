@@ -119,7 +119,6 @@ jvm::GetStackCmd::HandleSuccess
 
 		auto* node =
 			jnew StackFrameNode(root, id, classID, methodID, offset);
-		assert( node != nullptr );
 		root->Prepend(node);
 
 		link->AddFrame(id, classID, methodID, offset);

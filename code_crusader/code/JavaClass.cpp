@@ -165,7 +165,6 @@ JavaClass::NewGhost
 {
 	auto* newClass = jnew JavaClass(name, kGhostType, JFAID::kInvalidID, tree,
 											true, false);
-	assert( newClass != nullptr );
 	return newClass;
 }
 

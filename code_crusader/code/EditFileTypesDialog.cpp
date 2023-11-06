@@ -73,7 +73,6 @@ EditFileTypesDialog::BuildWindow
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 700,400, JString::empty);
-	assert( window != nullptr );
 
 	auto* cancelButton =
 		jnew JXTextButton(JGetString("cancelButton::EditFileTypesDialog::JXLayout"), window,
@@ -149,7 +148,6 @@ EditFileTypesDialog::BuildWindow
 		jnew JXColHeaderWidget(itsTable, scrollbarSet, encl,
 							  JXWidget::kHElastic, JXWidget::kFixedTop,
 							  0,0, w, kColHeaderHeight);
-	assert( colHeader != nullptr );
 	colHeader->TurnOnColResizing(20);
 	itsTable->SetColTitles(colHeader);
 

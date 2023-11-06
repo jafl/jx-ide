@@ -38,7 +38,6 @@ DockManager::DockManager()
 {
 	JXDisplay* display = JXGetApplication()->GetCurrentDisplay();
 	auto* icon      = jnew JXImage(display, jcc_project_window);
-	assert( icon != nullptr );
 	SetIcon(icon);
 }
 

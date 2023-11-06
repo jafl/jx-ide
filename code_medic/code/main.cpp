@@ -47,7 +47,6 @@ main
 	bool displayAbout;
 	JString prevVersStr;
 	auto* app = jnew App(&argc, argv, &displayAbout, &prevVersStr);
-	assert( app != nullptr );
 
 	CreateCommandDirector();	// so dock appears after JCheckForNewerVersion()
 

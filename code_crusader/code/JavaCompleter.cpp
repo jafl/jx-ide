@@ -86,7 +86,6 @@ JavaCompleter::Instance()
 		recursiveInstance = true;
 
 		itsSelf = jnew JavaCompleter;
-		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
 	}

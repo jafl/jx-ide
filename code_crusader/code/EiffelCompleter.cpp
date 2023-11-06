@@ -50,7 +50,6 @@ EiffelCompleter::Instance()
 		recursiveInstance = true;
 
 		itsSelf = jnew EiffelCompleter;
-		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
 	}

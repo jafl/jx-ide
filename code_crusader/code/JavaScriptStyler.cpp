@@ -70,7 +70,6 @@ JavaScriptStyler::Instance()
 		recursiveInstance = true;
 
 		itsSelf = jnew JavaScriptStyler;
-		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
 	}

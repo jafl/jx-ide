@@ -91,7 +91,6 @@ RunTEScriptDialog::BuildWindow()
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 390,110, JString::empty);
-	assert( window != nullptr );
 
 	itsCloseButton =
 		jnew JXTextButton(JGetString("itsCloseButton::RunTEScriptDialog::JXLayout"), window,
@@ -152,10 +151,8 @@ RunTEScriptDialog::BuildWindow()
 
 	// create hidden JXDocument so Meta-# shortcuts work
 
-	auto* fileListMenu =
-		jnew JXDocumentMenu(JString::empty, window,
-						   JXWidget::kFixedLeft, JXWidget::kFixedTop, 0,-20, 10,10);
-	assert( fileListMenu != nullptr );
+	jnew JXDocumentMenu(JString::empty, window,
+					   JXWidget::kFixedLeft, JXWidget::kFixedTop, 0,-20, 10,10);
 
 	UpdateDisplay();
 }

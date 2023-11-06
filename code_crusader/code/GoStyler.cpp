@@ -68,7 +68,6 @@ GoStyler::Instance()
 		recursiveInstance = true;
 
 		itsSelf = jnew GoStyler;
-		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
 	}

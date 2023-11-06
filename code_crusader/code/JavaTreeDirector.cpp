@@ -232,7 +232,6 @@ JavaTreeDirector::NewJavaTree
 	assert( javaTreeDir != nullptr );
 
 	auto* tree = jnew JavaTree(javaTreeDir, marginWidth);
-	assert( tree != nullptr );
 	return tree;
 }
 
@@ -265,7 +264,6 @@ JavaTreeDirector::StreamInJavaTree
 	auto* tree = jnew JavaTree(projInput, projVers,
 									  setInput, setVers, symInput, symVers,
 									  javaTreeDir, marginWidth, dirList);
-	assert( tree != nullptr );
 	return tree;
 }
 

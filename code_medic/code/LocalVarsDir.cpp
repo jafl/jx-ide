@@ -134,7 +134,6 @@ LocalVarsDir::BuildWindow()
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 450,500, JString::empty);
-	assert( window != nullptr );
 
 	auto* menuBar =
 		jnew JXMenuBar(window,
@@ -157,15 +156,12 @@ LocalVarsDir::BuildWindow()
 
 	JXDisplay* display = GetDisplay();
 	auto* icon      = jnew JXImage(display, medic_local_variables_window);
-	assert( icon != nullptr );
 	window->SetIcon(icon);
 
 	VarNode* root = itsLink->CreateVarNode(false);
 	assert( root != nullptr );
 	itsTree = jnew JTree(root);
-	assert( itsTree != nullptr );
 	auto* treeList = jnew JNamedTreeList(itsTree);
-	assert( treeList != nullptr );
 
 	itsWidget =
 		jnew VarTreeWidget(itsCommandDir, false, menuBar, itsTree, treeList,

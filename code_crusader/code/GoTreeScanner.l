@@ -222,7 +222,6 @@ interface\b {
 
 		itsCurrentClass = jnew GoClass(itsTypeName, Class::kClassType, fileID, tree,
 									  isExported);
-		assert( itsCurrentClass != nullptr );
 
 		itsCurrentClass->SetAbstract(itsAbstractFlag == 'T');
 		classList->Append(itsCurrentClass);

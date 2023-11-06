@@ -118,6 +118,5 @@ CClass::NewGhost
 	)
 {
 	auto* newClass = jnew CClass(name, kGhostType, JFAID::kInvalidID, tree);
-	assert( newClass != nullptr );
 	return newClass;
 }

@@ -211,35 +211,25 @@ CommandDirector::CommandDirector
 	JXMenuBar* menuBar = BuildWindow();
 
 	itsCurrentSourceDir = jnew SourceDirector(this, SourceDirector::kMainSourceType);
-	assert( itsCurrentSourceDir != nullptr );
 	itsCurrentSourceDir->Activate();
 
 	itsCurrentAsmDir = jnew SourceDirector(this, SourceDirector::kMainAsmType);
-	assert( itsCurrentAsmDir != nullptr );
 
 	itsThreadsDir = jnew ThreadsDir(this);
-	assert( itsThreadsDir != nullptr );
 
 	itsStackDir = jnew StackDir(this);
-	assert(itsStackDir != nullptr);
 
 	itsBreakpointsDir = jnew BreakpointsDir(this);
-	assert(itsBreakpointsDir != nullptr);
 
 	itsVarTreeDir = jnew VarTreeDir(this);
-	assert(itsVarTreeDir != nullptr);
 
 	itsLocalVarsDir = jnew LocalVarsDir(this);
-	assert(itsLocalVarsDir != nullptr);
 
 	itsRegistersDir = jnew RegistersDir(this);
-	assert(itsRegistersDir != nullptr);
 
 	itsFileListDir = jnew FileListDir(this);
-	assert(itsFileListDir != nullptr);
 
 	itsDebugDir = jnew DebugDir();
-	assert(itsDebugDir!=nullptr);
 
 	JXWDManager* wdMgr = GetDisplay()->GetWDManager();
 	wdMgr->PermanentDirectorCreated(this,                JString::empty,                            kShowCommandLineAction);
@@ -442,7 +432,6 @@ CommandDirector::BuildWindow()
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 500,550, JString::empty);
-	assert( window != nullptr );
 
 	auto* menuBar =
 		jnew JXMenuBar(window,
@@ -496,7 +485,6 @@ CommandDirector::BuildWindow()
 
 	JXDisplay* display = GetDisplay();
 	auto* icon      = jnew JXImage(display, medic_command_window);
-	assert( icon != nullptr );
 	window->SetIcon(icon);
 
 	itsDownRect->SetBackColor(itsCommandInput->GetCurrBackColor());
@@ -939,7 +927,6 @@ CommandDirector::Receive
 		if (itsWaitingToRunFlag)
 		{
 			auto* task = jnew RunProgramTask();
-			assert( task != nullptr );
 			task->Start();
 			itsWaitingToRunFlag = false;
 		}
@@ -1443,7 +1430,6 @@ CommandDirector::LoadConfig()
 			for (JIndex i=1; i<=count; i++)
 			{
 				auto* dir = jnew Array1DDir(input, vers, this);
-				assert( dir != nullptr );
 				// adds itself to list automatically
 				dir->Activate();
 			}
@@ -1453,7 +1439,6 @@ CommandDirector::LoadConfig()
 			for (JIndex i=1; i<=count; i++)
 			{
 				auto* dir = jnew Array2DDir(input, vers, this);
-				assert( dir != nullptr );
 				// adds itself to list automatically
 				dir->Activate();
 			}
@@ -1463,7 +1448,6 @@ CommandDirector::LoadConfig()
 			for (JIndex i=1; i<=count; i++)
 			{
 				auto* dir = jnew Plot2DDir(input, vers, this);
-				assert( dir != nullptr );
 				// adds itself to list automatically
 				dir->Activate();
 			}
@@ -1475,7 +1459,6 @@ CommandDirector::LoadConfig()
 				for (JIndex i=1; i<=count; i++)
 				{
 					auto* dir = jnew MemoryDir(input, vers, this);
-					assert( dir != nullptr );
 					// adds itself to list automatically
 					dir->Activate();
 				}
@@ -1825,7 +1808,6 @@ CommandDirector::HandleDebugMenu
 		}
 
 		auto* dir = jnew MemoryDir(this, s2);
-		assert(dir != nullptr);
 		dir->Activate();
 	}
 	else if (index == kDisassembleMemCmd)
@@ -1838,7 +1820,6 @@ CommandDirector::HandleDebugMenu
 		}
 
 		auto* dir = jnew MemoryDir(this, s2);
-		assert(dir != nullptr);
 		dir->SetDisplayType(MemoryDir::kAsm);
 		dir->Activate();
 	}
@@ -1956,7 +1937,6 @@ CommandDirector::RunProgram()
 	else if (GetLink()->HasPendingCommands())
 	{
 		auto* task = jnew RunProgramTask();
-		assert( task != nullptr );
 		task->Start();
 	}
 	else if (itsLink->OKToDetachOrKill())
@@ -2038,7 +2018,6 @@ CommandDirector::ChooseProcess()
 	if (itsLink->OKToDetachOrKill())
 	{
 		auto* dlog = jnew ChooseProcessDialog();
-		assert( dlog != nullptr );
 		if (dlog->DoDialog())
 		{
 			JInteger pid;
@@ -2077,7 +2056,6 @@ CommandDirector::Display1DArray
 	)
 {
 	auto* dir = jnew Array1DDir(this, expr);
-	assert( dir != nullptr );
 	dir->Activate();
 }
 
@@ -2093,7 +2071,6 @@ CommandDirector::Display2DArray
 	)
 {
 	auto* dir = jnew Array2DDir(this, expr);
-	assert( dir != nullptr );
 	dir->Activate();
 }
 
@@ -2109,7 +2086,6 @@ CommandDirector::Plot1DArray
 	)
 {
 	auto* dir = jnew Plot2DDir(this, expr);
-	assert( dir != nullptr );
 	dir->Activate();
 }
 
@@ -2166,7 +2142,6 @@ CommandDirector::HandlePrefsMenu
 	else if (index == kEditCmdsCmd)
 	{
 		auto* dlog = jnew EditCommandsDialog;
-		assert( dlog != nullptr );
 		dlog->DoDialog();
 	}
 	else if (index == kEditMacWinPrefsCmd)

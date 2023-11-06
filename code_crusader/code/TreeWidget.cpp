@@ -507,7 +507,6 @@ TreeWidget::HandleMouseDrag
 	if (itsExpectDragFlag && JMouseMoved(itsStartPt, pt))
 	{
 		auto* data = jnew JXFileSelection(this, kSelectionDataID);
-		assert( data != nullptr );
 
 		BeginDND(pt, buttonStates, modifiers, data);
 		itsExpectDragFlag = false;
@@ -571,14 +570,12 @@ TreeWidget::GetSelectionData
 			if (c->GetFileName(&headerName))
 			{
 				auto* s = jnew JString(headerName);
-				assert( s != nullptr );
 				list->Append(s);
 
 				if (docMgr->GetComplementFile(headerName, itsTree->GetFileType(),
 											  &sourceName, itsDirector->GetProjectDoc()))
 				{
 					s = jnew JString(sourceName);
-					assert( s != nullptr );
 					list->Append(s);
 				}
 			}

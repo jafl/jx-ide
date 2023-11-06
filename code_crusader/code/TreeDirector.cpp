@@ -500,7 +500,6 @@ TreeDirector::BuildWindow
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 400,430, JString::empty);
-	assert( window != nullptr );
 
 	auto* menuBar =
 		jnew JXMenuBar(window,
@@ -527,7 +526,6 @@ TreeDirector::BuildWindow
 
 	JXDisplay* display = GetDisplay();
 	auto* icon      = jnew JXImage(display, windowIcon);
-	assert( icon != nullptr );
 	window->SetIcon(icon);
 
 	JPoint desktopLoc;
@@ -549,15 +547,11 @@ TreeDirector::BuildWindow
 	itsFileMenu->SetItemImage(kOpenSomethingCmd, jx_file_open);
 	itsFileMenu->SetItemImage(kPrintPSCmd,       jx_file_print);
 
-	auto* recentProjectMenu =
-		jnew FileHistoryMenu(DocumentManager::kProjectFileHistory,
-							  itsFileMenu, kRecentProjectMenuCmd, menuBar);
-	assert( recentProjectMenu != nullptr );
+	jnew FileHistoryMenu(DocumentManager::kProjectFileHistory,
+						  itsFileMenu, kRecentProjectMenuCmd, menuBar);
 
-	auto* recentTextMenu =
-		jnew FileHistoryMenu(DocumentManager::kTextFileHistory,
-							  itsFileMenu, kRecentTextMenuCmd, menuBar);
-	assert( recentTextMenu != nullptr );
+	jnew FileHistoryMenu(DocumentManager::kTextFileHistory,
+						  itsFileMenu, kRecentTextMenuCmd, menuBar);
 
 	itsTreeMenu = menuBar->AppendTextMenu(JGetString("TreeMenuTitle::TreeDirector"));
 	itsTreeMenu->SetMenuItems(treeMenuItems, treeMenuNamespace);
@@ -582,7 +576,6 @@ TreeDirector::BuildWindow
 	itsCmdMenu =
 		jnew CommandMenu(itsProjDoc, nullptr, menuBar,
 						  JXWidget::kFixedLeft, JXWidget::kVElastic, 0,0, 10,10);
-	assert( itsCmdMenu != nullptr );
 	menuBar->AppendMenu(itsCmdMenu);
 	ListenTo(itsCmdMenu);
 

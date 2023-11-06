@@ -69,7 +69,6 @@ EditStylerDialog::BuildWindow
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 370,390, JString::empty);
-	assert( window != nullptr );
 
 	auto* scrollbarSet1 =
 		jnew JXScrollbarSet(window,

@@ -275,7 +275,6 @@ FileListDirector::BuildWindow()
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 340,450, JString::empty);
-	assert( window != nullptr );
 
 	auto* menuBar =
 		jnew JXMenuBar(window,
@@ -297,7 +296,6 @@ FileListDirector::BuildWindow()
 
 	JXDisplay* display = GetDisplay();
 	auto* icon      = jnew JXImage(display, jcc_file_list_window);
-	assert( icon != nullptr );
 	window->SetIcon(icon);
 
 	JPoint desktopLoc;
@@ -336,15 +334,11 @@ FileListDirector::BuildWindow()
 	itsFileMenu->SetItemImage(kNewTextEditorCmd, jx_file_new);
 	itsFileMenu->SetItemImage(kOpenSomethingCmd, jx_file_open);
 
-	auto* recentProjectMenu =
-		jnew FileHistoryMenu(DocumentManager::kProjectFileHistory,
-							  itsFileMenu, kRecentProjectMenuCmd, menuBar);
-	assert( recentProjectMenu != nullptr );
+	jnew FileHistoryMenu(DocumentManager::kProjectFileHistory,
+						  itsFileMenu, kRecentProjectMenuCmd, menuBar);
 
-	auto* recentTextMenu =
-		jnew FileHistoryMenu(DocumentManager::kTextFileHistory,
-							  itsFileMenu, kRecentTextMenuCmd, menuBar);
-	assert( recentTextMenu != nullptr );
+	jnew FileHistoryMenu(DocumentManager::kTextFileHistory,
+						  itsFileMenu, kRecentTextMenuCmd, menuBar);
 
 	itsListMenu = menuBar->AppendTextMenu(JGetString("ListMenuTitle::FileListDirector"));
 	itsListMenu->SetMenuItems(kListMenuStr, "FileListDirector");
@@ -379,7 +373,6 @@ FileListDirector::BuildWindow()
 	itsCmdMenu =
 		jnew CommandMenu(itsProjDoc, nullptr, menuBar,
 						  JXWidget::kFixedLeft, JXWidget::kVElastic, 0,0, 10,10);
-	assert( itsCmdMenu != nullptr );
 	menuBar->AppendMenu(itsCmdMenu);
 	ListenTo(itsCmdMenu);
 

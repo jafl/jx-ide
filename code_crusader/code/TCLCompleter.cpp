@@ -114,7 +114,6 @@ TCLCompleter::Instance()
 		recursiveInstance = true;
 
 		itsSelf = jnew TCLCompleter;
-		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
 	}

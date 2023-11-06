@@ -98,21 +98,17 @@ CreateGlobals
 
 	bool isNew;
 	thePrefsManager = jnew PrefsManager(&isNew);
-	assert( thePrefsManager != nullptr );
 
 	JXInitHelp();
 
 	theDocManager = jnew DocumentManager;
-	assert( theDocManager != nullptr );
 
 	if (useMDI)
 	{
 		auto* dockManager = jnew DockManager();
-		assert( dockManager != nullptr );
 		dockManager->JPrefObject::ReadPrefs();
 
 		theMDIServer = jnew MDIServer;
-		assert( theMDIServer != nullptr );
 	}
 
 	theSearchTextDialog = SearchTextDialog::Create();
@@ -139,13 +135,11 @@ CreateGlobals
 	// global commands
 
 	theCmdManager = jnew CommandManager(theDocManager);
-	assert( theCmdManager != nullptr );
 	theCmdManager->JPrefObject::ReadPrefs();
 
 	// fn menu updater
 
 	theFnMenuUpdater = jnew FnMenuUpdater;
-	assert( theFnMenuUpdater != nullptr );
 
 	// symbol type list
 
@@ -155,7 +149,6 @@ CreateGlobals
 	// printers
 
 	thePTTextPrinter = jnew PTPrinter;
-	assert( thePTTextPrinter != nullptr );
 
 	thePSTextPrinter = jnew PSPrinter(permWindow->GetDisplay());
 	assert( thePSTextPrinter != nullptr );

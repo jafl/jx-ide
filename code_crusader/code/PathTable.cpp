@@ -81,7 +81,6 @@ PathTable::PathTable
 	ListenTo(itsChoosePathButton);
 
 	itsData = jnew JStringTableData;
-	assert( itsData != nullptr );
 
 	itsData->AppendCols(3);		// recurse flag, folder icon, path
 
@@ -308,7 +307,6 @@ PathTable::CreateXInputField
 	assert( itsPathInput == nullptr && cell.x == kTextColumn );
 
 	itsPathInput = jnew JXPathInput(this, kFixedLeft, kFixedTop, x,y, w,h);
-	assert( itsPathInput != nullptr );
 
 	itsPathInput->GetText()->SetText(itsData->GetString(cell));
 	itsPathInput->SetBasePath(itsBasePath);

@@ -57,7 +57,6 @@ INIStyler::Instance()
 		recursiveInstance = true;
 
 		itsSelf = jnew INIStyler;
-		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
 	}

@@ -41,7 +41,6 @@ FileTypeTable::CreateMenuFn()
 		jnew JXTextMenu(JString::empty, this,
 						JXWidget::kFixedLeft, JXWidget::kFixedTop,
 						0,0, 10,10);
-	assert( menu != nullptr );
 	menu->SetToHiddenPopupMenu();
 	menu->SetUpdateAction(JXMenu::kDisableNone);
 

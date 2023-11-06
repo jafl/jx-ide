@@ -316,7 +316,6 @@ SymbolTable::SetNameFilter
 	if (isRegex)
 	{
 		itsNameFilter = jnew JRegex;
-		assert( itsNameFilter != nullptr );
 		result = itsNameFilter->SetPattern(filterStr);
 		if (!result.OK())
 		{
@@ -327,7 +326,6 @@ SymbolTable::SetNameFilter
 	else
 	{
 		itsNameLiteral = jnew JString(filterStr);
-		assert( itsNameLiteral != nullptr );
 	}
 
 	itsVisibleListLockedFlag = false;

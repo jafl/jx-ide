@@ -46,7 +46,6 @@ CShellCompleter::Instance()
 		recursiveInstance = true;
 
 		itsSelf = jnew CShellCompleter;
-		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
 	}

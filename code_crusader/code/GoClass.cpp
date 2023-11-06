@@ -160,7 +160,6 @@ GoClass::NewGhost
 {
 	auto* newClass = jnew GoClass(name, kGhostType, JFAID::kInvalidID, tree,
 										 true);
-	assert( newClass != nullptr );
 	return newClass;
 }
 

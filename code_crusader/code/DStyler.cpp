@@ -79,7 +79,6 @@ DStyler::Instance()
 		recursiveInstance = true;
 
 		itsSelf = jnew DStyler;
-		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
 	}

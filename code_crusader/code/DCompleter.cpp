@@ -53,7 +53,6 @@ DCompleter::Instance()
 		recursiveInstance = true;
 
 		itsSelf = jnew DCompleter;
-		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
 	}

@@ -56,7 +56,6 @@ EditSymbolPrefsDialog::BuildWindow
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 470,90, JString::empty);
-	assert( window != nullptr );
 
 	auto* cancelButton =
 		jnew JXTextButton(JGetString("cancelButton::EditSymbolPrefsDialog::JXLayout"), window,

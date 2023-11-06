@@ -50,7 +50,6 @@ void
 MacroManager::MacroManagerX()
 {
 	itsMacroList = jnew MacroList;
-	assert( itsMacroList != nullptr );
 	itsMacroList->SetSortOrder(JListT::kSortAscending);
 	itsMacroList->SetCompareFunction(CompareMacros);
 }

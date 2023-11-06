@@ -104,7 +104,6 @@ GoTree::StreamInGoClass
 	)
 {
 	auto* newClass = jnew GoClass(input, vers, tree);
-	assert( newClass != nullptr );
 	return newClass;
 }
 

@@ -328,7 +328,6 @@ x\" {
 	fullName.Prepend(itsPackage);
 
 	DClass* c = jnew DClass(fullName, Class::kClassType, fileID, tree, itsFinalFlag);
-	assert( c != nullptr );
 
 	c->SetAbstract(itsAbstractFlag);
 	c->SetTemplate(itsTemplateFlag);
@@ -643,10 +642,8 @@ TreeScanner::D::Scanner::StoreAlias
 	if (!itsNamespaceStack->IsEmpty())
 		{
 		key = jnew JString(*key);
-		assert( key != nullptr );
 
 		value = jnew JString(*value);
-		assert( value != nullptr );
 
 		for (auto* s : *itsNamespaceStack)
 			{

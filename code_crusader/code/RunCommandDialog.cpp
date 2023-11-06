@@ -131,7 +131,6 @@ RunCommandDialog::BuildWindow()
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 470,260, JString::empty);
-	assert( window != nullptr );
 
 	auto* cancelButton =
 		jnew JXTextButton(JGetString("cancelButton::RunCommandDialog::JXLayout"), window,
@@ -269,10 +268,8 @@ RunCommandDialog::BuildWindow()
 
 	// create hidden JXDocument so Meta-# shortcuts work
 
-	auto* fileListMenu =
-		jnew JXDocumentMenu(JString::empty, window,
-						   JXWidget::kFixedLeft, JXWidget::kFixedTop, 0,-20, 10,10);
-	assert( fileListMenu != nullptr );
+	jnew JXDocumentMenu(JString::empty, window,
+					   JXWidget::kFixedLeft, JXWidget::kFixedTop, 0,-20, 10,10);
 
 	UpdateDisplay();
 }
@@ -388,7 +385,6 @@ void
 RunCommandDialog::Exec()
 {
 	auto* path = jnew JString;
-	assert( path != nullptr );
 
 	if (!itsPathInput->GetPath(path))
 	{
@@ -401,16 +397,12 @@ RunCommandDialog::Exec()
 	assert( cmd != nullptr );
 
 	auto* ss = jnew JString;
-	assert( ss != nullptr );
 
 	auto* mt = jnew JString;
-	assert( mt != nullptr );
 
 	auto* ms = jnew JString;
-	assert( ms != nullptr );
 
 	auto* mi = jnew JString;
-	assert( mi != nullptr );
 
 	CommandManager::CmdInfo info(path, cmd, ss,
 								   itsIsMakeCB->IsChecked(), itsIsCVSCB->IsChecked(),

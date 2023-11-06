@@ -37,7 +37,6 @@ PythonCompleter::Instance()
 		recursiveInstance = true;
 
 		itsSelf = jnew PythonCompleter;
-		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
 	}

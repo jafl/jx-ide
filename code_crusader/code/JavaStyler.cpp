@@ -71,7 +71,6 @@ JavaStyler::Instance()
 		recursiveInstance = true;
 
 		itsSelf = jnew JavaStyler;
-		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
 	}

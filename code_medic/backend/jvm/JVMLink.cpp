@@ -95,7 +95,6 @@ jvm::Link::Link()
 	InitFlags();
 
 	itsBPMgr = jnew BreakpointManager(this);
-	assert( itsBPMgr != nullptr );
 
 	itsSourcePathList = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
 	assert( itsSourcePathList != nullptr );
@@ -108,10 +107,8 @@ jvm::Link::Link()
 	assert( itsClassByNameList != nullptr );
 
 	itsThreadRoot = jnew ThreadNode(ThreadNode::kGroupType, ThreadNode::kRootThreadGroupID);
-	assert( itsThreadRoot != nullptr );
 
 	itsThreadTree = jnew JTree(itsThreadRoot);
-	assert( itsThreadTree != nullptr );
 
 	itsThreadList = jnew JPtrArray<ThreadNode>(JPtrArrayT::kForgetAll);
 	assert( itsThreadList != nullptr );
@@ -484,7 +481,6 @@ jvm::Link::DispatchEventsFromJVM
 			if (!FindThread(threadID, &node))	// might be created by GetThreadGroupsCmd
 			{
 				node = jnew ThreadNode(ThreadNode::kThreadType, threadID);
-				assert( node != nullptr );
 			}
 		}
 		else if (type == kThreadDeathEvent)
@@ -634,7 +630,6 @@ jvm::Link::CheckNextThreadGroup()
 	}
 
 	Command* cmd = jnew GetThreadParentCmd(node, true);
-	assert( cmd != nullptr );
 
 	itsCullThreadGroupIndex++;
 }
@@ -707,7 +702,6 @@ jvm::Link::AddClass
 	Broadcast(IDResolved(id));
 
 	Command* cmd = jnew GetClassMethodsCmd(id);
-	assert( cmd != nullptr );
 }
 
 /******************************************************************************
@@ -734,7 +728,6 @@ jvm::Link::GetClassName
 	else
 	{
 		Command* cmd = jnew GetClassInfoCmd(id);
-		assert( cmd != nullptr );
 
 		name->Clear();
 		return false;
@@ -1214,7 +1207,6 @@ jvm::Link::SetProgram
 	}
 
 	auto* task = jnew SetProgramTask();
-	assert( task != nullptr );
 	task->Go();
 }
 
@@ -1664,7 +1656,6 @@ jvm::Link::CreateArray2DCmd
 	)
 {
 	auto* cmd = jnew Array2DCmd(dir, table, data);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1682,7 +1673,6 @@ jvm::Link::CreatePlot2DCmd
 	)
 {
 	auto* cmd = jnew Plot2DCmd(dir, x, y);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1698,7 +1688,6 @@ jvm::Link::CreateDisplaySourceForMainCmd
 	)
 {
 	auto* cmd = jnew DisplaySourceForMainCmd(sourceDir);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1715,7 +1704,6 @@ jvm::Link::CreateGetCompletionsCmd
 	)
 {
 	auto* cmd = jnew GetCompletionsCmd(input, history);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1731,7 +1719,6 @@ jvm::Link::CreateGetFrameCmd
 	)
 {
 	auto* cmd = jnew GetFrameCmd(widget);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1748,7 +1735,6 @@ jvm::Link::CreateGetStackCmd
 	)
 {
 	auto* cmd = jnew GetStackCmd(tree, widget);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1764,7 +1750,6 @@ jvm::Link::CreateGetThreadCmd
 	)
 {
 	auto* cmd = jnew GetThreadCmd(widget);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1781,7 +1766,6 @@ jvm::Link::CreateGetThreadsCmd
 	)
 {
 	auto* cmd = jnew GetThreadsCmd(tree, widget);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1798,7 +1782,6 @@ jvm::Link::CreateGetFullPathCmd
 	)
 {
 	auto* cmd = jnew GetFullPathCmd(fileName, lineIndex);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1814,7 +1797,6 @@ jvm::Link::CreateGetInitArgsCmd
 	)
 {
 	auto* cmd = jnew GetInitArgsCmd(argInput);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1830,7 +1812,6 @@ jvm::Link::CreateGetLocalVarsCmd
 	)
 {
 	auto* cmd = jnew GetLocalVarsCmd(rootNode);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1846,7 +1827,6 @@ jvm::Link::CreateGetSourceFileListCmd
 	)
 {
 	auto* cmd = jnew GetSourceFileListCmd(fileList);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1865,7 +1845,6 @@ jvm::Link::CreateVarValueCmd
 	s += expr;
 
 	auto* cmd = jnew VarCmd(s);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1885,7 +1864,6 @@ jvm::Link::CreateVarContentCmd
 	s += ")";
 
 	auto* cmd = jnew VarCmd(s);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1901,7 +1879,6 @@ jvm::Link::CreateVarNode
 	)
 {
 	auto* node = jnew VarNode(shouldUpdate);
-	assert( node != nullptr );
 	return node;
 }
 
@@ -1915,7 +1892,6 @@ jvm::Link::CreateVarNode
 	)
 {
 	auto* node = jnew VarNode(parent, name, fullName, value);
-	assert( node != nullptr );
 	return node;
 }
 
@@ -2232,7 +2208,6 @@ jvm::Link::StartDebugger()
 	if (itsAcceptor == nullptr)
 	{
 		itsAcceptor = jnew Acceptor;
-		assert( itsAcceptor != nullptr );
 	}
 
 	const JString portStr((JUInt64) kJavaPort);
@@ -2248,7 +2223,6 @@ jvm::Link::StartDebugger()
 		const JString msg = JGetString("ListenError::JVMLink", map, sizeof(map));
 
 		auto* task = jnew WelcomeTask(msg, true);
-		assert( task != nullptr );
 		task->Go();
 		return false;
 	}
@@ -2261,7 +2235,6 @@ jvm::Link::StartDebugger()
 		JString msg = JGetString("Welcome::JVMLink", map, sizeof(map));
 
 		auto* task = jnew WelcomeTask(msg, false);
-		assert( task != nullptr );
 		task->Go();
 		return true;
 	}
@@ -2358,7 +2331,6 @@ jvm::Link::ConnectionEstablished
 	itsAcceptor->close();
 
 	Command* cmd = jnew GetIDSizesCmd();
-	assert( cmd != nullptr );
 
 	// listen for class unload
 
@@ -2385,7 +2357,6 @@ jvm::Link::ConnectionEstablished
 	ListenTo(itsThreadTree);
 
 	cmd = jnew GetThreadGroupsCmd(itsThreadRoot, nullptr);
-	assert( cmd != nullptr );
 
 	// trigger commands
 

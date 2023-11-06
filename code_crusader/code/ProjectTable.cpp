@@ -191,7 +191,6 @@ ProjectTable::NewGroup
 	ProjectTree* tree = itsDoc->GetFileTree();
 
 	auto* newNode = jnew GroupNode(tree, false);
-	assert( newNode != nullptr );
 
 	if (returnNode != nullptr)
 	{
@@ -1316,7 +1315,6 @@ ProjectTable::HandleMouseDrag
 	else if (itsDragType == kWaitForDNDDrag && JMouseMoved(itsStartPt, pt))
 	{
 		auto* data = jnew JXFileSelection(this, kSelectionDataID);
-		assert( data != nullptr );
 
 		if (BeginDND(pt, buttonStates, modifiers, data))
 		{
@@ -1549,7 +1547,6 @@ ProjectTable::CopyFileToDNDList
 	assert( fNode != nullptr );
 
 	auto* s = jnew JString;
-	assert( s != nullptr );
 	if (fNode->GetFullName(s))
 	{
 		list->Append(s);
@@ -2158,7 +2155,6 @@ ProjectTable::CreateContextMenu()
 	if (itsContextMenu == nullptr)
 	{
 		itsContextMenu = jnew JXTextMenu(JString::empty, this, kFixedLeft, kFixedTop, 0,0, 10,10);
-		assert( itsContextMenu != nullptr );
 		itsContextMenu->SetMenuItems(kContextMenuStr, "ProjectTable");
 		itsContextMenu->SetUpdateAction(JXMenu::kDisableNone);
 		itsContextMenu->SetToHiddenPopupMenu();
@@ -2391,7 +2387,6 @@ ProjectTable::CreateTreeListInput
 	{
 		auto* obj =
 			jnew ProjectTableInput(this, enclosure, hSizing, vSizing, x,y, w,h);
-		assert( obj != nullptr );
 		obj->SetBasePath(itsDoc->GetFilePath());
 		return obj;
 	}

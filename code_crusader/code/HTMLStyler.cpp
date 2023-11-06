@@ -144,7 +144,6 @@ HTMLStyler::Instance()
 		recursiveInstance = true;
 
 		itsSelf = jnew HTMLStyler;
-		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
 	}

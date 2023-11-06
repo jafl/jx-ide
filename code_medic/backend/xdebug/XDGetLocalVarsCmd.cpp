@@ -67,7 +67,6 @@ xdebug::GetLocalVarsCmd::HandleSuccess
 			id = JGetXMLNodeAttr(node, "id");
 
 			auto* cmd = jnew GetContextVarsCmd(itsRootNode, id);
-			assert( cmd != nullptr );
 			cmd->Send();
 		}
 

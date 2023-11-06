@@ -55,7 +55,6 @@ MainDirector::MainDirector
 	JPrefObject(GetPrefsManager(), kMainDirectorID)
 {
 	itsClass = jnew Class();
-	assert(itsClass != nullptr);
 
 	JString outputPath;
 
@@ -128,7 +127,6 @@ MainDirector::BuildWindow
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 650,460, JString::empty);
-	assert( window != nullptr );
 
 	itsClassInput =
 		jnew JXInputField(window,

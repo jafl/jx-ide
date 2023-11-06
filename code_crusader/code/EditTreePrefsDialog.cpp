@@ -65,7 +65,6 @@ EditTreePrefsDialog::BuildWindow
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 320,270, JString::empty);
-	assert( window != nullptr );
 
 	auto* cancelButton =
 		jnew JXTextButton(JGetString("cancelButton::EditTreePrefsDialog::JXLayout"), window,

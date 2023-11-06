@@ -66,7 +66,6 @@ EiffelStyler::Instance()
 		recursiveInstance = true;
 
 		itsSelf = jnew EiffelStyler;
-		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
 	}

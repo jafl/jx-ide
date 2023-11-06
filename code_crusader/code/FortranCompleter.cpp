@@ -594,7 +594,6 @@ FortranCompleter::Instance()
 		recursiveInstance = true;
 
 		itsSelf = jnew FortranCompleter;
-		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
 	}

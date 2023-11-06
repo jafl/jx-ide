@@ -99,7 +99,6 @@ ThreadsDir::BuildWindow
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 450,500, JString::empty);
-	assert( window != nullptr );
 
 	auto* menuBar =
 		jnew JXMenuBar(window,
@@ -122,15 +121,11 @@ ThreadsDir::BuildWindow
 
 	JXDisplay* display = GetDisplay();
 	auto* icon      = jnew JXImage(display, medic_threads_window);
-	assert( icon != nullptr );
 	window->SetIcon(icon);
 
 	auto* root = jnew JNamedTreeNode(nullptr, JString::empty);
-	assert( root != nullptr );
 	auto* tree = jnew JTree(root);
-	assert( tree != nullptr );
 	auto* treeList = jnew JNamedTreeList(tree);
-	assert( treeList != nullptr );
 
 	itsWidget =
 		jnew ThreadsWidget(dir, this, tree, treeList,

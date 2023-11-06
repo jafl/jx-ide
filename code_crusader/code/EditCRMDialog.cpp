@@ -95,7 +95,6 @@ EditCRMDialog::BuildWindow
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 540,370, JString::empty);
-	assert( window != nullptr );
 
 	itsPartition =
 		jnew JXVertPartition(heights, elasticIndex, minHeights, window,
@@ -181,7 +180,6 @@ EditCRMDialog::BuildWindow
 		jnew JXColHeaderWidget(itsRuleTable, ruleScrollbarSet, encl,
 							  JXWidget::kHElastic, JXWidget::kFixedTop,
 							  0,0, w, kColHeaderHeight);
-	assert( colHeader != nullptr );
 	colHeader->TurnOnColResizing(20);
 	itsRuleTable->SetColTitles(colHeader);
 
@@ -229,7 +227,6 @@ EditCRMDialog::BuildWindow
 	colHeader =
 		jnew JXColHeaderWidget(itsCRMTable, crmScrollbarSet, crmColHeaderEncl,
 							  JXWidget::kHElastic, JXWidget::kFixedTop, 0,0, 10,10);
-	assert( colHeader != nullptr );
 	colHeader->FitToEnclosure();
 	colHeader->SetColTitle(1, JGetString("Column1::EditCRMDialog"));
 }

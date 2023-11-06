@@ -67,7 +67,6 @@ ProjectConfigDialog::BuildWindow
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 410,380, JString::empty);
-	assert( window != nullptr );
 
 	itsMethodRG =
 		jnew JXRadioGroup(window,

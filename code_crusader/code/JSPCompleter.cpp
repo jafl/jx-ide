@@ -81,7 +81,6 @@ JSPCompleter::Instance()
 		recursiveInstance = true;
 
 		itsSelf = jnew JSPCompleter;
-		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
 	}

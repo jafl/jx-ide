@@ -81,7 +81,6 @@ EditPrefsDialog::BuildWindow
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 450,480, JString::empty);
-	assert( window != nullptr );
 
 	itsGDBCmd =
 		jnew DebuggerProgramInput(window,

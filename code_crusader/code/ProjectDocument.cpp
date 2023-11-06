@@ -482,32 +482,24 @@ ProjectDocument::ProjectDocument
 	ProjectDocumentX(itsFileTree);
 
 	itsBuildMgr = jnew BuildManager(this);
-	assert( itsBuildMgr != nullptr );
 
 	itsAllFileDirector = jnew FileListDirector(this);
-	assert( itsAllFileDirector != nullptr );
 
 	itsSymbolDirector = jnew SymbolDirector(this);
-	assert( itsSymbolDirector != nullptr );
 
 	itsCTreeDirector = jnew CTreeDirector(this);
-	assert( itsCTreeDirector != nullptr );
 	itsTreeDirectorList->Append(itsCTreeDirector);
 
 	itsDTreeDirector = jnew DTreeDirector(this);
-	assert( itsDTreeDirector != nullptr );
 	itsTreeDirectorList->Append(itsDTreeDirector);
 
 	itsGoTreeDirector = jnew GoTreeDirector(this);
-	assert( itsGoTreeDirector != nullptr );
 	itsTreeDirectorList->Append(itsGoTreeDirector);
 
 	itsJavaTreeDirector = jnew JavaTreeDirector(this);
-	assert( itsJavaTreeDirector != nullptr );
 	itsTreeDirectorList->Append(itsJavaTreeDirector);
 
 	itsPHPTreeDirector = jnew PHPTreeDirector(this);
-	assert( itsPHPTreeDirector != nullptr );
 	itsTreeDirectorList->Append(itsPHPTreeDirector);
 
 	if (fromTemplate)
@@ -632,7 +624,6 @@ ProjectDocument::ProjectDocument
 	}
 
 	itsBuildMgr = jnew BuildManager(projInput, projVers, setInput, setVers, this);
-	assert( itsBuildMgr != nullptr );
 
 	if (36 <= projVers && projVers < 71)
 	{
@@ -649,19 +640,16 @@ ProjectDocument::ProjectDocument
 
 	itsAllFileDirector = jnew FileListDirector(projInput, projVers, setInput, setVers,
 												 symInput, symVers, this, silent);
-	assert( itsAllFileDirector != nullptr );
 
 	// create symbol list
 
 	itsSymbolDirector = jnew SymbolDirector(projInput, projVers, setInput, setVers,
 											  symInput, symVers, this, silent);
-	assert( itsSymbolDirector != nullptr );
 
 	// read C++ class tree
 
 	itsCTreeDirector = jnew CTreeDirector(projInput, projVers, setInput, setVers,
 											symInput, symVers, this, silent, itsDirList);
-	assert( itsCTreeDirector != nullptr );
 	// activates itself
 	itsTreeDirectorList->Append(itsCTreeDirector);
 
@@ -671,22 +659,18 @@ ProjectDocument::ProjectDocument
 	{
 		itsDTreeDirector = jnew DTreeDirector(projInput, projVers, setInput, setVers,
 												symInput, symVers, this, silent);
-		assert( itsDTreeDirector != nullptr );
 		// activates itself
 
 		itsGoTreeDirector = jnew GoTreeDirector(projInput, projVers, setInput, setVers,
 												  symInput, symVers, this, silent);
-		assert( itsGoTreeDirector != nullptr );
 		// activates itself
 	}
 	else
 	{
 		itsDTreeDirector = jnew DTreeDirector(this);
-		assert( itsDTreeDirector != nullptr );
 		itsDTreeDirector->GetTree()->NextUpdateMustReparseAll();
 
 		itsGoTreeDirector = jnew GoTreeDirector(this);
-		assert( itsGoTreeDirector != nullptr );
 		itsGoTreeDirector->GetTree()->NextUpdateMustReparseAll();
 	}
 	itsTreeDirectorList->Append(itsDTreeDirector);
@@ -698,13 +682,11 @@ ProjectDocument::ProjectDocument
 	{
 		itsJavaTreeDirector = jnew JavaTreeDirector(projInput, projVers, setInput, setVers,
 													  symInput, symVers, this, silent);
-		assert( itsJavaTreeDirector != nullptr );
 		// activates itself
 	}
 	else
 	{
 		itsJavaTreeDirector = jnew JavaTreeDirector(this);
-		assert( itsJavaTreeDirector != nullptr );
 		itsJavaTreeDirector->GetTree()->NextUpdateMustReparseAll();
 	}
 	itsTreeDirectorList->Append(itsJavaTreeDirector);
@@ -715,13 +697,11 @@ ProjectDocument::ProjectDocument
 	{
 		itsPHPTreeDirector = jnew PHPTreeDirector(projInput, projVers, setInput, setVers,
 												   symInput, symVers, this, silent);
-		assert( itsPHPTreeDirector != nullptr );
 		// activates itself
 	}
 	else
 	{
 		itsPHPTreeDirector = jnew PHPTreeDirector(this);
-		assert( itsPHPTreeDirector != nullptr );
 		itsPHPTreeDirector->GetTree()->NextUpdateMustReparseAll();
 	}
 	itsTreeDirectorList->Append(itsPHPTreeDirector);
@@ -773,11 +753,9 @@ ProjectDocument::ProjectDocumentX
 	itsLastSymbolLoadTime     = 0.0;
 
 	itsDirList = jnew DirList;
-	assert( itsDirList != nullptr );
 	itsDirList->SetBasePath(GetFilePath());
 
 	itsCmdMgr = jnew CommandManager;
-	assert( itsCmdMgr != nullptr );
 
 	ListenTo(GetPrefsManager());
 
@@ -1473,7 +1451,6 @@ ProjectDocument::BuildWindow
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 510,430, JString::empty);
-	assert( window != nullptr );
 
 	auto* menuBar =
 		jnew JXMenuBar(window,
@@ -1520,7 +1497,6 @@ ProjectDocument::BuildWindow
 
 	JXDisplay* display = GetDisplay();
 	auto* icon      = jnew JXImage(display, jcc_project_window);
-	assert( icon != nullptr );
 	window->SetIcon(icon);
 
 	JPoint desktopLoc;
@@ -1545,7 +1521,6 @@ ProjectDocument::BuildWindow
 	scrollbarSet->FitToEnclosure();
 
 	auto* treeList = jnew JNamedTreeList(fileList);
-	assert( treeList != nullptr );
 
 	itsFileTable =
 		jnew ProjectTable(this, menuBar, treeList,
@@ -1569,15 +1544,11 @@ ProjectDocument::BuildWindow
 	itsFileMenu->SetItemImage(kSaveCmd,          jx_file_save);
 	itsFileMenu->SetItemImage(kPrintCmd,         jx_file_print);
 
-	auto* recentProjectMenu =
-		jnew FileHistoryMenu(DocumentManager::kProjectFileHistory,
-							  itsFileMenu, kRecentProjectMenuCmd, menuBar);
-	assert( recentProjectMenu != nullptr );
+	jnew FileHistoryMenu(DocumentManager::kProjectFileHistory,
+						  itsFileMenu, kRecentProjectMenuCmd, menuBar);
 
-	auto* recentTextMenu =
-		jnew FileHistoryMenu(DocumentManager::kTextFileHistory,
-							  itsFileMenu, kRecentTextMenuCmd, menuBar);
-	assert( recentTextMenu != nullptr );
+	jnew FileHistoryMenu(DocumentManager::kTextFileHistory,
+						  itsFileMenu, kRecentTextMenuCmd, menuBar);
 
 	itsProjectMenu = menuBar->AppendTextMenu(JGetString("ProjectMenuTitle::global"));
 	itsProjectMenu->SetMenuItems(kProjectMenuStr, "ProjectDocument");
@@ -1611,7 +1582,6 @@ ProjectDocument::BuildWindow
 	itsCmdMenu =
 		jnew CommandMenu(this, nullptr, menuBar,
 						  JXWidget::kFixedLeft, JXWidget::kVElastic, 0,0, 10,10);
-	assert( itsCmdMenu != nullptr );
 	menuBar->AppendMenu(itsCmdMenu);
 	ListenTo(itsCmdMenu);
 
@@ -1648,7 +1618,6 @@ ProjectDocument::BuildWindow
 	// update pg
 
 	itsUpdatePG = jnew JXProgressDisplay();
-	assert( itsUpdatePG != nullptr );
 	itsUpdatePG->SetItems(nullptr, itsUpdateCounter, itsUpdateCleanUpIndicator, itsUpdateLabel);
 
 	ShowUpdatePG(false);
@@ -2028,7 +1997,6 @@ ProjectDocument::EditSearchPaths
 	)
 {
 	auto* dlog = jnew EditSearchPathsDialog(*itsDirList);
-	assert( dlog != nullptr );
 
 	if (dirList != nullptr)
 	{
@@ -2524,7 +2492,6 @@ ProjectDocument::SymbolUpdateProgress()
 			itsWaitForUpdateTask->Cancel();
 		}
 		itsWaitForUpdateTask = jnew WaitForSymbolUpdateTask(itsUpdateProcess);
-		assert( itsWaitForUpdateTask != nullptr );
 		ClearWhenGoingAway(itsWaitForUpdateTask, &itsWaitForUpdateTask);
 		itsWaitForUpdateTask->Go();
 	}
@@ -2629,7 +2596,6 @@ ProjectDocument::DelayUpdateSymbolDatabase()
 {
 	jdelete itsDelaySymbolUpdateTask;
 	itsDelaySymbolUpdateTask = jnew DelaySymbolUpdateTask(this);
-	assert( itsDelaySymbolUpdateTask != nullptr );
 	itsDelaySymbolUpdateTask->Start();
 }
 
@@ -2774,12 +2740,10 @@ ProjectDocument::UpdateSymbolDatabase()
 		close(fd[1][0]);
 
 		itsUpdateStream = jnew JOutPipeStream(fd[1][1], true);
-		assert( itsUpdateStream != nullptr );
 
 		ShowUpdatePG(true);
 
 		itsUpdateProcess = jnew JProcess(pid);
-		assert( itsUpdateProcess != nullptr );
 		ListenTo(itsUpdateProcess);
 		itsUpdateProcess->KillAtExit();
 

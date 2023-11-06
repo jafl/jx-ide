@@ -29,7 +29,6 @@ Class::Class()
 	itsAncestorFiles(nullptr)
 {
 	itsLink	= jnew Link();
-	assert(itsLink != nullptr);
 	ListenTo(itsLink);
 
 	SetCompareFunction(MemberFunction::CompareFunction);

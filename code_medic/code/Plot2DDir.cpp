@@ -146,7 +146,6 @@ Plot2DDir::Plot2DDirX1
 	itsWaitingForReloadFlag = false;
 
 	itsExprData = jnew JStringTableData;
-	assert( itsExprData != nullptr );
 
 	itsExprData->AppendCols(Plot2DExprTable::kColCount);
 
@@ -252,7 +251,6 @@ Plot2DDir::BuildWindow()
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 570,500, JString::empty);
-	assert( window != nullptr );
 
 	auto* menuBar =
 		jnew JXMenuBar(window,
@@ -294,7 +292,6 @@ Plot2DDir::BuildWindow()
 
 	JXDisplay* display = GetDisplay();
 	auto* icon      = jnew JXImage(display, medic_2d_plot_window);
-	assert( icon != nullptr );
 	window->SetIcon(icon);
 
 	JXContainer* encl = scrollbarSet->GetScrollEnclosure();
@@ -312,7 +309,6 @@ Plot2DDir::BuildWindow()
 		jnew JXColHeaderWidget(itsExprTable, scrollbarSet, encl,
 					JXWidget::kHElastic, JXWidget::kFixedTop,
 					0,0, w, kColHeaderHeight);
-	assert( itsColHeader != nullptr );
 
 	itsExprTable->ConfigureColHeader(itsColHeader);
 

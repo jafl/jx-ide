@@ -108,7 +108,6 @@ PHPTree::StreamInPHPClass
 	)
 {
 	auto* newClass = jnew PHPClass(input, vers, tree);
-	assert( newClass != nullptr );
 	return newClass;
 }
 

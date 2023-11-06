@@ -76,7 +76,6 @@ HTMLCompleter::Instance()
 		recursiveInstance = true;
 
 		itsSelf = jnew HTMLCompleter;
-		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
 	}

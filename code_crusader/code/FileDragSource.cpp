@@ -132,7 +132,6 @@ FileDragSource::HandleMouseDown
 			 !itsNameInput->GetText()->GetText().EndsWith(ACE_DIRECTORY_SEPARATOR_STR))
 	{
 		auto* task = jnew DSSFinishSaveTask(itsDoc);
-		assert( task != nullptr );
 
 		auto* data = jnew JXDSSSelection(GetWindow(), task);
 		assert( data != nullptr );

@@ -41,7 +41,6 @@ ListChooseFileDialog::Create
 	)
 {
 	auto* dlog = jnew ListChooseFileDialog(fileFilter);
-	assert( dlog != nullptr );
 	dlog->BuildWindow(replaceListStr, appendToListStr, selectType, selectName, message);
 	return dlog;
 }
@@ -99,7 +98,6 @@ ListChooseFileDialog::BuildWindow
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 310,420, JString::empty);
-	assert( window != nullptr );
 
 	auto* openButton =
 		jnew JXTextButton(JGetString("openButton::ListChooseFileDialog::JXLayout"), window,

@@ -134,7 +134,6 @@ Link::ParseClass
 		}
 
 		auto* fn = jnew MemberFunction;
-		assert( fn != nullptr );
 
 		fn->SetFnName(name);
 		fn->ShouldBeRequired(required);

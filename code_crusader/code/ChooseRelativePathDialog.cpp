@@ -38,7 +38,6 @@ ChooseRelativePathDialog::Create
 	)
 {
 	auto* dlog = jnew ChooseRelativePathDialog(fileFilter);
-	assert( dlog != nullptr );
 	dlog->BuildWindow(pathType, startPath, message);
 	return dlog;
 }
@@ -94,7 +93,6 @@ ChooseRelativePathDialog::BuildWindow
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 310,460, JString::empty);
-	assert( window != nullptr );
 
 	auto* openButton =
 		jnew JXTextButton(JGetString("openButton::ChooseRelativePathDialog::JXLayout"), window,

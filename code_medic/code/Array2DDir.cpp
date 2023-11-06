@@ -138,7 +138,6 @@ Array2DDir::Array2DDirX
 	itsWaitingForReloadFlag = false;
 
 	itsData = jnew JStringTableData;
-	assert( itsData != nullptr );
 
 	itsRowUpdateList = jnew JArray<JIntRange>;
 	assert( itsRowUpdateList != nullptr );
@@ -225,7 +224,6 @@ Array2DDir::BuildWindow()
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 370,500, JString::empty);
-	assert( window != nullptr );
 
 	auto* rowFTCContainer =
 		jnew JXWidgetSet(window,
@@ -324,7 +322,6 @@ Array2DDir::BuildWindow()
 
 	JXDisplay* display = GetDisplay();
 	auto* icon      = jnew JXImage(display, medic_2d_array_window);
-	assert( icon != nullptr );
 	window->SetIcon(icon);
 
 	const JFont& font = JFontManager::GetDefaultMonospaceFont();
@@ -348,7 +345,6 @@ Array2DDir::BuildWindow()
 
 // begin tableLayout
 
-	const JRect tableLayout_Frame    = encl->GetFrame();
 	const JRect tableLayout_Aperture = encl->GetAperture();
 	encl->AdjustSize(370 - tableLayout_Aperture.width(), 330 - tableLayout_Aperture.height());
 
@@ -367,7 +363,7 @@ Array2DDir::BuildWindow()
 					JXWidget::kFixedLeft, JXWidget::kVElastic, 0,20, 30,310);
 	assert( itsRowHeader != nullptr );
 
-	encl->SetSize(tableLayout_Frame.width(), tableLayout_Frame.height());
+	encl->SetSize(tableLayout_Aperture.width(), tableLayout_Aperture.height());
 
 // end tableLayout
 
@@ -1151,7 +1147,6 @@ Array2DDir::ExamineMemory
 		expr = GetExpression(cell);
 
 		dir = jnew MemoryDir(itsCommandDir, expr);
-		assert(dir != nullptr);
 		dir->SetDisplayType(type);
 		dir->Activate();
 	}
@@ -1159,7 +1154,6 @@ Array2DDir::ExamineMemory
 	if (dir == nullptr)
 	{
 		dir = jnew MemoryDir(itsCommandDir, JString::empty);
-		assert(dir != nullptr);
 		dir->SetDisplayType(type);
 		dir->Activate();
 	}

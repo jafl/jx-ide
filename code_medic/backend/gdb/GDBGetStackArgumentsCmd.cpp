@@ -116,7 +116,6 @@ gdb::GetStackArgumentsCmd::HandleSuccess
 			iter.Invalidate();
 
 			auto* argNode = jnew StackArgNode(frameNode, *name, *value);
-			assert( argNode != nullptr );
 		}
 	}
 }

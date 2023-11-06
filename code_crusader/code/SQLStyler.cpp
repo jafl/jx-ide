@@ -67,7 +67,6 @@ SQLStyler::Instance()
 		recursiveInstance = true;
 
 		itsSelf = jnew SQLStyler;
-		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
 	}

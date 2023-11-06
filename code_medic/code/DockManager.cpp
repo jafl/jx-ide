@@ -31,7 +31,6 @@ DockManager::DockManager()
 {
 	JXDisplay* display = JXGetApplication()->GetCurrentDisplay();
 	auto* icon      = jnew JXImage(display, medic_command_window);
-	assert( icon != nullptr );
 	SetIcon(icon);
 }
 

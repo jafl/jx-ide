@@ -34,7 +34,6 @@ jvm::ThreadNode::ThreadNode
 		dynamic_cast<Link*>(GetLink())->ThreadCreated(this);
 
 		Command* cmd = jnew GetThreadNameCmd(this);
-		assert( cmd != nullptr );
 	}
 }
 
@@ -95,7 +94,6 @@ jvm::ThreadNode::NameChanged()
 	if (!HasParent())
 	{
 		Command* cmd = jnew GetThreadParentCmd(this);
-		assert( cmd != nullptr );
 	}
 }
 
@@ -116,7 +114,6 @@ jvm::ThreadNode::FindParent
 	if (!link->FindThread(id, &parent))
 	{
 		parent = jnew ThreadNode(kGroupType, id);
-		assert( parent != nullptr );
 	}
 
 	parent->AppendThread(this);

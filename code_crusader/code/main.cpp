@@ -48,7 +48,6 @@ main
 	bool displayAbout;
 	JString prevVersStr;
 	auto* app = jnew App(&argc, argv, useMDI, &displayAbout, &prevVersStr);
-	assert( app != nullptr );
 
 	JXApplication::StartFiber([argc, argv, commitFile]()
 	{

@@ -140,7 +140,6 @@ LineIndexTable::LineIndexTable
 	AppendCols(3);
 
 	auto* task = jnew AdjustLineTableToTextTask(this);
-	assert( task != nullptr );
 	task->Go();
 
 	ListenTo(itsText);
@@ -492,7 +491,6 @@ LineIndexTable::OpenLineMenu
 	if (itsLineMenu == nullptr)
 	{
 		itsLineMenu = jnew JXTextMenu(JString::empty, this, kFixedLeft, kFixedTop, 0,0, 10,10);
-		assert( itsLineMenu != nullptr );
 		itsLineMenu->SetToHiddenPopupMenu(true);
 		itsLineMenu->SetUpdateAction(JXMenu::kDisableNone);
 		itsLineMenu->AttachHandlers(this,
@@ -553,7 +551,6 @@ LineIndexTable::OpenLineMenu
 	if (itsDeselectTask == nullptr)
 	{
 		itsDeselectTask = jnew DeselectLineTask(this);
-		assert( itsDeselectTask != nullptr );
 		itsDeselectTask->Start();
 	}
 

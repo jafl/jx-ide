@@ -30,7 +30,6 @@ void
 DirList::DirListX()
 {
 	itsDirList = jnew DirInfoList;
-	assert( itsDirList != nullptr );
 	itsDirList->SetSortOrder(JListT::kSortAscending);
 	itsDirList->SetCompareFunction(DirInfo::ComparePathNames);
 

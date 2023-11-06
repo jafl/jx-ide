@@ -171,7 +171,6 @@ interface\b {
 
 	JavaClass* c = jnew JavaClass(fullName, Class::kClassType, fileID, tree,
 									  itsPublicFlag, itsFinalFlag);
-	assert( c != nullptr );
 
 	c->SetAbstract(itsAbstractFlag);
 	classList->Append(c);

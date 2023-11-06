@@ -239,7 +239,6 @@ CtagsUser::StartProcess
 			ListenTo(itsProcess);
 
 			itsCmdPipe = jnew JOutPipeStream(toFD, true);
-			assert( itsCmdPipe != nullptr );
 
 			itsResultFD = fromFD;
 			assert( itsResultFD != ACE_INVALID_HANDLE );
@@ -329,7 +328,6 @@ CtagsUser::ReadExtensionFlags
 		}
 
 		auto* value = jnew JString;
-		assert( value != nullptr );
 
 		data.Split(":", &split, 2);
 		if (split.GetElementCount() == 2)

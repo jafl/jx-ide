@@ -115,7 +115,6 @@ VarTreeWidget::VarTreeWidget
 
 	itsBasePopupMenu =
 		jnew JXTextMenu(JString::empty, this, kFixedLeft, kFixedTop, 0,0, 10, 10);
-	assert( itsBasePopupMenu != nullptr );
 	itsBasePopupMenu->SetMenuItems(kBaseMenuStr, "VarTreeWidget");
 	itsBasePopupMenu->SetUpdateAction(JXMenu::kDisableNone);
 	itsBasePopupMenu->SetToHiddenPopupMenu();
@@ -398,7 +397,6 @@ VarTreeWidget::ExamineMemory
 		expr = node->GetFullName();
 
 		dir = jnew MemoryDir(itsDir, expr);
-		assert(dir != nullptr);
 		dir->SetDisplayType(type);
 		dir->Activate();
 	}
@@ -406,7 +404,6 @@ VarTreeWidget::ExamineMemory
 	if (dir == nullptr)
 	{
 		dir = jnew MemoryDir(itsDir, JString::empty);
-		assert(dir != nullptr);
 		dir->SetDisplayType(type);
 		dir->Activate();
 	}

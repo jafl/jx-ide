@@ -136,7 +136,6 @@ EditCommandsTable::TableDrawCell
 	{
 		itsMinColWidth = w;
 		auto* task = jnew UpdateCommandsTableWidth(this);
-		assert( task != nullptr );
 		task->Go();
 	}
 
@@ -203,7 +202,6 @@ EditCommandsTable::CreateXInputField
 		jnew JXInputField(this, kFixedLeft, kFixedTop,
 			x+kHMarginWidth, y,
 			w - kHMarginWidth, h);
-	assert(itsCmdInput != nullptr);
 
 	itsCmdInput->GetText()->SetText(itsDialog->GetString(cell.y));
 	itsRemoveButton->Activate();

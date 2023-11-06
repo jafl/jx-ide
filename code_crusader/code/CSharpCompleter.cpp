@@ -52,7 +52,6 @@ CSharpCompleter::Instance()
 		recursiveInstance = true;
 
 		itsSelf = jnew CSharpCompleter;
-		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
 	}

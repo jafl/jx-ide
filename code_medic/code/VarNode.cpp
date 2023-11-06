@@ -59,7 +59,6 @@ VarNode::VarNode
 		if (parent->IsRoot() && !name.IsEmpty())
 		{
 			auto* task = jnew InitVarNodeTask(this);
-			assert( task != nullptr );
 			task->Go();
 		}
 	}
@@ -199,7 +198,6 @@ VarNode::ConvertToBase()
 			// save value for when base reset to "default"
 
 			itsOrigValue = jnew JString(itsValue);
-			assert( itsOrigValue != nullptr );
 
 			// replace only the value, preserving whatever else is there
 

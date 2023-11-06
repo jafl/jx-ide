@@ -71,7 +71,6 @@ RubyStyler::Instance()
 		recursiveInstance = true;
 
 		itsSelf = jnew RubyStyler;
-		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
 	}

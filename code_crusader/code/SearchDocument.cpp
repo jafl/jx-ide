@@ -208,7 +208,6 @@ SearchDocument::SearchDocument
 	if (itsIsReplaceFlag)
 	{
 		itsReplaceTE = jnew SearchTE;
-		assert( itsReplaceTE != nullptr );
 	}
 
 	FileChanged(windowTitle, false);

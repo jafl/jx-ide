@@ -56,7 +56,6 @@ GoCompleter::Instance()
 		recursiveInstance = true;
 
 		itsSelf = jnew GoCompleter;
-		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
 	}

@@ -85,7 +85,6 @@ App::App
 	assert( mdi != nullptr );
 
 	auto* task = jnew QuitTask();
-	assert( task != nullptr );
 	task->Start();
 }
 
@@ -159,7 +158,6 @@ App::DisplayAbout
 		if (!showLicense || JGetUserNotification()->AcceptLicense())
 		{
 			auto* dlog = jnew AboutDialog(prevVersStr);
-			assert( dlog != nullptr );
 			dlog->DoDialog();
 
 			if (showLicense && prevVersStr.IsEmpty() &&

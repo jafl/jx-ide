@@ -97,7 +97,6 @@ BreakpointsDir::BuildWindow()
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 450,500, JString::empty);
-	assert( window != nullptr );
 
 	auto* menuBar =
 		jnew JXMenuBar(window,
@@ -120,7 +119,6 @@ BreakpointsDir::BuildWindow()
 
 	JXDisplay* display = GetDisplay();
 	auto* icon      = jnew JXImage(display, medic_breakpoints_window);
-	assert( icon != nullptr );
 	window->SetIcon(icon);
 
 	// layout table and column headers
@@ -129,7 +127,6 @@ BreakpointsDir::BuildWindow()
 
 // begin tablelayout
 
-	const JRect tablelayout_Frame    = encl->GetFrame();
 	const JRect tablelayout_Aperture = encl->GetAperture();
 	encl->AdjustSize(400 - tablelayout_Aperture.width(), 300 - tablelayout_Aperture.height());
 
@@ -143,7 +140,7 @@ BreakpointsDir::BuildWindow()
 					JXWidget::kHElastic, JXWidget::kFixedTop, 0,0, 400,20);
 	assert( itsColHeader != nullptr );
 
-	encl->SetSize(tablelayout_Frame.width(), tablelayout_Frame.height());
+	encl->SetSize(tablelayout_Aperture.width(), tablelayout_Aperture.height());
 
 // end tablelayout
 

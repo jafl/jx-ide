@@ -35,7 +35,6 @@ PTPrintSetupDialog::Create
 	)
 {
 	auto* dlog = jnew PTPrintSetupDialog;
-	assert( dlog != nullptr );
 	dlog->BuildWindow(dest, printCmd, fileName, printLineNumbers, printHeader);
 	return dlog;
 }
@@ -78,7 +77,6 @@ PTPrintSetupDialog::BuildWindow
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 370,240, JString::empty);
-	assert( window != nullptr );
 
 	auto* printCmdLabel =
 		jnew JXStaticText(JGetString("printCmdLabel::PTPrintSetupDialog::JXLayout"), window,

@@ -40,7 +40,6 @@ int main()
 JTEST(html)
 {
 	JStyledText* st = jnew JStyledText(false, false);
-	assert( st != nullptr );
 
 	TestHTMLStyler styler;
 
@@ -53,7 +52,6 @@ JTEST(html)
 JTEST(hbs)
 {
 	JStyledText* st = jnew JStyledText(false, false);
-	assert( st != nullptr );
 
 	TestHTMLStyler styler;
 	RunTest(st, &styler, "./data/styler/html/test.hbs", "./data/styler/html/styled-hbs.out");
@@ -62,7 +60,6 @@ JTEST(hbs)
 JTEST(php)
 {
 	JStyledText* st = jnew JStyledText(false, false);
-	assert( st != nullptr );
 
 	TestHTMLStyler styler;
 	RunTest(st, &styler, "./data/styler/html/test.php", "./data/styler/html/styled-php.out");
@@ -71,7 +68,6 @@ JTEST(php)
 JTEST(jsp)
 {
 	JStyledText* st = jnew JStyledText(false, false);
-	assert( st != nullptr );
 
 	TestHTMLStyler styler;
 	styler.TestSetWordStyle(JString("/form", false), JFontStyle(true, false, 0, false, JColorManager::GetBlueColor()));

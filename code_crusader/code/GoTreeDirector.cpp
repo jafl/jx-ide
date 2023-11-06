@@ -232,7 +232,6 @@ GoTreeDirector::NewGoTree
 	assert( goTreeDir != nullptr );
 
 	auto* tree = jnew GoTree(goTreeDir, marginWidth);
-	assert( tree != nullptr );
 	return tree;
 }
 
@@ -265,7 +264,6 @@ GoTreeDirector::StreamInGoTree
 	auto* tree = jnew GoTree(projInput, projVers,
 								   setInput, setVers, symInput, symVers,
 								   goTreeDir, marginWidth, dirList);
-	assert( tree != nullptr );
 	return tree;
 }
 

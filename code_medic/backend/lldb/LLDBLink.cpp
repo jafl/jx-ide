@@ -94,7 +94,6 @@ lldb::Link::Link()
 	InitFlags();
 
 	itsBPMgr = jnew BreakpointManager(this);
-	assert( itsBPMgr != nullptr );
 
 	StartDebugger(false);
 }
@@ -558,7 +557,6 @@ lldb::Link::SetProgram
 		StartListeningForEvents(t.GetBroadcaster(), kEventMask);
 
 		auto* task = jnew SymbolsLoadedTask(fullName);
-		assert( task != nullptr );
 		task->Go();
 	}
 }
@@ -664,7 +662,6 @@ lldb::Link::AttachToProcess
 				JString(f.GetFilename(), JString::kNoCopy));
 
 			auto* task = jnew SymbolsLoadedTask(fullName);
-			assert( task != nullptr );
 			task->Go();
 
 			Broadcast(AttachedToProcess());
@@ -1320,7 +1317,6 @@ lldb::Link::CreateArray2DCmd
 	)
 {
 	auto* cmd = jnew Array2DCmd(dir, table, data);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1338,7 +1334,6 @@ lldb::Link::CreatePlot2DCmd
 	)
 {
 	auto* cmd = jnew Plot2DCmd(dir, x, y);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1354,7 +1349,6 @@ lldb::Link::CreateDisplaySourceForMainCmd
 	)
 {
 	auto* cmd = jnew DisplaySourceForMainCmd(sourceDir);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1371,7 +1365,6 @@ lldb::Link::CreateGetCompletionsCmd
 	)
 {
 	auto* cmd = jnew GetCompletionsCmd(input, history);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1387,7 +1380,6 @@ lldb::Link::CreateGetFrameCmd
 	)
 {
 	auto* cmd = jnew GetFrameCmd(widget);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1404,7 +1396,6 @@ lldb::Link::CreateGetStackCmd
 	)
 {
 	auto* cmd = jnew GetStackCmd(tree, widget);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1420,7 +1411,6 @@ lldb::Link::CreateGetThreadCmd
 	)
 {
 	auto* cmd = jnew GetThreadCmd(widget);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1437,7 +1427,6 @@ lldb::Link::CreateGetThreadsCmd
 	)
 {
 	auto* cmd = jnew GetThreadsCmd(tree, widget);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1454,7 +1443,6 @@ lldb::Link::CreateGetFullPathCmd
 	)
 {
 	auto* cmd = jnew GetFullPathCmd(fileName, lineIndex);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1470,7 +1458,6 @@ lldb::Link::CreateGetInitArgsCmd
 	)
 {
 	auto* cmd = jnew GetInitArgsCmd(argInput);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1486,7 +1473,6 @@ lldb::Link::CreateGetLocalVarsCmd
 	)
 {
 	auto* cmd = jnew GetLocalVarsCmd(rootNode);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1502,7 +1488,6 @@ lldb::Link::CreateGetSourceFileListCmd
 	)
 {
 	auto* cmd = jnew GetSourceFileListCmd(fileList);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1518,7 +1503,6 @@ lldb::Link::CreateVarValueCmd
 	)
 {
 	auto* cmd = jnew VarCmd(expr);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1538,7 +1522,6 @@ lldb::Link::CreateVarContentCmd
 	s += ")";
 
 	auto* cmd = jnew VarCmd(s);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1554,7 +1537,6 @@ lldb::Link::CreateVarNode
 	)
 {
 	auto* node = jnew VarNode(shouldUpdate);
-	assert( node != nullptr );
 	return node;
 }
 
@@ -1568,7 +1550,6 @@ lldb::Link::CreateVarNode
 	)
 {
 	auto* node = jnew VarNode(parent, name, value);
-	assert( node != nullptr );
 	return node;
 }
 
@@ -1615,7 +1596,6 @@ lldb::Link::CreateGetMemoryCmd
 	)
 {
 	auto* cmd = jnew GetMemoryCmd(dir);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1631,7 +1611,6 @@ lldb::Link::CreateGetAssemblyCmd
 	)
 {
 	auto* cmd = jnew GetAssemblyCmd(dir);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1647,7 +1626,6 @@ lldb::Link::CreateGetRegistersCmd
 	)
 {
 	auto* cmd = jnew GetRegistersCmd(dir);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1692,7 +1670,6 @@ lldb::Link::SendMedicCommand
 	command->Starting();
 
 	JXUrgentTask* task = jnew RunBackgroundCmdTask(command);
-	assert( task != nullptr );
 	task->Go();
 }
 
@@ -1966,11 +1943,9 @@ lldb::Link::StartDebugger
 		const JString msg = JGetString("Welcome::LLDBLink", map, sizeof(map));
 
 		auto* welcomeTask = jnew WelcomeTask(msg, restart);
-		assert( welcomeTask != nullptr );
 		welcomeTask->Go();
 
 		itsEventTask = jnew EventTask(this);
-		assert( itsEventTask != nullptr );
 		itsEventTask->Start();
 
 		return true;

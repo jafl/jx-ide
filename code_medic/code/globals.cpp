@@ -107,31 +107,24 @@ CreateGlobals
 
 	bool isNew;
 	thePrefsManager = jnew PrefsManager(&isNew);
-	assert(thePrefsManager != nullptr);
 
 	JXInitHelp();
 
 	auto* wdMgr = jnew JXWDManager(display, true);
-	assert( wdMgr != nullptr );
 
 	auto* dockManager = jnew DockManager;
-	assert( dockManager != nullptr );
 	dockManager->JPrefObject::ReadPrefs();
 
 	theTextPrinter = jnew JXPTPrinter;
-	assert( theTextPrinter != nullptr );
 	thePrefsManager->ReadPrinterSetup(theTextPrinter);
 
 	thePSPrinter = jnew JXPSPrinter(display);
-	assert( thePSPrinter != nullptr );
 	thePrefsManager->ReadPrinterSetup(thePSPrinter);
 
 	thePlotEPSPrinter = jnew JX2DPlotEPSPrinter(display);
-	assert( thePlotEPSPrinter != nullptr );
 	thePrefsManager->ReadPrinterSetup(thePlotEPSPrinter);
 
 	theFnMenuUpdater = jnew FnMenuUpdater;
-	assert( theFnMenuUpdater != nullptr );
 
 	thePrefsManager->LoadSearchPrefs();
 	thePrefsManager->SyncWithCodeCrusader();	// after creating search dialog
@@ -151,7 +144,6 @@ void
 CreateCommandDirector()
 {
 	theCmdDir = jnew CommandDirector(theApplication);
-	assert( theCmdDir != nullptr );
 	theCmdDir->Activate();
 }
 

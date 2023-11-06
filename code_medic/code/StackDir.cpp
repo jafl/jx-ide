@@ -98,7 +98,6 @@ StackDir::BuildWindow
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 450,500, JString::empty);
-	assert( window != nullptr );
 
 	auto* menuBar =
 		jnew JXMenuBar(window,
@@ -121,15 +120,11 @@ StackDir::BuildWindow
 
 	JXDisplay* display = GetDisplay();
 	auto* icon      = jnew JXImage(display, medic_stack_trace_window);
-	assert( icon != nullptr );
 	window->SetIcon(icon);
 
 	auto* root = jnew JNamedTreeNode(nullptr, JString::empty);
-	assert( root != nullptr );
 	auto* tree = jnew JTree(root);
-	assert( tree != nullptr );
 	auto* treeList = jnew JNamedTreeList(tree);
-	assert( treeList != nullptr );
 
 	itsWidget =
 		jnew StackWidget(dir, this, tree, treeList,

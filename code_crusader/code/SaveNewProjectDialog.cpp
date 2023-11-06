@@ -58,7 +58,6 @@ SaveNewProjectDialog::Create
 	)
 {
 	auto* dlog = jnew SaveNewProjectDialog(fileFilter);
-	assert( dlog != nullptr );
 	dlog->BuildWindow(startName, prompt, message);
 	dlog->BuildTemplateMenu();
 	return dlog;
@@ -119,7 +118,6 @@ SaveNewProjectDialog::BuildWindow
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 310,500, JString::empty);
-	assert( window != nullptr );
 
 	auto* scrollbarSet =
 		jnew JXScrollbarSet(window,

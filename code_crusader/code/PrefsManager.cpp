@@ -195,7 +195,6 @@ PrefsManager::EditFileTypes()
 	auto* dlog =
 		jnew EditFileTypesDialog(*itsFileTypeList, *itsMacroList, *itsCRMList,
 								 itsExecOutputWordWrapFlag, itsUnknownTypeWordWrapFlag);
-	assert( dlog != nullptr );
 
 	if (dlog->DoDialog())
 	{
@@ -291,10 +290,8 @@ addNewSuffixes
 		if (!newInfo[i].found)
 		{
 			auto* suffix = jnew JString(newInfo[i].suffix);
-			assert( suffix != nullptr );
 
 			auto* complSuffix = jnew JString;
-			assert( complSuffix != nullptr );
 
 			fileTypeList->InsertSorted(
 				PrefsManager::FileTypeInfo(
@@ -343,13 +340,10 @@ addNewExternalSuffixes
 		if (!newInfo[i].found)
 		{
 			auto* suffix = jnew JString(newInfo[i].suffix);
-			assert( suffix != nullptr );
 
 			auto* complSuffix = jnew JString;
-			assert( complSuffix != nullptr );
 
 			auto* editCmd = jnew JString(newInfo[i].cmd);
-			assert( editCmd != nullptr );
 
 			PrefsManager::FileTypeInfo info(
 				suffix, nullptr, nullptr, kExternalFT,
@@ -1193,7 +1187,6 @@ std::string data;
 	for (JUnsignedOffset i=0; i<kOrigMacroCount; i++)
 	{
 		auto* actionMgr = jnew CharActionManager;
-		assert( actionMgr != nullptr );
 		if (GetData(50000 + kOrigMacroID[i], &data))
 		{
 			RemoveData(50000 + kOrigMacroID[i]);
@@ -1202,7 +1195,6 @@ std::string data;
 		}
 
 		auto* macroMgr = jnew MacroManager;
-		assert( macroMgr != nullptr );
 		if (GetData(40000 + kOrigMacroID[i], &data))
 		{
 			RemoveData(40000 + kOrigMacroID[i]);
@@ -1232,7 +1224,6 @@ std::string data;
 		}
 
 		auto* name = jnew JString(kOrigMacroName[i]);
-		assert( name != nullptr );
 
 		itsMacroList->AppendElement(
 			MacroSetInfo(kFirstMacroID + i, name, actionMgr, macroMgr));
@@ -1257,7 +1248,6 @@ std::string data;
 		for (JIndex j=1; j<=count; j++)
 		{
 			auto* complSuffix = jnew JString;
-			assert( complSuffix != nullptr );
 			InitComplementSuffix(*(suffixList.GetElement(j)), complSuffix);
 
 			itsFileTypeList->AppendElement(
@@ -1522,13 +1512,10 @@ PrefsManager::FindMacroName
 	const JIndex macroID = maxID+1;
 
 	auto* name = jnew JString(macroName);
-	assert( name != nullptr );
 
 	auto* actionMgr = jnew CharActionManager;
-	assert( actionMgr != nullptr );
 
 	auto* macroMgr = jnew MacroManager;
-	assert( macroMgr != nullptr );
 
 	macroList->InsertSorted(
 		MacroSetInfo(macroID, name, actionMgr, macroMgr));
@@ -1779,7 +1766,6 @@ PrefsManager::FileTypeInfo::CreateRegex()
 	if (suffix->GetFirstCharacter() == kContentRegexMarker)
 	{
 		contentRegex = jnew JRegex(*suffix);
-		assert( contentRegex != nullptr );
 		contentRegex->SetSingleLine(true);
 	}
 	else if (suffix->Contains(kNameRegexMarker))
@@ -1789,7 +1775,6 @@ PrefsManager::FileTypeInfo::CreateRegex()
 		assert( ok );
 
 		nameRegex = jnew JRegex(s);
-		assert( nameRegex != nullptr );
 	}
 }
 
@@ -1960,11 +1945,9 @@ PrefsManager::MacroSetInfo::CreateAndRead
 	)
 {
 	action = jnew CharActionManager;
-	assert( action != nullptr );
 	action->ReadSetup(input);
 
 	macro = jnew MacroManager;
-	assert( macro != nullptr );
 	macro->ReadSetup(input);
 }
 
@@ -2137,7 +2120,6 @@ createCRMRuleList
 	)
 {
 	auto* name = jnew JString(info.name);
-	assert( name != nullptr );
 
 	auto* ruleList = jnew JStyledText::CRMRuleList;
 	assert( ruleList != nullptr );
@@ -2250,10 +2232,8 @@ PrefsManager::CreateCRMRuleLists()
 	for (auto& ftrInfo : kFTRegexInfo)
 	{
 		auto* suffix = jnew JString(ftrInfo.pattern);
-		assert( suffix != nullptr );
 
 		auto* complSuffix = jnew JString;
-		assert( complSuffix != nullptr );
 
 		const JIndex macroID = FindMacroName(ftrInfo.macroName, itsMacroList, true);
 		const JIndex crmID   = FindCRMRuleListName(ftrInfo.crmName, *itsCRMList);

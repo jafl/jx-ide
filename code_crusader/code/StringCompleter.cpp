@@ -109,7 +109,6 @@ StringCompleter::Add
 	)
 {
 	auto* s = jnew JString(str);
-	assert( s != nullptr );
 	if (itsStringList->InsertSorted(s, false))
 	{
 		itsOwnedList->Append(s);

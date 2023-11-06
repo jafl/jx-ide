@@ -104,7 +104,6 @@ ExecOutputDocument::ExecOutputDocument
 	itsCmdInput =
 		jnew CmdLineInput(this, window, hSizing, vSizing,
 							-1000, -1000, 500, 500);
-	assert( itsCmdInput != nullptr );
 	itsCmdInput->ShareEditMenu(GetTextEditor());
 	itsCmdInput->Hide();
 
@@ -257,7 +256,6 @@ ExecOutputDocument::SetConnection
 	if (outFD != ACE_INVALID_HANDLE)
 	{
 		itsCmdStream = jnew JOutPipeStream(outFD, true);
-		assert( itsCmdStream != nullptr );
 	}
 
 	TextEditor* te = GetTextEditor();

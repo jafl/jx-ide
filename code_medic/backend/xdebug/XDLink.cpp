@@ -83,7 +83,6 @@ xdebug::Link::Link()
 	InitFlags();
 
 	itsBPMgr = jnew BreakpointManager(this);
-	assert( itsBPMgr != nullptr );
 
 	itsSourcePathList = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
 	assert( itsSourcePathList != nullptr );
@@ -397,7 +396,6 @@ xdebug::Link::ReceiveMessageFromDebugger()
 				CancelAllCommands();
 
 				auto* task = jnew CloseSocketTask(itsLink);
-				assert( task != nullptr );
 				task->Go();
 			}
 		}
@@ -486,7 +484,6 @@ xdebug::Link::SetProgram
 	}
 
 	auto* task = jnew SetProgramTask();
-	assert( task != nullptr );
 	task->Go();
 }
 
@@ -973,7 +970,6 @@ xdebug::Link::CreateArray2DCmd
 	)
 {
 	auto* cmd = jnew Array2DCmd(dir, table, data);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -991,7 +987,6 @@ xdebug::Link::CreatePlot2DCmd
 	)
 {
 	auto* cmd = jnew Plot2DCmd(dir, x, y);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1007,7 +1002,6 @@ xdebug::Link::CreateDisplaySourceForMainCmd
 	)
 {
 	auto* cmd = jnew DisplaySourceForMainCmd(sourceDir);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1024,7 +1018,6 @@ xdebug::Link::CreateGetCompletionsCmd
 	)
 {
 	auto* cmd = jnew GetCompletionsCmd(input, history);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1040,7 +1033,6 @@ xdebug::Link::CreateGetFrameCmd
 	)
 {
 	auto* cmd = jnew GetFrameCmd(widget);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1057,7 +1049,6 @@ xdebug::Link::CreateGetStackCmd
 	)
 {
 	auto* cmd = jnew GetStackCmd(tree, widget);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1073,7 +1064,6 @@ xdebug::Link::CreateGetThreadCmd
 	)
 {
 	auto* cmd = jnew GetThreadCmd(widget);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1090,7 +1080,6 @@ xdebug::Link::CreateGetThreadsCmd
 	)
 {
 	auto* cmd = jnew GetThreadsCmd(tree, widget);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1107,7 +1096,6 @@ xdebug::Link::CreateGetFullPathCmd
 	)
 {
 	auto* cmd = jnew GetFullPathCmd(fileName, lineIndex);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1123,7 +1111,6 @@ xdebug::Link::CreateGetInitArgsCmd
 	)
 {
 	auto* cmd = jnew GetInitArgsCmd(argInput);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1139,7 +1126,6 @@ xdebug::Link::CreateGetLocalVarsCmd
 	)
 {
 	auto* cmd = jnew GetLocalVarsCmd(rootNode);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1155,7 +1141,6 @@ xdebug::Link::CreateGetSourceFileListCmd
 	)
 {
 	auto* cmd = jnew GetSourceFileListCmd(fileList);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1176,7 +1161,6 @@ xdebug::Link::CreateVarValueCmd
 	s += JString((JUInt64)itsStackFrameIndex);
 
 	auto* cmd = jnew VarCmd(s);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1206,7 +1190,6 @@ xdebug::Link::CreateVarNode
 	)
 {
 	auto* node = jnew VarNode(shouldUpdate);
-	assert( node != nullptr );
 	return node;
 }
 
@@ -1220,7 +1203,6 @@ xdebug::Link::CreateVarNode
 	)
 {
 	auto* node = jnew VarNode(parent, name, fullName, value);
-	assert( node != nullptr );
 	return node;
 }
 
@@ -1544,7 +1526,6 @@ xdebug::Link::StartDebugger()
 	if (itsAcceptor == nullptr)
 	{
 		itsAcceptor = jnew Acceptor;
-		assert( itsAcceptor != nullptr );
 	}
 
 	const JString portStr((JUInt64) kXdebugPort);
@@ -1560,7 +1541,6 @@ xdebug::Link::StartDebugger()
 		JString msg = JGetString("ListenError::XDLink", map, sizeof(map));
 
 		auto* task = jnew WelcomeTask(msg, true);
-		assert( task != nullptr );
 		task->Go();
 		return false;
 	}
@@ -1573,7 +1553,6 @@ xdebug::Link::StartDebugger()
 		JString msg = JGetString("Welcome::XDLink", map, sizeof(map));
 
 		auto* task = jnew WelcomeTask(msg, false);
-		assert( task != nullptr );
 		task->Go();
 		return true;
 	}

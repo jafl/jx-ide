@@ -59,7 +59,6 @@ CShellStyler::Instance()
 		recursiveInstance = true;
 
 		itsSelf = jnew CShellStyler;
-		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
 	}

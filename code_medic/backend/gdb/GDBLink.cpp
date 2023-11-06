@@ -87,16 +87,12 @@ gdb::Link::Link()
 	assert( itsScanner != nullptr );
 
 	itsBPMgr = jnew BreakpointManager(this);
-	assert( itsBPMgr != nullptr );
 
 	itsGetStopLocation = jnew GetStopLocationForLinkCmd();
-	assert( itsGetStopLocation != nullptr );
 
 	itsGetStopLocation2 = jnew GetStopLocationForAsmCmd();
-	assert( itsGetStopLocation2 != nullptr );
 
 	itsPingTask = jnew PingTask();
-	assert( itsPingTask != nullptr );
 
 	StartDebugger();
 }
@@ -497,7 +493,6 @@ gdb::Link::ReadFromDebugger()
 			// will slurp up "(no debugging symbols found)..." as well.
 
 			auto* cmd = jnew GetProgramNameCmd;
-			assert( cmd != nullptr );
 
 			if (token.data.pString != nullptr)
 			{
@@ -528,7 +523,6 @@ gdb::Link::ReadFromDebugger()
 			// We have to check whether a core was loaded or cleared.
 
 			auto* cmd = jnew CheckCoreStatusCmd;
-			assert( cmd != nullptr );
 		}
 
 		else if (token.type == Output::Scanner::kAttachedToProcess)
@@ -563,7 +557,6 @@ gdb::Link::ReadFromDebugger()
 			if (itsChildProcess == nullptr)	// ask user for PID
 			{
 				auto* dlog = jnew ChooseProcessDialog();
-				assert( dlog != nullptr );
 				if (dlog->DoDialog())
 				{
 					JInteger pid;
@@ -842,7 +835,6 @@ gdb::Link::SetCore
 		if (itsProgramName.IsEmpty())
 		{
 			auto* cmd = jnew AnalyzeCoreCmd(cmdStr);
-			assert( cmd != nullptr );
 			cmd->Send();
 		}
 		else
@@ -1450,7 +1442,6 @@ gdb::Link::CreateArray2DCmd
 	)
 {
 	auto* cmd = jnew Array2DCmd(dir, table, data);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1468,7 +1459,6 @@ gdb::Link::CreatePlot2DCmd
 	)
 {
 	auto* cmd = jnew Plot2DCmd(dir, x, y);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1484,7 +1474,6 @@ gdb::Link::CreateDisplaySourceForMainCmd
 	)
 {
 	auto* cmd = jnew DisplaySourceForMainCmd(sourceDir);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1501,7 +1490,6 @@ gdb::Link::CreateGetCompletionsCmd
 	)
 {
 	auto* cmd = jnew GetCompletionsCmd(input, history);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1517,7 +1505,6 @@ gdb::Link::CreateGetFrameCmd
 	)
 {
 	auto* cmd = jnew GetFrameCmd(widget);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1534,7 +1521,6 @@ gdb::Link::CreateGetStackCmd
 	)
 {
 	auto* cmd = jnew GetStackCmd(tree, widget);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1550,7 +1536,6 @@ gdb::Link::CreateGetThreadCmd
 	)
 {
 	auto* cmd = jnew GetThreadCmd(widget);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1567,7 +1552,6 @@ gdb::Link::CreateGetThreadsCmd
 	)
 {
 	auto* cmd = jnew GetThreadsCmd(tree, widget);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1584,7 +1568,6 @@ gdb::Link::CreateGetFullPathCmd
 	)
 {
 	auto* cmd = jnew GetFullPathCmd(fileName, lineIndex);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1600,7 +1583,6 @@ gdb::Link::CreateGetInitArgsCmd
 	)
 {
 	auto* cmd = jnew GetInitArgsCmd(argInput);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1616,7 +1598,6 @@ gdb::Link::CreateGetLocalVarsCmd
 	)
 {
 	auto* cmd = jnew GetLocalVarsCmd(rootNode);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1632,7 +1613,6 @@ gdb::Link::CreateGetSourceFileListCmd
 	)
 {
 	auto* cmd = jnew GetSourceFileListCmd(fileList);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1648,7 +1628,6 @@ gdb::Link::CreateVarValueCmd
 	)
 {
 	auto* cmd = jnew VarCmd("print " + expr);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1680,7 +1659,6 @@ gdb::Link::CreateVarNode
 	)
 {
 	auto* node = jnew VarNode(shouldUpdate);
-	assert( node != nullptr );
 	return node;
 }
 
@@ -1694,7 +1672,6 @@ gdb::Link::CreateVarNode
 	)
 {
 	auto* node = jnew VarNode(parent, name, value);
-	assert( node != nullptr );
 	return node;
 }
 
@@ -1741,7 +1718,6 @@ gdb::Link::CreateGetMemoryCmd
 	)
 {
 	auto* cmd = jnew GetMemoryCmd(dir);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1757,7 +1733,6 @@ gdb::Link::CreateGetAssemblyCmd
 	)
 {
 	auto* cmd = jnew GetAssemblyCmd(dir);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -1773,7 +1748,6 @@ gdb::Link::CreateGetRegistersCmd
 	)
 {
 	auto* cmd = jnew GetRegistersCmd(dir);
-	assert( cmd != nullptr );
 	return cmd;
 }
 
@@ -2119,7 +2093,6 @@ gdb::Link::ProgramStarted
 	if (pid != 0)
 	{
 		itsChildProcess = jnew JProcess(pid);
-		assert( itsChildProcess != nullptr );
 		ListenTo(itsChildProcess);
 
 		std::ostringstream log;
@@ -2179,7 +2152,6 @@ gdb::Link::StopProgram()
 	else
 	{
 		auto* dlog = jnew ChooseProcessDialog();
-		assert( dlog != nullptr );
 		if (dlog->DoDialog())
 		{
 			JInteger pid;

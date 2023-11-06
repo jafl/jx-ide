@@ -58,7 +58,6 @@ PythonStyler::Instance()
 		recursiveInstance = true;
 
 		itsSelf = jnew PythonStyler;
-		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
 	}

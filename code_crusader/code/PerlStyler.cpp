@@ -86,7 +86,6 @@ PerlStyler::Instance()
 		recursiveInstance = true;
 
 		itsSelf = jnew PerlStyler;
-		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
 	}

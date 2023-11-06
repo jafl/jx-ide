@@ -134,7 +134,6 @@ StylerTable::StylerTableX
 	SetSelectionColor(prefsMgr->GetColor(PrefsManager::kSelColorIndex));
 
 	itsStyleMenu = jnew StylerTableMenu(this, kFixedLeft, kFixedTop, 0,0, 10,10);
-	assert( itsStyleMenu != nullptr );
 }
 
 /******************************************************************************
@@ -473,6 +472,5 @@ StylerTable::CreateStringTableInput
 
 	auto* obj =
 		jnew StylerTableInput(itsFileType, this, hSizing, vSizing, x,y, w,h);
-	assert( obj != nullptr );
 	return obj;
 }

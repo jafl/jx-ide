@@ -199,7 +199,6 @@ MemoryDir::BuildWindow()
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 500,500, JString::empty);
-	assert( window != nullptr );
 
 	auto* menuBar =
 		jnew JXMenuBar(window,
@@ -248,7 +247,6 @@ MemoryDir::BuildWindow()
 
 	JXDisplay* display = GetDisplay();
 	auto* icon      = jnew JXImage(display, medic_memory_window);
-	assert( icon != nullptr );
 	window->SetIcon(icon);
 
 	GetPrefsManager()->GetWindowSize(kMemoryWindSizeID, window, true);

@@ -58,7 +58,6 @@ BourneShellStyler::Instance()
 		recursiveInstance = true;
 
 		itsSelf = jnew BourneShellStyler;
-		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
 	}

@@ -35,7 +35,6 @@ LexCompleter::Instance()
 		recursiveInstance = true;
 
 		itsSelf = jnew LexCompleter;
-		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
 	}

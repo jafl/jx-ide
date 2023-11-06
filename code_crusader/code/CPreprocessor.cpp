@@ -25,7 +25,6 @@
 CPreprocessor::CPreprocessor()
 {
 	itsMacroList = jnew PPMacroList;
-	assert( itsMacroList != nullptr );
 	itsMacroList->SetSortOrder(JListT::kSortAscending);
 	itsMacroList->SetCompareFunction(CompareMacros);
 }

@@ -57,7 +57,6 @@ LuaCompleter::Instance()
 		recursiveInstance = true;
 
 		itsSelf = jnew LuaCompleter;
-		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
 	}

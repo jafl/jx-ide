@@ -67,7 +67,6 @@ TabWidthDialog::BuildWindow
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 180,90, JString::empty);
-	assert( window != nullptr );
 
 	auto* cancelButton =
 		jnew JXTextButton(JGetString("cancelButton::TabWidthDialog::JXLayout"), window,

@@ -577,7 +577,6 @@ BreakpointTable::CreateXInputField
 	if (cell.x == kIgnoreCountColumn)
 	{
 		auto* input = jnew JXIntegerInput(this, kFixedLeft, kFixedTop, x,y, w,h);
-		assert( input != nullptr );
 		input->SetLowerLimit(0);
 		input->SetValue(bp->GetIgnoreCount());
 
@@ -591,7 +590,6 @@ BreakpointTable::CreateXInputField
 	if (itsTextInput == nullptr)
 	{
 		itsTextInput = jnew JXInputField(this, kFixedLeft, kFixedTop, x,y, w,h);
-		assert( itsTextInput != nullptr );
 		itsTextInput->GetText()->SetText(text);
 	}
 

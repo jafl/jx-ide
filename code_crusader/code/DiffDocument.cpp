@@ -94,7 +94,6 @@ DiffDocument::CreatePlain
 		{
 			doc = jnew DiffDocument(kPlainType, fullName, JString::empty, cmd, defStyle,
 									 name1, removeStyle, name2, insertStyle);
-			assert( doc != nullptr );
 		}
 		doc->Init(fullName);
 
@@ -273,7 +272,6 @@ DiffDocument::CreateCVS
 		{
 			doc = jnew DiffDocument(kCVSType, fullName, getCmd, diffCmd, defStyle,
 									name1, removeStyle, name2, insertStyle);
-			assert( doc != nullptr );
 		}
 		doc->Init(startFullName);
 
@@ -437,7 +435,6 @@ DiffDocument::CreateSVN
 		{
 			doc = jnew DiffDocument(kSVNType, fullName, getCmd, diffCmd, defStyle,
 									name1, removeStyle, name2, insertStyle);
-			assert( doc != nullptr );
 		}
 		if (!startFullName.IsEmpty())
 		{
@@ -611,7 +608,6 @@ DiffDocument::CreateGit
 
 		doc = jnew DiffDocument(kGitType, fullName, getCmd, diffCmd, defStyle,
 								name1, removeStyle, name2, insertStyle);
-		assert( doc != nullptr );
 	}
 
 	JString cmd = diffCmd;

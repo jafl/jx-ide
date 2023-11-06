@@ -107,7 +107,6 @@ EditCommandsDialog::BuildWindow
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 620,530, JString::empty);
-	assert( window != nullptr );
 
 	itsPartition =
 		jnew JXVertPartition(heights, elasticIndex, minHeights, window,

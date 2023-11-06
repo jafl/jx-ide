@@ -153,7 +153,6 @@ CharActionTable::CreateStringTableInput
 	{
 		jdelete input;
 		input = jnew JXCharInput(enclosure, hSizing, vSizing, x,y, w,h);
-		assert( input != nullptr );
 	}
 
 	return input;

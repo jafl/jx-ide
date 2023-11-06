@@ -59,7 +59,6 @@ PHPCompleter::Instance()
 		recursiveInstance = true;
 
 		itsSelf = jnew PHPCompleter;
-		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
 	}

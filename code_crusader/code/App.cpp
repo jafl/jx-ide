@@ -201,7 +201,6 @@ App::DisplayAbout
 		if (!showLicense || JGetUserNotification()->AcceptLicense())
 		{
 			auto* dlog = jnew AboutDialog(prevVersStr);
-			assert( dlog != nullptr );
 			dlog->DoDialog();
 
 			if (showLicense && prevVersStr.IsEmpty() &&
@@ -230,7 +229,6 @@ void
 App::EditMiscPrefs()
 {
 	auto* dlog = jnew EditMiscPrefsDialog();
-	assert( dlog != nullptr );
 	if (dlog->DoDialog())
 	{
 		dlog->UpdateSettings();
@@ -322,7 +320,6 @@ App::HandleHelpMenu
 	else if (index == kTipCmd)
 	{
 		auto* dlog = jnew JXTipOfTheDayDialog;
-		assert( dlog != nullptr );
 		dlog->DoDialog();
 	}
 
@@ -472,7 +469,6 @@ App::GetSystemIncludeDirectories()
 		if (JDirectoryExists(JString(s, JString::kNoCopy)))
 		{
 			auto* p = jnew JString(s);
-			assert( p != nullptr );
 			itsSystemIncludeDirs->Append(p);
 		}
 	}
@@ -489,7 +485,6 @@ App::GetSystemIncludeDirectories()
 			if (JDirectoryExists(JString(s, JString::kNoCopy)))
 			{
 				auto* p = jnew JString(s);
-				assert( p != nullptr );
 				itsSystemIncludeDirs->Append(p);
 			}
 		}

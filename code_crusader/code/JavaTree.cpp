@@ -108,7 +108,6 @@ JavaTree::StreamInJavaClass
 	)
 {
 	auto* newClass = jnew JavaClass(input, vers, tree);
-	assert( newClass != nullptr );
 	return newClass;
 }
 

@@ -81,7 +81,6 @@ EditCPPMacroDialog::BuildWindow
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 370,290, JString::empty);
-	assert( window != nullptr );
 
 	auto* scrollbarSet =
 		jnew JXScrollbarSet(window,
@@ -151,7 +150,6 @@ EditCPPMacroDialog::BuildWindow
 	auto* colHeader =
 		jnew JXColHeaderWidget(itsTable, scrollbarSet, colHeaderEncl,
 							  JXWidget::kHElastic, JXWidget::kFixedTop, 0,0, 10,10);
-	assert( colHeader != nullptr );
 	colHeader->FitToEnclosure();
 	colHeader->TurnOnColResizing(20);
 	itsTable->SetColTitles(colHeader);

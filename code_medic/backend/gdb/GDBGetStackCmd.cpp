@@ -125,7 +125,6 @@ gdb::GetStackCmd::HandleSuccess
 		auto* node =
 			jnew StackFrameNode(root, frameIndex, frameName,
 								fileName, lineIndex);
-		assert( node != nullptr );
 		root->Prepend(node);
 
 		if (selectNextFrame)

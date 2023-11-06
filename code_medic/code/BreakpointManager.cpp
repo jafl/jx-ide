@@ -267,7 +267,6 @@ BreakpointManager::ReadSetup
 											JString::empty, JString::empty,
 											enabled, action, condition,
 											ignoreCount);
-		assert( bp != nullptr );
 		itsSavedBPList->Append(bp);
 
 		// set breakpoint after saving, so name resolution happens first

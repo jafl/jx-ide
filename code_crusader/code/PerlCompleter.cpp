@@ -65,7 +65,6 @@ PerlCompleter::Instance()
 		recursiveInstance = true;
 
 		itsSelf = jnew PerlCompleter;
-		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
 	}

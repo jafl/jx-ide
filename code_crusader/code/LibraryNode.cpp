@@ -186,7 +186,6 @@ LibraryNode::EditSubprojectConfig()
 	auto* dlog =
 		jnew SubprojectConfigDialog(doc, itsIncludeInDepListFlag,
 									itsProjFileName, itsShouldBuildFlag);
-	assert( dlog != nullptr );
 	if (dlog->DoDialog())
 	{
 		bool include, build;

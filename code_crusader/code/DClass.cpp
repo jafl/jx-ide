@@ -160,7 +160,6 @@ DClass::NewGhost
 	)
 {
 	auto* newClass = jnew DClass(name, kGhostType, JFAID::kInvalidID, tree, false);
-	assert( newClass != nullptr );
 	return newClass;
 }
 

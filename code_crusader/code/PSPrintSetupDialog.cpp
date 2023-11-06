@@ -40,7 +40,6 @@ PSPrintSetupDialog::Create
 	)
 {
 	auto* dlog = jnew PSPrintSetupDialog;
-	assert( dlog != nullptr );
 	dlog->BuildWindow(dest, printCmd, fileName, collate, bw, fontSize, printHeader);
 	return dlog;
 }
@@ -85,7 +84,6 @@ PSPrintSetupDialog::BuildWindow
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 370,300, JString::empty);
-	assert( window != nullptr );
 
 	auto* printCmdLabel =
 		jnew JXStaticText(JGetString("printCmdLabel::PSPrintSetupDialog::JXLayout"), window,

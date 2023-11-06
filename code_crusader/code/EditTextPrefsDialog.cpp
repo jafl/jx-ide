@@ -101,7 +101,6 @@ EditTextPrefsDialog::BuildWindow
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 640,530, JString::empty);
-	assert( window != nullptr );
 
 	itsTabCharCountInput =
 		jnew JXIntegerInput(window,
@@ -698,7 +697,6 @@ EditTextPrefsDialog::HandleColorButton
 	}
 
 	auto* dlog = jnew JXChooseColorDialog(itsColor[colorIndex-1]);
-	assert( dlog != nullptr );
 
 	if (dlog->DoDialog())
 	{

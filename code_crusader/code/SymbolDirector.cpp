@@ -226,7 +226,6 @@ SymbolDirector::SymbolDirectorX
 	}));
 
 	itsSymbolList = jnew SymbolList(projDoc);
-	assert( itsSymbolList != nullptr );
 
 	itsSRList = jnew JPtrArray<SymbolSRDirector>(JPtrArrayT::kForgetAll);
 	assert( itsSRList != nullptr );
@@ -511,7 +510,6 @@ SymbolDirector::FindSymbol
 		auto* dir =
 			jnew SymbolSRDirector(this, itsProjDoc, itsSymbolList,
 									symbolList, name);
-		assert( dir != nullptr );
 		dir->Activate();
 		itsSRList->Append(dir);
 		return true;
@@ -619,7 +617,6 @@ SymbolDirector::BuildWindow
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 400,430, JString::empty);
-	assert( window != nullptr );
 
 	auto* menuBar =
 		jnew JXMenuBar(window,
@@ -653,7 +650,6 @@ SymbolDirector::BuildWindow
 
 	JXDisplay* display = GetDisplay();
 	auto* icon      = jnew JXImage(display, jcc_symbol_window);
-	assert( icon != nullptr );
 	window->SetIcon(icon);
 
 	JPoint desktopLoc;
@@ -674,15 +670,11 @@ SymbolDirector::BuildWindow
 	itsFileMenu->SetItemImage(kNewTextEditorCmd, jx_file_new);
 	itsFileMenu->SetItemImage(kOpenSomethingCmd, jx_file_open);
 
-	auto* recentProjectMenu =
-		jnew FileHistoryMenu(DocumentManager::kProjectFileHistory,
-							  itsFileMenu, kRecentProjectMenuCmd, menuBar);
-	assert( recentProjectMenu != nullptr );
+	jnew FileHistoryMenu(DocumentManager::kProjectFileHistory,
+						  itsFileMenu, kRecentProjectMenuCmd, menuBar);
 
-	auto* recentTextMenu =
-		jnew FileHistoryMenu(DocumentManager::kTextFileHistory,
-							  itsFileMenu, kRecentTextMenuCmd, menuBar);
-	assert( recentTextMenu != nullptr );
+	jnew FileHistoryMenu(DocumentManager::kTextFileHistory,
+						  itsFileMenu, kRecentTextMenuCmd, menuBar);
 
 	itsSymbolMenu = menuBar->AppendTextMenu(JGetString("SymbolMenuTitle::SymbolDirector"));
 	itsSymbolMenu->SetMenuItems(kSymbolMenuStr, "SymbolDirector");
@@ -711,7 +703,6 @@ SymbolDirector::BuildWindow
 	itsCmdMenu =
 		jnew CommandMenu(itsProjDoc, nullptr, menuBar,
 						  JXWidget::kFixedLeft, JXWidget::kVElastic, 0,0, 10,10);
-	assert( itsCmdMenu != nullptr );
 	menuBar->AppendMenu(itsCmdMenu);
 	ListenTo(itsCmdMenu);
 
@@ -1020,7 +1011,6 @@ void
 SymbolDirector::EditPrefs()
 {
 	auto* dlog = jnew EditSymbolPrefsDialog(itsRaiseTreeOnRightClickFlag);
-	assert( dlog != nullptr );
 
 	if (dlog->DoDialog())
 	{

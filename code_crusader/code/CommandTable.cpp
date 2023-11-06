@@ -164,7 +164,6 @@ CommandTable::CommandTable
 	// type menu
 
 	itsOptionsMenu = jnew JXTextMenu(JString::empty, this, kFixedLeft, kFixedTop, 0,0, 10,10);
-	assert( itsOptionsMenu != nullptr );
 	itsOptionsMenu->SetToHiddenPopupMenu();
 	itsOptionsMenu->SetMenuItems(kOptionsMenuStr);
 	itsOptionsMenu->SetUpdateAction(JXMenu::kDisableNone);

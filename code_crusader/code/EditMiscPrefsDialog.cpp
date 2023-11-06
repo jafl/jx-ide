@@ -86,7 +86,6 @@ EditMiscPrefsDialog::BuildWindow()
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 370,390, JString::empty);
-	assert( window != nullptr );
 
 	auto* warnTitle =
 		jnew JXStaticText(JGetString("warnTitle::EditMiscPrefsDialog::JXLayout"), window,
@@ -225,8 +224,6 @@ EditMiscPrefsDialog::BuildWindow()
 
 	// bind the checkboxes so at least one remains selected
 
-	auto* group =
-		jnew JXAtLeastOneCBGroup(4, itsNewEditorCB, itsNewProjectCB,
-								itsReopenLastCB, itsChooseFileCB);
-	assert( group != nullptr );
+	jnew JXAtLeastOneCBGroup(4, itsNewEditorCB, itsNewProjectCB,
+							itsReopenLastCB, itsChooseFileCB);
 }

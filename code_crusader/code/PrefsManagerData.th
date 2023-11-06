@@ -206,7 +206,6 @@ PrefsManager::EditDataFn
 	}
 
 	auto* dlog = jnew DialogClass(list, initialIndex, firstUnusedID);
-	assert( dlog != nullptr );
 	if (dlog->DoDialog())
 	{
 		JIndex firstNewID, lastNewID;

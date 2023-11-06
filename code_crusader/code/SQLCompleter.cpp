@@ -169,7 +169,6 @@ SQLCompleter::Instance()
 		recursiveInstance = true;
 
 		itsSelf = jnew SQLCompleter;
-		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
 	}

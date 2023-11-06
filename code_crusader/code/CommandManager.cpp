@@ -58,7 +58,6 @@ CommandManager::CommandManager
 	itsCompileDoc(nullptr)
 {
 	itsCmdList = jnew CmdList;
-	assert( itsCmdList != nullptr );
 
 	if (docMgr != nullptr)
 	{
@@ -554,7 +553,6 @@ CommandManager::ProcessCmdQueue
 			if (fullNameList.IsEmpty())
 			{
 				auto* arg = jnew JString(*cmdArg);
-				assert( arg != nullptr );
 
 				if (!Substitute(arg, projDoc, JString::empty, 0, reportError))
 				{
@@ -570,7 +568,6 @@ CommandManager::ProcessCmdQueue
 				for (JIndex k=1; k<=nameCount; k++)
 				{
 					auto* arg = jnew JString(*cmdArg);
-					assert( arg != nullptr );
 
 					if (!Substitute(arg, projDoc,
 									*(fullNameList.GetElement(k)),
@@ -894,22 +891,16 @@ CommandManager::AppendCommand
 	)
 {
 	auto* p = jnew JString(path);
-	assert( p != nullptr );
 
 	auto* c = jnew JString(cmd);
-	assert( c != nullptr );
 
 	auto* cn = jnew JString(cmdName);
-	assert( cn != nullptr );
 
 	auto* mt = jnew JString(menuText);
-	assert( mt != nullptr );
 
 	auto* ms = jnew JString(menuShortcut);
-	assert( ms != nullptr );
 
 	auto* mi = jnew JString;
-	assert( mi != nullptr );
 
 	CmdInfo info(p, c, cn,
 				 isMake, isVCS, saveAll, oneAtATime,
@@ -1058,15 +1049,12 @@ CommandManager::ReadCmdInfo
 	)
 {
 	auto* path = jnew JString;
-	assert( path != nullptr );
 	input >> *path;
 
 	auto* cmd = jnew JString;
-	assert( cmd != nullptr );
 	input >> *cmd;
 
 	auto* cmdName = jnew JString;
-	assert( cmdName != nullptr );
 	input >> *cmdName;
 
 	bool isMake, saveAll, oneAtATime, useWindow, raise, beep;
@@ -1088,15 +1076,12 @@ CommandManager::ReadCmdInfo
 		  >> JBoolFromString(beep);
 
 	auto* menuText = jnew JString;
-	assert( menuText != nullptr );
 	input >> *menuText;
 
 	auto* menuShortcut = jnew JString;
-	assert( menuShortcut != nullptr );
 	input >> *menuShortcut;
 
 	auto* menuID = jnew JString;
-	assert( menuID != nullptr );
 	if (vers >= 2)
 	{
 		input >> *menuID;
@@ -1872,7 +1857,6 @@ CommandManager::GetCompileDoc
 	if (itsCompileDoc == nullptr)
 	{
 		itsCompileDoc = jnew CompileDocument(projDoc);
-		assert( itsCompileDoc != nullptr );
 		ListenTo(itsCompileDoc);
 	}
 
@@ -1896,7 +1880,6 @@ CommandManager::GetOutputDoc()
 	}
 
 	auto* doc = jnew ExecOutputDocument();
-	assert( doc != nullptr );
 	theExecDocList.Append(doc);
 	GetCommandManager()->ListenTo(doc);
 	return doc;

@@ -199,7 +199,6 @@ Array1DDir::BuildWindow()
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 300,500, JString::empty);
-	assert( window != nullptr );
 
 	itsExprInput =
 		jnew ArrayExprInput(window,
@@ -260,7 +259,6 @@ Array1DDir::BuildWindow()
 
 	JXDisplay* display = GetDisplay();
 	auto* icon      = jnew JXImage(display, medic_1d_array_window);
-	assert( icon != nullptr );
 	window->SetIcon(icon);
 
 	GetPrefsManager()->GetWindowSize(kArray1DWindSizeID, window, true);
@@ -268,9 +266,7 @@ Array1DDir::BuildWindow()
 	VarNode* root = itsLink->CreateVarNode();
 	assert( root != nullptr );
 	itsTree = jnew JTree(root);
-	assert( itsTree != nullptr );
 	auto* treeList = jnew JNamedTreeList(itsTree);
-	assert( treeList != nullptr );
 
 	itsWidget =
 		jnew VarTreeWidget(itsCommandDir, false, menuBar, itsTree, treeList,

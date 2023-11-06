@@ -92,7 +92,6 @@ EditSearchPathsDialog::BuildWindow
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 370,370, JString::empty);
-	assert( window != nullptr );
 
 	auto* scrollbarSet =
 		jnew JXScrollbarSet(window,

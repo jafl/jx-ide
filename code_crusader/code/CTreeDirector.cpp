@@ -261,7 +261,6 @@ CTreeDirector::NewCTree
 	assert( cTreeDir != nullptr );
 
 	auto* tree = jnew CTree(cTreeDir, marginWidth);
-	assert( tree != nullptr );
 	return tree;
 }
 
@@ -292,7 +291,6 @@ CTreeDirector::StreamInCTree
 	auto* tree = jnew CTree(projInput, projVers,
 								setInput, setVers, symInput, symVers,
 								cTreeDir, marginWidth, dirList);
-	assert( tree != nullptr );
 	return tree;
 }
 

@@ -243,7 +243,6 @@ DiffFileDialog::BuildWindow()
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 550,210, JString::empty);
-	assert( window != nullptr );
 
 	itsCloseButton =
 		jnew JXTextButton(JGetString("itsCloseButton::DiffFileDialog::JXLayout"), window,
@@ -643,10 +642,8 @@ DiffFileDialog::BuildWindow()
 
 	// create hidden JXDocument so Meta-# shortcuts work
 
-	auto* fileListMenu =
-		jnew JXDocumentMenu(JString::empty, window,
-						   JXWidget::kFixedLeft, JXWidget::kFixedTop, 0,-20, 10,10);
-	assert( fileListMenu != nullptr );
+	jnew JXDocumentMenu(JString::empty, window,
+					   JXWidget::kFixedLeft, JXWidget::kFixedTop, 0,-20, 10,10);
 
 	HandleGitRevMenu(itsGitRev1Menu, kCurrentRevCmd, &itsGitRev1Cmd, itsGitRev1Input);
 }
@@ -1056,10 +1053,8 @@ DiffFileDialog::DiffDirectory
 	const JArray<JIndex> lineIndexList;
 
 	auto* path = jnew JString(fullName);
-	assert( path != nullptr );
 
 	auto* cmd = jnew JString(diffCmd);
-	assert( cmd != nullptr );
 
 	if (summaryCB->IsChecked())
 	{
@@ -1067,16 +1062,12 @@ DiffFileDialog::DiffDirectory
 	}
 
 	auto* ss = jnew JString;
-	assert( ss != nullptr );
 
 	auto* mt = jnew JString;
-	assert( mt != nullptr );
 
 	auto* ms = jnew JString;
-	assert( ms != nullptr );
 
 	auto* mi = jnew JString;
-	assert( mi != nullptr );
 
 	CommandManager::CmdInfo info(path, cmd, ss, false, true, true, true,
 								   true, true, false, mt, ms, mi, false);

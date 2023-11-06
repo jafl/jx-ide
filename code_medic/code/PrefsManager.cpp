@@ -182,7 +182,6 @@ PrefsManager::EditPrefs()
 							 cSourceSuffixes, cHeaderSuffixes,
 							 javaSuffixes, phpSuffixes, fortranSuffixes,
 							 dSuffixes, goSuffixes);
-	assert( dlog != nullptr );
 	if (dlog->DoDialog())
 	{
 		dlog->GetPrefs(&gdbCmd, &jvmCmd,

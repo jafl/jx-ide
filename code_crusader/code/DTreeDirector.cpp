@@ -232,7 +232,6 @@ DTreeDirector::NewDTree
 	assert( dTreeDir != nullptr );
 
 	auto* tree = jnew DTree(dTreeDir, marginWidth);
-	assert( tree != nullptr );
 	return tree;
 }
 
@@ -263,7 +262,6 @@ DTreeDirector::StreamInDTree
 	auto* tree = jnew DTree(projInput, projVers,
 								setInput, setVers, symInput, symVers,
 								dTreeDir, marginWidth, dirList);
-	assert( tree != nullptr );
 	return tree;
 }
 

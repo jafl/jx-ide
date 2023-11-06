@@ -47,7 +47,6 @@ MakeCompleter::Instance()
 		recursiveInstance = true;
 
 		itsSelf = jnew MakeCompleter;
-		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
 	}

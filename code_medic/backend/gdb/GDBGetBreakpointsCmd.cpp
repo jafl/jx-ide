@@ -198,7 +198,6 @@ gdb::GetBreakpointsCmd::ParseBreakpoint
 	auto* bp =
 		jnew Breakpoint(bpIndex, fileName, lineIndex, fn, addr,
 						 enabled, action, condition, ignoreCount);
-	assert( bp != nullptr );
 	list->InsertSorted(bp);
 }
 

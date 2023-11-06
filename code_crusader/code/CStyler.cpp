@@ -74,7 +74,6 @@ CStyler::Instance()
 		recursiveInstance = true;
 
 		itsSelf = jnew CStyler;
-		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
 	}

@@ -124,7 +124,6 @@ PHPClass::NewGhost
 {
 	auto* newClass = jnew PHPClass(name, kGhostType, JFAID::kInvalidID, tree,
 										  false);
-	assert( newClass != nullptr );
 	return newClass;
 }
 

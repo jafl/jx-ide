@@ -56,7 +56,6 @@ TCLStyler::Instance()
 		recursiveInstance = true;
 
 		itsSelf = jnew TCLStyler;
-		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
 	}

@@ -85,7 +85,6 @@ ViewManPageDialog::BuildWindow()
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 360,150, JString::empty);
-	assert( window != nullptr );
 
 	itsCloseButton =
 		jnew JXTextButton(JGetString("itsCloseButton::ViewManPageDialog::JXLayout"), window,
@@ -164,10 +163,8 @@ ViewManPageDialog::BuildWindow()
 
 	// create hidden JXDocument so Meta-# shortcuts work
 
-	auto* fileListMenu =
-		jnew JXDocumentMenu(JString::empty, window,
-						   JXWidget::kFixedLeft, JXWidget::kFixedTop, 0,-20, 10,10);
-	assert( fileListMenu != nullptr );
+	jnew JXDocumentMenu(JString::empty, window,
+					   JXWidget::kFixedLeft, JXWidget::kFixedTop, 0,-20, 10,10);
 
 	UpdateDisplay();
 }

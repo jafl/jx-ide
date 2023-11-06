@@ -390,7 +390,6 @@ FileTypeTable::FileTypeTable
 	// type menu
 
 	itsTypeMenu = jnew JXTextMenu(JString::empty, this, kFixedLeft, kFixedTop, 0,0, 10,10);
-	assert( itsTypeMenu != nullptr );
 	itsTypeMenu->SetToHiddenPopupMenu();
 	itsTypeMenu->SetMenuItems(kTypeMenuStr);
 	itsTypeMenu->SetUpdateAction(JXMenu::kDisableNone);
@@ -408,7 +407,6 @@ FileTypeTable::FileTypeTable
 	// script menu
 
 	itsScriptMenu = jnew JXTextMenu(JString::empty, this, kFixedLeft, kFixedTop, 0,0, 10,10);
-	assert( itsScriptMenu != nullptr );
 	itsScriptMenu->SetToHiddenPopupMenu();
 	itsScriptMenu->SetMenuItems(kScriptMenuStr);	// ensure non-empty
 	itsScriptMenu->SetUpdateAction(JXMenu::kDisableNone);
@@ -426,7 +424,6 @@ FileTypeTable::FileTypeTable
 	// regex for testing
 
 	itsTestRegex = jnew JRegex(".");
-	assert( itsTestRegex != nullptr );
 
 	// data
 
@@ -751,7 +748,6 @@ FileTypeTable::CreateXInputField
 	s.SelectCell(cell);
 
 	itsTextInput = jnew JXInputField(this, kFixedLeft, kFixedTop, x,y, w,h);
-	assert( itsTextInput != nullptr );
 
 	const PrefsManager::FileTypeInfo info = itsFileTypeList->GetElement(cell.y);
 	if (cell.x == kSuffixColumn)

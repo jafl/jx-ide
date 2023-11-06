@@ -64,7 +64,6 @@ PrefsDialog::BuildWindow
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 510,530, JString::empty);
-	assert( window != nullptr );
 
 	auto* headerCommentLabel =
 		jnew JXStaticText(JGetString("headerCommentLabel::PrefsDialog::JXLayout"), window,

@@ -43,7 +43,6 @@ BourneShellCompleter::Instance()
 		recursiveInstance = true;
 
 		itsSelf = jnew BourneShellCompleter;
-		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
 	}

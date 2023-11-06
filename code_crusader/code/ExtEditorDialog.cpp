@@ -65,7 +65,6 @@ ExtEditorDialog::BuildWindow
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 450,220, JString::empty);
-	assert( window != nullptr );
 
 	itsEditTextFileCmdInput =
 		jnew JXInputField(window,

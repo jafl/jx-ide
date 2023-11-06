@@ -116,7 +116,6 @@ SourceDirector::Create
 	)
 {
 	auto* dir = jnew SourceDirector(commandDir, fileOrFn, type);
-	assert( dir != nullptr );
 	dir->CreateWindowsMenu();
 	return dir;
 }
@@ -253,7 +252,6 @@ SourceDirector::BuildWindow()
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 600,550, JString::empty);
-	assert( window != nullptr );
 
 	itsMenuBar =
 		jnew JXMenuBar(window,
@@ -292,7 +290,6 @@ SourceDirector::BuildWindow()
 
 		JXDisplay* display = GetDisplay();
 		auto* icon      = jnew JXImage(display, medic_current_source_window);
-		assert( icon != nullptr );
 		window->SetIcon(icon);
 	}
 	else if (itsType == kMainAsmType)
@@ -304,7 +301,6 @@ SourceDirector::BuildWindow()
 
 		JXDisplay* display = GetDisplay();
 		auto* icon      = jnew JXImage(display, medic_current_asm_window);
-		assert( icon != nullptr );
 		window->SetIcon(icon);
 	}
 	else if (itsType == kAsmType)
@@ -375,7 +371,6 @@ SourceDirector::BuildWindow()
 		jnew FunctionMenu(nullptr, kUnknownFT, itsText, itsMenuBar,
 						   JXWidget::kFixedLeft, JXWidget::kFixedTop,
 						   0,0, 10,10);
-	assert( itsFnMenu != nullptr );
 	itsFnMenu->Hide();
 
 	itsPrefsMenu = itsMenuBar->AppendTextMenu(JGetString("PrefsMenuTitle::JXGlobal"));
@@ -626,7 +621,6 @@ SourceDirector::ReceiveGoingAway
 		}
 
 		auto* task = jnew ClearSourceDisplayTask(this);
-		assert( task != nullptr );
 		task->Go();
 	}
 	else if (sender == itsLink && !IsShuttingDown())
@@ -1049,7 +1043,6 @@ SourceDirector::HandlePrefsMenu
 	else if (index == kEditCmdsCmd)
 	{
 		auto* dlog = jnew EditCommandsDialog;
-		assert(dlog != nullptr);
 		dlog->DoDialog();
 	}
 	else if (index == kEditMacWinPrefsCmd)

@@ -88,7 +88,6 @@ ManPageDocument::Create
 	ManPageDocument* trueDoc;
 	auto* doc =
 		jnew ManPageDocument(pageName, pageIndex, apropos, &trueDoc);
-	assert( doc != nullptr );
 
 	if (doc != trueDoc)
 	{
@@ -136,7 +135,6 @@ ManPageDocument::ManPageDocument
 	*trueDoc = nullptr;
 
 	auto* cmd = jnew JString;
-	assert( cmd != nullptr );
 
 	bool success = false;
 	if (!apropos)

@@ -361,7 +361,6 @@ CommandMenu::HandleSelection
 	else if (index == kEditCmd)
 	{
 		auto* dlog = jnew EditCommandsDialog(projDoc);
-		assert( dlog != nullptr );
 		if (dlog->DoDialog())
 		{
 			dlog->UpdateCommands();

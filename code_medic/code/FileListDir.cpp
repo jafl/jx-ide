@@ -122,7 +122,6 @@ FileListDir::BuildWindow()
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 250,500, JString::empty);
-	assert( window != nullptr );
 
 	auto* menuBar =
 		jnew JXMenuBar(window,
@@ -145,7 +144,6 @@ FileListDir::BuildWindow()
 
 	JXDisplay* display = GetDisplay();
 	auto* icon      = jnew JXImage(display, medic_file_list_window);
-	assert( icon != nullptr );
 	window->SetIcon(icon);
 
 	ListenTo(GetTable());

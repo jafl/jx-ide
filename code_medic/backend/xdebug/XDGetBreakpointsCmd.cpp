@@ -96,7 +96,6 @@ xdebug::GetBreakpointsCmd::HandleSuccess
 			auto* bp =
 				jnew Breakpoint(bpIndex, fileName, lineNumber, JString::empty, JString::empty,
 								 enabled, Breakpoint::kKeepBreakpoint, JString::empty, 0);
-			assert( bp != nullptr );
 			bpList.InsertSorted(bp);
 
 			if (true)	// no way to know if it is temporary -- may be deleted or other status change

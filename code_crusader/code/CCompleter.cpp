@@ -58,7 +58,6 @@ CCompleter::Instance()
 		recursiveInstance = true;
 
 		itsSelf = jnew CCompleter;
-		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
 	}

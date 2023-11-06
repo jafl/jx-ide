@@ -33,7 +33,6 @@ int main()
 JTEST(Basic)
 {
 	JStyledText* st = jnew JStyledText(false, false);
-	assert( st != nullptr );
 
 	TestPerlStyler styler;
 

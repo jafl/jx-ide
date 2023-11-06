@@ -98,7 +98,6 @@ SearchTE::SearchFiles
 					   *searchRegex, entireWord, doc);
 
 			auto* msg = jnew IncrementProgress();
-			assert( msg != nullptr );
 
 			doc->QueueMessage(msg);
 		}
@@ -248,7 +247,6 @@ SearchTE::SearchFile
 			}
 
 			auto* msg = jnew AdditionalMatch(matchRange);
-			assert( msg != nullptr );
 
 			doc->QueueMessage(msg);
 		}
@@ -281,7 +279,6 @@ SearchTE::SearchFile
 			}
 
 			auto* n = jnew JString(printName);
-			assert( n != nullptr );
 
 			auto* msg = jnew SearchResult(n, GetLineForChar(quoteRange.charRange.first),
 										  quoteText, matchRange);
@@ -317,7 +314,6 @@ SearchTE::QueueErrorMessage
 	assert( e != nullptr );
 
 	auto* msg = jnew Error(e);
-	assert( msg != nullptr );
 
 	doc->QueueMessage(msg);
 }
@@ -335,10 +331,8 @@ SearchTE::QueueFileNameMessage
 	)
 {
 	auto* n = jnew JString(name);
-	assert( n != nullptr );
 
 	auto* msg = jnew FileName(n);
-	assert( msg != nullptr );
 
 	doc->QueueMessage(msg);
 }

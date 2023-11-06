@@ -38,7 +38,6 @@ ChooseRelativeFileDialog::Create
 	)
 {
 	auto* dlog = jnew ChooseRelativeFileDialog(fileFilter);
-	assert( dlog != nullptr );
 	dlog->BuildWindow(pathType, selectType, selectName, message);
 	return dlog;
 }
@@ -95,7 +94,6 @@ ChooseRelativeFileDialog::BuildWindow
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 310,430, JString::empty);
-	assert( window != nullptr );
 
 	auto* openButton =
 		jnew JXTextButton(JGetString("openButton::ChooseRelativeFileDialog::JXLayout"), window,

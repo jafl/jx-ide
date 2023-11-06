@@ -58,7 +58,6 @@ PascalCompleter::Instance()
 		recursiveInstance = true;
 
 		itsSelf = jnew PascalCompleter;
-		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
 	}

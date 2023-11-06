@@ -122,7 +122,6 @@ jvm::GetThreadGroupsCmd::HandleSuccess
 			if (!link->FindThread(id, &node))	// might be created by ThreadStartEvent
 			{
 				node = jnew ThreadNode(ThreadNode::kThreadType, id);
-				assert( node != nullptr );
 
 				itsParent->AppendThread(node);
 			}
@@ -141,7 +140,6 @@ jvm::GetThreadGroupsCmd::HandleSuccess
 		if (!link->FindThread(id, &node))	// might be created by ThreadStartEvent
 		{
 			node = jnew ThreadNode(ThreadNode::kGroupType, id);
-			assert( node != nullptr );
 
 			if (itsParent != nullptr)
 			{

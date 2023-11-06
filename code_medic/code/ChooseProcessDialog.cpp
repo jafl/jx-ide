@@ -131,7 +131,6 @@ ChooseProcessDialog::BuildWindow()
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 390,500, JString::empty);
-	assert( window != nullptr );
 
 	auto* scrollbarSet =
 		jnew JXScrollbarSet(window,

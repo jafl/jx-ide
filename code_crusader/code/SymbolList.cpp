@@ -784,7 +784,6 @@ SymbolList::ReadSymbolList
 	while (true)
 	{
 		auto* name = jnew JString;
-		assert( name != nullptr );
 
 		input >> std::ws;
 		while (input.peek() == '!')
@@ -831,7 +830,6 @@ SymbolList::ReadSymbolList
 		if (flags.GetElement("signature", &value) && !value->IsEmpty())
 		{
 			signature = jnew JString(*value);
-			assert( signature != nullptr );
 			signature->Prepend(" ");
 		}
 
@@ -852,7 +850,6 @@ SymbolList::ReadSymbolList
 		if (IsFileScope(type))
 		{
 			auto* name1 = jnew JString(fileName);
-			assert( name1 != nullptr );
 			*name1 += ":";
 			*name1 += *name;
 
@@ -860,7 +857,6 @@ SymbolList::ReadSymbolList
 			if (signature != nullptr)
 			{
 				sig1 = jnew JString(*signature);
-				assert( sig1 != nullptr );
 			}
 
 			const SymbolInfo info1(name1, sig1, lang, type,
@@ -917,7 +913,6 @@ SymbolList::ReadSetup
 	for (JIndex i=1; i<=symbolCount; i++)
 	{
 		auto* name = jnew JString;
-		assert( name != nullptr );
 		input >> *name;
 
 		long lang, type;
@@ -942,7 +937,6 @@ SymbolList::ReadSetup
 			if (hasSignature)
 			{
 				signature = jnew JString;
-				assert( signature != nullptr );
 				input >> *signature;
 			}
 		}

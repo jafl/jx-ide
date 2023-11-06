@@ -35,7 +35,6 @@ CommandOutputDocument::CommandOutputDocument
 	itsDontCloseMsg(dontCloseMessage)
 {
 	JXUrgentTask* task = jnew CommandOutputPostFTCTask(this);
-	assert( task != nullptr );
 	task->Go();
 
 	JXGetDocumentManager()->DocumentMustStayOpen(this, true);

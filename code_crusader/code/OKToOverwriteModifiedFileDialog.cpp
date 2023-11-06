@@ -62,7 +62,6 @@ OKToOverwriteModifiedFileDialog::BuildWindow
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 330,110, JString::empty);
-	assert( window != nullptr );
 
 	auto* icon =
 		jnew JXImageWidget(window,

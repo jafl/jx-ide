@@ -35,7 +35,6 @@ BisonCompleter::Instance()
 		recursiveInstance = true;
 
 		itsSelf = jnew BisonCompleter;
-		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
 	}

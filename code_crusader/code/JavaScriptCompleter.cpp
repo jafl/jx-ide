@@ -72,7 +72,6 @@ JavaScriptCompleter::Instance()
 		recursiveInstance = true;
 
 		itsSelf = jnew JavaScriptCompleter;
-		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
 	}

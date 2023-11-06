@@ -215,7 +215,6 @@ using{WS}{NSID}{MS}; {
 		}
 
 	CClass* c = jnew CClass(fullName, Class::kClassType, fileID, tree);
-	assert( c != nullptr );
 
 	c->SetTemplate(itsTemplateFlag);
 	classList->Append(c);

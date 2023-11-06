@@ -97,7 +97,6 @@ gdb::GetThreadsCmd::HandleSuccess
 				}
 
 				auto* s = jnew JString(line);
-				assert( s != nullptr );
 				threadList.InsertSorted(s);
 			}
 		}
@@ -116,7 +115,6 @@ gdb::GetThreadsCmd::HandleSuccess
 			ExtractLocation(*line, &fileName, &lineIndex);
 
 			auto* node = jnew ThreadNode(threadIndex, *line, fileName, lineIndex);
-			assert( node != nullptr );
 
 			root->Append(node);
 		}

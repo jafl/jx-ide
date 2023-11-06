@@ -48,7 +48,6 @@ PropertiesStyler::Instance()
 		recursiveInstance = true;
 
 		itsSelf = jnew PropertiesStyler;
-		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
 	}

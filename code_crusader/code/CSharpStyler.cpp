@@ -61,7 +61,6 @@ CSharpStyler::Instance()
 		recursiveInstance = true;
 
 		itsSelf = jnew CSharpStyler;
-		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
 	}

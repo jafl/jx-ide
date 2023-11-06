@@ -59,7 +59,6 @@ REXXCompleter::Instance()
 		recursiveInstance = true;
 
 		itsSelf = jnew REXXCompleter;
-		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
 	}

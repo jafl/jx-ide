@@ -81,7 +81,6 @@ App::DisplayAbout
 		if (!showLicense || JGetUserNotification()->AcceptLicense())
 		{
 			auto* dlog = jnew AboutDialog(prevVersStr);
-			assert( dlog != nullptr );
 			dlog->DoDialog();
 
 			JCheckForNewerVersion(GetPrefsManager(), kVersionCheckID);

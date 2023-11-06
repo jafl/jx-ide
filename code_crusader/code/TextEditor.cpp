@@ -1022,7 +1022,6 @@ TextEditor::CreateContextMenu()
 	if (itsContextMenu == nullptr)
 	{
 		itsContextMenu = jnew JXTextMenu(JString::empty, this, kFixedLeft, kFixedTop, 0,0, 10,10);
-		assert( itsContextMenu != nullptr );
 		itsContextMenu->SetMenuItems(kContextMenuStr, "TextEditor");
 		itsContextMenu->SetUpdateAction(JXMenu::kDisableNone);
 		itsContextMenu->SetToHiddenPopupMenu();
@@ -1239,7 +1238,6 @@ TextEditor::FileTypeChanged
 
 			itsFnMenu = jnew FunctionMenu(itsDoc, type, this, menuBar,
 											kFixedLeft, kFixedTop, 0,0, 10,10);
-			assert( itsFnMenu != nullptr );
 
 			JXTextMenu* searchMenu;
 			const bool ok = GetSearchReplaceMenu(&searchMenu);
@@ -1262,7 +1260,6 @@ TextEditor::FileTypeChanged
 	if (itsDoc->GetStringCompleter(&completer))
 	{
 		itsCompletionMenu = jnew JXStringCompletionMenu(this, true);
-		assert( itsCompletionMenu != nullptr );
 	}
 	else
 	{

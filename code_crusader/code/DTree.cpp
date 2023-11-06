@@ -98,7 +98,6 @@ DTree::StreamInCClass
 	)
 {
 	auto* newClass = jnew DClass(input, vers, tree);
-	assert( newClass != nullptr );
 	return newClass;
 }
 

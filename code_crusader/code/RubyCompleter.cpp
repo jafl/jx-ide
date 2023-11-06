@@ -68,7 +68,6 @@ RubyCompleter::Instance()
 		recursiveInstance = true;
 
 		itsSelf = jnew RubyCompleter;
-		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
 	}

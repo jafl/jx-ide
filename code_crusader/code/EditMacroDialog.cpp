@@ -98,7 +98,6 @@ EditMacroDialog::BuildWindow
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 350,530, JString::empty);
-	assert( window != nullptr );
 
 	itsPartition =
 		jnew JXVertPartition(heights, elasticIndex, minHeights, window,
@@ -182,7 +181,6 @@ EditMacroDialog::BuildWindow
 	auto* colHeader =
 		jnew JXColHeaderWidget(itsActionTable, actionScrollbarSet, actionColHeaderEncl,
 							  JXWidget::kHElastic, JXWidget::kFixedTop, 0,0, 10,10);
-	assert( colHeader != nullptr );
 	colHeader->FitToEnclosure();
 	colHeader->SetColTitle(1, JGetString("Column1Char::EditMacroDialog"));
 	colHeader->SetColTitle(2, JGetString("Column2::EditMacroDialog"));
@@ -241,7 +239,6 @@ EditMacroDialog::BuildWindow
 	colHeader =
 		jnew JXColHeaderWidget(itsMacroTable, macroScrollbarSet, macroColHeaderEncl,
 							  JXWidget::kHElastic, JXWidget::kFixedTop, 0,0, 10,10);
-	assert( colHeader != nullptr );
 	colHeader->FitToEnclosure();
 	colHeader->SetColTitle(1, JGetString("Column1Macro::EditMacroDialog"));
 	colHeader->SetColTitle(2, JGetString("Column2::EditMacroDialog"));
@@ -292,7 +289,6 @@ EditMacroDialog::BuildWindow
 	colHeader =
 		jnew JXColHeaderWidget(itsMacroSetTable, macroSetScrollbarSet, macroSetColHeaderEncl,
 							  JXWidget::kHElastic, JXWidget::kFixedTop, 0,0, 10,10);
-	assert( colHeader != nullptr );
 	colHeader->FitToEnclosure();
 	colHeader->SetColTitle(1, JGetString("Column1Set::EditMacroDialog"));
 }

@@ -63,7 +63,6 @@ MakeStyler::Instance()
 		recursiveInstance = true;
 
 		itsSelf = jnew MakeStyler;
-		assert( itsSelf != nullptr );
 
 		recursiveInstance = false;
 	}

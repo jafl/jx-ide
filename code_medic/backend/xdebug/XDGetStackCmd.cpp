@@ -95,7 +95,6 @@ xdebug::GetStackCmd::HandleSuccess
 		auto* node =
 			jnew StackFrameNode(stackRoot, frameIndex, frameName,
 								 fileName, lineIndex);
-		assert( node != nullptr );
 		stackRoot->Prepend(node);
 
 		frame = frame->next;

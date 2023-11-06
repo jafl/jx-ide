@@ -155,14 +155,12 @@ DocumentManager::CreateFileHistoryMenus
 		jnew FileHistoryMenu(kProjectFileHistory, JString::empty, window,
 							  JXWidget::kFixedLeft, JXWidget::kFixedTop,
 							  -20,0, 10,10);
-	assert( itsRecentProjectMenu != nullptr );
 	itsRecentProjectMenu->Hide();
 
 	itsRecentTextMenu =
 		jnew FileHistoryMenu(kTextFileHistory, JString::empty, window,
 							  JXWidget::kFixedLeft, JXWidget::kFixedTop,
 							  -20,0, 10,10);
-	assert( itsRecentTextMenu != nullptr );
 	itsRecentTextMenu->Hide();
 
 	JPrefObject::ReadPrefs();
@@ -404,7 +402,6 @@ DocumentManager::NewTextDocument()
 	if (itsEditTextLocalFlag)
 	{
 		auto* doc = jnew TextDocument;
-		assert( doc != nullptr );
 		doc->Activate();
 		return;
 	}
@@ -1588,7 +1585,6 @@ DocumentManager::ReadFromProject
 		{
 			bool keep;
 			auto* doc = jnew TextDocument(input, vers, &keep);
-			assert( doc != nullptr );
 			if (!keep)
 			{
 				doc->Close();
@@ -1966,7 +1962,6 @@ DocumentManager::ChooseEditors()
 		jnew ExtEditorDialog(itsEditTextLocalFlag,
 							 itsEditTextFileCmd, itsEditTextFileLineCmd,
 							 itsEditBinaryLocalFlag, itsEditBinaryFileCmd);
-	assert( dlog != nullptr );
 
 	if (dlog->DoDialog())
 	{

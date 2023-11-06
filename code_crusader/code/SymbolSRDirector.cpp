@@ -147,7 +147,6 @@ SymbolSRDirector::BuildWindow
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 400,230, JString::empty);
-	assert( window != nullptr );
 
 	auto* scrollbarSet =
 		jnew JXScrollbarSet(window,
@@ -191,7 +190,6 @@ SymbolSRDirector::BuildWindow
 	itsCmdMenu =
 		jnew CommandMenu(itsProjDoc, nullptr, menuBar,
 						  JXWidget::kFixedLeft, JXWidget::kVElastic, 0,0, 10,10);
-	assert( itsCmdMenu != nullptr );
 	menuBar->AppendMenu(itsCmdMenu);
 	ListenTo(itsCmdMenu);
 }

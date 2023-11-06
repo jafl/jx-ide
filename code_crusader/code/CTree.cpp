@@ -84,7 +84,6 @@ void
 CTree::CTreeX()
 {
 	itsCPP = jnew CPreprocessor;
-	assert( itsCPP != nullptr );
 }
 
 /******************************************************************************
@@ -133,7 +132,6 @@ CTree::StreamInCClass
 	)
 {
 	auto* newClass = jnew CClass(input, vers, tree);
-	assert( newClass != nullptr );
 	return newClass;
 }
 

@@ -64,7 +64,6 @@ EditCommandsDialog::BuildWindow()
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 350,370, JString::empty);
-	assert( window != nullptr );
 
 	auto* gdbCmdTitle =
 		jnew JXStaticText(JGetString("gdbCmdTitle::EditCommandsDialog::JXLayout"), window,

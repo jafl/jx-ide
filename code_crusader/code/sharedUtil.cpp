@@ -117,7 +117,6 @@ WriteSharedPrefs
 	// editor settings
 
 	auto* doc = jnew TextDocument;
-	assert( doc != nullptr );
 
 	TextEditor* te         = doc->GetTextEditor();
 	FnMenuUpdater* updater = GetFnMenuUpdater();

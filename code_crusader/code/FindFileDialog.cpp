@@ -84,7 +84,6 @@ FindFileDialog::BuildWindow()
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 290,140, JString::empty);
-	assert( window != nullptr );
 
 	itsCloseButton =
 		jnew JXTextButton(JGetString("itsCloseButton::FindFileDialog::JXLayout"), window,
@@ -145,10 +144,8 @@ FindFileDialog::BuildWindow()
 
 	// create hidden JXDocument so Meta-# shortcuts work
 
-	auto* fileListMenu =
-		jnew JXDocumentMenu(JString::empty, window,
-						   JXWidget::kFixedLeft, JXWidget::kFixedTop, 0,-20, 10,10);
-	assert( fileListMenu != nullptr );
+	jnew JXDocumentMenu(JString::empty, window,
+					   JXWidget::kFixedLeft, JXWidget::kFixedTop, 0,-20, 10,10);
 
 	UpdateDisplay();
 }

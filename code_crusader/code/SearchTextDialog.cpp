@@ -85,7 +85,6 @@ SearchTextDialog*
 SearchTextDialog::Create()
 {
 	auto* dlog = jnew SearchTextDialog;
-	assert( dlog != nullptr );
 	dlog->BuildWindow();
 	dlog->JXSearchTextDialogX();
 	return dlog;
@@ -143,7 +142,6 @@ SearchTextDialog::BuildWindow()
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 450,460, JString::empty);
-	assert( window != nullptr );
 
 	auto* replaceLabel =
 		jnew JXStaticText(JGetString("replaceLabel::SearchTextDialog::JXLayout"), window,
@@ -422,10 +420,8 @@ SearchTextDialog::BuildWindow()
 
 	// create hidden JXDocument so Meta-# shortcuts work
 
-	auto* fileListMenu =
-		jnew JXDocumentMenu(JString::empty, window,
-						   JXWidget::kFixedLeft, JXWidget::kFixedTop, 0,-20, 10,10);
-	assert( fileListMenu != nullptr );
+	jnew JXDocumentMenu(JString::empty, window,
+					   JXWidget::kFixedLeft, JXWidget::kFixedTop, 0,-20, 10,10);
 
 	// decor
 
@@ -436,7 +432,6 @@ SearchTextDialog::BuildWindow()
 		jnew JXDownRect(window, JXWidget::kFixedLeft, JXWidget::kFixedTop,
 					   cbFrame.left, cbFrame.top-6,
 					   wFrame.right-10-cbFrame.left, 2);
-	assert( line != nullptr );
 	line->SetBorderWidth(1);
 }
 
@@ -753,7 +748,6 @@ SearchTextDialog::BuildSearchFileList
 		if (JDirInfo::BuildRegexFromWildcardFilter(fileFilter, &regexStr))
 		{
 			fileRegex = jnew JRegex(regexStr);
-			assert( fileRegex != nullptr );
 			fileRegex->SetCaseSensitive(false);
 		}
 
@@ -761,7 +755,6 @@ SearchTextDialog::BuildSearchFileList
 		if (JDirInfo::BuildRegexFromWildcardFilter(pathFilter, &regexStr))
 		{
 			pathRegex = jnew JRegex(regexStr);
-			assert( pathRegex != nullptr );
 			pathRegex->SetCaseSensitive(false);
 		}
 
@@ -863,7 +856,6 @@ SearchTextDialog::SaveFileForSearch
 	if (!exists)
 	{
 		auto* file = jnew JString(fullName);
-		assert( file != nullptr );
 
 		JXFileDocument* doc;
 		if (GetDocumentManager()->FileDocumentIsOpen(*file, &doc) &&
@@ -881,7 +873,6 @@ SearchTextDialog::SaveFileForSearch
 		if (!file->IsEmpty())
 		{
 			auto* name = jnew JString(fullName);
-			assert( name != nullptr );
 			nameList->InsertAtIndex(index, name);
 
 			fileList->InsertAtIndex(index, file);
