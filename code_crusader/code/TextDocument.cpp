@@ -483,7 +483,6 @@ TextDocument::BuildWindow
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 550,550, JString::empty);
-	assert( window != nullptr );
 
 	itsFileDragSource =
 		jnew FileDragSource(this, window,
@@ -621,18 +620,13 @@ TextDocument::BuildWindow
 	itsFileMenu->SetItemImage(kPrintPTCmd,       jx_file_print);
 	itsFileMenu->SetItemImage(kPrintPSCmd,       jcc_file_print_with_styles);
 
-	auto* recentProjectMenu =
-		jnew FileHistoryMenu(DocumentManager::kProjectFileHistory,
-							  itsFileMenu, kRecentProjectMenuCmd, itsMenuBar);
-	assert( recentProjectMenu != nullptr );
+	jnew FileHistoryMenu(DocumentManager::kProjectFileHistory,
+						  itsFileMenu, kRecentProjectMenuCmd, itsMenuBar);
 
-	auto* recentTextMenu =
-		jnew FileHistoryMenu(DocumentManager::kTextFileHistory,
-							  itsFileMenu, kRecentTextMenuCmd, itsMenuBar);
-	assert( recentTextMenu != nullptr );
+	jnew FileHistoryMenu(DocumentManager::kTextFileHistory,
+						  itsFileMenu, kRecentTextMenuCmd, itsMenuBar);
 
 	itsFileFormatMenu = jnew JXTextMenu(itsFileMenu, kFileFormatIndex, itsMenuBar);
-	assert( itsFileFormatMenu != nullptr );
 	itsFileFormatMenu->SetMenuItems(kFileFormatMenuStr, "TextDocument");
 	itsFileFormatMenu->SetUpdateAction(JXMenu::kDisableNone);
 	itsFileFormatMenu->AttachHandlers(this,
@@ -644,7 +638,6 @@ TextDocument::BuildWindow
 	itsFileFormatMenu->SetItemImage(kDOSFmtCmd,  jcc_dos_format);
 
 	itsDiffMenu = jnew JXTextMenu(itsFileMenu, kDiffMenuIndex, itsMenuBar);
-	assert( itsDiffMenu != nullptr );
 	itsDiffMenu->SetMenuItems(kDiffMenuStr, "TextDocument");
 	itsDiffMenu->AttachHandlers(this,
 		&TextDocument::UpdateDiffMenu,
@@ -657,7 +650,6 @@ TextDocument::BuildWindow
 	itsCmdMenu =
 		jnew CommandMenu(nullptr, this, itsMenuBar,
 						  JXWidget::kFixedLeft, JXWidget::kVElastic, 0,0, 10,10);
-	assert( itsCmdMenu != nullptr );
 	itsMenuBar->AppendMenu(itsCmdMenu);
 
 	itsWindowMenu =
@@ -672,7 +664,6 @@ TextDocument::BuildWindow
 	itsPrefsMenu->AttachHandler(this, &TextDocument::HandlePrefsMenu);
 
 	itsPrefsStylesMenu = jnew JXTextMenu(itsPrefsMenu, kEditStylesSubmenuIndex, itsMenuBar);
-	assert( itsPrefsStylesMenu != nullptr );
 	itsPrefsStylesMenu->SetMenuItems(kPrefsStylesMenuStr, "TextDocument");
 	itsPrefsStylesMenu->SetUpdateAction(JXMenu::kDisableNone);
 	itsPrefsStylesMenu->AttachHandler(this, &TextDocument::HandlePrefsStylesMenu);
@@ -1216,8 +1207,11 @@ TextDocument::OpenAsBinaryFile
 	const JString& fileName
 	)
 {
-	JString s;
-	JReadFile(fileName, &s);
+	std::ifstream input(fileName.GetBytes());
+	char buf[1024];
+	input.read(buf, 1024);
+	JString s(buf, input.gcount(), JString::kNoCopy);
+	input.close();
 
 	if (JStyledText::ContainsIllegalChars(s))
 	{
@@ -2251,7 +2245,6 @@ void
 TextDocument::EditPrefs()
 {
 	auto* dlog = jnew EditTextPrefsDialog(this);
-	assert( dlog != nullptr );
 	if (dlog->DoDialog())
 	{
 		dlog->UpdateSettings();
