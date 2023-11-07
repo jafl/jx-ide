@@ -149,9 +149,9 @@ interface\b {
 <CLASS_NAME_STATE>{
 
 {ID}({MS}"<")? {
-	if (classList->GetElementCount() == 1)
+	if (classList->GetItemCount() == 1)
 		{
-		itsPackage = classList->GetFirstElement()->GetFullName();
+		itsPackage = classList->GetFirstItem()->GetFullName();
 		}
 
 	JString fullName(text(), size());

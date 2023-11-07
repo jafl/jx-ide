@@ -169,16 +169,12 @@ SymbolDirector::SymbolDirector
 	{
 		GetWindow()->ReadGeometry(*setInput);
 
-		// put SR windows on top of main window
-
 		bool active;
 		*setInput >> JBoolFromString(active);
 		if (active && !subProject)
 		{
 			Activate();
 		}
-
-		// read and create SymbolSRDirectors here
 	}
 
 	if (projVers >= 41)
@@ -334,10 +330,10 @@ SymbolDirector::WritePrefs
 void
 SymbolDirector::CloseSymbolBrowsers()
 {
-	const JSize count = itsSRList->GetElementCount();
+	const JSize count = itsSRList->GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		itsSRList->GetLastElement()->Close();
+		itsSRList->GetLastItem()->Close();
 	}
 }
 
@@ -454,7 +450,7 @@ SymbolDirector::FindSymbol
 				theClass->GetAncestorList(list);
 				if (!list->IsEmpty())
 				{
-					cnList.AppendElement(
+					cnList.AppendItem(
 						SymbolList::ContextNamespace(tree->GetLanguage(), list));
 				}
 				else
@@ -472,7 +468,7 @@ SymbolDirector::FindSymbol
 			assert( list != nullptr );
 			list->Append(className);
 
-			cnList.AppendElement(SymbolList::ContextNamespace(lang, list));
+			cnList.AppendItem(SymbolList::ContextNamespace(lang, list));
 		}
 	}
 
@@ -500,9 +496,9 @@ SymbolDirector::FindSymbol
 		foundInAnyTree   = treeWidget->FindFunction(symbolList, button, raiseTree, false, !foundSymbol, false) || foundInAnyTree;
 	}
 
-	if (symbolList.GetElementCount() == 1 && button != kJXRightButton)
+	if (symbolList.GetItemCount() == 1 && button != kJXRightButton)
 	{
-		ViewSymbol(symbolList.GetFirstElement());
+		ViewSymbol(symbolList.GetFirstItem());
 		return true;
 	}
 	else if (foundSymbol)

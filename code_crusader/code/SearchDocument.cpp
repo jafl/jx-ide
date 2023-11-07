@@ -60,7 +60,7 @@ SearchDocument::Create
 	)
 {
 	assert( !fileList->IsEmpty() );
-	assert( fileList->GetElementCount() == nameList->GetElementCount() );
+	assert( fileList->GetItemCount() == nameList->GetItemCount() );
 
 	const JUtf8Byte* map[] =
 	{
@@ -70,7 +70,7 @@ SearchDocument::Create
 
 	auto* doc =
 		jnew SearchDocument(false, onlyListFiles || listFilesWithoutMatch,
-							fileList->GetElementCount(), windowTitle);
+							fileList->GetItemCount(), windowTitle);
 	assert( doc != nullptr );
 	doc->Activate();
 
@@ -102,7 +102,7 @@ SearchDocument::Create
 	)
 {
 	assert( !fileList->IsEmpty() );
-	assert( fileList->GetElementCount() == nameList->GetElementCount() );
+	assert( fileList->GetItemCount() == nameList->GetItemCount() );
 
 	const JUtf8Byte* map[] =
 	{
@@ -111,7 +111,7 @@ SearchDocument::Create
 	};
 	const JString windowTitle = JGetString("ReplaceTitle::SearchDocument", map, sizeof(map));
 
-	auto* doc = jnew SearchDocument(true, true, fileList->GetElementCount(), windowTitle);
+	auto* doc = jnew SearchDocument(true, true, fileList->GetItemCount(), windowTitle);
 	assert( doc != nullptr );
 
 	JXGetApplication()->Suspend();	// do this first so result window is active

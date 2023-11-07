@@ -652,9 +652,9 @@ xdebug::Link::RemoveAllBreakpointsOnLine
 	JString cmd;
 	if (itsBPMgr->GetBreakpoints(fileName, &list))
 	{
-		for (JIndex i=1; i<=list.GetElementCount(); i++)
+		for (JIndex i=1; i<=list.GetItemCount(); i++)
 		{
-			Breakpoint* bp = list.GetElement(i);
+			Breakpoint* bp = list.GetItem(i);
 			if (bp->GetLineNumber() == lineIndex)
 			{
 				cmd  = "breakpoint_remove -d ";
@@ -696,9 +696,9 @@ xdebug::Link::RemoveAllBreakpoints()
 
 	const JPtrArray<Breakpoint>& list = itsBPMgr->GetBreakpoints();
 	JString cmd;
-	for (JIndex i=1; i<=list.GetElementCount(); i++)
+	for (JIndex i=1; i<=list.GetItemCount(); i++)
 	{
-		const Breakpoint* bp = list.GetElement(i);
+		const Breakpoint* bp = list.GetItem(i);
 
 		cmd	 = "breakpoint_remove -d ";
 		cmd += JString((JUInt64) bp->GetDebuggerIndex());

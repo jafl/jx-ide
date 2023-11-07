@@ -93,14 +93,14 @@ EditCommandsDialog::BuildWindow
 	)
 {
 	JArray<JCoordinate> heights(2);
-	heights.AppendElement(210);
-	heights.AppendElement(240);
+	heights.AppendItem(210);
+	heights.AppendItem(240);
 
 	const JIndex elasticIndex = 2;
 
 	JArray<JCoordinate> minHeights(2);
-	minHeights.AppendElement(100);
-	minHeights.AppendElement(120);
+	minHeights.AppendItem(100);
+	minHeights.AppendItem(120);
 
 	const JCoordinate kHeaderHeight = 20;
 

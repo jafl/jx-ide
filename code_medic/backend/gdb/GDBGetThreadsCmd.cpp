@@ -103,12 +103,12 @@ gdb::GetThreadsCmd::HandleSuccess
 	}
 
 	JTreeNode* root   = itsTree->GetRoot();
-	const JSize count = threadList.GetElementCount();
+	const JSize count = threadList.GetItemCount();
 	JIndex threadIndex, lineIndex;
 	JString fileName;
 	for (JIndex i=1; i<=count; i++)
 	{
-		const JString* line = threadList.GetElement(i);
+		const JString* line = threadList.GetItem(i);
 
 		if (ExtractThreadIndex(*line, &threadIndex))
 		{

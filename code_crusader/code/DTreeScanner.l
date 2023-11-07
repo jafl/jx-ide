@@ -167,7 +167,7 @@ interface\b {
 	else if (itsCurlyBraceDepth == 0 && !itsCurlyBraceStack.IsEmpty())
 		{
 		itsCurlyBraceDepth = itsCurlyBraceStack.Pop();
-		itsNamespaceStack->DeleteElement(1);
+		itsNamespaceStack->DeleteItem(1);
 		}
 	}
 
@@ -405,7 +405,7 @@ x\" {
 		for (const auto* c : *itsAliasKeys)
 			{
 			JString* s1 = nullptr;
-			itsAliasMap->GetElement(*c, &s1);
+			itsAliasMap->GetItem(*c, &s1);
 
 			if (*c == parentName)
 				{
@@ -622,8 +622,8 @@ TreeScanner::D::Scanner::StoreAlias
 	JPtrArray<JString> partList(JPtrArrayT::kForgetAll);
 	s.Split("=", &partList);
 
-	JString* key   = partList.GetElement(1);
-	JString* value = partList.GetElement(2);
+	JString* key   = partList.GetItem(1);
+	JString* value = partList.GetItem(2);
 	key->TrimWhitespace();
 	value->TrimWhitespace();
 

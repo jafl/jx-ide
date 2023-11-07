@@ -76,7 +76,7 @@ StylerBase::StylerBase
 	JFontStyle style(itsDefColor);
 	for (JIndex i=1; i<=typeCount; i++)
 	{
-		itsTypeStyles->AppendElement(style);
+		itsTypeStyles->AppendItem(style);
 	}
 
 	itsWordStyles = jnew JStringMap<JFontStyle>(64);
@@ -153,7 +153,7 @@ JIndex i;
 
 	for (i=1; i<=typeCount; i++)
 	{
-		typeStyles.AppendElement(ReadStyle(input));
+		typeStyles.AppendItem(ReadStyle(input));
 	}
 
 	JFileVersion typeListVers;
@@ -166,7 +166,7 @@ JIndex i;
 	SetActive(active);
 	*itsTypeStyles = typeStyles;
 	UpgradeTypeList(typeListVers, itsTypeStyles);
-	assert( itsTypeStyles->GetElementCount() == itsTypeNameCount );
+	assert( itsTypeStyles->GetItemCount() == itsTypeNameCount );
 
 	// word styles
 
@@ -179,7 +179,7 @@ JIndex i;
 	for (i=1; i<=wordCount; i++)
 	{
 		input >> s;
-		itsWordStyles->SetElement(s, ReadStyle(input));
+		itsWordStyles->SetItem(s, ReadStyle(input));
 	}
 
 	Broadcast(WordListChanged(*itsWordStyles));
@@ -231,19 +231,19 @@ StylerBase::WritePrefs
 
 	// type styles
 
-	const JSize typeCount = itsTypeStyles->GetElementCount();
+	const JSize typeCount = itsTypeStyles->GetItemCount();
 	output << ' ' << typeCount;
 
 	for (JIndex i=1; i<=typeCount; i++)
 	{
-		WriteStyle(output, itsTypeStyles->GetElement(i));
+		WriteStyle(output, itsTypeStyles->GetItem(i));
 	}
 
 	output << ' ' << itsTypeNameVersion;
 
 	// word styles
 
-	output << ' ' << itsWordStyles->GetElementCount();
+	output << ' ' << itsWordStyles->GetItemCount();
 
 	JStringMapCursor<JFontStyle> cursor(itsWordStyles);
 	while (cursor.Next())
@@ -309,7 +309,7 @@ StylerBase::GetWordList
 		}
 		else
 		{
-			wordList->AppendElement(data);
+			wordList->AppendItem(data);
 		}
 	}
 }
@@ -375,11 +375,11 @@ StylerBase::SetDefaultFontColor
 	{
 		for (JIndex i=1; i<=itsTypeNameCount; i++)
 		{
-			JFontStyle style = itsTypeStyles->GetElement(i);
+			JFontStyle style = itsTypeStyles->GetItem(i);
 			if (style.color == itsDefColor)
 			{
 				style.color = color;
-				itsTypeStyles->SetElement(i, style);
+				itsTypeStyles->SetItem(i, style);
 			}
 		}
 
@@ -461,12 +461,12 @@ StylerBase::TypeStylesChanged
 	)
 	const
 {
-	const JSize count = itsTypeStyles->GetElementCount();
-	assert( newTypeStyles.GetElementCount() == count );
+	const JSize count = itsTypeStyles->GetItemCount();
+	assert( newTypeStyles.GetItemCount() == count );
 
 	for (JIndex i=1; i<=count; i++)
 	{
-		if (itsTypeStyles->GetElement(i) != newTypeStyles.GetElement(i))
+		if (itsTypeStyles->GetItem(i) != newTypeStyles.GetItem(i))
 		{
 			return true;
 		}
@@ -487,8 +487,8 @@ StylerBase::WordStylesChanged
 	)
 	const
 {
-	const JSize count = itsWordStyles->GetElementCount();
-	if (newWordStyles.GetElementCount() != count)
+	const JSize count = itsWordStyles->GetItemCount();
+	if (newWordStyles.GetItemCount() != count)
 	{
 		return true;
 	}
@@ -501,7 +501,7 @@ StylerBase::WordStylesChanged
 	JFontStyle newStyle;
 	while (cursor.Next())
 	{
-		if (!newWordStyles.GetElement(cursor.GetKey(), &newStyle) ||
+		if (!newWordStyles.GetItem(cursor.GetKey(), &newStyle) ||
 			newStyle != cursor.GetValue())
 		{
 			return true;

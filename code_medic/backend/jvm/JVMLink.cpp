@@ -463,9 +463,9 @@ jvm::Link::DispatchEventsFromJVM
 			JIndex j;
 			if (itsClassByNameList->SearchSorted(info, JListT::kAnyMatch, &j))
 			{
-				info = itsClassByNameList->GetElement(j);
+				info = itsClassByNameList->GetItem(j);
 				info.Clean();
-				itsClassByIDList->RemoveElement(itsClassByNameList->GetElementIndex(j));
+				itsClassByIDList->RemoveItem(itsClassByNameList->GetItemIndex(j));
 			}
 		}
 		else if (type == kThreadStartEvent)
@@ -559,7 +559,7 @@ jvm::Link::ThreadDeleted
 	JIndex i;
 	if (itsThreadList->Find(node, &i))
 	{
-		itsThreadList->RemoveElement(i);
+		itsThreadList->RemoveItem(i);
 
 		if (itsCurrentThreadID == node->GetID())
 		{
@@ -585,7 +585,7 @@ jvm::Link::FindThread
 	JIndex i;
 	if (itsThreadList->SearchSorted(&target, JListT::kAnyMatch, &i))
 	{
-		*node = itsThreadList->GetElement(i);
+		*node = itsThreadList->GetItem(i);
 		return true;
 	}
 	else
@@ -616,7 +616,7 @@ jvm::Link::CheckNextThreadGroup()
 	ThreadNode* node;
 	while (true)
 	{
-		node = itsThreadList->GetElement(itsCullThreadGroupIndex);
+		node = itsThreadList->GetItem(itsCullThreadGroupIndex);
 		if (node->GetType() == ThreadNode::kGroupType)
 		{
 			break;
@@ -642,10 +642,10 @@ jvm::Link::CheckNextThreadGroup()
 void
 jvm::Link::FlushClassList()
 {
-	const JSize count = itsClassByIDList->GetElementCount();
+	const JSize count = itsClassByIDList->GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		ClassInfo info = itsClassByIDList->GetElement(i);
+		ClassInfo info = itsClassByIDList->GetItem(i);
 		info.Clean();
 	}
 
@@ -721,7 +721,7 @@ jvm::Link::GetClassName
 	JIndex i;
 	if (itsClassByIDList->SearchSorted(target, JListT::kAnyMatch, &i))
 	{
-		target = itsClassByIDList->GetElement(i);
+		target = itsClassByIDList->GetItem(i);
 		*name  = *(target.name);
 		return true;
 	}
@@ -751,7 +751,7 @@ jvm::Link::GetClassSourceFile
 	JIndex i;
 	if (itsClassByIDList->SearchSorted(target, JListT::kAnyMatch, &i))
 	{
-		target = itsClassByIDList->GetElement(i);
+		target = itsClassByIDList->GetItem(i);
 		if (target.path != nullptr)
 		{
 			*fullName = *(target.path);
@@ -782,7 +782,7 @@ jvm::Link::AddMethod
 	const bool found = itsClassByIDList->SearchSorted(target, JListT::kAnyMatch, &i);
 	assert( found );
 
-	target = itsClassByIDList->GetElement(i);
+	target = itsClassByIDList->GetItem(i);
 
 	MethodInfo info;
 	info.id = methodID;
@@ -821,13 +821,13 @@ jvm::Link::GetMethodName
 		return false;
 	}
 
-	target1 = itsClassByIDList->GetElement(i);
+	target1 = itsClassByIDList->GetItem(i);
 
 	MethodInfo target2;
 	target2.id = methodID;
 	if (target1.methods->SearchSorted(target2, JListT::kAnyMatch, &i))
 	{
-		target2 = target1.methods->GetElement(i);
+		target2 = target1.methods->GetItem(i);
 		*name   = *(target2.name);
 		return true;
 	}
@@ -931,10 +931,10 @@ jvm::Link::ClassSignatureToFile
 	JString file = ClassSignatureToResourcePath(signature);
 	file        += ".java";
 
-	const JSize pathCount = itsSourcePathList->GetElementCount();
+	const JSize pathCount = itsSourcePathList->GetItemCount();
 	for (JIndex i=1; i<=pathCount; i++)
 	{
-		const JString* path = itsSourcePathList->GetElement(i);
+		const JString* path = itsSourcePathList->GetItem(i);
 		*fullName           = JCombinePathAndName(*path, file);
 		if (JFileReadable(*fullName))
 		{
@@ -1044,7 +1044,7 @@ jvm::Link::AddFrame
 	info.methodID   = methodID;
 	info.codeOffset = codeOffset;
 
-	itsFrameList->AppendElement(info);
+	itsFrameList->AppendItem(info);
 }
 
 /******************************************************************************
@@ -1062,10 +1062,10 @@ jvm::Link::GetFrame
 	)
 	const
 {
-	const JSize count = itsFrameList->GetElementCount();
+	const JSize count = itsFrameList->GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		FrameInfo info = itsFrameList->GetElement(i);
+		FrameInfo info = itsFrameList->GetItem(i);
 		if (info.id == id)
 		{
 			*index = i;
@@ -1353,17 +1353,17 @@ jvm::Link::SetBreakpoint
 	)
 {
 	JArray<unsigned char> data;
-	data.AppendElement(0x02);			// breakpoint
-	data.AppendElement(0x02);			// all
-	data.AppendElement(0x01);			// 1 condition
-		data.AppendElement(0x07);		// LocationOnly
-			data.AppendElement(0x01);	// CLASS
+	data.AppendItem(0x02);			// breakpoint
+	data.AppendItem(0x02);			// all
+	data.AppendItem(0x01);			// 1 condition
+		data.AppendItem(0x07);		// LocationOnly
+			data.AppendItem(0x01);	// CLASS
 			// classID
 			// methodID
 			// code index (8 bytes)
 
 //	itsDebugLink->Send(GetNextTransactionID(), kEventRequestCmdSet, kERSetCmd,
-//					   data.GetCArray(), data.GetElementCount());
+//					   data.GetCArray(), data.GetItemCount());
 }
 
 /******************************************************************************
@@ -1545,7 +1545,7 @@ jvm::Link::SwitchToFrame
 	JIndex i;
 	if (GetFrame(id, &i))
 	{
-		FrameInfo info = itsFrameList->GetElement(i);
+		FrameInfo info = itsFrameList->GetItem(i);
 
 		JString fullName;
 		if (GetClassSourceFile(info.classID, &fullName))

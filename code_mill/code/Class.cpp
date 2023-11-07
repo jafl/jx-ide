@@ -61,9 +61,9 @@ Class::GetBaseClassCount()
 		return 0;
 	}
 
-	assert(itsBaseClasses->GetElementCount() == itsBaseClassFiles->GetElementCount());
+	assert(itsBaseClasses->GetItemCount() == itsBaseClassFiles->GetItemCount());
 
-	return itsBaseClasses->GetElementCount();
+	return itsBaseClasses->GetItemCount();
 }
 
 /******************************************************************************
@@ -85,8 +85,8 @@ Class::GetBaseClass
 	assert(itsBaseClassFiles != nullptr);
 	assert(itsBaseClassFiles->IndexValid(index));
 	
-	*classname	= *(itsBaseClasses->GetElement(index));
-	*filename	= *(itsBaseClassFiles->GetElement(index));
+	*classname	= *(itsBaseClasses->GetItem(index));
+	*filename	= *(itsBaseClassFiles->GetItem(index));
 }
 
 /******************************************************************************
@@ -130,9 +130,9 @@ Class::GetAncestorCount()
 		return 0;
 	}
 
-	assert(itsAncestors->GetElementCount() == itsAncestorFiles->GetElementCount());
+	assert(itsAncestors->GetItemCount() == itsAncestorFiles->GetItemCount());
 
-	return itsAncestors->GetElementCount();
+	return itsAncestors->GetItemCount();
 }
 
 /******************************************************************************
@@ -154,8 +154,8 @@ Class::GetAncestor
 	assert(itsAncestorFiles != nullptr);
 	assert(itsAncestorFiles->IndexValid(index));
 	
-	*classname	= *itsAncestors->GetElement(index);
-	*filename	= *itsAncestorFiles->GetElement(index);
+	*classname	= *itsAncestors->GetItem(index);
+	*filename	= *itsAncestorFiles->GetItem(index);
 }
 
 /******************************************************************************

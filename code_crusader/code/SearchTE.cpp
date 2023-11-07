@@ -84,13 +84,13 @@ SearchTE::SearchFiles
 			&replaceStr, &interpolator, &preserveCase);
 	assert( ok );
 
-	const JSize count = fileList.GetElementCount();
-	assert( count == nameList.GetElementCount() );
+	const JSize count = fileList.GetItemCount();
+	assert( count == nameList.GetItemCount() );
 
 	for (JIndex i=1; i<=count; i++)
 	{
-		const JString* file = fileList.GetElement(i);
-		const JString* name = nameList.GetElement(i);
+		const JString* file = fileList.GetItem(i);
+		const JString* name = nameList.GetItem(i);
 
 		if (!itsCancelledFlag)
 		{

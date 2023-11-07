@@ -358,7 +358,7 @@ TreeScanner::Go::Scanner::ParseTypeContent
 
 		const JString* itsPackage;
 		if (!m.GetUtf8ByteRange(2).IsEmpty() &&
-			itsImportMap->GetElement(m.GetSubstring(2), &itsPackage))
+			itsImportMap->GetItem(m.GetSubstring(2), &itsPackage))
 			{
 			JStringIterator iter(&parent);
 			iter.Next(".");

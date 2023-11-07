@@ -66,15 +66,15 @@ MacroManager::MacroManager
 {
 	MacroManagerX();
 
-	const JSize count = (source.itsMacroList)->GetElementCount();
+	const JSize count = (source.itsMacroList)->GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		const MacroInfo oldInfo = (source.itsMacroList)->GetElement(i);
+		const MacroInfo oldInfo = (source.itsMacroList)->GetItem(i);
 
 		MacroInfo newInfo(jnew JString(*(oldInfo.macro)),
 						  jnew JString(*(oldInfo.script)));
 		assert( newInfo.macro != nullptr && newInfo.script != nullptr );
-		itsMacroList->AppendElement(newInfo);
+		itsMacroList->AppendItem(newInfo);
 	}
 }
 
@@ -111,10 +111,10 @@ MacroManager::Perform
 	const JStyledText* st = doc->GetTextEditor()->GetText();
 	const JUtf8Byte* text = st->GetText().GetBytes();
 
-	const JSize macroCount = itsMacroList->GetElementCount();
+	const JSize macroCount = itsMacroList->GetItemCount();
 	for (JIndex i=1; i<=macroCount; i++)
 	{
-		const MacroInfo info = itsMacroList->GetElement(i);
+		const MacroInfo info = itsMacroList->GetItem(i);
 		if (info.macro->GetCharacterCount() <= caretIndex.charIndex-1)
 		{
 			const JStyledText::TextIndex j =
@@ -219,7 +219,7 @@ MacroManager::HighlightErrors
 	JRunArray<JFont>*	styles
 	)
 {
-	const JFont f = styles->GetFirstElement();
+	const JFont f = styles->GetFirstItem();
 	styles->RemoveAll();
 
 	JFont black = f;
@@ -231,7 +231,7 @@ MacroManager::HighlightErrors
 	JFont red = f;
 	red.SetColor(JColorManager::GetRedColor());
 
-	styles->AppendElements(black, script.GetCharacterCount());
+	styles->AppendItems(black, script.GetCharacterCount());
 
 	JStringIterator siter(script);
 	JRunArrayIterator<JFont> fiter(styles);
@@ -251,7 +251,7 @@ MacroManager::HighlightErrors
 		{
 			siter.SkipNext();
 			const bool ok = BalanceForward(kCLang, &siter, &c);
-			fiter.SetNext(ok ? blue : red, siter.GetPrevCharacterIndex() - fiter.GetNextElementIndex() + 1);
+			fiter.SetNext(ok ? blue : red, siter.GetPrevCharacterIndex() - fiter.GetNextItemIndex() + 1);
 		}
 		else
 		{
@@ -322,7 +322,7 @@ MacroManager::ReadSetup
 		MacroInfo info(jnew JString, jnew JString);
 		assert( info.macro != nullptr && info.script != nullptr );
 		input >> *(info.macro) >> *(info.script);
-		itsMacroList->AppendElement(info);
+		itsMacroList->AppendItem(info);
 	}
 
 	if (vers == 0)
@@ -347,12 +347,12 @@ MacroManager::WriteSetup
 {
 	output << ' ' << kCurrentSetupVersion;
 
-	const JSize count = itsMacroList->GetElementCount();
+	const JSize count = itsMacroList->GetItemCount();
 	output << ' ' << count;
 
 	for (JIndex i=1; i<=count; i++)
 	{
-		const MacroInfo info = itsMacroList->GetElement(i);
+		const MacroInfo info = itsMacroList->GetItem(i);
 		output << ' ' << *(info.macro) << ' ' << *(info.script);
 	}
 
@@ -372,10 +372,10 @@ MacroManager::WriteSetup
 void
 MacroList::DeleteAll()
 {
-	const JSize count = GetElementCount();
+	const JSize count = GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		MacroManager::MacroInfo info = GetElement(i);
+		MacroManager::MacroInfo info = GetItem(i);
 		jdelete info.macro;
 		jdelete info.script;
 	}

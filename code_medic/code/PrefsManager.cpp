@@ -526,10 +526,10 @@ PrefsManager::GetFileType
 	{
 		if (GetSuffixes(suffix.id, &suffixList))
 		{
-			const JSize count = suffixList.GetElementCount();
+			const JSize count = suffixList.GetItemCount();
 			for (JIndex j=1; j<=count; j++)
 			{
-				if (fileName.EndsWith(*suffixList.GetElement(j)))
+				if (fileName.EndsWith(*suffixList.GetItem(j)))
 				{
 					return suffix.type;
 				}

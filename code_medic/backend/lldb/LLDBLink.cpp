@@ -692,15 +692,15 @@ lldb::Link::RunProgram
 		{
 			JParseArgsForExec(args, &argList);
 
-			lldbArgs = jnew JUtf8Byte*[ argList.GetElementCount()+1 ];
+			lldbArgs = jnew JUtf8Byte*[ argList.GetItemCount()+1 ];
 			assert( lldbArgs != nullptr );
 
-			for (JIndex i=1; i<=argList.GetElementCount(); i++)
+			for (JIndex i=1; i<=argList.GetItemCount(); i++)
 			{
-				lldbArgs[ i-1 ] = const_cast<JUtf8Byte*>(argList.GetElement(i)->GetBytes());
+				lldbArgs[ i-1 ] = const_cast<JUtf8Byte*>(argList.GetItem(i)->GetBytes());
 			}
 
-			lldbArgs[ argList.GetElementCount() ] = nullptr;
+			lldbArgs[ argList.GetItemCount() ] = nullptr;
 		}
 
 		SBError error;

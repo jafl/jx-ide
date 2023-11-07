@@ -278,7 +278,7 @@ RubyStyler::UpgradeTypeList
 {
 	if (vers < 1)
 	{
-		typeStyles->InsertElementAtIndex(12, typeStyles->GetElement(9));
+		typeStyles->InsertItemAtIndex(12, typeStyles->GetItem(9));
 	}
 
 	// set new values after all new slots have been created

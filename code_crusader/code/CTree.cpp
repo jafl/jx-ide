@@ -233,7 +233,7 @@ CTree::ParseFile
 			ReadExtensionFlags(input, &flags);		// skips file name and line number
 
 			JString* props;
-			if (name.Contains("::") && flags.GetElement("properties", &props) &&
+			if (name.Contains("::") && flags.GetItem("properties", &props) &&
 				props->Contains("pure") && props->Contains("virtual"))
 			{
 				JStringIterator iter(&name, JStringIterator::kStartAtEnd);

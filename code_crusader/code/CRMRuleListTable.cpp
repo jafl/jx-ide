@@ -61,7 +61,7 @@ CRMRuleListTable::CRMRuleListTable
 	auto* data = GetStringData();
 	data->AppendCols(1);
 
-	const JSize count = itsCRMList->GetElementCount();
+	const JSize count = itsCRMList->GetItemCount();
 	data->AppendRows(count);
 
 	JIndex i = 0;
@@ -103,10 +103,10 @@ CRMRuleListTable::~CRMRuleListTable()
 {
 	if (itsOwnsCRMListFlag)
 	{
-		const JSize count = itsCRMList->GetElementCount();
+		const JSize count = itsCRMList->GetItemCount();
 		for (JIndex i=1; i<=count; i++)
 		{
-			PrefsManager::CRMRuleListInfo info = itsCRMList->GetElement(i);
+			PrefsManager::CRMRuleListInfo info = itsCRMList->GetItem(i);
 			jdelete info.name;
 			(info.list)->DeleteAll();
 			jdelete info.list;
@@ -166,13 +166,13 @@ CRMRuleListTable::GetCRMRuleLists
 	const JSize count      = data->GetRowCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		PrefsManager::CRMRuleListInfo info = itsCRMList->GetElement(i);
+		PrefsManager::CRMRuleListInfo info = itsCRMList->GetItem(i);
 		*(info.name) = data->GetString(i,1);
 	}
 
 	if (itsCRMIndex > 0)
 	{
-		PrefsManager::CRMRuleListInfo info = itsCRMList->GetElement(itsCRMIndex);
+		PrefsManager::CRMRuleListInfo info = itsCRMList->GetItem(itsCRMIndex);
 		itsRuleTable->GetData(info.list);
 	}
 
@@ -256,7 +256,7 @@ CRMRuleListTable::AddRow()
 											 jnew JStyledText::CRMRuleList);
 		assert( info.name != nullptr &&
 				info.list != nullptr );
-		itsCRMList->AppendElement(info);
+		itsCRMList->AppendItem(info);
 
 		JStringTableData* data = GetStringData();
 		data->AppendRows(1);
@@ -280,7 +280,7 @@ CRMRuleListTable::RemoveRow()
 	CancelEditing();
 	itsRuleTable->CancelEditing();
 
-	auto info = itsCRMList->GetElement(itsCRMIndex);
+	auto info = itsCRMList->GetItem(itsCRMIndex);
 	jdelete info.name;
 	(info.list)->DeleteAll();
 	jdelete info.list;
@@ -296,9 +296,9 @@ CRMRuleListTable::RemoveRow()
 			PrefsManager::FindCRMRuleListID(*itsCRMList, itsLastNewID, &index);
 		assert( found );
 
-		auto info2 = itsCRMList->GetElement(index);
+		auto info2 = itsCRMList->GetItem(index);
 		info2.id   = info.id;
-		itsCRMList->SetElement(index, info2);
+		itsCRMList->SetItem(index, info2);
 
 		itsLastNewID--;
 	}
@@ -307,7 +307,7 @@ CRMRuleListTable::RemoveRow()
 
 	const JIndex crmIndex = itsCRMIndex;
 	itsCRMIndex = 0;
-	itsCRMList->RemoveElement(crmIndex);
+	itsCRMList->RemoveItem(crmIndex);
 	GetStringData()->RemoveRow(crmIndex);
 }
 
@@ -321,7 +321,7 @@ CRMRuleListTable::SwitchDisplay()
 {
 	if (itsCRMIndex > 0)
 	{
-		const PrefsManager::CRMRuleListInfo info = itsCRMList->GetElement(itsCRMIndex);
+		const PrefsManager::CRMRuleListInfo info = itsCRMList->GetItem(itsCRMIndex);
 		itsRuleTable->GetData(info.list);
 	}
 
@@ -330,7 +330,7 @@ CRMRuleListTable::SwitchDisplay()
 	{
 		itsCRMIndex = cell.y;
 
-		const PrefsManager::CRMRuleListInfo info = itsCRMList->GetElement(itsCRMIndex);
+		const PrefsManager::CRMRuleListInfo info = itsCRMList->GetItem(itsCRMIndex);
 		itsRuleTable->SetData(*(info.list));
 
 		itsRemoveRowButton->Activate();

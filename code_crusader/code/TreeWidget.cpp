@@ -233,9 +233,9 @@ TreeWidget::FindFunction
 
 	return ShowSearchResults([this, matchList](Class*)
 	{
-		if (matchList.GetElementCount() == 1)
+		if (matchList.GetItemCount() == 1)
 		{
-			itsDirector->GetProjectDoc()->GetSymbolDirector()->ViewSymbol(matchList.GetFirstElement());
+			itsDirector->GetProjectDoc()->GetSymbolDirector()->ViewSymbol(matchList.GetFirstItem());
 		}
 	},
 	button, raiseTreeWindow, reportNotFound, openFileIfSingleMatch,
@@ -281,9 +281,9 @@ TreeWidget::ShowSearchResults
 			JPtrArray<Class> classList(JPtrArrayT::kForgetAll);
 			const bool ok = itsTree->GetSelectedClasses(&classList);
 			assert( ok );
-			if (classList.GetElementCount() == 1)
+			if (classList.GetItemCount() == 1)
 			{
-				singleResultAction(classList.GetFirstElement());
+				singleResultAction(classList.GetFirstItem());
 			}
 		}
 
@@ -562,11 +562,11 @@ TreeWidget::GetSelectionData
 		const bool hasSelection = itsTree->GetSelectedClasses(&classList);
 		assert( hasSelection );
 
-		const JSize classCount = classList.GetElementCount();
+		const JSize classCount = classList.GetItemCount();
 		JString headerName, sourceName;
 		for (JIndex i=1; i<=classCount; i++)
 		{
-			Class* c = classList.GetElement(i);
+			Class* c = classList.GetItem(i);
 			if (c->GetFileName(&headerName))
 			{
 				auto* s = jnew JString(headerName);
@@ -649,10 +649,10 @@ TreeWidget::WillAcceptDrop
 
 	const Atom urlXAtom = GetSelectionManager()->GetURLXAtom();
 
-	const JSize typeCount = typeList.GetElementCount();
+	const JSize typeCount = typeList.GetItemCount();
 	for (JIndex i=1; i<=typeCount; i++)
 	{
-		const Atom a = typeList.GetElement(i);
+		const Atom a = typeList.GetItem(i);
 		if (a == urlXAtom)
 		{
 			*action = GetDNDManager()->GetDNDActionPrivateXAtom();
@@ -706,13 +706,13 @@ TreeWidget::HandleDNDDrop
 					   urlList(JPtrArrayT::kDeleteAll);
 	JXUnpackFileNames((char*) data, dataLength, &dirList, &urlList);
 
-	const JSize fileCount = dirList.GetElementCount();
+	const JSize fileCount = dirList.GetItemCount();
 	for (JIndex i=fileCount; i>=1; i--)
 	{
-		const JString* name = dirList.GetElement(i);
+		const JString* name = dirList.GetItem(i);
 		if (!JDirectoryExists(*name))
 		{
-			dirList.DeleteElement(i);
+			dirList.DeleteItem(i);
 		}
 	}
 
@@ -881,10 +881,10 @@ TreeWidget::Receive
 		if (itsTree->GetSelectedClasses(&sel))
 		{
 			bool visible  = false;
-			const JSize count = sel.GetElementCount();
+			const JSize count = sel.GetItemCount();
 			for (JIndex i=1; i<=count; i++)
 			{
-				Class* c    = sel.GetElement(i);
+				Class* c    = sel.GetItem(i);
 				const JRect r = c->GetFrame();
 				if (ap.Contains(r))
 				{

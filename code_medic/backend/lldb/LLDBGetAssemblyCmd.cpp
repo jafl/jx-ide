@@ -128,10 +128,10 @@ lldb::GetAssemblyCmd::HandleSuccess
 			}
 		}
 
-		const JSize count = addrList.GetElementCount();
+		const JSize count = addrList.GetItemCount();
 		for (JIndex i=1; i<=count; i++)
 		{
-			JString* s = addrList.GetElement(i);
+			JString* s = addrList.GetItem(i);
 
 			JStringIterator iter(s);
 			const JStringMatch m = offsetPattern.Match(*s, JRegex::kIgnoreSubmatches);

@@ -117,7 +117,7 @@ gdb::GetCompletionsCmd::HandleSuccess
 	// the array has only one element, we're done.  Otherwise, our test
 	// prefix is the 'start' of several possible commands.
 
-	const JSize stringCount = lines.GetElementCount();
+	const JSize stringCount = lines.GetItemCount();
 	bool found;
 	JIndex startIndex = lines.SearchSortedOTI(&itsPrefix, JListT::kAnyMatch, &found);
 	if (found)
@@ -145,7 +145,7 @@ gdb::GetCompletionsCmd::HandleSuccess
 
 	JString maxPrefix;
 
-	maxPrefix = *(lines.GetElement(startIndex));
+	maxPrefix = *(lines.GetItem(startIndex));
 	if (stringCount == 1)
 	{
 		// There's only one completion, which must be what we meant so we
@@ -159,7 +159,7 @@ gdb::GetCompletionsCmd::HandleSuccess
 
 	for (JIndex i=startIndex+1; i<=stringCount; i++)
 	{
-		const JString* s         = lines.GetElement(i);
+		const JString* s         = lines.GetItem(i);
 		const JSize matchLength  = JString::CalcCharacterMatchLength(maxPrefix, *s);
 		const JSize prefixLength = maxPrefix.GetCharacterCount();
 		if (matchLength < prefixLength)

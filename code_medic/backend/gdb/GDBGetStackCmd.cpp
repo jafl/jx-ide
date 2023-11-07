@@ -83,7 +83,7 @@ gdb::GetStackCmd::HandleSuccess
 
 		JString* s;
 		JIndex frameIndex;
-		if (!map.GetElement("level", &s))
+		if (!map.GetItem("level", &s))
 		{
 			Link::Log("missing frame index");
 			continue;
@@ -102,20 +102,20 @@ gdb::GetStackCmd::HandleSuccess
 		frameName += ":  ";
 
 		JString* fnName;
-		if (!map.GetElement("func", &fnName))
+		if (!map.GetItem("func", &fnName))
 		{
 			Link::Log("missing function name");
 			continue;
 		}
 		frameName += *fnName;
 
-		if (map.GetElement("file", &s))
+		if (map.GetItem("file", &s))
 		{
 			fileName = *s;
 		}
 
 		JIndex lineIndex = 0;
-		if (map.GetElement("line", &s) &&
+		if (map.GetItem("line", &s) &&
 			!s->ConvertToUInt(&lineIndex))
 		{
 			Link::Log("line number is not integer");

@@ -433,7 +433,7 @@ ProjectTable::AddFiles
 
 	JLatentPG pg(10);
 	pg.FixedLengthProcessBeginning(
-		fullNameList.GetElementCount(),
+		fullNameList.GetItemCount(),
 		JGetString("ParsingFilesProgress::ProjectDocument"), true, true);
 
 	for (const auto* fullName : fullNameList)
@@ -499,10 +499,10 @@ ProjectTable::AddFiles
 			jdelete parent;
 		}
 
-		if (!silent && fullNameList.GetElementCount() == 1)
+		if (!silent && fullNameList.GetItemCount() == 1)
 		{
 			JString path, name;
-			JSplitPathAndName(*fullNameList.GetFirstElement(), &path, &name);
+			JSplitPathAndName(*fullNameList.GetFirstItem(), &path, &name);
 			const JUtf8Byte* map[] =
 		{
 				"name", name.GetBytes()
@@ -1620,10 +1620,10 @@ ProjectTable::WillAcceptDrop
 
 	const Atom urlXAtom = GetSelectionManager()->GetURLXAtom();
 
-	const JSize typeCount = typeList.GetElementCount();
+	const JSize typeCount = typeList.GetItemCount();
 	for (JIndex i=1; i<=typeCount; i++)
 	{
-		const Atom a = typeList.GetElement(i);
+		const Atom a = typeList.GetItem(i);
 		if (a == urlXAtom)
 		{
 			*action = GetDNDManager()->GetDNDActionPrivateXAtom();
@@ -1847,21 +1847,21 @@ ProjectTable::HandleDNDDrop
 								   pathList(JPtrArrayT::kDeleteAll);
 				JXUnpackFileNames((char*) data, dataLength, &fileNameList, &urlList);
 
-				const JSize fileCount = fileNameList.GetElementCount();
+				const JSize fileCount = fileNameList.GetItemCount();
 
 				// insert files and directories into tree
 
 				for (JIndex i=fileCount; i>=1; i--)
 				{
-					JString* fullName = fileNameList.GetElement(i);
+					JString* fullName = fileNameList.GetItem(i);
 					if (JDirectoryExists(*fullName))
 					{
-						fileNameList.RemoveElement(i);
-						pathList.AppendElement(fullName);
+						fileNameList.RemoveItem(i);
+						pathList.AppendItem(fullName);
 					}
 					else if (!JFileExists(*fullName))
 					{
-						fileNameList.DeleteElement(i);
+						fileNameList.DeleteItem(i);
 					}
 				}
 
@@ -1877,9 +1877,9 @@ ProjectTable::HandleDNDDrop
 				else if (itsDropFileAction == kDropAskPathType)
 				{
 					JArray<Atom> actionList;
-					actionList.AppendElement(kAbsolutePath);
-					actionList.AppendElement(kProjectRelative);
-					actionList.AppendElement(kHomeRelative);
+					actionList.AppendItem(kAbsolutePath);
+					actionList.AppendItem(kProjectRelative);
+					actionList.AppendItem(kHomeRelative);
 
 					JPtrArray<JString> descriptionList(JPtrArrayT::kForgetAll);
 					descriptionList.Append(const_cast<JString*>(&JGetString("AddFilesAbsPath::ProjectDocument")));
@@ -1930,10 +1930,10 @@ ProjectTable::InsertFileSelectionAfter
 	GetSelectedNodes(&list);
 
 	const JSize depth = after->GetDepth();
-	const JSize count = list.GetElementCount();
+	const JSize count = list.GetItemCount();
 	for (JIndex i=count; i>=1; i--)
 	{
-		JTreeNode* node = list.GetElement(i);
+		JTreeNode* node = list.GetItem(i);
 		if (depth == kGroupDepth)
 		{
 			after->Prepend(node);
@@ -1959,10 +1959,10 @@ ProjectTable::AppendFileSelectionToGroup
 	JPtrArray<JTreeNode> list(JPtrArrayT::kForgetAll);
 	GetSelectedNodes(&list);
 
-	const JSize count = list.GetElementCount();
+	const JSize count = list.GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		group->Append(list.GetElement(i));
+		group->Append(list.GetItem(i));
 	}
 }
 
@@ -1983,10 +1983,10 @@ ProjectTable::InsertGroupSelectionBefore
 	GetSelectedNodes(&list);
 
 	JTreeNode* root   = (GetTreeList()->GetTree())->GetRoot();
-	const JSize count = list.GetElementCount();
+	const JSize count = list.GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		JTreeNode* node = list.GetElement(i);
+		JTreeNode* node = list.GetItem(i);
 		if (before != nullptr)
 		{
 			root->InsertBefore(before, node);

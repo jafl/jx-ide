@@ -89,8 +89,8 @@ LineAddressTable::SetLineNumbers
 	}
 
 	JSize charCount = 0;
-	const JString* s1 = itsLineTextList->GetFirstElement();
-	const JString* sN = itsLineTextList->GetLastElement();
+	const JString* s1 = itsLineTextList->GetFirstItem();
+	const JString* sN = itsLineTextList->GetLastItem();
 	if (s1->StartsWith("0x") && s1->GetCharacterCount() > 2 &&
 		sN->StartsWith("0x") && sN->GetCharacterCount() > 2)
 	{
@@ -173,7 +173,7 @@ LineAddressTable::GetLineText
 	const
 {
 	return itsLineTextList->IndexValid(lineIndex) ?
-		*(itsLineTextList->GetElement(lineIndex)) : JString();
+		*(itsLineTextList->GetItem(lineIndex)) : JString();
 }
 
 /******************************************************************************
@@ -189,7 +189,7 @@ LineAddressTable::GetLongestLineText
 	const
 {
 	return !itsLineTextList->IsEmpty() ?
-		*itsLineTextList->GetLastElement() : JString((JUInt64) lineCount);
+		*itsLineTextList->GetLastItem() : JString((JUInt64) lineCount);
 }
 
 /******************************************************************************
@@ -205,7 +205,7 @@ LineAddressTable::GetBreakpointLineIndex
 	)
 	const
 {
-	return itsVisualBPIndexList->GetElement(bpIndex);
+	return itsVisualBPIndexList->GetItem(bpIndex);
 }
 
 /******************************************************************************
@@ -221,7 +221,7 @@ LineAddressTable::GetFirstBreakpointOnLine
 	)
 	const
 {
-	const JString addr = BuildAddress(*itsLineTextList->GetElement(lineIndex));
+	const JString addr = BuildAddress(*itsLineTextList->GetItem(lineIndex));
 	Breakpoint bp(addr);
 	return GetBreakpointList()->SearchSorted(&bp, JListT::kFirstMatch, bpIndex);
 }
@@ -270,17 +270,17 @@ LineAddressTable::GetBreakpoints
 	}
 	list->Sort();
 
-	const JSize count = list->GetElementCount();
+	const JSize count = list->GetItemCount();
 	JString target;
 	for (JIndex i=1; i<=count; i++)
 	{
-		const Breakpoint* bp = list->GetElement(i);
+		const Breakpoint* bp = list->GetItem(i);
 
 		target = GetLineTextFromAddress(bp->GetAddress());
 
 		bool found;
 		const JIndex j = itsLineTextList->SearchSortedOTI(&target, JListT::kAnyMatch, &found);
-		itsVisualBPIndexList->AppendElement(j);
+		itsVisualBPIndexList->AppendItem(j);
 	}
 }
 
@@ -296,7 +296,7 @@ LineAddressTable::SetBreakpoint
 	const bool	temporary
 	)
 {
-	const JString addr = BuildAddress(*itsLineTextList->GetElement(lineIndex));
+	const JString addr = BuildAddress(*itsLineTextList->GetItem(lineIndex));
 	GetLink()->SetBreakpoint(addr, temporary);
 }
 
@@ -311,7 +311,7 @@ LineAddressTable::RemoveAllBreakpointsOnLine
 	const JIndex lineIndex
 	)
 {
-	const JString addr = BuildAddress(*itsLineTextList->GetElement(lineIndex));
+	const JString addr = BuildAddress(*itsLineTextList->GetItem(lineIndex));
 	GetLink()->RemoveAllBreakpointsAtAddress(addr);
 }
 
@@ -326,7 +326,7 @@ LineAddressTable::RunUntil
 	const JIndex lineIndex
 	)
 {
-	const JString addr = BuildAddress(*itsLineTextList->GetElement(lineIndex));
+	const JString addr = BuildAddress(*itsLineTextList->GetItem(lineIndex));
 	GetLink()->RunUntil(addr);
 }
 
@@ -341,7 +341,7 @@ LineAddressTable::SetExecutionPoint
 	const JIndex lineIndex
 	)
 {
-	const JString addr = BuildAddress(*itsLineTextList->GetElement(lineIndex));
+	const JString addr = BuildAddress(*itsLineTextList->GetItem(lineIndex));
 	GetLink()->SetExecutionPoint(addr);
 }
 
@@ -393,7 +393,7 @@ LineAddressTable::GetLineTextFromAddress
 	}
 
 	while (s.GetFirstCharacter() == '0' &&
-		   s.GetCharacterCount() > itsLineTextList->GetLastElement()->GetCharacterCount())
+		   s.GetCharacterCount() > itsLineTextList->GetLastItem()->GetCharacterCount())
 	{
 		iter.RemoveNext();
 	}

@@ -77,7 +77,7 @@ gdb::GetBreakpointsCmd::HandleSuccess
 		iter.MoveTo(JStringIterator::kStartAfterChar, (std::streamoff) stream.tellg());
 
 		JString* s;
-		if (!map.GetElement("type", &s))
+		if (!map.GetItem("type", &s))
 		{
 			Link::Log("missing breakpoint type");
 		}
@@ -121,7 +121,7 @@ gdb::GetBreakpointsCmd::ParseBreakpoint
 	JIndex lineIndex = 1;
 	do
 	{
-		if (!map.GetElement("line", &s))
+		if (!map.GetItem("line", &s))
 		{
 			Link::Log("warn: missing breakpoint line");
 			break;
@@ -132,7 +132,7 @@ gdb::GetBreakpointsCmd::ParseBreakpoint
 			break;
 		}
 
-		if (!map.GetElement("file", &s))
+		if (!map.GetItem("file", &s))
 		{
 			Link::Log("warn: missing breakpoint filename");
 			break;
@@ -149,7 +149,7 @@ gdb::GetBreakpointsCmd::ParseBreakpoint
 			break;
 		}
 
-		if (map.GetElement("original-location", &s))
+		if (map.GetItem("original-location", &s))
 		{
 			if (!s->Contains(":"))
 			{
@@ -158,15 +158,15 @@ gdb::GetBreakpointsCmd::ParseBreakpoint
 			}
 
 			s->Split(":", &split, 2);
-			if (!split.GetElement(1)->IsEmpty() && !split.GetElement(2)->IsEmpty())
+			if (!split.GetItem(1)->IsEmpty() && !split.GetItem(2)->IsEmpty())
 			{
-				if (!split.GetElement(2)->ConvertToUInt(&lineIndex))
+				if (!split.GetItem(2)->ConvertToUInt(&lineIndex))
 				{
 					Link::Log("warn: line number is not integer in original-location");
 					break;
 				}
 
-				fileName = *(split.GetElement(1));
+				fileName = *(split.GetItem(1));
 			}
 		}
 	}
@@ -178,19 +178,19 @@ gdb::GetBreakpointsCmd::ParseBreakpoint
 	}
 
 	JString fn;
-	if (map.GetElement("func", &s))
+	if (map.GetItem("func", &s))
 	{
 		fn = *s;
 	}
 
 	JString addr;
-	if (map.GetElement("addr", &s))
+	if (map.GetItem("addr", &s))
 	{
 		addr = *s;
 	}
 
 	JString condition;
-	if (map.GetElement("cond", &s))
+	if (map.GetItem("cond", &s))
 	{
 		condition = *s;
 	}
@@ -224,13 +224,13 @@ gdb::GetBreakpointsCmd::ParseOther
 
 	JString* s;
 	JString fn;
-	if (map.GetElement("type", &s))
+	if (map.GetItem("type", &s))
 	{
 		fn = *s;
 	}
 
 	JString condition;
-	if (map.GetElement("what", &s))
+	if (map.GetItem("what", &s))
 	{
 		condition = *s;
 	}
@@ -263,7 +263,7 @@ gdb::GetBreakpointsCmd::ParseCommon
 	)
 {
 	JString* s;
-	if (!map.GetElement("number", &s))
+	if (!map.GetItem("number", &s))
 	{
 		Link::Log("missing otherpoint number");
 		return false;
@@ -274,7 +274,7 @@ gdb::GetBreakpointsCmd::ParseCommon
 		return false;
 	}
 
-	if (!map.GetElement("disp", &s))
+	if (!map.GetItem("disp", &s))
 	{
 		Link::Log("missing otherpoint action");
 		return false;
@@ -292,7 +292,7 @@ gdb::GetBreakpointsCmd::ParseCommon
 		*action = Breakpoint::kKeepBreakpoint;
 	}
 
-	if (!map.GetElement("enabled", &s))
+	if (!map.GetItem("enabled", &s))
 	{
 		Link::Log("missing otherpoint enable status");
 		return false;
@@ -300,7 +300,7 @@ gdb::GetBreakpointsCmd::ParseCommon
 	*enabled = *s == "y" || *s == "Y";
 
 	*ignoreCount = 0;
-	if (map.GetElement("ignore", &s) && !s->IsEmpty() &&
+	if (map.GetItem("ignore", &s) && !s->IsEmpty() &&
 		!s->ConvertToUInt(ignoreCount))
 	{
 		Link::Log("ignore count is not integer");

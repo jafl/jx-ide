@@ -107,10 +107,10 @@ Command::~Command()
 	}
 	Broadcast(Finished(itsSuccessFlag, itsCancelledFlag));
 
-	const JSize count = itsCmdList->GetElementCount();
+	const JSize count = itsCmdList->GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		CmdInfo info = itsCmdList->GetElement(i);
+		CmdInfo info = itsCmdList->GetItem(i);
 		info.Free(true);
 	}
 	jdelete itsCmdList;
@@ -171,7 +171,7 @@ Command::Add
 	FunctionStack*				fnStack
 	)
 {
-	const JString* firstArg = cmdArgs.GetFirstElement();
+	const JString* firstArg = cmdArgs.GetFirstItem();
 	if (firstArg->GetFirstCharacter() == '&')
 	{
 		assert( fnStack != nullptr );
@@ -180,7 +180,7 @@ Command::Add
 
 		const JUtf8Byte* cmdName = firstArg->GetBytes()+1;
 
-		const JSize cmdCount = fnStack->GetElementCount();
+		const JSize cmdCount = fnStack->GetItemCount();
 		for (JIndex j=1; j<=cmdCount; j++)
 		{
 			if (strcmp(cmdName, fnStack->Peek(j)) == 0)
@@ -203,7 +203,7 @@ Command::Add
 						 &cmdObj, &cmdInfo, fnStack))
 		{
 			cmdObj->SetParent(this);
-			itsCmdList->AppendElement(CmdInfo(nullptr, cmdObj, cmdInfo, false));
+			itsCmdList->AppendItem(CmdInfo(nullptr, cmdObj, cmdInfo, false));
 		}
 		else
 		{
@@ -218,7 +218,7 @@ Command::Add
 		assert( args != nullptr );
 		args->CopyObjects(cmdArgs, JPtrArrayT::kDeleteAll, false);
 
-		itsCmdList->AppendElement(CmdInfo(args, nullptr, nullptr, false));
+		itsCmdList->AppendItem(CmdInfo(args, nullptr, nullptr, false));
 	}
 
 	return true;
@@ -242,7 +242,7 @@ Command::Add
 	assert( info != nullptr );
 	*info = cmdInfo.Copy();
 
-	itsCmdList->AppendElement(CmdInfo(nullptr, subCmd, info, false));
+	itsCmdList->AppendItem(CmdInfo(nullptr, subCmd, info, false));
 }
 
 /******************************************************************************
@@ -286,7 +286,7 @@ void
 Command::MarkEndOfSequence()
 {
 	CmdInfo info;
-	itsCmdList->AppendElement(info);
+	itsCmdList->AppendItem(info);
 }
 
 /******************************************************************************
@@ -391,7 +391,7 @@ Command::Start
 	{
 		if (itsMakeDependCmd != nullptr)
 		{
-			itsCmdList->PrependElement(CmdInfo(nullptr, itsMakeDependCmd, nullptr, true));
+			itsCmdList->PrependItem(CmdInfo(nullptr, itsMakeDependCmd, nullptr, true));
 			ListenTo(itsMakeDependCmd);		// many may need to hear; can't use SetParent()
 			return true;
 		}
@@ -470,11 +470,11 @@ Command::StartProcess()
 {
 	// check if we are finished
 
-	while (!itsCmdList->IsEmpty() && itsCmdList->GetFirstElement().IsEndOfSequence())
+	while (!itsCmdList->IsEmpty() && itsCmdList->GetFirstItem().IsEndOfSequence())
 	{
-		CmdInfo info = itsCmdList->GetFirstElement();
+		CmdInfo info = itsCmdList->GetFirstItem();
 		info.Free(true);
-		itsCmdList->RemoveElement(1);
+		itsCmdList->RemoveItem(1);
 	}
 	if (itsCmdList->IsEmpty())
 	{
@@ -498,13 +498,13 @@ Command::StartProcess()
 
 	// check if need to run a subroutine
 
-	CmdInfo info = itsCmdList->GetElement(1);
+	CmdInfo info = itsCmdList->GetItem(1);
 	if (info.cmdObj != nullptr)
 	{
 		StopListening(itsOutputDoc);	// wait for Command to notify us
 		const bool result = info.cmdObj->Start(*info.cmdInfo);
 		info.Free(false);
-		itsCmdList->RemoveElement(1);
+		itsCmdList->RemoveItem(1);
 		return result;
 	}
 
@@ -542,11 +542,11 @@ Command::StartProcess()
 
 	if (itsOutputDoc != nullptr)
 	{
-		const JSize count = info.cmd->GetElementCount();
+		const JSize count = info.cmd->GetItemCount();
 		JString cmd;
 		for (JIndex i=1; i<=count; i++)
 		{
-			cmd += JPrepArgForExec(*info.cmd->GetElement(i));
+			cmd += JPrepArgForExec(*info.cmd->GetItem(i));
 			cmd += " ";
 		}
 
@@ -565,7 +565,7 @@ Command::StartProcess()
 	}
 
 	info.Free(true);
-	itsCmdList->RemoveElement(1);
+	itsCmdList->RemoveItem(1);
 	return true;
 }
 
@@ -589,31 +589,31 @@ Command::ProcessFinished
 
 	if (success || itsInQueueFlag)
 	{
-		if (!itsCmdList->IsEmpty() && (itsCmdList->GetElement(1)).isMakeDepend)
+		if (!itsCmdList->IsEmpty() && (itsCmdList->GetItem(1)).isMakeDepend)
 		{
 			assert( !itsInQueueFlag );
-			CmdInfo info = itsCmdList->GetElement(1);
+			CmdInfo info = itsCmdList->GetItem(1);
 			info.Free(false);			// don't delete Command because it is deleting itself
-			itsCmdList->RemoveElement(1);
+			itsCmdList->RemoveItem(1);
 		}
 		StartProcess();		// may delete us
 	}
-	else if (!itsCmdList->IsEmpty() && (itsCmdList->GetElement(1)).isMakeDepend)
+	else if (!itsCmdList->IsEmpty() && (itsCmdList->GetItem(1)).isMakeDepend)
 	{
-		CmdInfo info = itsCmdList->GetElement(1);
+		CmdInfo info = itsCmdList->GetItem(1);
 		info.Free(false);				// don't delete Command because it is deleting itself
-		itsCmdList->RemoveElement(1);
+		itsCmdList->RemoveItem(1);
 
 		DeleteThis();
 	}
 	else if (!cancelled)
 	{
 		while (!itsCmdList->IsEmpty() &&
-			   !(itsCmdList->GetElement(1)).IsEndOfSequence())
+			   !(itsCmdList->GetItem(1)).IsEndOfSequence())
 		{
-			CmdInfo info = itsCmdList->GetElement(1);
+			CmdInfo info = itsCmdList->GetItem(1);
 			info.Free(true);
-			itsCmdList->RemoveElement(1);
+			itsCmdList->RemoveItem(1);
 		}
 		StartProcess();		// may delete us
 	}

@@ -75,10 +75,10 @@ MDIServer::HandleMDIRequest
 	JArray<JIndex> lineIndexList;
 	JArray<bool> breakList;
 
-	const JSize count = argList.GetElementCount();
+	const JSize count = argList.GetItemCount();
 	for (JIndex i=2; i<=count; i++)
 	{
-		const JString* arg = argList.GetElement(i);
+		const JString* arg = argList.GetItem(i);
 
 		if (*arg == "--gdb")
 		{
@@ -140,15 +140,15 @@ MDIServer::HandleMDIRequest
 				 context == kWaitingForBreakpoint)
 		{
 			// must do before changing context
-			breakList.AppendElement(context == kWaitingForBreakpoint);
+			breakList.AppendItem(context == kWaitingForBreakpoint);
 
-			const JString* arg = argList.GetElement(i);
+			const JString* arg = argList.GetItem(i);
 			if (arg->GetFirstCharacter() == '+')
 			{
 				JString temp = *arg;
 				JInteger value = 0;
 				temp.ConvertToInteger(&value);
-				lineIndexList.AppendElement(value);
+				lineIndexList.AppendItem(value);
 				context = kWaitingForName;
 			}
 			else
@@ -156,15 +156,15 @@ MDIServer::HandleMDIRequest
 				JPtrArray<JString> s(JPtrArrayT::kDeleteAll);
 				arg->Split(":", &s, 2);
 
-				fileList.Append(s.GetFirstElement());
-				s.RemoveElement(1);
+				fileList.Append(s.GetFirstItem());
+				s.RemoveItem(1);
 
 				JInteger value = 0;
 				if (!s.IsEmpty())
 				{
-					s.GetFirstElement()->ConvertToInteger(&value);
+					s.GetFirstItem()->ConvertToInteger(&value);
 				}
-				lineIndexList.AppendElement(value);
+				lineIndexList.AppendItem(value);
 
 				context = kWaitingForProgram;
 			}
@@ -197,12 +197,12 @@ MDIServer::HandleMDIRequest
 		GetLink()->SetCore(core);
 	}
 
-	const JSize fileCount = fileList.GetElementCount();
+	const JSize fileCount = fileList.GetItemCount();
 	for (JIndex i=1; i<=fileCount; i++)
 	{
-		const JString* fileName = fileList.GetElement(i);
-		const JIndex lineIndex  = lineIndexList.GetElement(i);
-		if (breakList.GetElement(i) && lineIndex > 0)
+		const JString* fileName = fileList.GetItem(i);
+		const JIndex lineIndex  = lineIndexList.GetItem(i);
+		if (breakList.GetItem(i) && lineIndex > 0)
 		{
 			if (wasFirstTime)
 			{

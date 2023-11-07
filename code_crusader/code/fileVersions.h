@@ -172,8 +172,10 @@ const JFileVersion kCurrentPrefsFileVersion = 68;
 // version 1:
 //	Stores "local text editing" flag in kViewFileCmdID
 
-const JFileVersion kCurrentProjectFileVersion = 92;
+const JFileVersion kCurrentProjectFileVersion = 93;
 
+// version 93:
+//	Stores partial paths for file scoped symbols.
 // version 92:
 //	Parse \\ in output from ctags (PHP).
 // version 91:

@@ -106,10 +106,10 @@ BreakpointManager::GetBreakpoints
 		const JIndex startIndex =
 			itsBPList->SearchSortedOTI(&target, JListT::kFirstMatch, &found);
 
-		const JSize count = itsBPList->GetElementCount();
+		const JSize count = itsBPList->GetItemCount();
 		for (JIndex i=startIndex; i<=count; i++)
 		{
-			Breakpoint* bp = itsBPList->GetElement(i);
+			Breakpoint* bp = itsBPList->GetItem(i);
 			if (bp->GetFileID() == target.GetFileID())
 			{
 				list->Append(bp);
@@ -149,10 +149,10 @@ BreakpointManager::GetBreakpoints
 		const JIndex startIndex =
 			itsBPList->SearchSortedOTI(&target, JListT::kFirstMatch, &found);
 
-		const JSize count = itsBPList->GetElementCount();
+		const JSize count = itsBPList->GetItemCount();
 		for (JIndex i=startIndex; i<=count; i++)
 		{
-			Breakpoint* bp = itsBPList->GetElement(i);
+			Breakpoint* bp = itsBPList->GetItem(i);
 			if (bp->GetLocation() == loc)
 			{
 				list->Append(bp);
@@ -167,10 +167,10 @@ BreakpointManager::GetBreakpoints
 	{
 		const JString fn = loc.GetFunctionName() + "(";
 
-		const JSize count = itsBPList->GetElementCount();
+		const JSize count = itsBPList->GetItemCount();
 		for (JIndex i=1; i<=count; i++)
 		{
-			Breakpoint* bp = itsBPList->GetElement(i);
+			Breakpoint* bp = itsBPList->GetItem(i);
 			if (bp->GetFunctionName() == loc.GetFunctionName() ||
 				bp->GetFunctionName().StartsWith(fn))
 			{
@@ -287,13 +287,13 @@ BreakpointManager::WriteSetup
 	)
 	const
 {
-	const JSize count = itsBPList->GetElementCount();
+	const JSize count = itsBPList->GetItemCount();
 	output << ' ' << count;
 
 	JString s;
 	for (JIndex i=1; i<=count; i++)
 	{
-		Breakpoint* bp = itsBPList->GetElement(i);
+		Breakpoint* bp = itsBPList->GetItem(i);
 		output << ' ' << bp->GetFileName();
 		output << ' ' << bp->GetLineNumber();
 		output << ' ' << JBoolToString(bp->IsEnabled());
@@ -327,7 +327,7 @@ BreakpointManager::Receive
 		const auto* info =
 			dynamic_cast<const Link::SymbolsLoaded*>(&message);
 		assert( info != nullptr );
-		const JSize count = itsBPList->GetElementCount();
+		const JSize count = itsBPList->GetItemCount();
 		if (info->Successful() && itsRestoreBreakpointsFlag && count > 0)
 		{
 			jdelete itsSavedBPList;
@@ -337,7 +337,7 @@ BreakpointManager::Receive
 
 			for (JIndex i=1; i<=count; i++)
 			{
-				itsLink->SetBreakpoint(*(itsBPList->GetElement(i)));
+				itsLink->SetBreakpoint(*(itsBPList->GetItem(i)));
 			}
 		}
 		itsRestoreBreakpointsFlag = false;
@@ -378,14 +378,14 @@ BreakpointManager::UpdateBreakpoints
 	Broadcast(BreakpointsChanged());
 
 	if (itsSavedBPList != nullptr &&
-		itsSavedBPList->GetElementCount() == itsBPList->GetElementCount())
+		itsSavedBPList->GetItemCount() == itsBPList->GetItemCount())
 	{
-		const JSize count = itsSavedBPList->GetElementCount();
+		const JSize count = itsSavedBPList->GetItemCount();
 		JString condition;
 		for (JIndex i=1; i<=count; i++)
 		{
-			Breakpoint* bp = itsSavedBPList->GetElement(i);
-			const JIndex j   = (itsBPList->GetElement(i))->GetDebuggerIndex();
+			Breakpoint* bp = itsSavedBPList->GetItem(i);
+			const JIndex j   = (itsBPList->GetItem(i))->GetDebuggerIndex();
 
 			if (!bp->IsEnabled())
 			{

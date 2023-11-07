@@ -94,7 +94,7 @@ gdb::Plot2DCmd::HandleSuccess
 		return;
 	}
 
-	const JIndex count = x->GetElementCount();
+	const JIndex count = x->GetItemCount();
 
 	JIndex i;
 	JString v1, v2;
@@ -127,14 +127,14 @@ gdb::Plot2DCmd::HandleSuccess
 			break;
 		}
 
-		x->SetElement(i, x1);
-		y->SetElement(i, y1);
+		x->SetItem(i, x1);
+		y->SetItem(i, y1);
 	}
 
 	if (i <= count)
 	{
 		const JSize delta = count - (i-1);
-		x->RemoveNextElements(count - delta + 1, delta);
-		y->RemoveNextElements(count - delta + 1, delta);
+		x->RemoveNextItems(count - delta + 1, delta);
+		y->RemoveNextItems(count - delta + 1, delta);
 	}
 }

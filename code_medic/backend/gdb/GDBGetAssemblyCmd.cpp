@@ -107,25 +107,25 @@ gdb::GetAssemblyCmd::HandleSuccess
 		}
 		else
 		{
-			const JSize count = list.GetElementCount();
+			const JSize count = list.GetItemCount();
 			JString *addr, *offset, *inst;
 			for (JIndex i=1; i<=count; i++)
 			{
-				JStringPtrMap<JString>* map = list.GetElement(i);
+				JStringPtrMap<JString>* map = list.GetItem(i);
 
-				if (!map->GetElement("address", &addr))
+				if (!map->GetItem("address", &addr))
 				{
 					Link::Log("invalid assembly instruction: missing address");
 					continue;
 				}
 
-				if (!map->GetElement("offset", &offset))
+				if (!map->GetItem("offset", &offset))
 				{
 					Link::Log("invalid assembly instruction: missing address");
 					continue;
 				}
 
-				if (!map->GetElement("inst", &inst))
+				if (!map->GetItem("inst", &inst))
 				{
 					Link::Log("invalid assembly instruction: missing inst");
 					continue;
@@ -147,10 +147,10 @@ gdb::GetAssemblyCmd::HandleSuccess
 		}
 	}
 
-	const JSize count = addrList.GetElementCount();
+	const JSize count = addrList.GetItemCount();
 	for (JIndex i=1; i<count; i++)
 	{
-		JString* s = addrList.GetElement(i);
+		JString* s = addrList.GetItem(i);
 
 		const JStringMatch m2 = offsetPattern.Match(*s, JRegex::kIgnoreSubmatches);
 		if (!m2.IsEmpty())

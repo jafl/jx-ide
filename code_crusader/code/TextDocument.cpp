@@ -1295,11 +1295,11 @@ TextDocument::ReadFile
 		JPtrArray<JString> safetyFilesToOpen(JPtrArrayT::kDeleteAll);
 		if (CheckForSafetySaveFiles(fileName, &safetyFilesToOpen))
 		{
-			const JSize count = safetyFilesToOpen.GetElementCount();
+			const JSize count = safetyFilesToOpen.GetItemCount();
 			for (JIndex i=1; i<=count; i++)
 			{
 				GetDocumentManager()->
-					OpenTextDocument(*(safetyFilesToOpen.GetElement(i)));
+					OpenTextDocument(*(safetyFilesToOpen.GetItem(i)));
 			}
 		}
 	}

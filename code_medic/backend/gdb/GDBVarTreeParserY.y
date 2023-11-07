@@ -87,9 +87,9 @@ top_group :
 	group P_EOF
 	{
 		itsCurrentNode = $$ = GetLink()->CreateVarNode(nullptr, JString::empty, JString::empty, $1->GetName());
-		for (JIndex i=1; i<=$1->list->GetElementCount(); i++)
+		for (JIndex i=1; i<=$1->list->GetItemCount(); i++)
 		{
-			itsCurrentNode->Append($1->list->GetElement(i));
+			itsCurrentNode->Append($1->list->GetItem(i));
 		}
 		itsIsPointerFlag = false;
 
@@ -101,9 +101,9 @@ top_group :
 	| reference_value group P_EOF
 	{
 		itsCurrentNode = $$ = GetLink()->CreateVarNode(nullptr, JString::empty, JString::empty, *$1);
-		for (JIndex i=1; i<=$2->list->GetElementCount(); i++)
+		for (JIndex i=1; i<=$2->list->GetItemCount(); i++)
 		{
-			itsCurrentNode->Append($2->list->GetElement(i));
+			itsCurrentNode->Append($2->list->GetItem(i));
 		}
 		itsIsPointerFlag = false;
 
@@ -209,7 +209,7 @@ node_list :
 		$$ = $1;
 
 		::VarNode* node = GetLink()->CreateVarNode(nullptr, JString::empty, JString::empty, *$3);
-		if ($$->GetFirstElement()->GetName().StartsWith(JString("[", JString::kNoCopy)))
+		if ($$->GetFirstItem()->GetName().StartsWith(JString("[", JString::kNoCopy)))
 		{
 			AppendAsArrayElement(node, $$);
 		}
@@ -234,7 +234,7 @@ node_list :
 
 	| node_list ',' group
 	{
-		if ((($1->GetFirstElement())->GetName()).StartsWith(JString("[", JString::kNoCopy)))
+		if ((($1->GetFirstItem())->GetName()).StartsWith(JString("[", JString::kNoCopy)))
 		{
 			$$ = $1;
 		}
@@ -291,9 +291,9 @@ node :
 		}
 		itsCurrentNode = $$ = GetLink()->CreateVarNode(nullptr, *$1, JString::empty, $2->GetName());
 		itsIsPointerFlag = false;
-		for (JIndex i=1; i<=$2->list->GetElementCount(); i++)
+		for (JIndex i=1; i<=$2->list->GetItemCount(); i++)
 		{
-			itsCurrentNode->Append($2->list->GetElement(i));
+			itsCurrentNode->Append($2->list->GetItem(i));
 		}
 
 		jdelete $1;

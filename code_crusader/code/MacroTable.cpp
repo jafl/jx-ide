@@ -103,11 +103,11 @@ MacroTable::SetData
 	data->RemoveAllRows();
 
 	const MacroList& macroList = mgr.GetMacroList();
-	const JSize count            = macroList.GetElementCount();
+	const JSize count            = macroList.GetItemCount();
 	data->AppendRows(count);
 	for (JIndex i=1; i<=count; i++)
 	{
-		const MacroManager::MacroInfo info = macroList.GetElement(i);
+		const MacroManager::MacroInfo info = macroList.GetItem(i);
 		data->SetString(i,kMacroColumn,  *(info.macro));
 		data->SetString(i,kScriptColumn, *(info.script));
 	}

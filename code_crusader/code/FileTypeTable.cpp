@@ -438,7 +438,7 @@ FileTypeTable::FileTypeTable
 		AppendCols(1, kInitColWidth[i-1]);
 	}
 
-	AppendRows(itsFileTypeList->GetElementCount());
+	AppendRows(itsFileTypeList->GetItemCount());
 
 	UpdateButtons();
 	ListenTo(&(GetTableSelection()));
@@ -469,10 +469,10 @@ FileTypeTable::CleanOutFileTypeList
 	)
 	const
 {
-	const JSize count = fileTypeList->GetElementCount();
+	const JSize count = fileTypeList->GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		PrefsManager::FileTypeInfo info = fileTypeList->GetElement(i);
+		PrefsManager::FileTypeInfo info = fileTypeList->GetItem(i);
 		info.Free();
 	}
 }
@@ -508,10 +508,10 @@ FileTypeTable::FinishFileTypeListCopy
 	)
 	const
 {
-	const JSize count = fileTypeList->GetElementCount();
+	const JSize count = fileTypeList->GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		PrefsManager::FileTypeInfo info = fileTypeList->GetElement(i);
+		PrefsManager::FileTypeInfo info = fileTypeList->GetItem(i);
 
 		info.suffix = jnew JString(*(info.suffix));
 		assert( info.suffix != nullptr );
@@ -543,7 +543,7 @@ FileTypeTable::FinishFileTypeListCopy
 
 		(info.literalRange).SetToNothing();		// assume text changed
 
-		fileTypeList->SetElement(i, info);
+		fileTypeList->SetItem(i, info);
 	}
 }
 
@@ -568,7 +568,7 @@ FileTypeTable::TableDrawCell
 
 	HilightIfSelected(p, cell, rect);
 
-	const PrefsManager::FileTypeInfo info = itsFileTypeList->GetElement(cell.y);
+	const PrefsManager::FileTypeInfo info = itsFileTypeList->GetItem(cell.y);
 	if (cell.x == kSuffixColumn)
 	{
 		p.SetFont(itsFont);
@@ -651,7 +651,7 @@ FileTypeTable::HandleMouseDown
 		s.SelectCell(cell);
 		TableScrollToCell(cell);
 
-		PrefsManager::FileTypeInfo info = itsFileTypeList->GetElement(cell.y);
+		PrefsManager::FileTypeInfo info = itsFileTypeList->GetItem(cell.y);
 
 		if (cell.x == kSuffixColumn)
 		{
@@ -683,18 +683,18 @@ FileTypeTable::HandleMouseDown
 			if (modifiers.meta())
 			{
 				const bool wrap = info.wordWrap;
-				const JSize count   = itsFileTypeList->GetElementCount();
+				const JSize count   = itsFileTypeList->GetItemCount();
 				for (JIndex i=1; i<=count; i++)
 				{
-					info          = itsFileTypeList->GetElement(i);
+					info          = itsFileTypeList->GetItem(i);
 					info.wordWrap = wrap;
-					itsFileTypeList->SetElement(i, info);
+					itsFileTypeList->SetItem(i, info);
 				}
 				TableRefreshCol(kWrapColumn);
 			}
 			else
 			{
-				itsFileTypeList->SetElement(cell.y, info);
+				itsFileTypeList->SetItem(cell.y, info);
 				TableRefreshCell(cell);
 			}
 		}
@@ -721,7 +721,7 @@ FileTypeTable::IsEditable
 	)
 	const
 {
-	const PrefsManager::FileTypeInfo info = itsFileTypeList->GetElement(cell.y);
+	const PrefsManager::FileTypeInfo info = itsFileTypeList->GetItem(cell.y);
 	return cell.x == kSuffixColumn ||
 				(cell.x == kEditCmdColumn && info.editCmd != nullptr);
 }
@@ -749,7 +749,7 @@ FileTypeTable::CreateXInputField
 
 	itsTextInput = jnew JXInputField(this, kFixedLeft, kFixedTop, x,y, w,h);
 
-	const PrefsManager::FileTypeInfo info = itsFileTypeList->GetElement(cell.y);
+	const PrefsManager::FileTypeInfo info = itsFileTypeList->GetItem(cell.y);
 	if (cell.x == kSuffixColumn)
 	{
 		itsTextInput->GetText()->SetText(*info.suffix);
@@ -777,7 +777,7 @@ FileTypeTable::ExtractInputData
 {
 	assert( itsTextInput != nullptr );
 
-	PrefsManager::FileTypeInfo info = itsFileTypeList->GetElement(cell.y);
+	PrefsManager::FileTypeInfo info = itsFileTypeList->GetItem(cell.y);
 	const JString& text               = itsTextInput->GetText()->GetText();
 
 	bool ok = itsTextInput->InputValid();
@@ -857,9 +857,9 @@ FileTypeTable::AddType()
 										  kEmptyMacroID, kEmptyCRMRuleListID,
 										  true, nullptr, true, jnew JString, nullptr);
 		assert( info.suffix != nullptr && info.complSuffix != nullptr );
-		itsFileTypeList->AppendElement(info);
+		itsFileTypeList->AppendItem(info);
 		AppendRows(1);
-		BeginEditing(JPoint(kSuffixColumn, itsFileTypeList->GetElementCount()));
+		BeginEditing(JPoint(kSuffixColumn, itsFileTypeList->GetItemCount()));
 	}
 }
 
@@ -876,10 +876,10 @@ FileTypeTable::RemoveType()
 	{
 		CancelEditing();
 
-		PrefsManager::FileTypeInfo info = itsFileTypeList->GetElement(cell.y);
+		PrefsManager::FileTypeInfo info = itsFileTypeList->GetItem(cell.y);
 		info.Free();
 
-		itsFileTypeList->RemoveElement(cell.y);
+		itsFileTypeList->RemoveItem(cell.y);
 		RemoveRow(cell.y);
 	}
 }
@@ -895,7 +895,7 @@ FileTypeTable::DuplicateType()
 	JPoint cell;
 	if ((GetTableSelection()).GetFirstSelectedCell(&cell) && EndEditing())
 	{
-		PrefsManager::FileTypeInfo info = itsFileTypeList->GetElement(cell.y);
+		PrefsManager::FileTypeInfo info = itsFileTypeList->GetItem(cell.y);
 
 		info.suffix = jnew JString(*(info.suffix));
 		assert( info.suffix != nullptr );
@@ -918,9 +918,9 @@ FileTypeTable::DuplicateType()
 			assert( info.editCmd != nullptr );
 		}
 
-		itsFileTypeList->AppendElement(info);
+		itsFileTypeList->AppendItem(info);
 		AppendRows(1);
-		BeginEditing(JPoint(kSuffixColumn, itsFileTypeList->GetElementCount()));
+		BeginEditing(JPoint(kSuffixColumn, itsFileTypeList->GetItemCount()));
 	}
 }
 
@@ -936,7 +936,7 @@ FileTypeTable::UpdateTypeMenu()
 	const bool ok = (GetTableSelection()).GetFirstSelectedCell(&cell);
 	assert( ok );
 
-	const PrefsManager::FileTypeInfo info = itsFileTypeList->GetElement(cell.y);
+	const PrefsManager::FileTypeInfo info = itsFileTypeList->GetItem(cell.y);
 	itsTypeMenu->CheckItem(kFileTypeToMenuIndex[ info.type ]);
 }
 
@@ -957,7 +957,7 @@ FileTypeTable::HandleTypeMenu
 
 	const TextFileType newType = kMenuIndexToFileType [ index-1 ];
 
-	PrefsManager::FileTypeInfo info = itsFileTypeList->GetElement(cell.y);
+	PrefsManager::FileTypeInfo info = itsFileTypeList->GetItem(cell.y);
 	if (newType != info.type)
 	{
 		info.type = newType;
@@ -972,7 +972,7 @@ FileTypeTable::HandleTypeMenu
 			jdelete info.editCmd;
 			info.editCmd = nullptr;
 		}
-		itsFileTypeList->SetElement(cell.y, info);
+		itsFileTypeList->SetItem(cell.y, info);
 
 		TableRefreshRow(cell.y);
 
@@ -998,7 +998,7 @@ FileTypeTable::UpdateScriptMenu()
 	JPoint cell;
 	const bool ok = GetTableSelection().GetFirstSelectedCell(&cell);
 	assert( ok );
-	const PrefsManager::FileTypeInfo info = itsFileTypeList->GetElement(cell.y);
+	const PrefsManager::FileTypeInfo info = itsFileTypeList->GetItem(cell.y);
 
 	if (info.scriptPath == nullptr)
 	{
@@ -1015,14 +1015,14 @@ FileTypeTable::UpdateScriptMenu()
 		BuildScriptMenuItems(sysDir,  false, &menuText);
 		BuildScriptMenuItems(userDir, true,  &menuText);
 
-		const JSize count = menuText.GetElementCount();
+		const JSize count = menuText.GetItemCount();
 		JString itemText, nmShortcut;
 		for (JIndex i=1; i<=count; i++)
 		{
 			// We have to extract user/sys here because otherwise we would
 			// have to keep extra state while building the sorted list.
 
-			itemText = *menuText.GetElement(i);
+			itemText = *menuText.GetItem(i);
 
 			JStringIterator iter(&itemText, JStringIterator::kStartAtEnd);
 			iter.BeginMatch();
@@ -1109,7 +1109,7 @@ FileTypeTable::HandleScriptMenu
 	const bool ok = (GetTableSelection()).GetFirstSelectedCell(&cell);
 	assert( ok );
 
-	PrefsManager::FileTypeInfo info = itsFileTypeList->GetElement(cell.y);
+	PrefsManager::FileTypeInfo info = itsFileTypeList->GetItem(cell.y);
 
 	const JSize itemCount = itsScriptMenu->GetItemCount();
 	if (index == kNoScriptPathCmd)
@@ -1139,7 +1139,7 @@ FileTypeTable::HandleScriptMenu
 		info.isUserScript = nmShortcut == JGetString("UserScriptMarker::FileTypeTable");
 	}
 
-	itsFileTypeList->SetElement(cell.y, info);
+	itsFileTypeList->SetItem(cell.y, info);
 	TableRefreshRow(cell.y);
 }
 
@@ -1177,7 +1177,7 @@ FileTypeTable::GetNewScriptDirectory()
 		const bool ok = GetTableSelection().GetFirstSelectedCell(&cell);
 		assert( ok );
 
-		PrefsManager::FileTypeInfo info = itsFileTypeList->GetElement(cell.y);
+		PrefsManager::FileTypeInfo info = itsFileTypeList->GetItem(cell.y);
 
 		JString path, name;
 		JSplitPathAndName(fullName, &path, &name);
@@ -1193,7 +1193,7 @@ FileTypeTable::GetNewScriptDirectory()
 
 		info.isUserScript = true;
 
-		itsFileTypeList->SetElement(cell.y, info);
+		itsFileTypeList->SetItem(cell.y, info);
 		TableRefreshRow(cell.y);
 	}
 }

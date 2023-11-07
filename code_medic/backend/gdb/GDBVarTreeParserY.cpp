@@ -1229,9 +1229,9 @@ yyreduce:
 #line 88 "backend/gdb/GDBVarTreeParserY.y"
         {
 		itsCurrentNode = (yyval.pNode) = GetLink()->CreateVarNode(nullptr, JString::empty, JString::empty, (yyvsp[-1].pGroup)->GetName());
-		for (JIndex i=1; i<=(yyvsp[-1].pGroup)->list->GetElementCount(); i++)
+		for (JIndex i=1; i<=(yyvsp[-1].pGroup)->list->GetItemCount(); i++)
 		{
-			itsCurrentNode->Append((yyvsp[-1].pGroup)->list->GetElement(i));
+			itsCurrentNode->Append((yyvsp[-1].pGroup)->list->GetItem(i));
 		}
 		itsIsPointerFlag = false;
 
@@ -1246,9 +1246,9 @@ yyreduce:
 #line 102 "backend/gdb/GDBVarTreeParserY.y"
         {
 		itsCurrentNode = (yyval.pNode) = GetLink()->CreateVarNode(nullptr, JString::empty, JString::empty, *(yyvsp[-2].pString));
-		for (JIndex i=1; i<=(yyvsp[-1].pGroup)->list->GetElementCount(); i++)
+		for (JIndex i=1; i<=(yyvsp[-1].pGroup)->list->GetItemCount(); i++)
 		{
-			itsCurrentNode->Append((yyvsp[-1].pGroup)->list->GetElement(i));
+			itsCurrentNode->Append((yyvsp[-1].pGroup)->list->GetItem(i));
 		}
 		itsIsPointerFlag = false;
 
@@ -1379,7 +1379,7 @@ yyreduce:
 		(yyval.pList) = (yyvsp[-2].pList);
 
 		::VarNode* node = GetLink()->CreateVarNode(nullptr, JString::empty, JString::empty, *(yyvsp[0].pString));
-		if ((yyval.pList)->GetFirstElement()->GetName().StartsWith(JString("[", JString::kNoCopy)))
+		if ((yyval.pList)->GetFirstItem()->GetName().StartsWith(JString("[", JString::kNoCopy)))
 		{
 			AppendAsArrayElement(node, (yyval.pList));
 		}
@@ -1410,7 +1410,7 @@ yyreduce:
   case 16: /* node_list: node_list ',' group  */
 #line 236 "backend/gdb/GDBVarTreeParserY.y"
         {
-		if ((((yyvsp[-2].pList)->GetFirstElement())->GetName()).StartsWith(JString("[", JString::kNoCopy)))
+		if ((((yyvsp[-2].pList)->GetFirstItem())->GetName()).StartsWith(JString("[", JString::kNoCopy)))
 		{
 			(yyval.pList) = (yyvsp[-2].pList);
 		}
@@ -1473,9 +1473,9 @@ yyreduce:
 		}
 		itsCurrentNode = (yyval.pNode) = GetLink()->CreateVarNode(nullptr, *(yyvsp[-1].pString), JString::empty, (yyvsp[0].pGroup)->GetName());
 		itsIsPointerFlag = false;
-		for (JIndex i=1; i<=(yyvsp[0].pGroup)->list->GetElementCount(); i++)
+		for (JIndex i=1; i<=(yyvsp[0].pGroup)->list->GetItemCount(); i++)
 		{
-			itsCurrentNode->Append((yyvsp[0].pGroup)->list->GetElement(i));
+			itsCurrentNode->Append((yyvsp[0].pGroup)->list->GetItem(i));
 		}
 
 		jdelete (yyvsp[-1].pString);

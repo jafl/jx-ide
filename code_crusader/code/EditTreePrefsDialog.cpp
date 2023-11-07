@@ -172,7 +172,7 @@ EditTreePrefsDialog::UpdateSettings()
 		GetDocumentManager()->GetProjectDocList();
 
 	JProgressDisplay* pg = JNewPG();
-	pg->FixedLengthProcessBeginning(docList->GetElementCount(),
+	pg->FixedLengthProcessBeginning(docList->GetItemCount(),
 		JGetString("UpdatingPrefs::EditTreePrefsDialog"), false, true);
 
 	JIndex i = 1;

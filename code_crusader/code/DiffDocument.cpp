@@ -871,9 +871,9 @@ DiffDocument::DiffDocument
 
 			JPtrArray<JString> s(JPtrArrayT::kDeleteAll);
 			itsGetCmd.Split(kGitCmdSeparator, &s, 2);
-			assert( s.GetElementCount() == 2 );
+			assert( s.GetItemCount() == 2 );
 
-			err = CreateGit(itsFullName, *s.GetElement(1), *s.GetElement(2),
+			err = CreateGit(itsFullName, *s.GetItem(1), *s.GetItem(2),
 							itsDiffCmd, itsDefaultStyle, 
 							itsName1, itsRemoveStyle, itsName2, itsInsertStyle,
 							false, this);

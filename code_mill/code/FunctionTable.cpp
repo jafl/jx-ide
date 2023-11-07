@@ -56,9 +56,9 @@ FunctionTable::FunctionTable
 	itsList(list),
 	itsNeedsAdjustment(true)
 {
-	ListenTo(itsList, std::function([this](const JListT::ElementsInserted&)
+	ListenTo(itsList, std::function([this](const JListT::ItemsInserted&)
 	{
-		const JSize delta = itsList->GetElementCount() - GetRowCount();
+		const JSize delta = itsList->GetItemCount() - GetRowCount();
 		if (delta != 0)
 		{
 			AppendCols(delta);
@@ -69,7 +69,7 @@ FunctionTable::FunctionTable
 	SetRowBorderInfo(0, JColorManager::GetBlackColor());
 	SetColBorderInfo(0, JColorManager::GetBlackColor());
 	AppendCols(kFSignature);
-	AppendRows(itsList->GetElementCount());
+	AppendRows(itsList->GetItemCount());
 	
 	SetColWidth(kFUsed, kUsedColWidth);
 	SetColWidth(kFSignature, kSignatureColWidth);
@@ -107,7 +107,7 @@ FunctionTable::HandleMouseDown
 	JPoint cell;
 	if (GetCell(pt, &cell))
 	{
-		MemberFunction* fn	= itsList->GetElement(cell.y);
+		MemberFunction* fn	= itsList->GetItem(cell.y);
 		fn->ShouldBeUsed(!fn->IsUsed());
 		TableRefresh();
 	}
@@ -136,7 +136,7 @@ FunctionTable::TableDrawCell
 		p.SetFilling(false);
 	}
 
-	const MemberFunction* fn	= itsList->GetElement(cell.y);
+	const MemberFunction* fn	= itsList->GetItem(cell.y);
 
 	if (cell.x == kFUsed)
 	{
@@ -228,10 +228,10 @@ FunctionTable::AdjustColumnWidths()
 	JFontManager* fontMgr = GetFontManager();
 	const JFont& font     = JFontManager::GetDefaultMonospaceFont();
 
-	const JSize count	= itsList->GetElementCount();
+	const JSize count	= itsList->GetItemCount();
 	for (JIndex i = 1; i <= count; i++)
 	{
-		const MemberFunction* fn	= itsList->GetElement(i);
+		const MemberFunction* fn	= itsList->GetItem(i);
 		JSize width	= font.GetStringWidth(fontMgr, fn->GetReturnType());
 		JCoordinate adjWidth = width + 2 * kHMarginWidth;
 		if (adjWidth > GetColWidth(kFReturnType))

@@ -731,10 +731,10 @@ SearchTextDialog::BuildSearchFileList
 	{
 		const JPtrArray<JString>& fullNameList = itsFileList->GetFullNameList();
 
-		const JSize count = fullNameList.GetElementCount();
+		const JSize count = fullNameList.GetItemCount();
 		for (JIndex i=1; i<=count; i++)
 		{
-			SaveFileForSearch(*(fullNameList.GetElement(i)), fileList, nameList);
+			SaveFileForSearch(*(fullNameList.GetItem(i)), fileList, nameList);
 		}
 	}
 
@@ -996,10 +996,10 @@ SearchTextDialog::SaveFileSet()
 
 		std::ofstream output(itsFileSetName.GetBytes());
 		const JPtrArray<JString>& fullNameList = itsFileList->GetFullNameList();
-		const JSize fileCount = fullNameList.GetElementCount();
+		const JSize fileCount = fullNameList.GetItemCount();
 		for (JIndex i=1; i<=fileCount; i++)
 		{
-			fullNameList.GetElement(i)->Print(output);
+			fullNameList.GetItem(i)->Print(output);
 			output << '\n';
 		}
 	}
@@ -1198,12 +1198,12 @@ SearchTextDialog::WritePrefs
 
 	const JPtrArray<JString>& fullNameList = itsFileList->GetFullNameList();
 
-	const JSize fileCount = fullNameList.GetElementCount();
+	const JSize fileCount = fullNameList.GetItemCount();
 	output << ' ' << fileCount;
 
 	for (JIndex i=1; i<=fileCount; i++)
 	{
-		output << ' ' << *(fullNameList.GetElement(i));
+		output << ' ' << *(fullNameList.GetItem(i));
 	}
 
 	// directory

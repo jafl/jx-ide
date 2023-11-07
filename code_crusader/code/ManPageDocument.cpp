@@ -71,7 +71,7 @@ ManPageDocument::Create
 	JIndex i;
 	if (theManCmdList.SearchSorted(&cmd, JListT::kAnyMatch, &i))
 	{
-		auto* doc = dynamic_cast<ManPageDocument*>(theManDocList.GetElement(i));
+		auto* doc = dynamic_cast<ManPageDocument*>(theManDocList.GetItem(i));
 		assert( doc != nullptr );
 		doc->Activate();
 		if (returnDoc != nullptr)
@@ -180,7 +180,7 @@ ManPageDocument::ManPageDocument
 		JIndex i;
 		if (theManCmdList.SearchSorted(cmd, JListT::kAnyMatch, &i))
 		{
-			auto* doc = dynamic_cast<ManPageDocument*>(theManDocList.GetElement(i));
+			auto* doc = dynamic_cast<ManPageDocument*>(theManDocList.GetItem(i));
 			assert( doc != nullptr );
 			*trueDoc = doc;
 			return;
@@ -287,8 +287,8 @@ ManPageDocument::RemoveFromManPageList
 	JIndex i;
 	if (theManDocList.Find(doc, &i))
 	{
-		theManCmdList.DeleteElement(i);
-		theManDocList.RemoveElement(i);
+		theManCmdList.DeleteItem(i);
+		theManDocList.RemoveItem(i);
 	}
 }
 

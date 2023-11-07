@@ -68,7 +68,7 @@ MDIServer::HandleMDIRequest
 	const JPtrArray<JString>&	argList
 	)
 {
-	const JSize argCount = argList.GetElementCount();
+	const JSize argCount = argList.GetItemCount();
 
 	const JString origDir = JGetCurrentDirectory();
 	const JError err      = JChangeDirectory(dir);
@@ -78,7 +78,7 @@ MDIServer::HandleMDIRequest
 		return;
 	}
 
-	const JString& execName = *argList.GetFirstElement();
+	const JString& execName = *argList.GetFirstItem();
 
 	JXStandAlonePG pg;
 	pg.RaiseWhenUpdate();
@@ -96,7 +96,7 @@ MDIServer::HandleMDIRequest
 	bool restore = IsFirstTime();
 	for (JIndex i=2; i<=argCount; i++)
 	{
-		const JString& arg = *argList.GetElement(i);
+		const JString& arg = *argList.GetItem(i);
 		if (arg.IsEmpty())
 		{
 			continue;
@@ -112,7 +112,7 @@ MDIServer::HandleMDIRequest
 		else if (arg == "--apropos" && i < argCount)
 		{
 			i++;
-			ManPageDocument::Create(nullptr, *(argList.GetElement(i)),
+			ManPageDocument::Create(nullptr, *(argList.GetItem(i)),
 									  JString::empty, true);
 			lineRange.SetToNothing();
 			restore = false;
@@ -345,12 +345,12 @@ MDIServer::DisplayManPage
 	const JPtrArray<JString>&	argList
 	)
 {
-	const JSize argCount = argList.GetElementCount();
+	const JSize argCount = argList.GetItemCount();
 
 	const JString* arg1 = nullptr;
 	if (*index < argCount)
 	{
-		arg1 = argList.GetElement((*index)+1);
+		arg1 = argList.GetItem((*index)+1);
 	}
 	if (arg1 == nullptr || arg1->IsEmpty())
 	{
@@ -361,7 +361,7 @@ MDIServer::DisplayManPage
 	const JString* arg2 = nullptr;
 	if (*index < argCount-1)
 	{
-		arg2 = argList.GetElement((*index)+2);
+		arg2 = argList.GetItem((*index)+2);
 	}
 
 	if (arg2 != nullptr && !arg2->IsEmpty() && arg2->GetFirstCharacter() != '-')
@@ -411,11 +411,11 @@ MDIServer::AddFilesToSearch
 		dlog->ClearFileList();
 	}
 
-	const JSize count = argList.GetElementCount();
+	const JSize count = argList.GetItemCount();
 	JString fullName;
 	for (JIndex i=*index+1; i<=count; i++)
 	{
-		const JString* fileName = argList.GetElement(i);
+		const JString* fileName = argList.GetItem(i);
 		if (JGetTrueName(*fileName, &fullName))
 		{
 			dlog->AddFileToSearch(fullName);
@@ -451,12 +451,12 @@ MDIServer::DisplayFileDiffs
 	const bool					silent
 	)
 {
-	const JSize argCount = argList.GetElementCount();
+	const JSize argCount = argList.GetItemCount();
 
 	JSize count = 0;
 	if (*index < argCount-1)
 	{
-		const JString* arg2    = argList.GetElement(*index+2);
+		const JString* arg2    = argList.GetItem(*index+2);
 		const JUtf8Character c = arg2->IsEmpty() ? JUtf8Character(' ') : arg2->GetFirstCharacter();
 		count                  = (c == '-' || c == '+') ? 1 : 2;
 	}
@@ -468,7 +468,7 @@ MDIServer::DisplayFileDiffs
 	JString file1, file2;
 	if (count == 1)
 	{
-		file2 = *argList.GetElement(*index+1);
+		file2 = *argList.GetItem(*index+1);
 		if (file2.StartsWith("#"))	// allows empty argument
 		{
 			file1 = file2;
@@ -493,8 +493,8 @@ MDIServer::DisplayFileDiffs
 	}
 	else if (count == 2)
 	{
-		file1 = *argList.GetElement(*index+1);
-		file2 = *argList.GetElement(*index+2);
+		file1 = *argList.GetItem(*index+1);
+		file2 = *argList.GetItem(*index+2);
 
 		if (JFileExists(file1) && JDirectoryExists(file2))
 		{
@@ -509,7 +509,7 @@ MDIServer::DisplayFileDiffs
 	JString full1, full2;
 	if (file1.IsEmpty() || file2.IsEmpty())
 	{
-		std::cerr << *argList.GetFirstElement() << ": too few arguments to --diff" << std::endl;
+		std::cerr << *argList.GetFirstItem() << ": too few arguments to --diff" << std::endl;
 	}
 	else if (!JConvertToAbsolutePath(file1, JString::empty, &full1))
 	{
@@ -552,12 +552,12 @@ MDIServer::DisplayVCSDiffs
 	const bool					silent
 	)
 {
-	const JSize argCount = argList.GetElementCount();
+	const JSize argCount = argList.GetItemCount();
 
 	JSize count = 0;
 	if (*index < argCount-1)
 	{
-		const JString* arg2    = argList.GetElement(*index+2);
+		const JString* arg2    = argList.GetItem(*index+2);
 		const JUtf8Character c = arg2->IsEmpty() ? JUtf8Character(' ') : arg2->GetFirstCharacter();
 		count                  = (c == '-' || c == '+') ? 1 : 2;
 	}
@@ -569,20 +569,20 @@ MDIServer::DisplayVCSDiffs
 	JString file, rev1, rev2;
 	if (count == 1)
 	{
-		file = *argList.GetElement(*index+1);
+		file = *argList.GetItem(*index+1);
 	}
 	else if (count == 2)
 	{
-		file = *argList.GetElement(*index+2);
+		file = *argList.GetItem(*index+2);
 
-		const JString* r = argList.GetElement(*index+1);
+		const JString* r = argList.GetItem(*index+1);
 
 		JPtrArray<JString> s(JPtrArrayT::kDeleteAll);
 		r->Split(":", &s, 2);
-		if (s.GetElementCount() == 2)
+		if (s.GetItemCount() == 2)
 		{
-			rev1 = *s.GetElement(1);
-			rev2 = *s.GetElement(2);
+			rev1 = *s.GetItem(1);
+			rev2 = *s.GetItem(2);
 		}
 		else
 		{
@@ -593,7 +593,7 @@ MDIServer::DisplayVCSDiffs
 	*index += count;
 	if (file.IsEmpty())
 	{
-		std::cerr << *argList.GetFirstElement() << ": too few arguments to --" << type << "-diff" << std::endl;
+		std::cerr << *argList.GetFirstItem() << ": too few arguments to --" << type << "-diff" << std::endl;
 		return;
 	}
 

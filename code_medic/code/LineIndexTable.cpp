@@ -219,9 +219,9 @@ LineIndexTable::TableDrawCell
 		const JCoordinate delta = rect.height()/2;
 
 		JPolygon poly;
-		poly.AppendElement(JPoint(rect.left+kMarginWidth,       rect.top));
-		poly.AppendElement(JPoint(rect.left+kMarginWidth+delta, rect.top + delta));
-		poly.AppendElement(JPoint(rect.left+kMarginWidth,       rect.top + 2*delta));
+		poly.AppendItem(JPoint(rect.left+kMarginWidth,       rect.top));
+		poly.AppendItem(JPoint(rect.left+kMarginWidth+delta, rect.top + delta));
+		poly.AppendItem(JPoint(rect.left+kMarginWidth,       rect.top + 2*delta));
 
 		p.SetPenColor(GetCurrentLineMarkerColor());
 		p.SetFilling(true);
@@ -286,7 +286,7 @@ LineIndexTable::DrawBreakpoints
 	}
 	else
 	{
-		DrawBreakpoint(itsBPList->GetElement(itsBPDrawIndex), p, r);
+		DrawBreakpoint(itsBPList->GetItem(itsBPDrawIndex), p, r);
 	}
 }
 
@@ -345,13 +345,13 @@ LineIndexTable::FindNextBreakpoint
 
 	while (itsBPList->IndexValid(itsBPDrawIndex))
 	{
-		Breakpoint* bp = itsBPList->GetElement(itsBPDrawIndex);
+		Breakpoint* bp = itsBPList->GetItem(itsBPDrawIndex);
 		const JIndex i   = itsText->CRLineIndexToVisualLineIndex(GetBreakpointLineIndex(itsBPDrawIndex, bp));
 		if (i == rowIndex)
 		{
 			if (multiple != nullptr && itsBPList->IndexValid(itsBPDrawIndex+1))
 			{
-				*multiple = BreakpointsOnSameLine(bp, itsBPList->GetElement(itsBPDrawIndex+1));
+				*multiple = BreakpointsOnSameLine(bp, itsBPList->GetItem(itsBPDrawIndex+1));
 			}
 			return true;
 		}
@@ -384,8 +384,8 @@ LineIndexTable::HasMultipleBreakpointsOnLine
 	}
 
 	return BreakpointsOnSameLine(
-		itsBPList->GetElement(bpIndex),
-		itsBPList->GetElement(bpIndex+1));
+		itsBPList->GetItem(bpIndex),
+		itsBPList->GetItem(bpIndex+1));
 }
 
 /******************************************************************************
@@ -464,11 +464,11 @@ LineIndexTable::AdjustBreakpoints
 	}
 	else if (modifiers.shift())
 	{
-		(itsBPList->GetElement(bpIndex))->ToggleEnabled();
+		(itsBPList->GetItem(bpIndex))->ToggleEnabled();
 	}
 	else
 	{
-		itsLink->RemoveBreakpoint(*(itsBPList->GetElement(bpIndex)));
+		itsLink->RemoveBreakpoint(*(itsBPList->GetItem(bpIndex)));
 	}
 }
 
@@ -523,7 +523,7 @@ LineIndexTable::OpenLineMenu
 	while (itsBPList->IndexValid(bpIndex))
 	{
 		itsLineMenuBPRange.last = bpIndex;
-		const Breakpoint* bp  = itsBPList->GetElement(bpIndex);
+		const Breakpoint* bp  = itsBPList->GetItem(bpIndex);
 
 		const JString bpIndexStr(bp->GetDebuggerIndex(), 0);
 		const JString ignoreCountStr(bp->GetIgnoreCount(), 0);
@@ -593,7 +593,7 @@ LineIndexTable::UpdateLineMenu()
 			itsLineMenu->SetItemEnabled(offset + kIgnoreNextNCmd,
 				itsLink->GetFeature(Link::kSetBreakpointIgnoreCount));
 
-			const Breakpoint* bp = itsBPList->GetElement(i);
+			const Breakpoint* bp = itsBPList->GetItem(i);
 			if (!bp->HasCondition())
 			{
 				itsLineMenu->DisableItem(offset + kRemoveConditionCmd);
@@ -662,7 +662,7 @@ LineIndexTable::HandleLineMenu
 	{
 		for (JIndex i=itsLineMenuBPRange.first; i<=itsLineMenuBPRange.last; i++)
 		{
-			Breakpoint* bp = itsBPList->GetElement(i);
+			Breakpoint* bp = itsBPList->GetItem(i);
 			if (index == offset + kShowBreakpointInfoCmd)
 			{
 				itsDirector->GetCommandDirector()->GetBreakpointsDir()->GetBreakpointTable()->Show(bp);

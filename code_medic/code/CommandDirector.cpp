@@ -572,16 +572,16 @@ CommandDirector::DockAll
 	srcDock->Dock(itsCurrentSourceDir);
 	srcDock->Dock(itsCurrentAsmDir);
 
-	JSize count = itsSourceDirs->GetElementCount();
+	JSize count = itsSourceDirs->GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		srcDock->Dock(itsSourceDirs->GetElement(i));
+		srcDock->Dock(itsSourceDirs->GetItem(i));
 	}
 
-	count = itsAsmDirs->GetElementCount();
+	count = itsAsmDirs->GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		srcDock->Dock(itsAsmDirs->GetElement(i));
+		srcDock->Dock(itsAsmDirs->GetItem(i));
 	}
 
 	infoDock->Dock(itsThreadsDir);
@@ -593,28 +593,28 @@ CommandDirector::DockAll
 	dataDock->Dock(itsLocalVarsDir);
 	dataDock->Dock(itsRegistersDir);
 
-	count = itsArray1DDirs->GetElementCount();
+	count = itsArray1DDirs->GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		dataDock->Dock(itsArray1DDirs->GetElement(i));
+		dataDock->Dock(itsArray1DDirs->GetItem(i));
 	}
 
-	count = itsArray2DDirs->GetElementCount();
+	count = itsArray2DDirs->GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		dataDock->Dock(itsArray2DDirs->GetElement(i));
+		dataDock->Dock(itsArray2DDirs->GetItem(i));
 	}
 
-	count = itsPlot2DDirs->GetElementCount();
+	count = itsPlot2DDirs->GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		dataDock->Dock(itsPlot2DDirs->GetElement(i));
+		dataDock->Dock(itsPlot2DDirs->GetItem(i));
 	}
 
-	count = itsMemoryDirs->GetElementCount();
+	count = itsMemoryDirs->GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		dataDock->Dock(itsMemoryDirs->GetElement(i));
+		dataDock->Dock(itsMemoryDirs->GetItem(i));
 	}
 }
 
@@ -1300,10 +1300,10 @@ CommandDirector::OpenSourceFile
 	}
 	else if (JConvertToAbsolutePath(fileName, JString::empty, &fullName))
 	{
-		const JSize count = itsSourceDirs->GetElementCount();
+		const JSize count = itsSourceDirs->GetItemCount();
 		for (JIndex i=1; i<=count; i++)
 		{
-			SourceDirector* dir = itsSourceDirs->GetElement(i);
+			SourceDirector* dir = itsSourceDirs->GetItem(i);
 			const JString* f;
 			if (dir->GetFileName(&f) && JSameDirEntry(fullName, *f))
 			{
@@ -1353,10 +1353,10 @@ CommandDirector::DisassembleFunction
 	}
 	iter.Invalidate();
 
-	const JSize count = itsAsmDirs->GetElementCount();
+	const JSize count = itsAsmDirs->GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		dir = itsAsmDirs->GetElement(i);
+		dir = itsAsmDirs->GetItem(i);
 		const JString* f;
 		if (dir->GetFunctionName(&f) && fn == *f)
 		{
@@ -1500,7 +1500,7 @@ CommandDirector::SaveConfig()
 		itsLink->GetBreakpointManager()->WriteSetup(output);
 		itsVarTreeDir->WriteSetup(output);
 
-		JSize count = itsArray1DDirs->GetElementCount();
+		JSize count = itsArray1DDirs->GetItemCount();
 		output << ' ' << count;
 
 		for (auto* d: *itsArray1DDirs)
@@ -1508,7 +1508,7 @@ CommandDirector::SaveConfig()
 			d->StreamOut(output);
 		}
 
-		count = itsArray2DDirs->GetElementCount();
+		count = itsArray2DDirs->GetItemCount();
 		output << ' ' << count;
 
 		for (auto* d: *itsArray2DDirs)
@@ -1516,7 +1516,7 @@ CommandDirector::SaveConfig()
 			d->StreamOut(output);
 		}
 
-		count = itsPlot2DDirs->GetElementCount();
+		count = itsPlot2DDirs->GetItemCount();
 		output << ' ' << count;
 
 		for (auto* d: *itsPlot2DDirs)
@@ -1524,7 +1524,7 @@ CommandDirector::SaveConfig()
 			d->StreamOut(output);
 		}
 
-		count = itsMemoryDirs->GetElementCount();
+		count = itsMemoryDirs->GetItemCount();
 		output << ' ' << count;
 
 		for (auto* d: *itsMemoryDirs)

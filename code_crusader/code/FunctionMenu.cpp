@@ -279,12 +279,12 @@ FunctionMenu::UpdateMenu()
 						itsTE->GetLineForChar(itsTE->GetInsertionCharIndex()));
 
 		const JSize count = GetItemCount();
-		assert( count == itsLineIndexList->GetElementCount() );
-		assert( count == itsLineLangList->GetElementCount() );
+		assert( count == itsLineIndexList->GetItemCount() );
+		assert( count == itsLineLangList->GetItemCount() );
 
 		for (JIndex i=1; i<=count; i++)
 		{
-			if (itsLineIndexList->GetElement(i) > lineIndex)
+			if (itsLineIndexList->GetItem(i) > lineIndex)
 			{
 				itsCaretItemIndex = i-1;
 				if (itsCaretItemIndex > 0)
@@ -311,9 +311,9 @@ FunctionMenu::HandleSelection
 	)
 {
 	JIndexRange r;
-	r.first = r.last = itsLineIndexList->GetElement(index);
+	r.first = r.last = itsLineIndexList->GetItem(index);
 	SelectLines(itsTE, r);
-	ScrollForDefinition(itsTE, itsLineLangList->GetElement(index));
+	ScrollForDefinition(itsTE, itsLineLangList->GetItem(index));
 }
 
 /******************************************************************************

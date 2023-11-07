@@ -65,7 +65,7 @@ inline JSize
 EditCommandsDialog::GetStringCount()
 	const
 {
-	return itsCommands->GetElementCount();
+	return itsCommands->GetItemCount();
 }
 
 /******************************************************************************
@@ -80,7 +80,7 @@ EditCommandsDialog::GetString
 	)
 	const
 {
-	return *(itsCommands->GetElement(index));
+	return *(itsCommands->GetItem(index));
 }
 
 /******************************************************************************

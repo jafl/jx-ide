@@ -90,10 +90,10 @@ KeyScriptTableBase::ContentsValid()
 	const JSize rowCount         = GetRowCount();
 	for (JIndex i=1; i<rowCount; i++)
 	{
-		const JString& s1 = data->GetElement(i, kMacroColumn);
+		const JString& s1 = data->GetItem(i, kMacroColumn);
 		for (JIndex j=i+1; j<=rowCount; j++)
 		{
-			const JString& s2 = data->GetElement(j, kMacroColumn);
+			const JString& s2 = data->GetItem(j, kMacroColumn);
 			if (s1 == s2)
 			{
 				JTableSelection& s = me->GetTableSelection();

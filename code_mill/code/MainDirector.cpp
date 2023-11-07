@@ -58,14 +58,14 @@ MainDirector::MainDirector
 
 	JString outputPath;
 
-	const JSize count = argList.GetElementCount();
+	const JSize count = argList.GetItemCount();
 	JString classname, filename;
 	for (JIndex i = 2; i <= count; i++)
 	{
-		const JString* argName = argList.GetElement(i);
+		const JString* argName = argList.GetItem(i);
 		if (*argName == "--output_path" && i < count)
 		{
-			outputPath = *argList.GetElement(i+1);
+			outputPath = *argList.GetItem(i+1);
 			i++;
 		}
 		else if (!argName->StartsWith("-"))

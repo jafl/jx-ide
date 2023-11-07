@@ -127,7 +127,7 @@ CRMRuleTable::GetData
 	const JSize count            = GetRowCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		list->AppendElement(
+		list->AppendItem(
 			JStyledText::CRMRule(data->GetString(i, kFirstColumn),
 								 data->GetString(i, kRestColumn),
 								 data->GetString(i, kReplaceColumn)));
@@ -148,11 +148,11 @@ CRMRuleTable::SetData
 	JStringTableData* data = GetStringData();
 	data->RemoveAllRows();
 
-	const JSize count = list.GetElementCount();
+	const JSize count = list.GetItemCount();
 	data->AppendRows(count);
 	for (JIndex i=1; i<=count; i++)
 	{
-		const JStyledText::CRMRule r = list.GetElement(i);
+		const JStyledText::CRMRule r = list.GetItem(i);
 		data->SetString(i,kFirstColumn,   r.first->GetPattern());
 		data->SetString(i,kRestColumn,    r.rest->GetPattern());
 		data->SetString(i,kReplaceColumn, *r.replace);

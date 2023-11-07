@@ -925,11 +925,11 @@ TreeDirector::ReceiveWithFeedback
 		JPtrArray<Class> classList(JPtrArrayT::kForgetAll);
 		if (itsTree->GetSelectedClasses(&classList))
 		{
-			const JSize count = classList.GetElementCount();
+			const JSize count = classList.GetItemCount();
 			JString fullName;
 			for (JIndex i=1; i<=count; i++)
 			{
-				if (classList.GetElement(i)->GetFileName(&fullName))
+				if (classList.GetItem(i)->GetFileName(&fullName))
 				{
 					info->AddFile(fullName);
 				}

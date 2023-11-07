@@ -1835,14 +1835,14 @@ gdb::Link::ParseMap
 			stream.ignore();	// skip }
 
 			value.Clear();
-			const JSize count = list.GetElementCount();
+			const JSize count = list.GetItemCount();
 			for (JIndex i=1; i<=count; i++)
 			{
 				if (i > 1)
 				{
 					value.Append("\1");
 				}
-				value.Append(*(list.GetElement(i)));
+				value.Append(*(list.GetItem(i)));
 			}
 		}
 		else

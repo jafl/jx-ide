@@ -61,11 +61,11 @@ gdb::GetStopLocationCmd::GetLocation()
 		{
 			Link::Log("invalid data map");
 		}
-		else if (!map.GetElement("fullname", &fullName))
+		else if (!map.GetItem("fullname", &fullName))
 		{
 			Link::Log("missing file name");
 		}
-		else if (!map.GetElement("line", &s))
+		else if (!map.GetItem("line", &s))
 		{
 			Link::Log("missing line index");
 		}
@@ -79,7 +79,7 @@ gdb::GetStopLocationCmd::GetLocation()
 			loc.SetLineNumber(lineIndex);
 		}
 
-		if (parsed && map.GetElement("func", &s) && map.GetElement("addr", &s1))
+		if (parsed && map.GetItem("func", &s) && map.GetItem("addr", &s1))
 		{
 			loc.SetFunctionName(*s);
 			loc.SetMemoryAddress(*s1);

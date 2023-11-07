@@ -335,14 +335,14 @@ BuildManager::UpdateMakeHeader
 
 	JGetString("MakeHeaderLibTargetWarning::BuildManager").Print(output);
 
-	const JSize libCount = libFileList.GetElementCount();
+	const JSize libCount = libFileList.GetItemCount();
 	JString libPath, libName;
 	for (JIndex i=1; i<=libCount; i++)
 	{
 		const JUtf8Byte* map[] =
 		{
-			"lib_full_name", libFileList.GetElement(i)->GetBytes(),
-			"lib_proj_path", libProjPathList.GetElement(i)->GetBytes(),
+			"lib_full_name", libFileList.GetItem(i)->GetBytes(),
+			"lib_proj_path", libProjPathList.GetItem(i)->GetBytes(),
 		};
 		JGetString("MakeHeaderLibTarget::BuildManager", map, sizeof(map)).Print(output);
 	}
@@ -731,10 +731,10 @@ BuildManager::EditMakeConfig()
 	makefileNameList.Append(JCombinePathAndName(itsProjDoc->GetFilePath(), JString("pom.xml", JString::kNoCopy)));	// Maven
 	makefileNameList.Append(JCombinePathAndName(itsProjDoc->GetFilePath(), JString("build.xml", JString::kNoCopy)));	// ant
 
-	const JSize count = makefileNameList.GetElementCount();
+	const JSize count = makefileNameList.GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		JString* fileName = makefileNameList.GetElement(i);
+		JString* fileName = makefileNameList.GetItem(i);
 		if (JFileReadable(*fileName) &&
 			GetDocumentManager()->OpenTextDocument(*fileName))
 		{
@@ -744,7 +744,7 @@ BuildManager::EditMakeConfig()
 
 	for (JIndex i=1; i<=count; i++)
 	{
-		if (GetDocumentManager()->OpenTextDocument(*(makefileNameList.GetElement(i))))
+		if (GetDocumentManager()->OpenTextDocument(*(makefileNameList.GetItem(i))))
 		{
 			return true;
 		}
@@ -1066,13 +1066,13 @@ BuildManager::WriteTemplate
 		list.Append(cmakeInputName);
 		list.Append(qmakeInputName);
 
-		const JSize count = list.GetElementCount();
+		const JSize count = list.GetItemCount();
 		output << ' ' << count;
 
 		JString path, name;
 		for (JIndex i=1; i<=count; i++)
 		{
-			const JString* fullName = list.GetElement(i);
+			const JString* fullName = list.GetItem(i);
 			JSplitPathAndName(*fullName, &path, &name);
 			output << ' ' << name;
 			saveFile(output, *fullName);
@@ -1603,7 +1603,7 @@ BuildManager::MakefileExists()
 	GetMakefileNames(&list);
 	for (JIndex i=kFirstDefaultMakefileIndex; i<=kMakefileNameCount; i++)
 	{
-		if (JFileExists(*(list.GetElement(i))))
+		if (JFileExists(*(list.GetItem(i))))
 		{
 			return true;
 		}

@@ -361,8 +361,8 @@ App::FindFile
 	{
 		DirInfoList searchPaths;
 		CollectSearchPaths(&searchPaths);
-		const JSize dirCount = searchPaths.GetElementCount(),
-					sysCount = itsSystemIncludeDirs->GetElementCount();
+		const JSize dirCount = searchPaths.GetItemCount(),
+					sysCount = itsSystemIncludeDirs->GetItemCount();
 
 		bool found = false;
 
@@ -378,7 +378,7 @@ App::FindFile
 		JString path, newName;
 		for (JIndex i=1; i<=dirCount; i++)
 		{
-			const DirInfo info = searchPaths.GetElement(i);
+			const DirInfo info = searchPaths.GetItem(i);
 			if (!info.recurse)
 			{
 				*fullName = JCombinePathAndName(*(info.path), fileName);
@@ -414,7 +414,7 @@ App::FindFile
 
 			for (JIndex i=1; i<=sysCount; i++)
 			{
-				if (JSearchSubdirs(*itsSystemIncludeDirs->GetElement(i), fileName, true, caseSensitive,
+				if (JSearchSubdirs(*itsSystemIncludeDirs->GetItem(i), fileName, true, caseSensitive,
 								   &path, &newName, nullptr, &cancelled))
 				{
 					*fullName = JCombinePathAndName(path, newName);
@@ -534,14 +534,14 @@ App::CollectSearchPaths
 	JPtrArray<ProjectDocument>* docList =
 		GetDocumentManager()->GetProjectDocList();
 
-	const JSize docCount = docList->GetElementCount();
+	const JSize docCount = docList->GetItemCount();
 	JString truePath;
 	bool recurse;
 	for (JIndex j=1; j<=docCount; j++)
 	{
-		ProjectDocument* doc   = docList->GetElement(j);
+		ProjectDocument* doc   = docList->GetItem(j);
 		const DirList& dirList = doc->GetDirectories();
-		const JSize count      = dirList.GetElementCount();
+		const JSize count      = dirList.GetItemCount();
 		for (JIndex i=1; i<=count; i++)
 		{
 			if (dirList.GetTruePath(i, &truePath, &recurse))
@@ -557,17 +557,17 @@ App::CollectSearchPaths
 				{
 					// compute OR of recurse flags
 
-					DirInfo existingInfo = searchPaths->GetElement(index);
+					DirInfo existingInfo = searchPaths->GetItem(index);
 					if (newInfo.recurse && !existingInfo.recurse)
 					{
 						existingInfo.recurse = true;
-						searchPaths->SetElement(index, existingInfo);
+						searchPaths->SetItem(index, existingInfo);
 					}
 					jdelete newInfo.path;
 				}
 				else
 				{
-					searchPaths->InsertElementAtIndex(index, newInfo);
+					searchPaths->InsertItemAtIndex(index, newInfo);
 				}
 			}
 		}

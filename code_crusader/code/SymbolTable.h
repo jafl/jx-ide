@@ -32,13 +32,13 @@ public:
 	~SymbolTable() override;
 
 	bool	HasSelection() const;
-	void		SelectSingleEntry(const JIndex index, const bool scroll = true);
-	void		ClearSelection();
-	void		CopySelectedSymbolNames() const;
-	void		DisplaySelectedSymbols() const;
-	void		FindSelectedSymbols(const JXMouseButton button) const;
-	void		GetFileNamesForSelection(JPtrArray<JString>* fileNameList,
-										 JArray<JIndex>* lineIndexList) const;
+	void	SelectSingleEntry(const JIndex index, const bool scroll = true);
+	void	ClearSelection();
+	void	CopySelectedSymbolNames() const;
+	void	DisplaySelectedSymbols() const;
+	void	FindSelectedSymbols(const JXMouseButton button) const;
+	void	GetFileNamesForSelection(JPtrArray<JString>* fileNameList,
+									 JArray<JIndex>* lineIndexList) const;
 
 	void	ShowAll();
 	JError	SetNameFilter(const JString& filterStr, const bool isRegex);

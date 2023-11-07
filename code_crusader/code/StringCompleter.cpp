@@ -252,7 +252,7 @@ StringCompleter::Complete
 		itsStringList->SearchSortedOTI(const_cast<JString*>(&prefix),
 									 JListT::kAnyMatch, &found);
 
-	const JSize stringCount = itsStringList->GetElementCount();
+	const JSize stringCount = itsStringList->GetItemCount();
 	if (startIndex > stringCount)
 	{
 		maxPrefix->Clear();
@@ -260,13 +260,13 @@ StringCompleter::Complete
 	}
 
 	JPtrArray<JString> matchList(JPtrArrayT::kForgetAll, 100);
-	*maxPrefix = *(itsStringList->GetElement(startIndex));
+	*maxPrefix = *(itsStringList->GetItem(startIndex));
 
 	JSize matchCount   = 0;
 	bool addString = true;
 	for (JIndex i=startIndex; i<=stringCount; i++)
 	{
-		const JString* s = itsStringList->GetElement(i);
+		const JString* s = itsStringList->GetItem(i);
 		if (!s->StartsWith(prefix, itsCaseSensitiveFlag))
 		{
 			break;
@@ -302,10 +302,10 @@ StringCompleter::Complete
 		matchList.SetCompareFunction(JCompareStringsCaseInsensitive);
 		matchList.Sort();
 
-		assert( matchCount == matchList.GetElementCount() );
+		assert( matchCount == matchList.GetItemCount() );
 		for (JIndex i=1; i<=matchCount; i++)
 		{
-			if (!menu->AddString(*(matchList.GetElement(i))))
+			if (!menu->AddString(*(matchList.GetItem(i))))
 			{
 				matchCount = i-1;
 				break;
@@ -447,7 +447,7 @@ StringCompleter::CopySymbolsForLanguage
 	{
 		const SymbolList* symbolList = doc->GetSymbolDirector()->GetSymbolList();
 
-		const JSize symbolCount = symbolList->GetElementCount();
+		const JSize symbolCount = symbolList->GetItemCount();
 		for (JIndex j=1; j<=symbolCount; j++)
 		{
 			Language l;

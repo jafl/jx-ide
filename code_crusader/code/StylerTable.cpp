@@ -47,13 +47,13 @@ StylerTable::StylerTable
 	JStringTableData* data = GetStringData();
 	data->AppendCols(1);
 
-	const JSize count = typeStyles.GetElementCount();
+	const JSize count = typeStyles.GetItemCount();
 	data->AppendRows(count);
 	for (JIndex i=1; i<=count; i++)
 	{
 		data->SetString(i,1, JString(typeNames[i-1], JString::kNoCopy));
 
-		SetCellStyle(JPoint(1,i), typeStyles.GetElement(i));
+		SetCellStyle(JPoint(1,i), typeStyles.GetItem(i));
 	}
 }
 
@@ -81,11 +81,11 @@ StylerTable::StylerTable
 	JStringTableData* data = GetStringData();
 	data->AppendCols(1);
 
-	const JSize count = wordList.GetElementCount();
+	const JSize count = wordList.GetItemCount();
 	data->AppendRows(count);
 	for (JIndex i=1; i<=count; i++)
 	{
-		const StylerBase::WordStyle info = wordList.GetElement(i);
+		const StylerBase::WordStyle info = wordList.GetItem(i);
 		data->SetString(i,1, *info.key);
 
 		SetCellStyle(JPoint(1,i), info.value);
@@ -161,12 +161,12 @@ StylerTable::GetData
 	const
 {
 	const JSize count = GetRowCount();
-	assert( count == typeStyles->GetElementCount() );
+	assert( count == typeStyles->GetItemCount() );
 
 	for (JIndex i=1; i<=count; i++)
 	{
 		const JFontStyle style = GetCellStyle(JPoint(1,i));
-		typeStyles->SetElement(i, style);
+		typeStyles->SetItem(i, style);
 	}
 }
 
@@ -189,7 +189,7 @@ StylerTable::GetData
 		if (!word.IsEmpty())
 		{
 			const JFontStyle style = GetCellStyle(cell);
-			wordStyles->SetElement(word, style);
+			wordStyles->SetItem(word, style);
 		}
 	}
 }

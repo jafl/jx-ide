@@ -105,14 +105,14 @@ Link::ParseClass
 		}
 
 		JString* s;
-		if (!flags.GetElement("class", &s) || *s != className)
+		if (!flags.GetItem("class", &s) || *s != className)
 		{
 			continue;
 		}
 
 		bool required = false, isConst = false;
 
-		if (flags.GetElement("properties", &s))
+		if (flags.GetItem("properties", &s))
 		{
 			if (s->Contains("virtual"))
 			{
@@ -139,12 +139,12 @@ Link::ParseClass
 		fn->ShouldBeRequired(required);
 		fn->ShouldBeConst(isConst);
 
-		if (flags.GetElement("access", &s) && *s == "protected")
+		if (flags.GetItem("access", &s) && *s == "protected")
 		{
 			fn->ShouldBeProtected(true);
 		}
 
-		if (flags.GetElement("signature", &s) && !s->IsEmpty())
+		if (flags.GetItem("signature", &s) && !s->IsEmpty())
 		{
 			fn->SetSignature(*s);
 		}
@@ -158,7 +158,7 @@ Link::ParseClass
 		const JIndex i = list->SearchSortedOTI(fn, JListT::kAnyMatch, &found);
 		if (found)
 		{
-			list->DeleteElement(i);
+			list->DeleteItem(i);
 		}
 		list->InsertAtIndex(i, fn);
 
@@ -208,13 +208,13 @@ Link::GetReturnType
 	{
 		i--;
 
-		if (startPattern.Match(*lines.GetElement(i)))
+		if (startPattern.Match(*lines.GetItem(i)))
 		{
 			break;
 		}
 	}
 
-	JString s = *lines.GetElement(i);
+	JString s = *lines.GetItem(i);
 	{
 	JStringIterator iter(&s, JStringIterator::kStartAtEnd);
 	if (iter.Prev(startPattern))
@@ -227,7 +227,7 @@ Link::GetReturnType
 	for (JIndex j=i+1; j<=lineIndex; j++)
 	{
 		s += "\n";
-		s += *lines.GetElement(j);
+		s += *lines.GetItem(j);
 	}
 
 	JStringIterator iter(&s, JStringIterator::kStartAtEnd);

@@ -282,22 +282,22 @@ SaveNewProjectDialog::BuildTemplateMenu()
 		BuildTemplateMenuItems(sysDir,  false, &menuText, &menuTextStr);
 		BuildTemplateMenuItems(userDir, true,  &menuText, &menuTextStr);
 
-		const JSize count = menuText.GetElementCount();
+		const JSize count = menuText.GetItemCount();
 		JString itemText, nmShortcut;
 		for (JIndex i=1; i<=count; i++)
 		{
 			// We have to extract user/sys here because otherwise we would
 			// have to keep extra state while building the sorted list.
 
-			itemText = *menuText.GetElement(i);
+			itemText = *menuText.GetItem(i);
 
 			JPtrArray<JString> s(JPtrArrayT::kDeleteAll);
 			itemText.Split(" (", &s, 2);
-			assert( s.GetElementCount() == 2 );
+			assert( s.GetItemCount() == 2 );
 
-			itemText = *s.GetElement(1);
+			itemText = *s.GetItem(1);
 
-			nmShortcut = *s.GetElement(2);
+			nmShortcut = *s.GetItem(2);
 			nmShortcut.Prepend("(");
 
 			itsTemplateMenu->AppendItem(itemText, JXMenu::kRadioType);
@@ -305,7 +305,7 @@ SaveNewProjectDialog::BuildTemplateMenu()
 
 			// mark item corresponding to initial template selection
 
-			if (menuText.GetElement(i) == menuTextStr)
+			if (menuText.GetItem(i) == menuTextStr)
 			{
 				itsTemplateIndex = itsTemplateMenu->GetItemCount();
 			}
@@ -518,10 +518,10 @@ SaveNewProjectDialog::OKToDeactivate()
 	JPtrArray<JString> makefileList(JPtrArrayT::kDeleteAll);
 	BuildManager::GetMakefileNames(GetPath(), &makefileList);
 
-	const JSize count = makefileList.GetElementCount();
+	const JSize count = makefileList.GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		const JString* fullName = makefileList.GetElement(i);
+		const JString* fullName = makefileList.GetItem(i);
 		if (JFileExists(*fullName) &&
 			!OKToReplaceFile(*fullName, BuildManager::GetMakefileMethodName(GetMakefileMethod())))
 		{

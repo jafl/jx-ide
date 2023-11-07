@@ -202,7 +202,7 @@ FnMenuUpdater::ReadFunctionList
 		// toss qualified or unqualified version, except for HTML id's
 
 		JString* type;
-		if (flags.GetElement("kind", &type) && *type == "I")
+		if (flags.GetItem("kind", &type) && *type == "I")
 		{
 			fnName.Prepend("#");
 		}
@@ -223,28 +223,28 @@ FnMenuUpdater::ReadFunctionList
 			i = lineIndexList->GetInsertionSortIndex(lineIndex);
 		}
 		fnNameList->InsertAtIndex(i, fnName);
-		lineIndexList->InsertElementAtIndex(i, lineIndex);
-		lineLangList->InsertElementAtIndex(i, lang);
+		lineIndexList->InsertItemAtIndex(i, lineIndex);
+		lineLangList->InsertItemAtIndex(i, lang);
 	}
 
 	// filter
 
 	if (hasNS && includeNS)
 	{
-		JSize count = fnNameList->GetElementCount();
+		JSize count = fnNameList->GetItemCount();
 		for (JIndex i=1; i<=count; i++)
 		{
-			const JString* fnName = fnNameList->GetElement(i);
+			const JString* fnName = fnNameList->GetItem(i);
 			if (NameIsQualified(*fnName))
 			{
-				const JIndex lineIndex = lineIndexList->GetElement(i);
+				const JIndex lineIndex = lineIndexList->GetItem(i);
 				for (JIndex j=1; j<=count; j++)
 				{
-					if (j != i && lineIndexList->GetElement(j) == lineIndex)
+					if (j != i && lineIndexList->GetItem(j) == lineIndex)
 					{
-						fnNameList->DeleteElement(j);
-						lineIndexList->RemoveElement(j);
-						lineLangList->RemoveElement(j);
+						fnNameList->DeleteItem(j);
+						lineIndexList->RemoveItem(j);
+						lineLangList->RemoveItem(j);
 						count--;
 						if (j < i)
 						{

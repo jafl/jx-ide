@@ -65,11 +65,11 @@ MacroSetTable::MacroSetTable
 	JStringTableData* data = GetStringData();
 	data->AppendCols(1);
 
-	const JSize count = itsMacroList->GetElementCount();
+	const JSize count = itsMacroList->GetItemCount();
 	data->AppendRows(count);
 	for (JIndex i=1; i<=count; i++)
 	{
-		const PrefsManager::MacroSetInfo info = itsMacroList->GetElement(i);
+		const PrefsManager::MacroSetInfo info = itsMacroList->GetItem(i);
 		data->SetString(i,1, *(info.name));
 	}
 
@@ -95,10 +95,10 @@ MacroSetTable::~MacroSetTable()
 {
 	if (itsOwnsMacroListFlag)
 	{
-		const JSize count = itsMacroList->GetElementCount();
+		const JSize count = itsMacroList->GetItemCount();
 		for (JIndex i=1; i<=count; i++)
 		{
-			PrefsManager::MacroSetInfo info = itsMacroList->GetElement(i);
+			PrefsManager::MacroSetInfo info = itsMacroList->GetItem(i);
 			jdelete info.name;
 			jdelete info.action;
 			jdelete info.macro;
@@ -175,13 +175,13 @@ MacroSetTable::GetMacroList
 	const JSize count      = data->GetRowCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		PrefsManager::MacroSetInfo info = itsMacroList->GetElement(i);
+		PrefsManager::MacroSetInfo info = itsMacroList->GetItem(i);
 		*(info.name) = data->GetString(i,1);
 	}
 
 	if (itsMacroIndex > 0)
 	{
-		PrefsManager::MacroSetInfo info = itsMacroList->GetElement(itsMacroIndex);
+		PrefsManager::MacroSetInfo info = itsMacroList->GetItem(itsMacroIndex);
 		itsActionTable->GetData(info.action);
 		itsMacroTable->GetData(info.macro);
 	}
@@ -268,7 +268,7 @@ MacroSetTable::AddRow()
 		assert( info.name   != nullptr &&
 				info.action != nullptr &&
 				info.macro  != nullptr );
-		itsMacroList->AppendElement(info);
+		itsMacroList->AppendItem(info);
 
 		JStringTableData* data = GetStringData();
 		data->AppendRows(1);
@@ -293,7 +293,7 @@ MacroSetTable::RemoveRow()
 	itsActionTable->CancelEditing();
 	itsMacroTable->CancelEditing();
 
-	PrefsManager::MacroSetInfo info = itsMacroList->GetElement(itsMacroIndex);
+	PrefsManager::MacroSetInfo info = itsMacroList->GetItem(itsMacroIndex);
 	jdelete info.name;
 	jdelete info.action;
 	jdelete info.macro;
@@ -309,9 +309,9 @@ MacroSetTable::RemoveRow()
 			PrefsManager::FindMacroID(*itsMacroList, itsLastNewID, &index);
 		assert( found );
 
-		PrefsManager::MacroSetInfo info2 = itsMacroList->GetElement(index);
+		PrefsManager::MacroSetInfo info2 = itsMacroList->GetItem(index);
 		info2.id = info.id;
-		itsMacroList->SetElement(index, info2);
+		itsMacroList->SetItem(index, info2);
 
 		itsLastNewID--;
 	}
@@ -320,7 +320,7 @@ MacroSetTable::RemoveRow()
 
 	const JIndex macroIndex = itsMacroIndex;
 	itsMacroIndex = 0;
-	itsMacroList->RemoveElement(macroIndex);
+	itsMacroList->RemoveItem(macroIndex);
 	GetStringData()->RemoveRow(macroIndex);
 }
 
@@ -336,7 +336,7 @@ MacroSetTable::SwitchDisplay()
 {
 	if (itsMacroIndex > 0)
 	{
-		const PrefsManager::MacroSetInfo info = itsMacroList->GetElement(itsMacroIndex);
+		const PrefsManager::MacroSetInfo info = itsMacroList->GetItem(itsMacroIndex);
 		itsActionTable->GetData(info.action);
 		itsMacroTable->GetData(info.macro);
 	}
@@ -346,7 +346,7 @@ MacroSetTable::SwitchDisplay()
 	{
 		itsMacroIndex = cell.y;
 
-		const PrefsManager::MacroSetInfo info = itsMacroList->GetElement(itsMacroIndex);
+		const PrefsManager::MacroSetInfo info = itsMacroList->GetItem(itsMacroIndex);
 		itsActionTable->SetData(*(info.action));
 		itsMacroTable->SetData(*(info.macro));
 

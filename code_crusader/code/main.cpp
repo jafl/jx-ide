@@ -67,7 +67,7 @@ main
 			JPtrArray<TextDocument>* docList = docMgr->GetTextDocList();
 			if (!docList->IsEmpty())
 			{
-				docList->GetFirstElement()->ShouldMakeBackupFile(false);
+				docList->GetFirstItem()->ShouldMakeBackupFile(false);
 			}
 		}
 	});

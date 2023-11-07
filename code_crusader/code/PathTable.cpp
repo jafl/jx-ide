@@ -84,7 +84,7 @@ PathTable::PathTable
 
 	itsData->AppendCols(3);		// recurse flag, folder icon, path
 
-	const JSize rowCount = pathList.GetElementCount();
+	const JSize rowCount = pathList.GetItemCount();
 	itsData->AppendRows(rowCount);
 
 	for (JIndex i=1; i<=rowCount; i++)
@@ -134,10 +134,10 @@ PathTable::AddDirectories
 {
 	JIndex firstNewRow = 0;
 
-	const JSize count = list.GetElementCount();
+	const JSize count = list.GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		const JString* name = list.GetElement(i);
+		const JString* name = list.GetItem(i);
 		if (JDirectoryExists(*name))
 		{
 			itsData->AppendRows(1);
@@ -486,10 +486,10 @@ PathTable::WillAcceptDrop
 {
 	const Atom urlXAtom = GetSelectionManager()->GetURLXAtom();
 
-	const JSize typeCount = typeList.GetElementCount();
+	const JSize typeCount = typeList.GetItemCount();
 	for (JIndex i=1; i<=typeCount; i++)
 	{
-		const Atom a = typeList.GetElement(i);
+		const Atom a = typeList.GetItem(i);
 		if (a == urlXAtom)
 		{
 			*action = GetDNDManager()->GetDNDActionPrivateXAtom();

@@ -292,10 +292,10 @@ VarTreeWidget::DisplayAsCString()
 
 	// DisplayExpression() messes with selection
 
-	const JSize count = exprList.GetElementCount();
+	const JSize count = exprList.GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		itsDir->DisplayExpression(*(exprList.GetElement(i)));
+		itsDir->DisplayExpression(*(exprList.GetItem(i)));
 	}
 
 	ClearIncrementalSearchBuffer();

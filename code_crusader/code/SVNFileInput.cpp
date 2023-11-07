@@ -63,10 +63,10 @@ SVNFileInput::StyledText::AdjustStylesBeforeBroadcast
 	if (JIsURL(text))
 	{
 		const JSize totalLength = text.GetCharacterCount();
-		JFont f                 = styles->GetFirstElement();
+		JFont f                 = styles->GetFirstItem();
 		styles->RemoveAll();
 		f.SetColor(JColorManager::GetBlackColor());
-		styles->AppendElements(f, totalLength);
+		styles->AppendItems(f, totalLength);
 
 		*recalcRange = *redrawRange = JStyledText::TextRange(
 			JCharacterRange(1, totalLength),

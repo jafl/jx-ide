@@ -100,9 +100,9 @@ gdb::GetFullPathCmd::HandleSuccess
 
 	const JPtrArray<JString>& resultList = GetResults();
 	JString data1;
-	if (resultList.GetElementCount() == 2)
+	if (resultList.GetItemCount() == 2)
 	{
-		data1 = *(resultList.GetFirstElement());
+		data1 = *(resultList.GetFirstItem());
 	}
 
 	const JStringMatch m2 = pathPattern.Match(data, JRegex::kIncludeSubmatches);

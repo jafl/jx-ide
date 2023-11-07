@@ -276,7 +276,7 @@ public:
 			ProjectDocumentMessage(kProjectDocumentActivated,
 								   list->IsEmpty() ?
 										(ProjectDocument*) nullptr :
-										list->GetFirstElement())
+										list->GetFirstItem())
 			{ };
 	};
 
@@ -332,7 +332,7 @@ inline JSize
 DocumentManager::GetTextDocumentCount()
 	const
 {
-	return itsTextDocuments->GetElementCount();
+	return itsTextDocuments->GetItemCount();
 }
 
 /******************************************************************************
@@ -411,7 +411,7 @@ DocumentManager::SetActiveProjectDocument
 	JIndex i;
 	if (itsProjectDocuments->Find(doc, &i) && i != 1)
 		{
-		itsProjectDocuments->MoveElementToIndex(i, 1);
+		itsProjectDocuments->MoveItemToIndex(i, 1);
 		}
 }
 

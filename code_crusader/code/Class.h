@@ -343,7 +343,7 @@ inline JSize
 Class::GetParentCount()
 	const
 {
-	return itsParentInfo->GetElementCount();
+	return itsParentInfo->GetItemCount();
 }
 
 /******************************************************************************
@@ -358,7 +358,7 @@ Class::GetParentName
 	)
 	const
 {
-	return *itsParentInfo->GetElement(index).name;
+	return *itsParentInfo->GetItem(index).name;
 }
 
 /******************************************************************************
@@ -373,7 +373,7 @@ Class::GetParentType
 	)
 	const
 {
-	return itsParentInfo->GetElement(index).inheritance;
+	return itsParentInfo->GetItem(index).inheritance;
 }
 
 /******************************************************************************

@@ -227,7 +227,7 @@ JavaStyler::UpgradeTypeList
 {
 	if (vers < 1)
 	{
-		typeStyles->InsertElementAtIndex(4, JFontStyle(JColorManager::GetBlueColor()));
+		typeStyles->InsertItemAtIndex(4, JFontStyle(JColorManager::GetBlueColor()));
 	}
 
 	// set new values after all new slots have been created

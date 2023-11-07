@@ -208,7 +208,7 @@ const JString&
 Command::GetLastResult()
 	const
 {
-	return (itsResultList != nullptr ? *(itsResultList->GetLastElement()) : theEmptyResult);
+	return (itsResultList != nullptr ? *(itsResultList->GetLastItem()) : theEmptyResult);
 }
 
 void

@@ -48,7 +48,7 @@ MDIServer::HandleMDIRequest
 	const JPtrArray<JString>&	argList
 	)
 {
-	const JSize count = argList.GetElementCount();
+	const JSize count = argList.GetItemCount();
 	if (count <= 1)
 	{
 		JScheduleTask([]()
@@ -60,7 +60,7 @@ MDIServer::HandleMDIRequest
 
 	for (JIndex i = 2; i <= count; i++)
 	{
-		JString arg	= *(argList.GetElement(i));
+		JString arg	= *(argList.GetItem(i));
 		if (arg == "--delete")
 		{
 			GetApplication()->ShouldBeDeletingTemplate(true);
@@ -75,7 +75,7 @@ MDIServer::HandleMDIRequest
 	{
 		for (JIndex i=2; i <= count; i++)
 		{
-			const JString& arg	= *(argList.GetElement(i));
+			const JString& arg	= *(argList.GetItem(i));
 			if (!arg.StartsWith("-"))
 			{
 				JRemoveFile(arg);

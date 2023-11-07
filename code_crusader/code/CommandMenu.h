@@ -114,7 +114,7 @@ public:
 			AddFile(const JString& fullName, const JIndex lineIndex = 0)
 			{
 				itsFileList.Append(fullName);
-				itsLineIndexList.AppendElement(lineIndex);
+				itsLineIndexList.AppendItem(lineIndex);
 			};
 
 		private:

@@ -245,12 +245,12 @@ JavaScriptStyler::UpgradeTypeList
 {
 	if (vers < 1)
 	{
-		typeStyles->InsertElementAtIndex(9, JFontStyle(JColorManager::GetDarkGreenColor()));
+		typeStyles->InsertItemAtIndex(9, JFontStyle(JColorManager::GetDarkGreenColor()));
 	}
 
 	if (vers < 2)
 	{
-		typeStyles->InsertElementAtIndex(6, JFontStyle(JColorManager::GetPinkColor()));
+		typeStyles->InsertItemAtIndex(6, JFontStyle(JColorManager::GetPinkColor()));
 	}
 
 	// set new values after all new slots have been created

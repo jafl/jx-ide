@@ -148,7 +148,7 @@ as\b {
 {NSID} {
 	JString* s = jnew JString(text(), size());
 	assert( s != nullptr );
-	itsUseMap->SetElement(*s, s, JPtrArrayT::kDelete);
+	itsUseMap->SetItem(*s, s, JPtrArrayT::kDelete);
 	itsUseName = *s;
 	}
 
@@ -178,7 +178,7 @@ as\b {
 {ID} {
 	JString* s = jnew JString(text(), size());
 	assert( s != nullptr );
-	itsUseMap->SetElement(itsUseName, s, JPtrArrayT::kDelete);
+	itsUseMap->SetItem(itsUseName, s, JPtrArrayT::kDelete);
 	start(INITIAL);
 	}
 

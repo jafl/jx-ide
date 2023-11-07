@@ -116,7 +116,7 @@ PrefsManager::CreateAndReadData
 
 		info.CreateAndRead(input, vers);
 
-		(**list).AppendElement(info);
+		(**list).AppendItem(info);
 	}
 
 	RemoveData(MainDataID);		// delete it since it might be an old version (see below)
@@ -154,12 +154,12 @@ PrefsManager::WriteData
 
 	std::ostringstream listStream;
 
-	const JSize count = list.GetElementCount();
+	const JSize count = list.GetItemCount();
 	listStream << count;
 
 	for (JIndex i=1; i<=count; i++)
 	{
-		DataType info = list.GetElement(i);
+		DataType info = list.GetItem(i);
 		listStream << ' ' << info.id << ' ' << *info.name;
 
 		std::ostringstream data;
@@ -185,14 +185,14 @@ PrefsManager::EditDataFn
 	JIndex firstUnusedID   = FirstDataID;
 	JIndex initialIndex    = 1;
 
-	const JSize count = ListVar->GetElementCount();
+	const JSize count = ListVar->GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		const DataType origInfo = ListVar->GetElement(i);
+		const DataType origInfo = ListVar->GetItem(i);
 
 		DataType newInfo(origInfo.id, jnew JString(*origInfo.name), CopyConstr);
 		assert( newInfo.name != nullptr && PtrCheck );
-		list->AppendElement(newInfo);
+		list->AppendItem(newInfo);
 
 		if (origInfo.id >= firstUnusedID)
 		{
@@ -212,14 +212,14 @@ PrefsManager::EditDataFn
 		JArray<DataType>* newList =
 			dlog->ExtractDataFn(&firstNewID, &lastNewID);
 
-		const JSize origCount = ListVar->GetElementCount();
-		const JSize ftCount   = itsFileTypeList->GetElementCount();
+		const JSize origCount = ListVar->GetItemCount();
+		const JSize ftCount   = itsFileTypeList->GetItemCount();
 
 		// throw out old objects and update file type->data links
 
 		for (JIndex i=1; i<=origCount; i++)
 		{
-			DataType info = ListVar->GetElement(i);
+			DataType info = ListVar->GetItem(i);
 			jdelete info.name;
 			Destr;
 
@@ -228,11 +228,11 @@ PrefsManager::EditDataFn
 			{
 				for (JIndex j=1; j<=ftCount; j++)
 				{
-					FileTypeInfo ftInfo = itsFileTypeList->GetElement(j);
+					FileTypeInfo ftInfo = itsFileTypeList->GetItem(j);
 					if (ftInfo.FTStructIDVar == info.id)
 					{
 						ftInfo.FTStructIDVar = EmptyDataID;
-						itsFileTypeList->SetElement(j, ftInfo);
+						itsFileTypeList->SetItem(j, ftInfo);
 					}
 				}
 			}
@@ -258,9 +258,9 @@ PrefsManager::EditDataFn
 				JIndex j;
 				if (!FindIDFn(*ListVar, i, &j))
 				{
-					DataType info = ListVar->GetElement(index);
+					DataType info = ListVar->GetItem(index);
 					info.id       = i;
-					ListVar->SetElement(index, info);
+					ListVar->SetItem(index, info);
 
 					foundEmptySlot = true;
 					break;

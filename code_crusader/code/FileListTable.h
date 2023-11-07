@@ -101,7 +101,7 @@ private:
 	bool	IDToIndex(const JFAID_t id, JIndex* index) const;
 	JFAID_t	GetUniqueID() const;
 
-	void	FilesAdded(const JListT::ElementsInserted& info);
+	void	FilesAdded(const JListT::ItemsInserted& info);
 	void	UpdateFileInfo(const JIndex index);
 };
 

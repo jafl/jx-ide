@@ -784,28 +784,28 @@ Array2DDir::BeginUpdate
 	const JIntRange&	range
 	)
 {
-	const JSize count = list->GetElementCount();
+	const JSize count = list->GetItemCount();
 	JIntRange overlap;
 	for (JIndex i=count; i>=1; i--)
 	{
-		JIntRange r = list->GetElement(i);
+		JIntRange r = list->GetItem(i);
 		if (r.Contains(range))
 		{
 			return;
 		}
 		else if (range.Contains(r))
 		{
-			list->RemoveElement(i);
+			list->RemoveItem(i);
 		}
 		else if (JIntersection(range, r, &overlap))
 		{
 			r = JCovering(range, r);
-			list->SetElement(i, r);
+			list->SetItem(i, r);
 			return;
 		}
 	}
 
-	list->AppendElement(range);
+	list->AppendItem(range);
 	UpdateNext();
 }
 
@@ -836,10 +836,10 @@ Array2DDir::UpdateNext()
 	JInteger arrayIndex;
 	if (!itsRowUpdateList->IsEmpty())
 	{
-		JIntRange r = itsRowUpdateList->GetFirstElement();
+		JIntRange r = itsRowUpdateList->GetFirstItem();
 		if (!JIntersection(itsRowDisplayRange, r, &r))
 		{
-			itsRowUpdateList->RemoveElement(1);
+			itsRowUpdateList->RemoveItem(1);
 			UpdateNext();
 			return;
 		}
@@ -851,19 +851,19 @@ Array2DDir::UpdateNext()
 		r.first++;
 		if (r.IsEmpty())
 		{
-			itsRowUpdateList->RemoveElement(1);
+			itsRowUpdateList->RemoveItem(1);
 		}
 		else
 		{
-			itsRowUpdateList->SetElement(1, r);
+			itsRowUpdateList->SetItem(1, r);
 		}
 	}
 	else if (!itsColUpdateList->IsEmpty())
 	{
-		JIntRange r = itsColUpdateList->GetFirstElement();
+		JIntRange r = itsColUpdateList->GetFirstItem();
 		if (!JIntersection(itsColDisplayRange, r, &r))
 		{
-			itsColUpdateList->RemoveElement(1);
+			itsColUpdateList->RemoveItem(1);
 			UpdateNext();
 			return;
 		}
@@ -875,11 +875,11 @@ Array2DDir::UpdateNext()
 		r.first++;
 		if (r.IsEmpty())
 		{
-			itsColUpdateList->RemoveElement(1);
+			itsColUpdateList->RemoveItem(1);
 		}
 		else
 		{
-			itsColUpdateList->SetElement(1, r);
+			itsColUpdateList->SetItem(1, r);
 		}
 	}
 	else

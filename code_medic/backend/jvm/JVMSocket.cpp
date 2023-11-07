@@ -124,23 +124,23 @@ jvm::Socket::handle_input
 
 		for (JUnsignedOffset i=0; i<count; i++)
 		{
-			itsRecvData->AppendElement(itsBuffer[i]);
+			itsRecvData->AppendItem(itsBuffer[i]);
 		}
 
 		if (!itsHandshakeFinishedFlag &&
 			memcmp(itsRecvData->GetCArray(), kHandshake.GetBytes(), kHandshake.GetByteCount()) == 0)
 		{
 			itsHandshakeFinishedFlag = true;
-			itsRecvData->RemoveNextElements(1, kHandshake.GetByteCount());
+			itsRecvData->RemoveNextItems(1, kHandshake.GetByteCount());
 
 			dynamic_cast<Link*>(GetLink())->InitDebugger();
 		}
 
-		while (itsHandshakeFinishedFlag && itsRecvData->GetElementCount() >= 11)
+		while (itsHandshakeFinishedFlag && itsRecvData->GetItemCount() >= 11)
 		{
 			const unsigned char* msg = itsRecvData->GetCArray();
 			const JSize msgLength    = Unpack4(msg);
-			if (itsRecvData->GetElementCount() >= msgLength)
+			if (itsRecvData->GetItemCount() >= msgLength)
 			{
 				const JIndex id        = Unpack4(msg + 4);
 				const bool isReply = *(msg + 8);
@@ -151,7 +151,7 @@ jvm::Socket::handle_input
 				Broadcast(MessageReady(id, isReply, cmdSet, cmd, errorCode,
 									   msg + 11, msgLength - 11));
 
-				itsRecvData->RemoveNextElements(1, msgLength);
+				itsRecvData->RemoveNextItems(1, msgLength);
 			}
 			else
 			{

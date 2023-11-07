@@ -223,6 +223,6 @@ INIStyler::UpgradeTypeList
 {
 	if (vers < 1)
 	{
-		typeStyles->InsertElementAtIndex(3, JFontStyle());
+		typeStyles->InsertItemAtIndex(3, JFontStyle());
 	}
 }

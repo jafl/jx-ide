@@ -212,7 +212,7 @@ SymbolList::GetSignature
 	)
 	const
 {
-	const SymbolInfo info = itsSymbolList->GetElement(symbolIndex);
+	const SymbolInfo info = itsSymbolList->GetItem(symbolIndex);
 	*signature = info.signature;
 	return info.signature != nullptr;
 }

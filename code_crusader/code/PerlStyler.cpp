@@ -309,17 +309,17 @@ PerlStyler::UpgradeTypeList
 {
 	if (vers < 1)
 	{
-		typeStyles->InsertElementAtIndex(5, JFontStyle(true, false, 0, false));
+		typeStyles->InsertItemAtIndex(5, JFontStyle(true, false, 0, false));
 	}
 
 	if (vers < 2)
 	{
-		typeStyles->InsertElementAtIndex(6, typeStyles->GetElement(1));
+		typeStyles->InsertItemAtIndex(6, typeStyles->GetItem(1));
 	}
 
 	if (vers < 3)
 	{
-		typeStyles->InsertElementAtIndex(27, JFontStyle(JColorManager::GetDarkGreenColor()));
+		typeStyles->InsertItemAtIndex(27, JFontStyle(JColorManager::GetDarkGreenColor()));
 	}
 
 	// set new values after all new slots have been created

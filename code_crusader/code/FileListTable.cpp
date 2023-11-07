@@ -119,10 +119,10 @@ JIndex i;
 	JArray<bool> fileUsage(1000);
 	itsFileUsage = &fileUsage;
 
-	const JSize origFileCount = itsFileInfo->GetElementCount();
+	const JSize origFileCount = itsFileInfo->GetItemCount();
 	for (i=1; i<=origFileCount; i++)
 	{
-		fileUsage.AppendElement(false);
+		fileUsage.AppendItem(false);
 	}
 
 	// process each file
@@ -133,16 +133,16 @@ JIndex i;
 
 	const JPtrArray<JString>& fileNameList = GetFullNameList();
 
-	const JSize fileCount = itsFileInfo->GetElementCount();
+	const JSize fileCount = itsFileInfo->GetItemCount();
 	JPtrArray<JString> deadFileNameList(JPtrArrayT::kDeleteAll, fileCount+1);	// +1 to avoid passing zero
 	JArray<JFAID_t> deadFileIDList(fileCount+1);
 
 	for (i=1; i<=fileCount; i++)
 	{
-		if (!fileUsage.GetElement(i))
+		if (!fileUsage.GetItem(i))
 		{
-			deadFileNameList.Append(*fileNameList.GetElement(i));
-			deadFileIDList.AppendElement(itsFileInfo->GetElement(i).id);
+			deadFileNameList.Append(*fileNameList.GetItem(i));
+			deadFileIDList.AppendItem(itsFileInfo->GetItem(i).id);
 		}
 	}
 
@@ -189,7 +189,7 @@ FileListTable::ScanAll
 	JProgressDisplay&		pg
 	)
 {
-	const JSize dirCount = dirList.GetElementCount();
+	const JSize dirCount = dirList.GetItemCount();
 	if (dirCount > 0 || fileTree->GetProjectRoot()->HasChildren())
 	{
 		pg.VariableLengthProcessBeginning(JGetString("ParsingFiles::FileListTable"), false, false);
@@ -342,10 +342,10 @@ FileListTable::AddFile
 
 	JIndex index;
 	const bool isNew = JXFileListTable::AddFile(fullName, &index);
-	FileInfo info    = itsFileInfo->GetElement(index);
+	FileInfo info    = itsFileInfo->GetItem(index);
 	*id              = info.id;
 
-	itsFileUsage->SetElement(index, true);
+	itsFileUsage->SetItem(index, true);
 	if (isNew)
 	{
 		return true;
@@ -353,7 +353,7 @@ FileListTable::AddFile
 	else if (modTime != info.modTime)
 	{
 		info.modTime = modTime;
-		itsFileInfo->SetElement(index, info);
+		itsFileInfo->SetItem(index, info);
 		return true;
 	}
 	else
@@ -392,7 +392,7 @@ FileListTable::GetFileName
 	JIndex index;
 	const bool found = IDToIndex(id, &index);
 	assert( found );
-	return *GetFullNameList().GetElement(index);
+	return *GetFullNameList().GetItem(index);
 }
 
 /******************************************************************************
@@ -412,7 +412,7 @@ FileListTable::GetFileID
 	JIndex index;
 	if (GetFullNameList().SearchSorted(&target, JListT::kAnyMatch, &index))
 	{
-		*id = itsFileInfo->GetElement(index).id;
+		*id = itsFileInfo->GetItem(index).id;
 		return true;
 	}
 	else
@@ -437,10 +437,10 @@ FileListTable::IDToIndex
 	)
 	const
 {
-	const JSize count = itsFileInfo->GetElementCount();
+	const JSize count = itsFileInfo->GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		const FileInfo info = itsFileInfo->GetElement(i);
+		const FileInfo info = itsFileInfo->GetItem(i);
 		if (info.id == id)
 		{
 			*index = i;
@@ -468,7 +468,7 @@ FileListTable::GetUniqueID()
 		return JFAID::kMinID;
 	}
 
-	const JFAID_t prevUniqueID = JMax(itsLastUniqueID, (JFAID_t) itsFileInfo->GetElementCount());
+	const JFAID_t prevUniqueID = JMax(itsLastUniqueID, (JFAID_t) itsFileInfo->GetItemCount());
 
 	// this is relevant to the outmost do-while loop
 
@@ -544,45 +544,45 @@ FileListTable::Receive
 	const Message&	message
 	)
 {
-	if (sender == GetFullNameDataList() && message.Is(JListT::kElementsInserted))
+	if (sender == GetFullNameDataList() && message.Is(JListT::kItemsInserted))
 	{
 		const auto* info =
-			dynamic_cast<const JListT::ElementsInserted*>(&message);
+			dynamic_cast<const JListT::ItemsInserted*>(&message);
 		assert( info != nullptr );
 		FilesAdded(*info);
 	}
-	else if (sender == GetFullNameDataList() && message.Is(JListT::kElementsRemoved))
+	else if (sender == GetFullNameDataList() && message.Is(JListT::kItemsRemoved))
 	{
 		const auto* info =
-			dynamic_cast<const JListT::ElementsRemoved*>(&message);
+			dynamic_cast<const JListT::ItemsRemoved*>(&message);
 		assert( info != nullptr );
-		itsFileInfo->RemoveElements(*info);
+		itsFileInfo->RemoveItems(*info);
 		if (itsFileUsage != nullptr)
 		{
-			itsFileUsage->RemoveElements(*info);
+			itsFileUsage->RemoveItems(*info);
 		}
 	}
 
-	else if (sender == GetFullNameDataList() && message.Is(JListT::kElementMoved))
+	else if (sender == GetFullNameDataList() && message.Is(JListT::kItemMoved))
 	{
 		const auto* info =
-			dynamic_cast<const JListT::ElementMoved*>(&message);
+			dynamic_cast<const JListT::ItemMoved*>(&message);
 		assert( info != nullptr );
-		itsFileInfo->MoveElementToIndex(*info);
+		itsFileInfo->MoveItemToIndex(*info);
 		if (itsFileUsage != nullptr)
 		{
-			itsFileUsage->MoveElementToIndex(*info);
+			itsFileUsage->MoveItemToIndex(*info);
 		}
 	}
-	else if (sender == GetFullNameDataList() && message.Is(JListT::kElementsSwapped))
+	else if (sender == GetFullNameDataList() && message.Is(JListT::kItemsSwapped))
 	{
 		const auto* info =
-			dynamic_cast<const JListT::ElementsSwapped*>(&message);
+			dynamic_cast<const JListT::ItemsSwapped*>(&message);
 		assert( info != nullptr );
-		itsFileInfo->SwapElements(*info);
+		itsFileInfo->SwapItems(*info);
 		if (itsFileUsage != nullptr)
 		{
-			itsFileUsage->SwapElements(*info);
+			itsFileUsage->SwapItems(*info);
 		}
 	}
 	else if (sender == GetFullNameDataList() && message.Is(JListT::kSorted))
@@ -590,10 +590,10 @@ FileListTable::Receive
 		assert_msg( 0, "FileListTable can't handle full sort of file list" );
 	}
 
-	else if (sender == GetFullNameDataList() && message.Is(JListT::kElementsChanged))
+	else if (sender == GetFullNameDataList() && message.Is(JListT::kItemsChanged))
 	{
 		const auto* info =
-			dynamic_cast<const JListT::ElementsChanged*>(&message);
+			dynamic_cast<const JListT::ItemsChanged*>(&message);
 		assert( info != nullptr );
 
 		for (JIndex i=info->GetFirstIndex(); i<=info->GetLastIndex(); i++)
@@ -613,7 +613,7 @@ FileListTable::Receive
 void
 FileListTable::FilesAdded
 	(
-	const JListT::ElementsInserted& info
+	const JListT::ItemsInserted& info
 	)
 {
 	const JPtrArray<JString>& fileNameList = GetFullNameList();
@@ -621,13 +621,13 @@ FileListTable::FilesAdded
 	for (JIndex i = info.GetFirstIndex(); i <= info.GetLastIndex(); i++)
 	{
 		time_t t;
-		const JError err = JGetModificationTime(*(fileNameList.GetElement(i)), &t);
+		const JError err = JGetModificationTime(*(fileNameList.GetItem(i)), &t);
 		assert_ok( err );
 
-		itsFileInfo->InsertElementAtIndex(i, FileInfo(GetUniqueID(), t));
+		itsFileInfo->InsertItemAtIndex(i, FileInfo(GetUniqueID(), t));
 		if (itsFileUsage != nullptr)
 		{
-			itsFileUsage->InsertElementAtIndex(i, true);
+			itsFileUsage->InsertItemAtIndex(i, true);
 		}
 	}
 }
@@ -645,18 +645,18 @@ FileListTable::UpdateFileInfo
 	const JIndex index
 	)
 {
-	FileInfo info = itsFileInfo->GetElement(index);
+	FileInfo info = itsFileInfo->GetItem(index);
 
 	info.id = GetUniqueID();
 
-	const JString& fileName = *(GetFullNameList().GetElement(index));
+	const JString& fileName = *(GetFullNameList().GetItem(index));
 	const JError err        = JGetModificationTime(fileName, &(info.modTime));
 	assert_ok( err );
 
-	itsFileInfo->SetElement(index, info);
+	itsFileInfo->SetItem(index, info);
 	if (itsFileUsage != nullptr)
 	{
-		itsFileUsage->SetElement(index, true);
+		itsFileUsage->SetItem(index, true);
 	}
 }
 
@@ -716,7 +716,7 @@ FileListTable::ReadSetup
 		const bool isNew = JXFileListTable::AddFile(fileName, &index);
 		assert( isNew );
 
-		itsFileInfo->InsertElementAtIndex(index, FileInfo(id, t));
+		itsFileInfo->InsertItemAtIndex(index, FileInfo(id, t));
 	}
 
 	ListenTo(GetFullNameDataList());
@@ -742,16 +742,16 @@ FileListTable::WriteSetup
 {
 	if (symOutput != nullptr)
 	{
-		const JSize fileCount = itsFileInfo->GetElementCount();
+		const JSize fileCount = itsFileInfo->GetItemCount();
 		*symOutput << ' ' << fileCount;
 
 		const JPtrArray<JString>& fileNameList = GetFullNameList();
 
 		for (JIndex i=1; i<=fileCount; i++)
 		{
-			*symOutput << ' ' << *(fileNameList.GetElement(i));
+			*symOutput << ' ' << *(fileNameList.GetItem(i));
 
-			const FileInfo info = itsFileInfo->GetElement(i);
+			const FileInfo info = itsFileInfo->GetItem(i);
 			*symOutput << ' ' << info.id;
 			*symOutput << ' ' << info.modTime;
 		}

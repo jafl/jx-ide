@@ -190,7 +190,7 @@ CommandTable::CommandTable
 		AppendCols(1, kInitColWidth[i-1]);
 	}
 
-	AppendRows(itsCmdList->GetElementCount());
+	AppendRows(itsCmdList->GetItemCount());
 
 	UpdateButtons();
 	ListenTo(&(GetTableSelection()));
@@ -238,10 +238,10 @@ CommandTable::FinishCmdListCopy
 	)
 	const
 {
-	const JSize count = cmdList->GetElementCount();
+	const JSize count = cmdList->GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		cmdList->SetElement(i, (cmdList->GetElement(i)).Copy());
+		cmdList->SetItem(i, (cmdList->GetItem(i)).Copy());
 	}
 }
 
@@ -303,7 +303,7 @@ CommandTable::TableDrawCell
 
 	HilightIfSelected(p, cell, rect);
 
-	const CommandManager::CmdInfo info = itsCmdList->GetElement(cell.y);
+	const CommandManager::CmdInfo info = itsCmdList->GetItem(cell.y);
 	if (info.separator)
 	{
 		JPoint pt1 = rect.bottomLeft(), pt2 = rect.bottomRight();
@@ -452,7 +452,7 @@ CommandTable::HandleMouseDrag
 		{
 			auto* data =
 				jnew CommandSelection(GetDisplay(), this,
-									   itsCmdList->GetElement(cell.y));
+									   itsCmdList->GetItem(cell.y));
 			assert( data != nullptr );
 
 			BeginDND(pt, buttonStates, modifiers, data);
@@ -513,10 +513,10 @@ CommandTable::WillAcceptDrop
 		return false;
 	}
 
-	const JSize typeCount = typeList.GetElementCount();
+	const JSize typeCount = typeList.GetItemCount();
 	for (JIndex i=1; i<=typeCount; i++)
 	{
-		if (typeList.GetElement(i) == itsCommandXAtom)
+		if (typeList.GetItem(i) == itsCommandXAtom)
 		{
 			return true;
 		}
@@ -626,7 +626,7 @@ CommandTable::HandleDNDDrop
 			}
 			newIndex = JMin(newIndex, GetRowCount());
 
-			itsCmdList->MoveElementToIndex(cell.y, newIndex);
+			itsCmdList->MoveItemToIndex(cell.y, newIndex);
 			MoveRow(cell.y, newIndex);
 			SelectSingleCell(JPoint(1, newIndex));
 		}
@@ -636,8 +636,8 @@ CommandTable::HandleDNDDrop
 		JPoint cell;
 		if ((GetTableSelection()).GetSingleSelectedCell(&cell))
 		{
-			itsCmdList->InsertElementAtIndex(
-				itsDNDRowIndex, (itsCmdList->GetElement(cell.y)).Copy());
+			itsCmdList->InsertItemAtIndex(
+				itsDNDRowIndex, (itsCmdList->GetItem(cell.y)).Copy());
 			InsertRows(itsDNDRowIndex, 1);
 			SelectSingleCell(JPoint(1, itsDNDRowIndex));
 		}
@@ -661,7 +661,7 @@ CommandTable::HandleDNDDrop
 				if (!input.fail())
 				{
 					const JIndex newIndex = JMax(JIndex(1), itsDNDRowIndex);
-					itsCmdList->InsertElementAtIndex(newIndex, cmdInfo);
+					itsCmdList->InsertItemAtIndex(newIndex, cmdInfo);
 					InsertRows(newIndex, 1);
 					SelectSingleCell(JPoint(1, newIndex));
 
@@ -701,7 +701,7 @@ CommandTable::HandleKeyPress
 		JPoint cell;
 		if (s.GetSingleSelectedCell(&cell))
 		{
-			CommandManager::CmdInfo info = itsCmdList->GetElement(cell.y);
+			CommandManager::CmdInfo info = itsCmdList->GetItem(cell.y);
 			if (cell.x == kMenuTextColumn)
 			{
 				info.menuText->Clear();
@@ -784,7 +784,7 @@ CommandTable::CreateXInputField
 	}
 	assert( itsTextInput != nullptr );
 
-	const CommandManager::CmdInfo info = itsCmdList->GetElement(cell.y);
+	const CommandManager::CmdInfo info = itsCmdList->GetItem(cell.y);
 	const JString* text = nullptr;
 	if (cell.x == kMenuTextColumn)
 	{
@@ -828,7 +828,7 @@ CommandTable::ExtractInputData
 {
 	assert( itsTextInput != nullptr && cell.x != kOptionsColumn );
 
-	CommandManager::CmdInfo info = itsCmdList->GetElement(cell.y);
+	CommandManager::CmdInfo info = itsCmdList->GetItem(cell.y);
 
 	const JString& text = itsTextInput->GetText()->GetText();
 
@@ -917,9 +917,9 @@ CommandTable::AddCommand()
 									   jnew JString, jnew JString, jnew JString);
 		assert( info.path != nullptr && info.cmd != nullptr && info.name != nullptr &&
 				info.menuText != nullptr && info.menuShortcut != nullptr );
-		itsCmdList->AppendElement(info);
+		itsCmdList->AppendItem(info);
 		AppendRows(1);
-		BeginEditing(JPoint(kCommandColumn, itsCmdList->GetElementCount()));
+		BeginEditing(JPoint(kCommandColumn, itsCmdList->GetItemCount()));
 	}
 }
 
@@ -936,10 +936,10 @@ CommandTable::RemoveCommand()
 	{
 		CancelEditing();
 
-		CommandManager::CmdInfo info = itsCmdList->GetElement(cell.y);
+		CommandManager::CmdInfo info = itsCmdList->GetItem(cell.y);
 		info.Free();
 
-		itsCmdList->RemoveElement(cell.y);
+		itsCmdList->RemoveItem(cell.y);
 		RemoveRow(cell.y);
 	}
 }
@@ -955,9 +955,9 @@ CommandTable::DuplicateCommand()
 	JPoint cell;
 	if ((GetTableSelection()).GetFirstSelectedCell(&cell) && EndEditing())
 	{
-		itsCmdList->AppendElement((itsCmdList->GetElement(cell.y)).Copy());
+		itsCmdList->AppendItem((itsCmdList->GetItem(cell.y)).Copy());
 		AppendRows(1);
-		BeginEditing(JPoint(kCommandColumn, itsCmdList->GetElementCount()));
+		BeginEditing(JPoint(kCommandColumn, itsCmdList->GetItemCount()));
 	}
 }
 
@@ -1034,7 +1034,7 @@ CommandTable::ImportCommands()
 
 			for (const auto& c : cmdList)
 			{
-				itsCmdList->AppendElement(c);
+				itsCmdList->AppendItem(c);
 			}
 		}
 		else
@@ -1069,13 +1069,13 @@ CommandTable::ImportCommands()
 				}
 
 				CommandManager::CmdInfo info = CommandManager::ReadCmdInfo(input, vers);
-				itsCmdList->AppendElement(info);
+				itsCmdList->AppendItem(info);
 			}
 		}
 
 		// adjust table
 
-		const JSize count = itsCmdList->GetElementCount();
+		const JSize count = itsCmdList->GetItemCount();
 		if (GetRowCount() < count)
 		{
 			AppendRows(count - GetRowCount());
@@ -1103,7 +1103,7 @@ CommandTable::UpdateOptionsMenu()
 
 	bool changed = false;
 
-	CommandManager::CmdInfo info = itsCmdList->GetElement(cell.y);
+	CommandManager::CmdInfo info = itsCmdList->GetItem(cell.y);
 	if (info.isMake)
 	{
 		itsOptionsMenu->CheckItem(kIsMakeCmd);
@@ -1159,7 +1159,7 @@ CommandTable::UpdateOptionsMenu()
 
 	if (changed)
 	{
-		itsCmdList->SetElement(cell.y, info);
+		itsCmdList->SetItem(cell.y, info);
 		TableRefreshCell(cell);
 	}
 }
@@ -1179,7 +1179,7 @@ CommandTable::HandleOptionsMenu
 	const bool ok = GetTableSelection().GetFirstSelectedCell(&cell);
 	assert( ok );
 
-	CommandManager::CmdInfo info = itsCmdList->GetElement(cell.y);
+	CommandManager::CmdInfo info = itsCmdList->GetItem(cell.y);
 	if (index == kIsMakeCmd)
 	{
 		info.isMake = !info.isMake;
@@ -1227,7 +1227,7 @@ CommandTable::HandleOptionsMenu
 	}
 
 	TableRefreshRow(cell.y);
-	itsCmdList->SetElement(cell.y, info);
+	itsCmdList->SetItem(cell.y, info);
 }
 
 /******************************************************************************

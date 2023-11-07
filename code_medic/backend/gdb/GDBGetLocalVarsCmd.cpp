@@ -70,8 +70,8 @@ gdb::GetLocalVarsCmd::HandleSuccess
 	JPtrArray<JString> s(JPtrArrayT::kDeleteAll);
 	data.Split(kSeparator, &s, 2);
 
-	JString *argData = s.GetElement(1),
-			*varData = s.GetElement(2);
+	JString *argData = s.GetItem(1),
+			*varData = s.GetItem(2);
 
 	// build list of arguments
 
@@ -101,7 +101,7 @@ gdb::GetLocalVarsCmd::HandleSuccess
 
 	CleanVarString(varData);
 
-	const JIndex insertionIndex = nameList.GetElementCount()+1;
+	const JIndex insertionIndex = nameList.GetItemCount()+1;
 
 	JStringIterator varIter(*varData);
 	while (varIter.Next(varPattern))
@@ -123,7 +123,7 @@ gdb::GetLocalVarsCmd::HandleSuccess
 	// delete existing nodes beyond the first one that doesn't match the
 	// new variable names
 
-	const JSize newCount = nameList.GetElementCount();
+	const JSize newCount = nameList.GetItemCount();
 	JSize origCount      = itsRootNode->GetChildCount();
 
 	while (origCount > newCount)
@@ -137,7 +137,7 @@ gdb::GetLocalVarsCmd::HandleSuccess
 	for (JIndex i=1; i<=origCount; i++)
 	{
 		if ((itsRootNode->GetVarChild(i))->GetName() !=
-			*(nameList.GetElement(i)))
+			*(nameList.GetItem(i)))
 		{
 			if (i == 1)		// optimize since likely to be most common case
 			{
@@ -167,12 +167,12 @@ gdb::GetLocalVarsCmd::HandleSuccess
 		}
 		else
 		{
-			node = GetLink()->CreateVarNode(nullptr, *(nameList.GetElement(i)), JString::empty, JString::empty);
+			node = GetLink()->CreateVarNode(nullptr, *(nameList.GetItem(i)), JString::empty, JString::empty);
 			assert( node != nullptr );
 			itsRootNode->Append(node);	// avoid automatic update
 		}
 
-		const JString* value = valueList.GetElement(i);
+		const JString* value = valueList.GetItem(i);
 		if (gdb7RefPattern.Match(*value))
 		{
 			node->UpdateValue();
@@ -187,7 +187,7 @@ gdb::GetLocalVarsCmd::HandleSuccess
 			}
 			else
 			{
-				node->UpdateFailed(*(valueList.GetElement(i)));
+				node->UpdateFailed(*(valueList.GetItem(i)));
 			}
 		}
 	}

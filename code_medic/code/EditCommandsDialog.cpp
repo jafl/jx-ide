@@ -176,7 +176,7 @@ EditCommandsDialog::SetString
 	const JString&	str
 	)
 {
-	*itsCommands->GetElement(index) = str;
+	*itsCommands->GetItem(index) = str;
 }
 
 /******************************************************************************
@@ -190,7 +190,7 @@ EditCommandsDialog::DeleteString
 	const JIndex index
 	)
 {
-	itsCommands->DeleteElement(index);
+	itsCommands->DeleteItem(index);
 }
 
 /******************************************************************************

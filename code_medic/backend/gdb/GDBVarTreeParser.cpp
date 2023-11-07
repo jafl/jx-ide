@@ -120,7 +120,7 @@ gdb::VarTreeParser::AppendAsArrayElement
 	)
 	const
 {
-	const JString name = "[" + JString((JUInt64) list->GetElementCount()) + "]";
+	const JString name = "[" + JString((JUInt64) list->GetItemCount()) + "]";
 	node->SetName(name);
 	list->Append(node);
 }
@@ -139,16 +139,16 @@ gdb::VarTreeParser::AppendAsArrayElement
 	)
 	const
 {
-	const JString name = "[" + JString((JUInt64) list->GetElementCount()) + "]";
+	const JString name = "[" + JString((JUInt64) list->GetItemCount()) + "]";
 
 	VarNode* node = GetLink()->CreateVarNode(nullptr, name, JString::empty, groupLabel);
 	assert( node != nullptr );
 	list->Append(node);
 
-	const JSize count = data.GetElementCount();
+	const JSize count = data.GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		node->Append(data.GetElement(i));
+		node->Append(data.GetItem(i));
 	}
 }
 

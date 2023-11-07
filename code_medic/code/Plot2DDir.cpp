@@ -439,7 +439,7 @@ Plot2DDir::Receive
 		StopListening(itsPlotWidget);
 		for (JIndex i=info->GetLastIndex(); i>=info->GetFirstIndex(); i--)
 		{
-			itsUpdateCmdList->DeleteElement(i);
+			itsUpdateCmdList->DeleteItem(i);
 			itsPlotWidget->RemoveCurve(i);
 		}
 		ListenTo(itsPlotWidget);
@@ -466,7 +466,7 @@ Plot2DDir::Receive
 		const JIndex index = info->GetIndex();
 
 		StopListening(itsExprData);
-		itsUpdateCmdList->DeleteElement(index);
+		itsUpdateCmdList->DeleteItem(index);
 		itsExprData->RemoveRow(index);
 		ListenTo(itsExprData);
 	}
@@ -589,9 +589,9 @@ Plot2DDir::Update
 	itsExprTable->CancelEditing();
 
 	const JSize count = itsExprData->GetRowCount();
-	while (itsUpdateCmdList->GetElementCount() > count)
+	while (itsUpdateCmdList->GetItemCount() > count)
 	{
-		itsUpdateCmdList->DeleteElement(itsUpdateCmdList->GetElementCount());
+		itsUpdateCmdList->DeleteItem(itsUpdateCmdList->GetItemCount());
 	}
 
 	JString curveName;
@@ -600,7 +600,7 @@ Plot2DDir::Update
 		Plot2DCmd* cmd;
 		if (itsUpdateCmdList->IndexValid(i))
 		{
-			cmd = itsUpdateCmdList->GetElement(i);
+			cmd = itsUpdateCmdList->GetItem(i);
 		}
 		else
 		{

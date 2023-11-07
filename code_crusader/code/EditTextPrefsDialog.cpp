@@ -565,14 +565,14 @@ EditTextPrefsDialog::UpdateSettings()
 	}
 
 	JPtrArray<TextDocument>* docList = GetDocumentManager()->GetTextDocList();
-	const JSize docCount = docList->GetElementCount();
+	const JSize docCount = docList->GetItemCount();
 
 	JProgressDisplay* pg = JNewPG();
 	pg->FixedLengthProcessBeginning(docCount, JGetString("UpdatingPrefs::EditTextPrefsDialog"), false, true);
 
 	for (JIndex i=1; i<=docCount; i++)
 	{
-		TextDocument* doc = docList->GetElement(i);
+		TextDocument* doc = docList->GetItem(i);
 
 		doc->ShouldMakeBackupFile(itsCreateBackupCB->IsChecked());
 		doc->ShouldMakeNewBackupEveryOpen(!itsOnlyBackupIfNoneCB->IsChecked());

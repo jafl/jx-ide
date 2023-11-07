@@ -90,10 +90,10 @@ CPreprocessor::PrintMacrosForCTags
 	)
 	const
 {
-	const JSize count = itsMacroList->GetElementCount();
+	const JSize count = itsMacroList->GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		const MacroInfo info = itsMacroList->GetElement(i);
+		const MacroInfo info = itsMacroList->GetItem(i);
 
 		if (!info.name->Contains(" ") &&
 			!info.name->Contains("\t") &&
@@ -211,7 +211,7 @@ CPreprocessor::ReadMacro
 	MacroInfo info(jnew JString, jnew JString);
 	assert( info.name != nullptr && info.value != nullptr );
 	input >> *info.name >> *info.value;
-	itsMacroList->AppendElement(info);
+	itsMacroList->AppendItem(info);
 }
 
 /******************************************************************************
@@ -228,12 +228,12 @@ CPreprocessor::WriteSetup
 {
 	output << "# C preprocessor\n";
 
-	const JSize count = itsMacroList->GetElementCount();
+	const JSize count = itsMacroList->GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
 		output << JBoolToString(true);
 
-		const MacroInfo info = itsMacroList->GetElement(i);
+		const MacroInfo info = itsMacroList->GetItem(i);
 		output << ' ' << *(info.name);
 		output << ' ' << *(info.value);
 		output << '\n';
@@ -255,10 +255,10 @@ CPreprocessor::WriteSetup
 void
 PPMacroList::DeleteAll()
 {
-	const JSize count = GetElementCount();
+	const JSize count = GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		CPreprocessor::MacroInfo info = GetElement(i);
+		CPreprocessor::MacroInfo info = GetItem(i);
 		jdelete info.name;
 		jdelete info.value;
 	}

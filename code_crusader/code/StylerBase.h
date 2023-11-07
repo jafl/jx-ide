@@ -139,7 +139,7 @@ StylerBase::GetTypeStyle
 	)
 	const
 {
-	return itsTypeStyles->GetElement(index);
+	return itsTypeStyles->GetItem(index);
 }
 
 inline void
@@ -149,7 +149,7 @@ StylerBase::SetTypeStyle
 	const JFontStyle&	style
 	)
 {
-	itsTypeStyles->SetElement(index, style);
+	itsTypeStyles->SetItem(index, style);
 }
 
 /******************************************************************************
@@ -165,7 +165,7 @@ StylerBase::GetWordStyle
 	)
 	const
 {
-	return itsWordStyles->GetElement(word, style);
+	return itsWordStyles->GetItem(word, style);
 }
 
 inline void
@@ -175,7 +175,7 @@ StylerBase::SetWordStyle
 	const JFontStyle&	style
 	)
 {
-	itsWordStyles->SetElement(word, style);
+	itsWordStyles->SetItem(word, style);
 }
 
 inline void
@@ -184,7 +184,7 @@ StylerBase::RemoveWordStyle
 	const JString& word
 	)
 {
-	itsWordStyles->RemoveElement(word);
+	itsWordStyles->RemoveItem(word);
 }
 
 /******************************************************************************

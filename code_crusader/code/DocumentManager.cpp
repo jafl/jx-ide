@@ -293,7 +293,7 @@ DocumentManager::GetActiveProjectDocument
 {
 	if (!itsProjectDocuments->IsEmpty())
 	{
-		*doc = itsProjectDocuments->GetFirstElement();
+		*doc = itsProjectDocuments->GetFirstItem();
 		return true;
 	}
 	else
@@ -584,12 +584,12 @@ DocumentManager::TextDocumentDeleted
 	JIndex i;
 	if (itsTextDocuments->Find(doc, &i))
 	{
-		itsTextDocuments->RemoveElement(i);
+		itsTextDocuments->RemoveItem(i);
 
 		if (i == 1 && !itsTextDocuments->IsEmpty())
 		{
 			JXGetSearchTextDialog()->SetActiveTE(
-				itsTextDocuments->GetFirstElement()->GetTextEditor());
+				itsTextDocuments->GetFirstItem()->GetTextEditor());
 		}
 	}
 
@@ -620,7 +620,7 @@ DocumentManager::GetActiveTextDocument
 {
 	if (!itsTextDocuments->IsEmpty())
 	{
-		*doc = itsTextDocuments->GetFirstElement();
+		*doc = itsTextDocuments->GetFirstItem();
 		return true;
 	}
 	else
@@ -646,7 +646,7 @@ DocumentManager::SetActiveTextDocument
 	JIndex i;
 	if (itsTextDocuments->Find(doc, &i) && i != 1)
 	{
-		itsTextDocuments->MoveElementToIndex(i, 1);
+		itsTextDocuments->MoveItemToIndex(i, 1);
 		doc->CheckIfModifiedByOthers();
 		JXGetSearchTextDialog()->SetActiveTE(doc->GetTextEditor());
 	}
@@ -746,7 +746,7 @@ DocumentManager::OpenSomething
 	const JPtrArray<JString>& fileNameList
 	)
 {
-	const JSize count = fileNameList.GetElementCount();
+	const JSize count = fileNameList.GetItemCount();
 	if (count > 0)
 	{
 		JXStandAlonePG pg;
@@ -755,7 +755,7 @@ DocumentManager::OpenSomething
 
 		for (JIndex i=1; i<=count; i++)
 		{
-			const JString* fileName = fileNameList.GetElement(i);
+			const JString* fileName = fileNameList.GetItem(i);
 			if (!fileName->IsEmpty())
 			{
 				OpenSomething(*fileName);
@@ -1060,10 +1060,10 @@ DocumentManager::ReloadTextDocuments
 	const bool force
 	)
 {
-	const JSize count = itsTextDocuments->GetElementCount();
+	const JSize count = itsTextDocuments->GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		TextDocument* doc = itsTextDocuments->GetElement(i);
+		TextDocument* doc = itsTextDocuments->GetItem(i);
 		doc->RevertIfChangedByOthers(force);
 	}
 }
@@ -1082,9 +1082,9 @@ DocumentManager::CloseTextDocuments()
 		// This is safe because there are no dependencies between documents.
 
 		JIndex i=1;
-		while (i <= itsTextDocuments->GetElementCount())
+		while (i <= itsTextDocuments->GetItemCount())
 		{
-			TextDocument* doc = itsTextDocuments->GetElement(i);
+			TextDocument* doc = itsTextDocuments->GetItem(i);
 			if (IsCommandOutput(doc->GetFileType()))
 			{
 				auto* cmdDoc = dynamic_cast<CommandOutputDocument*>(doc);
@@ -1118,10 +1118,10 @@ DocumentManager::FileRenamed
 	const JString& newFullName
 	)
 {
-	const JSize count = itsProjectDocuments->GetElementCount();
+	const JSize count = itsProjectDocuments->GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		itsProjectDocuments->GetElement(i)->
+		itsProjectDocuments->GetItem(i)->
 			GetFileTree()->GetProjectRoot()->
 				FileRenamed(origFullName, newFullName);
 	}
@@ -1138,14 +1138,14 @@ DocumentManager::StylerChanged
 	JSTStyler* styler
 	)
 {
-	const JSize count = itsTextDocuments->GetElementCount();
+	const JSize count = itsTextDocuments->GetItemCount();
 
 	JLatentPG pg;
 	pg.FixedLengthProcessBeginning(count, JGetString("AdjustStylesProgress::DocumentManager"), false, true);
 
 	for (JIndex i=1; i<=count; i++)
 	{
-		(itsTextDocuments->GetElement(i))->StylerChanged(styler);
+		(itsTextDocuments->GetItem(i))->StylerChanged(styler);
 		pg.IncrementProgress();
 	}
 
@@ -1301,14 +1301,14 @@ JIndex i;
 
 	JPtrArray<JString> suffixList(JPtrArrayT::kDeleteAll);
 	GetPrefsManager()->GetFileSuffixes(outputType, &suffixList);
-	const JSize suffixCount = suffixList.GetElementCount();
+	const JSize suffixCount = suffixList.GetItemCount();
 
 	// check full name of each document
 
 	JString fullName;
 	for (i=1; i<=suffixCount; i++)
 	{
-		fullName = baseName + *(suffixList.GetElement(i));
+		fullName = baseName + *(suffixList.GetItem(i));
 		if (FileDocumentIsOpen(fullName, doc))
 		{
 			return true;
@@ -1319,13 +1319,13 @@ JIndex i;
 
 	JString path, base, name;
 	JSplitPathAndName(baseName, &path, &base);
-	const JSize docCount = itsTextDocuments->GetElementCount();
+	const JSize docCount = itsTextDocuments->GetItemCount();
 	for (i=1; i<=suffixCount; i++)
 	{
-		name = base + *(suffixList.GetElement(i));
+		name = base + *(suffixList.GetItem(i));
 		for (JIndex j=1; j<=docCount; j++)
 		{
-			TextDocument* d = itsTextDocuments->GetElement(j);
+			TextDocument* d = itsTextDocuments->GetItem(j);
 			if (d->GetFileName() == name)
 			{
 				*doc = d;
@@ -1383,12 +1383,12 @@ DocumentManager::FindComplementFile
 
 	JPtrArray<JString> suffixList(JPtrArrayT::kDeleteAll);
 	GetPrefsManager()->GetFileSuffixes(outputType, &suffixList);
-	const JSize suffixCount = suffixList.GetElementCount();
+	const JSize suffixCount = suffixList.GetItemCount();
 
 	bool found = false;
 	for (JIndex i=1; i<=suffixCount; i++)
 	{
-		*outputName = baseName + *(suffixList.GetElement(i));
+		*outputName = baseName + *(suffixList.GetItem(i));
 		if (JFileExists(*outputName))
 		{
 			found = true;
@@ -1445,7 +1445,7 @@ JIndex i;
 	// sort the directories
 
 	const DirList& origDirList = projDoc->GetDirectories();
-	JSize dirCount               = origDirList.GetElementCount();
+	JSize dirCount               = origDirList.GetItemCount();
 	if (dirCount == 0)
 	{
 		return false;
@@ -1472,7 +1472,7 @@ JIndex i;
 		}
 	}
 
-	dirCount = dirList.GetElementCount();
+	dirCount = dirList.GetItemCount();
 	if (dirCount == 0)
 	{
 		return false;
@@ -1482,7 +1482,7 @@ JIndex i;
 
 	bool found          = false;
 	bool cancelled      = false;
-	const JSize suffixCount = suffixList.GetElementCount();
+	const JSize suffixCount = suffixList.GetItemCount();
 
 	JLatentPG pg;
 	JString origFilePath, origFileName;
@@ -1498,10 +1498,10 @@ JIndex i;
 	JString searchName, newPath, newName;
 	for (i=1; i<=suffixCount; i++)
 	{
-		searchName = baseName + *(suffixList.GetElement(i));
+		searchName = baseName + *(suffixList.GetItem(i));
 		for (JIndex j=1; j<=dirCount; j++)
 		{
-			const DirMatchInfo info = dirList.GetElement(j);
+			const DirMatchInfo info = dirList.GetItem(j);
 			if (info.recurse &&
 				JSearchSubdirs(*info.path, searchName, true, JString::kCompareCase,
 							   &newPath, &newName))
@@ -1540,7 +1540,7 @@ JIndex i;
 
 	for (i=1; i<=dirCount; i++)
 	{
-		jdelete (dirList.GetElement(i)).path;
+		jdelete (dirList.GetItem(i)).path;
 	}
 
 	return found;
@@ -1618,13 +1618,13 @@ DocumentManager::WriteForProject
 	)
 	const
 {
-	const JSize textCount = itsTextDocuments->GetElementCount();
+	const JSize textCount = itsTextDocuments->GetItemCount();
 	output << textCount;
 
 	for (JIndex i=1; i<=textCount; i++)
 	{
 		output << ' ';
-		TextDocument* doc = itsTextDocuments->GetElement(i);
+		TextDocument* doc = itsTextDocuments->GetItem(i);
 		doc->WriteForProject(output);
 	}
 }
@@ -1727,7 +1727,7 @@ DocumentManager::SaveState
 
 	output << kCurrentStateVersion;
 
-	const JSize projCount = itsProjectDocuments->GetElementCount();
+	const JSize projCount = itsProjectDocuments->GetItemCount();
 	output << ' ' << projCount;
 
 	if (projCount > 0)
@@ -1736,7 +1736,7 @@ DocumentManager::SaveState
 		JString fullName;
 		for (JIndex i=1; i<=projCount; i++)
 		{
-			fullName = (itsProjectDocuments->GetElement(i))->GetFullName(&onDisk);
+			fullName = (itsProjectDocuments->GetItem(i))->GetFullName(&onDisk);
 			output << ' ' << JBoolToString(onDisk) << ' ' << fullName;
 		}
 	}
@@ -1764,50 +1764,50 @@ DocumentManager::Receive
 	const Message&	message
 	)
 {
-	if (sender == itsProjectDocuments && message.Is(JListT::kElementsInserted))
+	if (sender == itsProjectDocuments && message.Is(JListT::kItemsInserted))
 	{
 		const auto* info =
-			dynamic_cast<const JListT::ElementsInserted*>(&message);
+			dynamic_cast<const JListT::ItemsInserted*>(&message);
 		assert( info != nullptr );
 		if (info->Contains(1))
 		{
 			Broadcast(ProjectDocumentActivated(itsProjectDocuments));
 		}
 	}
-	else if (sender == itsProjectDocuments && message.Is(JListT::kElementsRemoved))
+	else if (sender == itsProjectDocuments && message.Is(JListT::kItemsRemoved))
 	{
 		const auto* info =
-			dynamic_cast<const JListT::ElementsRemoved*>(&message);
+			dynamic_cast<const JListT::ItemsRemoved*>(&message);
 		assert( info != nullptr );
 		if (info->Contains(1))
 		{
 			Broadcast(ProjectDocumentActivated(itsProjectDocuments));
 		}
 	}
-	else if (sender == itsProjectDocuments && message.Is(JListT::kElementMoved))
+	else if (sender == itsProjectDocuments && message.Is(JListT::kItemMoved))
 	{
 		const auto* info =
-			dynamic_cast<const JListT::ElementMoved*>(&message);
+			dynamic_cast<const JListT::ItemMoved*>(&message);
 		assert( info != nullptr );
 		if (info->GetOrigIndex() == 1 || info->GetNewIndex() == 1)
 		{
 			Broadcast(ProjectDocumentActivated(itsProjectDocuments));
 		}
 	}
-	else if (sender == itsProjectDocuments && message.Is(JListT::kElementsSwapped))
+	else if (sender == itsProjectDocuments && message.Is(JListT::kItemsSwapped))
 	{
 		const auto* info =
-			dynamic_cast<const JListT::ElementsSwapped*>(&message);
+			dynamic_cast<const JListT::ItemsSwapped*>(&message);
 		assert( info != nullptr );
 		if (info->GetIndex1() == 1 || info->GetIndex2() == 1)
 		{
 			Broadcast(ProjectDocumentActivated(itsProjectDocuments));
 		}
 	}
-	else if (sender == itsProjectDocuments && message.Is(JListT::kElementsChanged))
+	else if (sender == itsProjectDocuments && message.Is(JListT::kItemsChanged))
 	{
 		const auto* info =
-			dynamic_cast<const JListT::ElementsChanged*>(&message);
+			dynamic_cast<const JListT::ItemsChanged*>(&message);
 		assert( info != nullptr );
 		if (info->Contains(1))
 		{
@@ -1822,7 +1822,7 @@ DocumentManager::Receive
 	else if (sender == GetPrefsManager() &&
 			 message.Is(PrefsManager::kFileTypesChanged))
 	{
-		const JSize count = itsTextDocuments->GetElementCount();
+		const JSize count = itsTextDocuments->GetItemCount();
 		if (count > 0)
 		{
 			JLatentPG pg;
@@ -1831,7 +1831,7 @@ DocumentManager::Receive
 
 			for (JIndex i=1; i<=count; i++)
 			{
-				(itsTextDocuments->GetElement(i))->UpdateFileType();
+				(itsTextDocuments->GetItem(i))->UpdateFileType();
 				pg.IncrementProgress();
 			}
 

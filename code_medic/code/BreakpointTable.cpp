@@ -141,23 +141,23 @@ BreakpointTable::Update()
 
 	const JPtrArray<Breakpoint>& list1 = mgr->GetBreakpoints();
 
-	JSize count = list1.GetElementCount();
+	JSize count = list1.GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		itsBPList->InsertSorted(list1.GetElement(i));
+		itsBPList->InsertSorted(list1.GetItem(i));
 	}
 
 	const JPtrArray<Breakpoint>& list2 = mgr->GetOtherpoints();
 
-	count = list2.GetElementCount();
+	count = list2.GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		itsBPList->InsertSorted(list2.GetElement(i));
+		itsBPList->InsertSorted(list2.GetItem(i));
 	}
 
 	// adjust table
 
-	count            = itsBPList->GetElementCount();
+	count            = itsBPList->GetItemCount();
 	const JSize orig = GetRowCount();
 	if (orig < count)
 	{
@@ -174,7 +174,7 @@ BreakpointTable::Update()
 	{
 		for (JIndex i=1; i<=count; i++)
 		{
-			if ((itsBPList->GetElement(i))->GetDebuggerIndex() == (JSize) cell.y)
+			if ((itsBPList->GetItem(i))->GetDebuggerIndex() == (JSize) cell.y)
 			{
 				SelectSingleCell(JPoint(cell.x, i));
 				break;
@@ -262,10 +262,10 @@ BreakpointTable::FindBreakpointByDebuggerIndex
 	)
 	const
 {
-	const JSize count = itsBPList->GetElementCount();
+	const JSize count = itsBPList->GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		const Breakpoint* b = itsBPList->GetElement(i);
+		const Breakpoint* b = itsBPList->GetItem(i);
 		if (b->GetDebuggerIndex() == bp->GetDebuggerIndex())
 		{
 			*index = i;
@@ -296,7 +296,7 @@ BreakpointTable::Receive
 		if ((GetTableSelection()).GetSingleSelectedCell(&itsSelectedCell))
 		{
 			itsSelectedCell.y =
-				(itsBPList->GetElement(itsSelectedCell.y))->GetDebuggerIndex();
+				(itsBPList->GetItem(itsSelectedCell.y))->GetDebuggerIndex();
 		}
 	}
 
@@ -335,7 +335,7 @@ BreakpointTable::TableDrawCell
 
 	HilightIfSelected(p, cell, rect);
 
-	const Breakpoint* bp = itsBPList->GetElement(cell.y);
+	const Breakpoint* bp = itsBPList->GetItem(cell.y);
 	if (cell.x == kStatusColumn)
 	{
 		JRect r = rect;
@@ -348,9 +348,9 @@ BreakpointTable::TableDrawCell
 		else
 		{
 			JPolygon poly;
-			poly.AppendElement(JPoint(r.topLeft()));
-			poly.AppendElement(JPoint(r.topRight()));
-			poly.AppendElement(JPoint(r.xcenter(), r.bottom));
+			poly.AppendItem(JPoint(r.topLeft()));
+			poly.AppendItem(JPoint(r.topRight()));
+			poly.AppendItem(JPoint(r.xcenter(), r.bottom));
 
 			const JColorID color = bp->IsEnabled() ? JColorManager::GetRedColor() : JColorManager::GetGreenColor();
 
@@ -437,7 +437,7 @@ BreakpointTable::HandleMouseDown
 			SelectSingleCell(cell);
 		}
 
-		Breakpoint* bp = itsBPList->GetElement(cell.y);
+		Breakpoint* bp = itsBPList->GetItem(cell.y);
 		if (cell.x == kStatusColumn)
 		{
 			GetLink()->SetBreakpointEnabled(bp->GetDebuggerIndex(), !bp->IsEnabled());
@@ -490,7 +490,7 @@ BreakpointTable::HandleKeyPress
 		JPoint cell;
 		if (s.GetSingleSelectedCell(&cell))
 		{
-			Breakpoint* bp = itsBPList->GetElement(cell.y);
+			Breakpoint* bp = itsBPList->GetItem(cell.y);
 			GetLink()->RemoveBreakpoint(*bp);
 		}
 	}
@@ -504,12 +504,12 @@ BreakpointTable::HandleKeyPress
 		}
 		else if (cell.x == kStatusColumn)
 		{
-			Breakpoint* bp = itsBPList->GetElement(cell.y);
+			Breakpoint* bp = itsBPList->GetItem(cell.y);
 			GetLink()->SetBreakpointEnabled(bp->GetDebuggerIndex(), !bp->IsEnabled());
 		}
 		else if (cell.x == kFileNameColumn || cell.x == kLineNumberColumn)
 		{
-			Breakpoint* bp = itsBPList->GetElement(cell.y);
+			Breakpoint* bp = itsBPList->GetItem(cell.y);
 			if (bp->GetLineNumber() > 0)
 			{
 				(itsDir->GetCommandDirector())->OpenSourceFile(bp->GetFileName(), bp->GetLineNumber());
@@ -517,7 +517,7 @@ BreakpointTable::HandleKeyPress
 		}
 		else if (cell.x == kFunctionColumn || cell.x == kAddressColumn)
 		{
-			Breakpoint* bp = itsBPList->GetElement(cell.y);
+			Breakpoint* bp = itsBPList->GetItem(cell.y);
 			if (!bp->GetFunctionName().IsEmpty())
 			{
 				(itsDir->GetCommandDirector())->DisassembleFunction(bp->GetFunctionName(), bp->GetAddress());
@@ -546,7 +546,7 @@ BreakpointTable::IsEditable
 	)
 	const
 {
-	Breakpoint* bp = itsBPList->GetElement(cell.y);
+	Breakpoint* bp = itsBPList->GetItem(cell.y);
 	return cell.x == kIgnoreCountColumn ||
 				 (cell.x == kConditionColumn && bp->GetLineNumber() > 0);
 }
@@ -572,7 +572,7 @@ BreakpointTable::CreateXInputField
 	s.ClearSelection();
 	s.SelectCell(cell);
 
-	Breakpoint* bp = itsBPList->GetElement(cell.y);
+	Breakpoint* bp = itsBPList->GetItem(cell.y);
 	JString text;
 	if (cell.x == kIgnoreCountColumn)
 	{
@@ -615,7 +615,7 @@ BreakpointTable::ExtractInputData
 		return false;
 	}
 
-	Breakpoint* bp = itsBPList->GetElement(cell.y);
+	Breakpoint* bp = itsBPList->GetItem(cell.y);
 	if (cell.x == kIgnoreCountColumn)
 	{
 		JInteger count;

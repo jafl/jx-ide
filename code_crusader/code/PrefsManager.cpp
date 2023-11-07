@@ -77,26 +77,26 @@ PrefsManager::~PrefsManager()
 {
 	SaveAllBeforeDestruct();
 
-	JSize count = itsFileTypeList->GetElementCount();
+	JSize count = itsFileTypeList->GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		itsFileTypeList->GetElement(i).Free();
+		itsFileTypeList->GetItem(i).Free();
 	}
 
 	jdelete itsFileTypeList;
 
-	count = itsMacroList->GetElementCount();
+	count = itsMacroList->GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		itsMacroList->GetElement(i).Free();
+		itsMacroList->GetItem(i).Free();
 	}
 
 	jdelete itsMacroList;
 
-	count = itsCRMList->GetElementCount();
+	count = itsCRMList->GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		itsCRMList->GetElement(i).Free();
+		itsCRMList->GetItem(i).Free();
 	}
 
 	jdelete itsCRMList;
@@ -221,7 +221,7 @@ PrefsManager::EditFileTypes()
 			GetFileSuffixes((TextFileType) i, &suffixes);
 
 			msg.SetChanged((TextFileType) i,
-				!JSameStrings(*origSuffixList.GetElement(i+1), suffixes, JString::kCompareCase));
+				!JSameStrings(*origSuffixList.GetItem(i+1), suffixes, JString::kCompareCase));
 		}
 
 		Broadcast(msg);
@@ -262,12 +262,12 @@ addNewSuffixes
 
 	// if suffix already exists, don't change it
 
-	const JSize ftCount = fileTypeList->GetElementCount();
+	const JSize ftCount = fileTypeList->GetItemCount();
 	for (JUnsignedOffset i=0; i<newCount; i++)
 	{
 		for (JIndex j=1; j<=ftCount; j++)
 		{
-			const PrefsManager::FileTypeInfo ftInfo = fileTypeList->GetElement(j);
+			const PrefsManager::FileTypeInfo ftInfo = fileTypeList->GetItem(j);
 			if (*(ftInfo.suffix) == newInfo[i].suffix)
 			{
 				newInfo[i].found = true;
@@ -321,12 +321,12 @@ addNewExternalSuffixes
 	JArray<PrefsManager::FileTypeInfo>*	fileTypeList
 	)
 {
-	const JSize ftCount = fileTypeList->GetElementCount();
+	const JSize ftCount = fileTypeList->GetItemCount();
 	for (JUnsignedOffset i=0; i<newCount; i++)
 	{
 		for (JIndex j=1; j<=ftCount; j++)
 		{
-			const PrefsManager::FileTypeInfo ftInfo = fileTypeList->GetElement(j);
+			const PrefsManager::FileTypeInfo ftInfo = fileTypeList->GetItem(j);
 			if (*(ftInfo.suffix) == newInfo[i].suffix)
 			{
 				newInfo[i].found = true;
@@ -918,7 +918,7 @@ PrefsManager::UpgradeData
 		JIndex macroIndex;
 		if (FindMacroID(*itsMacroList, macroID, &macroIndex))
 		{
-			const MacroSetInfo macroInfo = itsMacroList->GetElement(macroIndex);
+			const MacroSetInfo macroInfo = itsMacroList->GetItem(macroIndex);
 			if (macroInfo.macro->GetMacroList().IsEmpty())
 			{
 				AddDefaultCSharpMacros(macroInfo.macro);
@@ -984,7 +984,7 @@ PrefsManager::UpgradeData
 		JIndex macroIndex;
 		if (FindMacroID(*itsMacroList, macroID, &macroIndex))
 		{
-			const MacroSetInfo macroInfo = itsMacroList->GetElement(macroIndex);
+			const MacroSetInfo macroInfo = itsMacroList->GetItem(macroIndex);
 			if (macroInfo.macro->GetMacroList().IsEmpty())
 			{
 				AddDefaultXMLMacros(macroInfo.macro);
@@ -1225,7 +1225,7 @@ std::string data;
 
 		auto* name = jnew JString(kOrigMacroName[i]);
 
-		itsMacroList->AppendElement(
+		itsMacroList->AppendItem(
 			MacroSetInfo(kFirstMacroID + i, name, actionMgr, macroMgr));
 	}
 
@@ -1244,14 +1244,14 @@ std::string data;
 		bool wordWrap;
 		dataStream >> JBoolFromString(wordWrap);
 
-		const JSize count = suffixList.GetElementCount();
+		const JSize count = suffixList.GetItemCount();
 		for (JIndex j=1; j<=count; j++)
 		{
 			auto* complSuffix = jnew JString;
-			InitComplementSuffix(*(suffixList.GetElement(j)), complSuffix);
+			InitComplementSuffix(*(suffixList.GetItem(j)), complSuffix);
 
-			itsFileTypeList->AppendElement(
-				FileTypeInfo(suffixList.GetElement(j), nullptr, nullptr, kOrigFileType[i],
+			itsFileTypeList->AppendItem(
+				FileTypeInfo(suffixList.GetItem(j), nullptr, nullptr, kOrigFileType[i],
 							 kOrigFTMacroMap[i], kEmptyCRMRuleListID,
 							 true, nullptr, wordWrap, complSuffix, nullptr));
 		}
@@ -1491,10 +1491,10 @@ PrefsManager::FindMacroName
 
 	JIndex maxID = kEmptyMacroID;
 
-	const JSize macroCount = macroList->GetElementCount();
+	const JSize macroCount = macroList->GetItemCount();
 	for (JIndex i=1; i<=macroCount; i++)
 	{
-		const MacroSetInfo macroInfo = macroList->GetElement(i);
+		const MacroSetInfo macroInfo = macroList->GetItem(i);
 		maxID = JMax(maxID, macroInfo.id);
 		if (JString::Compare(macroName, *(macroInfo.name), JString::kIgnoreCase) == 0)
 		{
@@ -1542,10 +1542,10 @@ PrefsManager::FindCRMRuleListName
 		return kEmptyCRMRuleListID;
 	}
 
-	const JSize crmCount = crmList.GetElementCount();
+	const JSize crmCount = crmList.GetItemCount();
 	for (JIndex i=1; i<=crmCount; i++)
 	{
-		const CRMRuleListInfo crmInfo = crmList.GetElement(i);
+		const CRMRuleListInfo crmInfo = crmList.GetItem(i);
 		if (JString::Compare(crmName, *(crmInfo.name), JString::kIgnoreCase) == 0)
 		{
 			return crmInfo.id;
@@ -1575,10 +1575,10 @@ PrefsManager::ConvertHTMLSuffixesToFileTypes
 		bool found = false;
 		dataStream >> suffix;
 
-		const JSize ftCount = itsFileTypeList->GetElementCount();
+		const JSize ftCount = itsFileTypeList->GetItemCount();
 		for (JIndex j=1; j<=ftCount; j++)
 		{
-			const FileTypeInfo info = itsFileTypeList->GetElement(j);
+			const FileTypeInfo info = itsFileTypeList->GetItem(j);
 			if (*(info.suffix) == suffix)
 			{
 				found = true;
@@ -1689,7 +1689,7 @@ PrefsManager::ReadFileTypeInfo
 		}
 
 		info.CreateRegex();
-		itsFileTypeList->AppendElement(info);
+		itsFileTypeList->AppendItem(info);
 	}
 
 	std::string wrapData;
@@ -1712,12 +1712,12 @@ PrefsManager::WriteFileTypeInfo()
 {
 	std::ostringstream listStream;
 
-	const JSize count = itsFileTypeList->GetElementCount();
+	const JSize count = itsFileTypeList->GetItemCount();
 	listStream << count;
 
 	for (JIndex i=1; i<=count; i++)
 	{
-		FileTypeInfo info = itsFileTypeList->GetElement(i);
+		FileTypeInfo info = itsFileTypeList->GetItem(i);
 		listStream << ' ' << *(info.suffix) << ' ' << info.type;
 		listStream << ' ' << info.macroID << ' ' << JBoolToString(info.wordWrap);
 		listStream << ' ' << info.crmID << ' ' << *(info.complSuffix);
@@ -2126,15 +2126,15 @@ createCRMRuleList
 
 	for (JUnsignedOffset j=0; j<info.count; j++)
 	{
-		ruleList->AppendElement(JStyledText::CRMRule(
+		ruleList->AppendItem(JStyledText::CRMRule(
 			JString(info.first[j],   JString::kNoCopy),
 			JString(info.rest[j],    JString::kNoCopy),
 			JString(info.replace[j], JString::kNoCopy)));
 	}
 
-	list->AppendElement(
+	list->AppendItem(
 		PrefsManager::CRMRuleListInfo(
-			kFirstCRMRuleListID + list->GetElementCount(),
+			kFirstCRMRuleListID + list->GetItemCount(),
 			name, ruleList));
 }
 
@@ -2210,10 +2210,10 @@ PrefsManager::CreateCRMRuleLists()
 
 	// set CRM rule list for each original suffix
 
-	const JSize ftCount = itsFileTypeList->GetElementCount();
+	const JSize ftCount = itsFileTypeList->GetItemCount();
 	for (JIndex i=1; i<=ftCount; i++)
 	{
-		FileTypeInfo info = itsFileTypeList->GetElement(i);
+		FileTypeInfo info = itsFileTypeList->GetItem(i);
 		if (*(info.suffix) == ".c" ||
 			*(info.suffix) == ".l" ||
 			*(info.suffix) == ".y")
@@ -2224,7 +2224,7 @@ PrefsManager::CreateCRMRuleLists()
 		{
 			info.crmID = FindCRMRuleListName("C++", *itsCRMList);
 		}
-		itsFileTypeList->SetElement(i, info);
+		itsFileTypeList->SetItem(i, info);
 	}
 
 	// add content regex file types
@@ -2329,7 +2329,7 @@ PrefsManager::CRMRuleListInfo::CreateAndRead
 	for (JIndex j=1; j<=ruleCount; j++)
 	{
 		input >> first >> rest >> replace;
-		list->AppendElement(JStyledText::CRMRule(first, rest, replace));
+		list->AppendItem(JStyledText::CRMRule(first, rest, replace));
 	}
 }
 
@@ -2344,7 +2344,7 @@ PrefsManager::CRMRuleListInfo::Write
 	std::ostream& output
 	)
 {
-	const JSize ruleCount = list->GetElementCount();
+	const JSize ruleCount = list->GetItemCount();
 	output << ruleCount;
 
 	for (const auto& r : *list)
@@ -2732,7 +2732,7 @@ PrefsManager::EditWithOtherProgram
 	JIndex i;
 	if (GetFileType(fileName, &i) == kExternalFT)
 	{
-		const FileTypeInfo info = itsFileTypeList->GetElement(i);
+		const FileTypeInfo info = itsFileTypeList->GetItem(i);
 		assert( info.editCmd != nullptr );
 		*cmd = *(info.editCmd);
 		if (cmd->IsEmpty())
@@ -2784,10 +2784,10 @@ PrefsManager::GetFileType
 {
 	const JString name = CleanFileName(fileName);
 
-	const JSize count = itsFileTypeList->GetElementCount();
+	const JSize count = itsFileTypeList->GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		FileTypeInfo info = itsFileTypeList->GetElement(i);
+		FileTypeInfo info = itsFileTypeList->GetItem(i);
 		if ((info.nameRegex != nullptr && info.nameRegex->Match(name)) ||
 			(info.IsPlainSuffix() && name.EndsWith(*(info.suffix))))
 		{
@@ -2850,19 +2850,19 @@ PrefsManager::GetFileType
 	JIndex index;
 	if (CalcFileType(doc, &index))
 	{
-		const FileTypeInfo info = itsFileTypeList->GetElement(index);
+		const FileTypeInfo info = itsFileTypeList->GetItem(index);
 
 		JIndex index;
 		if (FindMacroID(*itsMacroList, info.macroID, &index))
 		{
-			const MacroSetInfo macroInfo = itsMacroList->GetElement(index);
+			const MacroSetInfo macroInfo = itsMacroList->GetItem(index);
 			*actionMgr = macroInfo.action;
 			*macroMgr  = macroInfo.macro;
 		}
 
 		if (FindCRMRuleListID(*itsCRMList, info.crmID, &index))
 		{
-			const CRMRuleListInfo crmInfo = itsCRMList->GetElement(index);
+			const CRMRuleListInfo crmInfo = itsCRMList->GetItem(index);
 			*crmRuleList = crmInfo.list;
 		}
 
@@ -2902,10 +2902,10 @@ PrefsManager::CalcFileType
 	const JString fileName   = CleanFileName(doc.GetFileName());
 	const bool checkSuffixes = doc.ExistsOnDisk();
 
-	const JSize count = itsFileTypeList->GetElementCount();
+	const JSize count = itsFileTypeList->GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		FileTypeInfo info   = itsFileTypeList->GetElement(i);
+		FileTypeInfo info   = itsFileTypeList->GetItem(i);
 		const JString& text = doc.GetTextEditor()->GetText()->GetText();
 		if (info.contentRegex != nullptr)
 		{
@@ -2915,7 +2915,7 @@ PrefsManager::CalcFileType
 			if (info.literalRange.IsNothing())
 			{
 				info.literalRange = GetLiteralPrefixRange(*(info.suffix));
-				itsFileTypeList->SetElement(i, info);
+				itsFileTypeList->SetItem(i, info);
 			}
 
 			if (JString::CompareMaxNBytes(
@@ -2997,10 +2997,10 @@ PrefsManager::FindMacroID
 	JIndex*						index
 	)
 {
-	const JSize count = list.GetElementCount();
+	const JSize count = list.GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		const MacroSetInfo info = list.GetElement(i);
+		const MacroSetInfo info = list.GetItem(i);
 		if (info.id == id)
 		{
 			*index = i;
@@ -3025,10 +3025,10 @@ PrefsManager::FindCRMRuleListID
 	JIndex*							index
 	)
 {
-	const JSize count = list.GetElementCount();
+	const JSize count = list.GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		const CRMRuleListInfo info = list.GetElement(i);
+		const CRMRuleListInfo info = list.GetItem(i);
 		if (info.id == id)
 		{
 			*index = i;
@@ -3055,10 +3055,10 @@ PrefsManager::GetFileSuffixes
 {
 	list->DeleteAll();
 
-	const JSize count = itsFileTypeList->GetElementCount();
+	const JSize count = itsFileTypeList->GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		const FileTypeInfo info = itsFileTypeList->GetElement(i);
+		const FileTypeInfo info = itsFileTypeList->GetItem(i);
 
 		if (info.type == type && info.IsPlainSuffix())
 		{
@@ -3081,10 +3081,10 @@ PrefsManager::GetAllFileSuffixes
 {
 	list->DeleteAll();
 
-	const JSize count = itsFileTypeList->GetElementCount();
+	const JSize count = itsFileTypeList->GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		const FileTypeInfo info = itsFileTypeList->GetElement(i);
+		const FileTypeInfo info = itsFileTypeList->GetItem(i);
 
 		if (info.IsPlainSuffix())
 		{
@@ -3138,11 +3138,11 @@ PrefsManager::GetDefaultComplementSuffix
 	)
 	const
 {
-	const JSize count = itsFileTypeList->GetElementCount();
+	const JSize count = itsFileTypeList->GetItemCount();
 	JString root, suffix;
 	for (JIndex i=1; i<=count; i++)
 	{
-		FileTypeInfo info = itsFileTypeList->GetElement(i);
+		FileTypeInfo info = itsFileTypeList->GetItem(i);
 
 		if (info.type == type && info.IsPlainSuffix() &&
 			name.EndsWith(*info.suffix) &&
@@ -3153,7 +3153,7 @@ PrefsManager::GetDefaultComplementSuffix
 				if (info.type == kDefComplSuffixType[j] && info.complSuffix->IsEmpty())
 				{
 					*info.complSuffix = kDefComplSuffixStr[j];
-					itsFileTypeList->SetElement(i, info);
+					itsFileTypeList->SetItem(i, info);
 					break;
 				}
 			}
@@ -3181,7 +3181,7 @@ PrefsManager::SetDefaultComplementSuffix
 	const JString&	name
 	)
 {
-	FileTypeInfo info = itsFileTypeList->GetElement(index);
+	FileTypeInfo info = itsFileTypeList->GetItem(index);
 
 	JString root;
 	if (JSplitRootAndSuffix(name, &root, info.complSuffix))
@@ -3190,7 +3190,7 @@ PrefsManager::SetDefaultComplementSuffix
 		*info.complSuffix = CleanFileName(*info.complSuffix);
 	}
 
-	itsFileTypeList->SetElement(index, info);
+	itsFileTypeList->SetItem(index, info);
 }
 
 /******************************************************************************
@@ -3205,10 +3205,10 @@ PrefsManager::FileMatchesSuffix
 	const JPtrArray<JString>&	suffixList
 	)
 {
-	const JSize count = suffixList.GetElementCount();
+	const JSize count = suffixList.GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		const JString& suffix = *(suffixList.GetElement(i));
+		const JString& suffix = *(suffixList.GetItem(i));
 		if (fileName.EndsWith(suffix))
 		{
 			return true;

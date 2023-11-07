@@ -46,10 +46,10 @@ FileTypeTable::CreateMenuFn()
 
 	menu->AppendItem(JGetString("NoScript::FileTypeTable"), JXMenu::kRadioType);
 	menu->ShowSeparatorAfter(1);
-	const JSize count = DataList.GetElementCount();
+	const JSize count = DataList.GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		menu->AppendItem(*DataList.GetElement(i).name, JXMenu::kRadioType);
+		menu->AppendItem(*DataList.GetItem(i).name, JXMenu::kRadioType);
 	}
 
 	return menu;
@@ -67,7 +67,7 @@ FileTypeTable::UpdateMenuFn()
 	const bool ok = GetTableSelection().GetFirstSelectedCell(&cell);
 	assert( ok );
 
-	const PrefsManager::FileTypeInfo info = itsFileTypeList->GetElement(cell.y);
+	const PrefsManager::FileTypeInfo info = itsFileTypeList->GetItem(cell.y);
 	MenuVar->CheckItem(IDToIndexFn(info.StructIDVar));
 }
 
@@ -112,16 +112,16 @@ FileTypeTable::HandleMenuFn
 	const bool ok = GetTableSelection().GetFirstSelectedCell(&cell);
 	assert( ok );
 
-	PrefsManager::FileTypeInfo info = itsFileTypeList->GetElement(cell.y);
+	PrefsManager::FileTypeInfo info = itsFileTypeList->GetItem(cell.y);
 	if (index == 1)
 	{
 		info.StructIDVar = EmptyDataID;
 	}
 	else
 	{
-		info.StructIDVar = DataList.GetElement(index-1).id;
+		info.StructIDVar = DataList.GetItem(index-1).id;
 	}
-	itsFileTypeList->SetElement(cell.y, info);
+	itsFileTypeList->SetItem(cell.y, info);
 
 	TableRefreshCell(cell);
 }

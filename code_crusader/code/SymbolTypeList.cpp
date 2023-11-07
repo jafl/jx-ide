@@ -147,7 +147,7 @@ SymbolTypeList::ReadPrefs
 		input >> type;
 
 		const JIndex j      = FindType((SymbolList::Type) type);
-		SymbolTypeInfo info = itsSymbolTypeList->GetElement(j);
+		SymbolTypeInfo info = itsSymbolTypeList->GetItem(j);
 
 		input >> JBoolFromString(info.visible);
 		input >> JBoolFromString(info.style.bold);
@@ -159,7 +159,7 @@ SymbolTypeList::ReadPrefs
 		input >> color;
 		info.style.color = JColorManager::GetColorID(color);
 
-		itsSymbolTypeList->SetElement(j, info);
+		itsSymbolTypeList->SetItem(j, info);
 	}
 }
 
@@ -177,12 +177,12 @@ SymbolTypeList::WritePrefs
 {
 	output << kCurrentSetupVersion;
 
-	const JSize typeCount = itsSymbolTypeList->GetElementCount();
+	const JSize typeCount = itsSymbolTypeList->GetItemCount();
 	output << ' ' << typeCount;
 
 	for (JIndex i=1; i<=typeCount; i++)
 	{
-		const SymbolTypeInfo info = itsSymbolTypeList->GetElement(i);
+		const SymbolTypeInfo info = itsSymbolTypeList->GetItem(i);
 		output << ' ' << (long) info.type;
 		output << ' ' << JBoolToString(info.visible);
 
@@ -210,7 +210,7 @@ SymbolTypeList::FindType
 {
 	const SymbolTypeInfo* info = itsSymbolTypeList->GetCArray();
 
-	const JSize count = itsSymbolTypeList->GetElementCount();
+	const JSize count = itsSymbolTypeList->GetItemCount();
 	for (JUnsignedOffset i=0; i<count; i++)
 	{
 		if (info[i].type == type)
@@ -229,19 +229,19 @@ SymbolTypeList::FindType
  ******************************************************************************/
 
 #define ADD(C,L) \
-	itsSymbolTypeList->AppendElement(SymbolTypeInfo( \
+	itsSymbolTypeList->AppendItem(SymbolTypeInfo( \
 		SymbolList::C, L, JFontStyle(), nullptr));
 
 #define ADD_S(C,L,S) \
-	itsSymbolTypeList->AppendElement(SymbolTypeInfo( \
+	itsSymbolTypeList->AppendItem(SymbolTypeInfo( \
 		SymbolList::C, L, S, nullptr));
 
 #define ADD_I(C,L,I) \
-	itsSymbolTypeList->AppendElement(SymbolTypeInfo( \
+	itsSymbolTypeList->AppendItem(SymbolTypeInfo( \
 		SymbolList::C, L, JFontStyle(), I));
 
 #define ADD_SI(C,L,S,I) \
-	itsSymbolTypeList->AppendElement(SymbolTypeInfo( \
+	itsSymbolTypeList->AppendItem(SymbolTypeInfo( \
 		SymbolList::C, L, S, I));
 
 void

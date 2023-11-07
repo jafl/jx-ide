@@ -56,7 +56,7 @@ ClassName::FunctionName
 	{
 		const JStringMatch& m = iter.GetLastMatch();
 		AdjustStyle(m.GetCharacterRange(), varStyle);
-		varIndexList.AppendElement(m.GetCharacterRange().first);
+		varIndexList.AppendItem(m.GetCharacterRange().first);
 	}
 
 	iter.MoveTo(JStringIterator::kStartBeforeChar, token.range.charRange.first);

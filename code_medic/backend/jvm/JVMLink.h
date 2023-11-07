@@ -368,10 +368,10 @@ public:
 			jdelete path;
 			path = nullptr;
 
-			const JSize count = methods->GetElementCount();
+			const JSize count = methods->GetItemCount();
 			for (JIndex i=1; i<=count; i++)
 				{
-				methods->GetElement(i).Clean();
+				methods->GetItem(i).Clean();
 				}
 
 			jdelete methods;

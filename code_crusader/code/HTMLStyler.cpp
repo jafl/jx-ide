@@ -744,62 +744,62 @@ HTMLStyler::UpgradeTypeList
 {
 	if (vers < 1)
 	{
-		typeStyles->InsertElementAtIndex(2, JFontStyle(JColorManager::GetDarkRedColor()));
+		typeStyles->InsertItemAtIndex(2, JFontStyle(JColorManager::GetDarkRedColor()));
 	}
 
 	if (vers < 2)
 	{
-		typeStyles->InsertElementAtIndex(1, JFontStyle());
+		typeStyles->InsertItemAtIndex(1, JFontStyle());
 
 		for (JIndex i=1; i<=16; i++)
 		{
-			typeStyles->InsertElementAtIndex(6, JFontStyle());
+			typeStyles->InsertItemAtIndex(6, JFontStyle());
 		}
 	}
 
 	if (vers < 3)
 	{
-		typeStyles->InsertElementAtIndex(22, JFontStyle());
-		typeStyles->InsertElementAtIndex(22, JFontStyle());
+		typeStyles->InsertItemAtIndex(22, JFontStyle());
+		typeStyles->InsertItemAtIndex(22, JFontStyle());
 
-		typeStyles->InsertElementAtIndex(17, JFontStyle());
-		typeStyles->InsertElementAtIndex(17, JFontStyle());
-		typeStyles->InsertElementAtIndex(17, JFontStyle());
-		typeStyles->InsertElementAtIndex(17, JFontStyle());
-		typeStyles->InsertElementAtIndex(17, JFontStyle());
+		typeStyles->InsertItemAtIndex(17, JFontStyle());
+		typeStyles->InsertItemAtIndex(17, JFontStyle());
+		typeStyles->InsertItemAtIndex(17, JFontStyle());
+		typeStyles->InsertItemAtIndex(17, JFontStyle());
+		typeStyles->InsertItemAtIndex(17, JFontStyle());
 	}
 
 	if (vers < 4)
 	{
-		typeStyles->InsertElementAtIndex(22, JFontStyle(JColorManager::GetDarkGreenColor()));
+		typeStyles->InsertItemAtIndex(22, JFontStyle(JColorManager::GetDarkGreenColor()));
 	}
 
 	if (vers < 5)
 	{
 		for (JIndex i=1; i<=9; i++)
 		{
-			typeStyles->InsertElementAtIndex(17, JFontStyle());
+			typeStyles->InsertItemAtIndex(17, JFontStyle());
 		}
 	}
 
 	if (vers < 6)
 	{
-		typeStyles->InsertElementAtIndex(6, JFontStyle());
+		typeStyles->InsertItemAtIndex(6, JFontStyle());
 	}
 
 	if (vers < 7)
 	{
-		typeStyles->InsertElementAtIndex(6, JFontStyle());
+		typeStyles->InsertItemAtIndex(6, JFontStyle());
 	}
 
 	if (vers < 8)
 	{
-		typeStyles->InsertElementAtIndex(33, JFontStyle(JColorManager::GetPinkColor()));
+		typeStyles->InsertItemAtIndex(33, JFontStyle(JColorManager::GetPinkColor()));
 	}
 
 	if (vers < 9)
 	{
-		typeStyles->InsertElementAtIndex(18, JFontStyle(JColorManager::GetBrownColor()));
+		typeStyles->InsertItemAtIndex(18, JFontStyle(JColorManager::GetBrownColor()));
 	}
 
 	// set new values after all new slots have been created

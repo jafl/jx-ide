@@ -362,10 +362,10 @@ EditPrefsDialog::GetSuffixList
 		text.Split(wsPattern, list);
 	}
 
-	const JSize count = list->GetElementCount();
+	const JSize count = list->GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		JString* suffix = list->GetElement(i);
+		JString* suffix = list->GetItem(i);
 		if (suffix->GetFirstCharacter() != '.')
 		{
 			suffix->Prepend(".");
@@ -387,14 +387,14 @@ EditPrefsDialog::SetSuffixList
 {
 	JString text;
 
-	const JSize count = list.GetElementCount();
+	const JSize count = list.GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
 		if (i > 1)
 		{
 			text += " ";
 		}
-		text += *(list.GetElement(i));
+		text += *(list.GetItem(i));
 	}
 
 	inputField->GetText()->SetText(text);

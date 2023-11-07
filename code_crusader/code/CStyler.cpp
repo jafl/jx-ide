@@ -351,20 +351,20 @@ CStyler::UpgradeTypeList
 	{
 		for (JIndex i=1; i<=20; i++)
 		{
-			typeStyles->RemoveElement(11);
+			typeStyles->RemoveItem(11);
 		}
 	}
 
 	if (vers < 2)
 	{
-		typeStyles->InsertElementAtIndex(5, typeStyles->GetElement(4));
+		typeStyles->InsertItemAtIndex(5, typeStyles->GetItem(4));
 	}
 
 	if (vers < 3)
 	{
-		const JFontStyle style = typeStyles->GetElement(1);
-		typeStyles->InsertElementAtIndex(6, style);
-		typeStyles->InsertElementAtIndex(6, style);
+		const JFontStyle style = typeStyles->GetItem(1);
+		typeStyles->InsertItemAtIndex(6, style);
+		typeStyles->InsertItemAtIndex(6, style);
 	}
 
 	// set new values after all new slots have been created

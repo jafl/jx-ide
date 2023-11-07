@@ -128,7 +128,7 @@ using{WS}{NSID}{MS}; {
 	else if (itsCurlyBraceDepth == 0 && !itsCurlyBraceStack.IsEmpty())
 		{
 		itsCurlyBraceDepth = itsCurlyBraceStack.Pop();
-		itsNamespaceStack->DeleteElement(1);
+		itsNamespaceStack->DeleteItem(1);
 		}
 	}
 

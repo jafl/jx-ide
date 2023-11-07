@@ -27,7 +27,7 @@ Plot2DCmd::Plot2DCmd
 	itsX(x),
 	itsY(y)
 {
-	assert( itsX->GetElementCount() == itsY->GetElementCount() );
+	assert( itsX->GetItemCount() == itsY->GetItemCount() );
 }
 
 /******************************************************************************
@@ -52,21 +52,21 @@ Plot2DCmd::UpdateRange
 	const JInteger	max
 	)
 {
-	const JSize oldCount = itsX->GetElementCount();
+	const JSize oldCount = itsX->GetItemCount();
 	const JSize newCount = max - min + 1;
 
 	if (newCount < oldCount)
 	{
 		const JSize delta = oldCount - newCount;
-		itsX->RemoveNextElements(oldCount - delta + 1, delta);
-		itsY->RemoveNextElements(oldCount - delta + 1, delta);
+		itsX->RemoveNextItems(oldCount - delta + 1, delta);
+		itsY->RemoveNextItems(oldCount - delta + 1, delta);
 	}
 	else if (oldCount < newCount)
 	{
 		for (JIndex i=oldCount+1; i<=newCount; i++)
 		{
-			itsX->AppendElement(0);
-			itsY->AppendElement(0);
+			itsX->AppendItem(0);
+			itsY->AppendItem(0);
 		}
 	}
 }

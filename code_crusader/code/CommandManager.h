@@ -276,7 +276,7 @@ inline JSize
 CommandManager::GetCommandCount()
 	const
 {
-	return itsCmdList->GetElementCount();
+	return itsCmdList->GetItemCount();
 }
 
 /******************************************************************************

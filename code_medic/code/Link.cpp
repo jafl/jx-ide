@@ -152,10 +152,10 @@ Link::DeleteOneShotCommands
 	JPtrArray<Command>* list
 	)
 {
-	const JSize count = list->GetElementCount();
+	const JSize count = list->GetItemCount();
 	for (JIndex i=count; i>=1; i--)
 	{
-		Command* cmd = list->GetElement(i);
+		Command* cmd = list->GetItem(i);
 		if (cmd->IsOneShot())
 		{
 			jdelete cmd;		// automatically removed from list
@@ -298,10 +298,10 @@ Link::RunNextCommand()
 {
 	if (!itsForegroundQ->IsEmpty() && OKToSendMultipleCommands())
 	{
-		const JSize count = itsForegroundQ->GetElementCount();
+		const JSize count = itsForegroundQ->GetItemCount();
 		for (JIndex i=1; i<=count; i++)
 		{
-			Command* command = itsForegroundQ->GetElement(i);
+			Command* command = itsForegroundQ->GetItem(i);
 			if (command->GetState() != Command::kExecuting)
 			{
 				SendMedicCommand(command);
@@ -310,7 +310,7 @@ Link::RunNextCommand()
 	}
 	else if (!itsForegroundQ->IsEmpty())
 	{
-		Command* command = itsForegroundQ->GetFirstElement();
+		Command* command = itsForegroundQ->GetFirstItem();
 		if (command->GetState() != Command::kExecuting && OKToSendCommands(false))
 		{
 			SendMedicCommand(command);
@@ -318,7 +318,7 @@ Link::RunNextCommand()
 	}
 	else if (!itsBackgroundQ->IsEmpty() && OKToSendCommands(true))
 	{
-		Command* command = itsBackgroundQ->GetFirstElement();
+		Command* command = itsBackgroundQ->GetFirstItem();
 		if (command->GetState() != Command::kExecuting)
 		{
 			SendMedicCommand(command);
@@ -339,25 +339,25 @@ Link::HandleCommandRunning
 {
 	assert( itsRunningCommand == nullptr );
 
-	const JSize fgCount = itsForegroundQ->GetElementCount();
+	const JSize fgCount = itsForegroundQ->GetItemCount();
 	for (JIndex i=1; i<=fgCount; i++)
 	{
-		Command* command = itsForegroundQ->GetElement(i);
+		Command* command = itsForegroundQ->GetItem(i);
 		if (command->GetTransactionID() == cmdID)
 		{
 			itsRunningCommand = command;
-			itsForegroundQ->RemoveElement(i);
+			itsForegroundQ->RemoveItem(i);
 			break;
 		}
 	}
 
 	if (itsRunningCommand == nullptr && !itsBackgroundQ->IsEmpty())
 	{
-		Command* command = itsBackgroundQ->GetFirstElement();
+		Command* command = itsBackgroundQ->GetFirstItem();
 		if (command->GetTransactionID() == cmdID)
 		{
 			itsRunningCommand = command;
-			itsBackgroundQ->RemoveElement(1);
+			itsBackgroundQ->RemoveItem(1);
 		}
 	}
 }
@@ -375,10 +375,10 @@ Link::CancelAllCommands()
 		return;
 	}
 
-	for (JIndex i=itsForegroundQ->GetElementCount(); i>=1; i--)
+	for (JIndex i=itsForegroundQ->GetItemCount(); i>=1; i--)
 	{
-		Command* cmd = itsForegroundQ->GetElement(i);
-		itsForegroundQ->RemoveElement(i);	// remove first, in case auto-delete
+		Command* cmd = itsForegroundQ->GetItem(i);
+		itsForegroundQ->RemoveItem(i);	// remove first, in case auto-delete
 		cmd->Finished(false);
 
 		if (itsRunningCommand == cmd)
@@ -403,10 +403,10 @@ Link::CancelBackgroundCommands()
 		return;
 	}
 
-	for (JIndex i=itsBackgroundQ->GetElementCount(); i>=1; i--)
+	for (JIndex i=itsBackgroundQ->GetItemCount(); i>=1; i--)
 	{
-		Command* cmd = itsBackgroundQ->GetElement(i);
-		itsBackgroundQ->RemoveElement(i);	// remove first, in case auto-delete
+		Command* cmd = itsBackgroundQ->GetItem(i);
+		itsBackgroundQ->RemoveItem(i);	// remove first, in case auto-delete
 		cmd->Finished(false);
 
 		if (itsRunningCommand == cmd)
@@ -430,11 +430,11 @@ Link::RememberFile
 {
 	if (fullName.IsEmpty())
 	{
-		itsFileNameMap->SetElement(fileName, nullptr, JPtrArrayT::kDelete);
+		itsFileNameMap->SetItem(fileName, nullptr, JPtrArrayT::kDelete);
 	}
 	else
 	{
-		itsFileNameMap->SetElement(fileName, fullName, JPtrArrayT::kDelete);
+		itsFileNameMap->SetItem(fileName, fullName, JPtrArrayT::kDelete);
 	}
 }
 
@@ -459,7 +459,7 @@ Link::FindFile
 		*fullName = fileName;
 		return true;
 	}
-	else if (itsFileNameMap->GetElement(fileName, &s))
+	else if (itsFileNameMap->GetItem(fileName, &s))
 	{
 		if (s == nullptr)
 		{
@@ -484,10 +484,10 @@ Link::FindFile
 
 	if (JIsRelativePath(fileName))
 	{
-		const JSize count = itsPathList->GetElementCount();
+		const JSize count = itsPathList->GetItemCount();
 		for (JIndex i=1; i<=count; i++)
 		{
-			*fullName = JCombinePathAndName(*(itsPathList->GetElement(i)), fileName);
+			*fullName = JCombinePathAndName(*(itsPathList->GetItem(i)), fileName);
 			if (JFileExists(*fullName))
 			{
 				return true;

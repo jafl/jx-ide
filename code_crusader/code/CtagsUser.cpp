@@ -330,14 +330,14 @@ CtagsUser::ReadExtensionFlags
 		auto* value = jnew JString;
 
 		data.Split(":", &split, 2);
-		if (split.GetElementCount() == 2)
+		if (split.GetItemCount() == 2)
 		{
-			key    = *split.GetElement(1);
-			*value = *split.GetElement(2);
+			key    = *split.GetItem(1);
+			*value = *split.GetItem(2);
 		}
 		else if (data.EndsWith(":"))
 		{
-			key = *split.GetElement(1);
+			key = *split.GetItem(1);
 			value->Clear();
 		}
 		else
@@ -348,7 +348,7 @@ CtagsUser::ReadExtensionFlags
 
 		if (!key.IsEmpty() && !value->IsEmpty())
 		{
-			flags->SetElement(key, value, JPtrArrayT::kDelete);
+			flags->SetItem(key, value, JPtrArrayT::kDelete);
 		}
 		else
 		{
@@ -823,7 +823,7 @@ CtagsUser::DecodeSymbolType
 	else if (lang == kJavaLang || lang == kJSPLang)
 	{
 		const JString* value;
-		if (c == 'm' && flags.GetElement("interface", &value))
+		if (c == 'm' && flags.GetItem("interface", &value))
 		{
 			return kJavaPrototypeST;
 		}

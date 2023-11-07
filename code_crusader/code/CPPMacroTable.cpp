@@ -86,11 +86,11 @@ CPPMacroTable::CPPMacroTable
 	SetColWidth(kNameColumn, kDefNameColWidth);
 
 	const PPMacroList& list = cpp.GetMacroList();
-	const JSize count         = list.GetElementCount();
+	const JSize count         = list.GetItemCount();
 	data->AppendRows(count);
 	for (JIndex i=1; i<=count; i++)
 	{
-		const CPreprocessor::MacroInfo info = list.GetElement(i);
+		const CPreprocessor::MacroInfo info = list.GetItem(i);
 		data->SetString(i,kNameColumn,  *(info.name));
 		data->SetString(i,kValueColumn, *(info.value));
 	}
@@ -127,10 +127,10 @@ CPPMacroTable::ContentsValid()
 	const JSize rowCount         = GetRowCount();
 	for (JIndex i=1; i<rowCount; i++)
 	{
-		const JString& s1 = data->GetElement(i, kNameColumn);
+		const JString& s1 = data->GetItem(i, kNameColumn);
 		for (JIndex j=i+1; j<=rowCount; j++)
 		{
-			const JString& s2 = data->GetElement(j, kNameColumn);
+			const JString& s2 = data->GetItem(j, kNameColumn);
 			if (s1 == s2)
 			{
 				JTableSelection& s = me->GetTableSelection();
@@ -169,7 +169,7 @@ CPPMacroTable::UpdateMacros
 	const PPMacroList& list    = cpp->GetMacroList();
 	const JStringTableData* data = GetStringData();
 	const JSize count            = GetRowCount();
-	if (count == list.GetElementCount())
+	if (count == list.GetItemCount())
 	{
 		// We know there are the same number of
 		// items and no duplicates.
@@ -185,7 +185,7 @@ CPPMacroTable::UpdateMacros
 				changed = true;
 				break;
 			}
-			const CPreprocessor::MacroInfo info2 = list.GetElement(j);
+			const CPreprocessor::MacroInfo info2 = list.GetItem(j);
 			if (*(info.value) != *(info2.value))
 			{
 				changed = true;

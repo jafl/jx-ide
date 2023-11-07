@@ -244,7 +244,7 @@ FileListDir::Receive
 		while (iter.Next(&cell))
 		{
 			const JIndex index = table->RowIndexToFileIndex(cell.y);
-			itsCommandDir->OpenSourceFile(*(files.GetElement(index)));
+			itsCommandDir->OpenSourceFile(*(files.GetItem(index)));
 		}
 	}
 

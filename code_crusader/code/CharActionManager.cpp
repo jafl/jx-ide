@@ -77,7 +77,7 @@ CharActionManager::Perform
 	)
 {
 	JString* script;
-	if (itsActionMap->GetElement(JString(c), &script))
+	if (itsActionMap->GetItem(JString(c), &script))
 	{
 		MacroManager::Perform(*script, doc);
 	}
@@ -101,7 +101,7 @@ CharActionManager::SetAction
 	}
 	else
 	{
-		itsActionMap->SetElement(JString(c), script, JPtrArrayT::kDelete);
+		itsActionMap->SetItem(JString(c), script, JPtrArrayT::kDelete);
 	}
 }
 
@@ -116,7 +116,7 @@ CharActionManager::ClearAction
 	const JUtf8Character& c
 	)
 {
-	itsActionMap->DeleteElement(JString(c));
+	itsActionMap->DeleteItem(JString(c));
 }
 
 /******************************************************************************

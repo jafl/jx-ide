@@ -95,13 +95,13 @@ gdb::GetStackArgumentsCmd::HandleSuccess
 			break;
 		}
 
-		const JSize count = argList.GetElementCount();
+		const JSize count = argList.GetItemCount();
 		for (JIndex i=1; i<=count; i++)
 		{
-			JStringPtrMap<JString>* arg = argList.GetElement(i);
+			JStringPtrMap<JString>* arg = argList.GetItem(i);
 			JString *name, *value;
-			if (!arg->GetElement("name", &name) ||
-				!arg->GetElement("value", &value))
+			if (!arg->GetItem("name", &name) ||
+				!arg->GetItem("value", &value))
 			{
 				Link::Log("invalid stack argument");
 				continue;

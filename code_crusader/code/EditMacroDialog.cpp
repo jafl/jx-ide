@@ -84,16 +84,16 @@ EditMacroDialog::BuildWindow
 	)
 {
 	JArray<JCoordinate> heights(3);
-	heights.AppendElement(150);
-	heights.AppendElement(150);
-	heights.AppendElement(150);
+	heights.AppendItem(150);
+	heights.AppendItem(150);
+	heights.AppendItem(150);
 
 	const JIndex elasticIndex = 3;
 
 	JArray<JCoordinate> minHeights(3);
-	minHeights.AppendElement(60);
-	minHeights.AppendElement(60);
-	minHeights.AppendElement(60);
+	minHeights.AppendItem(60);
+	minHeights.AppendItem(60);
+	minHeights.AppendItem(60);
 
 // begin JXLayout
 

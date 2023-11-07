@@ -83,14 +83,14 @@ EditCRMDialog::BuildWindow
 	)
 {
 	JArray<JCoordinate> heights(2);
-	heights.AppendElement(150);
-	heights.AppendElement(150);
+	heights.AppendItem(150);
+	heights.AppendItem(150);
 
 	const JIndex elasticIndex = 2;
 
 	JArray<JCoordinate> minHeights(2);
-	minHeights.AppendElement(60);
-	minHeights.AppendElement(60);
+	minHeights.AppendItem(60);
+	minHeights.AppendItem(60);
 
 // begin JXLayout
 

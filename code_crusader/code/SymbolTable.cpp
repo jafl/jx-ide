@@ -268,7 +268,7 @@ SymbolTable::GetFileNamesForSelection
 				itsSymbolList->GetFile(symbolIndex, &lineIndex);
 
 			fileNameList->Append(fileName);
-			lineIndexList->AppendElement(lineIndex);
+			lineIndexList->AppendItem(lineIndex);
 		}
 	}
 }
@@ -303,7 +303,7 @@ JError
 SymbolTable::SetNameFilter
 	(
 	const JString&	filterStr,
-	const bool	isRegex
+	const bool		isRegex
 	)
 {
 	jdelete itsNameFilter;
@@ -628,10 +628,10 @@ SymbolTable::RebuildTable()
 
 	if (itsVisibleListLockedFlag)
 	{
-		const JSize count = itsVisibleList->GetElementCount();
+		const JSize count = itsVisibleList->GetItemCount();
 		for (JIndex i=1; i<=count; i++)
 		{
-			const JIndex j = itsVisibleList->GetElement(i);
+			const JIndex j = itsVisibleList->GetItem(i);
 
 			const JString* signature;
 			itsSymbolList->GetSignature(j, &signature);
@@ -645,7 +645,7 @@ SymbolTable::RebuildTable()
 	{
 		itsVisibleList->RemoveAll();
 
-		const JSize symbolCount = itsSymbolList->GetElementCount();
+		const JSize symbolCount = itsSymbolList->GetItemCount();
 		for (JIndex i=1; i<=symbolCount; i++)
 		{
 			Language lang;
@@ -661,26 +661,26 @@ SymbolTable::RebuildTable()
 				 (itsNameLiteral != nullptr && symbolName.Contains(*itsNameLiteral)))
 				)
 			{
-				itsVisibleList->AppendElement(i);
+				itsVisibleList->AppendItem(i);
 				CalcColWidths(symbolName, signature);
 			}
 		}
 	}
 	else	// optimize because scanning 1e5 symbols takes a while!
 	{
-		const JSize symbolCount = itsSymbolList->GetElementCount();
-		if (itsVisibleList->GetElementCount() > symbolCount)
+		const JSize symbolCount = itsSymbolList->GetItemCount();
+		if (itsVisibleList->GetItemCount() > symbolCount)
 		{
-			itsVisibleList->RemoveNextElements(
-				symbolCount+1, itsVisibleList->GetElementCount() - symbolCount);
+			itsVisibleList->RemoveNextItems(
+				symbolCount+1, itsVisibleList->GetItemCount() - symbolCount);
 		}
-		while (itsVisibleList->GetElementCount() < symbolCount)
+		while (itsVisibleList->GetItemCount() < symbolCount)
 		{
-			itsVisibleList->AppendElement(itsVisibleList->GetElementCount()+1);
+			itsVisibleList->AppendItem(itsVisibleList->GetItemCount()+1);
 		}
 	}
 
-	const JSize rowCount = itsVisibleList->GetElementCount();
+	const JSize rowCount = itsVisibleList->GetItemCount();
 	if (GetRowCount() < rowCount)
 	{
 		AppendRows(rowCount - GetRowCount());
@@ -765,5 +765,5 @@ SymbolTable::CellToSymbolIndex
 	)
 	const
 {
-	return itsVisibleList->GetElement(cell.y);
+	return itsVisibleList->GetItem(cell.y);
 }

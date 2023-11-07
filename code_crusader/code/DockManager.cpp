@@ -115,10 +115,10 @@ DockManager::DockAll()
 	JPtrArray<ProjectDocument>* projList =
 		GetDocumentManager()->GetProjectDocList();
 
-	JSize count = projList->GetElementCount();
+	JSize count = projList->GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		ProjectDocument* projDoc = projList->GetElement(i);
+		ProjectDocument* projDoc = projList->GetItem(i);
 
 		dock1->Dock(projDoc);
 		dock1->Dock(projDoc->GetSymbolDirector());
@@ -132,10 +132,10 @@ DockManager::DockAll()
 	JPtrArray<TextDocument>* textList =
 		GetDocumentManager()->GetTextDocList();
 
-	count = textList->GetElementCount();
+	count = textList->GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		TextDocument* textDoc = textList->GetElement(i);
+		TextDocument* textDoc = textList->GetItem(i);
 
 		const TextFileType type = textDoc->GetFileType();
 		if (type == kExecOutputFT ||

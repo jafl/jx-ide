@@ -169,7 +169,7 @@ CommandManager::Exec
 	TextDocument*		textDoc
 	)
 {
-	const CmdInfo info = itsCmdList->GetElement(cmdIndex);
+	const CmdInfo info = itsCmdList->GetItem(cmdIndex);
 	Exec(info, projDoc, textDoc);
 }
 
@@ -199,7 +199,7 @@ CommandManager::Exec
 	fullNameList.Append(&fullName);
 
 	JArray<JIndex> lineIndexList;
-	lineIndexList.AppendElement(lineIndex);
+	lineIndexList.AppendItem(lineIndex);
 
 	Command* cmd = nullptr;
 	FunctionStack fnStack;
@@ -225,7 +225,7 @@ CommandManager::Exec
 	const JArray<JIndex>&		lineIndexList
 	)
 {
-	const CmdInfo info = itsCmdList->GetElement(cmdIndex);
+	const CmdInfo info = itsCmdList->GetItem(cmdIndex);
 	Exec(info, projDoc, fullNameList, lineIndexList);
 }
 
@@ -312,7 +312,7 @@ CommandManager::Prepare
 	)
 {
 	const bool hasLines = !lineIndexList.IsEmpty();
-	assert( !hasLines || lineIndexList.GetElementCount() == fullNameList.GetElementCount() );
+	assert( !hasLines || lineIndexList.GetItemCount() == fullNameList.GetItemCount() );
 
 	const bool usesFiles = (info.cmd->Contains("$full_name")        ||
 							info.cmd->Contains("$relative_name")    ||
@@ -338,22 +338,22 @@ CommandManager::Prepare
 
 	if (usesFiles && info.oneAtATime)
 	{
-		const JSize count = fullNameList.GetElementCount();
+		const JSize count = fullNameList.GetItemCount();
 		JString cmdPath;
 		for (JIndex i=1; i<=count; i++)
 		{
 			cmdPath = *info.path;
 
 			JPtrArray<JString> subFullNameList(JPtrArrayT::kForgetAll);
-			subFullNameList.Append(fullNameList.GetElement(i));
+			subFullNameList.Append(fullNameList.GetItem(i));
 
 			JArray<JIndex> subLineIndexList;
 			if (hasLines)
 			{
-				subLineIndexList.AppendElement(lineIndexList.GetElement(i));
+				subLineIndexList.AppendItem(lineIndexList.GetItem(i));
 			}
 
-			if (BuildCmdPath(&cmdPath, projDoc, *fullNameList.GetElement(i), true) &&
+			if (BuildCmdPath(&cmdPath, projDoc, *fullNameList.GetItem(i), true) &&
 				ProcessCmdQueue(cmdPath, cmdQueue, info, projDoc,
 								subFullNameList, subLineIndexList,
 								true, cmd, fnStack))
@@ -386,20 +386,20 @@ CommandManager::Prepare
 			samePathLineList.RemoveAll();
 			filePath.Clear();
 
-			JSize nameCount = nameList.GetElementCount();
+			JSize nameCount = nameList.GetItemCount();
 			for (JIndex i=1; i<=nameCount; i++)
 			{
-				const JString* fullName = nameList.GetElement(i);
+				const JString* fullName = nameList.GetItem(i);
 				JSplitPathAndName(*fullName, &p, &n);
 				if (filePath.IsEmpty() || p == filePath)
 				{
 					samePathNameList.Append(const_cast<JString*>(fullName));
-					nameList.RemoveElement(i);
+					nameList.RemoveItem(i);
 
 					if (hasLines)
 					{
-						samePathLineList.AppendElement(lineList.GetElement(i));
-						lineList.RemoveElement(i);
+						samePathLineList.AppendItem(lineList.GetItem(i));
+						lineList.RemoveItem(i);
 					}
 
 					filePath = p;
@@ -408,7 +408,7 @@ CommandManager::Prepare
 				}
 			}
 
-			if (BuildCmdPath(&cmdPath, projDoc, *samePathNameList.GetFirstElement(), true) &&
+			if (BuildCmdPath(&cmdPath, projDoc, *samePathNameList.GetFirstItem(), true) &&
 				ProcessCmdQueue(cmdPath, cmdQueue, info, projDoc,
 								samePathNameList, samePathLineList,
 								true, cmd, fnStack))
@@ -460,7 +460,7 @@ CommandManager::Parse
 	JPtrArray<JString> argList(JPtrArrayT::kDeleteAll);
 	JParseArgsForExec(origCmd, &argList);
 
-	if (!argList.IsEmpty() && *argList.GetLastElement() != ";")
+	if (!argList.IsEmpty() && *argList.GetLastItem() != ";")
 	{
 		argList.Append(JString(";", JString::kNoCopy));	// catch all commands inside loop
 	}
@@ -469,7 +469,7 @@ CommandManager::Parse
 
 	while (!argList.IsEmpty())
 	{
-		JString* arg = argList.GetFirstElement();
+		JString* arg = argList.GetFirstItem();
 		if (*arg == ";")
 		{
 			if (!cmdArgs.IsEmpty())
@@ -480,7 +480,7 @@ CommandManager::Parse
 				cmdQueue->Append(a);
 			}
 
-			argList.DeleteElement(1);
+			argList.DeleteItem(1);
 		}
 		else if (!arg->IsEmpty() && arg->GetFirstCharacter() == '&' &&
 				 cmdArgs.IsEmpty())
@@ -490,7 +490,7 @@ CommandManager::Parse
 				JGetUserNotification()->ReportError(JGetString("FnsNotAllowed::CommandManager"));
 				return false;
 			}
-			else if (*argList.GetElement(2) != ";")
+			else if (*argList.GetItem(2) != ";")
 			{
 				JGetUserNotification()->ReportError(JGetString("ArgsNotAllowed::CommandManager"));
 				return false;
@@ -501,12 +501,12 @@ CommandManager::Parse
 			a->Append(arg);
 			cmdQueue->Append(a);
 
-			argList.RemoveElement(1);
+			argList.RemoveItem(1);
 		}
 		else
 		{
 			cmdArgs.Append(arg);
-			argList.RemoveElement(1);
+			argList.RemoveItem(1);
 		}
 	}
 
@@ -534,21 +534,21 @@ CommandManager::ProcessCmdQueue
 {
 	JPtrArray<JString> args(JPtrArrayT::kDeleteAll);
 
-	const JSize nameCount = fullNameList.GetElementCount();
+	const JSize nameCount = fullNameList.GetItemCount();
 
 	const bool hasLines = !lineIndexList.IsEmpty();
-	assert( !hasLines || lineIndexList.GetElementCount() == fullNameList.GetElementCount() );
+	assert( !hasLines || lineIndexList.GetItemCount() == fullNameList.GetItemCount() );
 
-	const JSize cmdCount = cmdQueue.GetElementCount();
+	const JSize cmdCount = cmdQueue.GetItemCount();
 	for (JIndex i=1; i<=cmdCount; i++)
 	{
 		args.CleanOut();
 
-		const JPtrArray<JString>* cmdArgs = cmdQueue.GetElement(i);
-		const JSize argCount = cmdArgs->GetElementCount();
+		const JPtrArray<JString>* cmdArgs = cmdQueue.GetItem(i);
+		const JSize argCount = cmdArgs->GetItemCount();
 		for (JIndex j=1; j<=argCount; j++)
 		{
-			const JString* cmdArg = cmdArgs->GetElement(j);
+			const JString* cmdArg = cmdArgs->GetItem(j);
 
 			if (fullNameList.IsEmpty())
 			{
@@ -570,8 +570,8 @@ CommandManager::ProcessCmdQueue
 					auto* arg = jnew JString(*cmdArg);
 
 					if (!Substitute(arg, projDoc,
-									*(fullNameList.GetElement(k)),
-									(hasLines ? lineIndexList.GetElement(k) : 0),
+									*(fullNameList.GetItem(k)),
+									(hasLines ? lineIndexList.GetItem(k) : 0),
 									reportError))
 					{
 						jdelete *cmd;
@@ -852,10 +852,10 @@ CommandManager::FindCommandName
 	)
 	const
 {
-	const JSize count = itsCmdList->GetElementCount();
+	const JSize count = itsCmdList->GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		*info = itsCmdList->GetElement(i);
+		*info = itsCmdList->GetItem(i);
 		if (*info->name == name)
 		{
 			return true;
@@ -906,7 +906,7 @@ CommandManager::AppendCommand
 				 isMake, isVCS, saveAll, oneAtATime,
 				 useWindow, raise, beep,
 				 mt, ms, mi, separator);
-	itsCmdList->AppendElement(info);
+	itsCmdList->AppendItem(info);
 }
 
 /******************************************************************************
@@ -1004,7 +1004,7 @@ CommandManager::ReadCommands
 		{
 			CmdInfo info = ReadCmdInfo(input, vers);
 			UpgradeCommand(&info);
-			cmdList->AppendElement(info);
+			cmdList->AppendItem(info);
 
 			if (input.fail())
 			{
@@ -1025,7 +1025,7 @@ CommandManager::ReadCommands
 
 			CmdInfo info = ReadCmdInfo(input, vers);
 			UpgradeCommand(&info);
-			cmdList->AppendElement(info);
+			cmdList->AppendItem(info);
 		}
 	}
 
@@ -1111,11 +1111,11 @@ CommandManager::WriteSetup
 	output << kCurrentSetupVersion << '\n';
 	output << itsMakeDependCmd << '\n';
 
-	const JSize count = itsCmdList->GetElementCount();
+	const JSize count = itsCmdList->GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
 		output << JBoolToString(true);
-		WriteCmdInfo(output, itsCmdList->GetElement(i));
+		WriteCmdInfo(output, itsCmdList->GetItem(i));
 	}
 
 	output << JBoolToString(false) << '\n';
@@ -1558,7 +1558,7 @@ CommandManager::InitCommandList()
 
 	for (JIndex i=1; i<=kDefCmdCount; i++)
 	{
-		*((itsCmdList->GetElement(i)).menuID) = GetUniqueMenuID();
+		*((itsCmdList->GetItem(i)).menuID) = GetUniqueMenuID();
 	}
 }
 
@@ -1570,10 +1570,10 @@ CommandManager::InitCommandList()
 void
 CommandManager::UpdateMenuIDs()
 {
-	const JSize count = itsCmdList->GetElementCount();
+	const JSize count = itsCmdList->GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		JString* id = (itsCmdList->GetElement(i)).menuID;
+		JString* id = (itsCmdList->GetItem(i)).menuID;
 		if (id->IsEmpty())
 		{
 			*id = GetUniqueMenuID();
@@ -1603,10 +1603,10 @@ CommandManager::GetUniqueMenuID()
 
 		bool found = false;
 
-		const JSize count = itsCmdList->GetElementCount();
+		const JSize count = itsCmdList->GetItemCount();
 		for (JIndex i=1; i<=count; i++)
 		{
-			if (id == *((itsCmdList->GetElement(i)).menuID))
+			if (id == *((itsCmdList->GetItem(i)).menuID))
 			{
 				found = true;
 			}
@@ -1698,20 +1698,20 @@ CommandManager::ConvertCompileDialog
 
 	// save commands in menu
 
-	JSize count = makeList.GetElementCount();
+	JSize count = makeList.GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		UpdateFileMarkers(vers < 26, makeList.GetElement(i));
-		AppendCommand(path, *makeList.GetElement(i), JString::empty,
+		UpdateFileMarkers(vers < 26, makeList.GetItem(i));
+		AppendCommand(path, *makeList.GetItem(i), JString::empty,
 					  true, false, true, false, true, false, true,
 					  JString::empty, JString::empty, i == count);
 	}
 
-	count = compileList.GetElementCount();
+	count = compileList.GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		UpdateFileMarkers(vers < 26, compileList.GetElement(i));
-		AppendCommand(path, *compileList.GetElement(i), JString::empty,
+		UpdateFileMarkers(vers < 26, compileList.GetItem(i));
+		AppendCommand(path, *compileList.GetItem(i), JString::empty,
 					  true, false, true, true, true, true, false,
 					  JString::empty, JString::empty, i == count);
 	}
@@ -1778,20 +1778,20 @@ CommandManager::ConvertRunDialog
 
 	// save commands in menu
 
-	JSize count = runList.GetElementCount();
+	JSize count = runList.GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		UpdateFileMarkers(vers < 26, runList.GetElement(i));
-		AppendCommand(path, *runList.GetElement(i), JString::empty,
+		UpdateFileMarkers(vers < 26, runList.GetItem(i));
+		AppendCommand(path, *runList.GetItem(i), JString::empty,
 					  false, false, false, false, true, true, false,
 					  JString::empty, JString::empty, i == count);
 	}
 
-	count = debugList.GetElementCount();
+	count = debugList.GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		UpdateFileMarkers(vers < 26, debugList.GetElement(i));
-		AppendCommand(path, *debugList.GetElement(i), JString::empty,
+		UpdateFileMarkers(vers < 26, debugList.GetItem(i));
+		AppendCommand(path, *debugList.GetItem(i), JString::empty,
 					  false, false, false, true, false, false, false,
 					  JString::empty, JString::empty, i == count);
 	}
@@ -1951,12 +1951,12 @@ CommandManager::DocumentDeleted
 
 	// dynamic_cast won't work, because the object is partially deleted
 
-	const JSize count = theExecDocList.GetElementCount();
+	const JSize count = theExecDocList.GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		if (sender == theExecDocList.GetElement(i))
+		if (sender == theExecDocList.GetItem(i))
 		{
-			theExecDocList.RemoveElement(i);
+			theExecDocList.RemoveItem(i);
 			return true;
 		}
 	}
@@ -1977,10 +1977,10 @@ CommandManager::DocumentDeleted
 void
 CommandManager::CmdList::DeleteAll()
 {
-	const JSize count = GetElementCount();
+	const JSize count = GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		CmdInfo info = GetElement(i);
+		CmdInfo info = GetItem(i);
 		info.Free();
 	}
 	RemoveAll();

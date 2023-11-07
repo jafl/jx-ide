@@ -145,7 +145,7 @@ SymbolTypeList::IsVisible
 	const
 {
 	const JIndex i = FindType(type);
-	return itsSymbolTypeList->GetElement(i).visible;
+	return itsSymbolTypeList->GetItem(i).visible;
 }
 */
 /******************************************************************************
@@ -161,7 +161,7 @@ SymbolTypeList::GetLanguage
 	const
 {
 	const JIndex i = FindType(type);
-	return (itsSymbolTypeList->GetElement(i)).lang;
+	return (itsSymbolTypeList->GetItem(i)).lang;
 }
 
 /******************************************************************************
@@ -180,7 +180,7 @@ SymbolTypeList::GetStyle
 	const
 {
 	const JIndex i            = FindType(type);
-	const SymbolTypeInfo info = itsSymbolTypeList->GetElement(i);
+	const SymbolTypeInfo info = itsSymbolTypeList->GetItem(i);
 
 	*icon = info.icon;
 	return info.style;

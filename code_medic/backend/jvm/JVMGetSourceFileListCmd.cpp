@@ -54,10 +54,10 @@ jvm::GetSourceFileListCmd::Starting()
 	table->RemoveAllFiles();
 
 	const JPtrArray<JString>& list = dynamic_cast<Link*>(GetLink())->GetSourcePathList();
-	const JSize count              = list.GetElementCount();
+	const JSize count              = list.GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		ScanDirectory(*(list.GetElement(i)));
+		ScanDirectory(*(list.GetItem(i)));
 	}
 }
 

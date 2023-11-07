@@ -66,7 +66,7 @@ gdb::GetFrameCmd::HandleSuccess
 		{
 			Link::Log("invalid data map");
 		}
-		else if (!map.GetElement("level", &s))
+		else if (!map.GetItem("level", &s))
 		{
 			Link::Log("missing frame index");
 		}

@@ -101,10 +101,10 @@ DirList::CopyPaths
 {
 	itsDirList->DeleteAll();
 
-	const JSize count = (source.itsDirList)->GetElementCount();
+	const JSize count = (source.itsDirList)->GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		const DirInfo info = (source.itsDirList)->GetElement(i);
+		const DirInfo info = (source.itsDirList)->GetItem(i);
 		AddPath(*(info.path), info.recurse);
 	}
 }
@@ -122,7 +122,7 @@ DirList::GetPath
 	)
 	const
 {
-	const DirInfo info = itsDirList->GetElement(index);
+	const DirInfo info = itsDirList->GetItem(index);
 	*recurse             = info.recurse;
 	return *(info.path);
 }
@@ -141,7 +141,7 @@ DirList::GetFullPath
 	)
 	const
 {
-	const DirInfo info = itsDirList->GetElement(index);
+	const DirInfo info = itsDirList->GetItem(index);
 	*recurse             = info.recurse;
 	return JConvertToAbsolutePath(*(info.path), itsBasePath, fullPath);
 }
@@ -224,7 +224,7 @@ DirList::Contains
 		JSplitPathAndName(p, &path, &name);
 	}
 
-	const JSize count = GetElementCount();
+	const JSize count = GetItemCount();
 	JString truePath;
 	bool recurse;
 	for (JIndex i=1; i<=count; i++)
@@ -323,12 +323,12 @@ DirList::WriteDirectories
 {
 	output << "# search paths\n";
 
-	const JSize dirCount = GetElementCount();
+	const JSize dirCount = GetItemCount();
 	for (JIndex i=1; i<=dirCount; i++)
 	{
 		output << JBoolToString(true);
 
-		const DirInfo info = itsDirList->GetElement(i);
+		const DirInfo info = itsDirList->GetItem(i);
 		output << ' ' << *(info.path);
 		output << ' ' << JBoolToString(info.recurse);
 		output << '\n';
@@ -357,8 +357,8 @@ operator==
 	}
 
 	bool sameDirs = false;
-	const JSize count = l1.GetElementCount();
-	if (count == l2.GetElementCount())
+	const JSize count = l1.GetItemCount();
+	if (count == l2.GetItemCount())
 	{
 		sameDirs = true;
 		for (JIndex i=1; i<=count; i++)
@@ -384,10 +384,10 @@ operator==
 void
 DirInfoList::DeleteAll()
 {
-	const JSize count = GetElementCount();
+	const JSize count = GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		jdelete (GetElement(i)).path;
+		jdelete (GetItem(i)).path;
 	}
 	RemoveAll();
 }

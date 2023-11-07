@@ -203,7 +203,7 @@ JIndex i;
 		assert( pInfo.name != nullptr );
 
 		input >> *(pInfo.name) >> pInfo.indexFromFile >> pInfo.inheritance;
-		itsParentInfo->AppendElement(pInfo);
+		itsParentInfo->AppendItem(pInfo);
 	}
 
 	// functions
@@ -305,7 +305,7 @@ Class::StreamOut
 
 	for (JIndex i=1; i<=parentCount; i++)
 	{
-		const ParentInfo pInfo = itsParentInfo->GetElement(i);
+		const ParentInfo pInfo = itsParentInfo->GetItem(i);
 		output << ' ' << *(pInfo.name);
 		output << ' ' << itsTree->ClassToIndexForWrite(pInfo.parent);
 		output << ' ' << pInfo.inheritance;
@@ -414,7 +414,7 @@ Class::AddParent
 {
 	ParentInfo pInfo(jnew JString(name), nullptr, type);
 	assert( pInfo.name != nullptr );
-	itsParentInfo->AppendElement(pInfo);
+	itsParentInfo->AppendItem(pInfo);
 }
 
 /******************************************************************************
@@ -430,9 +430,9 @@ Class::ClearConnections()
 	const JSize parentCount = GetParentCount();
 	for (JIndex i=1; i<=parentCount; i++)
 	{
-		ParentInfo pInfo = itsParentInfo->GetElement(i);
+		ParentInfo pInfo = itsParentInfo->GetItem(i);
 		pInfo.parent     = nullptr;
-		itsParentInfo->SetElement(i, pInfo);
+		itsParentInfo->SetItem(i, pInfo);
 	}
 
 	itsHasPrimaryChildrenFlag   = false;
@@ -459,7 +459,7 @@ Class::FindParents
 	const JSize parentCount = GetParentCount();
 	for (JIndex i=1; i<=parentCount; i++)
 	{
-		ParentInfo pInfo         = itsParentInfo->GetElement(i);
+		ParentInfo pInfo         = itsParentInfo->GetItem(i);
 		const bool parentWasNull = pInfo.parent == nullptr;
 
 		if (parentWasNull &&
@@ -472,7 +472,7 @@ Class::FindParents
 		{
 			foundAnotherParent = true;
 			pInfo.parent->AddChild(this, i==1);
-			itsParentInfo->SetElement(i, pInfo);
+			itsParentInfo->SetItem(i, pInfo);
 		}
 	}
 
@@ -623,7 +623,7 @@ Class::GetParent
 {
 	if (itsParentInfo->IndexValid(index))
 	{
-		ParentInfo pInfo = itsParentInfo->GetElement(index);
+		ParentInfo pInfo = itsParentInfo->GetItem(index);
 		*parent          = pInfo.parent;
 		return *parent != nullptr;
 	}
@@ -753,13 +753,13 @@ Class::ViewHeader()
 void
 Class::FindParentsAfterRead()
 {
-	const JSize count = itsParentInfo->GetElementCount();
+	const JSize count = itsParentInfo->GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		ParentInfo pInfo    = itsParentInfo->GetElement(i);
+		ParentInfo pInfo    = itsParentInfo->GetItem(i);
 		pInfo.parent        = itsTree->IndexToClassAfterRead(pInfo.indexFromFile);
 		pInfo.indexFromFile = 0;	// make sure we never use it again
-		itsParentInfo->SetElement(i, pInfo);
+		itsParentInfo->SetItem(i, pInfo);
 	}
 }
 
