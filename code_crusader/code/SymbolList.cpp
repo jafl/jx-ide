@@ -91,7 +91,7 @@ SymbolList::GetSymbol
 	)
 	const
 {
-	const SymbolInfo info = itsSymbolList->GetElement(symbolIndex);
+	const SymbolInfo info = itsSymbolList->GetItem(symbolIndex);
 	*lang                 = info.lang;
 	*type                 = info.type;
 
@@ -100,7 +100,7 @@ SymbolList::GetSymbol
 		*fullyQualifiedFileScope = info.fullyQualifiedFileScope;
 	}
 
-	return *(info.name);
+	return *info.name;
 }
 
 /******************************************************************************
@@ -116,7 +116,7 @@ SymbolList::GetFile
 	)
 	const
 {
-	const SymbolInfo info = itsSymbolList->GetElement(symbolIndex);
+	const SymbolInfo info = itsSymbolList->GetItem(symbolIndex);
 	*lineIndex            = info.lineIndex;
 	return itsProjDoc->GetAllFileList()->GetFileName(info.fileID);
 }
@@ -136,7 +136,7 @@ SymbolList::IsUniqueClassName
 	)
 	const
 {
-	const JSize symCount  = itsSymbolList->GetElementCount();
+	const JSize symCount  = itsSymbolList->GetItemCount();
 	const SymbolInfo* sym = itsSymbolList->GetCArray();
 
 	bool found = false;
@@ -196,10 +196,10 @@ SymbolList::FindSymbol
 	JIndex startIndex;
 	if (itsSymbolList->SearchSorted(target, JListT::kFirstMatch, &startIndex))
 	{
-		const JSize count = itsSymbolList->GetElementCount();
+		const JSize count = itsSymbolList->GetItemCount();
 		for (JIndex i=startIndex; i<=count; i++)
 		{
-			const SymbolInfo info = itsSymbolList->GetElement(i);
+			const SymbolInfo info = itsSymbolList->GetItem(i);
 			if (CompareSymbols(target, info) != std::weak_ordering::equivalent)
 			{
 				break;
@@ -211,16 +211,16 @@ SymbolList::FindSymbol
 					IsFileScope(info.type))
 				{
 					matchList->RemoveAll();
-					matchList->AppendElement(i);
+					matchList->AppendItem(i);
 					break;
 				}
 
 				if ((findDeclaration || !IsPrototype(info.type)) &&
 					(findDefinition  || !IsFunction(info.type)))
 				{
-					matchList->AppendElement(i);
+					matchList->AppendItem(i);
 				}
-				allMatchList.AppendElement(i);
+				allMatchList.AppendItem(i);
 			}
 		}
 	}
@@ -303,20 +303,20 @@ SymbolList::ConvertToFullNames
 	// substitute indicies of fully qualified symbols
 	// and filter based on namespace context
 
-	const JSize symCount  = itsSymbolList->GetElementCount();
+	const JSize symCount  = itsSymbolList->GetItemCount();
 	const SymbolInfo* sym = itsSymbolList->GetCArray();
 
-	const JSize count = noContextList->GetElementCount();
+	const JSize count = noContextList->GetItemCount();
 	JString s1, s2, s3;
 	for (JIndex i=count; i>=1; i--)
 	{
-		const JIndex j               = noContextList->GetElement(i) - 1;
+		const JIndex j               = noContextList->GetItem(i) - 1;
 		const SymbolInfo& info       = sym[j];
 		const JString::Case caseSens = IsCaseSensitive(info.lang);
 
-		s1 = "."  + *(info.name);
-		s2 = ":"  + *(info.name);
-		s3 = "\\" + *(info.name);
+		s1 = "."  + *info.name;
+		s2 = ":"  + *info.name;
+		s3 = "\\" + *info.name;
 		for (JIndex k=0; k<symCount; k++)
 		{
 			if (k != j &&
@@ -334,7 +334,7 @@ SymbolList::ConvertToFullNames
 						if (!cns.list->IsEmpty() &&
 							!InContext(*sym[k].name, *cns.list, caseSens))
 						{
-							contextList->RemoveElement(i);
+							contextList->RemoveItem(i);
 							removed = true;
 						}
 						break;
@@ -343,10 +343,10 @@ SymbolList::ConvertToFullNames
 
 				if (!removed)
 				{
-					contextList->SetElement(i, k+1);
+					contextList->SetItem(i, k+1);
 				}
 
-				noContextList->SetElement(i, k+1);
+				noContextList->SetItem(i, k+1);
 				break;
 			}
 		}
@@ -368,10 +368,10 @@ SymbolList::PrepareContextNamespaceList
 	)
 	const
 {
-	const JSize count = contextNamespace->GetElementCount();
+	const JSize count = contextNamespace->GetItemCount();
 	for (JIndex i=count; i>=1; i--)
 	{
-		JString* cns1 = contextNamespace->GetElement(i);	// name::
+		JString* cns1 = contextNamespace->GetItem(i);	// name::
 		*cns1 += namespaceOp;
 
 		auto* cns2 = jnew JString(*cns1);					// ::name::
@@ -395,11 +395,11 @@ SymbolList::InContext
 	)
 	const
 {
-	const JSize count = contextNamespace.GetElementCount();
+	const JSize count = contextNamespace.GetItemCount();
 	for (JIndex i=1; i<=count; i+=2)
 	{
-		const JString* cns1 = contextNamespace.GetElement(i);
-		const JString* cns2 = contextNamespace.GetElement(i+1);
+		const JString* cns1 = contextNamespace.GetItem(i);
+		const JString* cns2 = contextNamespace.GetItem(i+1);
 		if (fullName.StartsWith(*cns1, caseSensitive) ||
 			fullName.Contains(*cns2, caseSensitive))
 		{
@@ -456,17 +456,17 @@ SymbolList::FindAllSymbols
 				prefix.Clear();
 			}
 
-			const JSize count = itsSymbolList->GetElementCount();
+			const JSize count = itsSymbolList->GetItemCount();
 			for (JIndex i=startIndex; i<=count; i++)
 			{
-				const SymbolInfo info = itsSymbolList->GetElement(i);
+				const SymbolInfo info = itsSymbolList->GetItem(i);
 				if (info.lang == lang &&
 					(findDeclaration || !IsPrototype(info.type)) &&
 					(findDefinition  || !IsFunction(info.type)) &&
 					(JString::Compare(*info.name, *name, caseSensitive) == 0 ||
 					 (hasNamespace && info.name->StartsWith(prefix, caseSensitive))))
 				{
-					matchList->AppendElement(i);
+					matchList->AppendItem(i);
 				}
 			}
 		}
@@ -544,9 +544,9 @@ SymbolList::ClosestMatch
 
 	bool found;
 	*index = visibleList.SearchSortedOTI(0, JListT::kFirstMatch, &found);
-	if (*index > visibleList.GetElementCount())		// insert beyond end of list
+	if (*index > visibleList.GetItemCount())		// insert beyond end of list
 	{
-		*index = visibleList.GetElementCount();
+		*index = visibleList.GetItemCount();
 	}
 
 	visibleList.ClearCompareFunction();
@@ -630,19 +630,56 @@ SymbolList::UpdateFinished
 
 	// toss files that no longer exist
 
-	const JSize fileCount = deadFileList.GetElementCount();
+	const JSize fileCount = deadFileList.GetItemCount();
 	if (fileCount > 0)
 	{
 		pg.FixedLengthProcessBeginning(fileCount, JGetString("CleaningUp::SymbolList"), false, false);
 
 		for (JIndex i=1; i<=fileCount; i++)
 		{
-			RemoveFile(deadFileList.GetElement(i));
+			RemoveFile(deadFileList.GetItem(i));
 			pg.IncrementProgress();
 		}
 
 		pg.ProcessFinished();
 	}
+
+	// trim file scope paths
+
+	JSize matchLength   = 0;
+	const JString* prev = nullptr;
+	for (const auto& info : *itsSymbolList)
+	{
+		if (!info.fullyQualifiedFileScope)
+		{
+			continue;
+		}
+		else if (prev == nullptr)
+		{
+			matchLength = info.name->GetCharacterCount();
+			prev        = info.name;
+		}
+		else
+		{
+			matchLength = JMin(matchLength, JString::CalcCharacterMatchLength(*prev, *info.name));
+			prev        = info.name;
+		}
+	}
+
+	if (matchLength > 1)
+	{
+		for (const auto& info : *itsSymbolList)
+		{
+			if (info.fullyQualifiedFileScope)
+			{
+				JStringIterator iter(info.name);
+				iter.SkipNext(matchLength);
+				iter.RemoveAllPrev();
+			}
+		}
+	}
+
+	// notify
 
 	if (itsChangedDuringParseFlag && !InUpdateThread())
 	{
@@ -661,10 +698,10 @@ SymbolList::UpdateFinished
 void
 SymbolList::RemoveAllSymbols()
 {
-	const JSize count = itsSymbolList->GetElementCount();
+	const JSize count = itsSymbolList->GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		SymbolInfo info = itsSymbolList->GetElement(i);
+		SymbolInfo info = itsSymbolList->GetItem(i);
 		info.Free();
 	}
 	itsSymbolList->RemoveAll();
@@ -683,14 +720,14 @@ SymbolList::RemoveFile
 	const JIndex id
 	)
 {
-	const JSize count = itsSymbolList->GetElementCount();
+	const JSize count = itsSymbolList->GetItemCount();
 	for (JIndex i=count; i>=1; i--)
 	{
-		SymbolInfo info = itsSymbolList->GetElement(i);
+		SymbolInfo info = itsSymbolList->GetItem(i);
 		if (info.fileID == id)
 		{
 			info.Free();
-			itsSymbolList->RemoveElement(i);
+			itsSymbolList->RemoveItem(i);
 			itsChangedDuringParseFlag = true;
 		}
 	}
@@ -821,13 +858,13 @@ SymbolList::ReadSymbolList
 
 		JUtf8Character typeChar(' ');
 		JString* value;
-		if (flags.GetElement("kind", &value) && !value->IsEmpty())
+		if (flags.GetItem("kind", &value) && !value->IsEmpty())
 		{
 			typeChar = value->GetFirstCharacter();
 		}
 
 		JString* signature = nullptr;
-		if (flags.GetElement("signature", &value) && !value->IsEmpty())
+		if (flags.GetItem("signature", &value) && !value->IsEmpty())
 		{
 			signature = jnew JString(*value);
 			signature->Prepend(" ");
@@ -849,7 +886,7 @@ SymbolList::ReadSymbolList
 
 		if (IsFileScope(type))
 		{
-			auto* name1 = jnew JString(fileName);
+			auto* name1 = jnew JString(fullName);
 			*name1 += ":";
 			*name1 += *name;
 
@@ -886,7 +923,7 @@ SymbolList::ReadSetup
 	{
 		ReadSetup(*input, vers);
 
-		itsReparseAllFlag = vers < 92 || (itsSymbolList->IsEmpty() && IsActive());
+		itsReparseAllFlag = vers < 93 || (itsSymbolList->IsEmpty() && IsActive());
 	}
 }
 
@@ -941,7 +978,7 @@ SymbolList::ReadSetup
 			}
 		}
 
-		itsSymbolList->AppendElement(
+		itsSymbolList->AppendItem(
 			SymbolInfo(name, signature, (Language) lang, (Type) type,
 					   fullyQualifiedFileScope, fileID, lineIndex));
 	}
@@ -973,12 +1010,12 @@ SymbolList::WriteSetup
 {
 	if (symOutput != nullptr)
 	{
-		const JSize symbolCount = itsSymbolList->GetElementCount();
+		const JSize symbolCount = itsSymbolList->GetItemCount();
 		*symOutput << ' ' << symbolCount;
 
 		for (JIndex i=1; i<=symbolCount; i++)
 		{
-			const SymbolInfo info = itsSymbolList->GetElement(i);
+			const SymbolInfo info = itsSymbolList->GetItem(i);
 			*symOutput << ' ' << *(info.name);
 			*symOutput << ' ' << (long) info.lang;
 			*symOutput << ' ' << (long) info.type;
