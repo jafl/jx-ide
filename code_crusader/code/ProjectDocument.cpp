@@ -1107,7 +1107,7 @@ ProjectDocument::CanReadFile
 JXFileDocument::FileStatus
 ProjectDocument::CanReadFile
 	(
-	std::istream&		input,
+	std::istream&	input,
 	JFileVersion*	actualFileVersion
 	)
 {
@@ -1594,7 +1594,7 @@ ProjectDocument::BuildWindow
 	itsPrefsMenu = menuBar->AppendTextMenu(JGetString("PrefsMenuTitle::JXGlobal"));
 	itsPrefsMenu->SetMenuItems(kPrefsMenuStr, "ProjectDocument");
 	itsPrefsMenu->SetUpdateAction(JXMenu::kDisableNone);
-	itsSourceMenu->AttachHandlers(this,
+	itsPrefsMenu->AttachHandlers(this,
 		&ProjectDocument::UpdatePrefsMenu,
 		&ProjectDocument::HandlePrefsMenu);
 
