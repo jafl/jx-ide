@@ -19,8 +19,8 @@
 StackArgNode::StackArgNode
 	(
 	StackFrameNode*	parent,
-	const JString&		name,
-	const JString&		value
+	const JString&	name,
+	const JString&	value
 	)
 	:
 	JNamedTreeNode(nullptr, name, false),

@@ -245,7 +245,7 @@ x\" {
 		if (!itsImportAlias.IsEmpty())
 			{
 			itsAliasKeys->Append(itsImportAlias);
-			itsAliasMap->SetNewElement(itsImportAlias, itsImportPackage);
+			itsAliasMap->SetNewItem(itsImportAlias, itsImportPackage);
 			}
 		itsImportPackages->Append(itsImportPackage);
 		start(text()[0] == ':' ? IMPORT_ALIAS_STATE : INITIAL);
@@ -637,7 +637,7 @@ TreeScanner::D::Scanner::StoreAlias
 		}
 
 	itsAliasKeys->Append(key);
-	itsAliasMap->SetNewElement(*key, value);
+	itsAliasMap->SetNewItem(*key, value);
 
 	if (!itsNamespaceStack->IsEmpty())
 		{
@@ -652,6 +652,6 @@ TreeScanner::D::Scanner::StoreAlias
 			}
 
 		itsAliasKeys->Append(key);
-		itsAliasMap->SetNewElement(*key, value);
+		itsAliasMap->SetNewItem(*key, value);
 		}
 }

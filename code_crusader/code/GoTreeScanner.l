@@ -164,7 +164,7 @@ type\b {
 	const JStringMatch m = modulePattern.Match(s, JRegex::kIncludeSubmatches);
 	if (!m.IsEmpty() && !itsImportAlias.IsEmpty())
 		{
-		itsImportMap->SetNewElement(itsImportAlias, m.GetSubstring(1));
+		itsImportMap->SetNewItem(itsImportAlias, m.GetSubstring(1));
 		}
 	start(INITIAL);
 	}

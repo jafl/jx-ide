@@ -1854,7 +1854,7 @@ gdb::Link::ParseMap
 			}
 		}
 
-		map->SetNewElement(key, value);
+		map->SetNewItem(key, value);
 
 		int c = stream.peek();
 		if (c == '}')

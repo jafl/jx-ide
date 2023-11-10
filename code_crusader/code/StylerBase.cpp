@@ -390,7 +390,7 @@ StylerBase::SetDefaultFontColor
 			if (style.color == itsDefColor)
 			{
 				style.color = color;
-				itsWordStyles->SetOldElement(cursor.GetKey(), style);
+				itsWordStyles->SetOldItem(cursor.GetKey(), style);
 			}
 		}
 

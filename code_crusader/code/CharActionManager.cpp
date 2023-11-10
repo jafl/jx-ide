@@ -48,7 +48,7 @@ CharActionManager::CharActionManager
 	JStringMapCursor cursor(source.itsActionMap);
 	while (cursor.Next())
 	{
-		itsActionMap->SetNewElement(
+		itsActionMap->SetNewItem(
 			cursor.GetKey().GetFirstCharacter(),
 			*cursor.GetValue());
 	}

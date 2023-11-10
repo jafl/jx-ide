@@ -1317,7 +1317,7 @@ void
 TextDocument::WriteTextFile
 	(
 	std::ostream&	output,
-	const bool	safetySave
+	const bool		safetySave
 	)
 	const
 {
