@@ -8,10 +8,10 @@
 #include "globals.h"
 #include "DockManager.h"
 #include "FnMenuUpdater.h"
-#include "GDBLink.h"
-#include "LLDBLink.h"
-#include "JVMLink.h"
-#include "XDLink.h"
+#include "gdb/Link.h"
+#include "lldb/Link.h"
+#include "jvm/Link.h"
+#include "xdebug/Link.h"
 #include "CommandDirector.h"
 #include <jx-af/jx/JXWDManager.h>
 #include <jx-af/jx/JXPSPrinter.h>

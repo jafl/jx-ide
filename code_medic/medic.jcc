@@ -4,17 +4,17 @@ jx_browser_data 93
 T
 1 "var parsing"
 T
-2 "GDBVarTreeParserY.y"
+2 "VarTreeParserY.y"
 F
-"./backend/gdb/GDBVarTreeParserY.y"
+"./backend/gdb/VarTreeParserY.y"
 T
-2 "GDBVarTreeScanner.l"
+2 "VarTreeScanner.l"
 F
-"./backend/gdb/GDBVarTreeScanner.l"
+"./backend/gdb/VarTreeScanner.l"
 T
-2 "GDBVarTreeParser.cpp"
+2 "VarTreeParser.cpp"
 F
-"./backend/gdb/GDBVarTreeParser.cpp"
+"./backend/gdb/VarTreeParser.cpp"
 F
 T
 1 "jcc"
@@ -464,433 +464,433 @@ F
 T
 1 "gbd"
 T
-2 "GDBOutputScanner.l"
+2 "OutputScanner.l"
 F
-"./backend/gdb/GDBOutputScanner.l"
+"./backend/gdb/OutputScanner.l"
 T
-2 "GDBLink.cpp"
+2 "Link.cpp"
 F
-"./backend/gdb/GDBLink.cpp"
+"./backend/gdb/Link.cpp"
 T
-2 "GDBPingTask.cpp"
+2 "PingTask.cpp"
 F
-"./backend/gdb/GDBPingTask.cpp"
+"./backend/gdb/PingTask.cpp"
 T
-2 "GDBBreakpointManager.cpp"
+2 "BreakpointManager.cpp"
 F
-"./backend/gdb/GDBBreakpointManager.cpp"
+"./backend/gdb/BreakpointManager.cpp"
 T
-2 "GDBAnalyzeCoreCmd.cpp"
+2 "AnalyzeCoreCmd.cpp"
 F
-"./backend/gdb/GDBAnalyzeCoreCmd.cpp"
+"./backend/gdb/AnalyzeCoreCmd.cpp"
 T
-2 "GDBArray2DCmd.cpp"
+2 "Array2DCmd.cpp"
 F
-"./backend/gdb/GDBArray2DCmd.cpp"
+"./backend/gdb/Array2DCmd.cpp"
 T
-2 "GDBPlot2DCmd.cpp"
+2 "Plot2DCmd.cpp"
 F
-"./backend/gdb/GDBPlot2DCmd.cpp"
+"./backend/gdb/Plot2DCmd.cpp"
 T
-2 "GDBCheckCoreStatusCmd.cpp"
+2 "CheckCoreStatusCmd.cpp"
 F
-"./backend/gdb/GDBCheckCoreStatusCmd.cpp"
+"./backend/gdb/CheckCoreStatusCmd.cpp"
 T
-2 "GDBDisplaySourceForMainCmd.cpp"
+2 "DisplaySourceForMainCmd.cpp"
 F
-"./backend/gdb/GDBDisplaySourceForMainCmd.cpp"
+"./backend/gdb/DisplaySourceForMainCmd.cpp"
 T
-2 "GDBGetAssemblyCmd.cpp"
+2 "GetAssemblyCmd.cpp"
 F
-"./backend/gdb/GDBGetAssemblyCmd.cpp"
+"./backend/gdb/GetAssemblyCmd.cpp"
 T
-2 "GDBGetBreakpointsCmd.cpp"
+2 "GetBreakpointsCmd.cpp"
 F
-"./backend/gdb/GDBGetBreakpointsCmd.cpp"
+"./backend/gdb/GetBreakpointsCmd.cpp"
 T
-2 "GDBGetCompletionsCmd.cpp"
+2 "GetCompletionsCmd.cpp"
 F
-"./backend/gdb/GDBGetCompletionsCmd.cpp"
+"./backend/gdb/GetCompletionsCmd.cpp"
 T
-2 "GDBGetFrameCmd.cpp"
+2 "GetFrameCmd.cpp"
 F
-"./backend/gdb/GDBGetFrameCmd.cpp"
+"./backend/gdb/GetFrameCmd.cpp"
 T
-2 "GDBGetFullPathCmd.cpp"
+2 "GetFullPathCmd.cpp"
 F
-"./backend/gdb/GDBGetFullPathCmd.cpp"
+"./backend/gdb/GetFullPathCmd.cpp"
 T
-2 "GDBGetInitArgsCmd.cpp"
+2 "GetInitArgsCmd.cpp"
 F
-"./backend/gdb/GDBGetInitArgsCmd.cpp"
+"./backend/gdb/GetInitArgsCmd.cpp"
 T
-2 "GDBGetLocalVarsCmd.cpp"
+2 "GetLocalVarsCmd.cpp"
 F
-"./backend/gdb/GDBGetLocalVarsCmd.cpp"
+"./backend/gdb/GetLocalVarsCmd.cpp"
 T
-2 "GDBGetMemoryCmd.cpp"
+2 "GetMemoryCmd.cpp"
 F
-"./backend/gdb/GDBGetMemoryCmd.cpp"
+"./backend/gdb/GetMemoryCmd.cpp"
 T
-2 "GDBGetProgramNameCmd.cpp"
+2 "GetProgramNameCmd.cpp"
 F
-"./backend/gdb/GDBGetProgramNameCmd.cpp"
+"./backend/gdb/GetProgramNameCmd.cpp"
 T
-2 "GDBGetRegistersCmd.cpp"
+2 "GetRegistersCmd.cpp"
 F
-"./backend/gdb/GDBGetRegistersCmd.cpp"
+"./backend/gdb/GetRegistersCmd.cpp"
 T
-2 "GDBGetSourceFileListCmd.cpp"
+2 "GetSourceFileListCmd.cpp"
 F
-"./backend/gdb/GDBGetSourceFileListCmd.cpp"
+"./backend/gdb/GetSourceFileListCmd.cpp"
 T
-2 "GDBGetStackCmd.cpp"
+2 "GetStackCmd.cpp"
 F
-"./backend/gdb/GDBGetStackCmd.cpp"
+"./backend/gdb/GetStackCmd.cpp"
 T
-2 "GDBGetStackArgumentsCmd.cpp"
+2 "GetStackArgumentsCmd.cpp"
 F
-"./backend/gdb/GDBGetStackArgumentsCmd.cpp"
+"./backend/gdb/GetStackArgumentsCmd.cpp"
 T
-2 "GDBGetStopLocationCmd.cpp"
+2 "GetStopLocationCmd.cpp"
 F
-"./backend/gdb/GDBGetStopLocationCmd.cpp"
+"./backend/gdb/GetStopLocationCmd.cpp"
 T
-2 "GDBGetStopLocationForLinkCmd.cpp"
+2 "GetStopLocationForLinkCmd.cpp"
 F
-"./backend/gdb/GDBGetStopLocationForLinkCmd.cpp"
+"./backend/gdb/GetStopLocationForLinkCmd.cpp"
 T
-2 "GDBGetStopLocationForAsmCmd.cpp"
+2 "GetStopLocationForAsmCmd.cpp"
 F
-"./backend/gdb/GDBGetStopLocationForAsmCmd.cpp"
+"./backend/gdb/GetStopLocationForAsmCmd.cpp"
 T
-2 "GDBGetThreadCmd.cpp"
+2 "GetThreadCmd.cpp"
 F
-"./backend/gdb/GDBGetThreadCmd.cpp"
+"./backend/gdb/GetThreadCmd.cpp"
 T
-2 "GDBGetThreadsCmd.cpp"
+2 "GetThreadsCmd.cpp"
 F
-"./backend/gdb/GDBGetThreadsCmd.cpp"
+"./backend/gdb/GetThreadsCmd.cpp"
 T
-2 "GDBSimpleCmd.cpp"
+2 "SimpleCmd.cpp"
 F
-"./backend/gdb/GDBSimpleCmd.cpp"
+"./backend/gdb/SimpleCmd.cpp"
 T
-2 "GDBVarCmd.cpp"
+2 "VarCmd.cpp"
 F
-"./backend/gdb/GDBVarCmd.cpp"
+"./backend/gdb/VarCmd.cpp"
 T
-2 "GDBVarNode.cpp"
+2 "VarNode.cpp"
 F
-"./backend/gdb/GDBVarNode.cpp"
+"./backend/gdb/VarNode.cpp"
 F
 T
 1 "lldb"
 T
-2 "LLDBLink.cpp"
+2 "Link.cpp"
 F
-"./backend/lldb/LLDBLink.cpp"
+"./backend/lldb/Link.cpp"
 T
-2 "LLDBEventTask.cpp"
+2 "EventTask.cpp"
 F
-"./backend/lldb/LLDBEventTask.cpp"
+"./backend/lldb/EventTask.cpp"
 T
-2 "LLDBWelcomeTask.cpp"
+2 "WelcomeTask.cpp"
 F
-"./backend/lldb/LLDBWelcomeTask.cpp"
+"./backend/lldb/WelcomeTask.cpp"
 T
-2 "LLDBSymbolsLoadedTask.cpp"
+2 "SymbolsLoadedTask.cpp"
 F
-"./backend/lldb/LLDBSymbolsLoadedTask.cpp"
+"./backend/lldb/SymbolsLoadedTask.cpp"
 T
-2 "LLDBRunBackgroundCmdTask.cpp"
+2 "RunBackgroundCmdTask.cpp"
 F
-"./backend/lldb/LLDBRunBackgroundCmdTask.cpp"
+"./backend/lldb/RunBackgroundCmdTask.cpp"
 T
-2 "LLDBBreakpointManager.cpp"
+2 "BreakpointManager.cpp"
 F
-"./backend/lldb/LLDBBreakpointManager.cpp"
+"./backend/lldb/BreakpointManager.cpp"
 T
-2 "LLDBArray2DCmd.cpp"
+2 "Array2DCmd.cpp"
 F
-"./backend/lldb/LLDBArray2DCmd.cpp"
+"./backend/lldb/Array2DCmd.cpp"
 T
-2 "LLDBPlot2DCmd.cpp"
+2 "Plot2DCmd.cpp"
 F
-"./backend/lldb/LLDBPlot2DCmd.cpp"
+"./backend/lldb/Plot2DCmd.cpp"
 T
-2 "LLDBDisplaySourceForMainCmd.cpp"
+2 "DisplaySourceForMainCmd.cpp"
 F
-"./backend/lldb/LLDBDisplaySourceForMainCmd.cpp"
+"./backend/lldb/DisplaySourceForMainCmd.cpp"
 T
-2 "LLDBGetAssemblyCmd.cpp"
+2 "GetAssemblyCmd.cpp"
 F
-"./backend/lldb/LLDBGetAssemblyCmd.cpp"
+"./backend/lldb/GetAssemblyCmd.cpp"
 T
-2 "LLDBGetBreakpointsCmd.cpp"
+2 "GetBreakpointsCmd.cpp"
 F
-"./backend/lldb/LLDBGetBreakpointsCmd.cpp"
+"./backend/lldb/GetBreakpointsCmd.cpp"
 T
-2 "LLDBGetCompletionsCmd.cpp"
+2 "GetCompletionsCmd.cpp"
 F
-"./backend/lldb/LLDBGetCompletionsCmd.cpp"
+"./backend/lldb/GetCompletionsCmd.cpp"
 T
-2 "LLDBGetFrameCmd.cpp"
+2 "GetFrameCmd.cpp"
 F
-"./backend/lldb/LLDBGetFrameCmd.cpp"
+"./backend/lldb/GetFrameCmd.cpp"
 T
-2 "LLDBGetFullPathCmd.cpp"
+2 "GetFullPathCmd.cpp"
 F
-"./backend/lldb/LLDBGetFullPathCmd.cpp"
+"./backend/lldb/GetFullPathCmd.cpp"
 T
-2 "LLDBGetInitArgsCmd.cpp"
+2 "GetInitArgsCmd.cpp"
 F
-"./backend/lldb/LLDBGetInitArgsCmd.cpp"
+"./backend/lldb/GetInitArgsCmd.cpp"
 T
-2 "LLDBGetLocalVarsCmd.cpp"
+2 "GetLocalVarsCmd.cpp"
 F
-"./backend/lldb/LLDBGetLocalVarsCmd.cpp"
+"./backend/lldb/GetLocalVarsCmd.cpp"
 T
-2 "LLDBGetMemoryCmd.cpp"
+2 "GetMemoryCmd.cpp"
 F
-"./backend/lldb/LLDBGetMemoryCmd.cpp"
+"./backend/lldb/GetMemoryCmd.cpp"
 T
-2 "LLDBGetRegistersCmd.cpp"
+2 "GetRegistersCmd.cpp"
 F
-"./backend/lldb/LLDBGetRegistersCmd.cpp"
+"./backend/lldb/GetRegistersCmd.cpp"
 T
-2 "LLDBGetSourceFileListCmd.cpp"
+2 "GetSourceFileListCmd.cpp"
 F
-"./backend/lldb/LLDBGetSourceFileListCmd.cpp"
+"./backend/lldb/GetSourceFileListCmd.cpp"
 T
-2 "LLDBGetStackCmd.cpp"
+2 "GetStackCmd.cpp"
 F
-"./backend/lldb/LLDBGetStackCmd.cpp"
+"./backend/lldb/GetStackCmd.cpp"
 T
-2 "LLDBGetThreadCmd.cpp"
+2 "GetThreadCmd.cpp"
 F
-"./backend/lldb/LLDBGetThreadCmd.cpp"
+"./backend/lldb/GetThreadCmd.cpp"
 T
-2 "LLDBGetThreadsCmd.cpp"
+2 "GetThreadsCmd.cpp"
 F
-"./backend/lldb/LLDBGetThreadsCmd.cpp"
+"./backend/lldb/GetThreadsCmd.cpp"
 T
-2 "LLDBVarCmd.cpp"
+2 "VarCmd.cpp"
 F
-"./backend/lldb/LLDBVarCmd.cpp"
+"./backend/lldb/VarCmd.cpp"
 T
-2 "LLDBVarNode.cpp"
+2 "VarNode.cpp"
 F
-"./backend/lldb/LLDBVarNode.cpp"
+"./backend/lldb/VarNode.cpp"
 F
 T
 1 "JVM"
 T
-2 "JVMLink.cpp"
+2 "Link.cpp"
 F
-"./backend/jvm/JVMLink.cpp"
+"./backend/jvm/Link.cpp"
 T
-2 "JVMSocket.cpp"
+2 "Socket.cpp"
 F
-"./backend/jvm/JVMSocket.cpp"
+"./backend/jvm/Socket.cpp"
 T
-2 "JVMThreadNode.cpp"
+2 "ThreadNode.cpp"
 F
-"./backend/jvm/JVMThreadNode.cpp"
+"./backend/jvm/ThreadNode.cpp"
 T
-2 "JVMStackFrameNode.cpp"
+2 "StackFrameNode.cpp"
 F
-"./backend/jvm/JVMStackFrameNode.cpp"
+"./backend/jvm/StackFrameNode.cpp"
 T
-2 "JVMGetThreadGroupsCmd.cpp"
+2 "GetThreadGroupsCmd.cpp"
 F
-"./backend/jvm/JVMGetThreadGroupsCmd.cpp"
+"./backend/jvm/GetThreadGroupsCmd.cpp"
 T
-2 "JVMGetThreadNameCmd.cpp"
+2 "GetThreadNameCmd.cpp"
 F
-"./backend/jvm/JVMGetThreadNameCmd.cpp"
+"./backend/jvm/GetThreadNameCmd.cpp"
 T
-2 "JVMGetThreadParentCmd.cpp"
+2 "GetThreadParentCmd.cpp"
 F
-"./backend/jvm/JVMGetThreadParentCmd.cpp"
+"./backend/jvm/GetThreadParentCmd.cpp"
 T
-2 "JVMGetClassInfoCmd.cpp"
+2 "GetClassInfoCmd.cpp"
 F
-"./backend/jvm/JVMGetClassInfoCmd.cpp"
+"./backend/jvm/GetClassInfoCmd.cpp"
 T
-2 "JVMGetClassMethodsCmd.cpp"
+2 "GetClassMethodsCmd.cpp"
 F
-"./backend/jvm/JVMGetClassMethodsCmd.cpp"
+"./backend/jvm/GetClassMethodsCmd.cpp"
 T
-2 "JVMWelcomeTask.cpp"
+2 "WelcomeTask.cpp"
 F
-"./backend/jvm/JVMWelcomeTask.cpp"
+"./backend/jvm/WelcomeTask.cpp"
 T
-2 "JVMSetProgramTask.cpp"
+2 "SetProgramTask.cpp"
 F
-"./backend/jvm/JVMSetProgramTask.cpp"
+"./backend/jvm/SetProgramTask.cpp"
 T
-2 "JVMBreakpointManager.cpp"
+2 "BreakpointManager.cpp"
 F
-"./backend/jvm/JVMBreakpointManager.cpp"
+"./backend/jvm/BreakpointManager.cpp"
 T
-2 "JVMDisplaySourceForMainCmd.cpp"
+2 "DisplaySourceForMainCmd.cpp"
 F
-"./backend/jvm/JVMDisplaySourceForMainCmd.cpp"
+"./backend/jvm/DisplaySourceForMainCmd.cpp"
 T
-2 "JVMGetCompletionsCmd.cpp"
+2 "GetCompletionsCmd.cpp"
 F
-"./backend/jvm/JVMGetCompletionsCmd.cpp"
+"./backend/jvm/GetCompletionsCmd.cpp"
 T
-2 "JVMGetIDSizesCmd.cpp"
+2 "GetIDSizesCmd.cpp"
 F
-"./backend/jvm/JVMGetIDSizesCmd.cpp"
+"./backend/jvm/GetIDSizesCmd.cpp"
 T
-2 "JVMGetSourceFileListCmd.cpp"
+2 "GetSourceFileListCmd.cpp"
 F
-"./backend/jvm/JVMGetSourceFileListCmd.cpp"
+"./backend/jvm/GetSourceFileListCmd.cpp"
 T
-2 "JVMGetStackCmd.cpp"
+2 "GetStackCmd.cpp"
 F
-"./backend/jvm/JVMGetStackCmd.cpp"
+"./backend/jvm/GetStackCmd.cpp"
 T
-2 "JVMGetThreadCmd.cpp"
+2 "GetThreadCmd.cpp"
 F
-"./backend/jvm/JVMGetThreadCmd.cpp"
+"./backend/jvm/GetThreadCmd.cpp"
 T
-2 "JVMGetThreadsCmd.cpp"
+2 "GetThreadsCmd.cpp"
 F
-"./backend/jvm/JVMGetThreadsCmd.cpp"
+"./backend/jvm/GetThreadsCmd.cpp"
 T
-2 "JVMVarNode.cpp"
+2 "VarNode.cpp"
 F
-"./backend/jvm/JVMVarNode.cpp"
+"./backend/jvm/VarNode.cpp"
 F
 T
 1 "JVM - todo"
 T
-2 "JVMArray2DCmd.cpp"
+2 "Array2DCmd.cpp"
 F
-"./backend/jvm/JVMArray2DCmd.cpp"
+"./backend/jvm/Array2DCmd.cpp"
 T
-2 "JVMPlot2DCmd.cpp"
+2 "Plot2DCmd.cpp"
 F
-"./backend/jvm/JVMPlot2DCmd.cpp"
+"./backend/jvm/Plot2DCmd.cpp"
 T
-2 "JVMGetBreakpointsCmd.cpp"
+2 "GetBreakpointsCmd.cpp"
 F
-"./backend/jvm/JVMGetBreakpointsCmd.cpp"
+"./backend/jvm/GetBreakpointsCmd.cpp"
 T
-2 "JVMGetFrameCmd.cpp"
+2 "GetFrameCmd.cpp"
 F
-"./backend/jvm/JVMGetFrameCmd.cpp"
+"./backend/jvm/GetFrameCmd.cpp"
 T
-2 "JVMGetFullPathCmd.cpp"
+2 "GetFullPathCmd.cpp"
 F
-"./backend/jvm/JVMGetFullPathCmd.cpp"
+"./backend/jvm/GetFullPathCmd.cpp"
 T
-2 "JVMGetInitArgsCmd.cpp"
+2 "GetInitArgsCmd.cpp"
 F
-"./backend/jvm/JVMGetInitArgsCmd.cpp"
+"./backend/jvm/GetInitArgsCmd.cpp"
 T
-2 "JVMGetLocalVarsCmd.cpp"
+2 "GetLocalVarsCmd.cpp"
 F
-"./backend/jvm/JVMGetLocalVarsCmd.cpp"
+"./backend/jvm/GetLocalVarsCmd.cpp"
 T
-2 "JVMVarCmd.cpp"
+2 "VarCmd.cpp"
 F
-"./backend/jvm/JVMVarCmd.cpp"
+"./backend/jvm/VarCmd.cpp"
 F
 T
 1 "Xdebug"
 T
-2 "XDLink.cpp"
+2 "Link.cpp"
 F
-"./backend/xdebug/XDLink.cpp"
+"./backend/xdebug/Link.cpp"
 T
-2 "XDSocket.cpp"
+2 "Socket.cpp"
 F
-"./backend/xdebug/XDSocket.cpp"
+"./backend/xdebug/Socket.cpp"
 T
-2 "XDWelcomeTask.cpp"
+2 "WelcomeTask.cpp"
 F
-"./backend/xdebug/XDWelcomeTask.cpp"
+"./backend/xdebug/WelcomeTask.cpp"
 T
-2 "XDSetProgramTask.cpp"
+2 "SetProgramTask.cpp"
 F
-"./backend/xdebug/XDSetProgramTask.cpp"
+"./backend/xdebug/SetProgramTask.cpp"
 T
-2 "XDCloseSocketTask.cpp"
+2 "CloseSocketTask.cpp"
 F
-"./backend/xdebug/XDCloseSocketTask.cpp"
+"./backend/xdebug/CloseSocketTask.cpp"
 T
-2 "XDBreakpointManager.cpp"
+2 "BreakpointManager.cpp"
 F
-"./backend/xdebug/XDBreakpointManager.cpp"
+"./backend/xdebug/BreakpointManager.cpp"
 T
-2 "XDArray2DCmd.cpp"
+2 "Array2DCmd.cpp"
 F
-"./backend/xdebug/XDArray2DCmd.cpp"
+"./backend/xdebug/Array2DCmd.cpp"
 T
-2 "XDPlot2DCmd.cpp"
+2 "Plot2DCmd.cpp"
 F
-"./backend/xdebug/XDPlot2DCmd.cpp"
+"./backend/xdebug/Plot2DCmd.cpp"
 T
-2 "XDDisplaySourceForMainCmd.cpp"
+2 "DisplaySourceForMainCmd.cpp"
 F
-"./backend/xdebug/XDDisplaySourceForMainCmd.cpp"
+"./backend/xdebug/DisplaySourceForMainCmd.cpp"
 T
-2 "XDGetBreakpointsCmd.cpp"
+2 "GetBreakpointsCmd.cpp"
 F
-"./backend/xdebug/XDGetBreakpointsCmd.cpp"
+"./backend/xdebug/GetBreakpointsCmd.cpp"
 T
-2 "XDGetCompletionsCmd.cpp"
+2 "GetCompletionsCmd.cpp"
 F
-"./backend/xdebug/XDGetCompletionsCmd.cpp"
+"./backend/xdebug/GetCompletionsCmd.cpp"
 T
-2 "XDGetContextVarsCmd.cpp"
+2 "GetContextVarsCmd.cpp"
 F
-"./backend/xdebug/XDGetContextVarsCmd.cpp"
+"./backend/xdebug/GetContextVarsCmd.cpp"
 T
-2 "XDGetFrameCmd.cpp"
+2 "GetFrameCmd.cpp"
 F
-"./backend/xdebug/XDGetFrameCmd.cpp"
+"./backend/xdebug/GetFrameCmd.cpp"
 T
-2 "XDGetFullPathCmd.cpp"
+2 "GetFullPathCmd.cpp"
 F
-"./backend/xdebug/XDGetFullPathCmd.cpp"
+"./backend/xdebug/GetFullPathCmd.cpp"
 T
-2 "XDGetInitArgsCmd.cpp"
+2 "GetInitArgsCmd.cpp"
 F
-"./backend/xdebug/XDGetInitArgsCmd.cpp"
+"./backend/xdebug/GetInitArgsCmd.cpp"
 T
-2 "XDGetLocalVarsCmd.cpp"
+2 "GetLocalVarsCmd.cpp"
 F
-"./backend/xdebug/XDGetLocalVarsCmd.cpp"
+"./backend/xdebug/GetLocalVarsCmd.cpp"
 T
-2 "XDGetSourceFileListCmd.cpp"
+2 "GetSourceFileListCmd.cpp"
 F
-"./backend/xdebug/XDGetSourceFileListCmd.cpp"
+"./backend/xdebug/GetSourceFileListCmd.cpp"
 T
-2 "XDGetStackCmd.cpp"
+2 "GetStackCmd.cpp"
 F
-"./backend/xdebug/XDGetStackCmd.cpp"
+"./backend/xdebug/GetStackCmd.cpp"
 T
-2 "XDGetThreadCmd.cpp"
+2 "GetThreadCmd.cpp"
 F
-"./backend/xdebug/XDGetThreadCmd.cpp"
+"./backend/xdebug/GetThreadCmd.cpp"
 T
-2 "XDGetThreadsCmd.cpp"
+2 "GetThreadsCmd.cpp"
 F
-"./backend/xdebug/XDGetThreadsCmd.cpp"
+"./backend/xdebug/GetThreadsCmd.cpp"
 T
-2 "XDVarCmd.cpp"
+2 "VarCmd.cpp"
 F
-"./backend/xdebug/XDVarCmd.cpp"
+"./backend/xdebug/VarCmd.cpp"
 T
-2 "XDVarNode.cpp"
+2 "VarNode.cpp"
 F
-"./backend/xdebug/XDVarNode.cpp"
+"./backend/xdebug/VarNode.cpp"
 F
 T
 1 "layouts"

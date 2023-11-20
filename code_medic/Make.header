@@ -19,8 +19,7 @@ include ${MAKE_INCLUDE}/jx_config
 include ${MAKE_INCLUDE}/jexpr_constants
 include ${MAKE_INCLUDE}/j2dplot_constants
 
-SEARCHDIRS := -I./code -I./image -I./shared \
-              $(foreach d, $(wildcard ./backend/*), -I${d}) \
+SEARCHDIRS := -I./code -I./backend -I./image -I./shared \
               ${SEARCHDIRS} -I./lldb-include \
               -I/usr/local/opt/llvm/include \
               -I/opt/homebrew/opt/llvm/include \
@@ -54,16 +53,16 @@ EXTRA_MENU_STRING_FILES := \
 include ${MAKE_INCLUDE}/app_targets
 
 # force reflex to run first
-${BIN_NAME}:: ./backend/gdb/GDBVarTreeScanner.cpp
+${BIN_NAME}:: ./backend/gdb/VarTreeScanner.cpp
 	@if [[ ! -e VarTreeParserY.hpp ]]; then ${RM} code/VarTreeParserY.o; fi
 
 .PHONY : clean
 clean::
-	@${RM} backend/gdb/GDBVarTreeParserY.cpp backend/gdb/GDBVarTreeParserY.hpp \
-           backend/gdb/GDBVarTreeScanner.cpp backend/gdb/GDBVarTreeScanner.h \
+	@${RM} backend/gdb/VarTreeParserY.cpp backend/gdb/VarTreeParserY.hpp \
+           backend/gdb/VarTreeScanner.cpp backend/gdb/VarTreeScanner.h \
            shared/*Scanner.h
 
-.PRECIOUS : backend/gdb/GDBVarTreeParserY.cpp backend/gdb/GDBVarTreeParserY.hpp
+.PRECIOUS : backend/gdb/VarTreeParserY.cpp backend/gdb/VarTreeParserY.hpp
 
 # DO NOT DELETE THIS LINE -- Code Crusader depends on it.
 
