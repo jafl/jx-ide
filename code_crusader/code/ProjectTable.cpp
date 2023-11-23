@@ -198,7 +198,7 @@ ProjectTable::NewGroup
 	}
 
 	JPoint cell;
-	if ((GetTableSelection()).GetLastSelectedCell(&cell))
+	if (GetTableSelection().GetLastSelectedCell(&cell))
 	{
 		const JTreeNode* node = GetTreeList()->GetNode(cell.y);
 		if (node->GetDepth() == kFileDepth)
@@ -730,7 +730,7 @@ ProjectTable::SelectAll()
 void
 ProjectTable::ClearSelection()
 {
-	(GetTableSelection()).ClearSelection();
+	GetTableSelection().ClearSelection();
 }
 
 /******************************************************************************
@@ -1258,7 +1258,7 @@ ProjectTable::HandleMouseDown
 			 !modifiers.shift() && !modifiers.control() && !modifiers.meta())
 	{
 		itsDragType = kWaitForDNDDrag;
-		if (!(GetTableSelection()).IsSelected(cell))
+		if (!GetTableSelection().IsSelected(cell))
 		{
 			SelectSingleCell(cell, false);
 		}
@@ -1281,7 +1281,7 @@ ProjectTable::HandleMouseDown
 	}
 	else if (button == kJXRightButton && clickCount == 1)
 	{
-		if (!(GetTableSelection()).IsSelected(cell))
+		if (!GetTableSelection().IsSelected(cell))
 		{
 			SelectSingleCell(cell, false);
 		}

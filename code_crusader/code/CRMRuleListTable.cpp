@@ -326,7 +326,7 @@ CRMRuleListTable::SwitchDisplay()
 	}
 
 	JPoint cell;
-	if ((GetTableSelection()).GetFirstSelectedCell(&cell))
+	if (GetTableSelection().GetFirstSelectedCell(&cell))
 	{
 		itsCRMIndex = cell.y;
 

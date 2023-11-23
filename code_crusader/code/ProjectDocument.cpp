@@ -365,10 +365,10 @@ ProjectDocument::Create
 		if (testContent.Contains("<<<<<<<") &&
 			testContent.Contains("=======") &&
 			testContent.Contains(">>>>>>>"))
-	{
+		{
 			JGetUserNotification()->ReportError(JGetString("VCSConflict::ProjectDocument"));
 			return kNotMyFile;
-	}
+		}
 
 		GetApplication()->DisplayBusyCursor();
 

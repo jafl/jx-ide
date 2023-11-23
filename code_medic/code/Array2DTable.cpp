@@ -248,7 +248,7 @@ Array2DTable::UpdateEditMenu()
 	JXTEBase* te = GetEditMenuHandler();
 
 	JIndex index;
-	if ((GetTableSelection()).HasSelection() &&
+	if (GetTableSelection().HasSelection() &&
 		te->EditMenuCmdToIndex(JTextEditor::kCopyCmd, &index))
 	{
 		itsEditMenu->EnableItem(index);
@@ -275,7 +275,7 @@ Array2DTable::HandleEditMenu
 	JPoint cell;
 	if (GetEditMenuHandler()->EditMenuIndexToCmd(index, &cmd) &&
 		cmd == JTextEditor::kCopyCmd &&
-		(GetTableSelection()).GetSingleSelectedCell(&cell))
+		GetTableSelection().GetSingleSelectedCell(&cell))
 	{
 		auto* data =
 			jnew JXTextSelection(GetDisplay(), GetStringData()->GetString(cell));

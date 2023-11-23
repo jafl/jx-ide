@@ -105,7 +105,7 @@ bool
 SymbolTable::HasSelection()
 	const
 {
-	return (GetTableSelection()).HasSelection();
+	return GetTableSelection().HasSelection();
 }
 
 /******************************************************************************
@@ -132,7 +132,7 @@ SymbolTable::SelectSingleEntry
 void
 SymbolTable::ClearSelection()
 {
-	(GetTableSelection()).ClearSelection();
+	GetTableSelection().ClearSelection();
 	itsKeyBuffer.Clear();
 }
 
@@ -434,7 +434,7 @@ SymbolTable::HandleMouseDown
 	}
 	else if (!GetCell(pt, &cell))
 	{
-		(GetTableSelection()).ClearSelection();
+		GetTableSelection().ClearSelection();
 	}
 	else if (button == kJXLeftButton &&
 			 clickCount == 2 &&

@@ -293,7 +293,7 @@ BreakpointTable::Receive
 {
 	if (sender == &(GetTableSelection()) && message.Is(JTableData::kRectChanged))
 	{
-		if ((GetTableSelection()).GetSingleSelectedCell(&itsSelectedCell))
+		if (GetTableSelection().GetSingleSelectedCell(&itsSelectedCell))
 		{
 			itsSelectedCell.y =
 				(itsBPList->GetItem(itsSelectedCell.y))->GetDebuggerIndex();

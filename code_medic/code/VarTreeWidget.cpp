@@ -477,7 +477,7 @@ bool
 VarTreeWidget::HasSelection()
 	const
 {
-	return (GetTableSelection()).HasSelection();
+	return GetTableSelection().HasSelection();
 }
 
 /******************************************************************************
@@ -612,7 +612,7 @@ VarTreeWidget::HandleMouseDown
 	}
 	else if (!GetCell(pt, &cell))
 	{
-		(GetTableSelection()).ClearSelection();
+		GetTableSelection().ClearSelection();
 	}
 	else if (JIndex(cell.x) == GetToggleOpenColIndex())
 	{
@@ -1023,7 +1023,7 @@ VarTreeWidget::UpdateEditMenu()
 		itsEditMenu->EnableItem(index);
 	}
 
-	if ((GetTableSelection()).HasSelection() &&
+	if (GetTableSelection().HasSelection() &&
 		te->EditMenuCmdToIndex(JTextEditor::kCopyCmd, &index))
 	{
 		assert( itsCopyPathCmdIndex == index+1 );

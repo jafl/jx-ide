@@ -422,7 +422,7 @@ StylerTable::RemoveSelection()
 void
 StylerTable::UpdateButtons()
 {
-	if (itsRemoveButton != nullptr && (GetTableSelection()).HasSelection())
+	if (itsRemoveButton != nullptr && GetTableSelection().HasSelection())
 	{
 		itsRemoveButton->Activate();
 	}

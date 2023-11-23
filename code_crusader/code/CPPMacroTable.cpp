@@ -330,7 +330,7 @@ CPPMacroTable::CreateStringTableInput
 	const JCoordinate	h
 	)
 {
-	(GetTableSelection()).ClearSelection();		// cancel ContentsValid() display
+	GetTableSelection().ClearSelection();		// cancel ContentsValid() display
 	itsRemoveRowButton->Activate();
 
 	JXInputField* input =

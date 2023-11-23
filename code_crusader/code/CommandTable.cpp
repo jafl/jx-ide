@@ -616,7 +616,7 @@ CommandTable::HandleDNDDrop
 	if (source == this && action == dndMgr->GetDNDActionMoveXAtom())
 	{
 		JPoint cell;
-		if ((GetTableSelection()).GetSingleSelectedCell(&cell) &&
+		if (GetTableSelection().GetSingleSelectedCell(&cell) &&
 			itsDNDRowIndex != JIndex(cell.y) && itsDNDRowIndex != JIndex(cell.y)+1)
 		{
 			JIndex newIndex = itsDNDRowIndex;
@@ -634,7 +634,7 @@ CommandTable::HandleDNDDrop
 	else if (source == this)
 	{
 		JPoint cell;
-		if ((GetTableSelection()).GetSingleSelectedCell(&cell))
+		if (GetTableSelection().GetSingleSelectedCell(&cell))
 		{
 			itsCmdList->InsertItemAtIndex(
 				itsDNDRowIndex, (itsCmdList->GetItem(cell.y)).Copy());
@@ -660,7 +660,7 @@ CommandTable::HandleDNDDrop
 					CommandManager::ReadCmdInfo(input, CommandManager::GetCurrentCmdInfoFileVersion());
 				if (!input.fail())
 				{
-					const JIndex newIndex = JMax(JIndex(1), itsDNDRowIndex);
+					const JIndex newIndex = JMax((JIndex) 1, itsDNDRowIndex);
 					itsCmdList->InsertItemAtIndex(newIndex, cmdInfo);
 					InsertRows(newIndex, 1);
 					SelectSingleCell(JPoint(1, newIndex));
@@ -932,7 +932,7 @@ void
 CommandTable::RemoveCommand()
 {
 	JPoint cell;
-	if ((GetTableSelection()).GetFirstSelectedCell(&cell))
+	if (GetTableSelection().GetFirstSelectedCell(&cell))
 	{
 		CancelEditing();
 
@@ -953,7 +953,7 @@ void
 CommandTable::DuplicateCommand()
 {
 	JPoint cell;
-	if ((GetTableSelection()).GetFirstSelectedCell(&cell) && EndEditing())
+	if (GetTableSelection().GetFirstSelectedCell(&cell) && EndEditing())
 	{
 		itsCmdList->AppendItem((itsCmdList->GetItem(cell.y)).Copy());
 		AppendRows(1);

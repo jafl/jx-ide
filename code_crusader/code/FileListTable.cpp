@@ -468,16 +468,16 @@ FileListTable::GetUniqueID()
 		return JFAID::kMinID;
 	}
 
-	const JFAID_t prevUniqueID = JMax(itsLastUniqueID, (JFAID_t) itsFileInfo->GetItemCount());
+	const JFAID_t prevUniqueID = JMax(itsLastUniqueID, itsFileInfo->GetItemCount());
 
 	// this is relevant to the outmost do-while loop
 
 	enum Range
-{
+	{
 		kAboveLastUniqueID,
 		kBelowLastUniqueID,
 		kEmpty
-};
+	};
 	Range idRange = kAboveLastUniqueID;
 
 	do

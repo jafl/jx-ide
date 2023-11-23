@@ -785,8 +785,7 @@ DocumentManager::PrivateOpenSomething
 	)
 {
 	ProjectDocument* doc;
-	if (ProjectDocument::Create(fileName, false, &doc) ==
-		JXFileDocument::kNotMyFile)
+	if (ProjectDocument::Create(fileName, false, &doc) == JXFileDocument::kNotMyFile)
 	{
 		JString cmd;
 		if (GetPrefsManager()->EditWithOtherProgram(fileName, &cmd))
@@ -903,9 +902,9 @@ DocumentManager::PrivateOpenTextDocument
 	(
 	const JString&		fullName,
 	const JIndexRange&	lineRange,
-	const bool		iconify,
-	const bool		forceReload,
-	TextDocument**	returnDoc
+	const bool			iconify,
+	const bool			forceReload,
+	TextDocument**		returnDoc
 	)
 	const
 {
@@ -930,7 +929,7 @@ DocumentManager::PrivateOpenTextDocument
 		assert( doc != nullptr );
 		if (iconify && !doc->IsActive())
 		{
-			(doc->GetWindow())->Iconify();
+			doc->GetWindow()->Iconify();
 		}
 		if (!iconify || !doc->IsActive())
 		{

@@ -342,7 +342,7 @@ MacroSetTable::SwitchDisplay()
 	}
 
 	JPoint cell;
-	if ((GetTableSelection()).GetFirstSelectedCell(&cell))
+	if (GetTableSelection().GetFirstSelectedCell(&cell))
 	{
 		itsMacroIndex = cell.y;
 

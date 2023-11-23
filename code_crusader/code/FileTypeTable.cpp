@@ -872,7 +872,7 @@ void
 FileTypeTable::RemoveType()
 {
 	JPoint cell;
-	if ((GetTableSelection()).GetFirstSelectedCell(&cell))
+	if (GetTableSelection().GetFirstSelectedCell(&cell))
 	{
 		CancelEditing();
 
@@ -893,7 +893,7 @@ void
 FileTypeTable::DuplicateType()
 {
 	JPoint cell;
-	if ((GetTableSelection()).GetFirstSelectedCell(&cell) && EndEditing())
+	if (GetTableSelection().GetFirstSelectedCell(&cell) && EndEditing())
 	{
 		PrefsManager::FileTypeInfo info = itsFileTypeList->GetItem(cell.y);
 
@@ -933,7 +933,7 @@ void
 FileTypeTable::UpdateTypeMenu()
 {
 	JPoint cell;
-	const bool ok = (GetTableSelection()).GetFirstSelectedCell(&cell);
+	const bool ok = GetTableSelection().GetFirstSelectedCell(&cell);
 	assert( ok );
 
 	const PrefsManager::FileTypeInfo info = itsFileTypeList->GetItem(cell.y);
@@ -952,7 +952,7 @@ FileTypeTable::HandleTypeMenu
 	)
 {
 	JPoint cell;
-	const bool ok = (GetTableSelection()).GetFirstSelectedCell(&cell);
+	const bool ok = GetTableSelection().GetFirstSelectedCell(&cell);
 	assert( ok );
 
 	const TextFileType newType = kMenuIndexToFileType [ index-1 ];
@@ -1106,7 +1106,7 @@ FileTypeTable::HandleScriptMenu
 	)
 {
 	JPoint cell;
-	const bool ok = (GetTableSelection()).GetFirstSelectedCell(&cell);
+	const bool ok = GetTableSelection().GetFirstSelectedCell(&cell);
 	assert( ok );
 
 	PrefsManager::FileTypeInfo info = itsFileTypeList->GetItem(cell.y);
@@ -1282,7 +1282,7 @@ FileTypeTable::CreateDirectory
 void
 FileTypeTable::UpdateButtons()
 {
-	if ((GetTableSelection()).HasSelection())
+	if (GetTableSelection().HasSelection())
 	{
 		itsRemoveTypeButton->Activate();
 		itsDuplicateTypeButton->Activate();
