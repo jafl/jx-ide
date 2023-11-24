@@ -621,10 +621,10 @@ TextDocument::BuildWindow
 	itsFileMenu->SetItemImage(kPrintPSCmd,       jcc_file_print_with_styles);
 
 	jnew FileHistoryMenu(DocumentManager::kProjectFileHistory,
-						  itsFileMenu, kRecentProjectMenuCmd, itsMenuBar);
+						 itsFileMenu, kRecentProjectMenuCmd, itsMenuBar);
 
 	jnew FileHistoryMenu(DocumentManager::kTextFileHistory,
-						  itsFileMenu, kRecentTextMenuCmd, itsMenuBar);
+						 itsFileMenu, kRecentTextMenuCmd, itsMenuBar);
 
 	itsFileFormatMenu = jnew JXTextMenu(itsFileMenu, kFileFormatIndex, itsMenuBar);
 	itsFileFormatMenu->SetMenuItems(kFileFormatMenuStr, "TextDocument");
@@ -1747,7 +1747,7 @@ TextDocument::HandlePrefsMenu
 	}
 	else if (index == kWWWPrefsCmd)
 	{
-		(JXGetWebBrowser())->EditPrefs();
+		JXGetWebBrowser()->EditPrefs();
 	}
 	else if (index == kMiscPrefsCmd)
 	{
