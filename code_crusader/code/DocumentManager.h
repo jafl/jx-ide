@@ -83,7 +83,7 @@ public:
 	bool	HasTextDocuments() const;
 	JSize	GetTextDocumentCount() const;
 	bool	GetActiveTextDocument(TextDocument** doc) const;
-	bool	TextDocumentsNeedSave();
+	bool	TextDocumentsNeedSave() const;
 	bool	SaveTextDocuments(const bool saveUntitled);
 	void	ReloadTextDocuments(const bool force);
 	bool	CloseTextDocuments();
@@ -354,6 +354,7 @@ DocumentManager::GetTextDocList()
 
 inline bool
 DocumentManager::TextDocumentsNeedSave()
+	const
 {
 	return !itsTextDocuments->IsEmpty() && itsTextNeedsSaveFlag;
 }

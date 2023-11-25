@@ -113,34 +113,8 @@ FileHistoryMenu::Receive
 	const Message&	message
 	)
 {
-	if (sender == this && message.Is(JXMenu::kItemSelected))
-	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-
-		// need copy because menu will change
-		const JString fileName = GetFile(selection->GetIndex());
-
-		bool saveReopen = ProjectDocument::WillReopenTextFiles();
-		if ((GetDisplay()->GetLatestKeyModifiers()).GetState(kJXShiftKeyIndex))
-		{
-			ProjectDocument::ShouldReopenTextFiles(!saveReopen);
-		}
-
-		DocumentManager* docMgr = GetDocumentManager();
-		if (!(GetDisplay()->GetLatestKeyModifiers()).meta() ||
-			(docMgr->CloseProjectDocuments() &&
-			 docMgr->CloseTextDocuments()))
-		{
-			docMgr->OpenSomething(fileName);
-		}
-
-		ProjectDocument::ShouldReopenTextFiles(saveReopen);
-	}
-
-	else if (sender == GetDocumentManager() &&
-			 message.Is(DocumentManager::kAddFileToHistory))
+	if (sender == GetDocumentManager() &&
+		message.Is(DocumentManager::kAddFileToHistory))
 	{
 		const auto* info =
 			dynamic_cast<const DocumentManager::AddFileToHistory*>(&message);
@@ -153,6 +127,31 @@ FileHistoryMenu::Receive
 
 	else
 	{
+		if (sender == this && message.Is(JXMenu::kItemSelected))
+		{
+			const auto* selection =
+				dynamic_cast<const JXMenu::ItemSelected*>(&message);
+			assert( selection != nullptr );
+
+			const JString fileName = GetFile(selection->GetIndex());
+
+			bool saveReopen = ProjectDocument::WillReopenTextFiles();
+			if (GetDisplay()->GetLatestKeyModifiers().shift())
+			{
+				ProjectDocument::ShouldReopenTextFiles(!saveReopen);
+			}
+
+			DocumentManager* docMgr = GetDocumentManager();
+			if (!GetDisplay()->GetLatestKeyModifiers().meta() ||
+				(docMgr->CloseProjectDocuments() &&
+				 docMgr->CloseTextDocuments()))
+			{
+				docMgr->OpenSomething(fileName);
+			}
+
+			ProjectDocument::ShouldReopenTextFiles(saveReopen);
+		}
+
 		JXFileHistoryMenu::Receive(sender, message);
 	}
 }

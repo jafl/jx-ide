@@ -933,13 +933,15 @@ TextDocument::UpdateFileMenu()
 	itsFileMenu->SetItemEnabled(kSaveFileCmd, NeedsSave());
 	itsFileMenu->SetItemEnabled(kRevertCmd, CanRevert());
 	itsFileMenu->SetItemEnabled(kSaveAllFilesCmd,
-							   GetDocumentManager()->TextDocumentsNeedSave());
+								GetDocumentManager()->TextDocumentsNeedSave());
 
 	bool enable, onDisk;
 	const JString fullName = GetFullName(&onDisk);
 	itsFileMenu->SetItemText(kDiffSmartCmd,
-		(GetDiffFileDialog())->GetSmartDiffItemText(onDisk, fullName, &enable));
+		GetDiffFileDialog()->GetSmartDiffItemText(onDisk, fullName, &enable));
 	itsFileMenu->SetItemEnabled(kDiffSmartCmd, enable);
+
+	itsFileMenu->SetItemEnabled(kShowInFileMgrCmd, onDisk);
 
 	enable = false;
 	const JString* s = & JGetString("DiffVCSMenuText::TextDocument");
@@ -1011,8 +1013,11 @@ TextDocument::HandleFileMenu
 	{
 		bool onDisk;
 		const JString fullName = GetFullName(&onDisk);
-		GetDocumentManager()->
-			AddToFileHistoryMenu(DocumentManager::kTextFileHistory, fullName);
+		if (onDisk)
+		{
+			GetDocumentManager()->
+				AddToFileHistoryMenu(DocumentManager::kTextFileHistory, fullName);
+		}
 
 		SaveInNewFile();
 	}
@@ -1072,10 +1077,8 @@ TextDocument::HandleFileMenu
 	{
 		bool onDisk;
 		const JString fullName = GetFullName(&onDisk);
-		if (onDisk)
-		{
-			JXGetWebBrowser()->ShowFileLocation(fullName);
-		}
+		assert( onDisk );
+		JXGetWebBrowser()->ShowFileLocation(fullName);
 	}
 
 	else if (index == kPTPageSetupCmd)
@@ -1100,7 +1103,7 @@ TextDocument::HandleFileMenu
 	{
 		bool onDisk;
 		const JString fullName = GetFullName(&onDisk);
-		(GetPSTextPrinter())->SetPrintInfo(itsTextEditor, fullName);
+		GetPSTextPrinter()->SetPrintInfo(itsTextEditor, fullName);
 		itsTextEditor->PrintPS();
 	}
 
