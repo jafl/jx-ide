@@ -76,7 +76,7 @@ FileDragSource::AdjustCursor
 		 itsNameInput->GetText()->GetText().EndsWith(ACE_DIRECTORY_SEPARATOR_STR)))
 	{
 		DisplayCursor(kJXInactiveCursor);
-		SetHint(JGetString("kFileSelected::JXFSDirMenu"));
+		SetHint(JGetString("HowToXDS1HintID::FileDragSource"));
 	}
 	else
 	{
