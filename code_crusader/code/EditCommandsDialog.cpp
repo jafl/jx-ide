@@ -150,7 +150,6 @@ EditCommandsDialog::BuildWindow
 		compartment =
 			jnew JXWidgetSet(window, JXWidget::kHElastic, JXWidget::kVElastic,
 							frame.left, frame.top, frame.width(), frame.height());
-		assert( compartment != nullptr );
 		itsPartition->Hide();
 	}
 
@@ -202,8 +201,8 @@ EditCommandsDialog::BuildWindow
 	if (itsCmdMgr == nullptr)
 	{
 		allScrollbarSet->AdjustSize(0,
-			(compartment->GetAperture()).bottom -
-			(allScrollbarSet->GetFrame()).bottom);
+			compartment->GetAperture().bottom -
+			allScrollbarSet->GetFrame().bottom);
 	}
 
 	const CommandManager::CmdList* allCmdList = (GetCommandManager())->GetCommandList();
@@ -213,7 +212,6 @@ EditCommandsDialog::BuildWindow
 						   allExportButton, allImportButton,
 						   allScrollbarSet, allScrollbarSet->GetScrollEnclosure(),
 						   JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 10,10);
-	assert( itsAllTable != nullptr );
 	itsAllTable->FitToEnclosure();
 	itsAllTable->Move(0, kHeaderHeight);
 	itsAllTable->AdjustSize(0, -kHeaderHeight);
@@ -223,7 +221,6 @@ EditCommandsDialog::BuildWindow
 							  allScrollbarSet->GetScrollEnclosure(),
 							  JXWidget::kHElastic, JXWidget::kFixedTop,
 							  0,0, 10,kHeaderHeight);
-	assert( colHeader != nullptr );
 	colHeader->FitToEnclosure(true, false);
 	itsAllTable->SetColTitles(colHeader);
 	colHeader->TurnOnColResizing(20);
@@ -310,7 +307,6 @@ EditCommandsDialog::BuildWindow
 							   thisExportButton, thisImportButton,
 							   thisScrollbarSet, thisScrollbarSet->GetScrollEnclosure(),
 							   JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 10,10);
-		assert( itsThisTable != nullptr );
 		itsThisTable->FitToEnclosure();
 		itsThisTable->Move(0, kHeaderHeight);
 		itsThisTable->AdjustSize(0, -kHeaderHeight);
@@ -320,7 +316,6 @@ EditCommandsDialog::BuildWindow
 								  thisScrollbarSet->GetScrollEnclosure(),
 								  JXWidget::kHElastic, JXWidget::kFixedTop,
 								  0,0, 10,kHeaderHeight);
-		assert( colHeader != nullptr );
 		colHeader->FitToEnclosure(true, false);
 		itsThisTable->SetColTitles(colHeader);
 		colHeader->TurnOnColResizing(20);

@@ -18,7 +18,7 @@ class CommandSelection : public JXSelectionData
 public:
 
 	CommandSelection(JXDisplay* display, CommandTable* table,
-					   const CommandManager::CmdInfo& cmdInfo);
+					 const CommandManager::CmdInfo& cmdInfo);
 
 	~CommandSelection() override;
 

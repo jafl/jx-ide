@@ -24,8 +24,8 @@ static const JUtf8Byte* kCommandXAtomName = "text/x-Command";
 
 CommandSelection::CommandSelection
 	(
-	JXDisplay*							display,
-	CommandTable*						table,
+	JXDisplay*						display,
+	CommandTable*					table,
 	const CommandManager::CmdInfo&	cmdInfo
 	)
 	:

@@ -2000,26 +2000,13 @@ CommandManager::CmdInfo
 CommandManager::CmdInfo::Copy()
 	const
 {
-	CmdInfo info = *this;
-
-	info.path = jnew JString(*(this->path));
-	assert( info.path != nullptr );
-
-	info.cmd = jnew JString(*(this->cmd));
-	assert( info.cmd != nullptr );
-
-	info.name = jnew JString(*(this->name));
-	assert( info.name != nullptr );
-
-	info.menuText = jnew JString(*(this->menuText));
-	assert( info.menuText != nullptr );
-
-	info.menuShortcut = jnew JString(*(this->menuShortcut));
-	assert( info.menuShortcut != nullptr );
-
-	info.menuID = jnew JString(*(this->menuID));
-	assert( info.menuID != nullptr );
-
+	CmdInfo info      = *this;
+	info.path         = jnew JString(*this->path);
+	info.cmd          = jnew JString(*this->cmd);
+	info.name         = jnew JString(*this->name);
+	info.menuText     = jnew JString(*this->menuText);
+	info.menuShortcut = jnew JString(*this->menuShortcut);
+	info.menuID       = jnew JString(*this->menuID);
 	return info;
 }
 

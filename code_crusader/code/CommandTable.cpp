@@ -182,12 +182,11 @@ CommandTable::CommandTable
 	// data
 
 	itsCmdList = jnew CommandManager::CmdList(cmdList);
-	assert( itsCmdList != nullptr );
 	FinishCmdListCopy(itsCmdList);
 
-	for (JIndex i=1; i<=kColCount; i++)
+	for (const auto w : kInitColWidth)
 	{
-		AppendCols(1, kInitColWidth[i-1]);
+		AppendCols(1, w);
 	}
 
 	AppendRows(itsCmdList->GetItemCount());
@@ -453,7 +452,6 @@ CommandTable::HandleMouseDrag
 			auto* data =
 				jnew CommandSelection(GetDisplay(), this,
 									   itsCmdList->GetItem(cell.y));
-			assert( data != nullptr );
 
 			BeginDND(pt, buttonStates, modifiers, data);
 		}
@@ -914,9 +912,7 @@ CommandTable::AddCommand()
 	if (EndEditing())
 	{
 		CommandManager::CmdInfo info(jnew JString("./"), jnew JString, jnew JString,
-									   jnew JString, jnew JString, jnew JString);
-		assert( info.path != nullptr && info.cmd != nullptr && info.name != nullptr &&
-				info.menuText != nullptr && info.menuShortcut != nullptr );
+									 jnew JString, jnew JString, jnew JString);
 		itsCmdList->AppendItem(info);
 		AppendRows(1);
 		BeginEditing(JPoint(kCommandColumn, itsCmdList->GetItemCount()));
