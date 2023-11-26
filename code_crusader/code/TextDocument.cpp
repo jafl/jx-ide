@@ -256,7 +256,7 @@ TextDocument::TextDocument
 	TextDocumentX1(type);
 	BuildWindow(true, ConstructTextEditor);
 
-	ReadFile(fileName, true);
+	ReadFile(JString::empty, true);
 	TextDocumentX2(true);
 
 	if (tmpl)
@@ -1173,7 +1173,7 @@ TextDocument::DiscardChanges()
 		// re-read file
 
 		DataReverted();			// must come first since file may need cleaning
-		ReadFile(fullName, false);
+		ReadFile(JString::empty, false);
 		itsTextEditor->UpdateWritable(fullName);
 
 		// restore location of caret and scrollbars
@@ -1243,7 +1243,15 @@ TextDocument::ReadFile
 	const bool		firstTime
 	)
 {
-	if (!itsTextEditor->GetText()->ReadPlainText(fileName, &itsFileFormat))
+	JString fullName = fileName;
+	if (fullName.IsEmpty())
+	{
+		bool onDisk;
+		fullName = GetFullName(&onDisk);
+		assert( onDisk );
+	}
+
+	if (!itsTextEditor->GetText()->ReadPlainText(fullName, &itsFileFormat))
 	{
 		// Don't let them overwrite it without thinking about it.
 
@@ -1253,16 +1261,13 @@ TextDocument::ReadFile
 		// Display the full path of the original file.
 		// (FileChanged() changes the display.)
 
-		JString fullName;
-		const bool ok = JGetTrueName(fileName, &fullName);
-		assert( ok );
 		DisplayFileName(fullName);
 		itsTextEditor->UpdateWritable(fullName);
 	}
 
 	bool setTabWidth, setTabMode, tabInsertsSpaces, setAutoIndent, autoIndent;
 	JSize tabWidth;
-	ParseEditorOptions(fileName, itsTextEditor->GetText()->GetText(), &setTabWidth, &tabWidth,
+	ParseEditorOptions(fullName, itsTextEditor->GetText()->GetText(), &setTabWidth, &tabWidth,
 					   &setTabMode, &tabInsertsSpaces, &setAutoIndent, &autoIndent);
 
 	if (setTabWidth)
@@ -1296,13 +1301,11 @@ TextDocument::ReadFile
 		}
 
 		JPtrArray<JString> safetyFilesToOpen(JPtrArrayT::kDeleteAll);
-		if (CheckForSafetySaveFiles(fileName, &safetyFilesToOpen))
+		if (CheckForSafetySaveFiles(fullName, &safetyFilesToOpen))
 		{
-			const JSize count = safetyFilesToOpen.GetItemCount();
-			for (JIndex i=1; i<=count; i++)
+			for (const auto* f : safetyFilesToOpen)
 			{
-				GetDocumentManager()->
-					OpenTextDocument(*(safetyFilesToOpen.GetItem(i)));
+				GetDocumentManager()->OpenTextDocument(*f);
 			}
 		}
 	}
@@ -1401,10 +1404,10 @@ TextDocument::ReadFromProject
 
 	JXFileDocument* existingDoc;
 	if (JFileReadable(fullName) &&
-		!(JXGetDocumentManager())->FileDocumentIsOpen(fullName, &existingDoc))
+		!JXGetDocumentManager()->FileDocumentIsOpen(fullName, &existingDoc))
 	{
 		FileChanged(fullName, true);
-		ReadFile(fullName, true);
+		ReadFile(JString::empty, true);
 
 		itsTextEditor->SetPTPrintFileName(ptPrintName);
 		itsTextEditor->SetPSPrintFileName(psPrintName);

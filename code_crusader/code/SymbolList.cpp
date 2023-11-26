@@ -143,7 +143,7 @@ SymbolList::IsUniqueClassName
 	for (JUnsignedOffset i=0; i<symCount; i++)
 	{
 		if (IsClass(sym[i].type) &&
-			JString::Compare(*(sym[i].name), name, IsCaseSensitive(sym[i].lang)) == 0)
+			JString::Compare(*sym[i].name, name, IsCaseSensitive(sym[i].lang)) == 0)
 		{
 			if (!found)
 			{
@@ -677,6 +677,8 @@ SymbolList::UpdateFinished
 				iter.RemoveAllPrev();
 			}
 		}
+
+		itsSymbolList->Sort();
 	}
 
 	// notify
@@ -923,7 +925,7 @@ SymbolList::ReadSetup
 	{
 		ReadSetup(*input, vers);
 
-		itsReparseAllFlag = vers < 93 || (itsSymbolList->IsEmpty() && IsActive());
+		itsReparseAllFlag = vers < 94 || (itsSymbolList->IsEmpty() && IsActive());
 	}
 }
 
