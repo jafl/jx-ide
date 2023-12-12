@@ -327,7 +327,7 @@ addNewExternalSuffixes
 		for (JIndex j=1; j<=ftCount; j++)
 		{
 			const PrefsManager::FileTypeInfo ftInfo = fileTypeList->GetItem(j);
-			if (*(ftInfo.suffix) == newInfo[i].suffix)
+			if (*ftInfo.suffix == newInfo[i].suffix)
 			{
 				newInfo[i].found = true;
 				break;
@@ -548,46 +548,46 @@ PrefsManager::UpgradeData
 	if (currentVersion < 18)
 	{
 		NewSuffixInfo kEiffelSuffix[] =
-	{
-		{ ".e", false }
-	};
+		{
+			{ ".e", false }
+		};
 		addNewSuffixes("Eiffel",  nullptr, kEiffelFT, kEiffelSuffix, sizeof(kEiffelSuffix), itsFileTypeList, itsMacroList, *itsCRMList);
 
 		NewSuffixInfo kFortranSuffix[] =
-	{
-		{ ".f",   false },
-		{ ".for", false },
-		{ ".ftn", false },
-		{ ".f77", false },
-		{ ".f90", false },
-		{ ".f95", false },
-		{ ".F",   false },
-		{ ".FOR", false },
-		{ ".FTN", false },
-		{ ".F77", false },
-		{ ".F90", false },
-		{ ".F95", false }
-	};
+		{
+			{ ".f",   false },
+			{ ".for", false },
+			{ ".ftn", false },
+			{ ".f77", false },
+			{ ".f90", false },
+			{ ".f95", false },
+			{ ".F",   false },
+			{ ".FOR", false },
+			{ ".FTN", false },
+			{ ".F77", false },
+			{ ".F90", false },
+			{ ".F95", false }
+		};
 		addNewSuffixes("FORTRAN", nullptr, kFortranFT, kFortranSuffix, sizeof(kFortranSuffix), itsFileTypeList, itsMacroList, *itsCRMList);
 
 		NewSuffixInfo kJavaSuffix[] =
-	{
-		{ ".java", false },
-		{ ".jws",  false }
-	};
+		{
+			{ ".java", false },
+			{ ".jws",  false }
+		};
 		addNewSuffixes("Java", nullptr, kJavaSourceFT, kJavaSuffix, sizeof(kJavaSuffix), itsFileTypeList, itsMacroList, *itsCRMList);
 
 		NewSuffixInfo kStaticLibrarySuffix[] =
-	{
-		{ ".a", false }
-	};
+		{
+			{ ".a", false }
+		};
 		addNewSuffixes(nullptr, nullptr, kStaticLibraryFT, kStaticLibrarySuffix, sizeof(kStaticLibrarySuffix), itsFileTypeList, itsMacroList, *itsCRMList);
 
 		NewSuffixInfo kSharedLibrarySuffix[] =
-	{
-		{ ".so",    false },
-		{ ".dylib", false }
-	};
+		{
+			{ ".so",    false },
+			{ ".dylib", false }
+		};
 		addNewSuffixes(nullptr, nullptr, kSharedLibraryFT, kSharedLibrarySuffix, sizeof(kSharedLibrarySuffix), itsFileTypeList, itsMacroList, *itsCRMList);
 	}
 
@@ -599,24 +599,24 @@ PrefsManager::UpgradeData
 	if (currentVersion < 24)
 	{
 		NewSuffixInfo kAssemblySuffix[] =
-	{
-		{ ".asm", false },
-		{ ".s",   false },
-		{ ".S",   false }
-	};
+		{
+			{ ".asm", false },
+			{ ".s",   false },
+			{ ".S",   false }
+		};
 		addNewSuffixes("Assembly", nullptr, kAssemblyFT, kAssemblySuffix, sizeof(kAssemblySuffix), itsFileTypeList, itsMacroList, *itsCRMList);
 
 		NewSuffixInfo kPascalSuffix[] =
-	{
-		{ ".p",   false },
-		{ ".pas", false }
-	};
+		{
+			{ ".p",   false },
+			{ ".pas", false }
+		};
 		addNewSuffixes("Pascal", nullptr, kPascalFT, kPascalSuffix, sizeof(kPascalSuffix),   itsFileTypeList, itsMacroList, *itsCRMList);
 
 		NewSuffixInfo kRatforSuffix[] =
-	{
-		{ ".r", false }
-	};
+		{
+			{ ".r", false }
+		};
 		addNewSuffixes("FORTRAN", nullptr, kRatforFT, kRatforSuffix, sizeof(kRatforSuffix),   itsFileTypeList, itsMacroList, *itsCRMList);
 	}
 
@@ -634,16 +634,16 @@ PrefsManager::UpgradeData
 		{
 #ifdef _J_MACOS
 			NewExternalSuffixInfo kImageSuffix[] =
-		{
-			{ ".gif", "open $f", false },
-			{ ".jpg", "open $f", false }
-		};
+			{
+				{ ".gif", "open $f", false },
+				{ ".jpg", "open $f", false }
+			};
 #else
 			NewExternalSuffixInfo kImageSuffix[] =
-		{
-			{ ".gif", "eog $f", false },
-			{ ".jpg", "eog $f", false }
-		};
+			{
+				{ ".gif", "eog $f", false },
+				{ ".jpg", "eog $f", false }
+			};
 #endif
 			addNewExternalSuffixes(kImageSuffix, sizeof(kImageSuffix)/sizeof(NewExternalSuffixInfo), itsFileTypeList);
 		}
@@ -652,9 +652,9 @@ PrefsManager::UpgradeData
 	if (currentVersion < 28)
 	{
 		NewExternalSuffixInfo kFDesignSuffix[] =
-	{
-		{ ".fd", "jfdesign $f", false }
-	};
+		{
+			{ ".fd", "jfdesign $f", false }
+		};
 		addNewExternalSuffixes(kFDesignSuffix, sizeof(kFDesignSuffix)/sizeof(NewExternalSuffixInfo), itsFileTypeList);
 	}
 
@@ -670,201 +670,201 @@ PrefsManager::UpgradeData
 	if (currentVersion < 30)
 	{
 		NewSuffixInfo kModula2ModuleSuffix[] =
-	{
-		{ ".md", false }
-	};
+		{
+			{ ".md", false }
+		};
 		addNewSuffixes("Modula-2", nullptr, kModula2ModuleFT, kModula2ModuleSuffix, sizeof(kModula2ModuleSuffix), itsFileTypeList, itsMacroList, *itsCRMList);
 
 		NewSuffixInfo kModula2InterfaceSuffix[] =
-	{
-		{ ".mi", false }
-	};
+		{
+			{ ".mi", false }
+		};
 		addNewSuffixes("Modula-2", nullptr, kModula2InterfaceFT, kModula2InterfaceSuffix, sizeof(kModula2InterfaceSuffix), itsFileTypeList, itsMacroList, *itsCRMList);
 
 		NewSuffixInfo kModula3ModuleSuffix[] =
-	{
-		{ ".m3", false }
-	};
+		{
+			{ ".m3", false }
+		};
 		addNewSuffixes("Modula-3", nullptr, kModula3ModuleFT, kModula3ModuleSuffix, sizeof(kModula3ModuleSuffix), itsFileTypeList, itsMacroList, *itsCRMList);
 
 		NewSuffixInfo kModula3InterfaceSuffix[] =
-	{
-		{ ".i3", false }
-	};
+		{
+			{ ".i3", false }
+		};
 		addNewSuffixes("Modula-3", nullptr, kModula3InterfaceFT, kModula3InterfaceSuffix, sizeof(kModula3InterfaceSuffix), itsFileTypeList, itsMacroList, *itsCRMList);
 	}
 
 	if (currentVersion < 31)
 	{
 		NewSuffixInfo kAWKSuffix[] =
-	{
-		{ ".awk", false }
-	};
+		{
+			{ ".awk", false }
+		};
 		addNewSuffixes("AWK", "unix script", kAWKFT, kAWKSuffix, sizeof(kAWKSuffix), itsFileTypeList, itsMacroList, *itsCRMList);
 
 		NewSuffixInfo kCobolSuffix[] =
-	{
-		{ ".cob", false },
-		{ ".COB", false }
-	};
+		{
+			{ ".cob", false },
+			{ ".COB", false }
+		};
 		addNewSuffixes("Cobol", nullptr, kCobolFT, kCobolSuffix, sizeof(kCobolSuffix), itsFileTypeList, itsMacroList, *itsCRMList);
 
 		NewSuffixInfo kLispSuffix[] =
-	{
-		{ ".cl",    false },
-		{ ".clisp", false },
-		{ ".el",    false },
-		{ ".lisp",  false },
-		{ ".lsp",   false }
-	};
+		{
+			{ ".cl",    false },
+			{ ".clisp", false },
+			{ ".el",    false },
+			{ ".lisp",  false },
+			{ ".lsp",   false }
+		};
 		addNewSuffixes("Lisp", nullptr, kLispFT, kLispSuffix, sizeof(kLispSuffix), itsFileTypeList, itsMacroList, *itsCRMList);
 
 		NewSuffixInfo kPerlSuffix[] =
-	{
-		{ ".pl",   false },
-		{ ".pm",   false },
-		{ ".perl", false },
-		{ ".plx",  false }
-	};
+		{
+			{ ".pl",   false },
+			{ ".pm",   false },
+			{ ".perl", false },
+			{ ".plx",  false }
+		};
 		addNewSuffixes("Perl", "unix script", kPerlFT, kPerlSuffix, sizeof(kPerlSuffix), itsFileTypeList, itsMacroList, *itsCRMList);
 
 		NewSuffixInfo kPythonSuffix[] =
-	{
-		{ ".py",     false },
-		{ ".python", false }
-	};
+		{
+			{ ".py",     false },
+			{ ".python", false }
+		};
 		addNewSuffixes("Python", "unix script", kPythonFT, kPythonSuffix, sizeof(kPythonSuffix), itsFileTypeList, itsMacroList, *itsCRMList);
 
 		NewSuffixInfo kSchemeSuffix[] =
-	{
-		{ ".sch",    false },
-		{ ".scheme", false },
-		{ ".scm",    false },
-		{ ".sm",     false },
-		{ ".SCM",    false },
-		{ ".SM",     false }
-	};
+		{
+			{ ".sch",    false },
+			{ ".scheme", false },
+			{ ".scm",    false },
+			{ ".sm",     false },
+			{ ".SCM",    false },
+			{ ".SM",     false }
+		};
 		addNewSuffixes("Scheme", nullptr, kSchemeFT, kSchemeSuffix, sizeof(kSchemeSuffix), itsFileTypeList, itsMacroList, *itsCRMList);
 
 		NewSuffixInfo kBourneShellSuffix[] =
-	{
-		{ ".sh",   false },
-		{ ".SH",   false },
-		{ ".bsh",  false },
-		{ ".bash", false },
-		{ ".ksh",  false }
-	};
+		{
+			{ ".sh",   false },
+			{ ".SH",   false },
+			{ ".bsh",  false },
+			{ ".bash", false },
+			{ ".ksh",  false }
+		};
 		addNewSuffixes("Bourne Shell", "unix script", kBourneShellFT, kBourneShellSuffix, sizeof(kBourneShellSuffix), itsFileTypeList, itsMacroList, *itsCRMList);
 
 		NewSuffixInfo kTCLSuffix[] =
-	{
-		{ ".tcl",  false },
-		{ ".tk",   false },
-		{ ".wish", false }
-	};
+		{
+			{ ".tcl",  false },
+			{ ".tk",   false },
+			{ ".wish", false }
+		};
 		addNewSuffixes("TCL", "unix script", kTCLFT, kTCLSuffix, sizeof(kTCLSuffix), itsFileTypeList, itsMacroList, *itsCRMList);
 
 		NewSuffixInfo kVIMSuffix[] =
-	{
-		{ ".vim", false }
-	};
+		{
+			{ ".vim", false }
+		};
 		addNewSuffixes("Vim", "unix script", kVimFT, kVIMSuffix, sizeof(kVIMSuffix), itsFileTypeList, itsMacroList, *itsCRMList);
 	}
 
 	if (currentVersion < 32)
 	{
 		NewSuffixInfo kJavaArchiveSuffix[] =
-	{
-		{ ".jar", false }
-	};
+		{
+			{ ".jar", false }
+		};
 		addNewSuffixes(nullptr, nullptr, kJavaArchiveFT, kJavaArchiveSuffix, sizeof(kJavaArchiveSuffix), itsFileTypeList, itsMacroList, *itsCRMList);
 	}
 
 	if (currentVersion < 33)
 	{
 		NewSuffixInfo kPHPSuffix[] =
-	{
-		{ ".php",   false },
-		{ ".php3",  false },
-		{ ".phtml", false }
-	};
+		{
+			{ ".php",   false },
+			{ ".php3",  false },
+			{ ".phtml", false }
+		};
 		addNewSuffixes("HTML", "PHP", kPHPFT, kPHPSuffix, sizeof(kPHPSuffix), itsFileTypeList, itsMacroList, *itsCRMList);
 	}
 
 	if (currentVersion < 34)
 	{
 		NewSuffixInfo kASPSuffix[] =
-	{
-		{ ".asp", false },
-		{ ".asa", false }
-	};
+		{
+			{ ".asp", false },
+			{ ".asa", false }
+		};
 		addNewSuffixes("ASP", nullptr, kASPFT, kASPSuffix, sizeof(kASPSuffix), itsFileTypeList, itsMacroList, *itsCRMList);
 	}
 
 	if (currentVersion < 35)
 	{
 		NewSuffixInfo kMakeSuffix[] =
-	{
-		{ ".mak",         false },
-		{ "Makefile",     false },
-		{ "makefile",     false },
-		{ "Make.header",  false }
-	};
+		{
+			{ ".mak",         false },
+			{ "Makefile",     false },
+			{ "makefile",     false },
+			{ "Make.header",  false }
+		};
 		addNewSuffixes("Make", "unix script", kMakeFT, kMakeSuffix, sizeof(kMakeSuffix), itsFileTypeList, itsMacroList, *itsCRMList);
 	}
 
 	if (currentVersion < 36)
 	{
 		NewSuffixInfo kREXXSuffix[] =
-	{
-		{ ".cmd",  false },
-		{ ".rexx", false },
-		{ ".rx",   false }
-	};
+		{
+			{ ".cmd",  false },
+			{ ".rexx", false },
+			{ ".rx",   false }
+		};
 		addNewSuffixes("REXX", "C", kREXXFT, kREXXSuffix, sizeof(kREXXSuffix), itsFileTypeList, itsMacroList, *itsCRMList);
 
 		NewSuffixInfo kRubySuffix[] =
-	{
-		{ ".rb", false }
-	};
+		{
+			{ ".rb", false }
+		};
 		addNewSuffixes("Ruby", "unix script", kRubyFT, kRubySuffix, sizeof(kRubySuffix), itsFileTypeList, itsMacroList, *itsCRMList);
 	}
 
 	if (currentVersion < 38)
 	{
 		NewSuffixInfo kLexSuffix[] =
-	{
-		{ ".l", false }
-	};
+		{
+			{ ".l", false }
+		};
 		addNewSuffixes("Lex", "C", kLexFT, kLexSuffix, sizeof(kLexSuffix), itsFileTypeList, itsMacroList, *itsCRMList);
 	}
 
 	if (currentVersion < 39)
 	{
 		NewSuffixInfo kCShellSuffix[] =
-	{
-		{ ".csh",   false },
-		{ ".CSH",   false },
-		{ ".tcsh",  false }
-	};
+		{
+			{ ".csh",   false },
+			{ ".CSH",   false },
+			{ ".tcsh",  false }
+		};
 		addNewSuffixes("C shell", "unix script", kCShellFT, kCShellSuffix, sizeof(kCShellSuffix), itsFileTypeList, itsMacroList, *itsCRMList);
 	}
 
 	if (currentVersion < 41)
 	{
 		NewSuffixInfo kBisonSuffix[] =
-	{
-		{ ".y", false }
-	};
+		{
+			{ ".y", false }
+		};
 		addNewSuffixes("Bison", "C", kBisonFT, kBisonSuffix, sizeof(kBisonSuffix), itsFileTypeList, itsMacroList, *itsCRMList);
 	}
 
 	if (currentVersion < 44)
 	{
 		NewSuffixInfo kBetaSuffix[] =
-	{
-		{ ".bet", false }
-	};
+		{
+			{ ".bet", false }
+		};
 		addNewSuffixes("Beta", "Beta", kBetaFT, kBetaSuffix, sizeof(kBetaSuffix), itsFileTypeList, itsMacroList, *itsCRMList);
 
 		NewSuffixInfo kLuaSuffix[] =
@@ -874,35 +874,35 @@ PrefsManager::UpgradeData
 		addNewSuffixes("Lua", "Lua",  kLuaFT, kLuaSuffix, sizeof(kLuaSuffix), itsFileTypeList, itsMacroList, *itsCRMList);
 
 		NewSuffixInfo kSLangSuffix[] =
-	{
-		{ ".sl", false }
-	};
+		{
+			{ ".sl", false }
+		};
 		addNewSuffixes("SLang", nullptr, kSLangFT, kSLangSuffix, sizeof(kSLangSuffix), itsFileTypeList, itsMacroList, *itsCRMList);
 
 		NewSuffixInfo kSQLSuffix[] =
-	{
-		{ ".sql",  false },
-		{ ".ddl",  false }
-	};
+		{
+			{ ".sql",  false },
+			{ ".ddl",  false }
+		};
 		addNewSuffixes("SQL", "SQL", kSQLFT, kSQLSuffix, sizeof(kSQLSuffix), itsFileTypeList, itsMacroList, *itsCRMList);
 
 		NewSuffixInfo kVeraSourceSuffix[] =
-	{
-		{ ".vr",  false },
-		{ ".vri", false }
-	};
+		{
+			{ ".vr",  false },
+			{ ".vri", false }
+		};
 		addNewSuffixes("Vera", "Vera", kVeraSourceFT, kVeraSourceSuffix, sizeof(kVeraSourceSuffix), itsFileTypeList, itsMacroList, *itsCRMList);
 
 		NewSuffixInfo kVeraHeaderSuffix[] =
-	{
-		{ ".vrh", false }
-	};
+		{
+			{ ".vrh", false }
+		};
 		addNewSuffixes("Vera", "Vera", kVeraHeaderFT, kVeraHeaderSuffix, sizeof(kVeraHeaderSuffix), itsFileTypeList, itsMacroList, *itsCRMList);
 
 		NewSuffixInfo kVerilogSuffix[] =
-	{
-		{ ".v", false }
-	};
+		{
+			{ ".v", false }
+		};
 		addNewSuffixes("Verilog", nullptr, kVerilogFT, kVerilogSuffix, sizeof(kVerilogSuffix), itsFileTypeList, itsMacroList, *itsCRMList);
 	}
 
@@ -926,40 +926,40 @@ PrefsManager::UpgradeData
 		}
 
 		NewSuffixInfo kCSharpSuffix[] =
-	{
-		{ ".cs", false }
-	};
+		{
+			{ ".cs", false }
+		};
 		addNewSuffixes("C#", nullptr, kCSharpFT, kCSharpSuffix, sizeof(kCSharpSuffix), itsFileTypeList, itsMacroList, *itsCRMList);
 
 		NewSuffixInfo kErlangSuffix[] =
-	{
-		{ ".erl", false }
-	};
+		{
+			{ ".erl", false }
+		};
 		addNewSuffixes("Erlang", nullptr, kErlangFT, kErlangSuffix, sizeof(kErlangSuffix), itsFileTypeList, itsMacroList, *itsCRMList);
 
 		NewSuffixInfo kSMLSuffix[] =
-	{
-		{ ".sml", false }
-	};
+		{
+			{ ".sml", false }
+		};
 		addNewSuffixes("SML", nullptr, kSMLFT, kSMLSuffix, sizeof(kSMLSuffix), itsFileTypeList, itsMacroList, *itsCRMList);
 	}
 
 	if (currentVersion < 50)
 	{
 		NewSuffixInfo kJavaScriptSuffix[] =
-	{
-		{ ".js",   false },
-		{ ".json", false }
-	};
+		{
+			{ ".js",   false },
+			{ ".json", false }
+		};
 		addNewSuffixes("JavaScript", "Java", kJavaScriptFT, kJavaScriptSuffix, sizeof(kJavaScriptSuffix), itsFileTypeList, itsMacroList, *itsCRMList);
 	}
 
 	if (currentVersion < 52)
 	{
 		NewSuffixInfo kAntSuffix[] =
-	{
-		{ "build.xml", false }
-	};
+		{
+			{ "build.xml", false }
+		};
 		addNewSuffixes("Ant", "XML", kAntFT, kAntSuffix, sizeof(kAntSuffix), itsFileTypeList, itsMacroList, *itsCRMList);
 	}
 
@@ -971,10 +971,10 @@ PrefsManager::UpgradeData
 	if (currentVersion < 56)
 	{
 		NewSuffixInfo kJSPSuffix[] =
-	{
-		{ ".jsp",   false },
-		{ ".jspf",  false }
-	};
+		{
+			{ ".jsp",   false },
+			{ ".jspf",  false }
+		};
 		addNewSuffixes("JSP", "Java", kJSPFT, kJSPSuffix, sizeof(kJSPSuffix), itsFileTypeList, itsMacroList, *itsCRMList);
 	}
 
@@ -999,24 +999,24 @@ PrefsManager::UpgradeData
 	if (currentVersion < 58)
 	{
 		NewSuffixInfo kXMLSuffix[] =
-	{
-		{ ".xml",  false },
-		{ ".xsd",  false },
-		{ ".wsdl", false },
-		{ ".dtd",  false }
-	};
+		{
+			{ ".xml",  false },
+			{ ".xsd",  false },
+			{ ".wsdl", false },
+			{ ".dtd",  false }
+		};
 		addNewSuffixes("XML", nullptr, kXMLFT, kXMLSuffix, sizeof(kXMLSuffix), itsFileTypeList, itsMacroList, *itsCRMList);
 	}
 
 	if (currentVersion < 59)
 	{
 		NewSuffixInfo kBasicSuffix[] =
-	{
-		{ ".bas", false },
-		{ ".bi",  false },
-		{ ".bb",  false },
-		{ ".pb",  false }
-	};
+		{
+			{ ".bas", false },
+			{ ".bi",  false },
+			{ ".bb",  false },
+			{ ".pb",  false }
+		};
 		addNewSuffixes("Basic", nullptr, kBasicFT, kBasicSuffix, sizeof(kBasicSuffix), itsFileTypeList, itsMacroList, *itsCRMList);
 	}
 
@@ -1024,14 +1024,14 @@ PrefsManager::UpgradeData
 	{
 #ifdef _J_MACOS
 		NewExternalSuffixInfo kImageSuffix[] =
-	{
-		{ ".png", "open $f", false }
-	};
+		{
+			{ ".png", "open $f", false }
+		};
 #else
 		NewExternalSuffixInfo kImageSuffix[] =
-	{
-		{ ".png", "eog $f", false }
-	};
+		{
+			{ ".png", "eog $f", false }
+		};
 #endif
 		addNewExternalSuffixes(kImageSuffix, sizeof(kImageSuffix)/sizeof(NewExternalSuffixInfo), itsFileTypeList);
 	}
@@ -1039,16 +1039,16 @@ PrefsManager::UpgradeData
 	if (currentVersion < 63)
 	{
 		NewSuffixInfo kMatlabSuffix[] =
-	{
-		{ ".m", false }
-	};
+		{
+			{ ".m", false }
+		};
 		addNewSuffixes("Matlab", "C", kMatlabFT, kMatlabSuffix, sizeof(kMatlabSuffix), itsFileTypeList, itsMacroList, *itsCRMList);
 
 		NewSuffixInfo kAdobeFlexSuffix[] =
-	{
-		{ ".as",   false },
-		{ ".mxml", false }
-	};
+		{
+			{ ".as",   false },
+			{ ".mxml", false }
+		};
 		addNewSuffixes("Adobe Flash", "C", kAdobeFlexFT, kAdobeFlexSuffix, sizeof(kAdobeFlexSuffix), itsFileTypeList, itsMacroList, *itsCRMList);
 	}
 
@@ -1069,27 +1069,27 @@ PrefsManager::UpgradeData
 		itsFileTypeList->Sort();
 
 		NewExternalSuffixInfo kCoreSuffix[] =
-	{
-		{ "core.*", "medic -c $f", false }
-	};
+		{
+			{ "core.*", "medic -c $f", false }
+		};
 		addNewExternalSuffixes(kCoreSuffix, sizeof(kCoreSuffix)/sizeof(NewExternalSuffixInfo), itsFileTypeList);
 	}
 
 	if (currentVersion < 66)
 	{
 		NewSuffixInfo kINISuffix[] =
-	{
-		{ ".ini", false }
-	};
+		{
+			{ ".ini", false }
+		};
 		addNewSuffixes("INI", nullptr, kINIFT, kINISuffix, sizeof(kINISuffix), itsFileTypeList, itsMacroList, *itsCRMList);
 	}
 
 	if (currentVersion < 67)
 	{
 		NewSuffixInfo kPropertiesSuffix[] =
-	{
-		{ ".properties", false }
-	};
+		{
+			{ ".properties", false }
+		};
 		addNewSuffixes("Properties", "UNIX script", kPropertiesFT, kPropertiesSuffix, sizeof(kPropertiesSuffix), itsFileTypeList, itsMacroList, *itsCRMList);
 	}
 
@@ -1098,16 +1098,31 @@ PrefsManager::UpgradeData
 		CreateDCRMRuleList();
 
 		NewSuffixInfo kDSuffix[] =
-	{
-		{ ".d", false }
-	};
+		{
+			{ ".d", false }
+		};
 		addNewSuffixes("D", nullptr, kDFT, kDSuffix, sizeof(kDSuffix), itsFileTypeList, itsMacroList, *itsCRMList);
 
 		NewSuffixInfo kGoSuffix[] =
-	{
-		{ ".go", false }
-	};
+		{
+			{ ".go", false }
+		};
 		addNewSuffixes("Go", nullptr, kGoFT, kGoSuffix, sizeof(kGoSuffix), itsFileTypeList, itsMacroList, *itsCRMList);
+	}
+
+	if (currentVersion < 69)
+	{
+		NewExternalSuffixInfo kJXLayoutEditorSuffix[] =
+		{
+			{ ".jxl", "jx_layout_editor $f", false }
+		};
+		addNewExternalSuffixes(kJXLayoutEditorSuffix, sizeof(kJXLayoutEditorSuffix)/sizeof(NewExternalSuffixInfo), itsFileTypeList);
+
+		NewExternalSuffixInfo kJXMenuEditorSuffix[] =
+		{
+			{ ".jxm", "jx_menu_editor $f", false }
+		};
+		addNewExternalSuffixes(kJXMenuEditorSuffix, sizeof(kJXMenuEditorSuffix)/sizeof(NewExternalSuffixInfo), itsFileTypeList);
 	}
 
 	//

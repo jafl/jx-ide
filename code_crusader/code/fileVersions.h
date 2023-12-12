@@ -12,8 +12,10 @@
 
 #include <jx-af/jcore/jTypes.h>
 
-const JFileVersion kCurrentPrefsFileVersion = 68;
+const JFileVersion kCurrentPrefsFileVersion = 69;
 
+// version 69:
+//	Added file types .jxl & .jxm
 // version 68:
 //	Added support for D & Go source files.
 // version 67:
