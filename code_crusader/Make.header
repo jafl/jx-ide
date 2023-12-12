@@ -19,7 +19,7 @@ MAKE_INCLUDE := ${JX_ROOT}/include/jx-af/make
 include ${MAKE_INCLUDE}/jx_config
 include ${MAKE_INCLUDE}/jfs_constants
 
-SEARCHDIRS := -I./code -I./image ${SEARCHDIRS} \
+SEARCHDIRS := -I./code -I./image-build ${SEARCHDIRS} \
               $(shell xml2-config --cflags)
 
 # makemake variables
