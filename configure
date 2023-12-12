@@ -49,7 +49,6 @@ elif command -v apt-get; then
 		if [[ ! -f ../JX/Makefile && -z $JX_ROOT ]]; then
 			curl -LO https://libjx.sourceforge.net/${MODE:-release}/re-flex.deb
 			curl -LO https://libjx.sourceforge.net/${MODE:-release}/jx-application-framework.deb;
-			$SUDO apt -y remove nginx libgd3;	# hack
 			$SUDO apt install ./re-flex.deb ./jx-application-framework.deb;
 		fi
 	fi;
@@ -110,6 +109,7 @@ fi
 
 make Makefiles;
 
-if [[ $MODE == release ]]; then
+if [[ $1 != package ]]; then
+	touch code_crusader/image-build/* code_medic/image-build/* code_mill/image-build/*;
 	touch code_medic/backend/gdb/GDBVarTreeParserY.cpp code_medic/backend/gdb/GDBVarTreeParserY.hpp;
 fi
