@@ -1,0 +1,126 @@
+jx_menu_editor 0
+1131 374
+"ProjectTable"
+"Context"
+' 
+40
+40
+264
+191
+51
+272
+166
+75
+
+0
+1
+0
+0 ""
+"Open selected files"
+"Left-dbl-click or Return."
+' 
+"__OpenSelectedFiles"
+"kOpenFilesCmd"
+0
+
+1
+0
+0 ""
+"Open complement files"
+"Middle-dbl-click or Ctrl-Tab."
+' 
+"__OpenComplementFiles"
+"kOpenComplFilesCmd"
+1
+
+1
+0
+0 ""
+"Edit sub-project configuration"
+""
+' 
+"__EditSubProjectConfiguration"
+"kEditSubprojConfigCmd"
+1
+
+1
+0
+0 ""
+"New group"
+""
+' 
+"__NewGroup"
+"kNewGroupCmd"
+0
+
+1
+0
+0 ""
+"Add files..."
+""
+' 
+"__AddFiles"
+"kAddFilesCmd"
+0
+
+1
+0
+0 ""
+"Add directory tree..."
+""
+' 
+"__AddDirectoryTree"
+"kAddDirTreeCmd"
+0
+
+1
+0
+0 ""
+"Remove selected items"
+"Backspace."
+' 
+"__RemoveSelectedItems"
+"kRemoveSelCmd"
+1
+
+1
+0
+0 ""
+"Edit file path"
+"Meta-left-dbl-click."
+' 
+"__EditFilePath"
+"kEditPathCmd"
+1
+
+1
+0
+0 ""
+"Compare selected files with backup"
+""
+' 
+"__CompareSelectedFilesWithBackup"
+"kDiffSmartCmd"
+0
+
+1
+0
+0 ""
+"Compare selected files with version control"
+""
+' 
+"__CompareSelectedFilesWithVersionControl"
+"kDiffVCSCmd"
+0
+
+1
+0
+0 ""
+"Show selected files in file manager"
+""
+' 
+"__ShowSelectedFilesInFileManager"
+"kShowLocationCmd"
+0
+
+0

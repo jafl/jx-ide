@@ -1,0 +1,136 @@
+jx_menu_editor 0
+1027 390
+"TextEditor"
+"Search"
+' 
+40
+40
+223
+123
+40
+213
+258
+75
+
+0
+1
+0
+0 "jcc_balance_braces.xpm"
+"Balance closest grouping symbols"
+"Ctrl-B"
+' 
+"BalanceGroupingSymbol"
+"kBalanceCmd"
+1
+
+1
+0
+0 ""
+"Go to line..."
+"Ctrl-comma"
+' 
+"GoToLine"
+"kGoToLineCmd"
+0
+
+1
+0
+0 ""
+"Go to column..."
+"Ctrl-<"
+' 
+"GoToColumn"
+"kGoToColCmd"
+0
+
+1
+0
+0 ""
+"Place bookmark"
+"Ctrl-Shift-B"
+' 
+"PlaceBookmark"
+"kPlaceBookmarkCmd"
+1
+
+1
+0
+0 ""
+"Open selection as file name or URL"
+"Ctrl-left-dbl-click"
+' 
+"OpenSelectionAsFile"
+"kOpenSelectionAsFileCmd"
+0
+
+1
+0
+0 ""
+"Find file..."
+"Ctrl-D"
+' 
+"FindFile"
+"kFindSourceFileCmd"
+1
+
+1
+0
+0 ""
+"Find selection as symbol"
+"Meta-dbl-click, F12"
+' 
+"FindSelectionInProject"
+"kFindSelectionAsSymbolCmd"
+0
+
+1
+0
+0 ""
+"Find selection (no context)"
+"Meta-Shift-dbl-click"
+' 
+"FindSelectionInProjectNoContext"
+"kFindSelectionAsSymbolNoContextCmd"
+0
+
+1
+0
+0 ""
+"Find selection (man page only)"
+"Ctrl-Shift-I"
+' 
+"FindSelectionInManPage"
+"kFindSelectionInManPageCmd"
+0
+
+1
+0
+0 "jcc_view_man_page.xpm"
+"Look up man page..."
+"Ctrl-I"
+' 
+"OpenManPage"
+"kViewManPageCmd"
+1
+
+1
+0
+0 ""
+"Previous search/compile result"
+"Meta-minus"
+' 
+"OpenPrevListItem"
+"kOpenPrevListItemCmd"
+0
+
+1
+0
+0 ""
+"Next search/compile result"
+"Meta-plus"
+' 
+"OpenNextListItem"
+"kOpenNextListItemCmd"
+0
+
+0

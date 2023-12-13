@@ -16,33 +16,8 @@
 #include <jx-af/jx/JXToolBar.h>
 #include <jx-af/jcore/jAssert.h>
 
+#include "TreeDirector-Tree.h"
 #include "jcc_d_tree_window.xpm"
-
-// Tree menu
-
-static const JUtf8Byte* kTreeMenuStr =
-	"    Add classes...                                         %i" kEditSearchPathsAction
-	"  | Update                 %k Meta-U                       %i" kUpdateClassTreeAction
-	"  | Minimize MI link lengths now                           %i" kMinimizeMILinkLengthAction
-	"%l| Open source            %k Left-dbl-click or Return     %i" kOpenSelectedFilesAction
-	"  | Open function list     %k Right-dbl-click              %i" kOpenClassFnListAction
-	"%l| Collapse               %k Meta-<                       %i" kCollapseClassesAction
-	"  | Expand                 %k Meta->                       %i" kExpandClassesAction
-	"  | Expand all                                             %i" kExpandAllClassesAction
-	"%l| Select parents                                         %i" kSelectParentClassAction
-	"  | Select descendants                                     %i" kSelectDescendantClassAction
-	"  | Copy selected names    %k Meta-C                       %i" kCopyClassNameAction
-	"%l| Find function...       %k Meta-F                       %i" kFindFunctionAction;
-
-enum
-{
-	kEditSearchPathsCmd = 1, kUpdateCurrentCmd,
-	kForceMinMILinksCmd,
-	kTreeOpenSourceCmd, kTreeOpenFnListCmd,
-	kTreeCollapseCmd, kTreeExpandCmd, kTreeExpandAllCmd,
-	kTreeSelParentsCmd, kTreeSelDescendantsCmd, kCopySelNamesCmd,
-	kFindFnCmd
-};
 
 /******************************************************************************
  Constructor
@@ -56,8 +31,7 @@ DTreeDirector::DTreeDirector
 	:
 	TreeDirector(supervisor, NewDTree, "WindowTitleSuffix::DTreeDirector",
 				   "DTreeHelp", jcc_d_tree_window,
-				   kTreeMenuStr, "DTreeDirector",
-				   kDTreeToolBarID, InitDTreeToolBar)
+				   kTreeMenuStr, kDTreeToolBarID, InitDTreeToolBar)
 {
 	DTreeDirectorX();
 }
@@ -78,8 +52,7 @@ DTreeDirector::DTreeDirector
 				   supervisor, subProject, StreamInDTree,
 				   "WindowTitleSuffix::DTreeDirector",
 				   "DTreeHelp", jcc_d_tree_window,
-				   kTreeMenuStr, "DTreeDirector",
-				   kDTreeToolBarID, InitDTreeToolBar,
+				   kTreeMenuStr, kDTreeToolBarID, InitDTreeToolBar,
 				   nullptr, false)
 {
 	DTreeDirectorX();
@@ -92,6 +65,8 @@ DTreeDirector::DTreeDirectorX()
 {
 	itsDTree = dynamic_cast<DTree*>(GetTree());
 	assert( itsDTree != nullptr );
+
+	ConfigureTreeMenu(GetTreeMenu());
 }
 
 /******************************************************************************

@@ -1,0 +1,76 @@
+jx_menu_editor 0
+838 271
+"SymbolDirector"
+"Symbol"
+'s
+40
+40
+143
+144
+43
+160
+175
+75
+
+0
+1
+0
+0 ""
+"Edit search paths..."
+""
+'p
+"EditSearchPaths"
+"kEditSearchPathsCmd"
+0
+
+1
+0
+0 ""
+"Update"
+"Ctrl-U"
+'u
+"UpdateClassTree"
+"kUpdateCurrentCmd"
+1
+
+1
+0
+1 "jx_file_open.xpm"
+"Open file"
+"Left-dbl-click or Return"
+'o
+"OpenSelectedFiles"
+"kOpenFileCmd"
+0
+
+1
+0
+1 "jx_edit_copy.xpm"
+"Copy selected names"
+"Ctrl-C"
+'n
+"CopySymbolName"
+"kCopySelNamesCmd"
+1
+
+1
+0
+0 ""
+"Find selected symbols"
+"Ctrl-dbl-click"
+'f
+"FindSelectionInProject"
+"kFindSelectedSymbolCmd"
+0
+
+1
+0
+0 ""
+"Close symbol browsers"
+""
+'c
+"CloseAllSymSR"
+"kCloseAllSymSRCmd"
+0
+
+0

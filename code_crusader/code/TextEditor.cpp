@@ -93,68 +93,8 @@ const JUtf8Byte kSetupDataEndDelimiter  = '\1';
 
 static const JString kExecScriptAction("ExecScript::TextEditor", JString::kNoCopy);
 
-// Search menu
-
-#include "jcc_balance_braces.xpm"
-#include "jcc_view_man_page.xpm"
-
-static const JUtf8Byte* kSearchMenuStr =
-	"    Balance closest grouping symbols   %k Meta-B               %i" kBalanceGroupingSymbolAction
-	"%l| Go to line...                      %k Meta-comma           %i" kGoToLineAction
-	"  | Go to column...                    %k Meta-<               %i" kGoToColumnAction
-	"  | Place bookmark                     %k Meta-Shift-B         %i" kPlaceBookmarkAction
-	"%l| Open selection as file name or URL %k Ctrl-left-dbl-click  %i" kOpenSelectionAsFileAction
-	"  | Find file...                       %k Meta-D               %i" kFindFileAction
-	"%l| Find selection as symbol           %k Meta-dbl-click, F12  %i" kFindSelectionInProjectAction
-	"  | Find selection (no context)        %k Meta-Shift-dbl-click %i" kFindSelInProjNoContextAction
-	"  | Find selection (man page only)     %k Meta-Shift-I         %i" kFindSelectionInManPageAction
-	"  | Look up man page...                %k Meta-I               %i" kOpenManPageAction
-	"%l| Previous search/compile result     %k Ctrl-minus           %i" kOpenPrevListItem
-	"  | Next search/compile result         %k Ctrl-plus            %i" kOpenNextListItem;
-
-// offsets from itsFirstSearchMenuItem
-
-enum
-{
-	kBalanceCmd = 0,
-	kGoToLineCmd, kGoToColCmd, kPlaceBookmarkCmd,
-	kOpenSelectionAsFileCmd, kFindSourceFileCmd,
-	kFindSelectionAsSymbolCmd, kFindSelectionAsSymbolNoContextCmd,
-	kFindSelectionInManPageCmd, kViewManPageCmd,
-	kOpenPrevListItemCmd, kOpenNextListItemCmd
-};
-
-// Context menu
-
-static const JUtf8Byte* kContextMenuStr =
-	"    Cut                              %k Meta-X."
-	"  | Copy                             %k Meta-C."
-	"  | Paste                            %k Meta-V."
-	"%l| Shift left                       %k Meta-[."
-	"  | Shift right                      %k Meta-]."
-	"%l| Complete                         %k Tab or Ctrl-space."
-	"  | Run macro                        %k Tab or Ctrl-space."
-	"  | Scripts"
-	"%l| Find backwards                   %k Meta-Shift-H."
-	"  | Find forward                     %k Meta-H."
-	"%l| Find as symbol                   %k Meta-dbl-click."
-	"  | Find as symbol (no context)      %k Meta-Shift-dbl-click."
-	"  | Find as symbol (man page only)   %k Meta-Shift-I."
-	"%l| Open as file name or URL         %k Ctrl-left-dbl-click."
-	"  | Show in file manager             %k Dbl-click icon in footer"
-	"%l| Balance closest grouping symbols %k Meta-B."
-	"  | Place bookmark                   %k Meta-Shift-B.";
-
-enum
-{
-	kContextCutCmd = 1, kContextCopyCmd, kContextPasteCmd,
-	kContextShiftLeftCmd, kContextShiftRightCmd,
-	kContextCompleteCmd, kContextMacroCmd, kContextScriptSubmenuIndex,
-	kContextFindSelBackCmd, kContextFindSelFwdCmd,
-	kContextFindSymbolCmd, kContextFindSymbolNoContextCmd, kContextFindSymbolManPageCmd,
-	kContextOpenSelAsFileCmd, kShowInFileMgrCmd,
-	kContextBalanceCmd, kContextPlaceBookmarkCmd
-};
+#include "TextEditor-Search.h"
+#include "TextEditor-Context.h"
 
 /******************************************************************************
  Constructor
@@ -168,7 +108,7 @@ TextEditor::TextEditor
 	JXMenuBar*			menuBar,
 	TELineIndexInput*	lineInput,
 	TEColIndexInput*	colInput,
-	const bool		pasteStyledText,
+	const bool			pasteStyledText,
 	JXScrollbarSet*		scrollbarSet,
 	JXContainer*		enclosure,
 	const HSizingOption	hSizing,
@@ -220,14 +160,12 @@ TextEditor::TextEditor
 
 	// create search menu
 
-	JXTextMenu* searchMenu = AppendSearchReplaceMenu(menuBar);
-	itsFirstSearchMenuItem = searchMenu->GetItemCount() + 1;
-	searchMenu->ShowSeparatorAfter(itsFirstSearchMenuItem-1);
-	searchMenu->AppendMenuItems(kSearchMenuStr, "TextEditor");
+	JXTextMenu* searchMenu  = AppendSearchReplaceMenu(menuBar);
+	itsSearchMenuItemOffset = searchMenu->GetItemCount();
+	searchMenu->ShowSeparatorAfter(itsSearchMenuItemOffset);
+	searchMenu->AppendMenuItems(kSearchMenuStr);
 	ListenTo(searchMenu);
-
-	searchMenu->SetItemImage(itsFirstSearchMenuItem + kBalanceCmd,     jcc_balance_braces);
-	searchMenu->SetItemImage(itsFirstSearchMenuItem + kViewManPageCmd, jcc_view_man_page);
+	ConfigureSearchMenu(searchMenu, itsSearchMenuItemOffset);
 
 	// create menus when needed
 
@@ -564,23 +502,23 @@ TextEditor::UpdateCustomSearchMenuItems()
 	const bool ok = GetSearchReplaceMenu(&searchMenu);
 	assert( ok );
 
-	searchMenu->EnableItem(itsFirstSearchMenuItem + kGoToLineCmd);
-	searchMenu->EnableItem(itsFirstSearchMenuItem + kGoToColCmd);
-	searchMenu->EnableItem(itsFirstSearchMenuItem + kPlaceBookmarkCmd);
-	searchMenu->EnableItem(itsFirstSearchMenuItem + kFindSourceFileCmd);
-	searchMenu->EnableItem(itsFirstSearchMenuItem + kViewManPageCmd);
+	searchMenu->EnableItem(itsSearchMenuItemOffset + kGoToLineCmd);
+	searchMenu->EnableItem(itsSearchMenuItemOffset + kGoToColCmd);
+	searchMenu->EnableItem(itsSearchMenuItemOffset + kPlaceBookmarkCmd);
+	searchMenu->EnableItem(itsSearchMenuItemOffset + kFindSourceFileCmd);
+	searchMenu->EnableItem(itsSearchMenuItemOffset + kViewManPageCmd);
 
 	if (!GetText()->IsEmpty())
 	{
-		searchMenu->EnableItem(itsFirstSearchMenuItem + kBalanceCmd);
+		searchMenu->EnableItem(itsSearchMenuItemOffset + kBalanceCmd);
 	}
 
 	if (HasSelection())
 	{
-		searchMenu->EnableItem(itsFirstSearchMenuItem + kOpenSelectionAsFileCmd);
-		searchMenu->EnableItem(itsFirstSearchMenuItem + kFindSelectionAsSymbolCmd);
-		searchMenu->EnableItem(itsFirstSearchMenuItem + kFindSelectionAsSymbolNoContextCmd);
-		searchMenu->EnableItem(itsFirstSearchMenuItem + kFindSelectionInManPageCmd);
+		searchMenu->EnableItem(itsSearchMenuItemOffset + kOpenSelectionAsFileCmd);
+		searchMenu->EnableItem(itsSearchMenuItemOffset + kFindSelectionAsSymbolCmd);
+		searchMenu->EnableItem(itsSearchMenuItemOffset + kFindSelectionAsSymbolNoContextCmd);
+		searchMenu->EnableItem(itsSearchMenuItemOffset + kFindSelectionInManPageCmd);
 	}
 
 	ProjectDocument* projDoc;
@@ -590,19 +528,19 @@ TextEditor::UpdateCustomSearchMenuItems()
 		{
 			"p", projDoc->GetName().GetBytes()
 		};
-		searchMenu->SetItemText(itsFirstSearchMenuItem + kFindSelectionAsSymbolCmd,
+		searchMenu->SetItemText(itsSearchMenuItemOffset + kFindSelectionAsSymbolCmd,
 			JGetString("FindSymbolGlobal::TextEditor", map, sizeof(map)));
 	}
 	else
 	{
-		searchMenu->SetItemText(itsFirstSearchMenuItem + kFindSelectionAsSymbolCmd, JGetString("FindSymbol::TextEditor"));
+		searchMenu->SetItemText(itsSearchMenuItemOffset + kFindSelectionAsSymbolCmd, JGetString("FindSymbol::TextEditor"));
 	}
 
 	CommandOutputDocument* listDoc;
 	if (GetDocumentManager()->GetActiveListDocument(&listDoc))
 	{
-		searchMenu->EnableItem(itsFirstSearchMenuItem + kOpenPrevListItemCmd);
-		searchMenu->EnableItem(itsFirstSearchMenuItem + kOpenNextListItemCmd);
+		searchMenu->EnableItem(itsSearchMenuItemOffset + kOpenPrevListItemCmd);
+		searchMenu->EnableItem(itsSearchMenuItemOffset + kOpenNextListItemCmd);
 	}
 }
 
@@ -617,7 +555,7 @@ TextEditor::HandleCustomSearchMenuItems
 	const JIndex origIndex
 	)
 {
-	const JInteger index = JInteger(origIndex) - JInteger(itsFirstSearchMenuItem);
+	const JInteger index = JInteger(origIndex) - JInteger(itsSearchMenuItemOffset);
 	if (index != kGoToLineCmd && index != kGoToColCmd)
 	{
 		Focus();
@@ -1008,37 +946,21 @@ TextEditor::HandleMouseUp
 
  ******************************************************************************/
 
-#include <jx-af/image/jx/jx_edit_cut.xpm>
-#include <jx-af/image/jx/jx_edit_copy.xpm>
-#include <jx-af/image/jx/jx_edit_paste.xpm>
-#include <jx-af/image/jx/jx_edit_shift_left.xpm>
-#include <jx-af/image/jx/jx_edit_shift_right.xpm>
-#include <jx-af/image/jx/jx_find_selection_backwards.xpm>
-#include <jx-af/image/jx/jx_find_selection_forward.xpm>
-
 void
 TextEditor::CreateContextMenu()
 {
 	if (itsContextMenu == nullptr)
 	{
 		itsContextMenu = jnew JXTextMenu(JString::empty, this, kFixedLeft, kFixedTop, 0,0, 10,10);
-		itsContextMenu->SetMenuItems(kContextMenuStr, "TextEditor");
+		itsContextMenu->SetMenuItems(kContextMenuStr);
 		itsContextMenu->SetUpdateAction(JXMenu::kDisableNone);
 		itsContextMenu->SetToHiddenPopupMenu();
 		itsContextMenu->AttachHandlers(this,
 			&TextEditor::UpdateContextMenu,
 			&TextEditor::HandleContextMenu);
+		ConfigureContextMenu(itsContextMenu);
 
 		CreateScriptMenu(itsContextMenu, kContextScriptSubmenuIndex);
-
-		itsContextMenu->SetItemImage(kContextCutCmd,         jx_edit_cut);
-		itsContextMenu->SetItemImage(kContextCopyCmd,        jx_edit_copy);
-		itsContextMenu->SetItemImage(kContextPasteCmd,       jx_edit_paste);
-		itsContextMenu->SetItemImage(kContextShiftLeftCmd,   jx_edit_shift_left);
-		itsContextMenu->SetItemImage(kContextShiftRightCmd,  jx_edit_shift_right);
-		itsContextMenu->SetItemImage(kContextFindSelBackCmd, jx_find_selection_backwards);
-		itsContextMenu->SetItemImage(kContextFindSelFwdCmd,  jx_find_selection_forward);
-		itsContextMenu->SetItemImage(kContextBalanceCmd,     jcc_balance_braces);
 	}
 }
 
@@ -1054,8 +976,7 @@ TextEditor::CreateScriptMenu
 	const JIndex	index
 	)
 {
-	auto* menu =
-		jnew TEScriptMenu(this, itsScriptPath, parent, index, parent->GetEnclosure());
+	auto* menu =jnew TEScriptMenu(this, itsScriptPath, parent, index, parent->GetEnclosure());
 	assert( menu != nullptr );
 	ListenTo(menu);
 

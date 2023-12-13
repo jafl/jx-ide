@@ -21,27 +21,14 @@
 #include <jx-af/jcore/jFileUtil.h>
 #include <jx-af/jcore/jAssert.h>
 
+#include "CompileDocument-Errors.h"
+
 static const JRegex dirMarkerPattern = "((Entering)|(Leaving)) directory `";
 static const JRegex endMarkerPattern = "['`]";
 
 // static data
 
 bool CompileDocument::theDoubleSpaceFlag = true;
-
-// Error menu
-
-static const JUtf8Byte* kErrorMenuStr =
-	"    First error             %k Ctrl-1"
-	"%l| Previous error          %k Meta-minus"		// and Meta-_
-	"  | Next error              %k Meta-plus"
-	"%l| Open selection to error %k Meta-Shift-O";
-
-enum
-{
-	kFirstErrorCmd = 1,
-	kPrevErrorCmd, kNextErrorCmd,
-	kOpenFileCmd
-};
 
 /******************************************************************************
  Constructor (protected)
@@ -58,12 +45,13 @@ CompileDocument::CompileDocument
 {
 	GetWindow()->SetWMClass(GetWMClassInstance(), GetCompileOutputWindowClass());
 
-	itsErrorMenu = InsertTextMenu(JGetString("ErrorMenuTitle::CompileDocument"));
-	itsErrorMenu->SetMenuItems(kErrorMenuStr, "CompileDocument");
+	itsErrorMenu = InsertTextMenu(JGetString("MenuTitle::CompileDocument_Errors"));
+	itsErrorMenu->SetMenuItems(kErrorsMenuStr);
 	itsErrorMenu->SetUpdateAction(JXMenu::kDisableNone);
 	itsErrorMenu->AttachHandlers(this,
 		&CompileDocument::UpdateErrorMenu,
 		&CompileDocument::HandleErrorMenu);
+	ConfigureErrorsMenu(itsErrorMenu);
 
 	GetCommandMenu()->SetProjectDocument(projDoc);
 

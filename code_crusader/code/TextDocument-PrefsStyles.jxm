@@ -1,0 +1,196 @@
+jx_menu_editor 0
+760 523
+"TextDocument"
+"PrefsStyles"
+' 
+40
+40
+170
+100
+40
+152
+118
+75
+
+0
+1
+0
+0 ""
+"Bourne shell"
+""
+' 
+"__BourneShell"
+"__BourneShell"
+0
+
+1
+0
+0 ""
+"C shell"
+""
+' 
+"__CShell"
+"__CShell"
+0
+
+1
+0
+0 ""
+"C / C++"
+""
+' 
+"__CC"
+"__C"
+0
+
+1
+0
+0 ""
+"C#"
+""
+' 
+"__C"
+"__CSharp"
+0
+
+1
+0
+0 ""
+"D"
+""
+' 
+"__D"
+"__D"
+0
+
+1
+0
+0 ""
+"Eiffel"
+""
+' 
+"__Eiffel"
+"__Eiffel"
+0
+
+1
+0
+0 ""
+"Go"
+""
+' 
+"__Go"
+"__Go"
+0
+
+1
+0
+0 ""
+"HTML / PHP / JSP / XML"
+""
+' 
+"__HTMLPHPJSPXML"
+"__HTML"
+0
+
+1
+0
+0 ""
+"INI"
+""
+' 
+"__INI"
+"__INI"
+0
+
+1
+0
+0 ""
+"Java"
+""
+' 
+"__Java"
+"__Java"
+0
+
+1
+0
+0 ""
+"Java properties"
+""
+' 
+"__JavaProperties"
+"__Properties"
+0
+
+1
+0
+0 ""
+"JavaScript"
+""
+' 
+"__JavaScript"
+"__JavaScript"
+0
+
+1
+0
+0 ""
+"Make"
+""
+' 
+"__Make"
+"__Make"
+0
+
+1
+0
+0 ""
+"Perl"
+""
+' 
+"__Perl"
+"__Perl"
+0
+
+1
+0
+0 ""
+"Python"
+""
+' 
+"__Python"
+"__Python"
+0
+
+1
+0
+0 ""
+"Ruby"
+""
+' 
+"__Ruby"
+"__Ruby"
+0
+
+1
+0
+0 ""
+"SQL"
+""
+' 
+"__SQL"
+"__SQL"
+0
+
+1
+0
+0 ""
+"TCL"
+""
+' 
+"__TCL"
+"__TCL"
+0
+
+0

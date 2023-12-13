@@ -1,0 +1,36 @@
+jx_menu_editor 0
+724 209
+"RunCommandDialog"
+"SaveCmd"
+' 
+40
+40
+117
+100
+40
+131
+135
+75
+
+0
+1
+0
+0 ""
+"For all projects"
+""
+' 
+"__ForAllProjects"
+"kSaveForAllCmd"
+0
+
+1
+0
+0 ""
+"For active project"
+""
+' 
+"__ForActiveProject"
+"kSaveForActiveCmd"
+0
+
+0

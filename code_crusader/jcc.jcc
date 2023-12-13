@@ -16,6 +16,10 @@ T
 F
 "./code/App.cpp"
 T
+2 "App-Help.jxm"
+F
+"./code/App-Help.jxm"
+T
 2 "PrefsManager.cpp"
 F
 "./code/PrefsManager.cpp"
@@ -59,9 +63,29 @@ T
 F
 "./code/ProjectDocument.cpp"
 T
+2 "ProjectDocument-File.jxm"
+F
+"./code/ProjectDocument-File.jxm"
+T
+2 "ProjectDocument-Project.jxm"
+F
+"./code/ProjectDocument-Project.jxm"
+T
+2 "ProjectDocument-Source.jxm"
+F
+"./code/ProjectDocument-Source.jxm"
+T
+2 "ProjectDocument-Preferences.jxm"
+F
+"./code/ProjectDocument-Preferences.jxm"
+T
 2 "ProjectTable.cpp"
 F
 "./code/ProjectTable.cpp"
+T
+2 "ProjectTable-Context.jxm"
+F
+"./code/ProjectTable-Context.jxm"
 T
 2 "ProjectTableInput.cpp"
 F
@@ -123,6 +147,10 @@ T
 F
 "./code/SaveNewProjectDialog.cpp"
 T
+2 "SaveNewProjectDialog-Template.jxm"
+F
+"./code/SaveNewProjectDialog-Template.jxm"
+T
 2 "ChooseRelativeFileDialog.cpp"
 F
 "./code/ChooseRelativeFileDialog.cpp"
@@ -154,6 +182,18 @@ T
 F
 "./code/CommandMenu.cpp"
 T
+2 "CommandMenu-Tasks.jxm"
+F
+"./code/CommandMenu-Tasks.jxm"
+T
+2 "CommandMenu-AddToProject.jxm"
+F
+"./code/CommandMenu-AddToProject.jxm"
+T
+2 "CommandMenu-ManageProject.jxm"
+F
+"./code/CommandMenu-ManageProject.jxm"
+T
 2 "Command.cpp"
 F
 "./code/Command.cpp"
@@ -166,6 +206,10 @@ T
 F
 "./code/CommandTable.cpp"
 T
+2 "CommandTable-Options.jxm"
+F
+"./code/CommandTable-Options.jxm"
+T
 2 "CommandPathInput.cpp"
 F
 "./code/CommandPathInput.cpp"
@@ -177,6 +221,10 @@ T
 2 "RunCommandDialog.cpp"
 F
 "./code/RunCommandDialog.cpp"
+T
+2 "RunCommandDialog-SaveCmd.jxm"
+F
+"./code/RunCommandDialog-SaveCmd.jxm"
 T
 2 "CommandOutputDocument.cpp"
 F
@@ -205,6 +253,10 @@ T
 F
 "./code/CompileDocument.cpp"
 T
+2 "CompileDocument-Errors.jxm"
+F
+"./code/CompileDocument-Errors.jxm"
+T
 2 "ProjectConfigDialog.cpp"
 F
 "./code/ProjectConfigDialog.cpp"
@@ -216,6 +268,22 @@ T
 F
 "./code/FileListDirector.cpp"
 T
+2 "Generic-File.jxm"
+F
+"./code/Generic-File.jxm"
+T
+2 "FileListDirector-List.jxm"
+F
+"./code/FileListDirector-List.jxm"
+T
+2 "FileListDirector-Project.jxm"
+F
+"./code/FileListDirector-Project.jxm"
+T
+2 "FileListDirector-Preferences.jxm"
+F
+"./code/FileListDirector-Preferences.jxm"
+T
 2 "FileListTable.cpp"
 F
 "./code/FileListTable.cpp"
@@ -226,6 +294,18 @@ T
 2 "SymbolDirector.cpp"
 F
 "./code/SymbolDirector.cpp"
+T
+2 "SymbolDirector-Symbol.jxm"
+F
+"./code/SymbolDirector-Symbol.jxm"
+T
+2 "SymbolDirector-Project.jxm"
+F
+"./code/SymbolDirector-Project.jxm"
+T
+2 "SymbolDirector-Preferences.jxm"
+F
+"./code/SymbolDirector-Preferences.jxm"
 T
 2 "SymbolTable.cpp"
 F
@@ -243,6 +323,10 @@ T
 F
 "./code/SymbolSRDirector.cpp"
 T
+2 "SymbolSRDirector-Actions.jxm"
+F
+"./code/SymbolSRDirector-Actions.jxm"
+T
 2 "EditSymbolPrefsDialog.cpp"
 F
 "./code/EditSymbolPrefsDialog.cpp"
@@ -253,6 +337,22 @@ T
 2 "TreeDirector.cpp"
 F
 "./code/TreeDirector.cpp"
+T
+2 "TreeDirector-File.jxm"
+F
+"./code/TreeDirector-File.jxm"
+T
+2 "TreeDirector-Tree.jxm"
+F
+"./code/TreeDirector-Tree.jxm"
+T
+2 "TreeDirector-Project.jxm"
+F
+"./code/TreeDirector-Project.jxm"
+T
+2 "TreeDirector-Preferences.jxm"
+F
+"./code/TreeDirector-Preferences.jxm"
 T
 2 "TreeWidget.cpp"
 F
@@ -273,6 +373,10 @@ T
 2 "CTreeDirector.cpp"
 F
 "./code/CTreeDirector.cpp"
+T
+2 "CTreeDirector-Tree.jxm"
+F
+"./code/CTreeDirector-Tree.jxm"
 T
 2 "CTreeScanner.l"
 F
@@ -317,6 +421,10 @@ T
 2 "GoTreeDirector.cpp"
 F
 "./code/GoTreeDirector.cpp"
+T
+2 "GoTreeDirector-Tree.jxm"
+F
+"./code/GoTreeDirector-Tree.jxm"
 T
 2 "GoTreeScanner.l"
 F
@@ -369,9 +477,41 @@ T
 F
 "./code/TextDocument.cpp"
 T
+2 "TextDocument-File.jxm"
+F
+"./code/TextDocument-File.jxm"
+T
+2 "TextDocument-FileFormat.jxm"
+F
+"./code/TextDocument-FileFormat.jxm"
+T
+2 "TextDocument-Diff.jxm"
+F
+"./code/TextDocument-Diff.jxm"
+T
+2 "TextDocument-Preferences.jxm"
+F
+"./code/TextDocument-Preferences.jxm"
+T
+2 "TextDocument-PrefsStyles.jxm"
+F
+"./code/TextDocument-PrefsStyles.jxm"
+T
+2 "TextDocument-Settings.jxm"
+F
+"./code/TextDocument-Settings.jxm"
+T
 2 "TextEditor.cpp"
 F
 "./code/TextEditor.cpp"
+T
+2 "TextEditor-Search.jxm"
+F
+"./code/TextEditor-Search.jxm"
+T
+2 "TextEditor-Context.jxm"
+F
+"./code/TextEditor-Context.jxm"
 T
 2 "TECaretInputBase.cpp"
 F
@@ -409,6 +549,10 @@ T
 F
 "./code/EditTextPrefsDialog.cpp"
 T
+2 "EditTextPrefsDialog-Emulator.jxm"
+F
+"./code/EditTextPrefsDialog-Emulator.jxm"
+T
 2 "EditCRMDialog.cpp"
 F
 "./code/EditCRMDialog.cpp"
@@ -429,6 +573,10 @@ T
 F
 "./code/TEScriptMenu.cpp"
 T
+2 "TEScriptMenu-Suffix.jxm"
+F
+"./code/TEScriptMenu-Suffix.jxm"
+T
 2 "TabWidthDialog.cpp"
 F
 "./code/TabWidthDialog.cpp"
@@ -448,6 +596,10 @@ T
 F
 "./code/SearchTextDialog.cpp"
 T
+2 "SearchTextDialog-FileList.jxm"
+F
+"./code/SearchTextDialog-FileList.jxm"
+T
 2 "SearchPathHistoryMenu.cpp"
 F
 "./code/SearchPathHistoryMenu.cpp"
@@ -459,6 +611,10 @@ T
 2 "SearchDocument.cpp"
 F
 "./code/SearchDocument.cpp"
+T
+2 "SearchDocument-Match.jxm"
+F
+"./code/SearchDocument-Match.jxm"
 T
 2 "SearchTE.cpp"
 F
@@ -810,6 +966,10 @@ T
 2 "FileTypeTable.cpp"
 F
 "./code/FileTypeTable.cpp"
+T
+2 "FileTypeTable-Type.jxm"
+F
+"./code/FileTypeTable-Type.jxm"
 F
 T
 1 "diff"
@@ -817,6 +977,30 @@ T
 2 "DiffFileDialog.cpp"
 F
 "./code/DiffFileDialog.cpp"
+T
+2 "DiffFileDialog-CVSRev1.jxm"
+F
+"./code/DiffFileDialog-CVSRev1.jxm"
+T
+2 "DiffFileDialog-CVSRev2.jxm"
+F
+"./code/DiffFileDialog-CVSRev2.jxm"
+T
+2 "DiffFileDialog-SVNRev1.jxm"
+F
+"./code/DiffFileDialog-SVNRev1.jxm"
+T
+2 "DiffFileDialog-SVNRev2.jxm"
+F
+"./code/DiffFileDialog-SVNRev2.jxm"
+T
+2 "DiffFileDialog-GitRev1.jxm"
+F
+"./code/DiffFileDialog-GitRev1.jxm"
+T
+2 "DiffFileDialog-GitRev2.jxm"
+F
+"./code/DiffFileDialog-GitRev2.jxm"
 T
 2 "DiffStyleMenu.cpp"
 F
@@ -829,6 +1013,10 @@ T
 2 "DiffDocument.cpp"
 F
 "./code/DiffDocument.cpp"
+T
+2 "DiffDocument-Differences.jxm"
+F
+"./code/DiffDocument-Differences.jxm"
 T
 2 "DiffEditor.cpp"
 F
@@ -943,7 +1131,7 @@ T "./" "echo ====" "" FFFTTFF "" "" "" F
 F
 # build settings
 1
-F
+T
 "jcc"
 "${LIB_DEPS}"
 "make -k all"

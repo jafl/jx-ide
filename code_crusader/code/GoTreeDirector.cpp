@@ -16,33 +16,8 @@
 #include <jx-af/jx/JXToolBar.h>
 #include <jx-af/jcore/jAssert.h>
 
+#include "GoTreeDirector-Tree.h"
 #include "jcc_go_tree_window.xpm"
-
-// Tree menu
-
-static const JUtf8Byte* kTreeMenuStr =
-	"    Add structs/interfaces...                              %i" kEditSearchPathsAction
-	"  | Update                 %k Meta-U                       %i" kUpdateClassTreeAction
-	"  | Minimize MI link lengths now                           %i" kMinimizeMILinkLengthAction
-	"%l| Open source            %k Left-dbl-click or Return     %i" kOpenSelectedFilesAction
-	"  | Open function list     %k Right-dbl-click              %i" kOpenClassFnListAction
-	"%l| Collapse               %k Meta-<                       %i" kCollapseClassesAction
-	"  | Expand                 %k Meta->                       %i" kExpandClassesAction
-	"  | Expand all                                             %i" kExpandAllClassesAction
-	"%l| Select parents                                         %i" kSelectParentClassAction
-	"  | Select descendants                                     %i" kSelectDescendantClassAction
-	"  | Copy selected names    %k Meta-C                       %i" kCopyClassNameAction
-	"%l| Find function...       %k Meta-F                       %i" kFindFunctionAction;
-
-enum
-{
-	kEditSearchPathsCmd = 1, kUpdateCurrentCmd,
-	kForceMinMILinksCmd,
-	kTreeOpenSourceCmd, kTreeOpenFnListCmd,
-	kTreeCollapseCmd, kTreeExpandCmd, kTreeExpandAllCmd,
-	kTreeSelParentsCmd, kTreeSelDescendantsCmd, kCopySelNamesCmd,
-	kFindFnCmd
-};
 
 /******************************************************************************
  Constructor
@@ -56,8 +31,7 @@ GoTreeDirector::GoTreeDirector
 	:
 	TreeDirector(supervisor, NewGoTree, "WindowTitleSuffix::GoTreeDirector",
 				   "GoTreeHelp", jcc_go_tree_window,
-				   kTreeMenuStr, "GoTreeDirector",
-				   kGoTreeToolBarID, InitGoTreeToolBar)
+				   kTreeMenuStr, kGoTreeToolBarID, InitGoTreeToolBar)
 {
 	GoTreeDirectorX();
 }
@@ -78,8 +52,7 @@ GoTreeDirector::GoTreeDirector
 				   supervisor, subProject, StreamInGoTree,
 				   "WindowTitleSuffix::GoTreeDirector",
 				   "GoTreeHelp", jcc_go_tree_window,
-				   kTreeMenuStr, "GoTreeDirector",
-				   kGoTreeToolBarID, InitGoTreeToolBar,
+				   kTreeMenuStr, kGoTreeToolBarID, InitGoTreeToolBar,
 				   nullptr, false)
 {
 	GoTreeDirectorX();
@@ -92,6 +65,8 @@ GoTreeDirector::GoTreeDirectorX()
 {
 	itsGoTree = dynamic_cast<GoTree*>(GetTree());
 	assert( itsGoTree != nullptr );
+
+	ConfigureTreeMenu(GetTreeMenu());
 }
 
 /******************************************************************************
@@ -212,6 +187,52 @@ GoTreeDirector::HandleTreeMenu
 	{
 		FindFunction();
 	}
+}
+
+/******************************************************************************
+ UpgradeTreeMenuToolBarID (virtual protected)
+
+ ******************************************************************************/
+
+static const JUtf8Byte* kToolbarIDMap[] =
+{
+	"CBEditSearchPaths",		"EditSearchPaths::GoTreeDirector",
+	"CBUpdateClassTree",		"UpdateClassTree::GoTreeDirector",
+	"CBMinimizeMILinkLength",	"MinimizeMILinkLength::GoTreeDirector",
+	"CBOpenSelectedFiles",		"OpenSelectedFiles::GoTreeDirector",
+	"CBOpenClassFnList",		"OpenClassFnList::GoTreeDirector",
+	"CBCollapseClasses",		"CollapseClasses::GoTreeDirector",
+	"CBExpandClasses",			"ExpandClasses::GoTreeDirector",
+	"CBExpandAllClasses",		"ExpandAllClasses::GoTreeDirector",
+	"CBSelectParentClass",		"SelectParentClass::GoTreeDirector",
+	"CBSelectDescendantClass",	"SelectDescendantClass::GoTreeDirector",
+	"CBCopyClassName"			"CopyClassName::GoTreeDirector",
+	"CBFindFunction",			"FindFunction::GoTreeDirector",
+};
+
+const JSize kToolbarIDMapCount = sizeof(kToolbarIDMap) / sizeof(JUtf8Byte*);
+
+bool
+GoTreeDirector::UpgradeTreeMenuToolBarID
+	(
+	JString* s
+	)
+{
+	if (!s->StartsWith("CB"))
+	{
+		return false;
+	}
+
+	for (JUnsignedOffset i=0; i<kToolbarIDMapCount; i+=2)
+	{
+		if (*s == kToolbarIDMap[i])
+		{
+			*s = kToolbarIDMap[i+1];
+			return true;
+		}
+	}
+
+	return false;
 }
 
 /******************************************************************************

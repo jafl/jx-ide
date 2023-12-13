@@ -1,0 +1,36 @@
+jx_menu_editor 0
+887 286
+"TEScriptMenu"
+"Suffix"
+' 
+40
+40
+98
+100
+40
+200
+173
+75
+
+0
+1
+0
+0 ""
+"New script"
+""
+' 
+"__NewScript"
+"kOpenDirectoryCmdOffset"
+0
+
+1
+0
+0 ""
+"Open directory"
+""
+' 
+"__OpenDirectory"
+"kNewScriptCmdOffset"
+0
+
+0

@@ -1,0 +1,186 @@
+jx_menu_editor 0
+1016 498
+"TextEditor"
+"Context"
+' 
+40
+40
+211
+146
+40
+221
+224
+75
+
+0
+1
+0
+1 "jx_edit_cut.xpm"
+"Cut"
+"Ctrl-X."
+' 
+"__Cut"
+"kContextCutCmd"
+0
+
+1
+0
+1 "jx_edit_copy.xpm"
+"Copy"
+"Ctrl-C."
+' 
+"__Copy"
+"kContextCopyCmd"
+0
+
+1
+0
+1 "jx_edit_paste.xpm"
+"Paste"
+"Ctrl-V."
+' 
+"__Paste"
+"kContextPasteCmd"
+1
+
+1
+0
+1 "jx_edit_shift_left.xpm"
+"Shift left"
+"Ctrl-[."
+' 
+"__ShiftLeft"
+"kContextShiftLeftCmd"
+0
+
+1
+0
+1 "jx_edit_shift_right.xpm"
+"Shift right"
+"Ctrl-]."
+' 
+"__ShiftRight"
+"kContextShiftRightCmd"
+1
+
+1
+0
+0 ""
+"Complete"
+"Tab or Ctrl-space."
+' 
+"__Complete"
+"kContextCompleteCmd"
+0
+
+1
+0
+0 ""
+"Run macro"
+"Tab or Ctrl-space."
+' 
+"__RunMacro"
+"kContextMacroCmd"
+0
+
+1
+0
+0 ""
+"Scripts"
+""
+' 
+"__Scripts"
+"kContextScriptSubmenuIndex"
+1
+
+1
+0
+1 "jx_find_selection_backwards.xpm"
+"Find backwards"
+"Ctrl-Shift-H."
+' 
+"__FindBackwards"
+"kContextFindSelBackCmd"
+0
+
+1
+0
+1 "jx_find_selection_forward.xpm"
+"Find forward"
+"Ctrl-H."
+' 
+"__FindForward"
+"kContextFindSelFwdCmd"
+1
+
+1
+0
+0 ""
+"Find as symbol"
+"Meta-dbl-click."
+' 
+"__FindAsSymbol"
+"kContextFindSymbolCmd"
+0
+
+1
+0
+0 ""
+"Find as symbol (no context)"
+"Meta-Shift-dbl-click."
+' 
+"__FindAsSymbolNoContext"
+"kContextFindSymbolNoContextCmd"
+0
+
+1
+0
+0 ""
+"Find as symbol (man page only)"
+"Ctrl-Shift-I."
+' 
+"__FindAsSymbolManPageOnly"
+"kContextFindSymbolManPageCmd"
+1
+
+1
+0
+0 ""
+"Open as file name or URL"
+"Ctrl-left-dbl-click."
+' 
+"__OpenAsFileNameOrURL"
+"kContextOpenSelAsFileCmd"
+0
+
+1
+0
+0 ""
+"Show in file manager"
+"Dbl-click icon in footer"
+' 
+"__ShowInFileManager"
+"kShowInFileMgrCmd"
+1
+
+1
+0
+0 "jcc_balance_braces.xpm"
+"Balance closest grouping symbols"
+"Ctrl-B."
+' 
+"__BalanceClosestGroupingSymbols"
+"kContextBalanceCmd"
+0
+
+1
+0
+0 ""
+"Place bookmark"
+"Ctrl-Shift-B."
+' 
+"__PlaceBookmark"
+"kContextPlaceBookmarkCmd"
+0
+
+0

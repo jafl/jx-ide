@@ -20,15 +20,7 @@
 #include <jx-af/jcore/jVCSUtil.h>
 #include <jx-af/jcore/jAssert.h>
 
-static const JUtf8Byte* kMenuSuffixStr =
-	"  New script"
-	"| Open directory";
-
-enum	// in reverse order since from end of menu
-{
-	kOpenDirectoryCmdOffset = 0,
-	kNewScriptCmdOffset
-};
+#include "TEScriptMenu-Suffix.h"
 
 /******************************************************************************
  Constructor
@@ -125,8 +117,10 @@ TEScriptMenu::Receive
 
 	if (sender == this && message.Is(JXMenu::kNeedsUpdate))
 	{
-		ShowSeparatorAfter(GetItemCount());
-		AppendMenuItems(kMenuSuffixStr);
+		const JSize count = GetItemCount();
+		ShowSeparatorAfter(count);
+		AppendMenuItems(kSuffixMenuStr);
+		ConfigureSuffixMenu(this, count);
 	}
 }
 
@@ -179,7 +173,7 @@ TEScriptMenu::HandleSelection
 	const JIndex index
 	)
 {
-	if (index == GetItemCount() - kNewScriptCmdOffset)
+	if (index == GetItemCount() - kNewScriptCmdOffset - 1)
 	{
 		JDirInfo* info;
 		if (GetDirInfo(&info))
@@ -200,7 +194,7 @@ TEScriptMenu::HandleSelection
 		}
 		return true;
 	}
-	else if (index == GetItemCount() - kOpenDirectoryCmdOffset)
+	else if (index == GetItemCount() - kOpenDirectoryCmdOffset - 1)
 	{
 		JDirInfo* info;
 		if (GetDirInfo(&info))

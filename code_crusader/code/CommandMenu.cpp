@@ -26,73 +26,15 @@
 #include "TextDocument.h"
 #include "Tree.h"
 #include "globals.h"
-#include "actionDefs.h"
 #include <jx-af/jcore/jAssert.h>
+
+#include "CommandMenu-Tasks.h"
+#include "CommandMenu-AddToProject.h"
+#include "CommandMenu-ManageProject.h"
 
 // Project menu
 
-static const JUtf8Byte* kMenuStr =
-	"    Perform one-off task..."
-	"  | Customize this menu..."
-	"%l| Add to project: none"
-	"  | Manage project: none"
-	"%l";
-
-enum
-{
-	kRunCmd = 1,
-	kEditCmd,
-	kAddToProjIndex,
-	kManageProjIndex,	// = kInitCmdCount
-
-	kInitCmdCount = kManageProjIndex
-};
-
-// Add to Project menu
-
-static const JUtf8Byte* kAddToProjMenuStr =
-	"  Absolute path                              %i" kAddToProjAbsoluteAction
-	"| Relative to project file   %k Meta-Shift-A %i" kAddToProjProjRelativeAction
-	"| Relative to home directory                 %i" kAddToProjHomeRelativeAction;
-
-enum
-{
-	kAddToProjAbsoluteCmd = 1,
-	kAddToProjProjRelativeCmd,
-	kAddToProjHomeRelativeCmd
-};
-
-// Manage Project menu
-
-#include "jcc_show_symbol_list.xpm"
-#include "jcc_show_c_tree.xpm"
-#include "jcc_show_d_tree.xpm"
-#include "jcc_show_go_tree.xpm"
-#include "jcc_show_java_tree.xpm"
-#include "jcc_show_php_tree.xpm"
-#include "jcc_show_file_list.xpm"
-
-static const JUtf8Byte* kManageProjMenuStr =
-	"    Update symbol database         %k Meta-U       %i" kUpdateClassTreeAction
-	"%l| Show symbol browser            %k Ctrl-F12     %i" kShowSymbolBrowserAction
-	"  | Show C++ class tree                            %i" kShowCPPClassTreeAction
-	"  | Show D class tree                              %i" kShowDClassTreeAction
-	"  | Show Go struct/interface tree                  %i" kShowGoClassTreeAction
-	"  | Show Java class tree                           %i" kShowJavaClassTreeAction
-	"  | Show PHP class tree                            %i" kShowPHPClassTreeAction
-	"  | Show file list                 %k Meta-Shift-F %i" kShowFileListAction;
-
-enum
-{
-	kUpdateSymbolDBCmd = 1,
-	kShowSymbolBrowserCmd,
-	kShowCTreeCmd,
-	kShowDTreeCmd,
-	kShowGoTreeCmd,
-	kShowJavaTreeCmd,
-	kShowPHPTreeCmd,
-	kShowFileListCmd
-};
+const JSize kInitCmdCount = 4;
 
 // JBroadcaster message types
 
@@ -153,8 +95,9 @@ CommandMenu::CommandMenuX
 	itsAddToProjMenu  = nullptr;
 	itsManageProjMenu = nullptr;
 
-	SetMenuItems(kMenuStr);
+	SetMenuItems(kTasksMenuStr);
 	SetUpdateAction(kDisableNone);
+	ConfigureTasksMenu(this);
 	ListenTo(this);
 
 	ListenTo(GetCommandManager(), std::function([this](const CommandManager::UpdateCommandMenu&)
@@ -166,28 +109,22 @@ CommandMenu::CommandMenuX
 	{
 		itsAddToProjMenu = jnew JXTextMenu(this, kAddToProjIndex, GetEnclosure());
 		assert( itsAddToProjMenu != nullptr );
-		itsAddToProjMenu->SetMenuItems(kAddToProjMenuStr, "CommandMenu");
+		itsAddToProjMenu->SetMenuItems(kAddToProjectMenuStr);
 		itsAddToProjMenu->SetUpdateAction(JXMenu::kDisableNone);
 		itsAddToProjMenu->AttachHandlers(this,
 			&CommandMenu::UpdateAddToProjectMenu,
 			&CommandMenu::HandleAddToProjectMenu);
+		ConfigureAddToProjectMenu(itsAddToProjMenu);
 	}
 
 	itsManageProjMenu = jnew JXTextMenu(this, kManageProjIndex, GetEnclosure());
 	assert( itsManageProjMenu != nullptr );
-	itsManageProjMenu->SetMenuItems(kManageProjMenuStr, "CommandMenu");
+	itsManageProjMenu->SetMenuItems(kManageProjectMenuStr);
 	itsManageProjMenu->SetUpdateAction(JXMenu::kDisableNone);
 	itsManageProjMenu->AttachHandlers(this,
 		&CommandMenu::UpdateManageProjectMenu,
 		&CommandMenu::HandleManageProjectMenu);
-
-	itsManageProjMenu->SetItemImage(kShowSymbolBrowserCmd, jcc_show_symbol_list);
-	itsManageProjMenu->SetItemImage(kShowCTreeCmd,         jcc_show_c_tree);
-	itsManageProjMenu->SetItemImage(kShowDTreeCmd,         jcc_show_d_tree);
-	itsManageProjMenu->SetItemImage(kShowGoTreeCmd,        jcc_show_go_tree);
-	itsManageProjMenu->SetItemImage(kShowJavaTreeCmd,      jcc_show_java_tree);
-	itsManageProjMenu->SetItemImage(kShowPHPTreeCmd,       jcc_show_php_tree);
-	itsManageProjMenu->SetItemImage(kShowFileListCmd,      jcc_show_file_list);
+	ConfigureManageProjectMenu(itsManageProjMenu);
 
 	UpdateMenu();	// build menu so shortcuts work
 }
@@ -565,4 +502,56 @@ CommandMenu::GetProjectDocument
 	}
 
 	return *projDoc != nullptr;
+}
+
+/******************************************************************************
+ UpgradeToolBarID (static)
+
+	Returns true if we modified the id.
+
+ ******************************************************************************/
+
+static const JUtf8Byte* kToolbarIDMap[] =
+{
+	// Manage
+
+	"CBUpdateClassTree",	"UpdateClassTree::CommandMenu",
+	"CBShowSymbolBrowser",	"ShowSymbolBrowser::CommandMenu",
+	"CBShowCPPClassTree",	"ShowCPPClassTree::CommandMenu",
+	"CBShowDClassTree",		"ShowDClassTree::CommandMenu",
+	"CBShowGoClassTree",	"ShowGoClassTree::CommandMenu",
+	"CBShowJavaClassTree",	"ShowJavaClassTree::CommandMenu",
+	"CBShowPHPClassTree",	"ShowPHPClassTree::CommandMenu",
+	"CBShowFileList",		"ShowFileList::CommandMenu",
+
+	// Add
+
+	"CBAddToProjAbsolute",		"AddToProjAbsolute::CommandMenu",
+	"CBAddToProjProjRelative",	"AddToProjProjRelative::CommandMenu",
+	"CBAddToProjHomeRelative",	"AddToProjHomeRelative::CommandMenu",
+};
+
+const JSize kToolbarIDMapCount = sizeof(kToolbarIDMap) / sizeof(JUtf8Byte*);
+
+bool
+CommandMenu::UpgradeToolBarID
+	(
+	JString* s
+	)
+{
+	if (!s->StartsWith("CB"))
+	{
+		return false;
+	}
+
+	for (JUnsignedOffset i=0; i<kToolbarIDMapCount; i+=2)
+	{
+		if (*s == kToolbarIDMap[i])
+		{
+			*s = kToolbarIDMap[i+1];
+			return true;
+		}
+	}
+
+	return false;
 }

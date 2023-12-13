@@ -153,7 +153,7 @@ private:
 	JXKeyModifiers			itsLastModifiers;
 
 	JIndex					itsExecScriptCmdIndex;	// index of "Run script" on Edit menu
-	JIndex					itsFirstSearchMenuItem;	// index of first item added to Search menu
+	JIndex					itsSearchMenuItemOffset;// offset of first item added to Search menu
 	FunctionMenu*			itsFnMenu;				// nullptr if not source
 	JXStringCompletionMenu*	itsCompletionMenu;		// nullptr if doesn't have completer
 	JXTextMenu*				itsContextMenu;			// nullptr until first used

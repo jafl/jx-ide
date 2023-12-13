@@ -1,0 +1,146 @@
+jx_menu_editor 0
+1033 413
+"ProjectDocument"
+"Source"
+'s
+40
+40
+261
+194
+45
+188
+162
+75
+
+0
+1
+0
+0 ""
+"New group"
+""
+'g
+"NewProjectGroup"
+"kNewGroupCmd"
+0
+
+1
+0
+0 ""
+"Add files..."
+""
+'f
+"AddFilesToProject"
+"kAddFilesCmd"
+0
+
+1
+0
+0 ""
+"Add directory tree..."
+""
+'t
+"AddDirectoryTreeToProject"
+"kAddDirTreeCmd"
+0
+
+1
+0
+0 ""
+"Remove selected items"
+"Backspace."
+'r
+"RemoveFiles"
+"kRemoveSelCmd"
+1
+
+1
+0
+0 ""
+"Open selected files"
+"Left-dbl-click or Return"
+'o
+"OpenSelectedFiles"
+"kOpenFilesCmd"
+0
+
+1
+0
+0 ""
+"Open complement files"
+"Middle-dbl-click or Ctrl-Tab"
+'c
+"OpenComplFiles"
+"kOpenComplFilesCmd"
+1
+
+1
+0
+0 ""
+"Edit file path"
+"Meta-left-dbl-click"
+'p
+"EditFilePath"
+"kEditPathCmd"
+0
+
+1
+0
+0 ""
+"Edit sub-project configuration"
+""
+'u
+"EditSubprojConfig"
+"kEditSubprojConfigCmd"
+1
+
+1
+0
+0 ""
+"Compare selected files with backup"
+""
+'b
+"DiffSmart"
+"kDiffSmartCmd"
+0
+
+1
+0
+0 ""
+"Compare selected files with version control"
+""
+'v
+"DiffVCS"
+"kDiffVCSCmd"
+0
+
+1
+0
+0 ""
+"Show selected files in file manager"
+"Ctrl-Return"
+'m
+"OpenSelectedFileLocations"
+"kShowLocationCmd"
+1
+
+1
+0
+1 "jx_file_save_all.xpm"
+"Save all"
+"Ctrl-Shift-S"
+'s
+"SaveAllTextFiles"
+"kSaveAllTextCmd"
+0
+
+1
+0
+0 ""
+"Close all"
+"Ctrl-Shift-W"
+'a
+"CloseAllTextFiles"
+"kCloseAllTextCmd"
+0
+
+0

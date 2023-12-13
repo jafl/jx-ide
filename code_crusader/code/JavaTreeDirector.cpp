@@ -16,33 +16,8 @@
 #include <jx-af/jx/JXToolBar.h>
 #include <jx-af/jcore/jAssert.h>
 
+#include "TreeDirector-Tree.h"
 #include "jcc_java_tree_window.xpm"
-
-// Tree menu
-
-static const JUtf8Byte* kTreeMenuStr =
-	"    Add classes...                                         %i" kEditSearchPathsAction
-	"  | Update                 %k Meta-U                       %i" kUpdateClassTreeAction
-	"  | Minimize MI link lengths now                           %i" kMinimizeMILinkLengthAction
-	"%l| Open source            %k Left-dbl-click or Return     %i" kOpenSelectedFilesAction
-	"  | Open function list     %k Right-dbl-click              %i" kOpenClassFnListAction
-	"%l| Collapse               %k Meta-<                       %i" kCollapseClassesAction
-	"  | Expand                 %k Meta->                       %i" kExpandClassesAction
-	"  | Expand all                                             %i" kExpandAllClassesAction
-	"%l| Select parents                                         %i" kSelectParentClassAction
-	"  | Select descendants                                     %i" kSelectDescendantClassAction
-	"  | Copy selected names    %k Meta-C                       %i" kCopyClassNameAction
-	"%l| Find function...       %k Meta-F                       %i" kFindFunctionAction;
-
-enum
-{
-	kEditSearchPathsCmd = 1, kUpdateCurrentCmd,
-	kForceMinMILinksCmd,
-	kTreeOpenSourceCmd, kTreeOpenFnListCmd,
-	kTreeCollapseCmd, kTreeExpandCmd, kTreeExpandAllCmd,
-	kTreeSelParentsCmd, kTreeSelDescendantsCmd, kCopySelNamesCmd,
-	kFindFnCmd
-};
 
 /******************************************************************************
  Constructor
@@ -56,8 +31,7 @@ JavaTreeDirector::JavaTreeDirector
 	:
 	TreeDirector(supervisor, NewJavaTree, "WindowTitleSuffix::JavaTreeDirector",
 				   "JavaTreeHelp", jcc_java_tree_window,
-				   kTreeMenuStr, "JavaTreeDirector",
-				   kJavaTreeToolBarID, InitJavaTreeToolBar)
+				   kTreeMenuStr, kJavaTreeToolBarID, InitJavaTreeToolBar)
 {
 	JavaTreeDirectorX();
 }
@@ -78,8 +52,7 @@ JavaTreeDirector::JavaTreeDirector
 				   supervisor, subProject, StreamInJavaTree,
 				   "WindowTitleSuffix::JavaTreeDirector",
 				   "JavaTreeHelp", jcc_java_tree_window,
-				   kTreeMenuStr, "JavaTreeDirector",
-				   kJavaTreeToolBarID, InitJavaTreeToolBar,
+				   kTreeMenuStr, kJavaTreeToolBarID, InitJavaTreeToolBar,
 				   nullptr, false)
 {
 	JavaTreeDirectorX();
@@ -92,6 +65,8 @@ JavaTreeDirector::JavaTreeDirectorX()
 {
 	itsJavaTree = dynamic_cast<JavaTree*>(GetTree());
 	assert( itsJavaTree != nullptr );
+
+	ConfigureTreeMenu(GetTreeMenu());
 }
 
 /******************************************************************************

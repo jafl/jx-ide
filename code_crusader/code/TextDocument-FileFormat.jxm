@@ -1,0 +1,46 @@
+jx_menu_editor 0
+735 208
+"TextDocument"
+"FileFormat"
+' 
+40
+40
+149
+100
+40
+144
+112
+75
+
+0
+1
+2
+0 "jcc_unix_format.xpm"
+"UNIX"
+""
+' 
+"UNIXTextFormat"
+"kUNIXFmtCmd"
+0
+
+1
+2
+0 "jcc_mac_format.xpm"
+"Macintosh (pre OS X)"
+""
+' 
+"MacTextFormat"
+"kMacFmtCmd"
+0
+
+1
+2
+0 "jcc_dos_format.xpm"
+"DOS / Windows"
+""
+' 
+"DOSTextFormat"
+"kDOSFmtCmd"
+0
+
+0

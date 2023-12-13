@@ -1,0 +1,76 @@
+jx_menu_editor 0
+779 291
+"DiffFileDialog"
+"GitRev1"
+' 
+40
+40
+134
+83
+40
+145
+200
+75
+
+0
+1
+2
+0 ""
+"Current"
+""
+' 
+"__Current"
+"__Current_Git1"
+0
+
+1
+2
+0 ""
+"Previous"
+""
+' 
+"__Previous"
+"__Previous_Git1"
+0
+
+1
+2
+0 ""
+"Commit"
+""
+' 
+"__Commit"
+"__Commit_Git1"
+0
+
+1
+2
+0 ""
+"Date"
+""
+' 
+"__Date"
+"__Date_Git1"
+0
+
+1
+2
+0 ""
+"Branch"
+""
+' 
+"__Branch"
+"__Branch_Git1"
+0
+
+1
+2
+0 ""
+"Common ancestor of"
+""
+' 
+"__CommonAncestorOf"
+"__CommonAncestorOf_Git1"
+0
+
+0

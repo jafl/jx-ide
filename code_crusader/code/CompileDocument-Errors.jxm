@@ -1,0 +1,56 @@
+jx_menu_editor 0
+717 227
+"CompileDocument"
+"Errors"
+'e
+40
+40
+148
+100
+44
+155
+100
+75
+
+0
+1
+0
+0 ""
+"First error"
+"Meta-1"
+' 
+"__FirstError"
+"kFirstErrorCmd"
+1
+
+1
+0
+0 ""
+"Previous error"
+"Ctrl-minus"
+' 
+"__PreviousError"
+"kPrevErrorCmd"
+0
+
+1
+0
+0 ""
+"Next error"
+"Ctrl-plus"
+' 
+"__NextError"
+"kNextErrorCmd"
+1
+
+1
+0
+0 ""
+"Open selection to error"
+"Ctrl-Shift-O"
+' 
+"__OpenSelectionToError"
+"kOpenFileCmd"
+0
+
+0

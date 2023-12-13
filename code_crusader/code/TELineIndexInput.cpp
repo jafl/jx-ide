@@ -10,7 +10,7 @@
  ******************************************************************************/
 
 #include "TELineIndexInput.h"
-#include <jx-af/jx/JXMenu.h>
+#include <jx-af/jx/jXMenuUtil.h>
 #include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
@@ -87,8 +87,8 @@ TELineIndexInput::HandleKeyPress
 		ShouldAct(false);
 	}
 	else if ((c == '\r' || c == '\n') &&
-			 !modifiers.GetState(JXMenu::AdjustNMShortcutModifier(kJXMetaKeyIndex))    &&
-			  modifiers.GetState(JXMenu::AdjustNMShortcutModifier(kJXControlKeyIndex)) &&
+			 !modifiers.GetState(JXAdjustNMShortcutModifier(kJXMetaKeyIndex))    &&
+			  modifiers.GetState(JXAdjustNMShortcutModifier(kJXControlKeyIndex)) &&
 			 !modifiers.shift())
 	{
 		JXTEBase* te = GetTE();

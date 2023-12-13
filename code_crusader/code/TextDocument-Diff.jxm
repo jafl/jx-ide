@@ -1,0 +1,46 @@
+jx_menu_editor 0
+848 218
+"TextDocument"
+"Diff"
+' 
+40
+40
+200
+100
+40
+200
+120
+75
+
+0
+1
+0
+0 "jcc_compare_files_1.xpm"
+"Compare as file #1..."
+""
+' 
+"__CompareAsFile1"
+"kDiffAs1Cmd"
+0
+
+1
+0
+0 "jcc_compare_files_2.xpm"
+"Compare as file #2..."
+""
+' 
+"__CompareAsFile2"
+"kDiffAs2Cmd"
+1
+
+1
+0
+0 "jcc_compare_vcs_as.xpm"
+"Compare with version control..."
+""
+' 
+"__CompareWithVersionControl"
+"kDiffAsVCSCmd"
+0
+
+0

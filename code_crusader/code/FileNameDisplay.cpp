@@ -11,7 +11,7 @@
 #include "FileDragSource.h"
 #include "TextDocument.h"
 #include "util.h"
-#include <jx-af/jx/JXMenu.h>
+#include <jx-af/jx/jXMenuUtil.h>
 #include <jx-af/jx/JXSaveFileDialog.h>
 #include <jx-af/jx/JXColorManager.h>
 #include <jx-af/jcore/jFileUtil.h>
@@ -307,11 +307,11 @@ FileNameDisplay::HandleKeyPress
 		itsTE->HandleKeyPress(c, keySym, modifiers);
 	}
 	else if ((c == '\r' || c == '\n') &&
-			 !modifiers.GetState(JXMenu::AdjustNMShortcutModifier(kJXMetaKeyIndex)) &&
+			 !modifiers.GetState(JXAdjustNMShortcutModifier(kJXMetaKeyIndex)) &&
 			 !modifiers.shift())
 	{
 		itsUnfocusAction =
-			modifiers.GetState(JXMenu::AdjustNMShortcutModifier(kJXControlKeyIndex)) ?
+			modifiers.GetState(JXAdjustNMShortcutModifier(kJXControlKeyIndex)) ?
 			kRename : kSaveAs;
 		itsTE->Focus();				// trigger HandleUnfocusEvent()
 		itsUnfocusAction = kCancel;

@@ -1,7 +1,7 @@
 /******************************************************************************
  CommandSelection.cpp
 
-	text/x-Command with DELETE support for DND.
+	text/x-jcc-command with DELETE support for DND.
 
 	BASE CLASS = JXSelectionData
 
@@ -15,7 +15,7 @@
 #include <jx-af/jcore/JTableSelection.h>
 #include <jx-af/jcore/jAssert.h>
 
-static const JUtf8Byte* kCommandXAtomName = "text/x-Command";
+static const JUtf8Byte* kCommandXAtomName = "text/x-jcc-command";
 
 /******************************************************************************
  Constructor
@@ -36,7 +36,7 @@ CommandSelection::CommandSelection
 
 	JPoint cell;
 	const bool hasSelection =
-		(itsTable->GetTableSelection()).GetSingleSelectedCell(&cell);
+		itsTable->GetTableSelection().GetSingleSelectedCell(&cell);
 	assert( hasSelection );
 	itsSrcRowIndex = cell.y;
 
@@ -68,7 +68,7 @@ CommandSelection::AddTypes
 	const Atom selectionName
 	)
 {
-	itsCBCommandXAtom = AddType(kCommandXAtomName);
+	itsCommandXAtom = AddType(kCommandXAtomName);
 }
 
 /******************************************************************************
@@ -92,9 +92,9 @@ CommandSelection::ConvertData
 	JXSelectionManager* selMgr = GetSelectionManager();
 	JPoint cell;
 
-	if (requestType == itsCBCommandXAtom)
+	if (requestType == itsCommandXAtom)
 	{
-		*returnType = itsCBCommandXAtom;
+		*returnType = itsCommandXAtom;
 		*dataLength = itsData.GetByteCount();
 		*data       = jnew unsigned char[ *dataLength ];
 		if (*data != nullptr)
@@ -106,7 +106,7 @@ CommandSelection::ConvertData
 
 	else if (requestType == selMgr->GetDeleteSelectionXAtom() &&
 			 itsTable != nullptr && IsCurrent() &&
-			 (itsTable->GetTableSelection()).GetSingleSelectedCell(&cell) &&
+			 itsTable->GetTableSelection().GetSingleSelectedCell(&cell) &&
 			 JIndex(cell.y) == itsSrcRowIndex)
 	{
 		itsTable->RemoveCommand();

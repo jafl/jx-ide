@@ -1,0 +1,46 @@
+jx_menu_editor 0
+869 210
+"CommandMenu"
+"AddToProject"
+' 
+40
+40
+166
+100
+39
+184
+194
+75
+
+0
+1
+0
+0 ""
+"Absolute path"
+""
+' 
+"AddToProjAbsolute"
+"kAddToProjAbsoluteCmd"
+0
+
+1
+0
+0 ""
+"Relative to project file"
+"Ctrl-Shift-A"
+' 
+"AddToProjProjRelative"
+"kAddToProjProjRelativeCmd"
+0
+
+1
+0
+0 ""
+"Relative to home directory"
+""
+' 
+"AddToProjHomeRelative"
+"kAddToProjHomeRelativeCmd"
+0
+
+0

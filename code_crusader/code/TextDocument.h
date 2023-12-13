@@ -215,6 +215,8 @@ private:
 											TEColIndexInput* colInput,
 											JXScrollbarSet* scrollbarSet);
 
+	static void	UpgradeToolBarID(JString* s);
+
 public:
 
 	// JBroadcaster messages

@@ -30,9 +30,11 @@ public:
 	CommandMenu(ProjectDocument* projDoc, TextDocument* textDoc,
 				  JXMenu* owner, const JIndex itemIndex, JXContainer* enclosure);
 
+	~CommandMenu() override;
+
 	void	SetProjectDocument(ProjectDocument* projDoc);
 
-	~CommandMenu() override;
+	static bool	UpgradeToolBarID(JString* s);
 
 protected:
 

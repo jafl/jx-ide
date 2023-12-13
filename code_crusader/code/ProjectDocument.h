@@ -250,6 +250,8 @@ private:
 
 	int		StartSymbolLoadTimer();
 	void	StopSymbolLoadTimer(const int timerStatus);
+
+	static void	UpgradeToolBarID(JString* s);
 };
 
 

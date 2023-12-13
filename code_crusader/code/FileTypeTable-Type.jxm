@@ -1,0 +1,606 @@
+jx_menu_editor 0
+795 1025
+"FileTypeTable"
+"Type"
+' 
+40
+40
+131
+100
+40
+141
+183
+75
+
+0
+1
+2
+0 ""
+"Adobe Flash"
+""
+' 
+"__AdobeFlash"
+"kAdobeFlexTypeCmd"
+0
+
+1
+2
+0 ""
+"Ant"
+""
+' 
+"__Ant"
+"kAntTypeCmd"
+0
+
+1
+2
+0 ""
+"Assembly"
+""
+' 
+"__Assembly"
+"kAssemblyTypeCmd"
+0
+
+1
+2
+0 ""
+"ASP"
+""
+' 
+"__ASP"
+"kASPTypeCmd"
+0
+
+1
+2
+0 ""
+"AWK"
+""
+' 
+"__AWK"
+"kAWKTypeCmd"
+0
+
+1
+2
+0 ""
+"Basic"
+""
+' 
+"__Basic"
+"kBasicTypeCmd"
+0
+
+1
+2
+0 ""
+"Beta"
+""
+' 
+"__Beta"
+"kBetaTypeCmd"
+0
+
+1
+2
+0 ""
+"Bison"
+""
+' 
+"__Bison"
+"kBisonTypeCmd"
+0
+
+1
+2
+0 ""
+"Bourne shell (sh)"
+""
+' 
+"__BourneShellSh"
+"kBourneShellTypeCmd"
+0
+
+1
+2
+0 ""
+"C shell (csh)"
+""
+' 
+"__CShellCsh"
+"kCShellTypeCmd"
+0
+
+1
+2
+0 ""
+"C/C++ source"
+""
+' 
+"__CCSource"
+"kCSourceTypeCmd"
+0
+
+1
+2
+0 ""
+"C/C++ header"
+""
+' 
+"__CCHeader"
+"kCHeaderTypeCmd"
+0
+
+1
+2
+0 ""
+"C#"
+""
+' 
+"__C"
+"kCSharpTypeCmd"
+0
+
+1
+2
+0 ""
+"Cobol"
+""
+' 
+"__Cobol"
+"kCobolTypeCmd"
+0
+
+1
+2
+0 ""
+"D"
+""
+' 
+"__D"
+"kDTypeCmd"
+0
+
+1
+2
+0 ""
+"Eiffel"
+""
+' 
+"__Eiffel"
+"kEiffelTypeCmd"
+0
+
+1
+2
+0 ""
+"Erlang"
+""
+' 
+"__Erlang"
+"kErlangTypeCmd"
+0
+
+1
+2
+0 ""
+"FORTRAN"
+""
+' 
+"__FORTRAN"
+"kFortranTypeCmd"
+0
+
+1
+2
+0 ""
+"Go"
+""
+' 
+"__Go"
+"kGoTypeCmd"
+0
+
+1
+2
+0 ""
+"HTML"
+""
+' 
+"__HTML"
+"kHTMLTypeCmd"
+0
+
+1
+2
+0 ""
+"INI"
+""
+' 
+"__INI"
+"kINITypeCmd"
+0
+
+1
+2
+0 ""
+"Java archive"
+""
+' 
+"__JavaArchive"
+"kJavaArchiveTypeCmd"
+0
+
+1
+2
+0 ""
+"Java properties"
+""
+' 
+"__JavaProperties"
+"kPropertiesTypeCmd"
+0
+
+1
+2
+0 ""
+"Java source"
+""
+' 
+"__JavaSource"
+"kJavaSourceTypeCmd"
+0
+
+1
+2
+0 ""
+"JavaScript"
+""
+' 
+"__JavaScript"
+"kJavaScriptTypeCmd"
+0
+
+1
+2
+0 ""
+"JSP"
+""
+' 
+"__JSP"
+"kJSPTypeCmd"
+0
+
+1
+2
+0 ""
+"Lex"
+""
+' 
+"__Lex"
+"kLexTypeCmd"
+0
+
+1
+2
+0 ""
+"Lisp"
+""
+' 
+"__Lisp"
+"kLispTypeCmd"
+0
+
+1
+2
+0 ""
+"Lua"
+""
+' 
+"__Lua"
+"kLuaTypeCmd"
+0
+
+1
+2
+0 ""
+"Make"
+""
+' 
+"__Make"
+"kMakeTypeCmd"
+0
+
+1
+2
+0 ""
+"Matlab"
+""
+' 
+"__Matlab"
+"kMatlabTypeCmd"
+0
+
+1
+2
+0 ""
+"Modula-2 module"
+""
+' 
+"__Modula2Module"
+"kModula2ModuleTypeCmd"
+0
+
+1
+2
+0 ""
+"Modula-2 interface"
+""
+' 
+"__Modula2Interface"
+"kModula2InterfaceTypeCmd"
+0
+
+1
+2
+0 ""
+"Modula-3 module"
+""
+' 
+"__Modula3Module"
+"kModula3ModuleTypeCmd"
+0
+
+1
+2
+0 ""
+"Modula-3 interface"
+""
+' 
+"__Modula3Interface"
+"kModula3InterfaceTypeCmd"
+0
+
+1
+2
+0 ""
+"Pascal"
+""
+' 
+"__Pascal"
+"kPascalTypeCmd"
+0
+
+1
+2
+0 ""
+"Perl"
+""
+' 
+"__Perl"
+"kPerlTypeCmd"
+0
+
+1
+2
+0 ""
+"PHP"
+""
+' 
+"__PHP"
+"kPHPTypeCmd"
+0
+
+1
+2
+0 ""
+"Python"
+""
+' 
+"__Python"
+"kPythonTypeCmd"
+0
+
+1
+2
+0 ""
+"Ratfor"
+""
+' 
+"__Ratfor"
+"kRatforTypeCmd"
+0
+
+1
+2
+0 ""
+"REXX"
+""
+' 
+"__REXX"
+"kREXXTypeCmd"
+0
+
+1
+2
+0 ""
+"Ruby"
+""
+' 
+"__Ruby"
+"kRubyTypeCmd"
+0
+
+1
+2
+0 ""
+"Scheme"
+""
+' 
+"__Scheme"
+"kSchemeTypeCmd"
+0
+
+1
+2
+0 ""
+"SLang"
+""
+' 
+"__SLang"
+"kSLangTypeCmd"
+0
+
+1
+2
+0 ""
+"SML"
+""
+' 
+"__SML"
+"kSMLTypeCmd"
+0
+
+1
+2
+0 ""
+"SQL"
+""
+' 
+"__SQL"
+"kSQLTypeCmd"
+0
+
+1
+2
+0 ""
+"TCL"
+""
+' 
+"__TCL"
+"kTCLTypeCmd"
+0
+
+1
+2
+0 ""
+"Vera source"
+""
+' 
+"__VeraSource"
+"kVeraSourceTypeCmd"
+0
+
+1
+2
+0 ""
+"Vera header"
+""
+' 
+"__VeraHeader"
+"kVeraHeaderTypeCmd"
+0
+
+1
+2
+0 ""
+"Verilog"
+""
+' 
+"__Verilog"
+"kVerilogTypeCmd"
+0
+
+1
+2
+0 ""
+"Vim"
+""
+' 
+"__Vim"
+"kVimTypeCmd"
+0
+
+1
+2
+0 ""
+"XML"
+""
+' 
+"__XML"
+"kXMLTypeCmd"
+0
+
+1
+2
+0 ""
+"Other source"
+""
+' 
+"__OtherSource"
+"kOtherSourceTypeCmd"
+0
+
+1
+2
+0 ""
+"Static library"
+""
+' 
+"__StaticLibrary"
+"kStaticLibTypeCmd"
+0
+
+1
+2
+0 ""
+"Shared library"
+""
+' 
+"__SharedLibrary"
+"kSharedLibTypeCmd"
+0
+
+1
+2
+0 ""
+"Documentation"
+""
+' 
+"__Documentation"
+"kDocumentationTypeCmd"
+0
+
+1
+2
+0 ""
+"Other text"
+""
+' 
+"__OtherText"
+"kOtherTextTypeCmd"
+0
+
+1
+2
+0 ""
+"Binary"
+""
+' 
+"__Binary"
+"kBinaryTypeCmd"
+0
+
+1
+2
+0 ""
+"External"
+""
+' 
+"__External"
+"kExternalTypeCmd"
+0
+
+0

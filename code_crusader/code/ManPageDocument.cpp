@@ -19,7 +19,7 @@
 #include <jx-af/jcore/JPtrArray-JString.h>
 #include <jx-af/jcore/jAssert.h>
 
-JPtrArray<JString>			ManPageDocument::theManCmdList(JPtrArrayT::kDeleteAll);
+JPtrArray<JString>		ManPageDocument::theManCmdList(JPtrArrayT::kDeleteAll);
 JPtrArray<TextDocument>	ManPageDocument::theManDocList(JPtrArrayT::kForgetAll);
 
 /******************************************************************************

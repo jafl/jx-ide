@@ -31,6 +31,7 @@ protected:
 
 	void	UpdateTreeMenu() override;
 	void	HandleTreeMenu(const JIndex index) override;
+	bool	UpgradeTreeMenuToolBarID(JString* s) override;
 
 private:
 

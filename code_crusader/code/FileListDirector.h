@@ -77,6 +77,8 @@ private:
 
 	void	UpdatePrefsMenu();
 	void	HandlePrefsMenu(const JIndex index);
+
+	static void	UpgradeToolBarID(JString* s);
 };
 
 

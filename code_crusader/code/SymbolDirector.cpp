@@ -52,85 +52,6 @@
 
 const JFileVersion kCurrentPrefsVersion = 0;
 
-// File menu
-
-static const JUtf8Byte* kFileMenuStr =
-	"    New text file                  %k Meta-N       %i" kNewTextFileAction
-	"  | New text file from template... %k Meta-Shift-N %i" kNewTextFileFromTmplAction
-	"  | New project...                                 %i" kNewProjectAction
-	"%l| Open...                        %k Meta-O       %i" kOpenSomethingAction
-	"  | Recent projects"
-	"  | Recent text files"
-	"%l| Close                          %k Meta-W       %i" kJXCloseWindowAction
-	"  | Quit                           %k Meta-Q       %i" kJXQuitAction;
-
-enum
-{
-	kNewTextEditorCmd = 1, kNewTextTemplateCmd, kNewProjectCmd,
-	kOpenSomethingCmd,
-	kRecentProjectMenuCmd, kRecentTextMenuCmd,
-	kCloseCmd, kQuitCmd
-};
-
-// Symbol menu
-
-static const JUtf8Byte* kSymbolMenuStr =
-	"    Edit search paths...                               %i" kEditSearchPathsAction
-	"  | Update                 %k Meta-U                   %i" kUpdateClassTreeAction
-	"%l| Open file              %k Left-dbl-click or Return %i" kOpenSelectedFilesAction
-	"  | Copy selected names    %k Meta-C                   %i" kCopySymbolNameAction
-	"%l| Find selected symbols  %k Meta-dbl-click           %i" kFindSelectionInProjectAction
-	"  | Close symbol browsers                              %i" kCloseAllSymSRAction;
-
-enum
-{
-	kEditSearchPathsCmd = 1, kUpdateCurrentCmd,
-	kOpenFileCmd, kCopySelNamesCmd,
-	kFindSelectedSymbolCmd,
-	kCloseAllSymSRCmd
-};
-
-// Project menu
-
-static const JUtf8Byte* kProjectMenuStr =
-	"    Show C++ class tree                 %i" kShowCPPClassTreeAction
-	"  | Show D class tree                   %i" kShowDClassTreeAction
-	"  | Show Go struct/interface tree       %i" kShowGoClassTreeAction
-	"  | Show Java class tree                %i" kShowJavaClassTreeAction
-	"  | Show PHP class tree                 %i" kShowPHPClassTreeAction
-	"  | Look up man page... %k Meta-I       %i" kViewManPageAction
-	"%l| Show file list      %k Meta-Shift-F %i" kShowFileListAction
-	"  | Find file...        %k Meta-D       %i" kFindFileAction
-	"  | Search files...     %k Meta-F       %i" kSearchFilesAction
-	"  | Compare files...                    %i" kDiffFilesAction
-	"%l| Save all            %k Meta-Shift-S %i" kSaveAllTextFilesAction
-	"  | Close all           %k Meta-Shift-W %i" kCloseAllTextFilesAction;
-
-enum
-{
-	kShowCTreeCmd = 1, kShowDTreeCmd, kShowGoTreeCmd, kShowJavaTreeCmd, kShowPHPTreeCmd,
-	kViewManPageCmd,
-	kShowFileListCmd, kFindFileCmd, kSearchFilesCmd, kDiffFilesCmd,
-	kSaveAllTextCmd, kCloseAllTextCmd
-};
-
-// Preferences menu
-
-static const JUtf8Byte* kPrefsMenuStr =
-	"    Symbols..."
-	"  | Toolbar buttons..."
-	"  | File types..."
-	"  | External editors..."
-	"  | Miscellaneous..."
-	"%l| Save window size as default";
-
-enum
-{
-	kSymbolPrefsCmd = 1, kToolBarPrefsCmd,
-	kEditFileTypesCmd, kChooseExtEditorsCmd, kMiscPrefsCmd,
-	kSaveWindSizeCmd
-};
-
 /******************************************************************************
  Constructor
 
@@ -590,19 +511,10 @@ SymbolDirector::FindAllSymbols
  ******************************************************************************/
 
 #include "jcc_symbol_window.xpm"
-
-#include <jx-af/image/jx/jx_file_new.xpm>
-#include <jx-af/image/jx/jx_file_open.xpm>
-#include "jcc_show_c_tree.xpm"
-#include "jcc_show_d_tree.xpm"
-#include "jcc_show_go_tree.xpm"
-#include "jcc_show_java_tree.xpm"
-#include "jcc_show_php_tree.xpm"
-#include "jcc_view_man_page.xpm"
-#include "jcc_show_file_list.xpm"
-#include "jcc_search_files.xpm"
-#include "jcc_compare_files.xpm"
-#include <jx-af/image/jx/jx_file_save_all.xpm>
+#include "Generic-File.h"
+#include "SymbolDirector-Symbol.h"
+#include "SymbolDirector-Project.h"
+#include "SymbolDirector-Preferences.h"
 
 void
 SymbolDirector::BuildWindow
@@ -656,15 +568,13 @@ SymbolDirector::BuildWindow
 		window->SetSize(w,h);
 	}
 
-	itsFileMenu = menuBar->AppendTextMenu(JGetString("FileMenuTitle::JXGlobal"));
-	itsFileMenu->SetMenuItems(kFileMenuStr, "SymbolDirector");
+	itsFileMenu = menuBar->AppendTextMenu(JGetString("MenuTitle::Generic_File"));
+	itsFileMenu->SetMenuItems(kFileMenuStr);
 	itsFileMenu->SetUpdateAction(JXMenu::kDisableNone);
 	itsFileMenu->AttachHandlers(this,
 		&SymbolDirector::UpdateFileMenu,
 		&SymbolDirector::HandleFileMenu);
-
-	itsFileMenu->SetItemImage(kNewTextEditorCmd, jx_file_new);
-	itsFileMenu->SetItemImage(kOpenSomethingCmd, jx_file_open);
+	ConfigureFileMenu(itsFileMenu);
 
 	jnew FileHistoryMenu(DocumentManager::kProjectFileHistory,
 						  itsFileMenu, kRecentProjectMenuCmd, menuBar);
@@ -672,29 +582,20 @@ SymbolDirector::BuildWindow
 	jnew FileHistoryMenu(DocumentManager::kTextFileHistory,
 						  itsFileMenu, kRecentTextMenuCmd, menuBar);
 
-	itsSymbolMenu = menuBar->AppendTextMenu(JGetString("SymbolMenuTitle::SymbolDirector"));
-	itsSymbolMenu->SetMenuItems(kSymbolMenuStr, "SymbolDirector");
+	itsSymbolMenu = menuBar->AppendTextMenu(JGetString("MenuTitle::SymbolDirector_Symbol"));
+	itsSymbolMenu->SetMenuItems(kSymbolMenuStr);
 	itsSymbolMenu->AttachHandlers(this,
 		&SymbolDirector::UpdateSymbolMenu,
 		&SymbolDirector::HandleSymbolMenu);
+	ConfigureSymbolMenu(itsSymbolMenu);
 
-	itsProjectMenu = menuBar->AppendTextMenu(JGetString("ProjectMenuTitle::global"));
-	itsProjectMenu->SetMenuItems(kProjectMenuStr, "SymbolDirector");
+	itsProjectMenu = menuBar->AppendTextMenu(JGetString("MenuTitle::SymbolDirector_Project"));
+	itsProjectMenu->SetMenuItems(kProjectMenuStr);
 	itsProjectMenu->SetUpdateAction(JXMenu::kDisableNone);
 	itsProjectMenu->AttachHandlers(this,
 		&SymbolDirector::UpdateProjectMenu,
 		&SymbolDirector::HandleProjectMenu);
-
-	itsProjectMenu->SetItemImage(kShowCTreeCmd,    jcc_show_c_tree);
-	itsProjectMenu->SetItemImage(kShowDTreeCmd,    jcc_show_d_tree);
-	itsProjectMenu->SetItemImage(kShowGoTreeCmd,   jcc_show_go_tree);
-	itsProjectMenu->SetItemImage(kShowJavaTreeCmd, jcc_show_java_tree);
-	itsProjectMenu->SetItemImage(kShowPHPTreeCmd,  jcc_show_php_tree);
-	itsProjectMenu->SetItemImage(kViewManPageCmd,  jcc_view_man_page);
-	itsProjectMenu->SetItemImage(kShowFileListCmd, jcc_show_file_list);
-	itsProjectMenu->SetItemImage(kSearchFilesCmd,  jcc_search_files);
-	itsProjectMenu->SetItemImage(kDiffFilesCmd,    jcc_compare_files);
-	itsProjectMenu->SetItemImage(kSaveAllTextCmd,  jx_file_save_all);
+	ConfigureProjectMenu(itsProjectMenu);
 
 	itsCmdMenu =
 		jnew CommandMenu(itsProjDoc, nullptr, menuBar,
@@ -708,18 +609,20 @@ SymbolDirector::BuildWindow
 	assert( fileListMenu != nullptr );
 	menuBar->AppendMenu(fileListMenu);
 
-	itsPrefsMenu = menuBar->AppendTextMenu(JGetString("PrefsMenuTitle::JXGlobal"));
-	itsPrefsMenu->SetMenuItems(kPrefsMenuStr, "SymbolDirector");
+	itsPrefsMenu = menuBar->AppendTextMenu(JGetString("MenuTitle::SymbolDirector_Preferences"));
+	itsPrefsMenu->SetMenuItems(kPreferencesMenuStr);
 	itsPrefsMenu->SetUpdateAction(JXMenu::kDisableNone);
 	itsPrefsMenu->AttachHandlers(this,
 		&SymbolDirector::UpdatePrefsMenu,
 		&SymbolDirector::HandlePrefsMenu);
+	ConfigurePreferencesMenu(itsPrefsMenu);
 
-	JXTextMenu* helpMenu = GetApplication()->CreateHelpMenu(menuBar, "SymbolDirector", "SymbolHelp");
+	JXTextMenu* helpMenu = GetApplication()->CreateHelpMenu(menuBar, "SymbolHelp");
 
 	// must do this after creating menus
 
-	itsToolBar->LoadPrefs();
+	auto f = std::function(UpgradeToolBarID);
+	itsToolBar->LoadPrefs(&f);
 	if (itsToolBar->IsEmpty())
 	{
 		itsToolBar->AppendButton(itsFileMenu, kNewTextEditorCmd);
@@ -729,6 +632,49 @@ SymbolDirector::BuildWindow
 
 		GetApplication()->AppendHelpMenuToToolBar(itsToolBar, helpMenu);
 	}
+}
+
+/******************************************************************************
+ UpgradeToolBarID (static private)
+
+ ******************************************************************************/
+
+static const JUtf8Byte* kToolbarIDMap[] =
+{
+	// File
+
+	"CBNewTextFile",			"NewTextFile::Generic",
+	"CBNewTextFileFromTmpl",	"NewTextFileFromTmpl::Generic",
+	"CBNewProject",				"NewProject::Generic",
+	"CBOpenSomething",			"OpenSomething::Generic",
+};
+
+const JSize kToolbarIDMapCount = sizeof(kToolbarIDMap) / sizeof(JUtf8Byte*);
+
+void
+SymbolDirector::UpgradeToolBarID
+	(
+	JString* s
+	)
+{
+	if (!s->StartsWith("CB") || CommandMenu::UpgradeToolBarID(s))
+	{
+		return;
+	}
+
+	for (JUnsignedOffset i=0; i<kToolbarIDMapCount; i+=2)
+	{
+		if (*s == kToolbarIDMap[i])
+		{
+			*s = kToolbarIDMap[i+1];
+			return;
+		}
+	}
+
+	JStringIterator iter(s);
+	iter.SkipNext(2);
+	iter.RemoveAllPrev();
+	*s += "::FileListDirector";
 }
 
 /******************************************************************************

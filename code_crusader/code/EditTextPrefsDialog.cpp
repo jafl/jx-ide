@@ -36,15 +36,7 @@
 
 // emulators
 
-static const JUtf8Byte* kEmulatorMenuStr =
-	"  None %r"
-	"| vi   %r";
-
-enum
-{
-	kNoEmulatorCmd = 1,
-	kVIEmulatorCmd
-};
+#include "EditTextPrefsDialog-Emulator.h"
 
 static const Emulator kMenuIndexToEmulator[] =
 {
@@ -377,6 +369,7 @@ EditTextPrefsDialog::BuildWindow
 	itsEmulatorMenu->SetUpdateAction(JXMenu::kDisableNone);
 	itsEmulatorMenu->SetToPopupChoice(true, itsEmulatorIndex);
 	ListenTo(itsEmulatorMenu);
+	ConfigureEmulatorMenu(itsEmulatorMenu);
 
 	itsCreateBackupCB->SetState(doc->WillMakeBackupFile());
 	itsOnlyBackupIfNoneCB->SetState(!doc->WillMakeNewBackupEveryOpen());

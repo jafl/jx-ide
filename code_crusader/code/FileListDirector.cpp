@@ -40,84 +40,6 @@
 #include <jx-af/jcore/JString.h>
 #include <jx-af/jcore/jAssert.h>
 
-// File menu
-
-static const JUtf8Byte* kFileMenuStr =
-	"    New text file                  %k Meta-N       %i" kNewTextFileAction
-	"  | New text file from template... %k Meta-Shift-N %i" kNewTextFileFromTmplAction
-	"  | New project...                                 %i" kNewProjectAction
-	"%l| Open...                        %k Meta-O       %i" kOpenSomethingAction
-	"  | Recent projects"
-	"  | Recent text files"
-	"%l| Close                          %k Meta-W       %i" kJXCloseWindowAction
-	"  | Quit                           %k Meta-Q       %i" kJXQuitAction;
-
-enum
-{
-	kNewTextEditorCmd = 1, kNewTextTemplateCmd, kNewProjectCmd,
-	kOpenSomethingCmd,
-	kRecentProjectMenuCmd, kRecentTextMenuCmd,
-	kCloseCmd, kQuitCmd
-};
-
-// List menu
-
-static const JUtf8Byte* kListMenuStr =
-	"    Open selected files                 %k Return.     %i" kOpenSelectedFilesAction
-	"  | Show selected files in file manager %k Meta-Return %i" kOpenSelectedFileLocationsAction
-	"  | Update                              %k Meta-U      %i" kUpdateClassTreeAction
-	"%l| Use wildcard filter %b                             %i" kUseWildcardFilterAction
-	"  | Use regex filter    %b                             %i" kUseRegexFilterAction;
-
-enum
-{
-	kOpenSelectionCmd = 1, kShowLocationCmd, kUpdateCmd,
-	kUseWildcardCmd, kUseRegexCmd
-};
-
-// Project menu
-
-static const JUtf8Byte* kProjectMenuStr =
-	"    Show symbol browser %k Ctrl-F12     %i" kShowSymbolBrowserAction
-	"  | Show C++ class tree                 %i" kShowCPPClassTreeAction
-	"  | Show D class tree                   %i" kShowDClassTreeAction
-	"  | Show Go struct/interface tree       %i" kShowGoClassTreeAction
-	"  | Show Java class tree                %i" kShowJavaClassTreeAction
-	"  | Show PHP class tree                 %i" kShowPHPClassTreeAction
-	"  | Look up man page... %k Meta-I       %i" kViewManPageAction
-	"%l| Find file...        %k Meta-D       %i" kFindFileAction
-	"  | Search files...     %k Meta-F       %i" kSearchFilesAction
-	"  | Compare files...                    %i" kDiffFilesAction
-	"%l| Save all            %k Meta-Shift-S %i" kSaveAllTextFilesAction
-	"  | Close all           %k Meta-Shift-W %i" kCloseAllTextFilesAction;
-
-enum
-{
-	kShowSymbolBrowserCmd = 1,
-	kShowCTreeCmd, kShowDTreeCmd, kShowGoTreeCmd, kShowJavaTreeCmd, kShowPHPTreeCmd,
-	kViewManPageCmd,
-	kFindFileCmd, kSearchFilesCmd, kDiffFilesCmd,
-	kSaveAllTextCmd, kCloseAllTextCmd
-};
-
-// Preferences menu
-
-static const JUtf8Byte* kPrefsMenuStr =
-	"    Toolbar buttons..."
-	"  | File types..."
-	"  | External editors..."
-	"  | File manager & web browser..."
-	"  | Miscellaneous..."
-	"%l| Save window size as default";
-
-enum
-{
-	kToolBarPrefsCmd = 1,
-	kEditFileTypesCmd, kChooseExtEditorsCmd,
-	kShowLocationPrefsCmd, kMiscPrefsCmd,
-	kSaveWindSizeCmd
-};
-
 /******************************************************************************
  Constructor
 
@@ -135,14 +57,14 @@ FileListDirector::FileListDirector
 
 FileListDirector::FileListDirector
 	(
-	std::istream&			projInput,
+	std::istream&		projInput,
 	const JFileVersion	projVers,
-	std::istream*			setInput,
+	std::istream*		setInput,
 	const JFileVersion	setVers,
-	std::istream*			symInput,
+	std::istream*		symInput,
 	const JFileVersion	symVers,
 	ProjectDocument*	supervisor,
-	const bool		subProject
+	const bool			subProject
 	)
 	:
 	JXWindowDirector(supervisor)
@@ -253,21 +175,10 @@ FileListDirector::StreamOut
  ******************************************************************************/
 
 #include "jcc_file_list_window.xpm"
-
-#include <jx-af/image/jx/jx_file_new.xpm>
-#include <jx-af/image/jx/jx_file_open.xpm>
-#include <jx-af/image/jx/jx_filter_wildcard.xpm>
-#include <jx-af/image/jx/jx_filter_regex.xpm>
-#include "jcc_show_symbol_list.xpm"
-#include "jcc_show_c_tree.xpm"
-#include "jcc_show_d_tree.xpm"
-#include "jcc_show_go_tree.xpm"
-#include "jcc_show_java_tree.xpm"
-#include "jcc_show_php_tree.xpm"
-#include "jcc_view_man_page.xpm"
-#include "jcc_search_files.xpm"
-#include "jcc_compare_files.xpm"
-#include <jx-af/image/jx/jx_file_save_all.xpm>
+#include "Generic-File.h"
+#include "FileListDirector-List.h"
+#include "FileListDirector-Project.h"
+#include "FileListDirector-Preferences.h"
 
 void
 FileListDirector::BuildWindow()
@@ -324,15 +235,13 @@ FileListDirector::BuildWindow()
 		OpenSelectedFiles();
 	}));
 
-	itsFileMenu = menuBar->AppendTextMenu(JGetString("FileMenuTitle::JXGlobal"));
-	itsFileMenu->SetMenuItems(kFileMenuStr, "FileListDirector");
+	itsFileMenu = menuBar->AppendTextMenu(JGetString("MenuTitle::Generic_File"));
+	itsFileMenu->SetMenuItems(kFileMenuStr);
 	itsFileMenu->SetUpdateAction(JXMenu::kDisableNone);
 	itsFileMenu->AttachHandlers(this,
 		&FileListDirector::UpdateFileMenu,
 		&FileListDirector::HandleFileMenu);
-
-	itsFileMenu->SetItemImage(kNewTextEditorCmd, jx_file_new);
-	itsFileMenu->SetItemImage(kOpenSomethingCmd, jx_file_open);
+	ConfigureFileMenu(itsFileMenu);
 
 	jnew FileHistoryMenu(DocumentManager::kProjectFileHistory,
 						  itsFileMenu, kRecentProjectMenuCmd, menuBar);
@@ -340,35 +249,23 @@ FileListDirector::BuildWindow()
 	jnew FileHistoryMenu(DocumentManager::kTextFileHistory,
 						  itsFileMenu, kRecentTextMenuCmd, menuBar);
 
-	itsListMenu = menuBar->AppendTextMenu(JGetString("ListMenuTitle::FileListDirector"));
-	itsListMenu->SetMenuItems(kListMenuStr, "FileListDirector");
+	itsListMenu = menuBar->AppendTextMenu(JGetString("MenuTitle::FileListDirector_List"));
+	itsListMenu->SetMenuItems(kListMenuStr);
 	itsListMenu->SetUpdateAction(JXMenu::kDisableNone);
 	itsListMenu->AttachHandlers(this,
 		&FileListDirector::UpdateListMenu,
 		&FileListDirector::HandleListMenu);
-
-	itsListMenu->SetItemImage(kUseWildcardCmd, jx_filter_wildcard);
-	itsListMenu->SetItemImage(kUseRegexCmd,    jx_filter_regex);
+	ConfigureListMenu(itsListMenu);
 
 	itsFLSet->AppendEditMenu(menuBar);
 
-	itsProjectMenu = menuBar->AppendTextMenu(JGetString("ProjectMenuTitle::global"));
-	itsProjectMenu->SetMenuItems(kProjectMenuStr, "FileListDirector");
+	itsProjectMenu = menuBar->AppendTextMenu(JGetString("MenuTitle::FileListDirector_Project"));
+	itsProjectMenu->SetMenuItems(kProjectMenuStr);
 	itsProjectMenu->SetUpdateAction(JXMenu::kDisableNone);
 	itsProjectMenu->AttachHandlers(this,
 		&FileListDirector::UpdateProjectMenu,
 		&FileListDirector::HandleProjectMenu);
-
-	itsProjectMenu->SetItemImage(kShowSymbolBrowserCmd, jcc_show_symbol_list);
-	itsProjectMenu->SetItemImage(kShowCTreeCmd,         jcc_show_c_tree);
-	itsProjectMenu->SetItemImage(kShowDTreeCmd,         jcc_show_d_tree);
-	itsProjectMenu->SetItemImage(kShowGoTreeCmd,        jcc_show_go_tree);
-	itsProjectMenu->SetItemImage(kShowJavaTreeCmd,      jcc_show_java_tree);
-	itsProjectMenu->SetItemImage(kShowPHPTreeCmd,       jcc_show_php_tree);
-	itsProjectMenu->SetItemImage(kViewManPageCmd,       jcc_view_man_page);
-	itsProjectMenu->SetItemImage(kSearchFilesCmd,       jcc_search_files);
-	itsProjectMenu->SetItemImage(kDiffFilesCmd,         jcc_compare_files);
-	itsProjectMenu->SetItemImage(kSaveAllTextCmd,       jx_file_save_all);
+	ConfigureProjectMenu(itsProjectMenu);
 
 	itsCmdMenu =
 		jnew CommandMenu(itsProjDoc, nullptr, menuBar,
@@ -382,18 +279,20 @@ FileListDirector::BuildWindow()
 	assert( fileListMenu != nullptr );
 	menuBar->AppendMenu(fileListMenu);
 
-	itsPrefsMenu = menuBar->AppendTextMenu(JGetString("PrefsMenuTitle::JXGlobal"));
-	itsPrefsMenu->SetMenuItems(kPrefsMenuStr, "FileListDirector");
+	itsPrefsMenu = menuBar->AppendTextMenu(JGetString("MenuTitle::FileListDirector_Preferences"));
+	itsPrefsMenu->SetMenuItems(kPreferencesMenuStr);
 	itsPrefsMenu->SetUpdateAction(JXMenu::kDisableNone);
 	itsPrefsMenu->AttachHandlers(this,
 		&FileListDirector::UpdatePrefsMenu,
 		&FileListDirector::HandlePrefsMenu);
+	ConfigurePreferencesMenu(itsPrefsMenu);
 
-	JXTextMenu* helpMenu = GetApplication()->CreateHelpMenu(menuBar, "FileListDirector", "FileListHelp");
+	JXTextMenu* helpMenu = GetApplication()->CreateHelpMenu(menuBar, "FileListHelp");
 
 	// must do this after creating menus
 
-	itsToolBar->LoadPrefs();
+	auto f = std::function(UpgradeToolBarID);
+	itsToolBar->LoadPrefs(&f);
 	if (itsToolBar->IsEmpty())
 	{
 		itsToolBar->AppendButton(itsFileMenu, kNewTextEditorCmd);
@@ -406,6 +305,49 @@ FileListDirector::BuildWindow()
 
 		GetApplication()->AppendHelpMenuToToolBar(itsToolBar, helpMenu);
 	}
+}
+
+/******************************************************************************
+ UpgradeToolBarID (static private)
+
+ ******************************************************************************/
+
+static const JUtf8Byte* kToolbarIDMap[] =
+{
+	// File
+
+	"CBNewTextFile",			"NewTextFile::Generic",
+	"CBNewTextFileFromTmpl",	"NewTextFileFromTmpl::Generic",
+	"CBNewProject",				"NewProject::Generic",
+	"CBOpenSomething",			"OpenSomething::Generic",
+};
+
+const JSize kToolbarIDMapCount = sizeof(kToolbarIDMap) / sizeof(JUtf8Byte*);
+
+void
+FileListDirector::UpgradeToolBarID
+	(
+	JString* s
+	)
+{
+	if (!s->StartsWith("CB") || CommandMenu::UpgradeToolBarID(s))
+	{
+		return;
+	}
+
+	for (JUnsignedOffset i=0; i<kToolbarIDMapCount; i+=2)
+	{
+		if (*s == kToolbarIDMap[i])
+		{
+			*s = kToolbarIDMap[i+1];
+			return;
+		}
+	}
+
+	JStringIterator iter(s);
+	iter.SkipNext(2);
+	iter.RemoveAllPrev();
+	*s += "::FileListDirector";
 }
 
 /******************************************************************************

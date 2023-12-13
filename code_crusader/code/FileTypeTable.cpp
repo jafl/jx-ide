@@ -56,129 +56,7 @@ const JUtf8Byte kGeometryDataEndDelimiter      = '\1';
 
 // Type menu
 
-static const JUtf8Byte* kTypeMenuStr =
-	"  Adobe Flash %r"
-	"| Ant %r"
-	"| Assembly %r"
-	"| ASP %r"
-	"| AWK %r"
-	"| Basic %r"
-	"| Beta %r"
-	"| Bison %r"
-	"| Bourne shell (sh) %r"
-	"| C shell (csh) %r"
-	"| C/C++ source %r"
-	"| C/C++ header %r"
-	"| C# %r"
-	"| Cobol %r"
-	"| D %d"
-	"| Eiffel %r"
-	"| Erlang %r"
-	"| FORTRAN %r"
-	"| Go %r"
-	"| HTML %r"
-	"| INI %r"
-	"| Java archive %r"
-	"| Java properties %r"
-	"| Java source %r"
-	"| JavaScript %r"
-	"| JSP %r"
-	"| Lex %r"
-	"| Lisp %r"
-	"| Lua %r"
-	"| Make %r"
-	"| Matlab %r"
-	"| Modula-2 module %r"
-	"| Modula-2 interface %r"
-	"| Modula-3 module %r"
-	"| Modula-3 interface %r"
-	"| Pascal %r"
-	"| Perl %r"
-	"| PHP %r"
-	"| Python %r"
-	"| Ratfor %r"
-	"| REXX %r"
-	"| Ruby %r"
-	"| Scheme %r"
-	"| SLang %r"
-	"| SML %r"
-	"| SQL %r"
-	"| TCL %r"
-	"| Vera source %r"
-	"| Vera header %r"
-	"| Verilog %r"
-	"| Vim %r"
-	"| XML %r"
-	"| Other source %r"
-	"| Static library %r"
-	"| Shared library %r"
-	"| Documentation %r"
-	"| Other text %r"
-	"| Binary %r"
-	"| External %r";
-
-enum
-{
-	kAdobeFlexTypeCmd = 1,
-	kAntTypeCmd,
-	kAssemblyTypeCmd,
-	kASPTypeCmd,
-	kAWKTypeCmd,
-	kBasicTypeCmd,
-	kBetaTypeCmd,
-	kBisonTypeCmd,
-	kBourneShellTypeCmd,
-	kCShellTypeCmd,
-	kCSourceTypeCmd,
-	kCHeaderTypeCmd,
-	kCSharpTypeCmd,
-	kCobolTypeCmd,
-	kDTypeCmd,
-	kEiffelTypeCmd,
-	kErlangTypeCmd,
-	kFortranTypeCmd,
-	kGoTypeCmd,
-	kHTMLTypeCmd,
-	kINITypeCmd,
-	kJavaArchiveTypeCmd,
-	kPropertiesTypeCmd,
-	kJavaSourceTypeCmd,
-	kJavaScriptTypeCmd,
-	kJSPTypeCmd,
-	kLexTypeCmd,
-	kLispTypeCmd,
-	kLuaTypeCmd,
-	kMakeTypeCmd,
-	kMatlabTypeCmd,
-	kModula2ModuleTypeCmd,
-	kModula2InterfaceTypeCmd,
-	kModula3ModuleTypeCmd,
-	kModula3InterfaceTypeCmd,
-	kPascalTypeCmd,
-	kPerlTypeCmd,
-	kPHPTypeCmd,
-	kPythonTypeCmd,
-	kRatforTypeCmd,
-	kREXXTypeCmd,
-	kRubyTypeCmd,
-	kSchemeTypeCmd,
-	kSLangTypeCmd,
-	kSMLTypeCmd,
-	kSQLTypeCmd,
-	kTCLTypeCmd,
-	kVeraSourceTypeCmd,
-	kVeraHeaderTypeCmd,
-	kVerilogTypeCmd,
-	kVimTypeCmd,
-	kXMLTypeCmd,
-	kOtherSourceTypeCmd,
-	kStaticLibTypeCmd,
-	kSharedLibTypeCmd,
-	kDocumentationTypeCmd,
-	kOtherTextTypeCmd,
-	kBinaryTypeCmd,
-	kExternalTypeCmd
-};
+#include "FileTypeTable-Type.h"
 
 static const TextFileType kMenuIndexToFileType[] =
 {
@@ -396,6 +274,7 @@ FileTypeTable::FileTypeTable
 	itsTypeMenu->AttachHandlers(this,
 		&FileTypeTable::UpdateTypeMenu,
 		&FileTypeTable::HandleTypeMenu);
+	ConfigureTypeMenu(itsTypeMenu);
 
 	// macro menu
 

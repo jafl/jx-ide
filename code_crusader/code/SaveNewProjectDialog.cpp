@@ -28,15 +28,6 @@
 #include <jx-af/jcore/jFileUtil.h>
 #include <jx-af/jcore/jAssert.h>
 
-// Template menu
-
-static const JUtf8Byte* kTemplateMenuStr = "None %r %l";
-
-enum
-{
-	kNoTemplateCmd = 1
-};
-
 // setup information
 
 const JFileVersion kCurrentSetupVersion = 1;
@@ -106,6 +97,8 @@ SaveNewProjectDialog::GetMakefileMethod()
  BuildWindow (private)
 
  ******************************************************************************/
+
+#include "SaveNewProjectDialog-Template.h"
 
 void
 SaveNewProjectDialog::BuildWindow
@@ -269,6 +262,7 @@ SaveNewProjectDialog::BuildTemplateMenu()
 	itsTemplateMenu->SetMenuItems(kTemplateMenuStr);
 	itsTemplateMenu->SetUpdateAction(JXMenu::kDisableNone);
 	ListenTo(itsTemplateMenu);
+	ConfigureTemplateMenu(itsTemplateMenu);
 
 	JPtrArray<JString> menuText(JPtrArrayT::kDeleteAll);
 	menuText.SetCompareFunction(JCompareStringsCaseInsensitive);

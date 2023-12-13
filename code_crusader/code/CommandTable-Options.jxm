@@ -1,0 +1,96 @@
+jx_menu_editor 0
+992 312
+"CommandTable"
+"Options"
+' 
+40
+40
+255
+100
+40
+252
+167
+75
+
+0
+1
+1
+0 ""
+"This task invokes make / ant / etc."
+"(M)"
+' 
+"__ThisTaskInvokesMakeAntEtc"
+"kIsMakeCmd"
+0
+
+1
+1
+0 ""
+"This task invokes version control"
+"(V)"
+' 
+"__ThisTaskInvokesVersionControl"
+"kIsCVSCmd"
+1
+
+1
+1
+0 ""
+"Save all files before performing"
+"(S)"
+' 
+"__SaveAllFilesBeforePerforming"
+"kSaveAllCmd"
+0
+
+1
+1
+0 ""
+"Perform on one file at a time"
+"(O)"
+' 
+"__PerformOnOneFileAtATime"
+"kOneAtATimeCmd"
+1
+
+1
+1
+0 ""
+"Display output in window"
+"(W)"
+' 
+"__DisplayOutputInWindow"
+"kUseWindowCmd"
+0
+
+1
+1
+0 ""
+"Raise window before performing"
+"(R)"
+' 
+"__RaiseWindowBeforePerforming"
+"kRaisedWhenStartCmd"
+0
+
+1
+1
+0 ""
+"Beep when task is finished"
+"(B)"
+' 
+"__BeepWhenTaskIsFinished"
+"kBeepWhenFinishedCmd"
+1
+
+1
+1
+0 ""
+"Display separator after this item in menu"
+""
+' 
+"__DisplaySeparatorAfterThisItemInMenu"
+"kShowSeparatorCmd"
+0
+
+0

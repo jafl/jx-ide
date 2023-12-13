@@ -1,0 +1,96 @@
+jx_menu_editor 0
+732 309
+"App"
+"Help"
+'h
+40
+40
+125
+100
+39
+121
+163
+75
+
+0
+1
+0
+0 ""
+"About"
+""
+'a
+"__About"
+"kHelpAboutCmd"
+1
+
+1
+0
+1 "jx_help_toc.xpm"
+"Table of Contents"
+""
+'c
+"HelpTOC::JX"
+"kHelpTOCCmd"
+0
+
+1
+0
+0 ""
+"Overview"
+""
+'o
+"__Overview"
+"kHelpOverviewCmd"
+0
+
+1
+0
+0 ""
+"Tutorial"
+""
+'t
+"__Tutorial"
+"kHelpTutorialCmd"
+0
+
+1
+0
+1 "jx_help_specific.xpm"
+"This window"
+"F1"
+'w
+"HelpSpecific::JX"
+"kHelpWindowCmd"
+1
+
+1
+0
+0 ""
+"Tip of the Day"
+""
+'d
+"__TipOfTheDay"
+"kTipCmd"
+1
+
+1
+0
+0 ""
+"Changes"
+""
+'h
+"__Changes"
+"kHelpChangeLogCmd"
+0
+
+1
+0
+0 ""
+"Credits"
+""
+'r
+"__Credits"
+"kHelpCreditsCmd"
+0
+
+0

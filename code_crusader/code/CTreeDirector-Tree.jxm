@@ -1,0 +1,166 @@
+jx_menu_editor 0
+950 469
+"CTreeDirector"
+"Tree"
+'t
+40
+40
+202
+187
+41
+178
+165
+75
+
+0
+1
+0
+0 ""
+"Configure C preprocessor..."
+""
+'o
+"ConfigureCTreeCPP"
+"kEditCPPMacrosCmd"
+0
+
+1
+0
+0 ""
+"Add classes..."
+""
+'e
+"EditSearchPaths"
+"kEditSearchPathsCmd"
+0
+
+1
+0
+0 ""
+"Update"
+"Ctrl-U"
+'u
+"UpdateClassTree"
+"kUpdateCurrentCmd"
+0
+
+1
+0
+0 ""
+"Minimize MI link lengths now"
+""
+'l
+"MinimizeMILinkLength"
+"kForceMinMILinksCmd"
+1
+
+1
+0
+0 ""
+"Open source"
+"Left-dbl-click or Return"
+'s
+"OpenSelectedFiles"
+"kTreeOpenSourceCmd"
+0
+
+1
+0
+0 ""
+"Open header"
+"Middle-dbl-click or Control-Tab"
+'h
+"OpenComplFiles"
+"kTreeOpenHeaderCmd"
+0
+
+1
+0
+0 ""
+"Open function list"
+"Right-dbl-click"
+'f
+"OpenClassFnList"
+"kTreeOpenFnListCmd"
+1
+
+1
+0
+0 ""
+"Create derived class..."
+""
+'r
+"CreateDerivedClass"
+"kCreateDerivedClassCmd"
+1
+
+1
+0
+0 ""
+"Collapse"
+"Ctrl-<"
+'c
+"CollapseClasses"
+"kTreeCollapseCmd"
+0
+
+1
+0
+0 ""
+"Expand"
+"Ctrl->"
+'x
+"ExpandClasses"
+"kTreeExpandCmd"
+0
+
+1
+0
+0 ""
+"Expand all"
+""
+'a
+"ExpandAllClasses"
+"kTreeExpandAllCmd"
+1
+
+1
+0
+0 ""
+"Select parents"
+""
+'p
+"SelectParentClass"
+"kTreeSelParentsCmd"
+0
+
+1
+0
+0 ""
+"Select descendants"
+""
+'d
+"SelectDescendantClass"
+"kTreeSelDescendantsCmd"
+0
+
+1
+0
+1 "jx_edit_copy.xpm"
+"Copy selected names"
+"Ctrl-C"
+'n
+"CopyClassName"
+"kCopySelNamesCmd"
+1
+
+1
+0
+0 ""
+"Find function..."
+"Ctrl-F"
+'i
+"FindFunction"
+"kFindFnCmd"
+0
+
+0

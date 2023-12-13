@@ -36,8 +36,7 @@ public:
 						 const JString& prevVersStr = JString::empty);
 	void	EditMiscPrefs();
 
-	JXTextMenu*	CreateHelpMenu(JXMenuBar* menuBar, const JUtf8Byte* idNamespace,
-							   const JUtf8Byte* sectionName);
+	JXTextMenu*	CreateHelpMenu(JXMenuBar* menuBar, const JUtf8Byte* sectionName);
 	void		AppendHelpMenuToToolBar(JXToolBar* toolBar, JXTextMenu* menu);
 
 	bool	FindFile(const JString& fileName, const JString::Case caseSensitive,

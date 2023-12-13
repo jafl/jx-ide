@@ -16,6 +16,7 @@
 #include "CompileDocument.h"
 #include "globals.h"
 #include <jx-af/jx/JXDisplay.h>
+#include <jx-af/jx/jXMenuUtil.h>
 #include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
@@ -74,7 +75,7 @@ DocumentMenu::Receive
 	)
 {
 	if (sender == this && message.Is(JXMenu::kItemSelected) &&
-		(GetDisplay()->GetLatestKeyModifiers()).GetState(JXMenu::AdjustNMShortcutModifier(kJXMetaKeyIndex)))
+		GetDisplay()->GetLatestKeyModifiers().GetState(JXAdjustNMShortcutModifier(kJXMetaKeyIndex)))
 	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);

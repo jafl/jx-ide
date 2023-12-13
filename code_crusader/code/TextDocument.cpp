@@ -57,120 +57,7 @@ const JUtf8Byte kSetupDataEndDelimiter  = '\1';
 	// version 1 includes itsBreakCodeCROnlyFlag
 	// version 2 removes itsBreakCodeCROnlyFlag
 
-// File menu
-
-static const JUtf8Byte* kFileMenuStr =
-	"    New text file                  %k Meta-N       %i" kNewTextFileAction
-	"  | New text file from template... %k Meta-Shift-N %i" kNewTextFileFromTmplAction
-	"  | New project...                                 %i" kNewProjectAction
-	"%l| Open...                        %k Meta-O       %i" kOpenSomethingAction
-	"  | Recent projects"
-	"  | Recent text files"
-	"%l| Save                           %k Meta-S       %i" kSaveFileAction
-	"  | Save as...                     %k Ctrl-S       %i" kSaveFileAsAction
-	"  | Save a copy as...              %k Ctrl-Shift-S %i" kSaveCopyAsAction
-	"  | Save as template...                            %i" kSaveAsTemplateAction
-	"  | Revert to saved                                %i" kRevertAction
-	"  | Save all                       %k Meta-Shift-S %i" kSaveAllTextFilesAction
-	"%l| File format"
-	"%l| Compare files...                               %i" kDiffFilesAction
-	"  | Compare with...                                %i" kDiffSmartAction
-	"  | Compare with version control                   %i" kDiffVCSAction
-	"  | Compare"
-	"%l| Show in file manager                           %i" kShowInFileMgrAction
-	"%l| Page setup...                                  %i" kJXPageSetupAction
-	"  | Print...                       %k Meta-P       %i" kJXPrintAction
-	"%l| Page setup for styles...                       %i" kPageSetupStyledTextAction
-	"  | Print with styles...           %k Meta-Shift-P %i" kPrintStyledTextAction
-	"%l| Close                          %k Meta-W       %i" kJXCloseWindowAction
-	"  | Close all                      %k Meta-Shift-W %i" kCloseAllTextFilesAction
-	"%l| Quit                           %k Meta-Q       %i" kJXQuitAction;
-
-enum
-{
-	kNewTextEditorCmd = 1, kNewTextTemplateCmd, kNewProjectCmd,
-	kOpenSomethingCmd, kRecentProjectMenuCmd, kRecentTextMenuCmd,
-	kSaveFileCmd, kSaveFileAsCmd, kSaveCopyAsCmd, kSaveAsTemplateCmd,
-	kRevertCmd, kSaveAllFilesCmd,
-	kFileFormatIndex,
-	kDiffFilesCmd, kDiffSmartCmd, kDiffVCSCmd, kDiffMenuIndex,
-	kShowInFileMgrCmd,
-	kPTPageSetupCmd, kPrintPTCmd,
-	kPSPageSetupCmd, kPrintPSCmd,
-	kCloseCmd, kCloseAllCmd,
-	kQuitCmd
-};
-
-// File format menu
-
-static const JUtf8Byte* kFileFormatMenuStr =
-	"  UNIX                 %r %i" kUNIXTextFormatAction
-	"| Macintosh (pre OS X) %r %i" kMacTextFormatAction
-	"| DOS / Windows        %r %i" kDOSTextFormatAction;
-
-enum
-{
-	kUNIXFmtCmd = 1, kMacFmtCmd, kDOSFmtCmd
-};
-
-// Diff menu
-
-static const JUtf8Byte* kDiffMenuStr =
-	"    Compare as file #1..."
-	"  | Compare as file #2..."
-	"%l| Compare with version control...";
-
-enum
-{
-	kDiffAs1Cmd = 1,
-	kDiffAs2Cmd,
-	kDiffAsVCSCmd
-};
-
-// Preferences menu
-
-static const JUtf8Byte* kPrefsMenuStr =
-	"    Editor..."
-	"  | Toolbar buttons..."
-	"  | External editors..."
-	"  | File manager & web browser..."
-	"  | Miscellaneous..."
-	"%l| File types..."
-	"  | Syntax highlighting..."
-	"  | Macros..."
-	"  | Clean paragraph margins rules..."
-	"%l| Save window size as default";
-
-enum
-{
-	kEditorPrefsCmd = 1, kToolBarPrefsCmd,
-	kChooseExtEditorsCmd, kWWWPrefsCmd, kMiscPrefsCmd,
-	kEditFileTypesCmd, kEditStylesSubmenuIndex,
-	kEditMacrosCmd, kEditCRMRuleListsCmd,
-	kSaveWindSizeCmd
-};
-
 // Syntax highlighting menu
-
-static const JUtf8Byte* kPrefsStylesMenuStr =
-	"  Bourne shell"
-	"| C shell"
-	"| C / C++"
-	"| C#"
-	"| D"
-	"| Eiffel"
-	"| Go"
-	"| HTML / PHP / JSP / XML"
-	"| INI"
-	"| Java"
-	"| Java properties"
-	"| JavaScript"
-	"| Make"
-	"| Perl"
-	"| Python"
-	"| Ruby"
-	"| SQL"
-	"| TCL";
 
 static const Language kMenuItemToLang[] =
 {
@@ -192,26 +79,6 @@ static const Language kMenuItemToLang[] =
 	kRubyLang,
 	kSQLLang,
 	kTCLLang
-};
-
-// Settings popup menu
-
-static const JUtf8Byte* kSettingsMenuStr =
-	"    Change spaces per tab..." 
-	"%l| Auto-indent        %b"
-	"  | Tab inserts spaces %b"
-	"  | Show whitespace    %b"
-	"  | Word wrap          %b"
-	"  | Read only          %b";
-
-enum
-{
-	kTabWidthCmd = 1,
-	kToggleAutoIndentCmd,
-	kToggleTabInsertsSpacesCmd,
-	kToggleWhitespaceCmd,
-	kToggleWordWrapCmd,
-	kToggleReadOnlyCmd
 };
 
 // JBroadcaster message types
@@ -449,29 +316,12 @@ TextDocument::GetMenuIcon
 
  ******************************************************************************/
 
-#include <jx-af/image/jx/jx_file_new.xpm>
-#include <jx-af/image/jx/jx_file_open.xpm>
-#include <jx-af/image/jx/jx_file_save.xpm>
-#include <jx-af/image/jx/jx_file_save_all.xpm>
-#include <jx-af/image/jx/jx_file_revert_to_saved.xpm>
-#include <jx-af/image/jx/jx_file_print.xpm>
-#include <jx-af/image/jx/jx_edit_read_only.xpm>
-#include <jx-af/image/jx/jx_show_whitespace.xpm>
-
-#include "jcc_file_print_with_styles.xpm"
-#include "jcc_file_save_copy_as.xpm"
-#include "jcc_unix_format.xpm"
-#include "jcc_mac_format.xpm"
-#include "jcc_dos_format.xpm"
-#include "jcc_compare_files.xpm"
-#include "jcc_compare_files_1.xpm"
-#include "jcc_compare_files_2.xpm"
-#include "jcc_compare_backup.xpm"
-#include "jcc_compare_vcs.xpm"
-#include "jcc_compare_vcs_as.xpm"
-#include "jcc_word_wrap.xpm"
-#include "jcc_auto_indent.xpm"
-#include "jcc_tab_inserts_spaces.xpm"
+#include "TextDocument-File.h"
+#include "TextDocument-FileFormat.h"
+#include "TextDocument-Diff.h"
+#include "TextDocument-Preferences.h"
+#include "TextDocument-PrefsStyles.h"
+#include "TextDocument-Settings.h"
 
 void
 TextDocument::BuildWindow
@@ -589,36 +439,20 @@ TextDocument::BuildWindow
 	itsSettingsMenu->SetPopupArrowDirection(JXMenu::kArrowPointsUp);
 	itsSettingsMenu->AdjustSize(
 		window->GetFrameGlobal().right - itsSettingsMenu->GetFrameGlobal().right, 0);
-	itsSettingsMenu->SetMenuItems(kSettingsMenuStr, "TextDocument");
+	itsSettingsMenu->SetMenuItems(kSettingsMenuStr);
 	itsSettingsMenu->SetUpdateAction(JXMenu::kDisableNone);
 	itsSettingsMenu->AttachHandlers(this,
 		&TextDocument::UpdateSettingsMenu,
 		&TextDocument::HandleSettingsMenu);
-
-	itsSettingsMenu->SetItemImage(kToggleAutoIndentCmd,       jcc_auto_indent);
-	itsSettingsMenu->SetItemImage(kToggleTabInsertsSpacesCmd, jcc_tab_inserts_spaces);
-	itsSettingsMenu->SetItemImage(kToggleWhitespaceCmd,       jx_show_whitespace);
-	itsSettingsMenu->SetItemImage(kToggleWordWrapCmd,         jcc_word_wrap);
-	itsSettingsMenu->SetItemImage(kToggleReadOnlyCmd,         jx_edit_read_only);
+	ConfigureSettingsMenu(itsSettingsMenu);
 
 	itsFileMenu = itsMenuBar->PrependTextMenu(JGetString("FileMenuTitle::JXGlobal"));
-	itsFileMenu->SetMenuItems(kFileMenuStr, "TextDocument");
+	itsFileMenu->SetMenuItems(kFileMenuStr);
 	itsFileMenu->SetUpdateAction(JXMenu::kDisableNone);
 	itsFileMenu->AttachHandlers(this,
 		&TextDocument::UpdateFileMenu,
 		&TextDocument::HandleFileMenu);
-
-	itsFileMenu->SetItemImage(kNewTextEditorCmd, jx_file_new);
-	itsFileMenu->SetItemImage(kOpenSomethingCmd, jx_file_open);
-	itsFileMenu->SetItemImage(kSaveFileCmd,      jx_file_save);
-	itsFileMenu->SetItemImage(kSaveCopyAsCmd,    jcc_file_save_copy_as);
-	itsFileMenu->SetItemImage(kRevertCmd,        jx_file_revert_to_saved);
-	itsFileMenu->SetItemImage(kSaveAllFilesCmd,  jx_file_save_all);
-	itsFileMenu->SetItemImage(kDiffFilesCmd,     jcc_compare_files);
-	itsFileMenu->SetItemImage(kDiffSmartCmd,     jcc_compare_backup);
-	itsFileMenu->SetItemImage(kDiffVCSCmd,       jcc_compare_vcs);
-	itsFileMenu->SetItemImage(kPrintPTCmd,       jx_file_print);
-	itsFileMenu->SetItemImage(kPrintPSCmd,       jcc_file_print_with_styles);
+	ConfigureFileMenu(itsFileMenu);
 
 	jnew FileHistoryMenu(DocumentManager::kProjectFileHistory,
 						 itsFileMenu, kRecentProjectMenuCmd, itsMenuBar);
@@ -627,25 +461,19 @@ TextDocument::BuildWindow
 						 itsFileMenu, kRecentTextMenuCmd, itsMenuBar);
 
 	itsFileFormatMenu = jnew JXTextMenu(itsFileMenu, kFileFormatIndex, itsMenuBar);
-	itsFileFormatMenu->SetMenuItems(kFileFormatMenuStr, "TextDocument");
+	itsFileFormatMenu->SetMenuItems(kFileFormatMenuStr);
 	itsFileFormatMenu->SetUpdateAction(JXMenu::kDisableNone);
 	itsFileFormatMenu->AttachHandlers(this,
 		&TextDocument::UpdateFileFormatMenu,
 		&TextDocument::HandleFileFormatMenu);
-
-	itsFileFormatMenu->SetItemImage(kUNIXFmtCmd, jcc_unix_format);
-	itsFileFormatMenu->SetItemImage(kMacFmtCmd,  jcc_mac_format);
-	itsFileFormatMenu->SetItemImage(kDOSFmtCmd,  jcc_dos_format);
+	ConfigureFileFormatMenu(itsFileFormatMenu);
 
 	itsDiffMenu = jnew JXTextMenu(itsFileMenu, kDiffMenuIndex, itsMenuBar);
-	itsDiffMenu->SetMenuItems(kDiffMenuStr, "TextDocument");
+	itsDiffMenu->SetMenuItems(kDiffMenuStr);
 	itsDiffMenu->AttachHandlers(this,
 		&TextDocument::UpdateDiffMenu,
 		&TextDocument::HandleDiffMenu);
-
-	itsDiffMenu->SetItemImage(kDiffAs1Cmd,   jcc_compare_files_1);
-	itsDiffMenu->SetItemImage(kDiffAs2Cmd,   jcc_compare_files_2);
-	itsDiffMenu->SetItemImage(kDiffAsVCSCmd, jcc_compare_vcs_as);
+	ConfigureDiffMenu(itsDiffMenu);
 
 	itsCmdMenu =
 		jnew CommandMenu(nullptr, this, itsMenuBar,
@@ -658,23 +486,26 @@ TextDocument::BuildWindow
 	assert( itsWindowMenu != nullptr );
 	itsMenuBar->AppendMenu(itsWindowMenu);
 
-	itsPrefsMenu = itsMenuBar->AppendTextMenu(JGetString("PrefsMenuTitle::JXGlobal"));
-	itsPrefsMenu->SetMenuItems(kPrefsMenuStr, "TextDocument");
+	itsPrefsMenu = itsMenuBar->AppendTextMenu(JGetString("MenuTitle::TextDocument_Preferences"));
+	itsPrefsMenu->SetMenuItems(kPreferencesMenuStr);
 	itsPrefsMenu->SetUpdateAction(JXMenu::kDisableNone);
 	itsPrefsMenu->AttachHandler(this, &TextDocument::HandlePrefsMenu);
+	ConfigurePreferencesMenu(itsPrefsMenu);
 
 	itsPrefsStylesMenu = jnew JXTextMenu(itsPrefsMenu, kEditStylesSubmenuIndex, itsMenuBar);
-	itsPrefsStylesMenu->SetMenuItems(kPrefsStylesMenuStr, "TextDocument");
+	itsPrefsStylesMenu->SetMenuItems(kPrefsStylesMenuStr);
 	itsPrefsStylesMenu->SetUpdateAction(JXMenu::kDisableNone);
 	itsPrefsStylesMenu->AttachHandler(this, &TextDocument::HandlePrefsStylesMenu);
+	ConfigurePrefsStylesMenu(itsPrefsStylesMenu);
 
-	JXTextMenu* helpMenu = GetApplication()->CreateHelpMenu(itsMenuBar, "TextDocument", itsHelpSectionName);
+	JXTextMenu* helpMenu = GetApplication()->CreateHelpMenu(itsMenuBar, itsHelpSectionName);
 
 	// must do this after creating widgets
 
 	JPrefObject::ReadPrefs();
 
-	itsToolBar->LoadPrefs();
+	auto f = std::function(UpgradeToolBarID);
+	itsToolBar->LoadPrefs(&f);
 	if (itsToolBar->IsEmpty())
 	{
 		JXTextMenu* editMenu;
@@ -718,6 +549,57 @@ TextDocument::BuildWindow
 
 		GetApplication()->AppendHelpMenuToToolBar(itsToolBar, helpMenu);
 	}
+}
+
+/******************************************************************************
+ UpgradeToolBarID (static private)
+
+ ******************************************************************************/
+
+static const JUtf8Byte* kToolbarIDMap[] =
+{
+	// Search
+
+	"CBBalanceGroupingSymbol",				"BalanceGroupingSymbol::TextEditor",
+	"CBGoToLine",							"GoToLine::TextEditor",
+	"CBGoToColumn",							"GoToColumn::TextEditor",
+	"CBPlaceBookmark",						"PlaceBookmark::TextEditor",
+	"CBOpenSelectionAsFile",				"OpenSelectionAsFile::TextEditor",
+	"CBFindFile",							"FindFile::TextEditor",
+	"CBFindSelectionInProject",				"FindSelectionInProject::TextEditor",
+	"CBFindSelectionInProjectNoContext",	"FindSelectionInProjectNoContext::TextEditor",
+	"CBFindSelectionInManPage",				"FindSelectionInManPage::TextEditor",
+	"CBOpenManPage",						"OpenManPage::TextEditor",
+	"CBOpenPrevListItem",					"OpenPrevListItem::TextEditor",
+	"CBOpenNextListItem",					"OpenNextListItem::TextEditor",
+};
+
+const JSize kToolbarIDMapCount = sizeof(kToolbarIDMap) / sizeof(JUtf8Byte*);
+
+void
+TextDocument::UpgradeToolBarID
+	(
+	JString* s
+	)
+{
+	if (!s->StartsWith("CB") || CommandMenu::UpgradeToolBarID(s))
+	{
+		return;
+	}
+
+	for (JUnsignedOffset i=0; i<kToolbarIDMapCount; i+=2)
+	{
+		if (*s == kToolbarIDMap[i])
+		{
+			*s = kToolbarIDMap[i+1];
+			return;
+		}
+	}
+
+	JStringIterator iter(s);
+	iter.SkipNext(2);
+	iter.RemoveAllPrev();
+	*s += "::TextDocument";
 }
 
 /******************************************************************************

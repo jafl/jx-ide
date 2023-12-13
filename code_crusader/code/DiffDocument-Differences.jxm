@@ -1,0 +1,46 @@
+jx_menu_editor 0
+707 213
+"DiffDocumentx"
+"Differences"
+'d
+40
+40
+138
+100
+42
+144
+100
+75
+
+0
+1
+0
+0 ""
+"First difference"
+"Meta-1"
+'f
+"__FirstDifference"
+"kFirstDiffCmd"
+1
+
+1
+0
+0 ""
+"Previous difference"
+"Ctrl-minus"
+'p
+"__PreviousDifference"
+"kPrevDiffCmd"
+0
+
+1
+0
+0 ""
+"Next difference"
+"Ctrl-plus"
+'n
+"__NextDifference"
+"kNextDiffCmd"
+0
+
+0

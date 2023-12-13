@@ -1,0 +1,96 @@
+jx_menu_editor 0
+819 310
+"CommandMenu"
+"ManageProject"
+' 
+40
+40
+183
+100
+36
+155
+174
+75
+
+0
+1
+0
+0 ""
+"Update symbol database"
+"Ctrl-U"
+' 
+"UpdateClassTree"
+"kUpdateSymbolDBCmd"
+1
+
+1
+0
+0 "jcc_show_symbol_list.xpm"
+"Show symbol browser"
+"Ctrl-F12"
+' 
+"ShowSymbolBrowser"
+"kShowSymbolBrowserCmd"
+0
+
+1
+0
+0 "jcc_show_c_tree.xpm"
+"Show C++ class tree"
+""
+' 
+"ShowCPPClassTree"
+"kShowCTreeCmd"
+0
+
+1
+0
+0 "jcc_show_d_tree.xpm"
+"Show D class tree"
+""
+' 
+"ShowDClassTree"
+"kShowDTreeCmd"
+0
+
+1
+0
+0 "jcc_show_go_tree.xpm"
+"Show Go struct/interface tree"
+""
+' 
+"ShowGoClassTree"
+"kShowGoTreeCmd"
+0
+
+1
+0
+0 "jcc_show_java_tree.xpm"
+"Show Java class tree"
+""
+' 
+"ShowJavaClassTree"
+"kShowJavaTreeCmd"
+0
+
+1
+0
+0 "jcc_show_php_tree.xpm"
+"Show PHP class tree"
+""
+' 
+"ShowPHPClassTree"
+"kShowPHPTreeCmd"
+0
+
+1
+0
+0 "jcc_show_file_list.xpm"
+"Show file list"
+"Ctrl-Shift-F"
+' 
+"ShowFileList"
+"kShowFileListCmd"
+0
+
+0

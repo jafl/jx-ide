@@ -20,6 +20,7 @@
 #include <jx-af/jx/JXColHeaderWidget.h>
 #include <jx-af/jx/JXWindowPainter.h>
 #include <jx-af/jx/JXSaveFileDialog.h>
+#include <jx-af/jx/jXMenuUtil.h>
 #include <jx-af/jcore/JTableSelection.h>
 #include <jx-af/jcore/JFontManager.h>
 #include <jx-af/jcore/JRegex.h>
@@ -29,6 +30,8 @@
 #include <jx-af/jcore/jASCIIConstants.h>
 #include <sstream>
 #include <jx-af/jcore/jAssert.h>
+
+#include "CommandTable-Options.h"
 
 const JCoordinate kHMarginWidth = 3;
 const JCoordinate kVMarginWidth = 1;
@@ -54,30 +57,6 @@ const JSize kColCount = sizeof(kInitColWidth) / sizeof(JCoordinate);
 
 const JFileVersion kCurrentGeometryDataVersion = 0;
 const JUtf8Byte kGeometryDataEndDelimiter      = '\1';
-
-// Options menu
-
-static const JUtf8Byte* kOptionsMenuStr =
-	"    This task invokes make / ant / etc.       %b %k (M)"
-	"  | This task invokes version control         %b %k (V)"
-	"%l| Save all files before performing          %b %k (S)"
-	"  | Perform on one file at a time             %b %k (O)"
-	"%l| Display output in window                  %b %k (W)"
-	"  | Raise window before performing            %b %k (R)"
-	"  | Beep when task is finished                %b %k (B)"
-	"%l| Display separator after this item in menu %b";
-
-enum
-{
-	kIsMakeCmd = 1,
-	kIsCVSCmd,
-	kSaveAllCmd,
-	kOneAtATimeCmd,
-	kUseWindowCmd,
-	kRaisedWhenStartCmd,
-	kBeepWhenFinishedCmd,
-	kShowSeparatorCmd
-};
 
 // import/export
 
@@ -170,6 +149,7 @@ CommandTable::CommandTable
 	itsOptionsMenu->AttachHandlers(this,
 		&CommandTable::UpdateOptionsMenu,
 		&CommandTable::HandleOptionsMenu);
+	ConfigureOptionsMenu(itsOptionsMenu);
 
 	// base path
 
@@ -472,7 +452,7 @@ CommandTable::GetDNDAction
 	)
 {
 	const bool meta =
-		modifiers.GetState(JXMenu::AdjustNMShortcutModifier(kJXMetaKeyIndex));
+		modifiers.GetState(JXAdjustNMShortcutModifier(kJXMetaKeyIndex));
 
 	if ((target == this && !meta) ||
 		(target != this &&  meta))

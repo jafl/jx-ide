@@ -17,37 +17,8 @@
 #include <jx-af/jx/JXToolBar.h>
 #include <jx-af/jcore/jAssert.h>
 
+#include "CTreeDirector-Tree.h"
 #include "jcc_c_tree_window.xpm"
-
-// Tree menu
-
-static const JUtf8Byte* kTreeMenuStr =
-	"    Configure C preprocessor...                            %i" kConfigureCTreeCPPAction
-	"  | Add classes...                                         %i" kEditSearchPathsAction
-	"  | Update                 %k Meta-U                       %i" kUpdateClassTreeAction
-	"  | Minimize MI link lengths now                           %i" kMinimizeMILinkLengthAction
-	"%l| Open source            %k Left-dbl-click or Return     %i" kOpenSelectedFilesAction
-	"  | Open header            %k Middle-dbl-click or Control-Tab %i" kOpenComplFilesAction
-	"  | Open function list     %k Right-dbl-click              %i" kOpenClassFnListAction
-	"%l| Create derived class...                                %i" kCreateDerivedClassAction
-	"%l| Collapse               %k Meta-<                       %i" kCollapseClassesAction
-	"  | Expand                 %k Meta->                       %i" kExpandClassesAction
-	"  | Expand all                                             %i" kExpandAllClassesAction
-	"%l| Select parents                                         %i" kSelectParentClassAction
-	"  | Select descendants                                     %i" kSelectDescendantClassAction
-	"  | Copy selected names    %k Meta-C                       %i" kCopyClassNameAction
-	"%l| Find function...       %k Meta-F                       %i" kFindFunctionAction;
-
-enum
-{
-	kEditCPPMacrosCmd = 1, kEditSearchPathsCmd, kUpdateCurrentCmd,
-	kForceMinMILinksCmd,
-	kTreeOpenSourceCmd, kTreeOpenHeaderCmd, kTreeOpenFnListCmd,
-	kCreateDerivedClassCmd,
-	kTreeCollapseCmd, kTreeExpandCmd, kTreeExpandAllCmd,
-	kTreeSelParentsCmd, kTreeSelDescendantsCmd, kCopySelNamesCmd,
-	kFindFnCmd
-};
 
 /******************************************************************************
  Constructor
@@ -61,8 +32,7 @@ CTreeDirector::CTreeDirector
 	:
 	TreeDirector(supervisor, NewCTree, "WindowTitleSuffix::CTreeDirector",
 				 "CTreeHelp", jcc_c_tree_window,
-				 kTreeMenuStr, "CTreeDirector",
-				 kCTreeToolBarID, InitCTreeToolBar)
+				 kTreeMenuStr, kCTreeToolBarID, InitCTreeToolBar)
 {
 	CTreeDirectorX();
 }
@@ -84,8 +54,7 @@ CTreeDirector::CTreeDirector
 				 supervisor, subProject, StreamInCTree,
 				 "WindowTitleSuffix::CTreeDirector",
 				 "CTreeHelp", jcc_c_tree_window,
-				 kTreeMenuStr, "CTreeDirector",
-				 kCTreeToolBarID, InitCTreeToolBar,
+				 kTreeMenuStr, kCTreeToolBarID, InitCTreeToolBar,
 				 dirList, true)
 {
 	CTreeDirectorX();
@@ -98,6 +67,8 @@ CTreeDirector::CTreeDirectorX()
 {
 	itsCTree = dynamic_cast<CTree*>(GetTree());
 	assert( itsCTree != nullptr );
+
+	ConfigureTreeMenu(GetTreeMenu());
 }
 
 /******************************************************************************
@@ -241,6 +212,55 @@ CTreeDirector::HandleTreeMenu
 	{
 		FindFunction();
 	}
+}
+
+/******************************************************************************
+ UpgradeTreeMenuToolBarID (virtual protected)
+
+ ******************************************************************************/
+
+static const JUtf8Byte* kToolbarIDMap[] =
+{
+	"CBConfigureCTreeCPP",		"ConfigureCTreeCPP::CTreeDirector",
+	"CBEditSearchPaths",		"EditSearchPaths::CTreeDirector",
+	"CBUpdateClassTree",		"UpdateClassTree::CTreeDirector",
+	"CBMinimizeMILinkLength",	"MinimizeMILinkLength::CTreeDirector",
+	"CBOpenSelectedFiles",		"OpenSelectedFiles::CTreeDirector",
+	"CBOpenComplFiles",			"OpenComplFiles::CTreeDirector",
+	"CBOpenClassFnList",		"OpenClassFnList::CTreeDirector",
+	"CBCreateDerivedClass",		"CreateDerivedClass::CTreeDirector",
+	"CBCollapseClasses",		"CollapseClasses::CTreeDirector",
+	"CBExpandClasses",			"ExpandClasses::CTreeDirector",
+	"CBExpandAllClasses",		"ExpandAllClasses::CTreeDirector",
+	"CBSelectParentClass",		"SelectParentClass::CTreeDirector",
+	"CBSelectDescendantClass",	"SelectDescendantClass::CTreeDirector",
+	"CBCopyClassName"			"CopyClassName::CTreeDirector",
+	"CBFindFunction",			"FindFunction::CTreeDirector",
+};
+
+const JSize kToolbarIDMapCount = sizeof(kToolbarIDMap) / sizeof(JUtf8Byte*);
+
+bool
+CTreeDirector::UpgradeTreeMenuToolBarID
+	(
+	JString* s
+	)
+{
+	if (!s->StartsWith("CB"))
+	{
+		return false;
+	}
+
+	for (JUnsignedOffset i=0; i<kToolbarIDMapCount; i+=2)
+	{
+		if (*s == kToolbarIDMap[i])
+		{
+			*s = kToolbarIDMap[i+1];
+			return true;
+		}
+	}
+
+	return false;
 }
 
 /******************************************************************************

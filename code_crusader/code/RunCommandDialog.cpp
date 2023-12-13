@@ -28,18 +28,6 @@
 
 const JSize kHistoryLength = 20;
 
-// Save Command menu
-
-static const JUtf8Byte* kSaveCmdMenuStr =
-	"  For all projects"
-	"| For active project";
-
-enum
-{
-	kSaveForAllCmd = 1,
-	kSaveForActiveCmd
-};
-
 // setup information
 
 const JFileVersion kCurrentSetupVersion = 1;
@@ -124,6 +112,8 @@ RunCommandDialog::Activate()
  BuildWindow (protected)
 
  ******************************************************************************/
+
+#include "RunCommandDialog-SaveCmd.h"
 
 void
 RunCommandDialog::BuildWindow()
@@ -261,10 +251,11 @@ RunCommandDialog::BuildWindow()
 
 	itsCmdInput->SetFont(JFontManager::GetDefaultMonospaceFont());
 
-	itsSaveCmdMenu->SetMenuItems(kSaveCmdMenuStr, "RunCommandDialog");
+	itsSaveCmdMenu->SetMenuItems(kSaveCmdMenuStr);
 	itsSaveCmdMenu->AttachHandlers(this,
 		&RunCommandDialog::UpdateSaveCmdMenu,
 		&RunCommandDialog::HandleSaveCmdMenu);
+	ConfigureSaveCmdMenu(itsSaveCmdMenu);
 
 	// create hidden JXDocument so Meta-# shortcuts work
 

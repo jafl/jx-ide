@@ -1,0 +1,266 @@
+jx_menu_editor 0
+938 671
+"TextDocument"
+"File"
+'f
+40
+40
+200
+100
+40
+200
+200
+75
+
+0
+1
+0
+1 "jx_file_new.xpm"
+"New text file"
+"Ctrl-N"
+' 
+"NewTextFile"
+"kNewTextEditorCmd"
+0
+
+1
+0
+0 ""
+"New text file from template..."
+"Ctrl-Shift-N"
+' 
+"NewTextFileFromTmpl"
+"kNewTextTemplateCmd"
+0
+
+1
+0
+0 ""
+"New project..."
+""
+' 
+"NewProject"
+"kNewProjectCmd"
+1
+
+1
+0
+1 "jx_file_open.xpm"
+"Open..."
+"Ctrl-O"
+' 
+"OpenSomething"
+"kOpenSomethingCmd"
+0
+
+1
+0
+0 ""
+"Recent projects"
+""
+' 
+"__RecentProjects"
+"kRecentProjectMenuCmd"
+0
+
+1
+0
+0 ""
+"Recent text files"
+""
+' 
+"__RecentTextFiles"
+"kRecentTextMenuCmd"
+1
+
+1
+0
+1 "jx_file_save.xpm"
+"Save"
+"Ctrl-S"
+' 
+"SaveFile"
+"kSaveFileCmd"
+0
+
+1
+0
+0 ""
+"Save as..."
+"Meta-S"
+' 
+"SaveFileAs"
+"kSaveFileAsCmd"
+0
+
+1
+0
+0 "jcc_file_save_copy_as.xpm"
+"Save a copy as..."
+"Meta-Shift-S"
+' 
+"SaveCopyAs"
+"kSaveCopyAsCmd"
+0
+
+1
+0
+0 ""
+"Save as template..."
+""
+' 
+"SaveAsTemplate"
+"kSaveAsTemplateCmd"
+0
+
+1
+0
+1 "jx_file_revert_to_saved.xpm"
+"Revert to saved"
+""
+' 
+"Revert"
+"kRevertCmd"
+0
+
+1
+0
+1 "jx_file_save_all.xpm"
+"Save all"
+"Ctrl-Shift-S"
+' 
+"SaveAllTextFiles"
+"kSaveAllFilesCmd"
+1
+
+1
+0
+0 ""
+"File format"
+""
+' 
+"__FileFormat"
+"kFileFormatIndex"
+1
+
+1
+0
+0 "jcc_compare_files.xpm"
+"Compare files..."
+""
+' 
+"DiffFiles"
+"kDiffFilesCmd"
+0
+
+1
+0
+0 "jcc_compare_backup.xpm"
+"Compare with..."
+""
+' 
+"DiffSmart"
+"kDiffSmartCmd"
+0
+
+1
+0
+0 "jcc_compare_vcs.xpm"
+"Compare with version control"
+""
+' 
+"DiffVCS"
+"kDiffVCSCmd"
+0
+
+1
+0
+0 ""
+"Compare"
+""
+' 
+"__Compare"
+"kDiffMenuIndex"
+1
+
+1
+0
+0 ""
+"Show in file manager"
+""
+' 
+"ShowInFileMgr"
+"kShowInFileMgrCmd"
+1
+
+1
+0
+0 ""
+"Page setup..."
+""
+' 
+"PageSetup::JX"
+"kPTPageSetupCmd"
+0
+
+1
+0
+1 "jx_file_print.xpm"
+"Print..."
+"Ctrl-P"
+' 
+"Print::JX"
+"kPrintPTCmd"
+1
+
+1
+0
+0 ""
+"Page setup for styles..."
+""
+' 
+"PageSetupStyledText"
+"kPSPageSetupCmd"
+0
+
+1
+0
+0 "jcc_file_print_with_styles.xpm"
+"Print with styles..."
+"Ctrl-Shift-P"
+' 
+"PrintStyledText"
+"kPrintPSCmd"
+1
+
+1
+0
+0 ""
+"Close"
+"Ctrl-W"
+' 
+"CloseWindow::JX"
+"kCloseCmd"
+0
+
+1
+0
+0 ""
+"Close all"
+"Ctrl-Shift-W"
+' 
+"CloseAllTextFiles"
+"kCloseAllCmd"
+1
+
+1
+0
+0 ""
+"Quit"
+"Ctrl-Q"
+' 
+"Quit::JX"
+"kQuitCmd"
+0
+
+0

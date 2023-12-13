@@ -1,0 +1,76 @@
+jx_menu_editor 0
+849 272
+"TextDocument"
+"Settings"
+' 
+40
+40
+167
+100
+40
+164
+200
+75
+
+0
+1
+0
+0 ""
+"Change spaces per tab..."
+""
+' 
+"__ChangeSpacesPerTab"
+"kTabWidthCmd"
+1
+
+1
+1
+0 "jcc_auto_indent.xpm"
+"Auto-indent"
+""
+' 
+"__AutoIndent"
+"kToggleAutoIndentCmd"
+0
+
+1
+1
+0 "jcc_tab_inserts_spaces.xpm"
+"Tab inserts spaces"
+""
+' 
+"__TabInsertsSpaces"
+"kToggleTabInsertsSpacesCmd"
+0
+
+1
+1
+1 "jx_show_whitespace.xpm"
+"Show whitespace"
+""
+' 
+"__ShowWhitespace"
+"kToggleWhitespaceCmd"
+0
+
+1
+1
+0 "jcc_word_wrap.xpm"
+"Word wrap"
+""
+' 
+"__WordWrap"
+"kToggleWordWrapCmd"
+0
+
+1
+1
+1 "jx_edit_read_only.xpm"
+"Read only"
+""
+' 
+"__ReadOnly"
+"kToggleReadOnlyCmd"
+0
+
+0

@@ -1,0 +1,66 @@
+jx_menu_editor 0
+901 285
+"FileListDirector"
+"List"
+'l
+40
+40
+219
+100
+39
+190
+142
+75
+
+0
+1
+0
+0 ""
+"Open selected files"
+"Return."
+'o
+"OpenSelectedFiles"
+"kOpenSelectionCmd"
+0
+
+1
+0
+0 ""
+"Show selected files in file manager"
+"Ctrl-Return"
+'s
+"OpenSelectedFileLocations"
+"kShowLocationCmd"
+0
+
+1
+0
+0 ""
+"Update"
+"Ctrl-U"
+'u
+"UpdateClassTree"
+"kUpdateCmd"
+1
+
+1
+1
+1 "jx_filter_wildcard.xpm"
+"Use wildcard filter"
+""
+'w
+"UseWildcardFilter"
+"kUseWildcardCmd"
+0
+
+1
+1
+1 "jx_filter_regex.xpm"
+"Use regex filter"
+""
+'r
+"UseRegexFilter"
+"kUseRegexCmd"
+0
+
+0

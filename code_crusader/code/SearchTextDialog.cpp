@@ -58,24 +58,6 @@ const JFileVersion kCurrentSetupVersion = 73;	// first digit must be >= 7
 	// version 2  stores replaceIsRegex
 	// version 1  uses JXWindow::Read/WriteGeometry()
 
-// File list menu
-
-static const JUtf8Byte* kFileListMenuStr =
-	"    Show text of each match      %b"
-	"  | List files that do not match %b"
-	"%l| Add files..."
-	"  | Remove selected files        %k Backspace."
-	"  | Remove all files"
-	"%l| Load file set..."
-	"  | Save file set...";
-
-enum
-{
-	kShowMatchTextCmd = 1, kListFilesWithoutMatchCmd,
-	kAddFilesCmd, kRemoveSelCmd, kRemoveAllCmd,
-	kLoadFileSetCmd, kSaveFileSetCmd
-};
-
 /******************************************************************************
  Constructor function (static)
 
@@ -135,6 +117,8 @@ SearchTextDialog::Activate()
  BuildWindow (private)
 
  ******************************************************************************/
+
+#include "SearchTextDialog-FileList.h"
 
 void
 SearchTextDialog::BuildWindow()
@@ -384,10 +368,11 @@ SearchTextDialog::BuildWindow()
 	itsFileList->BackspaceShouldRemoveSelectedFiles();
 	ListenTo(itsFileList);
 
-	itsFileListMenu->SetMenuItems(kFileListMenuStr, "SearchTextDialog");
+	itsFileListMenu->SetMenuItems(kOptionsMenuStr);
 	itsFileListMenu->AttachHandlers(this,
 		&SearchTextDialog::UpdateFileListMenu,
 		&SearchTextDialog::HandleFileListMenu);
+	ConfigureOptionsMenu(itsFileListMenu);
 
 	ListenTo(itsChooseDirButton);
 	ListenTo(itsDirHistory);

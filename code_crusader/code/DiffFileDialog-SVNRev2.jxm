@@ -1,0 +1,86 @@
+jx_menu_editor 0
+670 300
+"DiffFileDialog"
+"SVNRev2"
+' 
+40
+40
+93
+100
+40
+87
+143
+75
+
+0
+1
+2
+0 ""
+"Edited"
+""
+' 
+"__Edited"
+"__Edited_SVN2"
+0
+
+1
+2
+0 ""
+"Current"
+""
+' 
+"__Current"
+"__Current_SVN2"
+0
+
+1
+2
+0 ""
+"Revision"
+""
+' 
+"__Revision"
+"__Revision_SVN2"
+0
+
+1
+2
+0 ""
+"Date (Y-M-D)"
+""
+' 
+"__DateYMD"
+"__DateYMD_SVN2"
+1
+
+1
+2
+0 ""
+"Trunk"
+""
+' 
+"__Trunk"
+"__Trunk_SVN2"
+0
+
+1
+2
+0 ""
+"Branch"
+""
+' 
+"__Branch"
+"__Branch_SVN2"
+0
+
+1
+2
+0 ""
+"Tag"
+""
+' 
+"__Tag"
+"__Tag_SVN2"
+0
+
+0

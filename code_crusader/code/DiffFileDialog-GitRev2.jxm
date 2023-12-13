@@ -1,0 +1,66 @@
+jx_menu_editor 0
+670 300
+"DiffFileDialog"
+"GitRev2"
+' 
+40
+40
+67
+100
+40
+73
+200
+75
+
+0
+1
+2
+0 ""
+"Edited"
+""
+' 
+"__Edited"
+"__Edited_Git2"
+0
+
+1
+2
+0 ""
+"Current"
+""
+' 
+"__Current"
+"__Current_Git2"
+0
+
+1
+2
+0 ""
+"Commit"
+""
+' 
+"__Commit"
+"__Commit_Git2"
+0
+
+1
+2
+0 ""
+"Date"
+""
+' 
+"__Date"
+"__Date_Git2"
+0
+
+1
+2
+0 ""
+"Branch"
+""
+' 
+"__Branch"
+"__Branch_Git2"
+0
+
+0

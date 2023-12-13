@@ -1,0 +1,96 @@
+jx_menu_editor 0
+802 304
+"TreeDirector"
+"Project"
+'p
+40
+40
+166
+100
+39
+158
+172
+75
+
+0
+1
+0
+0 "jcc_show_symbol_list.xpm"
+"Show symbol browser"
+"Ctrl-F12"
+'b
+"ShowSymbolBrowser"
+"kShowSymbolBrowserCmd"
+0
+
+1
+0
+0 "jcc_view_man_page.xpm"
+"Look up man page..."
+"Ctrl-I"
+'e
+"ViewManPage"
+"kViewManPageCmd"
+1
+
+1
+0
+0 "jcc_show_file_list.xpm"
+"Show file list"
+"Ctrl-Shift-F"
+'l
+"ShowFileList"
+"kShowFileListCmd"
+0
+
+1
+0
+0 ""
+"Find file..."
+"Ctrl-D"
+'f
+"FindFile"
+"kFindFileCmd"
+0
+
+1
+0
+0 "jcc_search_files.xpm"
+"Search files..."
+"Ctrl-F"
+'s
+"SearchFiles"
+"kSearchFilesCmd"
+0
+
+1
+0
+0 "jcc_compare_files.xpm"
+"Compare files..."
+""
+'o
+"DiffFiles"
+"kDiffFilesCmd"
+1
+
+1
+0
+1 "jx_file_save_all.xpm"
+"Save all"
+"Ctrl-Shift-S"
+'a
+"SaveAllTextFiles"
+"kSaveAllTextCmd"
+0
+
+1
+0
+0 ""
+"Close all"
+"Ctrl-Shift-W"
+'c
+"CloseAllTextFiles"
+"kCloseAllTextCmd"
+0
+
+0

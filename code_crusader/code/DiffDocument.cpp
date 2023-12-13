@@ -28,19 +28,6 @@ const JCoordinate kMenuButtonWidth = 70;
 
 static const JUtf8Byte* kGitCmdSeparator = "\1";
 
-// Diff menu
-
-static const JUtf8Byte* kDiffMenuStr =
-	"    First difference    %k Ctrl-1"
-	"%l| Previous difference %k Meta-minus"		// and Meta-_
-	"  | Next difference     %k Meta-plus";
-
-enum
-{
-	kFirstDiffCmd = 1,
-	kPrevDiffCmd, kNextDiffCmd
-};
-
 // JError data
 
 const JUtf8Byte* kDiffFailed = "DiffFailed::DiffDocument";
@@ -790,6 +777,8 @@ DiffDocument::FillOutputFile
 
  ******************************************************************************/
 
+#include "DiffDocument-Differences.h"
+
 DiffDocument::DiffDocument
 	(
 	const Type			type,
@@ -818,13 +807,13 @@ DiffDocument::DiffDocument
 
 	// Diff menu
 
-	JXMenuBar* menuBar = GetMenuBar();
-	itsDiffMenu = menuBar->InsertTextMenu(menuBar->GetMenuCount(), JGetString("DiffMenuTitle::DiffDocument"));
-	itsDiffMenu->SetMenuItems(kDiffMenuStr, "DiffDocument");
+	itsDiffMenu = InsertTextMenu(JGetString("MenuTitle::DiffDocument_Differences"));
+	itsDiffMenu->SetMenuItems(kDifferencesMenuStr);
 	itsDiffMenu->SetUpdateAction(JXMenu::kDisableNone);
 	itsDiffMenu->AttachHandlers(this,
 		&DiffDocument::UpdateDiffMenu,
 		&DiffDocument::HandleDiffMenu);
+	ConfigureDifferencesMenu(itsDiffMenu);
 
 	// allow Meta-_ to parallel Shift key required for Meta-plus
 
@@ -836,6 +825,8 @@ DiffDocument::DiffDocument
 
 	JXWindow* window = GetWindow();
 	const JRect rect = window->GetBounds();
+
+	JXMenuBar* menuBar = GetMenuBar();
 
 	itsDiffButton =
 		jnew JXTextButton(JGetString("RedoDiffLabel::DiffDocument"), window,

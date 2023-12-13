@@ -28,21 +28,6 @@ const JCoordinate kIndicatorHeight = 10;
 
 static const JString kDoubleNewline("\n\n", JString::kNoCopy);
 
-// Match menu
-
-static const JUtf8Byte* kMatchMenuStr =
-	"    First match             %k Ctrl-1"
-	"%l| Previous match          %k Meta-minus"		// and Meta-_
-	"  | Next match              %k Meta-plus"
-	"%l| Open selection to match %k Meta-Shift-O";
-
-enum
-{
-	kFirstMatchCmd = 1,
-	kPrevMatchCmd, kNextMatchCmd,
-	kOpenFileCmd
-};
-
 /******************************************************************************
  Constructor function (static)
 
@@ -134,6 +119,8 @@ SearchDocument::Create
 
  ******************************************************************************/
 
+#include "SearchDocument-Match.h"
+
 SearchDocument::SearchDocument
 	(
 	const bool		isReplace,
@@ -190,12 +177,13 @@ SearchDocument::SearchDocument
 	itsIndicator->SetMaxValue(fileCount);
 
 	itsMatchMenu = InsertTextMenu(JGetString("MatchMenuTitle::SearchDocument"));
-	itsMatchMenu->SetMenuItems(kMatchMenuStr, "SearchDocument");
+	itsMatchMenu->SetMenuItems(kMatchMenuStr);
 	itsMatchMenu->SetUpdateAction(JXMenu::kDisableNone);
 	itsMatchMenu->Deactivate();
 	itsMatchMenu->AttachHandlers(this,
 		&SearchDocument::UpdateMatchMenu,
 		&SearchDocument::HandleMatchMenu);
+	ConfigureMatchMenu(itsMatchMenu);
 
 	// allow Meta-_ to parallel Shift key required for Meta-plus
 

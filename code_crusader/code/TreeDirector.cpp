@@ -23,7 +23,6 @@
 #include "FileListDirector.h"
 #include "CommandMenu.h"
 #include "DocumentMenu.h"
-#include "actionDefs.h"
 #include "globals.h"
 #include <jx-af/jx/JXApplication.h>
 #include <jx-af/jx/JXDisplay.h>
@@ -45,66 +44,6 @@ const JFileVersion kCurrentPrefsVersion = 3;
 	// version 2 saves TreeWidget::itsRaiseWhenSingleMatchFlag
 	// version 3 removed itsShowInheritedFnsFlag
 
-// File menu
-
-static const JUtf8Byte* kFileMenuStr =
-	"    New text file                  %k Meta-N       %i" kNewTextFileAction
-	"  | New text file from template... %k Meta-Shift-N %i" kNewTextFileFromTmplAction
-	"  | New project...                                 %i" kNewProjectAction
-	"%l| Open...                        %k Meta-O       %i" kOpenSomethingAction
-	"  | Recent projects"
-	"  | Recent text files"
-	"%l| PostScript page setup...                       %i" kJXPageSetupAction
-	"  | Print PostScript...            %k Meta-P       %i" kJXPrintAction
-	"  | Print EPS...                                   %i" kPrintTreeEPSAction
-	"%l| Close                          %k Meta-W       %i" kJXCloseWindowAction
-	"  | Quit                           %k Meta-Q       %i" kJXQuitAction;
-
-enum
-{
-	kNewTextEditorCmd = 1, kNewTextTemplateCmd, kNewProjectCmd,
-	kOpenSomethingCmd,
-	kRecentProjectMenuCmd, kRecentTextMenuCmd,
-	kPSPageSetupCmd, kPrintPSCmd, kPrintEPSCmd,
-	kCloseCmd, kQuitCmd
-};
-
-// Project menu
-
-static const JUtf8Byte* kProjectMenuStr =
-	"    Show symbol browser %k Ctrl-F12     %i" kShowSymbolBrowserAction
-	"  | Look up man page... %k Meta-I       %i" kViewManPageAction
-	"%l| Show file list      %k Meta-Shift-F %i" kShowFileListAction
-	"  | Find file...        %k Meta-D       %i" kFindFileAction
-	"  | Search files...     %k Meta-F       %i" kSearchFilesAction
-	"  | Compare files...                    %i" kDiffFilesAction
-	"%l| Save all            %k Meta-Shift-S %i" kSaveAllTextFilesAction
-	"  | Close all           %k Meta-Shift-W %i" kCloseAllTextFilesAction;
-
-enum
-{
-	kShowSymbolBrowserCmd = 1, kViewManPageCmd,
-	kShowFileListCmd, kFindFileCmd, kSearchFilesCmd, kDiffFilesCmd,
-	kSaveAllTextCmd, kCloseAllTextCmd
-};
-
-// Preferences menu
-
-static const JUtf8Byte* kPrefsMenuStr =
-	"    Tree..."
-	"  | Toolbar buttons..."
-	"  | File types..."
-	"  | External editors..."
-	"  | Miscellaneous..."
-	"%l| Save window size as default";
-
-enum
-{
-	kTreePrefsCmd = 1, kToolBarPrefsCmd,
-	kEditFileTypesCmd, kChooseExtEditorsCmd, kMiscPrefsCmd,
-	kSaveWindSizeCmd
-};
-
 /******************************************************************************
  Constructor
 
@@ -120,7 +59,6 @@ TreeDirector::TreeDirector
 	const JUtf8Byte*	windowHelpName,
 	const JXPM&			windowIcon,
 	const JUtf8Byte*	treeMenuItems,
-	const JUtf8Byte*	treeMenuNamespace,
 	const JIndex		toolBarPrefID,
 	TreeInitToolBarFn	initToolBarFn
 	)
@@ -132,7 +70,7 @@ TreeDirector::TreeDirector
 {
 	JXScrollbarSet* scrollbarSet =
 		TreeDirectorX(supervisor, windowIcon, treeMenuItems,
-						treeMenuNamespace, toolBarPrefID, initToolBarFn);
+					  toolBarPrefID, initToolBarFn);
 
 	itsTree = createTreeFn(this, TreeWidget::kBorderWidth);
 
@@ -184,7 +122,6 @@ TreeDirector::TreeDirector
 	const JUtf8Byte*	windowHelpName,
 	const JXPM&			windowIcon,
 	const JUtf8Byte*	treeMenuItems,
-	const JUtf8Byte*	treeMenuNamespace,
 	const JIndex		toolBarPrefID,
 	TreeInitToolBarFn	initToolBarFn,
 	DirList*			dirList,
@@ -198,7 +135,7 @@ TreeDirector::TreeDirector
 {
 	JXScrollbarSet* scrollbarSet =
 		TreeDirectorX(supervisor, windowIcon, treeMenuItems,
-						treeMenuNamespace, toolBarPrefID, initToolBarFn);
+					  toolBarPrefID, initToolBarFn);
 
 	itsTree = streamInTreeFn(projInput, projVers,
 							 setInput, setVers, symStream, origSymVers,
@@ -296,7 +233,6 @@ TreeDirector::TreeDirectorX
 	ProjectDocument*	doc,
 	const JXPM&			windowIcon,
 	const JUtf8Byte*	treeMenuItems,
-	const JUtf8Byte*	treeMenuNamespace,
 	const JIndex		toolBarPrefID,
 	TreeInitToolBarFn	initToolBarFn
 	)
@@ -308,7 +244,6 @@ TreeDirector::TreeDirectorX
 	}));
 
 	JXScrollbarSet* sbarSet = BuildWindow(windowIcon, treeMenuItems,
-										  treeMenuNamespace,
 										  toolBarPrefID, initToolBarFn);
 
 	// can't call GetWindow() until window is created
@@ -477,22 +412,15 @@ TreeDirector::ViewFunctionList
 
  ******************************************************************************/
 
-#include <jx-af/image/jx/jx_file_new.xpm>
-#include <jx-af/image/jx/jx_file_open.xpm>
-#include <jx-af/image/jx/jx_file_print.xpm>
-#include "jcc_view_man_page.xpm"
-#include "jcc_show_symbol_list.xpm"
-#include "jcc_show_file_list.xpm"
-#include "jcc_search_files.xpm"
-#include "jcc_compare_files.xpm"
-#include <jx-af/image/jx/jx_file_save_all.xpm>
+#include "TreeDirector-File.h"
+#include "TreeDirector-Project.h"
+#include "TreeDirector-Preferences.h"
 
 JXScrollbarSet*
 TreeDirector::BuildWindow
 	(
 	const JXPM&			windowIcon,
 	const JUtf8Byte*	treeMenuItems,
-	const JUtf8Byte*	treeMenuNamespace,
 	const JIndex		toolBarPrefID,
 	TreeInitToolBarFn	initToolBarFn
 	)
@@ -536,12 +464,13 @@ TreeDirector::BuildWindow
 		window->SetSize(w,h);
 	}
 
-	itsFileMenu = menuBar->AppendTextMenu(JGetString("FileMenuTitle::JXGlobal"));
-	itsFileMenu->SetMenuItems(kFileMenuStr, "TreeDirector");
+	itsFileMenu = menuBar->AppendTextMenu(JGetString("MenuTitle::TreeDirector_File"));
+	itsFileMenu->SetMenuItems(kFileMenuStr);
 	itsFileMenu->SetUpdateAction(JXMenu::kDisableNone);
 	itsFileMenu->AttachHandlers(this,
 		&TreeDirector::UpdateFileMenu,
 		&TreeDirector::HandleFileMenu);
+	ConfigureFileMenu(itsFileMenu);
 
 	itsFileMenu->SetItemImage(kNewTextEditorCmd, jx_file_new);
 	itsFileMenu->SetItemImage(kOpenSomethingCmd, jx_file_open);
@@ -554,17 +483,18 @@ TreeDirector::BuildWindow
 						  itsFileMenu, kRecentTextMenuCmd, menuBar);
 
 	itsTreeMenu = menuBar->AppendTextMenu(JGetString("TreeMenuTitle::TreeDirector"));
-	itsTreeMenu->SetMenuItems(treeMenuItems, treeMenuNamespace);
+	itsTreeMenu->SetMenuItems(treeMenuItems);
 	itsTreeMenu->AttachHandlers(this,
 		&TreeDirector::UpdateTreeMenu,
 		&TreeDirector::HandleTreeMenu);
 
-	itsProjectMenu = menuBar->AppendTextMenu(JGetString("ProjectMenuTitle::global"));
-	itsProjectMenu->SetMenuItems(kProjectMenuStr, "TreeDirector");
+	itsProjectMenu = menuBar->AppendTextMenu(JGetString("MenuTitle::TreeDirector_Project"));
+	itsProjectMenu->SetMenuItems(kProjectMenuStr);
 	itsProjectMenu->SetUpdateAction(JXMenu::kDisableNone);
 	itsProjectMenu->AttachHandlers(this,
 		&TreeDirector::UpdateProjectMenu,
 		&TreeDirector::HandleProjectMenu);
+	ConfigureProjectMenu(itsProjectMenu);
 
 	itsProjectMenu->SetItemImage(kViewManPageCmd,       jcc_view_man_page);
 	itsProjectMenu->SetItemImage(kShowSymbolBrowserCmd, jcc_show_symbol_list);
@@ -585,16 +515,30 @@ TreeDirector::BuildWindow
 	assert( fileListMenu != nullptr );
 	menuBar->AppendMenu(fileListMenu);
 
-	itsPrefsMenu = menuBar->AppendTextMenu(JGetString("PrefsMenuTitle::JXGlobal"));
-	itsPrefsMenu->SetMenuItems(kPrefsMenuStr, "TreeDirector");
+	itsPrefsMenu = menuBar->AppendTextMenu(JGetString("MenuTitle::TreeDirector_Preferences"));
+	itsPrefsMenu->SetMenuItems(kPreferencesMenuStr);
 	itsPrefsMenu->SetUpdateAction(JXMenu::kDisableNone);
 	itsPrefsMenu->AttachHandler(this, &TreeDirector::HandlePrefsMenu);
+	ConfigurePreferencesMenu(itsPrefsMenu);
 
-	JXTextMenu* helpMenu = GetApplication()->CreateHelpMenu(menuBar, "TreeDirector", itsWindowHelpName);
+	JXTextMenu* helpMenu = GetApplication()->CreateHelpMenu(menuBar, itsWindowHelpName);
 
 	// must do this after creating menus
 
-	itsToolBar->LoadPrefs();
+	auto f = std::function([this](JString* s)
+	{
+		if (!CommandMenu::UpgradeToolBarID(s) &&
+			!UpgradeTreeMenuToolBarID(s) &&
+			s->StartsWith("CB"))
+		{
+			JStringIterator iter(s);
+			iter.SkipNext(2);
+			iter.RemoveAllPrev();
+			*s += "::TreeDirector";
+		}
+	});
+
+	itsToolBar->LoadPrefs(&f);
 	if (itsToolBar->IsEmpty())
 	{
 		itsToolBar->AppendButton(itsFileMenu, kNewTextEditorCmd);
@@ -609,6 +553,29 @@ TreeDirector::BuildWindow
 	}
 
 	return scrollbarSet;
+}
+
+/******************************************************************************
+ UpgradeTreeMenuToolBarID (virtual protected)
+
+ ******************************************************************************/
+
+bool
+TreeDirector::UpgradeTreeMenuToolBarID
+	(
+	JString* s
+	)
+{
+	if (s->StartsWith("CB"))
+	{
+		JStringIterator iter(s);
+		iter.SkipNext(2);
+		iter.RemoveAllPrev();
+		*s += "::TreeDirector";
+		return true;
+	}
+
+	return false;
 }
 
 /******************************************************************************

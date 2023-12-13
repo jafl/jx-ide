@@ -1,0 +1,166 @@
+jx_menu_editor 0
+861 456
+"ProjectDocument"
+"Project"
+'p
+40
+40
+196
+100
+46
+155
+183
+75
+
+0
+1
+0
+0 ""
+"Edit project configuration..."
+""
+'c
+"EditMakeConfig"
+"kOpenMakeConfigDlogCmd"
+0
+
+1
+0
+0 ""
+"Update Makefile"
+""
+'m
+"UpdateMakefile"
+"kUpdateMakefileCmd"
+1
+
+1
+0
+0 ""
+"Update symbol database"
+"Ctrl-U"
+'u
+"UpdateClassTree"
+"kUpdateSymbolDBCmd"
+0
+
+1
+0
+0 ""
+"Show symbol browser"
+"Ctrl-F12"
+'b
+"ShowSymbolBrowser"
+"kShowSymbolBrowserCmd"
+0
+
+1
+0
+0 ""
+"Show C++ class tree"
+""
+'+
+"ShowCPPClassTree"
+"kShowCTreeCmd"
+0
+
+1
+0
+0 ""
+"Show D class tree"
+""
+'d
+"ShowDClassTree"
+"kShowDTreeCmd"
+0
+
+1
+0
+0 ""
+"Show Go struct/interface tree"
+""
+'g
+"ShowGoClassTree"
+"kShowGoTreeCmd"
+0
+
+1
+0
+0 ""
+"Show Java class tree"
+""
+'j
+"ShowJavaClassTree"
+"kShowJavaTreeCmd"
+0
+
+1
+0
+0 ""
+"Show PHP class tree"
+""
+'h
+"ShowPHPClassTree"
+"kShowPHPTreeCmd"
+0
+
+1
+0
+0 ""
+"Look up man page..."
+"Ctrl-I"
+'e
+"ViewManPage"
+"kViewManPageCmd"
+1
+
+1
+0
+0 ""
+"Edit search paths..."
+""
+'p
+"EditSearchPaths"
+"kEditSearchPathsCmd"
+0
+
+1
+0
+0 ""
+"Show file list"
+"Ctrl-Shift-F"
+'l
+"ShowFileList"
+"kShowFileListCmd"
+0
+
+1
+0
+0 ""
+"Find file..."
+"Ctrl-D"
+'f
+"FindFile"
+"kFindFileCmd"
+0
+
+1
+0
+0 ""
+"Search files..."
+"Ctrl-F"
+'s
+"SearchFiles"
+"kSearchFilesCmd"
+0
+
+1
+0
+0 ""
+"Compare files..."
+""
+'o
+"DiffFiles"
+"kDiffFilesCmd"
+0
+
+0

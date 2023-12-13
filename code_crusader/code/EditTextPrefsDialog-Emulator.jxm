@@ -1,0 +1,36 @@
+jx_menu_editor 0
+668 199
+"EditTextPrefsDialog"
+"Emulator"
+'e
+40
+40
+65
+100
+40
+62
+119
+75
+
+0
+1
+2
+0 ""
+"None"
+""
+' 
+"__None"
+"kNoEmulatorCmd"
+0
+
+1
+2
+0 ""
+"vi"
+""
+' 
+"__vi"
+"kVIEmulatorCmd"
+0
+
+0

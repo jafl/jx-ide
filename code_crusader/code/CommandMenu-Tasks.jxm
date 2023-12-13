@@ -1,0 +1,56 @@
+jx_menu_editor 0
+785 226
+"CommandMenu"
+"Tasks"
+'t
+40
+40
+155
+100
+44
+162
+137
+75
+
+0
+1
+0
+0 ""
+"Perform one-off task..."
+""
+'o
+"__PerformOneOffTask"
+"kRunCmd"
+0
+
+1
+0
+0 ""
+"Customize this menu..."
+""
+'c
+"__CustomizeThisMenu"
+"kEditCmd"
+1
+
+1
+0
+0 ""
+"Add to project: none"
+""
+' 
+"__AddToProjectNone"
+"kAddToProjIndex"
+0
+
+1
+0
+0 ""
+"Manage project: none"
+""
+' 
+"__ManageProjectNone"
+"kManageProjIndex"
+1
+
+0

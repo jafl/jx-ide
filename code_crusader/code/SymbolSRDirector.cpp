@@ -29,27 +29,6 @@
 #include <jx-af/jcore/jGlobals.h>
 #include <jx-af/jcore/jAssert.h>
 
-// Actions menu
-
-static const JUtf8Byte* kActionsMenuStr =
-	"    Copy selected names           %k Meta-C"
-	"%l| Update                        %k Meta-U"
-	"  | Show C++ class tree           %k Meta-Shift-C"
-	"  | Show D class tree             %k Meta-Shift-D"
-	"  | Show Go struct/interface tree %k Meta-Shift-G"
-	"  | Show Java class tree          %k Meta-Shift-J"
-	"  | Show PHP class tree           %k Meta-Shift-P"
-	"%l| Close window                  %k Meta-W"
-	"  | Close all                     %k Meta-Shift-W";
-
-enum
-{
-	kCopySelNamesCmd = 1,
-	kUpdateCmd,
-	kShowCTreeCmd, kShowDTreeCmd, kShowGoTreeCmd, kShowJavaTreeCmd, kShowPHPTreeCmd,
-	kCloseWindowCmd, kCloseAllCmd
-};
-
 /******************************************************************************
  Constructor
 
@@ -131,11 +110,7 @@ SymbolSRDirector::~SymbolSRDirector()
 
  ******************************************************************************/
 
-#include "jcc_show_c_tree.xpm"
-#include "jcc_show_d_tree.xpm"
-#include "jcc_show_go_tree.xpm"
-#include "jcc_show_java_tree.xpm"
-#include "jcc_show_php_tree.xpm"
+#include "SymbolSRDirector-Actions.h"
 
 void
 SymbolSRDirector::BuildWindow
@@ -174,12 +149,13 @@ SymbolSRDirector::BuildWindow
 	assert( itsSymbolTable != nullptr );
 	itsSymbolTable->FitToEnclosure();
 
-	itsActionsMenu = menuBar->AppendTextMenu(JGetString("ActionsMenuTitle::SymbolSRDirector"));
-	itsActionsMenu->SetMenuItems(kActionsMenuStr, "SymbolSRDirector");
+	itsActionsMenu = menuBar->AppendTextMenu(JGetString("MenuTitle::SymbolSRDirector_Actions"));
+	itsActionsMenu->SetMenuItems(kActionsMenuStr);
 	itsActionsMenu->SetUpdateAction(JXMenu::kDisableNone);
 	itsActionsMenu->AttachHandlers(this,
 		&SymbolSRDirector::UpdateActionsMenu,
 		&SymbolSRDirector::HandleActionsMenu);
+	ConfigureActionsMenu(itsActionsMenu);
 
 	itsActionsMenu->SetItemImage(kShowCTreeCmd,    jcc_show_c_tree);
 	itsActionsMenu->SetItemImage(kShowDTreeCmd,    jcc_show_d_tree);

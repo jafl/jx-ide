@@ -101,106 +101,6 @@ const JSize kWizardFileSignatureLength        = strlen(kWizardFileSignature);
 
 const JSize kSafetySavePeriod = 600000;		// 10 minutes (milliseconds)
 
-// File menu
-
-static const JUtf8Byte* kFileMenuStr =
-	"    New text file                  %k Meta-N       %i" kNewTextFileAction
-	"  | New text file from template... %k Meta-Shift-N %i" kNewTextFileFromTmplAction
-	"  | New project...                                 %i" kNewProjectAction
-	"%l| Open...                        %k Meta-O       %i" kOpenSomethingAction
-	"  | Recent projects"
-	"  | Recent text files"
-	"%l| Save                                           %i" kSaveFileAction
-	"  | Save as template...                            %i" kSaveAsTemplateAction
-	"%l| Page setup...                                  %i" kJXPageSetupAction
-	"  | Print...                       %k Meta-P       %i" kJXPrintAction
-	"%l| Close                          %k Meta-W       %i" kJXCloseWindowAction
-	"  | Quit                           %k Meta-Q       %i" kJXQuitAction;
-
-enum
-{
-	kNewTextEditorCmd = 1, kNewTextTemplateCmd, kNewProjectCmd,
-	kOpenSomethingCmd,
-	kRecentProjectMenuCmd, kRecentTextMenuCmd,
-	kSaveCmd, kSaveAsTemplateCmd,
-	kPageSetupCmd, kPrintCmd,
-	kCloseCmd, kQuitCmd
-};
-
-// Project menu
-
-static const JUtf8Byte* kProjectMenuStr =
-	"    Edit project configuration...                  %i" kEditMakeConfigAction
-	"  | Update Makefile                                %i" kUpdateMakefileAction
-	"%l| Update symbol database         %k Meta-U       %i" kUpdateClassTreeAction
-	"  | Show symbol browser            %k Ctrl-F12     %i" kShowSymbolBrowserAction
-	"  | Show C++ class tree                            %i" kShowCPPClassTreeAction
-	"  | Show D class tree                              %i" kShowDClassTreeAction
-	"  | Show Go struct/interface tree                  %i" kShowGoClassTreeAction
-	"  | Show Java class tree                           %i" kShowJavaClassTreeAction
-	"  | Show PHP class tree                            %i" kShowPHPClassTreeAction
-	"  | Look up man page...            %k Meta-I       %i" kViewManPageAction
-	"%l| Edit search paths...                           %i" kEditSearchPathsAction
-	"  | Show file list                 %k Meta-Shift-F %i" kShowFileListAction
-	"  | Find file...                   %k Meta-D       %i" kFindFileAction
-	"  | Search files...                %k Meta-F       %i" kSearchFilesAction
-	"  | Compare files...                               %i" kDiffFilesAction;
-
-enum
-{
-	kOpenMakeConfigDlogCmd = 1, kUpdateMakefileCmd,
-	kUpdateSymbolDBCmd, kShowSymbolBrowserCmd,
-	kShowCTreeCmd, kShowDTreeCmd, kShowGoTreeCmd, kShowJavaTreeCmd, kShowPHPTreeCmd,
-	kViewManPageCmd,
-	kEditSearchPathsCmd,
-	kShowFileListCmd, kFindFileCmd, kSearchFilesCmd, kDiffFilesCmd
-};
-
-// Source menu
-
-static const JUtf8Byte* kSourceMenuStr =
-	"    New group                                                      %i" kNewProjectGroupAction
-	"  | Add files...                                                   %i" kAddFilesToProjectAction
-	"  | Add directory tree...                                          %i" kAddDirectoryTreeToProjectAction
-	"  | Remove selected items          %k Backspace.                   %i" kRemoveFilesAction
-	"%l| Open selected files            %k Left-dbl-click or Return     %i" kOpenSelectedFilesAction
-	"  | Open complement files          %k Middle-dbl-click or Control-Tab %i" kOpenComplFilesAction
-	"%l| Edit file path                 %k Meta-left-dbl-click          %i" kEditFilePathAction
-	"  | Edit sub-project configuration                                 %i" kEditSubprojConfigAction
-	"%l| Compare selected files with backup                             %i" kDiffSmartAction
-	"  | Compare selected files with version control                    %i" kDiffVCSAction
-	"  | Show selected files in file manager %k Meta-Return             %i" kOpenSelectedFileLocationsAction
-	"%l| Save all                            %k Meta-Shift-S            %i" kSaveAllTextFilesAction
-	"  | Close all                           %k Meta-Shift-W            %i" kCloseAllTextFilesAction;
-
-enum
-{
-	kNewGroupCmd = 1, kAddFilesCmd, kAddDirTreeCmd, kRemoveSelCmd,
-	kOpenFilesCmd, kOpenComplFilesCmd,
-	kEditPathCmd, kEditSubprojConfigCmd,
-	kDiffSmartCmd, kDiffVCSCmd, kShowLocationCmd,
-	kSaveAllTextCmd, kCloseAllTextCmd
-};
-
-// Preferences menu
-
-static const JUtf8Byte* kPrefsMenuStr =
-	"    Project..."
-	"  | Toolbar buttons..."
-	"  | File types..."
-	"  | External editors..."
-	"  | File manager & web browser..."
-	"  | Miscellaneous..."
-	"%l| Save window size as default";
-
-enum
-{
-	kProjectPrefsCmd = 1, kToolBarPrefsCmd,
-	kEditFileTypesCmd, kChooseExtEditorsCmd,
-	kShowLocationPrefsCmd, kMiscPrefsCmd,
-	kSaveWindSizeCmd
-};
-
 // catch crashes during child process parsing
 
 class ChildAssertHandler : public JAssertBase
@@ -1423,24 +1323,10 @@ ProjectDocument::GetMenuIcon
  ******************************************************************************/
 
 #include "jcc_project_window.xpm"
-
-#include <jx-af/image/jx/jx_file_new.xpm>
-#include <jx-af/image/jx/jx_file_open.xpm>
-#include <jx-af/image/jx/jx_file_save.xpm>
-#include <jx-af/image/jx/jx_file_save_all.xpm>
-#include <jx-af/image/jx/jx_file_print.xpm>
-#include "jcc_show_symbol_list.xpm"
-#include "jcc_show_c_tree.xpm"
-#include "jcc_show_d_tree.xpm"
-#include "jcc_show_go_tree.xpm"
-#include "jcc_show_java_tree.xpm"
-#include "jcc_show_php_tree.xpm"
-#include "jcc_view_man_page.xpm"
-#include "jcc_show_file_list.xpm"
-#include "jcc_search_files.xpm"
-#include "jcc_compare_files.xpm"
-#include "jcc_compare_backup.xpm"
-#include "jcc_compare_vcs.xpm"
+#include "ProjectDocument-File.h"
+#include "ProjectDocument-Project.h"
+#include "ProjectDocument-Source.h"
+#include "ProjectDocument-Preferences.h"
 
 void
 ProjectDocument::BuildWindow
@@ -1532,17 +1418,13 @@ ProjectDocument::BuildWindow
 
 	// menus
 
-	itsFileMenu = menuBar->PrependTextMenu(JGetString("FileMenuTitle::JXGlobal"));
-	itsFileMenu->SetMenuItems(kFileMenuStr, "ProjectDocument");
+	itsFileMenu = menuBar->PrependTextMenu(JGetString("MenuTitle::ProjectDocument_File"));
+	itsFileMenu->SetMenuItems(kFileMenuStr);
 	itsFileMenu->SetUpdateAction(JXMenu::kDisableNone);
 	itsFileMenu->AttachHandlers(this,
 		&ProjectDocument::UpdateFileMenu,
 		&ProjectDocument::HandleFileMenu);
-
-	itsFileMenu->SetItemImage(kNewTextEditorCmd, jx_file_new);
-	itsFileMenu->SetItemImage(kOpenSomethingCmd, jx_file_open);
-	itsFileMenu->SetItemImage(kSaveCmd,          jx_file_save);
-	itsFileMenu->SetItemImage(kPrintCmd,         jx_file_print);
+	ConfigureFileMenu(itsFileMenu);
 
 	jnew FileHistoryMenu(DocumentManager::kProjectFileHistory,
 						  itsFileMenu, kRecentProjectMenuCmd, menuBar);
@@ -1550,34 +1432,21 @@ ProjectDocument::BuildWindow
 	jnew FileHistoryMenu(DocumentManager::kTextFileHistory,
 						  itsFileMenu, kRecentTextMenuCmd, menuBar);
 
-	itsProjectMenu = menuBar->AppendTextMenu(JGetString("ProjectMenuTitle::global"));
-	itsProjectMenu->SetMenuItems(kProjectMenuStr, "ProjectDocument");
+	itsProjectMenu = menuBar->AppendTextMenu(JGetString("MenuTitle::ProjectDocument_Project"));
+	itsProjectMenu->SetMenuItems(kProjectMenuStr);
 	itsProjectMenu->SetUpdateAction(JXMenu::kDisableNone);
 	itsProjectMenu->AttachHandlers(this,
 		&ProjectDocument::UpdateProjectMenu,
 		&ProjectDocument::HandleProjectMenu);
+	ConfigureProjectMenu(itsProjectMenu);
 
-	itsProjectMenu->SetItemImage(kShowSymbolBrowserCmd, jcc_show_symbol_list);
-	itsProjectMenu->SetItemImage(kShowCTreeCmd,         jcc_show_c_tree);
-	itsProjectMenu->SetItemImage(kShowDTreeCmd,         jcc_show_d_tree);
-	itsProjectMenu->SetItemImage(kShowGoTreeCmd,        jcc_show_go_tree);
-	itsProjectMenu->SetItemImage(kShowJavaTreeCmd,      jcc_show_java_tree);
-	itsProjectMenu->SetItemImage(kShowPHPTreeCmd,       jcc_show_php_tree);
-	itsProjectMenu->SetItemImage(kViewManPageCmd,       jcc_view_man_page);
-	itsProjectMenu->SetItemImage(kShowFileListCmd,      jcc_show_file_list);
-	itsProjectMenu->SetItemImage(kSearchFilesCmd,       jcc_search_files);
-	itsProjectMenu->SetItemImage(kDiffFilesCmd,         jcc_compare_files);
-
-	itsSourceMenu = menuBar->AppendTextMenu(JGetString("SourceMenuTitle::ProjectDocument"));
-	itsSourceMenu->SetMenuItems(kSourceMenuStr, "ProjectDocument");
+	itsSourceMenu = menuBar->AppendTextMenu(JGetString("MenuTitle::ProjectDocument_Source"));
+	itsSourceMenu->SetMenuItems(kSourceMenuStr);
 	itsSourceMenu->SetUpdateAction(JXMenu::kDisableNone);
 	itsSourceMenu->AttachHandlers(this,
 		&ProjectDocument::UpdateSourceMenu,
 		&ProjectDocument::HandleSourceMenu);
-
-	itsSourceMenu->SetItemImage(kSaveAllTextCmd, jx_file_save_all);
-	itsSourceMenu->SetItemImage(kDiffSmartCmd,   jcc_compare_backup);
-	itsSourceMenu->SetItemImage(kDiffVCSCmd,     jcc_compare_vcs);
+	ConfigureSourceMenu(itsSourceMenu);
 
 	itsCmdMenu =
 		jnew CommandMenu(this, nullptr, menuBar,
@@ -1591,18 +1460,20 @@ ProjectDocument::BuildWindow
 	assert( fileListMenu != nullptr );
 	menuBar->AppendMenu(fileListMenu);
 
-	itsPrefsMenu = menuBar->AppendTextMenu(JGetString("PrefsMenuTitle::JXGlobal"));
-	itsPrefsMenu->SetMenuItems(kPrefsMenuStr, "ProjectDocument");
+	itsPrefsMenu = menuBar->AppendTextMenu(JGetString("MenuTitle::ProjectDocument_Preferences"));
+	itsPrefsMenu->SetMenuItems(kPreferencesMenuStr);
 	itsPrefsMenu->SetUpdateAction(JXMenu::kDisableNone);
 	itsPrefsMenu->AttachHandlers(this,
 		&ProjectDocument::UpdatePrefsMenu,
 		&ProjectDocument::HandlePrefsMenu);
+	ConfigurePreferencesMenu(itsPrefsMenu);
 
-	JXTextMenu* helpMenu = GetApplication()->CreateHelpMenu(menuBar, "ProjectDocument", "ProjectHelp");
+	JXTextMenu* helpMenu = GetApplication()->CreateHelpMenu(menuBar, "ProjectHelp");
 
 	// must do this after creating widgets
 
-	itsToolBar->LoadPrefs();
+	auto f = std::function(UpgradeToolBarID);
+	itsToolBar->LoadPrefs(&f);
 	if (itsToolBar->IsEmpty())
 	{
 		itsToolBar->AppendButton(itsFileMenu, kNewTextEditorCmd);
@@ -1621,6 +1492,26 @@ ProjectDocument::BuildWindow
 	itsUpdatePG->SetItems(nullptr, itsUpdateCounter, itsUpdateCleanUpIndicator, itsUpdateLabel);
 
 	ShowUpdatePG(false);
+}
+
+/******************************************************************************
+ UpgradeToolBarID (static private)
+
+ ******************************************************************************/
+
+void
+ProjectDocument::UpgradeToolBarID
+	(
+	JString* s
+	)
+{
+	if (s->StartsWith("CB") && !CommandMenu::UpgradeToolBarID(s))
+	{
+		JStringIterator iter(s);
+		iter.SkipNext(2);
+		iter.RemoveAllPrev();
+		*s += "::ProjectDocument";
+	}
 }
 
 /******************************************************************************

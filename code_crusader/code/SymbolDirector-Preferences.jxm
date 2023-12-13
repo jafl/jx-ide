@@ -1,0 +1,86 @@
+jx_menu_editor 0
+888 291
+"ProjectDocument"
+"Preferences"
+'p
+40
+40
+190
+100
+44
+196
+174
+75
+
+0
+1
+0
+0 ""
+"Symbols..."
+""
+'y
+"__Project"
+"kSymbolPrefsCmd"
+0
+
+1
+0
+0 ""
+"Toolbar buttons..."
+""
+'t
+"__ToolbarButtons"
+"kToolBarPrefsCmd"
+0
+
+1
+0
+0 ""
+"File types..."
+""
+'f
+"__FileTypes"
+"kEditFileTypesCmd"
+0
+
+1
+0
+0 ""
+"External editors..."
+""
+'x
+"__ExternalEditors"
+"kChooseExtEditorsCmd"
+0
+
+1
+0
+0 ""
+"File manager & web browser..."
+""
+'w
+"__FileManagerWebBrowser"
+"kShowLocationPrefsCmd"
+0
+
+1
+0
+0 ""
+"Miscellaneous..."
+""
+'m
+"__Miscellaneous"
+"kMiscPrefsCmd"
+1
+
+1
+0
+0 ""
+"Save window size as default"
+""
+'s
+"__SaveWindowSizeAsDefault"
+"kSaveWindSizeCmd"
+0
+
+0

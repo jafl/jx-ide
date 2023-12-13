@@ -1,0 +1,116 @@
+jx_menu_editor 0
+846 396
+"TextDocument"
+"Preferences"
+'p
+40
+40
+208
+100
+35
+184
+160
+75
+
+0
+1
+0
+0 ""
+"Editor..."
+""
+'e
+"__Project"
+"kEditorPrefsCmd"
+0
+
+1
+0
+0 ""
+"Toolbar buttons..."
+""
+'t
+"__ToolbarButtons"
+"kToolBarPrefsCmd"
+0
+
+1
+0
+0 ""
+"External editors..."
+""
+'x
+"__ExternalEditors"
+"kChooseExtEditorsCmd"
+0
+
+1
+0
+0 ""
+"File manager & web browser..."
+""
+'w
+"__FileManagerWebBrowser"
+"kWWWPrefsCmd"
+0
+
+1
+0
+0 ""
+"Miscellaneous..."
+""
+'m
+"__Miscellaneous"
+"kMiscPrefsCmd"
+1
+
+1
+0
+0 ""
+"File types..."
+""
+'f
+"__FileTypes"
+"kEditFileTypesCmd"
+0
+
+1
+0
+0 ""
+"Syntax highlighting..."
+""
+'h
+"__SyntaxHighlighting"
+"kEditStylesSubmenuIndex"
+0
+
+1
+0
+0 ""
+"Macros..."
+""
+'a
+"__Macros"
+"kEditMacrosCmd"
+0
+
+1
+0
+0 ""
+"Clean paragraph margins rules..."
+""
+'p
+"__CleanParagraphMarginsRules"
+"kEditCRMRuleListsCmd"
+1
+
+1
+0
+0 ""
+"Save window size as default"
+""
+'s
+"__SaveWindowSizeAsDefault"
+"kSaveWindSizeCmd"
+0
+
+0

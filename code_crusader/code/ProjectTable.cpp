@@ -51,30 +51,6 @@ ProjectTable::DropFileAction
 
 static const JUtf8Byte* kSelectionDataID = "ProjectTable";
 
-// Context menu
-
-static const JUtf8Byte* kContextMenuStr =
-	"    Open selected files                 %k Left-dbl-click or Return."
-	"  | Open complement files               %k Middle-dbl-click or Control-Tab."
-	"%l| Edit sub-project configuration"
-	"%l| New group"
-	"  | Add files..."
-	"  | Add directory tree..."
-	"  | Remove selected items               %k Backspace."
-	"%l| Edit file path                      %k Meta-left-dbl-click."
-	"%l| Compare selected files with backup"
-	"  | Compare selected files with version control"
-	"  | Show selected files in file manager %k Meta-Return.";
-
-enum
-{
-	kOpenFilesCmd = 1, kOpenComplFilesCmd,
-	kEditSubprojConfigCmd,
-	kNewGroupCmd, kAddFilesCmd, kAddDirTreeCmd, kRemoveSelCmd,
-	kEditPathCmd,
-	kDiffSmartCmd, kDiffVCSCmd, kShowLocationCmd
-};
-
 /******************************************************************************
  Constructor
 
@@ -2146,8 +2122,7 @@ ProjectTable::CopySelectedNames()
 
  ******************************************************************************/
 
-#include "jcc_compare_backup.xpm"
-#include "jcc_compare_vcs.xpm"
+#include "ProjectTable-Context.h"
 
 void
 ProjectTable::CreateContextMenu()
@@ -2155,15 +2130,13 @@ ProjectTable::CreateContextMenu()
 	if (itsContextMenu == nullptr)
 	{
 		itsContextMenu = jnew JXTextMenu(JString::empty, this, kFixedLeft, kFixedTop, 0,0, 10,10);
-		itsContextMenu->SetMenuItems(kContextMenuStr, "ProjectTable");
+		itsContextMenu->SetMenuItems(kContextMenuStr);
 		itsContextMenu->SetUpdateAction(JXMenu::kDisableNone);
 		itsContextMenu->SetToHiddenPopupMenu();
 		itsContextMenu->AttachHandlers(this,
 			&ProjectTable::UpdateContextMenu,
 			&ProjectTable::HandleContextMenu);
-
-		itsContextMenu->SetItemImage(kDiffSmartCmd, jcc_compare_backup);
-		itsContextMenu->SetItemImage(kDiffVCSCmd,   jcc_compare_vcs);
+		ConfigureContextMenu(itsContextMenu);
 	}
 }
 

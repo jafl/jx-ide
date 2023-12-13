@@ -26,7 +26,6 @@ HelpURL::JXSearchTextDialog	"https://codecrusader.sourceforge.net/help.html#CBSe
 
 # global
 
-ProjectMenuTitle::global	"Project"
 ComplementHeader::global	"Header"
 ComplementSource::global	"Source"
 ComplementInterface::global	"Interface"
@@ -152,7 +151,6 @@ WaitCloseMsg::ExecOutputDocument
 
 SearchTitle::SearchDocument		"Search: $s"
 ReplaceTitle::SearchDocument	"Replace: $s → $r"
-MatchMenuTitle::SearchDocument	"Matches"
 
 NoCloseWhileSearching::SearchDocument
 "You cannot close the Search Output window until the search is finished."
@@ -168,7 +166,6 @@ KillButtonShortcuts::ShellDocument	"^C#."
 
 # ProjectDocument
 
-SourceMenuTitle::ProjectDocument			"Source"
 OpenFilesItemText::ProjectDocument			"Open selected files"
 EditGroupNameItemText::ProjectDocument		"Edit group name"
 ReloadingSymbols::ProjectDocument			"Reloading symbols..."
@@ -695,7 +692,6 @@ $build_cmd
 
 # CompileDocument
 
-ErrorMenuTitle::CompileDocument	"Errors"
 ChangeDirectory::CompileDocument	"Entering directory `$d`"
 
 # FileListTable
@@ -877,7 +873,6 @@ NotProjectFile::SubprojectConfigDialog		"That is not a project file."
 # FileListDirector
 
 WindowTitleSuffix::FileListDirector	" Files"
-ListMenuTitle::FileListDirector		"List"
 
 # FindFileDialog
 
@@ -894,12 +889,10 @@ WindowTitle::ProjectConfigDialog	"Project Configuration"
 # SymbolDirector
 
 WindowTitleSuffix::SymbolDirector	" Symbols"
-SymbolMenuTitle::SymbolDirector		"Symbol"
 
 # SymbolSRDirector
 
 WindowTitlePrefix::SymbolSRDirector	"Symbols: "
-ActionsMenuTitle::SymbolSRDirector	"Actions"
 
 # EditSymbolPrefsDialog
 
@@ -916,7 +909,6 @@ FontSizeMenuTitle::PSPrintSetupDialog	"Font size:"
 # DiffDocument
 
 WindowTitle::DiffDocument	"Diff: $name1 → $name2"
-DiffMenuTitle::DiffDocument	"Differences"
 NoDiff::DiffDocument		"The files are identical."
 RedoDiffLabel::DiffDocument	"Redo diff"
 

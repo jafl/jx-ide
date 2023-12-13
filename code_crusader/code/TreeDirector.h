@@ -45,7 +45,7 @@ public:
 				   const JUtf8Byte* windowTitleSuffixID,
 				   const JUtf8Byte* windowHelpName,
 				   const JXPM& windowIcon,
-				   const JUtf8Byte* treeMenuItems, const JUtf8Byte* treeMenuNamespace,
+				   const JUtf8Byte* treeMenuItems,
 				   const JIndex toolBarPrefID, TreeInitToolBarFn initToolBarFn);
 	TreeDirector(std::istream& projInput, const JFileVersion projVers,
 				   std::istream* setInput, const JFileVersion setVers,
@@ -55,7 +55,7 @@ public:
 				   const JUtf8Byte* windowTitleSuffixID,
 				   const JUtf8Byte* windowHelpName,
 				   const JXPM& windowIcon,
-				   const JUtf8Byte* treeMenuItems, const JUtf8Byte* treeMenuNamespace,
+				   const JUtf8Byte* treeMenuItems,
 				   const JIndex toolBarPrefID, TreeInitToolBarFn initToolBarFn,
 				   DirList* dirList, const bool readCompileRunDialogs);
 
@@ -96,6 +96,7 @@ protected:
 	JXTextMenu*		GetTreeMenu() const;
 	virtual void	UpdateTreeMenu() = 0;
 	virtual void	HandleTreeMenu(const JIndex index) = 0;
+	virtual bool	UpgradeTreeMenuToolBarID(JString* s);
 
 	void	ReadPrefs(std::istream& input) override;
 	void	WritePrefs(std::ostream& output) const override;
@@ -131,11 +132,9 @@ private:
 
 	JXScrollbarSet*	TreeDirectorX(ProjectDocument* doc, const JXPM& windowIcon,
 									const JUtf8Byte* treeMenuItems,
-									const JUtf8Byte* treeMenuNamespace,
 									const JIndex toolBarPrefID, TreeInitToolBarFn initToolBarFn);
 	JXScrollbarSet*	BuildWindow(const JXPM& windowIcon,
 								const JUtf8Byte* treeMenuItems,
-								const JUtf8Byte* treeMenuNamespace,
 								const JIndex toolBarPrefID, TreeInitToolBarFn initToolBarFn);
 	void			AdjustWindowTitle();
 

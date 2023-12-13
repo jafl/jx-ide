@@ -40,51 +40,6 @@
 
 static JString kDot(".", JString::kNoCopy);
 
-static const JUtf8Byte* kCVSRev1MenuStr =
-	"  Current  %r"
-	"| Previous %r"
-	"| Tag      %r"
-	"| Date     %r";
-
-static const JUtf8Byte* kCVSRev2MenuStr =
-	"  Edited  %r"
-	"| Current %r"
-	"| Tag     %r"
-	"| Date    %r";
-
-static const JUtf8Byte* kSVNRev1MenuStr =
-	"    Current      %r"
-	"  | Previous     %r"
-	"  | Revision     %r"
-	"  | Date (Y-M-D) %r"
-	"%l| Trunk        %r"
-	"  | Branch       %r"
-	"  | Tag          %r";
-
-static const JUtf8Byte* kSVNRev2MenuStr =
-	"    Edited       %r"
-	"  | Current      %r"
-	"  | Revision     %r"
-	"  | Date (Y-M-D) %r"
-	"%l| Trunk        %r"
-	"  | Branch       %r"
-	"  | Tag          %r";
-
-static const JUtf8Byte* kGitRev1MenuStr =
-	"    Current  %r"
-	"  | Previous %r"
-	"  | Commit   %r"
-	"  | Date     %r"
-	"  | Branch   %r"
-	"  | Common ancestor of %r";
-
-static const JUtf8Byte* kGitRev2MenuStr =
-	"    Edited  %r"
-	"  | Current %r"
-	"  | Commit  %r"
-	"  | Date    %r"
-	"  | Branch  %r";
-
 enum
 {
 	kCurrentRevCmd = 1,
@@ -110,8 +65,8 @@ isFixedRevCmd
 	const JIndex cmd
 	)
 {
-	return cmd == kCurrentRevCmd ||
-				cmd == kPreviousRevCmd;
+	return (cmd == kCurrentRevCmd ||
+			cmd == kPreviousRevCmd);
 }
 
 inline bool
@@ -120,9 +75,9 @@ isSVNFixedRevCmd
 	const JIndex cmd
 	)
 {
-	return cmd == kCurrentRevCmd  ||
-				cmd == kPreviousRevCmd ||
-				cmd == kTrunkCmd;
+	return (cmd == kCurrentRevCmd  ||
+			cmd == kPreviousRevCmd ||
+			cmd == kTrunkCmd);
 }
 
 // setup information
@@ -236,6 +191,13 @@ DiffFileDialog::SetGitFile
  BuildWindow (protected)
 
  ******************************************************************************/
+
+#include "DiffFileDialog-CVSRev1.h"
+#include "DiffFileDialog-CVSRev2.h"
+#include "DiffFileDialog-SVNRev1.h"
+#include "DiffFileDialog-SVNRev2.h"
+#include "DiffFileDialog-GitRev1.h"
+#include "DiffFileDialog-GitRev2.h"
 
 void
 DiffFileDialog::BuildWindow()
@@ -558,11 +520,13 @@ DiffFileDialog::BuildWindow()
 	itsCVSRev1Menu->SetToPopupChoice(true, itsCVSRev1Cmd);
 	itsCVSRev1Menu->SetUpdateAction(JXMenu::kDisableNone);
 	ListenTo(itsCVSRev1Menu);
+	ConfigureCVSRev1Menu(itsCVSRev1Menu);
 
 	itsCVSRev2Menu->SetMenuItems(kCVSRev2MenuStr);
 	itsCVSRev2Menu->SetToPopupChoice(true, itsCVSRev2Cmd);
 	itsCVSRev2Menu->SetUpdateAction(JXMenu::kDisableNone);
 	ListenTo(itsCVSRev2Menu);
+	ConfigureCVSRev2Menu(itsCVSRev2Menu);
 
 	itsCVSOnly1StyleMenu->SetStyle(
 		JFontStyle(false, false, 0, true, JColorManager::GetRedColor()));
@@ -585,11 +549,13 @@ DiffFileDialog::BuildWindow()
 	itsSVNRev1Menu->SetToPopupChoice(true, itsSVNRev1Cmd);
 	itsSVNRev1Menu->SetUpdateAction(JXMenu::kDisableNone);
 	ListenTo(itsSVNRev1Menu);
+	ConfigureSVNRev1Menu(itsSVNRev1Menu);
 
 	itsSVNRev2Menu->SetMenuItems(kSVNRev2MenuStr);
 	itsSVNRev2Menu->SetToPopupChoice(true, itsSVNRev2Cmd);
 	itsSVNRev2Menu->SetUpdateAction(JXMenu::kDisableNone);
 	ListenTo(itsSVNRev2Menu);
+	ConfigureSVNRev2Menu(itsSVNRev2Menu);
 
 	itsSVNOnly1StyleMenu->SetStyle(
 		JFontStyle(false, false, 0, true, JColorManager::GetRedColor()));
@@ -612,11 +578,13 @@ DiffFileDialog::BuildWindow()
 	itsGitRev1Menu->SetToPopupChoice(true, itsGitRev1Cmd);
 	itsGitRev1Menu->SetUpdateAction(JXMenu::kDisableNone);
 	ListenTo(itsGitRev1Menu);
+	ConfigureGitRev1Menu(itsGitRev1Menu);
 
 	itsGitRev2Menu->SetMenuItems(kGitRev2MenuStr);
 	itsGitRev2Menu->SetToPopupChoice(true, itsGitRev2Cmd);
 	itsGitRev2Menu->SetUpdateAction(JXMenu::kDisableNone);
 	ListenTo(itsGitRev2Menu);
+	ConfigureGitRev2Menu(itsGitRev2Menu);
 
 	itsGitOnly1StyleMenu->SetStyle(
 		JFontStyle(false, false, 0, true, JColorManager::GetRedColor()));

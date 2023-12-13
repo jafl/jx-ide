@@ -1,0 +1,56 @@
+jx_menu_editor 0
+767 242
+"SearchDocument"
+"Match"
+'m
+40
+40
+157
+100
+40
+165
+121
+75
+
+0
+1
+0
+0 ""
+"First match"
+"Meta-1"
+'f
+"__FirstMatch"
+"kFirstMatchCmd"
+1
+
+1
+0
+0 ""
+"Previous match"
+"Ctrl-minus"
+'p
+"__PreviousMatch"
+"kPrevMatchCmd"
+0
+
+1
+0
+0 ""
+"Next match"
+"Ctrl-plus"
+'n
+"__NextMatch"
+"kNextMatchCmd"
+1
+
+1
+0
+0 ""
+"Open selection to match"
+"Ctrl-Shift-O"
+'o
+"__OpenSelectionToMatch"
+"kOpenFileCmd"
+0
+
+0
