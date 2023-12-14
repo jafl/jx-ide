@@ -298,38 +298,38 @@ ArgsNotAllowed::CommandManager
 "You cannot pass arguments to a task when invoking it from another task."
 
 DefCmdBuildText::CommandManager				"Build (via make)"
-DefCmdBuildShortcut::CommandManager			"Meta-M"
+DefCmdBuildShortcut::CommandManager			"Ctrl-M"
 
 DefCmdCompileText::CommandManager			"Compile source file (via make)"
-DefCmdCompileShortcut::CommandManager		"Meta-;"
+DefCmdCompileShortcut::CommandManager		"Ctrl-;"
 
 DefCmdRemoveObjFilesText::CommandManager		"Remove object files (make tidy)"
 DefCmdRemoveObjFilesShortcut::CommandManager	""
 
 DefCmdRunText::CommandManager				"Run"
-DefCmdRunShortcut::CommandManager			"Meta-Shift-R"
+DefCmdRunShortcut::CommandManager			"Ctrl-Shift-R"
 
 DefCmdRunJavaText::CommandManager			"Run (java)"
 DefCmdRunJavaShortcut::CommandManager		""
 
 DefCmdDebugText::CommandManager				"Debug"
-DefCmdDebugShorcut::CommandManager			"Ctrl-Shift-R"
+DefCmdDebugShorcut::CommandManager			"Meta-Shift-R"
 
 DefCmdOpenDebuggerText::CommandManager		"Open source file in debugger"
-DefCmdOpenDebuggerShortcut::CommandManager	"Ctrl-:"
+DefCmdOpenDebuggerShortcut::CommandManager	"Meta-:"
 
 DefCmdSetBreakpointText::CommandManager		"Set breakpoint in debugger"
-DefCmdSetBreakpointShortcut::CommandManager	"Meta-:"
+DefCmdSetBreakpointShortcut::CommandManager	"Ctrl-:"
 
 DefCmdBuildRunText::CommandManager			"Build & Run"
-DefCmdBuildRunShortcut::CommandManager		"Meta-R"
+DefCmdBuildRunShortcut::CommandManager		"Ctrl-R"
 
 DefCmdBuildDebugText::CommandManager		"Build & Debug"
-DefCmdBuildDebugShortcut::CommandManager	"Ctrl-R"
+DefCmdBuildDebugShortcut::CommandManager	"Meta-R"
 
 DefCmdCVSCheckOutText::CommandManager		"CVS edit file"
 DefCmdSVNResolveText::CommandManager		"SVN resolve conflict"
-DefCmdVCSCheckOutShortcut::CommandManager	"Meta-`"
+DefCmdVCSCheckOutShortcut::CommandManager	"Ctrl-`"
 
 DefCmdCVSRevertText::CommandManager			"CVS unedit file"
 DefCmdSVNRevertText::CommandManager			"SVN revert file"
@@ -339,12 +339,12 @@ DefCmdVCSRevertShortcut::CommandManager		""
 DefCmdCVSCheckInText::CommandManager		"CVS commit file"
 DefCmdSVNCheckInText::CommandManager		"SVN commit file"
 DefCmdGitCheckInText::CommandManager		"Git commit file"
-DefCmdVCSCheckInShortcut::CommandManager	"Meta-~"
+DefCmdVCSCheckInShortcut::CommandManager	"Ctrl-~"
 
 DefCmdCVSAddText::CommandManager			"CVS add new file"
 DefCmdSVNAddText::CommandManager			"SVN add new file"
 DefCmdGitAddText::CommandManager			"Git add file (to index)"
-DefCmdVCSAddShortcut::CommandManager		"Meta-!"
+DefCmdVCSAddShortcut::CommandManager		"Ctrl-!"
 
 DefCmdCVSRemoveText::CommandManager			"CVS remove file"
 DefCmdSVNRemoveText::CommandManager			"SVN remove file"
@@ -354,7 +354,7 @@ DefCmdVCSRemoveShortcut::CommandManager		""
 DefCmdCVSUpdateAllText::CommandManager		"CVS update all"
 DefCmdSVNUpdateAllText::CommandManager		"SVN update all"
 DefCmdGitUpdateAllText::CommandManager		"Git pull"
-DefCmdVCSUpdateAllShortcut::CommandManager	"Meta-@"
+DefCmdVCSUpdateAllShortcut::CommandManager	"Ctrl-@"
 
 DefCmdSVNStatusText::CommandManager			"SVN status"
 DefCmdVCSStatusShortcut::CommandManager		""
@@ -710,6 +710,7 @@ CVSTabLabel::DiffFileDialog				"  CVS  "
 SVNTabLabel::DiffFileDialog				"Subversion"
 GitTabLabel::DiffFileDialog				"    Git    "
 SharedStyleMenuTitle::DiffFileDialog	"Shared text style"
+StyleMenuTitle::DiffDialog				"Style"
 
 DiffBackupItemText::DiffFileDialog	"Compare with backup"
 DiffNewItemText::DiffFileDialog		"Compare with new version"

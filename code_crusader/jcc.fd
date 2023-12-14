@@ -9478,7 +9478,7 @@ resize: FL_RESIZE_ALL
 gravity: FL_NorthEast FL_NoGravity
 name: itsPlainOnly1StyleMenu
 callback: 
-argument: JGetString("Title::JXStyleMenu")
+argument: JGetString("StyleMenuTitle::DiffDialog")
 
 --------------------
 class: FL_BOX
@@ -9496,7 +9496,7 @@ resize: FL_RESIZE_ALL
 gravity: FL_NorthEast FL_NoGravity
 name: itsPlainOnly2StyleMenu
 callback: 
-argument: JGetString("Title::JXStyleMenu")
+argument: JGetString("StyleMenuTitle::DiffDialog")
 
 --------------------
 class: FL_BOX
@@ -9646,7 +9646,7 @@ resize: FL_RESIZE_ALL
 gravity: FL_NorthWest FL_NoGravity
 name: itsCVSOnly1StyleMenu
 callback: 
-argument: JGetString("Title::JXStyleMenu")
+argument: JGetString("StyleMenuTitle::DiffDialog")
 
 --------------------
 class: FL_BOX
@@ -9664,7 +9664,7 @@ resize: FL_RESIZE_ALL
 gravity: FL_NorthEast FL_NoGravity
 name: itsCVSOnly2StyleMenu
 callback: 
-argument: JGetString("Title::JXStyleMenu")
+argument: JGetString("StyleMenuTitle::DiffDialog")
 
 --------------------
 class: FL_BUTTON
@@ -9832,7 +9832,7 @@ resize: FL_RESIZE_ALL
 gravity: FL_NorthWest FL_NoGravity
 name: itsSVNOnly1StyleMenu
 callback: 
-argument: JGetString("Title::JXStyleMenu")
+argument: JGetString("StyleMenuTitle::DiffDialog")
 
 --------------------
 class: FL_BOX
@@ -9850,7 +9850,7 @@ resize: FL_RESIZE_ALL
 gravity: FL_NorthEast FL_NoGravity
 name: itsSVNOnly2StyleMenu
 callback: 
-argument: JGetString("Title::JXStyleMenu")
+argument: JGetString("StyleMenuTitle::DiffDialog")
 
 --------------------
 class: FL_BUTTON
@@ -10018,7 +10018,7 @@ resize: FL_RESIZE_ALL
 gravity: FL_NorthWest FL_NoGravity
 name: itsGitOnly1StyleMenu
 callback: 
-argument: JGetString("Title::JXStyleMenu")
+argument: JGetString("StyleMenuTitle::DiffDialog")
 
 --------------------
 class: FL_BOX
@@ -10036,7 +10036,7 @@ resize: FL_RESIZE_ALL
 gravity: FL_NorthEast FL_NoGravity
 name: itsGitOnly2StyleMenu
 callback: 
-argument: JGetString("Title::JXStyleMenu")
+argument: JGetString("StyleMenuTitle::DiffDialog")
 
 --------------------
 class: FL_BUTTON

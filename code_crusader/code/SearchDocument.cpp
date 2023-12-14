@@ -176,7 +176,7 @@ SearchDocument::SearchDocument
 	assert( itsIndicator != nullptr );
 	itsIndicator->SetMaxValue(fileCount);
 
-	itsMatchMenu = InsertTextMenu(JGetString("MatchMenuTitle::SearchDocument"));
+	itsMatchMenu = InsertTextMenu(JGetString("MenuTitle::SearchDocument_Match"));
 	itsMatchMenu->SetMenuItems(kMatchMenuStr);
 	itsMatchMenu->SetUpdateAction(JXMenu::kDisableNone);
 	itsMatchMenu->Deactivate();

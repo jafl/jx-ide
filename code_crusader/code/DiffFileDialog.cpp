@@ -268,12 +268,12 @@ DiffFileDialog::BuildWindow()
 	file1Label->SetToLabel();
 
 	itsPlainOnly1StyleMenu =
-		jnew DiffStyleMenu(JGetString("Title::JXStyleMenu"), plainCard,
+		jnew DiffStyleMenu(JGetString("StyleMenuTitle::DiffDialog"), plainCard,
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 430,10, 70,20);
 	assert( itsPlainOnly1StyleMenu != nullptr );
 
 	itsPlainOnly2StyleMenu =
-		jnew DiffStyleMenu(JGetString("Title::JXStyleMenu"), plainCard,
+		jnew DiffStyleMenu(JGetString("StyleMenuTitle::DiffDialog"), plainCard,
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 430,40, 70,20);
 	assert( itsPlainOnly2StyleMenu != nullptr );
 
@@ -318,12 +318,12 @@ DiffFileDialog::BuildWindow()
 	assert( itsCVSFileInput != nullptr );
 
 	itsCVSOnly1StyleMenu =
-		jnew DiffStyleMenu(JGetString("Title::JXStyleMenu"), cvsCard,
+		jnew DiffStyleMenu(JGetString("StyleMenuTitle::DiffDialog"), cvsCard,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 160,60, 70,20);
 	assert( itsCVSOnly1StyleMenu != nullptr );
 
 	itsCVSOnly2StyleMenu =
-		jnew DiffStyleMenu(JGetString("Title::JXStyleMenu"), cvsCard,
+		jnew DiffStyleMenu(JGetString("StyleMenuTitle::DiffDialog"), cvsCard,
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 410,60, 70,20);
 	assert( itsCVSOnly2StyleMenu != nullptr );
 
@@ -372,12 +372,12 @@ DiffFileDialog::BuildWindow()
 	assert( itsSVNFileInput != nullptr );
 
 	itsSVNOnly1StyleMenu =
-		jnew DiffStyleMenu(JGetString("Title::JXStyleMenu"), svnCard,
+		jnew DiffStyleMenu(JGetString("StyleMenuTitle::DiffDialog"), svnCard,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 160,60, 70,20);
 	assert( itsSVNOnly1StyleMenu != nullptr );
 
 	itsSVNOnly2StyleMenu =
-		jnew DiffStyleMenu(JGetString("Title::JXStyleMenu"), svnCard,
+		jnew DiffStyleMenu(JGetString("StyleMenuTitle::DiffDialog"), svnCard,
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 410,60, 70,20);
 	assert( itsSVNOnly2StyleMenu != nullptr );
 
@@ -426,12 +426,12 @@ DiffFileDialog::BuildWindow()
 	assert( itsGitFileInput != nullptr );
 
 	itsGitOnly1StyleMenu =
-		jnew DiffStyleMenu(JGetString("Title::JXStyleMenu"), gitCard,
+		jnew DiffStyleMenu(JGetString("StyleMenuTitle::DiffDialog"), gitCard,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 160,60, 70,20);
 	assert( itsGitOnly1StyleMenu != nullptr );
 
 	itsGitOnly2StyleMenu =
-		jnew DiffStyleMenu(JGetString("Title::JXStyleMenu"), gitCard,
+		jnew DiffStyleMenu(JGetString("StyleMenuTitle::DiffDialog"), gitCard,
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 410,60, 70,20);
 	assert( itsGitOnly2StyleMenu != nullptr );
 
