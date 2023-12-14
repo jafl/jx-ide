@@ -16,7 +16,7 @@ FORGE_NAME := nps-codemill
 MAKE_INCLUDE := ${JX_ROOT}/include/jx-af/make
 include ${MAKE_INCLUDE}/jx_config
 
-SEARCHDIRS := -I./code -I./image -I./shared ${SEARCHDIRS}
+SEARCHDIRS := -I./code -I./image-build -I./shared ${SEARCHDIRS}
 
 # makemake variables
 
