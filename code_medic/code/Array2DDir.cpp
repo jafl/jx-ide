@@ -42,48 +42,6 @@
 const JCoordinate kDefaultColWidth = 50;
 const JCoordinate kMinColWidth     = 10;
 
-// File menu
-
-static const JUtf8Byte* kFileMenuStr =
-	"    Open source file... %k Meta-O %i" kOpenSourceFileAction
-	"%l| Page setup...                 %i" kJXPageSetupAction
-	"  | Print...            %k Meta-P %i" kJXPrintAction
-	"%l| Close               %k Meta-W %i" kJXCloseWindowAction
-	"  | Quit                %k Meta-Q %i" kJXQuitAction;
-
-enum
-{
-	kOpenCmd = 1,
-	kPageSetupCmd,
-	kPrintCmd,
-	kCloseWindowCmd,
-	kQuitCmd
-};
-
-// Actions menu
-
-static const JUtf8Byte* kActionMenuStr =
-	"    Display as 1D array %k Meta-Shift-A %i" kDisplay1DArrayAction
-	"  | Plot as 1D array                    %i" kPlot1DArrayAction
-	"  | Display as 2D array                 %i" kDisplay2DArrayAction
-	"%l| Watch expression                    %i" kWatchVarValueAction
-	"  | Watch expression location           %i" kWatchVarLocationAction
-	"%l| Examine memory                      %i" kExamineMemoryAction
-	"  | Disassemble memory                  %i" kDisasmMemoryAction
-	"%l| Save window size as default";
-
-enum
-{
-	kDisplay1DArrayCmd = 1,
-	kPlot1DArrayCmd,
-	kDisplay2DArrayCmd,
-	kWatchVarCmd,
-	kWatchLocCmd,
-	kExamineMemCmd,
-	kDisassembleMemCmd,
-	kSavePrefsCmd
-};
-
 /******************************************************************************
  Constructor
 
@@ -209,14 +167,9 @@ Array2DDir::Activate()
 
  ******************************************************************************/
 
+#include "Array2DDir-File.h"
+#include "Array2DDir-Actions.h"
 #include "medic_2d_array_window.xpm"
-
-#include "medic_show_1d_array.xpm"
-#include "medic_show_2d_plot.xpm"
-#include "medic_show_2d_array.xpm"
-#include "medic_show_memory.xpm"
-#include <jx-af/image/jx/jx_file_open.xpm>
-#include <jx-af/image/jx/jx_file_print.xpm>
 
 void
 Array2DDir::BuildWindow()
@@ -392,15 +345,13 @@ Array2DDir::BuildWindow()
 
 	// menus
 
-	itsFileMenu = menuBar->PrependTextMenu(JGetString("FileMenuTitle::JXGlobal"));
-	itsFileMenu->SetMenuItems(kFileMenuStr, "ThreadsDir");
+	itsFileMenu = menuBar->PrependTextMenu(JGetString("MenuTitle::Array2DDir_File"));
+	itsFileMenu->SetMenuItems(kFileMenuStr);
 	itsFileMenu->SetUpdateAction(JXMenu::kDisableNone);
 	itsFileMenu->AttachHandlers(this,
 		&Array2DDir::UpdateFileMenu,
 		&Array2DDir::HandleFileMenu);
-
-	itsFileMenu->SetItemImage(kOpenCmd, jx_file_open);
-	itsFileMenu->SetItemImage(kPrintCmd, jx_file_print);
+	ConfigureFileMenu(itsFileMenu);
 
 	JXTEBase* te = itsTable->GetEditMenuHandler();
 	itsExprInput->ShareEditMenu(te);
@@ -409,16 +360,12 @@ Array2DDir::BuildWindow()
 	itsColStartIndex->ShareEditMenu(te);
 	itsColEndIndex->ShareEditMenu(te);
 
-	itsActionMenu = menuBar->AppendTextMenu(JGetString("ActionsMenuTitle::global"));
-	itsActionMenu->SetMenuItems(kActionMenuStr, "Array2DDir");
+	itsActionMenu = menuBar->AppendTextMenu(JGetString("MenuTitle::Array2DDir_Actions"));
+	itsActionMenu->SetMenuItems(kActionsMenuStr);
 	itsActionMenu->AttachHandlers(this,
 		&Array2DDir::UpdateActionMenu,
 		&Array2DDir::HandleActionMenu);
-
-	itsActionMenu->SetItemImage(kDisplay1DArrayCmd, medic_show_1d_array);
-	itsActionMenu->SetItemImage(kPlot1DArrayCmd,    medic_show_2d_plot);
-	itsActionMenu->SetItemImage(kDisplay2DArrayCmd, medic_show_2d_array);
-	itsActionMenu->SetItemImage(kExamineMemCmd,     medic_show_memory);
+	ConfigureActionsMenu(itsActionMenu);
 
 	auto* wdMenu =
 		jnew JXWDMenu(JGetString("WindowsMenuTitle::JXGlobal"), menuBar,
@@ -426,7 +373,7 @@ Array2DDir::BuildWindow()
 	assert( wdMenu != nullptr );
 	menuBar->AppendMenu(wdMenu);
 
-	GetApplication()->CreateHelpMenu(menuBar, "Array2DDir", "VarTreeHelp-Array2D");
+	GetApplication()->CreateHelpMenu(menuBar, "VarTreeHelp-Array2D");
 
 	GetDisplay()->GetWDManager()->DirectorCreated(this);
 }

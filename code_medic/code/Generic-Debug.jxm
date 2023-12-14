@@ -1,0 +1,306 @@
+jx_menu_editor 0
+849 751
+"Generic"
+"Debug"
+'d
+40
+40
+163
+100
+40
+171
+183
+75
+
+0
+1
+0
+1 "jx_executable_small.xpm"
+"Choose program..."
+"Ctrl-Shift-P"
+'h
+"ChooseBinary"
+"kSelectBinCmd"
+0
+
+1
+0
+0 ""
+"Reload program"
+""
+' 
+"ReloadBinary"
+"kReloadBinCmd"
+0
+
+1
+0
+0 "medic_choose_core.xpm"
+"Choose core..."
+"Ctrl-Shift-C"
+'o
+"ChooseCore"
+"kSelectCoreCmd"
+0
+
+1
+0
+0 "medic_attach_process.xpm"
+"Choose process..."
+""
+' 
+"ChooseProcess"
+"kSelectProcessCmd"
+0
+
+1
+0
+0 ""
+"Set arguments"
+""
+'a
+"SetArguments"
+"kSetArgsCmd"
+1
+
+1
+0
+0 ""
+"Restart debugger"
+""
+' 
+"RestartDebugger"
+"kRestartDebuggerCmd"
+1
+
+1
+0
+0 ""
+"Display as variable"
+"Ctrl-D"
+'v
+"DisplayVariable"
+"kDisplayVarCmd"
+0
+
+1
+0
+0 "medic_show_1d_array.xpm"
+"Display as 1D array"
+"Ctrl-Shift-A"
+'1
+"Display1DArray"
+"kDisplay1DArrayCmd"
+0
+
+1
+0
+0 "medic_show_2d_plot.xpm"
+"Plot as 1D array"
+""
+'y
+"Plot1DArray"
+"kPlot1DArrayCmd"
+0
+
+1
+0
+0 "medic_show_2d_array.xpm"
+"Display as 2D array"
+""
+'2
+"Display2DArray"
+"kDisplay2DArrayCmd"
+1
+
+1
+0
+0 ""
+"Watch expression"
+""
+'e
+"WatchVarValue"
+"kWatchVarCmd"
+0
+
+1
+0
+0 ""
+"Watch location"
+""
+'l
+"WatchVarLocation"
+"kWatchLocCmd"
+1
+
+1
+0
+0 "medic_show_memory.xpm"
+"Examine memory"
+""
+'x
+"ExamineMemory"
+"kExamineMemCmd"
+0
+
+1
+0
+0 ""
+"Disassemble memory"
+""
+'d
+"DisasmMemory"
+"kDisassembleMemCmd"
+0
+
+1
+0
+0 ""
+"Disassemble function"
+""
+'u
+"DisasmFunction"
+"kDisassembleFnCmd"
+1
+
+1
+0
+0 "medic_run_program.xpm"
+"Run program"
+"Ctrl-R"
+'r
+"RunProgram"
+"kRunCmd"
+0
+
+1
+0
+0 "medic_stop_program.xpm"
+"Pause execution"
+"Ctrl-C"
+'p
+"StopProgram"
+"kStopCmd"
+0
+
+1
+0
+1 "jx_edit_clear.xpm"
+"Kill process"
+""
+'k
+"KillProgram"
+"kKillCmd"
+1
+
+1
+0
+0 "medic_next.xpm"
+"Next statement"
+"Ctrl-N"
+'n
+"NextInstr"
+"kNextCmd"
+0
+
+1
+0
+0 "medic_step.xpm"
+"Step into"
+"Ctrl-J"
+'s
+"StepInto"
+"kStepCmd"
+0
+
+1
+0
+0 "medic_finish.xpm"
+"Finish subroutine"
+"Ctrl-K"
+'f
+"FinishSub"
+"kFinishCmd"
+0
+
+1
+0
+0 "medic_continue.xpm"
+"Continue execution"
+"Ctrl-Shift-N"
+'c
+"ContinueRun"
+"kContCmd"
+1
+
+1
+0
+0 "medic_nexti.xpm"
+"Next instruction"
+"Ctrl-U"
+'i
+"NextInstrAsm"
+"kNextAsmCmd"
+0
+
+1
+0
+0 "medic_stepi.xpm"
+"Step into (instruction)"
+"Ctrl-I"
+'t
+"StepIntoAsm"
+"kStepAsmCmd"
+1
+
+1
+0
+0 "medic_reverse_next.xpm"
+"Previous statement"
+""
+' 
+"PrevInstr"
+"kPrevCmd"
+0
+
+1
+0
+0 "medic_reverse_step.xpm"
+"Backup into"
+""
+' 
+"ReverseStepInto"
+"kReverseStepCmd"
+0
+
+1
+0
+0 "medic_reverse_finish.xpm"
+"Reverse finish"
+""
+' 
+"ReverseFinishSub"
+"kReverseFinishCmd"
+0
+
+1
+0
+0 "medic_reverse_continue.xpm"
+"Reverse continue"
+""
+' 
+"ReverseContinueRun"
+"kReverseContCmd"
+1
+
+1
+0
+0 ""
+"Remove all breakpoints"
+"Meta-X"
+'b
+"ClearAllBreakpoints"
+"kRemoveAllBreakpointsCmd"
+1
+
+0

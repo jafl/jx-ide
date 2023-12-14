@@ -31,6 +31,7 @@ CommandOutputDisplay::CommandOutputDisplay
 	TextDisplayBase(kFullEditor, false, menuBar, scrollbarSet,
 					enclosure, hSizing, vSizing, x,y, w,h)
 {
+	AppendSearchMenu(menuBar);
 }
 
 /******************************************************************************

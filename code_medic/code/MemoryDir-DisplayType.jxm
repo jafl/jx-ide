@@ -1,0 +1,76 @@
+jx_menu_editor 0
+851 273
+"MemoryDir"
+"DisplayType"
+' 
+40
+40
+200
+100
+40
+150
+175
+75
+
+0
+1
+0
+0 ""
+"Hex bytes"
+""
+'b
+"__HexBytes"
+"____HexBytes"
+0
+
+1
+0
+0 ""
+"Hex short (2 bytes)"
+""
+'s
+"__HexShort2Bytes"
+"____HexShort2Bytes"
+0
+
+1
+0
+0 ""
+"Hex word (4 bytes)"
+""
+'w
+"__HexWord4Bytes"
+"____HexWord4Bytes"
+0
+
+1
+0
+0 ""
+"Hex long (8 bytes)"
+""
+'l
+"__HexLong8Bytes"
+"____HexLong8Bytes"
+1
+
+1
+0
+0 ""
+"Characters (ISO8859-1)"
+""
+'c
+"__CharactersISO88591"
+"____CharactersISO88591"
+1
+
+1
+0
+0 ""
+"Assembly code"
+""
+'a
+"__AssemblyCode"
+"____AssemblyCode"
+0
+
+0

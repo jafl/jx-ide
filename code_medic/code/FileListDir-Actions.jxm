@@ -1,0 +1,36 @@
+jx_menu_editor 0
+697 189
+"FileListDir"
+"Actions"
+'a
+40
+40
+124
+100
+40
+136
+121
+75
+
+0
+1
+1
+1 "jx_filter_wildcard.xpm"
+"Use wildcard filter"
+""
+'w
+"__UseWildcardFilter"
+"kShowFilterCmd"
+0
+
+1
+1
+1 "jx_filter_regex.xpm"
+"Use regex filter"
+""
+'r
+"__UseRegexFilter"
+"kShowRegexCmd"
+0
+
+0

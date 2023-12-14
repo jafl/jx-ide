@@ -1,0 +1,106 @@
+jx_menu_editor 0
+875 339
+"Array1DDir"
+"Actions"
+'a
+40
+40
+189
+100
+40
+200
+172
+75
+
+0
+1
+0
+0 ""
+"Display as C string"
+"Ctrl-S"
+'c
+"DisplayAsCStringAction"
+"kDisplayAsCStringCmd"
+1
+
+1
+0
+0 "medic_show_1d_array.xpm"
+"Display as 1D array"
+"Ctrl-Shift-A"
+'1
+"Display1DArray"
+"kDisplay1DArrayCmd"
+0
+
+1
+0
+0 "medic_show_2d_plot.xpm"
+"Plot as 1D array"
+""
+'p
+"Plot1DArray"
+"kPlot1DArrayCmd"
+0
+
+1
+0
+0 "medic_show_2d_array.xpm"
+"Display as 2D array"
+""
+'2
+"Display2DArray"
+"kDisplay2DArrayCmd"
+1
+
+1
+0
+0 ""
+"Watch expression"
+""
+'w
+"WatchVarValue"
+"kWatchVarCmd"
+0
+
+1
+0
+0 ""
+"Watch expression location"
+""
+'l
+"WatchVarLocation"
+"kWatchLocCmd"
+1
+
+1
+0
+0 "medic_show_memory.xpm"
+"Examine memory"
+""
+'e
+"ExamineMemory"
+"kExamineMemCmd"
+0
+
+1
+0
+0 ""
+"Disassemble memory"
+""
+'d
+"DisasmMemory"
+"kDisassembleMemCmd"
+1
+
+1
+0
+0 ""
+"Save window size as default"
+""
+'s
+"__SaveWindowSizeAsDefault"
+"kSavePrefsCmd"
+0
+
+0

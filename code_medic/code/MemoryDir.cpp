@@ -31,40 +31,6 @@
 
 #include <jx-af/jcore/jAssert.h>
 
-// File menu
-
-static const JUtf8Byte* kFileMenuStr =
-	"    Open source file... %k Meta-O %i" kOpenSourceFileAction
-	"%l| Close               %k Meta-W %i" kJXCloseWindowAction
-	"  | Quit                %k Meta-Q %i" kJXQuitAction;
-
-enum
-{
-	kOpenCmd = 1,
-	kCloseWindowCmd,
-	kQuitCmd
-};
-
-// Actions menu
-
-static const JUtf8Byte* kActionMenuStr =
-	"Save window size as default";
-
-enum
-{
-	kSavePrefsCmd = 1
-};
-
-// Display type
-
-static const JUtf8Byte* kDisplayTypeMenuStr =
-	"    Hex bytes"
-	"  | Hex short (2 bytes)"
-	"  | Hex word (4 bytes)"
-	"  | Hex long (8 bytes)"
-	"%l| Characters (ISO8859-1)"
-	"%l| Assembly code";
-
 /******************************************************************************
  Constructor
 
@@ -189,9 +155,10 @@ MemoryDir::Deactivate()
 
  ******************************************************************************/
 
+#include "Generic-File.h"
+#include "MemoryDir-Actions.h"
+#include "MemoryDir-DisplayType.h"
 #include "medic_memory_window.xpm"
-
-#include <jx-af/image/jx/jx_file_open.xpm>
 
 void
 MemoryDir::BuildWindow()
@@ -271,6 +238,7 @@ MemoryDir::BuildWindow()
 	itsDisplayTypeMenu->SetUpdateAction(JXMenu::kDisableNone);
 	itsDisplayTypeMenu->SetToPopupChoice(true, itsDisplayType);
 	ListenTo(itsDisplayTypeMenu);
+	ConfigureDisplayTypeMenu(itsDisplayTypeMenu);
 
 	itsItemCountInput->SetLowerLimit(1);
 	itsItemCountInput->SetValue(itsItemCount);
@@ -278,23 +246,23 @@ MemoryDir::BuildWindow()
 
 	// menus
 
-	itsFileMenu = menuBar->PrependTextMenu(JGetString("FileMenuTitle::JXGlobal"));
-	itsFileMenu->SetMenuItems(kFileMenuStr, "ThreadsDir");
+	itsFileMenu = menuBar->PrependTextMenu(JGetString("MenuTitle::Generic_File"));
+	itsFileMenu->SetMenuItems(kFileMenuStr);
 	itsFileMenu->SetUpdateAction(JXMenu::kDisableNone);
 	itsFileMenu->AttachHandler(this, &MemoryDir::HandleFileMenu);
-
-	itsFileMenu->SetItemImage(kOpenCmd, jx_file_open);
+	ConfigureFileMenu(itsFileMenu);
 
 	itsWidget->AppendEditMenu(menuBar);
 	itsExprInput->ShareEditMenu(itsWidget);
 	itsItemCountInput->ShareEditMenu(itsWidget);
 
-	itsActionMenu = menuBar->AppendTextMenu(JGetString("ActionsMenuTitle::global"));
+	itsActionMenu = menuBar->AppendTextMenu(JGetString("MenuTitle::MemoryDir_Actions"));
 	menuBar->InsertMenu(3, itsActionMenu);
-	itsActionMenu->SetMenuItems(kActionMenuStr, "MemoryDir");
+	itsActionMenu->SetMenuItems(kActionsMenuStr);
 	itsActionMenu->AttachHandlers(this,
 		&MemoryDir::UpdateActionMenu,
 		&MemoryDir::HandleActionMenu);
+	ConfigureActionsMenu(itsActionMenu);
 
 	auto* wdMenu =
 		jnew JXWDMenu(JGetString("WindowsMenuTitle::JXGlobal"), menuBar,
@@ -302,7 +270,7 @@ MemoryDir::BuildWindow()
 	assert( wdMenu != nullptr );
 	menuBar->AppendMenu(wdMenu);
 
-	GetApplication()->CreateHelpMenu(menuBar, "MemoryDir", "VarTreeHelp-Memory");
+	GetApplication()->CreateHelpMenu(menuBar, "VarTreeHelp-Memory");
 
 	GetDisplay()->GetWDManager()->DirectorCreated(this);
 }

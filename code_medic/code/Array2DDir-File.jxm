@@ -1,0 +1,66 @@
+jx_menu_editor 0
+723 252
+"Array2DDir"
+"File"
+'f
+40
+40
+126
+100
+40
+134
+135
+75
+
+0
+1
+0
+1 "jx_file_open.xpm"
+"Open source file..."
+"Ctrl-O"
+'o
+"OpenSourceFile"
+"kOpenCmd"
+1
+
+1
+0
+0 ""
+"Page setup..."
+""
+' 
+"PageSetup::JX"
+"kPageSetupCmd"
+0
+
+1
+0
+1 "jx_file_print.xpm"
+"Print..."
+"Ctrl-P"
+'p
+"Print::JX"
+"kPrintCmd"
+1
+
+1
+0
+0 ""
+"Close"
+"Ctrl-W"
+'c
+"CloseWindow::JX"
+"kCloseWindowCmd"
+0
+
+1
+0
+0 ""
+"Quit"
+"Ctrl-Q"
+'q
+"Quit::JX"
+"kQuitCmd"
+0
+
+0

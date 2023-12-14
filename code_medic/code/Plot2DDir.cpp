@@ -35,36 +35,6 @@
 #include <jx-af/jcore/JTableSelection.h>
 #include <jx-af/jcore/jAssert.h>
 
-// File menu
-
-static const JUtf8Byte* kFileMenuStr =
-	"    Open source file...      %k Meta-O %i" kOpenSourceFileAction
-	"%l| PostScript page setup...           %i" kJXPageSetupAction
-	"  | Print PostScript...      %k Meta-P %i" kJXPrintAction
-	"  | Print EPS...             %k Meta-P %i" kJXPrintAction
-	"%l| Close                    %k Meta-W %i" kJXCloseWindowAction
-	"  | Quit                     %k Meta-Q %i" kJXQuitAction;
-
-enum
-{
-	kOpenCmd = 1,
-	kPSPageSetupCmd,
-	kPrintPSCmd,
-	kPrintEPSCmd,
-	kCloseWindowCmd,
-	kQuitCmd
-};
-
-// Actions menu
-
-static const JUtf8Byte* kActionMenuStr =
-	"Save window size as default";
-
-enum
-{
-	kSavePrefsCmd = 1
-};
-
 /******************************************************************************
  Constructor
 
@@ -240,10 +210,9 @@ Plot2DDir::Activate()
 
  ******************************************************************************/
 
+#include "Plot2DDir-File.h"
+#include "Plot2DDir-Actions.h"
 #include "medic_2d_plot_window.xpm"
-
-#include <jx-af/image/jx/jx_file_open.xpm>
-#include <jx-af/image/jx/jx_file_print.xpm>
 
 void
 Plot2DDir::BuildWindow()
@@ -324,27 +293,26 @@ Plot2DDir::BuildWindow()
 
 	// menus
 
-	itsActionMenu = menuBar->PrependTextMenu(JGetString("ActionsMenuTitle::global"));
-	itsActionMenu->SetMenuItems(kActionMenuStr, "Plot2DDir");
+	itsActionMenu = menuBar->PrependTextMenu(JGetString("MenuTitle::Plot2DDir_Actions"));
+	itsActionMenu->SetMenuItems(kActionsMenuStr);
 	itsActionMenu->SetUpdateAction(JXMenu::kDisableNone);
 	itsActionMenu->AttachHandlers(this,
 		&Plot2DDir::UpdateActionMenu,
 		&Plot2DDir::HandleActionMenu);
+	ConfigureActionsMenu(itsActionMenu);
 
 	JXTextMenu* editMenu;
 	const bool hasEditMenu = (itsExprTable->GetEditMenuHandler())->GetEditMenu(&editMenu);
 	assert( hasEditMenu );
 	menuBar->PrependMenu(editMenu);
 
-	itsFileMenu = menuBar->PrependTextMenu(JGetString("FileMenuTitle::JXGlobal"));
-	itsFileMenu->SetMenuItems(kFileMenuStr, "ThreadsDir");
+	itsFileMenu = menuBar->PrependTextMenu(JGetString("MenuTitle::Plot2DDir_File"));
+	itsFileMenu->SetMenuItems(kFileMenuStr);
 	itsFileMenu->SetUpdateAction(JXMenu::kDisableNone);
 	itsFileMenu->AttachHandlers(this,
 		&Plot2DDir::UpdateFileMenu,
 		&Plot2DDir::HandleFileMenu);
-
-	itsFileMenu->SetItemImage(kOpenCmd,    jx_file_open);
-	itsFileMenu->SetItemImage(kPrintPSCmd, jx_file_print);
+	ConfigureFileMenu(itsFileMenu);
 
 	auto* wdMenu =
 		jnew JXWDMenu(JGetString("WindowsMenuTitle::JXGlobal"), menuBar,
@@ -352,7 +320,7 @@ Plot2DDir::BuildWindow()
 	assert( wdMenu != nullptr );
 	menuBar->AppendMenu(wdMenu);
 
-	GetApplication()->CreateHelpMenu(menuBar, "Plot2DDir", "2DPlotHelp");
+	GetApplication()->CreateHelpMenu(menuBar, "2DPlotHelp");
 
 	GetDisplay()->GetWDManager()->DirectorCreated(this);
 }

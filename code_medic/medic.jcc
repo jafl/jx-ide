@@ -1,4 +1,4 @@
-jx_browser_data 93
+jx_browser_data 94
 # project tree
 0 "root"
 T
@@ -161,6 +161,18 @@ T
 F
 "./code/CommandDirector.cpp"
 T
+2 "CommandDirector-File.jxm"
+F
+"./code/CommandDirector-File.jxm"
+T
+2 "Generic-Debug.jxm"
+F
+"./code/Generic-Debug.jxm"
+T
+2 "CommandDirector-Preferences.jxm"
+F
+"./code/CommandDirector-Preferences.jxm"
+T
 2 "CommandOutputDisplay.cpp"
 F
 "./code/CommandOutputDisplay.cpp"
@@ -208,9 +220,21 @@ T
 F
 "./code/SourceDirector.cpp"
 T
+2 "SourceDirector-File.jxm"
+F
+"./code/SourceDirector-File.jxm"
+T
+2 "SourceDirector-Preferences.jxm"
+F
+"./code/SourceDirector-Preferences.jxm"
+T
 2 "SourceText.cpp"
 F
 "./code/SourceText.cpp"
+T
+2 "SourceText-Search.jxm"
+F
+"./code/SourceText-Search.jxm"
 T
 2 "TextDisplayBase.cpp"
 F
@@ -253,11 +277,22 @@ F
 "./code/GetAssemblyCmd.cpp"
 F
 T
+1 "File menu"
+T
+2 "Generic-File.jxm"
+F
+"./code/Generic-File.jxm"
+F
+T
 1 "breakpoint"
 T
 2 "BreakpointsDir.cpp"
 F
 "./code/BreakpointsDir.cpp"
+T
+2 "BreakpointsDir-Actions.jxm"
+F
+"./code/BreakpointsDir-Actions.jxm"
 T
 2 "BreakpointTable.cpp"
 F
@@ -336,6 +371,10 @@ T
 F
 "./code/LocalVarsDir.cpp"
 T
+2 "LocalVarsDir-Actions.jxm"
+F
+"./code/LocalVarsDir-Actions.jxm"
+T
 2 "GetLocalVarsCmd.cpp"
 F
 "./code/GetLocalVarsCmd.cpp"
@@ -346,6 +385,10 @@ T
 2 "VarTreeDir.cpp"
 F
 "./code/VarTreeDir.cpp"
+T
+2 "VarTreeDir-Actions.jxm"
+F
+"./code/VarTreeDir-Actions.jxm"
 T
 2 "VarTreeWidget.cpp"
 F
@@ -370,9 +413,21 @@ T
 F
 "./code/Array1DDir.cpp"
 T
+2 "Array1DDir-Actions.jxm"
+F
+"./code/Array1DDir-Actions.jxm"
+T
 2 "Array2DDir.cpp"
 F
 "./code/Array2DDir.cpp"
+T
+2 "Array2DDir-File.jxm"
+F
+"./code/Array2DDir-File.jxm"
+T
+2 "Array2DDir-Actions.jxm"
+F
+"./code/Array2DDir-Actions.jxm"
 T
 2 "Array2DTable.cpp"
 F
@@ -397,6 +452,14 @@ T
 F
 "./code/Plot2DDir.cpp"
 T
+2 "Plot2DDir-File.jxm"
+F
+"./code/Plot2DDir-File.jxm"
+T
+2 "Plot2DDir-Actions.jxm"
+F
+"./code/Plot2DDir-Actions.jxm"
+T
 2 "Plot2DExprTable.cpp"
 F
 "./code/Plot2DExprTable.cpp"
@@ -411,6 +474,14 @@ T
 2 "MemoryDir.cpp"
 F
 "./code/MemoryDir.cpp"
+T
+2 "MemoryDir-Actions.jxm"
+F
+"./code/MemoryDir-Actions.jxm"
+T
+2 "MemoryDir-DisplayType.jxm"
+F
+"./code/MemoryDir-DisplayType.jxm"
 T
 2 "GetMemoryCmd.cpp"
 F

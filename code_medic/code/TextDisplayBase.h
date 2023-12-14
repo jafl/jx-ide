@@ -37,6 +37,8 @@ public:
 
 	static void	AdjustFont(JXTEBase* te);
 
+	virtual bool	UpgradeSearchMenuToolBarID(JString* s);
+
 private:
 
 	void	TextDisplayBaseX(JXMenuBar* menuBar, JXScrollbarSet* scrollbarSet);

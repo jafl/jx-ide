@@ -1,0 +1,26 @@
+jx_menu_editor 0
+815 177
+"Plot2DDir"
+"Actions"
+'a
+40
+40
+182
+100
+40
+200
+109
+75
+
+0
+1
+0
+0 ""
+"Save window size as default"
+""
+'s
+"__SaveWindowSizeAsDefault"
+"kSavePrefsCmd"
+0
+
+0

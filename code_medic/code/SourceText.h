@@ -37,6 +37,8 @@ public:
 	void	HandleKeyPress(const JUtf8Character& c, const int keySym,
 						   const JXKeyModifiers& modifiers) override;
 
+	bool	UpgradeSearchMenuToolBarID(JString* s) override;
+
 protected:
 
 	void	BoundsResized(const JCoordinate dw, const JCoordinate dh) override;
@@ -91,7 +93,7 @@ private:
 	SourceDirector*		itsSrcDir;
 	CommandDirector*	itsCmdDir;
 	StylerBase*			itsStyler;
-	JIndex				itsFirstSearchMenuItem;	// index of first item added to Search menu
+	JIndex				itsSearchMenuItemOffset;	// offset to first item added to Search menu
 	JSize				itsLastClickCount;
 
 private:

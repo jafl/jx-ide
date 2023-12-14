@@ -1,0 +1,46 @@
+jx_menu_editor 0
+704 211
+"Generic"
+"File"
+'f
+40
+40
+126
+100
+40
+128
+132
+75
+
+0
+1
+0
+1 "jx_file_open.xpm"
+"Open source file..."
+"Ctrl-O"
+'o
+"OpenSourceFile"
+"kOpenCmd"
+1
+
+1
+0
+0 ""
+"Close"
+"Ctrl-W"
+'c
+"CloseWindow::JX"
+"kCloseWindowCmd"
+0
+
+1
+0
+0 ""
+"Quit"
+"Ctrl-Q"
+'q
+"Quit::JX"
+"kQuitCmd"
+0
+
+0

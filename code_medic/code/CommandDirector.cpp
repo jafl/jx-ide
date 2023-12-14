@@ -66,124 +66,13 @@
 
 const JSize kCmdHistoryLength = 100;
 
-// File menu
-
-static const JUtf8Byte* kFileMenuStr =
-	"    Open source file...   %k Meta-O %i" kOpenSourceFileAction
-	"%l| Load configuration... %k Ctrl-O %i" kLoadConfigAction
-	"  | Save configuration... %k Ctrl-S %i" kSaveConfigAction
-	"%l| Save history                    %i" kSaveHistoryAction
-	"  | Save history as...              %i" kSaveHistoryAsAction
-	"%l| Page setup...                   %i" kJXPageSetupAction
-	"  | Print...              %k Meta-P %i" kJXPrintAction
-	"%l| Close                 %k Meta-W %i" kJXCloseWindowAction
-	"  | Quit                  %k Meta-Q %i" kJXQuitAction;
-
-enum
-{
-	kOpenCmd = 1,
-	kLoadConfigCmd,
-	kSaveConfigCmd,
-	kSaveCmd,
-	kSaveAsCmd,
-	kPageSetupCmd,
-	kPrintCmd,
-	kCloseCmd,
-	kQuitCmd
-};
-
 // Debug menu
 
-static const JUtf8Byte* kDebugMenuStr =
-	"    Choose program...      %k Meta-Shift-P %i" kChooseBinaryAction
-	"  | Reload program                         %i" kReloadBinaryAction
-	"  | Choose core...         %k Meta-Shift-C %i" kChooseCoreAction
-	"  | Choose process...                      %i" kChooseProcessAction
-	"  | Set arguments                          %i" kSetArgumentsAction
-	"%l| Restart debugger                       %i" kRestartDebuggerAction
-	"%l| Display as variable    %k Meta-D       %i" kDisplayVariableAction
-	"  | Display as 1D array    %k Meta-Shift-A %i" kDisplay1DArrayAction
-	"  | Plot as 1D array                       %i" kPlot1DArrayAction
-	"  | Display as 2D array                    %i" kDisplay2DArrayAction
-	"%l| Watch expression                       %i" kWatchVarValueAction
-	"  | Watch location                         %i" kWatchVarLocationAction
-	"%l| Examine memory                         %i" kExamineMemoryAction
-	"  | Disassemble memory                     %i" kDisasmMemoryAction
-	"  | Disassemble function                   %i" kDisasmFunctionAction
-	"%l| Run program            %k Meta-R       %i" kRunProgramAction
-	"  | Pause execution        %k Ctrl-C       %i" kStopProgramAction
-	"  | Kill process                           %i" kKillProgramAction
-	"%l| Next statement         %k Meta-N       %i" kNextInstrAction
-	"  | Step into              %k Meta-J       %i" kStepIntoAction
-	"  | Finish subroutine      %k Meta-K       %i" kFinishSubAction
-	"  | Continue execution     %k Meta-Shift-N %i" kContinueRunAction
-	"%l| Next instruction       %k Meta-U       %i" kNextAsmInstrAction
-	"  | Step into (instruction)%k Meta-I       %i" kStepIntoAsmAction
-	"%l| Previous statement                     %i" kPrevInstrAction
-	"  | Backup into                            %i" kReverseStepIntoAction
-	"  | Reverse finish                         %i" kReverseFinishSubAction
-	"  | Reverse continue                       %i" kReverseContinueRunAction
-	"%l| Remove all breakpoints %k Ctrl-X       %i" kClearAllBreakpointsAction
-	"%l";
-
-enum
-{
-	kSelectBinCmd = 1,
-	kReloadBinCmd,
-	kSelectCoreCmd,
-	kSelectProcessCmd,
-	kSetArgsCmd,
-	kRestartDebuggerCmd,
-	kDisplayVarCmd,
-	kDisplay1DArrayCmd,
-	kPlot1DArrayCmd,
-	kDisplay2DArrayCmd,
-	kWatchVarCmd,
-	kWatchLocCmd,
-	kExamineMemCmd,
-	kDisassembleMemCmd,
-	kDisassembleFnCmd,
-	kRunCmd,
-	kStopCmd,
-	kKillCmd,
-	kNextCmd,
-	kStepCmd,
-	kFinishCmd,
-	kContCmd,
-	kNextAsmCmd,
-	kStepAsmCmd,
-	kPrevCmd,
-	kReverseStepCmd,
-	kReverseFinishCmd,
-	kReverseContCmd,
-	kRemoveAllBreakpointsCmd,
-
-	kFirstCustomDebugCmd
-};
+JSize kFirstCustomDebugCmd;
 
 // Prefs menu
 
-static const JUtf8Byte* kPrefsMenuStr =
-	"    gdb %r"
-	"  | lldb %r"
-	"  | Java %r"
-	"  | Xdebug %r"
-	"%l| Preferences..."
-	"  | Toolbar buttons..."
-	"  | Custom commands..."
-	"  | Mac/Win/X emulation...";
-
-enum
-{
-	kUseGDBCmd = 1,
-	kUseLLDBCmd,
-	kUseJavaCmd,
-	kUseXdebugCmd,
-	kEditPrefsCmd,
-	kEditToolBarCmd,
-	kEditCmdsCmd,
-	kEditMacWinPrefsCmd
-};
+#include "CommandDirector-Preferences.h"
 
 static const JIndex kDebuggerTypeToMenuIndex[] =
 {
@@ -213,59 +102,53 @@ CommandDirector::CommandDirector
 	itsCurrentSourceDir = jnew SourceDirector(this, SourceDirector::kMainSourceType);
 	itsCurrentSourceDir->Activate();
 
-	itsCurrentAsmDir = jnew SourceDirector(this, SourceDirector::kMainAsmType);
-
-	itsThreadsDir = jnew ThreadsDir(this);
-
-	itsStackDir = jnew StackDir(this);
-
+	itsCurrentAsmDir  = jnew SourceDirector(this, SourceDirector::kMainAsmType);
+	itsThreadsDir     = jnew ThreadsDir(this);
+	itsStackDir       = jnew StackDir(this);
 	itsBreakpointsDir = jnew BreakpointsDir(this);
-
-	itsVarTreeDir = jnew VarTreeDir(this);
-
-	itsLocalVarsDir = jnew LocalVarsDir(this);
-
-	itsRegistersDir = jnew RegistersDir(this);
-
-	itsFileListDir = jnew FileListDir(this);
-
-	itsDebugDir = jnew DebugDir();
+	itsVarTreeDir     = jnew VarTreeDir(this);
+	itsLocalVarsDir   = jnew LocalVarsDir(this);
+	itsRegistersDir   = jnew RegistersDir(this);
+	itsFileListDir    = jnew FileListDir(this);
+	itsDebugDir       = jnew DebugDir();
 
 	JXWDManager* wdMgr = GetDisplay()->GetWDManager();
 	wdMgr->PermanentDirectorCreated(this,                JString::empty,                            kShowCommandLineAction);
 	wdMgr->PermanentDirectorCreated(itsCurrentSourceDir, JString::empty,                            kShowCurrentSourceAction);
-	wdMgr->PermanentDirectorCreated(itsThreadsDir,       JString("Meta-Shift-T", JString::kNoCopy), kShowThreadsAction);
-	wdMgr->PermanentDirectorCreated(itsStackDir,         JString("Meta-Shift-S", JString::kNoCopy), kShowStackTraceAction);
-	wdMgr->PermanentDirectorCreated(itsBreakpointsDir,   JString("Meta-Shift-B", JString::kNoCopy), kShowBreakpointsAction);
-	wdMgr->PermanentDirectorCreated(itsVarTreeDir,       JString("Meta-Shift-V", JString::kNoCopy), kShowVariablesAction);
-	wdMgr->PermanentDirectorCreated(itsLocalVarsDir,     JString("Meta-Shift-L", JString::kNoCopy), kShowLocalVariablesAction);
-	wdMgr->PermanentDirectorCreated(itsCurrentAsmDir,    JString("Meta-Shift-Y", JString::kNoCopy), kShowCurrentAsmAction);
-	wdMgr->PermanentDirectorCreated(itsRegistersDir,     JString("Meta-Shift-R", JString::kNoCopy), kShowRegistersAction);
-	wdMgr->PermanentDirectorCreated(itsFileListDir,      JString("Meta-Shift-F", JString::kNoCopy), kShowFileListAction);
+	wdMgr->PermanentDirectorCreated(itsThreadsDir,       JString("Ctrl-Shift-T", JString::kNoCopy), kShowThreadsAction);
+	wdMgr->PermanentDirectorCreated(itsStackDir,         JString("Ctrl-Shift-S", JString::kNoCopy), kShowStackTraceAction);
+	wdMgr->PermanentDirectorCreated(itsBreakpointsDir,   JString("Ctrl-Shift-B", JString::kNoCopy), kShowBreakpointsAction);
+	wdMgr->PermanentDirectorCreated(itsVarTreeDir,       JString("Ctrl-Shift-V", JString::kNoCopy), kShowVariablesAction);
+	wdMgr->PermanentDirectorCreated(itsLocalVarsDir,     JString("Ctrl-Shift-L", JString::kNoCopy), kShowLocalVariablesAction);
+	wdMgr->PermanentDirectorCreated(itsCurrentAsmDir,    JString("Ctrl-Shift-Y", JString::kNoCopy), kShowCurrentAsmAction);
+	wdMgr->PermanentDirectorCreated(itsRegistersDir,     JString("Ctrl-Shift-R", JString::kNoCopy), kShowRegistersAction);
+	wdMgr->PermanentDirectorCreated(itsFileListDir,      JString("Ctrl-Shift-F", JString::kNoCopy), kShowFileListAction);
 	wdMgr->PermanentDirectorCreated(itsDebugDir,         JString::empty,                            kShowDebugInfoAction);
 
+	auto f = std::function([this](JString* s)
+	{
+		if (s->StartsWith("GDB") &&
+			!itsCommandOutput->UpgradeSearchMenuToolBarID(s) &&
+			!UpgradeDebugMenuToolBarID(s))
+		{
+			JStringIterator iter(s);
+			iter.SkipNext(3);
+			iter.RemoveAllPrev();
+			*s += "::CommandDirector";
+		}
+	});
+
 	CreateWindowsMenuAndToolBar(menuBar, itsToolBar, false, false, true,
-								itsDebugMenu, itsPrefsMenu, itsHelpMenu);
+								itsDebugMenu, itsPrefsMenu, itsHelpMenu, &f);
 	itsCurrentSourceDir->CreateWindowsMenu();
 	itsCurrentAsmDir->CreateWindowsMenu();
 
-	itsSourceDirs = jnew JPtrArray<SourceDirector>(JPtrArrayT::kForgetAll);
-	assert( itsSourceDirs != nullptr );
-
-	itsAsmDirs = jnew JPtrArray<SourceDirector>(JPtrArrayT::kForgetAll);
-	assert( itsAsmDirs != nullptr );
-
+	itsSourceDirs  = jnew JPtrArray<SourceDirector>(JPtrArrayT::kForgetAll);
+	itsAsmDirs     = jnew JPtrArray<SourceDirector>(JPtrArrayT::kForgetAll);
 	itsArray1DDirs = jnew JPtrArray<Array1DDir>(JPtrArrayT::kForgetAll);
-	assert( itsArray1DDirs != nullptr );
-
 	itsArray2DDirs = jnew JPtrArray<Array2DDir>(JPtrArrayT::kForgetAll);
-	assert( itsArray2DDirs != nullptr );
-
-	itsPlot2DDirs = jnew JPtrArray<Plot2DDir>(JPtrArrayT::kForgetAll);
-	assert( itsPlot2DDirs != nullptr );
-
-	itsMemoryDirs = jnew JPtrArray<MemoryDir>(JPtrArrayT::kForgetAll);
-	assert( itsMemoryDirs != nullptr );
+	itsPlot2DDirs  = jnew JPtrArray<Plot2DDir>(JPtrArrayT::kForgetAll);
+	itsMemoryDirs  = jnew JPtrArray<MemoryDir>(JPtrArrayT::kForgetAll);
 
 	itsHistoryIndex     = 0;
 	itsWaitingToRunFlag = false;
@@ -325,7 +208,9 @@ CommandDirector::Close()
  CloseDynamicDirectors
 
  ******************************************************************************/
+
 #include <ranges>
+
 void
 CommandDirector::CloseDynamicDirectors()
 {
@@ -421,10 +306,8 @@ CommandDirector::PrepareCommand
 
  ******************************************************************************/
 
+#include "CommandDirector-File.h"
 #include "medic_command_window.xpm"
-
-#include <jx-af/image/jx/jx_file_open.xpm>
-#include <jx-af/image/jx/jx_file_print.xpm>
 
 JXMenuBar*
 CommandDirector::BuildWindow()
@@ -511,15 +394,13 @@ CommandDirector::BuildWindow()
 
 	// menus
 
-	itsFileMenu = menuBar->AppendTextMenu(JGetString("FileMenuTitle::JXGlobal"));
-	itsFileMenu->SetMenuItems(kFileMenuStr, "CommandDirector");
+	itsFileMenu = menuBar->AppendTextMenu(JGetString("MenuTitle::CommandDirector_File"));
+	itsFileMenu->SetMenuItems(kFileMenuStr);
 	itsFileMenu->SetUpdateAction(JXMenu::kDisableNone);
 	itsFileMenu->AttachHandlers(this,
 		&CommandDirector::UpdateFileMenu,
 		&CommandDirector::HandleFileMenu);
-
-	itsFileMenu->SetItemImage(kOpenCmd,  jx_file_open);
-	itsFileMenu->SetItemImage(kPrintCmd, jx_file_print);
+	ConfigureFileMenu(itsFileMenu);
 
 	auto* scrollbarSet =
 		jnew JXScrollbarSet(itsToolBar->GetWidgetEnclosure(),
@@ -536,22 +417,21 @@ CommandDirector::BuildWindow()
 	assert( itsCommandOutput != nullptr );
 	itsCommandOutput->FitToEnclosure(true, true);
 
-	itsCommandOutput->AppendSearchMenu(menuBar);
-
 	itsDebugMenu = CreateDebugMenu(menuBar);
 	ListenTo(itsDebugMenu);
 
 	itsCommandInput->ShareEditMenu(itsCommandOutput);
 	itsArgInput->ShareEditMenu(itsCommandOutput);
 
-	itsPrefsMenu = menuBar->AppendTextMenu(JGetString("PrefsMenuTitle::JXGlobal"));
-	itsPrefsMenu->SetMenuItems(kPrefsMenuStr, "CommandDirector");
+	itsPrefsMenu = menuBar->AppendTextMenu(JGetString("MenuTitle::CommandDirector_Preferences"));
+	itsPrefsMenu->SetMenuItems(kPreferencesMenuStr);
 	itsPrefsMenu->SetUpdateAction(JXMenu::kDisableNone);
 	itsPrefsMenu->AttachHandlers(this,
 		&CommandDirector::UpdatePrefsMenu,
 		&CommandDirector::HandlePrefsMenu);
+	ConfigurePreferencesMenu(itsPrefsMenu);
 
-	itsHelpMenu = GetApplication()->CreateHelpMenu(menuBar, "CommandDirector", "CommandDirHelp");
+	itsHelpMenu = GetApplication()->CreateHelpMenu(menuBar, "CommandDirHelp");
 
 	return menuBar;
 }
@@ -676,26 +556,7 @@ CommandDirector::GetMenuIcon
 
  ******************************************************************************/
 
-#include <jx-af/image/jx/jx_executable_small.xpm>
-#include "medic_choose_core.xpm"
-#include "medic_attach_process.xpm"
-#include "medic_show_1d_array.xpm"
-#include "medic_show_2d_plot.xpm"
-#include "medic_show_2d_array.xpm"
-#include "medic_show_memory.xpm"
-#include "medic_run_program.xpm"
-#include "medic_stop_program.xpm"
-#include "medic_kill_program.xpm"
-#include "medic_next.xpm"
-#include "medic_step.xpm"
-#include "medic_finish.xpm"
-#include "medic_continue.xpm"
-#include "medic_nexti.xpm"
-#include "medic_stepi.xpm"
-#include "medic_reverse_next.xpm"
-#include "medic_reverse_step.xpm"
-#include "medic_reverse_finish.xpm"
-#include "medic_reverse_continue.xpm"
+#include "Generic-Debug.h"
 
 JXTextMenu*
 CommandDirector::CreateDebugMenu
@@ -703,29 +564,11 @@ CommandDirector::CreateDebugMenu
 	JXMenuBar* menuBar
 	)
 {
-	JXTextMenu* menu = menuBar->AppendTextMenu(JGetString("DebugMenuTitle::CommandDirector"));
-	menu->SetMenuItems(kDebugMenuStr, "CommandDirector");
+	JXTextMenu* menu = menuBar->AppendTextMenu(JGetString("MenuTitle::Generic_Debug"));
+	menu->SetMenuItems(kDebugMenuStr);
+	ConfigureDebugMenu(menu);
 
-	menu->SetItemImage(kSelectBinCmd,      jx_executable_small);
-	menu->SetItemImage(kSelectCoreCmd,     medic_choose_core);
-	menu->SetItemImage(kSelectProcessCmd,  medic_attach_process);
-	menu->SetItemImage(kDisplay1DArrayCmd, medic_show_1d_array);
-	menu->SetItemImage(kPlot1DArrayCmd,    medic_show_2d_plot);
-	menu->SetItemImage(kDisplay2DArrayCmd, medic_show_2d_array);
-	menu->SetItemImage(kExamineMemCmd,     medic_show_memory);
-	menu->SetItemImage(kRunCmd,            medic_run_program);
-	menu->SetItemImage(kStopCmd,           medic_stop_program);
-	menu->SetItemImage(kKillCmd,           medic_kill_program);
-	menu->SetItemImage(kNextCmd,           medic_next);
-	menu->SetItemImage(kStepCmd,           medic_step);
-	menu->SetItemImage(kFinishCmd,         medic_finish);
-	menu->SetItemImage(kContCmd,           medic_continue);
-	menu->SetItemImage(kNextAsmCmd,        medic_nexti);
-	menu->SetItemImage(kStepAsmCmd,        medic_stepi);
-	menu->SetItemImage(kPrevCmd,           medic_reverse_next);
-	menu->SetItemImage(kReverseStepCmd,    medic_reverse_step);
-	menu->SetItemImage(kReverseFinishCmd,  medic_reverse_finish);
-	menu->SetItemImage(kReverseContCmd,    medic_reverse_continue);
+	kFirstCustomDebugCmd = menu->GetItemCount() + 1;
 
 	// Meta-. should also be "stop"
 
@@ -738,7 +581,7 @@ CommandDirector::CreateDebugMenu
 }
 
 /******************************************************************************
- AddDebugMenuItemsToToolBar (static)
+ AddDebugMenuItemsToToolBar (static private)
 
  ******************************************************************************/
 
@@ -765,6 +608,69 @@ CommandDirector::AddDebugMenuItemsToToolBar
 		toolBar->AppendButton(debugMenu, kNextAsmCmd);
 		toolBar->AppendButton(debugMenu, kStepAsmCmd);
 	}
+}
+
+/******************************************************************************
+ UpgradeDebugMenuToolBarID (static)
+
+ ******************************************************************************/
+
+static const JUtf8Byte* kToolbarIDMap[] =
+{
+	"GDBChooseBinary", "ChooseBinary::Generic",
+	"GDBReloadBinary", "ReloadBinary::Generic",
+	"GDBChooseCore", "ChooseCore::Generic",
+	"GDBChooseProcess", "ChooseProcess::Generic",
+	"GDBSetArguments", "SetArguments::Generic",
+	"GDBRestartDebugger", "RestartDebugger::Generic",
+	"GDBDisplayVariable", "DisplayVariable::Generic",
+	"GDBDisplay1DArray", "Display1DArray::Generic",
+	"GDBPlot1DArray", "Plot1DArray::Generic",
+	"GDBDisplay2DArray", "Display2DArray::Generic",
+	"GDBWatchVarValue", "WatchVarValue::Generic",
+	"GDBWatchVarLocation", "WatchVarLocation::Generic",
+	"GDBExamineMemory", "ExamineMemory::Generic",
+	"GDBDisasmMemory", "DisasmMemory::Generic",
+	"GDBDisasmFunction", "DisasmFunction::Generic",
+	"GDBRunProgram", "RunProgram::Generic",
+	"GDBStopProgram", "StopProgram::Generic",
+	"GDBKillProgram", "KillProgram::Generic",
+	"GDBNextInstr", "NextInstr::Generic",
+	"GDBStepInto", "StepInto::Generic",
+	"GDBFinishSub", "FinishSub::Generic",
+	"GDBContinueRun", "ContinueRun::Generic",
+	"GDBNextInstrAsm", "NextInstrAsm::Generic",
+	"GDBStepIntoAsm", "StepIntoAsm::Generic",
+	"GDBPrevInstr", "PrevInstr::Generic",
+	"GDBReverseStepInto", "ReverseStepInto::Generic",
+	"GDBReverseFinishSub", "ReverseFinishSub::Generic",
+	"GDBReverseContinueRun", "ReverseContinueRun::Generic",
+	"GDBClearAllBreakpoints", "ClearAllBreakpoints::Generic",
+};
+
+const JSize kToolbarIDMapCount = sizeof(kToolbarIDMap) / sizeof(JUtf8Byte*);
+
+bool
+CommandDirector::UpgradeDebugMenuToolBarID
+	(
+	JString* s
+	)
+{
+	if (!s->StartsWith("GDB"))
+	{
+		return false;
+	}
+
+	for (JUnsignedOffset i=0; i<kToolbarIDMapCount; i+=2)
+	{
+		if (*s == kToolbarIDMap[i])
+		{
+			*s = kToolbarIDMap[i+1];
+			return true;
+		}
+	}
+
+	return false;
 }
 
 /******************************************************************************
@@ -808,7 +714,9 @@ CommandDirector::CreateWindowsMenuAndToolBar
 	const bool		includeCurrSrc,
 	JXTextMenu*		debugMenu,
 	JXTextMenu*		prefsMenu,
-	JXTextMenu*		helpMenu
+	JXTextMenu*		helpMenu,
+
+	std::function<void(JString*)>*	upgradeToolBarID
 	)
 {
 	auto* wdMenu =
@@ -817,7 +725,7 @@ CommandDirector::CreateWindowsMenuAndToolBar
 	assert( wdMenu != nullptr );
 	menuBar->InsertMenuBefore(prefsMenu, wdMenu);
 
-	toolBar->LoadPrefs();
+	toolBar->LoadPrefs(upgradeToolBarID);
 	if (toolBar->IsEmpty())
 	{
 		AddDebugMenuItemsToToolBar(toolBar, debugMenu, includeStepAsm);
@@ -828,7 +736,7 @@ CommandDirector::CreateWindowsMenuAndToolBar
 }
 
 /******************************************************************************
- AddWindowsMenuItemsToToolBar (static)
+ AddWindowsMenuItemsToToolBar (static private)
 
  ******************************************************************************/
 
@@ -2100,7 +2008,7 @@ CommandDirector::UpdatePrefsMenu()
 	PrefsManager::DebuggerType type = GetPrefsManager()->GetDebuggerType();
 	itsPrefsMenu->CheckItem(kDebuggerTypeToMenuIndex[ type ]);
 
-//	itsPrefsMenu->DisableItem(kUseJavaCmd);
+	itsPrefsMenu->DisableItem(kUseJavaCmd);
 }
 
 /******************************************************************************

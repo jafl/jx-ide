@@ -25,20 +25,6 @@
 #include <jx-af/jcore/JNamedTreeNode.h>
 #include <jx-af/jcore/jAssert.h>
 
-// File menu
-
-static const JUtf8Byte* kFileMenuStr =
-	"    Open source file... %k Meta-O %i" kOpenSourceFileAction
-	"%l| Close               %k Meta-W %i" kJXCloseWindowAction
-	"  | Quit                %k Meta-Q %i" kJXQuitAction;
-
-enum
-{
-	kOpenCmd = 1,
-	kCloseWindowCmd,
-	kQuitCmd
-};
-
 /******************************************************************************
  Constructor
 
@@ -86,9 +72,8 @@ ThreadsDir::Activate()
 
  *****************************************************************************/
 
+#include "Generic-File.h"
 #include "medic_threads_window.xpm"
-
-#include <jx-af/image/jx/jx_file_open.xpm>
 
 void
 ThreadsDir::BuildWindow
@@ -136,14 +121,13 @@ ThreadsDir::BuildWindow
 
 	// menus
 
-	itsFileMenu = menuBar->AppendTextMenu(JGetString("FileMenuTitle::JXGlobal"));
-	itsFileMenu->SetMenuItems(kFileMenuStr, "ThreadsDir");
+	itsFileMenu = menuBar->AppendTextMenu(JGetString("MenuTitle::Generic_File"));
+	itsFileMenu->SetMenuItems(kFileMenuStr);
 	itsFileMenu->SetUpdateAction(JXMenu::kDisableNone);
 	itsFileMenu->AttachHandlers(this,
 		&ThreadsDir::UpdateFileMenu,
 		&ThreadsDir::HandleFileMenu);
-
-	itsFileMenu->SetItemImage(kOpenCmd, jx_file_open);
+	ConfigureFileMenu(itsFileMenu);
 
 	auto* wdMenu =
 		jnew JXWDMenu(JGetString("WindowsMenuTitle::JXGlobal"), menuBar,
@@ -151,7 +135,7 @@ ThreadsDir::BuildWindow
 	assert( wdMenu != nullptr );
 	menuBar->AppendMenu(wdMenu);
 
-	GetApplication()->CreateHelpMenu(menuBar, "ThreadsDir", "ThreadsHelp");
+	GetApplication()->CreateHelpMenu(menuBar, "ThreadsHelp");
 }
 
 /******************************************************************************

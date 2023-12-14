@@ -1,0 +1,96 @@
+jx_menu_editor 0
+776 310
+"CommandDirector"
+"Preferences"
+'p
+40
+40
+151
+100
+40
+151
+151
+75
+
+0
+1
+0
+0 ""
+"Preferences..."
+""
+'p
+"__Preferences"
+"kEditPrefsCmd"
+0
+
+1
+0
+0 ""
+"Toolbar buttons..."
+""
+'t
+"__ToolbarButtons"
+"kEditToolBarCmd"
+0
+
+1
+0
+0 ""
+"Custom commands..."
+""
+'c
+"__CustomCommands"
+"kEditCmdsCmd"
+0
+
+1
+0
+0 ""
+"Mac/Win/X emulation..."
+""
+'e
+"__MacWinXEmulation"
+"kEditMacWinPrefsCmd"
+1
+
+1
+2
+0 ""
+"gdb"
+""
+'g
+"__gdb"
+"kUseGDBCmd"
+0
+
+1
+2
+0 ""
+"lldb"
+""
+'l
+"__lldb"
+"kUseLLDBCmd"
+0
+
+1
+2
+0 ""
+"Java"
+""
+'j
+"__Java"
+"kUseJavaCmd"
+0
+
+1
+2
+0 ""
+"Xdebug"
+""
+'x
+"__Xdebug"
+"kUseXdebugCmd"
+0
+
+0

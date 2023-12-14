@@ -28,20 +28,6 @@
 
 #include <jx-af/jcore/jAssert.h>
 
-// File menu
-
-static const JUtf8Byte* kFileMenuStr =
-	"    Open source file... %k Meta-O %i" kOpenSourceFileAction
-	"%l| Close               %k Meta-W %i" kJXCloseWindowAction
-	"  | Quit                %k Meta-Q %i" kJXQuitAction;
-
-enum
-{
-	kOpenCmd = 1,
-	kCloseWindowCmd,
-	kQuitCmd
-};
-
 /******************************************************************************
  Constructor
 
@@ -108,9 +94,8 @@ RegistersDir::Deactivate()
 
  ******************************************************************************/
 
+#include "Generic-File.h"
 #include "medic_registers_window.xpm"
-
-#include <jx-af/image/jx/jx_file_open.xpm>
 
 void
 RegistersDir::BuildWindow()
@@ -156,14 +141,13 @@ RegistersDir::BuildWindow()
 
 	// menus
 
-	itsFileMenu = menuBar->PrependTextMenu(JGetString("FileMenuTitle::JXGlobal"));
-	itsFileMenu->SetMenuItems(kFileMenuStr, "ThreadsDir");
+	itsFileMenu = menuBar->PrependTextMenu(JGetString("MenuTitle::Generic_File"));
+	itsFileMenu->SetMenuItems(kFileMenuStr);
 	itsFileMenu->SetUpdateAction(JXMenu::kDisableNone);
 	itsFileMenu->AttachHandlers(this,
 		&RegistersDir::UpdateFileMenu,
 		&RegistersDir::HandleFileMenu);
-
-	itsFileMenu->SetItemImage(kOpenCmd, jx_file_open);
+	ConfigureFileMenu(itsFileMenu);
 
 	itsWidget->AppendEditMenu(menuBar);
 
@@ -173,7 +157,7 @@ RegistersDir::BuildWindow()
 	assert( wdMenu != nullptr );
 	menuBar->AppendMenu(wdMenu);
 
-	GetApplication()->CreateHelpMenu(menuBar, "RegistersDir", "VarTreeHelp-Registers");
+	GetApplication()->CreateHelpMenu(menuBar, "VarTreeHelp-Registers");
 }
 
 /******************************************************************************

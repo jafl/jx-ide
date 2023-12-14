@@ -29,44 +29,6 @@
 #include <jx-af/jcore/JNamedTreeList.h>
 #include <jx-af/jcore/jAssert.h>
 
-// File menu
-
-static const JUtf8Byte* kFileMenuStr =
-	"    Open source file... %k Meta-O %i" kOpenSourceFileAction
-	"%l| Close               %k Meta-W %i" kJXCloseWindowAction
-	"  | Quit                %k Meta-Q %i" kJXQuitAction;
-
-enum
-{
-	kOpenCmd = 1,
-	kCloseWindowCmd,
-	kQuitCmd
-};
-
-// Actions menu
-
-static const JUtf8Byte* kActionMenuStr =
-	"    Display as C string %k Meta-S       %i" kDisplayAsCStringAction
-	"%l| Display as 1D array %k Meta-Shift-A %i" kDisplay1DArrayAction
-	"  | Plot as 1D array                    %i" kPlot1DArrayAction
-	"  | Display as 2D array                 %i" kDisplay2DArrayAction
-	"%l| Watch expression                    %i" kWatchVarValueAction
-	"  | Watch expression location           %i" kWatchVarLocationAction
-	"%l| Examine memory                      %i" kExamineMemoryAction
-	"  | Disassemble memory                  %i" kDisasmMemoryAction;
-
-enum
-{
-	kDisplayAsCStringCmd = 1,
-	kDisplay1DArrayCmd,
-	kPlot1DArrayCmd,
-	kDisplay2DArrayCmd,
-	kWatchVarCmd,
-	kWatchLocCmd,
-	kExamineMemCmd,
-	kDisassembleMemCmd
-};
-
 /******************************************************************************
  Constructor
 
@@ -120,13 +82,9 @@ LocalVarsDir::Activate()
 
  *****************************************************************************/
 
+#include "Generic-File.h"
+#include "LocalVarsDir-Actions.h"
 #include "medic_local_variables_window.xpm"
-
-#include "medic_show_1d_array.xpm"
-#include "medic_show_2d_plot.xpm"
-#include "medic_show_2d_array.xpm"
-#include "medic_show_memory.xpm"
-#include <jx-af/image/jx/jx_file_open.xpm>
 
 void
 LocalVarsDir::BuildWindow()
@@ -174,26 +132,21 @@ LocalVarsDir::BuildWindow()
 
 	// menus
 
-	itsFileMenu = menuBar->PrependTextMenu(JGetString("FileMenuTitle::JXGlobal"));
-	itsFileMenu->SetMenuItems(kFileMenuStr, "ThreadsDir");
+	itsFileMenu = menuBar->PrependTextMenu(JGetString("MenuTitle::Generic_File"));
+	itsFileMenu->SetMenuItems(kFileMenuStr);
 	itsFileMenu->SetUpdateAction(JXMenu::kDisableNone);
 	itsFileMenu->AttachHandlers(this,
 		&LocalVarsDir::UpdateFileMenu,
 		&LocalVarsDir::HandleFileMenu);
+	ConfigureFileMenu(itsFileMenu);
 
-	itsFileMenu->SetItemImage(kOpenCmd, jx_file_open);
-
-	itsActionMenu = menuBar->AppendTextMenu(JGetString("ActionsMenuTitle::global"));
+	itsActionMenu = menuBar->AppendTextMenu(JGetString("MenuTitle::LocalVarsDir_Actions"));
 	menuBar->InsertMenu(3, itsActionMenu);
-	itsActionMenu->SetMenuItems(kActionMenuStr, "LocalVarsDir");
+	itsActionMenu->SetMenuItems(kActionsMenuStr);
 	itsActionMenu->AttachHandlers(this,
 		&LocalVarsDir::UpdateActionMenu,
 		&LocalVarsDir::HandleActionMenu);
-
-	itsActionMenu->SetItemImage(kDisplay1DArrayCmd, medic_show_1d_array);
-	itsActionMenu->SetItemImage(kPlot1DArrayCmd,    medic_show_2d_plot);
-	itsActionMenu->SetItemImage(kDisplay2DArrayCmd, medic_show_2d_array);
-	itsActionMenu->SetItemImage(kExamineMemCmd,     medic_show_memory);
+	ConfigureActionsMenu(itsActionMenu);
 
 	auto* wdMenu =
 		jnew JXWDMenu(JGetString("WindowsMenuTitle::JXGlobal"), menuBar,
@@ -201,7 +154,7 @@ LocalVarsDir::BuildWindow()
 	assert( wdMenu != nullptr );
 	menuBar->AppendMenu(wdMenu);
 
-	GetApplication()->CreateHelpMenu(menuBar, "LocalVarsDir", "VarTreeHelp-Local");
+	GetApplication()->CreateHelpMenu(menuBar, "VarTreeHelp-Local");
 }
 
 /******************************************************************************

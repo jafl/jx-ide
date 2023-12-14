@@ -1,0 +1,66 @@
+jx_menu_editor 0
+846 250
+"SourceDirector"
+"Preferences"
+'p
+40
+40
+195
+100
+40
+185
+151
+75
+
+0
+1
+0
+0 ""
+"Preferences..."
+""
+'p
+"__Preferences"
+"kEditPrefsCmd"
+0
+
+1
+0
+0 ""
+"Toolbar buttons..."
+""
+'t
+"__ToolbarButtons"
+"kEditToolBarCmd"
+0
+
+1
+0
+0 ""
+"Custom commands..."
+""
+'c
+"__CustomCommands"
+"kEditCmdsCmd"
+0
+
+1
+0
+0 ""
+"Mac/Win/X emulation..."
+""
+'e
+"__MacWinXEmulation"
+"kEditMacWinPrefsCmd"
+1
+
+1
+0
+0 ""
+"Save window size as default"
+""
+'s
+"__SaveWindowSizeAsDefault"
+"kWindowSizeCmd"
+0
+
+0

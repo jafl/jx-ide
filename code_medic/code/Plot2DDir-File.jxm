@@ -1,0 +1,76 @@
+jx_menu_editor 0
+755 278
+"Plot2DDir"
+"File"
+'f
+40
+40
+157
+100
+40
+138
+134
+75
+
+0
+1
+0
+1 "jx_file_open.xpm"
+"Open source file..."
+"Ctrl-O"
+'o
+"OpenSourceFile"
+"kOpenCmd"
+1
+
+1
+0
+0 ""
+"PostScript page setup..."
+""
+' 
+"PageSetup::JX"
+"kPSPageSetupCmd"
+0
+
+1
+0
+1 "jx_file_print.xpm"
+"Print PostScript..."
+"Ctrl-P"
+'p
+"Print::JX"
+"kPrintPSCmd"
+0
+
+1
+0
+0 ""
+"Print EPS..."
+"Ctrl-P"
+'e
+"Print::JX"
+"kPrintEPSCmd"
+1
+
+1
+0
+0 ""
+"Close"
+"Ctrl-W"
+'c
+"CloseWindow::JX"
+"kCloseWindowCmd"
+0
+
+1
+0
+0 ""
+"Quit"
+"Ctrl-Q"
+'q
+"Quit::JX"
+"kQuitCmd"
+0
+
+0

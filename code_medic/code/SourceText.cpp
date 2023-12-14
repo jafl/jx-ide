@@ -27,23 +27,7 @@
 #include <jx-af/jcore/jASCIIConstants.h>
 #include <jx-af/jcore/jAssert.h>
 
-// Search menu
-
-#include "jcc_balance_braces.xpm"
-
-static const JUtf8Byte* kSearchMenuStr =
-	"    Balance closest grouping symbols %k Meta-B     %i" kBalanceGroupingSymbolAction
-	"%l| Go to line...                    %k Meta-comma %i" kGoToLineAction
-	"  | Go to current line               %k Meta-<     %i" kGoToCurrentLineAction;
-
-// offsets from itsFirstSearchMenuItem
-
-enum
-{
-	kBalanceCmd = 0,
-	kGoToLineCmd,
-	kGoToCurrentLineCmd
-};
+#include "SourceText-Search.h"
 
 /******************************************************************************
  Constructor
@@ -52,7 +36,7 @@ enum
 
 SourceText::SourceText
 	(
-	SourceDirector*	srcDir,
+	SourceDirector*		srcDir,
 	CommandDirector*	cmdDir,
 	JXMenuBar*			menuBar,
 	JXScrollbarSet*		scrollbarSet,
@@ -76,12 +60,11 @@ SourceText::SourceText
 	SetSingleFocusWidget();
 
 	JXTextMenu* searchMenu = AppendSearchMenu(menuBar);
-	itsFirstSearchMenuItem = searchMenu->GetItemCount() + 1;
-	searchMenu->ShowSeparatorAfter(itsFirstSearchMenuItem-1);
-	searchMenu->AppendMenuItems(kSearchMenuStr, "SourceText");
+	itsSearchMenuItemOffset = searchMenu->GetItemCount();
+	searchMenu->ShowSeparatorAfter(itsSearchMenuItemOffset);
+	searchMenu->AppendMenuItems(kSearchMenuStr);
 	ListenTo(searchMenu);
-
-	searchMenu->SetItemImage(itsFirstSearchMenuItem + kBalanceCmd, jcc_balance_braces);
+	ConfigureSearchMenu(searchMenu, itsSearchMenuItemOffset);
 }
 
 /******************************************************************************
@@ -306,15 +289,15 @@ SourceText::UpdateCustomSearchMenuItems()
 	const bool ok = GetSearchMenu(&searchMenu);
 	assert( ok );
 
-	searchMenu->EnableItem(itsFirstSearchMenuItem + kGoToLineCmd);
+	searchMenu->EnableItem(itsSearchMenuItemOffset + kGoToLineCmd);
 
 	if (!GetText()->IsEmpty())
 	{
-		searchMenu->EnableItem(itsFirstSearchMenuItem + kBalanceCmd);
+		searchMenu->EnableItem(itsSearchMenuItemOffset + kBalanceCmd);
 
 		if (itsSrcDir->IsMainSourceWindow())
 		{
-			searchMenu->EnableItem(itsFirstSearchMenuItem + kGoToCurrentLineCmd);
+			searchMenu->EnableItem(itsSearchMenuItemOffset + kGoToCurrentLineCmd);
 		}
 	}
 }
@@ -330,7 +313,7 @@ SourceText::HandleCustomSearchMenuItems
 	const JIndex origIndex
 	)
 {
-	const JInteger index = JInteger(origIndex) - JInteger(itsFirstSearchMenuItem);
+	const JInteger index = JInteger(origIndex) - JInteger(itsSearchMenuItemOffset);
 	Focus();
 
 	if (index == kBalanceCmd)
@@ -358,4 +341,41 @@ SourceText::HandleCustomSearchMenuItems
 	{
 		return false;
 	}
+}
+
+/******************************************************************************
+ UpgradeSearchMenuToolBarID (virtual protected)
+
+ ******************************************************************************/
+
+static const JUtf8Byte* kToolbarIDMap[] =
+{
+	"GDBBalanceGroupingSymbol",	"BalanceGroupingSymbol::SourceText",
+	"GDBGoToLine",				"GoToLine::SourceText",
+	"GDBGoToCurrentLine",		"GoToCurrentLine::SourceText",
+};
+
+const JSize kToolbarIDMapCount = sizeof(kToolbarIDMap) / sizeof(JUtf8Byte*);
+
+bool
+SourceText::UpgradeSearchMenuToolBarID
+	(
+	JString* s
+	)
+{
+	if (!s->StartsWith("GDB"))
+	{
+		return false;
+	}
+
+	for (JUnsignedOffset i=0; i<kToolbarIDMapCount; i+=2)
+	{
+		if (*s == kToolbarIDMap[i])
+		{
+			*s = kToolbarIDMap[i+1];
+			return true;
+		}
+	}
+
+	return false;
 }

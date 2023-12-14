@@ -24,20 +24,6 @@
 #include <jx-af/jcore/JNamedTreeNode.h>
 #include <jx-af/jcore/jAssert.h>
 
-// File menu
-
-static const JUtf8Byte* kFileMenuStr =
-	"    Open source file... %k Meta-O %i" kOpenSourceFileAction
-	"%l| Close               %k Meta-W %i" kJXCloseWindowAction
-	"  | Quit                %k Meta-Q %i" kJXQuitAction;
-
-enum
-{
-	kOpenCmd = 1,
-	kCloseWindowCmd,
-	kQuitCmd
-};
-
 /******************************************************************************
  Constructor
 
@@ -85,9 +71,8 @@ StackDir::Activate()
 
  *****************************************************************************/
 
+#include "Generic-File.h"
 #include "medic_stack_trace_window.xpm"
-
-#include <jx-af/image/jx/jx_file_open.xpm>
 
 void
 StackDir::BuildWindow
@@ -135,14 +120,13 @@ StackDir::BuildWindow
 
 	// menus
 
-	itsFileMenu = menuBar->AppendTextMenu(JGetString("FileMenuTitle::JXGlobal"));
-	itsFileMenu->SetMenuItems(kFileMenuStr, "StackDir");
+	itsFileMenu = menuBar->AppendTextMenu(JGetString("MenuTitle::Generic_File"));
+	itsFileMenu->SetMenuItems(kFileMenuStr);
 	itsFileMenu->SetUpdateAction(JXMenu::kDisableNone);
 	itsFileMenu->AttachHandlers(this,
 		&StackDir::UpdateFileMenu,
 		&StackDir::HandleFileMenu);
-
-	itsFileMenu->SetItemImage(kOpenCmd, jx_file_open);
+	ConfigureFileMenu(itsFileMenu);
 
 	auto* wdMenu =
 		jnew JXWDMenu(JGetString("WindowsMenuTitle::JXGlobal"), menuBar,
@@ -150,7 +134,7 @@ StackDir::BuildWindow
 	assert( wdMenu != nullptr );
 	menuBar->AppendMenu(wdMenu);
 
-	GetApplication()->CreateHelpMenu(menuBar, "StackDir", "StackHelp");
+	GetApplication()->CreateHelpMenu(menuBar, "StackHelp");
 }
 
 /******************************************************************************

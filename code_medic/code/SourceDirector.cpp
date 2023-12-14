@@ -44,64 +44,6 @@
 #include <jx-af/jcore/jFileUtil.h>
 #include <jx-af/jcore/jAssert.h>
 
-// File menu
-
-static const JUtf8Byte* kFileMenuStr =
-	"    Open source file...      %k Meta-O       %i" kOpenSourceFileAction
-	"  | Open this file in editor %k Meta-Shift-O %i" kEditSourceFileAction
-	"%l| Load configuration...    %k Ctrl-O       %i" kLoadConfigAction
-	"  | Save configuration...    %k Ctrl-S       %i" kSaveConfigAction
-	"%l| Page setup...                            %i" kJXPageSetupAction
-	"  | Print...                 %k Meta-P       %i" kJXPrintAction
-	"%l| Close                    %k Meta-W       %i" kJXCloseWindowAction
-	"  | Quit                     %k Meta-Q       %i" kJXQuitAction;
-
-enum
-{
-	kOpenCmd = 1,
-	kEditCmd,
-	kLoadConfigCmd,
-	kSaveConfigCmd,
-	kPageSetupCmd,
-	kPrintCmd,
-	kCloseCmd,
-	kQuitCmd
-};
-
-// Prefs menu
-
-static const JUtf8Byte* kPrefsMenuStr =
-	"    gdb %r"
-	"  | lldb %r"
-	"  | Java %r"
-	"  | Xdebug %r"
-	"%l| Preferences..."
-	"  | Toolbar buttons..."
-	"  | Custom commands..."
-	"  | Mac/Win/X emulation..."
-	"%l| Save window size as default";
-
-enum
-{
-	kUseGDBCmd = 1,
-	kUseLLDBCmd,
-	kUseJavaCmd,
-	kUseXdebugCmd,
-	kEditPrefsCmd,
-	kEditToolBarCmd,
-	kEditCmdsCmd,
-	kEditMacWinPrefsCmd,
-	kWindowSizeCmd	// must be last item (see menu creation code)
-};
-
-static const JIndex kDebuggerTypeToMenuIndex[] =
-{
-	kUseGDBCmd,
-	kUseXdebugCmd,
-	kUseJavaCmd,
-	kUseLLDBCmd
-};
-
 /******************************************************************************
  Constructor function (static)
 
@@ -235,11 +177,10 @@ SourceDirector::GetCurrentExecLine()
 
  ******************************************************************************/
 
+#include "SourceDirector-File.h"
+#include "SourceDirector-Preferences.h"
 #include "medic_current_source_window.xpm"
 #include "medic_current_asm_window.xpm"
-
-#include <jx-af/image/jx/jx_file_open.xpm>
-#include <jx-af/image/jx/jx_file_print.xpm>
 
 void
 SourceDirector::BuildWindow()
@@ -289,7 +230,7 @@ SourceDirector::BuildWindow()
 		GetPrefsManager()->GetWindowSize(kMainCodeWindSizeID, window);
 
 		JXDisplay* display = GetDisplay();
-		auto* icon      = jnew JXImage(display, medic_current_source_window);
+		auto* icon         = jnew JXImage(display, medic_current_source_window);
 		window->SetIcon(icon);
 	}
 	else if (itsType == kMainAsmType)
@@ -300,7 +241,7 @@ SourceDirector::BuildWindow()
 		GetPrefsManager()->GetWindowSize(kMainAsmWindSizeID, window);
 
 		JXDisplay* display = GetDisplay();
-		auto* icon      = jnew JXImage(display, medic_current_asm_window);
+		auto* icon         = jnew JXImage(display, medic_current_asm_window);
 		window->SetIcon(icon);
 	}
 	else if (itsType == kAsmType)
@@ -315,14 +256,12 @@ SourceDirector::BuildWindow()
 	}
 
 	itsFileMenu = itsMenuBar->AppendTextMenu(JGetString("FileMenuTitle::JXGlobal"));
-	itsFileMenu->SetMenuItems(kFileMenuStr, "SourceDirector");
+	itsFileMenu->SetMenuItems(kFileMenuStr);
 	itsFileMenu->SetUpdateAction(JXMenu::kDisableNone);
 	itsFileMenu->AttachHandlers(this,
 		&SourceDirector::UpdateFileMenu,
 		&SourceDirector::HandleFileMenu);
-
-	itsFileMenu->SetItemImage(kOpenCmd,  jx_file_open);
-	itsFileMenu->SetItemImage(kPrintCmd, jx_file_print);
+	ConfigureFileMenu(itsFileMenu);
 
 	// appends Edit & Search menus
 
@@ -331,7 +270,6 @@ SourceDirector::BuildWindow()
 	auto* scrollbarSet =
 		jnew JXScrollbarSet(itsToolBar->GetWidgetEnclosure(),
 						   JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 100,100);
-	assert( scrollbarSet != nullptr );
 	scrollbarSet->FitToEnclosure();
 
 	JXContainer* encl = scrollbarSet->GetScrollEnclosure();
@@ -349,17 +287,16 @@ SourceDirector::BuildWindow()
 	{
 		itsTable =
 			jnew LineAddressTable(this, itsText, scrollbarSet, encl,
-								   JXWidget::kFixedLeft, JXWidget::kVElastic,
-								   0, 0, kInitTableWidth, 100);
+								  JXWidget::kFixedLeft, JXWidget::kVElastic,
+								  0, 0, kInitTableWidth, 100);
 	}
 	else
 	{
 		itsTable =
 			jnew LineNumberTable(this, itsText, scrollbarSet, encl,
-								  JXWidget::kFixedLeft, JXWidget::kVElastic,
-								  0, 0, kInitTableWidth, 100);
+								 JXWidget::kFixedLeft, JXWidget::kVElastic,
+								 0, 0, kInitTableWidth, 100);
 	}
-	assert( itsTable != nullptr );
 	itsTable->FitToEnclosure(false, true);
 
 	// requires itsText
@@ -369,22 +306,22 @@ SourceDirector::BuildWindow()
 
 	itsFnMenu =
 		jnew FunctionMenu(nullptr, kUnknownFT, itsText, itsMenuBar,
-						   JXWidget::kFixedLeft, JXWidget::kFixedTop,
-						   0,0, 10,10);
+						  JXWidget::kFixedLeft, JXWidget::kFixedTop,
+						  0,0, 10,10);
 	itsFnMenu->Hide();
 
-	itsPrefsMenu = itsMenuBar->AppendTextMenu(JGetString("PrefsMenuTitle::JXGlobal"));
-	itsPrefsMenu->SetMenuItems(kPrefsMenuStr, "SourceDirector");
+	itsPrefsMenu = itsMenuBar->AppendTextMenu(JGetString("MenuTitle::SourceDirector_Preferences"));
+	itsPrefsMenu->SetMenuItems(kPreferencesMenuStr);
 	itsPrefsMenu->SetUpdateAction(JXMenu::kDisableNone);
+	itsPrefsMenu->AttachHandler(this, &SourceDirector::HandlePrefsMenu);
+	ConfigurePreferencesMenu(itsPrefsMenu);
+
 	if (IsMainSourceWindow())
 	{
 		itsPrefsMenu->RemoveItem(kWindowSizeCmd);
 	}
-	itsPrefsMenu->AttachHandlers(this,
-		&SourceDirector::UpdateFileMenu,
-		&SourceDirector::HandleFileMenu);
 
-	itsHelpMenu = GetApplication()->CreateHelpMenu(itsMenuBar, "SourceDirector", "SourceWindowHelp");
+	itsHelpMenu = GetApplication()->CreateHelpMenu(itsMenuBar, "SourceWindowHelp");
 
 	if (!IsMainSourceWindow())
 	{
@@ -402,11 +339,24 @@ SourceDirector::BuildWindow()
 void
 SourceDirector::CreateWindowsMenu()
 {
+	auto f = std::function([this](JString* s)
+	{
+		if (s->StartsWith("GDB") &&
+			!itsText->UpgradeSearchMenuToolBarID(s) &&
+			!CommandDirector::UpgradeDebugMenuToolBarID(s))
+		{
+			JStringIterator iter(s);
+			iter.SkipNext(3);
+			iter.RemoveAllPrev();
+			*s += "::SourceDirector";
+		}
+	});
+
 	CommandDirector::CreateWindowsMenuAndToolBar(
 			itsMenuBar, itsToolBar,
 			itsType == kMainAsmType || itsType == kAsmType,
 			true, itsType != kMainSourceType,
-			itsDebugMenu, itsPrefsMenu, itsHelpMenu);
+			itsDebugMenu, itsPrefsMenu, itsHelpMenu, &f);
 }
 
 /******************************************************************************
@@ -921,7 +871,6 @@ void
 SourceDirector::UpdateFileMenu()
 {
 	itsFileMenu->SetItemEnabled(kEditCmd, !itsCurrentFile.IsEmpty());
-	itsFileMenu->SetItemEnabled(kLoadConfigCmd, itsLink->HasProgram());
 	itsFileMenu->SetItemEnabled(kCloseCmd, !GetWindow()->IsDocked());
 }
 
@@ -955,15 +904,6 @@ SourceDirector::HandleFileMenu
 					visualIndex);
 	}
 
-	else if (index == kLoadConfigCmd)
-	{
-		itsCommandDir->LoadConfig();
-	}
-	else if (index == kSaveConfigCmd)
-	{
-		itsCommandDir->SaveConfig();
-	}
-
 	else if (index == kPageSetupCmd)
 	{
 		itsText->HandlePTPageSetup();
@@ -991,20 +931,6 @@ SourceDirector::HandleFileMenu
 }
 
 /******************************************************************************
- UpdatePrefsMenu
-
- ******************************************************************************/
-
-void
-SourceDirector::UpdatePrefsMenu()
-{
-	PrefsManager::DebuggerType type = GetPrefsManager()->GetDebuggerType();
-	itsPrefsMenu->CheckItem(kDebuggerTypeToMenuIndex[ type ]);
-
-	itsPrefsMenu->DisableItem(kUseJavaCmd);
-}
-
-/******************************************************************************
  HandlePrefsMenu
 
  ******************************************************************************/
@@ -1015,24 +941,7 @@ SourceDirector::HandlePrefsMenu
 	const JIndex index
 	)
 {
-	if (index == kUseGDBCmd)
-	{
-		GetPrefsManager()->SetDebuggerType(PrefsManager::kGDBType);
-	}
-	else if (index == kUseLLDBCmd)
-	{
-		GetPrefsManager()->SetDebuggerType(PrefsManager::kLLDBType);
-	}
-	else if (index == kUseJavaCmd)
-	{
-		GetPrefsManager()->SetDebuggerType(PrefsManager::kJavaType);
-	}
-	else if (index == kUseXdebugCmd)
-	{
-		GetPrefsManager()->SetDebuggerType(PrefsManager::kXdebugType);
-	}
-
-	else if (index == kEditPrefsCmd)
+	if (index == kEditPrefsCmd)
 	{
 		GetPrefsManager()->EditPrefs();
 	}

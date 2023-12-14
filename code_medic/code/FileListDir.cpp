@@ -24,32 +24,6 @@
 #include <jx-af/jcore/JTableSelection.h>
 #include <jx-af/jcore/jAssert.h>
 
-// File menu
-
-static const JUtf8Byte* kFileMenuStr =
-	"    Open source file... %k Meta-O %i" kOpenSourceFileAction
-	"%l| Close               %k Meta-W %i" kJXCloseWindowAction
-	"  | Quit                %k Meta-Q %i" kJXQuitAction;
-
-enum
-{
-	kOpenCmd = 1,
-	kCloseWindowCmd,
-	kQuitCmd
-};
-
-// Actions menu
-
-static const JUtf8Byte* kActionMenuStr =
-	"    Use wildcard filter %b"
-	"  | Use regex filter    %b";
-
-enum
-{
-	kShowFilterCmd = 1,
-	kShowRegexCmd
-};
-
 // setup information
 
 const JFileVersion kCurrentSetupVersion = 0;
@@ -110,11 +84,9 @@ FileListDir::GetTable()
 
  ******************************************************************************/
 
+#include "Generic-File.h"
+#include "FileListDir-Actions.h"
 #include "medic_file_list_window.xpm"
-
-#include <jx-af/image/jx/jx_file_open.xpm>
-#include <jx-af/image/jx/jx_filter_wildcard.xpm>
-#include <jx-af/image/jx/jx_filter_regex.xpm>
 
 void
 FileListDir::BuildWindow()
@@ -150,24 +122,21 @@ FileListDir::BuildWindow()
 
 	// menus
 
-	itsFileMenu = menuBar->PrependTextMenu(JGetString("FileMenuTitle::JXGlobal"));
-	itsFileMenu->SetMenuItems(kFileMenuStr, "ThreadsDir");
+	itsFileMenu = menuBar->PrependTextMenu(JGetString("MenuTitle::Generic_File"));
+	itsFileMenu->SetMenuItems(kFileMenuStr);
 	itsFileMenu->SetUpdateAction(JXMenu::kDisableNone);
 	itsFileMenu->AttachHandlers(this,
 		&FileListDir::UpdateFileMenu,
 		&FileListDir::HandleFileMenu);
+	ConfigureFileMenu(itsFileMenu);
 
-	itsFileMenu->SetItemImage(kOpenCmd, jx_file_open);
-
-	itsActionMenu = menuBar->AppendTextMenu(JGetString("ActionsMenuTitle::global"));
-	itsActionMenu->SetMenuItems(kActionMenuStr, "FileListDir");
+	itsActionMenu = menuBar->AppendTextMenu(JGetString("MenuTitle::FileListDir_Actions"));
+	itsActionMenu->SetMenuItems(kActionsMenuStr);
 	itsActionMenu->SetUpdateAction(JXMenu::kDisableNone);
 	itsActionMenu->AttachHandlers(this,
 		&FileListDir::UpdateActionMenu,
 		&FileListDir::HandleActionMenu);
-
-	itsActionMenu->SetItemImage(kShowFilterCmd, jx_filter_wildcard);
-	itsActionMenu->SetItemImage(kShowRegexCmd,  jx_filter_regex);
+	ConfigureActionsMenu(itsActionMenu);
 
 	auto* wdMenu =
 		jnew JXWDMenu(JGetString("WindowsMenuTitle::JXGlobal"), menuBar,
@@ -175,7 +144,7 @@ FileListDir::BuildWindow()
 	assert( wdMenu != nullptr );
 	menuBar->AppendMenu(wdMenu);
 
-	GetApplication()->CreateHelpMenu(menuBar, "FileListDir", "SourceWindowHelp-FileList");
+	GetApplication()->CreateHelpMenu(menuBar, "SourceWindowHelp-FileList");
 }
 
 /******************************************************************************

@@ -101,7 +101,7 @@ VarTreeWidget::VarTreeWidget
 	assert( found );
 	itsCopyPathCmdIndex++;
 	itsCopyValueCmdIndex = itsCopyPathCmdIndex+1;
-	itsEditMenu->InsertMenuItems(itsCopyPathCmdIndex, kEditMenuAddStr, "VarTreeWidget");
+	itsEditMenu->InsertMenuItems(itsCopyPathCmdIndex, kEditMenuAddStr);
 	itsEditMenu->AttachHandlers(this,
 		&VarTreeWidget::UpdateEditMenu,
 		&VarTreeWidget::HandleEditMenu);
@@ -109,13 +109,13 @@ VarTreeWidget::VarTreeWidget
 	// Base conversion menus
 
 	itsBaseMenu = menuBar->AppendTextMenu(JGetString("BaseMenuTitle::VarTreeWidget"));
-	itsBaseMenu->SetMenuItems(kBaseMenuStr, "VarTreeWidget");
+	itsBaseMenu->SetMenuItems(kBaseMenuStr);
 	itsBaseMenu->SetUpdateAction(JXMenu::kDisableNone);
 	ListenTo(itsBaseMenu);
 
 	itsBasePopupMenu =
 		jnew JXTextMenu(JString::empty, this, kFixedLeft, kFixedTop, 0,0, 10, 10);
-	itsBasePopupMenu->SetMenuItems(kBaseMenuStr, "VarTreeWidget");
+	itsBasePopupMenu->SetMenuItems(kBaseMenuStr);
 	itsBasePopupMenu->SetUpdateAction(JXMenu::kDisableNone);
 	itsBasePopupMenu->SetToHiddenPopupMenu();
 	ListenTo(itsBasePopupMenu);

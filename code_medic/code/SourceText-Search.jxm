@@ -1,0 +1,46 @@
+jx_menu_editor 0
+929 212
+"SourceText"
+"Search"
+' 
+40
+40
+214
+100
+40
+200
+200
+75
+
+0
+1
+0
+0 "jcc_balance_braces.xpm"
+"Balance closest grouping symbols"
+"Ctrl-B"
+'g
+"BalanceGroupingSymbol"
+"kBalanceCmd"
+1
+
+1
+0
+0 ""
+"Go to line..."
+"Ctrl-comma"
+'t
+"GoToLine"
+"kGoToLineCmd"
+0
+
+1
+0
+0 ""
+"Go to current line"
+"Ctrl-<"
+'c
+"GoToCurrentLine"
+"kGoToCurrentLineCmd"
+0
+
+0

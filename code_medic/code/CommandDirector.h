@@ -78,20 +78,16 @@ public:
 	void		AdjustDebugMenu(JXTextMenu* menu);
 	void		UpdateDebugMenu(JXTextMenu* menu, JXTEBase* te1, JXTEBase* te2);
 	void		HandleDebugMenu(JXTextMenu* menu, const JIndex index, JXTEBase* te1, JXTEBase* te2);
+	static bool	UpgradeDebugMenuToolBarID(JString* s);
 
-	static void		CreateWindowsMenuAndToolBar(JXMenuBar* menuBar, JXToolBar* toolBar,
-												const bool includeStepAsm,
-												const bool includeCmdLine,
-												const bool includeCurrSrc,
-												JXTextMenu* debugMenu,
-												JXTextMenu* prefsMenu,
-												JXTextMenu* helpMenu);
-	static void		AddWindowsMenuItemsToToolBar(JXToolBar* toolBar,
-												 JXTextMenu* windowsMenu,
-												 const bool includeCmdLine,
-												 const bool includeCurrSrc);
-	static void		AddDebugMenuItemsToToolBar(JXToolBar* toolBar, JXTextMenu* debugMenu,
-											   const bool includeStepAsm);
+	static void	CreateWindowsMenuAndToolBar(JXMenuBar* menuBar, JXToolBar* toolBar,
+											const bool includeStepAsm,
+											const bool includeCmdLine,
+											const bool includeCurrSrc,
+											JXTextMenu* debugMenu,
+											JXTextMenu* prefsMenu,
+											JXTextMenu* helpMenu,
+											std::function<void(JString*)>* upgradeToolBarID);
 
 	SourceDirector*	GetCurrentSourceDir();
 	ThreadsDir*		GetThreadsDir();
@@ -195,6 +191,13 @@ private:
 
 	void	SaveInCurrentFile();
 	void	SaveInNewFile();
+
+	static void	AddWindowsMenuItemsToToolBar(JXToolBar* toolBar,
+											 JXTextMenu* windowsMenu,
+											 const bool includeCmdLine,
+											 const bool includeCurrSrc);
+	static void	AddDebugMenuItemsToToolBar(JXToolBar* toolBar, JXTextMenu* debugMenu,
+										   const bool includeStepAsm);
 
 	// Debug menu
 

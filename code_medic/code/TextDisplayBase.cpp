@@ -24,7 +24,7 @@
 TextDisplayBase::TextDisplayBase
 	(
 	const Type			type,
-	const bool		breakCROnly,
+	const bool			breakCROnly,
 	JXMenuBar*			menuBar,
 	JXScrollbarSet*		scrollbarSet,
 	JXContainer*		enclosure,
@@ -48,7 +48,7 @@ TextDisplayBase::TextDisplayBase
 	(
 	JXStyledText*		text,
 	const Type			type,
-	const bool		breakCROnly,
+	const bool			breakCROnly,
 	JXMenuBar*			menuBar,
 	JXScrollbarSet*		scrollbarSet,
 	JXContainer*		enclosure,
@@ -131,4 +131,18 @@ TextDisplayBase::AdjustFont
 	const JCoordinate charWidth = te->GetText()->GetDefaultFont().GetCharWidth(fontMgr, JUtf8Character(' '));
 	te->SetDefaultTabWidth(tabCharCount * charWidth);
 	te->GetText()->SetCRMTabCharCount(tabCharCount);
+}
+
+/******************************************************************************
+ UpgradeSearchMenuToolBarID (virtual protected)
+
+ ******************************************************************************/
+
+bool
+TextDisplayBase::UpgradeSearchMenuToolBarID
+	(
+	JString* s
+	)
+{
+	return false;
 }

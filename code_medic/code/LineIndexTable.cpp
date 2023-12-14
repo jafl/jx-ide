@@ -24,6 +24,7 @@
 #include <jx-af/jx/JXScrollbarSet.h>
 #include <jx-af/jx/JXScrollbar.h>
 #include <jx-af/jx/JXFontManager.h>
+#include <jx-af/jx/jXMenuUtil.h>
 #include <jx-af/jcore/JTableSelection.h>
 #include <jx-af/jcore/JPainter.h>
 #include <jx-af/jcore/JColorManager.h>
@@ -422,13 +423,13 @@ LineIndexTable::HandleMouseDown
 		OpenLineMenu(lineIndex, pt, buttonStates, modifiers, false);
 	}
 	else if (button == kJXLeftButton &&
-			 modifiers.GetState(JXMenu::AdjustNMShortcutModifier(kJXMetaKeyIndex)) &&
+			 modifiers.GetState(JXAdjustNMShortcutModifier(kJXMetaKeyIndex)) &&
 			 !modifiers.shift())
 	{
 		RunUntil(lineIndex);
 	}
 	else if (button == kJXLeftButton &&
-			 modifiers.GetState(JXMenu::AdjustNMShortcutModifier(kJXControlKeyIndex)))
+			 modifiers.GetState(JXAdjustNMShortcutModifier(kJXControlKeyIndex)))
 	{
 		SetExecutionPoint(lineIndex);
 	}
@@ -455,7 +456,7 @@ LineIndexTable::AdjustBreakpoints
 	JIndex bpIndex;
 	if (!GetFirstBreakpointOnLine(lineIndex, &bpIndex))
 	{
-		SetBreakpoint(lineIndex, modifiers.GetState(JXMenu::AdjustNMShortcutModifier(kJXMetaKeyIndex)) &&
+		SetBreakpoint(lineIndex, modifiers.GetState(JXAdjustNMShortcutModifier(kJXMetaKeyIndex)) &&
 			modifiers.shift());
 	}
 	else if (HasMultipleBreakpointsOnLine(bpIndex))
