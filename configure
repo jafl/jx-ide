@@ -45,6 +45,7 @@ elif command -v apt-get; then
 
 	if [[ -z $SNAPCRAFT_BUILD_ENVIRONMENT ]]; then
 		$SUDO apt update;
+		$SUDO apt -y install libeditorconfig-dev llvm liblldb-$LLDB_VERS-dev;
 
 		if [[ ! -f ../JX/Makefile && -z $JX_ROOT ]]; then
 			curl -LO https://libjx.sourceforge.net/${MODE:-release}/re-flex.deb
@@ -52,8 +53,6 @@ elif command -v apt-get; then
 			$SUDO apt install ./re-flex.deb ./jx-application-framework.deb;
 		fi
 	fi;
-
-	$SUDO apt -y install libeditorconfig-dev llvm liblldb-$LLDB_VERS-dev;
 
 	rm -f code_medic/lldb-include;
 	ln -sf /usr/lib/llvm-$LLDB_VERS/include code_medic/lldb-include;
@@ -111,5 +110,5 @@ make Makefiles;
 
 if [[ $1 != package ]]; then
 	touch code_crusader/image-build/* code_medic/image-build/* code_mill/image-build/*;
-	touch code_medic/backend/gdb/GDBVarTreeParserY.cpp code_medic/backend/gdb/GDBVarTreeParserY.hpp;
+	touch code_medic/backend/gdb/VarTreeParserY.cpp code_medic/backend/gdb/VarTreeParserY.hpp;
 fi
