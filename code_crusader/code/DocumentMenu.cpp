@@ -26,7 +26,6 @@
 
 DocumentMenu::DocumentMenu
 	(
-	const JString&		title,
 	JXContainer*		enclosure,
 	const HSizingOption	hSizing,
 	const VSizingOption	vSizing,
@@ -36,8 +35,12 @@ DocumentMenu::DocumentMenu
 	const JCoordinate	h
 	)
 	:
-	JXDocumentMenu(title, enclosure, hSizing, vSizing, x,y, w,h)
+	JXDocumentMenu(JGetString("WindowsMenuTitle::JXGlobal"), enclosure, hSizing, vSizing, x,y, w,h)
 {
+	if (JXMenu::GetDisplayStyle() == JXMenu::kWindowsStyle)
+	{
+		SetShortcuts(JGetString("WindowsMenuShortcut::JXGlobal"));
+	}
 }
 
 DocumentMenu::DocumentMenu

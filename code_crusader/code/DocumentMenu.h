@@ -14,7 +14,7 @@ class DocumentMenu : public JXDocumentMenu
 {
 public:
 
-	DocumentMenu(const JString& title, JXContainer* enclosure,
+	DocumentMenu(JXContainer* enclosure,
 				   const HSizingOption hSizing, const VSizingOption vSizing,
 				   const JCoordinate x, const JCoordinate y,
 				   const JCoordinate w, const JCoordinate h);

@@ -6,7 +6,7 @@
 
 MenuTitle::TreeDirector_Preferences "Preferences"
 
-__Project::TreeDirector "Tree... %h p"
+__Project::TreeDirector "Tree... %h r"
 __ToolbarButtons::TreeDirector "Toolbar buttons... %h t"
 __FileTypes::TreeDirector "File types... %h f"
 __ExternalEditors::TreeDirector "External editors... %h x"

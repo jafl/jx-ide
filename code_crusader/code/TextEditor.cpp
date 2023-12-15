@@ -41,7 +41,6 @@
 #include "PSPrinter.h"
 #include "globals.h"
 #include "sharedUtil.h"
-#include "actionDefs.h"
 
 #include <jx-af/jx/JXDisplay.h>
 #include <jx-af/jx/JXWindowDirector.h>

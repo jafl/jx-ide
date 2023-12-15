@@ -21,7 +21,6 @@
 #include <jx-af/jx/JXTextMenu.h>
 #include <jx-af/jx/JXToolBar.h>
 #include <jx-af/jx/JXTipOfTheDayDialog.h>
-#include <jx-af/jx/jXActionDefs.h>
 #include <jx-af/jcore/JLatentPG.h>
 #include <jx-af/jcore/jFileUtil.h>
 #include <jx-af/jcore/jStreamUtil.h>

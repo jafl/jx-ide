@@ -510,8 +510,7 @@ TreeDirector::BuildWindow
 	ListenTo(itsCmdMenu);
 
 	auto* fileListMenu =
-		jnew DocumentMenu(JGetString("WindowsMenuTitle::JXGlobal"), menuBar,
-						   JXWidget::kFixedLeft, JXWidget::kVElastic, 0,0, 10,10);
+		jnew DocumentMenu(menuBar, JXWidget::kFixedLeft, JXWidget::kVElastic, 0,0, 10,10);
 	assert( fileListMenu != nullptr );
 	menuBar->AppendMenu(fileListMenu);
 

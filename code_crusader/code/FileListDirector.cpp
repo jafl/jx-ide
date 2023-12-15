@@ -26,7 +26,6 @@
 #include "CommandMenu.h"
 #include "DocumentMenu.h"
 #include "FileHistoryMenu.h"
-#include "actionDefs.h"
 #include "globals.h"
 #include <jx-af/jx/JXDisplay.h>
 #include <jx-af/jx/JXWindow.h>
@@ -274,8 +273,7 @@ FileListDirector::BuildWindow()
 	ListenTo(itsCmdMenu);
 
 	auto* fileListMenu =
-		jnew DocumentMenu(JGetString("WindowsMenuTitle::JXGlobal"), menuBar,
-						   JXWidget::kFixedLeft, JXWidget::kVElastic, 0,0, 10,10);
+		jnew DocumentMenu(menuBar, JXWidget::kFixedLeft, JXWidget::kVElastic, 0,0, 10,10);
 	assert( fileListMenu != nullptr );
 	menuBar->AppendMenu(fileListMenu);
 

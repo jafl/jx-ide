@@ -11,7 +11,6 @@
 #include "CTree.h"
 #include "EditCPPMacroDialog.h"
 #include "ProjectDocument.h"
-#include "actionDefs.h"
 #include "globals.h"
 #include <jx-af/jx/JXTextMenu.h>
 #include <jx-af/jx/JXToolBar.h>

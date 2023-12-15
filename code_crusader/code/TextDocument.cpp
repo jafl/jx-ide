@@ -26,7 +26,6 @@
 #include "CommandMenu.h"
 #include "globals.h"
 #include "sharedUtil.h"
-#include "actionDefs.h"
 #include <jx-af/jx/JXDocumentManager.h>
 #include <jx-af/jx/JXWebBrowser.h>
 #include <jx-af/jx/JXWindow.h>
@@ -446,7 +445,7 @@ TextDocument::BuildWindow
 		&TextDocument::HandleSettingsMenu);
 	ConfigureSettingsMenu(itsSettingsMenu);
 
-	itsFileMenu = itsMenuBar->PrependTextMenu(JGetString("FileMenuTitle::JXGlobal"));
+	itsFileMenu = itsMenuBar->PrependTextMenu(JGetString("MenuTitle::TextDocument_File"));
 	itsFileMenu->SetMenuItems(kFileMenuStr);
 	itsFileMenu->SetUpdateAction(JXMenu::kDisableNone);
 	itsFileMenu->AttachHandlers(this,
@@ -481,8 +480,7 @@ TextDocument::BuildWindow
 	itsMenuBar->AppendMenu(itsCmdMenu);
 
 	itsWindowMenu =
-		jnew DocumentMenu(JGetString("WindowsMenuTitle::JXGlobal"), itsMenuBar,
-						   JXWidget::kFixedLeft, JXWidget::kVElastic, 0,0, 10,10);
+		jnew DocumentMenu(itsMenuBar, JXWidget::kFixedLeft, JXWidget::kVElastic, 0,0, 10,10);
 	assert( itsWindowMenu != nullptr );
 	itsMenuBar->AppendMenu(itsWindowMenu);
 
