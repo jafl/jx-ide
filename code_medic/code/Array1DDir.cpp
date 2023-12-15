@@ -14,7 +14,6 @@
 #include "VarNode.h"
 #include "CommandDirector.h"
 #include "globals.h"
-#include "actionDefs.h"
 
 #include <jx-af/jx/JXDisplay.h>
 #include <jx-af/jx/JXWindow.h>
@@ -24,7 +23,6 @@
 #include <jx-af/jx/JXStaticText.h>
 #include <jx-af/jx/JXScrollbarSet.h>
 #include <jx-af/jx/JXWDManager.h>
-#include <jx-af/jx/JXWDMenu.h>
 #include <jx-af/jx/JXImage.h>
 #include <jx-af/jx/JXCloseDirectorTask.h>
 
@@ -265,12 +263,7 @@ Array1DDir::BuildWindow()
 		&Array1DDir::HandleActionMenu);
 	ConfigureActionsMenu(itsActionMenu);
 
-	auto* wdMenu =
-		jnew JXWDMenu(JGetString("WindowsMenuTitle::JXGlobal"), menuBar,
-					 JXWidget::kFixedLeft, JXWidget::kVElastic, 0,0, 10,10);
-	assert( wdMenu != nullptr );
-	menuBar->AppendMenu(wdMenu);
-
+	GetApplication()->CreateWindowsMenu(menuBar);
 	GetApplication()->CreateHelpMenu(menuBar, "VarTreeHelp-Array1D");
 
 	GetDisplay()->GetWDManager()->DirectorCreated(this);

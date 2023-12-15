@@ -36,7 +36,6 @@
 #include "BreakpointManager.h"
 #include "globals.h"
 #include "fileVersions.h"
-#include "actionDefs.h"
 
 #include <jx-af/jx/JXDisplay.h>
 #include <jx-af/jx/JXWindow.h>
@@ -51,7 +50,6 @@
 #include <jx-af/jx/JXDockWidget.h>
 #include <jx-af/jx/JXStringHistoryMenu.h>
 #include <jx-af/jx/JXWDManager.h>
-#include <jx-af/jx/JXWDMenu.h>
 #include <jx-af/jx/JXChooseFileDialog.h>
 #include <jx-af/jx/JXSaveFileDialog.h>
 #include <jx-af/jx/JXImage.h>
@@ -69,6 +67,20 @@ const JSize kCmdHistoryLength = 100;
 // Debug menu
 
 JSize kFirstCustomDebugCmd;
+
+// Windows menu
+
+#define kShowCommandLineAction    "ShowCommandLine::Generic"
+#define kShowCurrentSourceAction  "ShowCurrentSource::Generic"
+#define kShowThreadsAction        "ShowThreads::Generic"
+#define kShowStackTraceAction     "ShowStackTrace::Generic"
+#define kShowBreakpointsAction    "ShowBreakpoints::Generic"
+#define kShowVariablesAction      "ShowVariables::Generic"
+#define kShowLocalVariablesAction "ShowLocalVariables::Generic"
+#define kShowCurrentAsmAction     "ShowCurrentAsm::Generic"
+#define kShowRegistersAction      "ShowRegisters::Generic"
+#define kShowFileListAction       "ShowFileList::Generic"
+#define kShowDebugInfoAction      "ShowDebugInfo::Generic"
 
 // Prefs menu
 
@@ -129,7 +141,7 @@ CommandDirector::CommandDirector
 	{
 		if (s->StartsWith("GDB") &&
 			!itsCommandOutput->UpgradeSearchMenuToolBarID(s) &&
-			!UpgradeDebugMenuToolBarID(s))
+			!UpgradeWindowsAndDebugMenusToolBarID(s))
 		{
 			JStringIterator iter(s);
 			iter.SkipNext(3);
@@ -611,7 +623,7 @@ CommandDirector::AddDebugMenuItemsToToolBar
 }
 
 /******************************************************************************
- UpgradeDebugMenuToolBarID (static)
+ UpgradeWindowsAndDebugMenusToolBarID (static)
 
  ******************************************************************************/
 
@@ -646,12 +658,24 @@ static const JUtf8Byte* kToolbarIDMap[] =
 	"GDBReverseFinishSub", "ReverseFinishSub::Generic",
 	"GDBReverseContinueRun", "ReverseContinueRun::Generic",
 	"GDBClearAllBreakpoints", "ClearAllBreakpoints::Generic",
+
+	"GDBShowCommandLine", kShowCommandLineAction,
+	"GDBShowCurrentSource", kShowCurrentSourceAction,
+	"GDBShowThreads", kShowThreadsAction,
+	"GDBShowStackTrace", kShowStackTraceAction,
+	"GDBShowBreakpoints", kShowBreakpointsAction,
+	"GDBShowVariables", kShowVariablesAction,
+	"GDBShowLocalVariables", kShowLocalVariablesAction,
+	"GDBShowCurrentAsm", kShowCurrentAsmAction,
+	"GDBShowRegisters", kShowRegistersAction,
+	"GDBShowFileList", kShowFileListAction,
+	"GDBShowDebugInfo", kShowDebugInfoAction,
 };
 
 const JSize kToolbarIDMapCount = sizeof(kToolbarIDMap) / sizeof(JUtf8Byte*);
 
 bool
-CommandDirector::UpgradeDebugMenuToolBarID
+CommandDirector::UpgradeWindowsAndDebugMenusToolBarID
 	(
 	JString* s
 	)
@@ -719,11 +743,7 @@ CommandDirector::CreateWindowsMenuAndToolBar
 	std::function<void(JString*)>*	upgradeToolBarID
 	)
 {
-	auto* wdMenu =
-		jnew JXWDMenu(JGetString("WindowsMenuTitle::JXGlobal"), menuBar,
-					 JXWidget::kFixedLeft, JXWidget::kVElastic, 0,0, 10,10);
-	assert( wdMenu != nullptr );
-	menuBar->InsertMenuBefore(prefsMenu, wdMenu);
+	auto* wdMenu = GetApplication()->CreateWindowsMenu(menuBar);
 
 	toolBar->LoadPrefs(upgradeToolBarID);
 	if (toolBar->IsEmpty())

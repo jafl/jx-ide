@@ -13,8 +13,6 @@
 #include "CommandDirector.h"
 #include "VarNode.h"
 #include "globals.h"
-#include "actionDefs.h"
-
 #include <jx-af/jx/JXDisplay.h>
 #include <jx-af/jx/JXWindow.h>
 #include <jx-af/jx/JXTextMenu.h>
@@ -25,12 +23,10 @@
 #include <jx-af/jx/JXColHeaderWidget.h>
 #include <jx-af/j2dplot/JX2DPlotWidget.h>
 #include <jx-af/jx/JXWDManager.h>
-#include <jx-af/jx/JXWDMenu.h>
 #include <jx-af/jx/JXImage.h>
 #include <jx-af/jx/JXColorManager.h>
 #include <jx-af/jx/JXCloseDirectorTask.h>
 #include <jx-af/jx/JXPSPrinter.h>
-
 #include <jx-af/jcore/JStringTableData.h>
 #include <jx-af/jcore/JTableSelection.h>
 #include <jx-af/jcore/jAssert.h>
@@ -314,12 +310,7 @@ Plot2DDir::BuildWindow()
 		&Plot2DDir::HandleFileMenu);
 	ConfigureFileMenu(itsFileMenu);
 
-	auto* wdMenu =
-		jnew JXWDMenu(JGetString("WindowsMenuTitle::JXGlobal"), menuBar,
-					 JXWidget::kFixedLeft, JXWidget::kVElastic, 0,0, 10,10);
-	assert( wdMenu != nullptr );
-	menuBar->AppendMenu(wdMenu);
-
+	GetApplication()->CreateWindowsMenu(menuBar);
 	GetApplication()->CreateHelpMenu(menuBar, "2DPlotHelp");
 
 	GetDisplay()->GetWDManager()->DirectorCreated(this);

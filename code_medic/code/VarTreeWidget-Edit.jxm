@@ -1,0 +1,36 @@
+jx_menu_editor 0
+719 194
+"VarTreeWidget"
+"Edit"
+' 
+40
+40
+140
+100
+40
+124
+134
+75
+
+0
+1
+0
+0 ""
+"Copy complete name"
+"Ctrl-Shift-C"
+' 
+"CopyFullVarName"
+"__CopyFullVarName"
+0
+
+1
+0
+0 ""
+"Copy value"
+"Meta-C"
+' 
+"CopyVarValue"
+"__CopyVarValue"
+0
+
+0

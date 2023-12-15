@@ -29,6 +29,7 @@ public:
 	void	DisplayAbout(const bool showLicense = false,
 						 const JString& prevVersStr = JString::empty);
 
+	JXTextMenu*	CreateWindowsMenu(JXMenuBar* menuBar);
 	JXTextMenu*	CreateHelpMenu(JXMenuBar* menuBar, const JUtf8Byte* sectionName);
 	void		AppendHelpMenuToToolBar(JXToolBar* toolBar, JXTextMenu* menu);
 

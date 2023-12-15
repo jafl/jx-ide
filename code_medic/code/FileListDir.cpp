@@ -11,7 +11,6 @@
 #include "CommandDirector.h"
 #include "GetSourceFileListCmd.h"
 #include "globals.h"
-#include "actionDefs.h"
 #include <jx-af/jx/JXDisplay.h>
 #include <jx-af/jx/JXWindow.h>
 #include <jx-af/jx/JXTextMenu.h>
@@ -19,7 +18,6 @@
 #include <jx-af/jx/JXTextButton.h>
 #include <jx-af/jx/JXFileListSet.h>
 #include <jx-af/jx/JXFileListTable.h>
-#include <jx-af/jx/JXWDMenu.h>
 #include <jx-af/jx/JXImage.h>
 #include <jx-af/jcore/JTableSelection.h>
 #include <jx-af/jcore/jAssert.h>
@@ -138,12 +136,7 @@ FileListDir::BuildWindow()
 		&FileListDir::HandleActionMenu);
 	ConfigureActionsMenu(itsActionMenu);
 
-	auto* wdMenu =
-		jnew JXWDMenu(JGetString("WindowsMenuTitle::JXGlobal"), menuBar,
-					 JXWidget::kFixedLeft, JXWidget::kVElastic, 0,0, 10,10);
-	assert( wdMenu != nullptr );
-	menuBar->AppendMenu(wdMenu);
-
+	GetApplication()->CreateWindowsMenu(menuBar);
 	GetApplication()->CreateHelpMenu(menuBar, "SourceWindowHelp-FileList");
 }
 

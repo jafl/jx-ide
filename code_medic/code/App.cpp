@@ -12,13 +12,13 @@
 #include "AboutDialog.h"
 #include "QuitTask.h"
 #include "globals.h"
-#include "actionDefs.h"
 #include "stringData.h"
 #include <jx-af/jx/JXWindow.h>
 #include <jx-af/jx/JXDockManager.h>
 #include <jx-af/jx/JXMenuBar.h>
 #include <jx-af/jx/JXTextMenu.h>
 #include <jx-af/jx/JXToolBar.h>
+#include <jx-af/jx/JXWDMenu.h>
 #include <jx-af/jx/JXHelpManager.h>
 #include <jx-af/jcore/JSimpleProcess.h>
 #include <jx-af/jcore/JSubstitute.h>
@@ -30,23 +30,6 @@
 // Application signature (MDI, prefs)
 
 static const JUtf8Byte* kAppSignature = "medic";
-
-// Help menu
-
-static const JUtf8Byte* kHelpMenuStr =
-	"    About" 
-	"%l| Table of Contents       %i" kJXHelpTOCAction
-	"  | Overview"
-	"  | This window       %k F1 %i" kJXHelpSpecificAction
-	"%l| Changes"
-	"  | Credits";
-
-enum
-{
-	kHelpAboutCmd = 1,
-	kHelpTOCCmd, kHelpOverviewCmd, kHelpWindowCmd,
-	kHelpChangeLogCmd, kHelpCreditsCmd
-};
 
 /******************************************************************************
  Constructor
@@ -178,12 +161,34 @@ App::DisplayAbout
 }
 
 /******************************************************************************
+ CreateWindowsMenu
+
+ ******************************************************************************/
+
+JXTextMenu*
+App::CreateWindowsMenu
+	(
+	JXMenuBar* menuBar
+	)
+{
+	auto* menu =
+		jnew JXWDMenu(JGetString("WindowsMenuTitle::JXGlobal"), menuBar,
+					 JXWidget::kFixedLeft, JXWidget::kVElastic, 0,0, 10,10);
+	menuBar->AppendMenu(menu);
+	if (JXMenu::GetDisplayStyle() == JXMenu::kWindowsStyle)
+	{
+		menu->SetShortcuts(JGetString("WindowsMenuShortcut::JXGlobal"));
+	}
+
+	return menu;
+}
+
+/******************************************************************************
  CreateHelpMenu
 
  ******************************************************************************/
 
-#include <jx-af/image/jx/jx_help_toc.xpm>
-#include <jx-af/image/jx/jx_help_specific.xpm>
+#include "App-Help.h"
 
 JXTextMenu*
 App::CreateHelpMenu
@@ -192,12 +197,10 @@ App::CreateHelpMenu
 	const JUtf8Byte*	sectionName
 	)
 {
-	JXTextMenu* menu = menuBar->AppendTextMenu(JGetString("HelpMenuTitle::JXGlobal"));
+	JXTextMenu* menu = menuBar->AppendTextMenu(JGetString("MenuTitle::App_Help"));
 	menu->SetMenuItems(kHelpMenuStr);
 	menu->SetUpdateAction(JXMenu::kDisableNone);
-
-	menu->SetItemImage(kHelpTOCCmd,    jx_help_toc);
-	menu->SetItemImage(kHelpWindowCmd, jx_help_specific);
+	ConfigureHelpMenu(menu);
 
 	ListenTo(menu, std::function([this, sectionName](const JXMenu::ItemSelected& msg)
 	{

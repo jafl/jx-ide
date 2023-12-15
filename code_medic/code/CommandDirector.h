@@ -78,7 +78,7 @@ public:
 	void		AdjustDebugMenu(JXTextMenu* menu);
 	void		UpdateDebugMenu(JXTextMenu* menu, JXTEBase* te1, JXTEBase* te2);
 	void		HandleDebugMenu(JXTextMenu* menu, const JIndex index, JXTEBase* te1, JXTEBase* te2);
-	static bool	UpgradeDebugMenuToolBarID(JString* s);
+	static bool	UpgradeWindowsAndDebugMenusToolBarID(JString* s);
 
 	static void	CreateWindowsMenuAndToolBar(JXMenuBar* menuBar, JXToolBar* toolBar,
 											const bool includeStepAsm,

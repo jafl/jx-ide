@@ -12,7 +12,6 @@
 #include "CommandDirector.h"
 #include "sharedUtil.h"
 #include "globals.h"
-#include "actionDefs.h"
 #include <jx-af/jx/JXWindow.h>
 #include <jx-af/jx/JXMenuBar.h>
 #include <jx-af/jx/JXTextMenu.h>
@@ -32,31 +31,10 @@ const JIndex kValueColIndex = 3;
 const JCoordinate kHMargin  = 5;
 const JSize kIndentWidth    = 2;	// characters
 
-// Edit menu additions
-
-static const JUtf8Byte* kEditMenuAddStr =
-	"  Copy complete name  %k Meta-Shift-C  %i" kCopyFullVarNameAction
-	"| Copy value          %k Ctrl-C        %i" kCopyVarValueAction;
+#include "VarTreeWidget-Edit.h"
+#include "VarTreeWidget-Base.h"
 
 // Base menu
-
-static const JUtf8Byte* kBaseMenuStr =
-	"    Default %r"
-	"%l| 10      %r"
-	"%l| 2       %r"
-	"  | 8       %r"
-	"  | 16      %r"
-	"%l| ASCII   %r";
-
-enum
-{
-	kDefaultBase = 1,
-	kBase10,
-	kBase2,
-	kBase8,
-	kBase16,
-	kBaseASCII
-};
 
 static const JSize kMenuIndexToBase[] = { 0, 10, 2, 8, 16, 1 };
 const JSize kBaseCount                = sizeof(kMenuIndexToBase) / sizeof(JSize);
@@ -101,10 +79,11 @@ VarTreeWidget::VarTreeWidget
 	assert( found );
 	itsCopyPathCmdIndex++;
 	itsCopyValueCmdIndex = itsCopyPathCmdIndex+1;
-	itsEditMenu->InsertMenuItems(itsCopyPathCmdIndex, kEditMenuAddStr);
+	itsEditMenu->InsertMenuItems(itsCopyPathCmdIndex, kEditMenuStr);
 	itsEditMenu->AttachHandlers(this,
 		&VarTreeWidget::UpdateEditMenu,
 		&VarTreeWidget::HandleEditMenu);
+	ConfigureEditMenu(itsEditMenu, itsCopyPathCmdIndex-1);
 
 	// Base conversion menus
 
@@ -112,6 +91,7 @@ VarTreeWidget::VarTreeWidget
 	itsBaseMenu->SetMenuItems(kBaseMenuStr);
 	itsBaseMenu->SetUpdateAction(JXMenu::kDisableNone);
 	ListenTo(itsBaseMenu);
+	ConfigureBaseMenu(itsBaseMenu);
 
 	itsBasePopupMenu =
 		jnew JXTextMenu(JString::empty, this, kFixedLeft, kFixedTop, 0,0, 10, 10);

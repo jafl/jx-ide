@@ -122,6 +122,10 @@ T
 F
 "./code/App.cpp"
 T
+2 "App-Help.jxm"
+F
+"./code/App-Help.jxm"
+T
 2 "PrefsManager.cpp"
 F
 "./code/PrefsManager.cpp"
@@ -393,6 +397,14 @@ T
 2 "VarTreeWidget.cpp"
 F
 "./code/VarTreeWidget.cpp"
+T
+2 "VarTreeWidget-Edit.jxm"
+F
+"./code/VarTreeWidget-Edit.jxm"
+T
+2 "VarTreeWidget-Base.jxm"
+F
+"./code/VarTreeWidget-Base.jxm"
 T
 2 "VarNode.cpp"
 F

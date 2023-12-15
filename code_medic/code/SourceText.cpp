@@ -13,13 +13,9 @@
 #include "SourceDirector.h"
 #include "CommandDirector.h"
 #include "CommandInput.h"
-
 #include "CStyler.h"
 #include "sharedUtil.h"
-
 #include "globals.h"
-#include "actionDefs.h"
-
 #include <jx-af/jx/JXApplication.h>
 #include <jx-af/jx/JXDisplay.h>
 #include <jx-af/jx/JXMenuBar.h>

@@ -23,7 +23,6 @@
 #include "StackDir.h"
 #include "sharedUtil.h"
 #include "globals.h"
-#include "actionDefs.h"
 
 #include <jx-af/jx/JXDisplay.h>
 #include <jx-af/jx/JXWindow.h>
@@ -255,7 +254,7 @@ SourceDirector::BuildWindow()
 		GetPrefsManager()->GetWindowSize(kCodeWindSizeID, window, true);
 	}
 
-	itsFileMenu = itsMenuBar->AppendTextMenu(JGetString("FileMenuTitle::JXGlobal"));
+	itsFileMenu = itsMenuBar->AppendTextMenu(JGetString("MenuTitle::SourceDirector_File"));
 	itsFileMenu->SetMenuItems(kFileMenuStr);
 	itsFileMenu->SetUpdateAction(JXMenu::kDisableNone);
 	itsFileMenu->AttachHandlers(this,
@@ -343,7 +342,7 @@ SourceDirector::CreateWindowsMenu()
 	{
 		if (s->StartsWith("GDB") &&
 			!itsText->UpgradeSearchMenuToolBarID(s) &&
-			!CommandDirector::UpgradeDebugMenuToolBarID(s))
+			!CommandDirector::UpgradeWindowsAndDebugMenusToolBarID(s))
 		{
 			JStringIterator iter(s);
 			iter.SkipNext(3);
