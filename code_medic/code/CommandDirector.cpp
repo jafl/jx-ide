@@ -744,6 +744,7 @@ CommandDirector::CreateWindowsMenuAndToolBar
 	)
 {
 	auto* wdMenu = GetApplication()->CreateWindowsMenu(menuBar);
+	menuBar->InsertMenuBefore(prefsMenu, wdMenu);
 
 	toolBar->LoadPrefs(upgradeToolBarID);
 	if (toolBar->IsEmpty())
