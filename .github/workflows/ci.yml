@@ -138,3 +138,13 @@ jobs:
     secrets:
       api-key: ${{ secrets.SOURCEFORGE_API_KEY }}
       ssh-key: ${{ secrets.SOURCEFORGE_SSH_KEY }}
+
+  publish-version:
+    name: Publish version
+    needs: [ update-sourceforge-code-crusader, update-sourceforge-code-medic, update-sourceforge-code-mill ]
+    steps:
+      - name: Update version & docs
+        run: |
+          scp -o StrictHostKeyChecking=no -i ssh-key code_crusader/release/VERSION code_crusader/release/doc/* jafl,codecrusader@web.sourceforge.net:htdocs/;
+          scp -o StrictHostKeyChecking=no -i ssh-key code_medic/release/VERSION code_medic/release/doc/* jafl,codemedic@web.sourceforge.net:htdocs/;
+          scp -o StrictHostKeyChecking=no -i ssh-key code_mill/release/VERSION code_mill/release/doc/* jafl,nps-codemill@web.sourceforge.net:htdocs/;
