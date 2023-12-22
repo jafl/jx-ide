@@ -423,13 +423,13 @@ LineIndexTable::HandleMouseDown
 		OpenLineMenu(lineIndex, pt, buttonStates, modifiers, false);
 	}
 	else if (button == kJXLeftButton &&
-			 modifiers.GetState(JXAdjustNMShortcutModifier(kJXMetaKeyIndex)) &&
+			 modifiers.GetState(JXAdjustNMShortcutModifier(kJXControlKeyIndex)) &&
 			 !modifiers.shift())
 	{
 		RunUntil(lineIndex);
 	}
 	else if (button == kJXLeftButton &&
-			 modifiers.GetState(JXAdjustNMShortcutModifier(kJXControlKeyIndex)))
+			 modifiers.GetState(JXAdjustNMShortcutModifier(kJXMetaKeyIndex)))
 	{
 		SetExecutionPoint(lineIndex);
 	}
@@ -456,7 +456,7 @@ LineIndexTable::AdjustBreakpoints
 	JIndex bpIndex;
 	if (!GetFirstBreakpointOnLine(lineIndex, &bpIndex))
 	{
-		SetBreakpoint(lineIndex, modifiers.GetState(JXAdjustNMShortcutModifier(kJXMetaKeyIndex)) &&
+		SetBreakpoint(lineIndex, modifiers.GetState(JXAdjustNMShortcutModifier(kJXControlKeyIndex)) &&
 			modifiers.shift());
 	}
 	else if (HasMultipleBreakpointsOnLine(bpIndex))

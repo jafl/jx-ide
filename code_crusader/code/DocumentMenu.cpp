@@ -78,7 +78,7 @@ DocumentMenu::Receive
 	)
 {
 	if (sender == this && message.Is(JXMenu::kItemSelected) &&
-		GetDisplay()->GetLatestKeyModifiers().GetState(JXAdjustNMShortcutModifier(kJXMetaKeyIndex)))
+		GetDisplay()->GetLatestKeyModifiers().GetState(JXAdjustNMShortcutModifier(kJXControlKeyIndex)))
 	{
 		const auto* selection =
 			dynamic_cast<const JXMenu::ItemSelected*>(&message);

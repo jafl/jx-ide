@@ -87,8 +87,8 @@ TELineIndexInput::HandleKeyPress
 		ShouldAct(false);
 	}
 	else if ((c == '\r' || c == '\n') &&
-			 !modifiers.GetState(JXAdjustNMShortcutModifier(kJXMetaKeyIndex))    &&
-			  modifiers.GetState(JXAdjustNMShortcutModifier(kJXControlKeyIndex)) &&
+			 !modifiers.GetState(JXAdjustNMShortcutModifier(kJXControlKeyIndex)) &&
+			  modifiers.GetState(JXAdjustNMShortcutModifier(kJXMetaKeyIndex))    &&
 			 !modifiers.shift())
 	{
 		JXTEBase* te = GetTE();

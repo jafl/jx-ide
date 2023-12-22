@@ -452,7 +452,7 @@ CommandTable::GetDNDAction
 	)
 {
 	const bool meta =
-		modifiers.GetState(JXAdjustNMShortcutModifier(kJXMetaKeyIndex));
+		modifiers.GetState(JXAdjustNMShortcutModifier(kJXControlKeyIndex));
 
 	if ((target == this && !meta) ||
 		(target != this &&  meta))

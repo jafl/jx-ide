@@ -307,11 +307,11 @@ FileNameDisplay::HandleKeyPress
 		itsTE->HandleKeyPress(c, keySym, modifiers);
 	}
 	else if ((c == '\r' || c == '\n') &&
-			 !modifiers.GetState(JXAdjustNMShortcutModifier(kJXMetaKeyIndex)) &&
+			 !modifiers.GetState(JXAdjustNMShortcutModifier(kJXControlKeyIndex)) &&
 			 !modifiers.shift())
 	{
 		itsUnfocusAction =
-			modifiers.GetState(JXAdjustNMShortcutModifier(kJXControlKeyIndex)) ?
+			modifiers.GetState(JXAdjustNMShortcutModifier(kJXMetaKeyIndex)) ?
 			kRename : kSaveAs;
 		itsTE->Focus();				// trigger HandleUnfocusEvent()
 		itsUnfocusAction = kCancel;
