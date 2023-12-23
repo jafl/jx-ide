@@ -182,11 +182,11 @@ ProjectTable::NewGroup
 			node = node->GetParent();
 		}
 
-		(tree->GetRoot())->InsertAfter(node, newNode);
+		tree->GetRoot()->InsertAfter(node, newNode);
 	}
 	else
 	{
-		(tree->GetRoot())->Append(newNode);
+		tree->GetRoot()->Append(newNode);
 	}
 
 	JIndex index;

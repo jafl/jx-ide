@@ -23,20 +23,20 @@
 GroupNode::GroupNode
 	(
 	ProjectTree*	tree,
-	const bool	append
+	const bool		append
 	)
 	:
 	ProjectNode(tree, kGroupNT, JGetString("NewGroupName::GroupNode"), true)
 {
 	if (tree != nullptr && append)
 	{
-		(tree->GetRoot())->Append(this);
+		tree->GetRoot()->Append(this);
 	}
 }
 
 GroupNode::GroupNode
 	(
-	std::istream&			input,
+	std::istream&		input,
 	const JFileVersion	vers,
 	ProjectNode*		parent
 	)
