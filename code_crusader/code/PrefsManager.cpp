@@ -1070,7 +1070,7 @@ PrefsManager::UpgradeData
 
 		NewExternalSuffixInfo kCoreSuffix[] =
 		{
-			{ "core.*", "medic -c $f", false }
+			{ "core.*", CODE_MEDIC_BINARY " -c $f", false }
 		};
 		addNewExternalSuffixes(kCoreSuffix, sizeof(kCoreSuffix)/sizeof(NewExternalSuffixInfo), itsFileTypeList);
 	}
@@ -1434,7 +1434,7 @@ PrefsManager::AddDefaultXMLActions
 	)
 	const
 {
-	mgr->SetAction(JUtf8Character('>'),  JString("$(xml-auto-close $t)", JString::kNoCopy));
+	mgr->SetAction(JUtf8Character('>'),  "$(xml-auto-close $t)");
 }
 
 /******************************************************************************

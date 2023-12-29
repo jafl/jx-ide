@@ -14,7 +14,6 @@
 #include "PrefsManager.h"
 #include "Class.h"
 #include "FunctionTable.h"
-
 #include "globals.h"
 
 #include <jx-af/jx/JXChoosePathDialog.h>
@@ -31,6 +30,7 @@
 #include <jx-af/jx/JXToolBar.h>
 #include <jx-af/jx/JXWindow.h>
 
+#include <jx-af/jcore/JFontManager.h>
 #include <jx-af/jcore/jDirUtil.h>
 #include <jx-af/jcore/jFileUtil.h>
 #include <jx-af/jcore/jProcessUtil.h>
@@ -132,6 +132,7 @@ MainDirector::BuildWindow
 		jnew JXInputField(window,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 105,10, 130,20);
 	assert( itsClassInput != nullptr );
+	itsClassInput->SetFontSize(JFontManager::GetDefaultFontSize()-2);
 
 	auto* classNameLabel =
 		jnew JXStaticText(JGetString("classNameLabel::MainDirector::JXLayout"), window,
@@ -488,7 +489,7 @@ MainDirector::Write()
 
 	os.close();
 
-	JString cmd	= "jcc " + headerfile + " " + sourcefile;
+	JString cmd	= CODE_CRUSADER_BINARY " " + headerfile + " " + sourcefile;
 
 	JString errStr;
 	JRunProgram(cmd, &errStr);

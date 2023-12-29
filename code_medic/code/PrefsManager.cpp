@@ -237,9 +237,7 @@ PrefsManager::UpgradeData
 		cHeaderSuffixData << ' ' << JString(".h++") << ' ' << JString(".H");
 		SetData(kCHeaderSuffixID, cHeaderSuffixData);
 
-		SetEditFileCmds(
-			JString("jcc $f", JString::kNoCopy),
-			JString("jcc +$l $f", JString::kNoCopy));
+		SetEditFileCmds(CODE_CRUSADER_BINARY " $f", CODE_CRUSADER_BINARY " +$l $f");
 
 		std::ostringstream gdbCmdData;
 		gdbCmdData << JString("gdb");

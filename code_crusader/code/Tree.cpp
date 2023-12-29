@@ -45,7 +45,7 @@ const JSize kBlockSize = 1024;
 
 // Code Mill info
 
-static const JString kCodeMillProgramName("code-mill", JString::kNoCopy);
+static const JString kCodeMillProgramName(CODE_MILL_BINARY, JString::kNoCopy);
 #ifndef CODE_CRUSADER_UNIT_TEST
 const JFileVersion kCodeMillDataVersion = 0;
 #endif
@@ -2171,8 +2171,8 @@ Tree::DeriveFromSelected()
 	if (success && fileCount > 0)
 	{
 		argList.Prepend(JPrepArgForExec(outputPath));
-		argList.Prepend(JString("--output_path", JString::kNoCopy));
-		argList.Prepend(JString("--delete", JString::kNoCopy));
+		argList.Prepend("--output_path");
+		argList.Prepend("--delete");
 		argList.Prepend(kCodeMillProgramName);
 		JSimpleProcess::Create(argList, true);
 	}

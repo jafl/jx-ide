@@ -25,10 +25,16 @@ SEARCHDIRS := -I./code -I./backend -I./image-build -I./shared \
               -I/opt/homebrew/opt/llvm/include \
               $(shell xml2-config --cflags)
 
+ifdef SNAPCRAFT_BUILD_ENVIRONMENT
+  CODE_CRUSADER_BINARY := jx-ide.code-crusader
+else
+  CODE_CRUSADER_BINARY := jcc
+endif
+
 # makemake variables
 
 DEPENDFLAGS  := ${J_COMPILER_DEPEND_FLAGS_FOR_BISON} ${SEARCHDIRS} \
-                -DCODE_MEDIC
+                -DCODE_MEDIC -DCODE_CRUSADER_BINARY=\"${CODE_CRUSADER_BINARY}\"
 
 # library dependencies
 

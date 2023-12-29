@@ -462,7 +462,7 @@ CommandManager::Parse
 
 	if (!argList.IsEmpty() && *argList.GetLastItem() != ";")
 	{
-		argList.Append(JString(";", JString::kNoCopy));	// catch all commands inside loop
+		argList.Append(";");	// catch all commands inside loop
 	}
 
 	JPtrArray<JString> cmdArgs(JPtrArrayT::kDeleteAll);
@@ -1186,13 +1186,13 @@ CommandManager::WritePrefs
 
  ******************************************************************************/
 
-static const JString svnClient("nps_svn_client", JString::kNoCopy);
+static const JString svnClient("nps_svn_client");
 
-static const JRegex svnChangeFullPathPattern =
-	"\\bsvn (resolved|revert|commit|add|remove) \\$full_name\\b";
+static const JRegex svnChangeFullPathPattern(
+	"\\bsvn (resolved|revert|commit|add|remove) \\$full_name\\b");
 
-static const JRegex svnChangeRelativePathPattern =
-	"\\bsvn (resolved|revert|commit|add|remove)\\b";
+static const JRegex svnChangeRelativePathPattern(
+	"\\bsvn (resolved|revert|commit|add|remove)\\b");
 
 void
 CommandManager::UpgradeCommand
@@ -1334,20 +1334,20 @@ static const DefCmd kDefCmd[] =
 		false },
 { "./",
 #ifdef _J_MACOS
-		"xterm -e \"medic $program\"",	// lldb: python requires working stdin
+		"xterm -e \"" CODE_MEDIC_BINARY " $program\"",	// lldb: python requires working stdin
 #else
-		"medic $program",
+		CODE_MEDIC_BINARY " $program",
 #endif
 		"",
 		false, false, false, false, false, false, false,
 		"DefCmdDebugText::CommandManager", "DefCmdDebugShorcut::CommandManager",
 		false },
-{ "./", "medic -b +$line $file_name",
+{ "./", CODE_MEDIC_BINARY " -b +$line $file_name",
 		"",
 		false, false, false, true, false, false, false,
 		"DefCmdSetBreakpointText::CommandManager", "DefCmdSetBreakpointShortcut::CommandManager",
 		false },
-{ "./", "medic -f +$line $file_name",
+{ "./", CODE_MEDIC_BINARY " -f +$line $file_name",
 		"",
 		false, false, false, true, false, false, false,
 		"DefCmdOpenDebuggerText::CommandManager", "DefCmdOpenDebuggerShortcut::CommandManager",
@@ -1362,9 +1362,9 @@ static const DefCmd kDefCmd[] =
 		false },
 { "./",
 #ifdef _J_MACOS
-		"&make_default ; xterm -e \"medic $program\"",	// lldb: python requires working stdin
+		"&make_default ; xterm -e \"" CODE_MEDIC_BINARY " $program\"",	// lldb: python requires working stdin
 #else
-		"&make_default ; medic $program",
+		"&make_default ; " CODE_MEDIC_BINARY " $program",
 #endif
 		"",
 		false, false, false, false, false, false, false,

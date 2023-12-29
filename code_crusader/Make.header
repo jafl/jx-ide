@@ -22,10 +22,19 @@ include ${MAKE_INCLUDE}/jfs_constants
 SEARCHDIRS := -I./code -I./image-build ${SEARCHDIRS} \
               $(shell xml2-config --cflags)
 
+ifdef SNAPCRAFT_BUILD_ENVIRONMENT
+  CODE_MEDIC_BINARY := jx-ide.code-medic
+  CODE_MILL_BINARY  := jx-ide.code-mill
+else
+  CODE_MEDIC_BINARY := medic
+  CODE_MILL_BINARY  := code-mill
+endif
+
 # makemake variables
 
 DEPENDFLAGS := ${J_COMPILER_DEPEND_FLAGS} ${SEARCHDIRS} \
-               -DCODE_CRUSADER \
+               -DCODE_CRUSADER -DCODE_MEDIC_BINARY=\"${CODE_MEDIC_BINARY}\" \
+               -DCODE_MILL_BINARY=\"${CODE_MILL_BINARY}\" \
                -DJ_MAKE_BINARY_NAME=\"$(firstword ${MAKE})\" \
                -DHOMEBREW_INCLUDE_ROOT=\"${BREW_ROOT}/include\"
 
