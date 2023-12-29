@@ -63,7 +63,7 @@ PrefsDialog::BuildWindow
 {
 // begin JXLayout
 
-	auto* window = jnew JXWindow(this, 510,530, JString::empty);
+	auto* window = jnew JXWindow(this, 1001,530, JString::empty);
 
 	auto* headerCommentLabel =
 		jnew JXStaticText(JGetString("headerCommentLabel::PrefsDialog::JXLayout"), window,
@@ -73,62 +73,62 @@ PrefsDialog::BuildWindow
 
 	itsHeaderInput =
 		jnew JXInputField(false, true, window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 20,40, 470,60);
+					JXWidget::kHElastic, JXWidget::kVElastic, 20,40, 470,200);
 	assert( itsHeaderInput != nullptr );
 
 	auto* sourceCommentLabel =
 		jnew JXStaticText(JGetString("sourceCommentLabel::PrefsDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,115, 470,20);
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,250, 470,20);
 	assert( sourceCommentLabel != nullptr );
 	sourceCommentLabel->SetToLabel();
 
 	itsSourceInput =
 		jnew JXInputField(false, true, window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 20,135, 470,60);
+					JXWidget::kHElastic, JXWidget::kVElastic, 20,270, 470,200);
 	assert( itsSourceInput != nullptr );
 
 	auto* ctorCommentLabel =
 		jnew JXStaticText(JGetString("ctorCommentLabel::PrefsDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,210, 470,20);
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 510,20, 470,20);
 	assert( ctorCommentLabel != nullptr );
 	ctorCommentLabel->SetToLabel();
 
 	itsConstructorInput =
 		jnew JXInputField(false, true, window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 20,230, 470,60);
+					JXWidget::kHElastic, JXWidget::kVElastic, 510,40, 470,120);
 	assert( itsConstructorInput != nullptr );
 
 	auto* dtorCommentLabel =
 		jnew JXStaticText(JGetString("dtorCommentLabel::PrefsDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,305, 470,20);
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 510,175, 470,20);
 	assert( dtorCommentLabel != nullptr );
 	dtorCommentLabel->SetToLabel();
 
 	itsDestructorInput =
 		jnew JXInputField(false, true, window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 20,325, 470,60);
+					JXWidget::kHElastic, JXWidget::kVElastic, 510,195, 470,120);
 	assert( itsDestructorInput != nullptr );
 
 	auto* fnCommentLabel =
 		jnew JXStaticText(JGetString("fnCommentLabel::PrefsDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,400, 470,20);
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 510,330, 470,20);
 	assert( fnCommentLabel != nullptr );
 	fnCommentLabel->SetToLabel();
 
 	itsFunctionInput =
 		jnew JXInputField(false, true, window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 20,420, 470,60);
+					JXWidget::kHElastic, JXWidget::kVElastic, 510,350, 470,120);
 	assert( itsFunctionInput != nullptr );
 
 	auto* cancelButton =
 		jnew JXTextButton(JGetString("cancelButton::PrefsDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 110,500, 70,20);
+					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 280,500, 70,20);
 	assert( cancelButton != nullptr );
 	cancelButton->SetShortcuts(JGetString("cancelButton::PrefsDialog::shortcuts::JXLayout"));
 
 	auto* okButton =
 		jnew JXTextButton(JGetString("okButton::PrefsDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 330,500, 70,20);
+					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 660,500, 70,20);
 	assert( okButton != nullptr );
 
 // end JXLayout

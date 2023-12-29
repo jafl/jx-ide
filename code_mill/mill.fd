@@ -5,18 +5,17 @@ Internal Form Definition File
 
 Number of forms: 3
 Unit of measure: FL_COORD_PIXEL
-SnapGrid: 5
 
 =============== FORM ===============
 Name: PrefsDialog
-Width: 510
+Width: 1001
 Height: 530
 Number of Objects: 13
 
 --------------------
 class: FL_BOX
 type: FL_FLAT_BOX
-box: 0 0 510 530
+box: 0 0 1001 530
 boxtype: FL_FLAT_BOX
 colors: FL_COL1 FL_COL1
 alignment: FL_ALIGN_CENTER
@@ -52,7 +51,7 @@ argument:
 --------------------
 class: FL_BOX
 type: FL_NO_BOX
-box: 20 40 470 60
+box: 20 40 470 200
 boxtype: FL_NO_BOX
 colors: FL_WHITE FL_COL1
 alignment: FL_ALIGN_CENTER
@@ -70,7 +69,7 @@ argument:
 --------------------
 class: FL_TEXT
 type: FL_NORMAL_TEXT
-box: 20 115 470 20
+box: 20 250 470 20
 boxtype: FL_FLAT_BOX
 colors: FL_COL1 FL_MCOL
 alignment: FL_ALIGN_LEFT|FL_ALIGN_INSIDE
@@ -88,7 +87,7 @@ argument:
 --------------------
 class: FL_BOX
 type: FL_NO_BOX
-box: 20 135 470 60
+box: 20 270 470 200
 boxtype: FL_NO_BOX
 colors: FL_WHITE FL_COL1
 alignment: FL_ALIGN_CENTER
@@ -106,7 +105,7 @@ argument:
 --------------------
 class: FL_TEXT
 type: FL_NORMAL_TEXT
-box: 20 210 470 20
+box: 510 20 470 20
 boxtype: FL_FLAT_BOX
 colors: FL_COL1 FL_MCOL
 alignment: FL_ALIGN_LEFT|FL_ALIGN_INSIDE
@@ -124,7 +123,7 @@ argument:
 --------------------
 class: FL_BOX
 type: FL_NO_BOX
-box: 20 230 470 60
+box: 510 40 470 120
 boxtype: FL_NO_BOX
 colors: FL_WHITE FL_COL1
 alignment: FL_ALIGN_CENTER
@@ -142,7 +141,7 @@ argument:
 --------------------
 class: FL_TEXT
 type: FL_NORMAL_TEXT
-box: 20 305 470 20
+box: 510 175 470 20
 boxtype: FL_FLAT_BOX
 colors: FL_COL1 FL_MCOL
 alignment: FL_ALIGN_LEFT|FL_ALIGN_INSIDE
@@ -160,7 +159,7 @@ argument:
 --------------------
 class: FL_BOX
 type: FL_NO_BOX
-box: 20 325 470 60
+box: 510 195 470 120
 boxtype: FL_NO_BOX
 colors: FL_WHITE FL_COL1
 alignment: FL_ALIGN_CENTER
@@ -178,7 +177,7 @@ argument:
 --------------------
 class: FL_TEXT
 type: FL_NORMAL_TEXT
-box: 20 400 470 20
+box: 510 330 470 20
 boxtype: FL_FLAT_BOX
 colors: FL_COL1 FL_MCOL
 alignment: FL_ALIGN_LEFT|FL_ALIGN_INSIDE
@@ -196,7 +195,7 @@ argument:
 --------------------
 class: FL_BOX
 type: FL_NO_BOX
-box: 20 420 470 60
+box: 510 350 470 120
 boxtype: FL_NO_BOX
 colors: FL_WHITE FL_COL1
 alignment: FL_ALIGN_CENTER
@@ -214,7 +213,7 @@ argument:
 --------------------
 class: FL_BUTTON
 type: FL_NORMAL_BUTTON
-box: 110 500 70 20
+box: 280 500 70 20
 boxtype: FL_UP_BOX
 colors: FL_COL1 FL_COL1
 alignment: FL_ALIGN_CENTER
@@ -232,7 +231,7 @@ argument:
 --------------------
 class: FL_BUTTON
 type: FL_NORMAL_BUTTON
-box: 330 500 70 20
+box: 660 500 70 20
 boxtype: FL_UP_BOX
 colors: FL_COL1 FL_COL1
 alignment: FL_ALIGN_CENTER
