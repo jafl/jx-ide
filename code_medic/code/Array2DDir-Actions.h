@@ -16,16 +16,7 @@ static const JUtf8Byte* kActionsMenuStr =
 "|* %i __SaveWindowSizeAsDefault::Array2DDir"
 ;
 
-enum {
-	kDisplay1DArrayCmd=1,
-	kPlot1DArrayCmd,
-	kDisplay2DArrayCmd,
-	kWatchVarCmd,
-	kWatchLocCmd,
-	kExamineMemCmd,
-	kDisassembleMemCmd,
-	kSavePrefsCmd,
-};
+#include "Array2DDir-Actions-enum.h"
 
 #ifndef _H_medic_show_1d_array
 #define _H_medic_show_1d_array
@@ -46,7 +37,7 @@ enum {
 
 static void ConfigureActionsMenu(JXTextMenu* menu, const int offset = 0) {
 	if (offset == 0 && JXMenu::GetDisplayStyle() == JXMenu::kWindowsStyle) {
-		menu->SetShortcuts(JString("#a", JString::kNoCopy));
+		menu->SetShortcuts("#a");
 	}
 	menu->SetItemImage(kDisplay1DArrayCmd + offset, medic_show_1d_array);
 	menu->SetItemImage(kPlot1DArrayCmd + offset, medic_show_2d_plot);

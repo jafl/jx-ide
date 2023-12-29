@@ -55,7 +55,7 @@ lldb::GetThreadsCmd::~GetThreadsCmd()
 
  ******************************************************************************/
 
-static const JRegex threadIDPattern = "^thread #([[:digit:]]+):\\s*tid = [^,]+,";
+static const JRegex threadIDPattern("^thread #([[:digit:]]+):\\s*tid = [^,]+,");
 
 void
 lldb::GetThreadsCmd::HandleSuccess

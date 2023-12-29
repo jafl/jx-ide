@@ -9,14 +9,12 @@ static const JUtf8Byte* kActionsMenuStr =
 "* %i __SaveWindowSizeAsDefault::Plot2DDir"
 ;
 
-enum {
-	kSavePrefsCmd=1,
-};
+#include "Plot2DDir-Actions-enum.h"
 
 
 static void ConfigureActionsMenu(JXTextMenu* menu, const int offset = 0) {
 	if (offset == 0 && JXMenu::GetDisplayStyle() == JXMenu::kWindowsStyle) {
-		menu->SetShortcuts(JString("#a", JString::kNoCopy));
+		menu->SetShortcuts("#a");
 	}
 };
 

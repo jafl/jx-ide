@@ -26,26 +26,7 @@ static const JUtf8Byte* kPrefsStylesMenuStr =
 "|* %i __TCL::TextDocument"
 ;
 
-enum {
-	__BourneShell=1,
-	__CShell,
-	__C,
-	__CSharp,
-	__D,
-	__Eiffel,
-	__Go,
-	__HTML,
-	__INI,
-	__Java,
-	__Properties,
-	__JavaScript,
-	__Make,
-	__Perl,
-	__Python,
-	__Ruby,
-	__SQL,
-	__TCL,
-};
+#include "TextDocument-PrefsStyles-enum.h"
 
 
 static void ConfigurePrefsStylesMenu(JXTextMenu* menu, const int offset = 0) {

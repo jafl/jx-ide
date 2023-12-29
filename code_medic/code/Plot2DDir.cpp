@@ -52,10 +52,10 @@ Plot2DDir::Plot2DDir
 	VarNode::TrimExpression(&expr);
 
 	itsExprData->AppendRows(1);
-	itsExprData->SetString(1, Plot2DExprTable::kXExprColIndex, JString("$i", JString::kNoCopy));
+	itsExprData->SetString(1, Plot2DExprTable::kXExprColIndex, "$i");
 	itsExprData->SetString(1, Plot2DExprTable::kYExprColIndex, expr);
-	itsExprData->SetString(1, Plot2DExprTable::kRangeMinColIndex, JString("0", JString::kNoCopy));
-	itsExprData->SetString(1, Plot2DExprTable::kRangeMaxColIndex, JString("10", JString::kNoCopy));
+	itsExprData->SetString(1, Plot2DExprTable::kRangeMinColIndex, "0");
+	itsExprData->SetString(1, Plot2DExprTable::kRangeMaxColIndex, "10");
 
 	Plot2DDirX2();
 }
@@ -439,10 +439,10 @@ Plot2DDir::Receive
 		if (itsExprTable->EndEditing())
 		{
 			JPtrArray<JString> data(JPtrArrayT::kDeleteAll);
-			data.Append(JString("$i", JString::kNoCopy));
-			data.Append(JString("$i", JString::kNoCopy));
-			data.Append(JString("0", JString::kNoCopy));
-			data.Append(JString("10", JString::kNoCopy));
+			data.Append("$i");
+			data.Append("$i");
+			data.Append("0");
+			data.Append("10");
 			itsExprData->AppendRows(1, &data);
 		}
 	}

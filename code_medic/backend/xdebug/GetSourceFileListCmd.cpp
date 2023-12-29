@@ -25,7 +25,7 @@ xdebug::GetSourceFileListCmd::GetSourceFileListCmd
 	FileListDir* fileList
 	)
 	:
-	::GetSourceFileListCmd(JString("status", JString::kNoCopy), fileList)
+	::GetSourceFileListCmd("status", fileList)
 {
 }
 

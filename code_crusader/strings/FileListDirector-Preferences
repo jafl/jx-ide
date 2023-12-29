@@ -6,9 +6,9 @@
 
 MenuTitle::FileListDirector_Preferences "Preferences"
 
-__ToolbarButtons::FileListDirectorx "Toolbar buttons... %h t"
-__FileTypes::FileListDirectorx "File types... %h f"
-__ExternalEditors::FileListDirectorx "External editors... %h x"
-__FileManagerWebBrowser::FileListDirectorx "File manager & web browser... %h w"
-__Miscellaneous::FileListDirectorx "Miscellaneous... %h m"
-__SaveWindowSizeAsDefault::FileListDirectorx "Save window size as default %h s"
+__ToolbarButtons::FileListDirector "Toolbar buttons... %h t"
+__FileTypes::FileListDirector "File types... %h f"
+__ExternalEditors::FileListDirector "External editors... %h x"
+__FileManagerWebBrowser::FileListDirector "File manager & web browser... %h w"
+__Miscellaneous::FileListDirector "Miscellaneous... %h m"
+__SaveWindowSizeAsDefault::FileListDirector "Save window size as default %h s"

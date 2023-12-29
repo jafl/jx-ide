@@ -26,7 +26,7 @@
 
 gdb::GetBreakpointsCmd::GetBreakpointsCmd()
 	:
-	::GetBreakpointsCmd(JString("-break-list", JString::kNoCopy))
+	::GetBreakpointsCmd("-break-list")
 {
 }
 
@@ -44,7 +44,7 @@ gdb::GetBreakpointsCmd::~GetBreakpointsCmd()
 
  *****************************************************************************/
 
-static const JRegex bpPattern = "\\bbkpt=\\{";
+static const JRegex bpPattern("\\bbkpt=\\{");
 
 void
 gdb::GetBreakpointsCmd::HandleSuccess

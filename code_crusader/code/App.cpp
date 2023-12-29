@@ -449,7 +449,7 @@ App::GetSystemIncludeDirectories()
 	}
 
 	int pid, fd, inFD;
-	const JError err = JExecute(JString("gcc -Wp,-v -x c++ -fsyntax-only -", JString::kNoCopy), &pid,
+	const JError err = JExecute("gcc -Wp,-v -x c++ -fsyntax-only -", &pid,
 								kJCreatePipe, &inFD,
 								kJCreatePipe, &fd,
 								kJAttachToFromFD);

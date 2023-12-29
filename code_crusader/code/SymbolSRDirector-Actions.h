@@ -17,17 +17,7 @@ static const JUtf8Byte* kActionsMenuStr =
 "|* %i __CloseAll::SymbolSRDirector"
 ;
 
-enum {
-	kCopySelNamesCmd=1,
-	kUpdateCmd,
-	kShowCTreeCmd,
-	kShowDTreeCmd,
-	kShowGoTreeCmd,
-	kShowJavaTreeCmd,
-	kShowPHPTreeCmd,
-	kCloseWindowCmd,
-	kCloseAllCmd,
-};
+#include "SymbolSRDirector-Actions-enum.h"
 
 #ifndef _H_jx_af_image_jx_jx_edit_copy
 #define _H_jx_af_image_jx_jx_edit_copy
@@ -56,7 +46,7 @@ enum {
 
 static void ConfigureActionsMenu(JXTextMenu* menu, const int offset = 0) {
 	if (offset == 0 && JXMenu::GetDisplayStyle() == JXMenu::kWindowsStyle) {
-		menu->SetShortcuts(JString("#a", JString::kNoCopy));
+		menu->SetShortcuts("#a");
 	}
 	menu->SetItemImage(kCopySelNamesCmd + offset, jx_edit_copy);
 	menu->SetItemImage(kShowCTreeCmd + offset, jcc_show_c_tree);

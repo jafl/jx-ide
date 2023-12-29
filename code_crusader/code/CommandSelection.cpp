@@ -96,7 +96,7 @@ CommandSelection::ConvertData
 	{
 		*returnType = itsCommandXAtom;
 		*dataLength = itsData.GetByteCount();
-		*data       = jnew unsigned char[ *dataLength ];
+		*data       = jnew_allow_null unsigned char[ *dataLength ];
 		if (*data != nullptr)
 		{
 			memcpy(*data, itsData.GetRawBytes(), *dataLength);

@@ -25,7 +25,7 @@ gdb::GetThreadCmd::GetThreadCmd
 	ThreadsWidget* widget
 	)
 	:
-	::GetThreadCmd(JString("set width 0\ninfo threads", JString::kNoCopy), widget)
+	::GetThreadCmd("set width 0\ninfo threads", widget)
 {
 }
 

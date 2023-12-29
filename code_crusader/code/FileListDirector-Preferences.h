@@ -6,27 +6,20 @@
 #define _H_FileListDirector_Preferences
 
 static const JUtf8Byte* kPreferencesMenuStr =
-"* %i __ToolbarButtons::FileListDirectorx"
-"|* %i __FileTypes::FileListDirectorx"
-"|* %i __ExternalEditors::FileListDirectorx"
-"|* %i __FileManagerWebBrowser::FileListDirectorx"
-"|* %i __Miscellaneous::FileListDirectorx %l"
-"|* %i __SaveWindowSizeAsDefault::FileListDirectorx"
+"* %i __ToolbarButtons::FileListDirector"
+"|* %i __FileTypes::FileListDirector"
+"|* %i __ExternalEditors::FileListDirector"
+"|* %i __FileManagerWebBrowser::FileListDirector"
+"|* %i __Miscellaneous::FileListDirector %l"
+"|* %i __SaveWindowSizeAsDefault::FileListDirector"
 ;
 
-enum {
-	kToolBarPrefsCmd=1,
-	kEditFileTypesCmd,
-	kChooseExtEditorsCmd,
-	kShowLocationPrefsCmd,
-	kMiscPrefsCmd,
-	kSaveWindSizeCmd,
-};
+#include "FileListDirector-Preferences-enum.h"
 
 
 static void ConfigurePreferencesMenu(JXTextMenu* menu, const int offset = 0) {
 	if (offset == 0 && JXMenu::GetDisplayStyle() == JXMenu::kWindowsStyle) {
-		menu->SetShortcuts(JString("#p", JString::kNoCopy));
+		menu->SetShortcuts("#p");
 	}
 };
 

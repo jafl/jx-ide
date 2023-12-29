@@ -732,15 +732,13 @@ SearchTextDialog::BuildSearchFileList
 		JString regexStr;
 		if (JDirInfo::BuildRegexFromWildcardFilter(fileFilter, &regexStr))
 		{
-			fileRegex = jnew JRegex(regexStr);
-			fileRegex->SetCaseSensitive(false);
+			fileRegex = jnew JRegex(regexStr, "i");
 		}
 
 		JRegex* pathRegex = nullptr;
 		if (JDirInfo::BuildRegexFromWildcardFilter(pathFilter, &regexStr))
 		{
-			pathRegex = jnew JRegex(regexStr);
-			pathRegex->SetCaseSensitive(false);
+			pathRegex = jnew JRegex(regexStr, "i");
 		}
 
 		JLatentPG pg(100);

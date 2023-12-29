@@ -21,21 +21,7 @@ static const JUtf8Byte* kSourceMenuStr =
 "|* %i CloseAllTextFiles::ProjectDocument"
 ;
 
-enum {
-	kNewGroupCmd=1,
-	kAddFilesCmd,
-	kAddDirTreeCmd,
-	kRemoveSelCmd,
-	kOpenFilesCmd,
-	kOpenComplFilesCmd,
-	kEditPathCmd,
-	kEditSubprojConfigCmd,
-	kDiffSmartCmd,
-	kDiffVCSCmd,
-	kShowLocationCmd,
-	kSaveAllTextCmd,
-	kCloseAllTextCmd,
-};
+#include "ProjectDocument-Source-enum.h"
 
 #ifndef _H_jx_af_image_jx_jx_file_save_all
 #define _H_jx_af_image_jx_jx_file_save_all
@@ -44,7 +30,7 @@ enum {
 
 static void ConfigureSourceMenu(JXTextMenu* menu, const int offset = 0) {
 	if (offset == 0 && JXMenu::GetDisplayStyle() == JXMenu::kWindowsStyle) {
-		menu->SetShortcuts(JString("#s", JString::kNoCopy));
+		menu->SetShortcuts("#s");
 	}
 	menu->SetItemImage(kSaveAllTextCmd + offset, jx_file_save_all);
 };

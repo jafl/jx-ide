@@ -14,19 +14,12 @@ static const JUtf8Byte* kBaseMenuStr =
 "|* %r %i __ASCII::VarTreeWidget"
 ;
 
-enum {
-	kDefaultBase=1,
-	kBase10,
-	kBase2,
-	kBase8,
-	kBase16,
-	kBaseASCII,
-};
+#include "VarTreeWidget-Base-enum.h"
 
 
 static void ConfigureBaseMenu(JXTextMenu* menu, const int offset = 0) {
 	if (offset == 0 && JXMenu::GetDisplayStyle() == JXMenu::kWindowsStyle) {
-		menu->SetShortcuts(JString("#b", JString::kNoCopy));
+		menu->SetShortcuts("#b");
 	}
 };
 

@@ -108,7 +108,7 @@ CSharpStyler::CSharpStyler()
 
 	SetTypeStyle(kError              - kWhitespace, JFontStyle(JColorManager::GetRedColor()));
 
-	SetWordStyle(JString("goto", JString::kNoCopy), JFontStyle(true, false, 0, false, JColorManager::GetRedColor()));
+	SetWordStyle("goto", JFontStyle(true, false, 0, false, JColorManager::GetRedColor()));
 
 	JPrefObject::ReadPrefs();
 }
@@ -211,12 +211,12 @@ CSharpStyler::Scan
 
  ******************************************************************************/
 
-static const JRegex ppCommentPattern =
-	"^[[:space:]]*#[[:space:]]*(el)?if[[:space:]]+false[[:space:]]*(//.*|/\\*[^*]*\\*/)?\n";
+static const JRegex ppCommentPattern(
+	"^[[:space:]]*#[[:space:]]*(el)?if[[:space:]]+false[[:space:]]*(//.*|/\\*[^*]*\\*/)?\n");
 
-static const JRegex ppIfPattern   = "^[[:space:]]*#[[:space:]]*if";
-static const JRegex ppElsePattern = "^[[:space:]]*#[[:space:]]*(else|elif)";
-static const JRegex ppEndPattern  = "^[[:space:]]*#[[:space:]]*endif";
+static const JRegex ppIfPattern("^[[:space:]]*#[[:space:]]*if");
+static const JRegex ppElsePattern("^[[:space:]]*#[[:space:]]*(else|elif)");
+static const JRegex ppEndPattern("^[[:space:]]*#[[:space:]]*endif");
 
 #if 0	// comment
 abc

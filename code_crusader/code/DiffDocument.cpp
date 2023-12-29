@@ -210,8 +210,8 @@ DiffDocument::CreateCVS
 	{
 		// let diff chug along while we load the contents of file 1
 
-		JString s = JCombinePathAndName(diskPath, JString("CVS", JString::kNoCopy));
-		s         = JCombinePathAndName(s, JString("Repository", JString::kNoCopy));
+		JString s = JCombinePathAndName(diskPath, "CVS");
+		s         = JCombinePathAndName(s, "Repository");
 
 		JString cvsPath;
 		JReadFile(s, &cvsPath);

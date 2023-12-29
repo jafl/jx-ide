@@ -46,9 +46,9 @@ gdb::VarCmd::~VarCmd()
 
  ******************************************************************************/
 
-static JRegex prefixPattern =
+static JRegex prefixPattern(
 	"^([^\v]*\v\n*|warning:[^\n\v]*[\n\v]+)*[[:space:]]*"
-	"\\$[[:digit:]]+[[:space:]]*=[[:space:]]*";
+	"\\$[[:digit:]]+[[:space:]]*=[[:space:]]*");
 
 void
 gdb::VarCmd::HandleSuccess

@@ -20,7 +20,7 @@ jvm::GetInitArgsCmd::GetInitArgsCmd
 	JXInputField* argInput
 	)
 	:
-	::GetInitArgsCmd(JString("NOP", JString::kNoCopy))
+	::GetInitArgsCmd("NOP")
 {
 }
 

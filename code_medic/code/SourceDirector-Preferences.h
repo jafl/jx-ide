@@ -13,18 +13,12 @@ static const JUtf8Byte* kPreferencesMenuStr =
 "|* %i __SaveWindowSizeAsDefault::SourceDirector"
 ;
 
-enum {
-	kEditPrefsCmd=1,
-	kEditToolBarCmd,
-	kEditCmdsCmd,
-	kEditMacWinPrefsCmd,
-	kWindowSizeCmd,
-};
+#include "SourceDirector-Preferences-enum.h"
 
 
 static void ConfigurePreferencesMenu(JXTextMenu* menu, const int offset = 0) {
 	if (offset == 0 && JXMenu::GetDisplayStyle() == JXMenu::kWindowsStyle) {
-		menu->SetShortcuts(JString("#p", JString::kNoCopy));
+		menu->SetShortcuts("#p");
 	}
 };
 

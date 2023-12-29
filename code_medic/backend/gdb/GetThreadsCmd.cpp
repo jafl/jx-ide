@@ -29,7 +29,7 @@ gdb::GetThreadsCmd::GetThreadsCmd
 	ThreadsWidget*	widget
 	)
 	:
-	::GetThreadsCmd(JString("set width 0\ninfo threads", JString::kNoCopy), widget),
+	::GetThreadsCmd("set width 0\ninfo threads", widget),
 	itsTree(tree)
 {
 }
@@ -48,8 +48,8 @@ gdb::GetThreadsCmd::~GetThreadsCmd()
 
  ******************************************************************************/
 
-static const JRegex prefixPattern      = "^([[:digit:]]+)[[:space:]]+";
-static const JRegex threadIndexPattern = "^[0-9]{2}:";
+static const JRegex prefixPattern("^([[:digit:]]+)[[:space:]]+");
+static const JRegex threadIndexPattern("^[0-9]{2}:");
 
 void
 gdb::GetThreadsCmd::HandleSuccess
@@ -128,7 +128,7 @@ gdb::GetThreadsCmd::HandleSuccess
 
  ******************************************************************************/
 
-static const JRegex indexPattern = "^[[:digit:]]+";
+static const JRegex indexPattern("^[[:digit:]]+");
 
 bool
 gdb::GetThreadsCmd::ExtractThreadIndex
@@ -157,7 +157,7 @@ gdb::GetThreadsCmd::ExtractThreadIndex
 
  ******************************************************************************/
 
-static const JRegex locationPattern = "[ \t]+at[ \t]+(.+):([[:digit:]]+)$";
+static const JRegex locationPattern("[ \t]+at[ \t]+(.+):([[:digit:]]+)$");
 
 bool
 gdb::GetThreadsCmd::ExtractLocation

@@ -21,7 +21,7 @@ ProjectTree::ProjectTree
 	ProjectDocument* doc
 	)
 	:
-	JTree(jnew ProjectNode(nullptr, kRootNT, JString("root", JString::kNoCopy), true))
+	JTree(jnew ProjectNode(nullptr, kRootNT, "root", true))
 {
 	itsDoc = doc;
 }

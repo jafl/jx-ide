@@ -70,7 +70,7 @@ TEScriptMenu::TEScriptMenuX()
 	JDirInfo* info;
 	if (GetDirInfo(&info))
 	{
-		info->SetWildcardFilter(JString("*~ #*#", JString::kNoCopy), true);
+		info->SetWildcardFilter("*~ #*#", true);
 	}
 }
 
@@ -179,7 +179,7 @@ TEScriptMenu::HandleSelection
 		if (GetDirInfo(&info))
 		{
 			JString origName = info->GetDirectory();
-			origName         = JCombinePathAndName(origName, JString("script", JString::kNoCopy));
+			origName         = JCombinePathAndName(origName, "script");
 
 			auto* dlog = JXSaveFileDialog::Create(JGetString("SavePrompt::TEScriptMenu"), origName);
 			if (dlog->DoDialog())

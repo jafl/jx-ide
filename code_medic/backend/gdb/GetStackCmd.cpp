@@ -31,7 +31,7 @@ gdb::GetStackCmd::GetStackCmd
 	StackWidget*	widget
 	)
 	:
-	::GetStackCmd(JString("-stack-list-frames", JString::kNoCopy), tree, widget)
+	::GetStackCmd("-stack-list-frames", tree, widget)
 {
 	itsArgsCmd = jnew GetStackArgumentsCmd(tree);
 }
@@ -51,8 +51,8 @@ gdb::GetStackCmd::~GetStackCmd()
 
  ******************************************************************************/
 
-static const JRegex framePattern  = "\\bframe=\\{";
-static const JRegex assertPattern = "^(JAssert|__assert(_[^[:space:]]+)?)$";
+static const JRegex framePattern("\\bframe=\\{");
+static const JRegex assertPattern("^(JAssert|__assert(_[^[:space:]]+)?)$");
 
 void
 gdb::GetStackCmd::HandleSuccess

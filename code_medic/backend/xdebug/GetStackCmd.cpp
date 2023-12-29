@@ -29,7 +29,7 @@ xdebug::GetStackCmd::GetStackCmd
 	StackWidget*	widget
 	)
 	:
-	::GetStackCmd(JString("stack_get", JString::kNoCopy), tree, widget)
+	::GetStackCmd("stack_get", tree, widget)
 {
 }
 

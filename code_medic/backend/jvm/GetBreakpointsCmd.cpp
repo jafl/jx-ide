@@ -18,7 +18,7 @@
 
 jvm::GetBreakpointsCmd::GetBreakpointsCmd()
 	:
-	::GetBreakpointsCmd(JString("NOP", JString::kNoCopy))
+	::GetBreakpointsCmd("NOP")
 {
 }
 

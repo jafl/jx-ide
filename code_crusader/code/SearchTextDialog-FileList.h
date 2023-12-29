@@ -15,20 +15,12 @@ static const JUtf8Byte* kOptionsMenuStr =
 "|* %i __SaveFileSet::SearchTextDialog"
 ;
 
-enum {
-	kShowMatchTextCmd=1,
-	kListFilesWithoutMatchCmd,
-	kAddFilesCmd,
-	kRemoveSelCmd,
-	kRemoveAllCmd,
-	kLoadFileSetCmd,
-	kSaveFileSetCmd,
-};
+#include "SearchTextDialog-FileList-enum.h"
 
 
 static void ConfigureOptionsMenu(JXTextMenu* menu, const int offset = 0) {
 	if (offset == 0 && JXMenu::GetDisplayStyle() == JXMenu::kWindowsStyle) {
-		menu->SetShortcuts(JString("#o", JString::kNoCopy));
+		menu->SetShortcuts("#o");
 	}
 };
 

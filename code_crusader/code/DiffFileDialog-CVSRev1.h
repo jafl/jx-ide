@@ -12,12 +12,7 @@ static const JUtf8Byte* kCVSRev1MenuStr =
 "|* %r %i __Date::DiffFileDialog"
 ;
 
-enum {
-	__Current_CVS1=1,
-	__Previous_CVS1,
-	__Tag_CVS1,
-	__Date_CVS1,
-};
+#include "DiffFileDialog-CVSRev1-enum.h"
 
 
 static void ConfigureCVSRev1Menu(JXTextMenu* menu, const int offset = 0) {

@@ -24,7 +24,7 @@ gdb::GetFrameCmd::GetFrameCmd
 	StackWidget* widget
 	)
 	:
-	::GetFrameCmd(JString("-stack-info-frame", JString::kNoCopy)),
+	::GetFrameCmd("-stack-info-frame"),
 	itsWidget(widget)
 {
 }
@@ -43,7 +43,7 @@ gdb::GetFrameCmd::~GetFrameCmd()
 
  ******************************************************************************/
 
-static const JRegex framePattern = "\\bframe=\\{";
+static const JRegex framePattern("\\bframe=\\{");
 
 void
 gdb::GetFrameCmd::HandleSuccess

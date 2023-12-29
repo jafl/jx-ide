@@ -22,7 +22,7 @@ jvm::VarCmd::VarCmd
 	:
 	::VarCmd()
 {
-	SetCommand(JString("NOP", JString::kNoCopy));
+	SetCommand("NOP");
 }
 
 /******************************************************************************

@@ -57,7 +57,7 @@ lldb::GetStackCmd::~GetStackCmd()
 
  ******************************************************************************/
 
-static const JRegex assertPattern = "^(JAssert|__assert(_[^[:space:]]+)?)\\(";
+static const JRegex assertPattern("^(JAssert|__assert(_[^[:space:]]+)?)\\(");
 
 void
 lldb::GetStackCmd::HandleSuccess

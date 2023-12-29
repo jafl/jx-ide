@@ -37,37 +37,7 @@ static const JUtf8Byte* kDebugMenuStr =
 "|* %i ClearAllBreakpoints::Generic %l"
 ;
 
-enum {
-	kSelectBinCmd=1,
-	kReloadBinCmd,
-	kSelectCoreCmd,
-	kSelectProcessCmd,
-	kSetArgsCmd,
-	kRestartDebuggerCmd,
-	kDisplayVarCmd,
-	kDisplay1DArrayCmd,
-	kPlot1DArrayCmd,
-	kDisplay2DArrayCmd,
-	kWatchVarCmd,
-	kWatchLocCmd,
-	kExamineMemCmd,
-	kDisassembleMemCmd,
-	kDisassembleFnCmd,
-	kRunCmd,
-	kStopCmd,
-	kKillCmd,
-	kNextCmd,
-	kStepCmd,
-	kFinishCmd,
-	kContCmd,
-	kNextAsmCmd,
-	kStepAsmCmd,
-	kPrevCmd,
-	kReverseStepCmd,
-	kReverseFinishCmd,
-	kReverseContCmd,
-	kRemoveAllBreakpointsCmd,
-};
+#include "Generic-Debug-enum.h"
 
 #ifndef _H_jx_af_image_jx_jx_executable_small
 #define _H_jx_af_image_jx_jx_executable_small
@@ -152,7 +122,7 @@ enum {
 
 static void ConfigureDebugMenu(JXTextMenu* menu, const int offset = 0) {
 	if (offset == 0 && JXMenu::GetDisplayStyle() == JXMenu::kWindowsStyle) {
-		menu->SetShortcuts(JString("#d", JString::kNoCopy));
+		menu->SetShortcuts("#d");
 	}
 	menu->SetItemImage(kSelectBinCmd + offset, jx_executable_small);
 	menu->SetItemImage(kSelectCoreCmd + offset, medic_choose_core);

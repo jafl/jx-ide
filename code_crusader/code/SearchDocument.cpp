@@ -154,7 +154,7 @@ SearchDocument::SearchDocument
 						  rect.right - kMenuButtonWidth,0, kMenuButtonWidth,h);
 	assert( itsStopButton != nullptr );
 	ListenTo(itsStopButton);
-	itsStopButton->SetShortcuts(JString("^C#.", JString::kNoCopy));
+	itsStopButton->SetShortcuts("^C#.");
 	itsStopButton->SetHint(JGetString("StopButtonHint::ExecOutputDocument"));
 
 	ListenTo(itsStopButton, std::function([this](const JXButton::Pushed&)
@@ -324,7 +324,7 @@ SearchDocument::AppendSearchResult
 	start = st->GetBeyondEnd();
 	te->SetCurrentFont(st->GetDefaultFont());
 
-	te->Paste(JString(":", JString::kNoCopy));
+	te->Paste(":");
 	te->Paste(JString((JUInt64) msg.GetLineIndex()));
 	te->Paste(kDoubleNewline);
 

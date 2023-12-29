@@ -20,7 +20,7 @@ jvm::GetLocalVarsCmd::GetLocalVarsCmd
 	VarNode* rootNode
 	)
 	:
-	::GetLocalVarsCmd(JString("NOP", JString::kNoCopy)),
+	::GetLocalVarsCmd("NOP"),
 	itsRootNode(rootNode)
 {
 }

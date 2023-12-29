@@ -247,10 +247,9 @@ MakeStyler::ExtendCheckRangeForString
 
 #define BourneShellStringID "([[:alpha:]_][[:alnum:]_]*|[0-9]+)"
 
-static JRegex variablePattern =
-	"(?<!\\\\)\\$(" BourneShellStringID "|\\{[#!]?" BourneShellStringID "(\\[[^]\n]+\\])?([}:]|#{1,2}|%{1,2}|/{1,2})|[-0-9*@#?$!_])";
-static JRegex emptyVariablePattern =
-	"(?<!\\\\)\\$\\{\\}?";
+static JRegex variablePattern(
+	"(?<!\\\\)\\$(" BourneShellStringID "|\\{[#!]?" BourneShellStringID "(\\[[^]\n]+\\])?([}:]|#{1,2}|%{1,2}|/{1,2})|[-0-9*@#?$!_])");
+static JRegex emptyVariablePattern("(?<!\\\\)\\$\\{\\}?");
 
 #undef BourneShellStringID
 

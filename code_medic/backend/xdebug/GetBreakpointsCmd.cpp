@@ -26,7 +26,7 @@
 
 xdebug::GetBreakpointsCmd::GetBreakpointsCmd()
 	:
-	::GetBreakpointsCmd(JString("breakpoint_list", JString::kNoCopy))
+	::GetBreakpointsCmd("breakpoint_list")
 {
 }
 

@@ -30,7 +30,7 @@ gdb::GetSourceFileListCmd::GetSourceFileListCmd
 	FileListDir* fileList
 	)
 	:
-	::GetSourceFileListCmd(JString("info sources", JString::kNoCopy), fileList)
+	::GetSourceFileListCmd("info sources", fileList)
 {
 }
 

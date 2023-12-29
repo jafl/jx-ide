@@ -220,8 +220,8 @@ TCLStyler::ExtendCheckRangeForString
 
  ******************************************************************************/
 
-static JRegex emptyVariablePattern = "(?<!\\\\)\\$\\{\\}";
-static JRegex variablePattern      = "(?<!\\\\)\\$(\\{[^}]+\\}|(_|\\p{L}|\\d)+)";
+static JRegex emptyVariablePattern("(?<!\\\\)\\$\\{\\}");
+static JRegex variablePattern("(?<!\\\\)\\$(\\{[^}]+\\}|(_|\\p{L}|\\d)+)");
 
 #define ClassName    TCLStyler
 #define VariableType kVariable

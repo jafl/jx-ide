@@ -10,10 +10,7 @@ static const JUtf8Byte* kActionsMenuStr =
 "|* %b %i __UseRegexFilter::FileListDir"
 ;
 
-enum {
-	kShowFilterCmd=1,
-	kShowRegexCmd,
-};
+#include "FileListDir-Actions-enum.h"
 
 #ifndef _H_jx_af_image_jx_jx_filter_wildcard
 #define _H_jx_af_image_jx_jx_filter_wildcard
@@ -26,7 +23,7 @@ enum {
 
 static void ConfigureActionsMenu(JXTextMenu* menu, const int offset = 0) {
 	if (offset == 0 && JXMenu::GetDisplayStyle() == JXMenu::kWindowsStyle) {
-		menu->SetShortcuts(JString("#a", JString::kNoCopy));
+		menu->SetShortcuts("#a");
 	}
 	menu->SetItemImage(kShowFilterCmd + offset, jx_filter_wildcard);
 	menu->SetItemImage(kShowRegexCmd + offset, jx_filter_regex);

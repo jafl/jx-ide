@@ -16,16 +16,7 @@ static const JUtf8Byte* kManageProjectMenuStr =
 "|* %i ShowFileList::CommandMenu"
 ;
 
-enum {
-	kUpdateSymbolDBCmd=1,
-	kShowSymbolBrowserCmd,
-	kShowCTreeCmd,
-	kShowDTreeCmd,
-	kShowGoTreeCmd,
-	kShowJavaTreeCmd,
-	kShowPHPTreeCmd,
-	kShowFileListCmd,
-};
+#include "CommandMenu-ManageProject-enum.h"
 
 #ifndef _H_jcc_show_symbol_list
 #define _H_jcc_show_symbol_list

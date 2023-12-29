@@ -25,25 +25,7 @@ static const JUtf8Byte* kContextMenuStr =
 "|* %i __PlaceBookmark::TextEditor"
 ;
 
-enum {
-	kContextCutCmd=1,
-	kContextCopyCmd,
-	kContextPasteCmd,
-	kContextShiftLeftCmd,
-	kContextShiftRightCmd,
-	kContextCompleteCmd,
-	kContextMacroCmd,
-	kContextScriptSubmenuIndex,
-	kContextFindSelBackCmd,
-	kContextFindSelFwdCmd,
-	kContextFindSymbolCmd,
-	kContextFindSymbolNoContextCmd,
-	kContextFindSymbolManPageCmd,
-	kContextOpenSelAsFileCmd,
-	kShowInFileMgrCmd,
-	kContextBalanceCmd,
-	kContextPlaceBookmarkCmd,
-};
+#include "TextEditor-Context-enum.h"
 
 #ifndef _H_jx_af_image_jx_jx_edit_cut
 #define _H_jx_af_image_jx_jx_edit_cut

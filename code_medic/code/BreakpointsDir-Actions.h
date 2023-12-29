@@ -11,16 +11,12 @@ static const JUtf8Byte* kActionsMenuStr =
 "|* %i ClearAllBreakpoints::BreakpointsDir"
 ;
 
-enum {
-	kEnableAllBreakpointsCmd=1,
-	kDisableAllBreakpointsCmd,
-	kRemoveAllBreakpointsCmd,
-};
+#include "BreakpointsDir-Actions-enum.h"
 
 
 static void ConfigureActionsMenu(JXTextMenu* menu, const int offset = 0) {
 	if (offset == 0 && JXMenu::GetDisplayStyle() == JXMenu::kWindowsStyle) {
-		menu->SetShortcuts(JString("#a", JString::kNoCopy));
+		menu->SetShortcuts("#a");
 	}
 };
 

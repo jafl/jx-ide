@@ -22,7 +22,7 @@ xdebug::GetThreadsCmd::GetThreadsCmd
 	ThreadsWidget*	widget
 	)
 	:
-	::GetThreadsCmd(JString("status", JString::kNoCopy), widget)
+	::GetThreadsCmd("status", widget)
 {
 }
 

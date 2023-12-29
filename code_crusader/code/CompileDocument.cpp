@@ -23,8 +23,8 @@
 
 #include "CompileDocument-Errors.h"
 
-static const JRegex dirMarkerPattern = "((Entering)|(Leaving)) directory `";
-static const JRegex endMarkerPattern = "['`]";
+static const JRegex dirMarkerPattern("((Entering)|(Leaving)) directory `");
+static const JRegex endMarkerPattern("['`]");
 
 // static data
 
@@ -128,7 +128,7 @@ CompileDocument::SetConnection
 			"d", execDir.GetBytes()
 		};
 		te->Paste(JGetString("ChangeDirectory::CompileDocument", map, sizeof(map)));
-		te->Paste(JString("\n\n", JString::kNoCopy));
+		te->Paste("\n\n");
 		te->GetText()->ClearUndo();
 	}
 }
@@ -179,15 +179,15 @@ CompileDocument::ProcessFinished
 
  ******************************************************************************/
 
-static const JRegex gccErrorRegex    = "(?<=.):[0-9]+(\\.[0-9]+-[0-9]+)?(:[0-9]+)?: (?:(?:fatal )?error|warning):";
-static const JRegex flexErrorRegex   = "(?<=..)\", line [0-9]+: ";
-static const JRegex bisonErrorRegex  = "(?<=...)\", line [0-9]+\\) error: ";
-static const JRegex makeErrorRegex   = ".(\\[[0-9]+\\])?: \\*\\*\\*";
-static const JRegex absoftErrorRegex = " error on line [0-9]+ of ([^:]+): ";
-static const JRegex javacOutputRegex = "^\\s+\\[.+?\\]\\s+";
-static const JRegex javacErrorRegex  = "^\\s+\\[.+?\\]\\s+(.+?):[0-9]+: ";
-static const JRegex maven2ErrorRegex = "^(?:\\[.+?\\]\\s+)?(.+?):\\[[0-9]+,[0-9]+\\] ";
-static const JRegex maven3ErrorRegex = "^(?:\\[.+?\\]\\s+)?(.+?):[0-9]+:[0-9]+::";
+static const JRegex gccErrorRegex("(?<=.):[0-9]+(\\.[0-9]+-[0-9]+)?(:[0-9]+)?: (?:(?:fatal )?error|warning):");
+static const JRegex flexErrorRegex("(?<=..)\", line [0-9]+: ");
+static const JRegex bisonErrorRegex("(?<=...)\", line [0-9]+\\) error: ");
+static const JRegex makeErrorRegex(".(\\[[0-9]+\\])?: \\*\\*\\*");
+static const JRegex absoftErrorRegex(" error on line [0-9]+ of ([^:]+): ");
+static const JRegex javacOutputRegex("^\\s+\\[.+?\\]\\s+");
+static const JRegex javacErrorRegex("^\\s+\\[.+?\\]\\s+(.+?):[0-9]+: ");
+static const JRegex maven2ErrorRegex("^(?:\\[.+?\\]\\s+)?(.+?):\\[[0-9]+,[0-9]+\\] ");
+static const JRegex maven3ErrorRegex("^(?:\\[.+?\\]\\s+)?(.+?):[0-9]+:[0-9]+::");
 
 static const JUtf8Byte* makeIgnoreErrorStr = "(ignored)";
 static const JUtf8Byte* gccMultilinePrefix = "   ";

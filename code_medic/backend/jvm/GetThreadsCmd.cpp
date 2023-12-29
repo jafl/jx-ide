@@ -26,7 +26,7 @@ jvm::GetThreadsCmd::GetThreadsCmd
 	ThreadsWidget*	widget
 	)
 	:
-	::GetThreadsCmd(JString("NOP", JString::kNoCopy), widget),
+	::GetThreadsCmd("NOP", widget),
 	itsTree(tree)
 {
 }

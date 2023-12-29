@@ -224,8 +224,8 @@ JavaScriptStyler::Scan
 
  ******************************************************************************/
 
-static JRegex variablePattern =      "(?<!\\\\)\\$\\{.+?\\}";
-static JRegex emptyVariablePattern = "(?<!\\\\)\\$\\{\\}?";
+static JRegex variablePattern("(?<!\\\\)\\$\\{.+?\\}");
+static JRegex emptyVariablePattern("(?<!\\\\)\\$\\{\\}?");
 
 #define ClassName JavaScriptStyler
 #include "STStylerEmbeddedVariables.th"

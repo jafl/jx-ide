@@ -24,7 +24,7 @@ xdebug::GetLocalVarsCmd::GetLocalVarsCmd
 	::VarNode* rootNode
 	)
 	:
-	::GetLocalVarsCmd(JString("context_names", JString::kNoCopy)),
+	::GetLocalVarsCmd("context_names"),
 	itsRootNode(rootNode)
 {
 }

@@ -20,20 +20,7 @@ static const JUtf8Byte* kSearchMenuStr =
 "|* %i OpenNextListItem::TextEditor"
 ;
 
-enum {
-	kBalanceCmd=1,
-	kGoToLineCmd,
-	kGoToColCmd,
-	kPlaceBookmarkCmd,
-	kOpenSelectionAsFileCmd,
-	kFindSourceFileCmd,
-	kFindSelectionAsSymbolCmd,
-	kFindSelectionAsSymbolNoContextCmd,
-	kFindSelectionInManPageCmd,
-	kViewManPageCmd,
-	kOpenPrevListItemCmd,
-	kOpenNextListItemCmd,
-};
+#include "TextEditor-Search-enum.h"
 
 #ifndef _H_jcc_balance_braces
 #define _H_jcc_balance_braces

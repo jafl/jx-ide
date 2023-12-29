@@ -100,10 +100,10 @@ gdb::DisplaySourceForMainCmd::Receive
 
  ******************************************************************************/
 
-static const JRegex infoPattern =
-	"Line [[:digit:]]+ of \"[^\"]*\" starts at address";
-static const JRegex locationPattern =
-	"032032(.+):([[:digit:]]+):[[:digit:]]+:[^:]+:0x[[:xdigit:]]+";
+static const JRegex infoPattern(
+	"Line [[:digit:]]+ of \"[^\"]*\" starts at address");
+static const JRegex locationPattern(
+	"032032(.+):([[:digit:]]+):[[:digit:]]+:[^:]+:0x[[:xdigit:]]+");
 
 void
 gdb::DisplaySourceForMainCmd::HandleSuccess

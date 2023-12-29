@@ -39,7 +39,7 @@ gdb::GetProgramNameCmd::~GetProgramNameCmd()
 
  ******************************************************************************/
 
-static const JRegex fileNamePattern = "Local exec file:\n\t`([^\n]+)'";
+static const JRegex fileNamePattern("Local exec file:\n\t`([^\n]+)'");
 
 void
 gdb::GetProgramNameCmd::HandleSuccess

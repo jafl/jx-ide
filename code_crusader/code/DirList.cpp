@@ -21,7 +21,7 @@ DirList::DirList()
 {
 	DirListX();
 
-	AddPath(JString("./", JString::kNoCopy), true);
+	AddPath("./", true);
 }
 
 // private

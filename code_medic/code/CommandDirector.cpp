@@ -125,17 +125,17 @@ CommandDirector::CommandDirector
 	itsDebugDir       = jnew DebugDir();
 
 	JXWDManager* wdMgr = GetDisplay()->GetWDManager();
-	wdMgr->PermanentDirectorCreated(this,                JString::empty,                            kShowCommandLineAction);
-	wdMgr->PermanentDirectorCreated(itsCurrentSourceDir, JString::empty,                            kShowCurrentSourceAction);
-	wdMgr->PermanentDirectorCreated(itsThreadsDir,       JString("Ctrl-Shift-T", JString::kNoCopy), kShowThreadsAction);
-	wdMgr->PermanentDirectorCreated(itsStackDir,         JString("Ctrl-Shift-S", JString::kNoCopy), kShowStackTraceAction);
-	wdMgr->PermanentDirectorCreated(itsBreakpointsDir,   JString("Ctrl-Shift-B", JString::kNoCopy), kShowBreakpointsAction);
-	wdMgr->PermanentDirectorCreated(itsVarTreeDir,       JString("Ctrl-Shift-V", JString::kNoCopy), kShowVariablesAction);
-	wdMgr->PermanentDirectorCreated(itsLocalVarsDir,     JString("Ctrl-Shift-L", JString::kNoCopy), kShowLocalVariablesAction);
-	wdMgr->PermanentDirectorCreated(itsCurrentAsmDir,    JString("Ctrl-Shift-Y", JString::kNoCopy), kShowCurrentAsmAction);
-	wdMgr->PermanentDirectorCreated(itsRegistersDir,     JString("Ctrl-Shift-R", JString::kNoCopy), kShowRegistersAction);
-	wdMgr->PermanentDirectorCreated(itsFileListDir,      JString("Ctrl-Shift-F", JString::kNoCopy), kShowFileListAction);
-	wdMgr->PermanentDirectorCreated(itsDebugDir,         JString::empty,                            kShowDebugInfoAction);
+	wdMgr->PermanentDirectorCreated(this,                JString::empty, kShowCommandLineAction);
+	wdMgr->PermanentDirectorCreated(itsCurrentSourceDir, JString::empty, kShowCurrentSourceAction);
+	wdMgr->PermanentDirectorCreated(itsThreadsDir,       "Ctrl-Shift-T", kShowThreadsAction);
+	wdMgr->PermanentDirectorCreated(itsStackDir,         "Ctrl-Shift-S", kShowStackTraceAction);
+	wdMgr->PermanentDirectorCreated(itsBreakpointsDir,   "Ctrl-Shift-B", kShowBreakpointsAction);
+	wdMgr->PermanentDirectorCreated(itsVarTreeDir,       "Ctrl-Shift-V", kShowVariablesAction);
+	wdMgr->PermanentDirectorCreated(itsLocalVarsDir,     "Ctrl-Shift-L", kShowLocalVariablesAction);
+	wdMgr->PermanentDirectorCreated(itsCurrentAsmDir,    "Ctrl-Shift-Y", kShowCurrentAsmAction);
+	wdMgr->PermanentDirectorCreated(itsRegistersDir,     "Ctrl-Shift-R", kShowRegistersAction);
+	wdMgr->PermanentDirectorCreated(itsFileListDir,      "Ctrl-Shift-F", kShowFileListAction);
+	wdMgr->PermanentDirectorCreated(itsDebugDir,         JString::empty, kShowDebugInfoAction);
 
 	auto f = std::function([this](JString* s)
 	{

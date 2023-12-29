@@ -39,7 +39,7 @@ gdb::CheckCoreStatusCmd::~CheckCoreStatusCmd()
 
  ******************************************************************************/
 
-static const JRegex coreFilePattern = "Local core dump file:\n\t`([^\n]+)'";
+static const JRegex coreFilePattern("Local core dump file:\n\t`([^\n]+)'");
 
 void
 gdb::CheckCoreStatusCmd::HandleSuccess

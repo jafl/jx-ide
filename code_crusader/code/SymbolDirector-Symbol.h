@@ -14,14 +14,7 @@ static const JUtf8Byte* kSymbolMenuStr =
 "|* %i CloseAllSymSR::SymbolDirector"
 ;
 
-enum {
-	kEditSearchPathsCmd=1,
-	kUpdateCurrentCmd,
-	kOpenFileCmd,
-	kCopySelNamesCmd,
-	kFindSelectedSymbolCmd,
-	kCloseAllSymSRCmd,
-};
+#include "SymbolDirector-Symbol-enum.h"
 
 #ifndef _H_jx_af_image_jx_jx_file_open
 #define _H_jx_af_image_jx_jx_file_open
@@ -34,7 +27,7 @@ enum {
 
 static void ConfigureSymbolMenu(JXTextMenu* menu, const int offset = 0) {
 	if (offset == 0 && JXMenu::GetDisplayStyle() == JXMenu::kWindowsStyle) {
-		menu->SetShortcuts(JString("#s", JString::kNoCopy));
+		menu->SetShortcuts("#s");
 	}
 	menu->SetItemImage(kOpenFileCmd + offset, jx_file_open);
 	menu->SetItemImage(kCopySelNamesCmd + offset, jx_edit_copy);

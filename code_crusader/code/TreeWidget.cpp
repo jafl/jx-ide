@@ -507,7 +507,6 @@ TreeWidget::HandleMouseDrag
 	if (itsExpectDragFlag && JMouseMoved(itsStartPt, pt))
 	{
 		auto* data = jnew JXFileSelection(this, kSelectionDataID);
-
 		BeginDND(pt, buttonStates, modifiers, data);
 		itsExpectDragFlag = false;
 	}
@@ -556,7 +555,6 @@ TreeWidget::GetSelectionData
 		DocumentManager* docMgr = GetDocumentManager();
 
 		auto* list = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
-		assert( list != nullptr );
 
 		JPtrArray<Class> classList(JPtrArrayT::kForgetAll);
 		const bool hasSelection = itsTree->GetSelectedClasses(&classList);

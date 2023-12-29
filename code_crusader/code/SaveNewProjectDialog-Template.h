@@ -9,9 +9,7 @@ static const JUtf8Byte* kTemplateMenuStr =
 "* %r %i __None::SaveNewProjectDialog %l"
 ;
 
-enum {
-	kNoTemplateCmd=1,
-};
+#include "SaveNewProjectDialog-Template-enum.h"
 
 
 static void ConfigureTemplateMenu(JXTextMenu* menu, const int offset = 0) {

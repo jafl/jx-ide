@@ -15,20 +15,12 @@ static const JUtf8Byte* kPreferencesMenuStr =
 "|* %i __SaveWindowSizeAsDefault::TreeDirector"
 ;
 
-enum {
-	kTreePrefsCmd=1,
-	kToolBarPrefsCmd,
-	kEditFileTypesCmd,
-	kChooseExtEditorsCmd,
-	kShowLocationPrefsCmd,
-	kMiscPrefsCmd,
-	kSaveWindSizeCmd,
-};
+#include "TreeDirector-Preferences-enum.h"
 
 
 static void ConfigurePreferencesMenu(JXTextMenu* menu, const int offset = 0) {
 	if (offset == 0 && JXMenu::GetDisplayStyle() == JXMenu::kWindowsStyle) {
-		menu->SetShortcuts(JString("#p", JString::kNoCopy));
+		menu->SetShortcuts("#p");
 	}
 };
 

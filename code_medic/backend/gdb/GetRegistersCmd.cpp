@@ -21,7 +21,7 @@ gdb::GetRegistersCmd::GetRegistersCmd
 	RegistersDir* dir
 	)
 	:
-	::GetRegistersCmd(JString("info all-registers", JString::kNoCopy), dir)
+	::GetRegistersCmd("info all-registers", dir)
 {
 }
 

@@ -23,28 +23,12 @@ static const JUtf8Byte* kProjectMenuStr =
 "|* %i DiffFiles::ProjectDocument"
 ;
 
-enum {
-	kOpenMakeConfigDlogCmd=1,
-	kUpdateMakefileCmd,
-	kUpdateSymbolDBCmd,
-	kShowSymbolBrowserCmd,
-	kShowCTreeCmd,
-	kShowDTreeCmd,
-	kShowGoTreeCmd,
-	kShowJavaTreeCmd,
-	kShowPHPTreeCmd,
-	kViewManPageCmd,
-	kEditSearchPathsCmd,
-	kShowFileListCmd,
-	kFindFileCmd,
-	kSearchFilesCmd,
-	kDiffFilesCmd,
-};
+#include "ProjectDocument-Project-enum.h"
 
 
 static void ConfigureProjectMenu(JXTextMenu* menu, const int offset = 0) {
 	if (offset == 0 && JXMenu::GetDisplayStyle() == JXMenu::kWindowsStyle) {
-		menu->SetShortcuts(JString("#p", JString::kNoCopy));
+		menu->SetShortcuts("#p");
 	}
 };
 

@@ -343,7 +343,7 @@ EditPrefsDialog::GetPrefs
 
  ******************************************************************************/
 
-static const JRegex wsPattern = "[ \t]+";
+static const JRegex wsPattern("[ \t]+");
 
 void
 EditPrefsDialog::GetSuffixList
@@ -414,11 +414,11 @@ EditPrefsDialog::Receive
 {
 	if (sender == itsChooseGDBButton && message.Is(JXButton::kPushed))
 	{
-		ChooseDebugger(JString("gdb", JString::kNoCopy), itsGDBCmd);
+		ChooseDebugger("gdb", itsGDBCmd);
 	}
 	else if (sender == itsChooseJDBButton && message.Is(JXButton::kPushed))
 	{
-		ChooseDebugger(JString("jdb", JString::kNoCopy), itsJDBCmd);
+		ChooseDebugger("jdb", itsJDBCmd);
 	}
 	else
 	{

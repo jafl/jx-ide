@@ -21,7 +21,7 @@ xdebug::GetFullPathCmd::GetFullPathCmd
 	const JIndex	lineIndex	// for convenience
 	)
 	:
-	::GetFullPathCmd(JString("status", JString::kNoCopy), fileName, lineIndex)
+	::GetFullPathCmd("status", fileName, lineIndex)
 {
 }
 

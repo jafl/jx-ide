@@ -13,13 +13,7 @@ static const JUtf8Byte* kListMenuStr =
 "|* %b %i UseRegexFilter::FileListDirector"
 ;
 
-enum {
-	kOpenSelectionCmd=1,
-	kShowLocationCmd,
-	kUpdateCmd,
-	kUseWildcardCmd,
-	kUseRegexCmd,
-};
+#include "FileListDirector-List-enum.h"
 
 #ifndef _H_jx_af_image_jx_jx_filter_wildcard
 #define _H_jx_af_image_jx_jx_filter_wildcard
@@ -32,7 +26,7 @@ enum {
 
 static void ConfigureListMenu(JXTextMenu* menu, const int offset = 0) {
 	if (offset == 0 && JXMenu::GetDisplayStyle() == JXMenu::kWindowsStyle) {
-		menu->SetShortcuts(JString("#l", JString::kNoCopy));
+		menu->SetShortcuts("#l");
 	}
 	menu->SetItemImage(kUseWildcardCmd + offset, jx_filter_wildcard);
 	menu->SetItemImage(kUseRegexCmd + offset, jx_filter_regex);

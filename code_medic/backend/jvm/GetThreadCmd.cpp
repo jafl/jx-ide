@@ -23,7 +23,7 @@ jvm::GetThreadCmd::GetThreadCmd
 	ThreadsWidget* widget
 	)
 	:
-	::GetThreadCmd(JString("NOP", JString::kNoCopy), widget)
+	::GetThreadCmd("NOP", widget)
 {
 }
 

@@ -46,12 +46,12 @@ gdb::GetStackArgumentsCmd::~GetStackArgumentsCmd()
 
  ******************************************************************************/
 
-static const JRegex framePattern =
+static const JRegex framePattern(
 	"frame=\\{"
 	"level=\"(?P<FrameIndex>[[:digit:]]+)\""
-	",args=\\[";
+	",args=\\[");
 
-static const JRegex refPattern = "@0x[[:xdigit:]]+:";
+static const JRegex refPattern("@0x[[:xdigit:]]+:");
 
 void
 gdb::GetStackArgumentsCmd::HandleSuccess

@@ -22,7 +22,7 @@ xdebug::GetCompletionsCmd::GetCompletionsCmd
 	CommandOutputDisplay*	history
 	)
 	:
-	::GetCompletionsCmd(JString("status", JString::kNoCopy)),
+	::GetCompletionsCmd("status"),
 	itsPrefix(input->GetText()->GetText()),
 	itsInput(input),
 	itsHistory(history)

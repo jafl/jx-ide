@@ -76,8 +76,8 @@ CRMRuleTable::CRMRuleTable
 	itsSaveButton = saveButton;
 	ListenTo(itsSaveButton);
 
-	itsFirstRegex          = JStyledText::CRMRule::CreateRegex(JString(".", JString::kNoCopy));
-	itsRestRegex           = JStyledText::CRMRule::CreateRegex(JString(".", JString::kNoCopy));
+	itsFirstRegex          = JStyledText::CRMRule::CreateRegex(".");
+	itsRestRegex           = JStyledText::CRMRule::CreateRegex(".");
 	itsReplaceInterpolator = JStyledText::CRMRule::CreateInterpolator();
 
 	JStringTableData* data = GetStringData();

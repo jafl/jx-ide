@@ -47,7 +47,7 @@ VarNode::VarNode
 	const JString&	value
 	)
 	:
-	JNamedTreeNode(nullptr, name.IsEmpty() ? JString(" ", JString::kNoCopy) : name, false),
+	JNamedTreeNode(nullptr, name.IsEmpty() ? JString::space : name, false),
 	itsShouldListenToLinkFlag(false),
 	itsValue(value)
 {
@@ -129,7 +129,7 @@ VarNode::SetValue
 
  ******************************************************************************/
 
-static const JRegex valuePattern = "^(-?[[:digit:]]+)([[:space:]]+'.*)?$";
+static const JRegex valuePattern("^(-?[[:digit:]]+)([[:space:]]+'.*)?$");
 
 struct SpecialCharInfo
 {

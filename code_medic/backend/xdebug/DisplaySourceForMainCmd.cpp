@@ -20,7 +20,7 @@ xdebug::DisplaySourceForMainCmd::DisplaySourceForMainCmd
 	SourceDirector* sourceDir
 	)
 	:
-	::DisplaySourceForMainCmd(sourceDir, JString("status", JString::kNoCopy))
+	::DisplaySourceForMainCmd(sourceDir, "status")
 {
 }
 

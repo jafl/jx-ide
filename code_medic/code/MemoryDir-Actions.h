@@ -9,14 +9,12 @@ static const JUtf8Byte* kActionsMenuStr =
 "* %i __SaveWindowSizeAsDefault::MemoryDir"
 ;
 
-enum {
-	kSavePrefsCmd=1,
-};
+#include "MemoryDir-Actions-enum.h"
 
 
 static void ConfigureActionsMenu(JXTextMenu* menu, const int offset = 0) {
 	if (offset == 0 && JXMenu::GetDisplayStyle() == JXMenu::kWindowsStyle) {
-		menu->SetShortcuts(JString("#a", JString::kNoCopy));
+		menu->SetShortcuts("#a");
 	}
 };
 

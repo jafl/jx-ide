@@ -51,9 +51,9 @@ gdb::GetLocalVarsCmd::~GetLocalVarsCmd()
 
  ******************************************************************************/
 
-static const JString kSeparator("\n-----\n", JString::kNoCopy);
-static const JRegex varPattern     = "^([^=]+)=(.*)$";
-static const JRegex gdb7RefPattern = "^@0[xX][[:xdigit:]]+$";
+static const JString kSeparator("\n-----\n");
+static const JRegex varPattern("^([^=]+)=(.*)$");
+static const JRegex gdb7RefPattern("^@0[xX][[:xdigit:]]+$");
 
 void
 gdb::GetLocalVarsCmd::HandleSuccess
@@ -202,8 +202,8 @@ gdb::GetLocalVarsCmd::HandleSuccess
 
  ******************************************************************************/
 
-static const JRegex parseError1Pattern = "[{,]\n";
-static const JRegex parseError2Pattern = "\n\\}";
+static const JRegex parseError1Pattern("[{,]\n");
+static const JRegex parseError2Pattern("\n\\}");
 
 void
 gdb::GetLocalVarsCmd::CleanVarString

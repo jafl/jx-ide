@@ -21,7 +21,7 @@ jvm::GetFrameCmd::GetFrameCmd
 	StackWidget* widget
 	)
 	:
-	::GetFrameCmd(JString("NOP", JString::kNoCopy)),
+	::GetFrameCmd("NOP"),
 	itsWidget(widget)
 {
 }

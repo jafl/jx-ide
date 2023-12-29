@@ -20,20 +20,7 @@ static const JUtf8Byte* kTreeMenuStr =
 "|* %i FindFunction::GoTreeDirector"
 ;
 
-enum {
-	kEditSearchPathsCmd=1,
-	kUpdateCurrentCmd,
-	kForceMinMILinksCmd,
-	kTreeOpenSourceCmd,
-	kTreeOpenFnListCmd,
-	kTreeCollapseCmd,
-	kTreeExpandCmd,
-	kTreeExpandAllCmd,
-	kTreeSelParentsCmd,
-	kTreeSelDescendantsCmd,
-	kCopySelNamesCmd,
-	kFindFnCmd,
-};
+#include "GoTreeDirector-Tree-enum.h"
 
 #ifndef _H_jx_af_image_jx_jx_edit_copy
 #define _H_jx_af_image_jx_jx_edit_copy
@@ -42,7 +29,7 @@ enum {
 
 static void ConfigureTreeMenu(JXTextMenu* menu, const int offset = 0) {
 	if (offset == 0 && JXMenu::GetDisplayStyle() == JXMenu::kWindowsStyle) {
-		menu->SetShortcuts(JString("#t", JString::kNoCopy));
+		menu->SetShortcuts("#t");
 	}
 	menu->SetItemImage(kCopySelNamesCmd + offset, jx_edit_copy);
 };

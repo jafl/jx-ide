@@ -897,8 +897,8 @@ DiffFileDialog::ViewDiffs()
 
 		if (JDirectoryExists(fullName))
 		{
-			DiffDirectory(fullName, JString("cvs -f diff", JString::kNoCopy),
-						  itsCVSSummaryCB, JString(" --brief", JString::kNoCopy));
+			DiffDirectory(fullName, "cvs -f diff",
+						  itsCVSSummaryCB, " --brief");
 		}
 		else
 		{
@@ -933,7 +933,7 @@ DiffFileDialog::ViewDiffs()
 								itsSVNRev2Cmd, &itsSVNRev2Input->GetText()->GetText(),
 								&getCmd, &diffCmd, &name1, &name2, false, true))
 			{
-				DiffDirectory(fullName, diffCmd, itsSVNSummaryCB, JString(" --diff-cmd diff -x --brief", JString::kNoCopy));
+				DiffDirectory(fullName, diffCmd, itsSVNSummaryCB, " --diff-cmd diff -x --brief");
 			}
 		}
 		else
@@ -1239,8 +1239,8 @@ DiffFileDialog::BuildCVSDiffCmd
 	JString path, name, cvsRoot;
 	JSplitPathAndName(fullName, &path, &name);
 
-	cvsRoot = JCombinePathAndName(path, JString("CVS", JString::kNoCopy));
-	cvsRoot = JCombinePathAndName(cvsRoot, JString("Root", JString::kNoCopy));
+	cvsRoot = JCombinePathAndName(path, "CVS");
+	cvsRoot = JCombinePathAndName(cvsRoot, "Root");
 	JReadFile(cvsRoot, &cvsRoot);
 	cvsRoot.TrimWhitespace();
 
@@ -1343,8 +1343,8 @@ DiffFileDialog::GetCurrentCVSRevision
 	JString path, name, data, pattern;
 	JSplitPathAndName(fullName, &path, &name);
 	pattern = "^[^/]*/" + JRegex::BackslashForLiteral(name) + "/([0-9.]+)/";
-	name    = JCombinePathAndName(path, JString("CVS", JString::kNoCopy));
-	name    = JCombinePathAndName(name, JString("Entries", JString::kNoCopy));
+	name    = JCombinePathAndName(path, "CVS");
+	name    = JCombinePathAndName(name, "Entries");
 	JReadFile(name, &data);
 
 	JRegex r(pattern);
@@ -1647,7 +1647,7 @@ DiffFileDialog::BuildSVNDiffCmd
 
  ******************************************************************************/
 
-static const JRegex theBranchPattern = "(?<=/)(trunk($|(?=/))|(branches|tags)/[^/]+(?=/))";
+static const JRegex theBranchPattern("(?<=/)(trunk($|(?=/))|(branches|tags)/[^/]+(?=/))");
 
 bool
 DiffFileDialog::BuildSVNRepositoryPath

@@ -67,7 +67,7 @@ xdebug::VarCmd::HandleSuccess
 	}
 	else
 	{
-		SetData(JString("<error reading value>", JString::kNoCopy));
+		SetData("<error reading value>");
 		Broadcast(ValueMessage(kValueFailed, nullptr));
 	}
 	itsRootNode->DeleteAllChildren();

@@ -190,9 +190,9 @@ Link::ReadFile
 
  *****************************************************************************/
 
-static const JRegex startPattern   = "[;:{]";
-static const JRegex commentPattern = "(/\\*(.|\n)+?\\*/)|(//.+?(?=\n))";
-static const JRegex spacePattern   = "[[:space:]]+";
+static const JRegex startPattern("[;:{]");
+static const JRegex commentPattern("(/\\*(.|\n)+?\\*/)|(//.+?(?=\n))");
+static const JRegex spacePattern("[[:space:]]+");
 
 JString
 Link::GetReturnType

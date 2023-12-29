@@ -38,7 +38,7 @@ gdb::GetStopLocationCmd::~GetStopLocationCmd()
 
  ******************************************************************************/
 
-static const JRegex locationPattern = "\\bframe=\\{";
+static const JRegex locationPattern("\\bframe=\\{");
 
 Location
 gdb::GetStopLocationCmd::GetLocation()

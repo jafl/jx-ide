@@ -21,7 +21,7 @@ jvm::GetCompletionsCmd::GetCompletionsCmd
 	CommandOutputDisplay*	history
 	)
 	:
-	::GetCompletionsCmd(JString("NOP", JString::kNoCopy))
+	::GetCompletionsCmd("NOP")
 {
 }
 

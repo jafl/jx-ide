@@ -112,7 +112,7 @@ TELineIndexInput::HandleKeyPress
 		const JString& s = GetText()->GetText();
 		if (s == "0")
 		{
-			GetText()->SetText(JString("1", JString::kNoCopy));
+			GetText()->SetText("1");
 			GoToEndOfLine();
 		}
 		if (s == "$")

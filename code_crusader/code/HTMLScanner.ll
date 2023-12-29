@@ -2324,12 +2324,12 @@ TextScanner::HTML::Scanner::ScriptToken()
 
  ******************************************************************************/
 
-static JRegex scriptTagPattern1 =
-	"^<[[:space:]]*script[[:space:]]+[^>]*language[[:space:]]*=[[:space:]]*\"?([^>\"[:space:]]+)";
-static JRegex scriptTagPattern2 =
-	"^<[[:space:]]*script[[:space:]]+[^>]*type[[:space:]]*=[[:space:]]*\"?[^/]+/([^>\"[:space:]]+)";
-static JRegex scriptTagPattern3 =
-	"^<[[:space:]]*script(>|[[:space:]])";
+static JRegex scriptTagPattern1(
+	"^<[[:space:]]*script[[:space:]]+[^>]*language[[:space:]]*=[[:space:]]*\"?([^>\"[:space:]]+)", "i");
+static JRegex scriptTagPattern2(
+	"^<[[:space:]]*script[[:space:]]+[^>]*type[[:space:]]*=[[:space:]]*\"?[^/]+/([^>\"[:space:]]+)", "i");
+static JRegex scriptTagPattern3(
+	"^<[[:space:]]*script(>|[[:space:]])", "i");
 
 bool
 TextScanner::HTML::Scanner::IsScript
@@ -2338,10 +2338,6 @@ TextScanner::HTML::Scanner::IsScript
 	)
 	const
 {
-	scriptTagPattern1.SetCaseSensitive(false);
-	scriptTagPattern2.SetCaseSensitive(false);
-	scriptTagPattern3.SetCaseSensitive(false);
-
 	language->Clear();
 
 	const JString s(GetScannedText().GetRawBytes(), GetCurrentRange().byteRange, JString::kNoCopy);

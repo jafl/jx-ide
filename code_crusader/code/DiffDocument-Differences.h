@@ -11,16 +11,12 @@ static const JUtf8Byte* kDifferencesMenuStr =
 "|* %i __NextDifference::DiffDocumentx"
 ;
 
-enum {
-	kFirstDiffCmd=1,
-	kPrevDiffCmd,
-	kNextDiffCmd,
-};
+#include "DiffDocument-Differences-enum.h"
 
 
 static void ConfigureDifferencesMenu(JXTextMenu* menu, const int offset = 0) {
 	if (offset == 0 && JXMenu::GetDisplayStyle() == JXMenu::kWindowsStyle) {
-		menu->SetShortcuts(JString("#d", JString::kNoCopy));
+		menu->SetShortcuts("#d");
 	}
 };
 

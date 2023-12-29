@@ -1276,9 +1276,9 @@ TextEditor::FindSelectedSymbol
  ******************************************************************************/
 
 static const JRegex manRegex(
-	"^([-_:a-zA-Z0-9]+)"								// name
-	"(?:[[:space:]]*,[[:space:]]*[-_:a-zA-Z0-9]+)*"		// optional intervening names, e.g., A,B,C(3)
-	"(?:[[:space:]]*\\(([a-zA-Z0-9]+)\\))?");			// optional section
+	"^([-_:a-z0-9]+)"								// name
+	"(?:[[:space:]]*,[[:space:]]*[-_:a-z0-9]+)*"	// optional intervening names, e.g., A,B,C(3)
+	"(?:[[:space:]]*\\(([a-z0-9]+)\\))?", "i");		// optional section
 
 void
 TextEditor::DisplayManPage()
@@ -1302,7 +1302,7 @@ TextEditor::DisplayManPage()
 
  ******************************************************************************/
 
-static const JRegex urlPrefixRegex = "^[A-Za-z0-9]+://";
+static const JRegex urlPrefixRegex("^[a-z0-9]+://", "i");
 
 void
 TextEditor::OpenSelection()
@@ -1481,10 +1481,10 @@ TextEditor::GetLineIndex
 
  ******************************************************************************/
 
-static const JRegex flexErrorRegex   = "\"(.+)\", line ([0-9]+)(\\.[0-9]+)?: ";
-static const JRegex bisonErrorRegex  = "\\(\"(.+)\", line ([0-9]+)\\) error: ";
-static const JRegex absoftErrorRegex = " error on line ([0-9]+) of ([^:]+): ";
-static const JRegex mavenErrorRegex  = "(?:\\[[^]]+\\]\\s+)?([^:]+):\\[([0-9]+),";
+static const JRegex flexErrorRegex("\"(.+)\", line ([0-9]+)(\\.[0-9]+)?: ");
+static const JRegex bisonErrorRegex("\\(\"(.+)\", line ([0-9]+)\\) error: ");
+static const JRegex absoftErrorRegex(" error on line ([0-9]+) of ([^:]+): ");
+static const JRegex mavenErrorRegex("(?:\\[[^]]+\\]\\s+)?([^:]+):\\[([0-9]+),");
 
 bool
 extractFileAndLine
@@ -1754,7 +1754,7 @@ TextEditor::SetFontBeforePrintPS
 	if (fontName != "Courier")
 	{
 		itsSavedBreakCROnlyFlag = WillBreakCROnly();
-		SetFont(JString("Courier", JString::kNoCopy), fontSize, itsTabCharCount, false);
+		SetFont("Courier", fontSize, itsTabCharCount, false);
 	}
 }
 

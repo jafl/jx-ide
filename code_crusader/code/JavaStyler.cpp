@@ -120,7 +120,7 @@ JavaStyler::JavaStyler()
 
 	SetTypeStyle(kError                - kWhitespace, JFontStyle(red));
 
-	SetWordStyle(JString("goto", JString::kNoCopy), JFontStyle(true, false, 0, false, red));
+	SetWordStyle("goto", JFontStyle(true, false, 0, false, red));
 
 	for (const auto* kw : kUnusedKeyword)
 	{

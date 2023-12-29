@@ -14,14 +14,7 @@ static const JUtf8Byte* kDisplayTypeMenuStr =
 "|* %i __AssemblyCode::MemoryDir"
 ;
 
-enum {
-	____HexBytes=1,
-	____HexShort2Bytes,
-	____HexWord4Bytes,
-	____HexLong8Bytes,
-	____CharactersISO88591,
-	____AssemblyCode,
-};
+#include "MemoryDir-DisplayType-enum.h"
 
 
 static void ConfigureDisplayTypeMenu(JXTextMenu* menu, const int offset = 0) {

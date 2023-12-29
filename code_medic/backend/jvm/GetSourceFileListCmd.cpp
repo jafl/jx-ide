@@ -25,7 +25,7 @@ jvm::GetSourceFileListCmd::GetSourceFileListCmd
 	FileListDir* fileList
 	)
 	:
-	::GetSourceFileListCmd(JString("NOP", JString::kNoCopy), fileList)
+	::GetSourceFileListCmd("NOP", fileList)
 {
 }
 

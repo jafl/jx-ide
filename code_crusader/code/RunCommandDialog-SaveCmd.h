@@ -10,10 +10,7 @@ static const JUtf8Byte* kSaveCmdMenuStr =
 "|* %i __ForActiveProject::RunCommandDialog"
 ;
 
-enum {
-	kSaveForAllCmd=1,
-	kSaveForActiveCmd,
-};
+#include "RunCommandDialog-SaveCmd-enum.h"
 
 
 static void ConfigureSaveCmdMenu(JXTextMenu* menu, const int offset = 0) {

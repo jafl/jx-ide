@@ -16,16 +16,7 @@ static const JUtf8Byte* kOptionsMenuStr =
 "|* %b %i __DisplaySeparatorAfterThisItemInMenu::CommandTable"
 ;
 
-enum {
-	kIsMakeCmd=1,
-	kIsCVSCmd,
-	kSaveAllCmd,
-	kOneAtATimeCmd,
-	kUseWindowCmd,
-	kRaisedWhenStartCmd,
-	kBeepWhenFinishedCmd,
-	kShowSeparatorCmd,
-};
+#include "CommandTable-Options-enum.h"
 
 
 static void ConfigureOptionsMenu(JXTextMenu* menu, const int offset = 0) {

@@ -156,7 +156,7 @@ xdebug::Link::GetProgram
 	)
 	const
 {
-	*fullName = (itsProgramName.IsEmpty() ? JString("PHP", JString::kNoCopy) : itsProgramName);
+	*fullName = (itsProgramName.IsEmpty() ? "PHP" : itsProgramName);
 	return true;
 }
 

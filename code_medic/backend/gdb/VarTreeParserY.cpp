@@ -1379,7 +1379,7 @@ yyreduce:
 		(yyval.pList) = (yyvsp[-2].pList);
 
 		::VarNode* node = GetLink()->CreateVarNode(nullptr, JString::empty, JString::empty, *(yyvsp[0].pString));
-		if ((yyval.pList)->GetFirstItem()->GetName().StartsWith(JString("[", JString::kNoCopy)))
+		if ((yyval.pList)->GetFirstItem()->GetName().StartsWith("["))
 		{
 			AppendAsArrayElement(node, (yyval.pList));
 		}
@@ -1410,7 +1410,7 @@ yyreduce:
   case 16: /* node_list: node_list ',' group  */
 #line 236 "backend/gdb/VarTreeParserY.y"
         {
-		if ((((yyvsp[-2].pList)->GetFirstItem())->GetName()).StartsWith(JString("[", JString::kNoCopy)))
+		if ((((yyvsp[-2].pList)->GetFirstItem())->GetName()).StartsWith("["))
 		{
 			(yyval.pList) = (yyvsp[-2].pList);
 		}
@@ -1434,7 +1434,7 @@ yyreduce:
 #line 256 "backend/gdb/VarTreeParserY.y"
         {
 		(yyval.pList) = (yyvsp[-3].pList);
-		::VarNode* child = GetLink()->CreateVarNode(nullptr, JString("...", JString::kNoCopy), JString::empty, JString::empty);
+		::VarNode* child = GetLink()->CreateVarNode(nullptr, "...", JString::empty, JString::empty);
 		(yyval.pList)->Append(child);
 	}
 #line 1441 "backend/gdb/VarTreeParserY.cpp"
@@ -1504,7 +1504,7 @@ yyreduce:
 			iter.RemovePrev();
 			(yyvsp[0].pString)->TrimWhitespace();
 		}
-		itsCurrentNode = (yyval.pNode) = GetLink()->CreateVarNode(nullptr, *(yyvsp[0].pString), JString::empty, JString("<nothing>", JString::kNoCopy));
+		itsCurrentNode = (yyval.pNode) = GetLink()->CreateVarNode(nullptr, *(yyvsp[0].pString), JString::empty, "<nothing>");
 		itsIsPointerFlag = false;
 
 		jdelete (yyvsp[0].pString);
@@ -1584,7 +1584,7 @@ yyreduce:
 #line 388 "backend/gdb/VarTreeParserY.y"
         {
 		(yyval.pList) = (yyvsp[-3].pList);
-		::VarNode* child = GetLink()->CreateVarNode(nullptr, JString("...", JString::kNoCopy), JString::empty, JString::empty);
+		::VarNode* child = GetLink()->CreateVarNode(nullptr, "...", JString::empty, JString::empty);
 		(yyval.pList)->Append(child);
 	}
 #line 1591 "backend/gdb/VarTreeParserY.cpp"

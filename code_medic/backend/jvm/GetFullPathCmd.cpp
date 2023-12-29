@@ -21,7 +21,7 @@ jvm::GetFullPathCmd::GetFullPathCmd
 	const JIndex	lineIndex	// for convenience
 	)
 	:
-	::GetFullPathCmd(JString("NOP", JString::kNoCopy), fileName, lineIndex)
+	::GetFullPathCmd("NOP", fileName, lineIndex)
 {
 }
 

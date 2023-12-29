@@ -230,8 +230,8 @@ CShellStyler::ExtendCheckRangeForString
 
 #define CShellStringID "([?#%]?[[:alpha:]_][[:alnum:]_]{0,19}|%?[0-9]+)"
 
-static JRegex variablePattern      = "(?<!\\\\)\\$(" CShellStringID "|\\{" CShellStringID "[}[]|[*#?$!_<])";
-static JRegex emptyVariablePattern = "(?<!\\\\)\\$\\{\\}?";
+static JRegex variablePattern("(?<!\\\\)\\$(" CShellStringID "|\\{" CShellStringID "[}[]|[*#?$!_<])");
+static JRegex emptyVariablePattern("(?<!\\\\)\\$\\{\\}?");
 
 #undef CShellStringID
 

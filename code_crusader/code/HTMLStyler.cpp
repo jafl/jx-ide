@@ -501,7 +501,7 @@ HTMLStyler::ExtendCheckRangeForLanguageStartEnd
 
  ******************************************************************************/
 
-static const JRegex tagNamePattern = "<[[:space:]]*(/?([^>/[:space:]]+))";
+static const JRegex tagNamePattern("<[[:space:]]*(/?([^>/[:space:]]+))");
 
 JFontStyle
 HTMLStyler::GetTagStyle
@@ -596,10 +596,10 @@ HTMLStyler::GetXMLStyle
 #define PHPStringID    "(_|\\p{L})(_|\\p{L}|\\d)*"
 #define PHPStringNotID "\\p{^L}"
 
-static JRegex emptyPHPVariablePattern =
-	"^\\$+(\\{\\}|" PHPStringID "(->(?=" PHPStringNotID ")|\\[\\]))";	// update special conditions in code below
-static JRegex phpVariablePattern =
-	"^\\$+(\\{[^}]+\\}|" PHPStringID "(\\[[^]]+\\]|->" PHPStringID ")*)";
+static JRegex emptyPHPVariablePattern(
+	"^\\$+(\\{\\}|" PHPStringID "(->(?=" PHPStringNotID ")|\\[\\]))");	// update special conditions in code below
+static JRegex phpVariablePattern(
+	"^\\$+(\\{[^}]+\\}|" PHPStringID "(\\[[^]]+\\]|->" PHPStringID ")*)");
 
 #undef PHPStringID
 
@@ -693,8 +693,8 @@ HTMLStyler::StyleEmbeddedPHPVariables
 
  ******************************************************************************/
 
-static JRegex variablePattern =      "(?<!\\\\)\\$\\{.+?\\}";
-static JRegex emptyVariablePattern = "(?<!\\\\)\\$\\{\\}?";
+static JRegex variablePattern("(?<!\\\\)\\$\\{.+?\\}");
+static JRegex emptyVariablePattern("(?<!\\\\)\\$\\{\\}?");
 
 #define ClassName HTMLStyler
 #define FunctionName StyleEmbeddedJSVariables

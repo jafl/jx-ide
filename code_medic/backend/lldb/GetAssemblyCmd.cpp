@@ -52,7 +52,7 @@ lldb::GetAssemblyCmd::~GetAssemblyCmd()
 
  *****************************************************************************/
 
-static const JRegex offsetPattern = "<\\+[[:digit:]]+>$";
+static const JRegex offsetPattern("<\\+[[:digit:]]+>$");
 
 void
 lldb::GetAssemblyCmd::HandleSuccess

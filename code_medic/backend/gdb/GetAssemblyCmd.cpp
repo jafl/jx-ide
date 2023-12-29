@@ -79,8 +79,8 @@ gdb::GetAssemblyCmd::Starting()
 
  *****************************************************************************/
 
-static const JRegex bpPattern     = "asm_insns=\\[";
-static const JRegex offsetPattern = "<\\+[[:digit:]]+>$";
+static const JRegex bpPattern("asm_insns=\\[");
+static const JRegex offsetPattern("<\\+[[:digit:]]+>$");
 
 void
 gdb::GetAssemblyCmd::HandleSuccess

@@ -12,17 +12,12 @@ static const JUtf8Byte* kErrorsMenuStr =
 "|* %i __OpenSelectionToError::CompileDocument"
 ;
 
-enum {
-	kFirstErrorCmd=1,
-	kPrevErrorCmd,
-	kNextErrorCmd,
-	kOpenFileCmd,
-};
+#include "CompileDocument-Errors-enum.h"
 
 
 static void ConfigureErrorsMenu(JXTextMenu* menu, const int offset = 0) {
 	if (offset == 0 && JXMenu::GetDisplayStyle() == JXMenu::kWindowsStyle) {
-		menu->SetShortcuts(JString("#e", JString::kNoCopy));
+		menu->SetShortcuts("#e");
 	}
 };
 

@@ -18,23 +18,12 @@ static const JUtf8Byte* kPreferencesMenuStr =
 "|* %i __SaveWindowSizeAsDefault::TextDocument"
 ;
 
-enum {
-	kEditorPrefsCmd=1,
-	kToolBarPrefsCmd,
-	kChooseExtEditorsCmd,
-	kWWWPrefsCmd,
-	kMiscPrefsCmd,
-	kEditFileTypesCmd,
-	kEditStylesSubmenuIndex,
-	kEditMacrosCmd,
-	kEditCRMRuleListsCmd,
-	kSaveWindSizeCmd,
-};
+#include "TextDocument-Preferences-enum.h"
 
 
 static void ConfigurePreferencesMenu(JXTextMenu* menu, const int offset = 0) {
 	if (offset == 0 && JXMenu::GetDisplayStyle() == JXMenu::kWindowsStyle) {
-		menu->SetShortcuts(JString("#p", JString::kNoCopy));
+		menu->SetShortcuts("#p");
 	}
 };
 

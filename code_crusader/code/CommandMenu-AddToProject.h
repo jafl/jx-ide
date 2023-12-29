@@ -11,11 +11,7 @@ static const JUtf8Byte* kAddToProjectMenuStr =
 "|* %i AddToProjHomeRelative::CommandMenu"
 ;
 
-enum {
-	kAddToProjAbsoluteCmd=1,
-	kAddToProjProjRelativeCmd,
-	kAddToProjHomeRelativeCmd,
-};
+#include "CommandMenu-AddToProject-enum.h"
 
 
 static void ConfigureAddToProjectMenu(JXTextMenu* menu, const int offset = 0) {

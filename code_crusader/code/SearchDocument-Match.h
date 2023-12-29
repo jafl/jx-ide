@@ -12,17 +12,12 @@ static const JUtf8Byte* kMatchMenuStr =
 "|* %i __OpenSelectionToMatch::SearchDocument"
 ;
 
-enum {
-	kFirstMatchCmd=1,
-	kPrevMatchCmd,
-	kNextMatchCmd,
-	kOpenFileCmd,
-};
+#include "SearchDocument-Match-enum.h"
 
 
 static void ConfigureMatchMenu(JXTextMenu* menu, const int offset = 0) {
 	if (offset == 0 && JXMenu::GetDisplayStyle() == JXMenu::kWindowsStyle) {
-		menu->SetShortcuts(JString("#m", JString::kNoCopy));
+		menu->SetShortcuts("#m");
 	}
 };
 

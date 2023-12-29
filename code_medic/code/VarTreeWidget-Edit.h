@@ -10,10 +10,7 @@ static const JUtf8Byte* kEditMenuStr =
 "|* %i CopyVarValue::VarTreeWidget"
 ;
 
-enum {
-	__CopyFullVarName=1,
-	__CopyVarValue,
-};
+#include "VarTreeWidget-Edit-enum.h"
 
 
 static void ConfigureEditMenu(JXTextMenu* menu, const int offset = 0) {

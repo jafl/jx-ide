@@ -15,20 +15,12 @@ static const JUtf8Byte* kPreferencesMenuStr =
 "|* %i __SaveWindowSizeAsDefault::ProjectDocument"
 ;
 
-enum {
-	kSymbolPrefsCmd=1,
-	kToolBarPrefsCmd,
-	kEditFileTypesCmd,
-	kChooseExtEditorsCmd,
-	kShowLocationPrefsCmd,
-	kMiscPrefsCmd,
-	kSaveWindSizeCmd,
-};
+#include "SymbolDirector-Preferences-enum.h"
 
 
 static void ConfigurePreferencesMenu(JXTextMenu* menu, const int offset = 0) {
 	if (offset == 0 && JXMenu::GetDisplayStyle() == JXMenu::kWindowsStyle) {
-		menu->SetShortcuts(JString("#p", JString::kNoCopy));
+		menu->SetShortcuts("#p");
 	}
 };
 

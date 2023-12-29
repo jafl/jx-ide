@@ -13,13 +13,7 @@ static const JUtf8Byte* kGitRev2MenuStr =
 "|* %r %i __Branch::DiffFileDialog"
 ;
 
-enum {
-	__Edited_Git2=1,
-	__Current_Git2,
-	__Commit_Git2,
-	__Date_Git2,
-	__Branch_Git2,
-};
+#include "DiffFileDialog-GitRev2-enum.h"
 
 
 static void ConfigureGitRev2Menu(JXTextMenu* menu, const int offset = 0) {

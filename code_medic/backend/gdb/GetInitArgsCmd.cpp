@@ -29,7 +29,7 @@ gdb::GetInitArgsCmd::GetInitArgsCmd
 	JXInputField* argInput
 	)
 	:
-	::GetInitArgsCmd(JString("show args", JString::kNoCopy)),
+	::GetInitArgsCmd("show args"),
 	itsArgInput(argInput)
 {
 }
@@ -51,7 +51,7 @@ gdb::GetInitArgsCmd::~GetInitArgsCmd()
 
  ******************************************************************************/
 
-static const JRegex resultPattern = "done,value=\"(.*)\"";
+static const JRegex resultPattern("done,value=\"(.*)\"");
 
 void
 gdb::GetInitArgsCmd::HandleSuccess

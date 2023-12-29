@@ -14,14 +14,7 @@ static const JUtf8Byte* kGitRev1MenuStr =
 "|* %r %i __CommonAncestorOf::DiffFileDialog"
 ;
 
-enum {
-	__Current_Git1=1,
-	__Previous_Git1,
-	__Commit_Git1,
-	__Date_Git1,
-	__Branch_Git1,
-	__CommonAncestorOf_Git1,
-};
+#include "DiffFileDialog-GitRev1-enum.h"
 
 
 static void ConfigureGitRev1Menu(JXTextMenu* menu, const int offset = 0) {

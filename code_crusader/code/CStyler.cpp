@@ -126,9 +126,9 @@ CStyler::CStyler()
 	SetTypeStyle(kRespelling         - kWhitespace, JFontStyle(red));
 	SetTypeStyle(kError              - kWhitespace, JFontStyle(red));
 
-	SetWordStyle(JString("#pragma", JString::kNoCopy),       JFontStyle(red));
-	SetWordStyle(JString("#include_next", JString::kNoCopy), JFontStyle(red));
-	SetWordStyle(JString("goto", JString::kNoCopy),          JFontStyle(true, false, 0, false, red));
+	SetWordStyle("#pragma",       JFontStyle(red));
+	SetWordStyle("#include_next", JFontStyle(red));
+	SetWordStyle("goto",          JFontStyle(true, false, 0, false, red));
 
 	JPrefObject::ReadPrefs();
 	ListenTo(this);
@@ -268,12 +268,12 @@ CStyler::PreexpandCheckRange
 
  ******************************************************************************/
 
-static const JRegex ppCommentPattern =
-	"^[[:space:]]*(#|%:|\\?\\?=)[[:space:]]*(el)?if[[:space:]]+0[[:space:]]*(//.*|/\\*[^*]*\\*/)?\n";
+static const JRegex ppCommentPattern(
+	"^[[:space:]]*(#|%:|\\?\\?=)[[:space:]]*(el)?if[[:space:]]+0[[:space:]]*(//.*|/\\*[^*]*\\*/)?\n");
 
-static const JRegex ppIfPattern   = "^[[:space:]]*(#|%:|\\?\\?=)[[:space:]]*if";
-static const JRegex ppElsePattern = "^[[:space:]]*(#|%:|\\?\\?=)[[:space:]]*(else|elif)";
-static const JRegex ppEndPattern  = "^[[:space:]]*(#|%:|\\?\\?=)[[:space:]]*endif";
+static const JRegex ppIfPattern("^[[:space:]]*(#|%:|\\?\\?=)[[:space:]]*if");
+static const JRegex ppElsePattern("^[[:space:]]*(#|%:|\\?\\?=)[[:space:]]*(else|elif)");
+static const JRegex ppEndPattern("^[[:space:]]*(#|%:|\\?\\?=)[[:space:]]*endif");
 
 bool
 CStyler::SlurpPPComment

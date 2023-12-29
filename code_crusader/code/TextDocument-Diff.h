@@ -11,11 +11,7 @@ static const JUtf8Byte* kDiffMenuStr =
 "|* %i __CompareWithVersionControl::TextDocument"
 ;
 
-enum {
-	kDiffAs1Cmd=1,
-	kDiffAs2Cmd,
-	kDiffAsVCSCmd,
-};
+#include "TextDocument-Diff-enum.h"
 
 #ifndef _H_jcc_compare_files_1
 #define _H_jcc_compare_files_1

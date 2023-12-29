@@ -16,16 +16,7 @@ static const JUtf8Byte* kProjectMenuStr =
 "|* %i CloseAllTextFiles::TreeDirector"
 ;
 
-enum {
-	kShowSymbolBrowserCmd=1,
-	kViewManPageCmd,
-	kShowFileListCmd,
-	kFindFileCmd,
-	kSearchFilesCmd,
-	kDiffFilesCmd,
-	kSaveAllTextCmd,
-	kCloseAllTextCmd,
-};
+#include "TreeDirector-Project-enum.h"
 
 #ifndef _H_jcc_show_symbol_list
 #define _H_jcc_show_symbol_list
@@ -54,7 +45,7 @@ enum {
 
 static void ConfigureProjectMenu(JXTextMenu* menu, const int offset = 0) {
 	if (offset == 0 && JXMenu::GetDisplayStyle() == JXMenu::kWindowsStyle) {
-		menu->SetShortcuts(JString("#p", JString::kNoCopy));
+		menu->SetShortcuts("#p");
 	}
 	menu->SetItemImage(kShowSymbolBrowserCmd + offset, jcc_show_symbol_list);
 	menu->SetItemImage(kViewManPageCmd + offset, jcc_view_man_page);

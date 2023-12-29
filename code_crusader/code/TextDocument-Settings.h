@@ -14,14 +14,7 @@ static const JUtf8Byte* kSettingsMenuStr =
 "|* %b %i __ReadOnly::TextDocument"
 ;
 
-enum {
-	kTabWidthCmd=1,
-	kToggleAutoIndentCmd,
-	kToggleTabInsertsSpacesCmd,
-	kToggleWhitespaceCmd,
-	kToggleWordWrapCmd,
-	kToggleReadOnlyCmd,
-};
+#include "TextDocument-Settings-enum.h"
 
 #ifndef _H_jcc_auto_indent
 #define _H_jcc_auto_indent

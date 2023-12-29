@@ -372,13 +372,13 @@ getSharedPrefsFileName
 #define VI_START        "(?:ex|vim?):[ \t]*set.*[ \t]+"
 #define VI_END          "(?:[ \t]+.*)?:"
 
-static JRegex emacsTopTabWidthOption = EMACS_TOP_START EMACS_TAB_WIDTH EMACS_TOP_END;
-static JRegex emacsTopTabModeOption  = EMACS_TOP_START EMACS_TAB_MODE  EMACS_TOP_END;
-static JRegex emacsTabWidthOption    = EMACS_START EMACS_TAB_WIDTH;
-static JRegex emacsTabModeOption     = EMACS_START EMACS_TAB_MODE;
-static JRegex viTabModeOption        = VI_START "(?:tabmode|tm)=(t|s)" VI_END;
-static JRegex viTabWidthOption       = VI_START "(?:tabstop|ts)=([0-9]+)" VI_END;
-static JRegex viAutoIndentOption     = VI_START "(autoindent|noautoindent|ai|noai)" VI_END;
+static JRegex emacsTopTabWidthOption(EMACS_TOP_START EMACS_TAB_WIDTH EMACS_TOP_END, "i");
+static JRegex emacsTopTabModeOption(EMACS_TOP_START EMACS_TAB_MODE  EMACS_TOP_END, "i");
+static JRegex emacsTabWidthOption(EMACS_START EMACS_TAB_WIDTH, "i");
+static JRegex emacsTabModeOption(EMACS_START EMACS_TAB_MODE, "i");
+static JRegex viTabModeOption(VI_START "(?:tabmode|tm)=(t|s)" VI_END);
+static JRegex viTabWidthOption(VI_START "(?:tabstop|ts)=([0-9]+)" VI_END);
+static JRegex viAutoIndentOption(VI_START "(autoindent|noautoindent|ai|noai)" VI_END);
 
 void
 ParseEditorOptions
@@ -395,12 +395,8 @@ ParseEditorOptions
 {
 	// configure patterns
 
-	emacsTopTabWidthOption.SetCaseSensitive(false);
 	emacsTopTabWidthOption.SetSingleLine(true);
-	emacsTopTabModeOption.SetCaseSensitive(false);
 	emacsTopTabModeOption.SetSingleLine(true);
-	emacsTabWidthOption.SetCaseSensitive(false);
-	emacsTabModeOption.SetCaseSensitive(false);
 
 	// process file
 
@@ -502,12 +498,12 @@ ParseEditorOptions
 
  ******************************************************************************/
 
-static JRegex scriptCommentPattern = "^(\n|[ \t]*#)";
-static JRegex makeCommentPattern   = "^(\n|[ \t]*(#|\\.PHONY))";
-static JRegex antCommentPattern    = "^(\n|[ \t]*<!--)";
-static JRegex lispCommentPattern   = "^(\n|[ \t]*;;)";
-static JRegex aspCommentPattern    = "^(\n|[ \t]*')";
-static JRegex sqlCommentPattern    = "^(\n|[ \t]*--)";
+static JRegex scriptCommentPattern("^(\n|[ \t]*#)");
+static JRegex makeCommentPattern("^(\n|[ \t]*(#|\\.PHONY))", "i");
+static JRegex antCommentPattern("^(\n|[ \t]*<!--)");
+static JRegex lispCommentPattern("^(\n|[ \t]*;;)");
+static JRegex aspCommentPattern("^(\n|[ \t]*')");
+static JRegex sqlCommentPattern("^(\n|[ \t]*--)");
 
 inline void
 includeScriptComments
@@ -577,7 +573,6 @@ ScrollForDefinition
 	{
 		// search backwards for line that is neither comment nor empty
 
-		makeCommentPattern.SetCaseSensitive(false);
 		includeScriptComments(iter, makeCommentPattern);
 	}
 	else if (lang == kAntLang)

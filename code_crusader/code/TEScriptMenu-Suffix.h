@@ -10,10 +10,7 @@ static const JUtf8Byte* kSuffixMenuStr =
 "|* %i __OpenDirectory::TEScriptMenu"
 ;
 
-enum {
-	kOpenDirectoryCmdOffset=1,
-	kNewScriptCmdOffset,
-};
+#include "TEScriptMenu-Suffix-enum.h"
 
 
 static void ConfigureSuffixMenu(JXTextMenu* menu, const int offset = 0) {

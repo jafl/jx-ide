@@ -69,7 +69,7 @@ gdb::GetMemoryCmd::Starting()
 
  ******************************************************************************/
 
-static const JRegex prefixPattern = "^\\s*0[xX][[:xdigit:]]+(.*):\\s";
+static const JRegex prefixPattern("^\\s*0[xX][[:xdigit:]]+(.*):\\s");
 
 void
 gdb::GetMemoryCmd::HandleSuccess

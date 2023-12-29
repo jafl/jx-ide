@@ -12,17 +12,12 @@ static const JUtf8Byte* kTasksMenuStr =
 "|* %i __ManageProjectNone::CommandMenu %l"
 ;
 
-enum {
-	kRunCmd=1,
-	kEditCmd,
-	kAddToProjIndex,
-	kManageProjIndex,
-};
+#include "CommandMenu-Tasks-enum.h"
 
 
 static void ConfigureTasksMenu(JXTextMenu* menu, const int offset = 0) {
 	if (offset == 0 && JXMenu::GetDisplayStyle() == JXMenu::kWindowsStyle) {
-		menu->SetShortcuts(JString("#t", JString::kNoCopy));
+		menu->SetShortcuts("#t");
 	}
 };
 

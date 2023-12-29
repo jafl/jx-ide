@@ -564,7 +564,6 @@ void
 CommandTable::HandleDNDLeave()
 {
 	itsDNDRowIndex = 0;
-	Refresh();
 }
 
 /******************************************************************************
@@ -796,7 +795,7 @@ CommandTable::CreateXInputField
 
  ******************************************************************************/
 
-static const JRegex illegalNamePattern = "[[:space:]]+";
+static const JRegex illegalNamePattern("[[:space:]]+");
 
 bool
 CommandTable::ExtractInputData

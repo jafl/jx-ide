@@ -21,7 +21,7 @@ xdebug::GetFrameCmd::GetFrameCmd
 	StackWidget* widget
 	)
 	:
-	::GetFrameCmd(JString("status", JString::kNoCopy)),
+	::GetFrameCmd("status"),
 	itsWidget(widget)
 {
 }

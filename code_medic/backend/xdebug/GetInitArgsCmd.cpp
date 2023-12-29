@@ -24,7 +24,7 @@ xdebug::GetInitArgsCmd::GetInitArgsCmd
 	JXInputField* argInput
 	)
 	:
-	::GetInitArgsCmd(JString("status", JString::kNoCopy))
+	::GetInitArgsCmd("status")
 {
 }
 

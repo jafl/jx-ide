@@ -277,7 +277,6 @@ TECaretInputBase::GetFTCMinContentSize
 {
 	return (horizontal ?
 			TEGetLeftMarginWidth() +
-				GetText().GetDefaultFont().GetStringWidth(
-					GetFontManager(), JString("00000", JString::kNoCopy)) :
+				GetText().GetDefaultFont().GetStringWidth(GetFontManager(), "00000") :
 			JXIntegerInput::GetFTCMinContentSize(horizontal));
 }

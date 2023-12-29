@@ -22,7 +22,7 @@
 CtagsUser::CtagsStatus CtagsUser::itsHasUniversalCtagsFlag = CtagsUser::kUntested;
 
 static const JString kCheckVersionCmd("ctags --version");
-static const JRegex versionPattern = "^Universal Ctags";
+static const JRegex versionPattern("^Universal Ctags");
 
 static const JUtf8Byte* kBaseExecCmd =
 	"ctags --filter=yes --filter-terminator=\\\f --fields=kzfsS --extras=+g --extras=-{anonymous} ";

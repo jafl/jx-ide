@@ -209,7 +209,7 @@ node_list :
 		$$ = $1;
 
 		::VarNode* node = GetLink()->CreateVarNode(nullptr, JString::empty, JString::empty, *$3);
-		if ($$->GetFirstItem()->GetName().StartsWith(JString("[", JString::kNoCopy)))
+		if ($$->GetFirstItem()->GetName().StartsWith("["))
 		{
 			AppendAsArrayElement(node, $$);
 		}
@@ -234,7 +234,7 @@ node_list :
 
 	| node_list ',' group
 	{
-		if ((($1->GetFirstItem())->GetName()).StartsWith(JString("[", JString::kNoCopy)))
+		if ((($1->GetFirstItem())->GetName()).StartsWith("["))
 		{
 			$$ = $1;
 		}
@@ -255,7 +255,7 @@ node_list :
 	| node_list '.' '.' '.'
 	{
 		$$ = $1;
-		::VarNode* child = GetLink()->CreateVarNode(nullptr, JString("...", JString::kNoCopy), JString::empty, JString::empty);
+		::VarNode* child = GetLink()->CreateVarNode(nullptr, "...", JString::empty, JString::empty);
 		$$->Append(child);
 	}
 	;
@@ -316,7 +316,7 @@ node :
 			iter.RemovePrev();
 			$1->TrimWhitespace();
 		}
-		itsCurrentNode = $$ = GetLink()->CreateVarNode(nullptr, *$1, JString::empty, JString("<nothing>", JString::kNoCopy));
+		itsCurrentNode = $$ = GetLink()->CreateVarNode(nullptr, *$1, JString::empty, "<nothing>");
 		itsIsPointerFlag = false;
 
 		jdelete $1;
@@ -387,7 +387,7 @@ value_list :
 	| value_list '.' '.' '.'
 	{
 		$$ = $1;
-		::VarNode* child = GetLink()->CreateVarNode(nullptr, JString("...", JString::kNoCopy), JString::empty, JString::empty);
+		::VarNode* child = GetLink()->CreateVarNode(nullptr, "...", JString::empty, JString::empty);
 		$$->Append(child);
 	}
 	;

@@ -18,18 +18,7 @@ static const JUtf8Byte* kActionsMenuStr =
 "|* %i DisasmMemory::VarTreeDir"
 ;
 
-enum {
-	kAddVarCmd=1,
-	kDelVarCmd,
-	kDisplayAsCStringCmd,
-	kDisplay1DArrayCmd,
-	kPlot1DArrayCmd,
-	kDisplay2DArrayCmd,
-	kWatchVarCmd,
-	kWatchLocCmd,
-	kExamineMemCmd,
-	kDisassembleMemCmd,
-};
+#include "VarTreeDir-Actions-enum.h"
 
 #ifndef _H_medic_show_1d_array
 #define _H_medic_show_1d_array
@@ -50,7 +39,7 @@ enum {
 
 static void ConfigureActionsMenu(JXTextMenu* menu, const int offset = 0) {
 	if (offset == 0 && JXMenu::GetDisplayStyle() == JXMenu::kWindowsStyle) {
-		menu->SetShortcuts(JString("#s", JString::kNoCopy));
+		menu->SetShortcuts("#s");
 	}
 	menu->SetItemImage(kDisplay1DArrayCmd + offset, medic_show_1d_array);
 	menu->SetItemImage(kPlot1DArrayCmd + offset, medic_show_2d_plot);

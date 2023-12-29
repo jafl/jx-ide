@@ -11,11 +11,7 @@ static const JUtf8Byte* kFileFormatMenuStr =
 "|* %r %i DOSTextFormat::TextDocument"
 ;
 
-enum {
-	kUNIXFmtCmd=1,
-	kMacFmtCmd,
-	kDOSFmtCmd,
-};
+#include "TextDocument-FileFormat-enum.h"
 
 #ifndef _H_jcc_unix_format
 #define _H_jcc_unix_format

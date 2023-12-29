@@ -11,11 +11,7 @@ static const JUtf8Byte* kSearchMenuStr =
 "|* %i GoToCurrentLine::SourceText"
 ;
 
-enum {
-	kBalanceCmd=1,
-	kGoToLineCmd,
-	kGoToCurrentLineCmd,
-};
+#include "SourceText-Search-enum.h"
 
 #ifndef _H_jcc_balance_braces
 #define _H_jcc_balance_braces

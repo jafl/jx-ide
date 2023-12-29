@@ -365,7 +365,7 @@ BuildManager::UpdateMakeHeader
 	// if new Make.header data is different, update file
 
 	const std::string s = output.str();
-	if (s.c_str() != text)
+	if (s != text)
 	{
 		JEditVCS(fileName);
 		std::ofstream f(fileName.GetBytes());
@@ -375,7 +375,7 @@ BuildManager::UpdateMakeHeader
 		// force reload of Make.header, if open
 
 		JXFileDocument* doc;
-		if ((JXGetDocumentManager())->FileDocumentIsOpen(fileName, &doc))
+		if (JXGetDocumentManager()->FileDocumentIsOpen(fileName, &doc))
 		{
 			doc->RevertIfChangedByOthers(true);
 		}
@@ -411,7 +411,7 @@ BuildManager::UpdateMakeFiles
 
 	JString origText;
 	JReadFile(fileName, &origText);
-	if (s.c_str() != origText)
+	if (s != origText)
 	{
 		JEditVCS(fileName);
 		std::ofstream output(fileName.GetBytes());
@@ -728,8 +728,8 @@ BuildManager::EditMakeConfig()
 	GetMakefileNames(&makefileNameList);
 	makefileNameList.Prepend(cmakeInputName);
 	makefileNameList.Prepend(qmakeInputName);
-	makefileNameList.Append(JCombinePathAndName(itsProjDoc->GetFilePath(), JString("pom.xml", JString::kNoCopy)));	// Maven
-	makefileNameList.Append(JCombinePathAndName(itsProjDoc->GetFilePath(), JString("build.xml", JString::kNoCopy)));	// ant
+	makefileNameList.Append(JCombinePathAndName(itsProjDoc->GetFilePath(), "pom.xml"));		// Maven
+	makefileNameList.Append(JCombinePathAndName(itsProjDoc->GetFilePath(), "build.xml"));	// ant
 
 	const JSize count = makefileNameList.GetItemCount();
 	for (JIndex i=1; i<=count; i++)

@@ -15,15 +15,7 @@ static const JUtf8Byte* kSVNRev1MenuStr =
 "|* %r %i __Tag::DiffFileDialog"
 ;
 
-enum {
-	__Current_SVN1=1,
-	__Previous_SVN1,
-	__Revision_SVN1,
-	__DateYMD_SVN1,
-	__Trunk_SVN1,
-	__Branch_SVN1,
-	__Tag_SVN1,
-};
+#include "DiffFileDialog-SVNRev1-enum.h"
 
 
 static void ConfigureSVNRev1Menu(JXTextMenu* menu, const int offset = 0) {

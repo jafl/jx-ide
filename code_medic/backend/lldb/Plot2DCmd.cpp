@@ -66,7 +66,7 @@ lldb::Plot2DCmd::UpdateRange
 
  ******************************************************************************/
 
-static const JRegex prefixPattern = "^\\$[[:digit:]]+[[:space:]]+=[[:space:]]+(.*)$";
+static const JRegex prefixPattern("^\\$[[:digit:]]+[[:space:]]+=[[:space:]]+(.*)$");
 
 void
 lldb::Plot2DCmd::HandleSuccess

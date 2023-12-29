@@ -20,7 +20,7 @@ jvm::DisplaySourceForMainCmd::DisplaySourceForMainCmd
 	SourceDirector* sourceDir
 	)
 	:
-	::DisplaySourceForMainCmd(sourceDir, JString("NOP", JString::kNoCopy))
+	::DisplaySourceForMainCmd(sourceDir, "NOP")
 {
 }
 

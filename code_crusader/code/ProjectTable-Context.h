@@ -19,19 +19,7 @@ static const JUtf8Byte* kContextMenuStr =
 "|* %i __ShowSelectedFilesInFileManager::ProjectTable"
 ;
 
-enum {
-	kOpenFilesCmd=1,
-	kOpenComplFilesCmd,
-	kEditSubprojConfigCmd,
-	kNewGroupCmd,
-	kAddFilesCmd,
-	kAddDirTreeCmd,
-	kRemoveSelCmd,
-	kEditPathCmd,
-	kDiffSmartCmd,
-	kDiffVCSCmd,
-	kShowLocationCmd,
-};
+#include "ProjectTable-Context-enum.h"
 
 
 static void ConfigureContextMenu(JXTextMenu* menu, const int offset = 0) {

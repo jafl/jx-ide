@@ -183,7 +183,7 @@ ListChooseFileDialog::BuildWindow
 	assert( appendRB != nullptr );
 
 	auto* currPathMenu =
-		jnew JXCurrentPathMenu(JString("/", JString::kNoCopy), window,
+		jnew JXCurrentPathMenu("/", window,
 					JXWidget::kHElastic, JXWidget::kFixedBottom, 20,110, 180,20);
 	assert( currPathMenu != nullptr );
 

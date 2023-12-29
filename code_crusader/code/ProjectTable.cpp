@@ -167,7 +167,6 @@ ProjectTable::NewGroup
 	ProjectTree* tree = itsDoc->GetFileTree();
 
 	auto* newNode = jnew GroupNode(tree, false);
-
 	if (returnNode != nullptr)
 	{
 		*returnNode = newNode;
@@ -225,8 +224,6 @@ ProjectTable::AddDirectoryTree
 		jnew JXGetStringDialog(JGetString("AddFilesTitle::ProjectTable"),
 							   JGetString("AddFilesPrompt::ProjectTable"),
 							   ProjectDocument::GetAddFilesFilter());
-	assert( dlog != nullptr );
-
 	if (dlog->DoDialog())
 	{
 		const JString& filter = dlog->GetString();
@@ -1291,7 +1288,6 @@ ProjectTable::HandleMouseDrag
 	else if (itsDragType == kWaitForDNDDrag && JMouseMoved(itsStartPt, pt))
 	{
 		auto* data = jnew JXFileSelection(this, kSelectionDataID);
-
 		if (BeginDND(pt, buttonStates, modifiers, data))
 		{
 			itsDragType = kInvalidDrag;
@@ -1457,8 +1453,6 @@ ProjectTable::GetSelectionData
 		assert( HasSelection() );
 
 		auto* list = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
-		assert( list != nullptr );
-
 		GetSelectedFileNames(list);
 
 		auto* fileData = dynamic_cast<JXFileSelection*>(data);
@@ -1757,7 +1751,6 @@ ProjectTable::HandleDNDLeave()
 {
 	itsDNDAction = kDNDInvalid;
 	itsDNDCell.Set(0,0);
-	Refresh();
 }
 
 /******************************************************************************
@@ -1793,7 +1786,6 @@ ProjectTable::HandleDNDDrop
 	else if (source == this && itsSelDepth == kFileDepth && itsDNDAction == kDNDNewGroup)
 	{
 		auto* groupNode = jnew GroupNode(itsDoc->GetFileTree());
-		assert( groupNode != nullptr );
 		AppendFileSelectionToGroup(groupNode);
 	}
 	else if (source == this && itsSelDepth == kGroupDepth && itsDNDAction == kDNDGroupBombsight)
@@ -2111,8 +2103,6 @@ ProjectTable::CopySelectedNames()
 		}
 
 		auto* data = jnew JXTextSelection(GetDisplay(), list);
-		assert( data != nullptr );
-
 		GetSelectionManager()->SetData(kJXClipboardName, data);
 	}
 }
@@ -2298,7 +2288,6 @@ ProjectTable::CreateXInputField
 		r.Expand(kJXDefaultBorderWidth, kJXDefaultBorderWidth);
 		itsCSFButton = jnew JXImageButton(this, kFixedLeft, kFixedTop,
 										 r.left, r.top, r.width(), r.height());
-		assert( itsCSFButton != nullptr );
 
 		const JXImage* image;
 		ok = GetImage(cell.y, &image);
@@ -2358,8 +2347,7 @@ ProjectTable::CreateTreeListInput
 {
 	if (GetDepth(cell.y) == kFileDepth)
 	{
-		auto* obj =
-			jnew ProjectTableInput(this, enclosure, hSizing, vSizing, x,y, w,h);
+		auto* obj = jnew ProjectTableInput(this, enclosure, hSizing, vSizing, x,y, w,h);
 		obj->SetBasePath(itsDoc->GetFilePath());
 		return obj;
 	}

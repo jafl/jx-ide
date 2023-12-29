@@ -88,8 +88,7 @@ lldb::Link::Link()
 	itsDebugger(nullptr),
 	itsStdoutStream(nullptr),
 	itsStderrStream(nullptr),
-	itsEventTask(nullptr),
-	itsPrompt(nullptr)
+	itsEventTask(nullptr)
 {
 	InitFlags();
 
@@ -620,8 +619,8 @@ lldb::Link::SetCore
 		JString cmdStr("target create --core ");
 		cmdStr += fullName;
 		SendRaw(cmdStr);
-		SendRaw(JString("frame select 1", JString::kNoCopy));
-		SendRaw(JString("frame select 0", JString::kNoCopy));
+		SendRaw("frame select 1");
+		SendRaw("frame select 0");
 	}
 }
 
@@ -733,7 +732,7 @@ lldb::Link::ShowBreakpointInfo
 	const JIndex debuggerIndex
 	)
 {
-	SendRaw(JString("breakpoint list", JString::kNoCopy));
+	SendRaw("breakpoint list");
 }
 
 /******************************************************************************

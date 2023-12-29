@@ -63,8 +63,8 @@ gdb::GetFullPathCmd::BuildCommand
 
  ******************************************************************************/
 
-static const JRegex redirectPattern = "file: \\\"([^\"]+)\\\", line number: 1\\n";
-static const JRegex pathPattern     = ",fullname=\"([^\"]+)\"";
+static const JRegex redirectPattern("file: \\\"([^\"]+)\\\", line number: 1\\n");
+static const JRegex pathPattern(",fullname=\"([^\"]+)\"");
 
 void
 gdb::GetFullPathCmd::HandleSuccess

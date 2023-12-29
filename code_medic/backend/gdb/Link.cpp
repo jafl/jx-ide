@@ -377,7 +377,7 @@ gdb::Link::ReadFromDebugger()
 
 				if (itsContinueCount == 0)
 				{
-					Send(JString("continue", JString::kNoCopy));
+					Send("continue");
 				}
 			}
 
@@ -729,7 +729,7 @@ gdb::Link::SendProgramStopped
 		}
 		else
 		{
-			Send(JString("continue", JString::kNoCopy));
+			Send("continue");
 		}
 	}
 	else if (itsContinueCount == 0)
@@ -789,10 +789,10 @@ gdb::Link::SetProgram
 	{
 		if (itsInitFinishedFlag && !JSameDirEntry(fullName, itsProgramName))
 		{
-			Send(JString("delete", JString::kNoCopy));
+			Send("delete");
 		}
 		DetachOrKill();
-		Send(JString("core-file", JString::kNoCopy));
+		Send("core-file");
 
 		Send("file " + JPrepArgForExec(fullName));
 	}
@@ -857,7 +857,7 @@ gdb::Link::AttachToProcess
 	const pid_t pid
 	)
 {
-	Send(JString("core-file", JString::kNoCopy));
+	Send("core-file");
 	DetachOrKill();
 
 	Send("attach " + JString((JUInt64) pid));
@@ -874,12 +874,12 @@ gdb::Link::RunProgram
 	const JString& args
 	)
 {
-	Send(JString("core-file", JString::kNoCopy));
+	Send("core-file");
 	DetachOrKill();
 
 	Send("set args " + args);
 
-	Send(JString("run", JString::kNoCopy));
+	Send("run");
 }
 
 /******************************************************************************
@@ -1043,7 +1043,7 @@ gdb::Link::RemoveAllBreakpoints()
 		itsContinueCount = 2;
 	}
 
-	SendWhenStopped(JString("delete", JString::kNoCopy));
+	SendWhenStopped("delete");
 }
 
 /******************************************************************************
@@ -1218,7 +1218,7 @@ gdb::Link::SwitchToFrame
 void
 gdb::Link::StepOver()
 {
-	Send(JString("next", JString::kNoCopy));
+	Send("next");
 }
 
 /******************************************************************************
@@ -1229,7 +1229,7 @@ gdb::Link::StepOver()
 void
 gdb::Link::StepInto()
 {
-	Send(JString("step", JString::kNoCopy));
+	Send("step");
 }
 
 /******************************************************************************
@@ -1240,7 +1240,7 @@ gdb::Link::StepInto()
 void
 gdb::Link::StepOut()
 {
-	Send(JString("finish", JString::kNoCopy));
+	Send("finish");
 }
 
 /******************************************************************************
@@ -1251,7 +1251,7 @@ gdb::Link::StepOut()
 void
 gdb::Link::Continue()
 {
-	Send(JString("continue", JString::kNoCopy));
+	Send("continue");
 }
 
 /******************************************************************************
@@ -1307,7 +1307,7 @@ gdb::Link::SetExecutionPoint
 void
 gdb::Link::StepOverAssembly()
 {
-	Send(JString("nexti", JString::kNoCopy));
+	Send("nexti");
 }
 
 /******************************************************************************
@@ -1318,7 +1318,7 @@ gdb::Link::StepOverAssembly()
 void
 gdb::Link::StepIntoAssembly()
 {
-	Send(JString("stepi", JString::kNoCopy));
+	Send("stepi");
 }
 
 /******************************************************************************
@@ -1366,7 +1366,7 @@ gdb::Link::SetExecutionPoint
 void
 gdb::Link::BackupOver()
 {
-	Send(JString("reverse-next", JString::kNoCopy));
+	Send("reverse-next");
 }
 
 /******************************************************************************
@@ -1377,7 +1377,7 @@ gdb::Link::BackupOver()
 void
 gdb::Link::BackupInto()
 {
-	Send(JString("reverse-step", JString::kNoCopy));
+	Send("reverse-step");
 }
 
 /******************************************************************************
@@ -1388,7 +1388,7 @@ gdb::Link::BackupInto()
 void
 gdb::Link::BackupOut()
 {
-	Send(JString("reverse-finish", JString::kNoCopy));
+	Send("reverse-finish");
 }
 
 /******************************************************************************
@@ -1399,7 +1399,7 @@ gdb::Link::BackupOut()
 void
 gdb::Link::BackupContinue()
 {
-	Send(JString("reverse-continue", JString::kNoCopy));
+	Send("reverse-continue");
 }
 
 /******************************************************************************
@@ -2172,7 +2172,7 @@ gdb::Link::StopProgram()
 void
 gdb::Link::KillProgram()
 {
-	SendWhenStopped(JString("kill", JString::kNoCopy));
+	SendWhenStopped("kill");
 }
 
 /******************************************************************************
@@ -2185,11 +2185,11 @@ gdb::Link::DetachOrKill()
 {
 	if (itsIsAttachedFlag)
 	{
-		Send(JString("detach", JString::kNoCopy));
+		Send("detach");
 	}
 	else if (itsChildProcess != nullptr)
 	{
-		Send(JString("kill", JString::kNoCopy));
+		Send("kill");
 	}
 }
 
@@ -2341,7 +2341,7 @@ void
 gdb::Link::StopDebugger()
 {
 	DetachOrKill();
-	Send(JString("quit", JString::kNoCopy));
+	Send("quit");
 
 	jdelete itsDebuggerProcess;
 	itsDebuggerProcess = nullptr;

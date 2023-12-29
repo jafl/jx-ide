@@ -79,7 +79,7 @@ gdb::Array2DCmd::PrepareToSend
 
  ******************************************************************************/
 
-static const JRegex prefixPattern = "^\\$[[:digit:]]+[[:space:]]+=[[:space:]]+(.*)$";
+static const JRegex prefixPattern("^\\$[[:digit:]]+[[:space:]]+=[[:space:]]+(.*)$");
 
 void
 gdb::Array2DCmd::HandleSuccess

@@ -110,7 +110,7 @@ SourceDirector::SourceDirector
 	{
 		Location loc;
 		loc.SetFunctionName(fileOrFn);
-		loc.SetMemoryAddress(JString("0x0", JString::kNoCopy));	// not allowed to be null
+		loc.SetMemoryAddress("0x0");	// not allowed to be null
 		DisplayDisassembly(loc);
 	}
 	else if (itsType == kSourceType && JFileReadable(fileOrFn))

@@ -76,7 +76,7 @@ gdb::Plot2DCmd::UpdateRange
 
  ******************************************************************************/
 
-static const JRegex prefixPattern = "^\\$[[:digit:]]+[[:space:]]+=[[:space:]]+(.*)$";
+static const JRegex prefixPattern("^\\$[[:digit:]]+[[:space:]]+=[[:space:]]+(.*)$");
 
 void
 gdb::Plot2DCmd::HandleSuccess

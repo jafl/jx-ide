@@ -66,7 +66,7 @@ ExecOutputDocument::ExecOutputDocument
 						  rect.right - 3*kMenuButtonWidth,0, kMenuButtonWidth,h);
 	assert( itsPauseButton != nullptr );
 	ListenTo(itsPauseButton);
-	itsPauseButton->SetShortcuts(JString("^Z", JString::kNoCopy));
+	itsPauseButton->SetShortcuts("^Z");
 	itsPauseButton->SetHint(JGetString("PauseButtonHint::ExecOutputDocument"));
 
 	itsStopButton =
@@ -75,7 +75,7 @@ ExecOutputDocument::ExecOutputDocument
 						  rect.right - 2*kMenuButtonWidth,0, kMenuButtonWidth,h);
 	assert( itsStopButton != nullptr );
 	ListenTo(itsStopButton);
-	itsStopButton->SetShortcuts(JString("^C#.", JString::kNoCopy));
+	itsStopButton->SetShortcuts("^C#.");
 	itsStopButton->SetHint(JGetString("StopButtonHint::ExecOutputDocument"));
 
 	itsKillButton =
@@ -112,7 +112,7 @@ ExecOutputDocument::ExecOutputDocument
 						  JXWidget::kFixedRight, vSizing,
 						  -1000, -1000, 500, 500);
 	assert( itsEOFButton != nullptr );
-	itsEOFButton->SetShortcuts(JString("^D", JString::kNoCopy));
+	itsEOFButton->SetShortcuts("^D");
 	itsEOFButton->Hide();
 	ListenTo(itsEOFButton);
 }
@@ -280,7 +280,7 @@ ExecOutputDocument::SetConnection
 		}
 		iter.Invalidate();
 
-		te->Paste(JString("\n\n----------\n\n", JString::kNoCopy));
+		te->Paste("\n\n----------\n\n");
 		te->GetText()->ClearUndo();
 	}
 
