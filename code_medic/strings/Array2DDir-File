@@ -7,7 +7,7 @@
 MenuTitle::Array2DDir_File "File"
 
 OpenSourceFile::Array2DDir "Open source file... %k Ctrl-O %h o"
-PageSetup::JX "Page setup..."
+PageSetup::JX "Page setup... %h g"
 Print::JX "Print... %k Ctrl-P %h p"
 CloseWindow::JX "Close %k Ctrl-W %h c"
 Quit::JX "Quit %k Ctrl-Q %h q"

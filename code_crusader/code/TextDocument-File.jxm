@@ -18,7 +18,7 @@ jx_menu_editor 0
 1 "jx_file_new.xpm"
 "New text file"
 "Ctrl-N"
-' 
+'t
 "NewTextFile"
 "kNewTextEditorCmd"
 0
@@ -38,7 +38,7 @@ jx_menu_editor 0
 0 ""
 "New project..."
 ""
-' 
+'j
 "NewProject"
 "kNewProjectCmd"
 1
@@ -48,7 +48,7 @@ jx_menu_editor 0
 1 "jx_file_open.xpm"
 "Open..."
 "Ctrl-O"
-' 
+'o
 "OpenSomething"
 "kOpenSomethingCmd"
 0
@@ -78,7 +78,7 @@ jx_menu_editor 0
 1 "jx_file_save.xpm"
 "Save"
 "Ctrl-S"
-' 
+'s
 "SaveFile"
 "kSaveFileCmd"
 0
@@ -88,7 +88,7 @@ jx_menu_editor 0
 0 ""
 "Save as..."
 "Meta-S"
-' 
+'e
 "SaveFileAs"
 "kSaveFileAsCmd"
 0
@@ -98,7 +98,7 @@ jx_menu_editor 0
 0 "jcc_file_save_copy_as.xpm"
 "Save a copy as..."
 "Meta-Shift-S"
-' 
+'c
 "SaveCopyAs"
 "kSaveCopyAsCmd"
 0
@@ -118,7 +118,7 @@ jx_menu_editor 0
 1 "jx_file_revert_to_saved.xpm"
 "Revert to saved"
 ""
-' 
+'r
 "Revert"
 "kRevertCmd"
 0
@@ -128,7 +128,7 @@ jx_menu_editor 0
 1 "jx_file_save_all.xpm"
 "Save all"
 "Ctrl-Shift-S"
-' 
+'a
 "SaveAllTextFiles"
 "kSaveAllFilesCmd"
 1
@@ -148,7 +148,7 @@ jx_menu_editor 0
 0 "jcc_compare_files.xpm"
 "Compare files..."
 ""
-' 
+'m
 "DiffFiles"
 "kDiffFilesCmd"
 0
@@ -168,7 +168,7 @@ jx_menu_editor 0
 0 "jcc_compare_vcs.xpm"
 "Compare with version control"
 ""
-' 
+'v
 "DiffVCS"
 "kDiffVCSCmd"
 0
@@ -188,7 +188,7 @@ jx_menu_editor 0
 0 ""
 "Show in file manager"
 ""
-' 
+'f
 "ShowInFileMgr"
 "kShowInFileMgrCmd"
 1
@@ -198,7 +198,7 @@ jx_menu_editor 0
 0 ""
 "Page setup..."
 ""
-' 
+'g
 "PageSetup::JX"
 "kPTPageSetupCmd"
 0
@@ -208,7 +208,7 @@ jx_menu_editor 0
 1 "jx_file_print.xpm"
 "Print..."
 "Ctrl-P"
-' 
+'p
 "Print::JX"
 "kPrintPTCmd"
 1
@@ -236,9 +236,9 @@ jx_menu_editor 0
 1
 0
 0 ""
-"Close"
+"Close window"
 "Ctrl-W"
-' 
+'w
 "CloseWindow::JX"
 "kCloseCmd"
 0
@@ -248,7 +248,7 @@ jx_menu_editor 0
 0 ""
 "Close all"
 "Ctrl-Shift-W"
-' 
+'l
 "CloseAllTextFiles"
 "kCloseAllCmd"
 1
@@ -258,7 +258,7 @@ jx_menu_editor 0
 0 ""
 "Quit"
 "Ctrl-Q"
-' 
+'q
 "Quit::JX"
 "kQuitCmd"
 0

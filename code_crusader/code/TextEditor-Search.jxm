@@ -18,7 +18,7 @@ jx_menu_editor 0
 0 "jcc_balance_braces.xpm"
 "Balance closest grouping symbols"
 "Ctrl-B"
-' 
+'g
 "BalanceGroupingSymbol"
 "kBalanceCmd"
 1
@@ -28,7 +28,7 @@ jx_menu_editor 0
 0 ""
 "Go to line..."
 "Ctrl-comma"
-' 
+'l
 "GoToLine"
 "kGoToLineCmd"
 0
@@ -48,7 +48,7 @@ jx_menu_editor 0
 0 ""
 "Place bookmark"
 "Ctrl-Shift-B"
-' 
+'m
 "PlaceBookmark"
 "kPlaceBookmarkCmd"
 1
@@ -78,7 +78,7 @@ jx_menu_editor 0
 0 ""
 "Find selection as symbol"
 "Meta-dbl-click, F12"
-' 
+'y
 "FindSelectionInProject"
 "kFindSelectionAsSymbolCmd"
 0
@@ -108,7 +108,7 @@ jx_menu_editor 0
 0 "jcc_view_man_page.xpm"
 "Look up man page..."
 "Ctrl-I"
-' 
+'a
 "OpenManPage"
 "kViewManPageCmd"
 1

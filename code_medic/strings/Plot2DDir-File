@@ -7,7 +7,7 @@
 MenuTitle::Plot2DDir_File "File"
 
 OpenSourceFile::Plot2DDir "Open source file... %k Ctrl-O %h o"
-PageSetup::JX "PostScript page setup..."
+PageSetup::JX "PostScript page setup... %h g"
 Print::JX "Print PostScript... %k Ctrl-P %h p"
 Print::JX "Print EPS... %k Ctrl-P %h e"
 CloseWindow::JX "Close %k Ctrl-W %h c"

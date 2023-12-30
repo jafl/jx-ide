@@ -8,7 +8,7 @@ MenuTitle::SourceDirector_File "File"
 
 OpenSourceFile::SourceDirector "Open source file... %k Ctrl-O %h o"
 EditSourceFile::SourceDirector "Open this file in editor %k Ctrl-Shift-O %h e"
-PageSetup::JX "Page setup..."
+PageSetup::JX "Page setup... %h g"
 Print::JX "Print... %k Ctrl-P %h p"
 CloseWindow::JX "Close %k Ctrl-W %h c"
 Quit::JX "Quit %k Ctrl-Q %h q"

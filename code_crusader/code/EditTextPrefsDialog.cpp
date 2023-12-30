@@ -32,6 +32,7 @@
 #include <jx-af/jx/JXColorManager.h>
 #include <jx-af/jx/JXHelpManager.h>
 #include <jx-af/jcore/JFontManager.h>
+#include <jx-af/jcore/JUndoRedoChain.h>
 #include <jx-af/jcore/jAssert.h>
 
 // emulators
@@ -405,7 +406,7 @@ EditTextPrefsDialog::BuildWindow
 	itsCRMLineWidthInput->SetValue(te->GetText()->GetCRMLineWidth());
 	itsCRMLineWidthInput->SetLowerLimit(1);
 
-	itsUndoDepthInput->SetValue(te->GetText()->GetUndoDepth());
+	itsUndoDepthInput->SetValue(te->GetText()->GetUndoRedoChain()->GetUndoDepth());
 	itsUndoDepthInput->SetLowerLimit(1);
 
 	JSize margin;
@@ -606,7 +607,7 @@ EditTextPrefsDialog::UpdateSettings()
 		}
 
 		te->GetText()->SetCRMLineWidth(crmLineWidth);
-		te->GetText()->SetUndoDepth(undoDepth);
+		te->GetText()->GetUndoRedoChain()->SetUndoDepth(undoDepth);
 		te->SetRightMarginWidth(itsRightMarginCB->IsChecked(), rightMargin);
 
 		te->GetText()->SetDefaultFontStyle(itsColor [ PrefsManager::kTextColorIndex-1 ]);

@@ -58,6 +58,7 @@
 
 #include <jx-af/jcore/JRegex.h>
 #include <jx-af/jcore/JStringIterator.h>
+#include <jx-af/jcore/JUndoRedoChain.h>
 #include <jx-af/jcore/JStack.h>
 #include <jx-af/jcore/jStreamUtil.h>
 #include <jx-af/jcore/jFileUtil.h>
@@ -206,7 +207,7 @@ TextEditor::TextEditor
 
 	scrollbarSet->GetVScrollbar()->SetScrollDelay(0);
 
-	GetText()->SetLastSaveLocation();
+	GetText()->GetUndoRedoChain()->SetLastSaveLocation();
 	GetText()->ShouldAutoIndent(true);
 	OverrideShouldAllowDragAndDrop(true);	// new users expect it
 	ShouldMoveToFrontOfText(true);
@@ -277,7 +278,7 @@ TextEditor::ReadSetup
 
 			OverrideShouldAllowDragAndDrop(allowDND);
 			ShouldMoveToFrontOfText(moveFrontOfText);
-			GetText()->SetUndoDepth(undoDepth);
+			GetText()->GetUndoRedoChain()->SetUndoDepth(undoDepth);
 		}
 
 		if (vers >= 4)
@@ -346,7 +347,7 @@ TextEditor::WriteSetup
 	output << ' ' << JBoolToString(GetText().WillAutoIndent());
 	output << ' ' << JBoolToString(AllowsDragAndDrop());
 	output << ' ' << JBoolToString(WillMoveToFrontOfText());
-	output << ' ' << GetText().GetUndoDepth();
+	output << ' ' << GetText().GetUndoRedoChain()->GetUndoDepth();
 	output << ' ' << GetText().GetCRMLineWidth();
 	output << ' ' << JBoolToString(itsBalanceWhileTypingFlag);
 	output << ' ' << JBoolToString(itsScrollToBalanceFlag);

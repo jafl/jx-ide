@@ -42,6 +42,7 @@
 #include <jx-af/jx/JXSharedPrefsManager.h>
 #include <jx-af/jx/jXEventUtil.h>
 #include <jx-af/jcore/JFontManager.h>
+#include <jx-af/jcore/JUndoRedoChain.h>
 #include <jx-af/jcore/jFileUtil.h>
 #include <jx-af/jcore/jVCSUtil.h>
 #include <jx-af/jcore/jStreamUtil.h>
@@ -771,7 +772,7 @@ TextDocument::Receive
 	if (sender == itsTextEditor &&
 		 message.Is(JStyledText::kTextChanged))
 	{
-		if (itsTextEditor->GetText()->IsAtLastSaveLocation())
+		if (itsTextEditor->GetText()->GetUndoRedoChain()->IsAtLastSaveLocation())
 		{
 			DataReverted(true);
 		}
@@ -1191,7 +1192,7 @@ TextDocument::ReadFile
 	}
 
 	UpdateFileType();
-	itsTextEditor->GetText()->SetLastSaveLocation();
+	itsTextEditor->GetText()->GetUndoRedoChain()->SetLastSaveLocation();
 }
 
 /******************************************************************************
@@ -1214,7 +1215,7 @@ TextDocument::WriteTextFile
 
 		if (output.good())
 		{
-			itsTextEditor->GetText()->SetLastSaveLocation();
+			itsTextEditor->GetText()->GetUndoRedoChain()->SetLastSaveLocation();
 
 			const_cast<TextDocument*>(this)->UpdateFileType();
 
@@ -1508,7 +1509,7 @@ TextDocument::HandleFileFormatMenu
 
 	if (itsFileFormat != origFormat)
 	{
-		itsTextEditor->GetText()->ClearLastSaveLocation();
+		itsTextEditor->GetText()->GetUndoRedoChain()->ClearLastSaveLocation();
 		DataModified();
 	}
 }

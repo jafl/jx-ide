@@ -18,7 +18,7 @@ jx_menu_editor 0
 0 ""
 "First error"
 "Meta-1"
-' 
+'f
 "__FirstError"
 "kFirstErrorCmd"
 1
@@ -28,7 +28,7 @@ jx_menu_editor 0
 0 ""
 "Previous error"
 "Ctrl-minus"
-' 
+'p
 "__PreviousError"
 "kPrevErrorCmd"
 0
@@ -38,7 +38,7 @@ jx_menu_editor 0
 0 ""
 "Next error"
 "Ctrl-plus"
-' 
+'n
 "__NextError"
 "kNextErrorCmd"
 1
@@ -48,7 +48,7 @@ jx_menu_editor 0
 0 ""
 "Open selection to error"
 "Ctrl-Shift-O"
-' 
+'o
 "__OpenSelectionToError"
 "kOpenFileCmd"
 0

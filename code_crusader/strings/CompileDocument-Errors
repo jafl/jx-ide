@@ -6,7 +6,7 @@
 
 MenuTitle::CompileDocument_Errors "Errors"
 
-__FirstError::CompileDocument "First error %k Meta-1"
-__PreviousError::CompileDocument "Previous error %k Ctrl-minus"
-__NextError::CompileDocument "Next error %k Ctrl-plus"
-__OpenSelectionToError::CompileDocument "Open selection to error %k Ctrl-Shift-O"
+__FirstError::CompileDocument "First error %k Meta-1 %h f"
+__PreviousError::CompileDocument "Previous error %k Ctrl-minus %h p"
+__NextError::CompileDocument "Next error %k Ctrl-plus %h n"
+__OpenSelectionToError::CompileDocument "Open selection to error %k Ctrl-Shift-O %h o"
