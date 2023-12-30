@@ -16,7 +16,7 @@ jobs:
       LC_ALL: en_US.UTF-8
       LANG: en_US.UTF-8
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -144,7 +144,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [ update-sourceforge-code-crusader, update-sourceforge-code-medic, update-sourceforge-code-mill ]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -155,3 +155,15 @@ jobs:
           scp -o StrictHostKeyChecking=no -i ssh-key code_crusader/release/VERSION code_crusader/release/doc/* jafl,codecrusader@web.sourceforge.net:htdocs/;
           scp -o StrictHostKeyChecking=no -i ssh-key code_medic/release/VERSION code_medic/release/doc/* jafl,codemedic@web.sourceforge.net:htdocs/;
           scp -o StrictHostKeyChecking=no -i ssh-key code_mill/release/VERSION code_mill/release/doc/* jafl,nps-codemill@web.sourceforge.net:htdocs/;
+
+  update-homebrew:
+    name: Update Homebrew Formulas
+    runs-on: ubuntu-latest
+    needs: [ release ]
+    steps:
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.UPDATE_HOMEBREW }}
+          repository: jafl/homebrew-jx
+          event-type: new-release
