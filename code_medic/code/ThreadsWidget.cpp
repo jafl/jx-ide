@@ -542,7 +542,10 @@ ThreadsWidget::SaveOpenNodes()
 	{
 		itsOpenIDList = jnew JArray<JUInt64>();
 		assert( itsOpenIDList != nullptr );
-		itsOpenIDList->SetCompareFunction(JCompareUInt64);
+		itsOpenIDList->SetCompareFunction(std::function([](const JUInt64& i1, const JUInt64& i2)
+		{
+			return i1 <=> i2;
+		}));
 	}
 	else
 	{
