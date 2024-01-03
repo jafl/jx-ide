@@ -241,5 +241,5 @@ LineNumberTable::CompareBreakpointLines
 	Breakpoint* const & bp2
 	)
 {
-	return JCompareIndices(bp1->GetLineNumber(), bp2->GetLineNumber());
+	return bp1->GetLineNumber() <=> bp2->GetLineNumber();
 }

@@ -2587,18 +2587,7 @@ Tree::CompareRGClassPtrs
 	const RootGeom& i2
 	)
 {
-	if (i1.root < i2.root)
-	{
-		return std::weak_ordering::less;
-	}
-	else if (i1.root > i2.root)
-	{
-		return std::weak_ordering::greater;
-	}
-	else
-	{
-		return std::weak_ordering::equivalent;
-	}
+	return i1.root <=> i2.root;
 }
 
 /******************************************************************************

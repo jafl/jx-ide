@@ -744,18 +744,12 @@ BreakpointTable::CompareBreakpointLocations
 	int r = JString::Compare(
 		bp1->GetFileName().GetBytes() + fileNameOffset(bp1),
 		bp2->GetFileName().GetBytes() + fileNameOffset(bp2), JString::kIgnoreCase);
-	if (r < 0)
+	if (r != 0)
 	{
-		return std::weak_ordering::less;
-	}
-	else if (r > 0)
-	{
-		return std::weak_ordering::greater;
+		return JIntToWeakOrdering(r);
 	}
 
-	std::weak_ordering r1 =
-		JCompareIndices(bp1->GetLineNumber(), bp2->GetLineNumber());
-
+	std::weak_ordering r1 = bp1->GetLineNumber() <=> bp2->GetLineNumber();
 	if (r1 == std::weak_ordering::equivalent)
 	{
 		r1 = JCompareStringsCaseInsensitive(

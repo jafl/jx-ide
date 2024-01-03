@@ -123,7 +123,10 @@ FnMenuUpdater::UpdateMenu
 	fnNameList.SetSortOrder(JListT::kSortAscending);
 
 	lineIndexList->RemoveAll();
-	lineIndexList->SetCompareFunction(JCompareIndices);
+	lineIndexList->SetCompareFunction(std::function([](const JIndex& i1, const JIndex& i2)
+	{
+		return i1 <=> i2;
+	}));
 	lineIndexList->SetSortOrder(JListT::kSortAscending);
 
 	lineLangList->RemoveAll();

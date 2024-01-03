@@ -48,7 +48,10 @@ ClassName::FunctionName
 	}
 #endif
 	JArray<JIndex> varIndexList;
-	varIndexList.SetCompareFunction(JCompareIndices);
+	varIndexList.SetCompareFunction(std::function([](const JIndex& i1, const JIndex& i2)
+	{
+		return i1 <=> i2;
+	}));
 
 	JStringIterator iter(GetText(), JStringIterator::kStartBeforeChar, token.range.charRange.first);
 	JUtf8Character c;

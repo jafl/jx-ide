@@ -1085,25 +1085,12 @@ SymbolList::CompareSymbolsAndTypes
 	const SymbolInfo& s2
 	)
 {
-	const std::weak_ordering result =
-		JCompareStringsCaseInsensitive(s1.name, s2.name);
-
-	if (result != std::weak_ordering::equivalent)
+	auto result = JCompareStringsCaseInsensitive(s1.name, s2.name);
+	if (result == std::weak_ordering::equivalent)
 	{
-		return result;
+		result = s1.type <=> s2.type;
 	}
-	else if (s1.type < s2.type)
-	{
-		return std::weak_ordering::less;
-	}
-	else if (s1.type > s2.type)
-	{
-		return std::weak_ordering::greater;
-	}
-	else
-	{
-		return std::weak_ordering::equivalent;
-	}
+	return result;
 }
 
 /******************************************************************************

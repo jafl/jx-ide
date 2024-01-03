@@ -958,18 +958,7 @@ jvm::Link::CompareClassIDs
 	const ClassInfo& c2
 	)
 {
-	if (c1.id < c2.id)
-	{
-		return std::weak_ordering::less;
-	}
-	else if (c1.id > c2.id)
-	{
-		return std::weak_ordering::greater;
-	}
-	else
-	{
-		return std::weak_ordering::equivalent;
-	}
+	return c1.id <=> c2.id;
 }
 
 /******************************************************************************
@@ -999,18 +988,7 @@ jvm::Link::CompareMethodIDs
 	const MethodInfo& m2
 	)
 {
-	if (m1.id < m2.id)
-	{
-		return std::weak_ordering::less;
-	}
-	else if (m1.id > m2.id)
-	{
-		return std::weak_ordering::greater;
-	}
-	else
-	{
-		return std::weak_ordering::equivalent;
-	}
+	return m1.id <=> m2.id;
 }
 
 /******************************************************************************

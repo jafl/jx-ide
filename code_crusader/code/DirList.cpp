@@ -421,16 +421,10 @@ DirInfo::CompareProjIndex
 	const DirInfo& i2
 	)
 {
-	if (i1.projIndex < i2.projIndex)
+	std::weak_ordering r = i1.projIndex <=> i2.projIndex;
+	if (r == std::weak_ordering::equivalent)
 	{
-		return std::weak_ordering::less;
+		r = ComparePathNames(i1, i2);
 	}
-	else if (i1.projIndex > i2.projIndex)
-	{
-		return std::weak_ordering::greater;
-	}
-	else
-	{
-		return ComparePathNames(i1, i2);
-	}
+	return r;
 }

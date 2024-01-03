@@ -460,10 +460,10 @@ BreakpointManager::CompareBreakpointLocations
 	Breakpoint* const & bp2
 	)
 {
-	std::weak_ordering r = JFileID::Compare(bp1->GetFileID(), bp2->GetFileID());
+	auto r = JFileID::Compare(bp1->GetFileID(), bp2->GetFileID());
 	if (r == std::weak_ordering::equivalent)
 	{
-		r = JCompareIndices(bp1->GetLineNumber(), bp2->GetLineNumber());
+		r = bp1->GetLineNumber() <=> bp2->GetLineNumber();
 	}
 	return r;
 }

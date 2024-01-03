@@ -205,6 +205,6 @@ gdb::GetThreadsCmd::CompareThreadIndices
 	}
 	else
 	{
-		return JCompareIndices(i1, i2);
+		return i1 <=> i2;
 	}
 }

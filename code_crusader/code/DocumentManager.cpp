@@ -1554,7 +1554,7 @@ CompareMatchLengths
 	const DirMatchInfo& i2
 	)
 {
-	return JCompareSizes(i1.matchLength, i2.matchLength);
+	return i1.matchLength <=> i2.matchLength;
 }
 
 /******************************************************************************

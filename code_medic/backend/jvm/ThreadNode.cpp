@@ -131,5 +131,5 @@ jvm::ThreadNode::CompareID
 	ThreadNode* const & t2
 	)
 {
-	return JCompareUInt64(t1->GetID(), t2->GetID());
+	return t1->GetID() <=> t2->GetID();
 }
