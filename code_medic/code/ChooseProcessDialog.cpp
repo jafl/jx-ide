@@ -26,9 +26,9 @@
 #include <jx-af/jcore/jAssert.h>
 
 #ifdef _J_CYGWIN
-static const JString kCmdStr("ps s", JString::kNoCopy);
+static const JString kCmdStr("ps s");
 #else
-static const JString kCmdStr("ps xco pid,stat,command", JString::kNoCopy);
+static const JString kCmdStr("ps xco pid,stat,command");
 #endif
 
 /******************************************************************************

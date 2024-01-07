@@ -667,7 +667,7 @@ ExecOutputDocument::ProcessFinished
 		if (reason != kJChildFinished)
 		{
 			#ifdef _J_MACOS
-			const JString path("/cores/", JString::kNoCopy);
+			const JString path("/cores/");
 			#else
 			const JString path = itsPath;
 			#endif

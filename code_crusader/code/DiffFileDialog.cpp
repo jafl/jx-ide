@@ -38,7 +38,7 @@
 #include <jx-af/jcore/jFStreamUtil.h>
 #include <jx-af/jcore/jAssert.h>
 
-static JString kDot(".", JString::kNoCopy);
+static JString kDot(".");
 
 enum
 {

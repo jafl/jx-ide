@@ -25,14 +25,14 @@ gdb::GetLocalVarsCmd::GetLocalVarsCmd
 	::VarNode* rootNode
 	)
 	:
-	::GetLocalVarsCmd(JString(
+	::GetLocalVarsCmd(
 		"set print pretty off\n"
 		"set print array off\n"
 		"set print repeats 0\n"
 		"set width 0\n"
 		"info args\n"
 		"echo -----\\n\n"
-		"info locals", JString::kNoCopy)),
+		"info locals"),
 	itsRootNode(rootNode)
 {
 }

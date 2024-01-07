@@ -91,7 +91,7 @@ const JUtf8Byte kSetupDataEndDelimiter  = '\1';
 
 #include <jx-af/image/jx/jx_run_script.xpm>
 
-static const JString kExecScriptAction("ExecScript::TextEditor", JString::kNoCopy);
+static const JString kExecScriptAction("ExecScript::TextEditor");
 
 #include "TextEditor-Search.h"
 #include "TextEditor-Context.h"

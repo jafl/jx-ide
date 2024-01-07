@@ -216,6 +216,8 @@ EditCRMDialog::BuildWindow
 
 // end crmLayout
 
+	crmColHeaderEncl->ClearNeedsInternalFTC();
+
 	itsCRMTable =
 		jnew CRMRuleListTable(crmList, initialSelection, firstUnusedID, itsRuleTable,
 							   newCRMButton, removeCRMButton,

@@ -13,7 +13,7 @@
 #include <jx-af/jcore/JFontManager.h>
 #include <jx-af/jcore/jAssert.h>
 
-static const JString kSampleText("I program therefore I am.", JString::kNoCopy);
+static const JString kSampleText("I program therefore I am.");
 static const JSize kRightMarginWidth = kSampleText.GetCharacterCount();
 
 /******************************************************************************

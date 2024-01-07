@@ -82,15 +82,15 @@ static const JUtf8Byte* kProjectFileSignature = "jx_browser_data";
 const JSize kProjectFileSignatureLength       = strlen(kProjectFileSignature);
 static const JUtf8Byte* kProjectFileSuffix    = ".jcc";
 
-static const JString kDataDirectory(".jcc", JString::kNoCopy);
+static const JString kDataDirectory(".jcc");
 
 static const JUtf8Byte* kSettingFileSignature = "jx_browser_local_settings";
 const JSize kSettingFileSignatureLength       = strlen(kSettingFileSignature);
-static const JString kSettingFileName("prefs", JString::kNoCopy);
+static const JString kSettingFileName("prefs");
 
 static const JUtf8Byte* kSymbolFileSignature  = "jx_browser_symbol_table";
 const JSize kSymbolFileSignatureLength        = strlen(kSymbolFileSignature);
-static const JString kSymbolFileName("symbols", JString::kNoCopy);
+static const JString kSymbolFileName("symbols");
 
 static const JUtf8Byte* kProjTemplateDir      = "project_templates";
 static const JUtf8Byte* kTmplFileSignature    = "jx_browser_project_template";
@@ -1394,8 +1394,6 @@ ProjectDocument::BuildWindow
 
 	ListenTo(itsConfigButton);
 	itsConfigButton->SetHint(JGetString("ConfigButtonHint::ProjectDocument"));
-
-	itsUpdateContainer->SetNeedsInternalFTC();
 
 	// file list
 

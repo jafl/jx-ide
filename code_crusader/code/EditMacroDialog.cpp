@@ -178,6 +178,8 @@ EditMacroDialog::BuildWindow
 							  JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 10,10);
 	assert( itsActionTable != nullptr );
 
+	actionColHeaderEncl->ClearNeedsInternalFTC();
+
 	auto* colHeader =
 		jnew JXColHeaderWidget(itsActionTable, actionScrollbarSet, actionColHeaderEncl,
 							  JXWidget::kHElastic, JXWidget::kFixedTop, 0,0, 10,10);
@@ -236,6 +238,8 @@ EditMacroDialog::BuildWindow
 						 JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 10,10);
 	assert( itsMacroTable != nullptr );
 
+	macroColHeaderEncl->ClearNeedsInternalFTC();
+
 	colHeader =
 		jnew JXColHeaderWidget(itsMacroTable, macroScrollbarSet, macroColHeaderEncl,
 							  JXWidget::kHElastic, JXWidget::kFixedTop, 0,0, 10,10);
@@ -285,6 +289,8 @@ EditMacroDialog::BuildWindow
 							JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 10,10);
 	assert( itsMacroSetTable != nullptr );
 	itsMacroSetTable->FitToEnclosure();
+
+	macroSetColHeaderEncl->ClearNeedsInternalFTC();
 
 	colHeader =
 		jnew JXColHeaderWidget(itsMacroSetTable, macroSetScrollbarSet, macroSetColHeaderEncl,

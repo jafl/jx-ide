@@ -26,7 +26,7 @@
 const JSize kMenuButtonWidth       = 60;
 const JCoordinate kIndicatorHeight = 10;
 
-static const JString kDoubleNewline("\n\n", JString::kNoCopy);
+static const JString kDoubleNewline("\n\n");
 
 /******************************************************************************
  Constructor function (static)

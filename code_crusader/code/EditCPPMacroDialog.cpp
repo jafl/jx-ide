@@ -147,6 +147,8 @@ EditCPPMacroDialog::BuildWindow
 							JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 10,10);
 	assert( itsTable != nullptr );
 
+	colHeaderEncl->ClearNeedsInternalFTC();
+
 	auto* colHeader =
 		jnew JXColHeaderWidget(itsTable, scrollbarSet, colHeaderEncl,
 							  JXWidget::kHElastic, JXWidget::kFixedTop, 0,0, 10,10);

@@ -205,7 +205,7 @@ HTMLStyler::HTMLStyler()
 	JPrefObject::ReadPrefs();
 
 	JFontStyle style;
-	const JString phpOpen("?php", JString::kNoCopy);
+	const JString phpOpen("?php");
 	if (GetWordStyle(phpOpen, &style))
 	{
 		RemoveWordStyle(phpOpen);

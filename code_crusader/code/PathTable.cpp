@@ -38,7 +38,7 @@ const JCoordinate kRecurseColumn = 1;
 const JCoordinate kIconColumn    = 2;
 const JCoordinate kTextColumn    = 3;
 
-static const JString kFlagOnStr("R", JString::kNoCopy);
+static const JString kFlagOnStr("R");
 static const JString kFlagOffStr;		// must be empty
 
 /******************************************************************************

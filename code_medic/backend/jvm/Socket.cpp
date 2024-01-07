@@ -14,7 +14,7 @@
 #include "globals.h"
 #include <jx-af/jcore/jAssert.h>
 
-static const JString kHandshake("JDWP-Handshake", JString::kNoCopy);
+static const JString kHandshake("JDWP-Handshake");
 const JSize kBufferSize      = 65536;	// 64KB
 const time_t kClientDeadTime = 5;		// seconds
 

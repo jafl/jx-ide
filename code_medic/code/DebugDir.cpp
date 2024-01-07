@@ -105,7 +105,7 @@ DebugDir::GetName()
 
  ******************************************************************************/
 
-static const JString kLogPrefix("=== ", JString::kNoCopy);
+static const JString kLogPrefix("=== ");
 
 void
 DebugDir::Receive

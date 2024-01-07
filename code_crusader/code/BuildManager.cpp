@@ -25,17 +25,17 @@
 
 bool BuildManager::itsRebuildMakefileDailyFlag = true;
 
-static const JString kMakeHeaderName("Make.header", JString::kNoCopy);
-static const JString kMakeFilesName("Make.files", JString::kNoCopy);
+static const JString kMakeHeaderName("Make.header");
+static const JString kMakeFilesName("Make.files");
 
-static const JString kCMakeHeaderName("CMake.header", JString::kNoCopy);
-static const JString kCMakeInputName("CMakeLists.txt", JString::kNoCopy);
+static const JString kCMakeHeaderName("CMake.header");
+static const JString kCMakeInputName("CMakeLists.txt");
 
-static const JString kQMakeHeaderName("QMake.header", JString::kNoCopy);
-static const JString kQMakeInputFileSuffix(".pro", JString::kNoCopy);
+static const JString kQMakeHeaderName("QMake.header");
+static const JString kQMakeInputFileSuffix(".pro");
 
-static const JString kDefaultSubProjectBuildCmd("make -k all", JString::kNoCopy);
-static const JString kSubProjectBuildSuffix(".jmk", JString::kNoCopy);
+static const JString kDefaultSubProjectBuildCmd("make -k all");
+static const JString kSubProjectBuildSuffix(".jmk");
 
 static const JUtf8Byte* kMakefileName[] =
 {

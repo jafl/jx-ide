@@ -42,13 +42,13 @@ static const JUtf8Byte* kTextTemplateDir = "text_templates";
 
 // External editors
 
-static const JString kDefEditTextFileCmd("emacsclient $f", JString::kNoCopy);
-static const JString kDefEditTextFileLineCmd("emacsclient +$l $f", JString::kNoCopy);
+static const JString kDefEditTextFileCmd("emacsclient $f");
+static const JString kDefEditTextFileLineCmd("emacsclient +$l $f");
 
 #ifdef _J_MACOS
-static const JString kDefEditBinaryFileCmd("open -a \"Hex Fiend\" $f", JString::kNoCopy);
+static const JString kDefEditBinaryFileCmd("open -a \"Hex Fiend\" $f");
 #else
-static const JString kDefEditBinaryFileCmd("khexedit $f", JString::kNoCopy); // "xterm -title \"$f\" -e vi $f";
+static const JString kDefEditBinaryFileCmd("khexedit $f"); // "xterm -title \"$f\" -e vi $f";
 #endif
 
 // setup information
