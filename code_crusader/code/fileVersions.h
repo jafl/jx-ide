@@ -7,8 +7,8 @@
 
  ******************************************************************************/
 
-#ifndef _H_cbFileVersions
-#define _H_cbFileVersions
+#ifndef _H_fileVersions
+#define _H_fileVersions
 
 #include <jx-af/jcore/jTypes.h>
 
