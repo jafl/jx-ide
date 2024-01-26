@@ -47,13 +47,13 @@ private:
 	Link*				itsLink;
 	CommandDirector*	itsCommandDir;
 	JTree*				itsTree;		// owned by itsWidget
-	VarTreeWidget*		itsWidget;
 
 	JXTextMenu*	itsFileMenu;
 	JXTextMenu*	itsActionMenu;
 
 // begin JXLayout
 
+	VarTreeWidget* itsWidget;
 
 // end JXLayout
 

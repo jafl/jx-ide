@@ -48,7 +48,6 @@ private:
 	Link*				itsLink;
 	CommandDirector*	itsCommandDir;
 	JTree*				itsTree;			// owned by itsWidget
-	VarTreeWidget*		itsWidget;
 	JString				itsExpr;
 	JIntRange			itsDisplayRange;
 	JIntRange			itsRequestRange;
@@ -61,9 +60,10 @@ private:
 // begin JXLayout
 
 	ArrayExprInput*  itsExprInput;
-	JXTextButton*    itsStopButton;
 	ArrayIndexInput* itsStartIndex;
+	JXTextButton*    itsStopButton;
 	ArrayIndexInput* itsEndIndex;
+	VarTreeWidget*   itsWidget;
 
 // end JXLayout
 

@@ -1,0 +1,152 @@
+jx_layout_editor 5
+500
+550
+"JXLayout"
+""
+"Code_Medic_Command_Line"
+""
+0
+
+1
+0
+"MenuBar"
+2
+0
+0 0 30 500
+"menuBar"
+0
+0
+0
+
+1
+0
+"ToolBar"
+2
+2
+30 0 470 500
+"itsToolBar"
+1
+0
+0
+"GetPrefsManager()"
+"kCmdWindowToolBarID"
+"menuBar"
+
+1
+2
+"ScrollbarSet"
+2
+2
+0 0 410 500
+"scrollbarSet"
+0
+0
+0
+
+1
+3
+"CustomWidget"
+2
+2
+0 0 395 485
+"itsCommandOutput"
+1
+0
+0
+"CommandOutputDisplay"
+"menuBar, scrollbarSet"
+0
+""
+
+1
+0
+"SimpleBorderRect"
+2
+1
+470 0 530 500
+"itsDownRect"
+1
+0
+0
+2
+2
+52428 52428 52428
+
+1
+5
+"StaticText"
+0
+0
+0 10 20 48
+"itsFakePrompt"
+1
+0
+0
+"(lldb)"
+1
+0
+0
+0
+0
+
+1
+5
+"CustomWidget"
+2
+0
+0 50 56 495
+"itsCommandInput"
+1
+0
+0
+"CommandInput"
+""
+0
+""
+
+1
+5
+"HistoryMenu"
+0
+0
+30 10 50 40
+"itsHistoryMenu"
+1
+0
+0
+0
+"kCmdHistoryLength"
+
+1
+0
+"TextButton"
+0
+1
+530 0 550 150
+"itsProgramButton"
+1
+0
+0
+"<no binary>"
+""
+
+1
+0
+"InputField"
+2
+1
+530 150 550 500
+"itsArgInput"
+1
+1
+0
+0
+0
+0
+""
+""
+""
+0
+0
+
+0

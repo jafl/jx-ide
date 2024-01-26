@@ -42,7 +42,6 @@ private:
 	Link*				itsLink;
 	CommandDirector*	itsCommandDir;
 	JTree*				itsTree;		// owned by itsWidget
-	VarTreeWidget*		itsWidget;
 	GetLocalVarsCmd*	itsGetLocalsCmd;
 	bool				itsNeedsUpdateFlag;
 
@@ -51,6 +50,7 @@ private:
 
 // begin JXLayout
 
+	VarTreeWidget* itsWidget;
 
 // end JXLayout
 

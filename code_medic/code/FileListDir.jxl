@@ -1,0 +1,36 @@
+jx_layout_editor 5
+250
+500
+"JXLayout"
+""
+"Code_Medic_File_List"
+""
+0
+
+1
+0
+"MenuBar"
+2
+0
+0 0 30 250
+"menuBar"
+0
+0
+0
+
+1
+0
+"CustomWidget"
+2
+2
+30 0 500 250
+"itsFileListSet"
+1
+0
+0
+"JXFileListSet"
+"menuBar"
+0
+""
+
+0

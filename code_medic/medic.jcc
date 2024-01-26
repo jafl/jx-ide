@@ -138,6 +138,10 @@ T
 F
 "./code/EditPrefsDialog.cpp"
 T
+2 "EditPrefsDialog.jxl"
+F
+"./code/EditPrefsDialog.jxl"
+T
 2 "DebuggerProgramInput.cpp"
 F
 "./code/DebuggerProgramInput.cpp"
@@ -150,9 +154,17 @@ T
 F
 "./code/AboutDialog.cpp"
 T
+2 "AboutDialog.jxl"
+F
+"./code/AboutDialog.jxl"
+T
 2 "DebugDir.cpp"
 F
 "./code/DebugDir.cpp"
+T
+2 "DebugDir.jxl"
+F
+"./code/DebugDir.jxl"
 T
 2 "QuitTask.cpp"
 F
@@ -164,6 +176,10 @@ T
 2 "CommandDirector.cpp"
 F
 "./code/CommandDirector.cpp"
+T
+2 "CommandDirector.jxl"
+F
+"./code/CommandDirector.jxl"
 T
 2 "CommandDirector-File.jxm"
 F
@@ -197,6 +213,10 @@ T
 F
 "./code/ChooseProcessDialog.cpp"
 T
+2 "ChooseProcessDialog.jxl"
+F
+"./code/ChooseProcessDialog.jxl"
+T
 2 "ProcessText.cpp"
 F
 "./code/ProcessText.cpp"
@@ -204,6 +224,10 @@ T
 2 "EditCommandsDialog.cpp"
 F
 "./code/EditCommandsDialog.cpp"
+T
+2 "EditCommandsDialog.jxl"
+F
+"./code/EditCommandsDialog.jxl"
 T
 2 "EditCommandsTable.cpp"
 F
@@ -223,6 +247,10 @@ T
 2 "SourceDirector.cpp"
 F
 "./code/SourceDirector.cpp"
+T
+2 "SourceDirector.jxl"
+F
+"./code/SourceDirector.jxl"
 T
 2 "SourceDirector-File.jxm"
 F
@@ -294,6 +322,10 @@ T
 F
 "./code/BreakpointsDir.cpp"
 T
+2 "BreakpointsDir.jxl"
+F
+"./code/BreakpointsDir.jxl"
+T
 2 "BreakpointsDir-Actions.jxm"
 F
 "./code/BreakpointsDir-Actions.jxm"
@@ -324,6 +356,10 @@ T
 2 "ThreadsDir.cpp"
 F
 "./code/ThreadsDir.cpp"
+T
+2 "ThreadsDir.jxl"
+F
+"./code/ThreadsDir.jxl"
 T
 2 "ThreadsWidget.cpp"
 F
@@ -375,6 +411,10 @@ T
 F
 "./code/LocalVarsDir.cpp"
 T
+2 "LocalVarsDir.jxl"
+F
+"./code/LocalVarsDir.jxl"
+T
 2 "LocalVarsDir-Actions.jxm"
 F
 "./code/LocalVarsDir-Actions.jxm"
@@ -389,6 +429,10 @@ T
 2 "VarTreeDir.cpp"
 F
 "./code/VarTreeDir.cpp"
+T
+2 "VarTreeDir.jxl"
+F
+"./code/VarTreeDir.jxl"
 T
 2 "VarTreeDir-Actions.jxm"
 F
@@ -425,6 +469,10 @@ T
 F
 "./code/Array1DDir.cpp"
 T
+2 "Array1DDir.jxl"
+F
+"./code/Array1DDir.jxl"
+T
 2 "Array1DDir-Actions.jxm"
 F
 "./code/Array1DDir-Actions.jxm"
@@ -432,6 +480,10 @@ T
 2 "Array2DDir.cpp"
 F
 "./code/Array2DDir.cpp"
+T
+2 "Array2DDir.jxl"
+F
+"./code/Array2DDir.jxl"
 T
 2 "Array2DDir-File.jxm"
 F
@@ -464,6 +516,10 @@ T
 F
 "./code/Plot2DDir.cpp"
 T
+2 "Plot2DDir.jxl"
+F
+"./code/Plot2DDir.jxl"
+T
 2 "Plot2DDir-File.jxm"
 F
 "./code/Plot2DDir-File.jxm"
@@ -487,6 +543,10 @@ T
 F
 "./code/MemoryDir.cpp"
 T
+2 "MemoryDir.jxl"
+F
+"./code/MemoryDir.jxl"
+T
 2 "MemoryDir-Actions.jxm"
 F
 "./code/MemoryDir-Actions.jxm"
@@ -506,6 +566,10 @@ T
 F
 "./code/RegistersDir.cpp"
 T
+2 "RegistersDir.jxl"
+F
+"./code/RegistersDir.jxl"
+T
 2 "GetRegistersCmd.cpp"
 F
 "./code/GetRegistersCmd.cpp"
@@ -516,6 +580,10 @@ T
 2 "FileListDir.cpp"
 F
 "./code/FileListDir.cpp"
+T
+2 "FileListDir.jxl"
+F
+"./code/FileListDir.jxl"
 T
 2 "GetSourceFileListCmd.cpp"
 F
@@ -976,13 +1044,6 @@ F
 "./backend/xdebug/VarNode.cpp"
 F
 T
-1 "layouts"
-T
-2 "medic.fd"
-F
-"./medic.fd"
-F
-T
 1 "strings"
 T
 2 "strings"
@@ -996,13 +1057,13 @@ F
 T
 1 "help"
 T
-2 "help.html"
-F
-"./release/doc/help.html"
-T
 2 "ChangeLog.html"
 F
 "./release/doc/ChangeLog.html"
+T
+2 "help.html"
+F
+"./release/doc/help.html"
 F
 F
 # tasks

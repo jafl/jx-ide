@@ -33,12 +33,12 @@ protected:
 private:
 
 	Link*			itsLink;
-	JXStaticText*	itsText;
 	std::ofstream	itsFile;
 
 // begin JXLayout
 
 	JXTextButton* itsCopyButton;
+	JXStaticText* itsText;
 
 // end JXLayout
 

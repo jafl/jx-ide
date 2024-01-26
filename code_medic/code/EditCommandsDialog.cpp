@@ -63,18 +63,31 @@ EditCommandsDialog::BuildWindow()
 {
 // begin JXLayout
 
-	auto* window = jnew JXWindow(this, 350,370, JString::empty);
+	auto* window = jnew JXWindow(this, 350,370, JGetString("WindowTitle::EditCommandsDialog::JXLayout"));
 
 	auto* gdbCmdTitle =
 		jnew JXStaticText(JGetString("gdbCmdTitle::EditCommandsDialog::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,10, 150,20);
-	assert( gdbCmdTitle != nullptr );
-	gdbCmdTitle->SetToLabel();
+	gdbCmdTitle->SetToLabel(false);
+
+	auto* hint =
+		jnew JXStaticText(JGetString("hint::EditCommandsDialog::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,30, 270,20);
+	hint->SetToLabel(false);
 
 	auto* scrollbarSet =
 		jnew JXScrollbarSet(window,
 					JXWidget::kHElastic, JXWidget::kVElastic, 10,50, 230,280);
 	assert( scrollbarSet != nullptr );
+
+	itsNewButton =
+		jnew JXTextButton(JGetString("itsNewButton::EditCommandsDialog::JXLayout"), window,
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 260,70, 70,20);
+	itsNewButton->SetShortcuts(JGetString("itsNewButton::shortcuts::EditCommandsDialog::JXLayout"));
+
+	itsRemoveButton =
+		jnew JXTextButton(JGetString("itsRemoveButton::EditCommandsDialog::JXLayout"), window,
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 260,110, 70,20);
 
 	auto* cancelButton =
 		jnew JXTextButton(JGetString("cancelButton::EditCommandsDialog::JXLayout"), window,
@@ -83,44 +96,24 @@ EditCommandsDialog::BuildWindow()
 
 	auto* okButton =
 		jnew JXTextButton(JGetString("okButton::EditCommandsDialog::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedBottom, 210,340, 60,20);
-	assert( okButton != nullptr );
-	okButton->SetShortcuts(JGetString("okButton::EditCommandsDialog::shortcuts::JXLayout"));
+					JXWidget::kFixedRight, JXWidget::kFixedBottom, 209,339, 62,22);
+	okButton->SetShortcuts(JGetString("okButton::shortcuts::EditCommandsDialog::JXLayout"));
 
-	itsNewButton =
-		jnew JXTextButton(JGetString("itsNewButton::EditCommandsDialog::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 260,70, 70,20);
-	assert( itsNewButton != nullptr );
-	itsNewButton->SetShortcuts(JGetString("itsNewButton::EditCommandsDialog::shortcuts::JXLayout"));
-
-	itsRemoveButton =
-		jnew JXTextButton(JGetString("itsRemoveButton::EditCommandsDialog::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 260,110, 70,20);
-	assert( itsRemoveButton != nullptr );
-
-	auto* hint =
-		jnew JXStaticText(JGetString("hint::EditCommandsDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,30, 270,20);
-	assert( hint != nullptr );
-	hint->SetFontSize(JFontManager::GetDefaultFontSize()-2);
-	hint->SetToLabel();
+	auto* itsWidget =
+		jnew EditCommandsTable(this, itsRemoveButton, scrollbarSet, scrollbarSet->GetScrollEnclosure(),
+					JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 230,280);
+	assert( itsWidget != nullptr );
 
 // end JXLayout
 
-	window->SetTitle(JGetString("WindowTitle::EditCommandsDialog"));
 	SetButtons(okButton, cancelButton);
 
 	ListenTo(itsNewButton);
 	ListenTo(itsRemoveButton);
 
-	itsWidget =
-		jnew EditCommandsTable(this, itsRemoveButton, scrollbarSet,
-								scrollbarSet->GetScrollEnclosure(),
-								JXWidget::kHElastic, JXWidget::kVElastic,
-								0,0, 10,10);
-	assert(itsWidget != nullptr);
 	itsWidget->SyncWithData();
-	itsWidget->FitToEnclosure(true, true);	// requires sync
+
+	hint->SetFontSize(JFontManager::GetDefaultFontSize()-2);
 }
 
 /******************************************************************************

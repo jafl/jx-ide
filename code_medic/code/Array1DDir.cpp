@@ -150,64 +150,66 @@ Array1DDir::Deactivate()
 void
 Array1DDir::BuildWindow()
 {
+	VarNode* root = itsLink->CreateVarNode();
+	assert( root != nullptr );
+	itsTree = jnew JTree(root);
+	auto* treeList = jnew JNamedTreeList(itsTree);
+
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 300,500, JString::empty);
-
-	itsExprInput =
-		jnew ArrayExprInput(window,
-					JXWidget::kHElastic, JXWidget::kFixedTop, 110,40, 170,20);
-	assert( itsExprInput != nullptr );
-
-	auto* startLabel =
-		jnew JXStaticText(JGetString("startLabel::Array1DDir::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,70, 90,20);
-	assert( startLabel != nullptr );
-	startLabel->SetToLabel();
-
-	auto* endLabel =
-		jnew JXStaticText(JGetString("endLabel::Array1DDir::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,100, 90,20);
-	assert( endLabel != nullptr );
-	endLabel->SetToLabel();
-
-	itsStopButton =
-		jnew JXTextButton(JGetString("itsStopButton::Array1DDir::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 200,85, 60,20);
-	assert( itsStopButton != nullptr );
-	itsStopButton->SetShortcuts(JGetString("itsStopButton::Array1DDir::shortcuts::JXLayout"));
+	window->SetMinSize(300, 200);
+	window->SetWMClass(JXGetApplication()->GetWMName().GetBytes(), "Code_Medic_Variables_Array_1D");
 
 	auto* menuBar =
 		jnew JXMenuBar(window,
 					JXWidget::kHElastic, JXWidget::kFixedTop, 0,0, 300,30);
 	assert( menuBar != nullptr );
 
+	auto* exprLabel =
+		jnew JXStaticText(JGetString("exprLabel::Array1DDir::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,40, 90,20);
+	exprLabel->SetToLabel(false);
+
+	itsExprInput =
+		jnew ArrayExprInput(window,
+					JXWidget::kHElastic, JXWidget::kFixedTop, 110,40, 170,20);
+
+	auto* startLabel =
+		jnew JXStaticText(JGetString("startLabel::Array1DDir::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,70, 90,20);
+	startLabel->SetToLabel(false);
+
+	itsStartIndex =
+		jnew ArrayIndexInput(window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 110,70, 60,20);
+
+	itsStopButton =
+		jnew JXTextButton(JGetString("itsStopButton::Array1DDir::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 200,85, 60,20);
+	itsStopButton->SetShortcuts(JGetString("itsStopButton::shortcuts::Array1DDir::JXLayout"));
+
+	auto* endLabel =
+		jnew JXStaticText(JGetString("endLabel::Array1DDir::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,100, 90,20);
+	endLabel->SetToLabel(false);
+
+	itsEndIndex =
+		jnew ArrayIndexInput(window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 110,100, 60,20);
+
 	auto* scrollbarSet =
 		jnew JXScrollbarSet(window,
 					JXWidget::kHElastic, JXWidget::kVElastic, 0,130, 300,370);
 	assert( scrollbarSet != nullptr );
 
-	itsStartIndex =
-		jnew ArrayIndexInput(window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 110,70, 60,20);
-	assert( itsStartIndex != nullptr );
-
-	itsEndIndex =
-		jnew ArrayIndexInput(window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 110,100, 60,20);
-	assert( itsEndIndex != nullptr );
-
-	auto* exprLabel =
-		jnew JXStaticText(JGetString("exprLabel::Array1DDir::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,40, 90,20);
-	assert( exprLabel != nullptr );
-	exprLabel->SetToLabel();
+	itsWidget =
+		jnew VarTreeWidget(itsCommandDir, false, menuBar, itsTree, treeList, scrollbarSet, scrollbarSet->GetScrollEnclosure(),
+					JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 300,370);
 
 // end JXLayout
 
-	window->SetMinSize(300, 200);
 	window->ShouldFocusWhenShow(true);
-	window->SetWMClass(GetWMClassInstance(), GetArray1DWindowClass());
 
 	UpdateWindowTitle();
 
@@ -216,18 +218,6 @@ Array1DDir::BuildWindow()
 	window->SetIcon(icon);
 
 	GetPrefsManager()->GetWindowSize(kArray1DWindSizeID, window, true);
-
-	VarNode* root = itsLink->CreateVarNode();
-	assert( root != nullptr );
-	itsTree = jnew JTree(root);
-	auto* treeList = jnew JNamedTreeList(itsTree);
-
-	itsWidget =
-		jnew VarTreeWidget(itsCommandDir, false, menuBar, itsTree, treeList,
-							scrollbarSet, scrollbarSet->GetScrollEnclosure(),
-							JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 100,100);
-	assert(itsWidget != nullptr);
-	itsWidget->FitToEnclosure();
 
 	itsExprInput->GetText()->SetText(itsExpr);
 	itsExprInput->SetIsRequired();

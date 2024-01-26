@@ -44,7 +44,7 @@ App::App
 	JString*	prevVersStr
 	)
 	:
-	JXApplication(argc, argv, kAppSignature, kDefaultStringData)
+	JXApplication(argc, argv, kAppSignature, "Code_Medic", kDefaultStringData)
 {
 	*displayAbout = CreateGlobals(this);
 	if (!*displayAbout)

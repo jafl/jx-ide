@@ -92,28 +92,31 @@ DockManager::DockAll()
 
 	JXDockWidget* dock1 = v1->GetDockWidget(1);
 	assert( dock1 != nullptr );
-	SetDefaultDock(GetMainSourceWindowClass(), dock1);
-	SetDefaultDock(GetMainAsmWindowClass(),    dock1);
-	SetDefaultDock(GetSourceViewWindowClass(), dock1);
-	SetDefaultDock(GetPlot2DWindowClass(),     dock1);
+	SetDefaultDock("Code_Medic_Source_Main",       dock1);
+	SetDefaultDock("Code_Medic_Disassembly_Main",  dock1);
+	SetDefaultDock("Code_Medic_Source",            dock1);
+	SetDefaultDock("Code_Medic_Disassembly",       dock1);
+	SetDefaultDock("Code_Medic_Variables_Plot_2D", dock1);
 
 	JXDockWidget* dock2 = v1->GetDockWidget(2);
 	assert( dock2 != nullptr );
-	SetDefaultDock(GetCommandWindowClass(), dock2);
+	SetDefaultDock("Code_Medic_Command_Line", dock2);
+	SetDefaultDock("Code_Medic_Breakpoints",  dock2);
 
 	JXDockWidget* dock3 = v2->GetDockWidget(1);
 	assert( dock3 != nullptr );
-	SetDefaultDock(GetThreadWindowClass(),   dock3);
-	SetDefaultDock(GetStackWindowClass(),    dock3);
-	SetDefaultDock(GetFileListWindowClass(), dock3);
+	SetDefaultDock("Code_Medic_Threads",   dock3);
+	SetDefaultDock("Code_Medic_Stack",     dock3);
+	SetDefaultDock("Code_Medic_File_List", dock3);
 
 	JXDockWidget* dock4 = v2->GetDockWidget(2);
 	assert( dock4 != nullptr );
-	SetDefaultDock(GetVariableWindowClass(),      dock4);
-	SetDefaultDock(GetLocalVariableWindowClass(), dock4);
-	SetDefaultDock(GetArray1DWindowClass(),       dock4);
-	SetDefaultDock(GetArray2DWindowClass(),       dock4);
-	SetDefaultDock(GetMemoryWindowClass(),        dock4);
+	SetDefaultDock("Code_Medic_Variables",          dock4);
+	SetDefaultDock("Code_Medic_Variables_Local",    dock4);
+	SetDefaultDock("Code_Medic_Variables_Array_1D", dock4);
+	SetDefaultDock("Code_Medic_Variables_Array_2D", dock4);
+	SetDefaultDock("Code_Medic_Registers",          dock4);
+	SetDefaultDock("Code_Medic_Memory",             dock4);
 
 	CommandDirector* cmdDir = GetCommandDirector();
 	dock2->Dock(cmdDir->GetWindow());

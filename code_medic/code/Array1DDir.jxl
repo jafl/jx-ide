@@ -1,0 +1,156 @@
+jx_layout_editor 5
+300
+500
+"JXLayout"
+""
+"Code_Medic_Variables_Array_1D"
+""
+0
+
+1
+0
+"MenuBar"
+2
+0
+0 0 30 300
+"menuBar"
+0
+0
+0
+
+1
+0
+"StaticText"
+0
+0
+40 20 60 110
+"exprLabel"
+0
+0
+0
+"Expression:"
+1
+0
+0
+0
+0
+
+1
+0
+"CustomWidget"
+2
+0
+40 110 60 280
+"itsExprInput"
+1
+0
+0
+"ArrayExprInput"
+""
+0
+""
+
+1
+0
+"StaticText"
+0
+0
+70 20 90 110
+"startLabel"
+0
+0
+0
+"Starting index:"
+1
+0
+0
+0
+0
+
+1
+0
+"CustomWidget"
+0
+0
+70 110 90 170
+"itsStartIndex"
+1
+0
+0
+"ArrayIndexInput"
+""
+0
+""
+
+1
+0
+"TextButton"
+0
+0
+85 200 105 260
+"itsStopButton"
+1
+0
+0
+"Stop"
+"^["
+
+1
+0
+"StaticText"
+0
+0
+100 20 120 110
+"endLabel"
+0
+0
+0
+"Ending index:"
+1
+0
+0
+0
+0
+
+1
+0
+"CustomWidget"
+0
+0
+100 110 120 170
+"itsEndIndex"
+1
+0
+0
+"ArrayIndexInput"
+""
+0
+""
+
+1
+0
+"ScrollbarSet"
+2
+2
+130 0 500 300
+"scrollbarSet"
+0
+0
+0
+
+1
+9
+"CustomWidget"
+2
+2
+0 0 355 285
+"itsWidget"
+1
+0
+0
+"VarTreeWidget"
+"itsCommandDir, false, menuBar, itsTree, treeList, scrollbarSet"
+0
+""
+
+0

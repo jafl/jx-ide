@@ -165,17 +165,16 @@ private:
 
 // begin JXLayout
 
-	JXToolBar*           itsToolBar;
-	JXTextButton*        itsProgramButton;
-	JXDownRect*          itsDownRect;
-	JXStaticText*        itsFakePrompt;
-	CommandInput*        itsCommandInput;
-	JXStringHistoryMenu* itsHistoryMenu;
-	JXInputField*        itsArgInput;
+	JXToolBar*            itsToolBar;
+	CommandOutputDisplay* itsCommandOutput;
+	JXDownRect*           itsDownRect;
+	JXStaticText*         itsFakePrompt;
+	CommandInput*         itsCommandInput;
+	JXStringHistoryMenu*  itsHistoryMenu;
+	JXTextButton*         itsProgramButton;
+	JXInputField*         itsArgInput;
 
 // end JXLayout
-
-	CommandOutputDisplay*	itsCommandOutput;
 
 private:
 

@@ -29,7 +29,7 @@ App::App
 	JString*	prevVersStr
 	)
 	:
-	JXApplication(argc, argv, kAppSignature, kDefaultStringData),
+	JXApplication(argc, argv, kAppSignature, "Code_Mill", kDefaultStringData),
 	itsDeletingTemplate(false)
 {
 	*displayAbout = CreateGlobals(this);

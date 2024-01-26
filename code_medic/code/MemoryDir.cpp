@@ -162,6 +162,7 @@ MemoryDir::BuildWindow()
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 500,500, JString::empty);
+	window->SetWMClass(JXGetApplication()->GetWMName().GetBytes(), "Code_Medic_Memory");
 
 	auto* menuBar =
 		jnew JXMenuBar(window,
@@ -171,40 +172,38 @@ MemoryDir::BuildWindow()
 	auto* exprLabel =
 		jnew JXStaticText(JGetString("exprLabel::MemoryDir::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,40, 80,20);
-	assert( exprLabel != nullptr );
-	exprLabel->SetToLabel();
+	exprLabel->SetToLabel(false);
 
 	itsExprInput =
 		jnew ArrayExprInput(window,
 					JXWidget::kHElastic, JXWidget::kFixedTop, 100,40, 380,20);
-	assert( itsExprInput != nullptr );
 
 	itsDisplayTypeMenu =
 		jnew JXTextMenu(JGetString("itsDisplayTypeMenu::MemoryDir::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,70, 400,25);
-	assert( itsDisplayTypeMenu != nullptr );
 
 	auto* countLabel =
 		jnew JXStaticText(JGetString("countLabel::MemoryDir::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,105, 80,20);
-	assert( countLabel != nullptr );
-	countLabel->SetToLabel();
+	countLabel->SetToLabel(false);
 
 	itsItemCountInput =
 		jnew ArrayIndexInput(window,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 100,105, 60,20);
-	assert( itsItemCountInput != nullptr );
 
 	auto* scrollbarSet =
 		jnew JXScrollbarSet(window,
 					JXWidget::kHElastic, JXWidget::kVElastic, 0,135, 500,365);
 	assert( scrollbarSet != nullptr );
 
+	itsWidget =
+		jnew JXStaticText(JString::empty, false, true, true, scrollbarSet, scrollbarSet->GetScrollEnclosure(),
+					JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 500,365);
+
 // end JXLayout
 
-	window->SetMinSize(300, 200);
+	window->SetTitle(JGetString("WindowTitleSuffix::MemoryDir"));
 	window->ShouldFocusWhenShow(true);
-	window->SetWMClass(GetWMClassInstance(), GetMemoryWindowClass());
 
 	UpdateWindowTitle();
 
@@ -213,13 +212,6 @@ MemoryDir::BuildWindow()
 	window->SetIcon(icon);
 
 	GetPrefsManager()->GetWindowSize(kMemoryWindSizeID, window, true);
-
-	itsWidget =
-		jnew JXStaticText(JString::empty, false, true, true,
-						 scrollbarSet, scrollbarSet->GetScrollEnclosure(),
-						 JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 100,100);
-	assert(itsWidget != nullptr);
-	itsWidget->FitToEnclosure();
 
 	JString name;
 	JSize size;

@@ -1,0 +1,49 @@
+jx_layout_editor 5
+450
+500
+"JXLayout"
+"Debug"
+"Code_Medic_Debug"
+""
+0
+
+1
+0
+"TextButton"
+2
+0
+0 0 20 450
+"itsCopyButton"
+1
+0
+0
+"Copy"
+""
+
+1
+0
+"ScrollbarSet"
+2
+2
+20 0 500 450
+"scrollbarSet"
+0
+0
+0
+
+1
+2
+"CustomWidget"
+2
+2
+0 0 465 435
+"itsText"
+1
+0
+0
+"JXStaticText"
+"JString::empty, false, true, true, scrollbarSet"
+0
+""
+
+0

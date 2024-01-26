@@ -57,32 +57,27 @@ DebugDir::BuildWindow()
 {
 // begin JXLayout
 
-	auto* window = jnew JXWindow(this, 450,500, JString::empty);
+	auto* window = jnew JXWindow(this, 450,500, JGetString("WindowTitle::DebugDir::JXLayout"));
+	window->SetWMClass(JXGetApplication()->GetWMName().GetBytes(), "Code_Medic_Debug");
+
+	itsCopyButton =
+		jnew JXTextButton(JGetString("itsCopyButton::DebugDir::JXLayout"), window,
+					JXWidget::kHElastic, JXWidget::kFixedTop, 0,0, 450,20);
 
 	auto* scrollbarSet =
 		jnew JXScrollbarSet(window,
 					JXWidget::kHElastic, JXWidget::kVElastic, 0,20, 450,480);
 	assert( scrollbarSet != nullptr );
 
-	itsCopyButton =
-		jnew JXTextButton(JGetString("itsCopyButton::DebugDir::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kFixedTop, 0,0, 450,20);
-	assert( itsCopyButton != nullptr );
+	itsText =
+		jnew JXStaticText(JString::empty, false, true, true, scrollbarSet, scrollbarSet->GetScrollEnclosure(),
+					JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 450,480);
 
 // end JXLayout
 
-	window->SetTitle(JGetString("WindowTitle::DebugDir"));
 	window->SetCloseAction(JXWindow::kDeactivateDirector);
-	window->SetMinSize(150, 150);
-	window->SetWMClass(GetWMClassInstance(), GetDebugWindowClass());
 	GetPrefsManager()->GetWindowSize(kDebugWindSizeID, window);
 
-	itsText =
-		jnew JXStaticText(JString::empty, false, true, true,
-						  scrollbarSet, scrollbarSet->GetScrollEnclosure(),
-						  JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 100,100);
-	assert( itsText != nullptr );
-	itsText->FitToEnclosure();
 	TextDisplayBase::AdjustFont(itsText);
 
 	ListenTo(itsCopyButton);

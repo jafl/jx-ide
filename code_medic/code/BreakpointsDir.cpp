@@ -67,6 +67,7 @@ BreakpointsDir::BuildWindow()
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 450,500, JString::empty);
+	window->SetWMClass(JXGetApplication()->GetWMName().GetBytes(), "Code_Medic_Breakpoints");
 
 	auto* menuBar =
 		jnew JXMenuBar(window,
@@ -78,44 +79,28 @@ BreakpointsDir::BuildWindow()
 					JXWidget::kHElastic, JXWidget::kVElastic, 0,30, 450,470);
 	assert( scrollbarSet != nullptr );
 
+	itsTable =
+		jnew BreakpointTable(this, scrollbarSet, scrollbarSet->GetScrollEnclosure(),
+					JXWidget::kHElastic, JXWidget::kVElastic, 0,20, 450,450);
+
+	auto* colHeader =
+		jnew JXColHeaderWidget(itsTable, scrollbarSet, scrollbarSet->GetScrollEnclosure(),
+					JXWidget::kHElastic, JXWidget::kFixedTop, 0,0, 450,20);
+	assert( colHeader != nullptr );
+
 // end JXLayout
 
 	window->SetTitle(JGetString("WindowTitleSuffix::BreakpointsDir"));
 	window->SetCloseAction(JXWindow::kDeactivateDirector);
-	window->SetMinSize(150, 150);
 	window->ShouldFocusWhenShow(true);
-	window->SetWMClass(GetWMClassInstance(), GetBreakpointsWindowClass());
 	GetPrefsManager()->GetWindowSize(kBreakpointsWindowSizeID, window);
 
 	JXDisplay* display = GetDisplay();
 	auto* icon      = jnew JXImage(display, medic_breakpoints_window);
 	window->SetIcon(icon);
 
-	// layout table and column headers
-
-	JXContainer* encl = scrollbarSet->GetScrollEnclosure();
-
-// begin tablelayout
-
-	const JRect tablelayout_Aperture = encl->GetAperture();
-	encl->AdjustSize(400 - tablelayout_Aperture.width(), 300 - tablelayout_Aperture.height());
-
-	itsTable =
-		jnew BreakpointTable(this, scrollbarSet, encl,
-					JXWidget::kHElastic, JXWidget::kVElastic, 0,20, 400,280);
-	assert( itsTable != nullptr );
-
-	itsColHeader =
-		jnew JXColHeaderWidget(itsTable, scrollbarSet, encl,
-					JXWidget::kHElastic, JXWidget::kFixedTop, 0,0, 400,20);
-	assert( itsColHeader != nullptr );
-
-	encl->SetSize(tablelayout_Aperture.width(), tablelayout_Aperture.height());
-
-// end tablelayout
-
-	itsTable->SetColTitles(itsColHeader);
-	itsColHeader->TurnOnColResizing();
+	itsTable->SetColTitles(colHeader);
+	colHeader->TurnOnColResizing();
 
 	// menus
 

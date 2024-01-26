@@ -13,9 +13,9 @@
 #include "MDIServer.h"
 #include <jx-af/jcore/jAssert.h>
 
-static App*			theApplication  = nullptr;		// owns itself
+static App*				theApplication  = nullptr;		// owns itself
 static PrefsManager*	thePrefsManager = nullptr;
-static MDIServer*	theMDIServer    = nullptr;
+static MDIServer*		theMDIServer    = nullptr;
 
 /******************************************************************************
  CreateGlobals

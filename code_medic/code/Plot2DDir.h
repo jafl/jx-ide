@@ -47,9 +47,7 @@ private:
 
 	Link*						itsLink;
 	CommandDirector*			itsCommandDir;
-	JXColHeaderWidget*			itsColHeader;
 	JStringTableData*			itsExprData;
-	Plot2DExprTable*			itsExprTable;
 	bool						itsShouldUpdateFlag;
 	JPtrArray<Plot2DCmd>*		itsUpdateCmdList;
 	JPtrArray<JArray<JFloat> >*	itsXData;
@@ -61,10 +59,12 @@ private:
 
 // begin JXLayout
 
-	JX2DPlotWidget* itsPlotWidget;
-	JXTextButton*   itsAddPlotButton;
-	JXTextButton*   itsDuplicatePlotButton;
-	JXTextButton*   itsRemovePlotButton;
+	JXTextButton*      itsAddPlotButton;
+	Plot2DExprTable*   itsExprTable;
+	JXTextButton*      itsDuplicatePlotButton;
+	JXTextButton*      itsRemovePlotButton;
+	JX2DPlotWidget*    itsPlotWidget;
+	JXColHeaderWidget* itsColHeader;
 
 // end JXLayout
 

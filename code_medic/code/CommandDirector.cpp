@@ -327,6 +327,7 @@ CommandDirector::BuildWindow()
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 500,550, JString::empty);
+	window->SetWMClass(JXGetApplication()->GetWMName().GetBytes(), "Code_Medic_Command_Line");
 
 	auto* menuBar =
 		jnew JXMenuBar(window,
@@ -336,46 +337,47 @@ CommandDirector::BuildWindow()
 	itsToolBar =
 		jnew JXToolBar(GetPrefsManager(), kCmdWindowToolBarID, menuBar, window,
 					JXWidget::kHElastic, JXWidget::kVElastic, 0,30, 500,440);
-	assert( itsToolBar != nullptr );
 
-	itsProgramButton =
-		jnew JXTextButton(JGetString("itsProgramButton::CommandDirector::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 0,530, 150,20);
-	assert( itsProgramButton != nullptr );
+	auto* scrollbarSet =
+		jnew JXScrollbarSet(itsToolBar->GetWidgetEnclosure(),
+					JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 500,440);
+	assert( scrollbarSet != nullptr );
+
+	itsCommandOutput =
+		jnew CommandOutputDisplay(menuBar, scrollbarSet, scrollbarSet->GetScrollEnclosure(),
+					JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 500,440);
 
 	itsDownRect =
 		jnew JXDownRect(window,
 					JXWidget::kHElastic, JXWidget::kFixedBottom, 0,470, 500,60);
-	assert( itsDownRect != nullptr );
+	itsDownRect->SetBorderWidth(2);
 
 	itsFakePrompt =
 		jnew JXStaticText(JGetString("itsFakePrompt::CommandDirector::JXLayout"), itsDownRect,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,0, 38,20);
-	assert( itsFakePrompt != nullptr );
-	itsFakePrompt->SetToLabel();
+	itsFakePrompt->SetToLabel(false);
 
 	itsCommandInput =
 		jnew CommandInput(itsDownRect,
-					JXWidget::kHElastic, JXWidget::kFixedTop, 53,0, 445,56);
-	assert( itsCommandInput != nullptr );
+					JXWidget::kHElastic, JXWidget::kFixedTop, 50,0, 445,56);
 
 	itsHistoryMenu =
-		jnew JXStringHistoryMenu(kCmdHistoryLength, JString::empty, itsDownRect,
+		jnew JXStringHistoryMenu(kCmdHistoryLength, itsDownRect,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,30, 30,20);
-	assert( itsHistoryMenu != nullptr );
+
+	itsProgramButton =
+		jnew JXTextButton(JGetString("itsProgramButton::CommandDirector::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 0,530, 150,20);
 
 	itsArgInput =
 		jnew JXInputField(window,
 					JXWidget::kHElastic, JXWidget::kFixedBottom, 150,530, 350,20);
-	assert( itsArgInput != nullptr );
 
 // end JXLayout
 
 	window->SetTitle(JGetString("WindowTitleSuffix::CommandDirector"));
 	window->SetCloseAction(JXWindow::kDeactivateDirector);
 	window->ShouldFocusWhenShow(true);
-	window->SetWMClass(GetWMClassInstance(), GetCommandWindowClass());
-	window->SetMinSize(300, 200);
 	GetPrefsManager()->GetWindowSize(kCmdWindSizeID, window);
 
 	JXDisplay* display = GetDisplay();
@@ -406,28 +408,13 @@ CommandDirector::BuildWindow()
 
 	// menus
 
-	itsFileMenu = menuBar->AppendTextMenu(JGetString("MenuTitle::CommandDirector_File"));
+	itsFileMenu = menuBar->PrependTextMenu(JGetString("MenuTitle::CommandDirector_File"));
 	itsFileMenu->SetMenuItems(kFileMenuStr);
 	itsFileMenu->SetUpdateAction(JXMenu::kDisableNone);
 	itsFileMenu->AttachHandlers(this,
 		&CommandDirector::UpdateFileMenu,
 		&CommandDirector::HandleFileMenu);
 	ConfigureFileMenu(itsFileMenu);
-
-	auto* scrollbarSet =
-		jnew JXScrollbarSet(itsToolBar->GetWidgetEnclosure(),
-						   JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 100,100);
-	assert( scrollbarSet != nullptr );
-	scrollbarSet->FitToEnclosure();
-
-	// appends Edit & Search menus
-
-	itsCommandOutput =
-		jnew CommandOutputDisplay(menuBar,
-								  scrollbarSet, scrollbarSet->GetScrollEnclosure(),
-								  JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 100,100);
-	assert( itsCommandOutput != nullptr );
-	itsCommandOutput->FitToEnclosure(true, true);
 
 	itsDebugMenu = CreateDebugMenu(menuBar);
 	ListenTo(itsDebugMenu);

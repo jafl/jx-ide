@@ -79,9 +79,15 @@ ThreadsDir::BuildWindow
 	CommandDirector* dir
 	)
 {
+	auto* root = jnew JNamedTreeNode(nullptr, JString::empty);
+	auto* tree = jnew JTree(root);
+	auto* treeList = jnew JNamedTreeList(tree);
+
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 450,500, JString::empty);
+	window->SetMinSize(150, 150);
+	window->SetWMClass(JXGetApplication()->GetWMName().GetBytes(), "Code_Medic_Threads");
 
 	auto* menuBar =
 		jnew JXMenuBar(window,
@@ -93,29 +99,20 @@ ThreadsDir::BuildWindow
 					JXWidget::kHElastic, JXWidget::kVElastic, 0,30, 450,470);
 	assert( scrollbarSet != nullptr );
 
+	itsWidget =
+		jnew ThreadsWidget(dir, this, tree, treeList, scrollbarSet, scrollbarSet->GetScrollEnclosure(),
+					JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 450,470);
+
 // end JXLayout
 
 	window->SetTitle(JGetString("WindowTitleSuffix::ThreadsDir"));
 	window->SetCloseAction(JXWindow::kDeactivateDirector);
-	window->SetMinSize(150, 150);
 	window->ShouldFocusWhenShow(true);
-	window->SetWMClass(GetWMClassInstance(), GetThreadWindowClass());
 	GetPrefsManager()->GetWindowSize(kThreadWindowSizeID, window);
 
 	JXDisplay* display = GetDisplay();
 	auto* icon      = jnew JXImage(display, medic_threads_window);
 	window->SetIcon(icon);
-
-	auto* root = jnew JNamedTreeNode(nullptr, JString::empty);
-	auto* tree = jnew JTree(root);
-	auto* treeList = jnew JNamedTreeList(tree);
-
-	itsWidget =
-		jnew ThreadsWidget(dir, this, tree, treeList,
-				scrollbarSet, scrollbarSet->GetScrollEnclosure(),
-				JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 100,100);
-	assert( itsWidget != nullptr );
-	itsWidget->FitToEnclosure();
 
 	// menus
 

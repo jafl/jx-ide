@@ -43,15 +43,9 @@ private:
 
 // begin JXLayout
 
+	BreakpointTable* itsTable;
 
 // end JXLayout
-
-// begin tablelayout
-
-	BreakpointTable*   itsTable;
-	JXColHeaderWidget* itsColHeader;
-
-// end tablelayout
 
 private:
 

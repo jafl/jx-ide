@@ -130,23 +130,26 @@ ChooseProcessDialog::BuildWindow()
 {
 // begin JXLayout
 
-	auto* window = jnew JXWindow(this, 390,500, JString::empty);
+	auto* window = jnew JXWindow(this, 390,500, JGetString("WindowTitle::ChooseProcessDialog::JXLayout"));
+
+	auto* hint =
+		jnew JXStaticText(JGetString("hint::ChooseProcessDialog::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,20, 360,20);
+	hint->SetToLabel(false);
 
 	auto* scrollbarSet =
 		jnew JXScrollbarSet(window,
 					JXWidget::kHElastic, JXWidget::kVElastic, 20,50, 350,400);
 	assert( scrollbarSet != nullptr );
 
-	itsProcessIDInput =
-		jnew JXIntegerInput(window,
-					JXWidget::kHElastic, JXWidget::kFixedBottom, 90,470, 80,20);
-	assert( itsProcessIDInput != nullptr );
+	itsText =
+		jnew ProcessText(this, scrollbarSet, scrollbarSet->GetScrollEnclosure(),
+					JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 350,400);
 
 	auto* pidLabel =
 		jnew JXStaticText(JGetString("pidLabel::ChooseProcessDialog::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 20,470, 70,20);
-	assert( pidLabel != nullptr );
-	pidLabel->SetToLabel();
+	pidLabel->SetToLabel(false);
 
 	auto* cancelButton =
 		jnew JXTextButton(JGetString("cancelButton::ChooseProcessDialog::JXLayout"), window,
@@ -155,25 +158,17 @@ ChooseProcessDialog::BuildWindow()
 
 	auto* okButton =
 		jnew JXTextButton(JGetString("okButton::ChooseProcessDialog::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedBottom, 310,470, 60,20);
-	assert( okButton != nullptr );
-	okButton->SetShortcuts(JGetString("okButton::ChooseProcessDialog::shortcuts::JXLayout"));
+					JXWidget::kFixedRight, JXWidget::kFixedBottom, 309,469, 62,22);
+	okButton->SetShortcuts(JGetString("okButton::shortcuts::ChooseProcessDialog::JXLayout"));
 
-	auto* hint =
-		jnew JXStaticText(JGetString("hint::ChooseProcessDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,20, 360,20);
-	assert( hint != nullptr );
-	hint->SetToLabel();
+	itsProcessIDInput =
+		jnew JXIntegerInput(window,
+					JXWidget::kHElastic, JXWidget::kFixedBottom, 90,470, 80,20);
+	itsProcessIDInput->SetIsRequired(false);
 
 // end JXLayout
 
-	window->SetTitle(JGetString("WindowTitle::ChooseProcessDialog"));
 	SetButtons(okButton, cancelButton);
 
-	itsText =
-		jnew ProcessText(this, scrollbarSet, scrollbarSet->GetScrollEnclosure(),
-						 JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 10,10);
-	assert( itsText != nullptr );
-	itsText->FitToEnclosure();
 	itsText->GetText()->SetDefaultFont(JFontManager::GetDefaultMonospaceFont());
 }

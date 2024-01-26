@@ -175,6 +175,22 @@ Array2DDir::BuildWindow()
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 370,500, JString::empty);
+	window->SetMinSize(300, 250);
+	window->SetWMClass(JXGetApplication()->GetWMName().GetBytes(), "Code_Medic_Variables_Array_2D");
+
+	auto* menuBar =
+		jnew JXMenuBar(window,
+					JXWidget::kHElastic, JXWidget::kFixedTop, 0,0, 370,30);
+	assert( menuBar != nullptr );
+
+	auto* exprLabel =
+		jnew JXStaticText(JGetString("exprLabel::Array2DDir::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,40, 70,20);
+	exprLabel->SetToLabel(false);
+
+	itsExprInput =
+		jnew ArrayExprInput(window,
+					JXWidget::kHElastic, JXWidget::kFixedTop, 90,40, 260,20);
 
 	auto* rowFTCContainer =
 		jnew JXWidgetSet(window,
@@ -186,88 +202,72 @@ Array2DDir::BuildWindow()
 					JXWidget::kHElastic, JXWidget::kVElastic, 150,60, 200,90);
 	assert( colFTCContainer != nullptr );
 
-	itsExprInput =
-		jnew ArrayExprInput(window,
-					JXWidget::kHElastic, JXWidget::kFixedTop, 90,40, 260,20);
-	assert( itsExprInput != nullptr );
+	auto* rowIndexLabel =
+		jnew JXStaticText(JGetString("rowIndexLabel::Array2DDir::JXLayout"), rowFTCContainer,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 0,10, 110,20);
+	rowIndexLabel->SetToLabel(false);
+
+	auto* colIndexLabel =
+		jnew JXStaticText(JGetString("colIndexLabel::Array2DDir::JXLayout"), colFTCContainer,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,10, 110,20);
+	colIndexLabel->SetToLabel(false);
 
 	auto* rowStartLabel =
 		jnew JXStaticText(JGetString("rowStartLabel::Array2DDir::JXLayout"), rowFTCContainer,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 0,35, 40,20);
-	assert( rowStartLabel != nullptr );
-	rowStartLabel->SetToLabel();
+	rowStartLabel->SetToLabel(false);
+
+	itsRowStartIndex =
+		jnew ArrayIndexInput(rowFTCContainer,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 40,35, 60,20);
+
+	auto* colStartLabel =
+		jnew JXStaticText(JGetString("colStartLabel::Array2DDir::JXLayout"), colFTCContainer,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,35, 40,20);
+	colStartLabel->SetToLabel(false);
+
+	itsColStartIndex =
+		jnew ArrayIndexInput(colFTCContainer,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 50,35, 60,20);
 
 	auto* rowEndLabel =
 		jnew JXStaticText(JGetString("rowEndLabel::Array2DDir::JXLayout"), rowFTCContainer,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 0,65, 40,20);
-	assert( rowEndLabel != nullptr );
-	rowEndLabel->SetToLabel();
+	rowEndLabel->SetToLabel(false);
 
-	auto* menuBar =
-		jnew JXMenuBar(window,
-					JXWidget::kHElastic, JXWidget::kFixedTop, 0,0, 370,30);
-	assert( menuBar != nullptr );
+	itsRowEndIndex =
+		jnew ArrayIndexInput(rowFTCContainer,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 40,65, 60,20);
+
+	auto* colEndLabel =
+		jnew JXStaticText(JGetString("colEndLabel::Array2DDir::JXLayout"), colFTCContainer,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,65, 40,20);
+	colEndLabel->SetToLabel(false);
+
+	itsColEndIndex =
+		jnew ArrayIndexInput(colFTCContainer,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 50,65, 60,20);
 
 	auto* scrollbarSet =
 		jnew JXScrollbarSet(window,
 					JXWidget::kHElastic, JXWidget::kVElastic, 0,170, 370,330);
 	assert( scrollbarSet != nullptr );
 
-	itsRowStartIndex =
-		jnew ArrayIndexInput(rowFTCContainer,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 40,35, 60,20);
-	assert( itsRowStartIndex != nullptr );
+	itsColHeader =
+		jnew JXColHeaderWidget(itsTable, scrollbarSet, scrollbarSet->GetScrollEnclosure(),
+					JXWidget::kHElastic, JXWidget::kFixedTop, 30,0, 340,20);
 
-	itsRowEndIndex =
-		jnew ArrayIndexInput(rowFTCContainer,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 40,65, 60,20);
-	assert( itsRowEndIndex != nullptr );
+	itsRowHeader =
+		jnew JXRowHeaderWidget(itsTable, scrollbarSet, scrollbarSet->GetScrollEnclosure(),
+					JXWidget::kFixedLeft, JXWidget::kVElastic, 0,20, 30,310);
 
-	auto* exprLabel =
-		jnew JXStaticText(JGetString("exprLabel::Array2DDir::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,40, 70,20);
-	assert( exprLabel != nullptr );
-	exprLabel->SetToLabel();
-
-	auto* rowIndexLabel =
-		jnew JXStaticText(JGetString("rowIndexLabel::Array2DDir::JXLayout"), rowFTCContainer,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 0,10, 110,20);
-	assert( rowIndexLabel != nullptr );
-	rowIndexLabel->SetToLabel();
-
-	auto* colStartLabel =
-		jnew JXStaticText(JGetString("colStartLabel::Array2DDir::JXLayout"), colFTCContainer,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,35, 40,20);
-	assert( colStartLabel != nullptr );
-	colStartLabel->SetToLabel();
-
-	auto* colEndLabel =
-		jnew JXStaticText(JGetString("colEndLabel::Array2DDir::JXLayout"), colFTCContainer,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,65, 40,20);
-	assert( colEndLabel != nullptr );
-	colEndLabel->SetToLabel();
-
-	itsColStartIndex =
-		jnew ArrayIndexInput(colFTCContainer,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 50,35, 60,20);
-	assert( itsColStartIndex != nullptr );
-
-	itsColEndIndex =
-		jnew ArrayIndexInput(colFTCContainer,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 50,65, 60,20);
-	assert( itsColEndIndex != nullptr );
-
-	auto* colIndexLabel =
-		jnew JXStaticText(JGetString("colIndexLabel::Array2DDir::JXLayout"), colFTCContainer,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,10, 110,20);
-	assert( colIndexLabel != nullptr );
-	colIndexLabel->SetToLabel();
+	itsTable =
+		jnew Array2DTable(itsCommandDir, this, menuBar, itsData, scrollbarSet, scrollbarSet->GetScrollEnclosure(),
+					JXWidget::kHElastic, JXWidget::kVElastic, 30,20, 340,310);
 
 // end JXLayout
 
-	window->SetMinSize(300, 250);
 	window->ShouldFocusWhenShow(true);
-	window->SetWMClass(GetWMClassInstance(), GetArray2DWindowClass());
 
 	UpdateWindowTitle();
 
@@ -291,32 +291,6 @@ Array2DDir::BuildWindow()
 	{
 		colIndexLabel->GetText()->SetFont(JStyledText::TextRange(m2), font, true);
 	}
-
-	JXContainer* encl = scrollbarSet->GetScrollEnclosure();
-
-// begin tableLayout
-
-	const JRect tableLayout_Aperture = encl->GetAperture();
-	encl->AdjustSize(370 - tableLayout_Aperture.width(), 330 - tableLayout_Aperture.height());
-
-	itsTable =
-		jnew Array2DTable(itsCommandDir, this, menuBar, itsData, scrollbarSet, encl,
-					JXWidget::kHElastic, JXWidget::kVElastic, 30,20, 340,310);
-	assert( itsTable != nullptr );
-
-	itsColHeader =
-		jnew JXColHeaderWidget(itsTable, scrollbarSet, encl,
-					JXWidget::kHElastic, JXWidget::kFixedTop, 30,0, 340,20);
-	assert( itsColHeader != nullptr );
-
-	itsRowHeader =
-		jnew JXRowHeaderWidget(itsTable, scrollbarSet, encl,
-					JXWidget::kFixedLeft, JXWidget::kVElastic, 0,20, 30,310);
-	assert( itsRowHeader != nullptr );
-
-	encl->SetSize(tableLayout_Aperture.width(), tableLayout_Aperture.height());
-
-// end tableLayout
 
 	itsTable->SetDefaultColWidth(kDefaultColWidth);
 	itsColHeader->TurnOnColResizing(kMinColWidth);

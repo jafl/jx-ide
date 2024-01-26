@@ -36,12 +36,12 @@ protected:
 private:
 
 	CommandDirector*	itsCommandDir;
-	ThreadsWidget*		itsWidget;
 
 	JXTextMenu*	itsFileMenu;
 
 // begin JXLayout
 
+	ThreadsWidget* itsWidget;
 
 // end JXLayout
 

@@ -1,0 +1,47 @@
+jx_layout_editor 5
+450
+500
+"JXLayout"
+""
+"Code_Medic_Variables_Local"
+""
+0
+
+1
+0
+"MenuBar"
+2
+0
+0 0 30 450
+"menuBar"
+0
+0
+0
+
+1
+0
+"ScrollbarSet"
+2
+2
+30 0 500 450
+"scrollbarSet"
+0
+0
+0
+
+1
+2
+"CustomWidget"
+2
+2
+0 0 455 435
+"itsWidget"
+1
+0
+0
+"VarTreeWidget"
+"itsCommandDir, false, menuBar, itsTree, treeList, scrollbarSet"
+0
+""
+
+0

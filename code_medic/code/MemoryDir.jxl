@@ -1,0 +1,127 @@
+jx_layout_editor 5
+500
+500
+"JXLayout"
+""
+"Code_Medic_Memory"
+""
+0
+
+1
+0
+"MenuBar"
+2
+0
+0 0 30 500
+"menuBar"
+0
+0
+0
+
+1
+0
+"StaticText"
+0
+0
+40 20 60 100
+"exprLabel"
+0
+0
+0
+"Expression:"
+1
+0
+0
+0
+0
+
+1
+0
+"CustomWidget"
+2
+0
+40 100 60 480
+"itsExprInput"
+1
+0
+0
+"ArrayExprInput"
+""
+0
+""
+
+1
+0
+"Menu"
+0
+0
+70 20 95 420
+"itsDisplayTypeMenu"
+1
+0
+0
+0
+"Display as:"
+1
+1
+0
+
+1
+0
+"StaticText"
+0
+0
+105 20 125 100
+"countLabel"
+0
+0
+0
+"# of items:"
+1
+0
+0
+0
+0
+
+1
+0
+"CustomWidget"
+0
+0
+105 100 125 160
+"itsItemCountInput"
+1
+0
+0
+"ArrayIndexInput"
+""
+0
+""
+
+1
+0
+"ScrollbarSet"
+2
+2
+135 0 500 500
+"scrollbarSet"
+0
+0
+0
+
+1
+7
+"CustomWidget"
+2
+2
+0 0 350 485
+"itsWidget"
+1
+0
+0
+"JXStaticText"
+"JString::empty, false, true, true, scrollbarSet"
+0
+""
+
+0

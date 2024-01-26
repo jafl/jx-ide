@@ -63,7 +63,6 @@ private:
 
 	Link*				itsLink;
 	CommandDirector*	itsCommandDir;
-	JXStaticText*		itsWidget;
 	JString				itsExpr;
 	DisplayType			itsDisplayType;
 	JSize				itsItemCount;
@@ -80,6 +79,7 @@ private:
 	ArrayExprInput*  itsExprInput;
 	JXTextMenu*      itsDisplayTypeMenu;
 	ArrayIndexInput* itsItemCountInput;
+	JXStaticText*    itsWidget;
 
 // end JXLayout
 

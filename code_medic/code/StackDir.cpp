@@ -78,9 +78,14 @@ StackDir::BuildWindow
 	CommandDirector* dir
 	)
 {
+	auto* root = jnew JNamedTreeNode(nullptr, JString::empty);
+	auto* tree = jnew JTree(root);
+	auto* treeList = jnew JNamedTreeList(tree);
+
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 450,500, JString::empty);
+	window->SetWMClass(JXGetApplication()->GetWMName().GetBytes(), "Code_Medic_Stack");
 
 	auto* menuBar =
 		jnew JXMenuBar(window,
@@ -92,29 +97,20 @@ StackDir::BuildWindow
 					JXWidget::kHElastic, JXWidget::kVElastic, 0,30, 450,470);
 	assert( scrollbarSet != nullptr );
 
+	itsWidget =
+		jnew StackWidget(dir, this, tree, treeList, scrollbarSet, scrollbarSet->GetScrollEnclosure(),
+					JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 450,470);
+
 // end JXLayout
 
 	window->SetTitle(JGetString("WindowTitleSuffix::StackDir"));
 	window->SetCloseAction(JXWindow::kDeactivateDirector);
-	window->SetMinSize(150, 150);
 	window->ShouldFocusWhenShow(true);
-	window->SetWMClass(GetWMClassInstance(), GetStackWindowClass());
 	GetPrefsManager()->GetWindowSize(kStackWindowSizeID, window);
 
 	JXDisplay* display = GetDisplay();
 	auto* icon      = jnew JXImage(display, medic_stack_trace_window);
 	window->SetIcon(icon);
-
-	auto* root = jnew JNamedTreeNode(nullptr, JString::empty);
-	auto* tree = jnew JTree(root);
-	auto* treeList = jnew JNamedTreeList(tree);
-
-	itsWidget =
-		jnew StackWidget(dir, this, tree, treeList,
-				scrollbarSet, scrollbarSet->GetScrollEnclosure(),
-				JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 100,100);
-	assert( itsWidget != nullptr );
-	itsWidget->FitToEnclosure();
 
 	// menus
 

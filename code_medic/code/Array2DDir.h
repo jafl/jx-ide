@@ -83,21 +83,16 @@ private:
 
 // begin JXLayout
 
-	ArrayExprInput*  itsExprInput;
-	ArrayIndexInput* itsRowStartIndex;
-	ArrayIndexInput* itsRowEndIndex;
-	ArrayIndexInput* itsColStartIndex;
-	ArrayIndexInput* itsColEndIndex;
-
-// end JXLayout
-
-// begin tableLayout
-
-	Array2DTable*      itsTable;
+	ArrayExprInput*    itsExprInput;
+	ArrayIndexInput*   itsRowStartIndex;
+	ArrayIndexInput*   itsColStartIndex;
+	ArrayIndexInput*   itsRowEndIndex;
+	ArrayIndexInput*   itsColEndIndex;
 	JXColHeaderWidget* itsColHeader;
 	JXRowHeaderWidget* itsRowHeader;
+	Array2DTable*      itsTable;
 
-// end tableLayout
+// end JXLayout
 
 private:
 

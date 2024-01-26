@@ -216,6 +216,8 @@ Plot2DDir::BuildWindow()
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 570,500, JString::empty);
+	window->SetMinSize(300, 300);
+	window->SetWMClass(JXGetApplication()->GetWMName().GetBytes(), "Code_Medic_Variables_Plot_2D");
 
 	auto* menuBar =
 		jnew JXMenuBar(window,
@@ -227,53 +229,39 @@ Plot2DDir::BuildWindow()
 					JXWidget::kHElastic, JXWidget::kFixedTop, 0,30, 480,100);
 	assert( scrollbarSet != nullptr );
 
-	itsPlotWidget =
-		jnew JX2DPlotWidget(menuBar, window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 0,130, 570,370);
-	assert( itsPlotWidget != nullptr );
-
 	itsAddPlotButton =
 		jnew JXTextButton(JGetString("itsAddPlotButton::Plot2DDir::JXLayout"), window,
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 490,40, 70,20);
-	assert( itsAddPlotButton != nullptr );
+
+	itsExprTable =
+		jnew Plot2DExprTable(menuBar, itsExprData, scrollbarSet, scrollbarSet->GetScrollEnclosure(),
+					JXWidget::kHElastic, JXWidget::kVElastic, 0,20, 480,80);
 
 	itsDuplicatePlotButton =
 		jnew JXTextButton(JGetString("itsDuplicatePlotButton::Plot2DDir::JXLayout"), window,
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 490,70, 70,20);
-	assert( itsDuplicatePlotButton != nullptr );
 
 	itsRemovePlotButton =
 		jnew JXTextButton(JGetString("itsRemovePlotButton::Plot2DDir::JXLayout"), window,
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 490,100, 70,20);
-	assert( itsRemovePlotButton != nullptr );
+
+	itsPlotWidget =
+		jnew JX2DPlotWidget(menuBar, window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 0,130, 570,370);
+
+	itsColHeader =
+		jnew JXColHeaderWidget(itsExprTable, scrollbarSet, scrollbarSet->GetScrollEnclosure(),
+					JXWidget::kHElastic, JXWidget::kFixedTop, 0,0, 480,20);
 
 // end JXLayout
 
-	window->SetMinSize(300, 300);
 	window->ShouldFocusWhenShow(true);
-	window->SetWMClass(GetWMClassInstance(), GetPlot2DWindowClass());
 
 	UpdateWindowTitle();
 
 	JXDisplay* display = GetDisplay();
 	auto* icon      = jnew JXImage(display, medic_2d_plot_window);
 	window->SetIcon(icon);
-
-	JXContainer* encl = scrollbarSet->GetScrollEnclosure();
-	const JCoordinate kColHeaderHeight = 20;
-	const JCoordinate w = encl->GetApertureWidth();
-
-	itsExprTable =
-		jnew Plot2DExprTable(menuBar, itsExprData, scrollbarSet, encl,
-					JXWidget::kHElastic, JXWidget::kVElastic,
-					0, kColHeaderHeight,
-					w, encl->GetApertureHeight() - kColHeaderHeight);
-	assert( itsExprTable != nullptr );
-
-	itsColHeader =
-		jnew JXColHeaderWidget(itsExprTable, scrollbarSet, encl,
-					JXWidget::kHElastic, JXWidget::kFixedTop,
-					0,0, w, kColHeaderHeight);
 
 	itsExprTable->ConfigureColHeader(itsColHeader);
 

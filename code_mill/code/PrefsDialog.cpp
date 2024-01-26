@@ -68,79 +68,66 @@ PrefsDialog::BuildWindow
 	auto* headerCommentLabel =
 		jnew JXStaticText(JGetString("headerCommentLabel::PrefsDialog::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,20, 470,20);
-	assert( headerCommentLabel != nullptr );
-	headerCommentLabel->SetToLabel();
-
-	itsHeaderInput =
-		jnew JXInputField(false, true, window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 20,40, 470,200);
-	assert( itsHeaderInput != nullptr );
-
-	auto* sourceCommentLabel =
-		jnew JXStaticText(JGetString("sourceCommentLabel::PrefsDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,250, 470,20);
-	assert( sourceCommentLabel != nullptr );
-	sourceCommentLabel->SetToLabel();
-
-	itsSourceInput =
-		jnew JXInputField(false, true, window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 20,270, 470,200);
-	assert( itsSourceInput != nullptr );
+	headerCommentLabel->SetToLabel(false);
 
 	auto* ctorCommentLabel =
 		jnew JXStaticText(JGetString("ctorCommentLabel::PrefsDialog::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 510,20, 470,20);
-	assert( ctorCommentLabel != nullptr );
-	ctorCommentLabel->SetToLabel();
-
-	itsConstructorInput =
-		jnew JXInputField(false, true, window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 510,40, 470,120);
-	assert( itsConstructorInput != nullptr );
+	ctorCommentLabel->SetToLabel(false);
 
 	auto* dtorCommentLabel =
 		jnew JXStaticText(JGetString("dtorCommentLabel::PrefsDialog::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 510,175, 470,20);
-	assert( dtorCommentLabel != nullptr );
-	dtorCommentLabel->SetToLabel();
+	dtorCommentLabel->SetToLabel(false);
 
-	itsDestructorInput =
-		jnew JXInputField(false, true, window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 510,195, 470,120);
-	assert( itsDestructorInput != nullptr );
+	auto* sourceCommentLabel =
+		jnew JXStaticText(JGetString("sourceCommentLabel::PrefsDialog::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,250, 470,20);
+	sourceCommentLabel->SetToLabel(false);
 
 	auto* fnCommentLabel =
 		jnew JXStaticText(JGetString("fnCommentLabel::PrefsDialog::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 510,330, 470,20);
-	assert( fnCommentLabel != nullptr );
-	fnCommentLabel->SetToLabel();
-
-	itsFunctionInput =
-		jnew JXInputField(false, true, window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 510,350, 470,120);
-	assert( itsFunctionInput != nullptr );
+	fnCommentLabel->SetToLabel(false);
 
 	auto* cancelButton =
 		jnew JXTextButton(JGetString("cancelButton::PrefsDialog::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 280,500, 70,20);
-	assert( cancelButton != nullptr );
-	cancelButton->SetShortcuts(JGetString("cancelButton::PrefsDialog::shortcuts::JXLayout"));
+	cancelButton->SetShortcuts(JGetString("cancelButton::shortcuts::PrefsDialog::JXLayout"));
 
 	auto* okButton =
 		jnew JXTextButton(JGetString("okButton::PrefsDialog::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 660,500, 70,20);
 	assert( okButton != nullptr );
 
+	itsHeaderInput =
+		jnew JXInputField(false, true, window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 20,40, 470,200);
+	itsHeaderInput->SetIsRequired();
+
+	itsSourceInput =
+		jnew JXInputField(false, true, window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 20,270, 470,200);
+	itsSourceInput->SetIsRequired();
+
+	itsConstructorInput =
+		jnew JXInputField(false, true, window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 510,40, 470,120);
+	itsConstructorInput->SetIsRequired();
+
+	itsDestructorInput =
+		jnew JXInputField(false, true, window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 510,195, 470,120);
+	itsDestructorInput->SetIsRequired();
+
+	itsFunctionInput =
+		jnew JXInputField(false, true, window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 510,350, 470,120);
+	itsFunctionInput->SetIsRequired();
+
 // end JXLayout
 
-	window->SetTitle(JGetString("WindowTitle::PrefsDialog"));
 	SetButtons(okButton, cancelButton);
-
-	itsHeaderInput->SetIsRequired();
-	itsSourceInput->SetIsRequired();
-	itsConstructorInput->SetIsRequired();
-	itsDestructorInput->SetIsRequired();
-	itsFunctionInput->SetIsRequired();
 
 	const JFont f = JFontManager::GetDefaultMonospaceFont();
 	itsHeaderInput->GetText()->SetDefaultFont(f);

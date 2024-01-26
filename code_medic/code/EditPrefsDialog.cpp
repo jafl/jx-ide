@@ -80,174 +80,157 @@ EditPrefsDialog::BuildWindow
 {
 // begin JXLayout
 
-	auto* window = jnew JXWindow(this, 450,480, JString::empty);
-
-	itsGDBCmd =
-		jnew DebuggerProgramInput(window,
-					JXWidget::kHElastic, JXWidget::kFixedTop, 20,40, 350,20);
-	assert( itsGDBCmd != nullptr );
-
-	itsJDBCmd =
-		jnew DebuggerProgramInput(window,
-					JXWidget::kHElastic, JXWidget::kFixedTop, 20,110, 350,20);
-	assert( itsJDBCmd != nullptr );
-
-	itsEditFileCmdInput =
-		jnew JXInputField(window,
-					JXWidget::kHElastic, JXWidget::kFixedTop, 190,160, 240,20);
-	assert( itsEditFileCmdInput != nullptr );
-
-	itsEditFileLineCmdInput =
-		jnew JXInputField(window,
-					JXWidget::kHElastic, JXWidget::kFixedTop, 190,180, 240,20);
-	assert( itsEditFileLineCmdInput != nullptr );
-
-	itsCSourceSuffixInput =
-		jnew JXInputField(window,
-					JXWidget::kHElastic, JXWidget::kFixedTop, 190,240, 240,20);
-	assert( itsCSourceSuffixInput != nullptr );
-
-	itsCHeaderSuffixInput =
-		jnew JXInputField(window,
-					JXWidget::kHElastic, JXWidget::kFixedTop, 190,260, 240,20);
-	assert( itsCHeaderSuffixInput != nullptr );
-
-	itsJavaSuffixInput =
-		jnew JXInputField(window,
-					JXWidget::kHElastic, JXWidget::kFixedTop, 190,290, 240,20);
-	assert( itsJavaSuffixInput != nullptr );
-
-	auto* okButton =
-		jnew JXTextButton(JGetString("okButton::EditPrefsDialog::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 280,450, 60,20);
-	assert( okButton != nullptr );
-	okButton->SetShortcuts(JGetString("okButton::EditPrefsDialog::shortcuts::JXLayout"));
-
-	auto* cancelButton =
-		jnew JXTextButton(JGetString("cancelButton::EditPrefsDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 100,450, 60,20);
-	assert( cancelButton != nullptr );
-
-	auto* cSourceFileLabel =
-		jnew JXStaticText(JGetString("cSourceFileLabel::EditPrefsDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,240, 170,20);
-	assert( cSourceFileLabel != nullptr );
-	cSourceFileLabel->SetToLabel();
-
-	auto* cHeaderFileLabel =
-		jnew JXStaticText(JGetString("cHeaderFileLabel::EditPrefsDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,260, 170,20);
-	assert( cHeaderFileLabel != nullptr );
-	cHeaderFileLabel->SetToLabel();
-
-	auto* cmdHint =
-		jnew JXStaticText(JGetString("cmdHint::EditPrefsDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 160,200, 270,20);
-	assert( cmdHint != nullptr );
-	cmdHint->SetFontSize(JFontManager::GetDefaultFontSize()-2);
-	cmdHint->SetToLabel();
-
-	auto* editFileLabel =
-		jnew JXStaticText(JGetString("editFileLabel::EditPrefsDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,160, 170,20);
-	assert( editFileLabel != nullptr );
-	editFileLabel->SetToLabel();
-
-	auto* editLineLabel =
-		jnew JXStaticText(JGetString("editLineLabel::EditPrefsDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,180, 170,20);
-	assert( editLineLabel != nullptr );
-	editLineLabel->SetToLabel();
-
-	auto* javaSourceLabel =
-		jnew JXStaticText(JGetString("javaSourceLabel::EditPrefsDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 31,290, 159,20);
-	assert( javaSourceLabel != nullptr );
-	javaSourceLabel->SetToLabel();
-
-	auto* fortranSourceLabel =
-		jnew JXStaticText(JGetString("fortranSourceLabel::EditPrefsDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,350, 170,20);
-	assert( fortranSourceLabel != nullptr );
-	fortranSourceLabel->SetToLabel();
+	auto* window = jnew JXWindow(this, 450,460, JGetString("WindowTitle::EditPrefsDialog::JXLayout"));
 
 	auto* gdbCmdLabel =
 		jnew JXStaticText(JGetString("gdbCmdLabel::EditPrefsDialog::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,20, 340,20);
-	assert( gdbCmdLabel != nullptr );
-	gdbCmdLabel->SetToLabel();
+	gdbCmdLabel->SetToLabel(false);
+
+	itsGDBCmd =
+		jnew DebuggerProgramInput(window,
+					JXWidget::kHElastic, JXWidget::kFixedTop, 20,40, 350,20);
 
 	itsChooseGDBButton =
 		jnew JXTextButton(JGetString("itsChooseGDBButton::EditPrefsDialog::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 370,40, 60,20);
-	assert( itsChooseGDBButton != nullptr );
 
 	auto* gdbScriptHint =
 		jnew JXStaticText(JGetString("gdbScriptHint::EditPrefsDialog::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,60, 410,20);
-	assert( gdbScriptHint != nullptr );
-	gdbScriptHint->SetFontSize(JFontManager::GetDefaultFontSize()-2);
-	gdbScriptHint->SetToLabel();
+	gdbScriptHint->SetToLabel(false);
 
 	auto* jvmCmdLabel =
 		jnew JXStaticText(JGetString("jvmCmdLabel::EditPrefsDialog::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,90, 340,20);
-	assert( jvmCmdLabel != nullptr );
-	jvmCmdLabel->SetToLabel();
+	jvmCmdLabel->SetToLabel(false);
+
+	itsJDBCmd =
+		jnew DebuggerProgramInput(window,
+					JXWidget::kHElastic, JXWidget::kFixedTop, 20,110, 350,20);
 
 	itsChooseJDBButton =
 		jnew JXTextButton(JGetString("itsChooseJDBButton::EditPrefsDialog::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 370,110, 60,20);
-	assert( itsChooseJDBButton != nullptr );
 
 	auto* jvmScriptHint =
 		jnew JXStaticText(JGetString("jvmScriptHint::EditPrefsDialog::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,130, 410,20);
-	assert( jvmScriptHint != nullptr );
-	jvmScriptHint->SetFontSize(JFontManager::GetDefaultFontSize()-2);
-	jvmScriptHint->SetToLabel();
+	jvmScriptHint->SetToLabel(false);
 
-	itsPHPSuffixInput =
-		jnew JXInputField(window,
-					JXWidget::kHElastic, JXWidget::kFixedTop, 190,320, 240,20);
-	assert( itsPHPSuffixInput != nullptr );
+	auto* editFileLabel =
+		jnew JXStaticText(JGetString("editFileLabel::EditPrefsDialog::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,160, 170,20);
+	editFileLabel->SetToLabel(false);
+
+	auto* editLineLabel =
+		jnew JXStaticText(JGetString("editLineLabel::EditPrefsDialog::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,180, 170,20);
+	editLineLabel->SetToLabel(false);
+
+	auto* cSourceFileLabel =
+		jnew JXStaticText(JGetString("cSourceFileLabel::EditPrefsDialog::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,220, 170,20);
+	cSourceFileLabel->SetToLabel(false);
+
+	auto* cHeaderFileLabel =
+		jnew JXStaticText(JGetString("cHeaderFileLabel::EditPrefsDialog::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,240, 170,20);
+	cHeaderFileLabel->SetToLabel(false);
+
+	auto* javaSourceLabel =
+		jnew JXStaticText(JGetString("javaSourceLabel::EditPrefsDialog::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 31,270, 159,20);
+	javaSourceLabel->SetToLabel(false);
 
 	auto* phpSourceLabel =
 		jnew JXStaticText(JGetString("phpSourceLabel::EditPrefsDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 31,320, 159,20);
-	assert( phpSourceLabel != nullptr );
-	phpSourceLabel->SetToLabel();
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 31,300, 159,20);
+	phpSourceLabel->SetToLabel(false);
 
-	itsFortranSuffixInput =
-		jnew JXInputField(window,
-					JXWidget::kHElastic, JXWidget::kFixedTop, 190,350, 240,20);
-	assert( itsFortranSuffixInput != nullptr );
+	auto* fortranSourceLabel =
+		jnew JXStaticText(JGetString("fortranSourceLabel::EditPrefsDialog::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,330, 170,20);
+	fortranSourceLabel->SetToLabel(false);
 
 	auto* dSourceLabel =
 		jnew JXStaticText(JGetString("dSourceLabel::EditPrefsDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,380, 170,20);
-	assert( dSourceLabel != nullptr );
-	dSourceLabel->SetToLabel();
-
-	itsDSuffixInput =
-		jnew JXInputField(window,
-					JXWidget::kHElastic, JXWidget::kFixedTop, 190,380, 240,20);
-	assert( itsDSuffixInput != nullptr );
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,360, 170,20);
+	dSourceLabel->SetToLabel(false);
 
 	auto* goSourceLabel =
 		jnew JXStaticText(JGetString("goSourceLabel::EditPrefsDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,410, 170,20);
-	assert( goSourceLabel != nullptr );
-	goSourceLabel->SetToLabel();
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,390, 170,20);
+	goSourceLabel->SetToLabel(false);
+
+	auto* cancelButton =
+		jnew JXTextButton(JGetString("cancelButton::EditPrefsDialog::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 100,430, 60,20);
+	assert( cancelButton != nullptr );
+
+	auto* okButton =
+		jnew JXTextButton(JGetString("okButton::EditPrefsDialog::JXLayout"), window,
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 279,429, 62,22);
+	okButton->SetShortcuts(JGetString("okButton::shortcuts::EditPrefsDialog::JXLayout"));
+
+	itsEditFileCmdInput =
+		jnew JXInputField(window,
+					JXWidget::kHElastic, JXWidget::kFixedTop, 190,160, 240,20);
+	itsEditFileCmdInput->SetIsRequired();
+	itsEditFileCmdInput->SetFont(JFontManager::GetDefaultMonospaceFont());
+	itsEditFileCmdInput->SetHint(JGetString("itsEditFileCmdInput::EditPrefsDialog::JXLayout"));
+
+	itsEditFileLineCmdInput =
+		jnew JXInputField(window,
+					JXWidget::kHElastic, JXWidget::kFixedTop, 190,180, 240,20);
+	itsEditFileLineCmdInput->SetIsRequired();
+	itsEditFileLineCmdInput->SetFont(JFontManager::GetDefaultMonospaceFont());
+	itsEditFileLineCmdInput->SetHint(JGetString("itsEditFileLineCmdInput::EditPrefsDialog::JXLayout"));
+
+	itsCSourceSuffixInput =
+		jnew JXInputField(window,
+					JXWidget::kHElastic, JXWidget::kFixedTop, 190,220, 240,20);
+	itsCSourceSuffixInput->SetIsRequired();
+	itsCSourceSuffixInput->SetFont(JFontManager::GetDefaultMonospaceFont());
+
+	itsCHeaderSuffixInput =
+		jnew JXInputField(window,
+					JXWidget::kHElastic, JXWidget::kFixedTop, 190,240, 240,20);
+	itsCHeaderSuffixInput->SetIsRequired();
+	itsCHeaderSuffixInput->SetFont(JFontManager::GetDefaultMonospaceFont());
+
+	itsJavaSuffixInput =
+		jnew JXInputField(window,
+					JXWidget::kHElastic, JXWidget::kFixedTop, 190,270, 240,20);
+	itsJavaSuffixInput->SetIsRequired();
+	itsJavaSuffixInput->SetFont(JFontManager::GetDefaultMonospaceFont());
+
+	itsPHPSuffixInput =
+		jnew JXInputField(window,
+					JXWidget::kHElastic, JXWidget::kFixedTop, 190,300, 240,20);
+	itsPHPSuffixInput->SetIsRequired();
+	itsPHPSuffixInput->SetFont(JFontManager::GetDefaultMonospaceFont());
+
+	itsFortranSuffixInput =
+		jnew JXInputField(window,
+					JXWidget::kHElastic, JXWidget::kFixedTop, 190,330, 240,20);
+	itsFortranSuffixInput->SetIsRequired();
+	itsFortranSuffixInput->SetFont(JFontManager::GetDefaultMonospaceFont());
+
+	itsDSuffixInput =
+		jnew JXInputField(window,
+					JXWidget::kHElastic, JXWidget::kFixedTop, 190,360, 240,20);
+	itsDSuffixInput->SetIsRequired();
+	itsDSuffixInput->SetFont(JFontManager::GetDefaultMonospaceFont());
 
 	itsGoSuffixInput =
 		jnew JXInputField(window,
-					JXWidget::kHElastic, JXWidget::kFixedTop, 190,410, 240,20);
-	assert( itsGoSuffixInput != nullptr );
+					JXWidget::kHElastic, JXWidget::kFixedTop, 190,390, 240,20);
+	itsGoSuffixInput->SetIsRequired();
+	itsGoSuffixInput->SetFont(JFontManager::GetDefaultMonospaceFont());
 
 // end JXLayout
 
-	window->SetTitle(JGetString("WindowTitle::EditPrefsDialog"));
 	SetButtons(okButton, cancelButton);
 
 	itsGDBCmd->GetText()->SetText(gdbCmd);
@@ -258,43 +241,18 @@ EditPrefsDialog::BuildWindow
 	itsJDBCmd->SetIsRequired();
 	itsJDBCmd->ShouldRequireExecutable();
 
-	const JFont& font = JFontManager::GetDefaultMonospaceFont();
-
 	itsEditFileCmdInput->GetText()->SetText(editFileCmd);
-	itsEditFileCmdInput->SetIsRequired();
-	itsEditFileCmdInput->SetFont(font);
-
 	itsEditFileLineCmdInput->GetText()->SetText(editFileLineCmd);
-	itsEditFileLineCmdInput->SetIsRequired();
-	itsEditFileLineCmdInput->SetFont(font);
-
 	SetSuffixList(itsCSourceSuffixInput, cSourceSuffixes);
-	itsCSourceSuffixInput->SetIsRequired();
-	itsCSourceSuffixInput->SetFont(font);
-
 	SetSuffixList(itsCHeaderSuffixInput, cHeaderSuffixes);
-	itsCHeaderSuffixInput->SetIsRequired();
-	itsCHeaderSuffixInput->SetFont(font);
-
 	SetSuffixList(itsJavaSuffixInput, javaSuffixes);
-	itsJavaSuffixInput->SetIsRequired();
-	itsJavaSuffixInput->SetFont(font);
-
 	SetSuffixList(itsPHPSuffixInput, phpSuffixes);
-	itsPHPSuffixInput->SetIsRequired();
-	itsPHPSuffixInput->SetFont(font);
-
 	SetSuffixList(itsFortranSuffixInput, fortranSuffixes);
-	itsFortranSuffixInput->SetIsRequired();
-	itsFortranSuffixInput->SetFont(font);
-
 	SetSuffixList(itsDSuffixInput, dSuffixes);
-	itsDSuffixInput->SetIsRequired();
-	itsDSuffixInput->SetFont(font);
-
 	SetSuffixList(itsGoSuffixInput, goSuffixes);
-	itsGoSuffixInput->SetIsRequired();
-	itsGoSuffixInput->SetFont(font);
+
+	gdbScriptHint->SetFontSize(JFontManager::GetDefaultFontSize()-2);
+	jvmScriptHint->SetFontSize(JFontManager::GetDefaultFontSize()-2);
 
 	ListenTo(itsChooseGDBButton);
 	ListenTo(itsChooseJDBButton);

@@ -63,27 +63,6 @@ void	CreateCommandDirector();
 void	DeleteGlobals();
 void	CleanUpBeforeSuddenDeath(const JXDocumentManager::SafetySaveReason reason);
 
-	// called by Directors
-
-const JUtf8Byte*	GetWMClassInstance();
-const JUtf8Byte*	GetCommandWindowClass();
-const JUtf8Byte*	GetSourceViewWindowClass();
-const JUtf8Byte*	GetAsmViewWindowClass();
-const JUtf8Byte*	GetMainSourceWindowClass();
-const JUtf8Byte*	GetMainAsmWindowClass();
-const JUtf8Byte*	GetThreadWindowClass();
-const JUtf8Byte*	GetStackWindowClass();
-const JUtf8Byte*	GetBreakpointsWindowClass();
-const JUtf8Byte*	GetVariableWindowClass();
-const JUtf8Byte*	GetLocalVariableWindowClass();
-const JUtf8Byte*	GetArray1DWindowClass();
-const JUtf8Byte*	GetArray2DWindowClass();
-const JUtf8Byte*	GetPlot2DWindowClass();
-const JUtf8Byte*	GetFileListWindowClass();
-const JUtf8Byte*	GetMemoryWindowClass();
-const JUtf8Byte*	GetRegistersWindowClass();
-const JUtf8Byte*	GetDebugWindowClass();
-
 // CtagsUser
 
 bool	InUpdateThread();

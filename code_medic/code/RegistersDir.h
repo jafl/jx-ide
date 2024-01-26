@@ -38,7 +38,6 @@ protected:
 private:
 
 	CommandDirector*	itsCommandDir;
-	JXStaticText*		itsWidget;
 	GetRegistersCmd*	itsCmd;			// can be nullptr
 	bool				itsShouldUpdateFlag;
 	bool				itsNeedsUpdateFlag;
@@ -47,6 +46,7 @@ private:
 
 // begin JXLayout
 
+	JXStaticText* itsWidget;
 
 // end JXLayout
 

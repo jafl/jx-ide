@@ -1,0 +1,92 @@
+jx_layout_editor 5
+430
+180
+"JXLayout"
+"About"
+""
+""
+0
+
+1
+0
+"ImageWidget"
+0
+0
+20 25 60 65
+"medicIcon"
+0
+0
+0
+0
+0 "medic_about.png"
+
+1
+0
+"StaticText"
+2
+2
+20 90 130 420
+"textWidget"
+0
+0
+0
+""
+0
+0
+0
+0
+0
+
+1
+0
+"ImageWidget"
+0
+0
+75 10 140 75
+"npsIcon"
+0
+0
+0
+0
+1 "new_planet_software.xpm"
+
+1
+0
+"TextButton"
+0
+1
+150 50 170 110
+"itsCreditsButton"
+1
+0
+0
+"Credits"
+""
+
+1
+0
+"TextButton"
+0
+1
+150 185 170 245
+"itsHelpButton"
+1
+0
+0
+"Help"
+"F1"
+
+1
+0
+"TextButton"
+0
+1
+150 320 170 380
+"okButton"
+0
+0
+0
+"OK"
+"^M"
+
+0

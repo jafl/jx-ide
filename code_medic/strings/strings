@@ -63,7 +63,6 @@ $copyright"
 
 # AboutDialog
 
-WindowTitle::AboutDialog		"About"
 ChangeButtonLabel::AboutDialog	"Changes"
 
 UpgradeNotice::AboutDialog
@@ -71,10 +70,6 @@ UpgradeNotice::AboutDialog
 
 
 You have just upgraded from version $vers"
-
-# EditPrefsDialog
-
-WindowTitle::EditPrefsDialog	"Edit preferences"
 
 # CommandDirector
 
@@ -162,7 +157,6 @@ WindowTitleSuffix::FileListDir	" Files"
 
 # DebugDir
 
-WindowTitle::DebugDir		"Debug"
 WindowsMenuText::DebugDir	"Debugging info"
 
 # Plot2DDir
@@ -188,17 +182,9 @@ WindowTitleSuffix::Array2DDir	"  (2D Array)"
 
 WindowTitleSuffix::MemoryDir	"  (Memory)"
 
-# EditCommandsDialog
-
-WindowTitle::EditCommandsDialog	"Edit custom gdb commands"
-
 # FileDragSource
 
 Hint::FileDragSource	"Drag this to drag the URL for this file."
-
-# ChooseProcessDialog
-
-WindowTitle::ChooseProcessDialog	"Choose process"
 
 # xdebug::Link
 

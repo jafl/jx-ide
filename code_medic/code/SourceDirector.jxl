@@ -1,0 +1,76 @@
+jx_layout_editor 5
+600
+550
+"JXLayout"
+""
+""
+""
+0
+
+1
+0
+"MenuBar"
+2
+0
+0 0 30 600
+"itsMenuBar"
+1
+0
+0
+
+1
+0
+"ToolBar"
+2
+2
+30 0 530 600
+"itsToolBar"
+1
+0
+0
+"GetPrefsManager()"
+"prefID"
+"itsMenuBar"
+
+1
+2
+"ScrollbarSet"
+2
+2
+0 0 470 600
+"scrollbarSet"
+0
+0
+0
+
+1
+0
+"CustomWidget"
+0
+1
+530 0 550 20
+"dragSource"
+0
+0
+0
+"FileDragSource"
+"this"
+0
+""
+
+1
+0
+"CustomWidget"
+2
+1
+530 20 550 600
+"itsFileDisplay"
+1
+0
+0
+"JXFileNameDisplay"
+"JString::empty"
+0
+""
+
+0

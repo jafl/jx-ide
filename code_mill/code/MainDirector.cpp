@@ -37,7 +37,6 @@
 #include <jx-af/jcore/jFStreamUtil.h>
 #include <jx-af/jcore/jAssert.h>
 
-const JCoordinate kColHeaderHeight		= 20;
 const JFileVersion kCurrentPrefsVersion	= 1;
 
 /******************************************************************************
@@ -126,106 +125,105 @@ MainDirector::BuildWindow
 {
 // begin JXLayout
 
-	auto* window = jnew JXWindow(this, 650,460, JString::empty);
-
-	itsClassInput =
-		jnew JXInputField(window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 105,10, 130,20);
-	assert( itsClassInput != nullptr );
-	itsClassInput->SetFontSize(JFontManager::GetDefaultFontSize()-2);
+	auto* window = jnew JXWindow(this, 650,460, JGetString("WindowTitle::MainDirector::JXLayout"));
 
 	auto* classNameLabel =
 		jnew JXStaticText(JGetString("classNameLabel::MainDirector::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 15,10, 90,20);
-	assert( classNameLabel != nullptr );
-	classNameLabel->SetToLabel();
+	classNameLabel->SetToLabel(false);
 
 	auto* directoryLabel =
 		jnew JXStaticText(JGetString("directoryLabel::MainDirector::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 240,10, 110,20);
-	assert( directoryLabel != nullptr );
-	directoryLabel->SetToLabel();
+	directoryLabel->SetToLabel(false);
 
 	itsChooseButton =
 		jnew JXTextButton(JGetString("itsChooseButton::MainDirector::JXLayout"), window,
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 550,10, 80,20);
-	assert( itsChooseButton != nullptr );
-	itsChooseButton->SetShortcuts(JGetString("itsChooseButton::MainDirector::shortcuts::JXLayout"));
+	itsChooseButton->SetShortcuts(JGetString("itsChooseButton::shortcuts::MainDirector::JXLayout"));
+
+	auto* derivedLabel =
+		jnew JXStaticText(JGetString("derivedLabel::MainDirector::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 15,45, 90,20);
+	derivedLabel->SetToLabel(false);
+
+	itsBaseClassTxt =
+		jnew JXStaticText(JString::empty, window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 105,45, 110,20);
+	itsBaseClassTxt->SetToLabel(false);
 
 	auto* scrollbarSet =
 		jnew JXScrollbarSet(window,
 					JXWidget::kHElastic, JXWidget::kVElastic, 20,75, 610,300);
 	assert( scrollbarSet != nullptr );
 
-	itsGenerateButton =
-		jnew JXTextButton(JGetString("itsGenerateButton::MainDirector::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 440,425, 70,20);
-	assert( itsGenerateButton != nullptr );
-	itsGenerateButton->SetShortcuts(JGetString("itsGenerateButton::MainDirector::shortcuts::JXLayout"));
-
-	itsHelpButton =
-		jnew JXTextButton(JGetString("itsHelpButton::MainDirector::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 285,425, 70,20);
-	assert( itsHelpButton != nullptr );
-	itsHelpButton->SetShortcuts(JGetString("itsHelpButton::MainDirector::shortcuts::JXLayout"));
-
-	itsCancelButton =
-		jnew JXTextButton(JGetString("itsCancelButton::MainDirector::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 130,425, 70,20);
-	assert( itsCancelButton != nullptr );
-	itsCancelButton->SetShortcuts(JGetString("itsCancelButton::MainDirector::shortcuts::JXLayout"));
-
-	itsDirInput =
-		jnew JXPathInput(window,
-					JXWidget::kHElastic, JXWidget::kFixedTop, 350,10, 200,20);
-	assert( itsDirInput != nullptr );
-
-	auto* derivedLabel =
-		jnew JXStaticText(JGetString("derivedLabel::MainDirector::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 15,45, 90,20);
-	assert( derivedLabel != nullptr );
-	derivedLabel->SetToLabel();
-
-	itsBaseClassTxt =
-		jnew JXStaticText(JGetString("itsBaseClassTxt::MainDirector::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 105,45, 110,20);
-	assert( itsBaseClassTxt != nullptr );
-	const JFontStyle itsBaseClassTxt_style(true, false, 0, false, JColorManager::GetBlackColor());
-	itsBaseClassTxt->SetFontStyle(itsBaseClassTxt_style);
-	itsBaseClassTxt->SetToLabel();
+	itsTable =
+		jnew FunctionTable(itsClass, scrollbarSet, scrollbarSet->GetScrollEnclosure(),
+					JXWidget::kHElastic, JXWidget::kVElastic, 0,20, 610,280);
 
 	auto* authorLabel =
 		jnew JXStaticText(JGetString("authorLabel::MainDirector::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 15,390, 60,20);
-	assert( authorLabel != nullptr );
-	authorLabel->SetToLabel();
-
-	itsAuthorInput =
-		jnew JXInputField(window,
-					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 75,390, 160,20);
-	assert( itsAuthorInput != nullptr );
-
-	itsStringsButton =
-		jnew JXTextButton(JGetString("itsStringsButton::MainDirector::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedBottom, 550,390, 80,20);
-	assert( itsStringsButton != nullptr );
-	itsStringsButton->SetShortcuts(JGetString("itsStringsButton::MainDirector::shortcuts::JXLayout"));
+	authorLabel->SetToLabel(false);
 
 	auto* copyrightLabel =
 		jnew JXStaticText(JGetString("copyrightLabel::MainDirector::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 250,390, 70,20);
-	assert( copyrightLabel != nullptr );
-	copyrightLabel->SetToLabel();
+	copyrightLabel->SetToLabel(false);
+
+	itsStringsButton =
+		jnew JXTextButton(JGetString("itsStringsButton::MainDirector::JXLayout"), window,
+					JXWidget::kFixedRight, JXWidget::kFixedBottom, 550,390, 80,20);
+	itsStringsButton->SetShortcuts(JGetString("itsStringsButton::shortcuts::MainDirector::JXLayout"));
+
+	itsCancelButton =
+		jnew JXTextButton(JGetString("itsCancelButton::MainDirector::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 130,425, 70,20);
+	itsCancelButton->SetShortcuts(JGetString("itsCancelButton::shortcuts::MainDirector::JXLayout"));
+
+	itsHelpButton =
+		jnew JXTextButton(JGetString("itsHelpButton::MainDirector::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 285,425, 70,20);
+	itsHelpButton->SetShortcuts(JGetString("itsHelpButton::shortcuts::MainDirector::JXLayout"));
+
+	itsGenerateButton =
+		jnew JXTextButton(JGetString("itsGenerateButton::MainDirector::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 439,424, 72,22);
+	itsGenerateButton->SetShortcuts(JGetString("itsGenerateButton::shortcuts::MainDirector::JXLayout"));
+
+	auto* colHeader =
+		jnew JXColHeaderWidget(itsTable, scrollbarSet, scrollbarSet->GetScrollEnclosure(),
+					JXWidget::kHElastic, JXWidget::kFixedTop, 0,0, 610,20);
+	assert( colHeader != nullptr );
+
+	itsClassInput =
+		jnew JXInputField(window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 105,10, 130,20);
+	itsClassInput->SetIsRequired();
+	itsClassInput->SetFont(JFontManager::GetDefaultMonospaceFont());
+
+	itsDirInput =
+		jnew JXPathInput(window,
+					JXWidget::kHElastic, JXWidget::kFixedTop, 350,10, 200,20);
+	itsDirInput->SetIsRequired(true);
+	itsDirInput->ShouldAllowInvalidPath(false);
+	itsDirInput->ShouldRequireWritable(true);
+
+	itsAuthorInput =
+		jnew JXInputField(window,
+					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 75,390, 160,20);
 
 	itsCopyrightInput =
 		jnew JXInputField(window,
 					JXWidget::kHElastic, JXWidget::kFixedBottom, 320,390, 230,20);
-	assert( itsCopyrightInput != nullptr );
 
 // end JXLayout
 
-	window->SetTitle(JGetString("WindowTitle::MainDirector"));
 	window->LockCurrentMinSize();
+
+	auto* image = jnew JXImage(GetDisplay(), gfg_main_window_icon);
+	assert( image != nullptr );
+	window->SetIcon(image);
 
 	ListenTo(itsChooseButton, std::function([this](const JXButton::Pushed&)
 	{
@@ -278,36 +276,15 @@ MainDirector::BuildWindow
 		bases += cname;
 	}
 
+	const JFontStyle itsBaseClassTxt_style(true, false, 0, false, JColorManager::GetBlackColor());
+	itsBaseClassTxt->SetFontStyle(itsBaseClassTxt_style);
 	itsBaseClassTxt->GetText()->SetText(bases);
 
-	auto* image = jnew JXImage(GetDisplay(), gfg_main_window_icon);
-	assert( image != nullptr );
-	window->SetIcon(image);
+	colHeader->SetColTitle(FunctionTable::kFUsed, JGetString("UseLabel::MainDirector"));
+	colHeader->SetColTitle(FunctionTable::kFReturnType, JGetString("ReturnTypeLabel::MainDirector"));
+	colHeader->SetColTitle(FunctionTable::kFFunctionName, JGetString("FunctionLabel::MainDirector"));
+	colHeader->SetColTitle(FunctionTable::kFSignature, JGetString("SignatureLabel::MainDirector"));
 
-	itsTable =
-		jnew FunctionTable(itsClass,
-			scrollbarSet, scrollbarSet->GetScrollEnclosure(),
-			JXWidget::kHElastic, JXWidget::kVElastic,
-			0,kColHeaderHeight, 100,
-			scrollbarSet->GetScrollEnclosure()->GetBoundsHeight() - kColHeaderHeight);
-	assert(itsTable != nullptr);
-
-	itsTable->FitToEnclosure(true, false);
-
-	auto* widget =
-		jnew JXColHeaderWidget(itsTable,
-							  scrollbarSet, scrollbarSet->GetScrollEnclosure(),
-							  JXWidget::kHElastic, JXWidget::kFixedTop,
-							  0,0, 100,kColHeaderHeight);
-	assert(widget != nullptr);
-	widget->FitToEnclosure(true, false);
-
-	widget->SetColTitle(FunctionTable::kFUsed, JGetString("UseLabel::MainDirector"));
-	widget->SetColTitle(FunctionTable::kFReturnType, JGetString("ReturnTypeLabel::MainDirector"));
-	widget->SetColTitle(FunctionTable::kFFunctionName, JGetString("FunctionLabel::MainDirector"));
-	widget->SetColTitle(FunctionTable::kFSignature, JGetString("SignatureLabel::MainDirector"));
-
-	itsClassInput->SetIsRequired();
 	itsDirInput->GetText()->SetText(outputPath);
 	itsAuthorInput->GetText()->SetText(GetPrefsManager()->GetAuthor());
 	itsCopyrightInput->GetText()->SetText(GetPrefsManager()->GetCopyright());

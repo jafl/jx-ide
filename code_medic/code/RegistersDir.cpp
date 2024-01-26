@@ -99,6 +99,7 @@ RegistersDir::BuildWindow()
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 450,500, JString::empty);
+	window->SetWMClass(JXGetApplication()->GetWMName().GetBytes(), "Code_Medic_Registers");
 
 	auto* menuBar =
 		jnew JXMenuBar(window,
@@ -110,25 +111,20 @@ RegistersDir::BuildWindow()
 					JXWidget::kHElastic, JXWidget::kVElastic, 0,30, 450,470);
 	assert( scrollbarSet != nullptr );
 
+	itsWidget =
+		jnew JXStaticText(JString::empty, false, true, true, scrollbarSet, scrollbarSet->GetScrollEnclosure(),
+					JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 450,470);
+
 // end JXLayout
 
 	window->SetTitle(JGetString("WindowTitleSuffix::RegistersDir"));
 	window->SetCloseAction(JXWindow::kDeactivateDirector);
-	window->SetMinSize(150, 150);
 	window->ShouldFocusWhenShow(true);
-	window->SetWMClass(GetWMClassInstance(), GetRegistersWindowClass());
 	GetPrefsManager()->GetWindowSize(kRegistersWindowSizeID, window);
 
 	JXDisplay* display = GetDisplay();
 	auto* icon      = jnew JXImage(display, medic_registers_window);
 	window->SetIcon(icon);
-
-	itsWidget =
-		jnew JXStaticText(JString::empty, false, true, true,
-						 scrollbarSet, scrollbarSet->GetScrollEnclosure(),
-						 JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 100,100);
-	assert(itsWidget != nullptr);
-	itsWidget->FitToEnclosure();
 
 	JString name;
 	JSize size;

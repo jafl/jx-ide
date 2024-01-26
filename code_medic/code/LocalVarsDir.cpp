@@ -85,9 +85,15 @@ LocalVarsDir::Activate()
 void
 LocalVarsDir::BuildWindow()
 {
+	VarNode* root = itsLink->CreateVarNode(false);
+	assert( root != nullptr );
+	itsTree = jnew JTree(root);
+	auto* treeList = jnew JNamedTreeList(itsTree);
+
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 450,500, JString::empty);
+	window->SetWMClass(JXGetApplication()->GetWMName().GetBytes(), "Code_Medic_Variables_Local");
 
 	auto* menuBar =
 		jnew JXMenuBar(window,
@@ -99,30 +105,20 @@ LocalVarsDir::BuildWindow()
 					JXWidget::kHElastic, JXWidget::kVElastic, 0,30, 450,470);
 	assert( scrollbarSet != nullptr );
 
+	itsWidget =
+		jnew VarTreeWidget(itsCommandDir, false, menuBar, itsTree, treeList, scrollbarSet, scrollbarSet->GetScrollEnclosure(),
+					JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 450,470);
+
 // end JXLayout
 
 	window->SetTitle(JGetString("WindowTitleSuffix::LocalVarsDir"));
 	window->SetCloseAction(JXWindow::kDeactivateDirector);
-	window->SetMinSize(150, 150);
 	window->ShouldFocusWhenShow(true);
-	window->SetWMClass(GetWMClassInstance(), GetLocalVariableWindowClass());
 	GetPrefsManager()->GetWindowSize(kLocalVarWindSizeID, window);
 
 	JXDisplay* display = GetDisplay();
 	auto* icon      = jnew JXImage(display, medic_local_variables_window);
 	window->SetIcon(icon);
-
-	VarNode* root = itsLink->CreateVarNode(false);
-	assert( root != nullptr );
-	itsTree = jnew JTree(root);
-	auto* treeList = jnew JNamedTreeList(itsTree);
-
-	itsWidget =
-		jnew VarTreeWidget(itsCommandDir, false, menuBar, itsTree, treeList,
-							scrollbarSet, scrollbarSet->GetScrollEnclosure(),
-							JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 100,100);
-	assert(itsWidget != nullptr);
-	itsWidget->FitToEnclosure();
 
 	itsGetLocalsCmd = itsLink->CreateGetLocalVarsCmd(root);
 

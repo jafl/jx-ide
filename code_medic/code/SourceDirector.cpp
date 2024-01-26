@@ -192,26 +192,29 @@ SourceDirector::BuildWindow()
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 600,550, JString::empty);
+	window->SetMinSize(300, 200);
 
 	itsMenuBar =
 		jnew JXMenuBar(window,
 					JXWidget::kHElastic, JXWidget::kFixedTop, 0,0, 600,30);
-	assert( itsMenuBar != nullptr );
 
 	itsToolBar =
 		jnew JXToolBar(GetPrefsManager(), prefID, itsMenuBar, window,
 					JXWidget::kHElastic, JXWidget::kVElastic, 0,30, 600,500);
-	assert( itsToolBar != nullptr );
 
-	itsFileDisplay =
-		jnew JXFileNameDisplay(JString::empty, window,
-					JXWidget::kHElastic, JXWidget::kFixedBottom, 20,530, 580,20);
-	assert( itsFileDisplay != nullptr );
+	auto* scrollbarSet =
+		jnew JXScrollbarSet(itsToolBar->GetWidgetEnclosure(),
+					JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 600,500);
+	assert( scrollbarSet != nullptr );
 
 	auto* dragSource =
 		jnew FileDragSource(this, window,
 					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 0,530, 20,20);
 	assert( dragSource != nullptr );
+
+	itsFileDisplay =
+		jnew JXFileNameDisplay(JString::empty, window,
+					JXWidget::kHElastic, JXWidget::kFixedBottom, 20,530, 580,20);
 
 // end JXLayout
 
@@ -219,13 +222,11 @@ SourceDirector::BuildWindow()
 		itsType == kMainAsmType ? "InitAsmWindowTitle::SourceDirector" :
 								  "InitSourceWindowTitle::SourceDirector"));
 
-	window->SetMinSize(300, 200);
-
 	if (itsType == kMainSourceType)
 	{
 		window->SetCloseAction(JXWindow::kDeactivateDirector);
 
-		window->SetWMClass(GetWMClassInstance(), GetMainSourceWindowClass());
+		window->SetWMClass(JXGetApplication()->GetWMName().GetBytes(), "Code_Medic_Source_Main");
 		GetPrefsManager()->GetWindowSize(kMainCodeWindSizeID, window);
 
 		JXDisplay* display = GetDisplay();
@@ -236,7 +237,7 @@ SourceDirector::BuildWindow()
 	{
 		window->SetCloseAction(JXWindow::kDeactivateDirector);
 
-		window->SetWMClass(GetWMClassInstance(), GetMainAsmWindowClass());
+		window->SetWMClass(JXGetApplication()->GetWMName().GetBytes(), "Code_Medic_Disassembly_Main");
 		GetPrefsManager()->GetWindowSize(kMainAsmWindSizeID, window);
 
 		JXDisplay* display = GetDisplay();
@@ -245,12 +246,12 @@ SourceDirector::BuildWindow()
 	}
 	else if (itsType == kAsmType)
 	{
-		window->SetWMClass(GetWMClassInstance(), GetAsmViewWindowClass());
+		window->SetWMClass(JXGetApplication()->GetWMName().GetBytes(), "Code_Medic_Disassembly");
 		GetPrefsManager()->GetWindowSize(kAsmWindSizeID, window, true);
 	}
 	else
 	{
-		window->SetWMClass(GetWMClassInstance(), GetSourceViewWindowClass());
+		window->SetWMClass(JXGetApplication()->GetWMName().GetBytes(), "Code_Medic_Source");
 		GetPrefsManager()->GetWindowSize(kCodeWindSizeID, window, true);
 	}
 
@@ -265,11 +266,6 @@ SourceDirector::BuildWindow()
 	// appends Edit & Search menus
 
 	const JCoordinate kInitTableWidth = 50;
-
-	auto* scrollbarSet =
-		jnew JXScrollbarSet(itsToolBar->GetWidgetEnclosure(),
-						   JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 100,100);
-	scrollbarSet->FitToEnclosure();
 
 	JXContainer* encl = scrollbarSet->GetScrollEnclosure();
 

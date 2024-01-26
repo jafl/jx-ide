@@ -92,6 +92,8 @@ FileListDir::BuildWindow()
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 250,500, JString::empty);
+	window->SetMinSize(150, 150);
+	window->SetWMClass(JXGetApplication()->GetWMName().GetBytes(), "Code_Medic_File_List");
 
 	auto* menuBar =
 		jnew JXMenuBar(window,
@@ -101,15 +103,12 @@ FileListDir::BuildWindow()
 	itsFileListSet =
 		jnew JXFileListSet(menuBar, window,
 					JXWidget::kHElastic, JXWidget::kVElastic, 0,30, 250,470);
-	assert( itsFileListSet != nullptr );
 
 // end JXLayout
 
 	window->SetTitle(JGetString("WindowTitleSuffix::FileListDir"));
 	window->SetCloseAction(JXWindow::kDeactivateDirector);
-	window->SetMinSize(150, 150);
 	window->ShouldFocusWhenShow(true);
-	window->SetWMClass(GetWMClassInstance(), GetFileListWindowClass());
 	GetPrefsManager()->GetWindowSize(kFileWindSizeID, window);
 
 	JXDisplay* display = GetDisplay();

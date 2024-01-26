@@ -1,0 +1,116 @@
+jx_layout_editor 5
+570
+500
+"JXLayout"
+""
+"Code_Medic_Variables_Plot_2D"
+""
+0
+
+1
+0
+"MenuBar"
+2
+0
+0 0 30 570
+"menuBar"
+0
+0
+0
+
+1
+0
+"ScrollbarSet"
+2
+0
+30 0 130 480
+"scrollbarSet"
+0
+0
+0
+
+1
+2
+"CustomWidget"
+2
+0
+0 0 20 465
+"itsColHeader"
+1
+0
+0
+"JXColHeaderWidget"
+"itsExprTable, scrollbarSet"
+0
+"itsExprTable"
+
+1
+0
+"TextButton"
+1
+0
+40 490 60 560
+"itsAddPlotButton"
+1
+0
+0
+"New"
+""
+
+1
+2
+"CustomWidget"
+2
+2
+20 0 85 465
+"itsExprTable"
+1
+0
+0
+"Plot2DExprTable"
+"menuBar, itsExprData, scrollbarSet"
+0
+""
+
+1
+0
+"TextButton"
+1
+0
+70 490 90 560
+"itsDuplicatePlotButton"
+1
+0
+0
+"Duplicate"
+""
+
+1
+0
+"TextButton"
+1
+0
+100 490 120 560
+"itsRemovePlotButton"
+1
+0
+0
+"Remove"
+""
+
+1
+0
+"CustomWidget"
+2
+2
+130 0 500 570
+"itsPlotWidget"
+1
+0
+0
+"JX2DPlotWidget"
+"menuBar"
+0
+""
+
+0

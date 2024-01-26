@@ -39,21 +39,21 @@ protected:
 
 private:
 
-	Class*			itsClass;
-	FunctionTable*	itsTable;
+	Class*	itsClass;
 
 // begin JXLayout
 
-	JXInputField* itsClassInput;
-	JXTextButton* itsChooseButton;
-	JXTextButton* itsGenerateButton;
-	JXTextButton* itsHelpButton;
-	JXTextButton* itsCancelButton;
-	JXPathInput*  itsDirInput;
-	JXStaticText* itsBaseClassTxt;
-	JXInputField* itsAuthorInput;
-	JXTextButton* itsStringsButton;
-	JXInputField* itsCopyrightInput;
+	JXTextButton*  itsChooseButton;
+	JXStaticText*  itsBaseClassTxt;
+	FunctionTable* itsTable;
+	JXTextButton*  itsStringsButton;
+	JXTextButton*  itsCancelButton;
+	JXTextButton*  itsHelpButton;
+	JXTextButton*  itsGenerateButton;
+	JXInputField*  itsClassInput;
+	JXPathInput*   itsDirInput;
+	JXInputField*  itsAuthorInput;
+	JXInputField*  itsCopyrightInput;
 
 // end JXLayout
 

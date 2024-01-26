@@ -52,14 +52,14 @@ private:
 // begin JXLayout
 
 	DebuggerProgramInput* itsGDBCmd;
+	JXTextButton*         itsChooseGDBButton;
 	DebuggerProgramInput* itsJDBCmd;
+	JXTextButton*         itsChooseJDBButton;
 	JXInputField*         itsEditFileCmdInput;
 	JXInputField*         itsEditFileLineCmdInput;
 	JXInputField*         itsCSourceSuffixInput;
 	JXInputField*         itsCHeaderSuffixInput;
 	JXInputField*         itsJavaSuffixInput;
-	JXTextButton*         itsChooseGDBButton;
-	JXTextButton*         itsChooseJDBButton;
 	JXInputField*         itsPHPSuffixInput;
 	JXInputField*         itsFortranSuffixInput;
 	JXInputField*         itsDSuffixInput;

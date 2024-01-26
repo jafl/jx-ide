@@ -26,10 +26,9 @@ public:
 
 private:
 
-	ProcessText*	itsText;
-
 // begin JXLayout
 
+	ProcessText*    itsText;
 	JXIntegerInput* itsProcessIDInput;
 
 // end JXLayout

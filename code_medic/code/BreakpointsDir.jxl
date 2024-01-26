@@ -1,0 +1,62 @@
+jx_layout_editor 5
+450
+500
+"JXLayout"
+""
+"Code_Medic_Breakpoints"
+""
+0
+
+1
+0
+"MenuBar"
+2
+0
+0 0 30 450
+"menuBar"
+0
+0
+0
+
+1
+0
+"ScrollbarSet"
+2
+2
+30 0 500 450
+"scrollbarSet"
+0
+0
+0
+
+1
+2
+"CustomWidget"
+2
+0
+0 0 20 435
+"colHeader"
+0
+0
+0
+"JXColHeaderWidget"
+"itsTable, scrollbarSet"
+0
+"itsTable"
+
+1
+2
+"CustomWidget"
+2
+2
+20 0 455 435
+"itsTable"
+1
+0
+0
+"BreakpointTable"
+"this, scrollbarSet"
+0
+""
+
+0
