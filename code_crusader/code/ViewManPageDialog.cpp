@@ -128,7 +128,7 @@ ViewManPageDialog::BuildWindow()
 	itsHelpButton->SetShortcuts(JGetString("itsHelpButton::ViewManPageDialog::shortcuts::JXLayout"));
 
 	itsFnHistoryMenu =
-		jnew JXStringHistoryMenu(kHistoryLength, JString::empty, window,
+		jnew JXStringHistoryMenu(kHistoryLength, window,
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 310,40, 30,20);
 	assert( itsFnHistoryMenu != nullptr );
 

@@ -152,13 +152,13 @@ DocumentManager::CreateFileHistoryMenus
 			itsRecentTextMenu    == nullptr );
 
 	itsRecentProjectMenu =
-		jnew FileHistoryMenu(kProjectFileHistory, JString::empty, window,
+		jnew FileHistoryMenu(kProjectFileHistory, window,
 							  JXWidget::kFixedLeft, JXWidget::kFixedTop,
 							  -20,0, 10,10);
 	itsRecentProjectMenu->Hide();
 
 	itsRecentTextMenu =
-		jnew FileHistoryMenu(kTextFileHistory, JString::empty, window,
+		jnew FileHistoryMenu(kTextFileHistory, window,
 							  JXWidget::kFixedLeft, JXWidget::kFixedTop,
 							  -20,0, 10,10);
 	itsRecentTextMenu->Hide();

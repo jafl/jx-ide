@@ -11,6 +11,7 @@
 #include "TextDocument.h"
 #include "TextEditor.h"
 #include "globals.h"
+#include <jx-af/jx/JXDisplay.h>
 #include <jx-af/jx/JXWindow.h>
 #include <jx-af/jx/JXTextButton.h>
 #include <jx-af/jx/JXTextCheckbox.h>
@@ -20,6 +21,7 @@
 #include <jx-af/jx/JXDocumentMenu.h>
 #include <jx-af/jx/JXHelpManager.h>
 #include <jx-af/jx/JXCSFDialogBase.h>
+#include <jx-af/jx/JXImageCache.h>
 #include <jx-af/jcore/JOutPipeStream.h>
 #include <jx-af/jcore/jProcessUtil.h>
 #include <jx-af/jcore/jStreamUtil.h>
@@ -85,6 +87,8 @@ RunTEScriptDialog::Activate()
 
  ******************************************************************************/
 
+#include <jx-af/image/jx/jx_executable_small.xpm>
+
 void
 RunTEScriptDialog::BuildWindow()
 {
@@ -116,7 +120,7 @@ RunTEScriptDialog::BuildWindow()
 	cmdLabel->SetToLabel();
 
 	itsHistoryMenu =
-		jnew JXStringHistoryMenu(kHistoryLength, JString::empty, window,
+		jnew JXStringHistoryMenu(kHistoryLength, window,
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 340,40, 30,20);
 	assert( itsHistoryMenu != nullptr );
 
@@ -148,6 +152,8 @@ RunTEScriptDialog::BuildWindow()
 	ListenTo(itsCmdInput);
 
 	itsStayOpenCB->SetState(true);
+
+	itsHistoryMenu->SetDefaultIcon(GetDisplay()->GetImageCache()->GetImage(jx_executable_small), false);
 
 	// create hidden JXDocument so Meta-# shortcuts work
 

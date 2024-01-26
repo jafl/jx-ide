@@ -14,8 +14,7 @@ class SearchPathHistoryMenu : public JXHistoryMenuBase
 {
 public:
 
-	SearchPathHistoryMenu(const JSize historyLength,
-							const JString& title, JXContainer* enclosure,
+	SearchPathHistoryMenu(const JSize historyLength, JXContainer* enclosure,
 							const HSizingOption hSizing, const VSizingOption vSizing,
 							const JCoordinate x, const JCoordinate y,
 							const JCoordinate w, const JCoordinate h);

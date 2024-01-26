@@ -18,13 +18,13 @@ class FileHistoryMenu : public JXFileHistoryMenu
 public:
 
 	FileHistoryMenu(const DocumentManager::FileHistoryType type,
-					  const JString& title, JXContainer* enclosure,
-					  const HSizingOption hSizing, const VSizingOption vSizing,
-					  const JCoordinate x, const JCoordinate y,
-					  const JCoordinate w, const JCoordinate h);
+					JXContainer* enclosure,
+					const HSizingOption hSizing, const VSizingOption vSizing,
+					const JCoordinate x, const JCoordinate y,
+					const JCoordinate w, const JCoordinate h);
 
 	FileHistoryMenu(const DocumentManager::FileHistoryType type,
-					  JXMenu* owner, const JIndex itemIndex, JXContainer* enclosure);
+					JXMenu* owner, const JIndex itemIndex, JXContainer* enclosure);
 
 	~FileHistoryMenu() override;
 

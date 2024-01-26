@@ -154,12 +154,12 @@ ChooseRelativePathDialog::BuildWindow
 	explanText->SetToLabel();
 
 	auto* pathHistory =
-		jnew JXPathHistoryMenu(1, JString::empty, window,
+		jnew JXPathHistoryMenu(1, window,
 					JXWidget::kFixedRight, JXWidget::kFixedBottom, 260,20, 30,20);
 	assert( pathHistory != nullptr );
 
 	auto* filterHistory =
-		jnew JXStringHistoryMenu(1, JString::empty, window,
+		jnew JXStringHistoryMenu(1, window,
 					JXWidget::kFixedRight, JXWidget::kFixedBottom, 260,50, 30,20);
 	assert( filterHistory != nullptr );
 

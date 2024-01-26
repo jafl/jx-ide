@@ -33,7 +33,6 @@ FileHistoryMenu::FileHistoryMenu
 	(
 	const DocumentManager::FileHistoryType	type,
 
-	const JString&		title,
 	JXContainer*		enclosure,
 	const HSizingOption	hSizing,
 	const VSizingOption	vSizing,
@@ -43,7 +42,7 @@ FileHistoryMenu::FileHistoryMenu
 	const JCoordinate	h
 	)
 	:
-	JXFileHistoryMenu(kHistoryLength, title, enclosure, hSizing, vSizing, x,y, w,h),
+	JXFileHistoryMenu(kHistoryLength, enclosure, hSizing, vSizing, x,y, w,h),
 	itsDocType(type)
 {
 	FileHistoryMenuX(type);
@@ -125,33 +124,33 @@ FileHistoryMenu::Receive
 		}
 	}
 
-	else
+	else if (sender == this && message.Is(JXMenu::kItemSelected))
 	{
-		if (sender == this && message.Is(JXMenu::kItemSelected))
+		const auto* selection =
+			dynamic_cast<const JXMenu::ItemSelected*>(&message);
+		assert( selection != nullptr );
+
+		const JString fileName = GetFile(selection->GetIndex());
+
+		bool saveReopen = ProjectDocument::WillReopenTextFiles();
+		if (GetDisplay()->GetLatestKeyModifiers().shift())
 		{
-			const auto* selection =
-				dynamic_cast<const JXMenu::ItemSelected*>(&message);
-			assert( selection != nullptr );
-
-			const JString fileName = GetFile(selection->GetIndex());
-
-			bool saveReopen = ProjectDocument::WillReopenTextFiles();
-			if (GetDisplay()->GetLatestKeyModifiers().shift())
-			{
-				ProjectDocument::ShouldReopenTextFiles(!saveReopen);
-			}
-
-			DocumentManager* docMgr = GetDocumentManager();
-			if (!GetDisplay()->GetLatestKeyModifiers().meta() ||
-				(docMgr->CloseProjectDocuments() &&
-				 docMgr->CloseTextDocuments()))
-			{
-				docMgr->OpenSomething(fileName);
-			}
-
-			ProjectDocument::ShouldReopenTextFiles(saveReopen);
+			ProjectDocument::ShouldReopenTextFiles(!saveReopen);
 		}
 
+		DocumentManager* docMgr = GetDocumentManager();
+		if (!GetDisplay()->GetLatestKeyModifiers().meta() ||
+			(docMgr->CloseProjectDocuments() &&
+			 docMgr->CloseTextDocuments()))
+		{
+			docMgr->OpenSomething(fileName);
+		}
+
+		ProjectDocument::ShouldReopenTextFiles(saveReopen);
+	}
+
+	else
+	{
 		JXFileHistoryMenu::Receive(sender, message);
 	}
 }

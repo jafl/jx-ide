@@ -3,7 +3,7 @@ Magic: 15000
 Internal Form Definition File
     (do not change)
 
-Number of forms: 47
+Number of forms: 48
 Unit of measure: FL_COORD_PIXEL
 
 =============== FORM ===============
@@ -1636,7 +1636,7 @@ resize: FL_RESIZE_ALL
 gravity: FL_NorthEast FL_NoGravity
 name: (prevReplaceMenu)
 callback: 
-argument: kHistoryLength, JString::empty
+argument: kHistoryLength
 
 --------------------
 class: FL_BOX
@@ -1654,7 +1654,7 @@ resize: FL_RESIZE_ALL
 gravity: FL_NorthEast FL_NoGravity
 name: (prevSearchMenu)
 callback: 
-argument: kHistoryLength, JString::empty
+argument: kHistoryLength
 
 --------------------
 class: FL_BUTTON
@@ -2032,7 +2032,7 @@ resize: FL_RESIZE_ALL
 gravity: FL_NorthEast FL_NoGravity
 name: itsDirHistory
 callback: 
-argument: kHistoryLength, JString::empty
+argument: kHistoryLength
 
 --------------------
 class: FL_INPUT
@@ -2068,7 +2068,7 @@ resize: FL_RESIZE_ALL
 gravity: FL_NorthEast FL_NoGravity
 name: itsFileFilterHistory
 callback: 
-argument: kHistoryLength, JString::empty
+argument: kHistoryLength
 
 --------------------
 class: FL_CHECKBUTTON
@@ -2158,7 +2158,7 @@ resize: FL_RESIZE_ALL
 gravity: FL_NorthEast FL_NoGravity
 name: itsPathFilterHistory
 callback: 
-argument: kHistoryLength, JString::empty
+argument: kHistoryLength
 
 --------------------
 class: FL_BUTTON
@@ -2440,7 +2440,7 @@ resize: FL_RESIZE_ALL
 gravity: FL_NorthEast FL_NoGravity
 name: itsFileHistoryMenu
 callback: 
-argument: kHistoryLength, JString::empty
+argument: kHistoryLength
 
 --------------------
 class: FL_CHECKBUTTON
@@ -2644,7 +2644,7 @@ resize: FL_RESIZE_ALL
 gravity: FL_NorthEast FL_NoGravity
 name: itsFnHistoryMenu
 callback: 
-argument: kHistoryLength, JString::empty
+argument: kHistoryLength
 
 --------------------
 class: FL_CHECKBUTTON
@@ -4546,7 +4546,7 @@ resize: FL_RESIZE_NONE
 gravity: FL_SouthEast FL_NoGravity
 name: (pathHistory)
 callback: 
-argument: 1, JString::empty,
+argument: 1
 
 --------------------
 class: FL_BOX
@@ -4564,7 +4564,7 @@ resize: FL_RESIZE_NONE
 gravity: FL_SouthEast FL_NoGravity
 name: (filterHistory)
 callback: 
-argument: 1, JString::empty,
+argument: 1
 
 --------------------
 class: FL_BUTTON
@@ -4804,7 +4804,7 @@ resize: FL_RESIZE_ALL
 gravity: FL_NorthEast FL_NoGravity
 name: itsHistoryMenu
 callback: 
-argument: kHistoryLength, JString::empty
+argument: kHistoryLength
 
 --------------------
 class: FL_BUTTON
@@ -6418,7 +6418,7 @@ resize: FL_RESIZE_NONE
 gravity: FL_SouthEast FL_NoGravity
 name: (pathHistory)
 callback: 
-argument: 1, JString::empty
+argument: 1
 
 --------------------
 class: FL_BOX
@@ -6436,7 +6436,7 @@ resize: FL_RESIZE_NONE
 gravity: FL_SouthEast FL_NoGravity
 name: (filterHistory)
 callback: 
-argument: 1, JString::empty
+argument: 1
 
 --------------------
 class: FL_BUTTON
@@ -6820,7 +6820,7 @@ resize: FL_RESIZE_NONE
 gravity: FL_SouthEast FL_NoGravity
 name: (pathHistory)
 callback: 
-argument: 1, JString::empty
+argument: 1
 
 --------------------
 class: FL_BOX
@@ -6838,7 +6838,7 @@ resize: FL_RESIZE_NONE
 gravity: FL_SouthEast FL_NoGravity
 name: (filterHistory)
 callback: 
-argument: 1, JString::empty
+argument: 1
 
 --------------------
 class: FL_BUTTON
@@ -8320,7 +8320,7 @@ resize: FL_RESIZE_NONE
 gravity: FL_SouthEast FL_NoGravity
 name: (pathHistory)
 callback: 
-argument: 1, JString::empty
+argument: 1
 
 --------------------
 class: FL_BOX
@@ -8338,7 +8338,7 @@ resize: FL_RESIZE_NONE
 gravity: FL_SouthEast FL_NoGravity
 name: (filterHistory)
 callback: 
-argument: 1, JString::empty
+argument: 1
 
 --------------------
 class: FL_BUTTON
@@ -9214,7 +9214,7 @@ resize: FL_RESIZE_ALL
 gravity: FL_NorthEast FL_NoGravity
 name: itsPathHistoryMenu
 callback: 
-argument: kHistoryLength, JString::empty
+argument: kHistoryLength
 
 --------------------
 class: FL_BUTTON
@@ -10257,6 +10257,84 @@ shortcut: #C
 resize: FL_RESIZE_ALL
 gravity: FL_SouthWest FL_NoGravity
 name: itsCompareButton
+callback: 
+argument: 
+
+=============== FORM ===============
+Name: testbox
+Width: 400
+Height: 430
+Number of Objects: 4
+
+--------------------
+class: FL_BOX
+type: FL_FLAT_BOX
+box: 0 0 400 430
+boxtype: FL_FLAT_BOX
+colors: FL_COL1 FL_COL1
+alignment: FL_ALIGN_CENTER
+style: FL_NORMAL_STYLE
+size: FL_DEFAULT_SIZE
+lcol: FL_BLACK
+label: 
+shortcut: 
+resize: FL_RESIZE_ALL
+gravity: FL_NoGravity FL_NoGravity
+name: 
+callback: 
+argument: 
+
+--------------------
+class: FL_BOX
+type: FL_UP_BOX
+box: 60 50 140 130
+boxtype: FL_EMBOSSED_BOX
+colors: FL_COL1 FL_COL1
+alignment: FL_ALIGN_CENTER
+style: FL_NORMAL_STYLE
+size: FL_DEFAULT_SIZE
+lcol: FL_BLACK
+label: 
+shortcut: 
+resize: FL_RESIZE_ALL
+gravity: FL_NoGravity FL_NoGravity
+name: 
+callback: 
+argument: 
+
+--------------------
+class: FL_BOX
+type: FL_UP_BOX
+box: 240 50 120 130
+boxtype: FL_FRAME_BOX
+colors: FL_COL1 FL_COL1
+alignment: FL_ALIGN_CENTER
+style: FL_NORMAL_STYLE
+size: FL_DEFAULT_SIZE
+lcol: FL_BLACK
+label: 
+shortcut: 
+resize: FL_RESIZE_ALL
+gravity: FL_NoGravity FL_NoGravity
+name: 
+callback: 
+argument: 
+
+--------------------
+class: FL_FRAME
+type: FL_ENGRAVED_FRAME
+box: 90 220 130 120
+boxtype: FL_OVAL_BOX
+colors: FL_BLACK FL_COL1
+alignment: FL_ALIGN_CENTER
+style: FL_NORMAL_STYLE
+size: FL_DEFAULT_SIZE
+lcol: FL_BLACK
+label: 
+shortcut: 
+resize: FL_RESIZE_ALL
+gravity: FL_NoGravity FL_NoGravity
+name: 
 callback: 
 argument: 
 

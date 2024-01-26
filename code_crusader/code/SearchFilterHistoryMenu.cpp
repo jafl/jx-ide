@@ -22,7 +22,6 @@
 SearchFilterHistoryMenu::SearchFilterHistoryMenu
 	(
 	const JSize			historyLength,
-	const JString&		title,
 	JXContainer*		enclosure,
 	const HSizingOption	hSizing,
 	const VSizingOption	vSizing,
@@ -32,7 +31,7 @@ SearchFilterHistoryMenu::SearchFilterHistoryMenu
 	const JCoordinate	h
 	)
 	:
-	JXHistoryMenuBase(historyLength, title, enclosure, hSizing, vSizing, x,y, w,h)
+	JXHistoryMenuBase(historyLength, enclosure, hSizing, vSizing, x,y, w,h)
 {
 }
 

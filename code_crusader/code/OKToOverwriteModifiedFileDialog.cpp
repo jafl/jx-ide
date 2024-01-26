@@ -100,5 +100,5 @@ OKToOverwriteModifiedFileDialog::BuildWindow
 		EndDialog(true);
 	}));
 
-	Init(window, text, message, icon, jx_un_warning);
+	Init(window, text, message);
 }

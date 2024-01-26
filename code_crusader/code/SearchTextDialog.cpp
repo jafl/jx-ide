@@ -175,12 +175,12 @@ SearchTextDialog::BuildWindow()
 	assert( entireWordCB != nullptr );
 
 	auto* prevReplaceMenu =
-		jnew JXStringHistoryMenu(kHistoryLength, JString::empty, window,
+		jnew JXStringHistoryMenu(kHistoryLength, window,
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 245,118, 30,20);
 	assert( prevReplaceMenu != nullptr );
 
 	auto* prevSearchMenu =
-		jnew JXStringHistoryMenu(kHistoryLength, JString::empty, window,
+		jnew JXStringHistoryMenu(kHistoryLength, window,
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 245,43, 30,20);
 	assert( prevSearchMenu != nullptr );
 
@@ -291,7 +291,7 @@ SearchTextDialog::BuildWindow()
 	filterLabel->SetToLabel();
 
 	itsDirHistory =
-		jnew SearchPathHistoryMenu(kHistoryLength, JString::empty, window,
+		jnew SearchPathHistoryMenu(kHistoryLength, window,
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 340,260, 30,20);
 	assert( itsDirHistory != nullptr );
 
@@ -301,7 +301,7 @@ SearchTextDialog::BuildWindow()
 	assert( itsFileFilterInput != nullptr );
 
 	itsFileFilterHistory =
-		jnew SearchFilterHistoryMenu(kHistoryLength, JString::empty, window,
+		jnew SearchFilterHistoryMenu(kHistoryLength, window,
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 340,290, 30,20);
 	assert( itsFileFilterHistory != nullptr );
 
@@ -326,7 +326,7 @@ SearchTextDialog::BuildWindow()
 	assert( itsPathFilterInput != nullptr );
 
 	itsPathFilterHistory =
-		jnew SearchFilterHistoryMenu(kHistoryLength, JString::empty, window,
+		jnew SearchFilterHistoryMenu(kHistoryLength, window,
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 410,320, 30,20);
 	assert( itsPathFilterHistory != nullptr );
 

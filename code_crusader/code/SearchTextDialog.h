@@ -12,6 +12,7 @@
 #include <jx-af/jcore/JPrefObject.h>
 
 class JProgressDisplay;
+class JXTextMenu;
 class JXFileListTable;
 class JXPathInput;
 class SearchPathHistoryMenu;

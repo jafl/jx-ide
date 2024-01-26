@@ -109,7 +109,7 @@ FindFileDialog::BuildWindow()
 	nameLabel->SetToLabel();
 
 	itsFileHistoryMenu =
-		jnew JXStringHistoryMenu(kHistoryLength, JString::empty, window,
+		jnew JXStringHistoryMenu(kHistoryLength, window,
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 240,40, 30,20);
 	assert( itsFileHistoryMenu != nullptr );
 

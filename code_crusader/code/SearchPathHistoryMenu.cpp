@@ -30,7 +30,6 @@ static const JString kRecurseFlag("(include subdirs)");
 SearchPathHistoryMenu::SearchPathHistoryMenu
 	(
 	const JSize			historyLength,
-	const JString&		title,
 	JXContainer*		enclosure,
 	const HSizingOption	hSizing,
 	const VSizingOption	vSizing,
@@ -40,7 +39,7 @@ SearchPathHistoryMenu::SearchPathHistoryMenu
 	const JCoordinate	h
 	)
 	:
-	JXHistoryMenuBase(historyLength, title, enclosure, hSizing, vSizing, x,y, w,h)
+	JXHistoryMenuBase(historyLength, enclosure, hSizing, vSizing, x,y, w,h)
 {
 	SearchPathHistoryMenuX();
 }

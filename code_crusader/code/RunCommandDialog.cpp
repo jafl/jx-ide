@@ -186,7 +186,7 @@ RunCommandDialog::BuildWindow()
 	pathLabel->SetToLabel();
 
 	itsPathHistoryMenu =
-		jnew JXPathHistoryMenu(kHistoryLength, JString::empty, window,
+		jnew JXPathHistoryMenu(kHistoryLength, window,
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 340,40, 30,20);
 	assert( itsPathHistoryMenu != nullptr );
 

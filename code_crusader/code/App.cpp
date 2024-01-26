@@ -65,7 +65,7 @@ App::App
 	JString*	prevVersStr
 	)
 	:
-	JXApplication(argc, argv, kAppSignature, kDefaultStringData),
+	JXApplication(argc, argv, kAppSignature, "Code_Crusader", kDefaultStringData),
 	JPrefObject(nullptr, kAppID)
 {
 	itsWarnBeforeQuitFlag = false;

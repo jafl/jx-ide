@@ -211,7 +211,6 @@
 .cpp ./code/ManPageDocument
 .cpp ./code/CtagsUser
 .cpp ./code/ListChooseFileDialog
-.cpp ./code/ExecHistoryMenu
 .cpp ./code/sharedUtil
 .cpp ./code/util
 
