@@ -48,8 +48,6 @@ private:
 private:
 
 	void	DisplayManPage(JIndex* index, const JPtrArray<JString>& argList);
-	void	AddFilesToSearch(JIndex* index, const JPtrArray<JString>& argList,
-							 const bool clearFileList);
 	void	DisplayFileDiffs(JIndex* index, const JPtrArray<JString>& argList,
 							 const bool silent);
 	void	DisplayVCSDiffs(const JUtf8Byte* type, JIndex* index,

@@ -43,7 +43,6 @@ protected:
 private:
 
 	ProjectDocument*	itsProjDoc;
-	JXFileListSet*		itsFLSet;
 	FileListTable*		itsFLTable;
 
 	JXTextMenu*		itsFileMenu;
@@ -54,7 +53,8 @@ private:
 
 // begin JXLayout
 
-	JXToolBar* itsToolBar;
+	JXToolBar*     itsToolBar;
+	JXFileListSet* itsFLSet;
 
 // end JXLayout
 

@@ -1,0 +1,323 @@
+jx_layout_editor 7
+370
+300
+"JXLayout"
+""
+""
+""
+0
+
+1
+0
+0
+"RadioGroup"
+2
+2
+20 135 59 274
+"destination"
+0
+0
+0
+
+1
+0
+0
+"StaticText"
+2
+2
+30 50 50 130
+"destinationLabel"
+0
+0
+0
+"Destination:"
+1
+0
+0
+0
+0
+
+1
+1
+1
+"TextRadioButton"
+2
+2
+8 5 28 75
+"printerRB"
+0
+0
+0
+"1"
+"Printer"
+"#P"
+
+1
+1
+1
+"TextRadioButton"
+2
+2
+8 75 28 125
+"fileRB"
+0
+0
+0
+"2"
+"File"
+"#F"
+
+1
+0
+0
+"StaticText"
+2
+2
+70 10 89 100
+"printCmdLabel"
+0
+0
+0
+"Print command:"
+1
+0
+0
+0
+0
+
+1
+0
+0
+"InputField"
+2
+2
+70 100 90 350
+"printCmdInput"
+0
+1
+0
+0
+0
+0
+""
+""
+""
+0
+0
+0
+""
+
+1
+0
+0
+"TextButton"
+2
+2
+90 20 110 100
+"chooseFileButton"
+0
+0
+0
+"Choose file"
+""
+
+1
+0
+0
+"StaticText"
+2
+2
+110 55 130 170
+"copiesLabel"
+0
+0
+0
+"Number of copies:"
+1
+0
+0
+0
+0
+
+1
+0
+0
+"IntegerInput"
+2
+2
+110 170 130 210
+"copyCount"
+0
+2
+0
+0
+0 0
+0 0
+
+1
+0
+0
+"TextCheckbox"
+2
+2
+110 240 130 310
+"collateCB"
+0
+0
+0
+"Collate"
+""
+
+1
+0
+0
+"TextCheckbox"
+2
+2
+150 40 170 160
+"printAllCB"
+0
+0
+0
+"Print all pages"
+""
+
+1
+0
+0
+"StaticText"
+2
+2
+150 160 170 230
+"firstPageIndexLabel"
+0
+0
+0
+"Print page"
+1
+0
+0
+0
+0
+
+1
+0
+0
+"IntegerInput"
+2
+2
+150 230 170 270
+"firstPageIndex"
+0
+3
+0
+0
+0 0
+0 0
+
+1
+0
+0
+"StaticText"
+2
+2
+150 270 170 290
+"lastPageIndexLabel"
+0
+0
+0
+"to"
+1
+0
+0
+0
+0
+
+1
+0
+0
+"IntegerInput"
+2
+2
+150 290 170 330
+"lastPageIndex"
+0
+4
+0
+0
+0 0
+0 0
+
+1
+0
+0
+"TextCheckbox"
+2
+2
+190 30 210 180
+"bwCheckbox"
+0
+0
+0
+"Black & White output"
+""
+
+1
+0
+0
+"TextCheckbox"
+2
+2
+190 210 210 340
+"itsPrintHeaderCB"
+1
+0
+0
+"Print page header"
+"#H"
+
+1
+0
+0
+"CustomWidget"
+2
+0
+220 120 250 290
+"itsFontSizeMenu"
+1
+0
+0
+"JXFontSizeMenu"
+"JFontManager::GetDefaultMonospaceFontName(), JGetString(\"FontSizeMenuTitle::PSPrintSetupDialog\")"
+0
+""
+
+1
+0
+0
+"TextButton"
+2
+2
+270 70 290 140
+"cancelButton"
+0
+0
+0
+"Cancel"
+""
+
+1
+0
+0
+"TextButton"
+2
+2
+270 220 290 290
+"okButton"
+0
+0
+0
+"Print"
+"^M"
+
+0

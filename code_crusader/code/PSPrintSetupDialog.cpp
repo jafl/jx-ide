@@ -85,75 +85,45 @@ PSPrintSetupDialog::BuildWindow
 
 	auto* window = jnew JXWindow(this, 370,300, JString::empty);
 
-	auto* printCmdLabel =
-		jnew JXStaticText(JGetString("printCmdLabel::PSPrintSetupDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 10,70, 90,19);
-	assert( printCmdLabel != nullptr );
-	printCmdLabel->SetToLabel();
-
-	auto* okButton =
-		jnew JXTextButton(JGetString("okButton::PSPrintSetupDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 220,270, 70,20);
-	assert( okButton != nullptr );
-	okButton->SetShortcuts(JGetString("okButton::PSPrintSetupDialog::shortcuts::JXLayout"));
-
-	auto* cancelButton =
-		jnew JXTextButton(JGetString("cancelButton::PSPrintSetupDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 70,270, 70,20);
-	assert( cancelButton != nullptr );
-
-	auto* destinationLabel =
-		jnew JXStaticText(JGetString("destinationLabel::PSPrintSetupDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 50,30, 80,20);
-	assert( destinationLabel != nullptr );
-	destinationLabel->SetToLabel();
-
 	auto* destination =
 		jnew JXRadioGroup(window,
 					JXWidget::kHElastic, JXWidget::kVElastic, 135,20, 139,39);
 	assert( destination != nullptr );
 
+	auto* destinationLabel =
+		jnew JXStaticText(JGetString("destinationLabel::PSPrintSetupDialog::JXLayout"), window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 50,30, 80,20);
+	destinationLabel->SetToLabel(false);
+
 	auto* printerRB =
 		jnew JXTextRadioButton(1, JGetString("printerRB::PSPrintSetupDialog::JXLayout"), destination,
 					JXWidget::kHElastic, JXWidget::kVElastic, 5,8, 70,20);
-	assert( printerRB != nullptr );
-	printerRB->SetShortcuts(JGetString("printerRB::PSPrintSetupDialog::shortcuts::JXLayout"));
+	printerRB->SetShortcuts(JGetString("printerRB::shortcuts::PSPrintSetupDialog::JXLayout"));
 
 	auto* fileRB =
 		jnew JXTextRadioButton(2, JGetString("fileRB::PSPrintSetupDialog::JXLayout"), destination,
 					JXWidget::kHElastic, JXWidget::kVElastic, 75,8, 50,20);
-	assert( fileRB != nullptr );
-	fileRB->SetShortcuts(JGetString("fileRB::PSPrintSetupDialog::shortcuts::JXLayout"));
+	fileRB->SetShortcuts(JGetString("fileRB::shortcuts::PSPrintSetupDialog::JXLayout"));
 
-	auto* printCmdInput =
-		jnew JXInputField(window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 100,70, 250,20);
-	assert( printCmdInput != nullptr );
+	auto* printCmdLabel =
+		jnew JXStaticText(JGetString("printCmdLabel::PSPrintSetupDialog::JXLayout"), window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 10,70, 90,19);
+	printCmdLabel->SetToLabel(false);
 
 	auto* chooseFileButton =
 		jnew JXTextButton(JGetString("chooseFileButton::PSPrintSetupDialog::JXLayout"), window,
 					JXWidget::kHElastic, JXWidget::kVElastic, 20,90, 80,20);
 	assert( chooseFileButton != nullptr );
 
-	auto* copyCount =
-		jnew JXIntegerInput(window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 170,110, 40,20);
-	assert( copyCount != nullptr );
+	auto* copiesLabel =
+		jnew JXStaticText(JGetString("copiesLabel::PSPrintSetupDialog::JXLayout"), window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 55,110, 115,20);
+	copiesLabel->SetToLabel(false);
 
-	auto* bwCheckbox =
-		jnew JXTextCheckbox(JGetString("bwCheckbox::PSPrintSetupDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 30,190, 150,20);
-	assert( bwCheckbox != nullptr );
-
-	auto* firstPageIndex =
-		jnew JXIntegerInput(window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 230,150, 40,20);
-	assert( firstPageIndex != nullptr );
-
-	auto* lastPageIndex =
-		jnew JXIntegerInput(window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 290,150, 40,20);
-	assert( lastPageIndex != nullptr );
+	auto* collateCB =
+		jnew JXTextCheckbox(JGetString("collateCB::PSPrintSetupDialog::JXLayout"), window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 240,110, 70,20);
+	assert( collateCB != nullptr );
 
 	auto* printAllCB =
 		jnew JXTextCheckbox(JGetString("printAllCB::PSPrintSetupDialog::JXLayout"), window,
@@ -163,36 +133,56 @@ PSPrintSetupDialog::BuildWindow
 	auto* firstPageIndexLabel =
 		jnew JXStaticText(JGetString("firstPageIndexLabel::PSPrintSetupDialog::JXLayout"), window,
 					JXWidget::kHElastic, JXWidget::kVElastic, 160,150, 70,20);
-	assert( firstPageIndexLabel != nullptr );
-	firstPageIndexLabel->SetToLabel();
+	firstPageIndexLabel->SetToLabel(false);
 
 	auto* lastPageIndexLabel =
 		jnew JXStaticText(JGetString("lastPageIndexLabel::PSPrintSetupDialog::JXLayout"), window,
 					JXWidget::kHElastic, JXWidget::kVElastic, 270,150, 20,20);
-	assert( lastPageIndexLabel != nullptr );
-	lastPageIndexLabel->SetToLabel();
+	lastPageIndexLabel->SetToLabel(false);
 
-	auto* copiesLabel =
-		jnew JXStaticText(JGetString("copiesLabel::PSPrintSetupDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 55,110, 115,20);
-	assert( copiesLabel != nullptr );
-	copiesLabel->SetToLabel();
-
-	auto* collateCB =
-		jnew JXTextCheckbox(JGetString("collateCB::PSPrintSetupDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 240,110, 70,20);
-	assert( collateCB != nullptr );
+	auto* bwCheckbox =
+		jnew JXTextCheckbox(JGetString("bwCheckbox::PSPrintSetupDialog::JXLayout"), window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 30,190, 150,20);
+	assert( bwCheckbox != nullptr );
 
 	itsPrintHeaderCB =
 		jnew JXTextCheckbox(JGetString("itsPrintHeaderCB::PSPrintSetupDialog::JXLayout"), window,
 					JXWidget::kHElastic, JXWidget::kVElastic, 210,190, 130,20);
-	assert( itsPrintHeaderCB != nullptr );
-	itsPrintHeaderCB->SetShortcuts(JGetString("itsPrintHeaderCB::PSPrintSetupDialog::shortcuts::JXLayout"));
+	itsPrintHeaderCB->SetShortcuts(JGetString("itsPrintHeaderCB::shortcuts::PSPrintSetupDialog::JXLayout"));
 
 	itsFontSizeMenu =
 		jnew JXFontSizeMenu(JFontManager::GetDefaultMonospaceFontName(), JGetString("FontSizeMenuTitle::PSPrintSetupDialog"), window,
 					JXWidget::kHElastic, JXWidget::kFixedTop, 120,220, 170,30);
-	assert( itsFontSizeMenu != nullptr );
+
+	auto* cancelButton =
+		jnew JXTextButton(JGetString("cancelButton::PSPrintSetupDialog::JXLayout"), window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 70,270, 70,20);
+	assert( cancelButton != nullptr );
+
+	auto* okButton =
+		jnew JXTextButton(JGetString("okButton::PSPrintSetupDialog::JXLayout"), window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 219,269, 72,22);
+	okButton->SetShortcuts(JGetString("okButton::shortcuts::PSPrintSetupDialog::JXLayout"));
+
+	auto* printCmdInput =
+		jnew JXInputField(window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 100,70, 250,20);
+	assert( printCmdInput != nullptr );
+
+	auto* copyCount =
+		jnew JXIntegerInput(window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 170,110, 40,20);
+	copyCount->SetIsRequired(false);
+
+	auto* firstPageIndex =
+		jnew JXIntegerInput(window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 230,150, 40,20);
+	firstPageIndex->SetIsRequired(false);
+
+	auto* lastPageIndex =
+		jnew JXIntegerInput(window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 290,150, 40,20);
+	lastPageIndex->SetIsRequired(false);
 
 // end JXLayout
 

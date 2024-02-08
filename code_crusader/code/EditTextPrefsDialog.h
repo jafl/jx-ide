@@ -49,37 +49,37 @@ private:
 
 // begin JXLayout
 
+	JXChooseMonoFont* itsFontMenu;
+	SampleText*       itsSampleText;
+	JXTextMenu*       itsEmulatorMenu;
+	JXTextButton*     itsDefColorsButton;
+	JXTextButton*     itsInvColorsButton;
+	JXTextCheckbox*   itsUseDNDCB;
+	JXTextCheckbox*   itsAutoIndentCB;
+	JXTextCheckbox*   itsTabToSpacesCB;
+	JXTextCheckbox*   itsRightMarginCB;
+	JXTextCheckbox*   itsSmartTabCB;
+	JXTextCheckbox*   itsCreateBackupCB;
+	JXTextCheckbox*   itsCopyWhenSelectCB;
+	JXTextCheckbox*   itsOnlyBackupIfNoneCB;
+	JXTextCheckbox*   itsMiddleButtonPasteCB;
+	JXTextCheckbox*   itsOpenComplFileOnTopCB;
+	JXTextCheckbox*   itsBalanceWhileTypingCB;
+	JXTextCheckbox*   itsExtraSpaceWindTitleCB;
+	JXTextCheckbox*   itsScrollToBalanceCB;
+	JXTextCheckbox*   itsBeepWhenTypeUnbalancedCB;
+	JXRadioGroup*     itsPWModRG;
+	JXTextCheckbox*   itsSortFnMenuCB;
+	JXTextCheckbox*   itsNSInFnMenuCB;
+	JXTextCheckbox*   itsPackFnMenuCB;
+	JXTextCheckbox*   itsLeftToFrontOfTextCB;
+	JXTextCheckbox*   itsHomeEndCB;
+	JXTextButton*     itsHelpButton;
+	JXTextCheckbox*   itsScrollCaretCB;
 	JXIntegerInput*   itsTabCharCountInput;
 	JXIntegerInput*   itsCRMLineWidthInput;
 	JXIntegerInput*   itsUndoDepthInput;
-	JXTextCheckbox*   itsCreateBackupCB;
-	JXTextCheckbox*   itsAutoIndentCB;
-	JXTextCheckbox*   itsExtraSpaceWindTitleCB;
-	JXTextCheckbox*   itsOpenComplFileOnTopCB;
-	JXChooseMonoFont* itsFontMenu;
-	JXTextMenu*       itsEmulatorMenu;
-	JXTextCheckbox*   itsUseDNDCB;
-	JXTextCheckbox*   itsOnlyBackupIfNoneCB;
-	JXTextCheckbox*   itsLeftToFrontOfTextCB;
-	JXTextButton*     itsHelpButton;
-	JXTextCheckbox*   itsBalanceWhileTypingCB;
-	JXTextCheckbox*   itsScrollToBalanceCB;
-	JXTextCheckbox*   itsBeepWhenTypeUnbalancedCB;
-	JXTextCheckbox*   itsSmartTabCB;
-	JXRadioGroup*     itsPWModRG;
-	JXTextCheckbox*   itsCopyWhenSelectCB;
-	JXTextButton*     itsDefColorsButton;
-	JXTextButton*     itsInvColorsButton;
-	JXTextCheckbox*   itsTabToSpacesCB;
-	JXTextCheckbox*   itsHomeEndCB;
-	JXTextCheckbox*   itsScrollCaretCB;
-	JXTextCheckbox*   itsSortFnMenuCB;
-	JXTextCheckbox*   itsPackFnMenuCB;
-	JXTextCheckbox*   itsRightMarginCB;
 	JXIntegerInput*   itsRightMarginInput;
-	SampleText*       itsSampleText;
-	JXTextCheckbox*   itsNSInFnMenuCB;
-	JXTextCheckbox*   itsMiddleButtonPasteCB;
 
 // end JXLayout
 

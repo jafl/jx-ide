@@ -1,0 +1,130 @@
+jx_layout_editor 7
+370
+460
+"JXLayout"
+"Search Paths for Symbol Database"
+""
+""
+0
+
+1
+0
+0
+"StaticText"
+2
+0
+20 20 170 350
+"instrText"
+0
+0
+0
+"Code Crusader will search these directories for source files to parse.
+
+R at the left means that subdirectories will also be searched.  Click on it to toggle the setting.
+
+This dialog does not modify compiler settings.  To specify directories in which the compiler should search for header files, click the Config button in the Project window."
+0
+0
+1
+0
+0
+
+1
+0
+0
+"ScrollbarSet"
+2
+2
+190 20 410 260
+"scrollbarSet"
+0
+0
+0
+
+1
+2
+1
+"CustomWidget"
+0
+0
+0 0 205 225
+"itsTable"
+1
+0
+0
+"PathTable"
+"dirList, addPathButton, removePathButton, choosePathButton, scrollbarSet"
+0
+"addPathButton,removePathButton,choosePathButton"
+
+1
+0
+0
+"TextButton"
+1
+0
+200 280 220 350
+"addPathButton"
+0
+0
+0
+"New"
+"#N"
+
+1
+0
+0
+"TextButton"
+1
+0
+230 280 250 350
+"removePathButton"
+0
+0
+0
+"Remove"
+"#R"
+
+1
+0
+0
+"TextButton"
+1
+0
+280 280 300 350
+"choosePathButton"
+0
+0
+0
+"Choose"
+"#O"
+
+1
+0
+0
+"TextButton"
+0
+1
+430 70 450 140
+"cancelButton"
+0
+0
+0
+"Cancel"
+""
+
+1
+0
+0
+"TextButton"
+1
+1
+430 230 450 300
+"okButton"
+0
+0
+0
+"OK"
+""
+
+0

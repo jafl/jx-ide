@@ -32,6 +32,10 @@ T
 F
 "./code/EditMiscPrefsDialog.cpp"
 T
+2 "EditMiscPrefsDialog.jxl"
+F
+"./code/EditMiscPrefsDialog.jxl"
+T
 2 "SampleText.cpp"
 F
 "./code/SampleText.cpp"
@@ -51,6 +55,10 @@ T
 2 "AboutDialog.cpp"
 F
 "./code/AboutDialog.cpp"
+T
+2 "AboutDialog.jxl"
+F
+"./code/AboutDialog.jxl"
 T
 2 "AboutDialogIconTask.cpp"
 F
@@ -123,6 +131,10 @@ T
 F
 "./code/SubprojectConfigDialog.cpp"
 T
+2 "SubprojectConfigDialog.jxl"
+F
+"./code/SubprojectConfigDialog.jxl"
+T
 2 "ProjectFileInput.cpp"
 F
 "./code/ProjectFileInput.cpp"
@@ -131,9 +143,17 @@ T
 F
 "./code/EditProjPrefsDialog.cpp"
 T
+2 "EditProjPrefsDialog.jxl"
+F
+"./code/EditProjPrefsDialog.jxl"
+T
 2 "EditSearchPathsDialog.cpp"
 F
 "./code/EditSearchPathsDialog.cpp"
+T
+2 "EditSearchPathsDialog.jxl"
+F
+"./code/EditSearchPathsDialog.jxl"
 T
 2 "PathTable.cpp"
 F
@@ -147,6 +167,10 @@ T
 F
 "./code/SaveNewProjectDialog.cpp"
 T
+2 "SaveNewProjectDialog.jxl"
+F
+"./code/SaveNewProjectDialog.jxl"
+T
 2 "SaveNewProjectDialog-Template.jxm"
 F
 "./code/SaveNewProjectDialog-Template.jxm"
@@ -155,9 +179,17 @@ T
 F
 "./code/ChooseRelativeFileDialog.cpp"
 T
+2 "ChooseRelativeFileDialog.jxl"
+F
+"./code/ChooseRelativeFileDialog.jxl"
+T
 2 "ChooseRelativePathDialog.cpp"
 F
 "./code/ChooseRelativePathDialog.cpp"
+T
+2 "ChooseRelativePathDialog.jxl"
+F
+"./code/ChooseRelativePathDialog.jxl"
 T
 2 "SymbolUpdatePG.cpp"
 F
@@ -202,6 +234,18 @@ T
 F
 "./code/EditCommandsDialog.cpp"
 T
+2 "EditCommandsDialog.jxl"
+F
+"./code/EditCommandsDialog.jxl"
+T
+2 "EditCommandsDialog__allProjectsLayout.jxl"
+F
+"./code/EditCommandsDialog__allProjectsLayout.jxl"
+T
+2 "EditCommandsDialog__thisProjectLayout.jxl"
+F
+"./code/EditCommandsDialog__thisProjectLayout.jxl"
+T
 2 "CommandTable.cpp"
 F
 "./code/CommandTable.cpp"
@@ -221,6 +265,10 @@ T
 2 "RunCommandDialog.cpp"
 F
 "./code/RunCommandDialog.cpp"
+T
+2 "RunCommandDialog.jxl"
+F
+"./code/RunCommandDialog.jxl"
 T
 2 "RunCommandDialog-SaveCmd.jxm"
 F
@@ -260,6 +308,10 @@ T
 2 "ProjectConfigDialog.cpp"
 F
 "./code/ProjectConfigDialog.cpp"
+T
+2 "ProjectConfigDialog.jxl"
+F
+"./code/ProjectConfigDialog.jxl"
 F
 T
 1 "file list"
@@ -267,6 +319,10 @@ T
 2 "FileListDirector.cpp"
 F
 "./code/FileListDirector.cpp"
+T
+2 "FileListDirector.jxl"
+F
+"./code/FileListDirector.jxl"
 T
 2 "Generic-File.jxm"
 F
@@ -294,6 +350,10 @@ T
 2 "SymbolDirector.cpp"
 F
 "./code/SymbolDirector.cpp"
+T
+2 "SymbolDirector.jxl"
+F
+"./code/SymbolDirector.jxl"
 T
 2 "SymbolDirector-Symbol.jxm"
 F
@@ -323,6 +383,10 @@ T
 F
 "./code/SymbolSRDirector.cpp"
 T
+2 "SymbolSRDirector.jxl"
+F
+"./code/SymbolSRDirector.jxl"
+T
 2 "SymbolSRDirector-Actions.jxm"
 F
 "./code/SymbolSRDirector-Actions.jxm"
@@ -330,6 +394,10 @@ T
 2 "EditSymbolPrefsDialog.cpp"
 F
 "./code/EditSymbolPrefsDialog.cpp"
+T
+2 "EditSymbolPrefsDialog.jxl"
+F
+"./code/EditSymbolPrefsDialog.jxl"
 F
 T
 1 "class tree"
@@ -337,6 +405,10 @@ T
 2 "TreeDirector.cpp"
 F
 "./code/TreeDirector.cpp"
+T
+2 "TreeDirector.jxl"
+F
+"./code/TreeDirector.jxl"
 T
 2 "TreeDirector-File.jxm"
 F
@@ -370,6 +442,10 @@ T
 F
 "./code/EditTreePrefsDialog.cpp"
 T
+2 "EditTreePrefsDialog.jxl"
+F
+"./code/EditTreePrefsDialog.jxl"
+T
 2 "CTreeDirector.cpp"
 F
 "./code/CTreeDirector.cpp"
@@ -397,6 +473,10 @@ T
 2 "EditCPPMacroDialog.cpp"
 F
 "./code/EditCPPMacroDialog.cpp"
+T
+2 "EditCPPMacroDialog.jxl"
+F
+"./code/EditCPPMacroDialog.jxl"
 T
 2 "CPPMacroTable.cpp"
 F
@@ -477,6 +557,10 @@ T
 F
 "./code/TextDocument.cpp"
 T
+2 "TextDocument.jxl"
+F
+"./code/TextDocument.jxl"
+T
 2 "TextDocument-File.jxm"
 F
 "./code/TextDocument-File.jxm"
@@ -549,6 +633,10 @@ T
 F
 "./code/EditTextPrefsDialog.cpp"
 T
+2 "EditTextPrefsDialog.jxl"
+F
+"./code/EditTextPrefsDialog.jxl"
+T
 2 "EditTextPrefsDialog-Emulator.jxm"
 F
 "./code/EditTextPrefsDialog-Emulator.jxm"
@@ -556,6 +644,10 @@ T
 2 "EditCRMDialog.cpp"
 F
 "./code/EditCRMDialog.cpp"
+T
+2 "EditCRMDialog.jxl"
+F
+"./code/EditCRMDialog.jxl"
 T
 2 "CRMRuleListTable.cpp"
 F
@@ -569,6 +661,10 @@ T
 F
 "./code/RunTEScriptDialog.cpp"
 T
+2 "RunTEScriptDialog.jxl"
+F
+"./code/RunTEScriptDialog.jxl"
+T
 2 "TEScriptMenu.cpp"
 F
 "./code/TEScriptMenu.cpp"
@@ -581,13 +677,25 @@ T
 F
 "./code/TabWidthDialog.cpp"
 T
+2 "TabWidthDialog.jxl"
+F
+"./code/TabWidthDialog.jxl"
+T
 2 "ExtEditorDialog.cpp"
 F
 "./code/ExtEditorDialog.cpp"
 T
+2 "ExtEditorDialog.jxl"
+F
+"./code/ExtEditorDialog.jxl"
+T
 2 "OKToOverwriteModifiedFileDialog.cpp"
 F
 "./code/OKToOverwriteModifiedFileDialog.cpp"
+T
+2 "OKToOverwriteModifiedFileDialog.jxl"
+F
+"./code/OKToOverwriteModifiedFileDialog.jxl"
 F
 T
 1 "search"
@@ -596,9 +704,9 @@ T
 F
 "./code/SearchTextDialog.cpp"
 T
-2 "SearchTextDialog-FileList.jxm"
+2 "SearchTextDialog.jxl"
 F
-"./code/SearchTextDialog-FileList.jxm"
+"./code/SearchTextDialog.jxl"
 T
 2 "SearchPathHistoryMenu.cpp"
 F
@@ -787,6 +895,10 @@ T
 F
 "./code/EditStylerDialog.cpp"
 T
+2 "EditStylerDialog.jxl"
+F
+"./code/EditStylerDialog.jxl"
+T
 2 "StylerTable.cpp"
 F
 "./code/StylerTable.cpp"
@@ -913,6 +1025,10 @@ T
 F
 "./code/EditMacroDialog.cpp"
 T
+2 "EditMacroDialog.jxl"
+F
+"./code/EditMacroDialog.jxl"
+T
 2 "MacroSetTable.cpp"
 F
 "./code/MacroSetTable.cpp"
@@ -962,6 +1078,10 @@ T
 2 "EditFileTypesDialog.cpp"
 F
 "./code/EditFileTypesDialog.cpp"
+T
+2 "EditFileTypesDialog.jxl"
+F
+"./code/EditFileTypesDialog.jxl"
 T
 2 "FileTypeTable.cpp"
 F
@@ -1033,6 +1153,10 @@ T
 F
 "./code/PSPrintSetupDialog.cpp"
 T
+2 "PSPrintSetupDialog.jxl"
+F
+"./code/PSPrintSetupDialog.jxl"
+T
 2 "PTPrinter.cpp"
 F
 "./code/PTPrinter.cpp"
@@ -1040,6 +1164,10 @@ T
 2 "PTPrintSetupDialog.cpp"
 F
 "./code/PTPrintSetupDialog.cpp"
+T
+2 "PTPrintSetupDialog.jxl"
+F
+"./code/PTPrintSetupDialog.jxl"
 F
 T
 1 "misc"
@@ -1052,9 +1180,17 @@ T
 F
 "./code/FindFileDialog.cpp"
 T
+2 "FindFileDialog.jxl"
+F
+"./code/FindFileDialog.jxl"
+T
 2 "ViewManPageDialog.cpp"
 F
 "./code/ViewManPageDialog.cpp"
+T
+2 "ViewManPageDialog.jxl"
+F
+"./code/ViewManPageDialog.jxl"
 T
 2 "ManPageDocument.cpp"
 F
@@ -1068,6 +1204,10 @@ T
 F
 "./code/ListChooseFileDialog.cpp"
 T
+2 "ListChooseFileDialog.jxl"
+F
+"./code/ListChooseFileDialog.jxl"
+T
 2 "sharedUtil.cpp"
 F
 "./code/sharedUtil.cpp"
@@ -1075,13 +1215,6 @@ T
 2 "util.cpp"
 F
 "./code/util.cpp"
-F
-T
-1 "layouts"
-T
-2 "jcc.fd"
-F
-"./jcc.fd"
 F
 T
 1 "strings"
@@ -1105,13 +1238,13 @@ F
 T
 1 "help"
 T
-2 "help.html"
-F
-"./release/doc/help.html"
-T
 2 "ChangeLog.html"
 F
 "./release/doc/ChangeLog.html"
+T
+2 "help.html"
+F
+"./release/doc/help.html"
 F
 F
 # tasks

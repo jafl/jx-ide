@@ -38,13 +38,12 @@ protected:
 
 private:
 
-	StylerTable*	itsTypeTable;
-	StylerTable*	itsWordTable;
-
 // begin JXLayout
 
 	JXTextCheckbox* itsActiveCB;
+	StylerTable*    itsTypeTable;
 	JXTextButton*   itsHelpButton;
+	StylerTable*    itsWordTable;
 
 // end JXLayout
 

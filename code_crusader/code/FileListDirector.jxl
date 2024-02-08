@@ -1,0 +1,53 @@
+jx_layout_editor 7
+340
+450
+"JXLayout"
+""
+"Code_Crusader_File_List"
+""
+0
+
+1
+0
+0
+"MenuBar"
+2
+0
+0 0 30 340
+"menuBar"
+0
+0
+0
+
+1
+0
+0
+"ToolBar"
+2
+2
+30 0 450 340
+"itsToolBar"
+1
+0
+0
+"GetPrefsManager()"
+"kFileListToolBarID"
+"menuBar"
+
+1
+2
+1
+"CustomWidget"
+2
+2
+0 0 390 340
+"itsFLSet"
+1
+0
+0
+"JXFileListSet"
+""
+0
+""
+
+0

@@ -39,12 +39,12 @@ private:
 
 // begin JXLayout
 
-	JXTextButton*        itsCloseButton;
-	JXTextButton*        itsFindButton;
-	JXInputField*        itsFileName;
 	JXStringHistoryMenu* itsFileHistoryMenu;
 	JXTextCheckbox*      itsIgnoreCaseCB;
 	JXTextCheckbox*      itsStayOpenCB;
+	JXTextButton*        itsCloseButton;
+	JXTextButton*        itsFindButton;
+	JXInputField*        itsFileName;
 
 // end JXLayout
 

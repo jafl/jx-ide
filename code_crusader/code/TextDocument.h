@@ -50,7 +50,7 @@ public:
 
 	TextDocument(const TextFileType type = kUnknownFT,
 				 const JUtf8Byte* helpSectionName = "EditorHelp",
-				 const bool setWMClass = true,
+				 const JUtf8Byte* wmClass = nullptr,
 				 TextEditorCtorFn teCtorFn = ConstructTextEditor);
 	TextDocument(const JString& fileName,
 				 const TextFileType type = kUnknownFT,
@@ -169,10 +169,10 @@ private:
 
 // begin JXLayout
 
-	FileDragSource*  itsFileDragSource;
 	JXMenuBar*       itsMenuBar;
 	JXTextButton*    itsActionButton;
 	JXToolBar*       itsToolBar;
+	FileDragSource*  itsFileDragSource;
 	FileNameDisplay* itsFileDisplay;
 	JXTextMenu*      itsSettingsMenu;
 
@@ -182,8 +182,7 @@ private:
 
 	void	TextDocumentX1(const TextFileType type);
 	void	TextDocumentX2(const bool setWindowSize);
-	void	BuildWindow(const bool setWMClass,
-						TextEditorCtorFn teCtorFn);
+	void	BuildWindow(const JUtf8Byte* wmClass, TextEditorCtorFn teCtorFn);
 	void	DisplayFileName(const JString& name);
 
 	void	UpdateFileMenu();

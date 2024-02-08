@@ -129,7 +129,9 @@ SearchDocument::SearchDocument
 	const JString&	windowTitle
 	)
 	:
-	CommandOutputDocument(kSearchOutputFT, "SearchTextHelp-Multifile", JGetString("NoCloseWhileSearching::SearchDocument")),
+	CommandOutputDocument(kSearchOutputFT, "SearchTextHelp-Multifile",
+						  "Code_Crusader_Editor_Search_Output",
+						  JGetString("NoCloseWhileSearching::SearchDocument")),
 	itsIsReplaceFlag(isReplace),
 	itsOnlyListFilesFlag(onlyListFiles),
 	itsFoundFlag(false),
@@ -137,7 +139,6 @@ SearchDocument::SearchDocument
 	itsSearchTE(nullptr)
 {
 	JXWindow* window = GetWindow();
-	window->SetWMClass(GetWMClassInstance(), GetSearchOutputWindowClass());
 
 	itsChannel = jnew boost::fibers::buffered_channel<JBroadcaster::Message*>(1024);
 	assert( itsChannel != nullptr );

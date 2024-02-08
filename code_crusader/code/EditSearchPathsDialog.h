@@ -36,10 +36,9 @@ protected:
 
 private:
 
-	PathTable*	itsTable;
-
 // begin JXLayout
 
+	PathTable* itsTable;
 
 // end JXLayout
 

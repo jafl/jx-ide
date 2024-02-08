@@ -37,10 +37,10 @@ private:
 
 // begin JXLayout
 
-	JXTextCheckbox*   itsShouldBuildCB;
+	JXTextCheckbox*   itsIncludeInDepListCB;
 	ProjectFileInput* itsSubProjName;
 	JXTextButton*     itsChooseFileButton;
-	JXTextCheckbox*   itsIncludeInDepListCB;
+	JXTextCheckbox*   itsShouldBuildCB;
 
 // end JXLayout
 

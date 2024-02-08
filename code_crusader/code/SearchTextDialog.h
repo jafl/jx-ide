@@ -28,10 +28,6 @@ public:
 
 	void	Activate() override;
 
-	void	ShouldSearchFiles(const bool search);
-	void	AddFileToSearch(const JString& fileName) const;
-	void	ClearFileList();
-
 protected:
 
 	SearchTextDialog();
@@ -45,35 +41,26 @@ protected:
 
 private:
 
-	JXFileListTable*	itsFileList;
-
-	mutable JString	itsFileSetName;
-	bool			itsOnlyListFilesFlag;
-	bool			itsListFilesWithoutMatchFlag;
-
 // begin JXLayout
 
-	JXTextCheckbox*          itsMultifileCB;
-	JXTextMenu*              itsFileListMenu;
 	JXTextCheckbox*          itsSearchDirCB;
-	JXPathInput*             itsDirInput;
 	SearchPathHistoryMenu*   itsDirHistory;
-	JXInputField*            itsFileFilterInput;
-	SearchFilterHistoryMenu* itsFileFilterHistory;
-	JXTextCheckbox*          itsRecurseDirCB;
 	JXTextButton*            itsChooseDirButton;
+	SearchFilterHistoryMenu* itsFileFilterHistory;
 	JXTextCheckbox*          itsInvertFileFilterCB;
-	JXInputField*            itsPathFilterInput;
+	JXTextCheckbox*          itsRecurseDirCB;
 	SearchFilterHistoryMenu* itsPathFilterHistory;
+	JXTextCheckbox*          itsOnlyListFilesCB;
+	JXTextCheckbox*          itsInvertMatchingCB;
+	JXPathInput*             itsDirInput;
+	JXInputField*            itsFileFilterInput;
+	JXInputField*            itsPathFilterInput;
 
 // end JXLayout
 
 private:
 
 	void	BuildWindow();
-
-	void	UpdateFileListMenu();
-	void	HandleFileListMenu(const JIndex item);
 
 	void	SearchFiles() const;
 	void	SearchFilesAndReplace();
@@ -90,11 +77,6 @@ private:
 	void	UpdateBasePath();
 	bool	GetSearchDirectory(JString* path, JString* fileFilter,
 							   JString *pathFilter) const;
-
-	void	LoadFileSet();
-	void	SaveFileSet() const;
-	void	OpenSelectedFiles() const;
-	void	AddSearchFiles();
 };
 
 #endif

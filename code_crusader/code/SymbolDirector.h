@@ -82,7 +82,6 @@ private:
 
 	ProjectDocument*	itsProjDoc;				// not owned
 	SymbolList*			itsSymbolList;
-	SymbolTable*		itsSymbolTable;
 	bool				itsRaiseTreeOnRightClickFlag;
 
 	JPtrArray<SymbolSRDirector>*	itsSRList;	// contents not owned
@@ -95,7 +94,8 @@ private:
 
 // begin JXLayout
 
-	JXToolBar* itsToolBar;
+	JXToolBar*   itsToolBar;
+	SymbolTable* itsSymbolTable;
 
 // end JXLayout
 

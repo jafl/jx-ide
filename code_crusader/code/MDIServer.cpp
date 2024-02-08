@@ -118,17 +118,6 @@ MDIServer::HandleMDIRequest
 			restore = false;
 		}
 
-		else if (arg == "--search")
-		{
-			AddFilesToSearch(&i, argList, true);
-			lineRange.SetToNothing();
-		}
-		else if (arg == "--add-search")
-		{
-			AddFilesToSearch(&i, argList, false);
-			lineRange.SetToNothing();
-		}
-
 		else if (arg == "--diff")
 		{
 			DisplayFileDiffs(&i, argList, false);
@@ -386,49 +375,6 @@ MDIServer::DisplayManPage
 
 	ManPageDocument::Create(nullptr, *arg1);
 	(*index)++;
-}
-
-/******************************************************************************
- AddFilesToSearch (private)
-
-	Adds the remaining arguments to the multifile search list.
-	(e.g. --search *.cc)
-
- ******************************************************************************/
-
-void
-MDIServer::AddFilesToSearch
-	(
-	JIndex*						index,
-	const JPtrArray<JString>&	argList,
-	const bool					clearFileList
-	)
-{
-	SearchTextDialog* dlog = GetSearchTextDialog();
-
-	if (clearFileList)
-	{
-		dlog->ClearFileList();
-	}
-
-	const JSize count = argList.GetItemCount();
-	JString fullName;
-	for (JIndex i=*index+1; i<=count; i++)
-	{
-		const JString* fileName = argList.GetItem(i);
-		if (JGetTrueName(*fileName, &fullName))
-		{
-			dlog->AddFileToSearch(fullName);
-		}
-	}
-
-	*index = count+1;
-
-	if (clearFileList)
-	{
-		dlog->ShouldSearchFiles(true);
-	}
-	dlog->Activate();
 }
 
 /******************************************************************************

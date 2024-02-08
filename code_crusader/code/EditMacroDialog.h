@@ -46,31 +46,15 @@ protected:
 
 private:
 
-	MacroSetTable*		itsMacroSetTable;
-	CharActionTable*	itsActionTable;
-	MacroTable*			itsMacroTable;
-
 // begin JXLayout
 
 	JXVertPartition* itsPartition;
 	JXTextButton*    itsHelpButton;
+	CharActionTable* itsActionTable;
+	MacroTable*      itsMacroTable;
+	MacroSetTable*   itsMacroSetTable;
 
 // end JXLayout
-
-// begin actionLayout
-
-
-// end actionLayout
-
-// begin macroLayout
-
-
-// end macroLayout
-
-// begin macroSetLayout
-
-
-// end macroSetLayout
 
 private:
 

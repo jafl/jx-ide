@@ -94,7 +94,7 @@ TextDocument::TextDocument
 	(
 	const TextFileType	type,		// first to avoid conflict with fileName
 	const JUtf8Byte*	helpSectionName,
-	const bool			setWMClass,
+	const JUtf8Byte*	wmClass,
 	TextEditorCtorFn	teCtorFn
 	)
 	:
@@ -105,7 +105,7 @@ TextDocument::TextDocument
 	itsHelpSectionName(helpSectionName)
 {
 	TextDocumentX1(type);
-	BuildWindow(setWMClass, teCtorFn);
+	BuildWindow(wmClass, teCtorFn);
 	TextDocumentX2(true);
 }
 
@@ -121,7 +121,7 @@ TextDocument::TextDocument
 	itsHelpSectionName("OverviewHelp")
 {
 	TextDocumentX1(type);
-	BuildWindow(true, ConstructTextEditor);
+	BuildWindow(nullptr, ConstructTextEditor);
 
 	ReadFile(JString::empty, true);
 	TextDocumentX2(true);
@@ -146,7 +146,7 @@ TextDocument::TextDocument
 	itsHelpSectionName("OverviewHelp")
 {
 	TextDocumentX1(kUnknownFT);
-	BuildWindow(true, ConstructTextEditor);
+	BuildWindow(nullptr, ConstructTextEditor);
 	*keep = ReadFromProject(input, vers);
 	TextDocumentX2(false);
 
@@ -326,7 +326,7 @@ TextDocument::GetMenuIcon
 void
 TextDocument::BuildWindow
 	(
-	const bool			setWMClass,
+	const JUtf8Byte*	wmClass,
 	TextEditorCtorFn	teCtorFn
 	)
 {
@@ -334,87 +334,74 @@ TextDocument::BuildWindow
 
 	auto* window = jnew JXWindow(this, 550,550, JString::empty);
 
-	itsFileDragSource =
-		jnew FileDragSource(this, window,
-					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 150,530, 20,20);
-	assert( itsFileDragSource != nullptr );
-
 	itsMenuBar =
 		jnew JXMenuBar(window,
 					JXWidget::kHElastic, JXWidget::kFixedTop, 0,0, 480,30);
-	assert( itsMenuBar != nullptr );
 
 	itsActionButton =
-		jnew JXTextButton(JGetString("itsActionButton::TextDocument::JXLayout"), window,
+		jnew JXTextButton(JString::empty, window,
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 480,0, 70,30);
-	assert( itsActionButton != nullptr );
 
 	itsToolBar =
 		jnew JXToolBar(GetPrefsManager(), kTEToolBarID, itsMenuBar, window,
 					JXWidget::kHElastic, JXWidget::kVElastic, 0,30, 550,500);
-	assert( itsToolBar != nullptr );
+
+	auto* scrollbarSet =
+		jnew JXScrollbarSet(itsToolBar->GetWidgetEnclosure(),
+					JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 550,500);
+	assert( scrollbarSet != nullptr );
 
 	auto* lineBorder =
 		jnew JXDownRect(window,
 					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 0,530, 80,20);
-	assert( lineBorder != nullptr );
+	lineBorder->SetBorderWidth(2);
+
+	auto* colBorder =
+		jnew JXDownRect(window,
+					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 80,530, 70,20);
+	colBorder->SetBorderWidth(2);
+
+	itsFileDragSource =
+		jnew FileDragSource(this, window,
+					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 150,530, 20,20);
+
+	itsFileDisplay =
+		jnew FileNameDisplay(this, itsFileDragSource, window,
+					JXWidget::kHElastic, JXWidget::kFixedBottom, 170,530, 295,20);
+
+	itsSettingsMenu =
+		jnew JXTextMenu(JGetString("itsSettingsMenu::TextDocument::JXLayout"), window,
+					JXWidget::kFixedRight, JXWidget::kFixedBottom, 465,530, 85,20);
 
 	auto* lineLabel =
 		jnew JXStaticText(JGetString("lineLabel::TextDocument::JXLayout"), lineBorder,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 0,0, 28,16);
-	assert( lineLabel != nullptr );
-	lineLabel->SetToLabel();
+	lineLabel->SetToLabel(false);
 
 	auto* lineInput =
 		jnew TELineIndexInput(lineLabel, lineBorder,
 					JXWidget::kHElastic, JXWidget::kFixedTop, 28,0, 48,16);
 	assert( lineInput != nullptr );
 
-	auto* colBorder =
-		jnew JXDownRect(window,
-					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 80,530, 70,20);
-	assert( colBorder != nullptr );
-
 	auto* colLabel =
 		jnew JXStaticText(JGetString("colLabel::TextDocument::JXLayout"), colBorder,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 0,0, 28,16);
-	assert( colLabel != nullptr );
-	colLabel->SetToLabel();
+	colLabel->SetToLabel(false);
 
 	auto* colInput =
 		jnew TEColIndexInput(lineInput, colLabel, colBorder,
 					JXWidget::kHElastic, JXWidget::kFixedTop, 28,0, 38,16);
 	assert( colInput != nullptr );
 
-	itsFileDisplay =
-		jnew FileNameDisplay(this, itsFileDragSource, window,
-					JXWidget::kHElastic, JXWidget::kFixedBottom, 170,530, 295,20);
-	assert( itsFileDisplay != nullptr );
-
-	itsSettingsMenu =
-		jnew JXTextMenu(JGetString("itsSettingsMenu::TextDocument::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedBottom, 465,530, 85,20);
-	assert( itsSettingsMenu != nullptr );
-
 // end JXLayout
 
 	AdjustWindowTitle();
-	window->SetMinSize(300, 100);
-	if (setWMClass)
-	{
-		window->SetWMClass(GetWMClassInstance(), GetEditorWindowClass());
-	}
+	window->SetWMClass(GetWMClassInstance(), wmClass != nullptr ? wmClass : "Code_Crusader_Editor");
 	window->ShouldFocusWhenShow(true);	// necessary for click-to-focus
 
 	JPoint p = itsSettingsMenu->GetTitlePadding();
 	p.y      = 0;
 	itsSettingsMenu->SetTitlePadding(p);
-
-	auto* scrollbarSet =
-		jnew JXScrollbarSet(itsToolBar->GetWidgetEnclosure(),
-						   JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 100,100);
-	assert( scrollbarSet != nullptr );
-	scrollbarSet->FitToEnclosure();
 
 	bool onDisk;
 	const JString fullName = GetFullName(&onDisk);

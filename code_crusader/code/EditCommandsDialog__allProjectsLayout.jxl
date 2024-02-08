@@ -1,0 +1,142 @@
+jx_layout_editor 7
+580
+210
+"allProjectsLayout"
+""
+""
+"compartment"
+1
+
+1
+0
+0
+"StaticText"
+2
+0
+0 0 20 580
+"anyProjectTitle"
+0
+0
+0
+"Tasks that can be used with any project:"
+1
+0
+0
+0
+0
+
+1
+0
+0
+"ScrollbarSet"
+2
+2
+30 0 210 510
+"allScrollbarSet"
+0
+0
+0
+
+1
+2
+1
+"CustomWidget"
+2
+0
+0 0 20 495
+"colHeader"
+0
+0
+0
+"JXColHeaderWidget"
+"itsAllTable, allScrollbarSet"
+0
+"itsAllTable"
+
+1
+2
+1
+"CustomWidget"
+2
+2
+20 0 165 495
+"itsAllTable"
+1
+0
+0
+"CommandTable"
+"*GetCommandManager()->GetCommandList(), allNewButton, allRemoveButton, allDuplicateButton, allExportButton, allImportButton, allScrollbarSet"
+0
+"allNewButton,allRemoveButton,allDuplicateButton,allExportButton,allImportButton"
+
+1
+0
+0
+"TextButton"
+1
+0
+60 520 80 580
+"allNewButton"
+0
+0
+0
+"New"
+""
+
+1
+0
+0
+"TextButton"
+1
+0
+90 520 110 580
+"allDuplicateButton"
+0
+0
+0
+"Duplicate"
+""
+
+1
+0
+0
+"TextButton"
+1
+0
+120 520 140 580
+"allRemoveButton"
+0
+0
+0
+"Remove"
+""
+
+1
+0
+0
+"TextButton"
+1
+0
+160 520 180 580
+"allExportButton"
+0
+0
+0
+"Export"
+""
+
+1
+0
+0
+"TextButton"
+1
+0
+190 520 210 580
+"allImportButton"
+0
+0
+0
+"Import"
+""
+
+0

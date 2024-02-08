@@ -38,11 +38,10 @@ protected:
 
 private:
 
-	CPPMacroTable*	itsTable;
-
 // begin JXLayout
 
-	JXTextButton* itsHelpButton;
+	JXTextButton*  itsHelpButton;
+	CPPMacroTable* itsTable;
 
 // end JXLayout
 

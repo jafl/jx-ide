@@ -41,7 +41,7 @@ public:
 	void	ScrollForDefinition(const Language lang);
 
 	void	HandleKeyPress(const JUtf8Character& c,
-								   const int keySym, const JXKeyModifiers& modifiers) override;
+						   const int keySym, const JXKeyModifiers& modifiers) override;
 	void	HandleShortcut(const int key, const JXKeyModifiers& modifiers) override;
 
 	JSize	GetTabCharCount() const;
@@ -104,12 +104,12 @@ protected:
 
 	void	AdjustCursor(const JPoint& pt, const JXKeyModifiers& modifiers) override;
 	void	HandleMouseDown(const JPoint& pt, const JXMouseButton button,
-									const JSize clickCount,
-									const JXButtonStates& buttonStates,
-									const JXKeyModifiers& modifiers) override;
+							const JSize clickCount,
+							const JXButtonStates& buttonStates,
+							const JXKeyModifiers& modifiers) override;
 	void	HandleMouseUp(const JPoint& pt, const JXMouseButton button,
-								  const JXButtonStates& buttonStates,
-								  const JXKeyModifiers& modifiers) override;
+						  const JXButtonStates& buttonStates,
+						  const JXKeyModifiers& modifiers) override;
 
 	JCoordinate	GetPrintHeaderHeight(JPagePrinter& p) const override;
 	void		DrawPrintHeader(JPagePrinter& p, const JCoordinate footerHeight) override;
@@ -129,10 +129,10 @@ protected:
 	protected:
 
 		void	AdjustStylesBeforeBroadcast(
-							const JString& text, JRunArray<JFont>* styles,
-							JStyledText::TextRange* recalcRange,
-							JStyledText::TextRange* redrawRange,
-							const bool deletion) override;
+					const JString& text, JRunArray<JFont>* styles,
+					JStyledText::TextRange* recalcRange,
+					JStyledText::TextRange* redrawRange,
+					const bool deletion) override;
 
 	private:
 
@@ -172,7 +172,7 @@ private:
 
 	// right margin
 
-	bool	itsDrawRightMarginFlag;
+	bool		itsDrawRightMarginFlag;
 	JSize		itsRightMarginWidth;
 	JColorID	itsRightMarginColor;		// saved by PrefsManager
 
@@ -186,10 +186,10 @@ private:
 
 	void	UpdateTabHandling();
 
-	void		UpdateCustomEditMenuItems();
+	void	UpdateCustomEditMenuItems();
 	bool	HandleCustomEditMenuItems(const JIndex index);
 
-	void		UpdateCustomSearchMenuItems();
+	void	UpdateCustomSearchMenuItems();
 	bool	HandleCustomSearchMenuItems(const JIndex index);
 
 	void	PlaceBookmark();
@@ -202,8 +202,8 @@ private:
 	void	PrivateSetTabCharCount(const JSize charCount);
 
 	bool	IsNonstdError(JString* fileName,
-							  JStyledText::TextRange* fileNameRange,
-							  JIndex* lineIndex) const;
+						  JStyledText::TextRange* fileNameRange,
+						  JIndex* lineIndex) const;
 
 	void	ShowBalancingOpenGroup();
 

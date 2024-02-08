@@ -27,10 +27,11 @@ CommandOutputDocument::CommandOutputDocument
 	(
 	const TextFileType	fileType,
 	const JUtf8Byte*	helpSectionName,
+	const JUtf8Byte*	wmClass,
 	const JString&		dontCloseMessage
 	)
 	:
-	TextDocument(fileType, helpSectionName, false, ConstructTextEditor),
+	TextDocument(fileType, helpSectionName, wmClass, ConstructTextEditor),
 	itsUseCount(0),
 	itsDontCloseMsg(dontCloseMessage)
 {

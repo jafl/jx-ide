@@ -1,0 +1,49 @@
+jx_layout_editor 7
+400
+430
+"JXLayout"
+""
+"Code_Crusader_Tree"
+""
+0
+
+1
+0
+0
+"MenuBar"
+2
+0
+0 0 30 400
+"menuBar"
+0
+0
+0
+
+1
+0
+0
+"ToolBar"
+2
+2
+30 0 430 400
+"itsToolBar"
+1
+0
+0
+"GetPrefsManager()"
+"toolBarPrefID"
+"menuBar"
+
+1
+2
+1
+"ScrollbarSet"
+2
+2
+0 0 370 400
+"scrollbarSet"
+0
+0
+0
+
+0

@@ -34,6 +34,7 @@ public:
 
 	ExecOutputDocument(const TextFileType fileType = kExecOutputFT,
 						 const JUtf8Byte* helpSectionName = "RunProgramHelp",
+						 const JUtf8Byte* wmClass = nullptr,
 						 const bool focusToCmd = true);
 
 	~ExecOutputDocument() override;

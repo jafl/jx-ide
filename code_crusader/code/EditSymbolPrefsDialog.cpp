@@ -55,33 +55,29 @@ EditSymbolPrefsDialog::BuildWindow
 {
 // begin JXLayout
 
-	auto* window = jnew JXWindow(this, 470,90, JString::empty);
+	auto* window = jnew JXWindow(this, 470,90, JGetString("WindowTitle::EditSymbolPrefsDialog::JXLayout"));
+
+	itsRaiseTreeOnRightClickCB =
+		jnew JXTextCheckbox(JGetString("itsRaiseTreeOnRightClickCB::EditSymbolPrefsDialog::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,20, 430,20);
 
 	auto* cancelButton =
 		jnew JXTextButton(JGetString("cancelButton::EditSymbolPrefsDialog::JXLayout"), window,
 					JXWidget::kHElastic, JXWidget::kVElastic, 60,60, 70,20);
 	assert( cancelButton != nullptr );
 
-	auto* okButton =
-		jnew JXTextButton(JGetString("okButton::EditSymbolPrefsDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 340,60, 70,20);
-	assert( okButton != nullptr );
-	okButton->SetShortcuts(JGetString("okButton::EditSymbolPrefsDialog::shortcuts::JXLayout"));
-
-	itsRaiseTreeOnRightClickCB =
-		jnew JXTextCheckbox(JGetString("itsRaiseTreeOnRightClickCB::EditSymbolPrefsDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,20, 430,20);
-	assert( itsRaiseTreeOnRightClickCB != nullptr );
-
 	itsHelpButton =
 		jnew JXTextButton(JGetString("itsHelpButton::EditSymbolPrefsDialog::JXLayout"), window,
 					JXWidget::kHElastic, JXWidget::kVElastic, 195,60, 70,20);
-	assert( itsHelpButton != nullptr );
-	itsHelpButton->SetShortcuts(JGetString("itsHelpButton::EditSymbolPrefsDialog::shortcuts::JXLayout"));
+	itsHelpButton->SetShortcuts(JGetString("itsHelpButton::shortcuts::EditSymbolPrefsDialog::JXLayout"));
+
+	auto* okButton =
+		jnew JXTextButton(JGetString("okButton::EditSymbolPrefsDialog::JXLayout"), window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 339,59, 72,22);
+	okButton->SetShortcuts(JGetString("okButton::shortcuts::EditSymbolPrefsDialog::JXLayout"));
 
 // end JXLayout
 
-	window->SetTitle(JGetString("WindowTitle::EditSymbolPrefsDialog"));
 	SetButtons(okButton, cancelButton);
 
 	ListenTo(itsHelpButton);

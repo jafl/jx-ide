@@ -65,58 +65,51 @@ SubprojectConfigDialog::BuildWindow
 {
 // begin JXLayout
 
-	auto* window = jnew JXWindow(this, 360,160, JString::empty);
-
-	auto* cancelButton =
-		jnew JXTextButton(JGetString("cancelButton::SubprojectConfigDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 70,130, 70,20);
-	assert( cancelButton != nullptr );
-
-	auto* okButton =
-		jnew JXTextButton(JGetString("okButton::SubprojectConfigDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 220,130, 70,20);
-	assert( okButton != nullptr );
-	okButton->SetShortcuts(JGetString("okButton::SubprojectConfigDialog::shortcuts::JXLayout"));
-
-	auto* fileLabel =
-		jnew JXStaticText(JGetString("fileLabel::SubprojectConfigDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 20,60, 70,20);
-	assert( fileLabel != nullptr );
-	fileLabel->SetToLabel();
-
-	itsShouldBuildCB =
-		jnew JXTextCheckbox(JGetString("itsShouldBuildCB::SubprojectConfigDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,90, 230,20);
-	assert( itsShouldBuildCB != nullptr );
-	itsShouldBuildCB->SetShortcuts(JGetString("itsShouldBuildCB::SubprojectConfigDialog::shortcuts::JXLayout"));
-
-	itsSubProjName =
-		jnew ProjectFileInput(window,
-					JXWidget::kHElastic, JXWidget::kFixedBottom, 90,60, 200,20);
-	assert( itsSubProjName != nullptr );
-
-	itsChooseFileButton =
-		jnew JXTextButton(JGetString("itsChooseFileButton::SubprojectConfigDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 290,60, 50,20);
-	assert( itsChooseFileButton != nullptr );
-	itsChooseFileButton->SetShortcuts(JGetString("itsChooseFileButton::SubprojectConfigDialog::shortcuts::JXLayout"));
+	auto* window = jnew JXWindow(this, 360,160, JGetString("WindowTitle::SubprojectConfigDialog::JXLayout"));
 
 	itsIncludeInDepListCB =
 		jnew JXTextCheckbox(JGetString("itsIncludeInDepListCB::SubprojectConfigDialog::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,20, 250,20);
-	assert( itsIncludeInDepListCB != nullptr );
-	itsIncludeInDepListCB->SetShortcuts(JGetString("itsIncludeInDepListCB::SubprojectConfigDialog::shortcuts::JXLayout"));
+	itsIncludeInDepListCB->SetShortcuts(JGetString("itsIncludeInDepListCB::shortcuts::SubprojectConfigDialog::JXLayout"));
+
+	auto* fileLabel =
+		jnew JXStaticText(JGetString("fileLabel::SubprojectConfigDialog::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,60, 70,20);
+	fileLabel->SetToLabel(false);
+
+	itsSubProjName =
+		jnew ProjectFileInput(window,
+					JXWidget::kHElastic, JXWidget::kFixedTop, 90,60, 200,20);
+
+	itsChooseFileButton =
+		jnew JXTextButton(JGetString("itsChooseFileButton::SubprojectConfigDialog::JXLayout"), window,
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 290,60, 50,20);
+	itsChooseFileButton->SetShortcuts(JGetString("itsChooseFileButton::shortcuts::SubprojectConfigDialog::JXLayout"));
+
+	itsShouldBuildCB =
+		jnew JXTextCheckbox(JGetString("itsShouldBuildCB::SubprojectConfigDialog::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,90, 230,20);
+	itsShouldBuildCB->SetShortcuts(JGetString("itsShouldBuildCB::shortcuts::SubprojectConfigDialog::JXLayout"));
+
+	auto* cancelButton =
+		jnew JXTextButton(JGetString("cancelButton::SubprojectConfigDialog::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 70,130, 70,20);
+	assert( cancelButton != nullptr );
+
+	auto* okButton =
+		jnew JXTextButton(JGetString("okButton::SubprojectConfigDialog::JXLayout"), window,
+					JXWidget::kFixedRight, JXWidget::kFixedBottom, 219,129, 72,22);
+	okButton->SetShortcuts(JGetString("okButton::shortcuts::SubprojectConfigDialog::JXLayout"));
 
 // end JXLayout
 
-	window->SetTitle(JGetString("WindowTitle::SubprojectConfigDialog"));
 	SetButtons(okButton, cancelButton);
 
 	itsSubProjName->GetText()->SetText(subProjName);
 	itsSubProjName->SetBasePath(basePath);
 	itsSubProjName->ShouldAllowInvalidFile();
 
-	if ((supervisor->GetBuildManager())->GetMakefileMethod() == BuildManager::kMakemake)
+	if (supervisor->GetBuildManager()->GetMakefileMethod() == BuildManager::kMakemake)
 	{
 		itsIncludeInDepListCB->SetState(includeInDepList);
 		itsShouldBuildCB->SetState(shouldBuild);

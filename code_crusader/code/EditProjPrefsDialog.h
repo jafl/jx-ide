@@ -39,10 +39,10 @@ private:
 // begin JXLayout
 
 	JXTextCheckbox* itsReopenTextFilesCB;
-	JXTextButton*   itsHelpButton;
-	JXRadioGroup*   itsDropFileActionRG;
 	JXTextCheckbox* itsDoubleSpaceCB;
 	JXTextCheckbox* itsRebuildMakefileDailyCB;
+	JXRadioGroup*   itsDropFileActionRG;
+	JXTextButton*   itsHelpButton;
 
 // end JXLayout
 

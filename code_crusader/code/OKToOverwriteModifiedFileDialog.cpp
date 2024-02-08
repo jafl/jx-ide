@@ -8,15 +8,14 @@
  ******************************************************************************/
 
 #include "OKToOverwriteModifiedFileDialog.h"
+#include <jx-af/jx/JXDisplay.h>
 #include <jx-af/jx/JXWindow.h>
 #include <jx-af/jx/JXTextButton.h>
 #include <jx-af/jx/JXStaticText.h>
 #include <jx-af/jx/JXImageWidget.h>
-#include <jx-af/jx/JXImage.h>
+#include <jx-af/jx/JXImageCache.h>
 #include <jx-af/jcore/jGlobals.h>
 #include <jx-af/jcore/jAssert.h>
-
-#include <jx-af/image/jx/jx_un_warning.xpm>
 
 /******************************************************************************
  Constructor
@@ -61,17 +60,26 @@ OKToOverwriteModifiedFileDialog::BuildWindow
 {
 // begin JXLayout
 
-	auto* window = jnew JXWindow(this, 330,110, JString::empty);
+	auto* window = jnew JXWindow(this, 330,110, JGetString("WindowTitle::OKToOverwriteModifiedFileDialog::JXLayout"));
 
 	auto* icon =
 		jnew JXImageWidget(window,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,20, 40,40);
-	assert( icon != nullptr );
+#ifndef _H_jx_af_image_jx_jx_un_warning
+#define _H_jx_af_image_jx_jx_un_warning
+#include <jx-af/image/jx/jx_un_warning.xpm>
+#endif
+	icon->SetImage(GetDisplay()->GetImageCache()->GetImage(jx_un_warning), false);
 
 	auto* text =
-		jnew JXStaticText(JGetString("text::OKToOverwriteModifiedFileDialog::JXLayout"), window,
+		jnew JXStaticText(JString::empty, true, false, false, nullptr, window,
 					JXWidget::kHElastic, JXWidget::kVElastic, 60,20, 250,50);
 	assert( text != nullptr );
+
+	itsCompareButton =
+		jnew JXTextButton(JGetString("itsCompareButton::OKToOverwriteModifiedFileDialog::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 50,80, 60,20);
+	itsCompareButton->SetShortcuts(JGetString("itsCompareButton::shortcuts::OKToOverwriteModifiedFileDialog::JXLayout"));
 
 	auto* cancelButton =
 		jnew JXTextButton(JGetString("cancelButton::OKToOverwriteModifiedFileDialog::JXLayout"), window,
@@ -80,20 +88,13 @@ OKToOverwriteModifiedFileDialog::BuildWindow
 
 	auto* saveButton =
 		jnew JXTextButton(JGetString("saveButton::OKToOverwriteModifiedFileDialog::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedBottom, 250,80, 60,20);
-	assert( saveButton != nullptr );
-	saveButton->SetShortcuts(JGetString("saveButton::OKToOverwriteModifiedFileDialog::shortcuts::JXLayout"));
-
-	itsCompareButton =
-		jnew JXTextButton(JGetString("itsCompareButton::OKToOverwriteModifiedFileDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 50,80, 60,20);
-	assert( itsCompareButton != nullptr );
-	itsCompareButton->SetShortcuts(JGetString("itsCompareButton::OKToOverwriteModifiedFileDialog::shortcuts::JXLayout"));
+					JXWidget::kFixedRight, JXWidget::kFixedBottom, 249,79, 62,22);
+	saveButton->SetShortcuts(JGetString("saveButton::shortcuts::OKToOverwriteModifiedFileDialog::JXLayout"));
 
 // end JXLayout
 
-	window->SetTitle(JGetString("WindowTitle::OKToOverwriteModifiedFileDialog"));
 	SetButtons(saveButton, cancelButton);
+
 	ListenTo(itsCompareButton, std::function([this](const JXButton::Pushed&)
 	{
 		itsCloseAction = kCompareData;

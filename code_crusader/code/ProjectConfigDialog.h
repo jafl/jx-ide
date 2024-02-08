@@ -43,11 +43,11 @@ private:
 // begin JXLayout
 
 	JXRadioGroup* itsMethodRG;
+	JXTextButton* itsHelpButton;
 	JXInputField* itsTargetName;
 	JXInputField* itsDepListExpr;
 	JXInputField* itsUpdateMakefileCmd;
 	JXInputField* itsSubProjectBuildCmd;
-	JXTextButton* itsHelpButton;
 
 // end JXLayout
 

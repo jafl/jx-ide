@@ -792,7 +792,7 @@ DiffDocument::DiffDocument
 	const JFontStyle&	insertStyle
 	)
 	:
-	TextDocument(kDiffOutputFT, "DiffHelp", true, ConstructDiffEditor),
+	TextDocument(kDiffOutputFT, "DiffHelp", nullptr, ConstructDiffEditor),
 	itsType(type),
 	itsFullName(fullName),
 	itsGetCmd(getCmd),

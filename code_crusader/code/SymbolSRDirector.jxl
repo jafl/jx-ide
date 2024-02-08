@@ -1,0 +1,50 @@
+jx_layout_editor 7
+400
+230
+"JXLayout"
+""
+""
+""
+0
+
+1
+0
+0
+"MenuBar"
+2
+0
+0 0 30 400
+"menuBar"
+0
+0
+0
+
+1
+0
+0
+"ScrollbarSet"
+2
+2
+30 0 230 400
+"scrollbarSet"
+0
+0
+0
+
+1
+2
+1
+"CustomWidget"
+2
+2
+0 0 185 385
+"itsSymbolTable"
+1
+0
+0
+"SymbolTable"
+"itsMainSymDir, symbolList, scrollbarSet"
+0
+""
+
+0

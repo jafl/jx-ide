@@ -91,65 +91,51 @@ EditSearchPathsDialog::BuildWindow
 {
 // begin JXLayout
 
-	auto* window = jnew JXWindow(this, 370,370, JString::empty);
+	auto* window = jnew JXWindow(this, 370,460, JGetString("WindowTitle::EditSearchPathsDialog::JXLayout"));
+
+	auto* instrText =
+		jnew JXStaticText(JGetString("instrText::EditSearchPathsDialog::JXLayout"), true, false, false, nullptr, window,
+					JXWidget::kHElastic, JXWidget::kFixedTop, 20,20, 330,150);
+	assert( instrText != nullptr );
 
 	auto* scrollbarSet =
 		jnew JXScrollbarSet(window,
-					JXWidget::kHElastic, JXWidget::kFixedBottom, 20,100, 240,220);
+					JXWidget::kHElastic, JXWidget::kVElastic, 20,190, 240,220);
 	assert( scrollbarSet != nullptr );
+
+	auto* addPathButton =
+		jnew JXTextButton(JGetString("addPathButton::EditSearchPathsDialog::JXLayout"), window,
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 280,200, 70,20);
+	addPathButton->SetShortcuts(JGetString("addPathButton::shortcuts::EditSearchPathsDialog::JXLayout"));
+
+	auto* removePathButton =
+		jnew JXTextButton(JGetString("removePathButton::EditSearchPathsDialog::JXLayout"), window,
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 280,230, 70,20);
+	removePathButton->SetShortcuts(JGetString("removePathButton::shortcuts::EditSearchPathsDialog::JXLayout"));
+
+	auto* choosePathButton =
+		jnew JXTextButton(JGetString("choosePathButton::EditSearchPathsDialog::JXLayout"), window,
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 280,280, 70,20);
+	choosePathButton->SetShortcuts(JGetString("choosePathButton::shortcuts::EditSearchPathsDialog::JXLayout"));
 
 	auto* cancelButton =
 		jnew JXTextButton(JGetString("cancelButton::EditSearchPathsDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 70,340, 70,20);
+					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 70,430, 70,20);
 	assert( cancelButton != nullptr );
 
 	auto* okButton =
 		jnew JXTextButton(JGetString("okButton::EditSearchPathsDialog::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedBottom, 230,340, 70,20);
+					JXWidget::kFixedRight, JXWidget::kFixedBottom, 230,430, 70,20);
 	assert( okButton != nullptr );
 
-	auto* instrText =
-		jnew JXStaticText(JGetString("instrText::EditSearchPathsDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 20,20, 330,70);
-	assert( instrText != nullptr );
-
-	auto* addPathButton =
-		jnew JXTextButton(JGetString("addPathButton::EditSearchPathsDialog::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedBottom, 280,110, 70,20);
-	assert( addPathButton != nullptr );
-	addPathButton->SetShortcuts(JGetString("addPathButton::EditSearchPathsDialog::shortcuts::JXLayout"));
-
-	auto* removePathButton =
-		jnew JXTextButton(JGetString("removePathButton::EditSearchPathsDialog::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedBottom, 280,140, 70,20);
-	assert( removePathButton != nullptr );
-	removePathButton->SetShortcuts(JGetString("removePathButton::EditSearchPathsDialog::shortcuts::JXLayout"));
-
-	auto* choosePathButton =
-		jnew JXTextButton(JGetString("choosePathButton::EditSearchPathsDialog::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedBottom, 280,190, 70,20);
-	assert( choosePathButton != nullptr );
-	choosePathButton->SetShortcuts(JGetString("choosePathButton::EditSearchPathsDialog::shortcuts::JXLayout"));
+	itsTable =
+		jnew PathTable(dirList, addPathButton, removePathButton, choosePathButton, scrollbarSet, scrollbarSet->GetScrollEnclosure(),
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 0,0, 225,205);
 
 // end JXLayout
 
-	window->SetTitle(JGetString("WindowTitle::EditSearchPathsDialog"));
 	window->LockCurrentMinSize();
 	SetButtons(okButton, cancelButton);
-
-	instrText->GetText()->SetText(JGetString("Instructions::EditSearchPathsDialog"));
-	window->AdjustSize(0, instrText->GetBoundsHeight() - instrText->GetFrameHeight());
-	instrText->SetSizing(JXWidget::kHElastic, JXWidget::kFixedTop);
-	scrollbarSet->SetSizing(JXWidget::kHElastic, JXWidget::kVElastic);
-	addPathButton->SetSizing(JXWidget::kFixedRight, JXWidget::kFixedTop);
-	removePathButton->SetSizing(JXWidget::kFixedRight, JXWidget::kFixedTop);
-	choosePathButton->SetSizing(JXWidget::kFixedRight, JXWidget::kFixedTop);
-
-	itsTable =
-		jnew PathTable(dirList, addPathButton, removePathButton, choosePathButton,
-						scrollbarSet, scrollbarSet->GetScrollEnclosure(),
-						JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 10,10);
-	assert( itsTable != nullptr );
 }
 
 /******************************************************************************

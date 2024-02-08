@@ -43,25 +43,14 @@ protected:
 
 private:
 
-	CRMRuleListTable*	itsCRMTable;
-	CRMRuleTable*		itsRuleTable;
-
 // begin JXLayout
 
-	JXVertPartition* itsPartition;
-	JXTextButton*    itsHelpButton;
+	JXVertPartition*  itsPartition;
+	JXTextButton*     itsHelpButton;
+	CRMRuleTable*     itsRuleTable;
+	CRMRuleListTable* itsCRMTable;
 
 // end JXLayout
-
-// begin ruleLayout
-
-
-// end ruleLayout
-
-// begin crmLayout
-
-
-// end crmLayout
 
 private:
 

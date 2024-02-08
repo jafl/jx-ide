@@ -1,0 +1,156 @@
+jx_layout_editor 7
+320
+270
+"JXLayout"
+"Tree Preferences"
+""
+""
+0
+
+1
+0
+0
+"CustomWidget"
+2
+0
+20 20 50 300
+"itsFontSizeMenu"
+1
+0
+0
+"JXFontSizeMenu"
+"JFontManager::GetDefaultFontName(), JGetString(\"FontSize::EditTreePrefsDialog\")"
+0
+""
+
+1
+0
+0
+"TextCheckbox"
+0
+0
+70 20 90 300
+"itsRaiseSingleMatchCB"
+1
+0
+0
+"Raise window if search matches single class"
+""
+
+1
+0
+0
+"TextCheckbox"
+0
+0
+110 20 130 300
+"itsAutoMinMILinkCB"
+1
+0
+0
+"Automatically minimize MI link lengths"
+""
+
+1
+0
+0
+"RadioGroup"
+0
+0
+140 140 214 274
+"itsMILinkStyleRG"
+1
+0
+0
+
+1
+4
+1
+"TextRadioButton"
+0
+0
+10 10 30 120
+"aboveLabel"
+0
+0
+0
+"1"
+"Above classes"
+""
+
+1
+0
+0
+"StaticText"
+0
+0
+170 45 190 135
+"miLinksLabel"
+0
+0
+0
+"Draw MI links:"
+1
+0
+0
+0
+0
+
+1
+4
+1
+"TextRadioButton"
+0
+0
+40 10 60 120
+"belowLabel"
+0
+0
+0
+"2"
+"Below classes"
+""
+
+1
+0
+0
+"TextButton"
+0
+0
+240 30 260 100
+"cancelButton"
+0
+0
+0
+"Cancel"
+""
+
+1
+0
+0
+"TextButton"
+0
+0
+240 125 260 195
+"itsHelpButton"
+1
+0
+0
+"Help"
+"F1"
+
+1
+0
+0
+"TextButton"
+0
+0
+240 220 260 290
+"okButton"
+0
+0
+0
+"OK"
+"^M"
+
+0

@@ -44,12 +44,12 @@ private:
 	SymbolDirector*		itsMainSymDir;		// owns us
 	ProjectDocument*	itsProjDoc;			// not owned
 	SymbolList*			itsSymbolList;		// not owned
-	SymbolTable*		itsSymbolTable;
 	JXTextMenu*			itsActionsMenu;
 	CommandMenu*		itsCmdMenu;
 
 // begin JXLayout
 
+	SymbolTable* itsSymbolTable;
 
 // end JXLayout
 

@@ -17,7 +17,7 @@
 #include <jx-af/jx/JXStaticText.h>
 #include <jx-af/jx/JXDocumentMenu.h>
 #include <jx-af/jx/JXCSFDialogBase.h>
-#include <jx-af/jcore/JString.h>
+#include <jx-af/jcore/JFontManager.h>
 #include <jx-af/jcore/jFileUtil.h>
 #include <jx-af/jcore/jAssert.h>
 
@@ -83,50 +83,43 @@ FindFileDialog::BuildWindow()
 {
 // begin JXLayout
 
-	auto* window = jnew JXWindow(this, 290,140, JString::empty);
-
-	itsCloseButton =
-		jnew JXTextButton(JGetString("itsCloseButton::FindFileDialog::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 130,110, 60,20);
-	assert( itsCloseButton != nullptr );
-	itsCloseButton->SetShortcuts(JGetString("itsCloseButton::FindFileDialog::shortcuts::JXLayout"));
-
-	itsFindButton =
-		jnew JXTextButton(JGetString("itsFindButton::FindFileDialog::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 210,110, 60,20);
-	assert( itsFindButton != nullptr );
-	itsFindButton->SetShortcuts(JGetString("itsFindButton::FindFileDialog::shortcuts::JXLayout"));
-
-	itsFileName =
-		jnew JXInputField(window,
-					JXWidget::kHElastic, JXWidget::kFixedTop, 20,40, 220,20);
-	assert( itsFileName != nullptr );
+	auto* window = jnew JXWindow(this, 290,140, JGetString("WindowTitle::FindFileDialog::JXLayout"));
 
 	auto* nameLabel =
 		jnew JXStaticText(JGetString("nameLabel::FindFileDialog::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,20, 80,20);
-	assert( nameLabel != nullptr );
-	nameLabel->SetToLabel();
+	nameLabel->SetToLabel(false);
 
 	itsFileHistoryMenu =
 		jnew JXStringHistoryMenu(kHistoryLength, window,
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 240,40, 30,20);
-	assert( itsFileHistoryMenu != nullptr );
 
 	itsIgnoreCaseCB =
 		jnew JXTextCheckbox(JGetString("itsIgnoreCaseCB::FindFileDialog::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,70, 230,20);
-	assert( itsIgnoreCaseCB != nullptr );
-	itsIgnoreCaseCB->SetShortcuts(JGetString("itsIgnoreCaseCB::FindFileDialog::shortcuts::JXLayout"));
+	itsIgnoreCaseCB->SetShortcuts(JGetString("itsIgnoreCaseCB::shortcuts::FindFileDialog::JXLayout"));
 
 	itsStayOpenCB =
 		jnew JXTextCheckbox(JGetString("itsStayOpenCB::FindFileDialog::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,110, 90,20);
-	assert( itsStayOpenCB != nullptr );
+
+	itsCloseButton =
+		jnew JXTextButton(JGetString("itsCloseButton::FindFileDialog::JXLayout"), window,
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 130,110, 60,20);
+	itsCloseButton->SetShortcuts(JGetString("itsCloseButton::shortcuts::FindFileDialog::JXLayout"));
+
+	itsFindButton =
+		jnew JXTextButton(JGetString("itsFindButton::FindFileDialog::JXLayout"), window,
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 209,109, 62,22);
+	itsFindButton->SetShortcuts(JGetString("itsFindButton::shortcuts::FindFileDialog::JXLayout"));
+
+	itsFileName =
+		jnew JXInputField(window,
+					JXWidget::kHElastic, JXWidget::kFixedTop, 20,40, 220,20);
+	itsFileName->SetFont(JFontManager::GetDefaultMonospaceFont());
 
 // end JXLayout
 
-	window->SetTitle(JGetString("WindowTitle::FindFileDialog"));
 	window->SetCloseAction(JXWindow::kDeactivateDirector);
 	window->PlaceAsDialogWindow();
 	window->LockCurrentMinSize();

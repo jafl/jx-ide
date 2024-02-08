@@ -1,0 +1,152 @@
+jx_layout_editor 7
+370
+290
+"JXLayout"
+"C Preprocessor"
+""
+""
+0
+
+1
+0
+0
+"ScrollbarSet"
+2
+2
+20 20 240 270
+"scrollbarSet"
+0
+0
+0
+
+1
+1
+1
+"CustomWidget"
+2
+0
+0 0 20 235
+"colHeader"
+0
+0
+0
+"JXColHeaderWidget"
+"itsTable, scrollbarSet"
+0
+"itsTable"
+
+1
+1
+1
+"CustomWidget"
+2
+2
+20 0 205 235
+"itsTable"
+1
+0
+0
+"CPPMacroTable"
+"cpp, addMacroButton, removeMacroButton, loadMacroButton, saveMacroButton, scrollbarSet"
+0
+"addMacroButton,removeMacroButton,loadMacroButton,saveMacroButton"
+
+1
+0
+0
+"TextButton"
+1
+0
+50 290 70 350
+"addMacroButton"
+0
+0
+0
+"New"
+"#N"
+
+1
+0
+0
+"TextButton"
+1
+0
+80 290 100 350
+"removeMacroButton"
+0
+0
+0
+"Remove"
+"#R"
+
+1
+0
+0
+"TextButton"
+1
+0
+130 290 150 350
+"loadMacroButton"
+0
+0
+0
+"Load"
+"#L"
+
+1
+0
+0
+"TextButton"
+1
+0
+160 290 180 350
+"saveMacroButton"
+0
+0
+0
+"Save"
+"#S"
+
+1
+0
+0
+"TextButton"
+0
+1
+260 40 280 110
+"cancelButton"
+0
+0
+0
+"Cancel"
+""
+
+1
+0
+0
+"TextButton"
+0
+1
+260 150 280 220
+"itsHelpButton"
+1
+0
+0
+"Help"
+"F1"
+
+1
+0
+0
+"TextButton"
+0
+1
+260 260 280 330
+"okButton"
+0
+0
+0
+"OK"
+""
+
+0

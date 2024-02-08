@@ -63,34 +63,28 @@ EditProjPrefsDialog::BuildWindow
 {
 // begin JXLayout
 
-	auto* window = jnew JXWindow(this, 360,310, JString::empty);
-
-	auto* cancelButton =
-		jnew JXTextButton(JGetString("cancelButton::EditProjPrefsDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 30,280, 70,20);
-	assert( cancelButton != nullptr );
-
-	auto* okButton =
-		jnew JXTextButton(JGetString("okButton::EditProjPrefsDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 250,280, 70,20);
-	assert( okButton != nullptr );
-	okButton->SetShortcuts(JGetString("okButton::EditProjPrefsDialog::shortcuts::JXLayout"));
+	auto* window = jnew JXWindow(this, 360,310, JGetString("WindowTitle::EditProjPrefsDialog::JXLayout"));
 
 	itsReopenTextFilesCB =
 		jnew JXTextCheckbox(JGetString("itsReopenTextFilesCB::EditProjPrefsDialog::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,20, 300,20);
-	assert( itsReopenTextFilesCB != nullptr );
 
-	itsHelpButton =
-		jnew JXTextButton(JGetString("itsHelpButton::EditProjPrefsDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 140,280, 70,20);
-	assert( itsHelpButton != nullptr );
-	itsHelpButton->SetShortcuts(JGetString("itsHelpButton::EditProjPrefsDialog::shortcuts::JXLayout"));
+	itsDoubleSpaceCB =
+		jnew JXTextCheckbox(JGetString("itsDoubleSpaceCB::EditProjPrefsDialog::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,50, 300,20);
+
+	itsRebuildMakefileDailyCB =
+		jnew JXTextCheckbox(JGetString("itsRebuildMakefileDailyCB::EditProjPrefsDialog::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,80, 300,20);
+
+	auto* dndPathLabel =
+		jnew JXStaticText(JGetString("dndPathLabel::EditProjPrefsDialog::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,120, 330,20);
+	dndPathLabel->SetToLabel(false);
 
 	itsDropFileActionRG =
 		jnew JXRadioGroup(window,
-					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 70,150, 204,114);
-	assert( itsDropFileActionRG != nullptr );
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 70,150, 204,114);
 
 	auto* absolutePathRB =
 		jnew JXTextRadioButton(ProjectTable::kAbsolutePath, JGetString("absolutePathRB::EditProjPrefsDialog::JXLayout"), itsDropFileActionRG,
@@ -107,30 +101,28 @@ EditProjPrefsDialog::BuildWindow
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,50, 180,20);
 	assert( homeDirLabel != nullptr );
 
-	auto* dndPathLabel =
-		jnew JXStaticText(JGetString("dndPathLabel::EditProjPrefsDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,120, 330,20);
-	assert( dndPathLabel != nullptr );
-	dndPathLabel->SetToLabel();
-
 	auto* dndAskLabel =
 		jnew JXTextRadioButton(ProjectTable::kDropAskPathType, JGetString("dndAskLabel::EditProjPrefsDialog::JXLayout"), itsDropFileActionRG,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,80, 180,20);
 	assert( dndAskLabel != nullptr );
 
-	itsDoubleSpaceCB =
-		jnew JXTextCheckbox(JGetString("itsDoubleSpaceCB::EditProjPrefsDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,50, 300,20);
-	assert( itsDoubleSpaceCB != nullptr );
+	auto* cancelButton =
+		jnew JXTextButton(JGetString("cancelButton::EditProjPrefsDialog::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 30,280, 70,20);
+	assert( cancelButton != nullptr );
 
-	itsRebuildMakefileDailyCB =
-		jnew JXTextCheckbox(JGetString("itsRebuildMakefileDailyCB::EditProjPrefsDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,80, 300,20);
-	assert( itsRebuildMakefileDailyCB != nullptr );
+	itsHelpButton =
+		jnew JXTextButton(JGetString("itsHelpButton::EditProjPrefsDialog::JXLayout"), window,
+					JXWidget::kFixedRight, JXWidget::kFixedBottom, 140,280, 70,20);
+	itsHelpButton->SetShortcuts(JGetString("itsHelpButton::shortcuts::EditProjPrefsDialog::JXLayout"));
+
+	auto* okButton =
+		jnew JXTextButton(JGetString("okButton::EditProjPrefsDialog::JXLayout"), window,
+					JXWidget::kFixedRight, JXWidget::kFixedBottom, 249,279, 72,22);
+	okButton->SetShortcuts(JGetString("okButton::shortcuts::EditProjPrefsDialog::JXLayout"));
 
 // end JXLayout
 
-	window->SetTitle(JGetString("WindowTitle::EditProjPrefsDialog"));
 	SetButtons(okButton, cancelButton);
 
 	ListenTo(itsHelpButton);

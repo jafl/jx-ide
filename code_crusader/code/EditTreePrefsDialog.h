@@ -46,10 +46,10 @@ private:
 // begin JXLayout
 
 	JXFontSizeMenu* itsFontSizeMenu;
+	JXTextCheckbox* itsRaiseSingleMatchCB;
 	JXTextCheckbox* itsAutoMinMILinkCB;
 	JXRadioGroup*   itsMILinkStyleRG;
 	JXTextButton*   itsHelpButton;
-	JXTextCheckbox* itsRaiseSingleMatchCB;
 
 // end JXLayout
 

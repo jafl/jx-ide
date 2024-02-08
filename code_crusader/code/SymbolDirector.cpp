@@ -524,6 +524,8 @@ SymbolDirector::BuildWindow
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 400,430, JString::empty);
+	window->SetMinSize(150, 150);
+	window->SetWMClass(JXGetApplication()->GetWMName().GetBytes(), "Code_Crusader_Symbol_List");
 
 	auto* menuBar =
 		jnew JXMenuBar(window,
@@ -533,30 +535,23 @@ SymbolDirector::BuildWindow
 	itsToolBar =
 		jnew JXToolBar(GetPrefsManager(), kSymbolToolBarID, menuBar, window,
 					JXWidget::kHElastic, JXWidget::kVElastic, 0,30, 400,400);
-	assert( itsToolBar != nullptr );
+
+	auto* scrollbarSet =
+		jnew JXScrollbarSet(itsToolBar->GetWidgetEnclosure(),
+					JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 400,400);
+	assert( scrollbarSet != nullptr );
+
+	itsSymbolTable =
+		jnew SymbolTable(this, symbolList, scrollbarSet, scrollbarSet->GetScrollEnclosure(),
+					JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 400,400);
 
 // end JXLayout
 
 	AdjustWindowTitle();
-	window->SetMinSize(150, 150);
 	window->SetCloseAction(JXWindow::kDeactivateDirector);
-	window->SetWMClass(GetWMClassInstance(), GetSymbolWindowClass());
-
-	auto* scrollbarSet =
-		jnew JXScrollbarSet(itsToolBar->GetWidgetEnclosure(),
-						   JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 100,100);
-	assert( scrollbarSet != nullptr );
-	scrollbarSet->FitToEnclosure();
-
-	itsSymbolTable =
-		jnew SymbolTable(this, symbolList,
-						  scrollbarSet, scrollbarSet->GetScrollEnclosure(),
-						  JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 10,10);
-	assert( itsSymbolTable != nullptr );
-	itsSymbolTable->FitToEnclosure();
 
 	JXDisplay* display = GetDisplay();
-	auto* icon      = jnew JXImage(display, jcc_symbol_window);
+	auto* icon         = jnew JXImage(display, jcc_symbol_window);
 	window->SetIcon(icon);
 
 	JPoint desktopLoc;

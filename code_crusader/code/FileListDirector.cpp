@@ -185,6 +185,8 @@ FileListDirector::BuildWindow()
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 340,450, JString::empty);
+	window->SetMinSize(150, 150);
+	window->SetWMClass(JXGetApplication()->GetWMName().GetBytes(), "Code_Crusader_File_List");
 
 	auto* menuBar =
 		jnew JXMenuBar(window,
@@ -194,15 +196,16 @@ FileListDirector::BuildWindow()
 	itsToolBar =
 		jnew JXToolBar(GetPrefsManager(), kFileListToolBarID, menuBar, window,
 					JXWidget::kHElastic, JXWidget::kVElastic, 0,30, 340,420);
-	assert( itsToolBar != nullptr );
+
+	itsFLSet =
+		jnew JXFileListSet(itsToolBar->GetWidgetEnclosure(),
+					JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 340,420);
 
 // end JXLayout
 
 	AdjustWindowTitle();
-	window->SetMinSize(150, 150);
 	window->ShouldFocusWhenShow(true);
 	window->SetCloseAction(JXWindow::kDeactivateDirector);
-	window->SetWMClass(GetWMClassInstance(), GetFileListWindowClass());
 
 	JXDisplay* display = GetDisplay();
 	auto* icon      = jnew JXImage(display, jcc_file_list_window);
@@ -215,12 +218,6 @@ FileListDirector::BuildWindow()
 		window->Place(desktopLoc.x, desktopLoc.y);
 		window->SetSize(w,h);
 	}
-
-	itsFLSet =
-		jnew JXFileListSet(itsToolBar->GetWidgetEnclosure(),
-						  JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 100,100);
-	assert( itsFLSet != nullptr );
-	itsFLSet->FitToEnclosure();
 
 	JXScrollbarSet* scrollbarSet = itsFLSet->GetScrollbarSet();
 	itsFLTable =

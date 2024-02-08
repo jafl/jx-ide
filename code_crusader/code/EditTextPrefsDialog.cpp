@@ -93,275 +93,233 @@ EditTextPrefsDialog::BuildWindow
 {
 // begin JXLayout
 
-	auto* window = jnew JXWindow(this, 640,530, JString::empty);
+	auto* window = jnew JXWindow(this, 640,530, JGetString("WindowTitle::EditTextPrefsDialog::JXLayout"));
 
-	itsTabCharCountInput =
-		jnew JXIntegerInput(window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 540,130, 40,20);
-	assert( itsTabCharCountInput != nullptr );
+	itsFontMenu =
+		jnew JXChooseMonoFont(window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,20, 280,60);
 
-	itsCRMLineWidthInput =
-		jnew JXIntegerInput(window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 540,150, 40,20);
-	assert( itsCRMLineWidthInput != nullptr );
+	itsSampleText =
+		jnew SampleText(window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 310,20, 310,25);
 
-	itsUndoDepthInput =
-		jnew JXIntegerInput(window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 540,170, 40,20);
-	assert( itsUndoDepthInput != nullptr );
+	auto* changeColorLabel =
+		jnew JXStaticText(JGetString("changeColorLabel::EditTextPrefsDialog::JXLayout"), window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 310,50, 90,20);
+	changeColorLabel->SetToLabel(false);
+
+	itsColorButton[PrefsManager::kTextColorIndex-1] =
+		jnew JXTextButton(JGetString("itsColorButton[PrefsManager::kTextColorIndex-1]::EditTextPrefsDialog::JXLayout"), window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 400,50, 40,20);
+
+	itsColorButton[PrefsManager::kBackColorIndex-1] =
+		jnew JXTextButton(JGetString("itsColorButton[PrefsManager::kBackColorIndex-1]::EditTextPrefsDialog::JXLayout"), window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 440,50, 80,20);
+
+	itsColorButton[PrefsManager::kCaretColorIndex-1] =
+		jnew JXTextButton(JGetString("itsColorButton[PrefsManager::kCaretColorIndex-1]::EditTextPrefsDialog::JXLayout"), window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 520,50, 40,20);
+
+	itsColorButton[PrefsManager::kSelColorIndex-1] =
+		jnew JXTextButton(JGetString("itsColorButton[PrefsManager::kSelColorIndex-1]::EditTextPrefsDialog::JXLayout"), window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 560,50, 60,20);
+
+	itsColorButton[PrefsManager::kSelLineColorIndex-1] =
+		jnew JXTextButton(JGetString("itsColorButton[PrefsManager::kSelLineColorIndex-1]::EditTextPrefsDialog::JXLayout"), window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 400,70, 50,20);
+
+	itsColorButton[PrefsManager::kRightMarginColorIndex-1] =
+		jnew JXTextButton(JGetString("itsColorButton[PrefsManager::kRightMarginColorIndex-1]::EditTextPrefsDialog::JXLayout"), window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 450,70, 160,20);
+
+	itsEmulatorMenu =
+		jnew JXTextMenu(JGetString("itsEmulatorMenu::EditTextPrefsDialog::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,90, 280,25);
+
+	auto* colorSetsLabel =
+		jnew JXStaticText(JGetString("colorSetsLabel::EditTextPrefsDialog::JXLayout"), window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 310,95, 90,20);
+	colorSetsLabel->SetToLabel(false);
+
+	itsDefColorsButton =
+		jnew JXTextButton(JGetString("itsDefColorsButton::EditTextPrefsDialog::JXLayout"), window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 400,95, 100,20);
+
+	itsInvColorsButton =
+		jnew JXTextButton(JGetString("itsInvColorsButton::EditTextPrefsDialog::JXLayout"), window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 500,95, 100,20);
+
+	itsUseDNDCB =
+		jnew JXTextCheckbox(JGetString("itsUseDNDCB::EditTextPrefsDialog::JXLayout"), window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 20,130, 280,20);
+
+	auto* spacesPerTabLabel =
+		jnew JXStaticText(JGetString("spacesPerTabLabel::EditTextPrefsDialog::JXLayout"), window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 330,130, 210,20);
+	spacesPerTabLabel->SetToLabel(false);
+
+	auto* cpmLabel =
+		jnew JXStaticText(JGetString("cpmLabel::EditTextPrefsDialog::JXLayout"), window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 330,150, 210,20);
+	cpmLabel->SetToLabel(false);
+
+	itsAutoIndentCB =
+		jnew JXTextCheckbox(JGetString("itsAutoIndentCB::EditTextPrefsDialog::JXLayout"), window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 20,160, 280,20);
+
+	auto* undoDepthLabel =
+		jnew JXStaticText(JGetString("undoDepthLabel::EditTextPrefsDialog::JXLayout"), window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 330,170, 210,20);
+	undoDepthLabel->SetToLabel(false);
+
+	itsTabToSpacesCB =
+		jnew JXTextCheckbox(JGetString("itsTabToSpacesCB::EditTextPrefsDialog::JXLayout"), window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 20,190, 280,20);
+
+	itsRightMarginCB =
+		jnew JXTextCheckbox(JGetString("itsRightMarginCB::EditTextPrefsDialog::JXLayout"), window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 330,190, 210,20);
+
+	itsSmartTabCB =
+		jnew JXTextCheckbox(JGetString("itsSmartTabCB::EditTextPrefsDialog::JXLayout"), window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 20,220, 280,20);
+
+	itsCreateBackupCB =
+		jnew JXTextCheckbox(JGetString("itsCreateBackupCB::EditTextPrefsDialog::JXLayout"), window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 330,230, 300,20);
+
+	itsCopyWhenSelectCB =
+		jnew JXTextCheckbox(JGetString("itsCopyWhenSelectCB::EditTextPrefsDialog::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,250, 280,20);
+
+	itsOnlyBackupIfNoneCB =
+		jnew JXTextCheckbox(JGetString("itsOnlyBackupIfNoneCB::EditTextPrefsDialog::JXLayout"), window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 330,250, 300,20);
+
+	itsMiddleButtonPasteCB =
+		jnew JXTextCheckbox(JGetString("itsMiddleButtonPasteCB::EditTextPrefsDialog::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,270, 280,20);
+
+	itsOpenComplFileOnTopCB =
+		jnew JXTextCheckbox(JGetString("itsOpenComplFileOnTopCB::EditTextPrefsDialog::JXLayout"), window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 330,280, 300,20);
+
+	itsBalanceWhileTypingCB =
+		jnew JXTextCheckbox(JGetString("itsBalanceWhileTypingCB::EditTextPrefsDialog::JXLayout"), window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 20,310, 280,20);
+
+	itsExtraSpaceWindTitleCB =
+		jnew JXTextCheckbox(JGetString("itsExtraSpaceWindTitleCB::EditTextPrefsDialog::JXLayout"), window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 330,310, 300,20);
+
+	itsScrollToBalanceCB =
+		jnew JXTextCheckbox(JGetString("itsScrollToBalanceCB::EditTextPrefsDialog::JXLayout"), window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 20,330, 280,20);
+
+	itsBeepWhenTypeUnbalancedCB =
+		jnew JXTextCheckbox(JGetString("itsBeepWhenTypeUnbalancedCB::EditTextPrefsDialog::JXLayout"), window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 20,350, 280,20);
+
+	itsPWModRG =
+		jnew JXRadioGroup(window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 460,350, 160,80);
+
+	auto* partialWordTitle =
+		jnew JXStaticText(JGetString("partialWordTitle::EditTextPrefsDialog::JXLayout"), true, false, false, nullptr, window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 330,360, 120,60);
+	assert( partialWordTitle != nullptr );
+
+	auto* ctrlMetaLabel =
+		jnew JXTextRadioButton(JXTEBase::kCtrlMetaPWMod, JGetString("ctrlMetaLabel::EditTextPrefsDialog::JXLayout"), itsPWModRG,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,10, 90,20);
+	assert( ctrlMetaLabel != nullptr );
+
+	auto* mod2Label =
+		jnew JXTextRadioButton(JXTEBase::kMod2PWMod, JGetString("mod2Label::EditTextPrefsDialog::JXLayout"), itsPWModRG,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,30, 70,20);
+	assert( mod2Label != nullptr );
+
+	auto* mod4Label =
+		jnew JXTextRadioButton(JXTEBase::kMod4PWMod, JGetString("mod4Label::EditTextPrefsDialog::JXLayout"), itsPWModRG,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 90,30, 60,20);
+	assert( mod4Label != nullptr );
+
+	itsSortFnMenuCB =
+		jnew JXTextCheckbox(JGetString("itsSortFnMenuCB::EditTextPrefsDialog::JXLayout"), window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 20,390, 280,20);
+
+	auto* mod3Label =
+		jnew JXTextRadioButton(JXTEBase::kMod3PWMod, JGetString("mod3Label::EditTextPrefsDialog::JXLayout"), itsPWModRG,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,50, 70,20);
+	assert( mod3Label != nullptr );
+
+	auto* mod5Label =
+		jnew JXTextRadioButton(JXTEBase::kMod5PWMod, JGetString("mod5Label::EditTextPrefsDialog::JXLayout"), itsPWModRG,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 90,50, 60,20);
+	assert( mod5Label != nullptr );
+
+	itsNSInFnMenuCB =
+		jnew JXTextCheckbox(JGetString("itsNSInFnMenuCB::EditTextPrefsDialog::JXLayout"), window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 20,410, 280,20);
+
+	itsPackFnMenuCB =
+		jnew JXTextCheckbox(JGetString("itsPackFnMenuCB::EditTextPrefsDialog::JXLayout"), window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 20,430, 280,20);
+
+	itsLeftToFrontOfTextCB =
+		jnew JXTextCheckbox(JGetString("itsLeftToFrontOfTextCB::EditTextPrefsDialog::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 330,450, 300,20);
+
+	auto* wordWrapHint =
+		jnew JXStaticText(JGetString("wordWrapHint::EditTextPrefsDialog::JXLayout"), window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 40,460, 250,20);
+	wordWrapHint->SetToLabel(false);
+
+	itsHomeEndCB =
+		jnew JXTextCheckbox(JGetString("itsHomeEndCB::EditTextPrefsDialog::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 330,470, 300,20);
 
 	auto* cancelButton =
 		jnew JXTextButton(JGetString("cancelButton::EditTextPrefsDialog::JXLayout"), window,
 					JXWidget::kHElastic, JXWidget::kVElastic, 40,490, 60,20);
 	assert( cancelButton != nullptr );
 
-	auto* okButton =
-		jnew JXTextButton(JGetString("okButton::EditTextPrefsDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 220,490, 60,20);
-	assert( okButton != nullptr );
-	okButton->SetShortcuts(JGetString("okButton::EditTextPrefsDialog::shortcuts::JXLayout"));
-
-	itsCreateBackupCB =
-		jnew JXTextCheckbox(JGetString("itsCreateBackupCB::EditTextPrefsDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 330,230, 300,20);
-	assert( itsCreateBackupCB != nullptr );
-
-	itsAutoIndentCB =
-		jnew JXTextCheckbox(JGetString("itsAutoIndentCB::EditTextPrefsDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 20,160, 280,20);
-	assert( itsAutoIndentCB != nullptr );
-
-	auto* spacesPerTabLabel =
-		jnew JXStaticText(JGetString("spacesPerTabLabel::EditTextPrefsDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 330,130, 210,20);
-	assert( spacesPerTabLabel != nullptr );
-	spacesPerTabLabel->SetToLabel();
-
-	itsExtraSpaceWindTitleCB =
-		jnew JXTextCheckbox(JGetString("itsExtraSpaceWindTitleCB::EditTextPrefsDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 330,310, 300,20);
-	assert( itsExtraSpaceWindTitleCB != nullptr );
-
-	itsOpenComplFileOnTopCB =
-		jnew JXTextCheckbox(JGetString("itsOpenComplFileOnTopCB::EditTextPrefsDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 330,280, 300,20);
-	assert( itsOpenComplFileOnTopCB != nullptr );
-
-	itsFontMenu =
-		jnew JXChooseMonoFont(window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,20, 280,60);
-	assert( itsFontMenu != nullptr );
-
-	itsEmulatorMenu =
-		jnew JXTextMenu(JGetString("itsEmulatorMenu::EditTextPrefsDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,90, 280,25);
-	assert( itsEmulatorMenu != nullptr );
-
-	auto* undoDepthLabel =
-		jnew JXStaticText(JGetString("undoDepthLabel::EditTextPrefsDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 330,170, 210,20);
-	assert( undoDepthLabel != nullptr );
-	undoDepthLabel->SetToLabel();
-
-	itsUseDNDCB =
-		jnew JXTextCheckbox(JGetString("itsUseDNDCB::EditTextPrefsDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 20,130, 280,20);
-	assert( itsUseDNDCB != nullptr );
-
-	itsOnlyBackupIfNoneCB =
-		jnew JXTextCheckbox(JGetString("itsOnlyBackupIfNoneCB::EditTextPrefsDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 330,250, 300,20);
-	assert( itsOnlyBackupIfNoneCB != nullptr );
-
-	itsLeftToFrontOfTextCB =
-		jnew JXTextCheckbox(JGetString("itsLeftToFrontOfTextCB::EditTextPrefsDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 330,450, 300,20);
-	assert( itsLeftToFrontOfTextCB != nullptr );
-
 	itsHelpButton =
 		jnew JXTextButton(JGetString("itsHelpButton::EditTextPrefsDialog::JXLayout"), window,
 					JXWidget::kHElastic, JXWidget::kVElastic, 130,490, 60,20);
-	assert( itsHelpButton != nullptr );
-	itsHelpButton->SetShortcuts(JGetString("itsHelpButton::EditTextPrefsDialog::shortcuts::JXLayout"));
+	itsHelpButton->SetShortcuts(JGetString("itsHelpButton::shortcuts::EditTextPrefsDialog::JXLayout"));
 
-	itsBalanceWhileTypingCB =
-		jnew JXTextCheckbox(JGetString("itsBalanceWhileTypingCB::EditTextPrefsDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 20,310, 280,20);
-	assert( itsBalanceWhileTypingCB != nullptr );
-
-	itsScrollToBalanceCB =
-		jnew JXTextCheckbox(JGetString("itsScrollToBalanceCB::EditTextPrefsDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 20,330, 280,20);
-	assert( itsScrollToBalanceCB != nullptr );
-
-	itsBeepWhenTypeUnbalancedCB =
-		jnew JXTextCheckbox(JGetString("itsBeepWhenTypeUnbalancedCB::EditTextPrefsDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 20,350, 280,20);
-	assert( itsBeepWhenTypeUnbalancedCB != nullptr );
-
-	auto* cpmLabel =
-		jnew JXStaticText(JGetString("cpmLabel::EditTextPrefsDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 330,150, 210,20);
-	assert( cpmLabel != nullptr );
-	cpmLabel->SetToLabel();
-
-	itsSmartTabCB =
-		jnew JXTextCheckbox(JGetString("itsSmartTabCB::EditTextPrefsDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 20,220, 280,20);
-	assert( itsSmartTabCB != nullptr );
-
-	itsPWModRG =
-		jnew JXRadioGroup(window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 460,350, 160,80);
-	assert( itsPWModRG != nullptr );
-
-	auto* ctrlMetaLabel =
-		jnew JXTextRadioButton(JXTEBase::kCtrlMetaPWMod, JGetString("ctrlMetaLabel::EditTextPrefsDialog::JXLayout"), itsPWModRG,
-					JXWidget::kHElastic, JXWidget::kVElastic, 10,10, 90,20);
-	assert( ctrlMetaLabel != nullptr );
-
-	auto* mod2Label =
-		jnew JXTextRadioButton(JXTEBase::kMod2PWMod, JGetString("mod2Label::EditTextPrefsDialog::JXLayout"), itsPWModRG,
-					JXWidget::kHElastic, JXWidget::kVElastic, 10,30, 70,20);
-	assert( mod2Label != nullptr );
-
-	auto* mod3Label =
-		jnew JXTextRadioButton(JXTEBase::kMod3PWMod, JGetString("mod3Label::EditTextPrefsDialog::JXLayout"), itsPWModRG,
-					JXWidget::kHElastic, JXWidget::kVElastic, 10,50, 70,20);
-	assert( mod3Label != nullptr );
-
-	auto* mod4Label =
-		jnew JXTextRadioButton(JXTEBase::kMod4PWMod, JGetString("mod4Label::EditTextPrefsDialog::JXLayout"), itsPWModRG,
-					JXWidget::kHElastic, JXWidget::kVElastic, 90,30, 60,20);
-	assert( mod4Label != nullptr );
-
-	auto* mod5Label =
-		jnew JXTextRadioButton(JXTEBase::kMod5PWMod, JGetString("mod5Label::EditTextPrefsDialog::JXLayout"), itsPWModRG,
-					JXWidget::kHElastic, JXWidget::kVElastic, 90,50, 60,20);
-	assert( mod5Label != nullptr );
-
-	auto* partialWordTitle =
-		jnew JXStaticText(JGetString("partialWordTitle::EditTextPrefsDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 330,360, 120,60);
-	assert( partialWordTitle != nullptr );
-
-	itsCopyWhenSelectCB =
-		jnew JXTextCheckbox(JGetString("itsCopyWhenSelectCB::EditTextPrefsDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,250, 280,20);
-	assert( itsCopyWhenSelectCB != nullptr );
-
-	itsColorButton[PrefsManager::kTextColorIndex-1] =
-		jnew JXTextButton(JGetString("itsColorButton[PrefsManager::kTextColorIndex-1]::EditTextPrefsDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 400,50, 40,20);
-	assert( itsColorButton[PrefsManager::kTextColorIndex-1] != nullptr );
-
-	itsColorButton[PrefsManager::kBackColorIndex-1] =
-		jnew JXTextButton(JGetString("itsColorButton[PrefsManager::kBackColorIndex-1]::EditTextPrefsDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 440,50, 80,20);
-	assert( itsColorButton[PrefsManager::kBackColorIndex-1] != nullptr );
-
-	auto* changeColorLabel =
-		jnew JXStaticText(JGetString("changeColorLabel::EditTextPrefsDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 310,50, 90,20);
-	assert( changeColorLabel != nullptr );
-	changeColorLabel->SetToLabel();
-
-	itsColorButton[PrefsManager::kSelColorIndex-1] =
-		jnew JXTextButton(JGetString("itsColorButton[PrefsManager::kSelColorIndex-1]::EditTextPrefsDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 560,50, 60,20);
-	assert( itsColorButton[PrefsManager::kSelColorIndex-1] != nullptr );
-
-	itsColorButton[PrefsManager::kSelLineColorIndex-1] =
-		jnew JXTextButton(JGetString("itsColorButton[PrefsManager::kSelLineColorIndex-1]::EditTextPrefsDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 400,70, 50,20);
-	assert( itsColorButton[PrefsManager::kSelLineColorIndex-1] != nullptr );
-
-	itsColorButton[PrefsManager::kCaretColorIndex-1] =
-		jnew JXTextButton(JGetString("itsColorButton[PrefsManager::kCaretColorIndex-1]::EditTextPrefsDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 520,50, 40,20);
-	assert( itsColorButton[PrefsManager::kCaretColorIndex-1] != nullptr );
-
-	itsDefColorsButton =
-		jnew JXTextButton(JGetString("itsDefColorsButton::EditTextPrefsDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 400,95, 100,20);
-	assert( itsDefColorsButton != nullptr );
-
-	itsInvColorsButton =
-		jnew JXTextButton(JGetString("itsInvColorsButton::EditTextPrefsDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 500,95, 100,20);
-	assert( itsInvColorsButton != nullptr );
-
-	auto* colorSetsLabel =
-		jnew JXStaticText(JGetString("colorSetsLabel::EditTextPrefsDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 310,95, 90,20);
-	assert( colorSetsLabel != nullptr );
-	colorSetsLabel->SetToLabel();
-
-	itsTabToSpacesCB =
-		jnew JXTextCheckbox(JGetString("itsTabToSpacesCB::EditTextPrefsDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 20,190, 280,20);
-	assert( itsTabToSpacesCB != nullptr );
-
-	itsHomeEndCB =
-		jnew JXTextCheckbox(JGetString("itsHomeEndCB::EditTextPrefsDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 330,470, 300,20);
-	assert( itsHomeEndCB != nullptr );
+	auto* okButton =
+		jnew JXTextButton(JGetString("okButton::EditTextPrefsDialog::JXLayout"), window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 219,489, 62,22);
+	okButton->SetShortcuts(JGetString("okButton::shortcuts::EditTextPrefsDialog::JXLayout"));
 
 	itsScrollCaretCB =
 		jnew JXTextCheckbox(JGetString("itsScrollCaretCB::EditTextPrefsDialog::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 330,490, 300,20);
-	assert( itsScrollCaretCB != nullptr );
 
-	itsSortFnMenuCB =
-		jnew JXTextCheckbox(JGetString("itsSortFnMenuCB::EditTextPrefsDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 20,390, 280,20);
-	assert( itsSortFnMenuCB != nullptr );
+	itsTabCharCountInput =
+		jnew JXIntegerInput(window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 540,130, 40,20);
+	itsTabCharCountInput->SetLowerLimit(1);
 
-	itsPackFnMenuCB =
-		jnew JXTextCheckbox(JGetString("itsPackFnMenuCB::EditTextPrefsDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 20,430, 280,20);
-	assert( itsPackFnMenuCB != nullptr );
+	itsCRMLineWidthInput =
+		jnew JXIntegerInput(window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 540,150, 40,20);
+	itsCRMLineWidthInput->SetLowerLimit(1);
 
-	itsColorButton[PrefsManager::kRightMarginColorIndex-1] =
-		jnew JXTextButton(JGetString("itsColorButton[PrefsManager::kRightMarginColorIndex-1]::EditTextPrefsDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 450,70, 160,20);
-	assert( itsColorButton[PrefsManager::kRightMarginColorIndex-1] != nullptr );
-
-	itsRightMarginCB =
-		jnew JXTextCheckbox(JGetString("itsRightMarginCB::EditTextPrefsDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 330,190, 210,20);
-	assert( itsRightMarginCB != nullptr );
+	itsUndoDepthInput =
+		jnew JXIntegerInput(window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 540,170, 40,20);
+	itsUndoDepthInput->SetLowerLimit(1);
 
 	itsRightMarginInput =
 		jnew JXIntegerInput(window,
 					JXWidget::kHElastic, JXWidget::kVElastic, 540,190, 40,20);
-	assert( itsRightMarginInput != nullptr );
-
-	itsSampleText =
-		jnew SampleText(window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 310,20, 310,25);
-	assert( itsSampleText != nullptr );
-
-	itsNSInFnMenuCB =
-		jnew JXTextCheckbox(JGetString("itsNSInFnMenuCB::EditTextPrefsDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 20,410, 280,20);
-	assert( itsNSInFnMenuCB != nullptr );
-
-	auto* wordWrapHint =
-		jnew JXStaticText(JGetString("wordWrapHint::EditTextPrefsDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 40,460, 250,20);
-	assert( wordWrapHint != nullptr );
-	wordWrapHint->SetFontSize(JFontManager::GetDefaultFontSize()-2);
-	wordWrapHint->SetToLabel();
-
-	itsMiddleButtonPasteCB =
-		jnew JXTextCheckbox(JGetString("itsMiddleButtonPasteCB::EditTextPrefsDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,270, 280,20);
-	assert( itsMiddleButtonPasteCB != nullptr );
+	itsRightMarginInput->SetLowerLimit(1);
 
 // end JXLayout
 
-	window->SetTitle(JGetString("WindowTitle::EditTextPrefsDialog"));
 	SetButtons(okButton, cancelButton);
 
 	ListenTo(itsHelpButton);
@@ -401,18 +359,12 @@ EditTextPrefsDialog::BuildWindow
 	itsFontMenu->SetFont(font.GetName(), font.GetSize());
 
 	itsTabCharCountInput->SetValue(te->GetTabCharCount());
-	itsTabCharCountInput->SetLowerLimit(1);
-
 	itsCRMLineWidthInput->SetValue(te->GetText()->GetCRMLineWidth());
-	itsCRMLineWidthInput->SetLowerLimit(1);
-
 	itsUndoDepthInput->SetValue(te->GetText()->GetUndoRedoChain()->GetUndoDepth());
-	itsUndoDepthInput->SetLowerLimit(1);
 
 	JSize margin;
 	itsRightMarginCB->SetState(te->GetRightMarginWidth(&margin));
 	itsRightMarginInput->SetValue(margin);
-	itsRightMarginInput->SetLowerLimit(1);
 
 	itsPWModRG->SelectItem(te->GetPartialWordModifier());
 	itsHomeEndCB->SetState(JXTEBase::WillUseWindowsHomeEnd());

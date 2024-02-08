@@ -1,0 +1,184 @@
+jx_layout_editor 7
+360
+310
+"JXLayout"
+"Project preferences"
+""
+""
+0
+
+1
+0
+0
+"TextCheckbox"
+0
+0
+20 20 40 320
+"itsReopenTextFilesCB"
+1
+0
+0
+"Reopen text files when project is opened"
+""
+
+1
+0
+0
+"TextCheckbox"
+0
+0
+50 20 70 320
+"itsDoubleSpaceCB"
+1
+0
+0
+"Double space compiler output"
+""
+
+1
+0
+0
+"TextCheckbox"
+0
+0
+80 20 100 320
+"itsRebuildMakefileDailyCB"
+1
+0
+0
+"Rebuild Makefile daily to update dependencies"
+""
+
+1
+0
+0
+"StaticText"
+0
+0
+120 20 140 350
+"dndPathLabel"
+0
+0
+0
+"Path type to use when adding files via Drag-And-Drop:"
+1
+0
+0
+0
+0
+
+1
+0
+0
+"RadioGroup"
+0
+0
+150 70 264 274
+"itsDropFileActionRG"
+1
+0
+0
+
+1
+5
+1
+"TextRadioButton"
+0
+0
+10 10 30 190
+"absolutePathRB"
+0
+0
+0
+"ProjectTable::kAbsolutePath"
+"Absolute path"
+""
+
+1
+5
+1
+"TextRadioButton"
+0
+0
+30 10 50 190
+"projectRelativeLabel"
+0
+0
+0
+"ProjectTable::kProjectRelative"
+"Relative to project file"
+""
+
+1
+5
+1
+"TextRadioButton"
+0
+0
+50 10 70 190
+"homeDirLabel"
+0
+0
+0
+"ProjectTable::kHomeRelative"
+"Relative to home directory"
+""
+
+1
+5
+1
+"TextRadioButton"
+0
+0
+80 10 100 190
+"dndAskLabel"
+0
+0
+0
+"ProjectTable::kDropAskPathType"
+"Ask when files are dropped"
+""
+
+1
+0
+0
+"TextButton"
+0
+1
+280 30 300 100
+"cancelButton"
+0
+0
+0
+"Cancel"
+""
+
+1
+0
+0
+"TextButton"
+1
+1
+280 140 300 210
+"itsHelpButton"
+1
+0
+0
+"Help"
+"F1"
+
+1
+0
+0
+"TextButton"
+1
+1
+280 250 300 320
+"okButton"
+0
+0
+0
+"OK"
+"^M"
+
+0

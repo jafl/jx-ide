@@ -52,21 +52,21 @@ private:
 
 // begin JXLayout
 
-	JXTextButton*      itsRunButton;
-	JXTextButton*      itsHelpButton;
 	CommandPathInput*  itsPathInput;
-	JXTextCheckbox*    itsSaveAllCB;
-	JXTextCheckbox*    itsOneAtATimeCB;
-	JXTextCheckbox*    itsUseWindowCB;
-	JXTextCheckbox*    itsIsMakeCB;
-	JXInputField*      itsCmdInput;
 	JXPathHistoryMenu* itsPathHistoryMenu;
 	JXTextButton*      itsChoosePathButton;
 	JXTextButton*      itsChooseCmdButton;
+	JXTextCheckbox*    itsIsMakeCB;
+	JXTextCheckbox*    itsUseWindowCB;
+	JXTextCheckbox*    itsIsCVSCB;
 	JXTextCheckbox*    itsRaiseCB;
 	JXTextCheckbox*    itsBeepCB;
+	JXTextCheckbox*    itsSaveAllCB;
+	JXTextCheckbox*    itsOneAtATimeCB;
+	JXTextButton*      itsRunButton;
 	JXTextMenu*        itsSaveCmdMenu;
-	JXTextCheckbox*    itsIsCVSCB;
+	JXTextButton*      itsHelpButton;
+	JXInputField*      itsCmdInput;
 
 // end JXLayout
 

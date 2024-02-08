@@ -6,11 +6,6 @@
 
 EmptyMenu::FunctionMenu	"No $name %d"
 
-# CBEditStylerDialog
-
-Instructions::EditStylerDialog
-"To change the style of the selected items, right-click on any one.  To edit the name of an item in the bottom list, double-click on it."
-
 # CBCStyler
 
 EditDialogTitle::CStyler	"Edit C/C++ Styles"

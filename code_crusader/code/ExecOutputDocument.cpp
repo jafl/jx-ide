@@ -38,10 +38,13 @@ ExecOutputDocument::ExecOutputDocument
 	(
 	const TextFileType	fileType,
 	const JUtf8Byte*	helpSectionName,
+	const JUtf8Byte*	wmClass,
 	const bool			focusToCmd
 	)
 	:
-	CommandOutputDocument(fileType, helpSectionName, JGetString("WaitCloseMsg::ExecOutputDocument")),
+	CommandOutputDocument(fileType, helpSectionName,
+						  wmClass != nullptr ? wmClass : "Code_Crusader_Editor_Exec_Output",
+						  JGetString("WaitCloseMsg::ExecOutputDocument")),
 	itsProcess(nullptr),
 	itsReceivedDataFlag(false),
 	itsProcessPausedFlag(false),
@@ -52,7 +55,6 @@ ExecOutputDocument::ExecOutputDocument
 	itsFocusToCmdFlag(focusToCmd)
 {
 	JXWindow* window = GetWindow();
-	window->SetWMClass(GetWMClassInstance(), GetExecOutputWindowClass());
 
 	// buttons in upper right
 

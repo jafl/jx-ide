@@ -80,81 +80,66 @@ EditCPPMacroDialog::BuildWindow
 {
 // begin JXLayout
 
-	auto* window = jnew JXWindow(this, 370,290, JString::empty);
+	auto* window = jnew JXWindow(this, 370,290, JGetString("WindowTitle::EditCPPMacroDialog::JXLayout"));
 
 	auto* scrollbarSet =
 		jnew JXScrollbarSet(window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 20,40, 250,200);
+					JXWidget::kHElastic, JXWidget::kVElastic, 20,20, 250,220);
 	assert( scrollbarSet != nullptr );
+
+	auto* addMacroButton =
+		jnew JXTextButton(JGetString("addMacroButton::EditCPPMacroDialog::JXLayout"), window,
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 290,50, 60,20);
+	addMacroButton->SetShortcuts(JGetString("addMacroButton::shortcuts::EditCPPMacroDialog::JXLayout"));
+
+	auto* removeMacroButton =
+		jnew JXTextButton(JGetString("removeMacroButton::EditCPPMacroDialog::JXLayout"), window,
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 290,80, 60,20);
+	removeMacroButton->SetShortcuts(JGetString("removeMacroButton::shortcuts::EditCPPMacroDialog::JXLayout"));
+
+	auto* loadMacroButton =
+		jnew JXTextButton(JGetString("loadMacroButton::EditCPPMacroDialog::JXLayout"), window,
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 290,130, 60,20);
+	loadMacroButton->SetShortcuts(JGetString("loadMacroButton::shortcuts::EditCPPMacroDialog::JXLayout"));
+
+	auto* saveMacroButton =
+		jnew JXTextButton(JGetString("saveMacroButton::EditCPPMacroDialog::JXLayout"), window,
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 290,160, 60,20);
+	saveMacroButton->SetShortcuts(JGetString("saveMacroButton::shortcuts::EditCPPMacroDialog::JXLayout"));
 
 	auto* cancelButton =
 		jnew JXTextButton(JGetString("cancelButton::EditCPPMacroDialog::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 40,260, 70,20);
 	assert( cancelButton != nullptr );
 
+	itsHelpButton =
+		jnew JXTextButton(JGetString("itsHelpButton::EditCPPMacroDialog::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 150,260, 70,20);
+	itsHelpButton->SetShortcuts(JGetString("itsHelpButton::shortcuts::EditCPPMacroDialog::JXLayout"));
+
 	auto* okButton =
 		jnew JXTextButton(JGetString("okButton::EditCPPMacroDialog::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 260,260, 70,20);
 	assert( okButton != nullptr );
 
-	auto* addMacroButton =
-		jnew JXTextButton(JGetString("addMacroButton::EditCPPMacroDialog::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 290,50, 60,20);
-	assert( addMacroButton != nullptr );
-	addMacroButton->SetShortcuts(JGetString("addMacroButton::EditCPPMacroDialog::shortcuts::JXLayout"));
+	itsTable =
+		jnew CPPMacroTable(cpp, addMacroButton, removeMacroButton, loadMacroButton, saveMacroButton, scrollbarSet, scrollbarSet->GetScrollEnclosure(),
+					JXWidget::kHElastic, JXWidget::kVElastic, 0,20, 250,200);
 
-	auto* removeMacroButton =
-		jnew JXTextButton(JGetString("removeMacroButton::EditCPPMacroDialog::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 290,80, 60,20);
-	assert( removeMacroButton != nullptr );
-	removeMacroButton->SetShortcuts(JGetString("removeMacroButton::EditCPPMacroDialog::shortcuts::JXLayout"));
-
-	auto* loadMacroButton =
-		jnew JXTextButton(JGetString("loadMacroButton::EditCPPMacroDialog::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 290,130, 60,20);
-	assert( loadMacroButton != nullptr );
-	loadMacroButton->SetShortcuts(JGetString("loadMacroButton::EditCPPMacroDialog::shortcuts::JXLayout"));
-
-	auto* saveMacroButton =
-		jnew JXTextButton(JGetString("saveMacroButton::EditCPPMacroDialog::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 290,160, 60,20);
-	assert( saveMacroButton != nullptr );
-	saveMacroButton->SetShortcuts(JGetString("saveMacroButton::EditCPPMacroDialog::shortcuts::JXLayout"));
-
-	itsHelpButton =
-		jnew JXTextButton(JGetString("itsHelpButton::EditCPPMacroDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 150,260, 70,20);
-	assert( itsHelpButton != nullptr );
-	itsHelpButton->SetShortcuts(JGetString("itsHelpButton::EditCPPMacroDialog::shortcuts::JXLayout"));
-
-	auto* colHeaderEncl =
-		jnew JXWidgetSet(window,
-					JXWidget::kHElastic, JXWidget::kFixedTop, 20,20, 250,20);
-	assert( colHeaderEncl != nullptr );
+	auto* colHeader =
+		jnew JXColHeaderWidget(itsTable, scrollbarSet, scrollbarSet->GetScrollEnclosure(),
+					JXWidget::kHElastic, JXWidget::kFixedTop, 0,0, 250,20);
+	assert( colHeader != nullptr );
 
 // end JXLayout
 
-	window->SetTitle(JGetString("WindowTitle::EditCPPMacroDialog"));
 	window->LockCurrentMinSize();
 	SetButtons(okButton, cancelButton);
 
-	ListenTo(itsHelpButton);
-
-	itsTable =
-		jnew CPPMacroTable(cpp, addMacroButton, removeMacroButton,
-							loadMacroButton, saveMacroButton,
-							scrollbarSet, scrollbarSet->GetScrollEnclosure(),
-							JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 10,10);
-	assert( itsTable != nullptr );
-
-	colHeaderEncl->ClearNeedsInternalFTC();
-
-	auto* colHeader =
-		jnew JXColHeaderWidget(itsTable, scrollbarSet, colHeaderEncl,
-							  JXWidget::kHElastic, JXWidget::kFixedTop, 0,0, 10,10);
-	colHeader->FitToEnclosure();
 	colHeader->TurnOnColResizing(20);
 	itsTable->SetColTitles(colHeader);
+
+	ListenTo(itsHelpButton);
 }
 
 /******************************************************************************

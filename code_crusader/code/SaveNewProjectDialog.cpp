@@ -112,130 +112,125 @@ SaveNewProjectDialog::BuildWindow
 
 	auto* window = jnew JXWindow(this, 310,500, JString::empty);
 
-	auto* scrollbarSet =
-		jnew JXScrollbarSet(window,
-					JXWidget::kHElastic, JXWidget::kFixedBottom, 20,140, 180,140);
-	assert( scrollbarSet != nullptr );
-
-	auto* saveButton =
-		jnew JXTextButton(JGetString("saveButton::SaveNewProjectDialog::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedBottom, 220,280, 70,20);
-	assert( saveButton != nullptr );
-	saveButton->SetShortcuts(JGetString("saveButton::SaveNewProjectDialog::shortcuts::JXLayout"));
-
-	auto* cancelButton =
-		jnew JXTextButton(JGetString("cancelButton::SaveNewProjectDialog::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedBottom, 220,310, 70,20);
-	assert( cancelButton != nullptr );
-
-	auto* homeButton =
-		jnew JXTextButton(JGetString("homeButton::SaveNewProjectDialog::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedBottom, 250,140, 40,20);
-	assert( homeButton != nullptr );
-
 	auto* pathLabel =
 		jnew JXStaticText(JGetString("pathLabel::SaveNewProjectDialog::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 20,20, 40,20);
-	assert( pathLabel != nullptr );
-	pathLabel->SetToLabel();
-
-	auto* fileNameInput =
-		jnew JXSaveFileInput(window,
-					JXWidget::kHElastic, JXWidget::kFixedBottom, 20,310, 180,20);
-	assert( fileNameInput != nullptr );
-
-	auto* pathInput =
-		jnew JXPathInput(window,
-					JXWidget::kHElastic, JXWidget::kFixedBottom, 60,20, 200,20);
-	assert( pathInput != nullptr );
-
-	auto* showHiddenCB =
-		jnew JXTextCheckbox(JGetString("showHiddenCB::SaveNewProjectDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 60,80, 130,20);
-	assert( showHiddenCB != nullptr );
-
-	auto* promptLabel =
-		jnew JXStaticText(JGetString("promptLabel::SaveNewProjectDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kFixedBottom, 20,290, 180,20);
-	assert( promptLabel != nullptr );
-	promptLabel->SetToLabel();
-
-	auto* filterLabel =
-		jnew JXStaticText(JGetString("filterLabel::SaveNewProjectDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 20,50, 40,20);
-	assert( filterLabel != nullptr );
-	filterLabel->SetToLabel();
-
-	auto* filterInput =
-		jnew JXInputField(window,
-					JXWidget::kHElastic, JXWidget::kFixedBottom, 60,50, 200,20);
-	assert( filterInput != nullptr );
-
-	auto* makefileTitle =
-		jnew JXStaticText(JGetString("makefileTitle::SaveNewProjectDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 20,420, 140,20);
-	assert( makefileTitle != nullptr );
-	makefileTitle->SetToLabel();
-
-	itsMethodRG =
-		jnew JXRadioGroup(window,
-					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 160,390, 132,106);
-	assert( itsMethodRG != nullptr );
-
-	auto* manualRB =
-		jnew JXTextRadioButton(BuildManager::kManual, JGetString("manualRB::SaveNewProjectDialog::JXLayout"), itsMethodRG,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,10, 110,20);
-	assert( manualRB != nullptr );
-
-	auto* qmakeRB =
-		jnew JXTextRadioButton(BuildManager::kQMake, JGetString("qmakeRB::SaveNewProjectDialog::JXLayout"), itsMethodRG,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,70, 110,20);
-	assert( qmakeRB != nullptr );
-
-	auto* makemakeRB =
-		jnew JXTextRadioButton(BuildManager::kMakemake, JGetString("makemakeRB::SaveNewProjectDialog::JXLayout"), itsMethodRG,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,30, 110,20);
-	assert( makemakeRB != nullptr );
+	pathLabel->SetToLabel(false);
 
 	auto* pathHistory =
 		jnew JXPathHistoryMenu(1, window,
 					JXWidget::kFixedRight, JXWidget::kFixedBottom, 260,20, 30,20);
 	assert( pathHistory != nullptr );
 
+	auto* filterLabel =
+		jnew JXStaticText(JGetString("filterLabel::SaveNewProjectDialog::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 20,50, 40,20);
+	filterLabel->SetToLabel(false);
+
 	auto* filterHistory =
 		jnew JXStringHistoryMenu(1, window,
 					JXWidget::kFixedRight, JXWidget::kFixedBottom, 260,50, 30,20);
 	assert( filterHistory != nullptr );
 
-	auto* upButton =
-		jnew JXTextButton(JGetString("upButton::SaveNewProjectDialog::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedBottom, 220,140, 30,20);
-	assert( upButton != nullptr );
-
-	auto* newDirButton =
-		jnew JXNewDirButton(window,
-					JXWidget::kFixedRight, JXWidget::kFixedBottom, 220,190, 70,20);
-	assert( newDirButton != nullptr );
+	auto* showHiddenCB =
+		jnew JXTextCheckbox(JGetString("showHiddenCB::SaveNewProjectDialog::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 60,80, 130,20);
+	assert( showHiddenCB != nullptr );
 
 	auto* currPathMenu =
 		jnew JXCurrentPathMenu("/", window,
 					JXWidget::kHElastic, JXWidget::kFixedBottom, 20,110, 180,20);
 	assert( currPathMenu != nullptr );
 
+	auto* scrollbarSet =
+		jnew JXScrollbarSet(window,
+					JXWidget::kHElastic, JXWidget::kFixedBottom, 20,140, 180,140);
+	assert( scrollbarSet != nullptr );
+
+	auto* upButton =
+		jnew JXTextButton(JGetString("upButton::SaveNewProjectDialog::JXLayout"), window,
+					JXWidget::kFixedRight, JXWidget::kFixedBottom, 220,140, 30,20);
+	assert( upButton != nullptr );
+
+	auto* homeButton =
+		jnew JXTextButton(JGetString("homeButton::SaveNewProjectDialog::JXLayout"), window,
+					JXWidget::kFixedRight, JXWidget::kFixedBottom, 250,140, 40,20);
+	assert( homeButton != nullptr );
+
+	auto* desktopButton =
+		jnew JXTextButton(JGetString("desktopButton::SaveNewProjectDialog::JXLayout"), window,
+					JXWidget::kFixedRight, JXWidget::kFixedBottom, 220,160, 70,20);
+	assert( desktopButton != nullptr );
+
+	auto* newDirButton =
+		jnew JXNewDirButton(window,
+					JXWidget::kFixedRight, JXWidget::kFixedBottom, 220,190, 70,20);
+	assert( newDirButton != nullptr );
+
+	auto* saveButton =
+		jnew JXTextButton(JGetString("saveButton::SaveNewProjectDialog::JXLayout"), window,
+					JXWidget::kFixedRight, JXWidget::kFixedBottom, 219,279, 72,22);
+	saveButton->SetShortcuts(JGetString("saveButton::shortcuts::SaveNewProjectDialog::JXLayout"));
+
+	auto* promptLabel =
+		jnew JXStaticText(JString::empty, window,
+					JXWidget::kHElastic, JXWidget::kFixedBottom, 20,290, 180,20);
+	promptLabel->SetToLabel(false);
+
+	auto* fileNameInput =
+		jnew JXSaveFileInput(window,
+					JXWidget::kHElastic, JXWidget::kFixedBottom, 20,310, 180,20);
+	assert( fileNameInput != nullptr );
+
+	auto* cancelButton =
+		jnew JXTextButton(JGetString("cancelButton::SaveNewProjectDialog::JXLayout"), window,
+					JXWidget::kFixedRight, JXWidget::kFixedBottom, 220,310, 70,20);
+	assert( cancelButton != nullptr );
+
 	itsTemplateMenu =
 		jnew JXTextMenu(JGetString("itsTemplateMenu::SaveNewProjectDialog::JXLayout"), window,
 					JXWidget::kHElastic, JXWidget::kFixedBottom, 20,350, 270,30);
-	assert( itsTemplateMenu != nullptr );
+
+	itsMethodRG =
+		jnew JXRadioGroup(window,
+					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 160,390, 132,106);
+
+	auto* manualRB =
+		jnew JXTextRadioButton(BuildManager::kManual, JGetString("manualRB::SaveNewProjectDialog::JXLayout"), itsMethodRG,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,10, 110,20);
+	assert( manualRB != nullptr );
+
+	auto* makefileTitle =
+		jnew JXStaticText(JGetString("makefileTitle::SaveNewProjectDialog::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 20,420, 140,20);
+	makefileTitle->SetToLabel(false);
+
+	auto* makemakeRB =
+		jnew JXTextRadioButton(BuildManager::kMakemake, JGetString("makemakeRB::SaveNewProjectDialog::JXLayout"), itsMethodRG,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,30, 110,20);
+	assert( makemakeRB != nullptr );
 
 	auto* cmakeRB =
 		jnew JXTextRadioButton(BuildManager::kCMake, JGetString("cmakeRB::SaveNewProjectDialog::JXLayout"), itsMethodRG,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,50, 110,20);
 	assert( cmakeRB != nullptr );
 
-	auto* desktopButton =
-		jnew JXTextButton(JGetString("desktopButton::SaveNewProjectDialog::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedBottom, 220,160, 70,20);
-	assert( desktopButton != nullptr );
+	auto* qmakeRB =
+		jnew JXTextRadioButton(BuildManager::kQMake, JGetString("qmakeRB::SaveNewProjectDialog::JXLayout"), itsMethodRG,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,70, 110,20);
+	assert( qmakeRB != nullptr );
+
+	auto* pathInput =
+		jnew JXPathInput(window,
+					JXWidget::kHElastic, JXWidget::kFixedBottom, 60,20, 200,20);
+	pathInput->SetIsRequired(true);
+	pathInput->ShouldAllowInvalidPath(false);
+	pathInput->ShouldRequireWritable(false);
+
+	auto* filterInput =
+		jnew JXInputField(window,
+					JXWidget::kHElastic, JXWidget::kFixedBottom, 60,50, 200,20);
+	assert( filterInput != nullptr );
 
 // end JXLayout
 

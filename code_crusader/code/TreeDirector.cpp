@@ -428,6 +428,8 @@ TreeDirector::BuildWindow
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 400,430, JString::empty);
+	window->SetMinSize(150, 150);
+	window->SetWMClass(JXGetApplication()->GetWMName().GetBytes(), "Code_Crusader_Tree");
 
 	auto* menuBar =
 		jnew JXMenuBar(window,
@@ -437,23 +439,19 @@ TreeDirector::BuildWindow
 	itsToolBar =
 		jnew JXToolBar(GetPrefsManager(), toolBarPrefID, menuBar, window,
 					JXWidget::kHElastic, JXWidget::kVElastic, 0,30, 400,400);
-	assert( itsToolBar != nullptr );
+
+	auto* scrollbarSet =
+		jnew JXScrollbarSet(itsToolBar->GetWidgetEnclosure(),
+					JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 400,400);
+	assert( scrollbarSet != nullptr );
 
 // end JXLayout
 
 	AdjustWindowTitle();
-	window->SetMinSize(150, 150);
 	window->SetCloseAction(JXWindow::kDeactivateDirector);
-	window->SetWMClass(GetWMClassInstance(), GetTreeWindowClass());
-
-	auto* scrollbarSet =
-		jnew JXScrollbarSet(itsToolBar->GetWidgetEnclosure(),
-						   JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 100,100);
-	assert( scrollbarSet != nullptr );
-	scrollbarSet->FitToEnclosure();
 
 	JXDisplay* display = GetDisplay();
-	auto* icon      = jnew JXImage(display, windowIcon);
+	auto* icon         = jnew JXImage(display, windowIcon);
 	window->SetIcon(icon);
 
 	JPoint desktopLoc;

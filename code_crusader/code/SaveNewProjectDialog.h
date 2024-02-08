@@ -49,8 +49,8 @@ private:
 
 // begin JXLayout
 
-	JXRadioGroup* itsMethodRG;
 	JXTextMenu*   itsTemplateMenu;
+	JXRadioGroup* itsMethodRG;
 
 // end JXLayout
 

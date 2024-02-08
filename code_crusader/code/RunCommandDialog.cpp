@@ -120,112 +120,96 @@ RunCommandDialog::BuildWindow()
 {
 // begin JXLayout
 
-	auto* window = jnew JXWindow(this, 470,260, JString::empty);
+	auto* window = jnew JXWindow(this, 470,260, JGetString("WindowTitle::RunCommandDialog::JXLayout"));
+
+	auto* pathLabel =
+		jnew JXStaticText(JGetString("pathLabel::RunCommandDialog::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,20, 200,20);
+	pathLabel->SetToLabel(false);
+
+	itsPathInput =
+		jnew CommandPathInput(window,
+					JXWidget::kHElastic, JXWidget::kFixedTop, 20,40, 320,20);
+
+	itsPathHistoryMenu =
+		jnew JXPathHistoryMenu(kHistoryLength, window,
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 340,40, 30,20);
+
+	itsChoosePathButton =
+		jnew JXTextButton(JGetString("itsChoosePathButton::RunCommandDialog::JXLayout"), window,
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 390,40, 60,20);
+
+	auto* cmdLabel =
+		jnew JXStaticText(JGetString("cmdLabel::RunCommandDialog::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,70, 130,20);
+	cmdLabel->SetToLabel(false);
+
+	itsChooseCmdButton =
+		jnew JXTextButton(JGetString("itsChooseCmdButton::RunCommandDialog::JXLayout"), window,
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 390,90, 60,20);
+
+	itsIsMakeCB =
+		jnew JXTextCheckbox(JGetString("itsIsMakeCB::RunCommandDialog::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,130, 220,20);
+	itsIsMakeCB->SetShortcuts(JGetString("itsIsMakeCB::shortcuts::RunCommandDialog::JXLayout"));
+
+	itsUseWindowCB =
+		jnew JXTextCheckbox(JGetString("itsUseWindowCB::RunCommandDialog::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 240,130, 220,20);
+	itsUseWindowCB->SetShortcuts(JGetString("itsUseWindowCB::shortcuts::RunCommandDialog::JXLayout"));
+
+	itsIsCVSCB =
+		jnew JXTextCheckbox(JGetString("itsIsCVSCB::RunCommandDialog::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,150, 220,20);
+	itsIsCVSCB->SetShortcuts(JGetString("itsIsCVSCB::shortcuts::RunCommandDialog::JXLayout"));
+
+	itsRaiseCB =
+		jnew JXTextCheckbox(JGetString("itsRaiseCB::RunCommandDialog::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 240,150, 220,20);
+	itsRaiseCB->SetShortcuts(JGetString("itsRaiseCB::shortcuts::RunCommandDialog::JXLayout"));
+
+	itsBeepCB =
+		jnew JXTextCheckbox(JGetString("itsBeepCB::RunCommandDialog::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 240,170, 220,20);
+	itsBeepCB->SetShortcuts(JGetString("itsBeepCB::shortcuts::RunCommandDialog::JXLayout"));
+
+	itsSaveAllCB =
+		jnew JXTextCheckbox(JGetString("itsSaveAllCB::RunCommandDialog::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,180, 220,20);
+	itsSaveAllCB->SetShortcuts(JGetString("itsSaveAllCB::shortcuts::RunCommandDialog::JXLayout"));
+
+	itsOneAtATimeCB =
+		jnew JXTextCheckbox(JGetString("itsOneAtATimeCB::RunCommandDialog::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,200, 220,20);
+	itsOneAtATimeCB->SetShortcuts(JGetString("itsOneAtATimeCB::shortcuts::RunCommandDialog::JXLayout"));
+
+	itsRunButton =
+		jnew JXTextButton(JGetString("itsRunButton::RunCommandDialog::JXLayout"), window,
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 388,233, 64,24);
+	itsRunButton->SetShortcuts(JGetString("itsRunButton::shortcuts::RunCommandDialog::JXLayout"));
+
+	itsSaveCmdMenu =
+		jnew JXTextMenu(JGetString("itsSaveCmdMenu::RunCommandDialog::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,235, 120,20);
 
 	auto* cancelButton =
 		jnew JXTextButton(JGetString("cancelButton::RunCommandDialog::JXLayout"), window,
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 210,235, 60,20);
 	assert( cancelButton != nullptr );
 
-	itsRunButton =
-		jnew JXTextButton(JGetString("itsRunButton::RunCommandDialog::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 389,234, 62,22);
-	assert( itsRunButton != nullptr );
-	itsRunButton->SetShortcuts(JGetString("itsRunButton::RunCommandDialog::shortcuts::JXLayout"));
-
 	itsHelpButton =
 		jnew JXTextButton(JGetString("itsHelpButton::RunCommandDialog::JXLayout"), window,
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 300,235, 60,20);
-	assert( itsHelpButton != nullptr );
-	itsHelpButton->SetShortcuts(JGetString("itsHelpButton::RunCommandDialog::shortcuts::JXLayout"));
-
-	itsPathInput =
-		jnew CommandPathInput(window,
-					JXWidget::kHElastic, JXWidget::kFixedTop, 20,40, 320,20);
-	assert( itsPathInput != nullptr );
-
-	itsSaveAllCB =
-		jnew JXTextCheckbox(JGetString("itsSaveAllCB::RunCommandDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,180, 220,20);
-	assert( itsSaveAllCB != nullptr );
-	itsSaveAllCB->SetShortcuts(JGetString("itsSaveAllCB::RunCommandDialog::shortcuts::JXLayout"));
-
-	itsOneAtATimeCB =
-		jnew JXTextCheckbox(JGetString("itsOneAtATimeCB::RunCommandDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,200, 220,20);
-	assert( itsOneAtATimeCB != nullptr );
-	itsOneAtATimeCB->SetShortcuts(JGetString("itsOneAtATimeCB::RunCommandDialog::shortcuts::JXLayout"));
-
-	itsUseWindowCB =
-		jnew JXTextCheckbox(JGetString("itsUseWindowCB::RunCommandDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 240,130, 220,20);
-	assert( itsUseWindowCB != nullptr );
-	itsUseWindowCB->SetShortcuts(JGetString("itsUseWindowCB::RunCommandDialog::shortcuts::JXLayout"));
-
-	itsIsMakeCB =
-		jnew JXTextCheckbox(JGetString("itsIsMakeCB::RunCommandDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,130, 220,20);
-	assert( itsIsMakeCB != nullptr );
-	itsIsMakeCB->SetShortcuts(JGetString("itsIsMakeCB::RunCommandDialog::shortcuts::JXLayout"));
+	itsHelpButton->SetShortcuts(JGetString("itsHelpButton::shortcuts::RunCommandDialog::JXLayout"));
 
 	itsCmdInput =
 		jnew JXInputField(window,
 					JXWidget::kHElastic, JXWidget::kFixedTop, 20,90, 370,20);
-	assert( itsCmdInput != nullptr );
-
-	auto* cmdLabel =
-		jnew JXStaticText(JGetString("cmdLabel::RunCommandDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,70, 130,20);
-	assert( cmdLabel != nullptr );
-	cmdLabel->SetToLabel();
-
-	auto* pathLabel =
-		jnew JXStaticText(JGetString("pathLabel::RunCommandDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,20, 200,20);
-	assert( pathLabel != nullptr );
-	pathLabel->SetToLabel();
-
-	itsPathHistoryMenu =
-		jnew JXPathHistoryMenu(kHistoryLength, window,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 340,40, 30,20);
-	assert( itsPathHistoryMenu != nullptr );
-
-	itsChoosePathButton =
-		jnew JXTextButton(JGetString("itsChoosePathButton::RunCommandDialog::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 390,40, 60,20);
-	assert( itsChoosePathButton != nullptr );
-
-	itsChooseCmdButton =
-		jnew JXTextButton(JGetString("itsChooseCmdButton::RunCommandDialog::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 390,90, 60,20);
-	assert( itsChooseCmdButton != nullptr );
-
-	itsRaiseCB =
-		jnew JXTextCheckbox(JGetString("itsRaiseCB::RunCommandDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 240,150, 220,20);
-	assert( itsRaiseCB != nullptr );
-	itsRaiseCB->SetShortcuts(JGetString("itsRaiseCB::RunCommandDialog::shortcuts::JXLayout"));
-
-	itsBeepCB =
-		jnew JXTextCheckbox(JGetString("itsBeepCB::RunCommandDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 240,170, 220,20);
-	assert( itsBeepCB != nullptr );
-	itsBeepCB->SetShortcuts(JGetString("itsBeepCB::RunCommandDialog::shortcuts::JXLayout"));
-
-	itsSaveCmdMenu =
-		jnew JXTextMenu(JGetString("itsSaveCmdMenu::RunCommandDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,235, 90,20);
-	assert( itsSaveCmdMenu != nullptr );
-
-	itsIsCVSCB =
-		jnew JXTextCheckbox(JGetString("itsIsCVSCB::RunCommandDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,150, 220,20);
-	assert( itsIsCVSCB != nullptr );
-	itsIsCVSCB->SetShortcuts(JGetString("itsIsCVSCB::RunCommandDialog::shortcuts::JXLayout"));
+	itsCmdInput->SetIsRequired();
+	itsCmdInput->SetFont(JFontManager::GetDefaultMonospaceFont());
 
 // end JXLayout
 
-	window->SetTitle(JGetString("WindowTitle::RunCommandDialog"));
 	window->LockCurrentMinSize();
 	SetButtons(itsRunButton, cancelButton);
 
@@ -248,8 +232,6 @@ RunCommandDialog::BuildWindow()
 
 	itsCmdInput->GetText()->SetCharacterInWordFunction(JXCSFDialogBase::IsCharacterInWord);
 	ListenTo(itsCmdInput);
-
-	itsCmdInput->SetFont(JFontManager::GetDefaultMonospaceFont());
 
 	itsSaveCmdMenu->SetMenuItems(kSaveCmdMenuStr);
 	itsSaveCmdMenu->AttachHandlers(this,

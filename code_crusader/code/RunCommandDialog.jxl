@@ -1,0 +1,283 @@
+jx_layout_editor 7
+470
+260
+"JXLayout"
+"Perform Task"
+""
+""
+0
+
+1
+0
+0
+"StaticText"
+0
+0
+20 20 40 220
+"pathLabel"
+0
+0
+0
+"Directory in which to perform task:"
+1
+0
+0
+0
+0
+
+1
+0
+0
+"CustomWidget"
+2
+0
+40 20 60 340
+"itsPathInput"
+1
+0
+0
+"CommandPathInput"
+""
+0
+""
+
+1
+0
+0
+"HistoryMenu"
+1
+0
+40 340 60 370
+"itsPathHistoryMenu"
+1
+0
+0
+2
+"kHistoryLength"
+
+1
+0
+0
+"TextButton"
+1
+0
+40 390 60 450
+"itsChoosePathButton"
+1
+0
+0
+"Choose"
+""
+
+1
+0
+0
+"StaticText"
+0
+0
+70 20 90 150
+"cmdLabel"
+0
+0
+0
+"Command to execute:"
+1
+0
+0
+0
+0
+
+1
+0
+0
+"InputField"
+2
+0
+90 20 110 390
+"itsCmdInput"
+1
+1
+0
+1
+0
+0
+""
+""
+""
+0
+0
+1
+""
+
+1
+0
+0
+"TextButton"
+1
+0
+90 390 110 450
+"itsChooseCmdButton"
+1
+0
+0
+"Browse"
+""
+
+1
+0
+0
+"TextCheckbox"
+0
+0
+130 20 150 240
+"itsIsMakeCB"
+1
+0
+0
+"This task invokes make / ant"
+"#M"
+
+1
+0
+0
+"TextCheckbox"
+0
+0
+130 240 150 460
+"itsUseWindowCB"
+1
+0
+0
+"Display output in window"
+"#W"
+
+1
+0
+0
+"TextCheckbox"
+0
+0
+150 20 170 240
+"itsIsCVSCB"
+1
+0
+0
+"This task invokes version control"
+"#E"
+
+1
+0
+0
+"TextCheckbox"
+0
+0
+150 240 170 460
+"itsRaiseCB"
+1
+0
+0
+"Raise window before performing"
+"#R"
+
+1
+0
+0
+"TextCheckbox"
+0
+0
+170 240 190 460
+"itsBeepCB"
+1
+0
+0
+"Beep when task is finished"
+"#B"
+
+1
+0
+0
+"TextCheckbox"
+0
+0
+180 20 200 240
+"itsSaveAllCB"
+1
+0
+0
+"Save all files before performing"
+"#S"
+
+1
+0
+0
+"TextCheckbox"
+0
+0
+200 20 220 240
+"itsOneAtATimeCB"
+1
+0
+0
+"Perform on one file at a time"
+"#O"
+
+1
+0
+0
+"TextButton"
+1
+0
+234 389 256 451
+"itsRunButton"
+1
+0
+0
+"Run"
+"^M"
+
+1
+0
+0
+"Menu"
+0
+0
+235 20 255 140
+"itsSaveCmdMenu"
+1
+0
+0
+0
+"Save in menu"
+1
+1
+0
+
+1
+0
+0
+"TextButton"
+1
+0
+235 210 255 270
+"cancelButton"
+0
+0
+0
+"Cancel"
+""
+
+1
+0
+0
+"TextButton"
+1
+0
+235 300 255 360
+"itsHelpButton"
+1
+0
+0
+"Help"
+"F1"
+
+0

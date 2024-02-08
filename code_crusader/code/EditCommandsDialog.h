@@ -38,9 +38,7 @@ protected:
 
 private:
 
-	CommandTable*	itsAllTable;
 	CommandManager*	itsCmdMgr;			// can be nullptr
-	CommandTable*	itsThisTable;		// nullptr if itsCmdMgr == nullptr
 	JString			itsThisTableSetup;	// used when itsThisTable == nullptr
 
 // begin JXLayout
@@ -52,11 +50,13 @@ private:
 
 // begin allProjectsLayout
 
+	CommandTable* itsAllTable;
 
 // end allProjectsLayout
 
 // begin thisProjectLayout
 
+	CommandTable* itsThisTable;
 	JXInputField* itsMakeDependCmd;
 
 // end thisProjectLayout

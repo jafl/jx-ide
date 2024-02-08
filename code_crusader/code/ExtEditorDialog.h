@@ -42,11 +42,11 @@ private:
 
 // begin JXLayout
 
+	JXTextCheckbox* itsExtTextEditorCB;
+	JXTextCheckbox* itsExtBinaryEditorCB;
 	JXInputField*   itsEditTextFileCmdInput;
 	JXInputField*   itsEditTextFileLineCmdInput;
-	JXTextCheckbox* itsExtTextEditorCB;
 	JXInputField*   itsEditBinaryFileCmdInput;
-	JXTextCheckbox* itsExtBinaryEditorCB;
 
 // end JXLayout
 

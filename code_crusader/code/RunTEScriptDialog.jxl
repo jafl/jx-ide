@@ -1,0 +1,120 @@
+jx_layout_editor 7
+390
+110
+"JXLayout"
+"Run script"
+""
+""
+0
+
+1
+0
+0
+"StaticText"
+2
+0
+20 20 40 370
+"cmdLabel"
+0
+0
+0
+"Enter the command to process the selected text (if any):"
+1
+0
+0
+0
+0
+
+1
+0
+0
+"InputField"
+2
+0
+40 20 60 340
+"itsCmdInput"
+1
+1
+0
+0
+0
+0
+""
+""
+""
+0
+0
+0
+""
+
+1
+0
+0
+"HistoryMenu"
+1
+0
+40 340 60 370
+"itsHistoryMenu"
+1
+0
+0
+0
+"kHistoryLength"
+
+1
+0
+0
+"TextCheckbox"
+0
+0
+80 20 100 110
+"itsStayOpenCB"
+1
+0
+0
+"Stay open"
+""
+
+1
+0
+0
+"TextButton"
+1
+0
+80 130 100 190
+"itsCloseButton"
+1
+0
+0
+"Close"
+"#W^["
+
+1
+0
+0
+"TextButton"
+1
+0
+80 220 100 280
+"itsHelpButton"
+1
+0
+0
+"Help"
+"F1"
+
+1
+0
+0
+"TextButton"
+1
+0
+80 310 100 370
+"itsRunButton"
+1
+0
+0
+"Run"
+"^M"
+
+0

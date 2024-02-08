@@ -73,13 +73,5 @@ void	CleanUpBeforeSuddenDeath(const JXDocumentManager::SafetySaveReason reason);
 
 const JUtf8Byte*	GetWMClassInstance();
 const JUtf8Byte*	GetProjectWindowClass();
-const JUtf8Byte*	GetSymbolWindowClass();
-const JUtf8Byte*	GetTreeWindowClass();
-const JUtf8Byte*	GetFileListWindowClass();
-const JUtf8Byte*	GetEditorWindowClass();
-const JUtf8Byte*	GetExecOutputWindowClass();
-const JUtf8Byte*	GetCompileOutputWindowClass();
-const JUtf8Byte*	GetSearchOutputWindowClass();
-const JUtf8Byte*	GetShellWindowClass();
 
 #endif

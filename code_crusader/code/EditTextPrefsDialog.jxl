@@ -1,0 +1,766 @@
+jx_layout_editor 7
+640
+530
+"JXLayout"
+"Text Editor Preferences"
+""
+""
+0
+
+1
+0
+0
+"CustomWidget"
+0
+0
+20 20 80 300
+"itsFontMenu"
+1
+0
+0
+"JXChooseMonoFont"
+""
+0
+""
+
+1
+0
+0
+"CustomWidget"
+0
+0
+20 310 45 620
+"itsSampleText"
+1
+0
+0
+"SampleText"
+""
+0
+""
+
+1
+0
+0
+"StaticText"
+2
+2
+50 310 70 400
+"changeColorLabel"
+0
+0
+0
+"Change color:"
+1
+0
+0
+0
+0
+
+1
+0
+0
+"TextButton"
+2
+2
+50 400 70 440
+"itsColorButton[PrefsManager::kTextColorIndex-1]"
+0
+0
+1
+"Text"
+""
+
+1
+0
+0
+"TextButton"
+2
+2
+50 440 70 520
+"itsColorButton[PrefsManager::kBackColorIndex-1]"
+0
+0
+1
+"Background"
+""
+
+1
+0
+0
+"TextButton"
+2
+2
+50 520 70 560
+"itsColorButton[PrefsManager::kCaretColorIndex-1]"
+0
+0
+1
+"Caret"
+""
+
+1
+0
+0
+"TextButton"
+2
+2
+50 560 70 620
+"itsColorButton[PrefsManager::kSelColorIndex-1]"
+0
+0
+1
+"Selection"
+""
+
+1
+0
+0
+"TextButton"
+2
+2
+70 400 90 450
+"itsColorButton[PrefsManager::kSelLineColorIndex-1]"
+0
+0
+1
+"Outline"
+""
+
+1
+0
+0
+"TextButton"
+2
+2
+70 450 90 610
+"itsColorButton[PrefsManager::kRightMarginColorIndex-1]"
+0
+0
+1
+"Right margin & whitespace"
+""
+
+1
+0
+0
+"Menu"
+0
+0
+90 20 115 300
+"itsEmulatorMenu"
+1
+0
+0
+0
+"Emulator:"
+1
+1
+0
+
+1
+0
+0
+"StaticText"
+2
+2
+95 310 115 400
+"colorSetsLabel"
+0
+0
+0
+"Color sets:"
+1
+0
+0
+0
+0
+
+1
+0
+0
+"TextButton"
+2
+2
+95 400 115 500
+"itsDefColorsButton"
+1
+0
+0
+"Black on white"
+""
+
+1
+0
+0
+"TextButton"
+2
+2
+95 500 115 600
+"itsInvColorsButton"
+1
+0
+0
+"White on black"
+""
+
+1
+0
+0
+"TextCheckbox"
+2
+2
+130 20 150 300
+"itsUseDNDCB"
+1
+0
+0
+"Enable Drag-and-Drop & context menu"
+""
+
+1
+0
+0
+"StaticText"
+2
+2
+130 330 150 540
+"spacesPerTabLabel"
+0
+0
+0
+"Spaces per tab:"
+1
+0
+0
+0
+0
+
+1
+0
+0
+"IntegerInput"
+2
+2
+130 540 150 580
+"itsTabCharCountInput"
+1
+1
+0
+1
+1 1
+0 0
+
+1
+0
+0
+"StaticText"
+2
+2
+150 330 170 540
+"cpmLabel"
+0
+0
+0
+"Clean paragraph margins line width:"
+1
+0
+0
+0
+0
+
+1
+0
+0
+"IntegerInput"
+2
+2
+150 540 170 580
+"itsCRMLineWidthInput"
+1
+2
+0
+1
+1 1
+0 0
+
+1
+0
+0
+"TextCheckbox"
+2
+2
+160 20 180 300
+"itsAutoIndentCB"
+1
+0
+0
+"Automatically indent new lines"
+""
+
+1
+0
+0
+"StaticText"
+2
+2
+170 330 190 540
+"undoDepthLabel"
+0
+0
+0
+"Undo depth:"
+1
+0
+0
+0
+0
+
+1
+0
+0
+"IntegerInput"
+2
+2
+170 540 190 580
+"itsUndoDepthInput"
+1
+3
+0
+1
+1 1
+0 0
+
+1
+0
+0
+"TextCheckbox"
+2
+2
+190 20 210 300
+"itsTabToSpacesCB"
+1
+0
+0
+"Tab inserts spaces"
+""
+
+1
+0
+0
+"TextCheckbox"
+2
+2
+190 330 210 540
+"itsRightMarginCB"
+1
+0
+0
+"Draw margin after column:"
+""
+
+1
+0
+0
+"IntegerInput"
+2
+2
+190 540 210 580
+"itsRightMarginInput"
+1
+4
+0
+1
+1 1
+0 0
+
+1
+0
+0
+"TextCheckbox"
+2
+2
+220 20 240 300
+"itsSmartTabCB"
+1
+0
+0
+"Tab completes words and activates macros"
+""
+
+1
+0
+0
+"TextCheckbox"
+2
+2
+230 330 250 630
+"itsCreateBackupCB"
+1
+0
+0
+"Create backup file"
+""
+
+1
+0
+0
+"TextCheckbox"
+0
+0
+250 20 270 300
+"itsCopyWhenSelectCB"
+1
+0
+0
+"Automatically copy text when it is selected"
+""
+
+1
+0
+0
+"TextCheckbox"
+2
+2
+250 330 270 630
+"itsOnlyBackupIfNoneCB"
+1
+0
+0
+"Only create backup file if it doesn't already exist"
+""
+
+1
+0
+0
+"TextCheckbox"
+0
+0
+270 20 290 300
+"itsMiddleButtonPasteCB"
+1
+0
+0
+"Middle button pastes text"
+""
+
+1
+0
+0
+"TextCheckbox"
+2
+2
+280 330 300 630
+"itsOpenComplFileOnTopCB"
+1
+0
+0
+"Open complement file on top of existing window"
+""
+
+1
+0
+0
+"TextCheckbox"
+2
+2
+310 20 330 300
+"itsBalanceWhileTypingCB"
+1
+0
+0
+"Balance grouping symbols while typing"
+""
+
+1
+0
+0
+"TextCheckbox"
+2
+2
+310 330 330 630
+"itsExtraSpaceWindTitleCB"
+1
+0
+0
+"Allocate space for *** in window title"
+""
+
+1
+0
+0
+"TextCheckbox"
+2
+2
+330 20 350 300
+"itsScrollToBalanceCB"
+1
+0
+0
+"Scroll if outside view"
+""
+
+1
+0
+0
+"TextCheckbox"
+2
+2
+350 20 370 300
+"itsBeepWhenTypeUnbalancedCB"
+1
+0
+0
+"Beep if symbol not balanced"
+""
+
+1
+0
+0
+"RadioGroup"
+2
+2
+350 460 430 620
+"itsPWModRG"
+1
+0
+0
+
+1
+0
+0
+"StaticText"
+0
+0
+360 330 420 450
+"partialWordTitle"
+0
+0
+0
+"Modifier to move by partial word:"
+0
+0
+1
+0
+0
+
+1
+35
+1
+"TextRadioButton"
+0
+0
+10 10 30 100
+"ctrlMetaLabel"
+0
+0
+0
+"JXTEBase::kCtrlMetaPWMod"
+"Ctrl + Meta"
+""
+
+1
+35
+1
+"TextRadioButton"
+0
+0
+30 10 50 80
+"mod2Label"
+0
+0
+0
+"JXTEBase::kMod2PWMod"
+"Mod2"
+""
+
+1
+35
+1
+"TextRadioButton"
+0
+0
+30 90 50 150
+"mod4Label"
+0
+0
+0
+"JXTEBase::kMod4PWMod"
+"Mod4"
+""
+
+1
+0
+0
+"TextCheckbox"
+2
+2
+390 20 410 300
+"itsSortFnMenuCB"
+1
+0
+0
+"Alphabetize Functions menu in source windows"
+""
+
+1
+35
+1
+"TextRadioButton"
+0
+0
+50 10 70 80
+"mod3Label"
+0
+0
+0
+"JXTEBase::kMod3PWMod"
+"Mod3"
+""
+
+1
+35
+1
+"TextRadioButton"
+0
+0
+50 90 70 150
+"mod5Label"
+0
+0
+0
+"JXTEBase::kMod5PWMod"
+"Mod5"
+""
+
+1
+0
+0
+"TextCheckbox"
+2
+2
+410 20 430 300
+"itsNSInFnMenuCB"
+1
+0
+0
+"Include namespace in Functions menu"
+""
+
+1
+0
+0
+"TextCheckbox"
+2
+2
+430 20 450 300
+"itsPackFnMenuCB"
+1
+0
+0
+"Use small font in Functions menu"
+""
+
+1
+0
+0
+"TextCheckbox"
+0
+0
+450 330 470 630
+"itsLeftToFrontOfTextCB"
+1
+0
+0
+"Meta-left-arrow moves to front of text"
+""
+
+1
+0
+0
+"StaticText"
+2
+2
+460 40 480 290
+"wordWrapHint"
+0
+0
+0
+"Word wrapping is controlled in the File Types dialog."
+1
+0
+0
+0
+0
+
+1
+0
+0
+"TextCheckbox"
+0
+0
+470 330 490 630
+"itsHomeEndCB"
+1
+0
+0
+"Home/End move caret to beginning/end of line"
+""
+
+1
+0
+0
+"TextButton"
+2
+2
+490 40 510 100
+"cancelButton"
+0
+0
+0
+"Cancel"
+""
+
+1
+0
+0
+"TextButton"
+2
+2
+490 130 510 190
+"itsHelpButton"
+1
+0
+0
+"Help"
+"F1"
+
+1
+0
+0
+"TextButton"
+2
+2
+490 220 510 280
+"okButton"
+0
+0
+0
+"OK"
+"^M"
+
+1
+0
+0
+"TextCheckbox"
+0
+0
+490 330 510 630
+"itsScrollCaretCB"
+1
+0
+0
+"Caret follows when you scroll"
+""
+
+0

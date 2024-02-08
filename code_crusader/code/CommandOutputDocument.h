@@ -20,6 +20,7 @@ public:
 
 	CommandOutputDocument(const TextFileType fileType,
 						  const JUtf8Byte* helpSectionName,
+						  const JUtf8Byte* wmClass,
 						  const JString& dontCloseMessage);
 
 	~CommandOutputDocument() override;

@@ -40,11 +40,10 @@ CompileDocument::CompileDocument
 	ProjectDocument* projDoc
 	)
 	:
-	ExecOutputDocument(kExecOutputFT, "CompileHelp", false),
+	ExecOutputDocument(kExecOutputFT, "CompileHelp",
+					   "Code_Crusader_Editor_Compile_Output", false),
 	itsHasErrorsFlag(false)
 {
-	GetWindow()->SetWMClass(GetWMClassInstance(), GetCompileOutputWindowClass());
-
 	itsErrorMenu = InsertTextMenu(JGetString("MenuTitle::CompileDocument_Errors"));
 	itsErrorMenu->SetMenuItems(kErrorsMenuStr);
 	itsErrorMenu->SetUpdateAction(JXMenu::kDisableNone);

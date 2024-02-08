@@ -29,19 +29,19 @@ private:
 
 // begin JXLayout
 
+	JXTextCheckbox* itsMacStyleCB;
+	JXTextCheckbox* itsCopyWhenSelectCB;
+	JXTextCheckbox* itsMiddleButtonPasteCB;
+	JXTextCheckbox* itsFocusInDockCB;
+	JXTextCheckbox* itsNewEditorCB;
+	JXTextCheckbox* itsOpenOldProjCB;
+	JXTextCheckbox* itsNewProjectCB;
+	JXTextCheckbox* itsCloseUnsavedCB;
+	JXTextCheckbox* itsReopenLastCB;
 	JXTextCheckbox* itsSaveAllCB;
 	JXTextCheckbox* itsCloseAllCB;
-	JXTextCheckbox* itsQuitCB;
-	JXTextCheckbox* itsNewEditorCB;
-	JXTextCheckbox* itsNewProjectCB;
 	JXTextCheckbox* itsChooseFileCB;
-	JXTextCheckbox* itsReopenLastCB;
-	JXTextCheckbox* itsCopyWhenSelectCB;
-	JXTextCheckbox* itsCloseUnsavedCB;
-	JXTextCheckbox* itsMacStyleCB;
-	JXTextCheckbox* itsOpenOldProjCB;
-	JXTextCheckbox* itsFocusInDockCB;
-	JXTextCheckbox* itsMiddleButtonPasteCB;
+	JXTextCheckbox* itsQuitCB;
 
 // end JXLayout
 

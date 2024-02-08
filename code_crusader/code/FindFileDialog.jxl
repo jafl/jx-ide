@@ -1,0 +1,120 @@
+jx_layout_editor 7
+290
+140
+"JXLayout"
+"Find File"
+""
+""
+0
+
+1
+0
+0
+"StaticText"
+0
+0
+20 20 40 100
+"nameLabel"
+0
+0
+0
+"Name of file:"
+1
+0
+0
+0
+0
+
+1
+0
+0
+"InputField"
+2
+0
+40 20 60 240
+"itsFileName"
+1
+1
+0
+0
+0
+0
+""
+""
+""
+0
+0
+1
+""
+
+1
+0
+0
+"HistoryMenu"
+1
+0
+40 240 60 270
+"itsFileHistoryMenu"
+1
+0
+0
+0
+"kHistoryLength"
+
+1
+0
+0
+"TextCheckbox"
+0
+0
+70 20 90 250
+"itsIgnoreCaseCB"
+1
+0
+0
+"Ignore case (only if no partial path)"
+"#I"
+
+1
+0
+0
+"TextCheckbox"
+0
+0
+110 20 130 110
+"itsStayOpenCB"
+1
+0
+0
+"Stay open"
+""
+
+1
+0
+0
+"TextButton"
+1
+0
+110 130 130 190
+"itsCloseButton"
+1
+0
+0
+"Close"
+"#W^["
+
+1
+0
+0
+"TextButton"
+1
+0
+110 210 130 270
+"itsFindButton"
+1
+0
+0
+"Find"
+"^M"
+
+0

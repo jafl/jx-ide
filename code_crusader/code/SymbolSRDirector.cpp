@@ -123,15 +123,19 @@ SymbolSRDirector::BuildWindow
 
 	auto* window = jnew JXWindow(this, 400,230, JString::empty);
 
+	auto* menuBar =
+		jnew JXMenuBar(window,
+					JXWidget::kHElastic, JXWidget::kFixedTop, 0,0, 400,30);
+	assert( menuBar != nullptr );
+
 	auto* scrollbarSet =
 		jnew JXScrollbarSet(window,
 					JXWidget::kHElastic, JXWidget::kVElastic, 0,30, 400,200);
 	assert( scrollbarSet != nullptr );
 
-	auto* menuBar =
-		jnew JXMenuBar(window,
-					JXWidget::kHElastic, JXWidget::kFixedTop, 0,0, 400,30);
-	assert( menuBar != nullptr );
+	itsSymbolTable =
+		jnew SymbolTable(itsMainSymDir, symbolList, scrollbarSet, scrollbarSet->GetScrollEnclosure(),
+					JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 400,200);
 
 // end JXLayout
 
@@ -141,13 +145,6 @@ SymbolSRDirector::BuildWindow
 	{
 		window->ShouldFocusWhenShow(true);
 	}
-
-	itsSymbolTable =
-		jnew SymbolTable(itsMainSymDir, symbolList,
-						  scrollbarSet, scrollbarSet->GetScrollEnclosure(),
-						  JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 10,10);
-	assert( itsSymbolTable != nullptr );
-	itsSymbolTable->FitToEnclosure();
 
 	itsActionsMenu = menuBar->AppendTextMenu(JGetString("MenuTitle::SymbolSRDirector_Actions"));
 	itsActionsMenu->SetMenuItems(kActionsMenuStr);

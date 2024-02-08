@@ -45,14 +45,6 @@ static PTPrinter*	thePTTextPrinter     = nullptr;
 static PSPrinter*	thePSTextPrinter     = nullptr;
 
 static const JUtf8Byte* kProjectWindowClass       = "Code_Crusader_Project";
-static const JUtf8Byte* kSymbolWindowClass        = "Code_Crusader_Symbol_List";
-static const JUtf8Byte* kTreeWindowClass          = "Code_Crusader_Tree";
-static const JUtf8Byte* kFileListWindowClass      = "Code_Crusader_File_List";
-static const JUtf8Byte* kEditorWindowClass        = "Code_Crusader_Editor";
-static const JUtf8Byte* kExecOutputWindowClass    = "Code_Crusader_Editor_Exec_Output";
-static const JUtf8Byte* kCompileOutputWindowClass = "Code_Crusader_Editor_Compile_Output";
-static const JUtf8Byte* kSearchOutputWindowClass  = "Code_Crusader_Editor_Search_Output";
-static const JUtf8Byte* kShellWindowClass         = "Code_Crusader_Editor_Shell";
 
 // owned by JXImageCache
 static JXImage* theFileIcon           = nullptr;
@@ -503,61 +495,13 @@ GetPSTextPrinter()
 const JUtf8Byte*
 GetWMClassInstance()
 {
-	return JGetString("Name").GetBytes();
+	return JXGetApplication()->GetWMName().GetBytes();
 }
 
 const JUtf8Byte*
 GetProjectWindowClass()
 {
 	return kProjectWindowClass;
-}
-
-const JUtf8Byte*
-GetSymbolWindowClass()
-{
-	return kSymbolWindowClass;
-}
-
-const JUtf8Byte*
-GetTreeWindowClass()
-{
-	return kTreeWindowClass;
-}
-
-const JUtf8Byte*
-GetFileListWindowClass()
-{
-	return kFileListWindowClass;
-}
-
-const JUtf8Byte*
-GetEditorWindowClass()
-{
-	return kEditorWindowClass;
-}
-
-const JUtf8Byte*
-GetExecOutputWindowClass()
-{
-	return kExecOutputWindowClass;
-}
-
-const JUtf8Byte*
-GetCompileOutputWindowClass()
-{
-	return kCompileOutputWindowClass;
-}
-
-const JUtf8Byte*
-GetSearchOutputWindowClass()
-{
-	return kSearchOutputWindowClass;
-}
-
-const JUtf8Byte*
-GetShellWindowClass()
-{
-	return kShellWindowClass;
 }
 
 /******************************************************************************

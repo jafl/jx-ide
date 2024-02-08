@@ -43,13 +43,12 @@ protected:
 
 private:
 
-	FileTypeTable*	itsTable;
-
 // begin JXLayout
 
 	JXTextCheckbox* itsExecOutputWrapCB;
 	JXTextCheckbox* itsUnknownTypeWrapCB;
 	JXTextButton*   itsHelpButton;
+	FileTypeTable*  itsTable;
 
 // end JXLayout
 

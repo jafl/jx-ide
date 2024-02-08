@@ -1,0 +1,114 @@
+jx_layout_editor 7
+360
+160
+"JXLayout"
+"Sub-project configuration"
+""
+""
+0
+
+1
+0
+0
+"TextCheckbox"
+0
+0
+20 20 40 270
+"itsIncludeInDepListCB"
+1
+0
+0
+"Include library in project dependencies"
+"#I"
+
+1
+0
+0
+"StaticText"
+0
+0
+60 20 80 90
+"fileLabel"
+0
+0
+0
+"Project file:"
+1
+0
+0
+0
+0
+
+1
+0
+0
+"CustomWidget"
+2
+0
+60 90 80 290
+"itsSubProjName"
+1
+0
+0
+"ProjectFileInput"
+""
+0
+""
+
+1
+0
+0
+"TextButton"
+1
+0
+60 290 80 340
+"itsChooseFileButton"
+1
+0
+0
+"Choose"
+"#O"
+
+1
+0
+0
+"TextCheckbox"
+0
+0
+90 20 110 250
+"itsShouldBuildCB"
+1
+0
+0
+"Automatically build this sub-project"
+"#B"
+
+1
+0
+0
+"TextButton"
+0
+1
+130 70 150 140
+"cancelButton"
+0
+0
+0
+"Cancel"
+""
+
+1
+0
+0
+"TextButton"
+1
+1
+130 220 150 290
+"okButton"
+0
+0
+0
+"OK"
+"^M"
+
+0

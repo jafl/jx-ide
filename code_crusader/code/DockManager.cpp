@@ -90,25 +90,25 @@ DockManager::DockAll()
 	v->SetElasticIndex(1);
 	h->SetElasticIndex(2);
 
-	(dir->GetWindow())->AdjustSize(200, 0);
+	dir->GetWindow()->AdjustSize(200, 0);
 	v->SetCompartmentSize(2, 2*v->GetCompartmentSize(2)/3);
 
 	JXDockWidget* dock1 = h->GetDockWidget(1);
 	assert( dock1 != nullptr );
-	SetDefaultDock(GetProjectWindowClass(),  dock1);
-	SetDefaultDock(GetSymbolWindowClass(),   dock1);
-	SetDefaultDock(GetFileListWindowClass(), dock1);
+	SetDefaultDock("Code_Crusader_Project",     dock1);
+	SetDefaultDock("Code_Crusader_Symbol_List", dock1);
+	SetDefaultDock("Code_Crusader_File_List",   dock1);
 
 	JXDockWidget* dock2 = h->GetDockWidget(2);
 	assert( dock2 != nullptr );
-	SetDefaultDock(GetEditorWindowClass(), dock2);
-	SetDefaultDock(GetTreeWindowClass(),   dock2);
+	SetDefaultDock("Code_Crusader_Editor", dock2);
+	SetDefaultDock("Code_Crusader_Tree",   dock2);
 
 	JXDockWidget* dock3 = v->GetDockWidget(2);
 	assert( dock3 != nullptr );
-	SetDefaultDock(GetExecOutputWindowClass(),    dock3);
-	SetDefaultDock(GetCompileOutputWindowClass(), dock3);
-	SetDefaultDock(GetSearchOutputWindowClass(),  dock3);
+	SetDefaultDock("Code_Crusader_Editor_Exec_Output",    dock3);
+	SetDefaultDock("Code_Crusader_Editor_Compile_Output", dock3);
+	SetDefaultDock("Code_Crusader_Editor_Search_Output",  dock3);
 
 	(dock3->GetTabGroup())->SetTabEdge(JXTabGroup::kBottom);
 

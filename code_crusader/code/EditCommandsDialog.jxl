@@ -1,0 +1,71 @@
+jx_layout_editor 7
+620
+550
+"JXLayout"
+"Edit Tasks Menu"
+""
+""
+0
+
+1
+0
+0
+"Partition"
+2
+2
+20 20 495 600
+"itsPartition"
+1
+0
+0
+1
+2
+220
+100
+250
+140
+2
+
+1
+0
+0
+"TextButton"
+0
+1
+520 100 540 170
+"cancelButton"
+0
+0
+0
+"Cancel"
+""
+
+1
+0
+0
+"TextButton"
+0
+1
+520 270 540 340
+"itsHelpButton"
+1
+0
+0
+"Help"
+"F1"
+
+1
+0
+0
+"TextButton"
+0
+1
+520 440 540 510
+"okButton"
+0
+0
+0
+"OK"
+""
+
+0

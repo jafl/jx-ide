@@ -92,46 +92,37 @@ EditCommandsDialog::BuildWindow
 	ProjectDocument* projDoc
 	)
 {
-	JArray<JCoordinate> heights(2);
-	heights.AppendItem(210);
-	heights.AppendItem(240);
-
-	const JIndex elasticIndex = 2;
-
-	JArray<JCoordinate> minHeights(2);
-	minHeights.AppendItem(100);
-	minHeights.AppendItem(120);
-
-	const JCoordinate kHeaderHeight = 20;
-
 // begin JXLayout
 
-	auto* window = jnew JXWindow(this, 620,530, JString::empty);
+	auto* window = jnew JXWindow(this, 620,550, JGetString("WindowTitle::EditCommandsDialog::JXLayout"));
+
+	JArray<JCoordinate> itsPartition_sizes, itsPartition_minSizes;
+	itsPartition_sizes.AppendItem(220);
+	itsPartition_minSizes.AppendItem(100);
+	itsPartition_sizes.AppendItem(250);
+	itsPartition_minSizes.AppendItem(140);
 
 	itsPartition =
-		jnew JXVertPartition(heights, elasticIndex, minHeights, window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 20,20, 580,455);
-	assert( itsPartition != nullptr );
+		jnew JXVertPartition(itsPartition_sizes, 2, itsPartition_minSizes, window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 20,20, 580,475);
 
 	auto* cancelButton =
 		jnew JXTextButton(JGetString("cancelButton::EditCommandsDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 100,500, 70,20);
+					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 100,520, 70,20);
 	assert( cancelButton != nullptr );
-
-	auto* okButton =
-		jnew JXTextButton(JGetString("okButton::EditCommandsDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 440,500, 70,20);
-	assert( okButton != nullptr );
 
 	itsHelpButton =
 		jnew JXTextButton(JGetString("itsHelpButton::EditCommandsDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 270,500, 70,20);
-	assert( itsHelpButton != nullptr );
-	itsHelpButton->SetShortcuts(JGetString("itsHelpButton::EditCommandsDialog::shortcuts::JXLayout"));
+					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 270,520, 70,20);
+	itsHelpButton->SetShortcuts(JGetString("itsHelpButton::shortcuts::EditCommandsDialog::JXLayout"));
+
+	auto* okButton =
+		jnew JXTextButton(JGetString("okButton::EditCommandsDialog::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 440,520, 70,20);
+	assert( okButton != nullptr );
 
 // end JXLayout
 
-	window->SetTitle(JGetString("WindowTitle::EditCommandsDialog"));
 	window->LockCurrentMinSize();
 	SetButtons(okButton, cancelButton);
 
@@ -158,41 +149,49 @@ EditCommandsDialog::BuildWindow
 	const JRect allProjectsLayout_Aperture = compartment->GetAperture();
 	compartment->AdjustSize(580 - allProjectsLayout_Aperture.width(), 210 - allProjectsLayout_Aperture.height());
 
-	auto* allNewButton =
-		jnew JXTextButton(JGetString("allNewButton::EditCommandsDialog::allProjectsLayout"), compartment,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 520,60, 60,20);
-	assert( allNewButton != nullptr );
-
-	auto* allRemoveButton =
-		jnew JXTextButton(JGetString("allRemoveButton::EditCommandsDialog::allProjectsLayout"), compartment,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 520,120, 60,20);
-	assert( allRemoveButton != nullptr );
+	auto* anyProjectTitle =
+		jnew JXStaticText(JGetString("anyProjectTitle::EditCommandsDialog__allProjectsLayout::allProjectsLayout"), compartment,
+					JXWidget::kHElastic, JXWidget::kFixedTop, 0,0, 580,20);
+	anyProjectTitle->SetToLabel(false);
 
 	auto* allScrollbarSet =
 		jnew JXScrollbarSet(compartment,
 					JXWidget::kHElastic, JXWidget::kVElastic, 0,30, 510,180);
 	assert( allScrollbarSet != nullptr );
 
+	auto* allNewButton =
+		jnew JXTextButton(JGetString("allNewButton::EditCommandsDialog__allProjectsLayout::allProjectsLayout"), compartment,
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 520,60, 60,20);
+	assert( allNewButton != nullptr );
+
 	auto* allDuplicateButton =
-		jnew JXTextButton(JGetString("allDuplicateButton::EditCommandsDialog::allProjectsLayout"), compartment,
+		jnew JXTextButton(JGetString("allDuplicateButton::EditCommandsDialog__allProjectsLayout::allProjectsLayout"), compartment,
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 520,90, 60,20);
 	assert( allDuplicateButton != nullptr );
 
-	auto* anyProjectTitle =
-		jnew JXStaticText(JGetString("anyProjectTitle::EditCommandsDialog::allProjectsLayout"), compartment,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 0,0, 580,20);
-	assert( anyProjectTitle != nullptr );
-	anyProjectTitle->SetToLabel();
+	auto* allRemoveButton =
+		jnew JXTextButton(JGetString("allRemoveButton::EditCommandsDialog__allProjectsLayout::allProjectsLayout"), compartment,
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 520,120, 60,20);
+	assert( allRemoveButton != nullptr );
 
 	auto* allExportButton =
-		jnew JXTextButton(JGetString("allExportButton::EditCommandsDialog::allProjectsLayout"), compartment,
+		jnew JXTextButton(JGetString("allExportButton::EditCommandsDialog__allProjectsLayout::allProjectsLayout"), compartment,
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 520,160, 60,20);
 	assert( allExportButton != nullptr );
 
 	auto* allImportButton =
-		jnew JXTextButton(JGetString("allImportButton::EditCommandsDialog::allProjectsLayout"), compartment,
+		jnew JXTextButton(JGetString("allImportButton::EditCommandsDialog__allProjectsLayout::allProjectsLayout"), compartment,
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 520,190, 60,20);
 	assert( allImportButton != nullptr );
+
+	itsAllTable =
+		jnew CommandTable(*GetCommandManager()->GetCommandList(), allNewButton, allRemoveButton, allDuplicateButton, allExportButton, allImportButton, allScrollbarSet, allScrollbarSet->GetScrollEnclosure(),
+					JXWidget::kHElastic, JXWidget::kVElastic, 0,20, 510,160);
+
+	auto* colHeader =
+		jnew JXColHeaderWidget(itsAllTable, allScrollbarSet, allScrollbarSet->GetScrollEnclosure(),
+					JXWidget::kHElastic, JXWidget::kFixedTop, 0,0, 510,20);
+	assert( colHeader != nullptr );
 
 	compartment->SetSize(allProjectsLayout_Aperture.width(), allProjectsLayout_Aperture.height());
 
@@ -205,23 +204,6 @@ EditCommandsDialog::BuildWindow
 			allScrollbarSet->GetFrame().bottom);
 	}
 
-	const CommandManager::CmdList* allCmdList = (GetCommandManager())->GetCommandList();
-
-	itsAllTable =
-		jnew CommandTable(*allCmdList, allNewButton, allRemoveButton, allDuplicateButton,
-						   allExportButton, allImportButton,
-						   allScrollbarSet, allScrollbarSet->GetScrollEnclosure(),
-						   JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 10,10);
-	itsAllTable->FitToEnclosure();
-	itsAllTable->Move(0, kHeaderHeight);
-	itsAllTable->AdjustSize(0, -kHeaderHeight);
-
-	auto* colHeader =
-		jnew JXColHeaderWidget(itsAllTable, allScrollbarSet,
-							  allScrollbarSet->GetScrollEnclosure(),
-							  JXWidget::kHElastic, JXWidget::kFixedTop,
-							  0,0, 10,kHeaderHeight);
-	colHeader->FitToEnclosure(true, false);
 	itsAllTable->SetColTitles(colHeader);
 	colHeader->TurnOnColResizing(20);
 
@@ -239,52 +221,59 @@ EditCommandsDialog::BuildWindow
 	const JRect thisProjectLayout_Aperture = compartment->GetAperture();
 	compartment->AdjustSize(580 - thisProjectLayout_Aperture.width(), 240 - thisProjectLayout_Aperture.height());
 
-	auto* thisNewButton =
-		jnew JXTextButton(JGetString("thisNewButton::EditCommandsDialog::thisProjectLayout"), compartment,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 520,90, 60,20);
-	assert( thisNewButton != nullptr );
+	auto* thisCaption =
+		jnew JXStaticText(JGetString("thisCaption::EditCommandsDialog__thisProjectLayout::thisProjectLayout"), compartment,
+					JXWidget::kHElastic, JXWidget::kFixedTop, 0,10, 580,20);
+	thisCaption->SetToLabel(false);
 
-	auto* thisRemoveButton =
-		jnew JXTextButton(JGetString("thisRemoveButton::EditCommandsDialog::thisProjectLayout"), compartment,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 520,150, 60,20);
-	assert( thisRemoveButton != nullptr );
+	auto* updateMakefileLabel =
+		jnew JXStaticText(JGetString("updateMakefileLabel::EditCommandsDialog__thisProjectLayout::thisProjectLayout"), compartment,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 0,40, 260,20);
+	updateMakefileLabel->SetToLabel(false);
 
 	auto* thisScrollbarSet =
 		jnew JXScrollbarSet(compartment,
 					JXWidget::kHElastic, JXWidget::kVElastic, 0,70, 510,170);
 	assert( thisScrollbarSet != nullptr );
 
-	itsMakeDependCmd =
-		jnew JXInputField(compartment,
-					JXWidget::kHElastic, JXWidget::kFixedTop, 260,40, 250,20);
-	assert( itsMakeDependCmd != nullptr );
-
-	auto* updateMakefileLabel =
-		jnew JXStaticText(JGetString("updateMakefileLabel::EditCommandsDialog::thisProjectLayout"), compartment,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 0,40, 260,20);
-	assert( updateMakefileLabel != nullptr );
-	updateMakefileLabel->SetToLabel();
+	auto* thisNewButton =
+		jnew JXTextButton(JGetString("thisNewButton::EditCommandsDialog__thisProjectLayout::thisProjectLayout"), compartment,
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 520,90, 60,20);
+	assert( thisNewButton != nullptr );
 
 	auto* thisDuplicateButton =
-		jnew JXTextButton(JGetString("thisDuplicateButton::EditCommandsDialog::thisProjectLayout"), compartment,
+		jnew JXTextButton(JGetString("thisDuplicateButton::EditCommandsDialog__thisProjectLayout::thisProjectLayout"), compartment,
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 520,120, 60,20);
 	assert( thisDuplicateButton != nullptr );
 
-	auto* thisCaption =
-		jnew JXStaticText(JGetString("thisCaption::EditCommandsDialog::thisProjectLayout"), compartment,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 0,10, 580,20);
-	assert( thisCaption != nullptr );
-	thisCaption->SetToLabel();
+	auto* thisRemoveButton =
+		jnew JXTextButton(JGetString("thisRemoveButton::EditCommandsDialog__thisProjectLayout::thisProjectLayout"), compartment,
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 520,150, 60,20);
+	assert( thisRemoveButton != nullptr );
 
 	auto* thisExportButton =
-		jnew JXTextButton(JGetString("thisExportButton::EditCommandsDialog::thisProjectLayout"), compartment,
+		jnew JXTextButton(JGetString("thisExportButton::EditCommandsDialog__thisProjectLayout::thisProjectLayout"), compartment,
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 520,190, 60,20);
 	assert( thisExportButton != nullptr );
 
 	auto* thisImportButton =
-		jnew JXTextButton(JGetString("thisImportButton::EditCommandsDialog::thisProjectLayout"), compartment,
+		jnew JXTextButton(JGetString("thisImportButton::EditCommandsDialog__thisProjectLayout::thisProjectLayout"), compartment,
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 520,220, 60,20);
 	assert( thisImportButton != nullptr );
+
+	itsThisTable =
+		jnew CommandTable(*itsCmdMgr->GetCommandList(), thisNewButton, thisRemoveButton, thisDuplicateButton, thisExportButton, thisImportButton, thisScrollbarSet, thisScrollbarSet->GetScrollEnclosure(),
+					JXWidget::kHElastic, JXWidget::kVElastic, 0,20, 510,150);
+
+	auto* colHeader =
+		jnew JXColHeaderWidget(itsThisTable, thisScrollbarSet, thisScrollbarSet->GetScrollEnclosure(),
+					JXWidget::kHElastic, JXWidget::kFixedTop, 0,0, 510,20);
+	assert( colHeader != nullptr );
+
+	itsMakeDependCmd =
+		jnew JXInputField(compartment,
+					JXWidget::kHElastic, JXWidget::kFixedTop, 260,40, 250,20);
+	itsMakeDependCmd->SetIsRequired();
 
 	compartment->SetSize(thisProjectLayout_Aperture.width(), thisProjectLayout_Aperture.height());
 
@@ -292,31 +281,13 @@ EditCommandsDialog::BuildWindow
 
 		const JUtf8Byte* map[] =
 		{
-			"project", (projDoc->GetName()).GetBytes()
+			"project", projDoc->GetName().GetBytes()
 		};
 		thisCaption->GetText()->SetText(
 			JGetString("ProjectTableCaption::EditCommandsDialog", map, sizeof(map)));
 
 		itsMakeDependCmd->GetText()->SetText(itsCmdMgr->GetMakeDependCommand());
-		itsMakeDependCmd->SetIsRequired();
 
-		const CommandManager::CmdList* thisCmdList = itsCmdMgr->GetCommandList();
-
-		itsThisTable =
-			jnew CommandTable(*thisCmdList, thisNewButton, thisRemoveButton, thisDuplicateButton,
-							   thisExportButton, thisImportButton,
-							   thisScrollbarSet, thisScrollbarSet->GetScrollEnclosure(),
-							   JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 10,10);
-		itsThisTable->FitToEnclosure();
-		itsThisTable->Move(0, kHeaderHeight);
-		itsThisTable->AdjustSize(0, -kHeaderHeight);
-
-		colHeader =
-			jnew JXColHeaderWidget(itsThisTable, thisScrollbarSet,
-								  thisScrollbarSet->GetScrollEnclosure(),
-								  JXWidget::kHElastic, JXWidget::kFixedTop,
-								  0,0, 10,kHeaderHeight);
-		colHeader->FitToEnclosure(true, false);
 		itsThisTable->SetColTitles(colHeader);
 		colHeader->TurnOnColResizing(20);
 	}

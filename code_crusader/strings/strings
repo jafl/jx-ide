@@ -49,7 +49,6 @@ DiffFailed::MDIServer	"Unable to display diff because \"$name\" is not a file."
 
 # AboutDialog
 
-WindowTitle::AboutDialog		"About"
 ChangeButtonLabel::AboutDialog	"Changes"
 
 UpgradeNotice::AboutDialog
@@ -57,10 +56,6 @@ UpgradeNotice::AboutDialog
 
 
 You have just upgraded from version $vers"
-
-# EditMiscPrefsDialog
-
-WindowTitle::EditMiscPrefsDialog	"Miscellaneous Preferences"
 
 # globals
 
@@ -229,10 +224,6 @@ SysTemplateMarker::SaveNewProjectDialog		" (global)"
 WarnFileExists::SaveNewProjectDialog
 "$file already exists.  Are you sure you want to have it overwritten by $method?"
 
-# EditProjPrefsDialog
-
-WindowTitle::EditProjPrefsDialog	"Project Preferences"
-
 # ProjectTable
 
 CSFButtonHint::ProjectTable	"Click this button to use the Choose File dialog."
@@ -260,17 +251,6 @@ $err"
 # GroupNode
 
 NewGroupName::GroupNode	"New group"
-
-# EditSearchPathsDialog
-
-WindowTitle::EditSearchPathsDialog	"Search Paths for Symbol Database"
-
-Instructions::EditSearchPathsDialog
-"Code Crusader will search these directories for source files to parse.
-
-R at the left means that subdirectories will also be searched.  Click on it to toggle the setting.
-
-This dialog does not modify compiler settings.  To specify directories in which the compiler should search for header files, click the Config button in the Project window."
 
 # CommandManager
 
@@ -393,8 +373,6 @@ NoProjectName::CommandMenu			"none"
 
 # EditCommandsDialog
 
-WindowTitle::EditCommandsDialog	"Edit Tasks Menu"
-
 ProjectTableCaption::EditCommandsDialog
 "Tasks that are specific to the active project ($project):"
 
@@ -421,7 +399,6 @@ ImportFilter::CommandTable		"*.tsk *.jcc"
 
 # RunCommandDialog
 
-WindowTitle::RunCommandDialog	"Perform Task"
 SaveForActive::RunCommandDialog	"For active project ($project)"
 
 # Command
@@ -853,7 +830,6 @@ MustBeUnique::KeyScriptTableBase	"The items in the left column must be unique."
 
 # EditMacroDialog
 
-WindowTitle::EditMacroDialog	"Edit Actions & Macros"
 Column1Char::EditMacroDialog	"Char"
 Column1Macro::EditMacroDialog	"Macro"
 Column2::EditMacroDialog		"Keystrokes"
@@ -867,25 +843,12 @@ SaveMacroListPrompt::MacroTable	"Save macros as:"
 
 # SubprojectConfigDialog
 
-WindowTitle::SubprojectConfigDialog			"Sub-project Configuration"
 ChooseProjectFile::SubprojectConfigDialog	"Select the project file that builds the library."
 NotProjectFile::SubprojectConfigDialog		"That is not a project file."
 
 # FileListDirector
 
 WindowTitleSuffix::FileListDirector	" Files"
-
-# FindFileDialog
-
-WindowTitle::FindFileDialog	"Find file"
-
-# ViewManPageDialog
-
-WindowTitle::ViewManPageDialog	"Man pages"
-
-# ProjectConfigDialog
-
-WindowTitle::ProjectConfigDialog	"Project Configuration"
 
 # SymbolDirector
 
@@ -894,14 +857,6 @@ WindowTitleSuffix::SymbolDirector	" Symbols"
 # SymbolSRDirector
 
 WindowTitlePrefix::SymbolSRDirector	"Symbols: "
-
-# EditSymbolPrefsDialog
-
-WindowTitle::EditSymbolPrefsDialog	"Symbol Preferences"
-
-# EditFileTypesDialog
-
-WindowTitle::EditFileTypesDialog	"Edit File Types"
 
 # PSPrintSetupDialog
 
@@ -987,28 +942,17 @@ NotFound::SearchTE			"Not found:  $n"
 NotReadable::SearchTE		"Not readable:  $n"
 NotSearchedBinary::SearchTE	"Not searched (binary):  $n"
 
-# ExtEditorDialog
-
-WindowTitle::ExtEditorDialog	"External Editor"
-
-# TabWidthDialog
-
-WindowTitle::TabWidthDialog	"Tab width"
-
 # RunTEScriptDialog
 
-WindowTitle::RunTEScriptDialog		"Run script"
 FileDoesNotExist::RunTEScriptDialog	"The file does not exist on disk."
 NoEditor::RunTEScriptDialog			"There is no editor on which to run the script."
 
 # EditTextPrefsDialog
 
-WindowTitle::EditTextPrefsDialog	"Text Editor Preferences"
 UpdatingPrefs::EditTextPrefsDialog	"Updating preferences..."
 
 # EditCRMDialog
 
-WindowTitle::EditCRMDialog	"Edit Clean Paragraph Margin Rules"
 Column1::EditCRMDialog		"Name"
 
 # CRMRuleTable
@@ -1022,7 +966,6 @@ SaveAsPrompt::CRMRuleTable	"Save rules as:"
 
 # EditTreePrefsDialog
 
-WindowTitle::EditTreePrefsDialog	"Tree Preferences"
 FontSize::EditTreePrefsDialog		"Font size:"
 UpdatingPrefs::EditTreePrefsDialog	"Updating preferences..."
 
@@ -1035,11 +978,6 @@ Column2::CPPMacroTable		"Replace with"
 UniqueName::CPPMacroTable	"The macro names must be unique."
 SavePrompt::CPPMacroTable	"Save macros as:"
 
-# EditCPPMacroDialog
-
-WindowTitle::EditCPPMacroDialog	"C Preprocessor"
-
 # OKToOverwriteModifiedFileDialog
 
-WindowTitle::OKToOverwriteModifiedFileDialog				"Warning"
 OverwriteChangedFilePrompt::OKToOverwriteModifiedFileDialog	"The copy of \"$name\" on disk has been modified by another program.  Do you want to overwrite the changes?"

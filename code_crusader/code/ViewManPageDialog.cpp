@@ -20,6 +20,7 @@
 #include <jx-af/jx/JXDocumentMenu.h>
 #include <jx-af/jx/JXCSFDialogBase.h>
 #include <jx-af/jcore/JStringIterator.h>
+#include <jx-af/jcore/JFontManager.h>
 #include <jx-af/jcore/jAssert.h>
 
 const JSize kHistoryLength = 20;
@@ -84,67 +85,58 @@ ViewManPageDialog::BuildWindow()
 {
 // begin JXLayout
 
-	auto* window = jnew JXWindow(this, 360,150, JString::empty);
-
-	itsCloseButton =
-		jnew JXTextButton(JGetString("itsCloseButton::ViewManPageDialog::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 120,120, 60,20);
-	assert( itsCloseButton != nullptr );
-	itsCloseButton->SetShortcuts(JGetString("itsCloseButton::ViewManPageDialog::shortcuts::JXLayout"));
-
-	itsViewButton =
-		jnew JXTextButton(JGetString("itsViewButton::ViewManPageDialog::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 280,120, 60,20);
-	assert( itsViewButton != nullptr );
-	itsViewButton->SetShortcuts(JGetString("itsViewButton::ViewManPageDialog::shortcuts::JXLayout"));
-
-	itsFnName =
-		jnew JXInputField(window,
-					JXWidget::kHElastic, JXWidget::kFixedTop, 20,40, 290,20);
-	assert( itsFnName != nullptr );
+	auto* window = jnew JXWindow(this, 360,150, JGetString("WindowTitle::ViewManPageDialog::JXLayout"));
 
 	auto* nameLabel =
 		jnew JXStaticText(JGetString("nameLabel::ViewManPageDialog::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,20, 100,20);
-	assert( nameLabel != nullptr );
-	nameLabel->SetToLabel();
-
-	auto* sectionLabel =
-		jnew JXStaticText(JGetString("sectionLabel::ViewManPageDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,80, 90,20);
-	assert( sectionLabel != nullptr );
-	sectionLabel->SetToLabel();
-
-	itsAproposCheckbox =
-		jnew JXTextCheckbox(JGetString("itsAproposCheckbox::ViewManPageDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 210,80, 80,20);
-	assert( itsAproposCheckbox != nullptr );
-	itsAproposCheckbox->SetShortcuts(JGetString("itsAproposCheckbox::ViewManPageDialog::shortcuts::JXLayout"));
-
-	itsHelpButton =
-		jnew JXTextButton(JGetString("itsHelpButton::ViewManPageDialog::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 200,120, 60,20);
-	assert( itsHelpButton != nullptr );
-	itsHelpButton->SetShortcuts(JGetString("itsHelpButton::ViewManPageDialog::shortcuts::JXLayout"));
+	nameLabel->SetToLabel(false);
 
 	itsFnHistoryMenu =
 		jnew JXStringHistoryMenu(kHistoryLength, window,
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 310,40, 30,20);
-	assert( itsFnHistoryMenu != nullptr );
+
+	auto* sectionLabel =
+		jnew JXStaticText(JGetString("sectionLabel::ViewManPageDialog::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,80, 90,20);
+	sectionLabel->SetToLabel(false);
+
+	itsAproposCheckbox =
+		jnew JXTextCheckbox(JGetString("itsAproposCheckbox::ViewManPageDialog::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 210,80, 80,20);
+	itsAproposCheckbox->SetShortcuts(JGetString("itsAproposCheckbox::shortcuts::ViewManPageDialog::JXLayout"));
 
 	itsStayOpenCB =
 		jnew JXTextCheckbox(JGetString("itsStayOpenCB::ViewManPageDialog::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,120, 90,20);
-	assert( itsStayOpenCB != nullptr );
+
+	itsCloseButton =
+		jnew JXTextButton(JGetString("itsCloseButton::ViewManPageDialog::JXLayout"), window,
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 120,120, 60,20);
+	itsCloseButton->SetShortcuts(JGetString("itsCloseButton::shortcuts::ViewManPageDialog::JXLayout"));
+
+	itsHelpButton =
+		jnew JXTextButton(JGetString("itsHelpButton::ViewManPageDialog::JXLayout"), window,
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 200,120, 60,20);
+	itsHelpButton->SetShortcuts(JGetString("itsHelpButton::shortcuts::ViewManPageDialog::JXLayout"));
+
+	itsViewButton =
+		jnew JXTextButton(JGetString("itsViewButton::ViewManPageDialog::JXLayout"), window,
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 279,119, 62,22);
+	itsViewButton->SetShortcuts(JGetString("itsViewButton::shortcuts::ViewManPageDialog::JXLayout"));
+
+	itsFnName =
+		jnew JXInputField(window,
+					JXWidget::kHElastic, JXWidget::kFixedTop, 20,40, 290,20);
+	itsFnName->SetFont(JFontManager::GetDefaultMonospaceFont());
 
 	itsManIndex =
 		jnew JXInputField(window,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 110,80, 50,20);
-	assert( itsManIndex != nullptr );
+	itsManIndex->SetFont(JFontManager::GetDefaultMonospaceFont());
 
 // end JXLayout
 
-	window->SetTitle(JGetString("WindowTitle::ViewManPageDialog"));
 	window->SetCloseAction(JXWindow::kDeactivateDirector);
 	window->PlaceAsDialogWindow();
 	window->LockCurrentMinSize();

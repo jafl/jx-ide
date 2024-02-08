@@ -66,107 +66,97 @@ ProjectConfigDialog::BuildWindow
 {
 // begin JXLayout
 
-	auto* window = jnew JXWindow(this, 410,380, JString::empty);
+	auto* window = jnew JXWindow(this, 410,380, JGetString("WindowTitle::ProjectConfigDialog::JXLayout"));
 
 	itsMethodRG =
 		jnew JXRadioGroup(window,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 60,10, 292,106);
-	assert( itsMethodRG != nullptr );
-
-	itsTargetName =
-		jnew JXInputField(window,
-					JXWidget::kHElastic, JXWidget::kFixedTop, 110,130, 280,20);
-	assert( itsTargetName != nullptr );
-
-	auto* cancelButton =
-		jnew JXTextButton(JGetString("cancelButton::ProjectConfigDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 50,350, 70,20);
-	assert( cancelButton != nullptr );
-
-	auto* okButton =
-		jnew JXTextButton(JGetString("okButton::ProjectConfigDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 280,350, 70,20);
-	assert( okButton != nullptr );
-	okButton->SetShortcuts(JGetString("okButton::ProjectConfigDialog::shortcuts::JXLayout"));
-
-	auto* targetNameLabel =
-		jnew JXStaticText(JGetString("targetNameLabel::ProjectConfigDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,130, 90,20);
-	assert( targetNameLabel != nullptr );
-	targetNameLabel->SetToLabel();
-
-	auto* makemakeLabel =
-		jnew JXTextRadioButton(BuildManager::kMakemake, JGetString("makemakeLabel::ProjectConfigDialog::JXLayout"), itsMethodRG,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,30, 270,20);
-	assert( makemakeLabel != nullptr );
-
-	itsDepListExpr =
-		jnew JXInputField(window,
-					JXWidget::kHElastic, JXWidget::kFixedTop, 20,180, 370,20);
-	assert( itsDepListExpr != nullptr );
-
-	auto* dependenciesLabel =
-		jnew JXStaticText(JGetString("dependenciesLabel::ProjectConfigDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kFixedTop, 20,160, 370,20);
-	assert( dependenciesLabel != nullptr );
-	dependenciesLabel->SetToLabel();
-
-	auto* gmakeLabel =
-		jnew JXTextRadioButton(BuildManager::kQMake, JGetString("gmakeLabel::ProjectConfigDialog::JXLayout"), itsMethodRG,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,70, 270,20);
-	assert( gmakeLabel != nullptr );
 
 	auto* manualLabel =
 		jnew JXTextRadioButton(BuildManager::kManual, JGetString("manualLabel::ProjectConfigDialog::JXLayout"), itsMethodRG,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,10, 270,20);
 	assert( manualLabel != nullptr );
 
-	itsUpdateMakefileCmd =
-		jnew JXInputField(window,
-					JXWidget::kHElastic, JXWidget::kFixedTop, 20,230, 370,20);
-	assert( itsUpdateMakefileCmd != nullptr );
-
-	auto* updateMakefileLabel =
-		jnew JXStaticText(JGetString("updateMakefileLabel::ProjectConfigDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kFixedTop, 20,210, 370,20);
-	assert( updateMakefileLabel != nullptr );
-	updateMakefileLabel->SetToLabel();
-
-	itsSubProjectBuildCmd =
-		jnew JXInputField(window,
-					JXWidget::kHElastic, JXWidget::kFixedTop, 20,280, 370,20);
-	assert( itsSubProjectBuildCmd != nullptr );
-
-	auto* subprojLabel =
-		jnew JXStaticText(JGetString("subprojLabel::ProjectConfigDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kFixedTop, 20,260, 370,20);
-	assert( subprojLabel != nullptr );
-	subprojLabel->SetToLabel();
-
-	auto* configInstrText =
-		jnew JXStaticText(JGetString("configInstrText::ProjectConfigDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kVElastic, 20,315, 370,25);
-	assert( configInstrText != nullptr );
-	configInstrText->SetFontSize(JFontManager::GetDefaultFontSize()-2);
-
-	itsHelpButton =
-		jnew JXTextButton(JGetString("itsHelpButton::ProjectConfigDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 165,350, 70,20);
-	assert( itsHelpButton != nullptr );
-	itsHelpButton->SetShortcuts(JGetString("itsHelpButton::ProjectConfigDialog::shortcuts::JXLayout"));
+	auto* makemakeLabel =
+		jnew JXTextRadioButton(BuildManager::kMakemake, JGetString("makemakeLabel::ProjectConfigDialog::JXLayout"), itsMethodRG,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,30, 270,20);
+	assert( makemakeLabel != nullptr );
 
 	auto* cmakeLabel =
 		jnew JXTextRadioButton(BuildManager::kCMake, JGetString("cmakeLabel::ProjectConfigDialog::JXLayout"), itsMethodRG,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,50, 270,20);
 	assert( cmakeLabel != nullptr );
 
+	auto* gmakeLabel =
+		jnew JXTextRadioButton(BuildManager::kQMake, JGetString("gmakeLabel::ProjectConfigDialog::JXLayout"), itsMethodRG,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,70, 270,20);
+	assert( gmakeLabel != nullptr );
+
+	auto* targetNameLabel =
+		jnew JXStaticText(JGetString("targetNameLabel::ProjectConfigDialog::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,130, 90,20);
+	targetNameLabel->SetToLabel(false);
+
+	auto* dependenciesLabel =
+		jnew JXStaticText(JGetString("dependenciesLabel::ProjectConfigDialog::JXLayout"), window,
+					JXWidget::kHElastic, JXWidget::kFixedTop, 20,160, 370,20);
+	dependenciesLabel->SetToLabel(false);
+
+	auto* updateMakefileLabel =
+		jnew JXStaticText(JGetString("updateMakefileLabel::ProjectConfigDialog::JXLayout"), window,
+					JXWidget::kHElastic, JXWidget::kFixedTop, 20,210, 370,20);
+	updateMakefileLabel->SetToLabel(false);
+
+	auto* subprojLabel =
+		jnew JXStaticText(JGetString("subprojLabel::ProjectConfigDialog::JXLayout"), window,
+					JXWidget::kHElastic, JXWidget::kFixedTop, 20,260, 370,20);
+	subprojLabel->SetToLabel(false);
+
+	auto* configInstrText =
+		jnew JXStaticText(JGetString("configInstrText::ProjectConfigDialog::JXLayout"), true, false, false, nullptr, window,
+					JXWidget::kFixedLeft, JXWidget::kVElastic, 20,315, 370,25);
+	assert( configInstrText != nullptr );
+
+	auto* cancelButton =
+		jnew JXTextButton(JGetString("cancelButton::ProjectConfigDialog::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 50,350, 70,20);
+	assert( cancelButton != nullptr );
+
+	itsHelpButton =
+		jnew JXTextButton(JGetString("itsHelpButton::ProjectConfigDialog::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 165,350, 70,20);
+	itsHelpButton->SetShortcuts(JGetString("itsHelpButton::shortcuts::ProjectConfigDialog::JXLayout"));
+
+	auto* okButton =
+		jnew JXTextButton(JGetString("okButton::ProjectConfigDialog::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 279,349, 72,22);
+	okButton->SetShortcuts(JGetString("okButton::shortcuts::ProjectConfigDialog::JXLayout"));
+
+	itsTargetName =
+		jnew JXInputField(window,
+					JXWidget::kHElastic, JXWidget::kFixedTop, 110,130, 280,20);
+
+	itsDepListExpr =
+		jnew JXInputField(window,
+					JXWidget::kHElastic, JXWidget::kFixedTop, 20,180, 370,20);
+
+	itsUpdateMakefileCmd =
+		jnew JXInputField(window,
+					JXWidget::kHElastic, JXWidget::kFixedTop, 20,230, 370,20);
+	itsUpdateMakefileCmd->SetIsRequired();
+
+	itsSubProjectBuildCmd =
+		jnew JXInputField(window,
+					JXWidget::kHElastic, JXWidget::kFixedTop, 20,280, 370,20);
+	itsSubProjectBuildCmd->SetIsRequired();
+
 // end JXLayout
 
-	window->SetTitle(JGetString("WindowTitle::ProjectConfigDialog"));
 	SetButtons(okButton, cancelButton);
 
 	ListenTo(itsHelpButton);
 
+	configInstrText->SetFontSize(JFontManager::GetDefaultFontSize()-2);
 	window->AdjustSize(0, configInstrText->GetBoundsHeight() - configInstrText->GetFrameHeight());
 
 	itsCurrentMethod = method;
@@ -180,11 +170,9 @@ ProjectConfigDialog::BuildWindow
 
 	itsUpdateMakefileCmd->GetText()->SetText(updateMakefileCmd);
 	itsUpdateMakefileCmd->GetText()->SetCharacterInWordFunction(JXCSFDialogBase::IsCharacterInWord);
-	itsUpdateMakefileCmd->SetIsRequired();
 
 	itsSubProjectBuildCmd->GetText()->SetText(subProjectBuildCmd);
 	itsSubProjectBuildCmd->GetText()->SetCharacterInWordFunction(JXCSFDialogBase::IsCharacterInWord);
-	itsSubProjectBuildCmd->SetIsRequired();
 
 	UpdateDisplay();
 	ListenTo(itsMethodRG);

@@ -653,7 +653,7 @@ PrefsManager::UpgradeData
 	{
 		NewExternalSuffixInfo kFDesignSuffix[] =
 		{
-			{ ".fd", "jfdesign $f", false }
+			{ ".fd", "jx_layout_editor $f", false }
 		};
 		addNewExternalSuffixes(kFDesignSuffix, sizeof(kFDesignSuffix)/sizeof(NewExternalSuffixInfo), itsFileTypeList);
 	}

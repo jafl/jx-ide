@@ -94,50 +94,42 @@ RunTEScriptDialog::BuildWindow()
 {
 // begin JXLayout
 
-	auto* window = jnew JXWindow(this, 390,110, JString::empty);
-
-	itsCloseButton =
-		jnew JXTextButton(JGetString("itsCloseButton::RunTEScriptDialog::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 130,80, 60,20);
-	assert( itsCloseButton != nullptr );
-	itsCloseButton->SetShortcuts(JGetString("itsCloseButton::RunTEScriptDialog::shortcuts::JXLayout"));
-
-	itsRunButton =
-		jnew JXTextButton(JGetString("itsRunButton::RunTEScriptDialog::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 310,80, 60,20);
-	assert( itsRunButton != nullptr );
-	itsRunButton->SetShortcuts(JGetString("itsRunButton::RunTEScriptDialog::shortcuts::JXLayout"));
-
-	itsCmdInput =
-		jnew JXInputField(window,
-					JXWidget::kHElastic, JXWidget::kFixedTop, 20,40, 320,20);
-	assert( itsCmdInput != nullptr );
+	auto* window = jnew JXWindow(this, 390,110, JGetString("WindowTitle::RunTEScriptDialog::JXLayout"));
 
 	auto* cmdLabel =
 		jnew JXStaticText(JGetString("cmdLabel::RunTEScriptDialog::JXLayout"), window,
 					JXWidget::kHElastic, JXWidget::kFixedTop, 20,20, 350,20);
-	assert( cmdLabel != nullptr );
-	cmdLabel->SetToLabel();
+	cmdLabel->SetToLabel(false);
 
 	itsHistoryMenu =
 		jnew JXStringHistoryMenu(kHistoryLength, window,
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 340,40, 30,20);
-	assert( itsHistoryMenu != nullptr );
-
-	itsHelpButton =
-		jnew JXTextButton(JGetString("itsHelpButton::RunTEScriptDialog::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 220,80, 60,20);
-	assert( itsHelpButton != nullptr );
-	itsHelpButton->SetShortcuts(JGetString("itsHelpButton::RunTEScriptDialog::shortcuts::JXLayout"));
 
 	itsStayOpenCB =
 		jnew JXTextCheckbox(JGetString("itsStayOpenCB::RunTEScriptDialog::JXLayout"), window,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,80, 90,20);
-	assert( itsStayOpenCB != nullptr );
+
+	itsCloseButton =
+		jnew JXTextButton(JGetString("itsCloseButton::RunTEScriptDialog::JXLayout"), window,
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 130,80, 60,20);
+	itsCloseButton->SetShortcuts(JGetString("itsCloseButton::shortcuts::RunTEScriptDialog::JXLayout"));
+
+	itsHelpButton =
+		jnew JXTextButton(JGetString("itsHelpButton::RunTEScriptDialog::JXLayout"), window,
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 220,80, 60,20);
+	itsHelpButton->SetShortcuts(JGetString("itsHelpButton::shortcuts::RunTEScriptDialog::JXLayout"));
+
+	itsRunButton =
+		jnew JXTextButton(JGetString("itsRunButton::RunTEScriptDialog::JXLayout"), window,
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 309,79, 62,22);
+	itsRunButton->SetShortcuts(JGetString("itsRunButton::shortcuts::RunTEScriptDialog::JXLayout"));
+
+	itsCmdInput =
+		jnew JXInputField(window,
+					JXWidget::kHElastic, JXWidget::kFixedTop, 20,40, 320,20);
 
 // end JXLayout
 
-	window->SetTitle(JGetString("WindowTitle::RunTEScriptDialog"));
 	window->SetCloseAction(JXWindow::kDeactivateDirector);
 	window->PlaceAsDialogWindow();
 	window->LockCurrentMinSize();

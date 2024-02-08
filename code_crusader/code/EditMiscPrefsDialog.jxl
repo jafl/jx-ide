@@ -1,0 +1,292 @@
+jx_layout_editor 7
+370
+390
+"JXLayout"
+"Miscellaneous Preferences"
+""
+""
+0
+
+1
+0
+0
+"TextCheckbox"
+0
+0
+20 20 40 350
+"itsMacStyleCB"
+1
+0
+0
+"Use Macintosh-style menu shortcuts (Meta)"
+""
+
+1
+0
+0
+"StaticText"
+2
+2
+40 40 60 330
+"restartHint"
+0
+0
+0
+"(You must restart the program after changing this setting.)"
+1
+0
+0
+0
+0
+
+1
+0
+0
+"TextCheckbox"
+0
+0
+70 20 90 350
+"itsCopyWhenSelectCB"
+1
+0
+0
+"Automatically copy text when it is selected"
+""
+
+1
+0
+0
+"TextCheckbox"
+0
+0
+100 20 120 350
+"itsMiddleButtonPasteCB"
+1
+0
+0
+"Middle button pastes text"
+""
+
+1
+0
+0
+"TextCheckbox"
+0
+0
+130 20 150 350
+"itsFocusInDockCB"
+1
+0
+0
+"Window focus follows cursor in dock"
+""
+
+1
+0
+0
+"StaticText"
+0
+0
+170 20 190 200
+"noArgsTitle"
+0
+0
+0
+"When run with no arguments:"
+1
+0
+0
+0
+0
+
+1
+0
+0
+"StaticText"
+0
+0
+170 220 190 300
+"warnTitle"
+0
+0
+0
+"Warn before:"
+1
+0
+0
+0
+0
+
+1
+0
+0
+"TextCheckbox"
+0
+0
+200 30 220 180
+"itsNewEditorCB"
+1
+0
+0
+"Create new text file"
+""
+
+1
+0
+0
+"TextCheckbox"
+0
+0
+200 230 220 350
+"itsOpenOldProjCB"
+1
+0
+0
+"Open old project"
+""
+
+1
+0
+0
+"TextCheckbox"
+0
+0
+230 30 250 180
+"itsNewProjectCB"
+1
+0
+0
+"Create new project"
+""
+
+1
+0
+0
+"TextCheckbox"
+0
+0
+230 230 250 350
+"itsCloseUnsavedCB"
+1
+0
+0
+"Close unsaved"
+""
+
+1
+0
+0
+"TextCheckbox"
+0
+0
+260 30 280 180
+"itsReopenLastCB"
+1
+0
+0
+"Reopen previous files"
+""
+
+1
+0
+0
+"TextCheckbox"
+0
+0
+260 230 280 350
+"itsSaveAllCB"
+1
+0
+0
+"Save all"
+""
+
+1
+0
+0
+"StaticText"
+0
+0
+280 50 300 150
+"firstTimeHint"
+0
+0
+0
+"(first time only)"
+1
+0
+0
+0
+0
+
+1
+0
+0
+"TextCheckbox"
+0
+0
+290 230 310 350
+"itsCloseAllCB"
+1
+0
+0
+"Close all"
+""
+
+1
+0
+0
+"TextCheckbox"
+0
+0
+310 30 330 180
+"itsChooseFileCB"
+1
+0
+0
+"Ask for file to open"
+""
+
+1
+0
+0
+"TextCheckbox"
+0
+0
+320 230 340 350
+"itsQuitCB"
+1
+0
+0
+"Quit"
+""
+
+1
+0
+0
+"TextButton"
+0
+1
+360 70 380 140
+"cancelButton"
+0
+0
+0
+"Cancel"
+""
+
+1
+0
+0
+"TextButton"
+1
+1
+360 230 380 300
+"okButton"
+0
+0
+0
+"OK"
+"^M"
+
+0

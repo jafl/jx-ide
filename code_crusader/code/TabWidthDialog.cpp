@@ -66,7 +66,12 @@ TabWidthDialog::BuildWindow
 {
 // begin JXLayout
 
-	auto* window = jnew JXWindow(this, 180,90, JString::empty);
+	auto* window = jnew JXWindow(this, 180,90, JGetString("WindowTitle::TabWidthDialog::JXLayout"));
+
+	auto* tabWidthLabel =
+		jnew JXStaticText(JGetString("tabWidthLabel::TabWidthDialog::JXLayout"), window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 20,20, 100,20);
+	tabWidthLabel->SetToLabel(false);
 
 	auto* cancelButton =
 		jnew JXTextButton(JGetString("cancelButton::TabWidthDialog::JXLayout"), window,
@@ -75,26 +80,17 @@ TabWidthDialog::BuildWindow
 
 	auto* okButton =
 		jnew JXTextButton(JGetString("okButton::TabWidthDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 100,60, 60,20);
-	assert( okButton != nullptr );
-	okButton->SetShortcuts(JGetString("okButton::TabWidthDialog::shortcuts::JXLayout"));
+					JXWidget::kHElastic, JXWidget::kVElastic, 99,59, 62,22);
+	okButton->SetShortcuts(JGetString("okButton::shortcuts::TabWidthDialog::JXLayout"));
 
 	itsTabWidthInput =
 		jnew JXIntegerInput(window,
 					JXWidget::kHElastic, JXWidget::kVElastic, 120,20, 40,20);
-	assert( itsTabWidthInput != nullptr );
-
-	auto* tabWidthLabel =
-		jnew JXStaticText(JGetString("tabWidthLabel::TabWidthDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 20,20, 100,20);
-	assert( tabWidthLabel != nullptr );
-	tabWidthLabel->SetToLabel();
+	itsTabWidthInput->SetLowerLimit(1);
 
 // end JXLayout
 
-	window->SetTitle(JGetString("WindowTitle::TabWidthDialog"));
 	SetButtons(okButton, cancelButton);
 
 	itsTabWidthInput->SetValue(tabWidth);
-	itsTabWidthInput->SetLowerLimit(1);
 }

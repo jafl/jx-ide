@@ -42,12 +42,12 @@ private:
 
 // begin JXLayout
 
+	JXStringHistoryMenu* itsHistoryMenu;
+	JXTextCheckbox*      itsStayOpenCB;
 	JXTextButton*        itsCloseButton;
+	JXTextButton*        itsHelpButton;
 	JXTextButton*        itsRunButton;
 	JXInputField*        itsCmdInput;
-	JXStringHistoryMenu* itsHistoryMenu;
-	JXTextButton*        itsHelpButton;
-	JXTextCheckbox*      itsStayOpenCB;
 
 // end JXLayout
 
