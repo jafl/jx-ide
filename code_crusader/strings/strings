@@ -681,11 +681,6 @@ CleaningUp::SymbolList	"Cleaning up:"
 
 # DiffFileDialog
 
-WindowTitle::DiffFileDialog				"Compare files"
-PlainTabLabel::DiffFileDialog			"Normal"
-CVSTabLabel::DiffFileDialog				"  CVS  "
-SVNTabLabel::DiffFileDialog				"Subversion"
-GitTabLabel::DiffFileDialog				"    Git    "
 SharedStyleMenuTitle::DiffFileDialog	"Shared text style"
 StyleMenuTitle::DiffDialog				"Style"
 

@@ -1,4 +1,4 @@
-jx_layout_editor 7
+jx_layout_editor 8
 540
 380
 "JXLayout"
@@ -116,7 +116,7 @@ jx_layout_editor 7
 "CustomWidget"
 2
 0
-0 70 20 180
+0 0 20 415
 "ruleColHeader"
 0
 0

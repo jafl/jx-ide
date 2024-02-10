@@ -77,7 +77,7 @@ EditStylerDialog::BuildWindow
 	auto* instrText =
 		jnew JXStaticText(JGetString("instrText::EditStylerDialog::JXLayout"), true, false, false, nullptr, window,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,50, 330,50);
-	assert( instrText != nullptr );
+	instrText->SetBorderWidth(0);
 
 	auto* scrollbarSet1 =
 		jnew JXScrollbarSet(window,

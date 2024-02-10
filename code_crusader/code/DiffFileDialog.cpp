@@ -204,272 +204,211 @@ DiffFileDialog::BuildWindow()
 {
 // begin JXLayout
 
-	auto* window = jnew JXWindow(this, 550,210, JString::empty);
-
-	itsCloseButton =
-		jnew JXTextButton(JGetString("itsCloseButton::DiffFileDialog::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 300,175, 60,20);
-	assert( itsCloseButton != nullptr );
-	itsCloseButton->SetShortcuts(JGetString("itsCloseButton::DiffFileDialog::shortcuts::JXLayout"));
-
-	itsViewButton =
-		jnew JXTextButton(JGetString("itsViewButton::DiffFileDialog::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 460,175, 60,20);
-	assert( itsViewButton != nullptr );
-	itsViewButton->SetShortcuts(JGetString("itsViewButton::DiffFileDialog::shortcuts::JXLayout"));
-
-	itsHelpButton =
-		jnew JXTextButton(JGetString("itsHelpButton::DiffFileDialog::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 380,175, 60,20);
-	assert( itsHelpButton != nullptr );
-	itsHelpButton->SetShortcuts(JGetString("itsHelpButton::DiffFileDialog::shortcuts::JXLayout"));
-
-	itsCommonStyleMenu =
-		jnew DiffStyleMenu(JGetString("SharedStyleMenuTitle::DiffFileDialog"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,170, 140,30);
-	assert( itsCommonStyleMenu != nullptr );
-
-	itsStayOpenCB =
-		jnew JXTextCheckbox(JGetString("itsStayOpenCB::DiffFileDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 180,175, 90,20);
-	assert( itsStayOpenCB != nullptr );
-
-	itsIgnoreSpaceChangeCB =
-		jnew JXTextCheckbox(JGetString("itsIgnoreSpaceChangeCB::DiffFileDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,140, 270,20);
-	assert( itsIgnoreSpaceChangeCB != nullptr );
-
-	itsIgnoreBlankLinesCB =
-		jnew JXTextCheckbox(JGetString("itsIgnoreBlankLinesCB::DiffFileDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 310,140, 230,20);
-	assert( itsIgnoreBlankLinesCB != nullptr );
+	auto* window = jnew JXWindow(this, 550,210, JGetString("WindowTitle::DiffFileDialog::JXLayout"));
 
 	itsTabGroup =
 		jnew JXTabGroup(window,
 					JXWidget::kHElastic, JXWidget::kFixedTop, 10,10, 530,120);
-	assert( itsTabGroup != nullptr );
+	itsTabGroup->AppendTab(JGetString("itsTabGroup::tab1::DiffFileDialog::JXLayout"));
+	itsTabGroup->AppendTab(JGetString("itsTabGroup::tab2::DiffFileDialog::JXLayout"));
+	itsTabGroup->AppendTab(JGetString("itsTabGroup::tab3::DiffFileDialog::JXLayout"));
+	itsTabGroup->AppendTab(JGetString("itsTabGroup::tab4::DiffFileDialog::JXLayout"));
+
+	itsSVNFileInput =
+		jnew SVNFileInput(itsTabGroup->GetTabEnclosure(3),
+					JXWidget::kHElastic, JXWidget::kFixedTop, 10,10, 330,20);
+
+	auto* file1Label =
+		jnew JXStaticText(JGetString("file1Label::DiffFileDialog::JXLayout"), itsTabGroup->GetTabEnclosure(1),
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,10, 20,20);
+	file1Label->SetToLabel(false);
+
+	itsGitChooseButton =
+		jnew JXTextButton(JGetString("itsGitChooseButton::DiffFileDialog::JXLayout"), itsTabGroup->GetTabEnclosure(4),
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 340,10, 60,20);
+
+	itsSVNChooseButton =
+		jnew JXTextButton(JGetString("itsSVNChooseButton::DiffFileDialog::JXLayout"), itsTabGroup->GetTabEnclosure(3),
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 340,10, 60,20);
+
+	itsCVSChooseButton =
+		jnew JXTextButton(JGetString("itsCVSChooseButton::DiffFileDialog::JXLayout"), itsTabGroup->GetTabEnclosure(2),
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 340,10, 60,20);
+
+	itsPlainChoose1Button =
+		jnew JXTextButton(JGetString("itsPlainChoose1Button::DiffFileDialog::JXLayout"), itsTabGroup->GetTabEnclosure(1),
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 350,10, 60,20);
+
+	itsGitSummaryCB =
+		jnew JXTextCheckbox(JGetString("itsGitSummaryCB::DiffFileDialog::JXLayout"), itsTabGroup->GetTabEnclosure(4),
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 420,10, 80,20);
+
+	itsSVNSummaryCB =
+		jnew JXTextCheckbox(JGetString("itsSVNSummaryCB::DiffFileDialog::JXLayout"), itsTabGroup->GetTabEnclosure(3),
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 420,10, 80,20);
+
+	itsCVSSummaryCB =
+		jnew JXTextCheckbox(JGetString("itsCVSSummaryCB::DiffFileDialog::JXLayout"), itsTabGroup->GetTabEnclosure(2),
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 420,10, 80,20);
+
+	itsPlainOnly1StyleMenu =
+		jnew DiffStyleMenu(JGetString("StyleMenuTitle::DiffDialog"), itsTabGroup->GetTabEnclosure(1),
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 430,10, 70,20);
+
+	itsGitRev1Menu =
+		jnew JXTextMenu(JGetString("itsGitRev1Menu::DiffFileDialog::JXLayout"), itsTabGroup->GetTabEnclosure(4),
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,40, 140,20);
+
+	itsSVNRev1Menu =
+		jnew JXTextMenu(JGetString("itsSVNRev1Menu::DiffFileDialog::JXLayout"), itsTabGroup->GetTabEnclosure(3),
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,40, 140,20);
+
+	itsCVSRev1Menu =
+		jnew JXTextMenu(JGetString("itsCVSRev1Menu::DiffFileDialog::JXLayout"), itsTabGroup->GetTabEnclosure(2),
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,40, 140,20);
+
+	auto* file2Label =
+		jnew JXStaticText(JGetString("file2Label::DiffFileDialog::JXLayout"), itsTabGroup->GetTabEnclosure(1),
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,40, 20,20);
+	file2Label->SetToLabel(false);
+
+	itsGitRev2Menu =
+		jnew JXTextMenu(JGetString("itsGitRev2Menu::DiffFileDialog::JXLayout"), itsTabGroup->GetTabEnclosure(4),
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 260,40, 140,20);
+
+	itsSVNRev2Menu =
+		jnew JXTextMenu(JGetString("itsSVNRev2Menu::DiffFileDialog::JXLayout"), itsTabGroup->GetTabEnclosure(3),
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 260,40, 140,20);
+
+	itsCVSRev2Menu =
+		jnew JXTextMenu(JGetString("itsCVSRev2Menu::DiffFileDialog::JXLayout"), itsTabGroup->GetTabEnclosure(2),
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 260,40, 140,20);
+
+	itsPlainChoose2Button =
+		jnew JXTextButton(JGetString("itsPlainChoose2Button::DiffFileDialog::JXLayout"), itsTabGroup->GetTabEnclosure(1),
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 350,40, 60,20);
+
+	itsPlainOnly2StyleMenu =
+		jnew DiffStyleMenu(JGetString("StyleMenuTitle::DiffDialog"), itsTabGroup->GetTabEnclosure(1),
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 430,40, 70,20);
+
+	itsGitOnly1StyleMenu =
+		jnew DiffStyleMenu(JGetString("StyleMenuTitle::DiffDialog"), itsTabGroup->GetTabEnclosure(4),
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 160,60, 70,20);
+
+	itsSVNOnly1StyleMenu =
+		jnew DiffStyleMenu(JGetString("StyleMenuTitle::DiffDialog"), itsTabGroup->GetTabEnclosure(3),
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 160,60, 70,20);
+
+	itsCVSOnly1StyleMenu =
+		jnew DiffStyleMenu(JGetString("StyleMenuTitle::DiffDialog"), itsTabGroup->GetTabEnclosure(2),
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 160,60, 70,20);
+
+	itsGitOnly2StyleMenu =
+		jnew DiffStyleMenu(JGetString("StyleMenuTitle::DiffDialog"), itsTabGroup->GetTabEnclosure(4),
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 410,60, 70,20);
+
+	itsSVNOnly2StyleMenu =
+		jnew DiffStyleMenu(JGetString("StyleMenuTitle::DiffDialog"), itsTabGroup->GetTabEnclosure(3),
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 410,60, 70,20);
+
+	itsCVSOnly2StyleMenu =
+		jnew DiffStyleMenu(JGetString("StyleMenuTitle::DiffDialog"), itsTabGroup->GetTabEnclosure(2),
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 410,60, 70,20);
+
+	itsIgnoreSpaceChangeCB =
+		jnew JXTextCheckbox(JGetString("itsIgnoreSpaceChangeCB::DiffFileDialog::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,140, 270,20);
+
+	itsIgnoreBlankLinesCB =
+		jnew JXTextCheckbox(JGetString("itsIgnoreBlankLinesCB::DiffFileDialog::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 310,140, 230,20);
+
+	itsCommonStyleMenu =
+		jnew DiffStyleMenu(JGetString("SharedStyleMenuTitle::DiffFileDialog"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,170, 140,30);
+
+	itsStayOpenCB =
+		jnew JXTextCheckbox(JGetString("itsStayOpenCB::DiffFileDialog::JXLayout"), window,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 180,175, 90,20);
+
+	itsCloseButton =
+		jnew JXTextButton(JGetString("itsCloseButton::DiffFileDialog::JXLayout"), window,
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 300,175, 60,20);
+	itsCloseButton->SetShortcuts(JGetString("itsCloseButton::shortcuts::DiffFileDialog::JXLayout"));
+
+	itsHelpButton =
+		jnew JXTextButton(JGetString("itsHelpButton::DiffFileDialog::JXLayout"), window,
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 380,175, 60,20);
+	itsHelpButton->SetShortcuts(JGetString("itsHelpButton::shortcuts::DiffFileDialog::JXLayout"));
+
+	itsViewButton =
+		jnew JXTextButton(JGetString("itsViewButton::DiffFileDialog::JXLayout"), window,
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 459,174, 62,22);
+	itsViewButton->SetShortcuts(JGetString("itsViewButton::shortcuts::DiffFileDialog::JXLayout"));
+
+	itsPlainFile1Input =
+		jnew JXFileInput(itsTabGroup->GetTabEnclosure(1),
+					JXWidget::kHElastic, JXWidget::kFixedTop, 30,10, 320,20);
+	itsPlainFile1Input->SetIsRequired(true);
+	itsPlainFile1Input->ShouldAllowInvalidFile(true);
+	itsPlainFile1Input->ShouldRequireReadable(true);
+	itsPlainFile1Input->ShouldRequireWritable(false);
+	itsPlainFile1Input->ShouldRequireExecutable(false);
+
+	itsPlainFile2Input =
+		jnew JXFileInput(itsTabGroup->GetTabEnclosure(1),
+					JXWidget::kHElastic, JXWidget::kFixedTop, 30,40, 320,20);
+	itsPlainFile2Input->SetIsRequired(true);
+	itsPlainFile2Input->ShouldAllowInvalidFile(true);
+	itsPlainFile2Input->ShouldRequireReadable(true);
+	itsPlainFile2Input->ShouldRequireWritable(false);
+	itsPlainFile2Input->ShouldRequireExecutable(false);
+
+	itsCVSFileInput =
+		jnew JXFileInput(itsTabGroup->GetTabEnclosure(2),
+					JXWidget::kHElastic, JXWidget::kFixedTop, 10,10, 330,20);
+	itsCVSFileInput->SetIsRequired(true);
+	itsCVSFileInput->ShouldAllowInvalidFile(true);
+	itsCVSFileInput->ShouldRequireReadable(true);
+	itsCVSFileInput->ShouldRequireWritable(false);
+	itsCVSFileInput->ShouldRequireExecutable(false);
+
+	itsCVSRev1Input =
+		jnew JXInputField(itsTabGroup->GetTabEnclosure(2),
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,60, 140,20);
+
+	itsCVSRev2Input =
+		jnew JXInputField(itsTabGroup->GetTabEnclosure(2),
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 260,60, 140,20);
+
+	itsSVNRev1Input =
+		jnew JXInputField(itsTabGroup->GetTabEnclosure(3),
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,60, 140,20);
+
+	itsSVNRev2Input =
+		jnew JXInputField(itsTabGroup->GetTabEnclosure(3),
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 260,60, 140,20);
+
+	itsGitFileInput =
+		jnew JXFileInput(itsTabGroup->GetTabEnclosure(4),
+					JXWidget::kHElastic, JXWidget::kFixedTop, 10,10, 330,20);
+	itsGitFileInput->SetIsRequired(true);
+	itsGitFileInput->ShouldAllowInvalidFile(true);
+	itsGitFileInput->ShouldRequireReadable(true);
+	itsGitFileInput->ShouldRequireWritable(false);
+	itsGitFileInput->ShouldRequireExecutable(false);
+
+	itsGitRev1Input =
+		jnew JXInputField(itsTabGroup->GetTabEnclosure(4),
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,60, 140,20);
+
+	itsGitRev2Input =
+		jnew JXInputField(itsTabGroup->GetTabEnclosure(4),
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 260,60, 140,20);
 
 // end JXLayout
 
-	JXContainer* plainCard = itsTabGroup->AppendTab(JGetString("PlainTabLabel::DiffFileDialog"));
-	JXContainer* cvsCard   = itsTabGroup->AppendTab(JGetString("CVSTabLabel::DiffFileDialog"));
-	JXContainer* svnCard   = itsTabGroup->AppendTab(JGetString("SVNTabLabel::DiffFileDialog"));
-	JXContainer* gitCard   = itsTabGroup->AppendTab(JGetString("GitTabLabel::DiffFileDialog"));
-
-// begin plainLayout
-
-	const JRect plainLayout_Aperture = plainCard->GetAperture();
-	plainCard->AdjustSize(530 - plainLayout_Aperture.width(), 70 - plainLayout_Aperture.height());
-
-	auto* file1Label =
-		jnew JXStaticText(JGetString("file1Label::DiffFileDialog::plainLayout"), plainCard,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,10, 20,20);
-	assert( file1Label != nullptr );
-	file1Label->SetToLabel();
-
-	itsPlainOnly1StyleMenu =
-		jnew DiffStyleMenu(JGetString("StyleMenuTitle::DiffDialog"), plainCard,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 430,10, 70,20);
-	assert( itsPlainOnly1StyleMenu != nullptr );
-
-	itsPlainOnly2StyleMenu =
-		jnew DiffStyleMenu(JGetString("StyleMenuTitle::DiffDialog"), plainCard,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 430,40, 70,20);
-	assert( itsPlainOnly2StyleMenu != nullptr );
-
-	itsPlainFile1Input =
-		jnew JXFileInput(plainCard,
-					JXWidget::kHElastic, JXWidget::kFixedTop, 30,10, 320,20);
-	assert( itsPlainFile1Input != nullptr );
-
-	itsPlainChoose1Button =
-		jnew JXTextButton(JGetString("itsPlainChoose1Button::DiffFileDialog::plainLayout"), plainCard,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 350,10, 60,20);
-	assert( itsPlainChoose1Button != nullptr );
-
-	auto* file2Label =
-		jnew JXStaticText(JGetString("file2Label::DiffFileDialog::plainLayout"), plainCard,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,40, 20,20);
-	assert( file2Label != nullptr );
-	file2Label->SetToLabel();
-
-	itsPlainFile2Input =
-		jnew JXFileInput(plainCard,
-					JXWidget::kHElastic, JXWidget::kFixedTop, 30,40, 320,20);
-	assert( itsPlainFile2Input != nullptr );
-
-	itsPlainChoose2Button =
-		jnew JXTextButton(JGetString("itsPlainChoose2Button::DiffFileDialog::plainLayout"), plainCard,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 350,40, 60,20);
-	assert( itsPlainChoose2Button != nullptr );
-
-	plainCard->SetSize(plainLayout_Aperture.width(), plainLayout_Aperture.height());
-
-// end plainLayout
-
-// begin cvsLayout
-
-	const JRect cvsLayout_Aperture = cvsCard->GetAperture();
-	cvsCard->AdjustSize(510 - cvsLayout_Aperture.width(), 90 - cvsLayout_Aperture.height());
-
-	itsCVSFileInput =
-		jnew JXFileInput(cvsCard,
-					JXWidget::kHElastic, JXWidget::kFixedTop, 10,10, 330,20);
-	assert( itsCVSFileInput != nullptr );
-
-	itsCVSOnly1StyleMenu =
-		jnew DiffStyleMenu(JGetString("StyleMenuTitle::DiffDialog"), cvsCard,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 160,60, 70,20);
-	assert( itsCVSOnly1StyleMenu != nullptr );
-
-	itsCVSOnly2StyleMenu =
-		jnew DiffStyleMenu(JGetString("StyleMenuTitle::DiffDialog"), cvsCard,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 410,60, 70,20);
-	assert( itsCVSOnly2StyleMenu != nullptr );
-
-	itsCVSChooseButton =
-		jnew JXTextButton(JGetString("itsCVSChooseButton::DiffFileDialog::cvsLayout"), cvsCard,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 340,10, 60,20);
-	assert( itsCVSChooseButton != nullptr );
-
-	itsCVSRev1Input =
-		jnew JXInputField(cvsCard,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,60, 140,20);
-	assert( itsCVSRev1Input != nullptr );
-
-	itsCVSRev1Menu =
-		jnew JXTextMenu(JGetString("itsCVSRev1Menu::DiffFileDialog::cvsLayout"), cvsCard,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,40, 140,20);
-	assert( itsCVSRev1Menu != nullptr );
-
-	itsCVSRev2Input =
-		jnew JXInputField(cvsCard,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 260,60, 140,20);
-	assert( itsCVSRev2Input != nullptr );
-
-	itsCVSRev2Menu =
-		jnew JXTextMenu(JGetString("itsCVSRev2Menu::DiffFileDialog::cvsLayout"), cvsCard,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 260,40, 140,20);
-	assert( itsCVSRev2Menu != nullptr );
-
-	itsCVSSummaryCB =
-		jnew JXTextCheckbox(JGetString("itsCVSSummaryCB::DiffFileDialog::cvsLayout"), cvsCard,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 420,10, 80,20);
-	assert( itsCVSSummaryCB != nullptr );
-
-	cvsCard->SetSize(cvsLayout_Aperture.width(), cvsLayout_Aperture.height());
-
-// end cvsLayout
-
-// begin svnLayout
-
-	const JRect svnLayout_Aperture = svnCard->GetAperture();
-	svnCard->AdjustSize(510 - svnLayout_Aperture.width(), 90 - svnLayout_Aperture.height());
-
-	itsSVNFileInput =
-		jnew SVNFileInput(svnCard,
-					JXWidget::kHElastic, JXWidget::kFixedTop, 10,10, 330,20);
-	assert( itsSVNFileInput != nullptr );
-
-	itsSVNOnly1StyleMenu =
-		jnew DiffStyleMenu(JGetString("StyleMenuTitle::DiffDialog"), svnCard,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 160,60, 70,20);
-	assert( itsSVNOnly1StyleMenu != nullptr );
-
-	itsSVNOnly2StyleMenu =
-		jnew DiffStyleMenu(JGetString("StyleMenuTitle::DiffDialog"), svnCard,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 410,60, 70,20);
-	assert( itsSVNOnly2StyleMenu != nullptr );
-
-	itsSVNChooseButton =
-		jnew JXTextButton(JGetString("itsSVNChooseButton::DiffFileDialog::svnLayout"), svnCard,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 340,10, 60,20);
-	assert( itsSVNChooseButton != nullptr );
-
-	itsSVNRev1Input =
-		jnew JXInputField(svnCard,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,60, 140,20);
-	assert( itsSVNRev1Input != nullptr );
-
-	itsSVNRev1Menu =
-		jnew JXTextMenu(JGetString("itsSVNRev1Menu::DiffFileDialog::svnLayout"), svnCard,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,40, 140,20);
-	assert( itsSVNRev1Menu != nullptr );
-
-	itsSVNRev2Input =
-		jnew JXInputField(svnCard,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 260,60, 140,20);
-	assert( itsSVNRev2Input != nullptr );
-
-	itsSVNRev2Menu =
-		jnew JXTextMenu(JGetString("itsSVNRev2Menu::DiffFileDialog::svnLayout"), svnCard,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 260,40, 140,20);
-	assert( itsSVNRev2Menu != nullptr );
-
-	itsSVNSummaryCB =
-		jnew JXTextCheckbox(JGetString("itsSVNSummaryCB::DiffFileDialog::svnLayout"), svnCard,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 420,10, 80,20);
-	assert( itsSVNSummaryCB != nullptr );
-
-	svnCard->SetSize(svnLayout_Aperture.width(), svnLayout_Aperture.height());
-
-// end svnLayout
-
-// begin gitLayout
-
-	const JRect gitLayout_Aperture = gitCard->GetAperture();
-	gitCard->AdjustSize(510 - gitLayout_Aperture.width(), 90 - gitLayout_Aperture.height());
-
-	itsGitFileInput =
-		jnew JXFileInput(gitCard,
-					JXWidget::kHElastic, JXWidget::kFixedTop, 10,10, 330,20);
-	assert( itsGitFileInput != nullptr );
-
-	itsGitOnly1StyleMenu =
-		jnew DiffStyleMenu(JGetString("StyleMenuTitle::DiffDialog"), gitCard,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 160,60, 70,20);
-	assert( itsGitOnly1StyleMenu != nullptr );
-
-	itsGitOnly2StyleMenu =
-		jnew DiffStyleMenu(JGetString("StyleMenuTitle::DiffDialog"), gitCard,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 410,60, 70,20);
-	assert( itsGitOnly2StyleMenu != nullptr );
-
-	itsGitChooseButton =
-		jnew JXTextButton(JGetString("itsGitChooseButton::DiffFileDialog::gitLayout"), gitCard,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 340,10, 60,20);
-	assert( itsGitChooseButton != nullptr );
-
-	itsGitRev1Input =
-		jnew JXInputField(gitCard,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,60, 140,20);
-	assert( itsGitRev1Input != nullptr );
-
-	itsGitRev1Menu =
-		jnew JXTextMenu(JGetString("itsGitRev1Menu::DiffFileDialog::gitLayout"), gitCard,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 10,40, 140,20);
-	assert( itsGitRev1Menu != nullptr );
-
-	itsGitRev2Input =
-		jnew JXInputField(gitCard,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 260,60, 140,20);
-	assert( itsGitRev2Input != nullptr );
-
-	itsGitRev2Menu =
-		jnew JXTextMenu(JGetString("itsGitRev2Menu::DiffFileDialog::gitLayout"), gitCard,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 260,40, 140,20);
-	assert( itsGitRev2Menu != nullptr );
-
-	itsGitSummaryCB =
-		jnew JXTextCheckbox(JGetString("itsGitSummaryCB::DiffFileDialog::gitLayout"), gitCard,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 420,10, 80,20);
-	assert( itsGitSummaryCB != nullptr );
-
-	gitCard->SetSize(gitLayout_Aperture.width(), gitLayout_Aperture.height());
-
-// end gitLayout
-
-	window->SetTitle(JGetString("WindowTitle::DiffFileDialog"));
 	window->SetCloseAction(JXWindow::kDeactivateDirector);
 	window->PlaceAsDialogWindow();
 	window->LockCurrentMinSize();
@@ -497,13 +436,9 @@ DiffFileDialog::BuildWindow()
 
 	// plain
 
-	itsPlainFile1Input->ShouldAllowInvalidFile(true);
-	itsPlainFile1Input->ShouldRequireWritable(false);
 	itsPlainFile1Input->GetText()->SetCharacterInWordFunction(JXCSFDialogBase::IsCharacterInWord);
 	ListenTo(itsPlainFile1Input);
 
-	itsPlainFile2Input->ShouldAllowInvalidFile(true);
-	itsPlainFile2Input->ShouldRequireWritable(false);
 	itsPlainFile2Input->GetText()->SetCharacterInWordFunction(JXCSFDialogBase::IsCharacterInWord);
 	ListenTo(itsPlainFile2Input);
 
@@ -536,8 +471,6 @@ DiffFileDialog::BuildWindow()
 	ListenTo(itsCVSRev1Input);
 	ListenTo(itsCVSRev2Input);
 
-	itsCVSFileInput->ShouldAllowInvalidFile(true);
-	itsCVSFileInput->ShouldRequireWritable(false);
 	itsCVSFileInput->GetText()->SetCharacterInWordFunction(JXCSFDialogBase::IsCharacterInWord);
 	ListenTo(itsCVSFileInput);
 
@@ -594,8 +527,6 @@ DiffFileDialog::BuildWindow()
 	ListenTo(itsGitRev1Input);
 	ListenTo(itsGitRev2Input);
 
-	itsGitFileInput->ShouldAllowInvalidFile(true);
-	itsGitFileInput->ShouldRequireWritable(false);
 	itsGitFileInput->GetText()->SetCharacterInWordFunction(JXCSFDialogBase::IsCharacterInWord);
 	ListenTo(itsGitFileInput);
 

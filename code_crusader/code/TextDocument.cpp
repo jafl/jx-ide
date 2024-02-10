@@ -396,7 +396,8 @@ TextDocument::BuildWindow
 // end JXLayout
 
 	AdjustWindowTitle();
-	window->SetWMClass(GetWMClassInstance(), wmClass != nullptr ? wmClass : "Code_Crusader_Editor");
+	window->SetWMClass(JXGetApplication()->GetWMName().GetBytes(),
+					   wmClass != nullptr ? wmClass : "Code_Crusader_Editor");
 	window->ShouldFocusWhenShow(true);	// necessary for click-to-focus
 
 	JPoint p = itsSettingsMenu->GetTitlePadding();

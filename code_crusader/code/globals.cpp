@@ -44,8 +44,6 @@ static SymbolTypeList*	theSymbolTypeList    = nullptr;
 static PTPrinter*	thePTTextPrinter     = nullptr;
 static PSPrinter*	thePSTextPrinter     = nullptr;
 
-static const JUtf8Byte* kProjectWindowClass       = "Code_Crusader_Project";
-
 // owned by JXImageCache
 static JXImage* theFileIcon           = nullptr;
 static JXImage* theWritableFileIcon   = nullptr;
@@ -485,23 +483,6 @@ GetPSTextPrinter()
 {
 	assert( thePSTextPrinter != nullptr );
 	return thePSTextPrinter;
-}
-
-/******************************************************************************
- GetWMClassInstance
-
- ******************************************************************************/
-
-const JUtf8Byte*
-GetWMClassInstance()
-{
-	return JXGetApplication()->GetWMName().GetBytes();
-}
-
-const JUtf8Byte*
-GetProjectWindowClass()
-{
-	return kProjectWindowClass;
 }
 
 /******************************************************************************

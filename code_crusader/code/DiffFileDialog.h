@@ -90,69 +90,49 @@ private:
 
 // begin JXLayout
 
-	JXTextButton*   itsCloseButton;
-	JXTextButton*   itsViewButton;
-	JXTextButton*   itsHelpButton;
-	DiffStyleMenu*  itsCommonStyleMenu;
-	JXTextCheckbox* itsStayOpenCB;
+	JXTabGroup*     itsTabGroup;
+	SVNFileInput*   itsSVNFileInput;
+	JXTextButton*   itsGitChooseButton;
+	JXTextButton*   itsSVNChooseButton;
+	JXTextButton*   itsCVSChooseButton;
+	JXTextButton*   itsPlainChoose1Button;
+	JXTextCheckbox* itsGitSummaryCB;
+	JXTextCheckbox* itsSVNSummaryCB;
+	JXTextCheckbox* itsCVSSummaryCB;
+	DiffStyleMenu*  itsPlainOnly1StyleMenu;
+	JXTextMenu*     itsGitRev1Menu;
+	JXTextMenu*     itsSVNRev1Menu;
+	JXTextMenu*     itsCVSRev1Menu;
+	JXTextMenu*     itsGitRev2Menu;
+	JXTextMenu*     itsSVNRev2Menu;
+	JXTextMenu*     itsCVSRev2Menu;
+	JXTextButton*   itsPlainChoose2Button;
+	DiffStyleMenu*  itsPlainOnly2StyleMenu;
+	DiffStyleMenu*  itsGitOnly1StyleMenu;
+	DiffStyleMenu*  itsSVNOnly1StyleMenu;
+	DiffStyleMenu*  itsCVSOnly1StyleMenu;
+	DiffStyleMenu*  itsGitOnly2StyleMenu;
+	DiffStyleMenu*  itsSVNOnly2StyleMenu;
+	DiffStyleMenu*  itsCVSOnly2StyleMenu;
 	JXTextCheckbox* itsIgnoreSpaceChangeCB;
 	JXTextCheckbox* itsIgnoreBlankLinesCB;
-	JXTabGroup*     itsTabGroup;
+	DiffStyleMenu*  itsCommonStyleMenu;
+	JXTextCheckbox* itsStayOpenCB;
+	JXTextButton*   itsCloseButton;
+	JXTextButton*   itsHelpButton;
+	JXTextButton*   itsViewButton;
+	JXFileInput*    itsPlainFile1Input;
+	JXFileInput*    itsPlainFile2Input;
+	JXFileInput*    itsCVSFileInput;
+	JXInputField*   itsCVSRev1Input;
+	JXInputField*   itsCVSRev2Input;
+	JXInputField*   itsSVNRev1Input;
+	JXInputField*   itsSVNRev2Input;
+	JXFileInput*    itsGitFileInput;
+	JXInputField*   itsGitRev1Input;
+	JXInputField*   itsGitRev2Input;
 
 // end JXLayout
-
-// begin plainLayout
-
-	DiffStyleMenu* itsPlainOnly1StyleMenu;
-	DiffStyleMenu* itsPlainOnly2StyleMenu;
-	JXFileInput*   itsPlainFile1Input;
-	JXTextButton*  itsPlainChoose1Button;
-	JXFileInput*   itsPlainFile2Input;
-	JXTextButton*  itsPlainChoose2Button;
-
-// end plainLayout
-
-// begin cvsLayout
-
-	JXFileInput*    itsCVSFileInput;
-	DiffStyleMenu*  itsCVSOnly1StyleMenu;
-	DiffStyleMenu*  itsCVSOnly2StyleMenu;
-	JXTextButton*   itsCVSChooseButton;
-	JXInputField*   itsCVSRev1Input;
-	JXTextMenu*     itsCVSRev1Menu;
-	JXInputField*   itsCVSRev2Input;
-	JXTextMenu*     itsCVSRev2Menu;
-	JXTextCheckbox* itsCVSSummaryCB;
-
-// end cvsLayout
-
-// begin svnLayout
-
-	SVNFileInput*   itsSVNFileInput;
-	DiffStyleMenu*  itsSVNOnly1StyleMenu;
-	DiffStyleMenu*  itsSVNOnly2StyleMenu;
-	JXTextButton*   itsSVNChooseButton;
-	JXInputField*   itsSVNRev1Input;
-	JXTextMenu*     itsSVNRev1Menu;
-	JXInputField*   itsSVNRev2Input;
-	JXTextMenu*     itsSVNRev2Menu;
-	JXTextCheckbox* itsSVNSummaryCB;
-
-// end svnLayout
-
-// begin gitLayout
-
-	JXFileInput*    itsGitFileInput;
-	DiffStyleMenu*  itsGitOnly1StyleMenu;
-	DiffStyleMenu*  itsGitOnly2StyleMenu;
-	JXTextButton*   itsGitChooseButton;
-	JXInputField*   itsGitRev1Input;
-	JXTextMenu*     itsGitRev1Menu;
-	JXInputField*   itsGitRev2Input;
-	JXTextMenu*     itsGitRev2Menu;
-	JXTextCheckbox* itsGitSummaryCB;
-
-// end gitLayout
 
 private:
 

@@ -71,6 +71,10 @@ T
 F
 "./code/ProjectDocument.cpp"
 T
+2 "ProjectDocument.jxl"
+F
+"./code/ProjectDocument.jxl"
+T
 2 "ProjectDocument-File.jxm"
 F
 "./code/ProjectDocument-File.jxm"
@@ -1097,6 +1101,10 @@ T
 2 "DiffFileDialog.cpp"
 F
 "./code/DiffFileDialog.cpp"
+T
+2 "DiffFileDialog.jxl"
+F
+"./code/DiffFileDialog.jxl"
 T
 2 "DiffFileDialog-CVSRev1.jxm"
 F

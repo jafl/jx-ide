@@ -161,7 +161,7 @@ EditCRMDialog::BuildWindow
 
 	auto* ruleColHeader =
 		jnew JXColHeaderWidget(itsRuleTable, ruleScrollbarSet, ruleScrollbarSet->GetScrollEnclosure(),
-					JXWidget::kHElastic, JXWidget::kFixedTop, 70,0, 125,20);
+					JXWidget::kHElastic, JXWidget::kFixedTop, 0,0, 430,20);
 	assert( ruleColHeader != nullptr );
 
 	auto* crmColHeader =

@@ -157,7 +157,6 @@ protected:
 private:
 
 	ProjectTree*	itsFileTree;
-	ProjectTable*	itsFileTable;
 	bool			itsProcessNodeMessageFlag;		// true => process messages from itsFileTree
 
 	CommandManager*		itsCmdMgr;
@@ -197,12 +196,13 @@ private:
 
 // begin JXLayout
 
-	JXToolBar*           itsToolBar;
 	JXTextButton*        itsConfigButton;
+	JXToolBar*           itsToolBar;
+	ProjectTable*        itsFileTable;
 	JXWidgetSet*         itsUpdateContainer;
 	JXStaticText*        itsUpdateLabel;
-	JXProgressIndicator* itsUpdateCleanUpIndicator;
 	JXStaticText*        itsUpdateCounter;
+	JXProgressIndicator* itsUpdateCleanUpIndicator;
 
 // end JXLayout
 

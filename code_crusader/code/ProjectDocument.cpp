@@ -1333,52 +1333,57 @@ ProjectDocument::BuildWindow
 	ProjectTree* fileList
 	)
 {
+	auto* treeList = jnew JNamedTreeList(fileList);
+
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 510,430, JString::empty);
+	window->SetMinSize(150, 150);
+	window->SetWMClass(JXGetApplication()->GetWMName().GetBytes(), "Code_Crusader_Project");
 
 	auto* menuBar =
 		jnew JXMenuBar(window,
 					JXWidget::kHElastic, JXWidget::kFixedTop, 0,0, 450,30);
 	assert( menuBar != nullptr );
 
-	itsToolBar =
-		jnew JXToolBar(GetPrefsManager(), kProjectToolBarID, menuBar, window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 0,30, 510,380);
-	assert( itsToolBar != nullptr );
-
 	itsConfigButton =
 		jnew JXTextButton(JGetString("itsConfigButton::ProjectDocument::JXLayout"), window,
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 450,0, 60,30);
-	assert( itsConfigButton != nullptr );
+
+	itsToolBar =
+		jnew JXToolBar(GetPrefsManager(), kProjectToolBarID, menuBar, window,
+					JXWidget::kHElastic, JXWidget::kVElastic, 0,30, 510,380);
+
+	auto* scrollbarSet =
+		jnew JXScrollbarSet(itsToolBar->GetWidgetEnclosure(),
+					JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 510,380);
+	assert( scrollbarSet != nullptr );
+
+	itsFileTable =
+		jnew ProjectTable(this, menuBar, treeList, scrollbarSet, scrollbarSet->GetScrollEnclosure(),
+					JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 510,380);
 
 	itsUpdateContainer =
 		jnew JXWidgetSet(window,
 					JXWidget::kHElastic, JXWidget::kFixedBottom, 0,410, 510,20);
-	assert( itsUpdateContainer != nullptr );
 
 	itsUpdateLabel =
 		jnew JXStaticText(JGetString("itsUpdateLabel::ProjectDocument::JXLayout"), itsUpdateContainer,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 0,2, 130,16);
-	assert( itsUpdateLabel != nullptr );
-	itsUpdateLabel->SetToLabel();
-
-	itsUpdateCleanUpIndicator =
-		jnew JXProgressIndicator(itsUpdateContainer,
-					JXWidget::kHElastic, JXWidget::kFixedTop, 130,5, 380,10);
-	assert( itsUpdateCleanUpIndicator != nullptr );
+	itsUpdateLabel->SetToLabel(false);
 
 	itsUpdateCounter =
 		jnew JXStaticText(JGetString("itsUpdateCounter::ProjectDocument::JXLayout"), itsUpdateContainer,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 130,2, 90,16);
-	assert( itsUpdateCounter != nullptr );
-	itsUpdateCounter->SetToLabel();
+	itsUpdateCounter->SetToLabel(false);
+
+	itsUpdateCleanUpIndicator =
+		jnew JXProgressIndicator(itsUpdateContainer,
+					JXWidget::kHElastic, JXWidget::kFixedTop, 130,5, 380,10);
 
 // end JXLayout
 
 	AdjustWindowTitle();
-	window->SetMinSize(150, 150);
-	window->SetWMClass(GetWMClassInstance(), GetProjectWindowClass());
 
 	JXDisplay* display = GetDisplay();
 	auto* icon      = jnew JXImage(display, jcc_project_window);
@@ -1394,24 +1399,6 @@ ProjectDocument::BuildWindow
 
 	ListenTo(itsConfigButton);
 	itsConfigButton->SetHint(JGetString("ConfigButtonHint::ProjectDocument"));
-
-	// file list
-
-	auto* scrollbarSet =
-		jnew JXScrollbarSet(itsToolBar->GetWidgetEnclosure(),
-						   JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 100,100);
-	assert( scrollbarSet != nullptr );
-	scrollbarSet->FitToEnclosure();
-
-	auto* treeList = jnew JNamedTreeList(fileList);
-
-	itsFileTable =
-		jnew ProjectTable(this, menuBar, treeList,
-						   scrollbarSet, scrollbarSet->GetScrollEnclosure(),
-						   JXWidget::kHElastic, JXWidget::kVElastic,
-						   0,0, 10,10);
-	assert( itsFileTable != nullptr );
-	itsFileTable->FitToEnclosure();
 
 	// menus
 

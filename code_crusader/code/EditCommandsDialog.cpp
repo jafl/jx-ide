@@ -150,7 +150,7 @@ EditCommandsDialog::BuildWindow
 	compartment->AdjustSize(580 - allProjectsLayout_Aperture.width(), 210 - allProjectsLayout_Aperture.height());
 
 	auto* anyProjectTitle =
-		jnew JXStaticText(JGetString("anyProjectTitle::EditCommandsDialog__allProjectsLayout::allProjectsLayout"), compartment,
+		jnew JXStaticText(JGetString("anyProjectTitle::EditCommandsDialog::allProjectsLayout"), compartment,
 					JXWidget::kHElastic, JXWidget::kFixedTop, 0,0, 580,20);
 	anyProjectTitle->SetToLabel(false);
 
@@ -160,27 +160,27 @@ EditCommandsDialog::BuildWindow
 	assert( allScrollbarSet != nullptr );
 
 	auto* allNewButton =
-		jnew JXTextButton(JGetString("allNewButton::EditCommandsDialog__allProjectsLayout::allProjectsLayout"), compartment,
+		jnew JXTextButton(JGetString("allNewButton::EditCommandsDialog::allProjectsLayout"), compartment,
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 520,60, 60,20);
 	assert( allNewButton != nullptr );
 
 	auto* allDuplicateButton =
-		jnew JXTextButton(JGetString("allDuplicateButton::EditCommandsDialog__allProjectsLayout::allProjectsLayout"), compartment,
+		jnew JXTextButton(JGetString("allDuplicateButton::EditCommandsDialog::allProjectsLayout"), compartment,
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 520,90, 60,20);
 	assert( allDuplicateButton != nullptr );
 
 	auto* allRemoveButton =
-		jnew JXTextButton(JGetString("allRemoveButton::EditCommandsDialog__allProjectsLayout::allProjectsLayout"), compartment,
+		jnew JXTextButton(JGetString("allRemoveButton::EditCommandsDialog::allProjectsLayout"), compartment,
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 520,120, 60,20);
 	assert( allRemoveButton != nullptr );
 
 	auto* allExportButton =
-		jnew JXTextButton(JGetString("allExportButton::EditCommandsDialog__allProjectsLayout::allProjectsLayout"), compartment,
+		jnew JXTextButton(JGetString("allExportButton::EditCommandsDialog::allProjectsLayout"), compartment,
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 520,160, 60,20);
 	assert( allExportButton != nullptr );
 
 	auto* allImportButton =
-		jnew JXTextButton(JGetString("allImportButton::EditCommandsDialog__allProjectsLayout::allProjectsLayout"), compartment,
+		jnew JXTextButton(JGetString("allImportButton::EditCommandsDialog::allProjectsLayout"), compartment,
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 520,190, 60,20);
 	assert( allImportButton != nullptr );
 
@@ -222,12 +222,12 @@ EditCommandsDialog::BuildWindow
 	compartment->AdjustSize(580 - thisProjectLayout_Aperture.width(), 240 - thisProjectLayout_Aperture.height());
 
 	auto* thisCaption =
-		jnew JXStaticText(JGetString("thisCaption::EditCommandsDialog__thisProjectLayout::thisProjectLayout"), compartment,
+		jnew JXStaticText(JGetString("thisCaption::EditCommandsDialog::thisProjectLayout"), compartment,
 					JXWidget::kHElastic, JXWidget::kFixedTop, 0,10, 580,20);
 	thisCaption->SetToLabel(false);
 
 	auto* updateMakefileLabel =
-		jnew JXStaticText(JGetString("updateMakefileLabel::EditCommandsDialog__thisProjectLayout::thisProjectLayout"), compartment,
+		jnew JXStaticText(JGetString("updateMakefileLabel::EditCommandsDialog::thisProjectLayout"), compartment,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 0,40, 260,20);
 	updateMakefileLabel->SetToLabel(false);
 
@@ -237,27 +237,27 @@ EditCommandsDialog::BuildWindow
 	assert( thisScrollbarSet != nullptr );
 
 	auto* thisNewButton =
-		jnew JXTextButton(JGetString("thisNewButton::EditCommandsDialog__thisProjectLayout::thisProjectLayout"), compartment,
+		jnew JXTextButton(JGetString("thisNewButton::EditCommandsDialog::thisProjectLayout"), compartment,
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 520,90, 60,20);
 	assert( thisNewButton != nullptr );
 
 	auto* thisDuplicateButton =
-		jnew JXTextButton(JGetString("thisDuplicateButton::EditCommandsDialog__thisProjectLayout::thisProjectLayout"), compartment,
+		jnew JXTextButton(JGetString("thisDuplicateButton::EditCommandsDialog::thisProjectLayout"), compartment,
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 520,120, 60,20);
 	assert( thisDuplicateButton != nullptr );
 
 	auto* thisRemoveButton =
-		jnew JXTextButton(JGetString("thisRemoveButton::EditCommandsDialog__thisProjectLayout::thisProjectLayout"), compartment,
+		jnew JXTextButton(JGetString("thisRemoveButton::EditCommandsDialog::thisProjectLayout"), compartment,
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 520,150, 60,20);
 	assert( thisRemoveButton != nullptr );
 
 	auto* thisExportButton =
-		jnew JXTextButton(JGetString("thisExportButton::EditCommandsDialog__thisProjectLayout::thisProjectLayout"), compartment,
+		jnew JXTextButton(JGetString("thisExportButton::EditCommandsDialog::thisProjectLayout"), compartment,
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 520,190, 60,20);
 	assert( thisExportButton != nullptr );
 
 	auto* thisImportButton =
-		jnew JXTextButton(JGetString("thisImportButton::EditCommandsDialog__thisProjectLayout::thisProjectLayout"), compartment,
+		jnew JXTextButton(JGetString("thisImportButton::EditCommandsDialog::thisProjectLayout"), compartment,
 					JXWidget::kFixedRight, JXWidget::kFixedTop, 520,220, 60,20);
 	assert( thisImportButton != nullptr );
 
