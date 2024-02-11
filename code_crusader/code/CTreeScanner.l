@@ -288,8 +288,24 @@ private {
 	itsInheritType = Class::kInheritPrivate;
 	}
 
-{NSID}"<"? {
+("::")?{NSID}"<"? {
 	JString parentName(text(), size());
+	if (parentName.StartsWith("::"))
+	{
+		JStringIterator iter(&parentName);
+		iter.SkipNext(2);
+		iter.RemoveAllPrev();
+	}
+	else
+	{
+		const JSize count = itsNamespaceStack->GetItemCount();
+		for (JIndex i=2; i<=count; i++)
+		{
+			parentName.Prepend("::");
+			parentName.Prepend(*itsNamespaceStack->GetItem(i));
+		}
+	}
+
 	if (parentName.GetLastCharacter() == '<')
 	{
 		itsTemplateBracketDepth = 1;
