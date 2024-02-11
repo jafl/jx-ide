@@ -243,7 +243,7 @@ PrefsManager::GetYear()
 		struct tm local_time;
 		localtime_r(&now, &local_time);
 
-		return JString((JUInt64) local_time.tm_year + 1900);
+		return JString(local_time.tm_year + 1900);
 	}
 }
 

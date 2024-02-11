@@ -590,7 +590,7 @@ xdebug::Link::SetBreakpoint
 	JString cmd("breakpoint_set -t line -f ");
 	cmd += fileName;
 	cmd += " -n ";
-	cmd += JString((JUInt64) lineIndex);
+	cmd += JString(lineIndex);
 
 	if (temporary)
 	{
@@ -628,7 +628,7 @@ xdebug::Link::RemoveBreakpoint
 	)
 {
 	JString cmd("breakpoint_remove -d ");
-	cmd += JString((JUInt64) debuggerIndex);
+	cmd += JString(debuggerIndex);
 	Send(cmd);
 
 	Broadcast(BreakpointsChanged());
@@ -658,7 +658,7 @@ xdebug::Link::RemoveAllBreakpointsOnLine
 			if (bp->GetLineNumber() == lineIndex)
 			{
 				cmd  = "breakpoint_remove -d ";
-				cmd += JString((JUInt64) bp->GetDebuggerIndex());
+				cmd += JString(bp->GetDebuggerIndex());
 				Send(cmd);
 				changed = true;
 			}
@@ -701,7 +701,7 @@ xdebug::Link::RemoveAllBreakpoints()
 		const Breakpoint* bp = list.GetItem(i);
 
 		cmd	 = "breakpoint_remove -d ";
-		cmd += JString((JUInt64) bp->GetDebuggerIndex());
+		cmd += JString(bp->GetDebuggerIndex());
 		Send(cmd);
 		changed = true;
 	}
@@ -726,7 +726,7 @@ xdebug::Link::SetBreakpointEnabled
 	)
 {
 	JString cmd("breakpoint_update -d ");
-	cmd += JString((JUInt64) debuggerIndex);
+	cmd += JString(debuggerIndex);
 	cmd += " -s ";
 	cmd += (enabled ? "enabled" : "disabled");
 	Send(cmd);
@@ -809,7 +809,7 @@ xdebug::Link::WatchLocation
 void
 xdebug::Link::SwitchToThread
 	(
-	const JUInt64 id
+	const JIndex id
 	)
 {
 }
@@ -822,7 +822,7 @@ xdebug::Link::SwitchToThread
 void
 xdebug::Link::SwitchToFrame
 	(
-	const JUInt64 id
+	const JIndex id
 	)
 {
 	if (id != itsStackFrameIndex)
@@ -947,7 +947,7 @@ xdebug::Link::SetValue
 		JString cmd("property_set @i -n ");
 		cmd += name;
 		cmd += " -l ";
-		cmd += JString((JUInt64) encValue.GetByteCount());
+		cmd += JString(encValue.GetByteCount());
 		cmd += " -- ";
 		cmd += encValue;
 		Send(cmd);
@@ -1158,7 +1158,7 @@ xdebug::Link::CreateVarValueCmd
 	JString s("property_get -n ");
 	s += expr;
 	s += " -d ";
-	s += JString((JUInt64)itsStackFrameIndex);
+	s += JString(itsStackFrameIndex);
 
 	auto* cmd = jnew VarCmd(s);
 	return cmd;
@@ -1459,7 +1459,7 @@ xdebug::Link::SendMedicCommand
 	command->Starting();
 
 	JString arg(" -i ");
-	arg += JString((JUInt64) command->GetTransactionID());
+	arg += JString(command->GetTransactionID());
 
 	JString s = command->GetCommand();
 
@@ -1528,10 +1528,10 @@ xdebug::Link::StartDebugger()
 		itsAcceptor = jnew Acceptor;
 	}
 
-	const JString portStr((JUInt64) kXdebugPort);
+	const JString portStr(kXdebugPort);
 	if (itsAcceptor->open(ACE_INET_Addr(kXdebugPort)) == -1)
 	{
-		const JString errStr((JUInt64) jerrno());
+		const JString errStr(jerrno());
 
 		const JUtf8Byte* map[] =
 		{

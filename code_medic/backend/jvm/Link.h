@@ -218,8 +218,8 @@ public:
 	void	WatchExpression(const JString& expr) override;
 	void	WatchLocation(const JString& expr) override;
 
-	void	SwitchToThread(const JUInt64 id) override;
-	void	SwitchToFrame(const JUInt64 id) override;
+	void	SwitchToThread(const JIndex id) override;
+	void	SwitchToFrame(const JIndex id) override;
 	void	StepOver() override;
 	void	StepInto() override;
 	void	StepOut() override;
@@ -462,27 +462,27 @@ public:
 
 	static const JUtf8Byte* kIDResolved;
 
-	class IDResolved : public JBroadcaster::Message
+	class IDResolved : public ::JBroadcaster::Message
+	{
+	public:
+
+		IDResolved(const JUInt64 id)
+			:
+			JBroadcaster::Message(kIDResolved),
+			itsID(id)
+			{ };
+
+		JUInt64
+		GetID()
+			const
 		{
-		public:
-
-			IDResolved(const JUInt64 id)
-				:
-				JBroadcaster::Message(kIDResolved),
-				itsID(id)
-				{ };
-
-			JUInt64
-			GetID()
-				const
-			{
-				return itsID;
-			};
-
-		private:
-
-			const JUInt64 itsID;
+			return itsID;
 		};
+
+	private:
+
+		const JUInt64 itsID;
+	};
 };
 
 };

@@ -67,7 +67,7 @@ gdb::GetAssemblyCmd::Starting()
 		cmd += " -f ";
 		cmd += name;
 		cmd += " -l ";
-		cmd += JString((JUInt64) loc.GetLineNumber());
+		cmd += JString(loc.GetLineNumber());
 	}
 
 	cmd += " -- 0";

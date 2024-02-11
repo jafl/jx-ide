@@ -360,7 +360,7 @@ TreeWidget::Print
 				break;
 			}
 
-			const JString pageNumberStr = "Page " + JString((JUInt64) i);
+			const JString pageNumberStr = "Page " + JString(i);
 			p.String(pageRect.left, pageRect.bottom - footerHeight, pageNumberStr,
 					 pageRect.width(), JPainter::HAlign::kCenter,
 					 footerHeight, JPainter::VAlign::kBottom);

@@ -67,7 +67,7 @@ public:
 
 	static const JUtf8Byte* kMessageReady;
 
-	class MessageReady : public JBroadcaster::Message
+	class MessageReady : public ::JBroadcaster::Message
 		{
 		public:
 

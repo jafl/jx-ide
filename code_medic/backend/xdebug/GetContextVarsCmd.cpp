@@ -31,7 +31,7 @@ xdebug::GetContextVarsCmd::GetContextVarsCmd
 	JString cmd("context_get -c ");
 	cmd += contextID;
 	cmd += " -d ";
-	cmd += JString((JUInt64) dynamic_cast<Link*>(GetLink())->GetStackFrameIndex());
+	cmd += JString(dynamic_cast<Link*>(GetLink())->GetStackFrameIndex());
 	SetCommand(cmd);
 }
 

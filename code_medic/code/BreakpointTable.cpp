@@ -379,7 +379,7 @@ BreakpointTable::TableDrawCell
 			const JSize line = bp->GetLineNumber();
 			if (line > 0)
 			{
-				s      = JString((JUInt64) line);
+				s      = JString(line);
 				hAlign = JPainter::HAlign::kRight;
 			}
 		}
@@ -393,7 +393,7 @@ BreakpointTable::TableDrawCell
 		}
 		else if (cell.x == kIgnoreCountColumn)
 		{
-			s      = JString((JUInt64) bp->GetIgnoreCount());
+			s      = JString(bp->GetIgnoreCount());
 			hAlign = JPainter::HAlign::kRight;
 		}
 		else if (cell.x == kConditionColumn)

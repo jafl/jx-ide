@@ -78,8 +78,8 @@ public:
 	void	WatchExpression(const JString& expr) override;
 	void	WatchLocation(const JString& expr) override;
 
-	void	SwitchToThread(const JUInt64 id) override;
-	void	SwitchToFrame(const JUInt64 id) override;
+	void	SwitchToThread(const JIndex id) override;
+	void	SwitchToFrame(const JIndex id) override;
 	void	StepOver() override;
 	void	StepInto() override;
 	void	StepOut() override;

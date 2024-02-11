@@ -122,14 +122,14 @@ using{WS}{NSID}{MS}; {
 "}" {
 	itsCurlyBraceDepth--;
 	if (itsCurlyBraceDepth < 0)
-		{
+	{
 		return false;
-		}
+	}
 	else if (itsCurlyBraceDepth == 0 && !itsCurlyBraceStack.IsEmpty())
-		{
+	{
 		itsCurlyBraceDepth = itsCurlyBraceStack.Pop();
 		itsNamespaceStack->DeleteItem(1);
-		}
+	}
 	}
 
 "/*" {
@@ -169,16 +169,16 @@ using{WS}{NSID}{MS}; {
 
 "{" {
 	if (!itsNamespaceStr.IsEmpty())
-		{
+	{
 		itsCurlyBraceStack.Push(itsCurlyBraceDepth);
 		itsCurlyBraceDepth = 1;
 
 		itsNamespaceStack->Prepend(itsNamespaceStr);
-		}
+	}
 	else
-		{
+	{
 		itsCurlyBraceDepth++;
-		}
+	}
 	ResetState();
 	start(INITIAL);
 	}
@@ -209,10 +209,10 @@ using{WS}{NSID}{MS}; {
 {ID} {
 	JString fullName(text(), size());
 	for (auto* s : *itsNamespaceStack)
-		{
+	{
 		fullName.Prepend("::");
 		fullName.Prepend(*s);
-		}
+	}
 
 	CClass* c = jnew CClass(fullName, Class::kClassType, fileID, tree);
 
@@ -225,28 +225,28 @@ using{WS}{NSID}{MS}; {
 
 : {
 	if (itsCurrentClass != nullptr)
-		{
+	{
 		itsInheritType = Class::kInheritPrivate;
 		start(INHERIT_STATE);
-		}
+	}
 	else
-		{
+	{
 		ResetState();
 		start(INITIAL);
-		}
+	}
 	}
 
 "{" {
 	if (itsCurrentClass != nullptr)
-		{
+	{
 		itsCurlyBraceStack.Push(itsCurlyBraceDepth);
 		itsCurlyBraceDepth = 1;
 		itsNamespaceStack->Prepend(itsCurrentClass->GetName());
-		}
+	}
 	else
-		{
+	{
 		itsCurlyBraceDepth++;
-		}
+	}
 	ResetState();
 	start(INITIAL);
 	}
@@ -291,25 +291,25 @@ private {
 {NSID}"<"? {
 	JString parentName(text(), size());
 	if (parentName.GetLastCharacter() == '<')
-		{
+	{
 		itsTemplateBracketDepth = 1;
 		push_state(TEMPLATE_PARAM_STATE);
 
 		parentName.Set(text(), size()-1);
-		}
+	}
 
 	JString s = parentName;
 	s.Prepend("::");
 
 	bool found = false;
 	while (true)
-		{
+	{
 		for (const auto* c : *itsUsingList)
-			{
+		{
 			if (!c->EndsWith(s))
-				{
+			{
 				continue;
-				}
+			}
 
 			JString s1 = *c;
 			JStringIterator iter(&s1, JStringIterator::kStartAtEnd);
@@ -322,18 +322,18 @@ private {
 			parentName = s1;
 			found      = true;
 			break;
-			}
+		}
 
 		JStringIterator iter(&s, JStringIterator::kStartAtEnd);
 		if (!found && iter.Prev("::") && !iter.AtBeginning())
-			{
+		{
 			iter.RemoveAllNext();
-			}
-		else
-			{
-			break;
-			}
 		}
+		else
+		{
+			break;
+		}
+	}
 
 	itsCurrentClass->AddParent(itsInheritType, parentName);
 	}
@@ -380,9 +380,9 @@ private {
 ">" {
 	itsTemplateBracketDepth--;
 	if (itsTemplateBracketDepth <= 0)
-		{
+	{
 		pop_state();
-		}
+	}
 	}
 
 [^<>]+	/* ignore */

@@ -211,7 +211,7 @@ MDIServer::HandleMDIRequest
 			else
 			{
 				GetLink()->SetBreakpoint(*fileName, lineIndex);
-				Link::NotifyUser("Breakpoint set in " + *fileName + " at line " + JString((JUInt64) lineIndex) + "\n\n", false);
+				Link::NotifyUser("Breakpoint set in " + *fileName + " at line " + JString(lineIndex) + "\n\n", false);
 			}
 		}
 		else

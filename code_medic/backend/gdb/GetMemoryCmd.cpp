@@ -56,7 +56,7 @@ gdb::GetMemoryCmd::Starting()
 	const JString& expr = GetDirector()->GetExpression(&type, &count);
 
 	JString cmd("x/");
-	cmd += JString((JUInt64) count);
+	cmd += JString(count);
 	cmd += kCommandName[ type-1 ];
 	cmd += " ";
 	cmd += expr;

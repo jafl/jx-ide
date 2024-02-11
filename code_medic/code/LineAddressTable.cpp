@@ -189,7 +189,7 @@ LineAddressTable::GetLongestLineText
 	const
 {
 	return !itsLineTextList->IsEmpty() ?
-		*itsLineTextList->GetLastItem() : JString((JUInt64) lineCount);
+		*itsLineTextList->GetLastItem() : JString(lineCount);
 }
 
 /******************************************************************************

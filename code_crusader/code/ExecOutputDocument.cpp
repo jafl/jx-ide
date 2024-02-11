@@ -300,7 +300,7 @@ ExecOutputDocument::SetConnection
 		{
 			te->Paste(JString::newline);
 			te->Paste(JGetString("ProcessID::ExecOutputDocument"));
-			te->Paste(JString((JUInt64) p->GetPID()));
+			te->Paste(JString(p->GetPID()));
 		}
 
 		te->Paste(JString::newline);
@@ -674,7 +674,7 @@ ExecOutputDocument::ProcessFinished
 			const JString path = itsPath;
 			#endif
 
-			const JString coreName = "core." + JString((JUInt64) pid);
+			const JString coreName = "core." + JString(pid);
 			const JString coreFull = JCombinePathAndName(path, coreName);
 			if (JFileExists(coreFull))
 			{

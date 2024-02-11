@@ -140,8 +140,8 @@ public:
 	virtual void	WatchExpression(const JString& expr) = 0;
 	virtual void	WatchLocation(const JString& expr) = 0;
 
-	virtual void	SwitchToThread(const JUInt64 id) = 0;
-	virtual void	SwitchToFrame(const JUInt64 id) = 0;
+	virtual void	SwitchToThread(const JIndex id) = 0;
+	virtual void	SwitchToFrame(const JIndex id) = 0;
 	virtual void	StepOver() = 0;
 	virtual void	StepInto() = 0;
 	virtual void	StepOut() = 0;

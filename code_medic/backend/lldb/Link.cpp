@@ -407,12 +407,12 @@ lldb::Link::HandleEvent
 
 	JString msg(eventClass);
 	msg += ":";
-	msg += JString((JUInt64) eventType);
+	msg += JString(eventType);
 
 	if (SBProcess::EventIsProcessEvent(e))
 	{
 		const StateType state = SBProcess::GetStateFromEvent(e);
-		msg += "; process state: " + JString((JUInt64) state) + ", " + JString((JUInt64) SBProcess::GetRestartedFromEvent(e));
+		msg += "; process state: " + JString(state) + ", " + JString(SBProcess::GetRestartedFromEvent(e));
 
 		if (state == eStateRunning ||
 			state == eStateStepping)
@@ -461,12 +461,12 @@ lldb::Link::HandleEvent
 	}
 	else if (SBBreakpoint::EventIsBreakpointEvent(e))
 	{
-		msg += "; bkpt event type: " + JString((JUInt64) SBBreakpoint::GetBreakpointEventTypeFromEvent(e));
+		msg += "; bkpt event type: " + JString(SBBreakpoint::GetBreakpointEventTypeFromEvent(e));
 		Broadcast(BreakpointsChanged());
 	}
 	else if (SBWatchpoint::EventIsWatchpointEvent(e))
 	{
-		msg += "; watch event type: " + JString((JUInt64) SBWatchpoint::GetWatchpointEventTypeFromEvent(e));
+		msg += "; watch event type: " + JString(SBWatchpoint::GetWatchpointEventTypeFromEvent(e));
 		Broadcast(BreakpointsChanged());
 	}
 	else if (SBCommandInterpreter::EventIsCommandInterpreterEvent(e))
@@ -1028,7 +1028,7 @@ lldb::Link::Watch
 void
 lldb::Link::SwitchToThread
 	(
-	const JUInt64 id
+	const JIndex id
 	)
 {
 	SBProcess p = itsDebugger->GetSelectedTarget().GetProcess();
@@ -1050,7 +1050,7 @@ lldb::Link::SwitchToThread
 void
 lldb::Link::SwitchToFrame
 	(
-	const JUInt64 id
+	const JIndex id
 	)
 {
 	SBThread t = itsDebugger->GetSelectedTarget().GetProcess().GetSelectedThread();
@@ -1160,7 +1160,7 @@ lldb::Link::SetExecutionPoint
 		JString cmd("_regexp-jump ");
 		cmd += fileName;
 		cmd += ":";
-		cmd += JString((JUInt64) lineIndex);
+		cmd += JString(lineIndex);
 		itsDebugger->HandleCommand(cmd.GetBytes());
 
 		ProgramStopped();
@@ -1751,7 +1751,7 @@ lldb::Link::ProgramStopped
 		if (msg != nullptr && file.IsValid())
 		{
 			*msg =  "; file: " + location.GetFileName() +
-					", line: " + JString((JUInt64) location.GetLineNumber()) +
+					", line: " + JString(location.GetLineNumber()) +
 					", func: " + location.GetFunctionName() +
 					", addr: " + location.GetMemoryAddress();
 		}

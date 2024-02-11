@@ -326,7 +326,7 @@ SearchDocument::AppendSearchResult
 	te->SetCurrentFont(st->GetDefaultFont());
 
 	te->Paste(":");
-	te->Paste(JString((JUInt64) msg.GetLineIndex()));
+	te->Paste(JString(msg.GetLineIndex()));
 	te->Paste(kDoubleNewline);
 
 	start = st->GetBeyondEnd();

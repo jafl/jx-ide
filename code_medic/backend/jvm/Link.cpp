@@ -1263,7 +1263,7 @@ jvm::Link::RunProgram
 		!itsJVMExecArgs.Contains("-Xrunjdwp"))
 	{
 		cmd += " -agentlib:jdwp=transport=dt_socket,address=localhost:";
-		cmd += JString((JUInt64) kJavaPort);
+		cmd += JString(kJavaPort);
 	}
 
 	cmd += " ";
@@ -1499,7 +1499,7 @@ jvm::Link::WatchLocation
 void
 jvm::Link::SwitchToThread
 	(
-	const JUInt64 id
+	const JIndex id
 	)
 {
 	if (id != itsCurrentThreadID)
@@ -1517,7 +1517,7 @@ jvm::Link::SwitchToThread
 void
 jvm::Link::SwitchToFrame
 	(
-	const JUInt64 id
+	const JIndex id
 	)
 {
 	JIndex i;
@@ -2188,10 +2188,10 @@ jvm::Link::StartDebugger()
 		itsAcceptor = jnew Acceptor;
 	}
 
-	const JString portStr((JUInt64) kJavaPort);
+	const JString portStr(kJavaPort);
 	if (itsAcceptor->open(ACE_INET_Addr(kJavaPort)) == -1)
 	{
-		const JString errStr((JUInt64) jerrno());
+		const JString errStr(jerrno());
 
 		const JUtf8Byte* map[] =
 		{

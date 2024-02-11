@@ -1331,7 +1331,7 @@ DiffFileDialog::GetPreviousCVSRevision
 	{
 		iter.RemoveAllNext();
 
-		*rev += JString((JUInt64) j-1);
+		*rev += JString(j-1);
 		return true;
 	}
 

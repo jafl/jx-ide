@@ -71,7 +71,7 @@ LineNumberTable::GetLineText
 	)
 	const
 {
-	return JString((JUInt64) lineIndex);
+	return JString(lineIndex);
 }
 
 /******************************************************************************
@@ -86,7 +86,7 @@ LineNumberTable::GetLongestLineText
 	)
 	const
 {
-	return JString((JUInt64) lineCount);
+	return JString(lineCount);
 }
 
 /******************************************************************************

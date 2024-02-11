@@ -944,7 +944,7 @@ VarNode::GetFullNameForCFamilyLanguage
 			str.Prepend("(");
 			str.Append(")");
 		}
-		str += "[" + JString((JUInt64) i-1) + "]";
+		str += "[" + JString(i-1) + "]";
 	}
 	else if (name.StartsWith("<"))
 	{

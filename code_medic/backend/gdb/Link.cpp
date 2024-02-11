@@ -860,7 +860,7 @@ gdb::Link::AttachToProcess
 	Send("core-file");
 	DetachOrKill();
 
-	Send("attach " + JString((JUInt64) pid));
+	Send("attach " + JString(pid));
 }
 
 /******************************************************************************
@@ -910,7 +910,7 @@ gdb::Link::ShowBreakpointInfo
 	}
 
 	JString cmd("echo \\n\ninfo breakpoint ");
-	cmd += JString((JUInt64) debuggerIndex);
+	cmd += JString(debuggerIndex);
 	cmd += "\necho \\n";
 	SendWhenStopped(cmd);
 }
@@ -938,7 +938,7 @@ gdb::Link::SetBreakpoint
 
 	JString cmd("echo \\032\\032:Medic breakpoints changed:\n");
 	cmd += (temporary ? "-break-insert -t " : "-break-insert ");
-	cmd += name + ":" + JString((JUInt64) lineIndex);
+	cmd += name + ":" + JString(lineIndex);
 	SendWhenStopped(cmd);
 }
 
@@ -982,7 +982,7 @@ gdb::Link::RemoveBreakpoint
 		itsContinueCount = 2;
 	}
 
-	const JString cmd = "delete " + JString((JUInt64) debuggerIndex);
+	const JString cmd = "delete " + JString(debuggerIndex);
 	SendWhenStopped(cmd);
 }
 
@@ -1006,7 +1006,7 @@ gdb::Link::RemoveAllBreakpointsOnLine
 		itsContinueCount = 2;
 	}
 
-	const JString cmd = "clear " + name + ":" + JString((JUInt64) lineIndex);
+	const JString cmd = "clear " + name + ":" + JString(lineIndex);
 	SendWhenStopped(cmd);
 }
 
@@ -1066,7 +1066,7 @@ gdb::Link::SetBreakpointEnabled
 
 	const JString cmd =
 		(enabled ? "enable " : "disable ") + 
-		((once ? "once " : "" ) + JString((JUInt64) debuggerIndex));
+		((once ? "once " : "" ) + JString(debuggerIndex));
 	SendWhenStopped(cmd);
 }
 
@@ -1087,7 +1087,7 @@ gdb::Link::SetBreakpointCondition
 		itsContinueCount = 2;
 	}
 
-	const JString cmd = "condition " + JString((JUInt64) debuggerIndex) + " " + condition;
+	const JString cmd = "condition " + JString(debuggerIndex) + " " + condition;
 	SendWhenStopped(cmd);
 }
 
@@ -1107,7 +1107,7 @@ gdb::Link::RemoveBreakpointCondition
 		itsContinueCount = 2;
 	}
 
-	const JString cmd = "condition " + JString((JUInt64) debuggerIndex);
+	const JString cmd = "condition " + JString(debuggerIndex);
 	SendWhenStopped(cmd);
 }
 
@@ -1128,7 +1128,7 @@ gdb::Link::SetBreakpointIgnoreCount
 		itsContinueCount = 2;
 	}
 
-	const JString cmd = "ignore " + JString((JUInt64) debuggerIndex) + " " + JString((JUInt64) count);
+	const JString cmd = "ignore " + JString(debuggerIndex) + " " + JString(count);
 	SendWhenStopped(cmd);
 }
 
@@ -1182,7 +1182,7 @@ gdb::Link::WatchLocation
 void
 gdb::Link::SwitchToThread
 	(
-	const JUInt64 id
+	const JIndex id
 	)
 {
 	if (ProgramIsStopped() || HasCore())
@@ -1200,7 +1200,7 @@ gdb::Link::SwitchToThread
 void
 gdb::Link::SwitchToFrame
 	(
-	const JUInt64 id
+	const JIndex id
 	)
 {
 	if (ProgramIsStopped() || HasCore())
@@ -1271,7 +1271,7 @@ gdb::Link::RunUntil
 		JString path, name;
 		JSplitPathAndName(fileName, &path, &name);
 
-		Send("until " + name + ":" + JString((JUInt64) lineIndex));
+		Send("until " + name + ":" + JString(lineIndex));
 	}
 }
 
@@ -1292,7 +1292,7 @@ gdb::Link::SetExecutionPoint
 		JString path, name;
 		JSplitPathAndName(fileName, &path, &name);
 
-		const JString loc = name + ":" + JString((JUInt64) lineIndex);
+		const JString loc = name + ":" + JString(lineIndex);
 
 		SendRaw("tbreak " + loc);
 		SendRaw("jump " + loc);
@@ -1946,7 +1946,7 @@ gdb::Link::SendPing()
 	{
 		itsPingID++;
 	}
-	const JString idStr((JUInt64) itsPingID);
+	const JString idStr(itsPingID);
 	const JUtf8Byte* map[] =
 	{
 		"id",     idStr.GetBytes(),
@@ -2045,7 +2045,7 @@ gdb::Link::SendMedicCommand
 		itsContinueCount = 1;	// only at final prompt will itsForegroundQ be empty
 	}
 
-	const JString id((JUInt64) command->GetTransactionID());
+	const JString id(command->GetTransactionID());
 
 	const JUtf8Byte *startId, *endId;
 	if (command->WillIgnoreResult())
