@@ -26,7 +26,7 @@
 // sort=no requires so qualified tag comes after unqualified version
 
 static const JUtf8Byte* kCtagsArgs =
-	"--format=2 --excmd=number --sort=no --extras=+q "
+	"--format=2 --excmd=number --sort=no --extras=+qr --fields=+r "
 	"--ant-kinds=t "
 	"--asm-kinds=l "
 	"--asp-kinds=fs "
@@ -202,10 +202,19 @@ FnMenuUpdater::ReadFunctionList
 			continue;
 		}
 
+		// only keep grouping tags for lex
+
+		JString *type, *roles;
+		if (!flags.GetItem("kind", &type) ||
+			(lang == kLexLang && *type == "c" &&
+			 flags.GetItem("roles", &roles) && !roles->Contains("grouping")))
+		{
+			continue;
+		}
+
 		// toss qualified or unqualified version, except for HTML id's
 
-		JString* type;
-		if (flags.GetItem("kind", &type) && *type == "I")
+		if (*type == "I")
 		{
 			fnName.Prepend("#");
 		}
