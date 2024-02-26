@@ -38,6 +38,7 @@ Usage:
 --man              section_name page_name : displays man page from given section
 --man              -k search_string       : displays list of relevant man pages
 --apropos          search_string          : displays list of relevant man pages
+--search           shows the Search Text dialog
 --diff             file1 file2 : compare two files
                    file dir : compare file with same name in dir
                    file : compare file with backup (~) or crash save (#)

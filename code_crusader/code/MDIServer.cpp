@@ -118,6 +118,12 @@ MDIServer::HandleMDIRequest
 			restore = false;
 		}
 
+		else if (arg == "--search")
+		{
+			GetSearchTextDialog()->Activate();
+			lineRange.SetToNothing();
+		}
+
 		else if (arg == "--diff")
 		{
 			DisplayFileDiffs(&i, argList, false);
