@@ -70,7 +70,7 @@ AboutDialog::BuildWindow
 	auto* textWidget =
 		jnew JXStaticText(JString::empty, true, false, false, nullptr, window,
 					JXWidget::kHElastic, JXWidget::kVElastic, 90,20, 330,110);
-	assert( textWidget != nullptr );
+	textWidget->SetBorderWidth(0);
 
 	auto* npsIcon =
 		jnew JXImageWidget(window,

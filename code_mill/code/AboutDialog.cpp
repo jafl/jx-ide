@@ -71,9 +71,9 @@ AboutDialog::BuildWindow
 	imageWidget->SetImage(GetDisplay()->GetImageCache()->GetImage(gfg_about_icon), false);
 
 	auto* textWidget =
-		jnew JXStaticText(JString::empty, window,
+		jnew JXStaticText(JString::empty, true, false, false, nullptr, window,
 					JXWidget::kHElastic, JXWidget::kVElastic, 70,20, 280,50);
-	assert( textWidget != nullptr );
+	textWidget->SetBorderWidth(0);
 
 	itsCreditsButton =
 		jnew JXTextButton(JGetString("itsCreditsButton::AboutDialog::JXLayout"), window,
