@@ -216,7 +216,6 @@ Plot2DDir::BuildWindow()
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 570,500, JString::empty);
-	window->SetMinSize(300, 300);
 	window->SetWMClass(JXGetApplication()->GetWMName().GetBytes(), "Code_Medic_Variables_Plot_2D");
 
 	auto* menuBar =

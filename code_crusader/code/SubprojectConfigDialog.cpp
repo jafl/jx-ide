@@ -98,7 +98,7 @@ SubprojectConfigDialog::BuildWindow
 
 	auto* okButton =
 		jnew JXTextButton(JGetString("okButton::SubprojectConfigDialog::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedBottom, 219,129, 72,22);
+					JXWidget::kFixedRight, JXWidget::kFixedBottom, 220,130, 70,20);
 	okButton->SetShortcuts(JGetString("okButton::shortcuts::SubprojectConfigDialog::JXLayout"));
 
 // end JXLayout

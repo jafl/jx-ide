@@ -73,7 +73,7 @@ EditSymbolPrefsDialog::BuildWindow
 
 	auto* okButton =
 		jnew JXTextButton(JGetString("okButton::EditSymbolPrefsDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 339,59, 72,22);
+					JXWidget::kHElastic, JXWidget::kVElastic, 340,60, 70,20);
 	okButton->SetShortcuts(JGetString("okButton::shortcuts::EditSymbolPrefsDialog::JXLayout"));
 
 // end JXLayout

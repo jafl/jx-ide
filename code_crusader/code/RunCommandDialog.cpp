@@ -185,7 +185,7 @@ RunCommandDialog::BuildWindow()
 
 	itsRunButton =
 		jnew JXTextButton(JGetString("itsRunButton::RunCommandDialog::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 388,233, 64,24);
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 389,234, 62,22);
 	itsRunButton->SetShortcuts(JGetString("itsRunButton::shortcuts::RunCommandDialog::JXLayout"));
 
 	itsSaveCmdMenu =

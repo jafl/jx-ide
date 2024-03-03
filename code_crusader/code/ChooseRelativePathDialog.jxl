@@ -1,4 +1,4 @@
-jx_layout_editor 7
+jx_layout_editor 8
 310
 460
 "JXLayout"
@@ -273,6 +273,7 @@ jx_layout_editor 7
 370 20 454 224
 "itsPathTypeRG"
 1
+0
 0
 0
 

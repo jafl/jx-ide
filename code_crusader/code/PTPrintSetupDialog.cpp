@@ -145,7 +145,7 @@ PTPrintSetupDialog::BuildWindow
 
 	auto* okButton =
 		jnew JXTextButton(JGetString("okButton::PTPrintSetupDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 219,209, 72,22);
+					JXWidget::kHElastic, JXWidget::kVElastic, 220,210, 70,20);
 	okButton->SetShortcuts(JGetString("okButton::shortcuts::PTPrintSetupDialog::JXLayout"));
 
 	auto* printCmdInput =

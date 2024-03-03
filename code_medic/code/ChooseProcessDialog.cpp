@@ -158,7 +158,7 @@ ChooseProcessDialog::BuildWindow()
 
 	auto* okButton =
 		jnew JXTextButton(JGetString("okButton::ChooseProcessDialog::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedBottom, 309,469, 62,22);
+					JXWidget::kFixedRight, JXWidget::kFixedBottom, 310,470, 60,20);
 	okButton->SetShortcuts(JGetString("okButton::shortcuts::ChooseProcessDialog::JXLayout"));
 
 	itsProcessIDInput =

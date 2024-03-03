@@ -161,7 +161,7 @@ PSPrintSetupDialog::BuildWindow
 
 	auto* okButton =
 		jnew JXTextButton(JGetString("okButton::PSPrintSetupDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 219,269, 72,22);
+					JXWidget::kHElastic, JXWidget::kVElastic, 220,270, 70,20);
 	okButton->SetShortcuts(JGetString("okButton::shortcuts::PSPrintSetupDialog::JXLayout"));
 
 	auto* printCmdInput =

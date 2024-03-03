@@ -121,7 +121,7 @@ RunTEScriptDialog::BuildWindow()
 
 	itsRunButton =
 		jnew JXTextButton(JGetString("itsRunButton::RunTEScriptDialog::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 309,79, 62,22);
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 310,80, 60,20);
 	itsRunButton->SetShortcuts(JGetString("itsRunButton::shortcuts::RunTEScriptDialog::JXLayout"));
 
 	itsCmdInput =

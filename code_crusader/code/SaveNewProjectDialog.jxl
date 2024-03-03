@@ -1,4 +1,4 @@
-jx_layout_editor 7
+jx_layout_editor 8
 310
 500
 "JXLayout"
@@ -292,6 +292,7 @@ jx_layout_editor 7
 390 160 496 292
 "itsMethodRG"
 1
+0
 0
 0
 

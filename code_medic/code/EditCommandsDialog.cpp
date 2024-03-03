@@ -96,7 +96,7 @@ EditCommandsDialog::BuildWindow()
 
 	auto* okButton =
 		jnew JXTextButton(JGetString("okButton::EditCommandsDialog::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedBottom, 209,339, 62,22);
+					JXWidget::kFixedRight, JXWidget::kFixedBottom, 210,340, 60,20);
 	okButton->SetShortcuts(JGetString("okButton::shortcuts::EditCommandsDialog::JXLayout"));
 
 	auto* itsWidget =

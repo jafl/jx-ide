@@ -188,7 +188,7 @@ MainDirector::BuildWindow
 
 	itsGenerateButton =
 		jnew JXTextButton(JGetString("itsGenerateButton::MainDirector::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 439,424, 72,22);
+					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 440,425, 70,20);
 	itsGenerateButton->SetShortcuts(JGetString("itsGenerateButton::shortcuts::MainDirector::JXLayout"));
 
 	auto* colHeader =

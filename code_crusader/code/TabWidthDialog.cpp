@@ -80,7 +80,7 @@ TabWidthDialog::BuildWindow
 
 	auto* okButton =
 		jnew JXTextButton(JGetString("okButton::TabWidthDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 99,59, 62,22);
+					JXWidget::kHElastic, JXWidget::kVElastic, 100,60, 60,20);
 	okButton->SetShortcuts(JGetString("okButton::shortcuts::TabWidthDialog::JXLayout"));
 
 	itsTabWidthInput =

@@ -122,7 +122,7 @@ ViewManPageDialog::BuildWindow()
 
 	itsViewButton =
 		jnew JXTextButton(JGetString("itsViewButton::ViewManPageDialog::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 279,119, 62,22);
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 280,120, 60,20);
 	itsViewButton->SetShortcuts(JGetString("itsViewButton::shortcuts::ViewManPageDialog::JXLayout"));
 
 	itsFnName =

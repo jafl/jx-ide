@@ -1,4 +1,4 @@
-jx_layout_editor 5
+jx_layout_editor 8
 570
 500
 "JXLayout"
@@ -8,6 +8,7 @@ jx_layout_editor 5
 0
 
 1
+0
 0
 "MenuBar"
 2
@@ -20,6 +21,7 @@ jx_layout_editor 5
 
 1
 0
+0
 "ScrollbarSet"
 2
 0
@@ -31,6 +33,7 @@ jx_layout_editor 5
 
 1
 2
+1
 "CustomWidget"
 2
 0
@@ -46,6 +49,7 @@ jx_layout_editor 5
 
 1
 0
+0
 "TextButton"
 1
 0
@@ -59,6 +63,7 @@ jx_layout_editor 5
 
 1
 2
+1
 "CustomWidget"
 2
 2
@@ -74,6 +79,7 @@ jx_layout_editor 5
 
 1
 0
+0
 "TextButton"
 1
 0
@@ -87,6 +93,7 @@ jx_layout_editor 5
 
 1
 0
+0
 "TextButton"
 1
 0
@@ -99,6 +106,7 @@ jx_layout_editor 5
 ""
 
 1
+0
 0
 "CustomWidget"
 2

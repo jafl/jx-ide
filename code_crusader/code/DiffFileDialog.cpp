@@ -344,7 +344,7 @@ DiffFileDialog::BuildWindow()
 
 	itsViewButton =
 		jnew JXTextButton(JGetString("itsViewButton::DiffFileDialog::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 459,174, 62,22);
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 460,175, 60,20);
 	itsViewButton->SetShortcuts(JGetString("itsViewButton::shortcuts::DiffFileDialog::JXLayout"));
 
 	itsPlainFile1Input =

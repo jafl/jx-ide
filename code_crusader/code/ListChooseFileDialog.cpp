@@ -156,7 +156,7 @@ ListChooseFileDialog::BuildWindow
 
 	auto* openButton =
 		jnew JXTextButton(JGetString("openButton::ListChooseFileDialog::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedBottom, 219,279, 72,22);
+					JXWidget::kFixedRight, JXWidget::kFixedBottom, 220,280, 70,20);
 	openButton->SetShortcuts(JGetString("openButton::shortcuts::ListChooseFileDialog::JXLayout"));
 
 	auto* cancelButton =

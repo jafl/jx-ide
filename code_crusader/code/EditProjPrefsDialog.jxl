@@ -1,4 +1,4 @@
-jx_layout_editor 7
+jx_layout_editor 8
 360
 310
 "JXLayout"
@@ -76,6 +76,7 @@ jx_layout_editor 7
 150 70 264 274
 "itsDropFileActionRG"
 1
+0
 0
 0
 

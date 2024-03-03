@@ -227,7 +227,7 @@ EditTextPrefsDialog::BuildWindow
 	auto* partialWordTitle =
 		jnew JXStaticText(JGetString("partialWordTitle::EditTextPrefsDialog::JXLayout"), true, false, false, nullptr, window,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 330,360, 120,60);
-	assert( partialWordTitle != nullptr );
+	partialWordTitle->SetBorderWidth(0);
 
 	auto* ctrlMetaLabel =
 		jnew JXTextRadioButton(JXTEBase::kCtrlMetaPWMod, JGetString("ctrlMetaLabel::EditTextPrefsDialog::JXLayout"), itsPWModRG,
@@ -291,7 +291,7 @@ EditTextPrefsDialog::BuildWindow
 
 	auto* okButton =
 		jnew JXTextButton(JGetString("okButton::EditTextPrefsDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 219,489, 62,22);
+					JXWidget::kHElastic, JXWidget::kVElastic, 220,490, 60,20);
 	okButton->SetShortcuts(JGetString("okButton::shortcuts::EditTextPrefsDialog::JXLayout"));
 
 	itsScrollCaretCB =

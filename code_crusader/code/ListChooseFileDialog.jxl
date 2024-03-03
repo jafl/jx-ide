@@ -1,4 +1,4 @@
-jx_layout_editor 7
+jx_layout_editor 8
 310
 420
 "JXLayout"
@@ -243,6 +243,7 @@ jx_layout_editor 7
 340 20 414 119
 "itsAppendReplaceRG"
 1
+0
 0
 0
 

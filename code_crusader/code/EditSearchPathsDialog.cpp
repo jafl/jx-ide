@@ -96,7 +96,7 @@ EditSearchPathsDialog::BuildWindow
 	auto* instrText =
 		jnew JXStaticText(JGetString("instrText::EditSearchPathsDialog::JXLayout"), true, false, false, nullptr, window,
 					JXWidget::kHElastic, JXWidget::kFixedTop, 20,20, 330,150);
-	assert( instrText != nullptr );
+	instrText->SetBorderWidth(0);
 
 	auto* scrollbarSet =
 		jnew JXScrollbarSet(window,

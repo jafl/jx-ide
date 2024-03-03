@@ -110,7 +110,7 @@ FindFileDialog::BuildWindow()
 
 	itsFindButton =
 		jnew JXTextButton(JGetString("itsFindButton::FindFileDialog::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 209,109, 62,22);
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 210,110, 60,20);
 	itsFindButton->SetShortcuts(JGetString("itsFindButton::shortcuts::FindFileDialog::JXLayout"));
 
 	itsFileName =

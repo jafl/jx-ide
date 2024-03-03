@@ -166,7 +166,7 @@ EditMiscPrefsDialog::BuildWindow()
 
 	auto* okButton =
 		jnew JXTextButton(JGetString("okButton::EditMiscPrefsDialog::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedBottom, 229,359, 72,22);
+					JXWidget::kFixedRight, JXWidget::kFixedBottom, 230,360, 70,20);
 	okButton->SetShortcuts(JGetString("okButton::shortcuts::EditMiscPrefsDialog::JXLayout"));
 
 // end JXLayout

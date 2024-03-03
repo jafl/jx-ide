@@ -118,7 +118,7 @@ EditProjPrefsDialog::BuildWindow
 
 	auto* okButton =
 		jnew JXTextButton(JGetString("okButton::EditProjPrefsDialog::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedBottom, 249,279, 72,22);
+					JXWidget::kFixedRight, JXWidget::kFixedBottom, 250,280, 70,20);
 	okButton->SetShortcuts(JGetString("okButton::shortcuts::EditProjPrefsDialog::JXLayout"));
 
 // end JXLayout

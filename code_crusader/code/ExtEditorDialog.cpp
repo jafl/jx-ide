@@ -96,7 +96,7 @@ ExtEditorDialog::BuildWindow
 
 	auto* okButton =
 		jnew JXTextButton(JGetString("okButton::ExtEditorDialog::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedBottom, 269,149, 72,22);
+					JXWidget::kFixedRight, JXWidget::kFixedBottom, 270,150, 70,20);
 	okButton->SetShortcuts(JGetString("okButton::shortcuts::ExtEditorDialog::JXLayout"));
 
 	itsEditTextFileCmdInput =

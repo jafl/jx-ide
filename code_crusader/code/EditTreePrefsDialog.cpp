@@ -109,7 +109,7 @@ EditTreePrefsDialog::BuildWindow
 
 	auto* okButton =
 		jnew JXTextButton(JGetString("okButton::EditTreePrefsDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 219,239, 72,22);
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 220,240, 70,20);
 	okButton->SetShortcuts(JGetString("okButton::shortcuts::EditTreePrefsDialog::JXLayout"));
 
 // end JXLayout

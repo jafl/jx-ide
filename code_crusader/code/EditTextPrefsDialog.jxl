@@ -1,4 +1,4 @@
-jx_layout_editor 7
+jx_layout_editor 8
 640
 530
 "JXLayout"
@@ -523,6 +523,7 @@ jx_layout_editor 7
 350 460 430 620
 "itsPWModRG"
 1
+0
 0
 0
 

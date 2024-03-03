@@ -115,7 +115,7 @@ ProjectConfigDialog::BuildWindow
 	auto* configInstrText =
 		jnew JXStaticText(JGetString("configInstrText::ProjectConfigDialog::JXLayout"), true, false, false, nullptr, window,
 					JXWidget::kFixedLeft, JXWidget::kVElastic, 20,315, 370,25);
-	assert( configInstrText != nullptr );
+	configInstrText->SetBorderWidth(0);
 
 	auto* cancelButton =
 		jnew JXTextButton(JGetString("cancelButton::ProjectConfigDialog::JXLayout"), window,
@@ -129,7 +129,7 @@ ProjectConfigDialog::BuildWindow
 
 	auto* okButton =
 		jnew JXTextButton(JGetString("okButton::ProjectConfigDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 279,349, 72,22);
+					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 280,350, 70,20);
 	okButton->SetShortcuts(JGetString("okButton::shortcuts::ProjectConfigDialog::JXLayout"));
 
 	itsTargetName =

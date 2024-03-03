@@ -170,7 +170,7 @@ EditPrefsDialog::BuildWindow
 
 	auto* okButton =
 		jnew JXTextButton(JGetString("okButton::EditPrefsDialog::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 279,429, 62,22);
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 280,430, 60,20);
 	okButton->SetShortcuts(JGetString("okButton::shortcuts::EditPrefsDialog::JXLayout"));
 
 	itsEditFileCmdInput =
