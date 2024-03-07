@@ -1082,6 +1082,11 @@ TextDocument::OpenAsBinaryFile
 	std::ifstream input(fileName.GetBytes());
 	char buf[1024];
 	input.read(buf, 1024);
+	if (input.gcount() == 0)
+	{
+		return false;
+	}
+
 	JString s(buf, input.gcount(), JString::kNoCopy);
 	input.close();
 
