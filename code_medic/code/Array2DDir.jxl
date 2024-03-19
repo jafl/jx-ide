@@ -1,13 +1,16 @@
-jx_layout_editor 5
+jx_layout_editor 9
 370
 500
 "JXLayout"
 ""
+300
+250
 "Code_Medic_Variables_Array_2D"
 ""
 0
 
 1
+0
 0
 "MenuBar"
 2
@@ -19,6 +22,7 @@ jx_layout_editor 5
 0
 
 1
+0
 0
 "StaticText"
 0
@@ -37,6 +41,7 @@ jx_layout_editor 5
 
 1
 0
+0
 "CustomWidget"
 2
 0
@@ -52,6 +57,7 @@ jx_layout_editor 5
 
 1
 0
+0
 "WidgetSet"
 2
 2
@@ -62,6 +68,7 @@ jx_layout_editor 5
 0
 
 1
+0
 0
 "WidgetSet"
 2
@@ -74,6 +81,7 @@ jx_layout_editor 5
 
 1
 4
+1
 "StaticText"
 0
 0
@@ -91,6 +99,7 @@ jx_layout_editor 5
 
 1
 5
+1
 "StaticText"
 0
 0
@@ -108,6 +117,7 @@ jx_layout_editor 5
 
 1
 4
+1
 "StaticText"
 0
 0
@@ -125,6 +135,7 @@ jx_layout_editor 5
 
 1
 4
+1
 "CustomWidget"
 0
 0
@@ -140,6 +151,7 @@ jx_layout_editor 5
 
 1
 5
+1
 "StaticText"
 0
 0
@@ -157,6 +169,7 @@ jx_layout_editor 5
 
 1
 5
+1
 "CustomWidget"
 0
 0
@@ -172,6 +185,7 @@ jx_layout_editor 5
 
 1
 4
+1
 "StaticText"
 0
 0
@@ -189,6 +203,7 @@ jx_layout_editor 5
 
 1
 4
+1
 "CustomWidget"
 0
 0
@@ -204,6 +219,7 @@ jx_layout_editor 5
 
 1
 5
+1
 "StaticText"
 0
 0
@@ -221,6 +237,7 @@ jx_layout_editor 5
 
 1
 5
+1
 "CustomWidget"
 0
 0
@@ -236,6 +253,7 @@ jx_layout_editor 5
 
 1
 0
+0
 "ScrollbarSet"
 2
 2
@@ -247,6 +265,7 @@ jx_layout_editor 5
 
 1
 16
+1
 "CustomWidget"
 2
 0
@@ -262,6 +281,7 @@ jx_layout_editor 5
 
 1
 16
+1
 "CustomWidget"
 0
 2
@@ -277,6 +297,7 @@ jx_layout_editor 5
 
 1
 16
+1
 "CustomWidget"
 2
 2

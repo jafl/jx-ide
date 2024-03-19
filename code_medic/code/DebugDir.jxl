@@ -1,13 +1,16 @@
-jx_layout_editor 5
+jx_layout_editor 9
 450
 500
 "JXLayout"
 "Debug"
+150
+150
 "Code_Medic_Debug"
 ""
 0
 
 1
+0
 0
 "TextButton"
 2
@@ -22,6 +25,7 @@ jx_layout_editor 5
 
 1
 0
+0
 "ScrollbarSet"
 2
 2
@@ -33,6 +37,7 @@ jx_layout_editor 5
 
 1
 2
+1
 "CustomWidget"
 2
 2

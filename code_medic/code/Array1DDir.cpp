@@ -158,6 +158,7 @@ Array1DDir::BuildWindow()
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 300,500, JString::empty);
+	window->SetMinSize(300, 300);
 	window->SetWMClass(JXGetApplication()->GetWMName().GetBytes(), "Code_Medic_Variables_Array_1D");
 
 	auto* menuBar =

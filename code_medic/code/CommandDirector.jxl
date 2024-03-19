@@ -1,13 +1,16 @@
-jx_layout_editor 5
+jx_layout_editor 9
 500
 550
 "JXLayout"
 ""
+300
+300
 "Code_Medic_Command_Line"
 ""
 0
 
 1
+0
 0
 "MenuBar"
 2
@@ -19,6 +22,7 @@ jx_layout_editor 5
 0
 
 1
+0
 0
 "ToolBar"
 2
@@ -34,6 +38,7 @@ jx_layout_editor 5
 
 1
 2
+1
 "ScrollbarSet"
 2
 2
@@ -45,6 +50,7 @@ jx_layout_editor 5
 
 1
 3
+1
 "CustomWidget"
 2
 2
@@ -60,6 +66,7 @@ jx_layout_editor 5
 
 1
 0
+0
 "SimpleBorderRect"
 2
 1
@@ -74,6 +81,7 @@ jx_layout_editor 5
 
 1
 5
+1
 "StaticText"
 0
 0
@@ -91,6 +99,7 @@ jx_layout_editor 5
 
 1
 5
+1
 "CustomWidget"
 2
 0
@@ -106,6 +115,7 @@ jx_layout_editor 5
 
 1
 5
+1
 "HistoryMenu"
 0
 0
@@ -119,6 +129,7 @@ jx_layout_editor 5
 
 1
 0
+0
 "TextButton"
 0
 1
@@ -131,6 +142,7 @@ jx_layout_editor 5
 ""
 
 1
+0
 0
 "InputField"
 2
@@ -148,5 +160,7 @@ jx_layout_editor 5
 ""
 0
 0
+0
+""
 
 0

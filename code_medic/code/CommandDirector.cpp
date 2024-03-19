@@ -327,6 +327,7 @@ CommandDirector::BuildWindow()
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 500,550, JString::empty);
+	window->SetMinSize(300, 300);
 	window->SetWMClass(JXGetApplication()->GetWMName().GetBytes(), "Code_Medic_Command_Line");
 
 	auto* menuBar =

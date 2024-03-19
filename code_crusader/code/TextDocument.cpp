@@ -333,6 +333,7 @@ TextDocument::BuildWindow
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 550,550, JString::empty);
+	window->SetMinSize(200, 200);
 
 	itsMenuBar =
 		jnew JXMenuBar(window,

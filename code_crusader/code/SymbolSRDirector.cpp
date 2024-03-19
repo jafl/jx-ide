@@ -122,6 +122,7 @@ SymbolSRDirector::BuildWindow
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 400,230, JString::empty);
+	window->SetMinSize(150, 150);
 
 	auto* menuBar =
 		jnew JXMenuBar(window,

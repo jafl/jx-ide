@@ -1,13 +1,16 @@
-jx_layout_editor 5
+jx_layout_editor 9
 250
 500
 "JXLayout"
 ""
+150
+150
 "Code_Medic_File_List"
 ""
 0
 
 1
+0
 0
 "MenuBar"
 2
@@ -19,6 +22,7 @@ jx_layout_editor 5
 0
 
 1
+0
 0
 "CustomWidget"
 2

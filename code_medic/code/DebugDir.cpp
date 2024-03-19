@@ -58,6 +58,7 @@ DebugDir::BuildWindow()
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 450,500, JGetString("WindowTitle::DebugDir::JXLayout"));
+	window->SetMinSize(150, 150);
 	window->SetWMClass(JXGetApplication()->GetWMName().GetBytes(), "Code_Medic_Debug");
 
 	itsCopyButton =

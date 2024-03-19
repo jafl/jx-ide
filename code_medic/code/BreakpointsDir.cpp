@@ -67,6 +67,7 @@ BreakpointsDir::BuildWindow()
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 450,500, JString::empty);
+	window->SetMinSize(150, 150);
 	window->SetWMClass(JXGetApplication()->GetWMName().GetBytes(), "Code_Medic_Breakpoints");
 
 	auto* menuBar =

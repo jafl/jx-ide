@@ -162,6 +162,7 @@ MemoryDir::BuildWindow()
 // begin JXLayout
 
 	auto* window = jnew JXWindow(this, 500,500, JString::empty);
+	window->SetMinSize(400, 400);
 	window->SetWMClass(JXGetApplication()->GetWMName().GetBytes(), "Code_Medic_Memory");
 
 	auto* menuBar =
