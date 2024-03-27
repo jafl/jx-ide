@@ -26,9 +26,9 @@ public:
 
 private:
 
-	JInteger				itsCurlyBraceDepth;
-	bool					itsTemplateFlag;
-	JInteger				itsTemplateBracketDepth;
+	JInteger			itsCurlyBraceDepth;
+	bool				itsTemplateFlag;
+	JInteger			itsTemplateBracketDepth;
 	Class::InheritType	itsInheritType;
 	Class*				itsCurrentClass;
 
@@ -90,7 +90,7 @@ NSID         ({ID}(::{ID})*)
 %}
 
 template\b {
-	itsTemplateFlag      = true;
+	itsTemplateFlag         = true;
 	itsTemplateBracketDepth = 0;
 	push_state(TEMPLATE_PARAM_STATE);
 	}
@@ -100,9 +100,13 @@ namespace\b {
 	start(NAMESPACE_STATE);
 	}
 
-friend{WS}class{WS}{NSID}	/* ignore */
+friend{WS}class{WS}{NSID} {
+	ResetState();	/* ignore friend declarations */
+	}
 
-class{WS}{NSID}{MS};		/* ignore */
+class{WS}{NSID}{MS}; {
+	ResetState();	/* ignore forward declarations */
+	}
 
 class\b {
 	start(CLASS_NAME_STATE);
@@ -298,11 +302,10 @@ private {
 	}
 	else
 	{
-		const JSize count = itsNamespaceStack->GetItemCount();
-		for (JIndex i=2; i<=count; i++)
+		for (const auto* ns : *itsNamespaceStack)
 		{
 			parentName.Prepend("::");
-			parentName.Prepend(*itsNamespaceStack->GetItem(i));
+			parentName.Prepend(*ns);
 		}
 	}
 
