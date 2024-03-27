@@ -1,7 +1,7 @@
 name: jx-ide
 title: JX IDE
 base: core20
-version: "7.1.4"
+version: "7.1.5"
 license: LGPL-2.1-or-later
 source-code: https://github.com/jafl/jx-ide
 issues: https://github.com/jafl/jx-ide/issues
