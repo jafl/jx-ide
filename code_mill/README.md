@@ -14,7 +14,7 @@ For macOS, the easiest way to install is via [Homebrew](https://brew.sh):
 
     brew install --cask xquartz
     brew tap jafl/jx
-    brew install jafl/jx/code_mill
+    brew install jafl/jx/code-mill
 
 For all other systems, download a package:
 

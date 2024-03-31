@@ -16,7 +16,7 @@ For macOS, the easiest way to install is via [Homebrew](https://brew.sh):
 
     brew install --cask xquartz
     brew tap jafl/jx
-    brew install jafl/jx/code_crusader
+    brew install jafl/jx/code-crusader
 
 For all other systems, download a package:
 
