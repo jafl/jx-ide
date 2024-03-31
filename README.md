@@ -11,7 +11,7 @@
 
 Code Crusader, Code Medic, and Code Mill together comprise the IDE built using the JX Application Framework.
 
-[![Homebrew](https://github.com/jafl/homebrew-jx)]
+[Homebrew](https://github.com/jafl/homebrew-jx)
 
 [![Download from Github](http://libjx.sourceforge.net/github.png)](https://github.com/jafl/jx-ide/releases/latest)
 
