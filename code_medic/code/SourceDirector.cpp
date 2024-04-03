@@ -20,6 +20,7 @@
 #include "DisplaySourceForMainCmd.h"
 #include "ClearSourceDisplayTask.h"
 #include "GetAssemblyCmd.h"
+#include "ThreadsDir.h"
 #include "StackDir.h"
 #include "sharedUtil.h"
 #include "globals.h"
@@ -40,7 +41,6 @@
 #include <jx-af/jcore/JStringIterator.h>
 #include <jx-af/jcore/JFontManager.h>
 #include <jx-af/jcore/jDirUtil.h>
-#include <jx-af/jcore/jFileUtil.h>
 #include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
@@ -471,7 +471,8 @@ SourceDirector::Receive
 		else
 		{
 			ClearDisplay();
-			(GetCommandDirector())->GetStackDir()->Activate();
+			GetCommandDirector()->GetThreadsDir()->Activate();
+			GetCommandDirector()->GetStackDir()->Activate();
 		}
 	}
 	else if (itsType == kMainAsmType && sender == itsLink &&

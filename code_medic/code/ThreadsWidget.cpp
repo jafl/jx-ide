@@ -51,6 +51,7 @@ ThreadsWidget::ThreadsWidget
 	itsCommandDir(commandDir),
 	itsThreadDir(threadDir),
 	itsTree(tree),
+	itsLastSelectedThreadID(0),
 	itsNeedsUpdateFlag(false),
 	itsIsWaitingForReloadFlag(false),
 	itsChangingThreadFlag(false),
@@ -71,7 +72,7 @@ ThreadsWidget::ThreadsWidget
 	GetPrefsManager()->GetDefaultFont(&name, &size);
 	SetFont(name, size);
 
-	ListenTo(&(GetTableSelection()));
+	ListenTo(&GetTableSelection());
 	ListenTo(GetWindow());
 }
 
@@ -96,10 +97,14 @@ ThreadsWidget::~ThreadsWidget()
 void
 ThreadsWidget::SelectThread
 	(
-	const JIndex id
+	const JIndex	id,
+	const bool		fromUpdate
 	)
 {
-	CalledBySelectThread(itsTree->GetRoot(), id);
+	if (CalledBySelectThread(itsTree->GetRoot(), id, fromUpdate))
+	{
+		itsLastSelectedThreadID = id;
+	}
 }
 
 /******************************************************************************
@@ -111,7 +116,8 @@ bool
 ThreadsWidget::CalledBySelectThread
 	(
 	const JTreeNode*	root,
-	const JIndex		id
+	const JIndex		id,
+	const bool			fromUpdate
 	)
 {
 	const JTreeList* list = GetTreeList();
@@ -129,7 +135,7 @@ ThreadsWidget::CalledBySelectThread
 			const bool found = list->FindNode(node, &j);
 			if (found)
 			{
-				itsSelectingThreadFlag = true;
+				itsSelectingThreadFlag = fromUpdate;
 				SelectSingleCell(JPoint(GetNodeColIndex(), j));
 				itsSelectingThreadFlag = false;
 			}
@@ -137,7 +143,7 @@ ThreadsWidget::CalledBySelectThread
 			return true;
 		}
 
-		if (CalledBySelectThread(node, id))
+		if (CalledBySelectThread(node, id, fromUpdate))
 		{
 			return true;
 		}
@@ -376,7 +382,7 @@ ThreadsWidget::Receive
 		//  because we won't always get kProgramStopped afterwards.)
 
 		const bool wasChanging = itsChangingThreadFlag;
-		itsChangingThreadFlag      = false;
+		itsChangingThreadFlag  = false;
 
 		if (!wasChanging)
 		{
@@ -424,8 +430,9 @@ ThreadsWidget::Receive
 				dynamic_cast<const ThreadNode*>(node);
 			assert( threadNode != nullptr );
 
-			itsChangingThreadFlag = true;
-			itsLink->SwitchToThread(threadNode->GetID());
+			itsChangingThreadFlag   = true;
+			itsLastSelectedThreadID = threadNode->GetID();
+			itsLink->SwitchToThread(itsLastSelectedThreadID);
 		}
 
 		JXNamedTreeListWidget::Receive(sender, message);
@@ -636,7 +643,7 @@ ThreadsWidget::FinishedLoading
 
 	if (currentID > 0)
 	{
-		SelectThread(currentID);
+		SelectThread(currentID, true);
 	}
 
 	itsIsWaitingForReloadFlag = false;

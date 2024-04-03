@@ -31,7 +31,8 @@ public:
 	~ThreadsWidget() override;
 
 	void	Update();
-	void	SelectThread(const JIndex id);
+	JIndex	GetLastSelectedThread() const;
+	void	SelectThread(const JIndex id, const bool fromUpdate = false);
 
 	void	HandleKeyPress(const JUtf8Character& c, const int keySym,
 						   const JXKeyModifiers& modifiers) override;
@@ -60,6 +61,7 @@ private:
 	CommandDirector*	itsCommandDir;
 	ThreadsDir*			itsThreadDir;
 	JTree*				itsTree;
+	JIndex				itsLastSelectedThreadID;
 	GetThreadsCmd*		itsGetThreadsCmd;
 	GetThreadCmd*		itsGetCurrentThreadCmd;
 	bool				itsNeedsUpdateFlag;
@@ -73,7 +75,8 @@ private:
 private:
 
 	bool	SelectNextThread(const JInteger delta);
-	bool	CalledBySelectThread(const JTreeNode* root, const JIndex id);
+	bool	CalledBySelectThread(const JTreeNode* root, const JIndex id,
+								 const bool fromUpdate);
 
 	void	FlushOldData();
 	bool	ShouldRebuild() const;
@@ -83,5 +86,18 @@ private:
 	void	CalledBySaveOpenNodes1(JTreeNode* root);
 	void	RestoreOpenNodes(JTreeNode* root);
 };
+
+
+/******************************************************************************
+ RestoreOpenNodes (private)
+
+ ******************************************************************************/
+
+inline JIndex
+ThreadsWidget::GetLastSelectedThread()
+	const
+{
+	return itsLastSelectedThreadID;
+}
 
 #endif

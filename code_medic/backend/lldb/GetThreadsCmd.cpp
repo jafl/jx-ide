@@ -17,6 +17,7 @@
 #include "ThreadNode.h"
 #include "globals.h"
 #include "lldb/Link.h"	// must be after X11 includes: Status
+#include <jx-af/jx/JXFunctionTask.h>
 #include <jx-af/jcore/JTree.h>
 #include <jx-af/jcore/JStringIterator.h>
 #include <jx-af/jcore/JRegex.h>
@@ -75,6 +76,8 @@ lldb::GetThreadsCmd::HandleSuccess
 		return;
 	}
 
+	const JIndex threadID = GetWidget()->GetLastSelectedThread();
+
 	JTreeNode* root   = itsTree->GetRoot();
 	const JSize count = p.GetNumThreads();
 	JString fileName, name, indexStr;
@@ -83,9 +86,9 @@ lldb::GetThreadsCmd::HandleSuccess
 		SBThread t = p.GetThreadAtIndex(i);
 		SBFrame f  = t.GetSelectedFrame();
 
-		JIndex lineIndex      = 0;
-		SBLineEntry e   = f.GetLineEntry();
-		SBFileSpec file = e.GetFileSpec();
+		JIndex lineIndex = 0;
+		SBLineEntry e    = f.GetLineEntry();
+		SBFileSpec file  = e.GetFileSpec();
 		if (file.IsValid())
 		{
 			fileName = JCombinePathAndName(
@@ -125,5 +128,14 @@ lldb::GetThreadsCmd::HandleSuccess
 		root->Append(node);
 	}
 
+	if (threadID != p.GetSelectedThread().GetThreadID())
+	{
+		auto* task = jnew JXFunctionTask(50, [this, threadID]()
+		{
+			GetWidget()->SelectThread(threadID);
+		},
+		true);
+		task->Start();
+	}
 	GetWidget()->FinishedLoading(p.GetSelectedThread().GetThreadID());
 }
