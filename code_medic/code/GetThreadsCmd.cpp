@@ -18,7 +18,7 @@
 
 GetThreadsCmd::GetThreadsCmd
 	(
-	const JString&		cmd,
+	const JString&	cmd,
 	ThreadsWidget*	widget
 	)
 	:

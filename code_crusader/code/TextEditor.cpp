@@ -25,6 +25,7 @@
 #include "TEColIndexInput.h"
 #include "ProjectDocument.h"
 #include "SymbolDirector.h"
+#include "CommandOutputDocument.h"
 #include "ManPageDocument.h"
 #include "ViewManPageDialog.h"
 #include "FindFileDialog.h"

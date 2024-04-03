@@ -2442,7 +2442,7 @@ ProjectTable::ExtractInputData
 			{
 				JString path;
 				if (node->GetFullName(&path) &&
-					!(itsDoc->GetDirectories()).Contains(path))
+					!itsDoc->GetDirectories().Contains(path))
 				{
 					itsDoc->DelayUpdateSymbolDatabase();
 				}

@@ -850,14 +850,14 @@ TreeWidget::Receive
 		const auto* selection =
 			dynamic_cast<const Tree::ClassSelected*>(&message);
 		assert( selection != nullptr );
-		RefreshRect((selection->GetClass())->GetFrame());
+		RefreshRect(selection->GetClass()->GetFrame());
 	}
 	else if (sender == itsTree && message.Is(Tree::kClassDeselected))
 	{
 		const auto* selection =
 			dynamic_cast<const Tree::ClassDeselected*>(&message);
 		assert( selection != nullptr );
-		RefreshRect((selection->GetClass())->GetFrame());
+		RefreshRect(selection->GetClass()->GetFrame());
 	}
 	else if (sender == itsTree && message.Is(Tree::kAllClassesDeselected))
 	{

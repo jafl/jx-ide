@@ -97,9 +97,7 @@ SearchTE::SearchFiles
 			SearchFile(*file, *name, onlyListFiles, listFilesWithoutMatch,
 					   *searchRegex, entireWord, doc);
 
-			auto* msg = jnew IncrementProgress();
-
-			doc->QueueMessage(msg);
+			doc->QueueMessage(jnew IncrementProgress());
 		}
 
 		// toss temp files once we are done

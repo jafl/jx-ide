@@ -37,14 +37,12 @@ StringCompleter::StringCompleter
 	itsCaseSensitiveFlag(caseSensitive)
 {
 	itsStringList = jnew JPtrArray<JString>(JPtrArrayT::kForgetAll, 4096);
-	assert( itsStringList != nullptr );
 	itsStringList->SetSortOrder(JListT::kSortAscending);
 
 	itsStringList->SetCompareFunction(
 		itsCaseSensitiveFlag ? JCompareStringsCaseSensitive : JCompareStringsCaseInsensitive);
 
 	itsOwnedList = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
-	assert( itsOwnedList != nullptr );
 
 	if (itsLanguage != kOtherLang)
 	{
@@ -360,7 +358,7 @@ StringCompleter::Receive
 		const auto* info =
 			dynamic_cast<const DocumentManager::ProjectDocumentCreated*>(&message);
 		UpdateWordList();
-		ListenTo(((info->GetProjectDocument())->GetSymbolDirector())->GetSymbolList());
+		ListenTo(info->GetProjectDocument()->GetSymbolDirector()->GetSymbolList());
 	}
 	else if (sender == GetDocumentManager() &&
 			 message.Is(DocumentManager::kProjectDocumentDeleted))

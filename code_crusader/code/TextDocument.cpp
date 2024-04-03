@@ -17,6 +17,7 @@
 #include "FileHistoryMenu.h"
 #include "TabWidthDialog.h"
 #include "ProjectDocument.h"
+#include "CommandOutputDocument.h"
 #include "DiffFileDialog.h"
 #include "OKToOverwriteModifiedFileDialog.h"
 #include "StylerBase.h"

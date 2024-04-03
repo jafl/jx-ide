@@ -13,6 +13,7 @@
 #include "ProjectDocument.h"
 #include <jx-af/jcore/JColorManager.h>
 #include <jx-af/jcore/JStringIterator.h>
+#include <jx-af/jcore/jDirUtil.h>
 #include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************

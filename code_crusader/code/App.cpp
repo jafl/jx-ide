@@ -22,6 +22,7 @@
 #include <jx-af/jx/JXToolBar.h>
 #include <jx-af/jx/JXTipOfTheDayDialog.h>
 #include <jx-af/jcore/JLatentPG.h>
+#include <jx-af/jcore/jProcessUtil.h>
 #include <jx-af/jcore/jFileUtil.h>
 #include <jx-af/jcore/jStreamUtil.h>
 #include <jx-af/jcore/jWebUtil.h>

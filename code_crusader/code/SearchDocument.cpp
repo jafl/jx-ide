@@ -141,7 +141,6 @@ SearchDocument::SearchDocument
 	JXWindow* window = GetWindow();
 
 	itsChannel = jnew boost::fibers::buffered_channel<JBroadcaster::Message*>(1024);
-	assert( itsChannel != nullptr );
 
 	// button in upper right
 
