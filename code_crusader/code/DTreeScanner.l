@@ -400,41 +400,41 @@ x\" {
 
 	JSize count = 0;
 	while (true)
-		{
+	{
 		bool changed = false;
 		for (const auto* c : *itsAliasKeys)
-			{
+		{
 			JString* s1 = nullptr;
 			itsAliasMap->GetItem(*c, &s1);
 
 			if (*c == parentName)
-				{
+			{
 				parentName = *s1;
 				changed    = true;
 				break;
-				}
+			}
 
 			s  = *c;
 			s += ".";
 			if (parentName.StartsWith(s))
-				{
+			{
 				JStringIterator iter(&parentName);
 				iter.Next(*c);
 				iter.RemoveAllPrev();
 				parentName.Prepend(*s1);
 				changed = true;
 				break;
-				}
-			}
-
-		count++;
-		if (!changed || count > 10)
-			{
-			break;
 			}
 		}
 
-	itsCurrentClass->AddParent(Class::kInheritPublic, parentName);
+		count++;
+		if (!changed || count > 10)
+		{
+			break;
+		}
+	}
+
+	itsCurrentClass->AddParent(Class::kInheritPublic, parentName, JString::empty);
 	}
 
 "!"?\([^)]+\)	/* ignore template parameters */

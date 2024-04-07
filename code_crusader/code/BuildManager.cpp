@@ -21,6 +21,7 @@
 #include <jx-af/jcore/jFStreamUtil.h>
 #include <jx-af/jcore/jVCSUtil.h>
 #include <sstream>
+#include <sys/stat.h>
 #include <jx-af/jcore/jAssert.h>
 
 bool BuildManager::itsRebuildMakefileDailyFlag = true;
@@ -1320,7 +1321,7 @@ BuildManager::WriteSubProjectBuildFile
 	}
 
 	mode_t perms;
-	if ((JGetPermissions(fileName, &perms)).OK())
+	if (JGetPermissions(fileName, &perms))
 	{
 		perms |= S_IXUSR | S_IXGRP | S_IXOTH;
 		JSetPermissions(fileName, perms);
@@ -1379,17 +1380,17 @@ BuildManager::MakeFilesChanged()
 
 	time_t t;
 	return needsMakefile ||
-		(JGetModificationTime(makeHeaderName, &t) == kJNoError &&
+		(JGetModificationTime(makeHeaderName, &t) &&
 		 itsModTime.makeHeaderModTime != t)  ||
-		(JGetModificationTime(makeFilesName, &t) == kJNoError &&
+		(JGetModificationTime(makeFilesName, &t) &&
 		 itsModTime.makeFilesModTime != t)   ||
-		(JGetModificationTime(cmakeHeaderName, &t) == kJNoError &&
+		(JGetModificationTime(cmakeHeaderName, &t) &&
 		 itsModTime.cmakeHeaderModTime != t) ||
-		(JGetModificationTime(cmakeInputName, &t) == kJNoError &&
+		(JGetModificationTime(cmakeInputName, &t) &&
 		 itsModTime.cmakeInputModTime != t)  ||
-		(JGetModificationTime(qmakeHeaderName, &t) == kJNoError &&
+		(JGetModificationTime(qmakeHeaderName, &t) &&
 		 itsModTime.qmakeHeaderModTime != t) ||
-		(JGetModificationTime(qmakeInputName, &t) == kJNoError &&
+		(JGetModificationTime(qmakeInputName, &t) &&
 		 itsModTime.qmakeInputModTime != t);
 }
 
@@ -1406,7 +1407,7 @@ BuildManager::CMakeHeaderChanged()
 	GetCMakeFileNames(&cmakeHeaderName, &cmakeInputName);
 
 	time_t t;
-	return JGetModificationTime(cmakeHeaderName, &t) == kJNoError &&
+	return JGetModificationTime(cmakeHeaderName, &t) &&
 				itsModTime.cmakeHeaderModTime != t;
 }
 
@@ -1423,7 +1424,7 @@ BuildManager::QMakeHeaderChanged()
 	GetQMakeFileNames(&qmakeHeaderName, &qmakeInputName);
 
 	time_t t;
-	return JGetModificationTime(qmakeHeaderName, &t) == kJNoError &&
+	return JGetModificationTime(qmakeHeaderName, &t) &&
 				itsModTime.qmakeHeaderModTime != t;
 }
 

@@ -153,9 +153,9 @@ type\b {
 {ID}|\. {
 	itsImportAlias.Set(text(), size());
 	if (itsImportAlias == "_" || itsImportAlias == ".")
-		{
+	{
 		start(INITIAL);
-		}
+	}
 	itsImportAlias += ".";		// easier lookup
 	}
 
@@ -163,9 +163,9 @@ type\b {
 	JString s(text()+1, size()-2);
 	const JStringMatch m = modulePattern.Match(s, JRegex::kIncludeSubmatches);
 	if (!m.IsEmpty() && !itsImportAlias.IsEmpty())
-		{
+	{
 		itsImportMap->SetNewItem(itsImportAlias, m.GetSubstring(1));
-		}
+	}
 	start(INITIAL);
 	}
 
@@ -207,28 +207,28 @@ interface\b {
 
 "{" {
 	if (itsAbstractFlag == ' ')
-		{
+	{
 		start(INITIAL);
-		}
+	}
 	else
-		{
+	{
 		const bool isExported = itsTypeName.GetFirstCharacter().IsUpper();
 
 		if (!itsPackage.IsEmpty())
-			{
+		{
 			itsTypeName.Prepend(".");
 			itsTypeName.Prepend(itsPackage);
-			}
+		}
 
 		itsCurrentClass = jnew GoClass(itsTypeName, Class::kClassType, fileID, tree,
-									  isExported);
+										isExported);
 
 		itsCurrentClass->SetAbstract(itsAbstractFlag == 'T');
 		classList->Append(itsCurrentClass);
 
 		itsTypeContent.Clear();
 		start(INHERIT_STATE);
-		}
+	}
 	}
 
 {WS}	/* ignore */
@@ -334,7 +334,7 @@ TreeScanner::Go::Scanner::~Scanner()
 }
 
 static const JRegex separator(";|\n");
-static const JRegex nsid("^\\*?(((_|\\p{L})(_|\\p{L}|\\d)*\\.)?(_|\\p{L})(_|\\p{L}|\\d)*)$");
+static const JRegex nsid("^\\*?((?:_|\\p{L})(?:_|\\p{L}|\\d)*\\.)?((?:_|\\p{L})(?:_|\\p{L}|\\d)*)$");
 
 void
 TreeScanner::Go::Scanner::ParseTypeContent
@@ -346,27 +346,23 @@ TreeScanner::Go::Scanner::ParseTypeContent
 	itsTypeContent.Split(separator, &lineList);
 
 	for (auto* line : lineList)
-		{
+	{
 		line->TrimWhitespace();
 
 		const JStringMatch m = nsid.Match(*line, JRegex::kIncludeSubmatches);
 		if (m.IsEmpty())
-			{
+		{
 			continue;
-			}
-		JString parent = m.GetSubstring(1);
+		}
+		JString ns     = m.GetSubstring(1),
+				parent = m.GetSubstring(2);
 
 		const JString* itsPackage;
-		if (!m.GetUtf8ByteRange(2).IsEmpty() &&
-			itsImportMap->GetItem(m.GetSubstring(2), &itsPackage))
-			{
-			JStringIterator iter(&parent);
-			iter.Next(".");
-			iter.RemoveAllPrev();
-			parent.Prepend(".");
-			parent.Prepend(*itsPackage);
-			}
-
-		goClass->AddParent(Class::kInheritPublic, parent);
+		if (!ns.IsEmpty() && itsImportMap->GetItem(ns, &itsPackage))
+		{
+			ns = *itsPackage;
 		}
+
+		goClass->AddParent(Class::kInheritPublic, parent, ns);
+	}
 }

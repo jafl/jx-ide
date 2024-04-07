@@ -293,7 +293,7 @@ private {
 	}
 
 ("::")?{NSID}"<"? {
-	JString parentName(text(), size());
+	JString parentName(text(), size()), ns;
 	if (parentName.StartsWith("::"))
 	{
 		JStringIterator iter(&parentName);
@@ -302,10 +302,15 @@ private {
 	}
 	else
 	{
-		for (const auto* ns : *itsNamespaceStack)
+		bool first = true;
+		for (const auto* ns1 : *itsNamespaceStack)
 		{
-			parentName.Prepend("::");
-			parentName.Prepend(*ns);
+			if (!first)
+			{
+				ns.Prepend("::");
+			}
+			ns.Prepend(*ns1);
+			first = false;
 		}
 	}
 
@@ -335,11 +340,12 @@ private {
 			iter.RemovePrev(s.GetCharacterCount());
 			iter.Invalidate();
 
-			s1.Append("::");
-			s1.Append(parentName);
+			s1 += "::";
+			s1 += parentName;
 
 			parentName = s1;
 			found      = true;
+			ns.Clear();
 			break;
 		}
 
@@ -354,7 +360,7 @@ private {
 		}
 	}
 
-	itsCurrentClass->AddParent(itsInheritType, parentName);
+	itsCurrentClass->AddParent(itsInheritType, parentName, ns);
 	}
 
 "{" {

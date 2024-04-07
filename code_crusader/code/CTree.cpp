@@ -33,7 +33,7 @@ static const JUtf8Byte* kCtagsArgs =
 CTree::CTree
 	(
 	CTreeDirector*	director,
-	const JSize			marginWidth
+	const JSize		marginWidth
 	)
 	:
 	Tree(StreamInCClass, director, kCLang, kCHeaderFT, marginWidth),
@@ -53,7 +53,7 @@ CTree::CTree
 	const JFileVersion	setVers,
 	std::istream*		symInput,
 	const JFileVersion	symVers,
-	CTreeDirector*	director,
+	CTreeDirector*		director,
 	const JSize			marginWidth,
 	DirList*			dirList
 	)
@@ -104,9 +104,9 @@ CTree::~CTree()
 void
 CTree::StreamOut
 	(
-	std::ostream&		projOutput,
-	std::ostream*		setOutput,
-	std::ostream*		symOutput,
+	std::ostream&	projOutput,
+	std::ostream*	setOutput,
+	std::ostream*	symOutput,
 	const DirList*	dirList
 	)
 	const
@@ -126,7 +126,7 @@ CTree::StreamOut
 Class*
 CTree::StreamInCClass
 	(
-	std::istream&			input,
+	std::istream&		input,
 	const JFileVersion	vers,
 	Tree*				tree
 	)
@@ -185,7 +185,7 @@ CTree::ParseFile
 	if (itsCPP->Preprocess(&buffer))
 	{
 		JString newFileName;
-		if (!JCreateTempFile(&newFileName).OK())
+		if (!JCreateTempFile(&newFileName))
 		{
 			return;
 		}

@@ -84,7 +84,7 @@ WriteSharedPrefs
 
 	JString p,n;
 	JSplitPathAndName(fileName, &p, &n);
-	if (JCreateDirectory(p) != kJNoError)
+	if (JCreateDirectory(p))
 	{
 		return;
 	}

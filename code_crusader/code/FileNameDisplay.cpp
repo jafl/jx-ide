@@ -17,6 +17,7 @@
 #include <jx-af/jcore/jFileUtil.h>
 #include <jx-af/jcore/jVCSUtil.h>
 #include <jx-af/jcore/jASCIIConstants.h>
+#include <jx-af/jcore/JStdError.h>
 #include <jx-af/jcore/jGlobals.h>
 #include <jx-af/jcore/jAssert.h>
 
@@ -251,8 +252,8 @@ FileNameDisplay::InputValid()
 
 	if (!JDirectoryExists(fullPath))
 	{
-		const JError err = JCreateDirectory(fullPath);
-		if (!err.OK())
+		JError err = JNoError();
+		if (!JCreateDirectory(fullPath, &err))
 		{
 			err.ReportIfError();
 			return false;

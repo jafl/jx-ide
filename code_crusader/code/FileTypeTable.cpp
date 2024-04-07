@@ -1089,8 +1089,8 @@ FileTypeTable::CreateDirectory
 	)
 	const
 {
-	const JError err = JCreateDirectory(path);
-	if (!err.OK())
+	JError err = JNoError();
+	if (!JCreateDirectory(path, &err))
 	{
 		const JUtf8Byte* map[] =
 		{

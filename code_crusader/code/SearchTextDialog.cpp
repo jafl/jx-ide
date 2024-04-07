@@ -687,8 +687,7 @@ SearchTextDialog::SaveFileForSearch
 			doc->NeedsSave())
 		{
 			auto* textDoc = dynamic_cast<TextDocument*>(doc);
-			if (textDoc != nullptr &&
-				JCreateTempFile(file).OK())
+			if (textDoc != nullptr && JCreateTempFile(file))
 			{
 				std::ofstream output(file->GetBytes());
 				textDoc->GetTextEditor()->GetText()->GetText().Print(output);

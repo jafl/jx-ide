@@ -620,7 +620,7 @@ SymbolTable::RebuildTable()
 {
 	JXGetApplication()->DisplayBusyCursor();
 
-	const JPoint scrollPt = (GetAperture()).topLeft();
+	const JPoint scrollPt = GetAperture().topLeft();
 
 	ClearSelection();
 	itsKeyBuffer.Clear();

@@ -668,9 +668,9 @@ FileListTable::UpdateFileInfo
 void
 FileListTable::ReadSetup
 	(
-	std::istream&			projInput,
+	std::istream&		projInput,
 	const JFileVersion	projVers,
-	std::istream*			symInput,
+	std::istream*		symInput,
 	const JFileVersion	symVers
 	)
 {
@@ -694,7 +694,7 @@ FileListTable::ReadSetup
 void
 FileListTable::ReadSetup
 	(
-	std::istream&			input,
+	std::istream&		input,
 	const JFileVersion	vers
 	)
 {

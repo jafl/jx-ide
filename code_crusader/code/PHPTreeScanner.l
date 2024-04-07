@@ -246,35 +246,35 @@ implements	/* ignore */
 
 {NSID} {
 	if (*theClass == nullptr)
-		{
+	{
 		return false;
-		}
+	}
 
 	JString parentName(text(), size());
 	if (parentName.StartsWith("\\"))
-		{
+	{
 		parentName.Set(text()+1, size()-1);
-		}
+	}
 	else if (!parentName.Contains("\\"))
-		{
+	{
 		JString s = parentName;
 		s.Prepend("\\");
 
 		JStringPtrMapCursor<JString> cursor(itsUseMap);
 		JString key;
 		while (cursor.Next())
-			{
+		{
 			key              = cursor.GetKey();
 			const JString* c = cursor.GetValue();
 			if (parentName == *c || key.EndsWith(s))
-				{
+			{
 				parentName = key;
 				break;
-				}
 			}
 		}
+	}
 
-	(**theClass).AddParent(Class::kInheritPublic, parentName);
+	(**theClass).AddParent(Class::kInheritPublic, parentName, JString::empty);
 	}
 
 ","		/* ignore */

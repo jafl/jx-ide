@@ -249,14 +249,14 @@ FileNode::CreateFilesForTemplate
 
 		if (!JDirectoryExists(path))
 		{
-			const JError err = JCreateDirectory(path);
-			if (!err.OK())
+			JError err = JNoError();
+			if (!JCreateDirectory(path, &err))
 			{
 				const JUtf8Byte* map[] =
-			{
+				{
 					"name", relName.GetBytes(),
 					"err",  err.GetMessage().GetBytes()
-			};
+				};
 				const JString msg = JGetString("CreateFileFailedWithError::FileNode", map, sizeof(map));
 				JGetUserNotification()->ReportError(msg);
 				return;
@@ -267,9 +267,9 @@ FileNode::CreateFilesForTemplate
 		if (JFileExists(fullName))
 		{
 			const JUtf8Byte* map[] =
-		{
+			{
 				"name", fullName.GetBytes()
-		};
+			};
 			const JString msg = JGetString("WarnReplaceFile::FileNode", map, sizeof(map));
 			if (!JGetUserNotification()->AskUserNo(msg))
 			{
@@ -285,9 +285,9 @@ FileNode::CreateFilesForTemplate
 		else
 		{
 			const JUtf8Byte* map[] =
-		{
+			{
 				"name", relName.GetBytes()
-		};
+			};
 			const JString msg = JGetString("CreateFileFailed::FileNode", map, sizeof(map));
 			JGetUserNotification()->ReportError(msg);
 		}

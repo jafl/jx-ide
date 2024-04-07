@@ -22,9 +22,9 @@ public:
 public:
 
 	StylerBase(const JSize typeVersion,
-				 const JSize typeCount, const JUtf8Byte** typeNames,
-				 const JString& editDialogTitle, const JPrefID& prefID,
-				 const TextFileType fileType);
+				const JSize typeCount, const JUtf8Byte** typeNames,
+				const JString& editDialogTitle, const JPrefID& prefID,
+				const TextFileType fileType);
 
 	~StylerBase() override;
 
@@ -56,18 +56,18 @@ protected:
 
 private:
 
-	JColorID				itsDefColor;
+	JColorID	itsDefColor;
 
-	const JFileVersion		itsTypeNameVersion;
-	const JSize				itsTypeNameCount;
-	const JUtf8Byte**		itsTypeNames;			// not owned
-	JArray<JFontStyle>*		itsTypeStyles;
+	const JFileVersion	itsTypeNameVersion;
+	const JSize			itsTypeNameCount;
+	const JUtf8Byte**	itsTypeNames;			// not owned
+	JArray<JFontStyle>*	itsTypeStyles;
 	const TextFileType	itsFileType;			// only use for IsCharInWord() !!
 
 	JStringMap<JFontStyle>*	itsWordStyles;
 
-	const JString&			itsDialogTitle;
-	JString					itsDialogGeom;
+	const JString&	itsDialogTitle;
+	JString			itsDialogGeom;
 
 private:
 

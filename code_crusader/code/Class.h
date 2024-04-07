@@ -69,7 +69,7 @@ public:
 	void		SetTemplate(const bool tmpl = true);
 	bool		IsGhost() const;
 
-	void			AddParent(const InheritType type, const JString& name);
+	void			AddParent(const InheritType type, const JString& name, const JString& ns);
 	bool			FindParents(const bool okToCreateGhost);
 	bool			HasParents() const;
 	JSize			GetParentCount() const;
@@ -133,6 +133,7 @@ private:
 	struct ParentInfo
 	{
 		JString*	name;
+		JString*	ns;
 		Class*		parent;			// can be nullptr; not owned
 		InheritType	inheritance;
 		JIndex		indexFromFile;	// used while reading from file
@@ -140,14 +141,16 @@ private:
 		ParentInfo()
 			:
 			name(nullptr),
+			ns(nullptr),
 			parent(nullptr),
 			inheritance(kInheritPublic),
 			indexFromFile(0)
 			{ };
 
-		ParentInfo(JString* n, Class* p, const InheritType type)
+		ParentInfo(JString* n, JString* _ns, Class* p, const InheritType type)
 			:
 			name(n),
+			ns(_ns),
 			parent(p),
 			inheritance(type),
 			indexFromFile(0)

@@ -174,8 +174,11 @@ const JFileVersion kCurrentPrefsFileVersion = 69;
 // version 1:
 //	Stores "local text editing" flag in kViewFileCmdID
 
-const JFileVersion kCurrentProjectFileVersion = 96;
+const JFileVersion kCurrentProjectFileVersion = 97;
 
+// version 97:
+//	Fixes additional bugs in C++ namespace parsing.
+//	Adds ns to Class:ParentInfo.
 // version 96:
 //	Fixes additional bugs in C++ namespace parsing.
 // version 95:

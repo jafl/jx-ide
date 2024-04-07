@@ -96,8 +96,8 @@ DiffDocument::CreatePlain
 			close(tempFileFD);
 
 			JSize length;
-			const JError err = JGetFileLength(tempFileName, &length);
-			assert_ok( err );
+			const bool ok = JGetFileLength(tempFileName, &length);
+			assert( ok );
 
 			std::ifstream input(tempFileName.GetBytes());
 			if (length > 0 && !isdigit(input.peek()))
@@ -277,8 +277,8 @@ DiffDocument::CreateCVS
 			close(tempFileFD);
 
 			JSize length;
-			const JError err1 = JGetFileLength(tempFileName, &length);
-			assert_ok( err1 );
+			const bool ok = JGetFileLength(tempFileName, &length);
+			assert( ok );
 
 			if (length == 0)
 			{
@@ -287,7 +287,7 @@ DiffDocument::CreateCVS
 					doc->Close();
 				}
 
-				if ((JGetFileLength(errFileName, &length)).OK() && length > 0)
+				if (JGetFileLength(errFileName, &length) && length > 0)
 				{
 					close(errFileFD);
 					err = DiffFailed(errFileName, true);
@@ -442,8 +442,8 @@ DiffDocument::CreateSVN
 			close(tempFileFD);
 
 			JSize length;
-			const JError err1 = JGetFileLength(tempFileName, &length);
-			assert_ok( err1 );
+			const bool ok = JGetFileLength(tempFileName, &length);
+			assert( ok );
 
 			if (length == 0)
 			{
@@ -452,7 +452,7 @@ DiffDocument::CreateSVN
 					doc->Close();
 				}
 
-				if ((JGetFileLength(errFileName, &length)).OK() && length > 0)
+				if (JGetFileLength(errFileName, &length) && length > 0)
 				{
 					close(errFileFD);
 					err = DiffFailed(errFileName, true);
@@ -683,7 +683,8 @@ DiffDocument::CreateOutputFiles
 	int*		errFileFD
 	)
 {
-	JError err = JCreateTempFile(tempFileName);
+	JError err = JNoError();
+	JCreateTempFile(tempFileName, &err);
 	if (!err.OK())
 	{
 		return err;
@@ -694,7 +695,7 @@ DiffDocument::CreateOutputFiles
 					   #endif
 					   );
 
-	err = JCreateTempFile(errFileName);
+	JCreateTempFile(errFileName, &err);
 	if (!err.OK())
 	{
 		close(*tempFileFD);

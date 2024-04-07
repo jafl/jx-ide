@@ -199,7 +199,7 @@ FunctionMenu::UpdateMenu()
 		{
 			itsDoc->SafetySave(JXDocumentManager::kTimer);
 			if (!itsDoc->GetSafetySaveFileName(&fileName) &&
-				(JCreateTempFile(&fileName)).OK())
+				JCreateTempFile(&fileName))
 			{
 				// directory may not be writable
 

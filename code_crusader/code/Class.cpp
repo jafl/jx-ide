@@ -200,9 +200,14 @@ JIndex i;
 	{
 		ParentInfo pInfo;
 		pInfo.name = jnew JString;
-		assert( pInfo.name != nullptr );
+		pInfo.ns   = jnew JString;
 
-		input >> *(pInfo.name) >> pInfo.indexFromFile >> pInfo.inheritance;
+		input >> *pInfo.name;
+		if (vers >= 97)
+		{
+			input >> *pInfo.ns;
+		}
+		input >> pInfo.indexFromFile >> pInfo.inheritance;
 		itsParentInfo->AppendItem(pInfo);
 	}
 
@@ -243,7 +248,6 @@ void
 Class::ClassX()
 {
 	itsParentInfo = jnew JArray<ParentInfo>;
-	assert( itsParentInfo != nullptr );
 
 	itsHasPrimaryChildrenFlag   = false;
 	itsHasSecondaryChildrenFlag = false;
@@ -306,7 +310,8 @@ Class::StreamOut
 	for (JIndex i=1; i<=parentCount; i++)
 	{
 		const ParentInfo pInfo = itsParentInfo->GetItem(i);
-		output << ' ' << *(pInfo.name);
+		output << ' ' << *pInfo.name;
+		output << ' ' << *pInfo.ns;
 		output << ' ' << itsTree->ClassToIndexForWrite(pInfo.parent);
 		output << ' ' << pInfo.inheritance;
 	}
@@ -409,10 +414,11 @@ void
 Class::AddParent
 	(
 	const InheritType	type,
-	const JString&		name
+	const JString&		name,
+	const JString&		ns
 	)
 {
-	ParentInfo pInfo(jnew JString(name), nullptr, type);
+	ParentInfo pInfo(jnew JString(name), jnew JString(ns), nullptr, type);
 	assert( pInfo.name != nullptr );
 	itsParentInfo->AppendItem(pInfo);
 }
@@ -498,21 +504,47 @@ Class::FindParent
 	const bool	okToSearchGhosts
 	)
 {
+	const JUtf8Byte* namespaceOp = GetNamespaceOperator(itsTree->GetLanguage());
+
 	// check for exact match that isn't a ghost
 
-	if (itsTree->FindClass(*pInfo->name, &pInfo->parent) &&
-		pInfo->parent != this &&
-		!pInfo->parent->IsGhost())
+	JString nameSpace = *pInfo->ns, testName;
+	while (true)
 	{
-		return true;
+		testName = *pInfo->name;
+		if (!nameSpace.IsEmpty())
+		{
+			testName.Prepend(namespaceOp);
+			testName.Prepend(nameSpace);
+		}
+
+		if (itsTree->FindClass(testName, &pInfo->parent) &&
+			pInfo->parent != this &&
+			!pInfo->parent->IsGhost())
+		{
+			return true;
+		}
+
+		if (nameSpace.IsEmpty())
+		{
+			break;
+		}
+
+		JStringIterator iter(&nameSpace, JStringIterator::kStartAtEnd);
+		if (iter.Prev(namespaceOp))
+		{
+			iter.RemoveAllNext();
+		}
+		else
+		{
+			nameSpace.Clear();
+		}
 	}
 
 	// try all possible namespaces to look for existing parent
 
-	const JUtf8Byte* namespaceOp = GetNamespaceOperator(itsTree->GetLanguage());
-
-	JString nameSpace = itsFullName;
-	JString prefixStr, testName;
+	nameSpace = itsFullName;
+	JString prefixStr;
 
 	JStringIterator iter(&nameSpace, JStringIterator::kStartAtEnd);
 	while (iter.Prev(namespaceOp) && !iter.AtBeginning())
@@ -1162,6 +1194,9 @@ Class::ParentInfo::CleanOut()
 {
 	jdelete name;
 	name = nullptr;
+
+	jdelete ns;
+	ns = nullptr;
 }
 
 /******************************************************************************

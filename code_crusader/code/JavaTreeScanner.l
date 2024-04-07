@@ -219,32 +219,32 @@ implements	/* ignore */
 
 {NSID}({MS}"<")? {
 	if (itsCurrentClass == nullptr)
-		{
+	{
 		return false;
-		}
+	}
 
 	JString parentName(text(), size());
 
 	bool generic = false;
 	if (parentName.GetLastCharacter() == '<')
-		{
+	{
 		generic = true;
 		parentName.Set(text(), size()-1);
 		parentName.TrimWhitespace();
-		}
+	}
 
 	JString s = parentName;
 	s.Prepend(".");
 
 	bool found = false;
 	while (true)
-		{
+	{
 		for (const auto* c : *itsImportList)
-			{
+		{
 			if (!c->EndsWith(s))
-				{
+			{
 				continue;
-				}
+			}
 
 			JString s1 = *c;
 			JStringIterator iter(&s1, JStringIterator::kStartAtEnd);
@@ -257,32 +257,32 @@ implements	/* ignore */
 			parentName = s1;
 			found      = true;
 			break;
-			}
+		}
 
 		JStringIterator iter(&s, JStringIterator::kStartAtEnd);
 		if (!found && iter.Prev(".") && !iter.AtBeginning())
-			{
+		{
 			iter.RemoveAllNext();
-			}
-		else
-			{
-			break;
-			}
 		}
+		else
+		{
+			break;
+		}
+	}
 
 	if (!found && !parentName.Contains("."))
-		{
+	{
 		parentName = itsPackage + "." + parentName;
-		}
+	}
 
-	itsCurrentClass->AddParent(Class::kInheritPublic, parentName);
+	itsCurrentClass->AddParent(Class::kInheritPublic, parentName, JString::empty);
 
 	if (generic)
-		{
+	{
 		itsGenericDepth = 1;
 		itsGenericPop   = true;
 		push_state(GENERIC_STATE);
-		}
+	}
 	}
 
 "{" {
