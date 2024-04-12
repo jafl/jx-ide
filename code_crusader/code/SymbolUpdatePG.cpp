@@ -1,14 +1,17 @@
 /******************************************************************************
  SymbolUpdatePG.cpp
 
-	Encapsulates the link back to the parent process which displays the progress.
+	Manages a progress display embedded below a widget.
 
-	Copyright © 2007 by John Lindal.
+	BASE CLASS = JLatentPG
+
+	Copyright © 2007-24 by John Lindal.
 
  ******************************************************************************/
 
 #include "SymbolUpdatePG.h"
-#include "ProjectDocument.h"
+#include <jx-af/jx/JXContainer.h>
+#include <boost/fiber/operations.hpp>
 #include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
@@ -18,20 +21,21 @@
 
 SymbolUpdatePG::SymbolUpdatePG
 	(
-	std::ostream&	link,
-	const JSize	scaleFactor
+	JProgressDisplay*	pg,
+	const JSize			scaleFactor,
+	JXContainer*		widget,
+	JXContainer*		container
 	)
 	:
-	JProgressDisplay(),
-	itsLink(link),
-	itsScaleFactor(scaleFactor)
+	JLatentPG(pg, true, scaleFactor),
+	itsWidget(widget),
+	itsContainer(container)
 {
+	SetMaxSilentTime(0);
 }
 
 /******************************************************************************
  Destructor
-
-	Make sure we restore the original signal handler.
 
  ******************************************************************************/
 
@@ -40,9 +44,7 @@ SymbolUpdatePG::~SymbolUpdatePG()
 }
 
 /******************************************************************************
- ProcessBeginning (protected)
-
-	Display the message.
+ ProcessBeginning (virtual protected)
 
  ******************************************************************************/
 
@@ -56,122 +58,46 @@ SymbolUpdatePG::ProcessBeginning
 	const bool			modal
 	)
 {
-	JProgressDisplay::ProcessBeginning(processType, stepCount, message,
-									   allowCancel, modal);
+	itsWidget->AdjustSize(0, -itsContainer->GetFrameHeight());
+	itsContainer->Show();
 
-	if (processType == kVariableLengthProcess)
-	{
-		itsLink << ProjectDocument::kVariableLengthStart;
-	}
-	else
-	{
-		assert( processType == kFixedLengthProcess );
-		itsLink << ProjectDocument::kFixedLengthStart;
-		itsLink << ' ' << stepCount;
-	}
-
-	itsLink << ' ' << JString(message) << std::endl;
+	JLatentPG::ProcessBeginning(processType, stepCount, message,
+								allowCancel, modal);
 }
 
 /******************************************************************************
- IncrementProgress
+ ProcessContinuing (virtual)
 
-	Update the display to show that progress is being made.
-	Returns false if process was cancelled by user.
 
  ******************************************************************************/
 
 bool
-SymbolUpdatePG::IncrementProgress
-	(
-	const JString&	message,
-	const JSize		delta
-	)
+SymbolUpdatePG::ProcessContinuing()
 {
-	IncrementStepCount(delta);
-	const JSize stepCount = GetCurrentStepCount();
-
-	if (stepCount % itsScaleFactor == 0)
-	{
-		itsLink << ProjectDocument::kProgressIncrement << ' ' << itsScaleFactor << std::endl;
-	}
-
-	return ProcessContinuing();
+	boost::this_fiber::yield();
+	return JLatentPG::ProcessContinuing();
 }
 
 /******************************************************************************
- IncrementProgress
-
-	Update the display to show that progress is being made.
-	Returns false if process was cancelled by user.
-
- ******************************************************************************/
-
-bool
-SymbolUpdatePG::IncrementProgress
-	(
-	const JString& message
-	)
-{
-	return IncrementProgress(message, 1);
-}
-
-/******************************************************************************
- IncrementProgress
-
-	The iteration count is incremented by the specified value.
-
-	Update the display to show that progress is being made.
-	Returns false if process was cancelled by user.
-
- ******************************************************************************/
-
-bool
-SymbolUpdatePG::IncrementProgress
-	(
-	const JSize delta
-	)
-{
-	return IncrementProgress(JString::empty, delta);
-}
-
-/******************************************************************************
- ProcessFinished
+ ProcessFinished (virtual)
 
  ******************************************************************************/
 
 void
 SymbolUpdatePG::ProcessFinished()
 {
-	if (GetCurrentProcessType() == kFixedLengthProcess)
-	{
-		const JSize delta = GetCurrentStepCount() % itsScaleFactor;
-		if (delta > 0)
-		{
-			itsLink << ProjectDocument::kProgressIncrement << ' ' << delta << std::endl;
-		}
-	}
-
-	JProgressDisplay::ProcessFinished();
+	Hide();
+	JLatentPG::ProcessFinished();
 }
 
 /******************************************************************************
- CheckForCancel
-
- ******************************************************************************/
-
-bool
-SymbolUpdatePG::CheckForCancel()
-{
-	return false;
-}
-
-/******************************************************************************
- DisplayBusyCursor (virtual)
+ Hide
 
  ******************************************************************************/
 
 void
-SymbolUpdatePG::DisplayBusyCursor()
+SymbolUpdatePG::Hide()
 {
+	itsContainer->Hide();
+	itsWidget->AdjustSize(0, itsContainer->GetFrameHeight());
 }

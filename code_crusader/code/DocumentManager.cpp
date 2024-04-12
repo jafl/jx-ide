@@ -364,30 +364,16 @@ DocumentManager::CloseProjectDocuments()
 }
 
 /******************************************************************************
- UpdateSymbolDatabases
+ SymbolDatabasesNeedUpdate
 
  ******************************************************************************/
 
 void
-DocumentManager::UpdateSymbolDatabases()
+DocumentManager::SymbolDatabasesNeedUpdate()
 {
 	for (auto* doc : *itsProjectDocuments)
 	{
-		doc->DelayUpdateSymbolDatabase();
-	}
-}
-
-/******************************************************************************
- CancelUpdateSymbolDatabases
-
- ******************************************************************************/
-
-void
-DocumentManager::CancelUpdateSymbolDatabases()
-{
-	for (auto* doc : *itsProjectDocuments)
-	{
-		doc->CancelUpdateSymbolDatabase();
+		doc->SymbolDatabaseNeedsUpdate();
 	}
 }
 
@@ -532,8 +518,8 @@ DocumentManager::GetTemplateDirectory
 			return false;
 		}
 
-		const JError err = JCreateDirectory(userDir);
-		if (err.OK())
+		JError err = JNoError();
+		if (JCreateDirectory(userDir, &err))
 		{
 			*fullName = userDir;
 			return true;
@@ -541,10 +527,10 @@ DocumentManager::GetTemplateDirectory
 		else
 		{
 			const JUtf8Byte* map[] =
-		{
+			{
 				"name", userDir.GetBytes(),
 				"err",  err.GetMessage().GetBytes()
-		};
+			};
 			const JString msg = JGetString("CannotCreateTemplates::DocumentManager", map, sizeof(map));
 			JGetUserNotification()->ReportError(msg);
 			return false;
@@ -990,8 +976,7 @@ DocumentManager::WarnFileSize
 	)
 {
 	JSize size;
-	if (JGetFileLength(fullName, &size) == kJNoError &&
-		size > kMinWarnFileSize)
+	if (JGetFileLength(fullName, &size) && size > kMinWarnFileSize)
 	{
 		JString path, fileName;
 		JSplitPathAndName(fullName, &path, &fileName);
@@ -1584,13 +1569,13 @@ DocumentManager::ReadFromProject
 		{
 			bool keep;
 			auto* doc = jnew TextDocument(input, vers, &keep);
-			if (!keep)
+			if (keep)
 			{
-				doc->Close();
+				doc->Activate();
 			}
 			else
 			{
-				doc->Activate();
+				doc->Close();
 			}
 
 			if (!pg.IncrementProgress())

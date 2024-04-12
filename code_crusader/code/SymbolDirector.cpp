@@ -143,8 +143,20 @@ SymbolDirector::SymbolDirectorX
 
 	itsSymbolList = jnew SymbolList(projDoc);
 
+	ListenTo(itsSymbolList, std::function([this](const SymbolList::UpdateFoundChanges&)
+	{
+		itsSymbolMenu->Deactivate();
+		itsSymbolTable->Hide();
+		CloseSymbolBrowsers();
+	}));
+
+	ListenTo(itsSymbolList, std::function([this](const class SymbolList::UpdateDone&)
+	{
+		itsSymbolMenu->Activate();
+		itsSymbolTable->Show();
+	}));
+
 	itsSRList = jnew JPtrArray<SymbolSRDirector>(JPtrArrayT::kForgetAll);
-	assert( itsSRList != nullptr );
 
 	itsRaiseTreeOnRightClickFlag = false;
 
@@ -312,12 +324,7 @@ SymbolDirector::ListUpdateFinished
 	JProgressDisplay&		pg
 	)
 {
-	const bool ok = itsSymbolList->UpdateFinished(deadFileList, pg);
-	if (ok && !InUpdateThread())
-	{
-		CloseSymbolBrowsers();
-	}
-	return ok;
+	return itsSymbolList->UpdateFinished(deadFileList, pg);
 }
 
 /******************************************************************************

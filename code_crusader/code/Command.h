@@ -76,7 +76,6 @@ private:
 	JString				itsDontCloseMsg;
 	const bool			itsBeepFlag;
 	bool				itsRefreshVCSStatusFlag;
-	bool				itsUpdateSymbolDatabaseFlag;
 	bool				itsInQueueFlag;
 	bool				itsSuccessFlag;
 	bool				itsCancelledFlag;

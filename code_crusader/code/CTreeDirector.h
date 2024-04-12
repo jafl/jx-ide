@@ -18,10 +18,10 @@ public:
 
 	CTreeDirector(ProjectDocument* supervisor);
 	CTreeDirector(std::istream& projInput, const JFileVersion projVers,
-					std::istream* setInput, const JFileVersion setVers,
-					std::istream* symInput, const JFileVersion symVers,
-					ProjectDocument* supervisor, const bool subProject,
-					DirList* dirList);
+				  std::istream* setInput, const JFileVersion setVers,
+				  std::istream* symInput, const JFileVersion symVers,
+				  ProjectDocument* supervisor, const bool subProject,
+				  DirList* dirList);
 
 	~CTreeDirector() override;
 

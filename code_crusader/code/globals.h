@@ -50,9 +50,6 @@ PSPrinter*			GetPSTextPrinter();
 const JString&		GetVersionNumberStr();
 JString				GetVersionStr();
 
-bool				InUpdateThread();
-void				SetUpdateThread();
-
 	// icons
 
 const JXImage*	GetPlainFileIcon();

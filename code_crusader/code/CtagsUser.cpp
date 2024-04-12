@@ -201,11 +201,7 @@ CtagsUser::ProcessFile
 		DeleteProcess();
 		itsIsActiveFlag = false;
 
-		if (!InUpdateThread())
-		{
-			JGetUserNotification()->ReportError(JGetString("ctagsFailure::CtagsUser"));
-		}
-
+		JGetUserNotification()->ReportError(JGetString("ctagsFailure::CtagsUser"));
 		return false;
 	}
 }

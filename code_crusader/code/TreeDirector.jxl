@@ -1,5 +1,5 @@
 jx_layout_editor 9
-400
+510
 430
 "JXLayout"
 ""
@@ -15,7 +15,7 @@ jx_layout_editor 9
 "MenuBar"
 2
 0
-0 0 30 400
+0 0 30 510
 "menuBar"
 0
 0
@@ -27,7 +27,7 @@ jx_layout_editor 9
 "ToolBar"
 2
 2
-30 0 430 400
+30 0 410 510
 "itsToolBar"
 1
 0
@@ -42,9 +42,83 @@ jx_layout_editor 9
 "ScrollbarSet"
 2
 2
-0 0 370 400
+0 0 350 510
 "scrollbarSet"
 0
+0
+0
+
+1
+0
+0
+"WidgetSet"
+2
+1
+410 0 430 510
+"itsUpdateContainer"
+1
+0
+0
+
+1
+4
+1
+"TextButton"
+0
+0
+0 0 20 60
+"itsUpdateCancelButton"
+1
+0
+0
+"Cancel"
+""
+
+1
+4
+1
+"StaticText"
+0
+0
+0 60 20 190
+"itsUpdateLabel"
+1
+0
+0
+"Minimizing MI links:"
+1
+0
+0
+0
+0
+
+1
+4
+1
+"StaticText"
+0
+0
+0 190 20 280
+"itsUpdateCounter"
+1
+0
+0
+"1000000"
+1
+0
+0
+0
+0
+
+1
+4
+1
+"ProgressIndicator"
+2
+0
+5 190 15 510
+"itsUpdateCleanUpIndicator"
+1
 0
 0
 

@@ -21,6 +21,7 @@
 #include "ProjectDocument.h"
 #include "SymbolDirector.h"
 #include "FileListDirector.h"
+#include "SymbolUpdatePG.h"
 #include "CommandMenu.h"
 #include "DocumentMenu.h"
 #include "globals.h"
@@ -30,6 +31,9 @@
 #include <jx-af/jx/JXScrollbarSet.h>
 #include <jx-af/jx/JXMenuBar.h>
 #include <jx-af/jx/JXToolBar.h>
+#include <jx-af/jx/JXProgressDisplay.h>
+#include <jx-af/jx/JXProgressIndicator.h>
+#include <jx-af/jx/JXTextButton.h>
 #include <jx-af/jx/JXPSPrinter.h>
 #include <jx-af/jx/JXEPSPrinter.h>
 #include <jx-af/jx/JXGetStringDialog.h>
@@ -73,13 +77,13 @@ TreeDirector::TreeDirector
 					  toolBarPrefID, initToolBarFn);
 
 	itsTree = createTreeFn(this, TreeWidget::kBorderWidth);
+	ListenTo(itsTree);
 
 	itsTreeWidget =
 		jnew TreeWidget(this, itsTree, scrollbarSet,
 						 scrollbarSet->GetScrollEnclosure(),
 						 JXWidget::kHElastic, JXWidget::kVElastic,
 						 0,0, 100,100);
-	assert( itsTreeWidget != nullptr );
 	itsTreeWidget->FitToEnclosure();
 
 	JPrefObject::ReadPrefs();
@@ -140,6 +144,7 @@ TreeDirector::TreeDirector
 	itsTree = streamInTreeFn(projInput, projVers,
 							 setInput, setVers, symStream, origSymVers,
 							 this, TreeWidget::kBorderWidth, dirList);
+	ListenTo(itsTree);
 
 	std::istream* symInput             = (projVers <= 41 ? &projInput : symStream);
 	const JFileVersion symVers    = (projVers <= 41 ? projVers   : origSymVers);
@@ -165,7 +170,6 @@ TreeDirector::TreeDirector
 						 scrollbarSet->GetScrollEnclosure(),
 						 JXWidget::kHElastic, JXWidget::kVElastic,
 						 0,0, 100,100);
-	assert( itsTreeWidget != nullptr );
 	itsTreeWidget->FitToEnclosure();
 
 	if (projVers < 71)
@@ -274,21 +278,6 @@ TreeDirector::~TreeDirector()
 }
 
 /******************************************************************************
- ReloadSetup (virtual)
-
- ******************************************************************************/
-
-void
-TreeDirector::ReloadSetup
-	(
-	std::istream&		input,
-	const JFileVersion	vers
-	)
-{
-	itsTree->ReloadSetup(input, vers);
-}
-
-/******************************************************************************
  StreamOut (virtual)
 
 	dirList, d1, and d2 can be nullptr
@@ -368,10 +357,11 @@ TreeDirector::PrepareForTreeUpdate
 bool
 TreeDirector::TreeUpdateFinished
 	(
-	const JArray<JFAID_t>& deadFileList
+	const JArray<JFAID_t>&	deadFileList,
+	JProgressDisplay&		pg
 	)
 {
-	return itsTree->UpdateFinished(deadFileList);
+	return itsTree->UpdateFinished(deadFileList, pg);
 }
 
 /******************************************************************************
@@ -427,23 +417,45 @@ TreeDirector::BuildWindow
 {
 // begin JXLayout
 
-	auto* window = jnew JXWindow(this, 400,430, JString::empty);
+	auto* window = jnew JXWindow(this, 510,430, JString::empty);
 	window->SetMinSize(150, 150);
 	window->SetWMClass(JXGetApplication()->GetWMName().GetBytes(), "Code_Crusader_Tree");
 
 	auto* menuBar =
 		jnew JXMenuBar(window,
-					JXWidget::kHElastic, JXWidget::kFixedTop, 0,0, 400,30);
+					JXWidget::kHElastic, JXWidget::kFixedTop, 0,0, 510,30);
 	assert( menuBar != nullptr );
 
 	itsToolBar =
 		jnew JXToolBar(GetPrefsManager(), toolBarPrefID, menuBar, window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 0,30, 400,400);
+					JXWidget::kHElastic, JXWidget::kVElastic, 0,30, 510,380);
 
 	auto* scrollbarSet =
 		jnew JXScrollbarSet(itsToolBar->GetWidgetEnclosure(),
-					JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 400,400);
+					JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 510,380);
 	assert( scrollbarSet != nullptr );
+
+	itsUpdateContainer =
+		jnew JXWidgetSet(window,
+					JXWidget::kHElastic, JXWidget::kFixedBottom, 0,410, 510,20);
+
+	itsUpdateCancelButton =
+		jnew JXTextButton(JGetString("itsUpdateCancelButton::TreeDirector::JXLayout"), itsUpdateContainer,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 0,0, 60,20);
+
+	itsUpdateLabel =
+		jnew JXStaticText(JGetString("itsUpdateLabel::TreeDirector::JXLayout"), itsUpdateContainer,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 60,0, 130,20);
+	itsUpdateLabel->SetToLabel(false);
+
+	itsUpdateCounter =
+		jnew JXStaticText(JGetString("itsUpdateCounter::TreeDirector::JXLayout"), itsUpdateContainer,
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 190,0, 90,20);
+	itsUpdateCounter->SetToLabel(false);
+
+	itsUpdateCleanUpIndicator =
+		jnew JXProgressIndicator(itsUpdateContainer,
+					JXWidget::kHElastic, JXWidget::kFixedTop, 190,5, 320,10);
 
 // end JXLayout
 
@@ -461,6 +473,8 @@ TreeDirector::BuildWindow
 		window->Place(desktopLoc.x, desktopLoc.y);
 		window->SetSize(w,h);
 	}
+
+	itsUpdateContainer->ClearNeedsInternalFTC();
 
 	itsFileMenu = menuBar->AppendTextMenu(JGetString("MenuTitle::TreeDirector_File"));
 	itsFileMenu->SetMenuItems(kFileMenuStr);
@@ -548,6 +562,14 @@ TreeDirector::BuildWindow
 
 		GetApplication()->AppendHelpMenuToToolBar(itsToolBar, helpMenu);
 	}
+
+	// update pg
+
+	auto* pg = jnew JXProgressDisplay;
+	pg->SetItems(itsUpdateCancelButton, itsUpdateCounter, itsUpdateCleanUpIndicator, itsUpdateLabel);
+
+	itsMinimizeMILinksPG = jnew SymbolUpdatePG(pg, 1, itsToolBar, itsUpdateContainer);
+	itsMinimizeMILinksPG->Hide();
 
 	return scrollbarSet;
 }
@@ -866,6 +888,38 @@ TreeDirector::WritePrefs
 	output << ' ' << JBoolToString(itsTree->WillAutoMinimizeMILinks());
 	output << ' ' << JBoolToString(itsTree->WillDrawMILinksOnTop());
 	output << ' ' << JBoolToString(itsTreeWidget->WillRaiseWindowWhenSingleMatch());
+}
+
+/******************************************************************************
+ Receive (protected)
+
+	We absorb the ItemSelected message if the Meta key is down.
+
+ ******************************************************************************/
+
+void
+TreeDirector::Receive
+	(
+	JBroadcaster*	sender,
+	const Message&	message
+	)
+{
+	if (sender == itsTree && message.Is(Tree::kUpdateFoundChanges))
+	{
+		itsTreeMenu->Deactivate();
+		itsTreeWidget->Hide();
+	}
+
+	else if (sender == itsTree && message.Is(Tree::kUpdateDone))
+	{
+		itsTreeMenu->Activate();
+		itsTreeWidget->Show();
+	}
+
+	else
+	{
+		JXWindowDirector::Receive(sender, message);
+	}
 }
 
 /******************************************************************************

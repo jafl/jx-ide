@@ -118,8 +118,7 @@ public:
 	void	AddToFileHistoryMenu(const FileHistoryType type,
 								 const JString& fullName);
 
-	void	UpdateSymbolDatabases();
-	void	CancelUpdateSymbolDatabases();
+	void	SymbolDatabasesNeedUpdate();
 	void	RefreshVCSStatus();
 
 	void	ChooseEditors();

@@ -59,7 +59,7 @@ CTree::CTree
 	)
 	:
 	Tree(projInput, projVers, setInput, setVers, symInput, symVers,
-		   StreamInCClass, director, kCLang, kCHeaderFT, marginWidth, dirList),
+		 StreamInCClass, director, kCLang, kCHeaderFT, marginWidth, dirList),
 	CtagsUser(kCtagsArgs),
 	itsClassNameLexer(nullptr)
 {
@@ -138,14 +138,15 @@ CTree::StreamInCClass
 /******************************************************************************
  UpdateFinished (virtual)
 
-	*** This often runs in the update thread.
+	*** This runs in the update fiber.
 
  ******************************************************************************/
 
 bool
 CTree::UpdateFinished
 	(
-	const JArray<JFAID_t>& deadFileList
+	const JArray<JFAID_t>&	deadFileList,
+	JProgressDisplay&		pg
 	)
 {
 	jdelete itsClassNameLexer;
@@ -153,7 +154,7 @@ CTree::UpdateFinished
 
 	DeleteProcess();
 
-	return Tree::UpdateFinished(deadFileList);
+	return Tree::UpdateFinished(deadFileList, pg);
 }
 
 /******************************************************************************

@@ -10,7 +10,6 @@
  ******************************************************************************/
 
 #include "FileListTable.h"
-#include "SymbolUpdatePG.h"
 #include "ProjectTree.h"
 #include "ProjectNode.h"
 #include "DirList.h"
@@ -23,6 +22,11 @@
 #include <jx-af/jcore/jVCSUtil.h>
 #include <jx-af/jcore/jDirUtil.h>
 #include <jx-af/jcore/jAssert.h>
+
+// JBroadcaster message types
+
+const JUtf8Byte* FileListTable::kUpdateFoundChanges = "UpdateFoundChanges::FileListTable";
+const JUtf8Byte* FileListTable::kUpdateDone         = "UpdateDone::FileListTable";
 
 /******************************************************************************
  Constructor
@@ -41,15 +45,13 @@ FileListTable::FileListTable
 	const JCoordinate	h
 	)
 	:
-	JXFileListTable(scrollbarSet, enclosure, hSizing,vSizing, x,y, w,h)
+	JXFileListTable(scrollbarSet, enclosure, hSizing,vSizing, x,y, w,h),
+	itsFileUsage(nullptr),
+	itsReparseAllFlag(false),
+	itsChangedDuringParseCount(0),
+	itsLastUniqueID(JFAID::kMinID)
 {
 	itsFileInfo = jnew JArray<FileInfo>(1024);
-	assert( itsFileInfo != nullptr );
-
-	itsFileUsage              = nullptr;
-	itsReparseAllFlag         = false;
-	itsChangedDuringParseFlag = false;
-	itsLastUniqueID           = JFAID::kMinID;
 
 	ListenTo(GetFullNameDataList());
 }
@@ -67,27 +69,25 @@ FileListTable::~FileListTable()
 /******************************************************************************
  Update
 
-	Update the list of files.
+	Update the list of files.  Returns the fraction of files updated.
 
-	*** This often runs in the update thread.
+	*** This runs in the update fiber.
 
  ******************************************************************************/
 
-bool
+JFloat
 FileListTable::Update
 	(
-	std::ostream&					link,
+	JProgressDisplay&				pg,
 	ProjectTree*					fileTree,
 	const DirList&					dirList,
 	SymbolDirector*					symbolDir,
 	const JPtrArray<TreeDirector>&	treeDirList
 	)
 {
-JIndex i;
+	itsChangedDuringParseCount = 0;
 
 	// get everybody ready
-
-	SymbolUpdatePG pg(link, 10);
 
 	SymbolList* symbolList = symbolDir->GetSymbolList();
 
@@ -105,6 +105,7 @@ JIndex i;
 	if (reparseAll)
 	{
 		RemoveAllFiles();
+		Broadcast(UpdateFoundChanges());
 	}
 	symbolDir->PrepareForListUpdate(reparseAll, pg);
 	for (auto* dir : treeDirList)
@@ -112,15 +113,13 @@ JIndex i;
 		dir->PrepareForTreeUpdate(reparseAll);
 	}
 
-	itsChangedDuringParseFlag = reparseAll;
-
 	// create array to track which files still exist
 
 	JArray<bool> fileUsage(1000);
 	itsFileUsage = &fileUsage;
 
 	const JSize origFileCount = itsFileInfo->GetItemCount();
-	for (i=1; i<=origFileCount; i++)
+	for (JIndex i=1; i<=origFileCount; i++)
 	{
 		fileUsage.AppendItem(false);
 	}
@@ -137,7 +136,7 @@ JIndex i;
 	JPtrArray<JString> deadFileNameList(JPtrArrayT::kDeleteAll, fileCount+1);	// +1 to avoid passing zero
 	JArray<JFAID_t> deadFileIDList(fileCount+1);
 
-	for (i=1; i<=fileCount; i++)
+	for (JIndex i=1; i<=fileCount; i++)
 	{
 		if (!fileUsage.GetItem(i))
 		{
@@ -150,19 +149,32 @@ JIndex i;
 
 	// remove non-existent files
 
-	RemoveFiles(deadFileNameList);
+	if (!deadFileNameList.IsEmpty())
+	{
+		pg.FixedLengthProcessBeginning(deadFileNameList.GetItemCount() * (2 + treeDirList.GetItemCount()),
+			JGetString("CleaningUp::FileListTable"), false, false);
+	}
+
+	RemoveFiles(deadFileNameList, &pg);
 	symbolDir->ListUpdateFinished(deadFileIDList, pg);
 	for (auto* dir : treeDirList)
 	{
-		dir->TreeUpdateFinished(deadFileIDList);
+		dir->TreeUpdateFinished(deadFileIDList, pg);
 	}
 
 	if (!deadFileIDList.IsEmpty())
 	{
-		itsChangedDuringParseFlag = true;
+		pg.ProcessFinished();
+		if (!reparseAll)
+		{
+			itsChangedDuringParseCount += deadFileIDList.GetItemCount();
+		}
 	}
 
-	return itsChangedDuringParseFlag;
+	itsReparseAllFlag = false;
+	Broadcast(UpdateDone());
+
+	return reparseAll ? 1.0 : JFloat(itsChangedDuringParseCount) / itsFileInfo->GetItemCount();
 }
 
 /******************************************************************************
@@ -175,7 +187,7 @@ JIndex i;
 	which I'm just too lazy to feel like catching, and the user can always
 	add those directories separately.
 
-	*** This often runs in the update thread.
+	*** This runs in the update fiber.
 
  ******************************************************************************/
 
@@ -218,7 +230,7 @@ FileListTable::ScanAll
 /******************************************************************************
  ScanDirectory (private -- recursive)
 
-	*** This often runs in the update thread.
+	*** This runs in the update fiber.
 
  ******************************************************************************/
 
@@ -265,13 +277,13 @@ FileListTable::ScanDirectory
 
 			if (entry.IsWorkingLink())
 			{
-				const bool ok = JGetTrueName(entry.GetFullName(), &trueName);
+				bool ok = JGetTrueName(entry.GetFullName(), &trueName);
 				assert( ok );
-				const JError err = JGetModificationTime(trueName, &modTime);
-				assert_ok( err );
+				ok = JGetModificationTime(trueName, &modTime);
+				assert( ok );
 			}
 
-			ParseFile(trueName, allSuffixList, modTime,  symbolList, treeList);
+			ParseFile(trueName, allSuffixList, modTime,  symbolList, treeList, pg);
 		}
 
 		pg.IncrementProgress();
@@ -285,7 +297,7 @@ FileListTable::ScanDirectory
 
 	Not private because called by FileNode.
 
-	*** This often runs in the update thread.
+	*** This runs in the update fiber.
 
  ******************************************************************************/
 
@@ -296,7 +308,8 @@ FileListTable::ParseFile
 	const JPtrArray<JString>&	allSuffixList,
 	const time_t				modTime,
 	SymbolList*					symbolList,
-	const JPtrArray<Tree>&		treeList
+	const JPtrArray<Tree>&		treeList,
+	JProgressDisplay&			pg
 	)
 {
 	if (PrefsManager::FileMatchesSuffix(fullName, allSuffixList))
@@ -305,9 +318,16 @@ FileListTable::ParseFile
 		JFAID_t id;
 		if (AddFile(fullName, fileType, modTime, &id))
 		{
-			itsChangedDuringParseFlag = true;
+			if (itsChangedDuringParseCount == 0)
+			{
+				Broadcast(UpdateFoundChanges());
+			}
+			itsChangedDuringParseCount++;
+			pg.ProcessContinuing();
 
 			symbolList->FileChanged(fullName, fileType, id);
+			pg.ProcessContinuing();
+
 			for (auto* tree : treeList)
 			{
 				tree->FileChanged(fullName, fileType, id);
@@ -322,7 +342,7 @@ FileListTable::ParseFile
 	Returns true if the file is new or changed.  *id is always set to
 	the id of the file.
 
-	*** This often runs in the update thread.
+	*** This runs in the update fiber.
 
  ******************************************************************************/
 
@@ -360,19 +380,6 @@ FileListTable::AddFile
 	{
 		return false;
 	}
-}
-
-/******************************************************************************
- UpdateFinished
-
-	The worker thread updates its data, and we need to do the same.
-
- ******************************************************************************/
-
-void
-FileListTable::UpdateFinished()
-{
-	itsReparseAllFlag = false;
 }
 
 /******************************************************************************
@@ -621,8 +628,8 @@ FileListTable::FilesAdded
 	for (JIndex i = info.GetFirstIndex(); i <= info.GetLastIndex(); i++)
 	{
 		time_t t;
-		const JError err = JGetModificationTime(*(fileNameList.GetItem(i)), &t);
-		assert_ok( err );
+		const bool ok = JGetModificationTime(*fileNameList.GetItem(i), &t);
+		assert( ok );
 
 		itsFileInfo->InsertItemAtIndex(i, FileInfo(GetUniqueID(), t));
 		if (itsFileUsage != nullptr)
@@ -650,8 +657,8 @@ FileListTable::UpdateFileInfo
 	info.id = GetUniqueID();
 
 	const JString& fileName = *(GetFullNameList().GetItem(index));
-	const JError err        = JGetModificationTime(fileName, &(info.modTime));
-	assert_ok( err );
+	const bool ok           = JGetModificationTime(fileName, &(info.modTime));
+	assert( ok );
 
 	itsFileInfo->SetItem(index, info);
 	if (itsFileUsage != nullptr)

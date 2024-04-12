@@ -198,14 +198,6 @@ T
 2 "SymbolUpdatePG.cpp"
 F
 "./code/SymbolUpdatePG.cpp"
-T
-2 "WaitForSymbolUpdateTask.cpp"
-F
-"./code/WaitForSymbolUpdateTask.cpp"
-T
-2 "DelaySymbolUpdateTask.cpp"
-F
-"./code/DelaySymbolUpdateTask.cpp"
 F
 T
 1 "commands"
@@ -728,9 +720,9 @@ T
 F
 "./code/SearchDocument-Match.jxm"
 T
-2 "SearchTE.cpp"
+2 "SearchST.cpp"
 F
-"./code/SearchTE.cpp"
+"./code/SearchST.cpp"
 T
 2 "SearchFontManager.cpp"
 F
@@ -1273,7 +1265,6 @@ F
 "${LIB_DEPS}"
 "make -k all"
 # search paths
-T "../../JX/include" T
 T "../../JX/include/jx-af/jcore" T
 T "../../JX/include/jx-af/jfs" T
 T "../../JX/include/jx-af/jx" T

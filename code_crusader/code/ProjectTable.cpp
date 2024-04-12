@@ -491,7 +491,7 @@ ProjectTable::AddFiles
 	}
 	else if (firstNew != nullptr && updateProject)
 	{
-		itsDoc->DelayUpdateSymbolDatabase();
+		itsDoc->SymbolDatabaseNeedsUpdate();
 	}
 
 	return firstNew != nullptr;
@@ -815,7 +815,7 @@ ProjectTable::RemoveSelection()
 
 		itsLockedSelDepthFlag = false;
 
-		itsDoc->DelayUpdateSymbolDatabase();
+		itsDoc->SymbolDatabaseNeedsUpdate();
 	}
 }
 
@@ -2444,7 +2444,7 @@ ProjectTable::ExtractInputData
 				if (node->GetFullName(&path) &&
 					!itsDoc->GetDirectories().Contains(path))
 				{
-					itsDoc->DelayUpdateSymbolDatabase();
+					itsDoc->SymbolDatabaseNeedsUpdate();
 				}
 			}
 			else

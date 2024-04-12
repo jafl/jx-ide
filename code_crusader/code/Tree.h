@@ -109,16 +109,13 @@ public:
 	Language			GetLanguage() const;
 	TextFileType		GetFileType() const;
 
-	// for loading updated symbols
-
-	virtual void	ReloadSetup(std::istream& input, const JFileVersion vers);
-
 	// called by TreeDirector
 
 	void	FileTypesChanged(const PrefsManager::FileTypesChanged& info);
 
 	virtual void	PrepareForUpdate(const bool reparseAll);
-	virtual bool	UpdateFinished(const JArray<JFAID_t>& deadFileList);
+	virtual bool	UpdateFinished(const JArray<JFAID_t>& deadFileList,
+									JProgressDisplay& pg);
 
 	// called by FileListTable
 
@@ -149,23 +146,21 @@ protected:
 	JPtrArray<Class>*	GetClasses();
 	JPtrArray<Class>*	GetVisibleClasses();
 
-	void	PlaceAll(JArray<RootGeom>* rootGeom = nullptr);
-
 	virtual void	ParseFile(const JString& fileName, const JFAID_t id) = 0;
 
 private:
 
 	struct RootConn
 	{
-		JSize	dy;
-		JIndex	otherRoot;
+		JCoordinate	dy;
+		JIndex		otherRoot;
 
 		RootConn()
 			:
 			dy(0), otherRoot(0)
 		{ };
 
-		RootConn(const JSize deltaY, const JIndex i)
+		RootConn(const JCoordinate deltaY, const JIndex i)
 			:
 			dy(deltaY), otherRoot(i)
 		{ };
@@ -173,8 +168,8 @@ private:
 
 	struct RootMIInfo
 	{
-		Class*			root;		// not owned
-		JSize				h;
+		Class*				root;		// not owned
+		JCoordinate			h;
 		JArray<RootConn>*	connList;
 
 		RootMIInfo()
@@ -182,7 +177,7 @@ private:
 			root(nullptr), h(0), connList(nullptr)
 		{ };
 
-		RootMIInfo(Class* r, const JSize height, JArray<RootConn>* list)
+		RootMIInfo(Class* r, const JCoordinate height, JArray<RootConn>* list)
 			:
 			root(r), h(height), connList(list)
 		{ };
@@ -191,8 +186,8 @@ private:
 	struct RootSubset
 	{
 		JArray<bool>*	content;
-		JArray<JIndex>*		order;
-		JSize				linkLength;
+		JArray<JIndex>*	order;
+		JSize			linkLength;
 
 		RootSubset()
 			:
@@ -230,7 +225,7 @@ private:
 	bool	itsDrawMILinksOnTopFlag;
 
 	bool	itsMinimizeMILinksFlag;
-	bool	itsNeedsMinimizeMILinksFlag;		// true => links not currently minimized
+	bool	itsNeedsMinimizeMILinksFlag;	// true => links not currently minimized
 
 	ClassStreamInFn	itsStreamInFn;
 
@@ -243,23 +238,33 @@ private:
 	void	RebuildTree();
 	void	RecalcVisible(const bool forceRebuildVisible = false,
 						  const bool forcePlaceAll = false);
+	void	PlaceAll(JArray<RootGeom>* rootGeom = nullptr);
 	void	PlaceClass(Class* theClass, const JCoordinate x, JCoordinate* y,
 					   JCoordinate* maxWidth);
 
 	void	SaveCollapsedClasses(JPtrArray<JString>* list) const;
 	bool	RestoreCollapsedClasses(const JPtrArray<JString>& list);
 
-	void	MinimizeMILinks();
-	bool	ArrangeRoots(const JArray<RootMIInfo>& rootList,
-						 JArray<JIndex>* rootOrder, JProgressDisplay& pg) const;
-	void	CleanList(JArray<RootSubset>* list) const;
-	void	FindMIClasses(Class* theClass, JArray<bool>* marked,
-						  const JArray<RootGeom>& rootGeom,
-						  JArray<RootMIInfo>* rootList) const;
-	void	FindRoots(Class* theClass, const JArray<RootGeom>& rootGeom,
-					  JArray<RootMIInfo>* rootInfoList) const;
-	bool	FindRoot(Class* root, const JArray<RootMIInfo>& rootInfoList,
-					 JIndex* index) const;
+	void		MinimizeMILinks();
+	static bool	ArrangeRootsDynamicProgramming(const JArray<RootMIInfo>& rootList,
+												JArray<JIndex>* rootOrder,
+												JProgressDisplay& pg);
+	static bool	ArrangeRootsGreedyNumberOfLinks(const JArray<RootMIInfo>& rootList,
+												JArray<JIndex>* rootOrder,
+												JProgressDisplay& pg);
+	static void	CleanList(JArray<RootSubset>* list);
+	static void	FindMIClasses(Class* theClass, JArray<bool>* marked,
+							  const JArray<RootGeom>& rootGeom,
+							  JArray<RootMIInfo>* rootList,
+							  const JPtrArray<Class>& visibleByGeom);
+	static void	FindRoots(Class* theClass, const JArray<RootGeom>& rootGeom,
+						  JArray<RootMIInfo>* rootInfoList);
+	static bool	FindRoot(Class* root, const JArray<RootMIInfo>& rootInfoList,
+						 JIndex* index);
+
+	static JCoordinate	TerminateOrPassThrough(JArray<RootConn>* connList,
+												const JIndex rootIndex,
+												const JCoordinate h);
 
 	void	CollectAncestors(Class* cbClass, JPtrArray<Class>* list) const;
 
@@ -296,8 +301,8 @@ public:
 	static const JUtf8Byte* kNeedsRefresh;
 	static const JUtf8Byte* kFontSizeChanged;
 
-	static const JUtf8Byte* kPrepareForParse;
-	static const JUtf8Byte* kParseFinished;
+	static const JUtf8Byte* kUpdateFoundChanges;
+	static const JUtf8Byte* kUpdateDone;
 
 	static const JUtf8Byte* kClassSelected;
 	static const JUtf8Byte* kClassDeselected;
@@ -370,36 +375,24 @@ public:
 		JFloat	itsVertScaleFactor;
 	};
 
-	class PrepareForParse : public JBroadcaster::Message
+	class UpdateFoundChanges : public JBroadcaster::Message
 	{
 	public:
 
-		PrepareForParse()
+		UpdateFoundChanges()
 			:
-			JBroadcaster::Message(kPrepareForParse)
+			JBroadcaster::Message(kUpdateFoundChanges)
 		{ };
 	};
 
-	class ParseFinished : public JBroadcaster::Message
+	class UpdateDone : public JBroadcaster::Message
 	{
 	public:
 
-		ParseFinished(const bool changed)
+		UpdateDone()
 			:
-			JBroadcaster::Message(kParseFinished),
-			itsChangedFlag(changed)
+			JBroadcaster::Message(kUpdateDone)
 		{ };
-
-		bool
-		Changed()
-			const
-		{
-			return itsChangedFlag;
-		};
-
-	private:
-
-		bool	itsChangedFlag;
 	};
 
 	class ClassSelected : public JBroadcaster::Message
@@ -584,13 +577,13 @@ Tree::ShouldAutoMinimizeMILinks
 	)
 {
 	if (autoMinimize != itsMinimizeMILinksFlag)
-		{
+	{
 		itsMinimizeMILinksFlag = autoMinimize;
 		if (itsMinimizeMILinksFlag && itsNeedsMinimizeMILinksFlag)
-			{
+		{
 			RecalcVisible(true);
-			}
 		}
+	}
 }
 
 inline bool
@@ -619,10 +612,10 @@ Tree::ShouldDrawMILinksOnTop
 	)
 {
 	if (drawOnTop != itsDrawMILinksOnTopFlag)
-		{
+	{
 		itsDrawMILinksOnTopFlag = drawOnTop;
 		Broadcast(NeedsRefresh());
-		}
+	}
 }
 
 /******************************************************************************

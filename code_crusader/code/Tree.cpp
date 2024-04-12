@@ -25,6 +25,7 @@
 #include "Tree.h"
 #include "Class.h"
 #include "TreeDirector.h"
+#include "SymbolUpdatePG.h"
 #include "DirList.h"
 #include "globals.h"
 #include <jx-af/jx/JXDisplay.h>
@@ -34,8 +35,10 @@
 #include <jx-af/jcore/JPainter.h>
 #include <jx-af/jcore/JLatentPG.h>
 #include <jx-af/jcore/JPtrArray-JString.h>
+#include <jx-af/jcore/JAliasArray.h>
 #include <jx-af/jcore/JStringIterator.h>
 #include <jx-af/jcore/JSimpleProcess.h>
+#include <jx-af/jcore/JThreadPG.h>
 #include <jx-af/jcore/jGlobals.h>
 #include <jx-af/jcore/jFileUtil.h>
 #include <jx-af/jcore/jDirUtil.h>
@@ -57,8 +60,8 @@ const JUtf8Byte* Tree::kBoundsChanged        = "BoundsChanged::Tree";
 const JUtf8Byte* Tree::kNeedsRefresh         = "NeedsRefresh::Tree";
 const JUtf8Byte* Tree::kFontSizeChanged      = "FontSizeChanged::Tree";
 
-const JUtf8Byte* Tree::kPrepareForParse      = "PrepareForParse::Tree";
-const JUtf8Byte* Tree::kParseFinished        = "ParseFinished::Tree";
+const JUtf8Byte* Tree::kUpdateFoundChanges   = "UpdateFoundChanges::Tree";
+const JUtf8Byte* Tree::kUpdateDone           = "UpdateDone::Tree";
 
 const JUtf8Byte* Tree::kClassSelected        = "ClassSelected::Tree";
 const JUtf8Byte* Tree::kClassDeselected      = "ClassDeselected::Tree";
@@ -121,6 +124,8 @@ JIndex i;
 	const bool useSymProjData = symInput == nullptr || symVers < 71;
 
 /* symbol file */
+
+	bool needsReparse = projVers < 97;
 
 	if (projVers < 71)
 	{
@@ -218,7 +223,7 @@ JIndex i;
 
 		for (i=1; i<=classCount; i++)
 		{
-			(itsClassesByFull->GetItem(i))->FindParentsAfterRead();
+			itsClassesByFull->GetItem(i)->FindParentsAfterRead();
 		}
 
 		// We can only sort this after calling FindParentsAfterRead(),
@@ -259,7 +264,6 @@ JIndex i;
 
 	// check for change in file suffixes
 
-	bool needsReparse = projVers < 49;
 	if (projVers >= 9)
 	{
 		JPtrArray<JString> suffixList(JPtrArrayT::kDeleteAll);
@@ -352,92 +356,6 @@ Tree::~Tree()
 }
 
 /******************************************************************************
- ReloadSetup (virtual)
-
-	We cannot share this with the load ctor because that contains too much
-	legacy code required for reading old project files.
-
- ******************************************************************************/
-
-void
-Tree::ReloadSetup
-	(
-	std::istream&		input,
-	const JFileVersion	vers
-	)
-{
-JIndex i;
-
-	itsReparseAllFlag = false;
-
-	itsClassesByFull->DeleteAll();
-	itsVisibleByGeom->RemoveAll();
-	itsVisibleByName->RemoveAll();
-
-	input >> itsWidth >> itsHeight;
-
-	// get number of classes in tree
-
-	JSize classCount;
-	input >> classCount;
-
-	// read in each class
-
-	itsClassesByFull->SetBlockSize(classCount+1);	// avoid repeated realloc
-	itsVisibleByName->SetBlockSize(classCount+1);
-
-	for (i=1; i<=classCount; i++)
-	{
-		Class* newClass = itsStreamInFn(input, vers, this);
-		newClass->CalcFrame();
-
-		itsClassesByFull->Append(newClass);
-		if (newClass->IsVisible())
-		{
-			itsVisibleByName->InsertSorted(newClass);
-		}
-	}
-
-	itsClassesByFull->SetBlockSize(kBlockSize);
-	itsVisibleByName->SetBlockSize(kBlockSize);
-
-	// read in geometry ordering
-
-	const JSize geomCount = itsVisibleByName->GetItemCount();
-
-	itsVisibleByGeom->SetBlockSize(geomCount+1);	// avoid repeated realloc
-
-	for (i=1; i<=geomCount; i++)
-	{
-		JIndex j;
-		input >> j;
-		itsVisibleByGeom->Append(itsVisibleByName->GetItem(j));
-	}
-
-	itsVisibleByGeom->SetBlockSize(kBlockSize);
-
-	// link up each class with parents
-
-	for (i=1; i<=classCount; i++)
-	{
-		(itsClassesByFull->GetItem(i))->FindParentsAfterRead();
-	}
-
-	// check for change in file suffixes
-
-	JPtrArray<JString> suffixList(JPtrArrayT::kDeleteAll);
-	input >> suffixList;
-	if (!JSameStrings(*itsSuffixList, suffixList, JString::kCompareCase))
-	{
-		NextUpdateMustReparseAll();
-	}
-
-	RebuildTree();	// calls X server, so cannot be done in child process
-
-	Broadcast(Changed());
-}
-
-/******************************************************************************
  StreamOut (virtual)
 
 	dirList can be nullptr
@@ -447,9 +365,9 @@ JIndex i;
 void
 Tree::StreamOut
 	(
-	std::ostream&		projOutput,
-	std::ostream*		setOutput,
-	std::ostream*		symOutput,
+	std::ostream&	projOutput,
+	std::ostream*	setOutput,
+	std::ostream*	symOutput,
 	const DirList*	dirList
 	)
 	const
@@ -550,7 +468,7 @@ Tree::FileTypesChanged
 	Get ready to parse files that have changed or been created and to
 	throw out classes in files that no longer exist.
 
-	*** This often runs in the update thread.
+	*** This runs in the update fiber.
 
  ******************************************************************************/
 
@@ -561,11 +479,6 @@ Tree::PrepareForUpdate
 	)
 {
 	assert( !itsReparseAllFlag || reparseAll );
-
-	if (!InUpdateThread())
-	{
-		Broadcast(PrepareForParse());
-	}
 
 	// save collapsed classes
 
@@ -580,10 +493,12 @@ Tree::PrepareForUpdate
 		itsClassesByFull->DeleteAll();
 		itsVisibleByGeom->RemoveAll();
 		itsVisibleByName->RemoveAll();
-	}
-	itsChangedDuringParseFlag = reparseAll;
 
-	itsBeganEmptyFlag = itsClassesByFull->IsEmpty();
+		Broadcast(UpdateFoundChanges());
+	}
+
+	itsChangedDuringParseFlag = reparseAll;
+	itsBeganEmptyFlag         = itsClassesByFull->IsEmpty();
 }
 
 /******************************************************************************
@@ -591,14 +506,15 @@ Tree::PrepareForUpdate
 
 	Cleans up after updating files.  Returns true if changes were found.
 
-	*** This often runs in the update thread.
+	*** This runs in the update fiber.
 
  ******************************************************************************/
 
 bool
 Tree::UpdateFinished
 	(
-	const JArray<JFAID_t>& deadFileList
+	const JArray<JFAID_t>&	deadFileList,
+	JProgressDisplay&		pg
 	)
 {
 	// toss files that no longer exist
@@ -607,6 +523,7 @@ Tree::UpdateFinished
 	for (JIndex i=1; i<=fileCount; i++)
 	{
 		RemoveFile(deadFileList.GetItem(i));
+		pg.IncrementProgress();
 	}
 
 	// restore collapsed classes
@@ -621,22 +538,18 @@ Tree::UpdateFinished
 	{
 		RebuildTree();
 	}
-	else if (forceRecalcVisible && !InUpdateThread())
+	else if (forceRecalcVisible)
 	{
 		RecalcVisible();
 	}
 
-	if (!InUpdateThread())
+	Broadcast(UpdateDone());
+	if (itsChangedDuringParseFlag)
 	{
-		Broadcast(ParseFinished(itsChangedDuringParseFlag));
-		if (itsChangedDuringParseFlag)
-		{
-			Broadcast(Changed());
-		}
-
-		itsReparseAllFlag = false;
+		Broadcast(Changed());
 	}
 
+	itsReparseAllFlag = false;
 	return itsChangedDuringParseFlag;
 }
 
@@ -701,6 +614,10 @@ Tree::RemoveFile
 			itsVisibleByGeom->Remove(theClass);
 			itsVisibleByName->Remove(theClass);
 
+			if (!itsChangedDuringParseFlag)
+			{
+				Broadcast(UpdateFoundChanges());
+			}
 			itsChangedDuringParseFlag = true;
 		}
 	}
@@ -783,6 +700,10 @@ Tree::AddClass
 		itsVisibleByGeom->RemoveAll();
 	}
 
+	if (!itsChangedDuringParseFlag)
+	{
+		Broadcast(UpdateFoundChanges());
+	}
 	itsChangedDuringParseFlag = true;
 }
 
@@ -839,12 +760,10 @@ JIndex i;
 		progress = false;
 		for (i=1; i<=classCount; i++)
 		{
-			const bool foundAnotherParent =
-				itsClassesByFull->GetItem(i)->FindParents(false);
-			progress = progress || foundAnotherParent;
+			progress = itsClassesByFull->GetItem(i)->FindParents(false) || progress;
 		}
 	}
-		while (progress);
+	while (progress);
 
 	// Now that no more progress is being made, allow ghosts to be created.
 	// (Inserting ghosts does not cause classes to be skipped.)
@@ -878,8 +797,8 @@ Tree::RecalcVisible
 	const bool forcePlaceAll
 	)
 {
-	const JSize classCount  = itsClassesByFull->GetItemCount();
-	bool rebuildVisible = forceRebuildVisible;
+	const JSize classCount = itsClassesByFull->GetItemCount();
+	bool rebuildVisible    = forceRebuildVisible;
 
 	// hide classes whose parents are hidden or collapsed
 
@@ -948,7 +867,7 @@ Tree::RecalcVisible
 			}
 		}
 
-		// truly minimize, if required
+		// optimize further
 
 		MinimizeMILinks();
 	}
@@ -962,7 +881,7 @@ Tree::RecalcVisible
 }
 
 /******************************************************************************
- PlaceAll (protected)
+ PlaceAll (private)
 
 	Calculates the placement of all classes, assuming all parents have
 	been found.  Normally only called by RecalcVisible().
@@ -979,11 +898,6 @@ Tree::PlaceAll
 	JArray<RootGeom>* rootGeom
 	)
 {
-	if (InUpdateThread())
-	{
-		return;
-	}
-
 	itsWidth  = 0;
 	itsHeight = itsMarginWidth;
 
@@ -1025,7 +939,7 @@ Tree::PlaceAll
 void
 Tree::PlaceClass
 	(
-	Class*			theClass,
+	Class*				theClass,
 	const JCoordinate	x,
 	JCoordinate*		y,
 	JCoordinate*		maxWidth
@@ -1078,10 +992,10 @@ Tree::ForceMinimizeMILinks()
 {
 	if (itsNeedsMinimizeMILinksFlag)
 	{
-		const bool saveFlag = itsMinimizeMILinksFlag;
-		itsMinimizeMILinksFlag  = true;
+		const bool saveFlag    = itsMinimizeMILinksFlag;
+		itsMinimizeMILinksFlag = true;
 		RecalcVisible(true);
-		itsMinimizeMILinksFlag  = saveFlag;
+		itsMinimizeMILinksFlag = saveFlag;
 	}
 }
 
@@ -1096,109 +1010,288 @@ Tree::ForceMinimizeMILinks()
 void
 Tree::MinimizeMILinks()
 {
-JIndex i,j;
-
-	if (InUpdateThread())
-	{
-		return;
-	}
+	itsNeedsMinimizeMILinksFlag = !itsMinimizeMILinksFlag;
 
 	const JSize classCount = itsVisibleByGeom->GetItemCount();
 	if (classCount == 0)
 	{
-		itsNeedsMinimizeMILinksFlag = false;
 		return;
 	}
-	else if (!itsMinimizeMILinksFlag)
-	{
-		itsNeedsMinimizeMILinksFlag = true;
-		return;
-	}
-
-	itsNeedsMinimizeMILinksFlag = false;
 
 	JArray<RootGeom> rootGeom;
 	PlaceAll(&rootGeom);
 
-	// optimize each disjoint subset of trees connected by MI
+	JPtrArray<Class> visByGeom(*itsVisibleByGeom, JPtrArrayT::kForgetAll),
+					 newByGeom(*itsVisibleByGeom, JPtrArrayT::kForgetAll);
 
-	JArray<bool> marked(classCount);
-	for (i=1; i<=classCount; i++)
+	boost::fibers::buffered_channel<JBroadcaster::Message*> channel(kJBufferedChannelCapacity);
+	std::atomic_bool cancelFlag = false;
+	JThreadPG threadPG(&channel, &cancelFlag, 1000);
+	threadPG.VariableLengthProcessBeginning(JGetString("MinMILengthsProgress::Tree"), true, false);
+
+	auto t = std::thread([this, classCount, &rootGeom, &visByGeom, &newByGeom, &threadPG]()
 	{
-		marked.AppendItem(false);
-	}
+		// optimize each disjoint subset of trees connected by MI
 
-	JPtrArray<Class> newByGeom(*itsVisibleByGeom, JPtrArrayT::kForgetAll);
-
-	JLatentPG pg(1000);
-	pg.VariableLengthProcessBeginning(JGetString("MinMILengthsProgress::Tree"), true, true);
-	pg.DisplayBusyCursor();
-
-	for (i=1; i<=classCount; i++)
-	{
-		Class* theClass = itsVisibleByGeom->GetItem(i);
-		if (theClass->GetParentCount() > 1 && !marked.GetItem(i))
+		JArray<bool> marked(classCount);
+		for (JIndex i=1; i<=classCount; i++)
 		{
-			// find the roots that this class connects
+			marked.AppendItem(false);
+		}
 
-			JArray<RootMIInfo> rootList;
-			FindRoots(theClass, rootGeom, &rootList);
-			marked.SetItem(i, true);
-
-			// find all the other roots in this connected subset of trees
-			// (must check GetItemCount() each time since list grows)
-
-			for (j=1; j <= rootList.GetItemCount(); j++)
+		for (JIndex i=1; i<=classCount; i++)
+		{
+			Class* theClass = visByGeom.GetItem(i);
+			if (theClass->GetParentCount() > 1 && !marked.GetItem(i))
 			{
-				const RootMIInfo rootInfo = rootList.GetItem(j);
-				FindMIClasses(rootInfo.root, &marked, rootGeom, &rootList);
-			}
+				// find the roots that this class connects
 
-			// find the best ordering of the roots
-			// (rootCount could be 1 if MI is within a single tree)
+				JArray<RootMIInfo> rootList;
+				FindRoots(theClass, rootGeom, &rootList);
+				marked.SetItem(i, true);
 
-			const JSize rootCount = rootList.GetItemCount();
-			if (rootCount > 1)
-			{
-//				std::cout << "# of roots: " << rootCount << std::endl;
-				JArray<JIndex> rootOrder(rootCount);
-				if (!ArrangeRoots(rootList, &rootOrder, pg))
+				// find all the other roots in this connected subset of trees
+				// (must check GetItemCount() each time since list grows)
+
+				for (JIndex j=1; j <= rootList.GetItemCount(); j++)
 				{
-					for (j=1; j<=rootCount; j++)
+					const RootMIInfo rootInfo = rootList.GetItem(j);
+					FindMIClasses(rootInfo.root, &marked, rootGeom, &rootList, visByGeom);
+				}
+
+				// find the best ordering of the roots
+				// (rootCount could be 1 if MI is within a single tree)
+
+				const JSize rootCount = rootList.GetItemCount();
+				if (rootCount > 1)
+				{
+//					std::cout << "# of roots: " << rootCount << std::endl;
+					JArray<JIndex> rootOrder(rootCount);
+					if (( itsMinimizeMILinksFlag &&
+						 !ArrangeRootsDynamicProgramming(rootList, &rootOrder, threadPG)) ||
+						(!itsMinimizeMILinksFlag &&
+						 !ArrangeRootsGreedyNumberOfLinks(rootList, &rootOrder, threadPG)))
 					{
-						jdelete (rootList.GetItem(j)).connList;
+						for (JIndex j=1; j<=rootCount; j++)
+						{
+							jdelete rootList.GetItem(j).connList;
+						}
+						newByGeom.CleanOut();
+						itsNeedsMinimizeMILinksFlag = true;
+						break;
 					}
-					itsNeedsMinimizeMILinksFlag = true;
-					break;
+
+					// rearrange the classes so PlaceAll() will place the trees
+					// next to each other
+
+					for (JIndex j=1; j<=rootCount; j++)
+					{
+						RootMIInfo info = rootList.GetItem(rootOrder.GetItem(j));
+						newByGeom.Remove(info.root);
+						newByGeom.InsertAtIndex(j, info.root);
+					}
 				}
 
-				// rearrange the classes so PlaceAll() will place the trees
-				// next to each other
+				// clean up
 
-				for (j=1; j<=rootCount; j++)
+				for (JIndex j=1; j<=rootCount; j++)
 				{
-					RootMIInfo info = rootList.GetItem(rootOrder.GetItem(j));
-					newByGeom.Remove(info.root);
-					newByGeom.InsertAtIndex(j, info.root);
+					jdelete rootList.GetItem(j).connList;
 				}
-			}
-
-			// clean up
-
-			for (j=1; j<=rootCount; j++)
-			{
-				jdelete (rootList.GetItem(j)).connList;
 			}
 		}
+
+		threadPG.ProcessFinished();
+	});
+
+	threadPG.WaitForProcessFinished(itsDirector->GetMinimizeMILinksPG());
+	t.join();
+
+	if (!newByGeom.IsEmpty())
+	{
+		itsVisibleByGeom->CopyPointers(newByGeom, itsVisibleByGeom->GetCleanUpAction(), false);
 	}
-
-	pg.ProcessFinished();
-
-	itsVisibleByGeom->CopyPointers(newByGeom, itsVisibleByGeom->GetCleanUpAction(), false);
 }
 
 /******************************************************************************
- ArrangeRoots (private)
+ ArrangeRootsGreedyNumberOfLinks (private static)
+
+	Find the ordering of the given root classes that approximately
+	minimizes the length of the MI connections.  The algorithm starts with
+	the largest root, based on primary inheritance, and then tries each
+	root, in order of descending # of links into the already placed items,
+	above and below the already placed roots.
+
+ ******************************************************************************/
+
+inline bool
+indexListIncludes
+	(
+	const JArray<JIndex>&	list,
+	const JIndex			i
+	)
+{
+	for (auto j : list)
+	{
+		if (j == i)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+JCoordinate
+Tree::TerminateOrPassThrough
+	(
+	JArray<RootConn>*	connList,
+	const JIndex		rootIndex,
+	const JCoordinate	h
+	)
+{
+	JCoordinate v = 0;
+	for (JIndex i=connList->GetItemCount(); i>0; i--)
+	{
+		const auto conn = connList->GetItem(i);
+		if (conn.otherRoot == rootIndex)
+		{
+			connList->RemoveItem(i);
+		}
+		else
+		{
+			v += h;
+		}
+	}
+
+	return v;
+}
+
+bool
+Tree::ArrangeRootsGreedyNumberOfLinks
+	(
+	const JArray<RootMIInfo>&	rootList,
+	JArray<JIndex>*				rootOrder,
+	JProgressDisplay&			pg
+	)
+{
+	JIndex i = 0, maxConnIndex = 0;
+	JSize connCountMax = 0;
+	JCoordinate hMax   = -1;
+	for (const auto& root : rootList)
+	{
+		i++;
+		if (root.connList->GetItemCount() > connCountMax ||
+			(root.connList->GetItemCount() == connCountMax && root.h > hMax))
+		{
+			maxConnIndex = i;
+			connCountMax = root.connList->GetItemCount();
+			hMax         = root.h;
+		}
+	}
+
+	rootOrder->AppendItem(maxConnIndex);
+
+	const JSize rootCount = rootList.GetItemCount();
+	while (rootOrder->GetItemCount() < rootCount)
+	{
+		// find root with max # of links into already placed roots
+
+		maxConnIndex = 0;
+		connCountMax = 0;
+		hMax         = -1;
+		for (JIndex i=1; i<=rootCount; i++)
+		{
+			if (indexListIncludes(*rootOrder, i))
+			{
+				continue;
+			}
+
+			const auto root = rootList.GetItem(i);
+
+			JSize connCount = 0;
+			for (const auto& conn : *root.connList)
+			{
+				if (indexListIncludes(*rootOrder, conn.otherRoot))
+				{
+					connCount++;
+				}
+			}
+
+			if (connCount > connCountMax ||
+				(connCount == connCountMax && root.h > hMax))
+			{
+				maxConnIndex = i;
+				connCountMax = connCount;
+				hMax         = root.h;
+			}
+		}
+
+		// try adding this root above the placed roots
+
+		const auto root = rootList.GetItem(maxConnIndex);
+		auto connList(*root.connList);
+		JCoordinate above = 0;
+		for (const auto& conn : connList)
+		{
+			above += root.h - conn.dy;
+		}
+
+		for (const auto rootIndex : *rootOrder)
+		{
+			const auto otherRoot = rootList.GetItem(rootIndex);
+			for (const auto& otherConn : *otherRoot.connList)
+			{
+				if (otherConn.otherRoot == maxConnIndex)
+				{
+					above += otherConn.dy;
+				}
+			}
+
+			above += TerminateOrPassThrough(&connList, rootIndex, otherRoot.h);
+		}
+
+		// try adding this root below the placed roots
+
+		connList = *root.connList;
+		JCoordinate below = 0;
+		for (const auto& conn : connList)
+		{
+			below += conn.dy;
+		}
+
+		for (JIndex j=rootOrder->GetItemCount(); j>0; j--)
+		{
+			const JIndex rootIndex = rootOrder->GetItem(j);
+			const auto otherRoot   = rootList.GetItem(rootIndex);
+			for (const auto& otherConn : *otherRoot.connList)
+			{
+				if (otherConn.otherRoot == maxConnIndex)
+				{
+					below += otherRoot.h - otherConn.dy;
+				}
+			}
+
+			below += TerminateOrPassThrough(&connList, rootIndex, otherRoot.h);
+		}
+
+		// pick the placement that minimizes the total link length
+
+		if (above < below)
+		{
+			rootOrder->PrependItem(maxConnIndex);
+		}
+		else
+		{
+			rootOrder->AppendItem(maxConnIndex);
+		}
+	}
+
+	return true;
+}
+
+/******************************************************************************
+ ArrangeRootsDynamicProgramming (private static)
 
 	Find the ordering of the given root classes that minimizes the length
 	of the MI connections.  The algorithm is based on the concept of
@@ -1210,16 +1303,15 @@ JIndex i,j;
  ******************************************************************************/
 
 bool
-Tree::ArrangeRoots
+Tree::ArrangeRootsDynamicProgramming
 	(
 	const JArray<RootMIInfo>&	rootList,
 	JArray<JIndex>*				rootOrder,
 	JProgressDisplay&			pg
 	)
-	const
 {
 	const JSize rootCount = rootList.GetItemCount();
-	// std::cout << "# roots: " << rootCount << std::endl;
+	std::cout << "# roots: " << rootCount << std::endl;
 
 	JArray<RootSubset> l1(100), l2(100);
 	JArray<RootSubset> *list1 = &l1, *list2 = &l2;
@@ -1242,7 +1334,7 @@ Tree::ArrangeRoots
 	do
 	{
 		const JSize subsetCount = list1->GetItemCount();
-		//std::cout << "do loop: " << subsetCount << std::endl;
+		std::cout << "do loop: " << subsetCount << std::endl;
 
 		for (JIndex subsetIndex=1; subsetIndex<=subsetCount; subsetIndex++)
 		{
@@ -1250,7 +1342,7 @@ Tree::ArrangeRoots
 			const JSize subsetSize   = (subset->order)->GetItemCount();
 			for (JIndex newRootIndex=1; newRootIndex<=rootCount; newRootIndex++)
 			{
-				if ((subset->content)->GetItem(newRootIndex))
+				if (subset->content->GetItem(newRootIndex))
 				{
 					continue;
 				}
@@ -1264,11 +1356,11 @@ Tree::ArrangeRoots
 				const RootMIInfo* rootPtr   = rootList.GetCArray();
 				const RootMIInfo* rootInfo  = rootPtr + newRootIndex-1;
 				const JCoordinate newHeight = rootInfo->h;
-				const JSize linkCount       = (rootInfo->connList)->GetItemCount();
-				const RootConn* connInfo    = (rootInfo->connList)->GetCArray();
+				const JSize linkCount       = rootInfo->connList->GetItemCount();
+				const RootConn* connInfo    = rootInfo->connList->GetCArray();
 				for (JUnsignedOffset i=0; i<linkCount; i++)
 				{
-					if ((subset->content)->GetItem(connInfo[i].otherRoot))
+					if (subset->content->GetItem(connInfo[i].otherRoot))
 					{
 						newLinkLength += connInfo[i].dy;
 					}
@@ -1282,16 +1374,16 @@ Tree::ArrangeRoots
 
 				for (JIndex i=1; i<=subsetSize; i++)
 				{
-					const JIndex j = (subset->order)->GetItem(i);
+					const JIndex j = subset->order->GetItem(i);
 
 					const RootMIInfo* rootInfo = rootPtr + j-1;
-					const JSize linkCount      = (rootInfo->connList)->GetItemCount();
-					const RootConn* connInfo   = (rootInfo->connList)->GetCArray();
+					const JSize linkCount      = rootInfo->connList->GetItemCount();
+					const RootConn* connInfo   = rootInfo->connList->GetCArray();
 					for (JIndex k=0; k<linkCount; k++)
 					{
 						const JIndex otherRoot = connInfo[k].otherRoot;
 						if (otherRoot != newRootIndex &&
-							!(subset->content)->GetItem(otherRoot))
+							!subset->content->GetItem(otherRoot))
 						{
 							newLinkLength += newHeight;
 						}
@@ -1304,28 +1396,25 @@ Tree::ArrangeRoots
 
 				bool found;
 				const JIndex i = list2->SearchSortedOTI(*subset, JListT::kAnyMatch, &found);
-				if (found && newLinkLength < (list2->GetCArray())[i-1].linkLength)
+				if (found && newLinkLength < list2->GetCArray()[i-1].linkLength)
 				{
 					RootSubset foundSubset = list2->GetItem(i);
-					*(foundSubset.content) = *(subset->content);
-					*(foundSubset.order)   = *(subset->order);
-					(foundSubset.order)->AppendItem(newRootIndex);
+					*foundSubset.content  = *subset->content;
+					*foundSubset.order    = *subset->order;
+					foundSubset.order->AppendItem(newRootIndex);
 					foundSubset.linkLength = newLinkLength;
 					list2->SetItem(i, foundSubset);
 				}
 				else if (!found)
 				{
-					auto* newContent = jnew JArray<bool>(*(subset->content));
-					assert( newContent != nullptr );
-
-					auto* newOrder = jnew JArray<JIndex>(*(subset->order));
-					assert( newOrder != nullptr );
+					auto* newContent = jnew JArray<bool>(*subset->content);
+					auto* newOrder   = jnew JArray<JIndex>(*subset->order);
 					newOrder->AppendItem(newRootIndex);
 
 					list2->InsertItemAtIndex(i, RootSubset(newContent, newOrder, newLinkLength));
 				}
 
-				(subset->content)->SetItem(newRootIndex, false);
+				subset->content->SetItem(newRootIndex, false);
 			}
 
 			if (!pg.IncrementProgress())
@@ -1349,7 +1438,7 @@ Tree::ArrangeRoots
 	// return the result
 
 	RootSubset completeSet = list1->GetFirstItem();
-	*rootOrder = *(completeSet.order);
+	*rootOrder = *completeSet.order;
 	jdelete completeSet.content;
 	jdelete completeSet.order;
 
@@ -1357,7 +1446,7 @@ Tree::ArrangeRoots
 }
 
 /******************************************************************************
- CleanList (private)
+ CleanList (private static)
 
 	Deletes all objects in the list and then empties it.
 
@@ -1368,7 +1457,6 @@ Tree::CleanList
 	(
 	JArray<RootSubset>* list
 	)
-	const
 {
 	const JSize count = list->GetItemCount();
 	for (JIndex i=1; i<=count; i++)
@@ -1382,7 +1470,7 @@ Tree::CleanList
 }
 
 /******************************************************************************
- FindMIClasses (private)
+ FindMIClasses (private static)
 
 	For each primary child of the given class, check if it connects
 	trees via MI and then recurse on it.
@@ -1392,17 +1480,17 @@ Tree::CleanList
 void
 Tree::FindMIClasses
 	(
-	Class*				theClass,
-	JArray<bool>*		marked,
+	Class*					theClass,
+	JArray<bool>*			marked,
 	const JArray<RootGeom>&	rootGeom,
-	JArray<RootMIInfo>*		rootList
+	JArray<RootMIInfo>*		rootList,
+	const JPtrArray<Class>&	visibleByGeom
 	)
-	const
 {
-	const JSize classCount = itsVisibleByGeom->GetItemCount();
+	const JSize classCount = visibleByGeom.GetItemCount();
 	for (JIndex i=1; i<=classCount; i++)
 	{
-		Class* c              = itsVisibleByGeom->GetItem(i);
+		Class* c                = visibleByGeom.GetItem(i);
 		const JSize parentCount = c->GetParentCount();
 		for (JIndex parentIndex=1; parentIndex<=parentCount; parentIndex++)
 		{
@@ -1417,14 +1505,14 @@ Tree::FindMIClasses
 			}
 			if (parentIndex == 1 && p == theClass && c->HasChildren())
 			{
-				FindMIClasses(c, marked, rootGeom, rootList);
+				FindMIClasses(c, marked, rootGeom, rootList, visibleByGeom);
 			}
 		}
 	}
 }
 
 /******************************************************************************
- FindRoots (private)
+ FindRoots (private static)
 
 	If the given class connects two or more trees via MI, store information
 	about each connection.
@@ -1434,11 +1522,10 @@ Tree::FindMIClasses
 void
 Tree::FindRoots
 	(
-	Class*				theClass,
+	Class*					theClass,
 	const JArray<RootGeom>&	rootGeom,
 	JArray<RootMIInfo>*		rootList
 	)
-	const
 {
 	const JSize parentCount = theClass->GetParentCount();
 	if (parentCount < 2)
@@ -1489,23 +1576,23 @@ Tree::FindRoots
 			theClass->GetCoords(&x, &y);
 			primaryRootDy = y - geom.top;
 		}
-		else
+		else if (rootIndex != primaryRootIndex)
 		{
 			// add information about connection between trees
 
 			RootMIInfo info = rootList->GetItem(primaryRootIndex);
-			(info.connList)->AppendItem(RootConn(primaryRootDy, rootIndex));
+			info.connList->AppendItem(RootConn(primaryRootDy, rootIndex));
 
 			JCoordinate x,y;
 			parent->GetCoords(&x, &y);
 			info = rootList->GetItem(rootIndex);
-			(info.connList)->AppendItem(RootConn(y - geom.top, primaryRootIndex));
+			info.connList->AppendItem(RootConn(y - geom.top, primaryRootIndex));
 		}
 	}
 }
 
 /******************************************************************************
- FindRoot (private)
+ FindRoot (private static)
 
 	Returns true if rootList contains the given root.  We have to do
 	a linear search because roots are appended to the list as they are
@@ -1518,16 +1605,15 @@ Tree::FindRoots
 bool
 Tree::FindRoot
 	(
-	Class*					root,
+	Class*						root,
 	const JArray<RootMIInfo>&	rootList,
 	JIndex*						index
 	)
-	const
 {
 	const JSize count = rootList.GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		if (root == (rootList.GetItem(i)).root)
+		if (root == rootList.GetItem(i).root)
 		{
 			*index = i;
 			return true;
@@ -2128,8 +2214,8 @@ Tree::DeriveFromSelected()
 		CollectAncestors(parent, &ancestorList);
 		ancestorList.Prepend(parent);		// first element must be base class
 
-		const JError err = JCreateTempFile(&dataFileName);
-		if (!err.OK())
+		JError err = JNoError();
+		if (!JCreateTempFile(&dataFileName, &err))
 		{
 			err.ReportIfError();
 			success = false;
@@ -2604,10 +2690,10 @@ Tree::CompareRSContent
 	const RootSubset& s2
 	)
 {
-	const bool* b1 = (s1.content)->GetCArray();
-	const bool* b2 = (s2.content)->GetCArray();
+	const bool* b1 = s1.content->GetCArray();
+	const bool* b2 = s2.content->GetCArray();
 
-	const JSize count = (s1.content)->GetItemCount();
+	const JSize count = s1.content->GetItemCount();
 	for (JIndex i=1; i<=count; i++, b1++, b2++)
 	{
 		if (!*b1 && *b2)

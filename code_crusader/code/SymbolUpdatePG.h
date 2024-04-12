@@ -8,23 +8,22 @@
 #ifndef _H_SymbolUpdatePG
 #define _H_SymbolUpdatePG
 
-#include <jx-af/jcore/JProgressDisplay.h>
+#include <jx-af/jcore/JLatentPG.h>
 
-class SymbolUpdatePG : public JProgressDisplay
+class JXContainer;
+
+class SymbolUpdatePG : public JLatentPG
 {
 public:
 
-	SymbolUpdatePG(std::ostream& link, const JSize scaleFactor);
+	SymbolUpdatePG(JProgressDisplay* pg, const JSize scaleFactor,
+					JXContainer* widget, JXContainer* container);
 
 	~SymbolUpdatePG() override;
 
-	bool	IncrementProgress(const JString& message = JString::empty) override;
-	bool	IncrementProgress(const JSize delta) override;
-	bool	IncrementProgress(const JString& message, const JSize delta) override;
+	bool	ProcessContinuing() override;
 	void	ProcessFinished() override;
-	void	DisplayBusyCursor() override;
-
-	void	SetScaleFactor(const JSize scaleFactor);
+	void	Hide();
 
 protected:
 
@@ -32,27 +31,10 @@ protected:
 							 const JString& message, const bool allowCancel,
 							 const bool modal) override;
 
-	bool	CheckForCancel() override;
-
 private:
 
-	std::ostream&	itsLink;
-	JSize			itsScaleFactor;
+	JXContainer*	itsWidget;
+	JXContainer*	itsContainer;
 };
-
-
-/******************************************************************************
- SetScaleFactor
-
- ******************************************************************************/
-
-inline void
-SymbolUpdatePG::SetScaleFactor
-	(
-	const JSize scaleFactor
-	)
-{
-	itsScaleFactor = scaleFactor;
-}
 
 #endif

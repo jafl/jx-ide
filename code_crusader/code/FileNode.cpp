@@ -78,6 +78,8 @@ FileNode::OpenFile()
 /******************************************************************************
  ParseFiles (virtual)
 
+	*** This runs in the update fiber.
+
  ******************************************************************************/
 
 bool
@@ -114,6 +116,8 @@ FileNode::ParseFiles
 /******************************************************************************
  ParseFile (private)
 
+	*** This runs in the update fiber.
+
  ******************************************************************************/
 
 bool
@@ -130,7 +134,7 @@ FileNode::ParseFile
 {
 	time_t t;
 	JGetModificationTime(fullName, &t);
-	parser->ParseFile(fullName, allSuffixList, t, symbolList, treeList);
+	parser->ParseFile(fullName, allSuffixList, t, symbolList, treeList, pg);
 
 	return pg.IncrementProgress();
 }

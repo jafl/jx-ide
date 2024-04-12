@@ -1162,20 +1162,17 @@ Class::CalcFrame()
 	JFontManager* fontManager = GetTree()->GetFontManager();
 	const JSize fontSize      = itsTree->GetFontSize();
 
-	JCoordinate w = 10;
-	if (!InUpdateThread())
-	{
-		const JString name = GetDrawName();
+	const JString name = GetDrawName();
 
-		JFontStyle style = kConcreteLabelStyle;
-		style.bold       = true;	// if not bold, extra space doesn't hurt
+	JFontStyle style = kConcreteLabelStyle;
+	style.bold       = true;	// if not bold, extra space doesn't hurt
 
-		JFont font = JFontManager::GetDefaultFont();
-		font.SetSize(fontSize);
-		font.SetStyle(style);
+	JFont font = JFontManager::GetDefaultFont();
+	font.SetSize(fontSize);
+	font.SetStyle(style);
 
-		w = JMax(kMinFrameWidth, 2*kHMarginWidth + font.GetStringWidth(fontManager, name));
-	}
+	const JCoordinate w =
+		JMax(kMinFrameWidth, 2*kHMarginWidth + font.GetStringWidth(fontManager, name));
 
 	const JCoordinate h = CalcFrameHeight(fontManager, fontSize);
 

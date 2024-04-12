@@ -63,6 +63,7 @@ private:
 	void	FileListDirectorX(ProjectDocument* projDoc);
 	void	BuildWindow();
 	void	AdjustWindowTitle();
+	void	SetActiveDuringUpdate(const bool active);
 
 	void	OpenSelectedFiles() const;
 

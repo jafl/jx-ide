@@ -1217,6 +1217,8 @@ TextDocument::WriteTextFile
 			itsFileDisplay->DiskCopyIsModified(false);
 
 			const_cast<TextDocument*>(this)->Broadcast(Saved());
+
+			GetDocumentManager()->SymbolDatabasesNeedUpdate();
 		}
 	}
 }

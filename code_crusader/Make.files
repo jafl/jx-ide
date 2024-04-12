@@ -36,8 +36,6 @@
 .cpp ./code/ChooseRelativeFileDialog
 .cpp ./code/ChooseRelativePathDialog
 .cpp ./code/SymbolUpdatePG
-.cpp ./code/WaitForSymbolUpdateTask
-.cpp ./code/DelaySymbolUpdateTask
 .cpp ./code/CommandManager
 .cpp ./code/CommandMenu
 .cpp ./code/Command
@@ -112,7 +110,7 @@
 .cpp ./code/SearchPathHistoryMenu
 .cpp ./code/SearchFilterHistoryMenu
 .cpp ./code/SearchDocument
-.cpp ./code/SearchTE
+.cpp ./code/SearchST
 .cpp ./code/SearchFontManager
 .cpp ./code/SearchColorManager
 .cpp ./code/StylerBase

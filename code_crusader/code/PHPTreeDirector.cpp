@@ -236,8 +236,8 @@ PHPTreeDirector::StreamInPHPTree
 	assert( phpTreeDir != nullptr );
 
 	auto* tree = jnew PHPTree(projInput, projVers,
-									setInput, setVers, symInput, symVers,
-									phpTreeDir, marginWidth, dirList);
+							  setInput, setVers, symInput, symVers,
+							  phpTreeDir, marginWidth, dirList);
 	return tree;
 }
 

@@ -33,11 +33,10 @@ public:
 
 	~FileListTable() override;
 
-	bool	Update(std::ostream& link,
+	JFloat	Update(JProgressDisplay& pg,
 				   ProjectTree* fileTree, const DirList& dirList,
 				   SymbolDirector* symbolDir,
 				   const JPtrArray<TreeDirector>& treeDirList);
-	void	UpdateFinished();
 
 	const JString&	GetFileName(const JFAID_t id) const;
 	bool			GetFileID(const JString& trueName, JFAID_t* id) const;
@@ -54,7 +53,8 @@ public:
 
 	void	ParseFile(const JString& fullName, const JPtrArray<JString>& allSuffixList,
 					  const time_t modTime,
-					  SymbolList* symbolList, const JPtrArray<Tree>& treeList);
+					  SymbolList* symbolList, const JPtrArray<Tree>& treeList,
+					  JProgressDisplay& pg);
 
 protected:
 
@@ -83,7 +83,7 @@ private:
 	JArray<FileInfo>*	itsFileInfo;
 	JArray<bool>*		itsFileUsage;		// nullptr unless updating files; on stack
 	bool				itsReparseAllFlag;	// true => flush all on next update
-	bool				itsChangedDuringParseFlag;
+	JSize				itsChangedDuringParseCount;
 	mutable JFAID_t		itsLastUniqueID;
 
 private:
@@ -103,6 +103,33 @@ private:
 
 	void	FilesAdded(const JListT::ItemsInserted& info);
 	void	UpdateFileInfo(const JIndex index);
+
+public:
+
+	// JBroadcaster messages
+
+	static const JUtf8Byte* kUpdateFoundChanges;
+	static const JUtf8Byte* kUpdateDone;
+
+	class UpdateFoundChanges : public JBroadcaster::Message
+	{
+	public:
+
+		UpdateFoundChanges()
+			:
+			JBroadcaster::Message(kUpdateFoundChanges)
+		{ };
+	};
+
+	class UpdateDone : public JBroadcaster::Message
+	{
+	public:
+
+		UpdateDone()
+			:
+			JBroadcaster::Message(kUpdateDone)
+		{ };
+	};
 };
 
 #endif

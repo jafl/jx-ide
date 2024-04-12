@@ -54,8 +54,6 @@ static JXImage* theProjectIcon        = nullptr;
 static JXImage* theActiveProjectIcon  = nullptr;
 static JXImage* theActiveListIcon     = nullptr;
 
-static bool theIsUpdateThread = false;
-
 // private functions
 
 void	CreateIcons();
@@ -278,28 +276,6 @@ GetApplication()
 {
 	assert( theApplication != nullptr );
 	return theApplication;
-}
-
-/******************************************************************************
- InUpdateThread
-
- ******************************************************************************/
-
-bool
-InUpdateThread()
-{
-	return theIsUpdateThread;
-}
-
-/******************************************************************************
- SetUpdateThread
-
- ******************************************************************************/
-
-void
-SetUpdateThread()
-{
-	theIsUpdateThread = true;
 }
 
 /******************************************************************************

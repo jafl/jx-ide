@@ -234,8 +234,8 @@ DTreeDirector::StreamInDTree
 	assert( dTreeDir != nullptr );
 
 	auto* tree = jnew DTree(projInput, projVers,
-								setInput, setVers, symInput, symVers,
-								dTreeDir, marginWidth, dirList);
+							setInput, setVers, symInput, symVers,
+							dTreeDir, marginWidth, dirList);
 	return tree;
 }
 

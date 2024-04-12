@@ -236,8 +236,8 @@ JavaTreeDirector::StreamInJavaTree
 	assert( javaTreeDir != nullptr );
 
 	auto* tree = jnew JavaTree(projInput, projVers,
-									  setInput, setVers, symInput, symVers,
-									  javaTreeDir, marginWidth, dirList);
+								setInput, setVers, symInput, symVers,
+								javaTreeDir, marginWidth, dirList);
 	return tree;
 }
 

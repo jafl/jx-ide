@@ -13,10 +13,15 @@
 #include <jx-af/jcore/JFAID.h>
 #include "PrefsManager.h"		// for FileTypesChanged
 
+class JProgressDisplay;
 struct JXPM;
 class JXTextMenu;
 class JXToolBar;
 class JXScrollbarSet;
+class JXWidgetSet;
+class JXStaticText;
+class JXTextButton;
+class JXProgressIndicator;
 class JXPSPrinter;
 class JXEPSPrinter;
 class DirList;
@@ -42,28 +47,29 @@ class TreeDirector : public JXWindowDirector, public JPrefObject
 public:
 
 	TreeDirector(ProjectDocument* supervisor, TreeCreateFn createTreeFn,
-				   const JUtf8Byte* windowTitleSuffixID,
-				   const JUtf8Byte* windowHelpName,
-				   const JXPM& windowIcon,
-				   const JUtf8Byte* treeMenuItems,
-				   const JIndex toolBarPrefID, TreeInitToolBarFn initToolBarFn);
+				 const JUtf8Byte* windowTitleSuffixID,
+				 const JUtf8Byte* windowHelpName,
+				 const JXPM& windowIcon,
+				 const JUtf8Byte* treeMenuItems,
+				 const JIndex toolBarPrefID, TreeInitToolBarFn initToolBarFn);
 	TreeDirector(std::istream& projInput, const JFileVersion projVers,
-				   std::istream* setInput, const JFileVersion setVers,
-				   std::istream* symInput, const JFileVersion symVers,
-				   ProjectDocument* supervisor, const bool subProject,
-				   TreeStreamInFn streamInTreeFn,
-				   const JUtf8Byte* windowTitleSuffixID,
-				   const JUtf8Byte* windowHelpName,
-				   const JXPM& windowIcon,
-				   const JUtf8Byte* treeMenuItems,
-				   const JIndex toolBarPrefID, TreeInitToolBarFn initToolBarFn,
-				   DirList* dirList, const bool readCompileRunDialogs);
+				 std::istream* setInput, const JFileVersion setVers,
+				 std::istream* symInput, const JFileVersion symVers,
+				 ProjectDocument* supervisor, const bool subProject,
+				 TreeStreamInFn streamInTreeFn,
+				 const JUtf8Byte* windowTitleSuffixID,
+				 const JUtf8Byte* windowHelpName,
+				 const JXPM& windowIcon,
+				 const JUtf8Byte* treeMenuItems,
+				 const JIndex toolBarPrefID, TreeInitToolBarFn initToolBarFn,
+				 DirList* dirList, const bool readCompileRunDialogs);
 
 	~TreeDirector() override;
 
 	ProjectDocument*	GetProjectDoc() const;
 	TreeWidget*			GetTreeWidget() const;
 	Tree*				GetTree() const;
+	SymbolUpdatePG*		GetMinimizeMILinksPG() const;
 
 	void	FindFunction();
 
@@ -72,10 +78,6 @@ public:
 	virtual void	StreamOut(std::ostream& projOutput, std::ostream* setOutput,
 							  std::ostream* symOutput, const DirList* dirList) const;
 
-	// for loading updated symbols
-
-	virtual void	ReloadSetup(std::istream& input, const JFileVersion vers);
-
 	// called by ProjectDocument
 
 	void	FileTypesChanged(const PrefsManager::FileTypesChanged& info);
@@ -83,7 +85,8 @@ public:
 	// called by FileListTable
 
 	void	PrepareForTreeUpdate(const bool reparseAll);
-	bool	TreeUpdateFinished(const JArray<JFAID_t>& deadFileList);
+	bool	TreeUpdateFinished(const JArray<JFAID_t>& deadFileList,
+								JProgressDisplay& pg);
 
 	// called by ProjectDocument
 
@@ -101,6 +104,7 @@ protected:
 	void	ReadPrefs(std::istream& input) override;
 	void	WritePrefs(std::ostream& output) const override;
 
+	void	Receive(JBroadcaster* sender, const Message& message) override;
 	void	ReceiveWithFeedback(JBroadcaster* sender, Message* message) override;
 
 private:
@@ -119,20 +123,27 @@ private:
 	CommandMenu*	itsCmdMenu;
 	JXTextMenu*		itsPrefsMenu;
 
+	SymbolUpdatePG*	itsMinimizeMILinksPG;
+
 	const JString		itsWindowTitleSuffix;
 	const JUtf8Byte*	itsWindowHelpName;
 
 // begin JXLayout
 
-	JXToolBar* itsToolBar;
+	JXToolBar*           itsToolBar;
+	JXWidgetSet*         itsUpdateContainer;
+	JXTextButton*        itsUpdateCancelButton;
+	JXStaticText*        itsUpdateLabel;
+	JXStaticText*        itsUpdateCounter;
+	JXProgressIndicator* itsUpdateCleanUpIndicator;
 
 // end JXLayout
 
 private:
 
 	JXScrollbarSet*	TreeDirectorX(ProjectDocument* doc, const JXPM& windowIcon,
-									const JUtf8Byte* treeMenuItems,
-									const JIndex toolBarPrefID, TreeInitToolBarFn initToolBarFn);
+								  const JUtf8Byte* treeMenuItems,
+								  const JIndex toolBarPrefID, TreeInitToolBarFn initToolBarFn);
 	JXScrollbarSet*	BuildWindow(const JXPM& windowIcon,
 								const JUtf8Byte* treeMenuItems,
 								const JIndex toolBarPrefID, TreeInitToolBarFn initToolBarFn);
@@ -195,6 +206,18 @@ TreeDirector::GetProjectDoc()
 	const
 {
 	return itsProjDoc;
+}
+
+/******************************************************************************
+ GetMinimizeMILinksPG
+
+ ******************************************************************************/
+
+inline SymbolUpdatePG*
+TreeDirector::GetMinimizeMILinksPG()
+	const
+{
+	return itsMinimizeMILinksPG;
 }
 
 #endif

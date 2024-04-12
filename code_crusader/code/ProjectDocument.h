@@ -11,11 +11,11 @@
 #define _H_ProjectDocument
 
 #include <jx-af/jx/JXFileDocument.h>
+#include <jx-af/jx/JXStaticText.h>
 #include "DirList.h"
 #include "TextFileType.h"
 #include "ProjectTable.h"		// for PathType, DropFileAction
 #include "BuildManager.h"		// for MakefileMethod
-#include "ExecOutputDocument.h"	// for RecordLink
 #include "CommandManager.h"		// for CmdList
 
 class JProcess;
@@ -26,7 +26,7 @@ class JXToolBar;
 class JXWidgetSet;
 class JXPTPrinter;
 class JXFunctionTask;
-class JXProgressDisplay;
+class JXUrgentTask;
 class JXProgressIndicator;
 class ProjectTree;
 class SymbolDirector;
@@ -39,8 +39,7 @@ class PHPTreeDirector;
 class CommandMenu;
 class FileListDirector;
 class FileListTable;
-class WaitForSymbolUpdateTask;
-class DelaySymbolUpdateTask;
+class SymbolUpdatePG;
 
 class ProjectDocument : public JXFileDocument
 {
@@ -70,7 +69,6 @@ public:
 	void			Activate() override;
 	const JString&	GetName() const override;
 	bool			GetMenuIcon(const JXImage** icon) const override;
-	bool			Close() override;
 
 	ProjectTree*	GetFileTree() const;
 	ProjectTable*	GetFileTable() const;
@@ -96,9 +94,10 @@ public:
 	const DirList&	GetDirectories() const;
 	void			EditSearchPaths(const JPtrArray<JString>* dirList = nullptr);
 
-	void	DelayUpdateSymbolDatabase();
+	bool	FindSymbol(const JString& name, const JString& fileName,
+					   const JXMouseButton button);
+	void	SymbolDatabaseNeedsUpdate();
 	void	UpdateSymbolDatabase();
-	void	CancelUpdateSymbolDatabase();
 	void	RefreshVCSStatus();
 
 	void	SetProjectPrefs(const bool reopenTextFiles,
@@ -147,6 +146,8 @@ protected:
 					  const JString& setName, const JString& symName,
 					  const bool silent);
 
+	bool	OKToClose() override;
+
 	void	DiscardChanges() override;
 	JError	WriteFile(const JString& fullName, const bool safetySave) const override;
 	void	WriteTextFile(std::ostream& output, const bool safetySave) const override;
@@ -175,23 +176,18 @@ private:
 	PHPTreeDirector*			itsPHPTreeDirector;
 	JPtrArray<TreeDirector>*	itsTreeDirectorList;
 
-	JProcess*						itsUpdateProcess;
-	ExecOutputDocument::RecordLink*	itsUpdateLink;
-	std::ostream*					itsUpdateStream;
-	JXProgressDisplay*				itsUpdatePG;
-	WaitForSymbolUpdateTask*		itsWaitForUpdateTask;
-	DelaySymbolUpdateTask*			itsDelaySymbolUpdateTask;
-	JFloat							itsLastSymbolLoadTime;
+	bool			itsIsUpdatingFlag;
+	SymbolUpdatePG*	itsUpdatePG;
+	JXUrgentTask*	itsDelaySymbolUpdateTask;
 
 	JXTextMenu*		itsFileMenu;
-	JXTextMenu*		itsTreeMenu;
 	JXTextMenu*		itsProjectMenu;
 	JXTextMenu*		itsSourceMenu;
 	CommandMenu*	itsCmdMenu;
 	JXTextMenu*		itsPrefsMenu;
 
-	static bool	theReopenTextFilesFlag;
-	static bool	theWarnOpenOldVersionFlag;
+	static bool		theReopenTextFilesFlag;
+	static bool		theWarnOpenOldVersionFlag;
 	static JString	theAddFilesFilter;
 
 // begin JXLayout
@@ -242,14 +238,6 @@ private:
 	void	UpdatePrefsMenu();
 	void	HandlePrefsMenu(const JIndex index);
 	void	EditProjectPrefs();
-
-	void	SymbolUpdateProgress();
-	void	SymbolUpdateFinished();
-	void	ShowUpdatePG(const bool visible);
-	void	DeleteUpdateLink();
-
-	int		StartSymbolLoadTimer();
-	void	StopSymbolLoadTimer(const int timerStatus);
 
 	static void	UpgradeToolBarID(JString* s);
 };

@@ -104,20 +104,21 @@ DTree::StreamInCClass
 /******************************************************************************
  UpdateFinished (virtual)
 
-	*** This often runs in the update thread.
+	*** This runs in the update fiber.
 
  ******************************************************************************/
 
 bool
 DTree::UpdateFinished
 	(
-	const JArray<JFAID_t>& deadFileList
+	const JArray<JFAID_t>&	deadFileList,
+	JProgressDisplay&		pg
 	)
 {
 	jdelete itsClassNameLexer;
 	itsClassNameLexer = nullptr;
 
-	return Tree::UpdateFinished(deadFileList);
+	return Tree::UpdateFinished(deadFileList, pg);
 }
 
 /******************************************************************************

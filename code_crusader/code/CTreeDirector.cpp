@@ -308,8 +308,8 @@ CTreeDirector::StreamInCTree
 	assert( cTreeDir != nullptr );
 
 	auto* tree = jnew CTree(projInput, projVers,
-								setInput, setVers, symInput, symVers,
-								cTreeDir, marginWidth, dirList);
+							setInput, setVers, symInput, symVers,
+							cTreeDir, marginWidth, dirList);
 	return tree;
 }
 

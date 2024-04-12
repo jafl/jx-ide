@@ -11,8 +11,6 @@
 #include "ProjectTable.h"
 #include "ProjectTree.h"
 #include "ProjectNode.h"
-#include "WaitForSymbolUpdateTask.h"
-#include "DelaySymbolUpdateTask.h"
 #include "FileListDirector.h"
 #include "FileListTable.h"
 #include "SymbolDirector.h"
@@ -24,6 +22,7 @@
 #include "GoTreeDirector.h"
 #include "JavaTreeDirector.h"
 #include "PHPTreeDirector.h"
+#include "SymbolUpdatePG.h"
 #include "FileHistoryMenu.h"
 #include "CommandManager.h"
 #include "CommandMenu.h"
@@ -54,12 +53,12 @@
 #include <jx-af/jx/JXProgressIndicator.h>
 #include <jx-af/jx/JXWebBrowser.h>
 #include <jx-af/jx/JXFunctionTask.h>
+#include <jx-af/jx/JXUrgentFunctionTask.h>
+#include <jx-af/jx/JXProgressDisplay.h>
 #include <jx-af/jx/JXImage.h>
 
 #include <jx-af/jcore/JNamedTreeList.h>
 #include <jx-af/jcore/JTreeNode.h>
-#include <jx-af/jcore/JThisProcess.h>
-#include <jx-af/jcore/JOutPipeStream.h>
 #include <jx-af/jcore/JMemoryManager.h>
 #include <jx-af/jcore/jFileUtil.h>
 #include <jx-af/jcore/jVCSUtil.h>
@@ -67,10 +66,6 @@
 #include <jx-af/jcore/jStreamUtil.h>
 #include <jx-af/jcore/jFStreamUtil.h>
 #include <jx-af/jcore/jSysUtil.h>
-#include <sstream>
-#include <cstdlib>
-#include <sys/time.h>
-#include <signal.h>
 #include <jx-af/jcore/jErrno.h>
 #include <jx-af/jcore/jAssert.h>
 
@@ -533,8 +528,6 @@ ProjectDocument::ProjectDocument
 		*setInput >> itsPrintName;
 	}
 
-	const int timerStatus = StartSymbolLoadTimer();
-
 	// create file list
 
 	itsAllFileDirector = jnew FileListDirector(projInput, projVers, setInput, setVers,
@@ -605,8 +598,6 @@ ProjectDocument::ProjectDocument
 	}
 	itsTreeDirectorList->Append(itsPHPTreeDirector);
 
-	StopSymbolLoadTimer(timerStatus);
-
 	// this must be last so it can be cancelled
 
 	DocumentManager* docMgr = GetDocumentManager();
@@ -649,7 +640,7 @@ ProjectDocument::ProjectDocumentX
 	)
 {
 	itsProcessNodeMessageFlag = true;
-	itsLastSymbolLoadTime     = 0.0;
+	itsIsUpdatingFlag         = false;
 
 	itsDirList = jnew DirList;
 	itsDirList->SetBasePath(GetFilePath());
@@ -660,6 +651,11 @@ ProjectDocument::ProjectDocumentX
 
 	itsSaveTask = jnew JXFunctionTask(kSafetySavePeriod, [this]()
 	{
+		if (itsIsUpdatingFlag)
+		{
+			return;
+		}
+
 		bool onDisk;
 		const JString fullName = GetFullName(&onDisk);
 		if (onDisk && !JFileWritable(fullName))
@@ -675,11 +671,7 @@ ProjectDocument::ProjectDocumentX
 	itsTreeDirectorList = jnew JPtrArray<TreeDirector>(JPtrArrayT::kForgetAll);
 	assert( itsTreeDirectorList != nullptr );
 
-	itsUpdateProcess         = nullptr;
-	itsUpdateLink            = nullptr;
-	itsUpdateStream          = nullptr;
 	itsUpdatePG              = nullptr;
-	itsWaitForUpdateTask     = nullptr;
 	itsDelaySymbolUpdateTask = nullptr;
 
 	SetSaveNewFilePrompt(JGetString("SaveFilePrompt::ProjectDocument"));
@@ -694,18 +686,11 @@ ProjectDocument::ProjectDocumentX
 
 ProjectDocument::~ProjectDocument()
 {
+	assert( !itsIsUpdatingFlag );
+
 	GetDocumentManager()->ProjDocDeleted(this);
 
-	DeleteUpdateLink();
-	jdelete itsUpdateStream;
-	jdelete itsUpdateProcess;
-	jdelete itsDelaySymbolUpdateTask;
-	// cannot delete itsWaitForUpdateTask
-
-	if (itsUpdatePG->ProcessRunning())
-	{
-		itsUpdatePG->ProcessFinished();
-	}
+	assert( !itsUpdatePG->ProcessRunning() );
 	jdelete itsUpdatePG;
 
 	jdelete itsCmdMgr;
@@ -717,15 +702,41 @@ ProjectDocument::~ProjectDocument()
 }
 
 /******************************************************************************
- DeleteUpdateLink (private)
+ OKToClose (virtual protected)
+
+	Update Make.files and .pro so user can build without running Code Crusader.
 
  ******************************************************************************/
 
-void
-ProjectDocument::DeleteUpdateLink()
+bool
+ProjectDocument::OKToClose()
 {
-	delete itsUpdateLink;
-	itsUpdateLink = nullptr;
+	if (itsIsUpdatingFlag)
+	{
+		Activate();
+		JGetUserNotification()->ReportError(
+			JGetString("NoCloseWhileUpdating::ProjectDocument"));
+		return false;
+	}
+
+	itsBuildMgr->UpdateMakeFiles(false);
+
+	bool onDisk;
+	const JString fullName = GetFullName(&onDisk);
+	if (true)//NeedsSave() && onDisk && !JFileWritable(fullName))
+	{
+		JEditVCS(fullName);
+		if (JFileWritable(fullName) && SaveInCurrentFile())
+		{
+			DataReverted(false);
+		}
+		else
+		{
+			DataModified();
+		}
+	}
+
+	return JXFileDocument::OKToClose();
 }
 
 /******************************************************************************
@@ -1137,36 +1148,6 @@ ProjectDocument::GetSymbolFileName
 }
 
 /******************************************************************************
- Close
-
-	Update Make.files and .pro so user can build without running Code Crusader.
-
- ******************************************************************************/
-
-bool
-ProjectDocument::Close()
-{
-	itsBuildMgr->UpdateMakeFiles(false);
-
-	bool onDisk;
-	const JString fullName = GetFullName(&onDisk);
-	if (true)//NeedsSave() && onDisk && !JFileWritable(fullName))
-	{
-		JEditVCS(fullName);
-		if (JFileWritable(fullName) && SaveInCurrentFile())
-		{
-			DataReverted(false);
-		}
-		else
-		{
-			DataModified();
-		}
-	}
-
-	return JXFileDocument::Close();
-}
-
-/******************************************************************************
  DiscardChanges (virtual protected)
 
 	We only set NeedsSilentSave(), so this will never be called.
@@ -1369,17 +1350,17 @@ ProjectDocument::BuildWindow
 
 	itsUpdateLabel =
 		jnew JXStaticText(JGetString("itsUpdateLabel::ProjectDocument::JXLayout"), itsUpdateContainer,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 0,2, 130,16);
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 0,0, 90,20);
 	itsUpdateLabel->SetToLabel(false);
 
 	itsUpdateCounter =
 		jnew JXStaticText(JGetString("itsUpdateCounter::ProjectDocument::JXLayout"), itsUpdateContainer,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 130,2, 90,16);
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 90,0, 90,20);
 	itsUpdateCounter->SetToLabel(false);
 
 	itsUpdateCleanUpIndicator =
 		jnew JXProgressIndicator(itsUpdateContainer,
-					JXWidget::kHElastic, JXWidget::kFixedTop, 130,5, 380,10);
+					JXWidget::kHElastic, JXWidget::kFixedTop, 90,5, 420,10);
 
 // end JXLayout
 
@@ -1399,6 +1380,8 @@ ProjectDocument::BuildWindow
 
 	ListenTo(itsConfigButton);
 	itsConfigButton->SetHint(JGetString("ConfigButtonHint::ProjectDocument"));
+
+	itsUpdateContainer->ClearNeedsInternalFTC();
 
 	// menus
 
@@ -1471,10 +1454,11 @@ ProjectDocument::BuildWindow
 
 	// update pg
 
-	itsUpdatePG = jnew JXProgressDisplay();
-	itsUpdatePG->SetItems(nullptr, itsUpdateCounter, itsUpdateCleanUpIndicator, itsUpdateLabel);
+	auto* pg = jnew JXProgressDisplay;
+	pg->SetItems(nullptr, itsUpdateCounter, itsUpdateCleanUpIndicator, itsUpdateLabel);
 
-	ShowUpdatePG(false);
+	itsUpdatePG = jnew SymbolUpdatePG(pg, 10, itsToolBar, itsUpdateContainer);
+	itsUpdatePG->Hide();
 }
 
 /******************************************************************************
@@ -1562,24 +1546,6 @@ ProjectDocument::Receive
 		EditMakeConfig();
 	}
 
-	else if (sender == itsUpdateLink && message.Is(JMessageProtocolT::kMessageReady))
-	{
-		SymbolUpdateProgress();
-	}
-	else if (sender == itsUpdateLink && message.Is(JMessageProtocolT::kReceivedDisconnect))
-	{
-		SymbolUpdateFinished();
-		for (auto* director : *itsTreeDirectorList)
-		{
-			director->GetTree()->RebuildLayout();
-		}
-	}
-
-	else if (sender == itsUpdateProcess && message.Is(JProcess::kFinished))
-	{
-		SymbolUpdateFinished();
-	}
-
 	else
 	{
 		JXFileDocument::Receive(sender, message);
@@ -1601,7 +1567,7 @@ ProjectDocument::ProcessNodeMessage
 		dynamic_cast<const JTree::NodeMessage*>(&message);
 	assert( info != nullptr );
 
-	if ((info->GetNode())->GetDepth() == ProjectTable::kFileDepth)
+	if (info->GetNode()->GetDepth() == ProjectTable::kFileDepth)
 	{
 		const auto* node = dynamic_cast<const ProjectNode*>(info->GetNode());
 		assert( node != nullptr );
@@ -1610,7 +1576,7 @@ ProjectDocument::ProcessNodeMessage
 
 		if (message.Is(JTree::kNodeChanged))
 		{
-			DelayUpdateSymbolDatabase();
+			SymbolDatabaseNeedsUpdate();
 		}
 	}
 }
@@ -2235,230 +2201,24 @@ ProjectDocument::GetProjectFileSuffix()
 }
 
 /******************************************************************************
- StartSymbolLoadTimer (private)
+ FindSymbol
 
  ******************************************************************************/
 
-const long kSymbolLoadTimerStart = 1000000;
-
-int
-ProjectDocument::StartSymbolLoadTimer()
-{
-	itimerval t = { { 0, 0 }, { kSymbolLoadTimerStart, 0 } };
-	return setitimer(ITIMER_PROF, &t, nullptr);
-}
-
-/******************************************************************************
- StopSymbolLoadTimer (private)
-
- ******************************************************************************/
-
-void
-ProjectDocument::StopSymbolLoadTimer
+bool
+ProjectDocument::FindSymbol
 	(
-	const int timerStatus
+	const JString&		name,
+	const JString&		fileName,
+	const JXMouseButton	button
 	)
 {
-	itimerval t;
-	if (timerStatus == 0 && getitimer(ITIMER_PROF, &t) == 0)
-	{
-		itsLastSymbolLoadTime = kSymbolLoadTimerStart - (t.it_value.tv_sec + (t.it_value.tv_usec / 1.0e6));
-	}
-
-	memset(&t, 0, sizeof(t));
-	setitimer(ITIMER_PROF, &t, nullptr);
+	return (!itsIsUpdatingFlag &&
+			itsSymbolDirector->FindSymbol(name, fileName, button));
 }
 
 /******************************************************************************
- SymbolUpdateProgress (private)
-
- ******************************************************************************/
-
-void
-ProjectDocument::SymbolUpdateProgress()
-{
-	JString msg;
-	const bool ok = itsUpdateLink->GetNextMessage(&msg);
-	assert( ok );
-
-	long type;
-
-	const std::string s(msg.GetBytes(), msg.GetByteCount());
-	std::istringstream input(s);
-	input >> type;
-
-	if (type == kFixedLengthStart)
-	{
-		if (itsUpdatePG->ProcessRunning())
-		{
-			itsUpdatePG->ProcessFinished();
-		}
-
-		JIndex count;
-		input >> count;
-
-		JString msg;
-		input >> msg;
-
-		itsUpdateLabel->Show();
-		itsUpdatePG->FixedLengthProcessBeginning(count, msg, false, false);
-	}
-	else if (type == kVariableLengthStart)
-	{
-		if (itsUpdatePG->ProcessRunning())
-		{
-			itsUpdatePG->ProcessFinished();
-		}
-
-		JString msg;
-		input >> msg;
-
-		itsUpdateLabel->Show();
-		itsUpdatePG->VariableLengthProcessBeginning(msg, false, false);
-	}
-	else if (type == kProgressIncrement)
-	{
-		JIndex delta;
-		input >> delta;
-		itsUpdatePG->IncrementProgress(delta);
-	}
-	else if (type == kDoItYourself)
-	{
-		if (itsUpdatePG->ProcessRunning())
-		{
-			itsUpdatePG->ProcessFinished();
-		}
-
-		JXGetApplication()->DisplayBusyCursor();
-
-		itsUpdateCounter->Hide();
-		itsUpdateCleanUpIndicator->Hide();
-		itsUpdateLabel->Show();
-		itsUpdateLabel->GetText()->SetText(JGetString("ReloadingSymbols::ProjectDocument"));
-		GetWindow()->Redraw();
-
-		std::ostringstream pgOutput;
-		itsAllFileDirector->GetFileListTable()->Update(
-			pgOutput, itsFileTree, *itsDirList, itsSymbolDirector,
-			*itsTreeDirectorList);
-
-		itsAllFileDirector->GetFileListTable()->UpdateFinished();
-	}
-	else if (type == kLockSymbolTable)
-	{
-		if (itsUpdatePG->ProcessRunning())
-		{
-			itsUpdatePG->ProcessFinished();
-		}
-
-		JXGetApplication()->DisplayBusyCursor();
-
-		itsUpdateCounter->Hide();
-		itsUpdateCleanUpIndicator->Hide();
-		itsUpdateLabel->Show();
-		itsUpdateLabel->GetText()->SetText(JGetString("ReloadingSymbols::ProjectDocument"));
-		GetWindow()->Redraw();
-
-		*itsUpdateStream << kSymbolTableLocked << std::endl;
-
-		if (itsWaitForUpdateTask != nullptr)
-		{
-			itsWaitForUpdateTask->Cancel();
-		}
-		itsWaitForUpdateTask = jnew WaitForSymbolUpdateTask(itsUpdateProcess);
-		ClearWhenGoingAway(itsWaitForUpdateTask, &itsWaitForUpdateTask);
-		itsWaitForUpdateTask->Go();
-	}
-	else if (type == kSymbolTableWritten)
-	{
-		bool onDisk;
-		const JString symName = GetSymbolFileName(GetFullName(&onDisk));
-
-		std::ifstream symInput(symName.GetBytes());
-
-		const JString symSignature = JRead(symInput, kSymbolFileSignatureLength);
-
-		JFileVersion symVers;
-		symInput >> symVers;
-
-		if (symSignature == kSymbolFileSignature &&
-			symVers == kCurrentProjectFileVersion)
-		{
-			const int timerStatus = StartSymbolLoadTimer();
-
-			itsAllFileDirector->GetFileListTable()->UpdateFinished();
-			itsAllFileDirector->GetFileListTable()->ReadSetup(symInput, symVers);
-			itsSymbolDirector->ReadSetup(symInput, symVers);
-			for (auto* director : *itsTreeDirectorList)
-			{
-				director->ReloadSetup(symInput, symVers);
-			}
-
-			StopSymbolLoadTimer(timerStatus);
-		}
-
-		if (itsWaitForUpdateTask != nullptr)
-		{
-			itsWaitForUpdateTask->StopWaiting();
-		}
-		itsWaitForUpdateTask = nullptr;
-	}
-}
-
-/******************************************************************************
- SymbolUpdateFinished (private)
-
- ******************************************************************************/
-
-void
-ProjectDocument::SymbolUpdateFinished()
-{
-	ShowUpdatePG(false);
-
-	DeleteUpdateLink();
-
-	jdelete itsUpdateStream;
-	itsUpdateStream = nullptr;
-
-	jdelete itsUpdateProcess;
-	itsUpdateProcess = nullptr;
-
-	if (itsWaitForUpdateTask != nullptr)
-	{
-		itsWaitForUpdateTask->StopWaiting();
-	}
-	itsWaitForUpdateTask = nullptr;
-}
-
-/******************************************************************************
- ShowUpdatePG (private)
-
- ******************************************************************************/
-
-void
-ProjectDocument::ShowUpdatePG
-	(
-	const bool visible
-	)
-{
-	if (visible)
-	{
-		itsUpdateContainer->Show();
-		itsToolBar->AdjustSize(0, -itsUpdateContainer->GetFrameHeight());
-	}
-	else
-	{
-		itsUpdateContainer->Hide();
-		itsToolBar->AdjustSize(0, itsUpdateContainer->GetFrameHeight());
-
-		itsUpdateLabel->Hide();
-		itsUpdateCounter->Hide();
-		itsUpdateCleanUpIndicator->Hide();
-	}
-}
-
-/******************************************************************************
- DelayUpdateSymbolDatabase
+ SymbolDatabaseNeedsUpdate
 
 	This is used when we expect more user actions that would trigger yet
 	another update.
@@ -2466,28 +2226,16 @@ ProjectDocument::ShowUpdatePG
  ******************************************************************************/
 
 void
-ProjectDocument::DelayUpdateSymbolDatabase()
+ProjectDocument::SymbolDatabaseNeedsUpdate()
 {
-	jdelete itsDelaySymbolUpdateTask;
-	itsDelaySymbolUpdateTask = jnew DelaySymbolUpdateTask(this);
-	itsDelaySymbolUpdateTask->Start();
-}
-
-/******************************************************************************
- CancelUpdateSymbolDatabase
-
- ******************************************************************************/
-
-void
-ProjectDocument::CancelUpdateSymbolDatabase()
-{
-	jdelete itsDelaySymbolUpdateTask;
-	itsDelaySymbolUpdateTask = nullptr;
-
-	if (itsUpdateLink != nullptr)
+	if (itsDelaySymbolUpdateTask == nullptr)
 	{
-		itsUpdateProcess->Kill();
-		SymbolUpdateFinished();
+		itsDelaySymbolUpdateTask = jnew JXUrgentFunctionTask(this, [this]()
+		{
+			itsDelaySymbolUpdateTask = nullptr;
+			UpdateSymbolDatabase();
+		});
+		itsDelaySymbolUpdateTask->Go();
 	}
 }
 
@@ -2499,130 +2247,32 @@ ProjectDocument::CancelUpdateSymbolDatabase()
 void
 ProjectDocument::UpdateSymbolDatabase()
 {
-	CancelUpdateSymbolDatabase();
-
-	int fd[2][2];
-	JError err = JCreatePipe(fd[0]);
-	if (!err.OK())
+	if (itsIsUpdatingFlag)
 	{
-		err.ReportIfError();
 		return;
 	}
+	itsIsUpdatingFlag = true;
 
-	err = JCreatePipe(fd[1]);
-	if (!err.OK())
+	itsUpdateLabel->GetText()->SetText(JString::empty);
+	itsFileTable->GetEditMenu()->Deactivate();
+	itsProjectMenu->Deactivate();
+	itsSourceMenu->Deactivate();
+
+	JXGetApplication()->StartFiber([this]()
 	{
-		close(fd[0][0]);
-		close(fd[0][1]);
-		err.ReportIfError();
-		return;
-	}
-
-	pid_t pid;
-	err = JThisProcess::Fork(&pid);
-	if (!err.OK())
-	{
-		err.ReportIfError();
-		return;
-	}
-
-	// child
-
-	else if (pid == 0)
-	{
-		close(fd[0][0]);
-		close(fd[1][1]);
-		JMemoryManager::Instance()->SetPrintExitStats(false);
-
-		JThisProcess::Instance()->SetPriority(19);
-
-		// get rid of JXCreatePG, since we must not use X connection
-		JInitCore(jnew ChildAssertHandler());
-		SetUpdateThread();
-
-		JOutPipeStream output(fd[0][1], true);
-
-		// update symbol table, trees, etc.
-		// (exit immediately if no changes)
-
-		const double prevSymbolLoadTime = itsLastSymbolLoadTime;
-		itsLastSymbolLoadTime           = -1;
-		const int timerStatus           = StartSymbolLoadTimer();
-
-		if (!itsAllFileDirector->GetFileListTable()->Update(
-				output, itsFileTree, *itsDirList, itsSymbolDirector,
-				*itsTreeDirectorList))
+		if (itsAllFileDirector->GetFileListTable()->Update(
+				*itsUpdatePG, itsFileTree, *itsDirList, itsSymbolDirector,
+				*itsTreeDirectorList) >= 0.05)
 		{
-			output.write(JMessageProtocolT::kStdDisconnectStr, JMessageProtocolT::kStdDisconnectByteCount);
-			output.close();
-
-			JWait(15);	// give last message a chance to be received
-			abort();	// prevent other fibers from executing
+			HandleFileMenu(kSaveCmd);
 		}
 
-		// tell parent to do it if it takes less time than last full read
+		assert( !itsUpdatePG->ProcessRunning() );
+		itsIsUpdatingFlag = false;
 
-		StopSymbolLoadTimer(timerStatus);
-		if (itsLastSymbolLoadTime < prevSymbolLoadTime)
-		{
-			output << kDoItYourself << std::endl;
-			output.write(JMessageProtocolT::kStdDisconnectStr, JMessageProtocolT::kStdDisconnectByteCount);
-			output.close();
-
-			JWait(15);	// give last message a chance to be received
-			abort();	// prevent other fibers from executing
-		}
-
-		// no need to clear itimer, since we will soon exit
-
-		// obtain lock on .jst
-
-		output << kLockSymbolTable << std::endl;
-
-		if (!JWaitForInput(fd[1][0], 5*60))		// 5 minutes; in case of blocking dialog
-		{
-			abort();	// prevent other fibers from executing
-		}
-
-		JReadUntil(fd[1][0], '\n');
-
-		// write .jst
-
-		std::ostringstream projOutput;
-
-		bool onDisk;
-		const JString symName = GetSymbolFileName(GetFullName(&onDisk));
-
-		std::ostream* symOutput = jnew std::ofstream(symName.GetBytes());
-		assert( symOutput != nullptr );
-
-		WriteFiles(projOutput, JString::empty, nullptr, symName, symOutput);
-
-		output << kSymbolTableWritten << std::endl;
-		output.write(JMessageProtocolT::kStdDisconnectStr, JMessageProtocolT::kStdDisconnectByteCount);
-		output.close();
-
-		JWait(15);	// give last message a chance to be received
-		abort();	// prevent other fibers from executing
-	}
-
-	// parent
-
-	else
-	{
-		close(fd[0][1]);
-		close(fd[1][0]);
-
-		itsUpdateStream = jnew JOutPipeStream(fd[1][1], true);
-
-		ShowUpdatePG(true);
-
-		itsUpdateProcess = jnew JProcess(pid);
-		ListenTo(itsUpdateProcess);
-		itsUpdateProcess->KillAtExit();
-
-		itsUpdateLink = new ExecOutputDocument::RecordLink(fd[0][0]);
-		assert( itsUpdateLink != nullptr );
-		ListenTo(itsUpdateLink);
-	}
+		itsFileTable->GetEditMenu()->Activate();
+		itsProjectMenu->Activate();
+		itsSourceMenu->Activate();
+	},
+	JXApplication::kEventLoopPriority);
 }

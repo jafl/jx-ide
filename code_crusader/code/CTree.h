@@ -26,10 +26,10 @@ public:
 
 	CTree(CTreeDirector* director, const JSize marginWidth);
 	CTree(std::istream& projInput, const JFileVersion projVers,
-			std::istream* setInput, const JFileVersion setVers,
-			std::istream* symInput, const JFileVersion symVers,
-			CTreeDirector* director, const JSize marginWidth,
-			DirList* dirList);
+		  std::istream* setInput, const JFileVersion setVers,
+		  std::istream* symInput, const JFileVersion symVers,
+		  CTreeDirector* director, const JSize marginWidth,
+		  DirList* dirList);
 
 	~CTree() override;
 
@@ -38,7 +38,8 @@ public:
 	void	StreamOut(std::ostream& projOutput, std::ostream* setOutput,
 					  std::ostream* symOutput, const DirList* dirList) const override;
 
-	bool	UpdateFinished(const JArray<JFAID_t>& deadFileList) override;
+	bool	UpdateFinished(const JArray<JFAID_t>& deadFileList,
+							JProgressDisplay& pg) override;
 
 protected:
 

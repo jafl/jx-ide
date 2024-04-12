@@ -822,14 +822,6 @@ TreeWidget::Receive
 		SetBounds(w, h);
 		Refresh();
 	}
-	else if (sender == itsTree && message.Is(Tree::kPrepareForParse))
-	{
-		Hide();
-	}
-	else if (sender == itsTree && message.Is(Tree::kParseFinished))
-	{
-		Show();
-	}
 
 	else if (sender == itsTree && message.Is(Tree::kFontSizeChanged))
 	{

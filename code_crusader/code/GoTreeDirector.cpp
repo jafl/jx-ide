@@ -282,8 +282,8 @@ GoTreeDirector::StreamInGoTree
 	assert( goTreeDir != nullptr );
 
 	auto* tree = jnew GoTree(projInput, projVers,
-								   setInput, setVers, symInput, symVers,
-								   goTreeDir, marginWidth, dirList);
+							 setInput, setVers, symInput, symVers,
+							 goTreeDir, marginWidth, dirList);
 	return tree;
 }
 

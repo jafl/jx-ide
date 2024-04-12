@@ -231,6 +231,16 @@ FileListDirector::BuildWindow()
 		OpenSelectedFiles();
 	}));
 
+	ListenTo(itsFLTable, std::function([this](const FileListTable::UpdateFoundChanges&)
+	{
+		SetActiveDuringUpdate(false);
+	}));
+
+	ListenTo(itsFLTable, std::function([this](const FileListTable::UpdateDone&)
+	{
+		SetActiveDuringUpdate(true);
+	}));
+
 	itsFileMenu = menuBar->AppendTextMenu(JGetString("MenuTitle::Generic_File"));
 	itsFileMenu->SetMenuItems(kFileMenuStr);
 	itsFileMenu->SetUpdateAction(JXMenu::kDisableNone);
@@ -355,6 +365,30 @@ FileListDirector::AdjustWindowTitle()
 {
 	const JString title = itsProjDoc->GetName() + JGetString("WindowTitleSuffix::FileListDirector");
 	GetWindow()->SetTitle(title);
+}
+
+/******************************************************************************
+ SetActiveDuringUpdate (private)
+
+ ******************************************************************************/
+
+void
+FileListDirector::SetActiveDuringUpdate
+	(
+	const bool active
+	)
+{
+	itsListMenu->SetActive(active);
+
+	JXTEBase* te;
+	JXTextMenu* menu;
+	if (itsFLTable->GetEditMenuProvider(&te) &&
+		te->GetEditMenu(&menu))
+	{
+		menu->SetActive(active);
+	}
+
+	itsFLSet->SetVisible(active);
 }
 
 /******************************************************************************

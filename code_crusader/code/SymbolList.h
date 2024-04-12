@@ -174,16 +174,38 @@ public:
 	// JBroadcaster messages
 
 	static const JUtf8Byte* kChanged;
+	static const JUtf8Byte* kUpdateFoundChanges;
+	static const JUtf8Byte* kUpdateDone;
 
 	class Changed : public JBroadcaster::Message
-		{
-		public:
+	{
+	public:
 
-			Changed()
-				:
-				JBroadcaster::Message(kChanged)
-				{ };
-		};
+		Changed()
+			:
+			JBroadcaster::Message(kChanged)
+		{ };
+	};
+
+	class UpdateFoundChanges : public JBroadcaster::Message
+	{
+	public:
+
+		UpdateFoundChanges()
+			:
+			JBroadcaster::Message(kUpdateFoundChanges)
+		{ };
+	};
+
+	class UpdateDone : public JBroadcaster::Message
+	{
+	public:
+
+		UpdateDone()
+			:
+			JBroadcaster::Message(kUpdateDone)
+		{ };
+	};
 };
 
 

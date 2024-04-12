@@ -69,11 +69,11 @@ public:
 public:
 
 	ProjectTable(ProjectDocument* doc, JXMenuBar* menuBar,
-				   JNamedTreeList* treeList,
-				   JXScrollbarSet* scrollbarSet, JXContainer* enclosure,
-				   const HSizingOption hSizing, const VSizingOption vSizing,
-				   const JCoordinate x, const JCoordinate y,
-				   const JCoordinate w, const JCoordinate h);
+				 JNamedTreeList* treeList,
+				 JXScrollbarSet* scrollbarSet, JXContainer* enclosure,
+				 const HSizingOption hSizing, const VSizingOption vSizing,
+				 const JCoordinate x, const JCoordinate y,
+				 const JCoordinate w, const JCoordinate h);
 
 	~ProjectTable() override;
 
@@ -125,6 +125,8 @@ public:
 						 const bool forExtend) const override;
 
 	void	SetInputAction(const InputAction action);
+
+	JXTextMenu*	GetEditMenu() const;
 
 protected:
 
@@ -292,6 +294,18 @@ ProjectTable::SetInputAction
 	)
 {
 	itsInputAction = action;
+}
+
+/******************************************************************************
+ GetEditMenu
+
+ ******************************************************************************/
+
+inline JXTextMenu*
+ProjectTable::GetEditMenu()
+	const
+{
+	return itsEditMenu;
 }
 
 #endif

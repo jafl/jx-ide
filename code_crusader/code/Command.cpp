@@ -48,7 +48,6 @@ Command::Command
 	itsOutputDoc(nullptr),
 	itsBeepFlag(beepWhenFinished),
 	itsRefreshVCSStatusFlag(refreshVCSStatusWhenFinished),
-	itsUpdateSymbolDatabaseFlag(false),
 	itsInQueueFlag(false),
 	itsSuccessFlag(true),
 	itsCancelledFlag(false),
@@ -83,11 +82,6 @@ Command::~Command()
 	if (itsParent != nullptr && itsParent->itsRunOutputDoc == nullptr)
 	{
 		itsParent->itsRunOutputDoc = itsRunOutputDoc;
-	}
-
-	if (itsUpdateSymbolDatabaseFlag && itsSuccessFlag)
-	{
-		GetDocumentManager()->UpdateSymbolDatabases();
 	}
 
 	// only refresh VCS status when all finished, since may be expensive
@@ -307,8 +301,6 @@ Command::Start
 
 	if (info.isMake)
 	{
-		itsUpdateSymbolDatabaseFlag = true;
-
 		Command* p = itsParent;
 		while (p != nullptr)
 		{
@@ -366,16 +358,6 @@ Command::Start
 	{
 		GetDocumentManager()->SaveTextDocuments(false);
 		JWait(1.1);		// ensure timestamp is different if any other program modifies the files and then does --revert-all-saved
-	}
-
-	if (info.isVCS)
-	{
-		itsUpdateSymbolDatabaseFlag = true;
-	}
-
-	if (itsUpdateSymbolDatabaseFlag)
-	{
-		GetDocumentManager()->CancelUpdateSymbolDatabases();
 	}
 
 	// after saving all files, update Makefile

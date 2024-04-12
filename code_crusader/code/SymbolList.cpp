@@ -35,7 +35,9 @@ static const JUtf8Byte* kCtagsArgs =
 
 // JBroadcaster message types
 
-const JUtf8Byte* SymbolList::kChanged = "Changed::SymbolList";
+const JUtf8Byte* SymbolList::kChanged            = "Changed::SymbolList";
+const JUtf8Byte* SymbolList::kUpdateFoundChanges = "UpdateFoundChanges::SymbolList";
+const JUtf8Byte* SymbolList::kUpdateDone         = "UpdateDone::SymbolList";
 
 /******************************************************************************
  Constructor
@@ -580,7 +582,7 @@ SymbolList::FileTypesChanged
 	Get ready to parse files that have changed or been created and to
 	throw out symbols in files that no longer exist.
 
-	*** This often runs in the update thread.
+	*** This runs in the update fiber.
 
  ******************************************************************************/
 
@@ -596,6 +598,7 @@ SymbolList::PrepareForUpdate
 	if (reparseAll)
 	{
 		RemoveAllSymbols();
+		Broadcast(UpdateFoundChanges());
 	}
 	itsChangedDuringParseFlag = reparseAll;
 
@@ -611,7 +614,7 @@ SymbolList::PrepareForUpdate
 
 	Cleans up after updating files.
 
-	*** This often runs in the update thread.
+	*** This runs in the update fiber.
 
  ******************************************************************************/
 
@@ -633,15 +636,11 @@ SymbolList::UpdateFinished
 	const JSize fileCount = deadFileList.GetItemCount();
 	if (fileCount > 0)
 	{
-		pg.FixedLengthProcessBeginning(fileCount, JGetString("CleaningUp::SymbolList"), false, false);
-
 		for (JIndex i=1; i<=fileCount; i++)
 		{
 			RemoveFile(deadFileList.GetItem(i));
 			pg.IncrementProgress();
 		}
-
-		pg.ProcessFinished();
 	}
 
 	// trim file scope paths
@@ -683,9 +682,10 @@ SymbolList::UpdateFinished
 
 	// notify
 
-	if (itsChangedDuringParseFlag && !InUpdateThread())
+	itsReparseAllFlag = false;
+	Broadcast(UpdateDone());
+	if (itsChangedDuringParseFlag)
 	{
-		itsReparseAllFlag = false;
 		Broadcast(Changed());
 	}
 
@@ -728,6 +728,11 @@ SymbolList::RemoveFile
 		SymbolInfo info = itsSymbolList->GetItem(i);
 		if (info.fileID == id)
 		{
+			if (!itsChangedDuringParseFlag)
+			{
+				Broadcast(UpdateFoundChanges());
+			}
+
 			info.Free();
 			itsSymbolList->RemoveItem(i);
 			itsChangedDuringParseFlag = true;
@@ -779,6 +784,11 @@ SymbolList::ParseFile
 	Language lang;
 	if (ProcessFile(fileName, fileType, &data, &lang))
 	{
+		if (!itsChangedDuringParseFlag)
+		{
+			Broadcast(UpdateFoundChanges());
+		}
+
 		icharbufstream input(data.GetBytes(), data.GetByteCount());
 		ReadSymbolList(input, lang, fileName, id);
 		itsChangedDuringParseFlag = true;
@@ -937,7 +947,7 @@ SymbolList::ReadSetup
 void
 SymbolList::ReadSetup
 	(
-	std::istream&			input,
+	std::istream&		input,
 	const JFileVersion	vers
 	)
 {
