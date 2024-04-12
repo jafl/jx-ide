@@ -163,7 +163,6 @@ KillButtonShortcuts::ShellDocument	"^C#."
 
 OpenFilesItemText::ProjectDocument			"Open selected files"
 EditGroupNameItemText::ProjectDocument		"Edit group name"
-ReloadingSymbols::ProjectDocument			"Reloading symbols..."
 ParsingFilesProgress::ProjectDocument		"Adding files..."
 FileAlreadyInProject::ProjectDocument		"\"$name\" is already in the project."
 AllFilesAlreadyInProject::ProjectDocument	"All the files that you selected are already in the project."
@@ -215,6 +214,8 @@ PrintHeader::ProjectDocument
 "Project name:  $name
 Project path:  $path
 "
+
+NoCloseWhileUpdating::ProjectDocument	"You cannot close the project while the symbol database is updating."
 
 # SaveNewProjectDialog
 
@@ -674,10 +675,7 @@ ChangeDirectory::CompileDocument	"Entering directory `$d`"
 # FileListTable
 
 ParsingFiles::FileListTable	"Parsing files:"
-
-# SymbolList
-
-CleaningUp::SymbolList	"Cleaning up:"
+CleaningUp::FileListTable	"Cleaning up:"
 
 # DiffFileDialog
 
@@ -794,7 +792,7 @@ OnlyDropFolders::TreeWidget		"You can only drop directories on the class tree, n
 
 # Tree
 
-MinMILengthsProgress::Tree	"Minimizing multiple inheritance lengths..."
+MinMILengthsProgress::Tree	"Minimizing MI links:"
 
 RequiresCodeMill::Tree
 "This feature requires that the Code Mill plug-in be installed in one of the directories on your execution path.
@@ -931,11 +929,11 @@ SaveFileSet::SearchTextDialog		"Save file set as:"
 
 InvertFlag::SearchFilterHistoryMenu	"(invert)"
 
-# SearchTE
+# SearchST
 
-NotFound::SearchTE			"Not found:  $n"
-NotReadable::SearchTE		"Not readable:  $n"
-NotSearchedBinary::SearchTE	"Not searched (binary):  $n"
+NotFound::SearchST			"Not found:  $n"
+NotReadable::SearchST		"Not readable:  $n"
+NotSearchedBinary::SearchST	"Not searched (binary):  $n"
 
 # RunTEScriptDialog
 

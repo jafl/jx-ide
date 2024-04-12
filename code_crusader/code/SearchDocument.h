@@ -9,7 +9,7 @@
 #define _H_SearchDocument
 
 #include "CommandOutputDocument.h"
-#include "SearchTE.h"		// need messages
+#include "SearchST.h"		// need messages
 #include <boost/fiber/buffered_channel.hpp>
 
 class JXTextMenu;
@@ -37,9 +37,9 @@ public:
 
 	void	ConvertSelectionToFullPath(JString* fileName) const override;
 
-	// for SearchTE
+	// for SearchST
 
-	void	SetSearchTE(SearchTE* te);
+	void	SetSearchST(SearchST* te);
 	void	QueueMessage(JBroadcaster::Message* message);
 	void	SearchFinished();
 
@@ -60,17 +60,17 @@ private:
 
 	JXTextMenu*				itsMatchMenu;
 	JXProgressIndicator*	itsIndicator;	// nullptr after ProcessFinished()
-	SearchTE*				itsReplaceTE;	// nullptr unless replacing
+	SearchST*				itsReplaceST;	// nullptr unless replacing
 
 	boost::fibers::buffered_channel<JBroadcaster::Message*>*	itsChannel;
 
-	SearchTE*		itsSearchTE;
+	SearchST*		itsSearchST;
 	JXTextButton*	itsStopButton;
 
 private:
 
 	void	RecvFromChannel();
-	void	AppendSearchResult(const SearchTE::SearchResult& msg);
+	void	AppendSearchResult(const SearchST::SearchResult& msg);
 	void	MarkAdditionalMatch(const JStyledText::TextRange& range);
 	void	AppendFileName(const JString& text);
 	void	AppendError(const JString& text);
@@ -106,17 +106,17 @@ SearchDocument::CommandRunning()
 }
 
 /******************************************************************************
- SetSearchTE
+ SetSearchST
 
  ******************************************************************************/
 
 inline void
-SearchDocument::SetSearchTE
+SearchDocument::SetSearchST
 	(
-	SearchTE* te
+	SearchST* te
 	)
 {
-	itsSearchTE = te;
+	itsSearchST = te;
 }
 
 #endif

@@ -9,7 +9,6 @@
 
 #include "SearchDocument.h"
 #include "TextEditor.h"
-#include "SearchTE.h"
 #include "SearchTextDialog.h"
 #include "globals.h"
 #include <jx-af/jx/JXDisplay.h>
@@ -61,8 +60,8 @@ SearchDocument::Create
 
 	std::thread t([fileList, nameList, onlyListFiles, listFilesWithoutMatch, doc]()
 	{
-		SearchTE te;
-		te.SearchFiles(*fileList, *nameList, onlyListFiles, listFilesWithoutMatch, doc);
+		SearchST st;
+		st.SearchFiles(*fileList, *nameList, onlyListFiles, listFilesWithoutMatch, doc);
 		jdelete fileList;
 		jdelete nameList;
 	});
@@ -104,8 +103,8 @@ SearchDocument::Create
 
 	std::thread t([fileList, nameList, doc]()
 	{
-		SearchTE te;
-		te.SearchFiles(*fileList, *nameList, true, false, doc);
+		SearchST st;
+		st.SearchFiles(*fileList, *nameList, true, false, doc);
 		jdelete fileList;
 		jdelete nameList;
 	});
@@ -135,12 +134,12 @@ SearchDocument::SearchDocument
 	itsIsReplaceFlag(isReplace),
 	itsOnlyListFilesFlag(onlyListFiles),
 	itsFoundFlag(false),
-	itsReplaceTE(nullptr),
-	itsSearchTE(nullptr)
+	itsReplaceST(nullptr),
+	itsSearchST(nullptr)
 {
 	JXWindow* window = GetWindow();
 
-	itsChannel = jnew boost::fibers::buffered_channel<JBroadcaster::Message*>(1024);
+	itsChannel = jnew boost::fibers::buffered_channel<JBroadcaster::Message*>(kJBufferedChannelCapacity);
 
 	// button in upper right
 
@@ -159,7 +158,7 @@ SearchDocument::SearchDocument
 
 	ListenTo(itsStopButton, std::function([this](const JXButton::Pushed&)
 	{
-		itsSearchTE->Cancel();
+		itsSearchST->Cancel();
 	}));
 
 	menuBar->AdjustSize(-kMenuButtonWidth, 0);
@@ -195,7 +194,7 @@ SearchDocument::SearchDocument
 
 	if (itsIsReplaceFlag)
 	{
-		itsReplaceTE = jnew SearchTE;
+		itsReplaceST = jnew SearchST;
 	}
 
 	FileChanged(windowTitle, false);
@@ -210,7 +209,7 @@ SearchDocument::SearchDocument
 
 SearchDocument::~SearchDocument()
 {
-	jdelete itsReplaceTE;
+	jdelete itsReplaceST;
 	jdelete itsChannel;
 }
 
@@ -249,12 +248,12 @@ SearchDocument::RecvFromChannel()
 
 	// finished
 
-	itsSearchTE = nullptr;
+	itsSearchST = nullptr;
 
 	if (itsIsReplaceFlag)
 	{
-		jdelete itsReplaceTE;
-		itsReplaceTE = nullptr;
+		jdelete itsReplaceST;
+		itsReplaceST = nullptr;
 
 		JXGetApplication()->Resume();
 	}
@@ -302,7 +301,7 @@ SearchDocument::QueueMessage
 void
 SearchDocument::AppendSearchResult
 	(
-	const SearchTE::SearchResult& msg
+	const SearchST::SearchResult& msg
 	)
 {
 	itsFoundFlag = true;
@@ -478,12 +477,11 @@ SearchDocument::ReplaceAll
 		}
 	}
 	else if (JFileReadable(fileName) &&
-			 itsReplaceTE->GetText()->ReadPlainText(fileName, &format, false))
+			 itsReplaceST->ReadPlainText(fileName, &format, false))
 	{
-		itsReplaceTE->SetCaretLocation(1);
-		if (itsReplaceTE->ReplaceAllForward())
+		if (itsReplaceST->ReplaceAllForward())
 		{
-			itsReplaceTE->GetText()->WritePlainText(fileName, format);
+			itsReplaceST->WritePlainText(fileName, format);
 		}
 	}
 }
@@ -574,31 +572,31 @@ SearchDocument::Receive
 	const Message&	message
 	)
 {
-	if (message.Is(SearchTE::kIncrementProgress))
+	if (message.Is(SearchST::kIncrementProgress))
 	{
 		itsIndicator->IncrementValue();
 	}
-	else if (message.Is(SearchTE::kSearchResult))
+	else if (message.Is(SearchST::kSearchResult))
 	{
-		const auto* result = dynamic_cast<const SearchTE::SearchResult*>(&message);
+		const auto* result = dynamic_cast<const SearchST::SearchResult*>(&message);
 		assert( result != nullptr );
 		AppendSearchResult(*result);
 	}
-	else if (message.Is(SearchTE::kAdditionalMatch))
+	else if (message.Is(SearchST::kAdditionalMatch))
 	{
-		const auto* result = dynamic_cast<const SearchTE::AdditionalMatch*>(&message);
+		const auto* result = dynamic_cast<const SearchST::AdditionalMatch*>(&message);
 		assert( result != nullptr );
 		MarkAdditionalMatch(result->GetRange());
 	}
-	else if (message.Is(SearchTE::kFileName))
+	else if (message.Is(SearchST::kFileName))
 	{
-		const auto* result = dynamic_cast<const SearchTE::FileName*>(&message);
+		const auto* result = dynamic_cast<const SearchST::FileName*>(&message);
 		assert( result != nullptr );
 		AppendFileName(result->GetFileName());
 	}
-	else if (message.Is(SearchTE::kError))
+	else if (message.Is(SearchST::kError))
 	{
-		const auto* result = dynamic_cast<const SearchTE::Error*>(&message);
+		const auto* result = dynamic_cast<const SearchST::Error*>(&message);
 		assert( result != nullptr );
 		AppendError(result->GetMessage());
 	}

@@ -1,17 +1,16 @@
 /******************************************************************************
- SearchTE.cpp
+ SearchST.cpp
 
 	Class to search files and report back to main Code Crusader process.
 
-	BASE CLASS = JTextEditor
+	BASE CLASS = JStyledText
 
-	Copyright © 1998 by John Lindal.
+	Copyright © 1998-24 by John Lindal.
 
  ******************************************************************************/
 
-#include "SearchTE.h"
+#include "SearchST.h"
 #include "SearchDocument.h"
-#include "SearchFontManager.h"
 #include "SearchTextDialog.h"
 #include "sharedUtil.h"
 #include "globals.h"
@@ -24,28 +23,23 @@ const JSize kMaxQuoteCharCount = 500;
 
 // JBroadcaster message types
 
-const JUtf8Byte* SearchTE::kIncrementProgress = "IncrementProgress::SearchTE";
-const JUtf8Byte* SearchTE::kSearchResult      = "SearchResult::SearchTE";
-const JUtf8Byte* SearchTE::kAdditionalMatch   = "AdditionalMatch::SearchTE";
-const JUtf8Byte* SearchTE::kFileName          = "FileName::SearchTE";
-const JUtf8Byte* SearchTE::kError             = "Error::SearchTE";
+const JUtf8Byte* SearchST::kIncrementProgress = "IncrementProgress::SearchST";
+const JUtf8Byte* SearchST::kSearchResult      = "SearchResult::SearchST";
+const JUtf8Byte* SearchST::kAdditionalMatch   = "AdditionalMatch::SearchST";
+const JUtf8Byte* SearchST::kFileName          = "FileName::SearchST";
+const JUtf8Byte* SearchST::kError             = "Error::SearchST";
 
 /******************************************************************************
  Constructor
 
  ******************************************************************************/
 
-SearchTE::SearchTE()
+SearchST::SearchST()
 	:
-	JTextEditor(kFullEditor, jnew JStyledText(false, false), true,
-				jnew SearchFontManager, true,
-				1,1,1,1, 1000000),
+	JStyledText(false, false),
 	itsCancelledFlag(false)
 {
-	assert( TEGetFontManager() != nullptr );
-
-	RecalcAll(true);
-	GetText()->SetCharacterInWordFunction(::IsCharacterInWord);
+	SetCharacterInWordFunction(::IsCharacterInWord);
 }
 
 /******************************************************************************
@@ -53,7 +47,7 @@ SearchTE::SearchTE()
 
  ******************************************************************************/
 
-SearchTE::~SearchTE()
+SearchST::~SearchST()
 {
 }
 
@@ -63,7 +57,7 @@ SearchTE::~SearchTE()
  ******************************************************************************/
 
 void
-SearchTE::SearchFiles
+SearchST::SearchFiles
 	(
 	const JPtrArray<JString>&	fileList,
 	const JPtrArray<JString>&	nameList,
@@ -72,7 +66,7 @@ SearchTE::SearchFiles
 	SearchDocument*				doc
 	)
 {
-	doc->SetSearchTE(this);
+	doc->SetSearchST(this);
 
 	JRegex* searchRegex;
 	JString replaceStr;
@@ -116,8 +110,30 @@ SearchTE::SearchFiles
 
  ******************************************************************************/
 
+inline JSize
+countLines
+	(
+	JStringIterator*	iter,
+	const JIndex		beyondEnd
+	)
+{
+	JSize count = 0;
+
+	JUtf8Character c;
+	while (iter->Next(&c) && !iter->AtEnd() &&
+		   iter->GetNextCharacterIndex() < beyondEnd)
+	{
+		if (c == '\n')
+		{
+			count++;
+		}
+	}
+
+	return count;
+}
+
 void
-SearchTE::SearchFile
+SearchST::SearchFile
 	(
 	const JString&	fileName,
 	const JString&	printName,		// so we display it correctly to the user
@@ -135,25 +151,25 @@ SearchTE::SearchFile
 
 	if (!JFileExists(fileName))
 	{
-		QueueErrorMessage(doc, "NotFound::SearchTE", map, sizeof(map));
+		QueueErrorMessage(doc, "NotFound::SearchST", map, sizeof(map));
 		return;
 	}
 	else if (!JFileReadable(fileName))
 	{
-		QueueErrorMessage(doc, "NotReadable::SearchTE", map, sizeof(map));
+		QueueErrorMessage(doc, "NotReadable::SearchST", map, sizeof(map));
 		return;
 	}
 
 	const bool ignore = JUtf8Character::IgnoreBadUtf8();
 	JUtf8Character::SetIgnoreBadUtf8(true);
 
-	JStyledText::PlainTextFormat format;
+	PlainTextFormat format;
 	if (IsKnownBinaryFile(printName) ||
-		!GetText()->ReadPlainText(fileName, &format, false))
+		!ReadPlainText(fileName, &format, false))
 	{
 		// don't search binary files (cleaning is too slow and pointless)
 
-		QueueErrorMessage(doc, "NotSearchedBinary::SearchTE", map, sizeof(map));
+		QueueErrorMessage(doc, "NotSearchedBinary::SearchST", map, sizeof(map));
 		JUtf8Character::SetIgnoreBadUtf8(ignore);
 		return;
 	}
@@ -161,13 +177,15 @@ SearchTE::SearchFile
 	JUtf8Character::SetIgnoreBadUtf8(ignore);
 
 	bool foundMatch = false;
-	JStyledText::TextRange prevQuoteRange;
+	TextRange prevQuoteRange;
 	bool prevQuoteTruncated = false;
 
+	TextIndex startIndex(1,1);
+	JIndex lineIndex = 1;
 	while (true)
 	{
 		bool wrapped;
-		const JStringMatch m = SearchForward(searchRegex, entireWord, false, &wrapped);
+		const JStringMatch m = SearchForward(startIndex, searchRegex, entireWord, false, &wrapped);
 		if (m.IsEmpty())
 		{
 			break;
@@ -183,9 +201,16 @@ SearchTE::SearchFile
 			break;
 		}
 
-		JStringIterator iter(GetText()->GetText());
+		JStringIterator iter(GetText());
+		iter.UnsafeMoveTo(JStringIterator::kStartBeforeChar, startIndex.charIndex, startIndex.byteIndex);
+		lineIndex += countLines(&iter, m.GetCharacterRange().first);
 
-		const JStyledText::TextRange origMatchRange(
+		startIndex.charIndex = m.GetCharacterRange().first + m.GetCharacterRange().GetCount();
+		startIndex.byteIndex = m.GetUtf8ByteRange().first + m.GetUtf8ByteRange().GetCount();
+
+		const JSize extraLineCount = countLines(&iter, startIndex.charIndex);
+
+		const TextRange origMatchRange(
 			m.GetCharacterRange(), m.GetUtf8ByteRange());
 
 		auto matchRange = origMatchRange;
@@ -198,11 +223,11 @@ SearchTE::SearchFile
 			matchRange.byteRange.last = iter.GetPrevByteIndex();
 		}
 
-		const JStyledText::TextRange origQuoteRange(
-			GetText()->GetParagraphStart(matchRange.GetFirst()),
-			GetText()->AdjustTextIndex(GetText()->GetParagraphEnd(matchRange.GetLast(*GetText())), +1));
+		const TextRange origQuoteRange(
+			GetParagraphStart(matchRange.GetFirst()),
+			AdjustTextIndex(GetParagraphEnd(matchRange.GetLast(*this)), +1));
 
-		JStyledText::TextRange quoteRange = origQuoteRange;
+		TextRange quoteRange = origQuoteRange;
 		if (prevQuoteRange.charRange.Contains(matchRange.charRange))
 		{
 			quoteRange = prevQuoteRange;
@@ -278,14 +303,14 @@ SearchTE::SearchFile
 
 			auto* n = jnew JString(printName);
 
-			auto* msg = jnew SearchResult(n, GetLineForChar(quoteRange.charRange.first),
-										  quoteText, matchRange);
+			auto* msg = jnew SearchResult(n, lineIndex, quoteText, matchRange);
 			assert( msg != nullptr );
 
 			doc->QueueMessage(msg);
 		}
 
 		prevQuoteRange = quoteRange;
+		lineIndex     += extraLineCount;
 	}
 
 	if (listFilesWithoutMatch && !foundMatch)
@@ -300,7 +325,7 @@ SearchTE::SearchFile
  ******************************************************************************/
 
 void
-SearchTE::QueueErrorMessage
+SearchST::QueueErrorMessage
 	(
 	SearchDocument*		doc,
 	const JUtf8Byte*	key,
@@ -322,7 +347,7 @@ SearchTE::QueueErrorMessage
  ******************************************************************************/
 
 void
-SearchTE::QueueFileNameMessage
+SearchST::QueueFileNameMessage
 	(
 	SearchDocument*	doc,
 	const JString&	name
@@ -347,7 +372,7 @@ static const JUtf8Byte* kSuffix[] =
 };
 
 bool
-SearchTE::IsKnownBinaryFile
+SearchST::IsKnownBinaryFile
 	(
 	const JString& fileName
 	)
@@ -378,7 +403,7 @@ SearchTE::IsKnownBinaryFile
  ******************************************************************************/
 
 bool
-SearchTE::ReplaceAllForward()
+SearchST::ReplaceAllForward()
 {
 	JRegex* searchRegex;
 	JString replaceStr;
@@ -388,208 +413,14 @@ SearchTE::ReplaceAllForward()
 			&searchRegex, &entireWord, &wrapSearch,
 			&replaceStr, &interpolator, &preserveCase))
 	{
-		return JTextEditor::ReplaceAll(
+		auto r = ReplaceAllInRange(
+					TextRange(TextIndex(1,1), GetBeyondEnd()),
 					*searchRegex, entireWord,
-					replaceStr, interpolator, preserveCase, false);
+					replaceStr, interpolator, preserveCase);
+		return !r.IsEmpty();
 	}
 	else
 	{
 		return false;
 	}
-}
-
-/******************************************************************************
- TERefresh (virtual protected)
-
- ******************************************************************************/
-
-void
-SearchTE::TERefresh()
-{
-}
-
-/******************************************************************************
- TERefreshRect (virtual protected)
-
- ******************************************************************************/
-
-void
-SearchTE::TERefreshRect
-	(
-	const JRect& rect
-	)
-{
-}
-
-/******************************************************************************
- TERedraw (virtual protected)
-
- ******************************************************************************/
-
-void
-SearchTE::TERedraw()
-{
-}
-
-/******************************************************************************
- TESetGUIBounds (virtual protected)
-
- ******************************************************************************/
-
-void
-SearchTE::TESetGUIBounds
-	(
-	const JCoordinate w,
-	const JCoordinate h,
-	const JCoordinate changeY
-	)
-{
-}
-
-/******************************************************************************
- TEWidthIsBeyondDisplayCapacity (virtual protected)
-
- ******************************************************************************/
-
-bool
-SearchTE::TEWidthIsBeyondDisplayCapacity
-	(
-	const JSize width
-	)
-	const
-{
-	return false;
-}
-
-/******************************************************************************
- TEScrollToRect (virtual protected)
-
- ******************************************************************************/
-
-bool
-SearchTE::TEScrollToRect
-	(
-	const JRect&	rect,
-	const bool		centerInDisplay
-	)
-{
-	return true;
-}
-
-/******************************************************************************
- TEScrollForDrag (virtual protected)
-
- ******************************************************************************/
-
-bool
-SearchTE::TEScrollForDrag
-	(
-	const JPoint& pt
-	)
-{
-	return true;
-}
-
-/******************************************************************************
- TEScrollForDND (virtual protected)
-
- ******************************************************************************/
-
-bool
-SearchTE::TEScrollForDND
-	(
-	const JPoint& pt
-	)
-{
-	return true;
-}
-
-/******************************************************************************
- TESetVertScrollStep (virtual protected)
-
- ******************************************************************************/
-
-void
-SearchTE::TESetVertScrollStep
-	(
-	const JCoordinate vStep
-	)
-{
-}
-
-/******************************************************************************
- TEUpdateClipboard (virtual protected)
-
- ******************************************************************************/
-
-void
-SearchTE::TEUpdateClipboard
-	(
-	const JString&			text,
-	const JRunArray<JFont>&	style
-	)
-	const
-{
-}
-
-/******************************************************************************
- TEGetClipboard (virtual protected)
-
- ******************************************************************************/
-
-bool
-SearchTE::TEGetClipboard
-	(
-	JString*			text,
-	JRunArray<JFont>*	style
-	)
-	const
-{
-	return false;
-}
-
-/******************************************************************************
- TEBeginDND (virtual protected)
-
- ******************************************************************************/
-
-bool
-SearchTE::TEBeginDND()
-{
-	return false;
-}
-
-/******************************************************************************
- TEPasteDropData (virtual protected)
-
- ******************************************************************************/
-
-void
-SearchTE::TEPasteDropData()
-{
-}
-
-/******************************************************************************
- TECaretShouldBlink (virtual protected)
-
- ******************************************************************************/
-
-void
-SearchTE::TECaretShouldBlink
-	(
-	const bool blink
-	)
-{
-}
-
-/******************************************************************************
- TEHasSearchText (virtual)
-
- ******************************************************************************/
-
-bool
-SearchTE::TEHasSearchText()
-	const
-{
-	return false;
 }

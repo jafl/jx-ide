@@ -1,24 +1,24 @@
 /******************************************************************************
- SearchTE.h
+ SearchST.h
 
 	Copyright © 1998 by John Lindal.
 
  ******************************************************************************/
 
-#ifndef _H_SearchTE
-#define _H_SearchTE
+#ifndef _H_SearchST
+#define _H_SearchST
 
-#include <jx-af/jcore/JTextEditor.h>
+#include <jx-af/jcore/JStyledText.h>
 
 class SearchDocument;
 
-class SearchTE : public JTextEditor
+class SearchST : public JStyledText
 {
 public:
 
-	SearchTE();
+	SearchST();
 
-	~SearchTE() override;
+	~SearchST() override;
 
 	void	SearchFiles(const JPtrArray<JString>& fileList,
 						const JPtrArray<JString>& nameList,
@@ -28,28 +28,7 @@ public:
 
 	bool	ReplaceAllForward();
 
-	bool	TEHasSearchText() const override;
-
 	void	Cancel();
-
-protected:
-
-	void	TERefresh() override;
-	void	TERefreshRect(const JRect& rect) override;
-	void	TERedraw() override;
-	void	TESetGUIBounds(const JCoordinate w, const JCoordinate h,
-								   const JCoordinate changeY) override;
-	bool	TEWidthIsBeyondDisplayCapacity(const JSize width) const override;
-	bool	TEScrollToRect(const JRect& rect,
-								   const bool centerInDisplay) override;
-	bool	TEScrollForDrag(const JPoint& pt) override;
-	bool	TEScrollForDND(const JPoint& pt) override;
-	void	TESetVertScrollStep(const JCoordinate vStep) override;
-	void	TEUpdateClipboard(const JString& text, const JRunArray<JFont>& style) const override;
-	bool	TEGetClipboard(JString* text, JRunArray<JFont>* style) const override;
-	bool	TEBeginDND() override;
-	void	TEPasteDropData() override;
-	void	TECaretShouldBlink(const bool blink) override;
 
 private:
 
@@ -70,7 +49,7 @@ private:
 
 	// not allowed
 
-	SearchTE(const SearchTE&) = delete;
+	SearchST(const SearchST&) = delete;
 
 public:
 
@@ -246,7 +225,7 @@ public:
  ******************************************************************************/
 
 inline void
-SearchTE::Cancel()
+SearchST::Cancel()
 {
 	itsCancelledFlag = true;
 }
