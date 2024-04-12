@@ -63,8 +63,8 @@ private:
 	JXTextCheckbox*    itsBeepCB;
 	JXTextCheckbox*    itsSaveAllCB;
 	JXTextCheckbox*    itsOneAtATimeCB;
-	JXTextButton*      itsRunButton;
 	JXTextMenu*        itsSaveCmdMenu;
+	JXTextButton*      itsRunButton;
 	JXTextButton*      itsHelpButton;
 	JXInputField*      itsCmdInput;
 

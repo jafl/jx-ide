@@ -130,7 +130,7 @@ EditSearchPathsDialog::BuildWindow
 
 	itsTable =
 		jnew PathTable(dirList, addPathButton, removePathButton, choosePathButton, scrollbarSet, scrollbarSet->GetScrollEnclosure(),
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 0,0, 225,205);
+					JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 240,220);
 
 // end JXLayout
 

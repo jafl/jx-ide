@@ -1,8 +1,10 @@
-jx_layout_editor 8
+jx_layout_editor 9
 370
 460
 "JXLayout"
 "Search Paths for Symbol Database"
+0
+0
 ""
 ""
 0
@@ -45,8 +47,8 @@ This dialog does not modify compiler settings.  To specify directories in which 
 2
 1
 "CustomWidget"
-0
-0
+2
+2
 0 0 205 225
 "itsTable"
 1

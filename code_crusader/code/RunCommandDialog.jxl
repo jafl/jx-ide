@@ -1,8 +1,10 @@
-jx_layout_editor 8
+jx_layout_editor 9
 470
 260
 "JXLayout"
 "Perform Task"
+0
+0
 ""
 ""
 0
@@ -224,24 +226,10 @@ jx_layout_editor 8
 1
 0
 0
-"TextButton"
-1
-0
-234 389 256 451
-"itsRunButton"
-1
-0
-0
-"Run"
-"^M"
-
-1
-0
-0
 "Menu"
 0
 0
-235 20 255 140
+225 20 255 140
 "itsSaveCmdMenu"
 1
 0
@@ -258,7 +246,21 @@ jx_layout_editor 8
 "TextButton"
 1
 0
-235 210 255 270
+229 389 251 451
+"itsRunButton"
+1
+0
+0
+"Run"
+"^M"
+
+1
+0
+0
+"TextButton"
+1
+0
+230 210 250 270
 "cancelButton"
 0
 0
@@ -272,7 +274,7 @@ jx_layout_editor 8
 "TextButton"
 1
 0
-235 300 255 360
+230 300 250 360
 "itsHelpButton"
 1
 0

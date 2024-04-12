@@ -183,23 +183,23 @@ RunCommandDialog::BuildWindow()
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,200, 220,20);
 	itsOneAtATimeCB->SetShortcuts(JGetString("itsOneAtATimeCB::shortcuts::RunCommandDialog::JXLayout"));
 
-	itsRunButton =
-		jnew JXTextButton(JGetString("itsRunButton::RunCommandDialog::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 389,234, 62,22);
-	itsRunButton->SetShortcuts(JGetString("itsRunButton::shortcuts::RunCommandDialog::JXLayout"));
-
 	itsSaveCmdMenu =
 		jnew JXTextMenu(JGetString("itsSaveCmdMenu::RunCommandDialog::JXLayout"), window,
-					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,235, 120,20);
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 20,225, 120,30);
+
+	itsRunButton =
+		jnew JXTextButton(JGetString("itsRunButton::RunCommandDialog::JXLayout"), window,
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 389,229, 62,22);
+	itsRunButton->SetShortcuts(JGetString("itsRunButton::shortcuts::RunCommandDialog::JXLayout"));
 
 	auto* cancelButton =
 		jnew JXTextButton(JGetString("cancelButton::RunCommandDialog::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 210,235, 60,20);
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 210,230, 60,20);
 	assert( cancelButton != nullptr );
 
 	itsHelpButton =
 		jnew JXTextButton(JGetString("itsHelpButton::RunCommandDialog::JXLayout"), window,
-					JXWidget::kFixedRight, JXWidget::kFixedTop, 300,235, 60,20);
+					JXWidget::kFixedRight, JXWidget::kFixedTop, 300,230, 60,20);
 	itsHelpButton->SetShortcuts(JGetString("itsHelpButton::shortcuts::RunCommandDialog::JXLayout"));
 
 	itsCmdInput =
