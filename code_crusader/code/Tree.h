@@ -222,10 +222,10 @@ private:
 	const JSize	itsMarginWidth;
 	bool		itsBroadcastClassSelFlag;
 
-	bool	itsDrawMILinksOnTopFlag;
-
-	bool	itsMinimizeMILinksFlag;
-	bool	itsNeedsMinimizeMILinksFlag;	// true => links not currently minimized
+	bool			itsDrawMILinksOnTopFlag;
+	bool			itsMinimizeMILinksFlag;
+	bool			itsNeedsMinimizeMILinksFlag;	// true => links not currently minimized
+	std::thread*	itsMinimizeMILinksThread;
 
 	ClassStreamInFn	itsStreamInFn;
 
@@ -250,8 +250,7 @@ private:
 												JArray<JIndex>* rootOrder,
 												JProgressDisplay& pg);
 	static bool	ArrangeRootsGreedyNumberOfLinks(const JArray<RootMIInfo>& rootList,
-												JArray<JIndex>* rootOrder,
-												JProgressDisplay& pg);
+												JArray<JIndex>* rootOrder);
 	static void	CleanList(JArray<RootSubset>* list);
 	static void	FindMIClasses(Class* theClass, JArray<bool>* marked,
 							  const JArray<RootGeom>& rootGeom,
@@ -302,7 +301,6 @@ public:
 	static const JUtf8Byte* kFontSizeChanged;
 
 	static const JUtf8Byte* kUpdateFoundChanges;
-	static const JUtf8Byte* kUpdateDone;
 
 	static const JUtf8Byte* kClassSelected;
 	static const JUtf8Byte* kClassDeselected;
@@ -382,16 +380,6 @@ public:
 		UpdateFoundChanges()
 			:
 			JBroadcaster::Message(kUpdateFoundChanges)
-		{ };
-	};
-
-	class UpdateDone : public JBroadcaster::Message
-	{
-	public:
-
-		UpdateDone()
-			:
-			JBroadcaster::Message(kUpdateDone)
 		{ };
 	};
 
@@ -559,7 +547,7 @@ Tree::GetBounds
 }
 
 /******************************************************************************
- Show enums
+ Automatically minimize MI links
 
  ******************************************************************************/
 

@@ -21,6 +21,7 @@
 #include <jx-af/jcore/JDirInfo.h>
 #include <jx-af/jcore/jVCSUtil.h>
 #include <jx-af/jcore/jDirUtil.h>
+#include <boost/fiber/operations.hpp>
 #include <jx-af/jcore/jAssert.h>
 
 // JBroadcaster message types
@@ -323,10 +324,10 @@ FileListTable::ParseFile
 				Broadcast(UpdateFoundChanges());
 			}
 			itsChangedDuringParseCount++;
-			pg.ProcessContinuing();
+			boost::this_fiber::yield();
 
 			symbolList->FileChanged(fullName, fileType, id);
-			pg.ProcessContinuing();
+			boost::this_fiber::yield();
 
 			for (auto* tree : treeList)
 			{

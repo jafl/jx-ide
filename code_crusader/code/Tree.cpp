@@ -42,6 +42,7 @@
 #include <jx-af/jcore/jGlobals.h>
 #include <jx-af/jcore/jFileUtil.h>
 #include <jx-af/jcore/jDirUtil.h>
+#include <boost/fiber/operations.hpp>
 #include <jx-af/jcore/jAssert.h>
 
 const JSize kBlockSize = 1024;
@@ -61,7 +62,6 @@ const JUtf8Byte* Tree::kNeedsRefresh         = "NeedsRefresh::Tree";
 const JUtf8Byte* Tree::kFontSizeChanged      = "FontSizeChanged::Tree";
 
 const JUtf8Byte* Tree::kUpdateFoundChanges   = "UpdateFoundChanges::Tree";
-const JUtf8Byte* Tree::kUpdateDone           = "UpdateDone::Tree";
 
 const JUtf8Byte* Tree::kClassSelected        = "ClassSelected::Tree";
 const JUtf8Byte* Tree::kClassDeselected      = "ClassDeselected::Tree";
@@ -333,6 +333,7 @@ Tree::TreeX
 
 	itsMinimizeMILinksFlag      = false;
 	itsNeedsMinimizeMILinksFlag = false;
+	itsMinimizeMILinksThread    = nullptr;
 
 	itsReparseAllFlag           = false;
 	itsChangedDuringParseFlag   = false;
@@ -348,6 +349,11 @@ Tree::TreeX
 
 Tree::~Tree()
 {
+	while (itsMinimizeMILinksThread != nullptr)		// director triggered cancel
+	{
+		boost::this_fiber::yield();
+	}
+
 	jdelete itsClassesByFull;
 	jdelete itsVisibleByGeom;
 	jdelete itsVisibleByName;
@@ -480,6 +486,11 @@ Tree::PrepareForUpdate
 {
 	assert( !itsReparseAllFlag || reparseAll );
 
+	while (itsMinimizeMILinksThread != nullptr)		// director triggered cancel
+	{
+		boost::this_fiber::yield();
+	}
+
 	// save collapsed classes
 
 	itsCollapsedList = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
@@ -543,7 +554,6 @@ Tree::UpdateFinished
 		RecalcVisible();
 	}
 
-	Broadcast(UpdateDone());
 	if (itsChangedDuringParseFlag)
 	{
 		Broadcast(Changed());
@@ -1029,7 +1039,7 @@ Tree::MinimizeMILinks()
 	JThreadPG threadPG(&channel, &cancelFlag, 1000);
 	threadPG.VariableLengthProcessBeginning(JGetString("MinMILengthsProgress::Tree"), true, false);
 
-	auto t = std::thread([this, classCount, &rootGeom, &visByGeom, &newByGeom, &threadPG]()
+	itsMinimizeMILinksThread = jnew std::thread([this, classCount, &rootGeom, &visByGeom, &newByGeom, &threadPG]()
 	{
 		// optimize each disjoint subset of trees connected by MI
 
@@ -1070,7 +1080,7 @@ Tree::MinimizeMILinks()
 					if (( itsMinimizeMILinksFlag &&
 						 !ArrangeRootsDynamicProgramming(rootList, &rootOrder, threadPG)) ||
 						(!itsMinimizeMILinksFlag &&
-						 !ArrangeRootsGreedyNumberOfLinks(rootList, &rootOrder, threadPG)))
+						 !ArrangeRootsGreedyNumberOfLinks(rootList, &rootOrder)))
 					{
 						for (JIndex j=1; j<=rootCount; j++)
 						{
@@ -1105,7 +1115,10 @@ Tree::MinimizeMILinks()
 	});
 
 	threadPG.WaitForProcessFinished(itsDirector->GetMinimizeMILinksPG());
-	t.join();
+	itsMinimizeMILinksThread->join();
+
+	jdelete itsMinimizeMILinksThread;
+	itsMinimizeMILinksThread = nullptr;
 
 	if (!newByGeom.IsEmpty())
 	{
@@ -1171,8 +1184,7 @@ bool
 Tree::ArrangeRootsGreedyNumberOfLinks
 	(
 	const JArray<RootMIInfo>&	rootList,
-	JArray<JIndex>*				rootOrder,
-	JProgressDisplay&			pg
+	JArray<JIndex>*				rootOrder
 	)
 {
 	JIndex i = 0, maxConnIndex = 0;

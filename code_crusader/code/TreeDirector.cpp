@@ -271,7 +271,10 @@ TreeDirector::TreeDirectorX
 
 TreeDirector::~TreeDirector()
 {
+	itsMinimizeMILinksPG->Cancel();
 	jdelete itsTree;
+	jdelete itsMinimizeMILinksPG;
+
 	jdelete itsPSPrinter;
 	jdelete itsEPSPrinter;
 	jdelete itsFnListPrinter;
@@ -346,6 +349,8 @@ TreeDirector::PrepareForTreeUpdate
 	const bool reparseAll
 	)
 {
+	itsTreeMenu->Deactivate();
+	itsMinimizeMILinksPG->Cancel();
 	itsTree->PrepareForUpdate(reparseAll);
 }
 
@@ -361,7 +366,10 @@ TreeDirector::TreeUpdateFinished
 	JProgressDisplay&		pg
 	)
 {
-	return itsTree->UpdateFinished(deadFileList, pg);
+	const bool changed = itsTree->UpdateFinished(deadFileList, pg);
+	itsTreeMenu->Activate();
+	itsTreeWidget->Show();
+	return changed;
 }
 
 /******************************************************************************
@@ -906,14 +914,7 @@ TreeDirector::Receive
 {
 	if (sender == itsTree && message.Is(Tree::kUpdateFoundChanges))
 	{
-		itsTreeMenu->Deactivate();
 		itsTreeWidget->Hide();
-	}
-
-	else if (sender == itsTree && message.Is(Tree::kUpdateDone))
-	{
-		itsTreeMenu->Activate();
-		itsTreeWidget->Show();
 	}
 
 	else

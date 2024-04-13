@@ -11,7 +11,6 @@
 
 #include "SymbolUpdatePG.h"
 #include <jx-af/jx/JXContainer.h>
-#include <boost/fiber/operations.hpp>
 #include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
@@ -29,7 +28,8 @@ SymbolUpdatePG::SymbolUpdatePG
 	:
 	JLatentPG(pg, true, scaleFactor),
 	itsWidget(widget),
-	itsContainer(container)
+	itsContainer(container),
+	itsCancelFlag(false)
 {
 	SetMaxSilentTime(0);
 }
@@ -60,6 +60,7 @@ SymbolUpdatePG::ProcessBeginning
 {
 	itsWidget->AdjustSize(0, -itsContainer->GetFrameHeight());
 	itsContainer->Show();
+	itsCancelFlag = false;
 
 	JLatentPG::ProcessBeginning(processType, stepCount, message,
 								allowCancel, modal);
@@ -68,14 +69,12 @@ SymbolUpdatePG::ProcessBeginning
 /******************************************************************************
  ProcessContinuing (virtual)
 
-
  ******************************************************************************/
 
 bool
 SymbolUpdatePG::ProcessContinuing()
 {
-	boost::this_fiber::yield();
-	return JLatentPG::ProcessContinuing();
+	return !itsCancelFlag && JLatentPG::ProcessContinuing();
 }
 
 /******************************************************************************

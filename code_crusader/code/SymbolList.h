@@ -175,7 +175,6 @@ public:
 
 	static const JUtf8Byte* kChanged;
 	static const JUtf8Byte* kUpdateFoundChanges;
-	static const JUtf8Byte* kUpdateDone;
 
 	class Changed : public JBroadcaster::Message
 	{
@@ -194,16 +193,6 @@ public:
 		UpdateFoundChanges()
 			:
 			JBroadcaster::Message(kUpdateFoundChanges)
-		{ };
-	};
-
-	class UpdateDone : public JBroadcaster::Message
-	{
-	public:
-
-		UpdateDone()
-			:
-			JBroadcaster::Message(kUpdateDone)
 		{ };
 	};
 };

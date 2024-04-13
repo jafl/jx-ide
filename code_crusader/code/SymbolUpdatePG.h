@@ -23,6 +23,8 @@ public:
 
 	bool	ProcessContinuing() override;
 	void	ProcessFinished() override;
+
+	void	Cancel();
 	void	Hide();
 
 protected:
@@ -35,6 +37,19 @@ private:
 
 	JXContainer*	itsWidget;
 	JXContainer*	itsContainer;
+	bool			itsCancelFlag;
 };
+
+
+/******************************************************************************
+ Cancel
+
+ ******************************************************************************/
+
+inline void
+SymbolUpdatePG::Cancel()
+{
+	itsCancelFlag = true;
+}
 
 #endif

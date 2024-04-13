@@ -37,7 +37,6 @@ static const JUtf8Byte* kCtagsArgs =
 
 const JUtf8Byte* SymbolList::kChanged            = "Changed::SymbolList";
 const JUtf8Byte* SymbolList::kUpdateFoundChanges = "UpdateFoundChanges::SymbolList";
-const JUtf8Byte* SymbolList::kUpdateDone         = "UpdateDone::SymbolList";
 
 /******************************************************************************
  Constructor
@@ -683,7 +682,6 @@ SymbolList::UpdateFinished
 	// notify
 
 	itsReparseAllFlag = false;
-	Broadcast(UpdateDone());
 	if (itsChangedDuringParseFlag)
 	{
 		Broadcast(Changed());
