@@ -17,6 +17,7 @@
 #include <jx-af/jcore/JRect.h>
 #include <jx-af/jcore/JFAID.h>
 #include <jx-af/jcore/jTime.h>
+#include <thread>
 
 class JString;
 class JPainter;
