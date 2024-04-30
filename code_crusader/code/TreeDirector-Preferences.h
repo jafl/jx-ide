@@ -6,7 +6,7 @@
 #define _H_TreeDirector_Preferences
 
 static const JUtf8Byte* kPreferencesMenuStr =
-"* %i __Project::TreeDirector"
+"* %i __Tree::TreeDirector"
 "|* %i __ToolbarButtons::TreeDirector"
 "|* %i __FileTypes::TreeDirector"
 "|* %i __ExternalEditors::TreeDirector"

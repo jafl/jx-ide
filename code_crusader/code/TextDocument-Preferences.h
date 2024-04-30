@@ -6,7 +6,7 @@
 #define _H_TextDocument_Preferences
 
 static const JUtf8Byte* kPreferencesMenuStr =
-"* %i __Project::TextDocument"
+"* %i __Editor::TextDocument"
 "|* %i __ToolbarButtons::TextDocument"
 "|* %i __ExternalEditors::TextDocument"
 "|* %i __FileManagerWebBrowser::TextDocument"

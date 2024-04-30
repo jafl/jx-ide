@@ -6,7 +6,7 @@
 
 MenuTitle::TextDocument_Preferences "Preferences"
 
-__Project::TextDocument "Editor... %h e"
+__Editor::TextDocument "Editor... %h e"
 __ToolbarButtons::TextDocument "Toolbar buttons... %h t"
 __ExternalEditors::TextDocument "External editors... %h x"
 __FileManagerWebBrowser::TextDocument "File manager & web browser... %h w"

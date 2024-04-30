@@ -6,10 +6,10 @@
 
 MenuTitle::SymbolDirector_Preferences "Preferences"
 
-__Project::ProjectDocument "Symbols... %h y"
-__ToolbarButtons::ProjectDocument "Toolbar buttons... %h t"
-__FileTypes::ProjectDocument "File types... %h f"
-__ExternalEditors::ProjectDocument "External editors... %h x"
-__FileManagerWebBrowser::ProjectDocument "File manager & web browser... %h w"
-__Miscellaneous::ProjectDocument "Miscellaneous... %h m"
-__SaveWindowSizeAsDefault::ProjectDocument "Save window size as default %h s"
+__Symbols::SymbolDirector "Symbols... %h y"
+__ToolbarButtons::SymbolDirector "Toolbar buttons... %h t"
+__FileTypes::SymbolDirector "File types... %h f"
+__ExternalEditors::SymbolDirector "External editors... %h x"
+__FileManagerWebBrowser::SymbolDirector "File manager & web browser... %h w"
+__Miscellaneous::SymbolDirector "Miscellaneous... %h m"
+__SaveWindowSizeAsDefault::SymbolDirector "Save window size as default %h s"

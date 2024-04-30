@@ -6,13 +6,13 @@
 #define _H_SymbolDirector_Preferences
 
 static const JUtf8Byte* kPreferencesMenuStr =
-"* %i __Project::ProjectDocument"
-"|* %i __ToolbarButtons::ProjectDocument"
-"|* %i __FileTypes::ProjectDocument"
-"|* %i __ExternalEditors::ProjectDocument"
-"|* %i __FileManagerWebBrowser::ProjectDocument"
-"|* %i __Miscellaneous::ProjectDocument %l"
-"|* %i __SaveWindowSizeAsDefault::ProjectDocument"
+"* %i __Symbols::SymbolDirector"
+"|* %i __ToolbarButtons::SymbolDirector"
+"|* %i __FileTypes::SymbolDirector"
+"|* %i __ExternalEditors::SymbolDirector"
+"|* %i __FileManagerWebBrowser::SymbolDirector"
+"|* %i __Miscellaneous::SymbolDirector %l"
+"|* %i __SaveWindowSizeAsDefault::SymbolDirector"
 ;
 
 #include "SymbolDirector-Preferences-enum.h"

@@ -1,6 +1,6 @@
 jx_menu_editor 0
 888 291
-"ProjectDocument"
+"SymbolDirector"
 "Preferences"
 'p
 40
@@ -19,7 +19,7 @@ jx_menu_editor 0
 "Symbols..."
 ""
 'y
-"__Project"
+"__Symbols"
 "kSymbolPrefsCmd"
 0
 
