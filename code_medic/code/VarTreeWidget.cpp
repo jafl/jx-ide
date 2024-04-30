@@ -142,8 +142,7 @@ VarTreeWidget::NewExpression
 {
 	VarNode* node =
 		GetLink()->CreateVarNode(GetTreeList()->GetTree()->GetRoot(),
-								   expr, expr, JString::empty);
-	assert( node != nullptr );
+								 expr, expr, JString::empty);
 	if (expr.IsEmpty())
 	{
 		node->SetName(JString::empty);		// compensate for ctor using " " instead of ""
@@ -240,42 +239,6 @@ VarTreeWidget::WatchLocation()
 
 		expr = node->GetFullName();
 		GetLink()->WatchLocation(expr);
-	}
-
-	ClearIncrementalSearchBuffer();
-}
-
-/******************************************************************************
- DisplayAsCString
-
- ******************************************************************************/
-
-void
-VarTreeWidget::DisplayAsCString()
-{
-	JPtrArray<JString> exprList(JPtrArrayT::kDeleteAll);
-
-	JTableSelectionIterator iter(&(GetTableSelection()));
-	JPoint cell;
-	JString expr;
-	while (iter.Next(&cell))
-	{
-		auto* node =
-			dynamic_cast<VarNode*>(GetTreeList()->GetNode(cell.y));
-		assert( node != nullptr );
-
-		expr = node->GetFullName();
-		expr.Prepend("(char*)(");
-		expr.Append(")");
-		exprList.Append(expr);
-	}
-
-	// DisplayExpression() messes with selection
-
-	const JSize count = exprList.GetItemCount();
-	for (JIndex i=1; i<=count; i++)
-	{
-		itsDir->DisplayExpression(*(exprList.GetItem(i)));
 	}
 
 	ClearIncrementalSearchBuffer();
@@ -399,7 +362,7 @@ VarTreeWidget::ExamineMemory
 void
 VarTreeWidget::ReadSetup
 	(
-	std::istream&			input,
+	std::istream&		input,
 	const JFileVersion	vers
 	)
 {
@@ -627,7 +590,7 @@ VarTreeWidget::HandleMouseDown
 		{
 			const auto* varNode = dynamic_cast<const VarNode*>(node);
 			assert( varNode != nullptr );
-			const JString expr = varNode->GetFullName();
+			const JString expr = varNode->GetFullNameWithCast();
 			if (itsIsMainDisplayFlag)
 			{
 				NewExpression(expr);	// avoid Activate()

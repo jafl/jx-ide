@@ -18,8 +18,7 @@ public:
 
 	VarNode(const bool shouldUpdate = true);
 
-	VarNode(JTreeNode* parent, const JString& name,
-			   const JString& fullName, const JString& value);
+	VarNode(JTreeNode* parent, const JString& name, const JString& value);
 
 	~VarNode() override;
 

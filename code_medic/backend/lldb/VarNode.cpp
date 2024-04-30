@@ -9,10 +9,12 @@
 
 #include "lldb/VarNode.h"
 #include "lldb/API/SBType.h"
+#include "lldb/API/SBError.h"
 #include "VarCmd.h"
 #include "globals.h"
 #include <jx-af/jcore/JTree.h>
 #include <jx-af/jcore/JRegex.h>
+#include <jx-af/jcore/JStringIterator.h>
 #include <jx-af/jcore/jAssert.h>
 
 /******************************************************************************
@@ -37,6 +39,18 @@ lldb::VarNode::VarNode
 	)
 	:
 	::VarNode(parent, name, value)
+{
+}
+
+lldb::VarNode::VarNode
+	(
+	const JUtf8Byte*	type,
+	const JString&		name,
+	const JString&		value
+	)
+	:
+	::VarNode(nullptr, name, value),
+	itsType(type)
 {
 }
 
@@ -68,9 +82,36 @@ lldb::VarNode::GetFullName
 }
 
 /******************************************************************************
+ GetFullNameWithCast (virtual)
+
+	isPointer can be nullptr.  Its content is only modified if GetFullName()
+	has to directly recurse due to fake nodes in the path.
+
+ ******************************************************************************/
+
+JString
+lldb::VarNode::GetFullNameWithCast
+	(
+	bool* isPointer
+	)
+	const
+{
+	JString s = GetFullNameForCFamilyLanguage(isPointer);
+	if (!itsType.IsEmpty())
+	{
+		s.Prepend(") ");
+		s.Prepend(itsType);
+		s.Prepend("(");
+	}
+	return s;
+}
+
+/******************************************************************************
  BuildTree (static)
 
  ******************************************************************************/
+
+static const JRegex errorPrefixPattern("[0-9]+:[0-9]+:\\s+");
 
 ::VarNode*
 lldb::VarNode::BuildTree
@@ -79,60 +120,17 @@ lldb::VarNode::BuildTree
 	SBValue& v
 	)
 {
-	const JUtf8Byte* s = v.GetValue();
-	if (s == nullptr)
-	{
-		s = "";
-	}
-
-	JString value(s);
+	JString name(v.GetName()), value(v.GetValue());
 	bool isPointer = false;
-	bool isSpecial = false;
 
-	JString name;
-	if (v.GetName() != nullptr)
+	SBType t = v.GetType();
+	if (t.IsPointerType())
 	{
-		name = v.GetName();
-	}
+		isPointer = true;
 
-	if (v.TypeIsPointerType())
-	{
-		lldb::BasicType type = v.GetType().GetPointeeType().GetBasicType();
-
-		if (type == eBasicTypeChar       ||
-			type == eBasicTypeSignedChar ||
-			type == eBasicTypeUnsignedChar)
-		{
-#ifdef _J_LLDB_HAS_SBVALUE_GETSUMMARY
-			if (v.GetSummary() != nullptr)
-			{
-				value += "  ";
-				value += v.GetSummary();
-			}
-#endif
-			isSpecial = true;
-		}
-		else
-		{
-			isPointer = true;
-		}
-	}
-	else if (v.GetType().GetTypeClass() == lldb::eTypeClassArray)
-	{
-		lldb::BasicType type = v.GetChildAtIndex(0).GetType().GetBasicType();
-		if (type == eBasicTypeChar       ||
-			type == eBasicTypeSignedChar ||
-			type == eBasicTypeUnsignedChar)
-		{
-#ifdef _J_LLDB_HAS_SBVALUE_GETSUMMARY
-			if (v.GetSummary() != nullptr)
-			{
-				value += "  ";
-				value += v.GetSummary();
-			}
-#endif
-			isSpecial = true;
-		}
+		value.Prepend(") ");
+		value.Prepend(t.GetDisplayTypeName());
+		value.Prepend("(");
 	}
 	else if (v.GetType().GetTypeClass() == lldb::eTypeClassClass &&
 			 !JString::IsEmpty(v.GetTypeName()) &&
@@ -143,16 +141,43 @@ lldb::VarNode::BuildTree
 		name.Append(">");
 	}
 
-	::VarNode* node = GetLink()->CreateVarNode(nullptr, name, JString::empty, value);
-	assert( node != nullptr );
+#ifdef _J_LLDB_HAS_SBVALUE_GETSUMMARY
+	if (v.GetSummary() != nullptr)
+	{
+		if (!value.IsEmpty())
+		{
+			value += "  ";
+		}
+		value += v.GetSummary();
+	}
+#endif
 
+	SBError e = v.GetError();
+	if (e.Fail())
+	{
+		value = e.GetCString();
+
+		JStringIterator iter(&value);
+		if (iter.Next(errorPrefixPattern))
+		{
+			iter.RemoveAllPrev();
+		}
+		else
+		{
+			iter.MoveTo(JStringIterator::kStartAtBeginning, 0);
+		}
+
+		if (iter.Next("\n"))
+		{
+			iter.SkipPrev();
+			iter.RemoveAllNext();
+		}
+	}
+
+	auto* node = jnew VarNode(t.GetDisplayTypeName(), name, value);
 	if (isPointer)
 	{
 		node->MakePointer(true);
-		return node;
-	}
-	else if (isSpecial)
-	{
 		return node;
 	}
 

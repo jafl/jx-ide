@@ -212,6 +212,10 @@ SourceDirector::BuildWindow()
 					JXWidget::kFixedLeft, JXWidget::kFixedBottom, 0,530, 20,20);
 	assert( dragSource != nullptr );
 
+	itsText =
+		jnew SourceText(this, itsCommandDir, itsMenuBar, scrollbarSet, scrollbarSet->GetScrollEnclosure(),
+					JXWidget::kHElastic, JXWidget::kVElastic, 50,0, 550,500);
+
 	itsFileDisplay =
 		jnew JXFileNameDisplay(JString::empty, window,
 					JXWidget::kHElastic, JXWidget::kFixedBottom, 20,530, 580,20);
@@ -255,28 +259,10 @@ SourceDirector::BuildWindow()
 		GetPrefsManager()->GetWindowSize(kCodeWindSizeID, window, true);
 	}
 
-	itsFileMenu = itsMenuBar->AppendTextMenu(JGetString("MenuTitle::SourceDirector_File"));
-	itsFileMenu->SetMenuItems(kFileMenuStr);
-	itsFileMenu->SetUpdateAction(JXMenu::kDisableNone);
-	itsFileMenu->AttachHandlers(this,
-		&SourceDirector::UpdateFileMenu,
-		&SourceDirector::HandleFileMenu);
-	ConfigureFileMenu(itsFileMenu);
-
-	// appends Edit & Search menus
-
-	const JCoordinate kInitTableWidth = 50;
-
-	JXContainer* encl = scrollbarSet->GetScrollEnclosure();
-
-	itsText =
-		jnew SourceText(this, itsCommandDir, itsMenuBar, scrollbarSet, encl,
-						 JXWidget::kHElastic, JXWidget::kVElastic,
-						 kInitTableWidth, 0,
-						 encl->GetApertureWidth()-kInitTableWidth, 100);
-	assert( itsText != nullptr );
-	itsText->FitToEnclosure(false, true);
 	ListenTo(itsText);
+
+	JXContainer* encl                 = scrollbarSet->GetScrollEnclosure();
+	const JCoordinate kInitTableWidth = itsText->GetFrame().left;
 
 	if (itsType == kMainAsmType || itsType == kAsmType)
 	{
@@ -294,7 +280,13 @@ SourceDirector::BuildWindow()
 	}
 	itsTable->FitToEnclosure(false, true);
 
-	// requires itsText
+	itsFileMenu = itsMenuBar->PrependTextMenu(JGetString("MenuTitle::SourceDirector_File"));
+	itsFileMenu->SetMenuItems(kFileMenuStr);
+	itsFileMenu->SetUpdateAction(JXMenu::kDisableNone);
+	itsFileMenu->AttachHandlers(this,
+		&SourceDirector::UpdateFileMenu,
+		&SourceDirector::HandleFileMenu);
+	ConfigureFileMenu(itsFileMenu);
 
 	itsDebugMenu = itsCommandDir->CreateDebugMenu(itsMenuBar);
 	ListenTo(itsDebugMenu);

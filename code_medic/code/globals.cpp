@@ -215,7 +215,7 @@ void
 StartDebugger()
 {
 	Link* origLink = theLink;
-	theLink          = nullptr;
+	theLink        = nullptr;
 
 	PrefsManager::DebuggerType type = GetPrefsManager()->GetDebuggerType();
 	if (type == PrefsManager::kGDBType)

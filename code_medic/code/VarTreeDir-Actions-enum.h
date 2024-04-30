@@ -8,7 +8,6 @@
 enum {
 	kAddVarCmd=1,
 	kDelVarCmd,
-	kDisplayAsCStringCmd,
 	kDisplay1DArrayCmd,
 	kPlot1DArrayCmd,
 	kDisplay2DArrayCmd,

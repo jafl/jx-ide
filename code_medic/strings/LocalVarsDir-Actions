@@ -6,7 +6,6 @@
 
 MenuTitle::LocalVarsDir_Actions "Actions"
 
-DisplayAsCStringAction::LocalVarsDir "Display as C string %k Ctrl-S %h c"
 Display1DArray::LocalVarsDir "Display as 1D array %k Ctrl-Shift-A %h 1"
 Plot1DArray::LocalVarsDir "Plot as 1D array %h p"
 Display2DArray::LocalVarsDir "Display as 2D array %h 2"

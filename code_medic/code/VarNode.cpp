@@ -575,7 +575,7 @@ VarNode::UpdateChildren()
 	const JSize count = GetChildCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		(GetVarChild(i))->UpdateValue();
+		GetVarChild(i)->UpdateValue();
 	}
 
 	itsNeedsUpdateFlag = false;
@@ -591,7 +591,7 @@ VarNode::UpdateChildren()
 void
 VarNode::UpdateValue()
 {
-	if (HasTree() && GetDepth() == 1 && !(GetName()).IsEmpty())
+	if (HasTree() && GetDepth() == 1 && !GetName().IsEmpty())
 	{
 		jdelete itsValueCommand;
 
@@ -910,6 +910,24 @@ VarNode::GetVarChild
 }
 
 /******************************************************************************
+ GetFullNameWithCast (virtual)
+
+	isPointer can be nullptr.  Its content is only modified if GetFullName()
+	has to directly recurse due to fake nodes in the path.
+
+ ******************************************************************************/
+
+JString
+VarNode::GetFullNameWithCast
+	(
+	bool* isPointer
+	)
+	const
+{
+	return GetFullNameForCFamilyLanguage(isPointer);
+}
+
+/******************************************************************************
  GetFullNameForCFamilyLanguage (protected)
 
  ******************************************************************************/
@@ -928,7 +946,7 @@ VarNode::GetFullNameForCFamilyLanguage
 	}
 
 	const VarNode* parent = GetVarParent();
-	const JString& name     = GetName();
+	const JString& name   = GetName();
 	if (parent->IsRoot())
 	{
 		str = "(" + name + ")";

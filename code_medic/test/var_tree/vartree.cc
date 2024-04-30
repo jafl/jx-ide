@@ -522,8 +522,8 @@ int main(int argc, char** argv)
 	a.num_markers = 6;
 	a.marker_lat = 0x0;
 	a.marker_lng = 0x0;
-	a.marker_route = 0x0;
-	memcpy(a.origin, "NOT_SET\0000ÀU@0ÀU@/Dialog\000\030\000\000\000\030\000\000\000java/awt", MAX_ACID_LEN);
+	a.marker_route = (char*) "foobarbaz";
+	memcpy(a.origin, "NOT_SET\0000ï¿½U@0ï¿½U@/Dialog\000\030\000\000\000\030\000\000\000java/awt", MAX_ACID_LEN);
 	memcpy(a.destination, "NOT_SET\0000\000\000\000\030\000\000\000java/awt/ContainH\000\000\000\030\000\000", MAX_ACID_LEN);
 	a.pred_num_markers = 0;
 	a.pred_marker_lat = 0x0;

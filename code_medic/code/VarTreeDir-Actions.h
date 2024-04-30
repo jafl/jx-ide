@@ -8,7 +8,6 @@
 static const JUtf8Byte* kActionsMenuStr =
 "* %i NewExpression::VarTreeDir"
 "|* %i RemoveExpression::VarTreeDir %l"
-"|* %i DisplayAsCStringAction::VarTreeDir %l"
 "|* %i Display1DArray::VarTreeDir"
 "|* %i Plot1DArray::VarTreeDir"
 "|* %i Display2DArray::VarTreeDir %l"
@@ -20,31 +19,11 @@ static const JUtf8Byte* kActionsMenuStr =
 
 #include "VarTreeDir-Actions-enum.h"
 
-#ifndef _H_medic_show_1d_array
-#define _H_medic_show_1d_array
-#include "medic_show_1d_array.xpm"
-#endif
-#ifndef _H_medic_show_2d_plot
-#define _H_medic_show_2d_plot
-#include "medic_show_2d_plot.xpm"
-#endif
-#ifndef _H_medic_show_2d_array
-#define _H_medic_show_2d_array
-#include "medic_show_2d_array.xpm"
-#endif
-#ifndef _H_medic_show_memory
-#define _H_medic_show_memory
-#include "medic_show_memory.xpm"
-#endif
 
 static void ConfigureActionsMenu(JXTextMenu* menu, const int offset = 0) {
 	if (offset == 0 && JXMenu::GetDisplayStyle() == JXMenu::kWindowsStyle) {
 		menu->SetShortcuts("#s");
 	}
-	menu->SetItemImage(kDisplay1DArrayCmd + offset, medic_show_1d_array);
-	menu->SetItemImage(kPlot1DArrayCmd + offset, medic_show_2d_plot);
-	menu->SetItemImage(kDisplay2DArrayCmd + offset, medic_show_2d_array);
-	menu->SetItemImage(kExamineMemCmd + offset, medic_show_memory);
 };
 
 #endif

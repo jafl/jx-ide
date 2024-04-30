@@ -36,16 +36,6 @@ jx_menu_editor 0
 1
 0
 0 ""
-"Display as C string"
-"Ctrl-S"
-'c
-"DisplayAsCStringAction"
-"kDisplayAsCStringCmd"
-1
-
-1
-0
-0 "medic_show_1d_array.xpm"
 "Display as 1D array"
 "Ctrl-Shift-A"
 '1
@@ -55,7 +45,7 @@ jx_menu_editor 0
 
 1
 0
-0 "medic_show_2d_plot.xpm"
+0 ""
 "Plot as 1D array"
 ""
 'p
@@ -65,7 +55,7 @@ jx_menu_editor 0
 
 1
 0
-0 "medic_show_2d_array.xpm"
+0 ""
 "Display as 2D array"
 ""
 '2
@@ -95,7 +85,7 @@ jx_menu_editor 0
 
 1
 0
-0 "medic_show_memory.xpm"
+0 ""
 "Examine memory"
 ""
 'e

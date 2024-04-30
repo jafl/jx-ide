@@ -1869,7 +1869,7 @@ jvm::Link::CreateVarNode
 	const JString&	value
 	)
 {
-	auto* node = jnew VarNode(parent, name, fullName, value);
+	auto* node = jnew VarNode(parent, name, value);
 	return node;
 }
 

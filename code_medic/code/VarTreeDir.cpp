@@ -298,7 +298,6 @@ VarTreeDir::UpdateActionMenu()
 	if (itsWidget->HasSelection())
 	{
 		itsActionMenu->EnableItem(kDelVarCmd);
-		itsActionMenu->EnableItem(kDisplayAsCStringCmd);
 		itsActionMenu->EnableItem(kDisplay1DArrayCmd);
 		itsActionMenu->EnableItem(kPlot1DArrayCmd);
 		itsActionMenu->EnableItem(kDisplay2DArrayCmd);
@@ -334,11 +333,6 @@ VarTreeDir::HandleActionMenu
 	else if (index == kDelVarCmd)
 	{
 		itsWidget->RemoveSelection();
-	}
-
-	else if (index == kDisplayAsCStringCmd)
-	{
-		itsWidget->DisplayAsCString();
 	}
 
 	else if (index == kDisplay1DArrayCmd)

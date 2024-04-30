@@ -19,14 +19,19 @@ class VarNode : public ::VarNode
 public:
 
 	VarNode(const bool shouldUpdate = true);
-
 	VarNode(JTreeNode* parent, const JString& name, const JString& value);
+	VarNode(const JUtf8Byte* type, const JString& name, const JString& value);
 
 	~VarNode() override;
 
 	JString	GetFullName(bool* isPointer = nullptr) const override;
+	JString	GetFullNameWithCast(bool* isPointer = nullptr) const override;
 
 	static ::VarNode*	BuildTree(SBFrame& frame, SBValue& value);
+
+private:
+
+	JString	itsType;
 };
 
 };

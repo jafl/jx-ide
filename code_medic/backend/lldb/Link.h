@@ -10,6 +10,7 @@
 
 // conflict between X11 and LLDB
 #undef Status
+#undef Success
 
 #include <Link.h>
 #include "lldb/API/SBDebugger.h"

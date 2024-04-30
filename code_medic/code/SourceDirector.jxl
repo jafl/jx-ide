@@ -49,6 +49,22 @@ jx_layout_editor 9
 0
 
 1
+3
+1
+"CustomWidget"
+2
+2
+0 50 455 585
+"itsText"
+1
+1
+0
+"SourceText"
+"this, itsCommandDir, itsMenuBar, scrollbarSet"
+0
+""
+
+1
 0
 0
 "CustomWidget"
@@ -73,7 +89,7 @@ jx_layout_editor 9
 530 20 550 600
 "itsFileDisplay"
 1
-0
+2
 0
 "JXFileNameDisplay"
 "JString::empty"

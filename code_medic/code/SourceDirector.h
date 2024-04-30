@@ -87,7 +87,6 @@ private:
 	CommandDirector*	itsCommandDir;
 	const Type			itsType;
 	LineIndexTable*		itsTable;
-	SourceText*			itsText;
 	JString				itsCurrentFile;			// can be empty
 	JString				itsCurrentFn;			// can be empty
 	Location			itsAsmLocation;			// used while waiting for GetAssemblyCmd
@@ -106,6 +105,7 @@ private:
 
 	JXMenuBar*         itsMenuBar;
 	JXToolBar*         itsToolBar;
+	SourceText*        itsText;
 	JXFileNameDisplay* itsFileDisplay;
 
 // end JXLayout

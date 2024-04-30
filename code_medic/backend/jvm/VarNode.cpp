@@ -32,7 +32,6 @@ jvm::VarNode::VarNode
 	(
 	JTreeNode*		parent,
 	const JString&	name,
-	const JString&	fullName,
 	const JString&	value
 	)
 	:

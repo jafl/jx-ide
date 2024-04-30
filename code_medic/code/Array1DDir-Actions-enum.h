@@ -6,8 +6,7 @@
 #define _H_Array1DDir_Actions_enum
 
 enum {
-	kDisplayAsCStringCmd=1,
-	kDisplay1DArrayCmd,
+	kDisplay1DArrayCmd=1,
 	kPlot1DArrayCmd,
 	kDisplay2DArrayCmd,
 	kWatchVarCmd,

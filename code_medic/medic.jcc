@@ -1080,7 +1080,6 @@ F
 "${LIB_DEPS}"
 "make -k all"
 # search paths
-T "../../JX/include" T
 T "../../JX/include/jx-af/j2dplot" T
 T "../../JX/include/jx-af/jcore" T
 T "../../JX/include/jx-af/jexpr" T
@@ -1088,6 +1087,7 @@ T "../../JX/include/jx-af/jx" T
 T "./backend" T
 T "./code" T
 T "./shared" T
+T "/opt/homebrew/Cellar/llvm/17.0.6_1/include/" T
 F
 # C preprocessor
 T "CBCFlexLexer" "yyFlexLexer"

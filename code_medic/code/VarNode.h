@@ -26,6 +26,7 @@ public:
 
 	bool			ValueIsValid() const;
 	virtual JString	GetFullName(bool* isPointer = nullptr) const = 0;
+	virtual JString	GetFullNameWithCast(bool* isPointer = nullptr) const;
 	const JString&	GetValue() const;
 	void			SetValue(const JString& value);
 	void			SetValid(const bool valid);

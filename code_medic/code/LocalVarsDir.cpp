@@ -381,7 +381,6 @@ LocalVarsDir::UpdateActionMenu()
 {
 	if (itsWidget->HasSelection())
 	{
-		itsActionMenu->EnableItem(kDisplayAsCStringCmd);
 		itsActionMenu->EnableItem(kDisplay1DArrayCmd);
 		itsActionMenu->EnableItem(kPlot1DArrayCmd);
 		itsActionMenu->EnableItem(kDisplay2DArrayCmd);
@@ -410,12 +409,7 @@ LocalVarsDir::HandleActionMenu
 	const JIndex index
 	)
 {
-	if (index == kDisplayAsCStringCmd)
-	{
-		itsWidget->DisplayAsCString();
-	}
-
-	else if (index == kDisplay1DArrayCmd)
+	if (index == kDisplay1DArrayCmd)
 	{
 		itsWidget->Display1DArray();
 	}

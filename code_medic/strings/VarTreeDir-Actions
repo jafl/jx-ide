@@ -8,7 +8,6 @@ MenuTitle::VarTreeDir_Actions "Actions"
 
 NewExpression::VarTreeDir "New expression %k Ctrl-N %h n"
 RemoveExpression::VarTreeDir "Remove expression %k Backspace. %h r"
-DisplayAsCStringAction::VarTreeDir "Display as C string %k Ctrl-S %h c"
 Display1DArray::VarTreeDir "Display as 1D array %k Ctrl-Shift-A %h 1"
 Plot1DArray::VarTreeDir "Plot as 1D array %h p"
 Display2DArray::VarTreeDir "Display as 2D array %h 2"
