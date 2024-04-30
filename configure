@@ -52,6 +52,8 @@ elif command -v apt-get; then
 		fi
 	fi;
 
+	ls -l /usr/lib/llvm-*;
+
 	rm -f code_medic/lldb-include;
 	ln -sf /usr/lib/llvm-*/include code_medic/lldb-include;
 
@@ -62,6 +64,8 @@ elif command -v dnf; then
 
 	# redhat
 
+	$SUDO dnf -y install gdb editorconfig-devel lldb-devel llvm-devel;
+
 	if [[ -z $SNAPCRAFT_BUILD_ENVIRONMENT ]]; then
 		if [[ ! -f ../JX/Makefile && -z $JX_ROOT ]]; then
 			$SUDO dnf install -y \
@@ -70,8 +74,6 @@ elif command -v dnf; then
 				https://libjx.sourceforge.net/ci/ace-fedora.rpm;
 		fi
 	fi
-
-	$SUDO dnf -y install gdb editorconfig-devel lldb-devel llvm-devel;
 
 elif command -v zypper; then
 
