@@ -41,11 +41,9 @@ elif command -v apt-get; then
 
 	# debian
 
-	LLDB_VERS=11
-
 	if [[ -z $SNAPCRAFT_BUILD_ENVIRONMENT ]]; then
 		$SUDO apt update;
-		$SUDO apt -y install libeditorconfig-dev llvm liblldb-$LLDB_VERS-dev;
+		$SUDO apt -y install gdb libeditorconfig-dev llvm liblldb-dev;
 
 		if [[ ! -f ../JX/Makefile && -z $JX_ROOT ]]; then
 			curl -LO https://libjx.sourceforge.net/${MODE:-release}/re-flex.deb
@@ -55,10 +53,10 @@ elif command -v apt-get; then
 	fi;
 
 	rm -f code_medic/lldb-include;
-	ln -sf /usr/lib/llvm-$LLDB_VERS/include code_medic/lldb-include;
+	ln -sf /usr/lib/llvm-*/include code_medic/lldb-include;
 
 	rm -f code_medic/liblldb.so;
-	ln -sf /usr/lib/llvm-$LLDB_VERS/lib/liblldb.so.1 code_medic/liblldb.so;
+	ln -sf /usr/lib/llvm-*/lib/liblldb.so.1 code_medic/liblldb.so;
 
 elif command -v dnf; then
 
@@ -73,13 +71,13 @@ elif command -v dnf; then
 		fi
 	fi
 
-	$SUDO dnf -y install editorconfig-devel lldb-devel llvm-devel;
+	$SUDO dnf -y install gdb editorconfig-devel lldb-devel llvm-devel;
 
 elif command -v zypper; then
 
 	# openSUSE
 
-	$SUDO zypper -in install editorconfig-devel lldb llvm-devel;
+	$SUDO zypper -in install gdb editorconfig-devel lldb llvm-devel;
 
 	# lldb-devel is missing
 	rm -f code_medic/lldb-include;

@@ -5,7 +5,7 @@ Release: 1
 License: Copyright New Planet Software, Inc.
 Group: Development/Tools/Debuggers
 Source: %pkg_name
-Requires: lldb, editorconfig-libs, libX11, libXinerama, libXpm, libXft, libxml2, gd, libjpeg, libpng, libicu, pcre, boost-devel, ctags, curl
+Requires: gdb, lldb, editorconfig-libs, libX11, libXinerama, libXpm, libXft, libxml2, gd, libjpeg, libpng, libicu, pcre, boost-devel, ctags, curl
 
 %description
 Code Medic is a graphical debugging environment for UNIX.
