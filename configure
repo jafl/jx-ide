@@ -52,13 +52,13 @@ elif command -v apt-get; then
 		fi
 	fi;
 
-	ls -l /usr/lib/llvm-*;
+	LLVM_ROOT=`ls /usr/lib/llvm-* | sort -gr | head --lines=1`;
 
 	rm -f code_medic/lldb-include;
-	ln -sf /usr/lib/llvm-*/include code_medic/lldb-include;
+	ln -sf $LLVM_ROOT/include code_medic/lldb-include;
 
 	rm -f code_medic/liblldb.so;
-	ln -sf /usr/lib/llvm-*/lib/liblldb.so.1 code_medic/liblldb.so;
+	ln -sf $LLVM_ROOT/lib/liblldb.so.1 code_medic/liblldb.so;
 
 elif command -v dnf; then
 
