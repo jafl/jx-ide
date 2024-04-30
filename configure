@@ -52,7 +52,7 @@ elif command -v apt-get; then
 		fi
 	fi;
 
-	LLVM_ROOT=`ls /usr/lib/llvm-* | sort -gr | head --lines=1`;
+	LLVM_ROOT=`ls -d /usr/lib/llvm-* | sort -gr | head --lines=1`;
 
 	rm -f code_medic/lldb-include;
 	ln -sf $LLVM_ROOT/include code_medic/lldb-include;
