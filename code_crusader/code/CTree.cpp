@@ -174,7 +174,6 @@ CTree::ParseFile
 	if (itsClassNameLexer == nullptr)
 	{
 		itsClassNameLexer = jnew TreeScanner::C::Scanner;
-		assert( itsClassNameLexer != nullptr );
 	}
 
 	// Read in the entire file and apply preprocessor.

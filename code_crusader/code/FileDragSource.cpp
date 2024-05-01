@@ -124,18 +124,12 @@ FileDragSource::HandleMouseDown
 		list.Append(&fileName);
 
 		auto* data = jnew JXFileSelection(GetDisplay(), list);
-		assert( data != nullptr );
-
 		BeginDND(pt, buttonStates, modifiers, data);
 	}
 	else if (itsNameInput != nullptr &&
 			 !itsNameInput->GetText()->GetText().EndsWith(ACE_DIRECTORY_SEPARATOR_STR))
 	{
-		auto* task = jnew DSSFinishSaveTask(itsDoc);
-
-		auto* data = jnew JXDSSSelection(GetWindow(), task);
-		assert( data != nullptr );
-
+		auto* data = jnew JXDSSSelection(GetWindow(), jnew DSSFinishSaveTask(itsDoc));
 		BeginDND(pt, buttonStates, modifiers, data);
 	}
 }

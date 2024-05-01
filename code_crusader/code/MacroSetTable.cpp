@@ -263,18 +263,15 @@ MacroSetTable::AddRow()
 	{
 		itsLastNewID++;
 		PrefsManager::MacroSetInfo info(itsLastNewID, jnew JString("New"),
-										  jnew CharActionManager,
-										  jnew MacroManager);
-		assert( info.name   != nullptr &&
-				info.action != nullptr &&
-				info.macro  != nullptr );
+										jnew CharActionManager,
+										jnew MacroManager);
 		itsMacroList->AppendItem(info);
 
 		JStringTableData* data = GetStringData();
 		data->AppendRows(1);
 
 		const JPoint newCell(1, GetRowCount());
-		data->SetString(newCell, *(info.name));
+		data->SetString(newCell, *info.name);
 		BeginEditing(newCell);
 	}
 }

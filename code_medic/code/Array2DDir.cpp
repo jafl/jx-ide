@@ -96,10 +96,7 @@ Array2DDir::Array2DDirX
 	itsData = jnew JStringTableData;
 
 	itsRowUpdateList = jnew JArray<JIntRange>;
-	assert( itsRowUpdateList != nullptr );
-
 	itsColUpdateList = jnew JArray<JIntRange>;
-	assert( itsColUpdateList != nullptr );
 
 	itsRowDisplayRange.SetToEmptyAt(0);
 	itsColDisplayRange.SetToEmptyAt(0);
@@ -472,8 +469,7 @@ Array2DDir::Receive
 
 	else if (sender == itsRowHeader && message.Is(JXRowHeaderWidget::kNeedsToBeWidened))
 	{
-		const auto* info =
-			dynamic_cast<const JXRowHeaderWidget::NeedsToBeWidened*>(&message);
+		auto* info = dynamic_cast<const JXRowHeaderWidget::NeedsToBeWidened*>(&message);
 		assert( info != nullptr );
 
 		const JCoordinate dw = info->GetDeltaWidth();

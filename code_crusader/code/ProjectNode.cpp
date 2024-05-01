@@ -598,7 +598,7 @@ ProjectTree*
 ProjectNode::GetProjectTree()
 {
 	auto* tree = dynamic_cast<ProjectTree*>(GetTree());
-	assert (tree != nullptr);
+	assert( tree != nullptr );
 	return tree;
 }
 
@@ -607,7 +607,7 @@ ProjectNode::GetProjectTree()
 	const
 {
 	const auto* tree = dynamic_cast<const ProjectTree*>(GetTree());
-	assert (tree != nullptr);
+	assert( tree != nullptr );
 	return tree;
 }
 
@@ -619,8 +619,8 @@ ProjectNode::GetProjectTree()
 ProjectNode*
 ProjectNode::GetProjectParent()
 {
-	JTreeNode* p     = GetParent();
-	auto* n = dynamic_cast<ProjectNode*>(p);
+	JTreeNode* p = GetParent();
+	auto* n      = dynamic_cast<ProjectNode*>(p);
 	assert( n != nullptr );
 	return n;
 }
@@ -629,8 +629,8 @@ const ProjectNode*
 ProjectNode::GetProjectParent()
 	const
 {
-	const JTreeNode* p     = GetParent();
-	const auto* n = dynamic_cast<const ProjectNode*>(p);
+	const JTreeNode* p = GetParent();
+	auto* n            = dynamic_cast<const ProjectNode*>(p);
 	assert( n != nullptr );
 	return n;
 }
@@ -688,7 +688,7 @@ ProjectNode::GetProjectChild
 	)
 {
 	auto* node = dynamic_cast<ProjectNode*>(GetChild(index));
-	assert (node != nullptr);
+	assert( node != nullptr );
 	return node;
 }
 
@@ -700,6 +700,6 @@ ProjectNode::GetProjectChild
 	const
 {
 	const auto* node = dynamic_cast<const ProjectNode*>(GetChild(index));
-	assert (node != nullptr);
+	assert( node != nullptr );
 	return node;
 }

@@ -69,7 +69,8 @@ jvm::GetThreadGroupsCmd::Starting()
 	}
 	else
 	{
-		const JSize length  = link->GetObjectIDSize();
+		const JSize length = link->GetObjectIDSize();
+
 		auto* data = (unsigned char*) calloc(length, 1);
 		assert( data != nullptr );
 

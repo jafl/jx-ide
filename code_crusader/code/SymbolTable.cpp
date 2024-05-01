@@ -64,7 +64,6 @@ SymbolTable::SymbolTable
 	itsMaxStringWidth = 0;
 
 	itsVisibleList = jnew JArray<JIndex>(SymbolList::kBlockSize);
-	assert( itsVisibleList != nullptr );
 
 	itsVisibleListLockedFlag = false;
 	itsNameFilter            = nullptr;
@@ -234,8 +233,6 @@ SymbolTable::CopySelectedSymbolNames()
 		}
 
 		auto* data = jnew JXTextSelection(GetDisplay(), list);
-		assert( data != nullptr );
-
 		GetSelectionManager()->SetData(kJXClipboardName, data);
 	}
 }

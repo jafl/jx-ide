@@ -41,12 +41,10 @@ BreakpointManager::BreakpointManager
 	assert( itsCmd != nullptr );
 
 	itsBPList = jnew JPtrArray<Breakpoint>(JPtrArrayT::kDeleteAll);
-	assert(itsBPList != nullptr);
 	itsBPList->SetCompareFunction(CompareBreakpointLocations);
 	itsBPList->SetSortOrder(JListT::kSortAscending);
 
 	itsOtherList = jnew JPtrArray<Breakpoint>(JPtrArrayT::kDeleteAll);
-	assert(itsOtherList != nullptr);
 
 	ListenTo(itsLink);
 }
@@ -237,7 +235,6 @@ BreakpointManager::ReadSetup
 	{
 		jdelete itsSavedBPList;
 		itsSavedBPList = jnew JPtrArray<Breakpoint>(JPtrArrayT::kDeleteAll);
-		assert( itsSavedBPList != nullptr );
 	}
 
 	JString fileName, condition, commands;
@@ -324,15 +321,13 @@ BreakpointManager::Receive
 	}
 	else if (sender == itsLink && message.Is(Link::kSymbolsLoaded))
 	{
-		const auto* info =
-			dynamic_cast<const Link::SymbolsLoaded*>(&message);
+		auto* info = dynamic_cast<const Link::SymbolsLoaded*>(&message);
 		assert( info != nullptr );
 		const JSize count = itsBPList->GetItemCount();
 		if (info->Successful() && itsRestoreBreakpointsFlag && count > 0)
 		{
 			jdelete itsSavedBPList;
 			itsSavedBPList = jnew JPtrArray<Breakpoint>(JPtrArrayT::kDeleteAll);
-			assert( itsSavedBPList != nullptr );
 			itsSavedBPList->CopyObjects(*itsBPList, JPtrArrayT::kDeleteAll, false);
 
 			for (JIndex i=1; i<=count; i++)

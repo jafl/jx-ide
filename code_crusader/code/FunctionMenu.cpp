@@ -84,10 +84,7 @@ FunctionMenu::FunctionMenuX
 	itsCaretItemIndex = 0;
 
 	itsLineIndexList = jnew JArray<JIndex>(100);
-	assert( itsLineIndexList != nullptr );
-
-	itsLineLangList = jnew JArray<Language>(100);
-	assert( itsLineLangList != nullptr );
+	itsLineLangList  = jnew JArray<Language>(100);
 
 	SetEmptyMenuItems();
 	SetUpdateAction(kDisableNone);
@@ -149,8 +146,7 @@ FunctionMenu::Receive
 	}
 	else if (sender == this && message.Is(JXMenu::kItemSelected))
 	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
+		auto* selection = dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleSelection(selection->GetIndex());
 	}

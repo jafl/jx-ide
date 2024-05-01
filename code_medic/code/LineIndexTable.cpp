@@ -127,7 +127,6 @@ LineIndexTable::LineIndexTable
 	ListenTo(itsLink);
 
 	itsBPList = jnew JPtrArray<Breakpoint>(JPtrArrayT::kForgetAll);
-	assert(itsBPList != nullptr);
 	itsBPList->SetCompareFunction(bpCcompareFn);
 	itsBPList->SetSortOrder(JListT::kSortAscending);
 
@@ -721,8 +720,7 @@ LineIndexTable::Receive
 
 	else if (sender == itsVScrollbar && message.Is(JXScrollbar::kScrolled))
 	{
-		const auto* info =
-			dynamic_cast<const JXScrollbar::Scrolled*>(&message);
+		auto* info = dynamic_cast<const JXScrollbar::Scrolled*>(&message);
 		assert( info != nullptr );
 		ScrollTo(0, info->GetValue());
 	}

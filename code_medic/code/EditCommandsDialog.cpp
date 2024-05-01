@@ -30,9 +30,7 @@ EditCommandsDialog::EditCommandsDialog()
 	JXModalDialogDirector(true),
 	JPrefObject(GetPrefsManager(), kEditCommandsDialogID)
 {
-	itsCommands	= jnew JPtrArray<JString>(JPtrArrayT::kForgetAll);
-	assert(itsCommands != nullptr);
-
+	itsCommands = jnew JPtrArray<JString>(JPtrArrayT::kForgetAll);
 	GetPrefsManager()->GetCmdList(itsCommands);
 
 	BuildWindow();

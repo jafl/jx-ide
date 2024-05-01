@@ -2277,8 +2277,7 @@ ProjectTable::CreateXInputField
 
 	if (GetDepth(cell.y) == kFileDepth)
 	{
-		auto* node =
-			dynamic_cast<FileNodeBase*>(GetProjectNode(cell.y));
+		auto* node = dynamic_cast<FileNodeBase*>(GetProjectNode(cell.y));
 		assert( node != nullptr );
 		inputField->GetText()->SetText(node->GetFileName());
 
@@ -2382,8 +2381,7 @@ ProjectTable::ExtractInputData
 
 		if (inputField->InputValid())
 		{
-			auto* node =
-				dynamic_cast<FileNodeBase*>(GetProjectNode(cell.y));
+			auto* node = dynamic_cast<FileNodeBase*>(GetProjectNode(cell.y));
 			assert( node != nullptr );
 
 			const JString origName = node->GetFileName();
@@ -2575,8 +2573,7 @@ ProjectTable::WriteSetup
 		const JSize groupCount = rootNode->GetChildCount();
 		for (JIndex i=1; i<=groupCount; i++)
 		{
-			const auto* child =
-				dynamic_cast<const JNamedTreeNode*>(rootNode->GetChild(i));
+			auto* child = dynamic_cast<const JNamedTreeNode*>(rootNode->GetChild(i));
 			assert( child != nullptr );
 
 			if (treeList->IsOpen(child))

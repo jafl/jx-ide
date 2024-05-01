@@ -245,7 +245,7 @@ FileNode::CreateFilesForTemplate
 		JString path, name;
 		JSplitPathAndName(relName, &path, &name);
 
-		const auto* projTree = dynamic_cast<const ProjectTree*>(GetTree());
+		auto* projTree = dynamic_cast<const ProjectTree*>(GetTree());
 		assert( projTree != nullptr );
 
 		const JString& basePath = (projTree->GetProjectDoc())->GetFilePath();

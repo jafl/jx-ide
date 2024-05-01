@@ -165,8 +165,7 @@ TECaretInputBase::Receive
 {
 	if (sender == itsTE && message.Is(JTextEditor::kCaretLocationChanged))
 	{
-		const auto* info =
-			dynamic_cast<const JTextEditor::CaretLocationChanged*>(&message);
+		auto* info = dynamic_cast<const JTextEditor::CaretLocationChanged*>(&message);
 		assert( info != nullptr );
 		if (itsOptimizeUpdateFlag)
 		{

@@ -202,7 +202,6 @@ PrefsManager::EditFileTypes()
 		for (JUnsignedOffset i=0; i<kFTCount; i++)
 		{
 			auto* list = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
-			assert( list != nullptr );
 			origSuffixList.Append(list);
 
 			GetFileSuffixes((TextFileType) i, list);
@@ -1609,11 +1608,10 @@ PrefsManager::ConvertHTMLSuffixesToFileTypes
 			const JUtf8Byte* cmd = "eog $f";
 			#endif
 
-			FileTypeInfo info(jnew JString(suffix), nullptr, nullptr, kExternalFT,
-							  kEmptyMacroID, kEmptyCRMRuleListID,
-							  true, nullptr, true, jnew JString, jnew JString(cmd));
-			assert( info.suffix != nullptr && info.complSuffix != nullptr && info.editCmd != nullptr );
-			itsFileTypeList->InsertSorted(info);
+			itsFileTypeList->InsertSorted(
+				FileTypeInfo(jnew JString(suffix), nullptr, nullptr, kExternalFT,
+							 kEmptyMacroID, kEmptyCRMRuleListID,
+							 true, nullptr, true, jnew JString, jnew JString(cmd)));
 		}
 	}
 }
@@ -1627,7 +1625,6 @@ JArray<PrefsManager::FileTypeInfo>*
 PrefsManager::CreateFileTypeList()
 {
 	auto* list = jnew JArray<FileTypeInfo>(256);
-	assert( list != nullptr );
 	list->SetSortOrder(JListT::kSortAscending);
 	list->SetCompareFunction(CompareFileTypeSpecAndLength);
 	return list;
@@ -1660,23 +1657,20 @@ PrefsManager::ReadFileTypeInfo
 	{
 		FileTypeInfo info;
 
-		info.suffix = jnew JString;
-		assert( info.suffix != nullptr );
-
+		info.suffix      = jnew JString;
 		info.complSuffix = jnew JString;
-		assert( info.complSuffix != nullptr );
 
-		listStream >> *(info.suffix) >> info.type;
+		listStream >> *info.suffix >> info.type;
 		listStream >> info.macroID >> JBoolFromString(info.wordWrap);
 
 		if (vers >= 13)
 		{
-			listStream >> info.crmID >> *(info.complSuffix);
+			listStream >> info.crmID >> *info.complSuffix;
 		}
 		else
 		{
 			info.crmID = kEmptyCRMRuleListID;	// set by CreateCRMRuleLists()
-			InitComplementSuffix(*(info.suffix), info.complSuffix);
+			InitComplementSuffix(*info.suffix, info.complSuffix);
 		}
 
 		if (vers >= 26)
@@ -1686,8 +1680,7 @@ PrefsManager::ReadFileTypeInfo
 			if (hasEditCmd)
 			{
 				info.editCmd = jnew JString;
-				assert( info.editCmd != nullptr );
-				listStream >> *(info.editCmd);
+				listStream >> *info.editCmd;
 			}
 		}
 
@@ -1698,8 +1691,7 @@ PrefsManager::ReadFileTypeInfo
 			if (hasScriptPath)
 			{
 				info.scriptPath = jnew JString;
-				assert( info.scriptPath != nullptr );
-				listStream >> *(info.scriptPath);
+				listStream >> *info.scriptPath;
 			}
 		}
 
@@ -1922,10 +1914,8 @@ PrefsManager::CompareFileTypeSpecAndLength
 #define EditDataSel   macro
 #define DialogClass   EditMacroDialog
 #define ExtractDataFn GetMacroList
-#define CopyConstr    jnew CharActionManager(*(origInfo.action)), \
-					  jnew MacroManager(*(origInfo.macro))
-#define PtrCheck      newInfo.action != nullptr && \
-					  newInfo.macro  != nullptr
+#define CopyConstr    jnew CharActionManager(*origInfo.action), \
+					  jnew MacroManager(*origInfo.macro)
 #define Destr         jdelete info.action; \
 					  jdelete info.macro
 #include "PrefsManagerData.th"
@@ -2131,14 +2121,10 @@ void
 createCRMRuleList
 	(
 	JArray<PrefsManager::CRMRuleListInfo>*	list,
-	const InitCRMInfo&							info
+	const InitCRMInfo&						info
 	)
 {
-	auto* name = jnew JString(info.name);
-
 	auto* ruleList = jnew JStyledText::CRMRuleList;
-	assert( ruleList != nullptr );
-
 	for (JUnsignedOffset j=0; j<info.count; j++)
 	{
 		ruleList->AppendItem(JStyledText::CRMRule(
@@ -2150,7 +2136,7 @@ createCRMRuleList
 	list->AppendItem(
 		PrefsManager::CRMRuleListInfo(
 			kFirstCRMRuleListID + list->GetItemCount(),
-			name, ruleList));
+			jnew JString(info.name), ruleList));
 }
 
 // regex file types
@@ -2246,8 +2232,7 @@ PrefsManager::CreateCRMRuleLists()
 
 	for (auto& ftrInfo : kFTRegexInfo)
 	{
-		auto* suffix = jnew JString(ftrInfo.pattern);
-
+		auto* suffix      = jnew JString(ftrInfo.pattern);
 		auto* complSuffix = jnew JString;
 
 		const JIndex macroID = FindMacroName(ftrInfo.macroName, itsMacroList, true);
@@ -2256,7 +2241,6 @@ PrefsManager::CreateCRMRuleLists()
 		FileTypeInfo info(suffix, nullptr, nullptr, ftrInfo.type, macroID, crmID,
 						  true, nullptr, ftrInfo.wrap, complSuffix, nullptr);
 		info.CreateRegex();
-		assert( info.contentRegex != nullptr );
 		itsFileTypeList->InsertSorted(info);
 	}
 }
@@ -2299,9 +2283,8 @@ PrefsManager::CreateDCRMRuleList()
 #define EditDataSel   list
 #define DialogClass   EditCRMDialog
 #define ExtractDataFn GetCRMRuleLists
-#define CopyConstr    jnew JStyledText::CRMRuleList(*(origInfo.list))
-#define PtrCheck      newInfo.list != nullptr
-#define Destr         (info.list)->DeleteAll(); \
+#define CopyConstr    jnew JStyledText::CRMRuleList(*origInfo.list)
+#define Destr         info.list->DeleteAll(); \
 					  jdelete info.list
 #include "PrefsManagerData.th"
 #undef DataType
@@ -2335,7 +2318,6 @@ PrefsManager::CRMRuleListInfo::CreateAndRead
 	)
 {
 	list = jnew JStyledText::CRMRuleList;
-	assert( list != nullptr );
 
 	JSize ruleCount;
 	input >> ruleCount;
@@ -2748,8 +2730,7 @@ PrefsManager::EditWithOtherProgram
 	if (GetFileType(fileName, &i) == kExternalFT)
 	{
 		const FileTypeInfo info = itsFileTypeList->GetItem(i);
-		assert( info.editCmd != nullptr );
-		*cmd = *(info.editCmd);
+		*cmd = *info.editCmd;
 		if (cmd->IsEmpty())
 		{
 			return false;

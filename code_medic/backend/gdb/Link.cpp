@@ -83,16 +83,11 @@ gdb::Link::Link()
 {
 	InitFlags();
 
-	itsScanner = jnew Output::Scanner;
-	assert( itsScanner != nullptr );
-
-	itsBPMgr = jnew BreakpointManager(this);
-
-	itsGetStopLocation = jnew GetStopLocationForLinkCmd();
-
+	itsScanner          = jnew Output::Scanner;
+	itsBPMgr            = jnew BreakpointManager(this);
+	itsGetStopLocation  = jnew GetStopLocationForLinkCmd();
 	itsGetStopLocation2 = jnew GetStopLocationForAsmCmd();
-
-	itsPingTask = jnew PingTask();
+	itsPingTask         = jnew PingTask();
 
 	StartDebugger();
 }
@@ -492,11 +487,11 @@ gdb::Link::ReadFromDebugger()
 			// output because the pattern "Reading symbols from [^\n]+..."
 			// will slurp up "(no debugging symbols found)..." as well.
 
-			auto* cmd = jnew GetProgramNameCmd;
+			jnew GetProgramNameCmd;
 
 			if (token.data.pString != nullptr)
 			{
-				Broadcast(UserOutput(*(token.data.pString), false));
+				Broadcast(UserOutput(*token.data.pString, false));
 			}
 		}
 		else if (token.type == Output::Scanner::kNoSymbolsInProgram)
@@ -522,7 +517,7 @@ gdb::Link::ReadFromDebugger()
 		{
 			// We have to check whether a core was loaded or cleared.
 
-			auto* cmd = jnew CheckCoreStatusCmd;
+			jnew CheckCoreStatusCmd;
 		}
 
 		else if (token.type == Output::Scanner::kAttachedToProcess)
@@ -1441,8 +1436,7 @@ gdb::Link::CreateArray2DCmd
 	JStringTableData*	data
 	)
 {
-	auto* cmd = jnew Array2DCmd(dir, table, data);
-	return cmd;
+	return jnew Array2DCmd(dir, table, data);
 }
 
 /******************************************************************************
@@ -1458,8 +1452,7 @@ gdb::Link::CreatePlot2DCmd
 	JArray<JFloat>*	y
 	)
 {
-	auto* cmd = jnew Plot2DCmd(dir, x, y);
-	return cmd;
+	return jnew Plot2DCmd(dir, x, y);
 }
 
 /******************************************************************************
@@ -1473,8 +1466,7 @@ gdb::Link::CreateDisplaySourceForMainCmd
 	SourceDirector* sourceDir
 	)
 {
-	auto* cmd = jnew DisplaySourceForMainCmd(sourceDir);
-	return cmd;
+	return jnew DisplaySourceForMainCmd(sourceDir);
 }
 
 /******************************************************************************
@@ -1489,8 +1481,7 @@ gdb::Link::CreateGetCompletionsCmd
 	CommandOutputDisplay*	history
 	)
 {
-	auto* cmd = jnew GetCompletionsCmd(input, history);
-	return cmd;
+	return jnew GetCompletionsCmd(input, history);
 }
 
 /******************************************************************************
@@ -1504,8 +1495,7 @@ gdb::Link::CreateGetFrameCmd
 	StackWidget* widget
 	)
 {
-	auto* cmd = jnew GetFrameCmd(widget);
-	return cmd;
+	return jnew GetFrameCmd(widget);
 }
 
 /******************************************************************************
@@ -1520,8 +1510,7 @@ gdb::Link::CreateGetStackCmd
 	StackWidget*	widget
 	)
 {
-	auto* cmd = jnew GetStackCmd(tree, widget);
-	return cmd;
+	return jnew GetStackCmd(tree, widget);
 }
 
 /******************************************************************************
@@ -1535,8 +1524,7 @@ gdb::Link::CreateGetThreadCmd
 	ThreadsWidget* widget
 	)
 {
-	auto* cmd = jnew GetThreadCmd(widget);
-	return cmd;
+	return jnew GetThreadCmd(widget);
 }
 
 /******************************************************************************
@@ -1547,12 +1535,11 @@ gdb::Link::CreateGetThreadCmd
 ::GetThreadsCmd*
 gdb::Link::CreateGetThreadsCmd
 	(
-	JTree*				tree,
+	JTree*			tree,
 	ThreadsWidget*	widget
 	)
 {
-	auto* cmd = jnew GetThreadsCmd(tree, widget);
-	return cmd;
+	return jnew GetThreadsCmd(tree, widget);
 }
 
 /******************************************************************************
@@ -1567,8 +1554,7 @@ gdb::Link::CreateGetFullPathCmd
 	const JIndex	lineIndex
 	)
 {
-	auto* cmd = jnew GetFullPathCmd(fileName, lineIndex);
-	return cmd;
+	return jnew GetFullPathCmd(fileName, lineIndex);
 }
 
 /******************************************************************************
@@ -1582,8 +1568,7 @@ gdb::Link::CreateGetInitArgsCmd
 	JXInputField* argInput
 	)
 {
-	auto* cmd = jnew GetInitArgsCmd(argInput);
-	return cmd;
+	return jnew GetInitArgsCmd(argInput);
 }
 
 /******************************************************************************
@@ -1597,8 +1582,7 @@ gdb::Link::CreateGetLocalVarsCmd
 	::VarNode* rootNode
 	)
 {
-	auto* cmd = jnew GetLocalVarsCmd(rootNode);
-	return cmd;
+	return jnew GetLocalVarsCmd(rootNode);
 }
 
 /******************************************************************************
@@ -1612,8 +1596,7 @@ gdb::Link::CreateGetSourceFileListCmd
 	FileListDir* fileList
 	)
 {
-	auto* cmd = jnew GetSourceFileListCmd(fileList);
-	return cmd;
+	return jnew GetSourceFileListCmd(fileList);
 }
 
 /******************************************************************************
@@ -1627,8 +1610,7 @@ gdb::Link::CreateVarValueCmd
 	const JString& expr
 	)
 {
-	auto* cmd = jnew VarCmd("print " + expr);
-	return cmd;
+	return jnew VarCmd("print " + expr);
 }
 
 /******************************************************************************
@@ -1642,9 +1624,7 @@ gdb::Link::CreateVarContentCmd
 	const JString& expr
 	)
 {
-	auto* cmd = jnew VarCmd("print *(" + expr + ")");
-	assert( cmd != nullptr );
-	return cmd;
+	return jnew VarCmd("print *(" + expr + ")");
 }
 
 /******************************************************************************
@@ -1671,8 +1651,7 @@ gdb::Link::CreateVarNode
 	const JString&	value
 	)
 {
-	auto* node = jnew VarNode(parent, name, value);
-	return node;
+	return jnew VarNode(parent, name, value);
 }
 
 /******************************************************************************
@@ -1717,8 +1696,7 @@ gdb::Link::CreateGetMemoryCmd
 	MemoryDir* dir
 	)
 {
-	auto* cmd = jnew GetMemoryCmd(dir);
-	return cmd;
+	return jnew GetMemoryCmd(dir);
 }
 
 /******************************************************************************
@@ -1732,8 +1710,7 @@ gdb::Link::CreateGetAssemblyCmd
 	SourceDirector* dir
 	)
 {
-	auto* cmd = jnew GetAssemblyCmd(dir);
-	return cmd;
+	return jnew GetAssemblyCmd(dir);
 }
 
 /******************************************************************************
@@ -1747,8 +1724,7 @@ gdb::Link::CreateGetRegistersCmd
 	RegistersDir* dir
 	)
 {
-	auto* cmd = jnew GetRegistersCmd(dir);
-	return cmd;
+	return jnew GetRegistersCmd(dir);
 }
 
 /******************************************************************************
@@ -1903,7 +1879,6 @@ gdb::Link::ParseMapArray
 		stream.ignore();
 
 		auto* map = jnew JStringPtrMap<JString>(JPtrArrayT::kDeleteAll);
-		assert( map != nullptr );
 		if (ParseMap(stream, map))
 		{
 			list->Append(map);

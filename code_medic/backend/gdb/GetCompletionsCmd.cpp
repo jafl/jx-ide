@@ -81,7 +81,6 @@ gdb::GetCompletionsCmd::HandleSuccess
 		if (!m.IsEmpty())
 		{
 			auto* s = jnew JString(m.GetString());
-			assert( s != nullptr );
 			s->TrimWhitespace();
 			if (s->IsEmpty() || !lines.InsertSorted(s, false))
 			{
@@ -98,7 +97,6 @@ gdb::GetCompletionsCmd::HandleSuccess
 		const JStringMatch& m = iter.FinishMatch();
 
 		auto* s = jnew JString(m.GetString());
-		assert( s != nullptr );
 		s->TrimWhitespace();
 		if (s->IsEmpty() || !lines.InsertSorted(s, false))
 		{

@@ -28,7 +28,6 @@ InstallEmulator
 	if (type == kVIEmulator)
 	{
 		*handler = jnew VIKeyHandler(editor);
-		assert( *handler != nullptr );
 	}
 
 	editor->SetKeyHandler(*handler);

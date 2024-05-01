@@ -374,8 +374,7 @@ TextEditor::Receive
 {
 	if (message.Is(JXFSDirMenu::kFileSelected))
 	{
-		const auto* info =
-			dynamic_cast<const JXFSDirMenu::FileSelected*>(&message);
+		auto* info = dynamic_cast<const JXFSDirMenu::FileSelected*>(&message);
 		assert( info != nullptr );
 		bool onDisk;
 		const JString fullName = itsDoc->GetFullName(&onDisk);
@@ -401,8 +400,7 @@ TextEditor::Receive
 		}
 		else if (sender == editMenu && message.Is(JXMenu::kItemSelected))
 		{
-			const auto* selection =
-				dynamic_cast<const JXMenu::ItemSelected*>(&message);
+			auto* selection = dynamic_cast<const JXMenu::ItemSelected*>(&message);
 			assert( selection != nullptr );
 			if (HandleCustomEditMenuItems(selection->GetIndex()))
 			{
@@ -416,8 +414,7 @@ TextEditor::Receive
 		}
 		else if (sender == searchMenu && message.Is(JXMenu::kItemSelected))
 		{
-			const auto* selection =
-				dynamic_cast<const JXMenu::ItemSelected*>(&message);
+			auto* selection = dynamic_cast<const JXMenu::ItemSelected*>(&message);
 			assert( selection != nullptr );
 			if (HandleCustomSearchMenuItems(selection->GetIndex()))
 			{
@@ -977,8 +974,7 @@ TextEditor::CreateScriptMenu
 	const JIndex	index
 	)
 {
-	auto* menu =jnew TEScriptMenu(this, itsScriptPath, parent, index, parent->GetEnclosure());
-	assert( menu != nullptr );
+	auto* menu = jnew TEScriptMenu(this, itsScriptPath, parent, index, parent->GetEnclosure());
 	ListenTo(menu);
 
 	JXTextMenu* editMenu;

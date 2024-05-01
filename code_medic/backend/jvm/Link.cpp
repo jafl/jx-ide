@@ -97,30 +97,23 @@ jvm::Link::Link()
 	itsBPMgr = jnew BreakpointManager(this);
 
 	itsSourcePathList = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
-	assert( itsSourcePathList != nullptr );
 
 	itsClassByIDList = jnew JArray<ClassInfo>;
-	assert( itsClassByIDList != nullptr );
 	itsClassByIDList->SetCompareFunction(CompareClassIDs);
 
 	itsClassByNameList = jnew JAliasArray<ClassInfo>(itsClassByIDList, CompareClassNames, JListT::kSortAscending);
-	assert( itsClassByNameList != nullptr );
 
 	itsThreadRoot = jnew ThreadNode(ThreadNode::kGroupType, ThreadNode::kRootThreadGroupID);
-
 	itsThreadTree = jnew JTree(itsThreadRoot);
 
 	itsThreadList = jnew JPtrArray<ThreadNode>(JPtrArrayT::kForgetAll);
-	assert( itsThreadList != nullptr );
 	itsThreadList->SetCompareFunction(ThreadNode::CompareID);
 
 	itsCullThreadGroupsTask = jnew JXFunctionTask(10000, std::bind(&Link::CheckNextThreadGroup, this));
-	assert( itsCullThreadGroupsTask != nullptr );
 	itsCullThreadGroupsTask->Start();
 	itsCullThreadGroupIndex = 1;
 
 	itsFrameList = jnew JArray<FrameInfo>();
-	assert( itsFrameList != nullptr );
 
 	StartDebugger();
 }
@@ -335,8 +328,7 @@ jvm::Link::Receive
 {
 	if (sender == itsDebugLink && message.Is(Socket::kMessageReady))
 	{
-		const auto* info =
-			dynamic_cast<const Socket::MessageReady*>(&message);
+		auto* info = dynamic_cast<const Socket::MessageReady*>(&message);
 		assert( info != nullptr );
 		ReceiveMessageFromJVM(*info);
 	}
@@ -347,8 +339,7 @@ jvm::Link::Receive
 
 	else if (sender == itsProcess && message.Is(JProcess::kFinished))
 	{
-		const auto* info =
-			dynamic_cast<const JProcess::Finished*>(&message);
+		auto* info = dynamic_cast<const JProcess::Finished*>(&message);
 		assert( info != nullptr );
 		CleanUpAfterProgramFinished(info);
 
@@ -676,13 +667,11 @@ jvm::Link::AddClass
 	}
 
 	info.name = jnew JString(ClassSignatureToName(signature));
-	assert( info.name != nullptr );
 
 	JString path;
 	if (ClassSignatureToFile(signature, &path))
 	{
 		info.path = jnew JString(path);
-		assert( info.path != nullptr );
 	}
 	else
 	{
@@ -690,7 +679,6 @@ jvm::Link::AddClass
 	}
 
 	info.methods = jnew JArray<MethodInfo>();
-	assert( info.methods != nullptr );
 	info.methods->SetCompareFunction(CompareMethodIDs);
 
 	itsClassByIDList->InsertSorted(info);
@@ -785,10 +773,8 @@ jvm::Link::AddMethod
 	target = itsClassByIDList->GetItem(i);
 
 	MethodInfo info;
-	info.id = methodID;
-
+	info.id   = methodID;
 	info.name = jnew JString(name);
-	assert( info.name != nullptr );
 
 	target.methods->InsertSorted(info);
 
@@ -1633,8 +1619,7 @@ jvm::Link::CreateArray2DCmd
 	JStringTableData*	data
 	)
 {
-	auto* cmd = jnew Array2DCmd(dir, table, data);
-	return cmd;
+	return jnew Array2DCmd(dir, table, data);
 }
 
 /******************************************************************************
@@ -1650,8 +1635,7 @@ jvm::Link::CreatePlot2DCmd
 	JArray<JFloat>*	y
 	)
 {
-	auto* cmd = jnew Plot2DCmd(dir, x, y);
-	return cmd;
+	return jnew Plot2DCmd(dir, x, y);
 }
 
 /******************************************************************************
@@ -1665,8 +1649,7 @@ jvm::Link::CreateDisplaySourceForMainCmd
 	SourceDirector* sourceDir
 	)
 {
-	auto* cmd = jnew DisplaySourceForMainCmd(sourceDir);
-	return cmd;
+	return jnew DisplaySourceForMainCmd(sourceDir);
 }
 
 /******************************************************************************
@@ -1681,8 +1664,7 @@ jvm::Link::CreateGetCompletionsCmd
 	CommandOutputDisplay*	history
 	)
 {
-	auto* cmd = jnew GetCompletionsCmd(input, history);
-	return cmd;
+	return jnew GetCompletionsCmd(input, history);
 }
 
 /******************************************************************************
@@ -1696,8 +1678,7 @@ jvm::Link::CreateGetFrameCmd
 	StackWidget* widget
 	)
 {
-	auto* cmd = jnew GetFrameCmd(widget);
-	return cmd;
+	return jnew GetFrameCmd(widget);
 }
 
 /******************************************************************************
@@ -1712,8 +1693,7 @@ jvm::Link::CreateGetStackCmd
 	StackWidget*	widget
 	)
 {
-	auto* cmd = jnew GetStackCmd(tree, widget);
-	return cmd;
+	return jnew GetStackCmd(tree, widget);
 }
 
 /******************************************************************************
@@ -1727,8 +1707,7 @@ jvm::Link::CreateGetThreadCmd
 	ThreadsWidget* widget
 	)
 {
-	auto* cmd = jnew GetThreadCmd(widget);
-	return cmd;
+	return jnew GetThreadCmd(widget);
 }
 
 /******************************************************************************
@@ -1743,8 +1722,7 @@ jvm::Link::CreateGetThreadsCmd
 	ThreadsWidget*	widget
 	)
 {
-	auto* cmd = jnew GetThreadsCmd(tree, widget);
-	return cmd;
+	return jnew GetThreadsCmd(tree, widget);
 }
 
 /******************************************************************************
@@ -1759,8 +1737,7 @@ jvm::Link::CreateGetFullPathCmd
 	const JIndex	lineIndex
 	)
 {
-	auto* cmd = jnew GetFullPathCmd(fileName, lineIndex);
-	return cmd;
+	return jnew GetFullPathCmd(fileName, lineIndex);
 }
 
 /******************************************************************************
@@ -1774,8 +1751,7 @@ jvm::Link::CreateGetInitArgsCmd
 	JXInputField* argInput
 	)
 {
-	auto* cmd = jnew GetInitArgsCmd(argInput);
-	return cmd;
+	return jnew GetInitArgsCmd(argInput);
 }
 
 /******************************************************************************
@@ -1789,8 +1765,7 @@ jvm::Link::CreateGetLocalVarsCmd
 	::VarNode* rootNode
 	)
 {
-	auto* cmd = jnew GetLocalVarsCmd(rootNode);
-	return cmd;
+	return jnew GetLocalVarsCmd(rootNode);
 }
 
 /******************************************************************************
@@ -1804,8 +1779,7 @@ jvm::Link::CreateGetSourceFileListCmd
 	FileListDir* fileList
 	)
 {
-	auto* cmd = jnew GetSourceFileListCmd(fileList);
-	return cmd;
+	return jnew GetSourceFileListCmd(fileList);
 }
 
 /******************************************************************************
@@ -1822,8 +1796,7 @@ jvm::Link::CreateVarValueCmd
 	JString s("print ");
 	s += expr;
 
-	auto* cmd = jnew VarCmd(s);
-	return cmd;
+	return jnew VarCmd(s);
 }
 
 /******************************************************************************
@@ -1841,8 +1814,7 @@ jvm::Link::CreateVarContentCmd
 	s += expr;
 	s += ")";
 
-	auto* cmd = jnew VarCmd(s);
-	return cmd;
+	return jnew VarCmd(s);
 }
 
 /******************************************************************************
@@ -2052,7 +2024,6 @@ jvm::Link::WaitForJVMDeath()
 		itsJVMDeathTask = nullptr;
 	},
 	true);
-	assert( itsJVMDeathTask != nullptr );
 	itsJVMDeathTask->Start();
 }
 

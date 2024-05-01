@@ -257,7 +257,6 @@ SymbolTypeList::CreateSymTypeList
 					 bold_gray(true, false, 0, false, JColorManager::GetGrayColor(50));
 
 	itsSymbolTypeList = jnew JArray<SymbolTypeInfo>(512);
-	assert( itsSymbolTypeList != nullptr );
 
 	ADD_S (kUnknownST, kOtherLang, JFontStyle(JColorManager::GetGrayColor(50)))
 

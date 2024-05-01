@@ -254,8 +254,6 @@ CRMRuleListTable::AddRow()
 		itsLastNewID++;
 		PrefsManager::CRMRuleListInfo info(itsLastNewID, jnew JString("New"),
 											 jnew JStyledText::CRMRuleList);
-		assert( info.name != nullptr &&
-				info.list != nullptr );
 		itsCRMList->AppendItem(info);
 
 		JStringTableData* data = GetStringData();

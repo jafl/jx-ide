@@ -66,7 +66,6 @@ ExecOutputDocument::ExecOutputDocument
 		jnew JXTextButton(JGetString("PauseLabel::ExecOutputDocument"), window,
 						  JXWidget::kFixedRight, JXWidget::kFixedTop,
 						  rect.right - 3*kMenuButtonWidth,0, kMenuButtonWidth,h);
-	assert( itsPauseButton != nullptr );
 	ListenTo(itsPauseButton);
 	itsPauseButton->SetShortcuts("^Z");
 	itsPauseButton->SetHint(JGetString("PauseButtonHint::ExecOutputDocument"));
@@ -75,7 +74,6 @@ ExecOutputDocument::ExecOutputDocument
 		jnew JXTextButton(JGetString("StopLabel::ExecOutputDocument"), window,
 						  JXWidget::kFixedRight, JXWidget::kFixedTop,
 						  rect.right - 2*kMenuButtonWidth,0, kMenuButtonWidth,h);
-	assert( itsStopButton != nullptr );
 	ListenTo(itsStopButton);
 	itsStopButton->SetShortcuts("^C#.");
 	itsStopButton->SetHint(JGetString("StopButtonHint::ExecOutputDocument"));
@@ -84,7 +82,6 @@ ExecOutputDocument::ExecOutputDocument
 		jnew JXTextButton(JGetString("KillLabel::ExecOutputDocument"), window,
 						  JXWidget::kFixedRight, JXWidget::kFixedTop,
 						  rect.right - kMenuButtonWidth,0, kMenuButtonWidth,h);
-	assert( itsKillButton != nullptr );
 	ListenTo(itsKillButton);
 
 	menuBar->AdjustSize(-3*kMenuButtonWidth, 0);
@@ -99,7 +96,6 @@ ExecOutputDocument::ExecOutputDocument
 		jnew JXStaticText(JGetString("CmdPrompt::ExecOutputDocument"), window,
 						  JXWidget::kFixedLeft, vSizing,
 						  -1000, -1000, 0, 500);
-	assert( itsCmdPrompt != nullptr );
 	itsCmdPrompt->SetToLabel();
 	itsCmdPrompt->Hide();
 
@@ -113,7 +109,6 @@ ExecOutputDocument::ExecOutputDocument
 		jnew JXTextButton(JGetString("EOFButtonTitle::ExecOutputDocument"), window,
 						  JXWidget::kFixedRight, vSizing,
 						  -1000, -1000, 500, 500);
-	assert( itsEOFButton != nullptr );
 	itsEOFButton->SetShortcuts("^D");
 	itsEOFButton->Hide();
 	ListenTo(itsEOFButton);
@@ -372,8 +367,7 @@ ExecOutputDocument::Receive
 
 	else if (sender == itsProcess && message.Is(JProcess::kFinished))
 	{
-		const auto* info =
-			dynamic_cast<const JProcess::Finished*>(&message);
+		auto* info = dynamic_cast<const JProcess::Finished*>(&message);
 		assert( info != nullptr );
 		const bool stayOpen = ProcessFinished(*info);
 
@@ -491,8 +485,7 @@ ExecOutputDocument::ReceiveData
 	const Message& message
 	)
 {
-	const auto* info =
-		dynamic_cast<const JAsynchDataReceiverT::DataReady*>(&message);
+	auto* info = dynamic_cast<const JAsynchDataReceiverT::DataReady*>(&message);
 	assert( info != nullptr );
 
 	TextEditor* te                   = GetTextEditor();

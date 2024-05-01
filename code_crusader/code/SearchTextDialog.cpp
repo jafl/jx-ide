@@ -498,10 +498,7 @@ SearchTextDialog::SearchFiles()
 	bool entireWord, wrapSearch, preserveCase;
 
 	auto* fileList = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
-	assert( fileList != nullptr );
-
 	auto* nameList = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
-	assert( nameList != nullptr );
 
 	if (GetSearchParameters(&searchRegex, &entireWord, &wrapSearch,
 							&replaceStr, &interpolator, &preserveCase) &&
@@ -527,10 +524,7 @@ SearchTextDialog::SearchFilesAndReplace()
 	bool entireWord, wrapSearch, preserveCase;
 
 	auto* fileList = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
-	assert( fileList != nullptr );
-
 	auto* nameList = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
-	assert( nameList != nullptr );
 
 	if (GetSearchParameters(&searchRegex, &entireWord, &wrapSearch,
 							&replaceStr, &interpolator, &preserveCase) &&

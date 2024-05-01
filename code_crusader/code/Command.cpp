@@ -60,7 +60,6 @@ Command::Command
 	assert( JIsAbsolutePath(path) );
 
 	itsCmdList = jnew JArray<CmdInfo>;
-	assert( itsCmdList != nullptr );
 
 	if (itsProjDoc != nullptr)
 	{
@@ -209,7 +208,6 @@ Command::Add
 	else
 	{
 		auto* args = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
-		assert( args != nullptr );
 		args->CopyObjects(cmdArgs, JPtrArrayT::kDeleteAll, false);
 
 		itsCmdList->AppendItem(CmdInfo(args, nullptr, nullptr, false));
@@ -233,8 +231,7 @@ Command::Add
 	subCmd->SetParent(this);
 
 	auto* info = jnew CommandManager::CmdInfo;
-	assert( info != nullptr );
-	*info = cmdInfo.Copy();
+	*info      = cmdInfo.Copy();
 
 	itsCmdList->AppendItem(CmdInfo(nullptr, subCmd, info, false));
 }
@@ -619,16 +616,14 @@ Command::Receive
 {
 	if (message.Is(JProcess::kFinished))
 	{
-		const auto* info =
-			dynamic_cast<const JProcess::Finished*>(&message);
+		auto* info = dynamic_cast<const JProcess::Finished*>(&message);
 		assert( info != nullptr );
 		const bool cancelled = info->GetReason() != kJChildFinished;
 		ProcessFinished(info->Successful() && !cancelled, cancelled);
 	}
 	else if (sender == itsMakeDependCmd && message.Is(Command::kFinished))
 	{
-		const auto* info =
-			dynamic_cast<const Command::Finished*>(&message);
+		auto* info = dynamic_cast<const Command::Finished*>(&message);
 		assert( info != nullptr );
 		itsMakeDependCmd     = nullptr;
 		const bool cancelled = info->Cancelled();
@@ -654,8 +649,7 @@ Command::ReceiveWithFeedback
 {
 	if (sender == itsOutputDoc && message->Is(CommandOutputDocument::kFinished))
 	{
-		auto* info =
-			dynamic_cast<ExecOutputDocument::Finished*>(message);
+		auto* info = dynamic_cast<ExecOutputDocument::Finished*>(message);
 		assert( info != nullptr );
 		ProcessFinished(info->Successful(), info->Cancelled());
 	}

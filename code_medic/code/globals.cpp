@@ -234,7 +234,7 @@ StartDebugger()
 	{
 		theLink = jnew xdebug::Link;
 	}
-	assert (theLink != nullptr);
+	assert( theLink != nullptr );
 
 	// original must be deleted *last* so listeners can call GetLink() to
 	// get the new one

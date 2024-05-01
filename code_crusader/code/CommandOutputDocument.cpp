@@ -54,13 +54,9 @@ CommandOutputDocument::ConstructTextEditor
 	JXScrollbarSet*		scrollbarSet
 	)
 {
-	auto* te =
-		jnew TextEditor(document, fileName, menuBar, lineInput, colInput, true,
-						scrollbarSet, scrollbarSet->GetScrollEnclosure(),
-						JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 10,10);
-	assert( te != nullptr );
-
-	return te;
+	return jnew TextEditor(document, fileName, menuBar, lineInput, colInput, true,
+							scrollbarSet, scrollbarSet->GetScrollEnclosure(),
+							JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 10,10);
 }
 
 /******************************************************************************

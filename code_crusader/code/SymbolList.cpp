@@ -57,7 +57,6 @@ SymbolList::SymbolList
 	itsBeganEmptyFlag         = false;
 
 	itsSymbolList = jnew JArray<SymbolInfo>(kBlockSize);
-	assert( itsSymbolList != nullptr );
 	itsSymbolList->SetSortOrder(JListT::kSortAscending);
 	itsSymbolList->SetCompareFunction(CompareSymbols);
 
@@ -373,10 +372,9 @@ SymbolList::PrepareContextNamespaceList
 	for (JIndex i=count; i>=1; i--)
 	{
 		JString* cns1 = contextNamespace->GetItem(i);	// name::
-		*cns1 += namespaceOp;
+		*cns1        += namespaceOp;
 
-		auto* cns2 = jnew JString(*cns1);					// ::name::
-		assert( cns2 != nullptr );
+		auto* cns2 = jnew JString(*cns1);				// ::name::
 		cns2->Prepend(namespaceOp);
 		contextNamespace->InsertAtIndex(i+1, cns2);
 	}
@@ -885,7 +883,6 @@ SymbolList::ReadSymbolList
 			(IsFunction(type) || IsPrototype(type)))
 		{
 			signature = jnew JString(" ( )");
-			assert( signature != nullptr );
 		}
 
 		const SymbolInfo info(name, signature, lang, type,

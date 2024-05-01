@@ -107,8 +107,6 @@ FileDragSource::HandleMouseDown
 		list.Append(const_cast<JString*>(fileName));
 
 		auto* data = jnew JXFileSelection(GetDisplay(), list);
-		assert( data != nullptr );
-
 		BeginDND(pt, buttonStates, modifiers, data);
 	}
 }

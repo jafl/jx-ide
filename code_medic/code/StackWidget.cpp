@@ -108,8 +108,7 @@ StackWidget::GetStackFrame
 	const JSize count     = root->GetChildCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		const auto* node =
-			dynamic_cast<const StackFrameNode*>(root->GetChild(i));
+		auto* node = dynamic_cast<const StackFrameNode*>(root->GetChild(i));
 		assert( node != nullptr );
 
 		if (node->GetID() == id)
@@ -140,8 +139,7 @@ StackWidget::SelectFrame
 	const JSize count = root->GetChildCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		const auto* node =
-			dynamic_cast<const StackFrameNode*>(root->GetChild(i));
+		auto* node = dynamic_cast<const StackFrameNode*>(root->GetChild(i));
 		assert( node != nullptr );
 
 		if (node->GetID() == id)
@@ -189,8 +187,7 @@ StackWidget::TableDrawCell
 			font.SetStyle(GetCellStyle(cell));
 			p.SetFont(font);
 
-			const auto* argNode =
-				dynamic_cast<const StackArgNode*>(node);
+			auto* argNode = dynamic_cast<const StackArgNode*>(node);
 			assert( argNode != nullptr );
 			p.String(rect, argNode->GetValue(), JPainter::HAlign::kLeft, JPainter::VAlign::kCenter);
 		}
@@ -214,8 +211,7 @@ StackWidget::GetMinCellWidth
 		const JTreeNode* node = GetTreeList()->GetNode(cell.y);
 		if (node->GetDepth() > 1)
 		{
-			const auto* argNode =
-				dynamic_cast<const StackArgNode*>(node);
+			auto* argNode = dynamic_cast<const StackArgNode*>(node);
 			assert( argNode != nullptr );
 
 			return GetFont().GetStringWidth(GetFontManager(), argNode->GetValue());
@@ -287,8 +283,7 @@ StackWidget::HandleMouseDown
 				node = node->GetParent();
 			}
 
-			const auto* stackNode =
-				dynamic_cast<const StackFrameNode*>(node);
+			auto* stackNode = dynamic_cast<const StackFrameNode*>(node);
 			assert( stackNode != nullptr );
 
 			JString fileName;
@@ -509,8 +504,7 @@ StackWidget::Receive
 				node = node->GetParent();
 			}
 
-			const auto* stackNode =
-				dynamic_cast<const StackFrameNode*>(node);
+			auto* stackNode = dynamic_cast<const StackFrameNode*>(node);
 			assert( stackNode != nullptr );
 
 			SwitchToFrame(stackNode->GetID());

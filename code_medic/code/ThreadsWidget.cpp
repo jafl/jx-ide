@@ -125,8 +125,7 @@ ThreadsWidget::CalledBySelectThread
 	const JSize count = root->GetChildCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		const auto* node =
-			dynamic_cast<const ThreadNode*>(root->GetChild(i));
+		auto* node = dynamic_cast<const ThreadNode*>(root->GetChild(i));
 		assert( node != nullptr );
 
 		if (node->GetID() == id)
@@ -203,8 +202,8 @@ ThreadsWidget::HandleMouseDown
 		if (modifiers.meta())
 		{
 			const JTreeNode* node = GetTreeList()->GetNode(cell.y);
-			const auto* threadNode =
-				dynamic_cast<const ThreadNode*>(node);
+
+			auto* threadNode = dynamic_cast<const ThreadNode*>(node);
 			assert( threadNode != nullptr );
 
 			JString fileName;
@@ -407,7 +406,6 @@ ThreadsWidget::Receive
 //		is loaded, even if the program doesn't use threads.
 //
 //		CheckForThreads* cmd = jnew CheckForThreads(itsThreadDir);
-//		assert( cmd != nullptr );
 //		cmd->Send();
 	}
 
@@ -426,8 +424,8 @@ ThreadsWidget::Receive
 			s.GetFirstSelectedCell(&cell))
 		{
 			const JTreeNode* node = GetTreeList()->GetNode(cell.y);
-			const auto* threadNode =
-				dynamic_cast<const ThreadNode*>(node);
+
+			auto* threadNode = dynamic_cast<const ThreadNode*>(node);
 			assert( threadNode != nullptr );
 
 			itsChangingThreadFlag   = true;
@@ -548,7 +546,6 @@ ThreadsWidget::SaveOpenNodes()
 	if (itsOpenIDList == nullptr)
 	{
 		itsOpenIDList = jnew JArray<JUInt64>();
-		assert( itsOpenIDList != nullptr );
 		itsOpenIDList->SetCompareFunction(std::function([](const JUInt64& i1, const JUInt64& i2)
 		{
 			return i1 <=> i2;

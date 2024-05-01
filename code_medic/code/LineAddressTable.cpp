@@ -38,10 +38,8 @@ LineAddressTable::LineAddressTable
 	LineIndexTable(CompareBreakpointAddresses, dir, text, scrollbarSet, enclosure, hSizing, vSizing, x, y, w, h)
 {
 	itsVisualBPIndexList = jnew JArray<JIndex>;
-	assert( itsVisualBPIndexList != nullptr );
 
 	itsLineTextList = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
-	assert( itsLineTextList != nullptr );
 	itsLineTextList->SetCompareFunction(JCompareStringsCaseInsensitive);
 	itsLineTextList->SetSortOrder(JListT::kSortAscending);
 }

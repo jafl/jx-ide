@@ -789,8 +789,7 @@ CommandDirector::Receive
 
 	if (sender == itsLink && message.Is(Link::kUserOutput))
 	{
-		const auto* output =
-			dynamic_cast<const Link::UserOutput*>(&message);
+		auto* output = dynamic_cast<const Link::UserOutput*>(&message);
 		assert(output != nullptr);
 		itsCommandOutput->SetCaretLocation(
 			itsCommandOutput->GetText()->GetText().GetCharacterCount()+1);
@@ -836,8 +835,7 @@ CommandDirector::Receive
 
 	else if (sender == itsLink && message.Is(Link::kSymbolsLoaded))
 	{
-		const auto* info =
-			dynamic_cast<const Link::SymbolsLoaded*>(&message);
+		auto* info = dynamic_cast<const Link::SymbolsLoaded*>(&message);
 		assert( info != nullptr );
 		UpdateWindowTitle(info->GetProgramName());
 
@@ -915,8 +913,7 @@ CommandDirector::Receive
 	}
 	else if (sender == itsDebugMenu && message.Is(JXMenu::kItemSelected))
 	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
+		auto* selection = dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		HandleDebugMenu(itsDebugMenu, selection->GetIndex(), itsCommandOutput, itsCommandInput);
 	}
@@ -942,22 +939,19 @@ CommandDirector::Receive
 
 	else if (message.Is(GetFullPathCmd::kFileFound))
 	{
-		const auto* info =
-			dynamic_cast<const GetFullPathCmd::FileFound*>(&message);
+		auto* info = dynamic_cast<const GetFullPathCmd::FileFound*>(&message);
 		assert( info != nullptr );
 		OpenSourceFile(info->GetFullName(), info->GetLineIndex());
 	}
 	else if (message.Is(GetFullPathCmd::kFileNotFound))
 	{
-		const auto* info =
-			dynamic_cast<const GetFullPathCmd::FileNotFound*>(&message);
+		auto* info = dynamic_cast<const GetFullPathCmd::FileNotFound*>(&message);
 		assert( info != nullptr );
 		ReportUnreadableSourceFile(info->GetFileName());
 	}
 	else if (message.Is(GetFullPathCmd::kNewCommand))
 	{
-		const auto* info =
-			dynamic_cast<const GetFullPathCmd::NewCommand*>(&message);
+		auto* info = dynamic_cast<const GetFullPathCmd::NewCommand*>(&message);
 		assert( info != nullptr );
 		ListenTo(info->GetNewCommand());
 	}

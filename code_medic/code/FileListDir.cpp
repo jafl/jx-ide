@@ -211,8 +211,7 @@ FileListDir::Receive
 
 	else if (sender == itsLink && message.Is(Link::kSymbolsLoaded))
 	{
-		const auto* info =
-			dynamic_cast<const Link::SymbolsLoaded*>(&message);
+		auto* info = dynamic_cast<const Link::SymbolsLoaded*>(&message);
 		assert( info != nullptr );
 		UpdateWindowTitle(info->GetProgramName());
 	}

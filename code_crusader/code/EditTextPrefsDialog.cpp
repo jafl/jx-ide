@@ -443,8 +443,7 @@ EditTextPrefsDialog::Receive
 	}
 	else if (sender == itsEmulatorMenu && message.Is(JXMenu::kItemSelected))
 	{
-		const auto* info =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
+		auto* info = dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( info != nullptr );
 		itsEmulatorIndex = info->GetIndex();
 	}

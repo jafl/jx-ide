@@ -116,13 +116,8 @@ Plot2DDir::Plot2DDirX1
 	itsExprData->AppendCols(Plot2DExprTable::kColCount);
 
 	itsUpdateCmdList = jnew JPtrArray<Plot2DCmd>(JPtrArrayT::kDeleteAll);
-	assert( itsUpdateCmdList != nullptr );
-
-	itsXData = jnew JPtrArray<JArray<JFloat> >(JPtrArrayT::kDeleteAll);
-	assert( itsXData != nullptr );
-
-	itsYData = jnew JPtrArray<JArray<JFloat> >(JPtrArrayT::kDeleteAll);
-	assert( itsYData != nullptr );
+	itsXData         = jnew JPtrArray<JArray<JFloat> >(JPtrArrayT::kDeleteAll);
+	itsYData         = jnew JPtrArray<JArray<JFloat> >(JPtrArrayT::kDeleteAll);
 }
 
 void
@@ -365,22 +360,19 @@ Plot2DDir::Receive
 
 	else if (sender == itsExprData && message.Is(JTableData::kRowsInserted))
 	{
-		const auto* info =
-			dynamic_cast<const JTableData::RowsInserted*>(&message);
+		auto* info = dynamic_cast<const JTableData::RowsInserted*>(&message);
 		assert( info != nullptr );
 		Update(info->GetFirstIndex(), info->GetLastIndex());	// only append
 	}
 	else if (sender == itsExprData && message.Is(JTableData::kRowDuplicated))
 	{
-		const auto* info =
-			dynamic_cast<const JTableData::RowDuplicated*>(&message);
+		auto* info = dynamic_cast<const JTableData::RowDuplicated*>(&message);
 		assert( info != nullptr );
 		Update(info->GetNewIndex(), info->GetNewIndex());
 	}
 	else if (sender == itsExprData && message.Is(JTableData::kRowsRemoved))
 	{
-		const auto* info =
-			dynamic_cast<const JTableData::RowsRemoved*>(&message);
+		auto* info = dynamic_cast<const JTableData::RowsRemoved*>(&message);
 		assert( info != nullptr );
 
 		StopListening(itsPlotWidget);
@@ -393,8 +385,7 @@ Plot2DDir::Receive
 	}
 	else if (sender == itsExprData && message.Is(JTableData::kRectChanged))
 	{
-		const auto* info =
-			dynamic_cast<const JTableData::RectChanged*>(&message);
+		auto* info = dynamic_cast<const JTableData::RectChanged*>(&message);
 		assert( info != nullptr );
 		const JRect& r = info->GetRect();
 		Update(r.top, r.bottom-1);
@@ -407,8 +398,7 @@ Plot2DDir::Receive
 
 	else if (sender == itsPlotWidget && message.Is(J2DPlotWidget::kCurveRemoved))
 	{
-		const auto* info =
-			dynamic_cast<const J2DPlotWidget::CurveRemoved*>(&message);
+		auto* info = dynamic_cast<const J2DPlotWidget::CurveRemoved*>(&message);
 		assert( info != nullptr );
 		const JIndex index = info->GetIndex();
 
@@ -552,11 +542,9 @@ Plot2DDir::Update
 		else
 		{
 			auto* x = jnew JArray<JFloat>(100);
-			assert( x != nullptr );
 			itsXData->Append(x);
 
 			auto* y = jnew JArray<JFloat>(100);
-			assert( y != nullptr );
 			itsYData->Append(y);
 
 			JIndex j;

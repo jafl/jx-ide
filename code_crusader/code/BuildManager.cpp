@@ -564,8 +564,7 @@ BuildManager::Receive
 {
 	if (sender == itsMakeDependCmd && message.Is(Command::kFinished))
 	{
-		const auto* info =
-			dynamic_cast<const Command::Finished*>(&message);
+		auto* info = dynamic_cast<const Command::Finished*>(&message);
 		assert( info != nullptr );
 
 		itsMakeDependCmd = nullptr;
@@ -616,7 +615,6 @@ BuildManager::EditProjectConfig()
 								 itsTargetName, itsDepListExpr,
 								 itsProjDoc->GetCommandManager()->GetMakeDependCommand(),
 								 itsSubProjectBuildCmd);
-	assert( dlog != nullptr );
 
 	if (dlog->DoDialog())
 	{

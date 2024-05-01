@@ -82,10 +82,8 @@ xdebug::Link::Link()
 {
 	InitFlags();
 
-	itsBPMgr = jnew BreakpointManager(this);
-
+	itsBPMgr          = jnew BreakpointManager(this);
 	itsSourcePathList = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
-	assert( itsSourcePathList != nullptr );
 
 	StartDebugger();
 }
@@ -969,8 +967,7 @@ xdebug::Link::CreateArray2DCmd
 	JStringTableData*	data
 	)
 {
-	auto* cmd = jnew Array2DCmd(dir, table, data);
-	return cmd;
+	return jnew Array2DCmd(dir, table, data);
 }
 
 /******************************************************************************
@@ -986,8 +983,7 @@ xdebug::Link::CreatePlot2DCmd
 	JArray<JFloat>*	y
 	)
 {
-	auto* cmd = jnew Plot2DCmd(dir, x, y);
-	return cmd;
+	return jnew Plot2DCmd(dir, x, y);
 }
 
 /******************************************************************************
@@ -1001,8 +997,7 @@ xdebug::Link::CreateDisplaySourceForMainCmd
 	SourceDirector* sourceDir
 	)
 {
-	auto* cmd = jnew DisplaySourceForMainCmd(sourceDir);
-	return cmd;
+	return jnew DisplaySourceForMainCmd(sourceDir);
 }
 
 /******************************************************************************
@@ -1017,8 +1012,7 @@ xdebug::Link::CreateGetCompletionsCmd
 	CommandOutputDisplay*	history
 	)
 {
-	auto* cmd = jnew GetCompletionsCmd(input, history);
-	return cmd;
+	return jnew GetCompletionsCmd(input, history);
 }
 
 /******************************************************************************
@@ -1032,8 +1026,7 @@ xdebug::Link::CreateGetFrameCmd
 	StackWidget* widget
 	)
 {
-	auto* cmd = jnew GetFrameCmd(widget);
-	return cmd;
+	return jnew GetFrameCmd(widget);
 }
 
 /******************************************************************************
@@ -1048,8 +1041,7 @@ xdebug::Link::CreateGetStackCmd
 	StackWidget*	widget
 	)
 {
-	auto* cmd = jnew GetStackCmd(tree, widget);
-	return cmd;
+	return jnew GetStackCmd(tree, widget);
 }
 
 /******************************************************************************
@@ -1063,8 +1055,7 @@ xdebug::Link::CreateGetThreadCmd
 	ThreadsWidget* widget
 	)
 {
-	auto* cmd = jnew GetThreadCmd(widget);
-	return cmd;
+	return jnew GetThreadCmd(widget);
 }
 
 /******************************************************************************
@@ -1079,8 +1070,7 @@ xdebug::Link::CreateGetThreadsCmd
 	ThreadsWidget*	widget
 	)
 {
-	auto* cmd = jnew GetThreadsCmd(tree, widget);
-	return cmd;
+	return jnew GetThreadsCmd(tree, widget);
 }
 
 /******************************************************************************
@@ -1095,8 +1085,7 @@ xdebug::Link::CreateGetFullPathCmd
 	const JIndex	lineIndex
 	)
 {
-	auto* cmd = jnew GetFullPathCmd(fileName, lineIndex);
-	return cmd;
+	return jnew GetFullPathCmd(fileName, lineIndex);
 }
 
 /******************************************************************************
@@ -1110,8 +1099,7 @@ xdebug::Link::CreateGetInitArgsCmd
 	JXInputField* argInput
 	)
 {
-	auto* cmd = jnew GetInitArgsCmd(argInput);
-	return cmd;
+	return jnew GetInitArgsCmd(argInput);
 }
 
 /******************************************************************************
@@ -1125,8 +1113,7 @@ xdebug::Link::CreateGetLocalVarsCmd
 	::VarNode* rootNode
 	)
 {
-	auto* cmd = jnew GetLocalVarsCmd(rootNode);
-	return cmd;
+	return jnew GetLocalVarsCmd(rootNode);
 }
 
 /******************************************************************************
@@ -1140,8 +1127,7 @@ xdebug::Link::CreateGetSourceFileListCmd
 	FileListDir* fileList
 	)
 {
-	auto* cmd = jnew GetSourceFileListCmd(fileList);
-	return cmd;
+	return jnew GetSourceFileListCmd(fileList);
 }
 
 /******************************************************************************
@@ -1160,8 +1146,7 @@ xdebug::Link::CreateVarValueCmd
 	s += " -d ";
 	s += JString(itsStackFrameIndex);
 
-	auto* cmd = jnew VarCmd(s);
-	return cmd;
+	return jnew VarCmd(s);
 }
 
 /******************************************************************************

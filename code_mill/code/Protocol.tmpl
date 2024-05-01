@@ -48,11 +48,8 @@ template <ACE_PEER_STREAM_1>
 void
 Protocol<ACE_PEER_STREAM_2>::ProtocolX()
 {
-	itsBufferSize = ProtocolT::kDefaultBufferSize;
-
-	itsBuffer = jnew JCharacter [ itsBufferSize ];
-	assert( itsBuffer != nullptr );
-
+	itsBufferSize        = ProtocolT::kDefaultBufferSize;
+	itsBuffer            = jnew JCharacter [ itsBufferSize ];
 	itsInHandleInputFlag = false;
 }
 

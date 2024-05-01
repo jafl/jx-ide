@@ -235,15 +235,13 @@ gdb::GetBreakpointsCmd::ParseOther
 		condition = *s;
 	}
 
-	auto* bp =
+	list->Append(
 		jnew Breakpoint(bpIndex, Location(), fn, JString::empty,
-						 enabled, action, condition, ignoreCount);
-	assert( bp != nullptr );
-	list->Append(bp);
+						enabled, action, condition, ignoreCount));
 
 	if (fn.Contains("watchpoint"))		// may be deleted when go out of scope
 	{
-		(GetLink()->GetBreakpointManager())->SetUpdateWhenStop(true);
+		GetLink()->GetBreakpointManager()->SetUpdateWhenStop(true);
 	}
 }
 

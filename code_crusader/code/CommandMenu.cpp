@@ -108,7 +108,6 @@ CommandMenu::CommandMenuX
 	if (itsTextDoc != nullptr)
 	{
 		itsAddToProjMenu = jnew JXTextMenu(this, kAddToProjIndex, GetEnclosure());
-		assert( itsAddToProjMenu != nullptr );
 		itsAddToProjMenu->SetMenuItems(kAddToProjectMenuStr);
 		itsAddToProjMenu->SetUpdateAction(JXMenu::kDisableNone);
 		itsAddToProjMenu->AttachHandlers(this,
@@ -118,7 +117,6 @@ CommandMenu::CommandMenuX
 	}
 
 	itsManageProjMenu = jnew JXTextMenu(this, kManageProjIndex, GetEnclosure());
-	assert( itsManageProjMenu != nullptr );
 	itsManageProjMenu->SetMenuItems(kManageProjectMenuStr);
 	itsManageProjMenu->SetUpdateAction(JXMenu::kDisableNone);
 	itsManageProjMenu->AttachHandlers(this,
@@ -174,8 +172,7 @@ CommandMenu::Receive
 	}
 	else if (sender == this && message.Is(JXMenu::kItemSelected))
 	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
+		auto* selection = dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 
 		GetTargetInfo info;
@@ -288,7 +285,6 @@ CommandMenu::HandleSelection
 			jnew RunCommandDialog(projDoc, itsTextDoc) :
 			jnew RunCommandDialog(projDoc, info.GetFileList(), info.GetLineIndexList());
 
-		assert( dlog != nullptr );
 		if (dlog->DoDialog())
 		{
 			dlog->Exec();

@@ -194,8 +194,7 @@ Breakpoint::Receive
 {
 	if (message.Is(GetFullPathCmd::kFileFound))
 	{
-		const auto* info =
-			dynamic_cast<const GetFullPathCmd::FileFound*>(&message);
+		auto* info = dynamic_cast<const GetFullPathCmd::FileFound*>(&message);
 		assert( info != nullptr );
 		itsLocation.SetFileName(info->GetFullName());
 		GetLink()->GetBreakpointManager()->BreakpointFileNameResolved(this);
@@ -206,8 +205,7 @@ Breakpoint::Receive
 	}
 	else if (message.Is(GetFullPathCmd::kNewCommand))
 	{
-		const auto* info =
-			dynamic_cast<const GetFullPathCmd::NewCommand*>(&message);
+		auto* info = dynamic_cast<const GetFullPathCmd::NewCommand*>(&message);
 		assert( info != nullptr );
 		ListenTo(info->GetNewCommand());
 	}

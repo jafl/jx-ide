@@ -60,8 +60,7 @@ jvm::StackFrameNode::Receive
 {
 	if (message.Is(Link::kIDResolved))
 	{
-		const auto* info =
-			dynamic_cast<const Link::IDResolved*>(&message);
+		auto* info = dynamic_cast<const Link::IDResolved*>(&message);
 		assert( info != nullptr );
 
 		if (info->GetID() == itsClassID || info->GetID() == itsMethodID)

@@ -62,8 +62,7 @@ GetSourceFileListCmd::Receive
 	}
 	else if (sender == link && message.Is(Link::kSymbolsLoaded))
 	{
-		const auto* info =
-			dynamic_cast<const Link::SymbolsLoaded*>(&message);
+		auto* info = dynamic_cast<const Link::SymbolsLoaded*>(&message);
 		assert( info != nullptr );
 		if (info->Successful())
 		{

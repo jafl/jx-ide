@@ -53,7 +53,8 @@ jvm::GetThreadNameCmd::Starting()
 	{
 		auto* link = dynamic_cast<Link*>(GetLink());
 
-		const JSize length  = link->GetObjectIDSize();
+		const JSize length = link->GetObjectIDSize();
+
 		auto* data = (unsigned char*) calloc(length, 1);
 		assert( data != nullptr );
 

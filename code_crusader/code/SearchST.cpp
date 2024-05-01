@@ -282,8 +282,6 @@ SearchST::SearchFile
 			iter.UnsafeMoveTo(JStringIterator::kStartAfterChar, quoteRange.charRange.last, quoteRange.byteRange.last);
 
 			auto* quoteText = jnew JString(iter.FinishMatch().GetString());
-			assert( quoteText != nullptr );
-
 			if (quoteRange.charRange.first != origQuoteRange.charRange.first)
 			{
 				quoteText->Prepend("...");
@@ -301,12 +299,9 @@ SearchST::SearchFile
 				matchRange.byteRange.last += 3;
 			}
 
-			auto* n = jnew JString(printName);
-
-			auto* msg = jnew SearchResult(n, lineIndex, quoteText, matchRange);
-			assert( msg != nullptr );
-
-			doc->QueueMessage(msg);
+			doc->QueueMessage(
+				jnew SearchResult(jnew JString(printName),
+								  lineIndex, quoteText, matchRange));
 		}
 
 		prevQuoteRange = quoteRange;
@@ -333,12 +328,8 @@ SearchST::QueueErrorMessage
 	const JSize			size
 	)
 {
-	auto* e = jnew JString(JGetString(key, map, size));
-	assert( e != nullptr );
-
-	auto* msg = jnew Error(e);
-
-	doc->QueueMessage(msg);
+	doc->QueueMessage(
+		jnew Error(jnew JString(JGetString(key, map, size))));
 }
 
 /******************************************************************************
@@ -353,11 +344,8 @@ SearchST::QueueFileNameMessage
 	const JString&	name
 	)
 {
-	auto* n = jnew JString(name);
-
-	auto* msg = jnew FileName(n);
-
-	doc->QueueMessage(msg);
+	doc->QueueMessage(
+		jnew FileName(jnew JString(name)));
 }
 
 /******************************************************************************

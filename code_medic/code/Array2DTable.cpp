@@ -279,7 +279,6 @@ Array2DTable::HandleEditMenu
 	{
 		auto* data =
 			jnew JXTextSelection(GetDisplay(), GetStringData()->GetString(cell));
-		assert( data != nullptr );
 
 		GetSelectionManager()->SetData(kJXClipboardName, data);
 	}

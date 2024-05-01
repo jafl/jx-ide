@@ -337,8 +337,7 @@ Array1DDir::Receive
 
 	else if (sender == itsTree && message.Is(JTree::kNodeChanged))
 	{
-		const auto* info =
-			dynamic_cast<const JTree::NodeChanged*>(&message);
+		auto* info = dynamic_cast<const JTree::NodeChanged*>(&message);
 		assert(info != nullptr);
 		if (info->GetNode() == itsCurrentNode)
 		{
@@ -461,8 +460,8 @@ Array1DDir::CreateNextNode()
 	{
 		itsDisplayRange.first--;
 		const JString expr = GetExpression(itsDisplayRange.first);
-		VarNode* node    = itsLink->CreateVarNode(root, expr, expr, JString::empty);
-		assert (node != nullptr);
+		VarNode* node      = itsLink->CreateVarNode(root, expr, expr, JString::empty);
+		assert( node != nullptr );
 
 		itsCurrentNode = node;
 		root->InsertAtIndex(1, node);	// move it to the top -- inserted by ctor so it will update self
@@ -472,8 +471,8 @@ Array1DDir::CreateNextNode()
 	{
 		itsDisplayRange.last++;
 		const JString expr = GetExpression(itsDisplayRange.last);
-		VarNode* node    = itsLink->CreateVarNode(root, expr, expr, JString::empty);
-		assert (node != nullptr);
+		VarNode* node      = itsLink->CreateVarNode(root, expr, expr, JString::empty);
+		assert( node != nullptr );
 
 		itsCurrentNode = node;
 		ListenTo(itsTree);

@@ -893,7 +893,7 @@ VarNode::GetVarChild
 	)
 {
 	auto* node = dynamic_cast<VarNode*>(GetChild(index));
-	assert (node != nullptr);
+	assert( node != nullptr );
 	return node;
 }
 
@@ -905,7 +905,7 @@ VarNode::GetVarChild
 	const
 {
 	const auto* node = dynamic_cast<const VarNode*>(GetChild(index));
-	assert (node != nullptr);
+	assert( node != nullptr );
 	return node;
 }
 

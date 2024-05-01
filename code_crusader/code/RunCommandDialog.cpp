@@ -70,11 +70,8 @@ RunCommandDialog::RunCommandDialog
 	itsProjDoc(projDoc),
 	itsTextDoc(nullptr)
 {
-	itsFullNameList = jnew JDCCPtrArray<JString>(fullNameList, JPtrArrayT::kDeleteAll);
-	assert( itsFullNameList != nullptr );
-
+	itsFullNameList  = jnew JDCCPtrArray<JString>(fullNameList, JPtrArrayT::kDeleteAll);
 	itsLineIndexList = jnew JArray<JIndex>(lineIndexList);
-	assert( itsLineIndexList != nullptr );
 
 	BuildWindow();
 	JPrefObject::ReadPrefs();
@@ -367,21 +364,13 @@ RunCommandDialog::Exec()
 	itsPathHistoryMenu->AddString(itsPathInput->GetText()->GetText());
 
 	auto* cmd = jnew JString(itsCmdInput->GetText()->GetText());
-	assert( cmd != nullptr );
 
-	auto* ss = jnew JString;
-
-	auto* mt = jnew JString;
-
-	auto* ms = jnew JString;
-
-	auto* mi = jnew JString;
-
-	CommandManager::CmdInfo info(path, cmd, ss,
-								   itsIsMakeCB->IsChecked(), itsIsCVSCB->IsChecked(),
-								   itsSaveAllCB->IsChecked(), itsOneAtATimeCB->IsChecked(),
-								   itsUseWindowCB->IsChecked(), itsRaiseCB->IsChecked(),
-								   itsBeepCB->IsChecked(), mt, ms, mi, false);
+	CommandManager::CmdInfo info(path, cmd, jnew JString,
+								 itsIsMakeCB->IsChecked(), itsIsCVSCB->IsChecked(),
+								 itsSaveAllCB->IsChecked(), itsOneAtATimeCB->IsChecked(),
+								 itsUseWindowCB->IsChecked(), itsRaiseCB->IsChecked(),
+								 itsBeepCB->IsChecked(), jnew JString,
+								 jnew JString, jnew JString, false);
 
 	if (itsTextDoc != nullptr)
 	{

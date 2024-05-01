@@ -138,7 +138,6 @@ DTree::ParseFile
 	if (itsClassNameLexer == nullptr)
 	{
 		itsClassNameLexer = jnew TreeScanner::D::Scanner;
-		assert( itsClassNameLexer != nullptr );
 	}
 
 	// extract info about classes

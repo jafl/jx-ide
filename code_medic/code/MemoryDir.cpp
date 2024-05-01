@@ -314,8 +314,7 @@ MemoryDir::Receive
 	}
 	else if (sender == itsDisplayTypeMenu && message.Is(JXMenu::kItemSelected))
 	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
+		auto* selection = dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 
 		if (selection->GetIndex() != (JIndex) itsDisplayType)

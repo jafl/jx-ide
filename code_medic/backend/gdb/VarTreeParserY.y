@@ -145,22 +145,18 @@ group :
 	P_GROUP_OPEN node_list P_GROUP_CLOSE
 	{
 		$$ = jnew GDBVarGroupInfo(nullptr, $2);
-		assert( $$ != nullptr );
 	}
 
 	| P_GROUP_OPEN value_list P_GROUP_CLOSE
 	{
 		$$ = jnew GDBVarGroupInfo(nullptr, $2);
-		assert( $$ != nullptr );
 	}
 
 	| P_GROUP_OPEN group P_GROUP_CLOSE
 	{
 		auto* list = jnew JPtrArray< ::VarNode>(JPtrArrayT::kForgetAll);
-		assert( list != nullptr );
 		AppendAsArrayElement(JString::empty, *($2->list), list);
 		$$ = jnew GDBVarGroupInfo(nullptr, list);
-		assert( $$ != nullptr );
 
 		jdelete $2;
 	}
@@ -168,22 +164,18 @@ group :
 	| P_SUMMARY P_GROUP_OPEN node_list P_GROUP_CLOSE
 	{
 		$$ = jnew GDBVarGroupInfo($1, $3);
-		assert( $$ != nullptr );
 	}
 
 	| P_SUMMARY P_GROUP_OPEN value_list P_GROUP_CLOSE
 	{
 		$$ = jnew GDBVarGroupInfo($1, $3);
-		assert( $$ != nullptr );
 	}
 
 	| P_SUMMARY P_GROUP_OPEN group P_GROUP_CLOSE
 	{
 		auto* list = jnew JPtrArray< ::VarNode>(JPtrArrayT::kForgetAll);
-		assert( list != nullptr );
 		AppendAsArrayElement($3->GetName(), *($3->list), list);
 		$$ = jnew GDBVarGroupInfo($1, list);
-		assert( $$ != nullptr );
 
 		jdelete $3;
 	}
@@ -194,7 +186,6 @@ node_list :
 	node
 	{
 		auto* list = $$ = jnew JPtrArray< ::VarNode>(JPtrArrayT::kForgetAll);
-		assert( list != nullptr );
 		list->Append($1);
 	}
 
@@ -224,9 +215,8 @@ node_list :
 	| group ',' group
 	{
 		auto* list = $$ = jnew JPtrArray< ::VarNode>(JPtrArrayT::kForgetAll);
-		assert( list != nullptr );
-		AppendAsArrayElement($1->GetName(), *($1->list), list);
-		AppendAsArrayElement($3->GetName(), *($3->list), list);
+		AppendAsArrayElement($1->GetName(), *$1->list, list);
+		AppendAsArrayElement($3->GetName(), *$3->list, list);
 
 		jdelete $1;
 		jdelete $3;
@@ -234,14 +224,13 @@ node_list :
 
 	| node_list ',' group
 	{
-		if ((($1->GetFirstItem())->GetName()).StartsWith("["))
+		if ($1->GetFirstItem()->GetName().StartsWith("["))
 		{
 			$$ = $1;
 		}
 		else
 		{
 			auto* list = $$ = jnew JPtrArray< ::VarNode>(JPtrArrayT::kForgetAll);
-			assert( list != nullptr );
 			AppendAsArrayElement(JString::empty, *$1, list);
 
 			jdelete $1;
@@ -374,7 +363,6 @@ value_list :
 	value_node
 	{
 		auto* list = $$ = jnew JPtrArray< ::VarNode>(JPtrArrayT::kForgetAll);
-		assert( list != nullptr );
 		AppendAsArrayElement($1, $$);
 	}
 
@@ -544,7 +532,6 @@ value :
 	| P_GROUP_OPEN P_GROUP_CLOSE
 	{
 		$$ = jnew JString("{}");
-		assert( $$ != nullptr );
 	}
 	;
 

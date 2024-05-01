@@ -178,7 +178,6 @@ DirList::AddPath
 	)
 {
 	DirInfo info(jnew JString(path), recurse);
-	assert( info.path != nullptr );
 	itsDirList->InsertSorted(info);
 }
 

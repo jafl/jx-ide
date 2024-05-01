@@ -128,9 +128,8 @@ CPreprocessor::DefineMacro
 {
 	assert( !name.IsEmpty() );
 
-	MacroInfo info(jnew JString(name), jnew JString(value));
-	assert( info.name != nullptr && info.value != nullptr );
-	itsMacroList->InsertSorted(info);
+	itsMacroList->InsertSorted(
+		MacroInfo(jnew JString(name), jnew JString(value)));
 }
 
 /******************************************************************************
@@ -209,7 +208,6 @@ CPreprocessor::ReadMacro
 	)
 {
 	MacroInfo info(jnew JString, jnew JString);
-	assert( info.name != nullptr && info.value != nullptr );
 	input >> *info.name >> *info.value;
 	itsMacroList->AppendItem(info);
 }

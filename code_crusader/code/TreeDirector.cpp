@@ -146,9 +146,9 @@ TreeDirector::TreeDirector
 							 this, TreeWidget::kBorderWidth, dirList);
 	ListenTo(itsTree);
 
-	std::istream* symInput             = (projVers <= 41 ? &projInput : symStream);
-	const JFileVersion symVers    = (projVers <= 41 ? projVers   : origSymVers);
-	const bool useSetProjData = setInput == nullptr || setVers < 71;
+	std::istream* symInput     = (projVers <= 41 ? &projInput : symStream);
+	const JFileVersion symVers = (projVers <= 41 ? projVers   : origSymVers);
+	const bool useSetProjData  = setInput == nullptr || setVers < 71;
 
 /* settings file */
 
@@ -192,13 +192,20 @@ TreeDirector::TreeDirector
 	{
 		itsPSPrinter->ReadXPSSetup(projInput);
 		itsEPSPrinter->ReadXEPSSetup(projInput);
-		itsFnListPrinter->ReadXPSSetup(projInput);
+
+		JXPSPrinter p(GetDisplay());
+		p.ReadXPSSetup(projInput);
 	}
 	if (!useSetProjData)	// overwrite
 	{
 		itsPSPrinter->ReadXPSSetup(*setInput);
 		itsEPSPrinter->ReadXEPSSetup(*setInput);
-		itsFnListPrinter->ReadXPSSetup(*setInput);
+
+		if (setVers < 98)
+		{
+			JXPSPrinter p(GetDisplay());
+			p.ReadXPSSetup(*setInput);
+		}
 	}
 
 	// put fn list windows on top of tree window
@@ -252,14 +259,8 @@ TreeDirector::TreeDirectorX
 
 	// can't call GetWindow() until window is created
 
-	itsPSPrinter = jnew JXPSPrinter(GetDisplay());
-	assert( itsPSPrinter != nullptr );
-
+	itsPSPrinter  = jnew JXPSPrinter(GetDisplay());
 	itsEPSPrinter = jnew JXEPSPrinter(GetDisplay());
-	assert( itsEPSPrinter != nullptr );
-
-	itsFnListPrinter = jnew JXPSPrinter(GetDisplay());
-	assert( itsFnListPrinter != nullptr );
 
 	return sbarSet;
 }
@@ -277,7 +278,6 @@ TreeDirector::~TreeDirector()
 
 	jdelete itsPSPrinter;
 	jdelete itsEPSPrinter;
-	jdelete itsFnListPrinter;
 }
 
 /******************************************************************************
@@ -290,9 +290,9 @@ TreeDirector::~TreeDirector()
 void
 TreeDirector::StreamOut
 	(
-	std::ostream&		projOutput,
-	std::ostream*		setOutput,
-	std::ostream*		symOutput,
+	std::ostream&	projOutput,
+	std::ostream*	setOutput,
+	std::ostream*	symOutput,
 	const DirList*	dirList
 	)
 	const
@@ -314,9 +314,6 @@ TreeDirector::StreamOut
 
 		*setOutput << ' ';
 		itsEPSPrinter->WriteXEPSSetup(*setOutput);
-
-		*setOutput << ' ';
-		itsFnListPrinter->WriteXPSSetup(*setOutput);
 
 		*setOutput << ' ' << JBoolToString(IsActive());
 
@@ -383,8 +380,6 @@ TreeDirector::FindFunction()
 	auto* dlog =
 		jnew JXGetStringDialog(JGetString("FindFunctionTitle::TreeDirector"),
 							   JGetString("FindFunctionPrompt::TreeDirector"));
-	assert( dlog != nullptr );
-
 	if (dlog->DoDialog())
 	{
 		itsTreeWidget->FindFunction(dlog->GetString(), kJXLeftButton);
@@ -531,7 +526,6 @@ TreeDirector::BuildWindow
 
 	auto* fileListMenu =
 		jnew DocumentMenu(menuBar, JXWidget::kFixedLeft, JXWidget::kVElastic, 0,0, 10,10);
-	assert( fileListMenu != nullptr );
 	menuBar->AppendMenu(fileListMenu);
 
 	itsPrefsMenu = menuBar->AppendTextMenu(JGetString("MenuTitle::TreeDirector_Preferences"));
@@ -806,7 +800,6 @@ TreeDirector::EditTreePrefs()
 								 itsTree->WillAutoMinimizeMILinks(),
 								 itsTree->WillDrawMILinksOnTop(),
 								 itsTreeWidget->WillRaiseWindowWhenSingleMatch());
-	assert( dlog != nullptr );
 	if (dlog->DoDialog())
 	{
 		dlog->UpdateSettings();
@@ -937,8 +930,7 @@ TreeDirector::ReceiveWithFeedback
 {
 	if (sender == itsCmdMenu && message->Is(CommandMenu::kGetTargetInfo))
 	{
-		auto* info =
-			dynamic_cast<CommandMenu::GetTargetInfo*>(message);
+		auto* info = dynamic_cast<CommandMenu::GetTargetInfo*>(message);
 		assert( info != nullptr );
 
 		JPtrArray<Class> classList(JPtrArrayT::kForgetAll);

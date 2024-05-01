@@ -50,11 +50,8 @@ template <ACE_PEER_STREAM_1>
 void
 Pipe<ACE_PEER_STREAM_2>::PipeX()
 {
-	itsRecvBufferSize = PipeT::kDefaultBufferSize;
-
-	itsRecvBuffer = jnew JUtf8Byte [ itsRecvBufferSize ];
-	assert( itsRecvBuffer != nullptr );
-
+	itsRecvBufferSize    = PipeT::kDefaultBufferSize;
+	itsRecvBuffer        = jnew JUtf8Byte [ itsRecvBufferSize ];
 	itsInHandleInputFlag = false;
 }
 

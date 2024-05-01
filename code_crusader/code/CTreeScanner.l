@@ -48,11 +48,8 @@ private:
 }
 
 %init {
-	itsUsingList = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
-	assert( itsUsingList != nullptr );
-
+	itsUsingList      = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
 	itsNamespaceStack = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
-	assert( itsNamespaceStack != nullptr );
 }
 
 %x NAMESPACE_STATE CLASS_NAME_STATE INHERIT_STATE
@@ -114,7 +111,6 @@ class\b {
 
 using{WS}{NSID}{MS}; {
 	JString* s = jnew JString(text()+5, size()-6);
-	assert( s != nullptr );
 	s->TrimWhitespace();
 	itsUsingList->Append(s);
 	}

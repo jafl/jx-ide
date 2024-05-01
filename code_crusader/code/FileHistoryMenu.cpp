@@ -115,8 +115,7 @@ FileHistoryMenu::Receive
 	if (sender == GetDocumentManager() &&
 		message.Is(DocumentManager::kAddFileToHistory))
 	{
-		const auto* info =
-			dynamic_cast<const DocumentManager::AddFileToHistory*>(&message);
+		auto* info = dynamic_cast<const DocumentManager::AddFileToHistory*>(&message);
 		assert( info != nullptr );
 		if (itsDocType == info->GetFileHistoryType())
 		{
@@ -126,8 +125,7 @@ FileHistoryMenu::Receive
 
 	else if (sender == this && message.Is(JXMenu::kItemSelected))
 	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
+		auto* selection = dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 
 		const JString fileName = GetFile(selection->GetIndex());

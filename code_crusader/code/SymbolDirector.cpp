@@ -369,8 +369,6 @@ SymbolDirector::FindSymbol
 			if (tree->IsUniqueClassName(className, &theClass))
 			{
 				auto* list = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
-				assert( list != nullptr );
-
 				theClass->GetAncestorList(list);
 				if (!list->IsEmpty())
 				{
@@ -389,7 +387,6 @@ SymbolDirector::FindSymbol
 			itsSymbolList->IsUniqueClassName(className, &lang))
 		{
 			auto* list = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
-			assert( list != nullptr );
 			list->Append(className);
 
 			cnList.AppendItem(SymbolList::ContextNamespace(lang, list));
@@ -497,7 +494,6 @@ SymbolDirector::FindAllSymbols
 		auto* dir =
 			jnew SymbolSRDirector(this, itsProjDoc, itsSymbolList,
 									symbolList, theClass->GetFullName());
-		assert( dir != nullptr );
 		dir->Activate();
 		itsSRList->Append(dir);
 		return true;
@@ -603,7 +599,6 @@ SymbolDirector::BuildWindow
 
 	auto* fileListMenu =
 		jnew DocumentMenu(menuBar, JXWidget::kFixedLeft, JXWidget::kVElastic, 0,0, 10,10);
-	assert( fileListMenu != nullptr );
 	menuBar->AppendMenu(fileListMenu);
 
 	itsPrefsMenu = menuBar->AppendTextMenu(JGetString("MenuTitle::SymbolDirector_Preferences"));
@@ -991,8 +986,7 @@ SymbolDirector::ReceiveWithFeedback
 {
 	if (sender == itsCmdMenu && message->Is(CommandMenu::kGetTargetInfo))
 	{
-		auto* info =
-			dynamic_cast<CommandMenu::GetTargetInfo*>(message);
+		auto* info = dynamic_cast<CommandMenu::GetTargetInfo*>(message);
 		assert( info != nullptr );
 		itsSymbolTable->GetFileNamesForSelection(info->GetFileList(),
 												 info->GetLineIndexList());

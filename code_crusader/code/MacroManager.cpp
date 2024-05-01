@@ -66,15 +66,14 @@ MacroManager::MacroManager
 {
 	MacroManagerX();
 
-	const JSize count = (source.itsMacroList)->GetItemCount();
+	const JSize count = source.itsMacroList->GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		const MacroInfo oldInfo = (source.itsMacroList)->GetItem(i);
+		const MacroInfo oldInfo = source.itsMacroList->GetItem(i);
 
-		MacroInfo newInfo(jnew JString(*(oldInfo.macro)),
-						  jnew JString(*(oldInfo.script)));
-		assert( newInfo.macro != nullptr && newInfo.script != nullptr );
-		itsMacroList->AppendItem(newInfo);
+		itsMacroList->AppendItem(
+			MacroInfo(jnew JString(*oldInfo.macro),
+					  jnew JString(*oldInfo.script)));
 	}
 }
 
@@ -274,9 +273,8 @@ MacroManager::AddMacro
 {
 	assert( !JString::IsEmpty(macro) && script != nullptr );
 
-	MacroInfo info(jnew JString(macro), jnew JString(script));
-	assert( info.macro != nullptr && info.script != nullptr );
-	itsMacroList->InsertSorted(info);
+	itsMacroList->InsertSorted(
+		MacroInfo(jnew JString(macro), jnew JString(script)));
 }
 
 /******************************************************************************
@@ -320,8 +318,7 @@ MacroManager::ReadSetup
 	for (JIndex i=1; i<=count; i++)
 	{
 		MacroInfo info(jnew JString, jnew JString);
-		assert( info.macro != nullptr && info.script != nullptr );
-		input >> *(info.macro) >> *(info.script);
+		input >> *info.macro >> *info.script;
 		itsMacroList->AppendItem(info);
 	}
 

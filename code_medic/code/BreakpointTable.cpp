@@ -81,7 +81,6 @@ BreakpointTable::BreakpointTable
 	itsFont(JFontManager::GetDefaultFont())
 {
 	itsBPList = jnew JPtrArray<Breakpoint>(JPtrArrayT::kForgetAll);
-	assert(itsBPList != nullptr);
 	itsBPList->SetCompareFunction(CompareBreakpointLocations);
 	itsBPList->SetSortOrder(JListT::kSortAscending);
 

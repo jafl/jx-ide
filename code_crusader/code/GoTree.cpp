@@ -144,7 +144,6 @@ GoTree::ParseFile
 	if (itsClassNameLexer == nullptr)
 	{
 		itsClassNameLexer = jnew TreeScanner::Go::Scanner;
-		assert( itsClassNameLexer != nullptr );
 	}
 
 	// extract info about classes

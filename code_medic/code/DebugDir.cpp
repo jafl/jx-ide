@@ -116,8 +116,7 @@ DebugDir::Receive
 
 		if (message.Is(Link::kDebugOutput))
 		{
-			const auto* msg =
-				dynamic_cast<const Link::DebugOutput*>(&message);
+			auto* msg = dynamic_cast<const Link::DebugOutput*>(&message);
 			assert( msg != nullptr );
 
 			const Link::DebugType type = msg->GetType();

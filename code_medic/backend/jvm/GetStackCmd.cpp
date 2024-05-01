@@ -49,9 +49,10 @@ jvm::GetStackCmd::Starting()
 {
 	::GetStackCmd::Starting();
 
-	auto* link       = dynamic_cast<Link*>(GetLink());
-	const JSize length  = link->GetObjectIDSize();
-	const JSize size    = length+8;
+	auto* link         = dynamic_cast<Link*>(GetLink());
+	const JSize length = link->GetObjectIDSize();
+	const JSize size   = length+8;
+
 	auto* data = (unsigned char*) calloc(size, 1);
 	assert( data != nullptr );
 

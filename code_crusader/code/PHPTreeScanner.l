@@ -34,7 +34,6 @@ private:
 
 %init {
 	itsUseMap = jnew JStringPtrMap<JString>(JPtrArrayT::kDeleteAll);
-	assert( itsUseMap != nullptr );
 }
 
 %x NAMESPACE_STATE USE_STATE USE_AS_STATE CLASS_NAME_STATE INHERIT_STATE
@@ -147,7 +146,6 @@ as\b {
 
 {NSID} {
 	JString* s = jnew JString(text(), size());
-	assert( s != nullptr );
 	itsUseMap->SetItem(*s, s, JPtrArrayT::kDelete);
 	itsUseName = *s;
 	}
@@ -177,7 +175,6 @@ as\b {
 
 {ID} {
 	JString* s = jnew JString(text(), size());
-	assert( s != nullptr );
 	itsUseMap->SetItem(itsUseName, s, JPtrArrayT::kDelete);
 	start(INITIAL);
 	}
@@ -213,7 +210,6 @@ as\b {
 		}
 
 	*theClass = jnew PHPClass(fullName, Class::kClassType, fileID, tree, itsFinalFlag);
-	assert( *theClass != nullptr );
 	(**theClass).SetAbstract(itsAbstractFlag);
 
 	start(INITIAL);

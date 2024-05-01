@@ -99,20 +99,11 @@ CreateGlobals
 		theMDIServer = jnew MDIServer;
 	}
 
-	theSearchTextDialog = SearchTextDialog::Create();
-	assert( theSearchTextDialog != nullptr );
-
+	theSearchTextDialog  = SearchTextDialog::Create();
 	theRunTEScriptDialog = jnew RunTEScriptDialog(JXGetPersistentWindowOwner());
-	assert( theRunTEScriptDialog != nullptr );
-
 	theViewManPageDialog = jnew ViewManPageDialog(JXGetPersistentWindowOwner());
-	assert( theViewManPageDialog != nullptr );
-
-	theFindFileDialog = jnew FindFileDialog(JXGetPersistentWindowOwner());
-	assert( theFindFileDialog != nullptr );
-
-	theDiffFileDialog = jnew DiffFileDialog(JXGetPersistentWindowOwner());
-	assert( theDiffFileDialog != nullptr );
+	theFindFileDialog    = jnew FindFileDialog(JXGetPersistentWindowOwner());
+	theDiffFileDialog    = jnew DiffFileDialog(JXGetPersistentWindowOwner());
 
 	// widgets hidden in permanent window
 
@@ -132,14 +123,11 @@ CreateGlobals
 	// symbol type list
 
 	theSymbolTypeList = jnew SymbolTypeList(permWindow->GetDisplay());
-	assert( theSymbolTypeList != nullptr );
 
 	// printers
 
 	thePTTextPrinter = jnew PTPrinter;
-
 	thePSTextPrinter = jnew PSPrinter(permWindow->GetDisplay());
-	assert( thePSTextPrinter != nullptr );
 
 	return isNew;
 }

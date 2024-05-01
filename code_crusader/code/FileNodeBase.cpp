@@ -137,7 +137,7 @@ FileNodeBase::GetFullName
 	)
 	const
 {
-	const auto* projTree = dynamic_cast<const ProjectTree*>(GetTree());
+	auto* projTree = dynamic_cast<const ProjectTree*>(GetTree());
 	assert( projTree != nullptr );
 
 	const JString& basePath = (projTree->GetProjectDoc())->GetFilePath();
@@ -414,10 +414,10 @@ FileNodeBase::FileRenamed
 	{
 		assert( type == ProjectTable::kProjectRelative );
 
-		const auto* projTree = dynamic_cast<const ProjectTree*>(GetTree());
+		auto* projTree = dynamic_cast<const ProjectTree*>(GetTree());
 		assert( projTree != nullptr );
 
-		const JString& basePath = (projTree->GetProjectDoc())->GetFilePath();
+		const JString& basePath = projTree->GetProjectDoc()->GetFilePath();
 		JString s               = JConvertToRelativePath(origFullName, basePath);
 		if (itsFileName == s)
 		{
@@ -441,7 +441,7 @@ FileNodeBase::ShowFileLocation()
 	JString fullName;
 	if (GetFullName(&fullName))
 	{
-		(JXGetWebBrowser())->ShowFileLocation(fullName);
+		JXGetWebBrowser()->ShowFileLocation(fullName);
 	}
 	else
 	{
@@ -480,18 +480,13 @@ FileNodeBase::New
 	const JString&	fileName
 	)
 {
-	FileNodeBase* node = nullptr;
-
 	const TextFileType type = GetPrefsManager()->GetFileType(fileName);
 	if (IsLibrary(type))
 	{
-		node = jnew LibraryNode(tree, fileName);
+		return jnew LibraryNode(tree, fileName);
 	}
 	else
 	{
-		node = jnew FileNode(tree, fileName);
+		return jnew FileNode(tree, fileName);
 	}
-	assert( node != nullptr );
-
-	return node;
 }

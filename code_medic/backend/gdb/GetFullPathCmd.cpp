@@ -88,15 +88,14 @@ gdb::GetFullPathCmd::HandleSuccess
 		}
 		else
 		{
-			auto* cmd = jnew GetFullPathCmd(fullName, GetLineIndex());
-			assert( cmd != nullptr );
-			Broadcast(NewCommand(cmd));
+			Broadcast(NewCommand(
+				jnew GetFullPathCmd(fullName, GetLineIndex())));
 		}
 		return;
 	}
 
 	const JString& data = GetLastResult();
-	bool fileOK     = false;
+	bool fileOK         = false;
 
 	const JPtrArray<JString>& resultList = GetResults();
 	JString data1;

@@ -195,16 +195,12 @@ Plot2DExprTable::CreateStringTableInput
 	const JCoordinate	h
 	)
 {
-	JXInputField* obj = nullptr;
 	if (cell.x == kRangeMinColIndex || cell.x == kRangeMaxColIndex)
 	{
-		obj = jnew JXIntegerInput(enclosure, hSizing, vSizing, x,y, w,h);
+		return jnew JXIntegerInput(enclosure, hSizing, vSizing, x,y, w,h);
 	}
 	else
 	{
-		obj = jnew JXInputField(enclosure, hSizing, vSizing, x,y, w,h);
+		return jnew JXInputField(enclosure, hSizing, vSizing, x,y, w,h);
 	}
-
-	assert( obj != nullptr );
-	return obj;
 }

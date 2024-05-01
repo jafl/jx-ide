@@ -29,7 +29,6 @@ const unsigned char kEndOfSetupListMarker = '\1';
 CharActionManager::CharActionManager()
 {
 	itsActionMap = jnew JStringPtrMap<JString>(JPtrArrayT::kDeleteAll);
-	assert( itsActionMap != nullptr );
 }
 
 /******************************************************************************
@@ -43,7 +42,6 @@ CharActionManager::CharActionManager
 	)
 {
 	itsActionMap = jnew JStringPtrMap<JString>(JPtrArrayT::kDeleteAll);
-	assert( itsActionMap != nullptr );
 
 	JStringMapCursor cursor(source.itsActionMap);
 	while (cursor.Next())

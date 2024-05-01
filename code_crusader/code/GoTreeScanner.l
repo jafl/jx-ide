@@ -46,7 +46,6 @@ private:
 
 %init {
 	itsImportMap = jnew JStringPtrMap<JString>(JPtrArrayT::kDeleteAll);
-	assert( itsImportMap != nullptr );
 }
 
 %x PACKAGE_STATE IMPORT_STATE CLASS_NAME_STATE INHERIT_STATE

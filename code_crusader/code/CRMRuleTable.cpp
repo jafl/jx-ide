@@ -343,7 +343,6 @@ CRMRuleTable::CreateStringTableInput
 		input = jnew JXRegexReplaceInput(itsReplaceInterpolator, false,
 										 enclosure, hSizing, vSizing, x,y, w,h);
 	}
-
 	assert( input != nullptr );
 	return input;
 }

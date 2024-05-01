@@ -103,7 +103,6 @@ PrefsManager::EditPrefs()
 			GetConstructorComment(),
 			GetDestructorComment(),
 			GetFunctionComment());
-	assert( dlog != nullptr );
 
 	if (dlog->DoDialog())
 	{

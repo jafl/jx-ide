@@ -554,15 +554,13 @@ FileListTable::Receive
 {
 	if (sender == GetFullNameDataList() && message.Is(JListT::kItemsInserted))
 	{
-		const auto* info =
-			dynamic_cast<const JListT::ItemsInserted*>(&message);
+		auto* info = dynamic_cast<const JListT::ItemsInserted*>(&message);
 		assert( info != nullptr );
 		FilesAdded(*info);
 	}
 	else if (sender == GetFullNameDataList() && message.Is(JListT::kItemsRemoved))
 	{
-		const auto* info =
-			dynamic_cast<const JListT::ItemsRemoved*>(&message);
+		auto* info = dynamic_cast<const JListT::ItemsRemoved*>(&message);
 		assert( info != nullptr );
 		itsFileInfo->RemoveItems(*info);
 		if (itsFileUsage != nullptr)
@@ -573,8 +571,7 @@ FileListTable::Receive
 
 	else if (sender == GetFullNameDataList() && message.Is(JListT::kItemMoved))
 	{
-		const auto* info =
-			dynamic_cast<const JListT::ItemMoved*>(&message);
+		auto* info = dynamic_cast<const JListT::ItemMoved*>(&message);
 		assert( info != nullptr );
 		itsFileInfo->MoveItemToIndex(*info);
 		if (itsFileUsage != nullptr)
@@ -584,8 +581,7 @@ FileListTable::Receive
 	}
 	else if (sender == GetFullNameDataList() && message.Is(JListT::kItemsSwapped))
 	{
-		const auto* info =
-			dynamic_cast<const JListT::ItemsSwapped*>(&message);
+		auto* info = dynamic_cast<const JListT::ItemsSwapped*>(&message);
 		assert( info != nullptr );
 		itsFileInfo->SwapItems(*info);
 		if (itsFileUsage != nullptr)
@@ -600,8 +596,7 @@ FileListTable::Receive
 
 	else if (sender == GetFullNameDataList() && message.Is(JListT::kItemsChanged))
 	{
-		const auto* info =
-			dynamic_cast<const JListT::ItemsChanged*>(&message);
+		auto* info = dynamic_cast<const JListT::ItemsChanged*>(&message);
 		assert( info != nullptr );
 
 		for (JIndex i=info->GetFirstIndex(); i<=info->GetLastIndex(); i++)

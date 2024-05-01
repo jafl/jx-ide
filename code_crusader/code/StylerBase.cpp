@@ -65,7 +65,6 @@ StylerBase::StylerBase
 	itsDialogTitle(editDialogTitle)
 {
 	itsTypeStyles = jnew JArray<JFontStyle>(64);
-	assert( itsTypeStyles != nullptr );
 
 #ifndef CODE_CRUSADER_UNIT_TEST
 	itsDefColor = GetPrefsManager()->GetColor(PrefsManager::kTextColorIndex);
@@ -80,7 +79,6 @@ StylerBase::StylerBase
 	}
 
 	itsWordStyles = jnew JStringMap<JFontStyle>(64);
-	assert( itsWordStyles != nullptr );
 
 #ifndef CODE_CRUSADER_UNIT_TEST
 	ListenTo(GetPrefsManager());
@@ -302,7 +300,6 @@ StylerBase::GetWordList
 	while (cursor.Next())
 	{
 		const WordStyle data(jnew JString(cursor.GetKey()), cursor.GetValue());
-		assert( data.key != nullptr );
 		if (sort)
 		{
 			wordList->InsertSorted(data);
@@ -414,7 +411,6 @@ StylerBase::EditStyles()
 	auto* dlog = jnew EditStylerDialog(itsDialogTitle, IsActive(),
 									   itsTypeNames, *itsTypeStyles,
 									   wordList, itsFileType);
-	assert( dlog != nullptr );
 
 	for (auto& ws : wordList)
 	{

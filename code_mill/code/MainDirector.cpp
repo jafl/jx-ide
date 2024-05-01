@@ -220,10 +220,7 @@ MainDirector::BuildWindow
 // end JXLayout
 
 	window->LockCurrentMinSize();
-
-	auto* image = jnew JXImage(GetDisplay(), gfg_main_window_icon);
-	assert( image != nullptr );
-	window->SetIcon(image);
+	window->SetIcon(jnew JXImage(GetDisplay(), gfg_main_window_icon));
 
 	ListenTo(itsChooseButton, std::function([this](const JXButton::Pushed&)
 	{

@@ -275,8 +275,7 @@ CommandManager::Prepare
 	{
 		if (Prepare(info, projDoc, fullNameList, lineIndexList, cmd, fnStack))
 		{
-			*returnInfo = jnew CmdInfo;
-			assert( *returnInfo != nullptr );
+			*returnInfo  = jnew CmdInfo;
 			**returnInfo = info.Copy();
 		}
 		return *cmd != nullptr;
@@ -475,7 +474,6 @@ CommandManager::Parse
 			if (!cmdArgs.IsEmpty())
 			{
 				auto* a = jnew JPtrArray<JString>(cmdArgs, JPtrArrayT::kDeleteAll);
-				assert( a != nullptr );
 				cmdArgs.RemoveAll();
 				cmdQueue->Append(a);
 			}
@@ -497,7 +495,6 @@ CommandManager::Parse
 			}
 
 			auto* a = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
-			assert( a != nullptr );
 			a->Append(arg);
 			cmdQueue->Append(a);
 
@@ -618,7 +615,6 @@ CommandManager::Add
 	if (*cmd == nullptr)
 	{
 		*cmd = jnew Command(path, info.isVCS, info.beepWhenFinished, projDoc);
-		assert( *cmd != nullptr );
 	}
 
 	if (path != (**cmd).GetPath())

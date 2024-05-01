@@ -198,7 +198,6 @@ Command::GetResults()
 	if (itsResultList == nullptr)
 	{
 		const_cast<Command*>(this)->itsResultList = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
-		assert( itsResultList != nullptr );
 	}
 
 	return *itsResultList;
@@ -208,7 +207,7 @@ const JString&
 Command::GetLastResult()
 	const
 {
-	return (itsResultList != nullptr ? *(itsResultList->GetLastItem()) : theEmptyResult);
+	return (itsResultList != nullptr ? *itsResultList->GetLastItem() : theEmptyResult);
 }
 
 void
@@ -220,7 +219,6 @@ Command::SaveResult
 	if (itsResultList == nullptr)
 	{
 		itsResultList = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
-		assert( itsResultList != nullptr );
 	}
 
 	itsResultList->Append(data);

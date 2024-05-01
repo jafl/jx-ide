@@ -227,13 +227,9 @@ TextDocument::ConstructTextEditor
 	JXScrollbarSet*		scrollbarSet
 	)
 {
-	auto* te =
-		jnew TextEditor(document, fileName, menuBar, lineInput, colInput, false,
-						scrollbarSet, scrollbarSet->GetScrollEnclosure(),
-						JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 10,10);
-	assert( te != nullptr );
-
-	return te;
+	return jnew TextEditor(document, fileName, menuBar, lineInput, colInput, false,
+							scrollbarSet, scrollbarSet->GetScrollEnclosure(),
+							JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 10,10);
 }
 
 /******************************************************************************
@@ -472,7 +468,6 @@ TextDocument::BuildWindow
 
 	itsWindowMenu =
 		jnew DocumentMenu(itsMenuBar, JXWidget::kFixedLeft, JXWidget::kVElastic, 0,0, 10,10);
-	assert( itsWindowMenu != nullptr );
 	itsMenuBar->AppendMenu(itsWindowMenu);
 
 	itsPrefsMenu = itsMenuBar->AppendTextMenu(JGetString("MenuTitle::TextDocument_Preferences"));
@@ -701,7 +696,6 @@ TextDocument::AskOverwriteFileModifiedByOthers()
 	const
 {
 	auto* dlog = jnew OKToOverwriteModifiedFileDialog(GetFileName());
-	assert( dlog != nullptr );
 	if (!dlog->DoDialog())
 	{
 		return false;
@@ -782,8 +776,7 @@ TextDocument::Receive
 	{
 		if (sender == this && message.Is(JXFileDocument::kNameChanged))
 		{
-			const auto* info =
-				dynamic_cast<const JXFileDocument::NameChanged*>(&message);
+			auto* info = dynamic_cast<const JXFileDocument::NameChanged*>(&message);
 			assert( info != nullptr );
 			DisplayFileName(info->GetFullName());
 			UpdateFileType();
@@ -1732,7 +1725,6 @@ TextDocument::HandleSettingsMenu
 	if (index == kTabWidthCmd)
 	{
 		auto* dlog = jnew TabWidthDialog(itsTextEditor->GetTabCharCount());
-		assert( dlog != nullptr );
 		if (dlog->DoDialog())
 		{
 			OverrideTabWidth(dlog->GetTabCharCount());

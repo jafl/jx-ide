@@ -85,8 +85,8 @@ Class::GetBaseClass
 	assert(itsBaseClassFiles != nullptr);
 	assert(itsBaseClassFiles->IndexValid(index));
 	
-	*classname	= *(itsBaseClasses->GetItem(index));
-	*filename	= *(itsBaseClassFiles->GetItem(index));
+	*classname	= *itsBaseClasses->GetItem(index);
+	*filename	= *itsBaseClassFiles->GetItem(index);
 }
 
 /******************************************************************************
@@ -104,14 +104,12 @@ Class::AddBaseClass
 	if (itsBaseClasses == nullptr)
 	{
 		itsBaseClasses = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
-		assert(itsBaseClasses != nullptr);
 	}
 	itsBaseClasses->Append(classname);
 
 	if (itsBaseClassFiles == nullptr)
 	{
 		itsBaseClassFiles = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
-		assert(itsBaseClassFiles != nullptr);
 	}
 	itsBaseClassFiles->Append(filename);
 }
@@ -173,14 +171,12 @@ Class::AddAncestor
 	if (itsAncestors == nullptr)
 	{
 		itsAncestors = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
-		assert(itsAncestors != nullptr);
 	}
 	itsAncestors->Append(classname);
 
 	if (itsAncestorFiles == nullptr)
 	{
 		itsAncestorFiles = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
-		assert(itsAncestorFiles != nullptr);
 	}
 	itsAncestorFiles->Append(filename);
 }

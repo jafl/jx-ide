@@ -337,8 +337,6 @@ SaveNewProjectDialog::BuildTemplateMenuItems
 			if (ProjectDocument::GetProjectTemplateType(fullName, &templateType))
 			{
 				auto* s = jnew JString((info->GetEntry(i)).GetName());
-				assert( s != nullptr );
-
 				if (isUserPath)
 				{
 					*s += JGetString("UserTemplateMarker::SaveNewProjectDialog");
@@ -413,8 +411,7 @@ SaveNewProjectDialog::Receive
 	}
 	else if (sender == itsTemplateMenu && message.Is(JXMenu::kItemSelected))
 	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
+		auto* selection = dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		itsTemplateIndex = selection->GetIndex();
 		UpdateMakefileMethod();

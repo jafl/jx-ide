@@ -116,7 +116,6 @@ lldb::GetStackCmd::HandleSuccess
 		auto* node =
 			jnew StackFrameNode(root, f.GetFrameID(), frameName,
 								 fileName, lineIndex);
-		assert( node != nullptr );
 		root->Prepend(node);
 
 		if (selectNextFrame)
@@ -143,10 +142,9 @@ lldb::GetStackCmd::HandleSuccess
 
 			if (v.GetName() != nullptr)
 			{
-				auto* argNode = jnew StackArgNode(node,
+				jnew StackArgNode(node,
 					JString(v.GetName(), JString::kNoCopy),
 					JString(v.GetValue() == nullptr ? "null" : v.GetValue(), JString::kNoCopy));
-				assert( argNode != nullptr );
 			}
 		}
 	}

@@ -72,7 +72,6 @@ App::App
 	itsWarnBeforeQuitFlag = false;
 
 	itsSystemIncludeDirs = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
-	assert( itsSystemIncludeDirs != nullptr );
 
 	*displayAbout = CreateGlobals(this, useMDI) && useMDI;	// ensure CreateGlobals() is always called
 	SetPrefInfo(GetPrefsManager(), kAppID);
@@ -523,7 +522,6 @@ App::CollectSearchPaths
 			if (dirList.GetTruePath(i, &truePath, &recurse))
 			{
 				DirInfo newInfo(jnew JString(truePath), recurse);
-				assert( newInfo.path != nullptr );
 				newInfo.projIndex = j;
 
 				bool found;

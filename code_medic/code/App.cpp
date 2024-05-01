@@ -65,7 +65,6 @@ App::App
 	}
 
 	auto* mdi = jnew MDIServer;		// deleted by jXGlobals
-	assert( mdi != nullptr );
 
 	auto* task = jnew QuitTask();
 	task->Start();

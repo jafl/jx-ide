@@ -13,8 +13,7 @@ This scanner reads output from gdb's print command.
 #include <jx-af/jcore/jAssert.h>
 
 #define NEW_TOKEN(s) \
-	lvalp->pString = jnew JString(s); \
-	assert( lvalp->pString != nullptr );
+	lvalp->pString = jnew JString(s);
 %}
 
 %option namespace="gdb::VarTree" lexer="Scanner"

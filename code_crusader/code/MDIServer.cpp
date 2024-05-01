@@ -563,9 +563,9 @@ MDIServer::DisplayVCSDiffs
 		else if (type1 != "file")
 		{
 			const JUtf8Byte* map[] =
-		{
+			{
 				"name", file.GetBytes()
-		};
+			};
 			const JString msg = JGetString("DiffFailed::MDIServer", map, sizeof(map));
 			JGetUserNotification()->ReportError(msg);
 			return;
@@ -576,9 +576,9 @@ MDIServer::DisplayVCSDiffs
 	if (!JIsURL(file) && !JConvertToAbsolutePath(file, JString::empty, &full))
 	{
 		const JUtf8Byte* map[] =
-	{
+		{
 			"name", file.GetBytes()
-	};
+		};
 		const JString msg = JGetString("NotAFile::MDIServer", map, sizeof(map));
 		JGetUserNotification()->ReportError(msg);
 		return;
@@ -586,15 +586,15 @@ MDIServer::DisplayVCSDiffs
 
 	if (strcmp(type, "cvs") == 0)
 	{
-		(GetDiffFileDialog())->ViewCVSDiffs(full, rev1, rev2, silent);
+		GetDiffFileDialog()->ViewCVSDiffs(full, rev1, rev2, silent);
 	}
 	else if (strcmp(type, "svn") == 0)
 	{
-		(GetDiffFileDialog())->ViewSVNDiffs(full, rev1, rev2, silent);
+		GetDiffFileDialog()->ViewSVNDiffs(full, rev1, rev2, silent);
 	}
 	else if (strcmp(type, "git") == 0)
 	{
-		(GetDiffFileDialog())->ViewGitDiffs(full, rev1, rev2, silent);
+		GetDiffFileDialog()->ViewGitDiffs(full, rev1, rev2, silent);
 	}
 }
 

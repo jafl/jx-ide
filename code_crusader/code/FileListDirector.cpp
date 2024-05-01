@@ -223,7 +223,6 @@ FileListDirector::BuildWindow()
 	itsFLTable =
 		jnew FileListTable(scrollbarSet, scrollbarSet->GetScrollEnclosure(),
 							JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 10,10);
-	assert( itsFLTable != nullptr );
 	itsFLSet->SetTable(itsFLTable);
 
 	ListenTo(itsFLTable, std::function([this](const JXFileListTable::ProcessSelection&)
@@ -281,7 +280,6 @@ FileListDirector::BuildWindow()
 
 	auto* fileListMenu =
 		jnew DocumentMenu(menuBar, JXWidget::kFixedLeft, JXWidget::kVElastic, 0,0, 10,10);
-	assert( fileListMenu != nullptr );
 	menuBar->AppendMenu(fileListMenu);
 
 	itsPrefsMenu = menuBar->AppendTextMenu(JGetString("MenuTitle::FileListDirector_Preferences"));

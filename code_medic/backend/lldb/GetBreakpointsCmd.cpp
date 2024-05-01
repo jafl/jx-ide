@@ -121,7 +121,6 @@ lldb::GetBreakpointsCmd::HandleSuccess
 			bp = jnew Breakpoint(b.GetID(), fullName, e.GetLine(), func, addr,
 								  b.IsEnabled(), action,
 								  cond, b.GetIgnoreCount());
-			assert( bp != nullptr );
 		}
 		else if (fn.IsValid())
 		{
@@ -129,7 +128,6 @@ lldb::GetBreakpointsCmd::HandleSuccess
 			bp = jnew Breakpoint(b.GetID(), loc, func, addr,
 								  b.IsEnabled(), action,
 								  cond, b.GetIgnoreCount());
-			assert( bp != nullptr );
 		}
 
 		if (bp != nullptr)
@@ -140,7 +138,7 @@ lldb::GetBreakpointsCmd::HandleSuccess
 
 			if (action != Breakpoint::kKeepBreakpoint || b.GetIgnoreCount() > 0)
 			{
-				(GetLink()->GetBreakpointManager())->SetUpdateWhenStop(true);
+				GetLink()->GetBreakpointManager()->SetUpdateWhenStop(true);
 			}
 		}
 	}
@@ -148,7 +146,7 @@ lldb::GetBreakpointsCmd::HandleSuccess
 	count = t.GetNumWatchpoints();
 	if (count > 0)	// may be deleted when go out of scope
 	{
-		(GetLink()->GetBreakpointManager())->SetUpdateWhenStop(true);
+		GetLink()->GetBreakpointManager()->SetUpdateWhenStop(true);
 	}
 
 	for (JUnsignedOffset i=0; i<count; i++)
@@ -170,7 +168,6 @@ lldb::GetBreakpointsCmd::HandleSuccess
 		auto* bp = jnew Breakpoint(w.GetID(), loc, JString::empty, addr,
 								 w.IsEnabled(), Breakpoint::kKeepBreakpoint,
 								 cond, w.GetIgnoreCount());
-		assert( bp != nullptr );
 		bpList.InsertSorted(bp);
 	}
 

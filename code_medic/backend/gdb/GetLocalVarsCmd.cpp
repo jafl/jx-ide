@@ -86,12 +86,10 @@ gdb::GetLocalVarsCmd::HandleSuccess
 		const JStringMatch& m = argIter.GetLastMatch();
 
 		auto* name = jnew JString(m.GetSubstring(1));
-		assert( name != nullptr );
 		name->TrimWhitespace();
 		nameList.Append(name);
 
 		auto* value = jnew JString(m.GetSubstring(2));
-		assert( value != nullptr );
 		value->TrimWhitespace();
 		valueList.Append(value);
 	}
@@ -109,12 +107,10 @@ gdb::GetLocalVarsCmd::HandleSuccess
 		const JStringMatch& m = varIter.GetLastMatch();
 
 		auto* name = jnew JString(m.GetSubstring(1));
-		assert( name != nullptr );
 		name->TrimWhitespace();
 		nameList.InsertAtIndex(insertionIndex, name);
 
 		auto* value = jnew JString(m.GetSubstring(2));
-		assert( value != nullptr );
 		value->TrimWhitespace();
 		valueList.InsertAtIndex(insertionIndex, value);
 	}
@@ -167,7 +163,7 @@ gdb::GetLocalVarsCmd::HandleSuccess
 		}
 		else
 		{
-			node = GetLink()->CreateVarNode(nullptr, *(nameList.GetItem(i)), JString::empty, JString::empty);
+			node = GetLink()->CreateVarNode(nullptr, *nameList.GetItem(i), JString::empty, JString::empty);
 			assert( node != nullptr );
 			itsRootNode->Append(node);	// avoid automatic update
 		}

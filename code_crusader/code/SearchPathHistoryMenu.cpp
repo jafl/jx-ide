@@ -89,8 +89,7 @@ SearchPathHistoryMenu::GetPath
 {
 	assert( message.Is(JXMenu::kItemSelected) );
 
-	const auto* selection =
-		dynamic_cast<const JXMenu::ItemSelected*>(&message);
+	auto* selection = dynamic_cast<const JXMenu::ItemSelected*>(&message);
 	assert( selection != nullptr );
 
 	return GetPath(selection->GetIndex(), recurse);

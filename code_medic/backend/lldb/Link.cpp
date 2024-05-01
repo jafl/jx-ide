@@ -692,8 +692,6 @@ lldb::Link::RunProgram
 			JParseArgsForExec(args, &argList);
 
 			lldbArgs = jnew JUtf8Byte*[ argList.GetItemCount()+1 ];
-			assert( lldbArgs != nullptr );
-
 			for (JIndex i=1; i<=argList.GetItemCount(); i++)
 			{
 				lldbArgs[ i-1 ] = const_cast<JUtf8Byte*>(argList.GetItem(i)->GetBytes());
@@ -1315,8 +1313,7 @@ lldb::Link::CreateArray2DCmd
 	JStringTableData*	data
 	)
 {
-	auto* cmd = jnew Array2DCmd(dir, table, data);
-	return cmd;
+	return jnew Array2DCmd(dir, table, data);
 }
 
 /******************************************************************************
@@ -1332,8 +1329,7 @@ lldb::Link::CreatePlot2DCmd
 	JArray<JFloat>*	y
 	)
 {
-	auto* cmd = jnew Plot2DCmd(dir, x, y);
-	return cmd;
+	return jnew Plot2DCmd(dir, x, y);
 }
 
 /******************************************************************************
@@ -1347,8 +1343,7 @@ lldb::Link::CreateDisplaySourceForMainCmd
 	SourceDirector* sourceDir
 	)
 {
-	auto* cmd = jnew DisplaySourceForMainCmd(sourceDir);
-	return cmd;
+	return jnew DisplaySourceForMainCmd(sourceDir);
 }
 
 /******************************************************************************
@@ -1363,8 +1358,7 @@ lldb::Link::CreateGetCompletionsCmd
 	CommandOutputDisplay*	history
 	)
 {
-	auto* cmd = jnew GetCompletionsCmd(input, history);
-	return cmd;
+	return jnew GetCompletionsCmd(input, history);
 }
 
 /******************************************************************************
@@ -1378,8 +1372,7 @@ lldb::Link::CreateGetFrameCmd
 	StackWidget* widget
 	)
 {
-	auto* cmd = jnew GetFrameCmd(widget);
-	return cmd;
+	return jnew GetFrameCmd(widget);
 }
 
 /******************************************************************************
@@ -1394,8 +1387,7 @@ lldb::Link::CreateGetStackCmd
 	StackWidget*	widget
 	)
 {
-	auto* cmd = jnew GetStackCmd(tree, widget);
-	return cmd;
+	return jnew GetStackCmd(tree, widget);
 }
 
 /******************************************************************************
@@ -1409,8 +1401,7 @@ lldb::Link::CreateGetThreadCmd
 	ThreadsWidget* widget
 	)
 {
-	auto* cmd = jnew GetThreadCmd(widget);
-	return cmd;
+	return jnew GetThreadCmd(widget);
 }
 
 /******************************************************************************
@@ -1425,8 +1416,7 @@ lldb::Link::CreateGetThreadsCmd
 	ThreadsWidget*	widget
 	)
 {
-	auto* cmd = jnew GetThreadsCmd(tree, widget);
-	return cmd;
+	return jnew GetThreadsCmd(tree, widget);
 }
 
 /******************************************************************************
@@ -1441,8 +1431,7 @@ lldb::Link::CreateGetFullPathCmd
 	const JIndex	lineIndex
 	)
 {
-	auto* cmd = jnew GetFullPathCmd(fileName, lineIndex);
-	return cmd;
+	return jnew GetFullPathCmd(fileName, lineIndex);
 }
 
 /******************************************************************************
@@ -1456,8 +1445,7 @@ lldb::Link::CreateGetInitArgsCmd
 	JXInputField* argInput
 	)
 {
-	auto* cmd = jnew GetInitArgsCmd(argInput);
-	return cmd;
+	return jnew GetInitArgsCmd(argInput);
 }
 
 /******************************************************************************
@@ -1471,8 +1459,7 @@ lldb::Link::CreateGetLocalVarsCmd
 	::VarNode* rootNode
 	)
 {
-	auto* cmd = jnew GetLocalVarsCmd(rootNode);
-	return cmd;
+	return jnew GetLocalVarsCmd(rootNode);
 }
 
 /******************************************************************************
@@ -1486,8 +1473,7 @@ lldb::Link::CreateGetSourceFileListCmd
 	FileListDir* fileList
 	)
 {
-	auto* cmd = jnew GetSourceFileListCmd(fileList);
-	return cmd;
+	return jnew GetSourceFileListCmd(fileList);
 }
 
 /******************************************************************************
@@ -1501,8 +1487,7 @@ lldb::Link::CreateVarValueCmd
 	const JString& expr
 	)
 {
-	auto* cmd = jnew VarCmd(expr);
-	return cmd;
+	return jnew VarCmd(expr);
 }
 
 /******************************************************************************
@@ -1520,8 +1505,7 @@ lldb::Link::CreateVarContentCmd
 	s += expr;
 	s += ")";
 
-	auto* cmd = jnew VarCmd(s);
-	return cmd;
+	return jnew VarCmd(s);
 }
 
 /******************************************************************************
@@ -1594,8 +1578,7 @@ lldb::Link::CreateGetMemoryCmd
 	MemoryDir* dir
 	)
 {
-	auto* cmd = jnew GetMemoryCmd(dir);
-	return cmd;
+	return jnew GetMemoryCmd(dir);
 }
 
 /******************************************************************************
@@ -1609,8 +1592,7 @@ lldb::Link::CreateGetAssemblyCmd
 	SourceDirector* dir
 	)
 {
-	auto* cmd = jnew GetAssemblyCmd(dir);
-	return cmd;
+	return jnew GetAssemblyCmd(dir);
 }
 
 /******************************************************************************
@@ -1624,8 +1606,7 @@ lldb::Link::CreateGetRegistersCmd
 	RegistersDir* dir
 	)
 {
-	auto* cmd = jnew GetRegistersCmd(dir);
-	return cmd;
+	return jnew GetRegistersCmd(dir);
 }
 
 /******************************************************************************

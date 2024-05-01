@@ -68,7 +68,6 @@ MDIServer::HandleMDIRequest
 	}
 
 	auto* dialog = jnew MainDirector(JXGetApplication(), argList);
-	assert( dialog != nullptr );
 	dialog->Activate();
 
 	if (GetApplication()->IsDeletingTemplate())

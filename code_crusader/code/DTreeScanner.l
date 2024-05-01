@@ -62,16 +62,9 @@ private:
 
 %init {
 	itsNamespaceStack = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
-	assert( itsNamespaceStack != nullptr );
-
-	itsAliasKeys = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
-	assert( itsAliasKeys != nullptr );
-
-	itsAliasMap = jnew JStringPtrMap<JString>(JPtrArrayT::kDeleteAll);
-	assert( itsAliasMap != nullptr );
-
+	itsAliasKeys      = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
+	itsAliasMap       = jnew JStringPtrMap<JString>(JPtrArrayT::kDeleteAll);
 	itsImportPackages = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
-	assert( itsImportPackages != nullptr );
 }
 
 %x IMPORT_STATE IMPORT_ALIAS_STATE

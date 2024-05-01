@@ -97,11 +97,9 @@ DocumentManager::DocumentManager()
 	itsEditBinaryFileCmd(kDefEditBinaryFileCmd)
 {
 	itsProjectDocuments = jnew JPtrArray<ProjectDocument>(JPtrArrayT::kForgetAll);
-	assert( itsProjectDocuments != nullptr );
 	ListenTo(itsProjectDocuments);
 
 	itsTextDocuments = jnew JPtrArray<TextDocument>(JPtrArrayT::kForgetAll);
-	assert( itsTextDocuments != nullptr );
 
 	itsListDocument = nullptr;
 
@@ -432,7 +430,6 @@ DocumentManager::NewTextDocumentFromTemplate()
 		if (itsEditTextLocalFlag)
 		{
 			auto* doc = jnew TextDocument(dlog->GetFullName(), kUnknownFT, true);
-			assert( doc != nullptr );
 			doc->Activate();
 			return;
 		}
@@ -1443,9 +1440,8 @@ JIndex i;
 	for (i=1; i<=dirCount; i++)
 	{
 		info.path = jnew JString;
-		assert( info.path != nullptr );
 
-		if (origDirList.GetTruePath(i, info.path, &(info.recurse)))
+		if (origDirList.GetTruePath(i, info.path, &info.recurse))
 		{
 			info.matchLength = JString::CalcCharacterMatchLength(origPath, *(info.path));
 			dirList.InsertSorted(info);
@@ -1750,8 +1746,7 @@ DocumentManager::Receive
 {
 	if (sender == itsProjectDocuments && message.Is(JListT::kItemsInserted))
 	{
-		const auto* info =
-			dynamic_cast<const JListT::ItemsInserted*>(&message);
+		auto* info = dynamic_cast<const JListT::ItemsInserted*>(&message);
 		assert( info != nullptr );
 		if (info->Contains(1))
 		{
@@ -1760,8 +1755,7 @@ DocumentManager::Receive
 	}
 	else if (sender == itsProjectDocuments && message.Is(JListT::kItemsRemoved))
 	{
-		const auto* info =
-			dynamic_cast<const JListT::ItemsRemoved*>(&message);
+		auto* info = dynamic_cast<const JListT::ItemsRemoved*>(&message);
 		assert( info != nullptr );
 		if (info->Contains(1))
 		{
@@ -1770,8 +1764,7 @@ DocumentManager::Receive
 	}
 	else if (sender == itsProjectDocuments && message.Is(JListT::kItemMoved))
 	{
-		const auto* info =
-			dynamic_cast<const JListT::ItemMoved*>(&message);
+		auto* info = dynamic_cast<const JListT::ItemMoved*>(&message);
 		assert( info != nullptr );
 		if (info->GetOrigIndex() == 1 || info->GetNewIndex() == 1)
 		{
@@ -1780,8 +1773,7 @@ DocumentManager::Receive
 	}
 	else if (sender == itsProjectDocuments && message.Is(JListT::kItemsSwapped))
 	{
-		const auto* info =
-			dynamic_cast<const JListT::ItemsSwapped*>(&message);
+		auto* info = dynamic_cast<const JListT::ItemsSwapped*>(&message);
 		assert( info != nullptr );
 		if (info->GetIndex1() == 1 || info->GetIndex2() == 1)
 		{
@@ -1790,8 +1782,7 @@ DocumentManager::Receive
 	}
 	else if (sender == itsProjectDocuments && message.Is(JListT::kItemsChanged))
 	{
-		const auto* info =
-			dynamic_cast<const JListT::ItemsChanged*>(&message);
+		auto* info = dynamic_cast<const JListT::ItemsChanged*>(&message);
 		assert( info != nullptr );
 		if (info->Contains(1))
 		{

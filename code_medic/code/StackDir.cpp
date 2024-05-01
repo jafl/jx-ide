@@ -185,8 +185,7 @@ StackDir::Receive
 {
 	if (sender == GetLink() && message.Is(Link::kSymbolsLoaded))
 	{
-		const auto* info =
-			dynamic_cast<const Link::SymbolsLoaded*>(&message);
+		auto* info = dynamic_cast<const Link::SymbolsLoaded*>(&message);
 		assert( info != nullptr );
 		UpdateWindowTitle(info->GetProgramName());
 		itsWidget->Update();

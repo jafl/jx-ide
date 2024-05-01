@@ -34,11 +34,8 @@ jvm::Socket::Socket()
 	itsTimerID(-1),
 	itsInHandleInputFlag(false)
 {
-	itsBuffer = jnew unsigned char [ kBufferSize ];
-	assert( itsBuffer != nullptr );
-
+	itsBuffer   = jnew unsigned char [ kBufferSize ];
 	itsRecvData = jnew JArray<unsigned char>;
-	assert( itsRecvData != nullptr );
 }
 
 /******************************************************************************

@@ -70,17 +70,14 @@ Link::Link
 {
 	// commands are often owned by other objects, who can delete them more reliably
 	itsForegroundQ = jnew JPtrArray<Command>(JPtrArrayT::kForgetAll);
-	assert( itsForegroundQ != nullptr );
 
 	// commands are often owned by other objects, who can delete them more reliably
 	itsBackgroundQ = jnew JPtrArray<Command>(JPtrArrayT::kForgetAll);
-	assert( itsBackgroundQ != nullptr );
 
 	itsRunningCommand = nullptr;
 	itsLastCommandID  = 0;
 
 	itsFileNameMap = jnew JStringPtrMap<JString>(JPtrArrayT::kDeleteAll);
-	assert( itsFileNameMap != nullptr );
 }
 
 /******************************************************************************

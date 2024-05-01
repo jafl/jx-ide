@@ -307,7 +307,6 @@ FileTypeTable::FileTypeTable
 	// data
 
 	itsFileTypeList = jnew JArray<PrefsManager::FileTypeInfo>(fileTypeList);
-	assert( itsFileTypeList != nullptr );
 	FinishFileTypeListCopy(itsFileTypeList);
 	itsFileTypeList->SetCompareFunction(PrefsManager::CompareFileTypeSpec);
 	itsFileTypeList->Sort();
@@ -392,22 +391,17 @@ FileTypeTable::FinishFileTypeListCopy
 	{
 		PrefsManager::FileTypeInfo info = fileTypeList->GetItem(i);
 
-		info.suffix = jnew JString(*(info.suffix));
-		assert( info.suffix != nullptr );
-
-		info.complSuffix = jnew JString(*(info.complSuffix));
-		assert( info.complSuffix != nullptr );
+		info.suffix      = jnew JString(*info.suffix);
+		info.complSuffix = jnew JString(*info.complSuffix);
 
 		if (info.scriptPath != nullptr)
 		{
-			info.scriptPath = jnew JString(*(info.scriptPath));
-			assert( info.scriptPath != nullptr );
+			info.scriptPath = jnew JString(*info.scriptPath);
 		}
 
 		if (info.editCmd != nullptr)
 		{
-			info.editCmd = jnew JString(*(info.editCmd));
-			assert( info.editCmd != nullptr );
+			info.editCmd = jnew JString(*info.editCmd);
 		}
 
 		// create regex when it is not our own private list
@@ -735,7 +729,6 @@ FileTypeTable::AddType()
 		PrefsManager::FileTypeInfo info(jnew JString, nullptr, nullptr, kUnknownFT,
 										  kEmptyMacroID, kEmptyCRMRuleListID,
 										  true, nullptr, true, jnew JString, nullptr);
-		assert( info.suffix != nullptr && info.complSuffix != nullptr );
 		itsFileTypeList->AppendItem(info);
 		AppendRows(1);
 		BeginEditing(JPoint(kSuffixColumn, itsFileTypeList->GetItemCount()));
@@ -776,25 +769,19 @@ FileTypeTable::DuplicateType()
 	{
 		PrefsManager::FileTypeInfo info = itsFileTypeList->GetItem(cell.y);
 
-		info.suffix = jnew JString(*(info.suffix));
-		assert( info.suffix != nullptr );
-
+		info.suffix       = jnew JString(*info.suffix);
 		info.nameRegex    = nullptr;
 		info.contentRegex = nullptr;
-
-		info.complSuffix = jnew JString(*(info.complSuffix));
-		assert( info.complSuffix != nullptr );
+		info.complSuffix  = jnew JString(*info.complSuffix);
 
 		if (info.scriptPath != nullptr)
 		{
-			info.scriptPath = jnew JString(*(info.scriptPath));
-			assert( info.scriptPath != nullptr );
+			info.scriptPath = jnew JString(*info.scriptPath);
 		}
 
 		if (info.editCmd != nullptr)
 		{
-			info.editCmd = jnew JString(*(info.editCmd));
-			assert( info.editCmd != nullptr );
+			info.editCmd = jnew JString(*info.editCmd);
 		}
 
 		itsFileTypeList->AppendItem(info);
@@ -843,7 +830,6 @@ FileTypeTable::HandleTypeMenu
 		if (info.type == kExternalFT)
 		{
 			info.editCmd = jnew JString;
-			assert( info.editCmd != nullptr );
 			BeginEditing(JPoint(kEditCmdColumn, cell.y));
 		}
 		else
@@ -957,8 +943,6 @@ FileTypeTable::BuildScriptMenuItems
 		for (JIndex i=1; i<=count; i++)
 		{
 			auto* s = jnew JString(info->GetEntry(i).GetName());
-			assert( s != nullptr );
-
 			if (isUserPath)
 			{
 				*s += JGetString("UserScriptMarker::FileTypeTable");
@@ -1005,11 +989,10 @@ FileTypeTable::HandleScriptMenu
 		if (info.scriptPath == nullptr)
 		{
 			info.scriptPath = jnew JString(itsScriptMenu->GetItemText(index));
-			assert( info.scriptPath != nullptr );
 		}
 		else
 		{
-			*(info.scriptPath) = itsScriptMenu->GetItemText(index);
+			*info.scriptPath = itsScriptMenu->GetItemText(index);
 		}
 
 		JString nmShortcut;
@@ -1045,8 +1028,6 @@ FileTypeTable::GetNewScriptDirectory()
 	auto* dlog =
 		jnew JXGetNewDirDialog(JGetString("NewDirTitle::FileTypeTable"),
 							  JGetString("NewDirPrompt::FileTypeTable"), JString::empty, userDir);
-	assert( dlog != nullptr );
-
 	if (dlog->DoDialog())
 	{
 		const JString fullName = dlog->GetNewDirName();
@@ -1063,7 +1044,6 @@ FileTypeTable::GetNewScriptDirectory()
 		if (info.scriptPath == nullptr)
 		{
 			info.scriptPath = jnew JString(name);
-			assert( info.scriptPath != nullptr );
 		}
 		else
 		{

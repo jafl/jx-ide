@@ -433,16 +433,14 @@ SourceDirector::Receive
 	else if (IsMainSourceWindow() &&
 			 sender == itsLink && message.Is(Link::kSymbolsLoaded))
 	{
-		const auto* info =
-			dynamic_cast<const Link::SymbolsLoaded*>(&message);
+		auto* info = dynamic_cast<const Link::SymbolsLoaded*>(&message);
 		assert( info != nullptr );
 		UpdateWindowTitle(info->GetProgramName());
 	}
 	else if (IsMainSourceWindow() &&
 			 sender == itsLink && message.Is(Link::kProgramStopped))
 	{
-		const auto* info =
-			dynamic_cast<const Link::ProgramStopped*>(&message);
+		auto* info = dynamic_cast<const Link::ProgramStopped*>(&message);
 		assert( info != nullptr);
 		const Location* loc;
 		const bool hasFile = info->GetLocation(&loc);
@@ -470,8 +468,7 @@ SourceDirector::Receive
 	else if (itsType == kMainAsmType && sender == itsLink &&
 			 message.Is(Link::kProgramStopped2))
 	{
-		const auto* info =
-			dynamic_cast<const Link::ProgramStopped2*>(&message);
+		auto* info = dynamic_cast<const Link::ProgramStopped2*>(&message);
 		assert( info != nullptr);
 		const Location* loc;
 		info->GetLocation(&loc);
@@ -507,8 +504,7 @@ SourceDirector::Receive
 	}
 	else if (sender == itsDebugMenu && message.Is(JXMenu::kItemSelected))
 	{
-		const auto* selection =
-			dynamic_cast<const JXMenu::ItemSelected*>(&message);
+		auto* selection = dynamic_cast<const JXMenu::ItemSelected*>(&message);
 		assert( selection != nullptr );
 		itsCommandDir->HandleDebugMenu(itsDebugMenu, selection->GetIndex(), itsText, nullptr);
 	}

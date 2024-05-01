@@ -49,7 +49,6 @@ private:
 
 %init {
 	itsImportList = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
-	assert( itsImportList != nullptr );
 }
 
 %x CLASS_NAME_STATE INHERIT_STATE

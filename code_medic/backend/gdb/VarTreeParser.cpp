@@ -22,7 +22,6 @@ gdb::VarTreeParser::VarTreeParser()
 	itsIsPointerFlag(false)
 {
 	itsScanner = jnew gdb::VarTree::Scanner;
-	assert(itsScanner != nullptr);
 }
 
 /******************************************************************************
@@ -79,7 +78,6 @@ gdb::VarTreeParser::yylex
 
 		token          = P_GROUP_CLOSE;
 		lvalp->pString = jnew JString("}");
-		assert( lvalp->pString != nullptr );
 
 		itsGroupDepth--;
 	}
@@ -142,7 +140,6 @@ gdb::VarTreeParser::AppendAsArrayElement
 	const JString name = "[" + JString(list->GetItemCount()) + "]";
 
 	::VarNode* node = GetLink()->CreateVarNode(nullptr, name, JString::empty, groupLabel);
-	assert( node != nullptr );
 	list->Append(node);
 
 	const JSize count = data.GetItemCount();

@@ -115,7 +115,6 @@ private:
 
 	JXPSPrinter*	itsPSPrinter;
 	JXEPSPrinter*	itsEPSPrinter;
-	JXPSPrinter*	itsFnListPrinter;		// shared by all FnListDirectors
 
 	JXTextMenu*		itsFileMenu;
 	JXTextMenu*		itsTreeMenu;

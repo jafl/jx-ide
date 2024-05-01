@@ -151,7 +151,6 @@ JavaTree::ParseFile
 	if (itsClassNameLexer == nullptr)
 	{
 		itsClassNameLexer = jnew TreeScanner::Java::Scanner;
-		assert( itsClassNameLexer != nullptr );
 	}
 
 	// extract info about classes

@@ -142,7 +142,6 @@ CTreeDirector::HandleTreeMenu
 	if (index == kEditCPPMacrosCmd)
 	{
 		auto* dlog = jnew EditCPPMacroDialog(*itsCTree->GetCPreprocessor());
-		assert( dlog != nullptr );
 		if (dlog->DoDialog() &&
 			dlog->UpdateMacros(itsCTree->GetCPreprocessor()))
 		{
@@ -279,8 +278,7 @@ CTreeDirector::NewCTree
 	auto* cTreeDir = static_cast<CTreeDirector*>(director);
 	assert( cTreeDir != nullptr );
 
-	auto* tree = jnew CTree(cTreeDir, marginWidth);
-	return tree;
+	return jnew CTree(cTreeDir, marginWidth);
 }
 
 /******************************************************************************
@@ -307,10 +305,9 @@ CTreeDirector::StreamInCTree
 	auto* cTreeDir = static_cast<CTreeDirector*>(director);
 	assert( cTreeDir != nullptr );
 
-	auto* tree = jnew CTree(projInput, projVers,
-							setInput, setVers, symInput, symVers,
-							cTreeDir, marginWidth, dirList);
-	return tree;
+	return jnew CTree(projInput, projVers,
+						setInput, setVers, symInput, symVers,
+						cTreeDir, marginWidth, dirList);
 }
 
 /******************************************************************************

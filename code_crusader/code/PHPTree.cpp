@@ -148,7 +148,6 @@ PHPTree::ParseFile
 	if (itsClassNameLexer == nullptr)
 	{
 		itsClassNameLexer = jnew TreeScanner::PHP::Scanner;
-		assert( itsClassNameLexer != nullptr );
 	}
 
 	// extract info about class

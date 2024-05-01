@@ -122,10 +122,7 @@ lldb::GetThreadsCmd::HandleSuccess
 			name.Prepend(indexStr);
 		}
 
-		auto* node = jnew ThreadNode(t.GetThreadID(), name, fileName, lineIndex);
-		assert( node != nullptr );
-
-		root->Append(node);
+		root->Append(jnew ThreadNode(t.GetThreadID(), name, fileName, lineIndex));
 	}
 
 	if (threadID != p.GetSelectedThread().GetThreadID())

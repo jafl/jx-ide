@@ -825,8 +825,7 @@ TreeWidget::Receive
 
 	else if (sender == itsTree && message.Is(Tree::kFontSizeChanged))
 	{
-		const auto* info =
-			dynamic_cast<const Tree::FontSizeChanged*>(&message);
+		auto* info = dynamic_cast<const Tree::FontSizeChanged*>(&message);
 		assert( info != nullptr );
 
 		JXScrollbar *hScrollbar, *vScrollbar;
@@ -839,15 +838,13 @@ TreeWidget::Receive
 
 	else if (sender == itsTree && message.Is(Tree::kClassSelected))
 	{
-		const auto* selection =
-			dynamic_cast<const Tree::ClassSelected*>(&message);
+		auto* selection = dynamic_cast<const Tree::ClassSelected*>(&message);
 		assert( selection != nullptr );
 		RefreshRect(selection->GetClass()->GetFrame());
 	}
 	else if (sender == itsTree && message.Is(Tree::kClassDeselected))
 	{
-		const auto* selection =
-			dynamic_cast<const Tree::ClassDeselected*>(&message);
+		auto* selection = dynamic_cast<const Tree::ClassDeselected*>(&message);
 		assert( selection != nullptr );
 		RefreshRect(selection->GetClass()->GetFrame());
 	}

@@ -208,8 +208,7 @@ VarTreeDir::Receive
 {
 	if (sender == itsLink && message.Is(Link::kSymbolsLoaded))
 	{
-		const auto* info =
-			dynamic_cast<const Link::SymbolsLoaded*>(&message);
+		auto* info = dynamic_cast<const Link::SymbolsLoaded*>(&message);
 		assert( info != nullptr );
 		UpdateWindowTitle(info->GetProgramName());
 	}
@@ -236,7 +235,7 @@ VarTreeDir::ReceiveGoingAway
 		itsLink = GetLink();
 		ListenTo(itsLink);
 
-		(itsTree->GetRoot())->DeleteAllChildren();
+		itsTree->GetRoot()->DeleteAllChildren();
 
 		VarNode* root = itsLink->CreateVarNode();
 		assert( root != nullptr );

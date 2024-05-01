@@ -418,9 +418,8 @@ Class::AddParent
 	const JString&		ns
 	)
 {
-	ParentInfo pInfo(jnew JString(name), jnew JString(ns), nullptr, type);
-	assert( pInfo.name != nullptr );
-	itsParentInfo->AppendItem(pInfo);
+	itsParentInfo->AppendItem(
+		ParentInfo(jnew JString(name), jnew JString(ns), nullptr, type));
 }
 
 /******************************************************************************

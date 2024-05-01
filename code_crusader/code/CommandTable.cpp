@@ -759,7 +759,6 @@ CommandTable::CreateXInputField
 	{
 		itsTextInput = jnew JXInputField(this, kFixedLeft, kFixedTop, x,y, w,h);
 	}
-	assert( itsTextInput != nullptr );
 
 	const CommandManager::CmdInfo info = itsCmdList->GetItem(cell.y);
 	const JString* text = nullptr;

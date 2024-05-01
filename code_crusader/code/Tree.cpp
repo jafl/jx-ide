@@ -302,21 +302,17 @@ Tree::TreeX
 	itsFontSize = JFontManager::GetDefaultFontSize();
 
 	itsClassesByFull = jnew JPtrArray<Class>(JPtrArrayT::kDeleteAll, kBlockSize);
-	assert( itsClassesByFull != nullptr );
 	itsClassesByFull->SetCompareFunction(CompareClassFullNames);
 	itsClassesByFull->SetSortOrder(JListT::kSortAscending);
 
 	itsVisibleByGeom = jnew JPtrArray<Class>(JPtrArrayT::kForgetAll, kBlockSize);
-	assert( itsVisibleByGeom != nullptr );
 
 	itsVisibleByName = jnew JPtrArray<Class>(JPtrArrayT::kForgetAll, kBlockSize);
-	assert( itsVisibleByName != nullptr );
 	itsVisibleByName->SetCompareFunction(CompareClassNames);
 	itsVisibleByName->SetSortOrder(JListT::kSortAscending);
 
 #ifndef CODE_CRUSADER_UNIT_TEST
 	itsSuffixList = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
-	assert( itsSuffixList != nullptr );
 	GetPrefsManager()->GetFileSuffixes(itsFileType, itsSuffixList);
 #else
 	itsSuffixList = nullptr;
@@ -494,7 +490,6 @@ Tree::PrepareForUpdate
 	// save collapsed classes
 
 	itsCollapsedList = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
-	assert( itsCollapsedList != nullptr );
 	SaveCollapsedClasses(itsCollapsedList);
 
 	if (reparseAll)
@@ -1332,15 +1327,12 @@ Tree::ArrangeRootsDynamicProgramming
 	l2.SetCompareFunction(CompareRSContent);
 
 	auto* content = jnew JArray<bool>(rootCount);
-	assert( content != nullptr );
 	for (JIndex i=1; i<=rootCount; i++)
 	{
 		content->AppendItem(false);
 	}
 
 	auto* order = jnew JArray<JIndex>(rootCount);
-	assert( order != nullptr );
-
 	list1->AppendItem(RootSubset(content, order, 0));
 
 	do
@@ -1575,7 +1567,6 @@ Tree::FindRoots
 		if (!FindRoot(root, *rootList, &rootIndex))
 		{
 			const RootMIInfo info(root, geom.h, jnew JArray<RootConn>);
-			assert( info.connList != nullptr );
 			rootList->AppendItem(info);
 			rootIndex = rootList->GetItemCount();
 		}
@@ -2177,9 +2168,7 @@ Tree::CopySelectedClassNames()
 	if (!nameList.IsEmpty())
 	{
 		auto* data = jnew JXTextSelection(itsDirector->GetDisplay(), nameList);
-		assert( data != nullptr );
-
-		((itsDirector->GetDisplay())->GetSelectionManager())->SetData(kJXClipboardName, data);
+		itsDirector->GetDisplay()->GetSelectionManager()->SetData(kJXClipboardName, data);
 	}
 }
 
