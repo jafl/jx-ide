@@ -71,7 +71,15 @@ gdb::GetSourceFileListCmd::HandleSuccess
 			input >> std::ws;
 			fullName = JReadUntil(input, ',', &foundDelimiter);
 			fullName.TrimWhitespace();
-			if (!fullName.IsEmpty())
+			if (fullName.IsEmpty())
+			{
+				// ignore
+			}
+			else if (JIsAbsolutePath(fullName) && JFileReadable(fullName))
+			{
+				table->AddFile(fullName);
+			}
+			else
 			{
 				JSplitPathAndName(fullName, &path, &name);
 				table->AddFile(name);
