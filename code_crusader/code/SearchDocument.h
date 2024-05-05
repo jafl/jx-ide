@@ -39,7 +39,7 @@ public:
 
 	// for SearchST
 
-	void	SetSearchST(SearchST* te);
+	void	SetSearchST(SearchST* st);
 	void	QueueMessage(JBroadcaster::Message* message);
 	void	SearchFinished();
 
@@ -113,10 +113,10 @@ SearchDocument::CommandRunning()
 inline void
 SearchDocument::SetSearchST
 	(
-	SearchST* te
+	SearchST* st
 	)
 {
-	itsSearchST = te;
+	itsSearchST = st;
 }
 
 #endif

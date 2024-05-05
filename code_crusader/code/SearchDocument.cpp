@@ -20,6 +20,7 @@
 #include <jx-af/jx/JXColorManager.h>
 #include <jx-af/jcore/jFileUtil.h>
 #include <thread>
+#include <boost/fiber/operations.hpp>
 #include <jx-af/jcore/jAssert.h>
 
 const JSize kMenuButtonWidth       = 60;
@@ -55,7 +56,6 @@ SearchDocument::Create
 	auto* doc =
 		jnew SearchDocument(false, onlyListFiles || listFilesWithoutMatch,
 							fileList->GetItemCount(), windowTitle);
-	assert( doc != nullptr );
 	doc->Activate();
 
 	std::thread t([fileList, nameList, onlyListFiles, listFilesWithoutMatch, doc]()
@@ -96,7 +96,6 @@ SearchDocument::Create
 	const JString windowTitle = JGetString("ReplaceTitle::SearchDocument", map, sizeof(map));
 
 	auto* doc = jnew SearchDocument(true, true, fileList->GetItemCount(), windowTitle);
-	assert( doc != nullptr );
 
 	JXGetApplication()->Suspend();	// do this first so result window is active
 	doc->Activate();
@@ -151,14 +150,16 @@ SearchDocument::SearchDocument
 		jnew JXTextButton(JGetString("StopLabel::ExecOutputDocument"), window,
 						  JXWidget::kFixedRight, JXWidget::kFixedTop,
 						  rect.right - kMenuButtonWidth,0, kMenuButtonWidth,h);
-	assert( itsStopButton != nullptr );
 	ListenTo(itsStopButton);
 	itsStopButton->SetShortcuts("^C#.");
 	itsStopButton->SetHint(JGetString("StopButtonHint::ExecOutputDocument"));
 
 	ListenTo(itsStopButton, std::function([this](const JXButton::Pushed&)
 	{
-		itsSearchST->Cancel();
+		if (itsSearchST != nullptr)
+		{
+			itsSearchST->Cancel();
+		}
 	}));
 
 	menuBar->AdjustSize(-kMenuButtonWidth, 0);
@@ -172,7 +173,6 @@ SearchDocument::SearchDocument
 	itsIndicator =
 		jnew JXProgressIndicator(GetWindow(), hSizing, vSizing,
 								 -1000, -1000, 500, kIndicatorHeight);
-	assert( itsIndicator != nullptr );
 	itsIndicator->SetMaxValue(fileCount);
 
 	itsMatchMenu = InsertTextMenu(JGetString("MenuTitle::SearchDocument_Match"));
@@ -240,15 +240,21 @@ void
 SearchDocument::RecvFromChannel()
 {
 	JBroadcaster::Message* m;
+	JSize count = 0;
 	while (itsChannel->pop(m) == boost::fibers::channel_op_status::success)
 	{
 		Receive(nullptr, *m);
 		jdelete m;
+
+		count++;
+		if (count >= 5)		// avoid getting stuck if channel is flooded
+		{
+			boost::this_fiber::sleep_for(
+				std::chrono::nanoseconds(1));
+		}
 	}
 
 	// finished
-
-	itsSearchST = nullptr;
 
 	if (itsIsReplaceFlag)
 	{
@@ -447,6 +453,7 @@ SearchDocument::AppendText
 void
 SearchDocument::SearchFinished()
 {
+	itsSearchST = nullptr;
 	itsChannel->close();
 }
 
