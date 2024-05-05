@@ -1305,7 +1305,7 @@ lldb::Link::SetValue
 
  *****************************************************************************/
 
-::Array2DCmd*
+Array2DCmd*
 lldb::Link::CreateArray2DCmd
 	(
 	Array2DDir*			dir,
@@ -1321,7 +1321,7 @@ lldb::Link::CreateArray2DCmd
 
  *****************************************************************************/
 
-::Plot2DCmd*
+Plot2DCmd*
 lldb::Link::CreatePlot2DCmd
 	(
 	Plot2DDir*	dir,
@@ -1337,7 +1337,7 @@ lldb::Link::CreatePlot2DCmd
 
  *****************************************************************************/
 
-::DisplaySourceForMainCmd*
+DisplaySourceForMainCmd*
 lldb::Link::CreateDisplaySourceForMainCmd
 	(
 	SourceDirector* sourceDir
@@ -1351,7 +1351,7 @@ lldb::Link::CreateDisplaySourceForMainCmd
 
  *****************************************************************************/
 
-::GetCompletionsCmd*
+GetCompletionsCmd*
 lldb::Link::CreateGetCompletionsCmd
 	(
 	CommandInput*	input,
@@ -1366,7 +1366,7 @@ lldb::Link::CreateGetCompletionsCmd
 
  *****************************************************************************/
 
-::GetFrameCmd*
+GetFrameCmd*
 lldb::Link::CreateGetFrameCmd
 	(
 	StackWidget* widget
@@ -1380,7 +1380,7 @@ lldb::Link::CreateGetFrameCmd
 
  *****************************************************************************/
 
-::GetStackCmd*
+GetStackCmd*
 lldb::Link::CreateGetStackCmd
 	(
 	JTree*			tree,
@@ -1395,7 +1395,7 @@ lldb::Link::CreateGetStackCmd
 
  *****************************************************************************/
 
-::GetThreadCmd*
+GetThreadCmd*
 lldb::Link::CreateGetThreadCmd
 	(
 	ThreadsWidget* widget
@@ -1409,7 +1409,7 @@ lldb::Link::CreateGetThreadCmd
 
  *****************************************************************************/
 
-::GetThreadsCmd*
+GetThreadsCmd*
 lldb::Link::CreateGetThreadsCmd
 	(
 	JTree*			tree,
@@ -1424,7 +1424,7 @@ lldb::Link::CreateGetThreadsCmd
 
  *****************************************************************************/
 
-::GetFullPathCmd*
+GetFullPathCmd*
 lldb::Link::CreateGetFullPathCmd
 	(
 	const JString&	fileName,
@@ -1439,7 +1439,7 @@ lldb::Link::CreateGetFullPathCmd
 
  *****************************************************************************/
 
-::GetInitArgsCmd*
+GetInitArgsCmd*
 lldb::Link::CreateGetInitArgsCmd
 	(
 	JXInputField* argInput
@@ -1453,7 +1453,7 @@ lldb::Link::CreateGetInitArgsCmd
 
  *****************************************************************************/
 
-::GetLocalVarsCmd*
+GetLocalVarsCmd*
 lldb::Link::CreateGetLocalVarsCmd
 	(
 	::VarNode* rootNode
@@ -1467,7 +1467,7 @@ lldb::Link::CreateGetLocalVarsCmd
 
  *****************************************************************************/
 
-::GetSourceFileListCmd*
+GetSourceFileListCmd*
 lldb::Link::CreateGetSourceFileListCmd
 	(
 	FileListDir* fileList
@@ -1481,7 +1481,7 @@ lldb::Link::CreateGetSourceFileListCmd
 
  *****************************************************************************/
 
-::VarCmd*
+VarCmd*
 lldb::Link::CreateVarValueCmd
 	(
 	const JString& expr
@@ -1495,7 +1495,7 @@ lldb::Link::CreateVarValueCmd
 
  *****************************************************************************/
 
-::VarCmd*
+VarCmd*
 lldb::Link::CreateVarContentCmd
 	(
 	const JString& expr
@@ -1513,7 +1513,7 @@ lldb::Link::CreateVarContentCmd
 
  *****************************************************************************/
 
-::VarNode*
+VarNode*
 lldb::Link::CreateVarNode
 	(
 	const bool shouldUpdate		// false for Local Variables
@@ -1523,7 +1523,7 @@ lldb::Link::CreateVarNode
 	return node;
 }
 
-::VarNode*
+VarNode*
 lldb::Link::CreateVarNode
 	(
 	JTreeNode*		parent,
@@ -1572,7 +1572,7 @@ lldb::Link::Build2DArrayExpression
 
  *****************************************************************************/
 
-::GetMemoryCmd*
+GetMemoryCmd*
 lldb::Link::CreateGetMemoryCmd
 	(
 	MemoryDir* dir
@@ -1586,7 +1586,7 @@ lldb::Link::CreateGetMemoryCmd
 
  *****************************************************************************/
 
-::GetAssemblyCmd*
+GetAssemblyCmd*
 lldb::Link::CreateGetAssemblyCmd
 	(
 	SourceDirector* dir
@@ -1600,7 +1600,7 @@ lldb::Link::CreateGetAssemblyCmd
 
  *****************************************************************************/
 
-::GetRegistersCmd*
+GetRegistersCmd*
 lldb::Link::CreateGetRegistersCmd
 	(
 	RegistersDir* dir

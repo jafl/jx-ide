@@ -1,25 +1,25 @@
 /******************************************************************************
- VarCmd.h
+ VarTypeCmd.h
 
-	Copyright (C) 2001 by John Lindal.
+	Copyright (C) 2024 by John Lindal.
 
  ******************************************************************************/
 
-#ifndef _H_VarCmd
-#define _H_VarCmd
+#ifndef _H_VarTypeCmd
+#define _H_VarTypeCmd
 
 #include "Command.h"
 #include <jx-af/jcore/JBroadcaster.h>
 
 class VarNode;
 
-class VarCmd : public Command, virtual public JBroadcaster
+class VarTypeCmd : public Command, virtual public JBroadcaster
 {
 public:
 
-	VarCmd();
+	VarTypeCmd();
 
-	~VarCmd() override;
+	~VarTypeCmd() override;
 
 	const JString&	GetData() const;
 
@@ -37,28 +37,27 @@ public:
 
 	// JBroadcaster messages
 
-	static const JUtf8Byte* kValueUpdated;
-	static const JUtf8Byte* kValueFailed;
+	static const JUtf8Byte* kTypeInfo;
 
-	class ValueMessage : public JBroadcaster::Message
+	class TypeInfo : public JBroadcaster::Message
 	{
 	public:
 
-		ValueMessage(const JUtf8Byte* type, VarNode* root)
+		TypeInfo(const JString& type)
 			:
-			JBroadcaster::Message(type),
-			itsRootNode(root)
+			JBroadcaster::Message(kTypeInfo),
+			itsType(type)
 		{ };
 
-		VarNode*
-		GetRootNode() const
+		const JString&
+		GetType() const
 		{
-			return itsRootNode;
+			return itsType;
 		}
 
 	private:
 
-		VarNode*	itsRootNode;
+		JString	itsType;
 	};
 };
 
@@ -69,7 +68,7 @@ public:
  ******************************************************************************/
 
 inline const JString&
-VarCmd::GetData()
+VarTypeCmd::GetData()
 	const
 {
 	return itsData;
@@ -81,7 +80,7 @@ VarCmd::GetData()
  ******************************************************************************/
 
 inline void
-VarCmd::SetData
+VarTypeCmd::SetData
 	(
 	const JString& data
 	)

@@ -35,6 +35,7 @@
 #include "gdb/GetProgramNameCmd.h"
 #include "gdb/GetSourceFileListCmd.h"
 #include "gdb/SimpleCmd.h"
+#include "gdb/VarTypeCmd.h"
 #include "gdb/VarCmd.h"
 #include "gdb/VarNode.h"
 
@@ -1428,7 +1429,7 @@ gdb::Link::SetValue
 
  *****************************************************************************/
 
-::Array2DCmd*
+Array2DCmd*
 gdb::Link::CreateArray2DCmd
 	(
 	Array2DDir*			dir,
@@ -1444,7 +1445,7 @@ gdb::Link::CreateArray2DCmd
 
  *****************************************************************************/
 
-::Plot2DCmd*
+Plot2DCmd*
 gdb::Link::CreatePlot2DCmd
 	(
 	Plot2DDir*	dir,
@@ -1460,7 +1461,7 @@ gdb::Link::CreatePlot2DCmd
 
  *****************************************************************************/
 
-::DisplaySourceForMainCmd*
+DisplaySourceForMainCmd*
 gdb::Link::CreateDisplaySourceForMainCmd
 	(
 	SourceDirector* sourceDir
@@ -1474,7 +1475,7 @@ gdb::Link::CreateDisplaySourceForMainCmd
 
  *****************************************************************************/
 
-::GetCompletionsCmd*
+GetCompletionsCmd*
 gdb::Link::CreateGetCompletionsCmd
 	(
 	CommandInput*	input,
@@ -1489,7 +1490,7 @@ gdb::Link::CreateGetCompletionsCmd
 
  *****************************************************************************/
 
-::GetFrameCmd*
+GetFrameCmd*
 gdb::Link::CreateGetFrameCmd
 	(
 	StackWidget* widget
@@ -1503,7 +1504,7 @@ gdb::Link::CreateGetFrameCmd
 
  *****************************************************************************/
 
-::GetStackCmd*
+GetStackCmd*
 gdb::Link::CreateGetStackCmd
 	(
 	JTree*			tree,
@@ -1518,7 +1519,7 @@ gdb::Link::CreateGetStackCmd
 
  *****************************************************************************/
 
-::GetThreadCmd*
+GetThreadCmd*
 gdb::Link::CreateGetThreadCmd
 	(
 	ThreadsWidget* widget
@@ -1532,7 +1533,7 @@ gdb::Link::CreateGetThreadCmd
 
  *****************************************************************************/
 
-::GetThreadsCmd*
+GetThreadsCmd*
 gdb::Link::CreateGetThreadsCmd
 	(
 	JTree*			tree,
@@ -1547,7 +1548,7 @@ gdb::Link::CreateGetThreadsCmd
 
  *****************************************************************************/
 
-::GetFullPathCmd*
+GetFullPathCmd*
 gdb::Link::CreateGetFullPathCmd
 	(
 	const JString&	fileName,
@@ -1562,7 +1563,7 @@ gdb::Link::CreateGetFullPathCmd
 
  *****************************************************************************/
 
-::GetInitArgsCmd*
+GetInitArgsCmd*
 gdb::Link::CreateGetInitArgsCmd
 	(
 	JXInputField* argInput
@@ -1576,7 +1577,7 @@ gdb::Link::CreateGetInitArgsCmd
 
  *****************************************************************************/
 
-::GetLocalVarsCmd*
+GetLocalVarsCmd*
 gdb::Link::CreateGetLocalVarsCmd
 	(
 	::VarNode* rootNode
@@ -1590,7 +1591,7 @@ gdb::Link::CreateGetLocalVarsCmd
 
  *****************************************************************************/
 
-::GetSourceFileListCmd*
+GetSourceFileListCmd*
 gdb::Link::CreateGetSourceFileListCmd
 	(
 	FileListDir* fileList
@@ -1600,11 +1601,27 @@ gdb::Link::CreateGetSourceFileListCmd
 }
 
 /******************************************************************************
+ CreateVarTypeCmd
+
+ *****************************************************************************/
+
+bool
+gdb::Link::CreateVarTypeCmd
+	(
+	const JString&	expr,
+	::VarTypeCmd**	cmd
+	)
+{
+	*cmd = jnew VarTypeCmd("whatis " + expr);
+	return true;
+}
+
+/******************************************************************************
  CreateVarValueCmd
 
  *****************************************************************************/
 
-::VarCmd*
+VarCmd*
 gdb::Link::CreateVarValueCmd
 	(
 	const JString& expr
@@ -1618,7 +1635,7 @@ gdb::Link::CreateVarValueCmd
 
  *****************************************************************************/
 
-::VarCmd*
+VarCmd*
 gdb::Link::CreateVarContentCmd
 	(
 	const JString& expr
@@ -1632,7 +1649,7 @@ gdb::Link::CreateVarContentCmd
 
  *****************************************************************************/
 
-::VarNode*
+VarNode*
 gdb::Link::CreateVarNode
 	(
 	const bool shouldUpdate		// false for Local Variables
@@ -1642,7 +1659,7 @@ gdb::Link::CreateVarNode
 	return node;
 }
 
-::VarNode*
+VarNode*
 gdb::Link::CreateVarNode
 	(
 	JTreeNode*		parent,
@@ -1690,7 +1707,7 @@ gdb::Link::Build2DArrayExpression
 
  *****************************************************************************/
 
-::GetMemoryCmd*
+GetMemoryCmd*
 gdb::Link::CreateGetMemoryCmd
 	(
 	MemoryDir* dir
@@ -1704,7 +1721,7 @@ gdb::Link::CreateGetMemoryCmd
 
  *****************************************************************************/
 
-::GetAssemblyCmd*
+GetAssemblyCmd*
 gdb::Link::CreateGetAssemblyCmd
 	(
 	SourceDirector* dir
@@ -1718,7 +1735,7 @@ gdb::Link::CreateGetAssemblyCmd
 
  *****************************************************************************/
 
-::GetRegistersCmd*
+GetRegistersCmd*
 gdb::Link::CreateGetRegistersCmd
 	(
 	RegistersDir* dir

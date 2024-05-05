@@ -8,6 +8,7 @@
  *****************************************************************************/
 
 #include "VarNode.h"
+#include "VarTypeCmd.h"
 #include "VarCmd.h"
 #include "InitVarNodeTask.h"
 #include "globals.h"
@@ -69,6 +70,7 @@ VarNode::VarNode
 void
 VarNode::VarTreeNodeX()
 {
+	itsTypeCommand      = nullptr;
 	itsValueCommand		= nullptr;
 	itsIsPointerFlag	= false;
 	itsValidFlag		= !itsValue.IsEmpty();
@@ -91,6 +93,7 @@ VarNode::VarTreeNodeX()
 
 VarNode::~VarNode()
 {
+	jdelete itsTypeCommand;
 	jdelete itsValueCommand;
 	jdelete itsContentCommand;
 	jdelete itsOrigValue;
@@ -375,14 +378,22 @@ VarNode::Receive
 		}
 	}
 
+	else if (sender == itsTypeCommand && message.Is(VarTypeCmd::kTypeInfo))
+	{
+		auto* info = dynamic_cast<const VarTypeCmd::TypeInfo*>(&message);
+		assert( info != nullptr );
+
+		SetType(info->GetType());
+	}
+
 	else if (sender == itsValueCommand &&
 			 message.Is(VarCmd::kValueUpdated))
 	{
-		const auto& info =
-			dynamic_cast<const VarCmd::ValueMessage&>(message);
+		auto* info = dynamic_cast<const VarCmd::ValueMessage*>(&message);
+		assert( info != nullptr );
 
 		SetValid(true);
-		Update(info.GetRootNode());
+		Update(info->GetRootNode());
 	}
 	else if (sender == itsValueCommand &&
 			 message.Is(VarCmd::kValueFailed))
@@ -394,10 +405,10 @@ VarNode::Receive
 	else if (sender == itsContentCommand &&
 			 message.Is(VarCmd::kValueUpdated))
 	{
-		const auto& info =
-			dynamic_cast<const VarCmd::ValueMessage&>(message);
+		auto* info = dynamic_cast<const VarCmd::ValueMessage*>(&message);
+		assert( info != nullptr );
 
-		VarNode* root = info.GetRootNode();
+		VarNode* root = info->GetRootNode();
 
 		// value or pointer
 
@@ -594,13 +605,20 @@ VarNode::UpdateValue()
 	if (HasTree() && GetDepth() == 1 && !GetName().IsEmpty())
 	{
 		jdelete itsValueCommand;
+		jdelete itsTypeCommand;
 
 		const JString expr = GetFullName();
-		itsValueCommand = GetLink()->CreateVarValueCmd(expr);
+		itsValueCommand    = GetLink()->CreateVarValueCmd(expr);
 		ListenTo(itsValueCommand);
 
 		SetValid(false);
 		itsValueCommand->Send();
+
+		if (GetLink()->CreateVarTypeCmd(expr, &itsTypeCommand))
+		{
+			ListenTo(itsTypeCommand);
+			itsTypeCommand->Send();
+		}
 	}
 	else
 	{
@@ -706,7 +724,7 @@ VarNode::SameElements
 		const JSize count = GetChildCount();
 		for (JIndex i=1; i<=count; i++)
 		{
-			if ((GetVarChild(i))->GetName() != (node->GetVarChild(i))->GetName())
+			if (GetVarChild(i)->GetName() != node->GetVarChild(i)->GetName())
 			{
 				sameElements = false;
 				break;
@@ -792,7 +810,7 @@ VarNode::MergeChildren
 
 	for (JIndex i=1; i<=count; i++)
 	{
-		(GetVarChild(i))->Update(node->GetVarChild(i));
+		GetVarChild(i)->Update(node->GetVarChild(i));
 	}
 }
 
@@ -924,7 +942,7 @@ VarNode::GetFullNameWithCast
 	)
 	const
 {
-	return GetFullNameForCFamilyLanguage(isPointer);
+	return GetFullName(isPointer);
 }
 
 /******************************************************************************

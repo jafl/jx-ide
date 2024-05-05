@@ -49,6 +49,7 @@ class GetFullPathCmd;
 class GetInitArgsCmd;
 class GetLocalVarsCmd;
 class GetSourceFileListCmd;
+class VarTypeCmd;
 class VarCmd;
 class VarNode;
 
@@ -194,6 +195,7 @@ public:
 	virtual GetInitArgsCmd*				CreateGetInitArgsCmd(JXInputField* argInput) = 0;
 	virtual GetLocalVarsCmd*			CreateGetLocalVarsCmd(VarNode* rootNode) = 0;
 	virtual GetSourceFileListCmd*		CreateGetSourceFileListCmd(FileListDir* fileList) = 0;
+	virtual bool						CreateVarTypeCmd(const JString& expr, ::VarTypeCmd** cmd);
 	virtual VarCmd*						CreateVarValueCmd(const JString& expr) = 0;
 	virtual VarCmd*						CreateVarContentCmd(const JString& expr) = 0;
 	virtual VarNode*					CreateVarNode(const bool shouldUpdate = true) = 0;

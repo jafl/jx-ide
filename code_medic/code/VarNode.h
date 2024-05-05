@@ -11,6 +11,7 @@
 #include <jx-af/jcore/JNamedTreeNode.h>
 #include <jx-af/jcore/JFontStyle.h>
 
+class VarTypeCmd;
 class VarCmd;
 
 class VarNode : public JNamedTreeNode
@@ -25,6 +26,8 @@ public:
 	~VarNode() override;
 
 	bool			ValueIsValid() const;
+	bool			GetType(JString* type) const;
+	void			SetType(const JString& type);
 	virtual JString	GetFullName(bool* isPointer = nullptr) const = 0;
 	virtual JString	GetFullNameWithCast(bool* isPointer = nullptr) const;
 	const JString&	GetValue() const;
@@ -76,7 +79,9 @@ protected:
 private:
 
 	const bool		itsShouldListenToLinkFlag;
-	VarCmd*	itsValueCommand;
+	VarTypeCmd*		itsTypeCommand;		// can be nullptr
+	VarCmd*			itsValueCommand;
+	JString			itsType;
 	JString			itsValue;
 	bool			itsIsPointerFlag;
 	bool			itsValidFlag;
@@ -120,6 +125,33 @@ VarNode::ValueIsValid()
 	const
 {
 	return itsValidFlag;
+}
+
+/******************************************************************************
+ Type
+
+	Returns true if we got a type from the debugger.
+
+ ******************************************************************************/
+
+inline bool
+VarNode::GetType
+	(
+	JString* type
+	)
+	const
+{
+	*type = itsType;
+	return !itsType.IsEmpty();
+}
+
+inline void
+VarNode::SetType
+	(
+	const JString& type
+	)
+{
+	itsType = type;
 }
 
 /******************************************************************************

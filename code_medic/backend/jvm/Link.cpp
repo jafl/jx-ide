@@ -1611,7 +1611,7 @@ jvm::Link::SetValue
 
  *****************************************************************************/
 
-::Array2DCmd*
+Array2DCmd*
 jvm::Link::CreateArray2DCmd
 	(
 	Array2DDir*			dir,
@@ -1627,7 +1627,7 @@ jvm::Link::CreateArray2DCmd
 
  *****************************************************************************/
 
-::Plot2DCmd*
+Plot2DCmd*
 jvm::Link::CreatePlot2DCmd
 	(
 	Plot2DDir*		dir,
@@ -1643,7 +1643,7 @@ jvm::Link::CreatePlot2DCmd
 
  *****************************************************************************/
 
-::DisplaySourceForMainCmd*
+DisplaySourceForMainCmd*
 jvm::Link::CreateDisplaySourceForMainCmd
 	(
 	SourceDirector* sourceDir
@@ -1657,7 +1657,7 @@ jvm::Link::CreateDisplaySourceForMainCmd
 
  *****************************************************************************/
 
-::GetCompletionsCmd*
+GetCompletionsCmd*
 jvm::Link::CreateGetCompletionsCmd
 	(
 	CommandInput*	input,
@@ -1672,7 +1672,7 @@ jvm::Link::CreateGetCompletionsCmd
 
  *****************************************************************************/
 
-::GetFrameCmd*
+GetFrameCmd*
 jvm::Link::CreateGetFrameCmd
 	(
 	StackWidget* widget
@@ -1686,7 +1686,7 @@ jvm::Link::CreateGetFrameCmd
 
  *****************************************************************************/
 
-::GetStackCmd*
+GetStackCmd*
 jvm::Link::CreateGetStackCmd
 	(
 	JTree*			tree,
@@ -1701,7 +1701,7 @@ jvm::Link::CreateGetStackCmd
 
  *****************************************************************************/
 
-::GetThreadCmd*
+GetThreadCmd*
 jvm::Link::CreateGetThreadCmd
 	(
 	ThreadsWidget* widget
@@ -1715,7 +1715,7 @@ jvm::Link::CreateGetThreadCmd
 
  *****************************************************************************/
 
-::GetThreadsCmd*
+GetThreadsCmd*
 jvm::Link::CreateGetThreadsCmd
 	(
 	JTree*			tree,
@@ -1730,7 +1730,7 @@ jvm::Link::CreateGetThreadsCmd
 
  *****************************************************************************/
 
-::GetFullPathCmd*
+GetFullPathCmd*
 jvm::Link::CreateGetFullPathCmd
 	(
 	const JString&	fileName,
@@ -1745,7 +1745,7 @@ jvm::Link::CreateGetFullPathCmd
 
  *****************************************************************************/
 
-::GetInitArgsCmd*
+GetInitArgsCmd*
 jvm::Link::CreateGetInitArgsCmd
 	(
 	JXInputField* argInput
@@ -1759,7 +1759,7 @@ jvm::Link::CreateGetInitArgsCmd
 
  *****************************************************************************/
 
-::GetLocalVarsCmd*
+GetLocalVarsCmd*
 jvm::Link::CreateGetLocalVarsCmd
 	(
 	::VarNode* rootNode
@@ -1773,7 +1773,7 @@ jvm::Link::CreateGetLocalVarsCmd
 
  *****************************************************************************/
 
-::GetSourceFileListCmd*
+GetSourceFileListCmd*
 jvm::Link::CreateGetSourceFileListCmd
 	(
 	FileListDir* fileList
@@ -1787,7 +1787,7 @@ jvm::Link::CreateGetSourceFileListCmd
 
  *****************************************************************************/
 
-::VarCmd*
+VarCmd*
 jvm::Link::CreateVarValueCmd
 	(
 	const JString& expr
@@ -1804,7 +1804,7 @@ jvm::Link::CreateVarValueCmd
 
  *****************************************************************************/
 
-::VarCmd*
+VarCmd*
 jvm::Link::CreateVarContentCmd
 	(
 	const JString& expr
@@ -1822,7 +1822,7 @@ jvm::Link::CreateVarContentCmd
 
  *****************************************************************************/
 
-::VarNode*
+VarNode*
 jvm::Link::CreateVarNode
 	(
 	const bool shouldUpdate		// false for Local Variables
@@ -1832,7 +1832,7 @@ jvm::Link::CreateVarNode
 	return node;
 }
 
-::VarNode*
+VarNode*
 jvm::Link::CreateVarNode
 	(
 	JTreeNode*		parent,
@@ -1881,7 +1881,7 @@ jvm::Link::Build2DArrayExpression
 
  *****************************************************************************/
 
-::GetMemoryCmd*
+GetMemoryCmd*
 jvm::Link::CreateGetMemoryCmd
 	(
 	MemoryDir* dir
@@ -1895,7 +1895,7 @@ jvm::Link::CreateGetMemoryCmd
 
  *****************************************************************************/
 
-::GetAssemblyCmd*
+GetAssemblyCmd*
 jvm::Link::CreateGetAssemblyCmd
 	(
 	SourceDirector* dir
@@ -1909,7 +1909,7 @@ jvm::Link::CreateGetAssemblyCmd
 
  *****************************************************************************/
 
-::GetRegistersCmd*
+GetRegistersCmd*
 jvm::Link::CreateGetRegistersCmd
 	(
 	RegistersDir* dir

@@ -28,10 +28,6 @@ public:
 	JString	GetFullNameWithCast(bool* isPointer = nullptr) const override;
 
 	static ::VarNode*	BuildTree(SBFrame& frame, SBValue& value);
-
-private:
-
-	JString	itsType;
 };
 
 };

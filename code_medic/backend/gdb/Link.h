@@ -125,6 +125,7 @@ public:
 	::GetInitArgsCmd*			CreateGetInitArgsCmd(JXInputField* argInput) override;
 	::GetLocalVarsCmd*			CreateGetLocalVarsCmd(::VarNode* rootNode) override;
 	::GetSourceFileListCmd*		CreateGetSourceFileListCmd(FileListDir* fileList) override;
+	bool						CreateVarTypeCmd(const JString& expr, ::VarTypeCmd** cmd) override;
 	::VarCmd*					CreateVarValueCmd(const JString& expr) override;
 	::VarCmd*					CreateVarContentCmd(const JString& expr) override;
 	::VarNode*					CreateVarNode(const bool shouldUpdate = true) override;

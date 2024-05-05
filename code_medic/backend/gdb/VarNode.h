@@ -23,6 +23,7 @@ public:
 	~VarNode() override;
 
 	JString	GetFullName(bool* isPointer = nullptr) const override;
+	JString	GetFullNameWithCast(bool* isPointer = nullptr) const override;
 };
 
 };

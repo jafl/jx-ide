@@ -959,7 +959,7 @@ xdebug::Link::SetValue
 
  *****************************************************************************/
 
-::Array2DCmd*
+Array2DCmd*
 xdebug::Link::CreateArray2DCmd
 	(
 	Array2DDir*			dir,
@@ -975,7 +975,7 @@ xdebug::Link::CreateArray2DCmd
 
  *****************************************************************************/
 
-::Plot2DCmd*
+Plot2DCmd*
 xdebug::Link::CreatePlot2DCmd
 	(
 	Plot2DDir*		dir,
@@ -991,7 +991,7 @@ xdebug::Link::CreatePlot2DCmd
 
  *****************************************************************************/
 
-::DisplaySourceForMainCmd*
+DisplaySourceForMainCmd*
 xdebug::Link::CreateDisplaySourceForMainCmd
 	(
 	SourceDirector* sourceDir
@@ -1005,7 +1005,7 @@ xdebug::Link::CreateDisplaySourceForMainCmd
 
  *****************************************************************************/
 
-::GetCompletionsCmd*
+GetCompletionsCmd*
 xdebug::Link::CreateGetCompletionsCmd
 	(
 	CommandInput*		input,
@@ -1020,7 +1020,7 @@ xdebug::Link::CreateGetCompletionsCmd
 
  *****************************************************************************/
 
-::GetFrameCmd*
+GetFrameCmd*
 xdebug::Link::CreateGetFrameCmd
 	(
 	StackWidget* widget
@@ -1034,7 +1034,7 @@ xdebug::Link::CreateGetFrameCmd
 
  *****************************************************************************/
 
-::GetStackCmd*
+GetStackCmd*
 xdebug::Link::CreateGetStackCmd
 	(
 	JTree*			tree,
@@ -1049,7 +1049,7 @@ xdebug::Link::CreateGetStackCmd
 
  *****************************************************************************/
 
-::GetThreadCmd*
+GetThreadCmd*
 xdebug::Link::CreateGetThreadCmd
 	(
 	ThreadsWidget* widget
@@ -1063,7 +1063,7 @@ xdebug::Link::CreateGetThreadCmd
 
  *****************************************************************************/
 
-::GetThreadsCmd*
+GetThreadsCmd*
 xdebug::Link::CreateGetThreadsCmd
 	(
 	JTree*			tree,
@@ -1078,7 +1078,7 @@ xdebug::Link::CreateGetThreadsCmd
 
  *****************************************************************************/
 
-::GetFullPathCmd*
+GetFullPathCmd*
 xdebug::Link::CreateGetFullPathCmd
 	(
 	const JString&	fileName,
@@ -1093,7 +1093,7 @@ xdebug::Link::CreateGetFullPathCmd
 
  *****************************************************************************/
 
-::GetInitArgsCmd*
+GetInitArgsCmd*
 xdebug::Link::CreateGetInitArgsCmd
 	(
 	JXInputField* argInput
@@ -1107,7 +1107,7 @@ xdebug::Link::CreateGetInitArgsCmd
 
  *****************************************************************************/
 
-::GetLocalVarsCmd*
+GetLocalVarsCmd*
 xdebug::Link::CreateGetLocalVarsCmd
 	(
 	::VarNode* rootNode
@@ -1121,7 +1121,7 @@ xdebug::Link::CreateGetLocalVarsCmd
 
  *****************************************************************************/
 
-::GetSourceFileListCmd*
+GetSourceFileListCmd*
 xdebug::Link::CreateGetSourceFileListCmd
 	(
 	FileListDir* fileList
@@ -1135,7 +1135,7 @@ xdebug::Link::CreateGetSourceFileListCmd
 
  *****************************************************************************/
 
-::VarCmd*
+VarCmd*
 xdebug::Link::CreateVarValueCmd
 	(
 	const JString& expr
@@ -1154,7 +1154,7 @@ xdebug::Link::CreateVarValueCmd
 
  *****************************************************************************/
 
-::VarCmd*
+VarCmd*
 xdebug::Link::CreateVarContentCmd
 	(
 	const JString& expr
@@ -1168,7 +1168,7 @@ xdebug::Link::CreateVarContentCmd
 
  *****************************************************************************/
 
-::VarNode*
+VarNode*
 xdebug::Link::CreateVarNode
 	(
 	const bool shouldUpdate		// false for Local Variables
@@ -1178,7 +1178,7 @@ xdebug::Link::CreateVarNode
 	return node;
 }
 
-::VarNode*
+VarNode*
 xdebug::Link::CreateVarNode
 	(
 	JTreeNode*		parent,
@@ -1316,7 +1316,7 @@ xdebug::Link::Build2DArrayExpression
 
  *****************************************************************************/
 
-::GetMemoryCmd*
+GetMemoryCmd*
 xdebug::Link::CreateGetMemoryCmd
 	(
 	MemoryDir* dir
@@ -1330,7 +1330,7 @@ xdebug::Link::CreateGetMemoryCmd
 
  *****************************************************************************/
 
-::GetAssemblyCmd*
+GetAssemblyCmd*
 xdebug::Link::CreateGetAssemblyCmd
 	(
 	SourceDirector* dir
@@ -1344,7 +1344,7 @@ xdebug::Link::CreateGetAssemblyCmd
 
  *****************************************************************************/
 
-::GetRegistersCmd*
+GetRegistersCmd*
 xdebug::Link::CreateGetRegistersCmd
 	(
 	RegistersDir* dir

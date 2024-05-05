@@ -458,6 +458,10 @@ T
 F
 "./code/InitVarNodeTask.cpp"
 T
+2 "VarTypeCmd.cpp"
+F
+"./code/VarTypeCmd.cpp"
+T
 2 "VarCmd.cpp"
 F
 "./code/VarCmd.cpp"
@@ -558,6 +562,10 @@ T
 2 "GetMemoryCmd.cpp"
 F
 "./code/GetMemoryCmd.cpp"
+T
+2 "shared_strings"
+F
+"../code_crusader/strings/shared_strings"
 F
 T
 1 "registers"
@@ -726,6 +734,10 @@ T
 2 "SimpleCmd.cpp"
 F
 "./backend/gdb/SimpleCmd.cpp"
+T
+2 "VarTypeCmd.cpp"
+F
+"./backend/gdb/VarTypeCmd.cpp"
 T
 2 "VarCmd.cpp"
 F

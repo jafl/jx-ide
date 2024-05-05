@@ -49,9 +49,9 @@ lldb::VarNode::VarNode
 	const JString&		value
 	)
 	:
-	::VarNode(nullptr, name, value),
-	itsType(type)
+	::VarNode(nullptr, name, value)
 {
+	SetType(type);
 }
 
 /******************************************************************************
@@ -96,11 +96,11 @@ lldb::VarNode::GetFullNameWithCast
 	)
 	const
 {
-	JString s = GetFullNameForCFamilyLanguage(isPointer);
-	if (!itsType.IsEmpty())
+	JString s = GetFullNameForCFamilyLanguage(isPointer), t;
+	if (GetType(&t))
 	{
 		s.Prepend(") ");
-		s.Prepend(itsType);
+		s.Prepend(t);
 		s.Prepend("(");
 	}
 	return s;

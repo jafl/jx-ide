@@ -65,3 +65,28 @@ gdb::VarNode::GetFullName
 {
 	return GetFullNameForCFamilyLanguage(isPointer);
 }
+
+/******************************************************************************
+ GetFullNameWithCast (virtual)
+
+	isPointer can be nullptr.  Its content is only modified if GetFullName()
+	has to directly recurse due to fake nodes in the path.
+
+ ******************************************************************************/
+
+JString
+gdb::VarNode::GetFullNameWithCast
+	(
+	bool* isPointer
+	)
+	const
+{
+	JString s = GetFullNameForCFamilyLanguage(isPointer), t;
+	if (GetType(&t))
+	{
+		s.Prepend(") ");
+		s.Prepend(t);
+		s.Prepend("(");
+	}
+	return s;
+}

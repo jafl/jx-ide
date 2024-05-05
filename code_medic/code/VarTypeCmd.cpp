@@ -1,26 +1,25 @@
 /******************************************************************************
- VarCmd.cpp
+ VarTypeCmd.cpp
 
 	BASE CLASS = Command, virtual JBroadcaster
 
-	Copyright (C) 2001 by John Lindal.
+	Copyright (C) 2024 by John Lindal.
 
  ******************************************************************************/
 
-#include "VarCmd.h"
+#include "VarTypeCmd.h"
 #include <jx-af/jcore/jAssert.h>
 
 // JBroadcaster message types
 
-const JUtf8Byte* VarCmd::kValueUpdated = "Updated::VarCmd";
-const JUtf8Byte* VarCmd::kValueFailed  = "Failed::VarCmd";
+const JUtf8Byte* VarTypeCmd::kTypeInfo = "TypeInfo::VarTypeCmd";
 
 /******************************************************************************
  Constructor
 
  ******************************************************************************/
 
-VarCmd::VarCmd()
+VarTypeCmd::VarTypeCmd()
 	:
 	Command("", false, true)
 {
@@ -31,7 +30,7 @@ VarCmd::VarCmd()
 
  ******************************************************************************/
 
-VarCmd::~VarCmd()
+VarTypeCmd::~VarTypeCmd()
 {
 }
 
@@ -41,7 +40,6 @@ VarCmd::~VarCmd()
  *****************************************************************************/
 
 void
-VarCmd::HandleFailure()
+VarTypeCmd::HandleFailure()
 {
-	Broadcast(ValueMessage(kValueFailed, nullptr));
 }

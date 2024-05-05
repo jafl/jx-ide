@@ -86,6 +86,7 @@
 .cpp ./code/VarTreeWidget
 .cpp ./code/VarNode
 .cpp ./code/InitVarNodeTask
+.cpp ./code/VarTypeCmd
 .cpp ./code/VarCmd
 .cpp ./code/Array1DDir
 .cpp ./code/Array2DDir
@@ -134,6 +135,7 @@
 .cpp ./backend/gdb/GetThreadCmd
 .cpp ./backend/gdb/GetThreadsCmd
 .cpp ./backend/gdb/SimpleCmd
+.cpp ./backend/gdb/VarTypeCmd
 .cpp ./backend/gdb/VarCmd
 .cpp ./backend/gdb/VarNode
 .cpp ./backend/lldb/Link
