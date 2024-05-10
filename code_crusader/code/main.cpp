@@ -45,8 +45,6 @@ main
 		return 0;
 	}
 
-	XInitThreads();
-
 	bool displayAbout;
 	JString prevVersStr;
 	auto* app = jnew App(&argc, argv, useMDI, &displayAbout, &prevVersStr);
@@ -72,7 +70,8 @@ main
 				docList->GetFirstItem()->ShouldMakeBackupFile(false);
 			}
 		}
-	});
+	},
+	"main init");
 
 	if (displayAbout)
 	{
