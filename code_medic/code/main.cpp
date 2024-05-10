@@ -57,7 +57,8 @@ main
 		{
 			mdi->HandleCmdLineOptions(argc, argv);
 		}
-	});
+	},
+	"main init");
 
 	if (displayAbout)
 	{
