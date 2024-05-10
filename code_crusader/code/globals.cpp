@@ -54,6 +54,9 @@ static JXImage* theProjectIcon        = nullptr;
 static JXImage* theActiveProjectIcon  = nullptr;
 static JXImage* theActiveListIcon     = nullptr;
 
+static std::atomic_int theSymbolUpdateRefCount    = 0;
+static std::atomic_int theCompleterUpdateRefCount = 0;
+
 // private functions
 
 void	CreateIcons();
@@ -559,4 +562,47 @@ GetTextFileIcon
 	)
 {
 	return (active ? theActiveListIcon : theDocManager->GetDefaultMenuIcon());
+}
+
+/******************************************************************************
+ Thread management
+
+ ******************************************************************************/
+
+void
+SymbolUpdateStarted()
+{
+	theSymbolUpdateRefCount++;
+}
+
+bool
+SymbolUpdateRunning()
+{
+	return theSymbolUpdateRefCount > 0;
+}
+
+void
+SymbolUpdateFinished()
+{
+	assert( theSymbolUpdateRefCount > 0 );
+	theSymbolUpdateRefCount--;
+}
+
+void
+CompleterUpdateStarted()
+{
+	theCompleterUpdateRefCount++;
+}
+
+bool
+CompleterUpdateRunning()
+{
+	return theCompleterUpdateRefCount > 0;
+}
+
+void
+CompleterUpdateFinished()
+{
+	assert( theCompleterUpdateRefCount > 0 );
+	theCompleterUpdateRefCount--;
 }

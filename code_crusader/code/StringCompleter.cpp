@@ -14,9 +14,13 @@
 #include "SymbolList.h"
 #include "globals.h"
 #include <jx-af/jx/JXStringCompletionMenu.h>
+#include <jx-af/jx/JXFunctionTask.h>
 #include <jx-af/jcore/JTextEditor.h>
 #include <jx-af/jcore/JStringIterator.h>
+#include <boost/fiber/operations.hpp>
 #include <jx-af/jcore/jAssert.h>
+
+const JSize kUpdateCheckInterval = 100;		// ms
 
 /******************************************************************************
  Constructor
@@ -34,7 +38,9 @@ StringCompleter::StringCompleter
 	itsLanguage(lang),
 	itsPredefKeywordCount(keywordCount),
 	itsPrefefKeywordList(keywordList),
-	itsCaseSensitiveFlag(caseSensitive)
+	itsCaseSensitiveFlag(caseSensitive),
+	itsNeedsUpdateTask(nullptr),
+	itsUpdatingFlag(false)
 {
 	itsStringList = jnew JPtrArray<JString>(JPtrArrayT::kForgetAll, 4096);
 	itsStringList->SetSortOrder(JListT::kSortAscending);
@@ -75,8 +81,11 @@ StringCompleter::StringCompleter
 
 StringCompleter::~StringCompleter()
 {
+	WaitForUpdateThreadFinished();
+
 	jdelete itsStringList;
 	jdelete itsOwnedList;
+	jdelete itsNeedsUpdateTask;
 }
 
 /******************************************************************************
@@ -154,6 +163,7 @@ StringCompleter::Complete
 	JXStringCompletionMenu*	menu
 	)
 {
+	WaitForUpdateThreadFinished();
 	return Complete(te, true, menu);
 }
 
@@ -355,13 +365,14 @@ StringCompleter::Receive
 	if (sender == GetDocumentManager() &&
 		message.Is(DocumentManager::kProjectDocumentCreated))
 	{
-		const auto* info =
-			dynamic_cast<const DocumentManager::ProjectDocumentCreated*>(&message);
-		UpdateWordList();
+		auto* info = dynamic_cast<const DocumentManager::ProjectDocumentCreated*>(&message);
+		assert( info != nullptr );
 		ListenTo(info->GetProjectDocument()->GetSymbolDirector()->GetSymbolList());
+		// SymbolList guaranteed to broadcast after first scan
 	}
 	else if (sender == GetDocumentManager() &&
-			 message.Is(DocumentManager::kProjectDocumentDeleted))
+			 (message.Is(DocumentManager::kProjectDocumentDeleted) ||
+			  message.Is(DocumentManager::kProjectDocumentsDeleted)))
 	{
 		UpdateWordList();
 	}
@@ -383,30 +394,72 @@ StringCompleter::Receive
 }
 
 /******************************************************************************
- UpdateWordList (virtual protected)
+ UpdateWordList (protected)
 
  ******************************************************************************/
 
 void
 StringCompleter::UpdateWordList()
 {
-	// start with predefined keywords
-
-	Reset();
-
-	// add words from styler's override list
-
-	if (itsStyler != nullptr)
+	if (SymbolUpdateRunning() || itsUpdatingFlag)
 	{
-		CopyWordsFromStyler(itsStyler);
+		if (itsNeedsUpdateTask == nullptr)
+		{
+			itsNeedsUpdateTask = jnew JXFunctionTask(kUpdateCheckInterval, [this]()
+			{
+				if (!SymbolUpdateRunning() && !itsUpdatingFlag)
+				{
+					jdelete itsNeedsUpdateTask;
+					itsNeedsUpdateTask = nullptr;
+
+					UpdateWordList();
+				}
+			},
+			"StringCompleter::UpdateWordList::Wait");
+			itsNeedsUpdateTask->Start();
+		}
+		return;
 	}
 
-	// add symbols from source code
+	CompleterUpdateStarted();
+	itsUpdatingFlag = true;
 
-	if (itsLanguage != kOtherLang)
+	std::thread t([this]()
 	{
-		CopySymbolsForLanguage(itsLanguage);
-	}
+		// start with predefined keywords
+
+		Reset();
+
+		// add words from styler's override list
+
+		if (itsStyler != nullptr)
+		{
+			CopyWordsFromStyler(itsStyler);
+		}
+
+		// add symbols from source code
+
+		if (itsLanguage != kOtherLang)
+		{
+			CopySymbolsForLanguage(itsLanguage);
+		}
+
+		UpdateWordListExtra();
+
+		itsUpdatingFlag = false;
+		CompleterUpdateFinished();
+	});
+	t.detach();
+}
+
+/******************************************************************************
+ UpdateWordListExtra (virtual protected)
+
+ ******************************************************************************/
+
+void
+StringCompleter::UpdateWordListExtra()
+{
 }
 
 /******************************************************************************
@@ -458,5 +511,20 @@ StringCompleter::CopySymbolsForLanguage
 				Add(const_cast<JString*>(&symbolName));
 			}
 		}
+	}
+}
+
+/******************************************************************************
+ WaitForUpdateThreadFinished (private)
+
+ ******************************************************************************/
+
+void
+StringCompleter::WaitForUpdateThreadFinished()
+{
+	while (itsUpdatingFlag)
+	{
+		boost::this_fiber::sleep_for(
+			std::chrono::milliseconds(kUpdateCheckInterval));
 	}
 }

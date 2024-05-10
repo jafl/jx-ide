@@ -86,7 +86,7 @@ PHPCompleter::PHPCompleter()
 	:
 	StringCompleter(kPHPLang, kKeywordCount, kKeywordList, JString::kCompareCase)
 {
-	UpdateWordList();	// include HTML and JavaScript
+	UpdateWordListExtra();	// include HTML and JavaScript
 	ListenTo(HTMLStyler::Instance());
 	ListenTo(JavaScriptStyler::Instance());
 }
@@ -145,15 +145,13 @@ PHPCompleter::Receive
 }
 
 /******************************************************************************
- UpdateWordList (virtual protected)
+ UpdateWordListExtra (virtual protected)
 
  ******************************************************************************/
 
 void
-PHPCompleter::UpdateWordList()
+PHPCompleter::UpdateWordListExtra()
 {
-	StringCompleter::UpdateWordList();
-
 	// include HTML words
 
 	const JUtf8Byte** htmlWordList;

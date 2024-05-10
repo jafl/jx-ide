@@ -14,8 +14,9 @@
 #include <jx-af/jcore/JPtrArray-JString.h>
 
 class JTextEditor;
-class StylerBase;
+class JXIdleTask;
 class JXStringCompletionMenu;
+class StylerBase;
 
 class StringCompleter : virtual public JBroadcaster
 {
@@ -35,7 +36,8 @@ public:
 
 protected:
 
-	virtual void	UpdateWordList();
+	void			UpdateWordList();
+	virtual void	UpdateWordListExtra();
 	void			CopyWordsFromStyler(StylerBase* styler);
 	void			CopySymbolsForLanguage(const Language lang);
 
@@ -53,6 +55,8 @@ private:
 	JPtrArray<JString>*	itsStringList;	// contents not owned
 	JPtrArray<JString>*	itsOwnedList;
 	StylerBase*			itsStyler;		// can be nullptr; not owned; provides extra words
+	JXIdleTask*			itsNeedsUpdateTask;
+	std::atomic_bool	itsUpdatingFlag;
 
 private:
 
@@ -61,6 +65,8 @@ private:
 					 JXStringCompletionMenu* menu);
 	JSize	Complete(const JString& prefix, JString* maxPrefix,
 					 JXStringCompletionMenu* menu) const;
+
+	void	WaitForUpdateThreadFinished();
 
 	// not allowed
 

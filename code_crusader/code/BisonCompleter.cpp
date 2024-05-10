@@ -62,7 +62,7 @@ BisonCompleter::BisonCompleter()
 	:
 	StringCompleter(kBisonLang, kKeywordCount, kKeywordList, JString::kCompareCase)
 {
-	UpdateWordList();	// include C
+	UpdateWordListExtra();	// include C
 	ListenTo(CStyler::Instance());
 }
 
@@ -118,15 +118,13 @@ BisonCompleter::Receive
 }
 
 /******************************************************************************
- UpdateWordList (virtual protected)
+ UpdateWordListExtra (virtual protected)
 
  ******************************************************************************/
 
 void
-BisonCompleter::UpdateWordList()
+BisonCompleter::UpdateWordListExtra()
 {
-	StringCompleter::UpdateWordList();
-
 	// include C words
 
 	const JUtf8Byte** cWordList;

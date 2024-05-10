@@ -25,7 +25,7 @@ protected:
 
 	bool	IsWordCharacter(const JUtf8Character& c,
 							const bool includeNS) const override;
-	void	UpdateWordList() override;
+	void	UpdateWordListExtra() override;
 	void	Receive(JBroadcaster* sender, const Message& message) override;
 
 private:

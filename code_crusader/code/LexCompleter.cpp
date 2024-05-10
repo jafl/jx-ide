@@ -62,7 +62,7 @@ LexCompleter::LexCompleter()
 	:
 	StringCompleter(kLexLang, kKeywordCount, kKeywordList, JString::kCompareCase)
 {
-	UpdateWordList();	// include C
+	UpdateWordListExtra();	// include C
 	ListenTo(CStyler::Instance());
 }
 
@@ -118,15 +118,13 @@ LexCompleter::Receive
 }
 
 /******************************************************************************
- UpdateWordList (virtual protected)
+ UpdateWordListExtra (virtual protected)
 
  ******************************************************************************/
 
 void
-LexCompleter::UpdateWordList()
+LexCompleter::UpdateWordListExtra()
 {
-	StringCompleter::UpdateWordList();
-
 	// include C words
 
 	const JUtf8Byte** cWordList;

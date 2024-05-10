@@ -71,4 +71,14 @@ void	CleanUpBeforeSuddenDeath(const JXDocumentManager::SafetySaveReason reason);
 const JUtf8Byte*	GetWMClassInstance();
 const JUtf8Byte*	GetProjectWindowClass();
 
+	// thread management
+
+bool	SymbolUpdateRunning();
+void	SymbolUpdateStarted();
+void	SymbolUpdateFinished();
+
+bool	CompleterUpdateRunning();
+void	CompleterUpdateStarted();
+void	CompleterUpdateFinished();
+
 #endif

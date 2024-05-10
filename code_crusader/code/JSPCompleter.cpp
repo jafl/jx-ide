@@ -108,7 +108,7 @@ JSPCompleter::JSPCompleter()
 	:
 	StringCompleter(kJSPLang, kKeywordCount, kKeywordList, JString::kCompareCase)
 {
-	UpdateWordList();	// include HTML and JavaScript
+	UpdateWordListExtra();	// include HTML and JavaScript
 	ListenTo(HTMLStyler::Instance());
 	ListenTo(JavaScriptStyler::Instance());
 }
@@ -167,15 +167,13 @@ JSPCompleter::Receive
 }
 
 /******************************************************************************
- UpdateWordList (virtual protected)
+ UpdateWordListExtra (virtual protected)
 
  ******************************************************************************/
 
 void
-JSPCompleter::UpdateWordList()
+JSPCompleter::UpdateWordListExtra()
 {
-	StringCompleter::UpdateWordList();
-
 	// include HTML words
 
 	const JUtf8Byte** htmlWordList;
