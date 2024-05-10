@@ -71,9 +71,9 @@ DTree::~DTree()
 void
 DTree::StreamOut
 	(
-	std::ostream&		projOutput,
-	std::ostream*		setOutput,
-	std::ostream*		symOutput,
+	std::ostream&	projOutput,
+	std::ostream*	setOutput,
+	std::ostream*	symOutput,
 	const DirList*	dirList
 	)
 	const
@@ -92,7 +92,7 @@ DTree::StreamOut
 Class*
 DTree::StreamInCClass
 	(
-	std::istream&			input,
+	std::istream&		input,
 	const JFileVersion	vers,
 	Tree*				tree
 	)
@@ -102,29 +102,30 @@ DTree::StreamInCClass
 }
 
 /******************************************************************************
- UpdateFinished (virtual)
+ UpdateThreadFinished (virtual)
 
-	*** This runs in the update fiber.
+	*** This runs in the update thread.
 
  ******************************************************************************/
 
-bool
-DTree::UpdateFinished
+void
+DTree::UpdateThreadFinished
 	(
-	const JArray<JFAID_t>&	deadFileList,
-	JProgressDisplay&		pg
+	const JArray<JFAID_t>& deadFileList
 	)
 {
 	jdelete itsClassNameLexer;
 	itsClassNameLexer = nullptr;
 
-	return Tree::UpdateFinished(deadFileList, pg);
+	Tree::UpdateThreadFinished(deadFileList);
 }
 
 /******************************************************************************
  ParseFile (virtual protected)
 
 	Parses the given file and creates DClasses.
+
+	*** This runs in the update thread.
 
  ******************************************************************************/
 

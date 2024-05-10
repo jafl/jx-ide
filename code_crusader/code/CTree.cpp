@@ -136,17 +136,16 @@ CTree::StreamInCClass
 }
 
 /******************************************************************************
- UpdateFinished (virtual)
+ UpdateThreadFinished (virtual)
 
-	*** This runs in the update fiber.
+	*** This runs in the update thread.
 
  ******************************************************************************/
 
-bool
-CTree::UpdateFinished
+void
+CTree::UpdateThreadFinished
 	(
-	const JArray<JFAID_t>&	deadFileList,
-	JProgressDisplay&		pg
+	const JArray<JFAID_t>& deadFileList
 	)
 {
 	jdelete itsClassNameLexer;
@@ -154,13 +153,15 @@ CTree::UpdateFinished
 
 	DeleteProcess();
 
-	return Tree::UpdateFinished(deadFileList, pg);
+	Tree::UpdateThreadFinished(deadFileList);
 }
 
 /******************************************************************************
  ParseFile (virtual protected)
 
 	Parses the given file and creates CClasses.
+
+	*** This runs in the update thread.
 
  ******************************************************************************/
 

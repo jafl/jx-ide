@@ -81,9 +81,9 @@ JavaTree::~JavaTree()
 void
 JavaTree::StreamOut
 	(
-	std::ostream&		projOutput,
-	std::ostream*		setOutput,
-	std::ostream*		symOutput,
+	std::ostream&	projOutput,
+	std::ostream*	setOutput,
+	std::ostream*	symOutput,
 	const DirList*	dirList
 	)
 	const
@@ -112,23 +112,22 @@ JavaTree::StreamInJavaClass
 }
 
 /******************************************************************************
- UpdateFinished (virtual)
+ UpdateThreadFinished (virtual)
 
-	*** This runs in the update fiber.
+	*** This runs in the update thread.
 
  ******************************************************************************/
 
-bool
-JavaTree::UpdateFinished
+void
+JavaTree::UpdateThreadFinished
 	(
-	const JArray<JFAID_t>&	deadFileList,
-	JProgressDisplay&		pg
+	const JArray<JFAID_t>& deadFileList
 	)
 {
 	jdelete itsClassNameLexer;
 	itsClassNameLexer = nullptr;
 
-	return Tree::UpdateFinished(deadFileList, pg);
+	Tree::UpdateThreadFinished(deadFileList);
 }
 
 /******************************************************************************
@@ -138,6 +137,8 @@ JavaTree::UpdateFinished
 
 	We do not create java.lang.Object, because that destroys the ability to
 	minimize MI links.
+
+	*** This runs in the update thread.
 
  ******************************************************************************/
 

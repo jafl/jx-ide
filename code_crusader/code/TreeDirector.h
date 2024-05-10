@@ -13,7 +13,6 @@
 #include <jx-af/jcore/JFAID.h>
 #include "PrefsManager.h"		// for FileTypesChanged
 
-class JProgressDisplay;
 struct JXPM;
 class JXTextMenu;
 class JXToolBar;
@@ -85,8 +84,8 @@ public:
 	// called by FileListTable
 
 	void	PrepareForTreeUpdate(const bool reparseAll);
-	bool	TreeUpdateFinished(const JArray<JFAID_t>& deadFileList,
-								JProgressDisplay& pg);
+	void	TreeUpdateThreadFinished(const JArray<JFAID_t>& deadFileList);
+	bool	TreeUpdateFinished();
 
 	// called by ProjectDocument
 

@@ -32,6 +32,7 @@
 #include <jx-af/jx/JXFontManager.h>
 #include <jx-af/jx/JXSelectionManager.h>
 #include <jx-af/jx/JXTextSelection.h>
+#include <jx-af/jx/JXUrgentFunctionTask.h>
 #include <jx-af/jcore/JPainter.h>
 #include <jx-af/jcore/JLatentPG.h>
 #include <jx-af/jcore/JPtrArray-JString.h>
@@ -45,7 +46,8 @@
 #include <boost/fiber/operations.hpp>
 #include <jx-af/jcore/jAssert.h>
 
-const JSize kBlockSize = 1024;
+const JSize kBlockSize     = 1024;
+const JSize kSleepInterval = 100;	// ms
 
 // Code Mill info
 
@@ -345,10 +347,7 @@ Tree::TreeX
 
 Tree::~Tree()
 {
-	while (itsMinimizeMILinksThread != nullptr)		// director triggered cancel
-	{
-		boost::this_fiber::yield();
-	}
+	WaitForMinimizeMIThreadFinished();
 
 	jdelete itsClassesByFull;
 	jdelete itsVisibleByGeom;
@@ -470,8 +469,6 @@ Tree::FileTypesChanged
 	Get ready to parse files that have changed or been created and to
 	throw out classes in files that no longer exist.
 
-	*** This runs in the update fiber.
-
  ******************************************************************************/
 
 void
@@ -482,10 +479,7 @@ Tree::PrepareForUpdate
 {
 	assert( !itsReparseAllFlag || reparseAll );
 
-	while (itsMinimizeMILinksThread != nullptr)		// director triggered cancel
-	{
-		boost::this_fiber::yield();
-	}
+	WaitForMinimizeMIThreadFinished();
 
 	// save collapsed classes
 
@@ -508,19 +502,18 @@ Tree::PrepareForUpdate
 }
 
 /******************************************************************************
- UpdateFinished (virtual)
+ UpdateThreadFinished (virtual)
 
-	Cleans up after updating files.  Returns true if changes were found.
+	Cleans up after updating files.
 
-	*** This runs in the update fiber.
+	*** This runs in the update thread.
 
  ******************************************************************************/
 
-bool
-Tree::UpdateFinished
+void
+Tree::UpdateThreadFinished
 	(
-	const JArray<JFAID_t>&	deadFileList,
-	JProgressDisplay&		pg
+	const JArray<JFAID_t>& deadFileList
 	)
 {
 	// toss files that no longer exist
@@ -529,9 +522,19 @@ Tree::UpdateFinished
 	for (JIndex i=1; i<=fileCount; i++)
 	{
 		RemoveFile(deadFileList.GetItem(i));
-		pg.IncrementProgress();
 	}
+}
 
+/******************************************************************************
+ UpdateFinished
+
+	Rebuilds the tree.  Returns true if changes were found.
+
+ ******************************************************************************/
+
+bool
+Tree::UpdateFinished()
+{
 	// restore collapsed classes
 
 	const bool forceRecalcVisible = RestoreCollapsedClasses(*itsCollapsedList);
@@ -564,6 +567,8 @@ Tree::UpdateFinished
 	Returns true if the file should be parsed.
 
 	Not private because it is called by FileListTable::ParseFile().
+
+	*** This runs in the update thread.
 
  ******************************************************************************/
 
@@ -600,6 +605,8 @@ Tree::FileChanged
 
 	*** Caller must call RebuildTree().
 
+	*** This runs in the update thread.
+
  ******************************************************************************/
 
 void
@@ -621,7 +628,12 @@ Tree::RemoveFile
 
 			if (!itsChangedDuringParseFlag)
 			{
-				Broadcast(UpdateFoundChanges());
+				auto* task = jnew JXUrgentFunctionTask(this, [this]()
+				{
+					Broadcast(UpdateFoundChanges());
+				},
+				"Tree::RemoveFile::UpdateFoundChanges");
+				task->Go();
 			}
 			itsChangedDuringParseFlag = true;
 		}
@@ -690,6 +702,8 @@ Tree::RestoreCollapsedClasses
 
 	*** Caller must ensure that RebuildTree() gets called.
 
+	*** This runs in the update thread.
+
  ******************************************************************************/
 
 void
@@ -707,7 +721,12 @@ Tree::AddClass
 
 	if (!itsChangedDuringParseFlag)
 	{
-		Broadcast(UpdateFoundChanges());
+		auto* task = jnew JXUrgentFunctionTask(this, [this]()
+		{
+			Broadcast(UpdateFoundChanges());
+		},
+		"Tree::AddClass::UpdateFoundChanges");
+		task->Go();
 	}
 	itsChangedDuringParseFlag = true;
 }
@@ -1118,6 +1137,21 @@ Tree::MinimizeMILinks()
 	if (!newByGeom.IsEmpty())
 	{
 		itsVisibleByGeom->CopyPointers(newByGeom, itsVisibleByGeom->GetCleanUpAction(), false);
+	}
+}
+
+/******************************************************************************
+ WaitForMinimizeMIThreadFinished (private)
+
+ ******************************************************************************/
+
+void
+Tree::WaitForMinimizeMIThreadFinished()
+{
+	while (itsMinimizeMILinksThread != nullptr)		// director triggered cancel
+	{
+		boost::this_fiber::sleep_for(
+			std::chrono::milliseconds(kSleepInterval));
 	}
 }
 

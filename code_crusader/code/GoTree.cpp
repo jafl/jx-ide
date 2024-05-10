@@ -28,7 +28,7 @@
 GoTree::GoTree
 	(
 	GoTreeDirector*	director,
-	const JSize			marginWidth
+	const JSize		marginWidth
 	)
 	:
 	Tree(StreamInGoClass, director, kGoLang, kGoFT, marginWidth),
@@ -46,7 +46,7 @@ GoTree::GoTree
 	const JFileVersion	setVers,
 	std::istream*		symInput,
 	const JFileVersion	symVers,
-	GoTreeDirector*	director,
+	GoTreeDirector*		director,
 	const JSize			marginWidth,
 	DirList*			dirList
 	)
@@ -77,9 +77,9 @@ GoTree::~GoTree()
 void
 GoTree::StreamOut
 	(
-	std::ostream&		projOutput,
-	std::ostream*		setOutput,
-	std::ostream*		symOutput,
+	std::ostream&	projOutput,
+	std::ostream*	setOutput,
+	std::ostream*	symOutput,
 	const DirList*	dirList
 	)
 	const
@@ -108,29 +108,30 @@ GoTree::StreamInGoClass
 }
 
 /******************************************************************************
- UpdateFinished (virtual)
+ UpdateThreadFinished (virtual)
 
-	*** This runs in the update fiber.
+	*** This runs in the update thread.
 
  ******************************************************************************/
 
-bool
-GoTree::UpdateFinished
+void
+GoTree::UpdateThreadFinished
 	(
-	const JArray<JFAID_t>&	deadFileList,
-	JProgressDisplay&		pg
+	const JArray<JFAID_t>& deadFileList
 	)
 {
 	jdelete itsClassNameLexer;
 	itsClassNameLexer = nullptr;
 
-	return Tree::UpdateFinished(deadFileList, pg);
+	Tree::UpdateThreadFinished(deadFileList);
 }
 
 /******************************************************************************
  ParseFile (virtual protected)
 
 	Parses the given file and creates GoClasses.
+
+	*** This runs in the update thread.
 
  ******************************************************************************/
 

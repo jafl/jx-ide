@@ -81,9 +81,9 @@ PHPTree::~PHPTree()
 void
 PHPTree::StreamOut
 	(
-	std::ostream&		projOutput,
-	std::ostream*		setOutput,
-	std::ostream*		symOutput,
+	std::ostream&	projOutput,
+	std::ostream*	setOutput,
+	std::ostream*	symOutput,
 	const DirList*	dirList
 	)
 	const
@@ -102,7 +102,7 @@ PHPTree::StreamOut
 Class*
 PHPTree::StreamInPHPClass
 	(
-	std::istream&			input,
+	std::istream&		input,
 	const JFileVersion	vers,
 	Tree*				tree
 	)
@@ -112,29 +112,30 @@ PHPTree::StreamInPHPClass
 }
 
 /******************************************************************************
- UpdateFinished (virtual)
+ UpdateThreadFinished (virtual)
 
-	*** This runs in the update fiber.
+	*** This runs in the update thread.
 
  ******************************************************************************/
 
-bool
-PHPTree::UpdateFinished
+void
+PHPTree::UpdateThreadFinished
 	(
-	const JArray<JFAID_t>&	deadFileList,
-	JProgressDisplay&		pg
+	const JArray<JFAID_t>& deadFileList
 	)
 {
 	jdelete itsClassNameLexer;
 	itsClassNameLexer = nullptr;
 
-	return Tree::UpdateFinished(deadFileList, pg);
+	Tree::UpdateThreadFinished(deadFileList);
 }
 
 /******************************************************************************
  ParseFile (virtual protected)
 
 	Parses the given file and creates one PHPClass.
+
+	*** This runs in the update thread.
 
  ******************************************************************************/
 

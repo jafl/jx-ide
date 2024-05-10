@@ -115,8 +115,8 @@ public:
 	void	FileTypesChanged(const PrefsManager::FileTypesChanged& info);
 
 	virtual void	PrepareForUpdate(const bool reparseAll);
-	virtual bool	UpdateFinished(const JArray<JFAID_t>& deadFileList,
-									JProgressDisplay& pg);
+	virtual void	UpdateThreadFinished(const JArray<JFAID_t>& deadFileList);
+	bool			UpdateFinished();
 
 	// called by FileListTable
 
@@ -247,6 +247,7 @@ private:
 	bool	RestoreCollapsedClasses(const JPtrArray<JString>& list);
 
 	void		MinimizeMILinks();
+	void		WaitForMinimizeMIThreadFinished();
 	static bool	ArrangeRootsDynamicProgramming(const JArray<RootMIInfo>& rootList,
 												JArray<JIndex>* rootOrder,
 												JProgressDisplay& pg);

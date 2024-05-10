@@ -352,18 +352,30 @@ TreeDirector::PrepareForTreeUpdate
 }
 
 /******************************************************************************
+ TreeUpdateThreadFinished
+
+	*** This runs in the update thread.
+
+ ******************************************************************************/
+
+void
+TreeDirector::TreeUpdateThreadFinished
+	(
+	const JArray<JFAID_t>& deadFileList
+	)
+{
+	itsTree->UpdateThreadFinished(deadFileList);
+}
+
+/******************************************************************************
  TreeUpdateFinished
 
  ******************************************************************************/
 
 bool
-TreeDirector::TreeUpdateFinished
-	(
-	const JArray<JFAID_t>&	deadFileList,
-	JProgressDisplay&		pg
-	)
+TreeDirector::TreeUpdateFinished()
 {
-	const bool changed = itsTree->UpdateFinished(deadFileList, pg);
+	const bool changed = itsTree->UpdateFinished();
 	itsTreeMenu->Activate();
 	itsTreeWidget->Show();
 	return changed;
