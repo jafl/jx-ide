@@ -70,12 +70,15 @@ MDIServer::HandleMDIRequest
 {
 	const JSize argCount = argList.GetItemCount();
 
+	JGetTemporaryDirectoryChangeMutex().lock();
+
 	const JString origDir = JGetCurrentDirectory();
 
 	JError err = JNoError();
 	if (!JChangeDirectory(dir, &err))
 	{
 		err.ReportIfError();
+		JGetTemporaryDirectoryChangeMutex().unlock();
 		return;
 	}
 
@@ -287,6 +290,7 @@ MDIServer::HandleMDIRequest
 	}
 
 	JChangeDirectory(origDir);
+	JGetTemporaryDirectoryChangeMutex().unlock();
 
 	JXWindow::ShouldAutoDockNewWindows(true);
 

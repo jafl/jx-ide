@@ -78,7 +78,7 @@ FileNode::OpenFile()
 /******************************************************************************
  ParseFiles (virtual)
 
-	*** This runs in the update fiber.
+	*** This runs in the update thread.
 
  ******************************************************************************/
 
@@ -103,7 +103,7 @@ FileNode::ParseFiles
 
 		const TextFileType type = GetPrefsManager()->GetFileType(trueName);
 		if (GetDocumentManager()->GetComplementFile(trueName, type, &fullName,
-														GetProjectDoc(), false) &&
+													GetProjectDoc(), false) &&
 			JGetTrueName(fullName, &trueName) &&
 			!ParseFile(trueName, parser, allSuffixList, symbolList, treeList, pg))
 		{
@@ -116,7 +116,7 @@ FileNode::ParseFiles
 /******************************************************************************
  ParseFile (private)
 
-	*** This runs in the update fiber.
+	*** This runs in the update thread.
 
  ******************************************************************************/
 

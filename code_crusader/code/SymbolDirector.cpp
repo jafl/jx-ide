@@ -299,11 +299,26 @@ SymbolDirector::FileTypesChanged
 void
 SymbolDirector::PrepareForListUpdate
 	(
-	const bool			reparseAll,
-	JProgressDisplay&	pg
+	const bool reparseAll
 	)
 {
-	itsSymbolList->PrepareForUpdate(reparseAll, pg);
+	itsSymbolList->PrepareForUpdate(reparseAll);
+}
+
+/******************************************************************************
+ ListUpdateThreadFinished
+
+	*** This runs in the update thread.
+
+ ******************************************************************************/
+
+void
+SymbolDirector::ListUpdateThreadFinished
+	(
+	const JArray<JFAID_t>& deadFileList
+	)
+{
+	itsSymbolList->UpdateThreadFinished(deadFileList);
 }
 
 /******************************************************************************
@@ -312,13 +327,9 @@ SymbolDirector::PrepareForListUpdate
  ******************************************************************************/
 
 bool
-SymbolDirector::ListUpdateFinished
-	(
-	const JArray<JFAID_t>&	deadFileList,
-	JProgressDisplay&		pg
-	)
+SymbolDirector::ListUpdateFinished()
 {
-	const bool changed = itsSymbolList->UpdateFinished(deadFileList, pg);
+	const bool changed = itsSymbolList->UpdateFinished();
 	itsSymbolMenu->Activate();
 	itsSymbolTable->Show();
 	return changed;

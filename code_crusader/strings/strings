@@ -675,7 +675,6 @@ ChangeDirectory::CompileDocument	"Entering directory `$d`"
 # FileListTable
 
 ParsingFiles::FileListTable	"Parsing files:"
-CleaningUp::FileListTable	"Cleaning up:"
 
 # DiffFileDialog
 

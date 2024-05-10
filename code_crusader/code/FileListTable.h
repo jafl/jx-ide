@@ -84,6 +84,7 @@ private:
 	JArray<bool>*		itsFileUsage;		// nullptr unless updating files; on stack
 	bool				itsReparseAllFlag;	// true => flush all on next update
 	JSize				itsChangedDuringParseCount;
+	JSize				itsNewOrDeletedDuringParseCount;
 	mutable JFAID_t		itsLastUniqueID;
 
 private:

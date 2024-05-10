@@ -84,8 +84,9 @@ public:
 	// called by SymbolDirector
 
 	void	FileTypesChanged(const PrefsManager::FileTypesChanged& info);
-	void	PrepareForUpdate(const bool reparseAll, JProgressDisplay& pg);
-	bool	UpdateFinished(const JArray<JFAID_t>& deadFileList, JProgressDisplay& pg);
+	void	PrepareForUpdate(const bool reparseAll);
+	void	UpdateThreadFinished(const JArray<JFAID_t>& deadFileList);
+	bool	UpdateFinished();
 
 	// called by FileListTable
 
@@ -134,6 +135,7 @@ private:
 	ProjectDocument*	itsProjDoc;					// not owned
 	JArray<SymbolInfo>*	itsSymbolList;
 	bool				itsReparseAllFlag;			// true => flush all on next update
+	bool				itsFirstSymbolUpdateFlag;
 	bool				itsChangedDuringParseFlag;
 	bool				itsBeganEmptyFlag;			// true => ignore RemoveFile()
 

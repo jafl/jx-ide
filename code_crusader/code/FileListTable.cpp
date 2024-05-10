@@ -18,6 +18,8 @@
 #include "TreeDirector.h"
 #include "Tree.h"
 #include "globals.h"
+#include <jx-af/jx/JXUrgentFunctionTask.h>
+#include <jx-af/jcore/JThreadPG.h>
 #include <jx-af/jcore/JDirInfo.h>
 #include <jx-af/jcore/jVCSUtil.h>
 #include <jx-af/jcore/jDirUtil.h>
@@ -50,6 +52,7 @@ FileListTable::FileListTable
 	itsFileUsage(nullptr),
 	itsReparseAllFlag(false),
 	itsChangedDuringParseCount(0),
+	itsNewOrDeletedDuringParseCount(0),
 	itsLastUniqueID(JFAID::kMinID)
 {
 	itsFileInfo = jnew JArray<FileInfo>(1024);
@@ -72,9 +75,9 @@ FileListTable::~FileListTable()
 
 	Update the list of files.  Returns the fraction of files updated.
 
-	*** This runs in the update fiber.
-
  ******************************************************************************/
+
+#include <jx-af/jcore/JStopWatch.h>
 
 JFloat
 FileListTable::Update
@@ -86,95 +89,116 @@ FileListTable::Update
 	const JPtrArray<TreeDirector>&	treeDirList
 	)
 {
-	itsChangedDuringParseCount = 0;
+	itsChangedDuringParseCount      = 0;
+	itsNewOrDeletedDuringParseCount = 0;
 
 	// get everybody ready
 
-	SymbolList* symbolList = symbolDir->GetSymbolList();
+	bool reparseAll = itsReparseAllFlag || symbolDir->GetSymbolList()->NeedsReparseAll();
 
-	JPtrArray<Tree> treeList(JPtrArrayT::kForgetAll);
 	for (auto* dir : treeDirList)
 	{
-		treeList.Append(dir->GetTree());
+		reparseAll = reparseAll || dir->GetTree()->NeedsReparseAll();
 	}
-
-	const bool reparseAll = itsReparseAllFlag             ||
-							symbolList->NeedsReparseAll() ||
-							std::any_of(begin(treeList), end(treeList),
-								[](Tree* tree){ return tree->NeedsReparseAll(); });
 
 	if (reparseAll)
 	{
 		RemoveAllFiles();
 		Broadcast(UpdateFoundChanges());
 	}
-	symbolDir->PrepareForListUpdate(reparseAll, pg);
+	symbolDir->PrepareForListUpdate(reparseAll);
 	for (auto* dir : treeDirList)
 	{
 		dir->PrepareForTreeUpdate(reparseAll);
 	}
 
-	// create array to track which files still exist
+	boost::fibers::buffered_channel<JBroadcaster::Message*> pgChannel(kJBufferedChannelCapacity);
+	JThreadPG threadPG(&pgChannel, nullptr, 10);
 
-	JArray<bool> fileUsage(1000);
-	itsFileUsage = &fileUsage;
-
-	const JSize origFileCount = itsFileInfo->GetItemCount();
-	for (JIndex i=1; i<=origFileCount; i++)
+	std::thread t([this, reparseAll, &threadPG, fileTree, &dirList, symbolDir, &treeDirList]()
 	{
-		fileUsage.AppendItem(false);
-	}
-
-	// process each file
-
-	ScanAll(fileTree, dirList, symbolList, treeList, pg);
-
-	// collect files that no longer exist
-
-	const JPtrArray<JString>& fileNameList = GetFullNameList();
-
-	const JSize fileCount = itsFileInfo->GetItemCount();
-	JPtrArray<JString> deadFileNameList(JPtrArrayT::kDeleteAll, fileCount+1);	// +1 to avoid passing zero
-	JArray<JFAID_t> deadFileIDList(fileCount+1);
-
-	for (JIndex i=1; i<=fileCount; i++)
-	{
-		if (!fileUsage.GetItem(i))
+		JPtrArray<Tree> treeList(JPtrArrayT::kForgetAll);
+		for (auto* dir : treeDirList)
 		{
-			deadFileNameList.Append(*fileNameList.GetItem(i));
-			deadFileIDList.AppendItem(itsFileInfo->GetItem(i).id);
+			treeList.Append(dir->GetTree());
 		}
-	}
 
-	itsFileUsage = nullptr;
+		// create array to track which files still exist
 
-	// remove non-existent files
+		JArray<bool> fileUsage(1000);
+		itsFileUsage = &fileUsage;
 
-	if (!deadFileNameList.IsEmpty())
+		const JSize origFileCount = itsFileInfo->GetItemCount();
+		for (JIndex i=1; i<=origFileCount; i++)
+		{
+			fileUsage.AppendItem(false);
+		}
+
+		// process each file
+
+		ScanAll(fileTree, dirList, symbolDir->GetSymbolList(), treeList, threadPG);
+
+		// collect files that no longer exist
+
+		const JPtrArray<JString>& fileNameList = GetFullNameList();
+
+		const JSize fileCount = itsFileInfo->GetItemCount();
+		JPtrArray<JString> deadFileNameList(JPtrArrayT::kDeleteAll, fileCount+1);	// +1 to avoid passing zero
+		JArray<JFAID_t> deadFileIDList(fileCount+1);
+
+		for (JIndex i=1; i<=fileCount; i++)
+		{
+			if (!fileUsage.GetItem(i))
+			{
+				deadFileNameList.Append(*fileNameList.GetItem(i));
+				deadFileIDList.AppendItem(itsFileInfo->GetItem(i).id);
+			}
+		}
+
+		itsFileUsage = nullptr;
+
+		// remove non-existent files
+
+		RemoveFilesNeedsRebuild(deadFileNameList);
+		symbolDir->ListUpdateThreadFinished(deadFileIDList);
+		for (auto* dir : treeDirList)
+		{
+			dir->TreeUpdateThreadFinished(deadFileIDList);
+		}
+
+		if (!reparseAll && !deadFileIDList.IsEmpty())
+		{
+			itsChangedDuringParseCount      += deadFileIDList.GetItemCount();
+			itsNewOrDeletedDuringParseCount += deadFileIDList.GetItemCount();
+		}
+	});
+
+	threadPG.WaitForProcessFinished(&pg);
+	t.join();
+JStopWatch w;
+	if (itsNewOrDeletedDuringParseCount > 0)
 	{
-		pg.FixedLengthProcessBeginning(deadFileNameList.GetItemCount() * (2 + treeDirList.GetItemCount()),
-			JGetString("CleaningUp::FileListTable"), false, false);
+w.StartTimer();
+		RebuildTable();
+w.StopTimer();
+std::cout << "RebuildTable: " << w.PrintTimeInterval() << std::endl;
 	}
-
-	RemoveFiles(deadFileNameList, &pg);
-	symbolDir->ListUpdateFinished(deadFileIDList, pg);
+w.StartTimer();
+	symbolDir->ListUpdateFinished();
+w.StopTimer();
+std::cout << "ListUpdateFinished: " << w.PrintTimeInterval() << std::endl;
+w.StartTimer();
 	for (auto* dir : treeDirList)
 	{
-		dir->TreeUpdateFinished(deadFileIDList, pg);
+		dir->TreeUpdateFinished();
 	}
-
-	if (!deadFileIDList.IsEmpty())
-	{
-		pg.ProcessFinished();
-		if (!reparseAll)
-		{
-			itsChangedDuringParseCount += deadFileIDList.GetItemCount();
-		}
-	}
-
+w.StopTimer();
+std::cout << "TreeUpdateFinished: " << w.PrintTimeInterval() << std::endl;
+w.StartTimer();
 	itsReparseAllFlag = false;
 	Broadcast(UpdateDone());
-
+w.StopTimer();
+std::cout << "Broadcast(UpdateDone: " << w.PrintTimeInterval() << std::endl;
 	return reparseAll ? 1.0 : JFloat(itsChangedDuringParseCount) / itsFileInfo->GetItemCount();
 }
 
@@ -188,7 +212,7 @@ FileListTable::Update
 	which I'm just too lazy to feel like catching, and the user can always
 	add those directories separately.
 
-	*** This runs in the update fiber.
+	*** This runs in the update thread.
 
  ******************************************************************************/
 
@@ -231,7 +255,7 @@ FileListTable::ScanAll
 /******************************************************************************
  ScanDirectory (private -- recursive)
 
-	*** This runs in the update fiber.
+	*** This runs in the update thread.
 
  ******************************************************************************/
 
@@ -298,7 +322,7 @@ FileListTable::ScanDirectory
 
 	Not private because called by FileNode.
 
-	*** This runs in the update fiber.
+	*** This runs in the update thread.
 
  ******************************************************************************/
 
@@ -313,27 +337,33 @@ FileListTable::ParseFile
 	JProgressDisplay&			pg
 	)
 {
-	if (PrefsManager::FileMatchesSuffix(fullName, allSuffixList))
+	if (!PrefsManager::FileMatchesSuffix(fullName, allSuffixList))
 	{
-		const TextFileType fileType = GetPrefsManager()->GetFileType(fullName);
-		JFAID_t id;
-		if (AddFile(fullName, fileType, modTime, &id))
+		return;
+	}
+
+	const TextFileType fileType = GetPrefsManager()->GetFileType(fullName);
+	JFAID_t id;
+	if (!AddFile(fullName, fileType, modTime, &id))
+	{
+		return;
+	}
+
+	if (itsChangedDuringParseCount == 0)
+	{
+		auto* task = jnew JXUrgentFunctionTask(this, [this]()
 		{
-			if (itsChangedDuringParseCount == 0)
-			{
-				Broadcast(UpdateFoundChanges());
-			}
-			itsChangedDuringParseCount++;
-			boost::this_fiber::yield();
+			Broadcast(UpdateFoundChanges());
+		},
+		"FileListTable::ParseFile::Broadcast(UpdateFoundChanges())");
+		task->Go();
+	}
+	itsChangedDuringParseCount++;
 
-			symbolList->FileChanged(fullName, fileType, id);
-			boost::this_fiber::yield();
-
-			for (auto* tree : treeList)
-			{
-				tree->FileChanged(fullName, fileType, id);
-			}
-		}
+	symbolList->FileChanged(fullName, fileType, id);
+	for (auto* tree : treeList)
+	{
+		tree->FileChanged(fullName, fileType, id);
 	}
 }
 
@@ -343,7 +373,7 @@ FileListTable::ParseFile
 	Returns true if the file is new or changed.  *id is always set to
 	the id of the file.
 
-	*** This runs in the update fiber.
+	*** This runs in the update thread.
 
  ******************************************************************************/
 
@@ -362,13 +392,14 @@ FileListTable::AddFile
 	}
 
 	JIndex index;
-	const bool isNew = JXFileListTable::AddFile(fullName, &index);
+	const bool isNew = JXFileListTable::AddFileNeedsRebuild(fullName, &index);
 	FileInfo info    = itsFileInfo->GetItem(index);
 	*id              = info.id;
 
 	itsFileUsage->SetItem(index, true);
 	if (isNew)
 	{
+		itsNewOrDeletedDuringParseCount++;
 		return true;
 	}
 	else if (modTime != info.modTime)

@@ -72,13 +72,16 @@ const JFileVersion kCurrentStateVersion = 2;
 // JBroadcaster message types
 
 const JUtf8Byte* DocumentManager::kProjectDocumentCreated =
-	"ProjectDocumentCreated::DocumentManager";
+	"Created::Project::DocumentManager";
 
 const JUtf8Byte* DocumentManager::kProjectDocumentDeleted =
-	"ProjectDocumentDeleted::DocumentManager";
+	"Deleted::Project::DocumentManager";
+
+const JUtf8Byte* DocumentManager::kProjectDocumentsDeleted =
+	"MultipleDeleted::Project::DocumentManager";
 
 const JUtf8Byte* DocumentManager::kProjectDocumentActivated =
-	"ProjectDocumentActivated::DocumentManager";
+	"Activated::Project::DocumentManager";
 
 const JUtf8Byte* DocumentManager::kAddFileToHistory =
 	"AddFileToHistory::DocumentManager";
@@ -92,26 +95,23 @@ DocumentManager::DocumentManager()
 	:
 	JXDocumentManager(),
 	JPrefObject(GetPrefsManager(), kDocMgrID),
+	itsClosingAllProjectsFlag(false),
+	itsListDocument(nullptr),
+	itsTextNeedsSaveFlag(false),
+	itsWarnBeforeSaveAllFlag(false),
+	itsWarnBeforeCloseAllFlag(false),
+	itsRecentProjectMenu(nullptr),
+	itsRecentTextMenu(nullptr),
+	itsEditTextLocalFlag(true),
 	itsEditTextFileCmd(kDefEditTextFileCmd),
 	itsEditTextFileLineCmd(kDefEditTextFileLineCmd),
+	itsEditBinaryLocalFlag(false),
 	itsEditBinaryFileCmd(kDefEditBinaryFileCmd)
 {
 	itsProjectDocuments = jnew JPtrArray<ProjectDocument>(JPtrArrayT::kForgetAll);
 	ListenTo(itsProjectDocuments);
 
 	itsTextDocuments = jnew JPtrArray<TextDocument>(JPtrArrayT::kForgetAll);
-
-	itsListDocument = nullptr;
-
-	itsWarnBeforeSaveAllFlag  = false;
-	itsWarnBeforeCloseAllFlag = false;
-
-	itsTextNeedsSaveFlag   = false;
-	itsEditTextLocalFlag   = true;
-	itsEditBinaryLocalFlag = false;
-
-	itsRecentProjectMenu = nullptr;
-	itsRecentTextMenu    = nullptr;
 
 	PrefsManager* prefsMgr = GetPrefsManager();
 	ListenTo(prefsMgr);
@@ -267,7 +267,10 @@ DocumentManager::ProjDocDeleted
 	)
 {
 	itsProjectDocuments->Remove(doc);
-	Broadcast(ProjectDocumentDeleted(doc));
+	if (!itsClosingAllProjectsFlag)
+	{
+		Broadcast(ProjectDocumentDeleted(doc));
+	}
 
 	bool onDisk;
 	const JString fullName = doc->GetFullName(&onDisk);
@@ -350,6 +353,8 @@ DocumentManager::ProjectDocumentIsOpen
 bool
 DocumentManager::CloseProjectDocuments()
 {
+	itsClosingAllProjectsFlag = true;
+
 	for (auto* doc : std::views::reverse(*itsProjectDocuments))
 	{
 		if (!doc->Close())
@@ -357,6 +362,9 @@ DocumentManager::CloseProjectDocuments()
 			break;
 		}
 	}
+
+	itsClosingAllProjectsFlag = false;
+	Broadcast(ProjectDocumentsDeleted());
 
 	return itsProjectDocuments->IsEmpty();
 }

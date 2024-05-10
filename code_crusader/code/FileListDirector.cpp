@@ -232,6 +232,7 @@ FileListDirector::BuildWindow()
 
 	ListenTo(itsFLTable, std::function([this](const FileListTable::UpdateFoundChanges&)
 	{
+		itsFLTable->ClearSelection();
 		SetActiveDuringUpdate(false);
 	}));
 

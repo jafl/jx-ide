@@ -18,6 +18,7 @@
 #include "Class.h"
 #include "globals.h"
 #include "ctagsRegex.h"
+#include <jx-af/jx/JXUrgentFunctionTask.h>
 #include <jx-af/jcore/JStringIterator.h>
 #include <jx-af/jcore/jStreamUtil.h>
 #include <jx-af/jcore/jDirUtil.h>
@@ -53,6 +54,7 @@ SymbolList::SymbolList
 {
 	itsProjDoc                = projDoc;
 	itsReparseAllFlag         = true;		// ReadSetup() clears this
+	itsFirstSymbolUpdateFlag  = true;
 	itsChangedDuringParseFlag = false;
 	itsBeganEmptyFlag         = false;
 
@@ -579,15 +581,12 @@ SymbolList::FileTypesChanged
 	Get ready to parse files that have changed or been created and to
 	throw out symbols in files that no longer exist.
 
-	*** This runs in the update fiber.
-
  ******************************************************************************/
 
 void
 SymbolList::PrepareForUpdate
 	(
-	const bool			reparseAll,
-	JProgressDisplay&	pg
+	const bool reparseAll
 	)
 {
 	assert( !itsReparseAllFlag || reparseAll );
@@ -607,19 +606,18 @@ SymbolList::PrepareForUpdate
 }
 
 /******************************************************************************
- UpdateFinished
+ UpdateThreadFinished
 
 	Cleans up after updating files.
 
-	*** This runs in the update fiber.
+	*** This runs in the update thread.
 
  ******************************************************************************/
 
-bool
-SymbolList::UpdateFinished
+void
+SymbolList::UpdateThreadFinished
 	(
-	const JArray<JFAID_t>&	deadFileList,
-	JProgressDisplay&		pg
+	const JArray<JFAID_t>& deadFileList
 	)
 {
 	DeleteProcess();
@@ -636,7 +634,6 @@ SymbolList::UpdateFinished
 		for (JIndex i=1; i<=fileCount; i++)
 		{
 			RemoveFile(deadFileList.GetItem(i));
-			pg.IncrementProgress();
 		}
 	}
 
@@ -646,19 +643,14 @@ SymbolList::UpdateFinished
 	const JString* prev = nullptr;
 	for (const auto& info : *itsSymbolList)
 	{
-		if (!info.fullyQualifiedFileScope)
+		if (info.fullyQualifiedFileScope)
 		{
-			continue;
-		}
-		else if (prev == nullptr)
-		{
-			matchLength = info.name->GetCharacterCount();
-			prev        = info.name;
-		}
-		else
-		{
-			matchLength = JMin(matchLength, JString::CalcCharacterMatchLength(*prev, *info.name));
-			prev        = info.name;
+			matchLength =
+				prev == nullptr ?
+					info.name->GetCharacterCount() :
+					JMin(matchLength, JString::CalcCharacterMatchLength(*prev, *info.name));
+
+			prev = info.name;
 		}
 	}
 
@@ -676,15 +668,25 @@ SymbolList::UpdateFinished
 
 		itsSymbolList->Sort();
 	}
+}
 
-	// notify
+/******************************************************************************
+ UpdateFinished
 
+	Cleans up after updating files.
+
+ ******************************************************************************/
+
+bool
+SymbolList::UpdateFinished()
+{
 	itsReparseAllFlag = false;
-	if (itsChangedDuringParseFlag)
+	if (itsChangedDuringParseFlag || itsFirstSymbolUpdateFlag)
 	{
 		Broadcast(Changed());
 	}
 
+	itsFirstSymbolUpdateFlag = false;
 	return itsChangedDuringParseFlag;
 }
 
@@ -710,6 +712,8 @@ SymbolList::RemoveAllSymbols()
 
 	Throws out all symbols that were defined in the given file.
 
+	*** This runs in the update thread.
+
  ******************************************************************************/
 
 void
@@ -726,7 +730,12 @@ SymbolList::RemoveFile
 		{
 			if (!itsChangedDuringParseFlag)
 			{
-				Broadcast(UpdateFoundChanges());
+				auto* task = jnew JXUrgentFunctionTask(this, [this]()
+				{
+					Broadcast(UpdateFoundChanges());
+				},
+				"SymbolList::RemoveFile::UpdateFoundChanges");
+				task->Go();
 			}
 
 			info.Free();
@@ -740,6 +749,8 @@ SymbolList::RemoveFile
  FileChanged
 
 	Throws out all symbols that were in the given file and reparses it.
+
+	*** This runs in the update thread.
 
  ******************************************************************************/
 
@@ -766,6 +777,8 @@ SymbolList::FileChanged
 
 	Runs the specified file through ctags.
 
+	*** This runs in the update thread.
+
  ******************************************************************************/
 
 void
@@ -782,7 +795,12 @@ SymbolList::ParseFile
 	{
 		if (!itsChangedDuringParseFlag)
 		{
-			Broadcast(UpdateFoundChanges());
+			auto* task = jnew JXUrgentFunctionTask(this, [this]()
+			{
+				Broadcast(UpdateFoundChanges());
+			},
+			"SymbolList::ParseFile::UpdateFoundChanges");
+			task->Go();
 		}
 
 		icharbufstream input(data.GetBytes(), data.GetByteCount());

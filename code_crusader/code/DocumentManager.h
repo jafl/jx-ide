@@ -155,6 +155,7 @@ protected:
 private:
 
 	JPtrArray<ProjectDocument>*	itsProjectDocuments;
+	bool						itsClosingAllProjectsFlag;
 
 	JPtrArray<TextDocument>*	itsTextDocuments;
 	CommandOutputDocument*		itsListDocument;
@@ -238,6 +239,7 @@ public:
 
 	static const JUtf8Byte* kProjectDocumentCreated;
 	static const JUtf8Byte* kProjectDocumentDeleted;
+	static const JUtf8Byte* kProjectDocumentsDeleted;
 	static const JUtf8Byte* kProjectDocumentActivated;
 	static const JUtf8Byte* kAddFileToHistory;
 
@@ -258,6 +260,16 @@ public:
 		ProjectDocumentDeleted(ProjectDocument* doc)
 			:
 			ProjectDocumentMessage(kProjectDocumentDeleted, doc)
+			{ };
+	};
+
+	class ProjectDocumentsDeleted : public JBroadcaster::Message
+	{
+	public:
+
+		ProjectDocumentsDeleted()
+			:
+			JBroadcaster::Message(kProjectDocumentsDeleted)
 			{ };
 	};
 

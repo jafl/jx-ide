@@ -25,8 +25,8 @@ class JXTextButton;
 class JXToolBar;
 class JXWidgetSet;
 class JXPTPrinter;
-class JXFunctionTask;
 class JXUrgentTask;
+class JXIdleTask;
 class JXProgressIndicator;
 class ProjectTree;
 class SymbolDirector;
@@ -162,7 +162,7 @@ private:
 
 	CommandManager*		itsCmdMgr;
 	BuildManager*		itsBuildMgr;
-	JXFunctionTask*		itsSaveTask;
+	JXIdleTask*			itsSaveTask;
 	JString				itsPrintName;
 	mutable JString		itsDocName;					// so GetName() can return JString&
 
@@ -192,13 +192,12 @@ private:
 
 // begin JXLayout
 
-	JXTextButton*        itsConfigButton;
-	JXToolBar*           itsToolBar;
-	ProjectTable*        itsFileTable;
-	JXWidgetSet*         itsUpdateContainer;
-	JXStaticText*        itsUpdateLabel;
-	JXStaticText*        itsUpdateCounter;
-	JXProgressIndicator* itsUpdateCleanUpIndicator;
+	JXTextButton* itsConfigButton;
+	JXToolBar*    itsToolBar;
+	ProjectTable* itsFileTable;
+	JXWidgetSet*  itsUpdateContainer;
+	JXStaticText* itsUpdateLabel;
+	JXStaticText* itsUpdateCounter;
 
 // end JXLayout
 

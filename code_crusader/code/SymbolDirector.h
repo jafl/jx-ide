@@ -15,7 +15,6 @@
 #include "PrefsManager.h"		// for FileTypesChanged
 #include <jx-af/jx/JXButtonStates.h>
 
-class JProgressDisplay;
 class JXTextMenu;
 class JXToolBar;
 class SymbolList;
@@ -64,8 +63,9 @@ public:
 
 	// called by FileListTable
 
-	void	PrepareForListUpdate(const bool reparseAll, JProgressDisplay& pg);
-	bool	ListUpdateFinished(const JArray<JFAID_t>& deadFileList, JProgressDisplay& pg);
+	void	PrepareForListUpdate(const bool reparseAll);
+	void	ListUpdateThreadFinished(const JArray<JFAID_t>& deadFileList);
+	bool	ListUpdateFinished();
 
 	// called by SymbolSRDirector
 

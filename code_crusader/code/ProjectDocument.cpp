@@ -93,7 +93,10 @@ const JSize kTmplFileSignatureLength          = strlen(kTmplFileSignature);
 static const JUtf8Byte* kWizardFileSignature  = "jx_browser_project_wizard";
 const JSize kWizardFileSignatureLength        = strlen(kWizardFileSignature);
 
-const JSize kSafetySavePeriod = 600000;		// 10 minutes (milliseconds)
+const JSize kSafetySavePeriod          = 600000;	// 10 minutes (ms)
+const JSize kUpdateCheckInterval       = 100;		// ms
+const JSize kSymbolUpdateScaleFactor   = 10;
+const JFloat kSymbolUpdateSaveFraction = 0.05;		// fraction of changed files that triggers save
 
 // catch crashes during child process parsing
 
@@ -149,7 +152,6 @@ ProjectDocument::Create()
 
 		auto* doc = jnew ProjectDocument(fullName, dlog->GetMakefileMethod(),
 										 fromTemplate, tmplFile);
-		assert( doc != nullptr );
 		doc->SaveInCurrentFile();
 		doc->Activate();
 	}
@@ -270,7 +272,6 @@ ProjectDocument::Create
 		const JString setName = GetSettingFileName(fullName);
 
 		*doc = jnew ProjectDocument(input, projName, setName, symName, silent);
-		assert( *doc != nullptr );
 	}
 	else if (status == kNeedNewerVersion)
 	{
@@ -371,7 +372,6 @@ ProjectDocument::ProjectDocument
 	{
 		itsFileTree = jnew ProjectTree(this);
 	}
-	assert( itsFileTree != nullptr );
 
 	ProjectDocumentX(itsFileTree);
 
@@ -487,7 +487,6 @@ ProjectDocument::ProjectDocument
 	{
 		itsFileTree = jnew ProjectTree(this);
 	}
-	assert( itsFileTree != nullptr );
 
 	ProjectDocumentX(itsFileTree);
 
@@ -664,12 +663,11 @@ ProjectDocument::ProjectDocumentX
 		}
 		WriteFile(fullName, false);		// always save .jst/.jup, even if .jcc not writable
 		DataReverted(false);			// update file modification time
-	});
-	assert( itsSaveTask != nullptr );
+	},
+	"ProjectDocument::PeriodicSave");
 	itsSaveTask->Start();
 
 	itsTreeDirectorList = jnew JPtrArray<TreeDirector>(JPtrArrayT::kForgetAll);
-	assert( itsTreeDirectorList != nullptr );
 
 	itsUpdatePG              = nullptr;
 	itsDelaySymbolUpdateTask = nullptr;
@@ -808,15 +806,10 @@ ProjectDocument::WriteTextFile
 	if (!safetySave)
 	{
 		bool onDisk;
-		setName = GetSettingFileName(GetFullName(&onDisk));
-
+		setName   = GetSettingFileName(GetFullName(&onDisk));
 		setOutput = jnew std::ofstream(setName.GetBytes());
-		assert( setOutput != nullptr );
-
-		symName = GetSymbolFileName(GetFullName(&onDisk));
-
+		symName   = GetSymbolFileName(GetFullName(&onDisk));
 		symOutput = jnew std::ofstream(symName.GetBytes());
-		assert( symOutput != nullptr );
 	}
 
 	WriteFiles(projOutput, setName, setOutput, symName, symOutput);
@@ -1338,7 +1331,6 @@ ProjectDocument::BuildWindow
 	auto* scrollbarSet =
 		jnew JXScrollbarSet(itsToolBar->GetWidgetEnclosure(),
 					JXWidget::kHElastic, JXWidget::kVElastic, 0,0, 510,380);
-	assert( scrollbarSet != nullptr );
 
 	itsFileTable =
 		jnew ProjectTable(this, menuBar, treeList, scrollbarSet, scrollbarSet->GetScrollEnclosure(),
@@ -1357,10 +1349,6 @@ ProjectDocument::BuildWindow
 		jnew JXStaticText(JGetString("itsUpdateCounter::ProjectDocument::JXLayout"), itsUpdateContainer,
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 90,0, 90,20);
 	itsUpdateCounter->SetToLabel(false);
-
-	itsUpdateCleanUpIndicator =
-		jnew JXProgressIndicator(itsUpdateContainer,
-					JXWidget::kHElastic, JXWidget::kFixedTop, 90,5, 420,10);
 
 // end JXLayout
 
@@ -1423,7 +1411,6 @@ ProjectDocument::BuildWindow
 
 	auto* fileListMenu =
 		jnew DocumentMenu(menuBar, JXWidget::kFixedLeft, JXWidget::kVElastic, 0,0, 10,10);
-	assert( fileListMenu != nullptr );
 	menuBar->AppendMenu(fileListMenu);
 
 	itsPrefsMenu = menuBar->AppendTextMenu(JGetString("MenuTitle::ProjectDocument_Preferences"));
@@ -1455,9 +1442,10 @@ ProjectDocument::BuildWindow
 	// update pg
 
 	auto* pg = jnew JXProgressDisplay;
-	pg->SetItems(nullptr, itsUpdateCounter, itsUpdateCleanUpIndicator, itsUpdateLabel);
+	pg->SetItems(nullptr, itsUpdateCounter, nullptr, itsUpdateLabel);
 
-	itsUpdatePG = jnew SymbolUpdatePG(pg, 10, itsToolBar, itsUpdateContainer);
+	itsUpdatePG = jnew SymbolUpdatePG(pg, kSymbolUpdateScaleFactor,
+									  itsToolBar, itsUpdateContainer);
 	itsUpdatePG->Hide();
 }
 
@@ -1496,8 +1484,7 @@ ProjectDocument::Receive
 	if (sender == GetPrefsManager() &&
 		 message.Is(PrefsManager::kFileTypesChanged))
 	{
-		const auto* info =
-			dynamic_cast<const PrefsManager::FileTypesChanged*>(&message);
+		auto* info = dynamic_cast<const PrefsManager::FileTypesChanged*>(&message);
 		assert( info != nullptr );
 
 		if (info->AnyChanged())
@@ -1563,13 +1550,12 @@ ProjectDocument::ProcessNodeMessage
 	const Message& message
 	)
 {
-	const auto* info =
-		dynamic_cast<const JTree::NodeMessage*>(&message);
+	auto* info = dynamic_cast<const JTree::NodeMessage*>(&message);
 	assert( info != nullptr );
 
 	if (info->GetNode()->GetDepth() == ProjectTable::kFileDepth)
 	{
-		const auto* node = dynamic_cast<const ProjectNode*>(info->GetNode());
+		auto* node = dynamic_cast<const ProjectNode*>(info->GetNode());
 		assert( node != nullptr );
 
 		itsBuildMgr->ProjectChanged(node);
@@ -2055,7 +2041,6 @@ ProjectDocument::EditProjectPrefs()
 								 CompileDocument::WillDoubleSpace(),
 								 BuildManager::WillRebuildMakefileDaily(),
 								 ProjectTable::GetDropFileAction());
-	assert( dlog != nullptr );
 	if (dlog->DoDialog())
 	{
 		dlog->UpdateSettings();
@@ -2178,8 +2163,7 @@ ProjectDocument::ReceiveWithFeedback
 {
 	if (sender == itsCmdMenu && message->Is(CommandMenu::kGetTargetInfo))
 	{
-		auto* info =
-			dynamic_cast<CommandMenu::GetTargetInfo*>(message);
+		auto* info = dynamic_cast<CommandMenu::GetTargetInfo*>(message);
 		assert( info != nullptr );
 		itsFileTable->GetSelectedFileNames(info->GetFileList());
 	}
@@ -2234,7 +2218,8 @@ ProjectDocument::SymbolDatabaseNeedsUpdate()
 		{
 			itsDelaySymbolUpdateTask = nullptr;
 			UpdateSymbolDatabase();
-		});
+		},
+		"ProjectDocument::SymbolDatabaseNeedsUpdate");
 		itsDelaySymbolUpdateTask->Go();
 	}
 }
@@ -2251,6 +2236,14 @@ ProjectDocument::UpdateSymbolDatabase()
 	{
 		return;
 	}
+
+	while (CompleterUpdateRunning())
+	{
+		boost::this_fiber::sleep_for(
+			std::chrono::milliseconds(kUpdateCheckInterval));
+	}
+
+	SymbolUpdateStarted();
 	itsIsUpdatingFlag = true;
 
 	itsUpdateLabel->GetText()->SetText(JString::empty);
@@ -2258,21 +2251,18 @@ ProjectDocument::UpdateSymbolDatabase()
 	itsProjectMenu->Deactivate();
 	itsSourceMenu->Deactivate();
 
-	JXGetApplication()->StartFiber([this]()
+	if (itsAllFileDirector->GetFileListTable()->Update(
+			*itsUpdatePG, itsFileTree, *itsDirList, itsSymbolDirector,
+			*itsTreeDirectorList) >= kSymbolUpdateSaveFraction)
 	{
-		if (itsAllFileDirector->GetFileListTable()->Update(
-				*itsUpdatePG, itsFileTree, *itsDirList, itsSymbolDirector,
-				*itsTreeDirectorList) >= 0.05)
-		{
-			HandleFileMenu(kSaveCmd);
-		}
+		HandleFileMenu(kSaveCmd);
+	}
 
-		assert( !itsUpdatePG->ProcessRunning() );
-		itsIsUpdatingFlag = false;
+	assert( !itsUpdatePG->ProcessRunning() );
+	itsIsUpdatingFlag = false;
+	SymbolUpdateFinished();
 
-		itsFileTable->GetEditMenu()->Activate();
-		itsProjectMenu->Activate();
-		itsSourceMenu->Activate();
-	},
-	JXApplication::kEventLoopPriority);
+	itsFileTable->GetEditMenu()->Activate();
+	itsProjectMenu->Activate();
+	itsSourceMenu->Activate();
 }
