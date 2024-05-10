@@ -93,7 +93,7 @@ EditMiscPrefsDialog::BuildWindow()
 
 	auto* restartHint =
 		jnew JXStaticText(JGetString("restartHint::EditMiscPrefsDialog::JXLayout"), window,
-					JXWidget::kHElastic, JXWidget::kVElastic, 40,40, 290,20);
+					JXWidget::kFixedLeft, JXWidget::kFixedTop, 40,40, 290,20);
 	restartHint->SetToLabel(false);
 
 	itsCopyWhenSelectCB =
@@ -172,6 +172,9 @@ EditMiscPrefsDialog::BuildWindow()
 // end JXLayout
 
 	SetButtons(okButton, cancelButton);
+
+	restartHint->SetFontSize(JFontManager::GetDefaultFontSize()-2);
+	firstTimeHint->SetFontSize(JFontManager::GetDefaultFontSize()-2);
 
 	itsMacStyleCB->SetState(JXMenu::GetDisplayStyle() == JXMenu::kMacintoshStyle);
 	itsCopyWhenSelectCB->SetState(JTextEditor::WillCopyWhenSelect());

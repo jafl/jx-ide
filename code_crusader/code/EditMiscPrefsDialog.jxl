@@ -1,8 +1,10 @@
-jx_layout_editor 8
+jx_layout_editor 9
 370
 390
 "JXLayout"
 "Miscellaneous Preferences"
+0
+0
 ""
 ""
 0
@@ -25,8 +27,8 @@ jx_layout_editor 8
 0
 0
 "StaticText"
-2
-2
+0
+0
 40 40 60 330
 "restartHint"
 0
