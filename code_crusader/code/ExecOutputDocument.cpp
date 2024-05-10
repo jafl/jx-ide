@@ -25,9 +25,11 @@
 #include <jx-af/jcore/jSignal.h>
 #include <jx-af/jcore/jTime.h>
 #include <jx-af/jcore/jASCIIConstants.h>
+#include <boost/fiber/operations.hpp>
 #include <jx-af/jcore/jAssert.h>
 
-const JSize kMenuButtonWidth = 60;
+const JSize kMenuButtonWidth        = 60;
+const JSize kPauseForOutputInterval = 2;	// seconds
 
 /******************************************************************************
  Constructor
@@ -599,12 +601,18 @@ ExecOutputDocument::ProcessFinished
 	// everything to the pipe.  When handle_input() no longer broadcasts,
 	// we know we have read everything.
 
-	do
+	const time_t t = time(nullptr);
+	while (time(nullptr) - t < kPauseForOutputInterval)
 	{
-		itsReceivedDataFlag = false;
-		JThisProcess::CheckACEReactor();
+		do
+		{
+			itsReceivedDataFlag = false;
+			JThisProcess::CheckACEReactor();
+		}
+			while (itsReceivedDataFlag);
+
+		boost::this_fiber::yield();
 	}
-		while (itsReceivedDataFlag);
 
 	const pid_t pid = itsProcess->GetPID();
 	JProcess* p = itsProcess;
