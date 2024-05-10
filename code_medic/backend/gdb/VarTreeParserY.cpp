@@ -506,18 +506,18 @@ union yyalloc
 #endif /* !YYCOPY_NEEDED */
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  50
+#define YYFINAL  51
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   157
+#define YYLAST   174
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  26
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  11
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  60
+#define YYNRULES  64
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  98
+#define YYNSTATES  107
 
 /* YYMAXUTOK -- Last valid token kind.  */
 #define YYMAXUTOK   276
@@ -569,12 +569,12 @@ static const yytype_int8 yytranslate[] =
 static const yytype_int16 yyrline[] =
 {
        0,    87,    87,   101,   118,   129,   145,   150,   155,   164,
-     169,   174,   186,   192,   198,   215,   225,   244,   254,   273,
-     292,   300,   317,   319,   328,   330,   339,   347,   358,   363,
-     369,   375,   387,   399,   401,   403,   405,   407,   413,   420,
-     430,   432,   434,   443,   455,   465,   474,   483,   492,   501,
-     503,   514,   523,   532,   540,   542,   551,   553,   562,   567,
-     577
+     169,   174,   183,   188,   193,   205,   211,   217,   234,   244,
+     263,   273,   292,   311,   319,   336,   338,   347,   349,   358,
+     366,   377,   382,   388,   394,   406,   418,   420,   422,   424,
+     426,   432,   439,   449,   451,   453,   462,   474,   484,   493,
+     502,   511,   520,   522,   533,   542,   551,   556,   561,   563,
+     572,   574,   583,   588,   598
 };
 #endif
 
@@ -606,12 +606,12 @@ yysymbol_name (yysymbol_kind_t yysymbol)
 }
 #endif
 
-#define YYPACT_NINF (-15)
+#define YYPACT_NINF (-34)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
 
-#define YYTABLE_NINF (-57)
+#define YYTABLE_NINF (-61)
 
 #define yytable_value_is_error(Yyn) \
   0
@@ -620,16 +620,17 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int16 yypact[] =
 {
-      41,    22,   -15,    44,   115,   -10,    -8,   -15,   -15,   -15,
-      16,    38,    21,     5,    39,    61,    77,    82,   -15,   -15,
-     -15,   -15,   -15,   -15,   -15,    42,    85,    88,   -15,   -15,
-      -3,   -15,   -15,   -15,    -1,   -15,   -15,    54,   105,    78,
-     -14,   -15,    82,   -12,   -15,   -15,   104,   112,    64,   103,
-     -15,   -15,   -15,   110,   113,   -15,   -15,   -15,   -15,   121,
-     -15,   -15,   -15,   -15,    69,   -15,   119,   118,   -15,   -15,
-     -15,   100,   124,   -15,   123,   128,   120,   122,   -15,   -15,
-     -15,   -15,    64,   -15,   133,   -15,   -15,   -15,   129,   135,
-     -15,   131,   -15,   -15,   -15,   -15,   -15,   -15
+      83,    47,   -34,    72,    36,    -9,    -2,   -34,   -34,   -34,
+      16,    28,    21,    45,    46,    69,    78,   101,   -34,   -34,
+     -34,   -34,   -34,   -34,   -34,    41,    86,    89,   -34,   -34,
+      -8,   -34,   -34,   -34,    -1,   -34,   -34,    -5,   108,    79,
+     -13,   -34,   101,    35,   -34,   -34,   111,    65,   140,    65,
+     122,   -34,   -34,   -34,   105,   129,   -34,   -34,   -34,   -34,
+     137,   -34,   -34,   -34,   -34,    44,   -34,   138,   133,   -34,
+     -34,   -34,   119,   139,   -34,    97,    37,   117,   135,   115,
+     141,   143,   -34,   -34,   -34,   -34,    65,   150,   -34,   152,
+     -34,   -34,   -34,   146,   153,   161,   -34,   149,   -34,   -34,
+     -34,   -34,   -34,   -34,   -34,   -34,   -34
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -637,23 +638,24 @@ static const yytype_int16 yypact[] =
    means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       0,    33,    34,    35,    37,    36,     0,    41,    40,    49,
-       0,     0,     0,     0,     0,     0,     0,     0,    45,    51,
-      52,    46,    54,    58,    42,     0,    44,     0,    47,    48,
-      33,    22,    28,    20,     0,    24,    53,     0,     0,     0,
-       0,    12,    21,     0,    29,    32,    39,     0,     0,    38,
-       1,     2,     4,     0,     0,    55,    57,    50,    26,     0,
-      23,    25,    38,     8,     0,     6,     0,     0,    19,    18,
-       7,     0,     0,    43,     0,     0,     0,     0,    60,     3,
-       5,    27,     0,    15,     0,    14,    16,    13,     0,     0,
-      30,     0,    59,    11,     9,    10,    17,    31
+       0,    36,    37,    38,    40,    39,     0,    44,    43,    52,
+       0,    57,     0,     0,     0,     0,     0,     0,    48,    54,
+      55,    49,    58,    62,    45,     0,    47,     0,    50,    51,
+      36,    25,    31,    23,     0,    27,    56,    57,     0,     0,
+       0,    15,    24,     0,    32,    35,    42,     0,     0,     0,
+      41,     1,     2,     4,     0,     0,    59,    61,    53,    29,
+       0,    26,    28,    41,     8,     0,     6,     0,     0,    22,
+      21,     7,     0,     0,    46,     0,     0,     0,     0,     0,
+       0,     0,    64,     3,     5,    30,     0,     0,    18,     0,
+      17,    19,    16,     0,     0,    57,    33,     0,    14,    12,
+      13,    63,    11,     9,    10,    20,    34
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -15,   -15,     0,   107,    90,   -15,   109,    80,     1,   -15,
-     -15
+     -34,   -34,     0,   -33,   106,   -34,    99,   102,     1,   -34,
+     -34
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
@@ -668,42 +670,46 @@ static const yytype_int8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-      15,    16,    59,    60,    65,    28,    70,    29,    66,    67,
-      71,    72,    18,    58,    49,    61,    19,    53,    54,    30,
+      15,    16,    60,    61,    46,    66,    28,    18,    59,    67,
+      68,    19,    47,    29,    76,    62,    80,    54,    55,    30,
       31,     2,    32,    33,     3,     4,     5,     6,     7,     8,
-      34,     9,    35,    10,    36,    37,    12,    18,    48,    50,
-      38,    19,    68,    69,     1,    55,     2,    46,    75,     3,
-       4,     5,     6,     7,     8,    20,     9,    56,    10,    21,
-      11,    12,    47,    46,    83,    13,    86,    30,    31,     2,
-      32,    33,     3,     4,     5,     6,     7,     8,    34,     9,
-      35,    10,    51,    37,    12,     1,    82,     2,    38,    12,
-       3,     4,     5,     6,     7,     8,    63,     9,    52,    10,
-      64,    37,    12,     1,   -56,     2,    38,    57,     3,     4,
-       5,     6,     7,     8,    62,     9,    73,    89,    22,    37,
-      23,    74,    84,    31,    38,    32,    33,    24,    78,    25,
-      26,    79,    85,    34,    80,    35,    82,    81,    94,    12,
-      95,    88,    66,    67,    71,    72,    93,    91,    92,    58,
-      64,    90,    96,    36,    97,    76,    87,    77
+      34,     9,    35,    10,    36,    37,    12,    46,    49,    22,
+      38,    23,    69,    70,    56,    47,    51,    75,    24,    79,
+      25,    26,    48,    71,    50,    99,    57,    72,    73,    67,
+      68,    86,    18,    87,    12,    88,    19,    91,    30,    31,
+       2,    32,    33,     3,     4,     5,     6,     7,     8,    34,
+       9,    35,    10,    20,    37,    12,     1,    21,     2,    38,
+      52,     3,     4,     5,     6,     7,     8,    64,     9,    53,
+      10,    65,    11,    12,     1,   -60,     2,    13,    58,     3,
+       4,     5,     6,     7,     8,    98,     9,    63,    10,    65,
+      37,    12,     1,    74,     2,    38,    83,     3,     4,     5,
+       6,     7,     8,   102,     9,   100,    94,    65,    95,    72,
+      73,    89,    31,    38,    32,    33,    77,    82,    81,    78,
+      84,    90,    34,    85,    35,    86,    93,    87,    12,   103,
+     101,   104,    97,    67,    68,    72,    73,    47,    59,   105,
+      46,    36,   106,    92,    96
 };
 
 static const yytype_int8 yycheck[] =
 {
-       0,     0,     3,     4,    18,    15,    18,    15,    22,    23,
-      22,    23,    15,    16,     9,    16,    19,    17,    17,     3,
+       0,     0,     3,     4,     9,    18,    15,    15,    16,    22,
+      23,    19,    17,    15,    47,    16,    49,    17,    17,     3,
        4,     5,     6,     7,     8,     9,    10,    11,    12,    13,
-      14,    15,    16,    17,    18,    19,    20,    15,    17,     0,
-      24,    19,    42,    42,     3,     3,     5,     9,    48,     8,
-       9,    10,    11,    12,    13,    11,    15,    15,    17,    15,
-      19,    20,    24,     9,    64,    24,    66,     3,     4,     5,
-       6,     7,     8,     9,    10,    11,    12,    13,    14,    15,
-      16,    17,    21,    19,    20,     3,    17,     5,    24,    20,
-       8,     9,    10,    11,    12,    13,    18,    15,    21,    17,
-      22,    19,    20,     3,    19,     5,    24,    19,     8,     9,
-      10,    11,    12,    13,     9,    15,    12,    17,     3,    19,
-       5,     9,     3,     4,    24,     6,     7,    12,    25,    14,
-      15,    21,    13,    14,    21,    16,    17,    16,    18,    20,
-      18,    23,    22,    23,    22,    23,    18,    23,    25,    16,
-      22,    71,    23,    18,    23,    48,    66,    48
+      14,    15,    16,    17,    18,    19,    20,     9,    17,     3,
+      24,     5,    42,    42,     3,    17,     0,    47,    12,    49,
+      14,    15,    24,    18,     9,    18,    15,    22,    23,    22,
+      23,    17,    15,    19,    20,    65,    19,    67,     3,     4,
+       5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
+      15,    16,    17,    11,    19,    20,     3,    15,     5,    24,
+      21,     8,     9,    10,    11,    12,    13,    18,    15,    21,
+      17,    22,    19,    20,     3,    19,     5,    24,    19,     8,
+       9,    10,    11,    12,    13,    18,    15,     9,    17,    22,
+      19,    20,     3,    12,     5,    24,    21,     8,     9,    10,
+      11,    12,    13,    18,    15,    18,    17,    22,    19,    22,
+      23,     3,     4,    24,     6,     7,    47,    25,    49,     9,
+      21,    13,    14,    16,    16,    17,    23,    19,    20,    18,
+      25,    18,    23,    22,    23,    22,    23,    17,    16,    23,
+       9,    18,    23,    67,    72
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
@@ -714,36 +720,37 @@ static const yytype_int8 yystos[] =
       17,    19,    20,    24,    27,    28,    34,    36,    15,    19,
       11,    15,     3,     5,    12,    14,    15,    35,    15,    15,
        3,     4,     6,     7,    14,    16,    18,    19,    24,    28,
-      29,    30,    31,    32,    33,    34,     9,    24,    17,     9,
-       0,    21,    21,    28,    34,     3,    15,    19,    16,     3,
-       4,    16,     9,    18,    22,    18,    22,    23,    28,    34,
-      18,    22,    23,    12,     9,    28,    29,    32,    25,    21,
-      21,    16,    17,    28,     3,    13,    28,    30,    23,    17,
-      33,    23,    25,    18,    18,    18,    23,    23
+      29,    30,    31,    32,    33,    34,     9,    17,    24,    17,
+       9,     0,    21,    21,    28,    34,     3,    15,    19,    16,
+       3,     4,    16,     9,    18,    22,    18,    22,    23,    28,
+      34,    18,    22,    23,    12,    28,    29,    32,     9,    28,
+      29,    32,    25,    21,    21,    16,    17,    19,    28,     3,
+      13,    28,    30,    23,    17,    19,    33,    23,    18,    18,
+      18,    25,    18,    18,    18,    23,    23
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr1[] =
 {
        0,    26,    27,    27,    27,    27,    28,    28,    28,    28,
-      28,    28,    29,    29,    29,    29,    29,    29,    30,    30,
-      30,    30,    31,    31,    31,    31,    31,    31,    31,    32,
-      32,    32,    33,    34,    34,    34,    34,    34,    34,    34,
+      28,    28,    28,    28,    28,    29,    29,    29,    29,    29,
+      29,    30,    30,    30,    30,    31,    31,    31,    31,    31,
+      31,    31,    32,    32,    32,    33,    34,    34,    34,    34,
       34,    34,    34,    34,    34,    34,    34,    34,    34,    34,
-      34,    34,    34,    34,    35,    35,    35,    35,    35,    36,
-      36
+      34,    34,    34,    34,    34,    34,    34,    34,    35,    35,
+      35,    35,    35,    36,    36
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr2[] =
 {
        0,     2,     2,     3,     2,     3,     3,     3,     3,     4,
-       4,     4,     1,     3,     3,     3,     3,     4,     2,     2,
-       1,     1,     1,     2,     1,     2,     2,     3,     1,     1,
-       3,     4,     1,     1,     1,     1,     1,     1,     2,     2,
-       1,     1,     2,     3,     2,     2,     2,     2,     2,     1,
-       3,     2,     2,     2,     1,     2,     1,     2,     1,     4,
-       3
+       4,     4,     4,     4,     4,     1,     3,     3,     3,     3,
+       4,     2,     2,     1,     1,     1,     2,     1,     2,     2,
+       3,     1,     1,     3,     4,     1,     1,     1,     1,     1,
+       1,     2,     2,     1,     1,     2,     3,     2,     2,     2,
+       2,     2,     1,     3,     2,     2,     2,     1,     1,     2,
+       1,     2,     1,     4,     3
 };
 
 
@@ -1025,7 +1032,7 @@ YYSTYPE yylval YY_INITIAL_VALUE (= yyval_default);
 if (yynerrs) ;	// keep C++20 happy
 }
 
-#line 1029 "backend/gdb/VarTreeParserY.cpp"
+#line 1036 "backend/gdb/VarTreeParserY.cpp"
 
   goto yysetstate;
 
@@ -1239,7 +1246,7 @@ yyreduce:
 
 		YYACCEPT;
 	}
-#line 1243 "backend/gdb/VarTreeParserY.cpp"
+#line 1250 "backend/gdb/VarTreeParserY.cpp"
     break;
 
   case 3: /* top_group: reference_value group P_EOF  */
@@ -1257,7 +1264,7 @@ yyreduce:
 
 		YYACCEPT;
 	}
-#line 1261 "backend/gdb/VarTreeParserY.cpp"
+#line 1268 "backend/gdb/VarTreeParserY.cpp"
     break;
 
   case 4: /* top_group: value P_EOF  */
@@ -1271,7 +1278,7 @@ yyreduce:
 
 		YYACCEPT;
 	}
-#line 1275 "backend/gdb/VarTreeParserY.cpp"
+#line 1282 "backend/gdb/VarTreeParserY.cpp"
     break;
 
   case 5: /* top_group: reference_value value P_EOF  */
@@ -1287,7 +1294,7 @@ yyreduce:
 
 		YYACCEPT;
 	}
-#line 1291 "backend/gdb/VarTreeParserY.cpp"
+#line 1298 "backend/gdb/VarTreeParserY.cpp"
     break;
 
   case 6: /* group: P_GROUP_OPEN node_list P_GROUP_CLOSE  */
@@ -1295,7 +1302,7 @@ yyreduce:
         {
 		(yyval.pGroup) = jnew GDBVarGroupInfo(nullptr, (yyvsp[-1].pList));
 	}
-#line 1299 "backend/gdb/VarTreeParserY.cpp"
+#line 1306 "backend/gdb/VarTreeParserY.cpp"
     break;
 
   case 7: /* group: P_GROUP_OPEN value_list P_GROUP_CLOSE  */
@@ -1303,7 +1310,7 @@ yyreduce:
         {
 		(yyval.pGroup) = jnew GDBVarGroupInfo(nullptr, (yyvsp[-1].pList));
 	}
-#line 1307 "backend/gdb/VarTreeParserY.cpp"
+#line 1314 "backend/gdb/VarTreeParserY.cpp"
     break;
 
   case 8: /* group: P_GROUP_OPEN group P_GROUP_CLOSE  */
@@ -1315,7 +1322,7 @@ yyreduce:
 
 		jdelete (yyvsp[-1].pGroup);
 	}
-#line 1319 "backend/gdb/VarTreeParserY.cpp"
+#line 1326 "backend/gdb/VarTreeParserY.cpp"
     break;
 
   case 9: /* group: P_SUMMARY P_GROUP_OPEN node_list P_GROUP_CLOSE  */
@@ -1323,7 +1330,7 @@ yyreduce:
         {
 		(yyval.pGroup) = jnew GDBVarGroupInfo((yyvsp[-3].pString), (yyvsp[-1].pList));
 	}
-#line 1327 "backend/gdb/VarTreeParserY.cpp"
+#line 1334 "backend/gdb/VarTreeParserY.cpp"
     break;
 
   case 10: /* group: P_SUMMARY P_GROUP_OPEN value_list P_GROUP_CLOSE  */
@@ -1331,7 +1338,7 @@ yyreduce:
         {
 		(yyval.pGroup) = jnew GDBVarGroupInfo((yyvsp[-3].pString), (yyvsp[-1].pList));
 	}
-#line 1335 "backend/gdb/VarTreeParserY.cpp"
+#line 1342 "backend/gdb/VarTreeParserY.cpp"
     break;
 
   case 11: /* group: P_SUMMARY P_GROUP_OPEN group P_GROUP_CLOSE  */
@@ -1343,29 +1350,57 @@ yyreduce:
 
 		jdelete (yyvsp[-1].pGroup);
 	}
-#line 1347 "backend/gdb/VarTreeParserY.cpp"
+#line 1354 "backend/gdb/VarTreeParserY.cpp"
     break;
 
-  case 12: /* node_list: node  */
-#line 187 "backend/gdb/VarTreeParserY.y"
+  case 12: /* group: P_PAREN_EXPR P_GROUP_OPEN node_list P_GROUP_CLOSE  */
+#line 184 "backend/gdb/VarTreeParserY.y"
+        {
+		(yyval.pGroup) = jnew GDBVarGroupInfo((yyvsp[-3].pString), (yyvsp[-1].pList));
+	}
+#line 1362 "backend/gdb/VarTreeParserY.cpp"
+    break;
+
+  case 13: /* group: P_PAREN_EXPR P_GROUP_OPEN value_list P_GROUP_CLOSE  */
+#line 189 "backend/gdb/VarTreeParserY.y"
+        {
+		(yyval.pGroup) = jnew GDBVarGroupInfo((yyvsp[-3].pString), (yyvsp[-1].pList));
+	}
+#line 1370 "backend/gdb/VarTreeParserY.cpp"
+    break;
+
+  case 14: /* group: P_PAREN_EXPR P_GROUP_OPEN group P_GROUP_CLOSE  */
+#line 194 "backend/gdb/VarTreeParserY.y"
+        {
+		auto* list = jnew JPtrArray< ::VarNode>(JPtrArrayT::kForgetAll);
+		AppendAsArrayElement((yyvsp[-1].pGroup)->GetName(), *((yyvsp[-1].pGroup)->list), list);
+		(yyval.pGroup) = jnew GDBVarGroupInfo((yyvsp[-3].pString), list);
+
+		jdelete (yyvsp[-1].pGroup);
+	}
+#line 1382 "backend/gdb/VarTreeParserY.cpp"
+    break;
+
+  case 15: /* node_list: node  */
+#line 206 "backend/gdb/VarTreeParserY.y"
         {
 		auto* list = (yyval.pList) = jnew JPtrArray< ::VarNode>(JPtrArrayT::kForgetAll);
 		list->Append((yyvsp[0].pNode));
 	}
-#line 1356 "backend/gdb/VarTreeParserY.cpp"
+#line 1391 "backend/gdb/VarTreeParserY.cpp"
     break;
 
-  case 13: /* node_list: node_list ',' node  */
-#line 193 "backend/gdb/VarTreeParserY.y"
+  case 16: /* node_list: node_list ',' node  */
+#line 212 "backend/gdb/VarTreeParserY.y"
         {
 		(yyval.pList) = (yyvsp[-2].pList);
 		(yyval.pList)->Append((yyvsp[0].pNode));
 	}
-#line 1365 "backend/gdb/VarTreeParserY.cpp"
+#line 1400 "backend/gdb/VarTreeParserY.cpp"
     break;
 
-  case 14: /* node_list: node_list ',' P_EMPTY_SUMMARY  */
-#line 199 "backend/gdb/VarTreeParserY.y"
+  case 17: /* node_list: node_list ',' P_EMPTY_SUMMARY  */
+#line 218 "backend/gdb/VarTreeParserY.y"
         {
 		(yyval.pList) = (yyvsp[-2].pList);
 
@@ -1381,11 +1416,11 @@ yyreduce:
 
 		jdelete (yyvsp[0].pString);
 	}
-#line 1385 "backend/gdb/VarTreeParserY.cpp"
+#line 1420 "backend/gdb/VarTreeParserY.cpp"
     break;
 
-  case 15: /* node_list: group ',' group  */
-#line 216 "backend/gdb/VarTreeParserY.y"
+  case 18: /* node_list: group ',' group  */
+#line 235 "backend/gdb/VarTreeParserY.y"
         {
 		auto* list = (yyval.pList) = jnew JPtrArray< ::VarNode>(JPtrArrayT::kForgetAll);
 		AppendAsArrayElement((yyvsp[-2].pGroup)->GetName(), *(yyvsp[-2].pGroup)->list, list);
@@ -1394,11 +1429,11 @@ yyreduce:
 		jdelete (yyvsp[-2].pGroup);
 		jdelete (yyvsp[0].pGroup);
 	}
-#line 1398 "backend/gdb/VarTreeParserY.cpp"
+#line 1433 "backend/gdb/VarTreeParserY.cpp"
     break;
 
-  case 16: /* node_list: node_list ',' group  */
-#line 226 "backend/gdb/VarTreeParserY.y"
+  case 19: /* node_list: node_list ',' group  */
+#line 245 "backend/gdb/VarTreeParserY.y"
         {
 		if ((yyvsp[-2].pList)->GetFirstItem()->GetName().StartsWith("["))
 		{
@@ -1416,21 +1451,21 @@ yyreduce:
 
 		jdelete (yyvsp[0].pGroup);
 	}
-#line 1420 "backend/gdb/VarTreeParserY.cpp"
+#line 1455 "backend/gdb/VarTreeParserY.cpp"
     break;
 
-  case 17: /* node_list: node_list '.' '.' '.'  */
-#line 245 "backend/gdb/VarTreeParserY.y"
+  case 20: /* node_list: node_list '.' '.' '.'  */
+#line 264 "backend/gdb/VarTreeParserY.y"
         {
 		(yyval.pList) = (yyvsp[-3].pList);
 		::VarNode* child = GetLink()->CreateVarNode(nullptr, "...", JString::empty, JString::empty);
 		(yyval.pList)->Append(child);
 	}
-#line 1430 "backend/gdb/VarTreeParserY.cpp"
+#line 1465 "backend/gdb/VarTreeParserY.cpp"
     break;
 
-  case 18: /* node: name_eq value  */
-#line 255 "backend/gdb/VarTreeParserY.y"
+  case 21: /* node: name_eq value  */
+#line 274 "backend/gdb/VarTreeParserY.y"
         {
 		if ((yyvsp[-1].pString)->EndsWith("="))
 		{
@@ -1448,11 +1483,11 @@ yyreduce:
 		jdelete (yyvsp[-1].pString);
 		jdelete (yyvsp[0].pString);
 	}
-#line 1452 "backend/gdb/VarTreeParserY.cpp"
+#line 1487 "backend/gdb/VarTreeParserY.cpp"
     break;
 
-  case 19: /* node: name_eq group  */
-#line 274 "backend/gdb/VarTreeParserY.y"
+  case 22: /* node: name_eq group  */
+#line 293 "backend/gdb/VarTreeParserY.y"
         {
 		if ((yyvsp[-1].pString)->EndsWith("="))
 		{
@@ -1470,22 +1505,22 @@ yyreduce:
 		jdelete (yyvsp[-1].pString);
 		jdelete (yyvsp[0].pGroup);
 	}
-#line 1474 "backend/gdb/VarTreeParserY.cpp"
+#line 1509 "backend/gdb/VarTreeParserY.cpp"
     break;
 
-  case 20: /* node: P_NO_DATA_FIELDS  */
-#line 293 "backend/gdb/VarTreeParserY.y"
+  case 23: /* node: P_NO_DATA_FIELDS  */
+#line 312 "backend/gdb/VarTreeParserY.y"
         {
 		itsCurrentNode = (yyval.pNode) = GetLink()->CreateVarNode(nullptr, *(yyvsp[0].pString), JString::empty, JString::empty);
 		itsIsPointerFlag = false;
 
 		jdelete (yyvsp[0].pString);
 	}
-#line 1485 "backend/gdb/VarTreeParserY.cpp"
+#line 1520 "backend/gdb/VarTreeParserY.cpp"
     break;
 
-  case 21: /* node: name_eq  */
-#line 301 "backend/gdb/VarTreeParserY.y"
+  case 24: /* node: name_eq  */
+#line 320 "backend/gdb/VarTreeParserY.y"
         {
 		if ((yyvsp[0].pString)->EndsWith("="))
 		{
@@ -1498,46 +1533,46 @@ yyreduce:
 
 		jdelete (yyvsp[0].pString);
 	}
-#line 1502 "backend/gdb/VarTreeParserY.cpp"
-    break;
-
-  case 23: /* name_eq: P_STATIC P_NAME_EQ  */
-#line 320 "backend/gdb/VarTreeParserY.y"
-        {
-		(yyval.pString) = (yyvsp[-1].pString);
-		(yyval.pString)->Append(" ");
-		(yyval.pString)->Append(*(yyvsp[0].pString));
-
-		jdelete (yyvsp[0].pString);
-	}
-#line 1514 "backend/gdb/VarTreeParserY.cpp"
-    break;
-
-  case 25: /* name_eq: P_STATIC P_BRACKET_EQ  */
-#line 331 "backend/gdb/VarTreeParserY.y"
-        {
-		(yyval.pString) = (yyvsp[-1].pString);
-		(yyval.pString)->Append(" ");
-		(yyval.pString)->Append(*(yyvsp[0].pString));
-
-		jdelete (yyvsp[0].pString);
-	}
-#line 1526 "backend/gdb/VarTreeParserY.cpp"
-    break;
-
-  case 26: /* name_eq: P_NAME P_BRACKET_EQ  */
-#line 340 "backend/gdb/VarTreeParserY.y"
-        {
-		(yyval.pString) = (yyvsp[-1].pString);
-		(yyval.pString)->Append(*(yyvsp[0].pString));
-
-		jdelete (yyvsp[0].pString);
-	}
 #line 1537 "backend/gdb/VarTreeParserY.cpp"
     break;
 
-  case 27: /* name_eq: P_STATIC P_NAME P_BRACKET_EQ  */
-#line 348 "backend/gdb/VarTreeParserY.y"
+  case 26: /* name_eq: P_STATIC P_NAME_EQ  */
+#line 339 "backend/gdb/VarTreeParserY.y"
+        {
+		(yyval.pString) = (yyvsp[-1].pString);
+		(yyval.pString)->Append(" ");
+		(yyval.pString)->Append(*(yyvsp[0].pString));
+
+		jdelete (yyvsp[0].pString);
+	}
+#line 1549 "backend/gdb/VarTreeParserY.cpp"
+    break;
+
+  case 28: /* name_eq: P_STATIC P_BRACKET_EQ  */
+#line 350 "backend/gdb/VarTreeParserY.y"
+        {
+		(yyval.pString) = (yyvsp[-1].pString);
+		(yyval.pString)->Append(" ");
+		(yyval.pString)->Append(*(yyvsp[0].pString));
+
+		jdelete (yyvsp[0].pString);
+	}
+#line 1561 "backend/gdb/VarTreeParserY.cpp"
+    break;
+
+  case 29: /* name_eq: P_NAME P_BRACKET_EQ  */
+#line 359 "backend/gdb/VarTreeParserY.y"
+        {
+		(yyval.pString) = (yyvsp[-1].pString);
+		(yyval.pString)->Append(*(yyvsp[0].pString));
+
+		jdelete (yyvsp[0].pString);
+	}
+#line 1572 "backend/gdb/VarTreeParserY.cpp"
+    break;
+
+  case 30: /* name_eq: P_STATIC P_NAME P_BRACKET_EQ  */
+#line 367 "backend/gdb/VarTreeParserY.y"
         {
 		(yyval.pString) = (yyvsp[-2].pString);
 		(yyval.pString)->Append(" ");
@@ -1547,39 +1582,39 @@ yyreduce:
 		jdelete (yyvsp[-1].pString);
 		jdelete (yyvsp[0].pString);
 	}
-#line 1551 "backend/gdb/VarTreeParserY.cpp"
+#line 1586 "backend/gdb/VarTreeParserY.cpp"
     break;
 
-  case 29: /* value_list: value_node  */
-#line 364 "backend/gdb/VarTreeParserY.y"
+  case 32: /* value_list: value_node  */
+#line 383 "backend/gdb/VarTreeParserY.y"
         {
 		auto* list = (yyval.pList) = jnew JPtrArray< ::VarNode>(JPtrArrayT::kForgetAll);
 		AppendAsArrayElement((yyvsp[0].pNode), (yyval.pList));
 	}
-#line 1560 "backend/gdb/VarTreeParserY.cpp"
+#line 1595 "backend/gdb/VarTreeParserY.cpp"
     break;
 
-  case 30: /* value_list: value_list ',' value_node  */
-#line 370 "backend/gdb/VarTreeParserY.y"
+  case 33: /* value_list: value_list ',' value_node  */
+#line 389 "backend/gdb/VarTreeParserY.y"
         {
 		(yyval.pList) = (yyvsp[-2].pList);
 		AppendAsArrayElement((yyvsp[0].pNode), (yyval.pList));
 	}
-#line 1569 "backend/gdb/VarTreeParserY.cpp"
+#line 1604 "backend/gdb/VarTreeParserY.cpp"
     break;
 
-  case 31: /* value_list: value_list '.' '.' '.'  */
-#line 376 "backend/gdb/VarTreeParserY.y"
+  case 34: /* value_list: value_list '.' '.' '.'  */
+#line 395 "backend/gdb/VarTreeParserY.y"
         {
 		(yyval.pList) = (yyvsp[-3].pList);
 		::VarNode* child = GetLink()->CreateVarNode(nullptr, "...", JString::empty, JString::empty);
 		(yyval.pList)->Append(child);
 	}
-#line 1579 "backend/gdb/VarTreeParserY.cpp"
+#line 1614 "backend/gdb/VarTreeParserY.cpp"
     break;
 
-  case 32: /* value_node: value  */
-#line 388 "backend/gdb/VarTreeParserY.y"
+  case 35: /* value_node: value  */
+#line 407 "backend/gdb/VarTreeParserY.y"
         {
 		itsCurrentNode = (yyval.pNode) = GetLink()->CreateVarNode(nullptr, JString::empty, JString::empty, *(yyvsp[0].pString));
 		itsCurrentNode->MakePointer(itsIsPointerFlag);
@@ -1587,30 +1622,30 @@ yyreduce:
 
 		jdelete (yyvsp[0].pString);
 	}
-#line 1591 "backend/gdb/VarTreeParserY.cpp"
+#line 1626 "backend/gdb/VarTreeParserY.cpp"
     break;
 
-  case 37: /* value: P_HEX  */
-#line 408 "backend/gdb/VarTreeParserY.y"
+  case 40: /* value: P_HEX  */
+#line 427 "backend/gdb/VarTreeParserY.y"
         {
 		itsIsPointerFlag = isOpenablePointer(*(yyvsp[0].pString));
 		(yyval.pString) = (yyvsp[0].pString);
 	}
-#line 1600 "backend/gdb/VarTreeParserY.cpp"
+#line 1635 "backend/gdb/VarTreeParserY.cpp"
     break;
 
-  case 38: /* value: '@' P_HEX  */
-#line 414 "backend/gdb/VarTreeParserY.y"
+  case 41: /* value: '@' P_HEX  */
+#line 433 "backend/gdb/VarTreeParserY.y"
         {
 		itsIsPointerFlag = isOpenablePointer(*(yyvsp[0].pString));
 		(yyval.pString) = (yyvsp[0].pString);
 		(yyval.pString)->Prepend("@");
 	}
-#line 1610 "backend/gdb/VarTreeParserY.cpp"
+#line 1645 "backend/gdb/VarTreeParserY.cpp"
     break;
 
-  case 39: /* value: P_PAREN_EXPR P_HEX  */
-#line 421 "backend/gdb/VarTreeParserY.y"
+  case 42: /* value: P_PAREN_EXPR P_HEX  */
+#line 440 "backend/gdb/VarTreeParserY.y"
         {
 		itsIsPointerFlag = isOpenablePointer(*(yyvsp[0].pString));
 		(yyval.pString) = (yyvsp[-1].pString);
@@ -1619,11 +1654,11 @@ yyreduce:
 
 		jdelete (yyvsp[0].pString);
 	}
-#line 1623 "backend/gdb/VarTreeParserY.cpp"
+#line 1658 "backend/gdb/VarTreeParserY.cpp"
     break;
 
-  case 42: /* value: P_HEX P_STRING  */
-#line 435 "backend/gdb/VarTreeParserY.y"
+  case 45: /* value: P_HEX P_STRING  */
+#line 454 "backend/gdb/VarTreeParserY.y"
         {
 		(yyval.pString) = (yyvsp[-1].pString);
 		(yyval.pString)->Append(" ");
@@ -1631,11 +1666,11 @@ yyreduce:
 
 		jdelete (yyvsp[0].pString);
 	}
-#line 1635 "backend/gdb/VarTreeParserY.cpp"
+#line 1670 "backend/gdb/VarTreeParserY.cpp"
     break;
 
-  case 43: /* value: P_PAREN_EXPR P_HEX P_STRING  */
-#line 444 "backend/gdb/VarTreeParserY.y"
+  case 46: /* value: P_PAREN_EXPR P_HEX P_STRING  */
+#line 463 "backend/gdb/VarTreeParserY.y"
         {
 		(yyval.pString) = (yyvsp[-2].pString);
 		(yyval.pString)->Append(" ");
@@ -1646,11 +1681,11 @@ yyreduce:
 		jdelete (yyvsp[-1].pString);
 		jdelete (yyvsp[0].pString);
 	}
-#line 1650 "backend/gdb/VarTreeParserY.cpp"
+#line 1685 "backend/gdb/VarTreeParserY.cpp"
     break;
 
-  case 44: /* value: P_HEX P_BRACKET  */
-#line 456 "backend/gdb/VarTreeParserY.y"
+  case 47: /* value: P_HEX P_BRACKET  */
+#line 475 "backend/gdb/VarTreeParserY.y"
         {
 		itsIsPointerFlag = isOpenablePointer(*(yyvsp[-1].pString));
 		(yyval.pString) = (yyvsp[-1].pString);
@@ -1659,11 +1694,11 @@ yyreduce:
 
 		jdelete (yyvsp[0].pString);
 	}
-#line 1663 "backend/gdb/VarTreeParserY.cpp"
+#line 1698 "backend/gdb/VarTreeParserY.cpp"
     break;
 
-  case 45: /* value: P_NAME P_BRACKET  */
-#line 466 "backend/gdb/VarTreeParserY.y"
+  case 48: /* value: P_NAME P_BRACKET  */
+#line 485 "backend/gdb/VarTreeParserY.y"
         {
 		(yyval.pString) = (yyvsp[-1].pString);
 		(yyval.pString)->Append(" ");
@@ -1671,11 +1706,11 @@ yyreduce:
 
 		jdelete (yyvsp[0].pString);
 	}
-#line 1675 "backend/gdb/VarTreeParserY.cpp"
+#line 1710 "backend/gdb/VarTreeParserY.cpp"
     break;
 
-  case 46: /* value: P_INTEGER P_BRACKET  */
-#line 475 "backend/gdb/VarTreeParserY.y"
+  case 49: /* value: P_INTEGER P_BRACKET  */
+#line 494 "backend/gdb/VarTreeParserY.y"
         {
 		(yyval.pString) = (yyvsp[-1].pString);
 		(yyval.pString)->Append(" ");
@@ -1683,11 +1718,11 @@ yyreduce:
 
 		jdelete (yyvsp[0].pString);
 	}
-#line 1687 "backend/gdb/VarTreeParserY.cpp"
+#line 1722 "backend/gdb/VarTreeParserY.cpp"
     break;
 
-  case 47: /* value: P_FLOAT P_BRACKET  */
-#line 484 "backend/gdb/VarTreeParserY.y"
+  case 50: /* value: P_FLOAT P_BRACKET  */
+#line 503 "backend/gdb/VarTreeParserY.y"
         {
 		(yyval.pString) = (yyvsp[-1].pString);
 		(yyval.pString)->Append(" ");
@@ -1695,11 +1730,11 @@ yyreduce:
 
 		jdelete (yyvsp[0].pString);
 	}
-#line 1699 "backend/gdb/VarTreeParserY.cpp"
+#line 1734 "backend/gdb/VarTreeParserY.cpp"
     break;
 
-  case 48: /* value: P_CHAR P_BRACKET  */
-#line 493 "backend/gdb/VarTreeParserY.y"
+  case 51: /* value: P_CHAR P_BRACKET  */
+#line 512 "backend/gdb/VarTreeParserY.y"
         {
 		(yyval.pString) = (yyvsp[-1].pString);
 		(yyval.pString)->Append(" ");
@@ -1707,11 +1742,11 @@ yyreduce:
 
 		jdelete (yyvsp[0].pString);
 	}
-#line 1711 "backend/gdb/VarTreeParserY.cpp"
+#line 1746 "backend/gdb/VarTreeParserY.cpp"
     break;
 
-  case 50: /* value: P_HEX name P_PAREN_EXPR  */
-#line 504 "backend/gdb/VarTreeParserY.y"
+  case 53: /* value: P_HEX name P_PAREN_EXPR  */
+#line 523 "backend/gdb/VarTreeParserY.y"
         {
 		(yyval.pString) = (yyvsp[-2].pString);
 		(yyval.pString)->Append(" ");
@@ -1721,11 +1756,11 @@ yyreduce:
 		jdelete (yyvsp[-1].pString);
 		jdelete (yyvsp[0].pString);
 	}
-#line 1725 "backend/gdb/VarTreeParserY.cpp"
+#line 1760 "backend/gdb/VarTreeParserY.cpp"
     break;
 
-  case 51: /* value: P_NAME P_PAREN_EXPR  */
-#line 515 "backend/gdb/VarTreeParserY.y"
+  case 54: /* value: P_NAME P_PAREN_EXPR  */
+#line 534 "backend/gdb/VarTreeParserY.y"
         {
 		(yyval.pString) = (yyvsp[-1].pString);
 		(yyval.pString)->Append(" ");
@@ -1733,30 +1768,10 @@ yyreduce:
 
 		jdelete (yyvsp[0].pString);
 	}
-#line 1737 "backend/gdb/VarTreeParserY.cpp"
+#line 1772 "backend/gdb/VarTreeParserY.cpp"
     break;
 
-  case 52: /* value: P_INTEGER P_CHAR  */
-#line 524 "backend/gdb/VarTreeParserY.y"
-        {
-		(yyval.pString) = (yyvsp[-1].pString);
-		(yyval.pString)->Append(" ");
-		(yyval.pString)->Append(*(yyvsp[0].pString));
-
-		jdelete (yyvsp[0].pString);
-	}
-#line 1749 "backend/gdb/VarTreeParserY.cpp"
-    break;
-
-  case 53: /* value: P_GROUP_OPEN P_GROUP_CLOSE  */
-#line 533 "backend/gdb/VarTreeParserY.y"
-        {
-		(yyval.pString) = jnew JString("{}");
-	}
-#line 1757 "backend/gdb/VarTreeParserY.cpp"
-    break;
-
-  case 55: /* name: P_STATIC P_NAME  */
+  case 55: /* value: P_INTEGER P_CHAR  */
 #line 543 "backend/gdb/VarTreeParserY.y"
         {
 		(yyval.pString) = (yyvsp[-1].pString);
@@ -1765,11 +1780,19 @@ yyreduce:
 
 		jdelete (yyvsp[0].pString);
 	}
-#line 1769 "backend/gdb/VarTreeParserY.cpp"
+#line 1784 "backend/gdb/VarTreeParserY.cpp"
     break;
 
-  case 57: /* name: P_STATIC P_BRACKET  */
-#line 554 "backend/gdb/VarTreeParserY.y"
+  case 56: /* value: P_GROUP_OPEN P_GROUP_CLOSE  */
+#line 552 "backend/gdb/VarTreeParserY.y"
+        {
+		(yyval.pString) = jnew JString("{}");
+	}
+#line 1792 "backend/gdb/VarTreeParserY.cpp"
+    break;
+
+  case 59: /* name: P_STATIC P_NAME  */
+#line 564 "backend/gdb/VarTreeParserY.y"
         {
 		(yyval.pString) = (yyvsp[-1].pString);
 		(yyval.pString)->Append(" ");
@@ -1777,11 +1800,23 @@ yyreduce:
 
 		jdelete (yyvsp[0].pString);
 	}
-#line 1781 "backend/gdb/VarTreeParserY.cpp"
+#line 1804 "backend/gdb/VarTreeParserY.cpp"
     break;
 
-  case 59: /* reference_value: P_PAREN_EXPR '@' P_HEX ':'  */
-#line 568 "backend/gdb/VarTreeParserY.y"
+  case 61: /* name: P_STATIC P_BRACKET  */
+#line 575 "backend/gdb/VarTreeParserY.y"
+        {
+		(yyval.pString) = (yyvsp[-1].pString);
+		(yyval.pString)->Append(" ");
+		(yyval.pString)->Append(*(yyvsp[0].pString));
+
+		jdelete (yyvsp[0].pString);
+	}
+#line 1816 "backend/gdb/VarTreeParserY.cpp"
+    break;
+
+  case 63: /* reference_value: P_PAREN_EXPR '@' P_HEX ':'  */
+#line 589 "backend/gdb/VarTreeParserY.y"
         {
 		(yyval.pString) = (yyvsp[-3].pString);
 		(yyval.pString)->Append(" ");
@@ -1790,20 +1825,20 @@ yyreduce:
 
 		jdelete (yyvsp[-1].pString);
 	}
-#line 1794 "backend/gdb/VarTreeParserY.cpp"
+#line 1829 "backend/gdb/VarTreeParserY.cpp"
     break;
 
-  case 60: /* reference_value: '@' P_HEX ':'  */
-#line 578 "backend/gdb/VarTreeParserY.y"
+  case 64: /* reference_value: '@' P_HEX ':'  */
+#line 599 "backend/gdb/VarTreeParserY.y"
         {
 		(yyval.pString) = (yyvsp[-1].pString);
 		(yyval.pString)->Prepend("@");
 	}
-#line 1803 "backend/gdb/VarTreeParserY.cpp"
+#line 1838 "backend/gdb/VarTreeParserY.cpp"
     break;
 
 
-#line 1807 "backend/gdb/VarTreeParserY.cpp"
+#line 1842 "backend/gdb/VarTreeParserY.cpp"
 
       default: break;
     }
@@ -1996,5 +2031,5 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 584 "backend/gdb/VarTreeParserY.y"
+#line 605 "backend/gdb/VarTreeParserY.y"
 

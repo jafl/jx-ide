@@ -13,16 +13,18 @@
 <p>Please submit all suggestions and bugs via <a href="https://github.com/jafl/jx_application_framework/issues">github</a>.</p>
 <hr>
 
-<h2>7.1.6</h2>
+<h2>7.2</h2>
 
 <ul>
 	<li>When the program stops, opens both Threads and Stack Trace windows.</li>
 
 	<li>When using lldb, it now maintains the thread you are stepping through.</li>
 
-	<li>When using lldb, it now displays the true type of every pointer.  When a variable is transferred from the Local Variables window to the main Variables window, the object is cast to this type.</li>
+	<li>When using gdb or lldb, it now displays the true type of every pointer.  When a variable is transferred from the Local Variables window to the main Variables window, the object is cast to this type.</li>
 
 	<li>Removed "Display as C string" menu item because lldb backend now displays string contents.</li>
+
+	<li>Fixes for gdb data parsing.</li>
 
 	<li>File name at bottom of source windows can be selected and copied.</li>
 

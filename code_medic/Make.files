@@ -86,8 +86,8 @@
 .cpp ./code/VarTreeWidget
 .cpp ./code/VarNode
 .cpp ./code/InitVarNodeTask
-.cpp ./code/VarTypeCmd
 .cpp ./code/VarCmd
+.cpp ./code/VarTypeCmd
 .cpp ./code/Array1DDir
 .cpp ./code/Array2DDir
 .cpp ./code/Array2DTable

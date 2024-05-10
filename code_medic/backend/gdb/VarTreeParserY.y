@@ -179,6 +179,25 @@ group :
 
 		jdelete $3;
 	}
+
+	| P_PAREN_EXPR P_GROUP_OPEN node_list P_GROUP_CLOSE
+	{
+		$$ = jnew GDBVarGroupInfo($1, $3);
+	}
+
+	| P_PAREN_EXPR P_GROUP_OPEN value_list P_GROUP_CLOSE
+	{
+		$$ = jnew GDBVarGroupInfo($1, $3);
+	}
+
+	| P_PAREN_EXPR P_GROUP_OPEN group P_GROUP_CLOSE
+	{
+		auto* list = jnew JPtrArray< ::VarNode>(JPtrArrayT::kForgetAll);
+		AppendAsArrayElement($3->GetName(), *($3->list), list);
+		$$ = jnew GDBVarGroupInfo($1, list);
+
+		jdelete $3;
+	}
 	;
 
 node_list :
@@ -533,6 +552,8 @@ value :
 	{
 		$$ = jnew JString("{}");
 	}
+
+	| P_PAREN_EXPR
 	;
 
 name :

@@ -458,13 +458,13 @@ T
 F
 "./code/InitVarNodeTask.cpp"
 T
-2 "VarTypeCmd.cpp"
-F
-"./code/VarTypeCmd.cpp"
-T
 2 "VarCmd.cpp"
 F
 "./code/VarCmd.cpp"
+T
+2 "VarTypeCmd.cpp"
+F
+"./code/VarTypeCmd.cpp"
 F
 T
 1 "arrays"
