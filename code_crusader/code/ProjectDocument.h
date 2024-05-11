@@ -192,12 +192,13 @@ private:
 
 // begin JXLayout
 
-	JXTextButton* itsConfigButton;
-	JXToolBar*    itsToolBar;
-	ProjectTable* itsFileTable;
-	JXWidgetSet*  itsUpdateContainer;
-	JXStaticText* itsUpdateLabel;
-	JXStaticText* itsUpdateCounter;
+	JXTextButton*        itsConfigButton;
+	JXToolBar*           itsToolBar;
+	ProjectTable*        itsFileTable;
+	JXWidgetSet*         itsUpdateContainer;
+	JXStaticText*        itsUpdateLabel;
+	JXStaticText*        itsUpdateCounter;
+	JXProgressIndicator* itsUpdateCleanUpIndicator;
 
 // end JXLayout
 

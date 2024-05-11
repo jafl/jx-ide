@@ -52,7 +52,6 @@ FileListTable::FileListTable
 	itsFileUsage(nullptr),
 	itsReparseAllFlag(false),
 	itsChangedDuringParseCount(0),
-	itsNewOrDeletedDuringParseCount(0),
 	itsLastUniqueID(JFAID::kMinID)
 {
 	itsFileInfo = jnew JArray<FileInfo>(1024);
@@ -77,8 +76,6 @@ FileListTable::~FileListTable()
 
  ******************************************************************************/
 
-#include <jx-af/jcore/JStopWatch.h>
-
 JFloat
 FileListTable::Update
 	(
@@ -89,8 +86,7 @@ FileListTable::Update
 	const JPtrArray<TreeDirector>&	treeDirList
 	)
 {
-	itsChangedDuringParseCount      = 0;
-	itsNewOrDeletedDuringParseCount = 0;
+	itsChangedDuringParseCount = 0;
 
 	// get everybody ready
 
@@ -113,9 +109,13 @@ FileListTable::Update
 	}
 
 	boost::fibers::buffered_channel<JBroadcaster::Message*> pgChannel(kJBufferedChannelCapacity);
-	JThreadPG threadPG(&pgChannel, nullptr, 10);
+	JThreadPG threadPG(&pgChannel);
 
-	std::thread t([this, reparseAll, &threadPG, fileTree, &dirList, symbolDir, &treeDirList]()
+	JPtrArray<JString> deadFileNameList(JPtrArrayT::kDeleteAll);
+	JArray<JFAID_t> deadFileIDList;
+
+	std::thread t([this, &threadPG, &deadFileNameList, &deadFileIDList,
+					fileTree, &dirList, symbolDir, &treeDirList]()
 	{
 		JPtrArray<Tree> treeList(JPtrArrayT::kForgetAll);
 		for (auto* dir : treeDirList)
@@ -141,64 +141,60 @@ FileListTable::Update
 		// collect files that no longer exist
 
 		const JPtrArray<JString>& fileNameList = GetFullNameList();
-
-		const JSize fileCount = itsFileInfo->GetItemCount();
-		JPtrArray<JString> deadFileNameList(JPtrArrayT::kDeleteAll, fileCount+1);	// +1 to avoid passing zero
-		JArray<JFAID_t> deadFileIDList(fileCount+1);
-
-		for (JIndex i=1; i<=fileCount; i++)
+		if (!fileNameList.IsEmpty())
 		{
-			if (!fileUsage.GetItem(i))
+			const JSize fileCount = itsFileInfo->GetItemCount();
+			deadFileNameList.SetBlockSize(fileCount);
+			deadFileIDList.SetBlockSize(fileCount);
+
+			for (JIndex i=1; i<=fileCount; i++)
 			{
-				deadFileNameList.Append(*fileNameList.GetItem(i));
-				deadFileIDList.AppendItem(itsFileInfo->GetItem(i).id);
+				if (!fileUsage.GetItem(i))
+				{
+					deadFileNameList.Append(*fileNameList.GetItem(i));
+					deadFileIDList.AppendItem(itsFileInfo->GetItem(i).id);
+				}
 			}
 		}
 
 		itsFileUsage = nullptr;
 
-		// remove non-existent files
+		// remove non-existent symbols & classes
 
-		RemoveFilesNeedsRebuild(deadFileNameList);
 		symbolDir->ListUpdateThreadFinished(deadFileIDList);
 		for (auto* dir : treeDirList)
 		{
 			dir->TreeUpdateThreadFinished(deadFileIDList);
 		}
-
-		if (!reparseAll && !deadFileIDList.IsEmpty())
-		{
-			itsChangedDuringParseCount      += deadFileIDList.GetItemCount();
-			itsNewOrDeletedDuringParseCount += deadFileIDList.GetItemCount();
-		}
 	});
 
 	threadPG.WaitForProcessFinished(&pg);
 	t.join();
-JStopWatch w;
-	if (itsNewOrDeletedDuringParseCount > 0)
+
+	// remove non-existent files
+
+	if (!deadFileNameList.IsEmpty())
 	{
-w.StartTimer();
-		RebuildTable();
-w.StopTimer();
-std::cout << "RebuildTable: " << w.PrintTimeInterval() << std::endl;
+		assert( !reparseAll );
+
+		pg.FixedLengthProcessBeginning(deadFileNameList.GetItemCount(),
+			JGetString("CleaningUp::FileListTable"), false, true);
+
+		RemoveFiles(deadFileNameList, &pg);
+
+		pg.ProcessFinished();
+		itsChangedDuringParseCount += deadFileNameList.GetItemCount();
 	}
-w.StartTimer();
+
 	symbolDir->ListUpdateFinished();
-w.StopTimer();
-std::cout << "ListUpdateFinished: " << w.PrintTimeInterval() << std::endl;
-w.StartTimer();
 	for (auto* dir : treeDirList)
 	{
 		dir->TreeUpdateFinished();
 	}
-w.StopTimer();
-std::cout << "TreeUpdateFinished: " << w.PrintTimeInterval() << std::endl;
-w.StartTimer();
+
 	itsReparseAllFlag = false;
 	Broadcast(UpdateDone());
-w.StopTimer();
-std::cout << "Broadcast(UpdateDone: " << w.PrintTimeInterval() << std::endl;
+
 	return reparseAll ? 1.0 : JFloat(itsChangedDuringParseCount) / itsFileInfo->GetItemCount();
 }
 
@@ -392,14 +388,13 @@ FileListTable::AddFile
 	}
 
 	JIndex index;
-	const bool isNew = JXFileListTable::AddFileNeedsRebuild(fullName, &index);
+	const bool isNew = JXFileListTable::AddFile(fullName, &index);
 	FileInfo info    = itsFileInfo->GetItem(index);
 	*id              = info.id;
 
 	itsFileUsage->SetItem(index, true);
 	if (isNew)
 	{
-		itsNewOrDeletedDuringParseCount++;
 		return true;
 	}
 	else if (modTime != info.modTime)
@@ -783,7 +778,7 @@ FileListTable::WriteSetup
 
 		for (JIndex i=1; i<=fileCount; i++)
 		{
-			*symOutput << ' ' << *(fileNameList.GetItem(i));
+			*symOutput << ' ' << *fileNameList.GetItem(i);
 
 			const FileInfo info = itsFileInfo->GetItem(i);
 			*symOutput << ' ' << info.id;

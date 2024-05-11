@@ -1350,6 +1350,10 @@ ProjectDocument::BuildWindow
 					JXWidget::kFixedLeft, JXWidget::kFixedTop, 90,0, 90,20);
 	itsUpdateCounter->SetToLabel(false);
 
+	itsUpdateCleanUpIndicator =
+		jnew JXProgressIndicator(itsUpdateContainer,
+					JXWidget::kHElastic, JXWidget::kFixedTop, 90,5, 420,10);
+
 // end JXLayout
 
 	AdjustWindowTitle();
@@ -1442,7 +1446,7 @@ ProjectDocument::BuildWindow
 	// update pg
 
 	auto* pg = jnew JXProgressDisplay;
-	pg->SetItems(nullptr, itsUpdateCounter, nullptr, itsUpdateLabel);
+	pg->SetItems(nullptr, itsUpdateCounter, itsUpdateCleanUpIndicator, itsUpdateLabel);
 
 	itsUpdatePG = jnew SymbolUpdatePG(pg, kSymbolUpdateScaleFactor,
 									  itsToolBar, itsUpdateContainer);
