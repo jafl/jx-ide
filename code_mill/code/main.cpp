@@ -38,7 +38,8 @@ main
 	JXApplication::StartFiber([argc, argv]()
 	{
 		GetMDIServer()->HandleCmdLineOptions(argc, argv);
-	});
+	},
+	"main->mdi");
 
 	if (displayAbout)
 	{

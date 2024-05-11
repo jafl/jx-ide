@@ -131,6 +131,7 @@ lldb::GetThreadsCmd::HandleSuccess
 		{
 			GetWidget()->SelectThread(threadID);
 		},
+		"lldb::GetThreadsCmd::SelectThread",
 		true);
 		task->Start();
 	}

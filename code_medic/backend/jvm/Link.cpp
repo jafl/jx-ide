@@ -109,7 +109,9 @@ jvm::Link::Link()
 	itsThreadList = jnew JPtrArray<ThreadNode>(JPtrArrayT::kForgetAll);
 	itsThreadList->SetCompareFunction(ThreadNode::CompareID);
 
-	itsCullThreadGroupsTask = jnew JXFunctionTask(10000, std::bind(&Link::CheckNextThreadGroup, this));
+	itsCullThreadGroupsTask = jnew JXFunctionTask(10000,
+		std::bind(&Link::CheckNextThreadGroup, this),
+		"jvm::Link::CullThreadGroups");
 	itsCullThreadGroupsTask->Start();
 	itsCullThreadGroupIndex = 1;
 
@@ -2023,6 +2025,7 @@ jvm::Link::WaitForJVMDeath()
 		CleanUpAfterProgramFinished(nullptr);
 		itsJVMDeathTask = nullptr;
 	},
+	"jvm::Link::WaitForJVMDeath",
 	true);
 	itsJVMDeathTask->Start();
 }
