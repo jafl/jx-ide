@@ -1650,6 +1650,7 @@ DocumentManager::RestoreState
 		input >> projCount;
 	}
 
+	JSize trueProjCount = 0;
 	if (projCount > 0)
 	{
 		bool saveReopen = ProjectDocument::WillReopenTextFiles();
@@ -1669,7 +1670,12 @@ DocumentManager::RestoreState
 			input >> fileName;
 			if (onDisk && JFileReadable(fileName))
 			{
-				OpenSomething(fileName);
+				trueProjCount++;
+				JXApplication::StartFiber([this, fileName]()
+				{
+					OpenSomething(fileName);
+				},
+				"DocumentManager::RestoreState");
 			}
 		}
 
@@ -1686,7 +1692,7 @@ DocumentManager::RestoreState
 		}
 	}
 
-	return HasProjectDocuments() || HasTextDocuments();
+	return trueProjCount > 0 || HasTextDocuments();
 }
 
 /******************************************************************************
