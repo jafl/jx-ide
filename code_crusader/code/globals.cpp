@@ -145,6 +145,9 @@ DeleteGlobals()
 {
 	if (thePrefsManager != nullptr)
 	{
+		ShutdownCompleters();	// first, in case they are running
+		ShutdownStylers();
+
 		theDocManager->JPrefObject::WritePrefs();
 
 		JXDockManager* dockMgr;
@@ -187,12 +190,6 @@ DeleteGlobals()
 
 	jdelete thePSTextPrinter;
 	thePSTextPrinter = nullptr;
-
-	if (thePrefsManager != nullptr)
-	{
-		ShutdownCompleters();
-		ShutdownStylers();
-	}
 
 	// windows closed by JXGetPersistentWindowOwner()
 
