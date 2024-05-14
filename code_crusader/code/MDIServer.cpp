@@ -354,7 +354,7 @@ MDIServer::DisplayManPage
 	}
 	if (arg1 == nullptr || arg1->IsEmpty())
 	{
-		(GetViewManPageDialog())->Activate();
+		GetViewManPageDialog()->Activate();
 		return;
 	}
 

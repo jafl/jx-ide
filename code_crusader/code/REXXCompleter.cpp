@@ -86,6 +86,7 @@ REXXCompleter::REXXCompleter()
 	:
 	StringCompleter(kREXXLang, kKeywordCount, kKeywordList, JString::kCompareCase)
 {
+	UpdateWordList();
 }
 
 /******************************************************************************

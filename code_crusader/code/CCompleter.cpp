@@ -85,6 +85,7 @@ CCompleter::CCompleter()
 	:
 	StringCompleter(kCLang, kKeywordCount, kKeywordList, JString::kCompareCase)
 {
+	UpdateWordList();
 }
 
 /******************************************************************************

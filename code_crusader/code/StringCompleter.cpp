@@ -25,6 +25,8 @@ const JSize kUpdateCheckInterval = 100;		// ms
 /******************************************************************************
  Constructor
 
+	*** Derived class must call UpdateWordList().
+
  ******************************************************************************/
 
 StringCompleter::StringCompleter
@@ -37,7 +39,7 @@ StringCompleter::StringCompleter
 	:
 	itsLanguage(lang),
 	itsPredefKeywordCount(keywordCount),
-	itsPrefefKeywordList(keywordList),
+	itsPredefKeywordList(keywordList),
 	itsCaseSensitiveFlag(caseSensitive),
 	itsNeedsUpdateTask(nullptr),
 	itsUpdatingFlag(false)
@@ -56,7 +58,6 @@ StringCompleter::StringCompleter
 	}
 
 	GetStyler(lang, &itsStyler);
-	UpdateWordList();
 	if (itsStyler != nullptr)
 	{
 		ListenTo(itsStyler);
@@ -100,7 +101,7 @@ StringCompleter::Reset()
 
 	for (JUnsignedOffset i=0; i<itsPredefKeywordCount; i++)
 	{
-		Add(JString(itsPrefefKeywordList[i], JString::kNoCopy));
+		Add(itsPredefKeywordList[i]);
 	}
 }
 

@@ -73,6 +73,7 @@ CShellCompleter::CShellCompleter()
 	:
 	StringCompleter(kCShellLang, kKeywordCount, kKeywordList, JString::kCompareCase)
 {
+	UpdateWordList();
 }
 
 /******************************************************************************

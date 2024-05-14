@@ -80,6 +80,7 @@ DCompleter::DCompleter()
 	:
 	StringCompleter(kDLang, kKeywordCount, kKeywordList, JString::kCompareCase)
 {
+	UpdateWordList();
 }
 
 /******************************************************************************

@@ -196,6 +196,7 @@ SQLCompleter::SQLCompleter()
 	:
 	StringCompleter(kSQLLang, kKeywordCount, kKeywordList, JString::kIgnoreCase)
 {
+	UpdateWordList();
 }
 
 /******************************************************************************

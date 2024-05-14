@@ -84,6 +84,7 @@ LuaCompleter::LuaCompleter()
 	:
 	StringCompleter(kLuaLang, kKeywordCount, kKeywordList, JString::kCompareCase)
 {
+	UpdateWordList();
 }
 
 /******************************************************************************

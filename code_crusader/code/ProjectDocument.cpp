@@ -624,9 +624,14 @@ ProjectDocument::ProjectDocument
 		Activate();
 	}
 
-	UpdateSymbolDatabase();
-	ListenTo(itsFileTree);
+	auto* task = jnew JXUrgentFunctionTask(this, [this]()
+	{
+		UpdateSymbolDatabase();
+	},
+	"ProjectDocument::ctor::UpdateSymbolDatabase");
+	task->Go();
 
+	ListenTo(itsFileTree);
 	docMgr->ProjDocCreated(this);
 }
 

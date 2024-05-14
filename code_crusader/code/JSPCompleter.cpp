@@ -108,7 +108,7 @@ JSPCompleter::JSPCompleter()
 	:
 	StringCompleter(kJSPLang, kKeywordCount, kKeywordList, JString::kCompareCase)
 {
-	UpdateWordListExtra();	// include HTML and JavaScript
+	UpdateWordList();
 	ListenTo(HTMLStyler::Instance());
 	ListenTo(JavaScriptStyler::Instance());
 }
@@ -180,7 +180,7 @@ JSPCompleter::UpdateWordListExtra()
 	JSize count = HTMLCompleter::GetDefaultWordList(&htmlWordList);
 	for (JUnsignedOffset i=0; i<count; i++)
 	{
-		Add(JString(htmlWordList[i], JString::kNoCopy));
+		Add(htmlWordList[i]);
 	}
 
 	CopyWordsFromStyler(HTMLStyler::Instance());
@@ -191,7 +191,7 @@ JSPCompleter::UpdateWordListExtra()
 	count = JavaScriptCompleter::GetDefaultWordList(&jsWordList);
 	for (JUnsignedOffset i=0; i<count; i++)
 	{
-		Add(JString(jsWordList[i], JString::kNoCopy));
+		Add(jsWordList[i]);
 	}
 
 	CopyWordsFromStyler(JavaScriptStyler::Instance());

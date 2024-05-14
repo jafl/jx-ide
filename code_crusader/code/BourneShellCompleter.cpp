@@ -70,6 +70,7 @@ BourneShellCompleter::BourneShellCompleter()
 	:
 	StringCompleter(kBourneShellLang, kKeywordCount, kKeywordList, JString::kCompareCase)
 {
+	UpdateWordList();
 }
 
 /******************************************************************************

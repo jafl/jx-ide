@@ -50,7 +50,7 @@ private:
 
 	const Language		itsLanguage;
 	const JSize			itsPredefKeywordCount;
-	const JUtf8Byte**	itsPrefefKeywordList;
+	const JUtf8Byte**	itsPredefKeywordList;
 	const JString::Case	itsCaseSensitiveFlag;
 	JPtrArray<JString>*	itsStringList;	// contents not owned
 	JPtrArray<JString>*	itsOwnedList;

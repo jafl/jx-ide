@@ -79,6 +79,7 @@ CSharpCompleter::CSharpCompleter()
 	:
 	StringCompleter(kCSharpLang, kKeywordCount, kKeywordList, JString::kCompareCase)
 {
+	UpdateWordList();
 }
 
 /******************************************************************************

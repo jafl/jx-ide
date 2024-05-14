@@ -83,6 +83,7 @@ GoCompleter::GoCompleter()
 	:
 	StringCompleter(kGoLang, kKeywordCount, kKeywordList, JString::kCompareCase)
 {
+	UpdateWordList();
 }
 
 /******************************************************************************

@@ -92,6 +92,7 @@ PerlCompleter::PerlCompleter()
 	:
 	StringCompleter(kPerlLang, kKeywordCount, kKeywordList, JString::kCompareCase)
 {
+	UpdateWordList();
 }
 
 /******************************************************************************

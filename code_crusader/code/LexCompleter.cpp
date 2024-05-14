@@ -62,7 +62,7 @@ LexCompleter::LexCompleter()
 	:
 	StringCompleter(kLexLang, kKeywordCount, kKeywordList, JString::kCompareCase)
 {
-	UpdateWordListExtra();	// include C
+	UpdateWordList();
 	ListenTo(CStyler::Instance());
 }
 
@@ -131,7 +131,7 @@ LexCompleter::UpdateWordListExtra()
 	const JSize count = CCompleter::GetDefaultWordList(&cWordList);
 	for (JUnsignedOffset i=0; i<count; i++)
 	{
-		Add(JString(cWordList[i], JString::kNoCopy));
+		Add(cWordList[i]);
 	}
 
 	CopySymbolsForLanguage(kCLang);

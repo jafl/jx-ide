@@ -113,8 +113,9 @@ FileListTable::Update
 
 	JPtrArray<JString> deadFileNameList(JPtrArrayT::kDeleteAll);
 	JArray<JFAID_t> deadFileIDList;
+	boost::fibers::buffered_channel<bool> flagChannel(4);
 
-	std::thread t([this, &threadPG, &deadFileNameList, &deadFileIDList,
+	std::thread t([this, &threadPG, &deadFileNameList, &deadFileIDList, &flagChannel,
 					fileTree, &dirList, symbolDir, &treeDirList]()
 	{
 		JPtrArray<Tree> treeList(JPtrArrayT::kForgetAll);
@@ -161,14 +162,36 @@ FileListTable::Update
 
 		// remove non-existent symbols & classes
 
-		symbolDir->ListUpdateThreadFinished(deadFileIDList);
+		if (!deadFileNameList.IsEmpty())
+		{
+			threadPG.FixedLengthProcessBeginning(
+				deadFileNameList.GetItemCount(),
+				JGetString("CleaningUp::FileListTable"), false, false);
+
+			flagChannel.push(true);
+		}
+		else
+		{
+			flagChannel.push(false);
+		}
+
+		symbolDir->ListUpdateThreadFinished(deadFileIDList, threadPG);
 		for (auto* dir : treeDirList)
 		{
 			dir->TreeUpdateThreadFinished(deadFileIDList);
 		}
+
+		if (threadPG.ProcessRunning())
+		{
+			threadPG.ProcessFinished();
+		}
 	});
 
 	threadPG.WaitForProcessFinished(&pg);
+	if (flagChannel.value_pop())
+	{
+		threadPG.WaitForProcessFinished(&pg);
+	}
 	t.join();
 
 	// remove non-existent files

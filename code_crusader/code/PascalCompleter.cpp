@@ -85,6 +85,7 @@ PascalCompleter::PascalCompleter()
 	:
 	StringCompleter(kPascalLang, kKeywordCount, kKeywordList, JString::kCompareCase)
 {
+	UpdateWordList();
 }
 
 /******************************************************************************

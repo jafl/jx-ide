@@ -113,6 +113,7 @@ JavaCompleter::JavaCompleter()
 	:
 	StringCompleter(kJavaLang, kKeywordCount, kKeywordList, JString::kCompareCase)
 {
+	UpdateWordList();
 }
 
 /******************************************************************************

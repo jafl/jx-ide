@@ -6,7 +6,7 @@ if (!($dir = $ARGV[0]))
 	exit 1;
 	}
 
-open(F, "> cbPHPFunctionList.h");
+open(F, "> phpFunctionList.h");
 
 chdir($dir) or die "Can't cd to $dir\n";
 @list = glob("function.*.html");

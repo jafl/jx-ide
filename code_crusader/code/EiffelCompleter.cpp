@@ -77,6 +77,7 @@ EiffelCompleter::EiffelCompleter()
 	:
 	StringCompleter(kEiffelLang, kKeywordCount, kKeywordList, JString::kIgnoreCase)
 {
+	UpdateWordList();
 }
 
 /******************************************************************************

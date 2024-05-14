@@ -95,6 +95,7 @@ RubyCompleter::RubyCompleter()
 	:
 	StringCompleter(kRubyLang, kKeywordCount, kKeywordList, JString::kCompareCase)
 {
+	UpdateWordList();
 }
 
 /******************************************************************************

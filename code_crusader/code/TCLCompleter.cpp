@@ -141,6 +141,7 @@ TCLCompleter::TCLCompleter()
 	:
 	StringCompleter(kTCLLang, kKeywordCount, kKeywordList, JString::kCompareCase)
 {
+	UpdateWordList();
 }
 
 /******************************************************************************

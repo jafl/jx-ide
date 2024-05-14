@@ -18,7 +18,7 @@ PHPCompleter* PHPCompleter::itsSelf = nullptr;
 
 static const JUtf8Byte* kKeywordList[] =
 {
-	#include "pHPFunctionList.h"
+	#include "phpFunctionList.h"
 
 	"__FILE__", "__LINE__", "__FUNCTION__", "__CLASS__", "__METHOD__",
 	"abstract", "and", "array", "as",
@@ -86,7 +86,7 @@ PHPCompleter::PHPCompleter()
 	:
 	StringCompleter(kPHPLang, kKeywordCount, kKeywordList, JString::kCompareCase)
 {
-	UpdateWordListExtra();	// include HTML and JavaScript
+	UpdateWordList();
 	ListenTo(HTMLStyler::Instance());
 	ListenTo(JavaScriptStyler::Instance());
 }
@@ -158,7 +158,7 @@ PHPCompleter::UpdateWordListExtra()
 	JSize count = HTMLCompleter::GetDefaultWordList(&htmlWordList);
 	for (JUnsignedOffset i=0; i<count; i++)
 	{
-		Add(JString(htmlWordList[i], JString::kNoCopy));
+		Add(htmlWordList[i]);
 	}
 
 	CopyWordsFromStyler(HTMLStyler::Instance());
@@ -169,7 +169,7 @@ PHPCompleter::UpdateWordListExtra()
 	count = JavaScriptCompleter::GetDefaultWordList(&jsWordList);
 	for (JUnsignedOffset i=0; i<count; i++)
 	{
-		Add(JString(jsWordList[i], JString::kNoCopy));
+		Add(jsWordList[i]);
 	}
 
 	CopyWordsFromStyler(JavaScriptStyler::Instance());

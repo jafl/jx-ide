@@ -64,6 +64,7 @@ PythonCompleter::PythonCompleter()
 	:
 	StringCompleter(kPythonLang, kKeywordCount, kKeywordList, JString::kCompareCase)
 {
+	UpdateWordList();
 }
 
 /******************************************************************************

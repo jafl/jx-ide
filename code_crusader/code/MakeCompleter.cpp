@@ -74,6 +74,7 @@ MakeCompleter::MakeCompleter()
 	:
 	StringCompleter(kMakeLang, kKeywordCount, kKeywordList, JString::kCompareCase)
 {
+	UpdateWordList();
 }
 
 /******************************************************************************

@@ -103,6 +103,7 @@ HTMLCompleter::HTMLCompleter()
 	:
 	StringCompleter(kHTMLLang, kKeywordCount, kKeywordList, JString::kCompareCase)
 {
+	UpdateWordList();
 }
 
 /******************************************************************************

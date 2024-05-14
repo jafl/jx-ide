@@ -99,6 +99,7 @@ JavaScriptCompleter::JavaScriptCompleter()
 	:
 	StringCompleter(kJavaScriptLang, kKeywordCount, kKeywordList, JString::kCompareCase)
 {
+	UpdateWordList();
 }
 
 /******************************************************************************
