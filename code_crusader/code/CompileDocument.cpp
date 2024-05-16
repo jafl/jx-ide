@@ -18,6 +18,7 @@
 #include <jx-af/jcore/JRegex.h>
 #include <jx-af/jcore/JStringIterator.h>
 #include <jx-af/jcore/JStack.h>
+#include <jx-af/jcore/jTextUtil.h>
 #include <jx-af/jcore/jFileUtil.h>
 #include <jx-af/jcore/jAssert.h>
 
@@ -243,29 +244,32 @@ CompileDocument::AppendText
 	}
 	iter.Invalidate();
 
-	const bool isJavacError = javacOutputRegex.Match(text);
+	JString plainText = text;
+	JStripUNIXTerminalFormatting(&plainText);
 
-	const JStringMatch gccMatch         = gccErrorRegex.Match(text, JRegex::kIgnoreSubmatches),
+	const bool isJavacError = javacOutputRegex.Match(plainText);
+
+	const JStringMatch gccMatch         = gccErrorRegex.Match(plainText, JRegex::kIgnoreSubmatches),
 					   gccPrevLineMatch = gccErrorRegex.Match(itsPrevLine, JRegex::kIgnoreSubmatches);
 
 	const bool isGCCError = !isJavacError && !gccMatch.IsEmpty();
 
-	const JStringMatch flexMatch = flexErrorRegex.Match(text, JRegex::kIgnoreSubmatches);
+	const JStringMatch flexMatch = flexErrorRegex.Match(plainText, JRegex::kIgnoreSubmatches);
 	const bool isFlexError       = !flexMatch.IsEmpty();
 
-	const JStringMatch bisonMatch = bisonErrorRegex.Match(text, JRegex::kIgnoreSubmatches);
+	const JStringMatch bisonMatch = bisonErrorRegex.Match(plainText, JRegex::kIgnoreSubmatches);
 	const bool isBisonError       = !bisonMatch.IsEmpty();
 
-	const JStringMatch makeMatch = makeErrorRegex.Match(text, JRegex::kIgnoreSubmatches);
-	const bool isMakeError       = !makeMatch.IsEmpty() && !text.EndsWith(makeIgnoreErrorStr);
+	const JStringMatch makeMatch = makeErrorRegex.Match(plainText, JRegex::kIgnoreSubmatches);
+	const bool isMakeError       = !makeMatch.IsEmpty() && !plainText.EndsWith(makeIgnoreErrorStr);
 
-	const JStringMatch absoftMatch = absoftErrorRegex.Match(text, JRegex::kIncludeSubmatches);
+	const JStringMatch absoftMatch = absoftErrorRegex.Match(plainText, JRegex::kIncludeSubmatches);
 	const bool isAbsoftError       = !absoftMatch.IsEmpty();
 
-	const JStringMatch maven2Match = maven2ErrorRegex.Match(text, JRegex::kIncludeSubmatches);
+	const JStringMatch maven2Match = maven2ErrorRegex.Match(plainText, JRegex::kIncludeSubmatches);
 	const bool isMaven2Error       = !maven2Match.IsEmpty();
 
-	const JStringMatch maven3Match = maven3ErrorRegex.Match(text, JRegex::kIncludeSubmatches);
+	const JStringMatch maven3Match = maven3ErrorRegex.Match(plainText, JRegex::kIncludeSubmatches);
 	const bool isMaven3Error       = !maven3Match.IsEmpty();
 
 	TextEditor* te = GetTextEditor();
@@ -281,7 +285,8 @@ CompileDocument::AppendText
 			iter.Invalidate();
 
 			te->SetCaretLocation(te->GetText()->GetText().GetCharacterCount() - (theDoubleSpaceFlag ? 1 : 0));
-			te->Paste(text);
+			JPasteUNIXTerminalOutput(text, te->GetText()->GetBeyondEnd(), te->GetText());
+			te->SetCaretLocation(te->GetText()->GetBeyondEnd().charIndex);
 			return;
 		}
 	}
@@ -294,7 +299,7 @@ CompileDocument::AppendText
 		te->Paste(JString::newline);
 	}
 
-	itsPrevLine = text;
+	itsPrevLine = plainText;
 
 	// display file name in bold and activate Errors menu
 
