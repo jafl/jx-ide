@@ -6,6 +6,7 @@ Copyright © 2021 by John Lindal.
 This scanner reads a C/C++ file and creates Class instances.
 */
 
+#include "Tree.h"
 #include "CClass.h"
 #include <jx-af/jcore/JStringIterator.h>
 #include <jx-af/jcore/JStack.h>
@@ -69,6 +70,7 @@ IDCAR        (_|\p{L}|{UESCCODE})
 IDCDR        (_|\p{L}|\d|{UESCCODE})
 ID           ({IDCAR}{IDCDR}*)
 NSID         ({ID}(::{ID})*)
+ATTR         ("[["[^]]+"]]")
 
 %%
 
@@ -101,7 +103,7 @@ friend{WS}class{WS}{NSID} {
 	ResetState();	/* ignore friend declarations */
 	}
 
-class{WS}{NSID}{MS}; {
+class{WS}({ATTR}{WS})*{NSID}{MS}; {
 	ResetState();	/* ignore forward declarations */
 	}
 
@@ -206,18 +208,27 @@ using{WS}{NSID}{MS}; {
 
 <CLASS_NAME_STATE>{
 
-{ID} {
+{ID}({WS}final)? {
 	JString fullName(text(), size());
+	if (fullName.EndsWith("final"))
+	{
+		JStringIterator iter(&fullName, JStringIterator::kStartAtEnd);
+		iter.RemovePrev(5);
+		fullName.TrimWhitespace();
+	}
 	for (auto* s : *itsNamespaceStack)
 	{
 		fullName.Prepend("::");
 		fullName.Prepend(*s);
 	}
 
-	CClass* c = jnew CClass(fullName, Class::kClassType, fileID, tree);
-
-	c->SetTemplate(itsTemplateFlag);
-	classList->Append(c);
+	Class* c;
+	if (!tree->FindClass(fullName, &c))
+	{
+		c = jnew CClass(fullName, Class::kClassType, fileID, tree);
+		c->SetTemplate(itsTemplateFlag);
+		classList->Append(c);
+	}
 
 	ResetState();
 	itsCurrentClass = c;	// must be after ResetState();
@@ -251,7 +262,8 @@ using{WS}{NSID}{MS}; {
 	start(INITIAL);
 	}
 
-{WS}	/* ignore */
+{WS} |
+{ATTR}	/* ignore */
 
 "/*" {
 	push_state(C_COMMENT_STATE);
@@ -356,7 +368,11 @@ private {
 		}
 	}
 
-	itsCurrentClass->AddParent(itsInheritType, parentName, ns);
+	if (parentName != itsCurrentClass->GetName() &&
+		parentName != itsCurrentClass->GetFullName())
+	{
+		itsCurrentClass->AddParent(itsInheritType, parentName, ns);
+	}
 	}
 
 "{" {

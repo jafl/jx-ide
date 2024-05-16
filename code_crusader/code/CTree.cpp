@@ -70,7 +70,7 @@ CTree::CTree
 		itsCPP->ReadSetup(projInput, projVers);
 	}
 
-	if (projVers < 96 && !IsEmpty())
+	if (projVers < 99 && !IsEmpty())
 	{
 		NextUpdateMustReparseAll();
 	}
