@@ -20,7 +20,7 @@
 #include <boost/fiber/operations.hpp>
 #include <jx-af/jcore/jAssert.h>
 
-const JSize kUpdateCheckInterval = 100;		// ms
+const JSize kCheckInterval = 100;	// ms
 
 /******************************************************************************
  Constructor
@@ -82,11 +82,13 @@ StringCompleter::StringCompleter
 
 StringCompleter::~StringCompleter()
 {
+	jdelete itsNeedsUpdateTask;
+	itsNeedsUpdateTask = nullptr;	// ensure waiting only for thread
+
 	WaitForUpdateThreadFinished();
 
 	jdelete itsStringList;
 	jdelete itsOwnedList;
-	jdelete itsNeedsUpdateTask;
 }
 
 /******************************************************************************
@@ -146,8 +148,8 @@ StringCompleter::Add
 void
 StringCompleter::RemoveAll()
 {
-	itsStringList->RemoveAll();
-	itsOwnedList->DeleteAll();
+	itsStringList->CleanOut();
+	itsOwnedList->CleanOut();
 }
 
 /******************************************************************************
@@ -406,7 +408,7 @@ StringCompleter::UpdateWordList()
 	{
 		if (itsNeedsUpdateTask == nullptr)
 		{
-			itsNeedsUpdateTask = jnew JXFunctionTask(kUpdateCheckInterval, [this]()
+			itsNeedsUpdateTask = jnew JXFunctionTask(kCheckInterval, [this]()
 			{
 				if (!SymbolUpdateRunning() && !itsUpdatingFlag)
 				{
@@ -419,6 +421,8 @@ StringCompleter::UpdateWordList()
 			"StringCompleter::UpdateWordList::Wait");
 			itsNeedsUpdateTask->Start();
 		}
+
+		RemoveAll();	// itsStringList may contain invalid pointers
 		return;
 	}
 
@@ -523,9 +527,9 @@ StringCompleter::CopySymbolsForLanguage
 void
 StringCompleter::WaitForUpdateThreadFinished()
 {
-	while (itsUpdatingFlag)
+	while (itsUpdatingFlag || itsNeedsUpdateTask != nullptr)
 	{
 		boost::this_fiber::sleep_for(
-			std::chrono::milliseconds(kUpdateCheckInterval));
+			std::chrono::milliseconds(kCheckInterval));
 	}
 }

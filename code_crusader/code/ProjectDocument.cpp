@@ -690,6 +690,7 @@ ProjectDocument::ProjectDocumentX
 ProjectDocument::~ProjectDocument()
 {
 	assert( !itsIsUpdatingFlag );
+	assert( !CompleterUpdateRunning() );
 
 	GetDocumentManager()->ProjDocDeleted(this);
 
@@ -714,7 +715,7 @@ ProjectDocument::~ProjectDocument()
 bool
 ProjectDocument::OKToClose()
 {
-	if (itsIsUpdatingFlag)
+	if (itsIsUpdatingFlag || CompleterUpdateRunning())
 	{
 		Activate();
 		JGetUserNotification()->ReportError(
