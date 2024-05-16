@@ -5,6 +5,7 @@ Copyright © 1999 by John Lindal.
 This scanner reads a Java file and builds a JavaClass.
 */
 
+#include "Tree.h"
 #include "JavaClass.h"
 #include <jx-af/jcore/JPtrArray.h>
 #include <jx-af/jcore/JStringIterator.h>
@@ -149,45 +150,49 @@ interface\b {
 
 {ID}({MS}"<")? {
 	if (classList->GetItemCount() == 1)
-		{
+	{
 		itsPackage = classList->GetFirstItem()->GetFullName();
-		}
+	}
 
 	JString fullName(text(), size());
 	bool generic = false;
 	if (fullName.GetLastCharacter() == '<')
-		{
+	{
 		generic = true;
 		fullName.Set(text(), size()-1);
 		fullName.TrimWhitespace();
-		}
+	}
 
 	if (!itsPackage.IsEmpty())
-		{
+	{
 		fullName.Prepend(".");
 		fullName.Prepend(itsPackage);
-		}
+	}
 
-	JavaClass* c = jnew JavaClass(fullName, Class::kClassType, fileID, tree,
-									  itsPublicFlag, itsFinalFlag);
+	Class* c;
+	if (!tree->FindClass(fullName, &c))
+	{
+		c = jnew JavaClass(fullName, Class::kClassType, fileID, tree,
+							itsPublicFlag, itsFinalFlag);
 
-	c->SetAbstract(itsAbstractFlag);
-	classList->Append(c);
+		c->SetAbstract(itsAbstractFlag);
+		classList->Append(c);
+	}
 
 	ResetState();
 	itsCurrentClass = c;	// must be after ResetState();
 
 	if (generic)
-		{
+	{
 		c->SetTemplate();
 		itsGenericDepth = 1;
 		itsGenericPop   = false;
 		start(GENERIC_STATE);
-		}
+	}
 	else
-		{
+	{
 		start(INITIAL);
-		}
+	}
 	}
 
 {WS}	/* ignore */
@@ -274,7 +279,11 @@ implements	/* ignore */
 		parentName = itsPackage + "." + parentName;
 	}
 
-	itsCurrentClass->AddParent(Class::kInheritPublic, parentName, JString::empty);
+	if (parentName != itsCurrentClass->GetName() &&
+		parentName != itsCurrentClass->GetFullName())
+	{
+		itsCurrentClass->AddParent(Class::kInheritPublic, parentName, JString::empty);
+	}
 
 	if (generic)
 	{

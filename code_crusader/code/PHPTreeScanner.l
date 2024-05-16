@@ -5,6 +5,7 @@ Copyright © 2014 by John Lindal.
 This scanner reads a PHP file and builds a PHPClass.
 */
 
+#include "Tree.h"
 #include "PHPClass.h"
 #include <jx-af/jcore/JString.h>
 #include <jx-af/jcore/JFAID.h>
@@ -204,13 +205,16 @@ as\b {
 {ID} {
 	JString fullName(text(), size());
 	if (!itsPHPNamespace.IsEmpty())
-		{
+	{
 		fullName.Prepend("\\");
 		fullName.Prepend(itsPHPNamespace);
-		}
+	}
 
-	*theClass = jnew PHPClass(fullName, Class::kClassType, fileID, tree, itsFinalFlag);
-	(**theClass).SetAbstract(itsAbstractFlag);
+	if (!tree->FindClass(fullName, theClass))
+	{
+		*theClass = jnew PHPClass(fullName, Class::kClassType, fileID, tree, itsFinalFlag);
+		(**theClass).SetAbstract(itsAbstractFlag);
+	}
 
 	start(INITIAL);
 	}
@@ -270,7 +274,11 @@ implements	/* ignore */
 		}
 	}
 
-	(**theClass).AddParent(Class::kInheritPublic, parentName, JString::empty);
+	if (parentName != (**theClass).GetName() &&
+		parentName != (**theClass).GetFullName())
+	{
+		(**theClass).AddParent(Class::kInheritPublic, parentName, JString::empty);
+	}
 	}
 
 ","		/* ignore */

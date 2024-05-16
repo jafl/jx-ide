@@ -5,6 +5,7 @@ Copyright © 2021 by John Lindal.
 This scanner reads a GoLang file and creates GoClass instances.
 */
 
+#include "Tree.h"
 #include "GoClass.h"
 #include <jx-af/jcore/JStringIterator.h>
 #include <jx-af/jcore/JRegex.h>
@@ -36,7 +37,7 @@ private:
 	JStringPtrMap<JString>*	itsImportMap;
 	JString					itsTypeName;
 	JUtf8Character			itsAbstractFlag;
-	GoClass*				itsCurrentClass;
+	Class*					itsCurrentClass;
 	JString					itsTypeContent;
 
 private:
@@ -219,11 +220,14 @@ interface\b {
 			itsTypeName.Prepend(itsPackage);
 		}
 
-		itsCurrentClass = jnew GoClass(itsTypeName, Class::kClassType, fileID, tree,
-										isExported);
+		if (!tree->FindClass(itsTypeName, &itsCurrentClass))
+		{
+			itsCurrentClass = jnew GoClass(itsTypeName, Class::kClassType, fileID, tree,
+											isExported);
 
-		itsCurrentClass->SetAbstract(itsAbstractFlag == 'T');
-		classList->Append(itsCurrentClass);
+			itsCurrentClass->SetAbstract(itsAbstractFlag == 'T');
+			classList->Append(itsCurrentClass);
+		}
 
 		itsTypeContent.Clear();
 		start(INHERIT_STATE);
@@ -362,6 +366,10 @@ TreeScanner::Go::Scanner::ParseTypeContent
 			ns = *itsPackage;
 		}
 
-		goClass->AddParent(Class::kInheritPublic, parent, ns);
+		if (parent != goClass->GetName() &&
+			parent != goClass->GetFullName())
+		{
+			goClass->AddParent(Class::kInheritPublic, parent, ns);
+		}
 	}
 }

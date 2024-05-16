@@ -6,6 +6,7 @@ Copyright © 2021 by John Lindal.
 This scanner reads a D file and creates Class instances.
 */
 
+#include "Tree.h"
 #include "DClass.h"
 #include <jx-af/jcore/JString.h>
 #include <jx-af/jcore/JStringIterator.h>
@@ -320,11 +321,14 @@ x\" {
 	fullName.Prepend(".");
 	fullName.Prepend(itsPackage);
 
-	DClass* c = jnew DClass(fullName, Class::kClassType, fileID, tree, itsFinalFlag);
-
-	c->SetAbstract(itsAbstractFlag);
-	c->SetTemplate(itsTemplateFlag);
-	classList->Append(c);
+	Class* c;
+	if (!tree->FindClass(fullName, &c))
+	{
+		c = jnew DClass(fullName, Class::kClassType, fileID, tree, itsFinalFlag);
+		c->SetAbstract(itsAbstractFlag);
+		c->SetTemplate(itsTemplateFlag);
+		classList->Append(c);
+	}
 
 	ResetState();
 	itsCurrentClass = c;	// must be after ResetState();
@@ -427,7 +431,11 @@ x\" {
 		}
 	}
 
-	itsCurrentClass->AddParent(Class::kInheritPublic, parentName, JString::empty);
+	if (parentName != itsCurrentClass->GetName() &&
+		parentName != itsCurrentClass->GetFullName())
+	{
+		itsCurrentClass->AddParent(Class::kInheritPublic, parentName, JString::empty);
+	}
 	}
 
 "!"?\([^)]+\)	/* ignore template parameters */
