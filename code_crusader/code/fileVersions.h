@@ -174,8 +174,10 @@ const JFileVersion kCurrentPrefsFileVersion = 69;
 // version 1:
 //	Stores "local text editing" flag in kViewFileCmdID
 
-const JFileVersion kCurrentProjectFileVersion = 98;
+const JFileVersion kCurrentProjectFileVersion = 99;
 
+// version 99:
+//	Added support for C++ attributes ([[...]]) and final keyword.
 // version 98:
 //	Removed unused itsFnListPrinter from TreeDirector.
 // version 97:
