@@ -80,9 +80,8 @@ DocumentMenu::Receive
 	if (sender == this && message.Is(JXMenu::kItemSelected) &&
 		GetDisplay()->GetLatestKeyModifiers().GetState(JXAdjustNMShortcutModifier(kJXControlKeyIndex)))
 	{
-		auto* selection = dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		if (selection->IsFromShortcut())
+		auto& selection = dynamic_cast<const JXMenu::ItemSelected&>(message);
+		if (selection.IsFromShortcut())
 		{
 			JXDocumentMenu::Receive(sender, message);
 		}
@@ -90,10 +89,10 @@ DocumentMenu::Receive
 		{
 			JXDocument* doc;
 			DocumentManager* docMgr = GetDocumentManager();
-			if (docMgr->GetDocument(selection->GetIndex(), &doc))
+			if (docMgr->GetDocument(selection.GetIndex(), &doc))
 			{
 				auto* projDoc    = dynamic_cast<ProjectDocument*>(doc);
-				auto* searchDoc   = dynamic_cast<SearchDocument*>(doc);
+				auto* searchDoc  = dynamic_cast<SearchDocument*>(doc);
 				auto* compileDoc = dynamic_cast<CompileDocument*>(doc);
 				if (projDoc != nullptr)
 				{

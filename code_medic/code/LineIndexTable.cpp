@@ -720,9 +720,8 @@ LineIndexTable::Receive
 
 	else if (sender == itsVScrollbar && message.Is(JXScrollbar::kScrolled))
 	{
-		auto* info = dynamic_cast<const JXScrollbar::Scrolled*>(&message);
-		assert( info != nullptr );
-		ScrollTo(0, info->GetValue());
+		auto& info = dynamic_cast<const JXScrollbar::Scrolled&>(message);
+		ScrollTo(0, info.GetValue());
 	}
 
 	else if (sender == itsLink && message.Is(Link::kProgramRunning))

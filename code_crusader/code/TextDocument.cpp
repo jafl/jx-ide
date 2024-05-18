@@ -776,9 +776,8 @@ TextDocument::Receive
 	{
 		if (sender == this && message.Is(JXFileDocument::kNameChanged))
 		{
-			auto* info = dynamic_cast<const JXFileDocument::NameChanged*>(&message);
-			assert( info != nullptr );
-			DisplayFileName(info->GetFullName());
+			auto& info = dynamic_cast<const JXFileDocument::NameChanged&>(message);
+			DisplayFileName(info.GetFullName());
 			UpdateFileType();
 		}
 

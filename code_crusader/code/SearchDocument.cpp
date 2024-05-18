@@ -585,27 +585,23 @@ SearchDocument::Receive
 	}
 	else if (message.Is(SearchST::kSearchResult))
 	{
-		const auto* result = dynamic_cast<const SearchST::SearchResult*>(&message);
-		assert( result != nullptr );
-		AppendSearchResult(*result);
+		auto& result = dynamic_cast<const SearchST::SearchResult&>(message);
+		AppendSearchResult(result);
 	}
 	else if (message.Is(SearchST::kAdditionalMatch))
 	{
-		const auto* result = dynamic_cast<const SearchST::AdditionalMatch*>(&message);
-		assert( result != nullptr );
-		MarkAdditionalMatch(result->GetRange());
+		auto& result = dynamic_cast<const SearchST::AdditionalMatch&>(message);
+		MarkAdditionalMatch(result.GetRange());
 	}
 	else if (message.Is(SearchST::kFileName))
 	{
-		const auto* result = dynamic_cast<const SearchST::FileName*>(&message);
-		assert( result != nullptr );
-		AppendFileName(result->GetFileName());
+		auto& result = dynamic_cast<const SearchST::FileName&>(message);
+		AppendFileName(result.GetFileName());
 	}
 	else if (message.Is(SearchST::kError))
 	{
-		const auto* result = dynamic_cast<const SearchST::Error*>(&message);
-		assert( result != nullptr );
-		AppendError(result->GetMessage());
+		auto& result = dynamic_cast<const SearchST::Error&>(message);
+		AppendError(result.GetMessage());
 	}
 
 	else

@@ -65,16 +65,14 @@ const JString&
 SearchFilterHistoryMenu::GetFilter
 	(
 	const Message&	message,
-	bool*		invert
+	bool*			invert
 	)
 	const
 {
 	assert( message.Is(JXMenu::kItemSelected) );
 
-	auto* selection = dynamic_cast<const JXMenu::ItemSelected*>(&message);
-	assert( selection != nullptr );
-
-	return GetFilter(selection->GetIndex(), invert);
+	auto& selection = dynamic_cast<const JXMenu::ItemSelected&>(message);
+	return GetFilter(selection.GetIndex(), invert);
 }
 
 const JString&

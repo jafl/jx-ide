@@ -433,17 +433,15 @@ SourceDirector::Receive
 	else if (IsMainSourceWindow() &&
 			 sender == itsLink && message.Is(Link::kSymbolsLoaded))
 	{
-		auto* info = dynamic_cast<const Link::SymbolsLoaded*>(&message);
-		assert( info != nullptr );
-		UpdateWindowTitle(info->GetProgramName());
+		auto& info = dynamic_cast<const Link::SymbolsLoaded&>(message);
+		UpdateWindowTitle(info.GetProgramName());
 	}
 	else if (IsMainSourceWindow() &&
 			 sender == itsLink && message.Is(Link::kProgramStopped))
 	{
-		auto* info = dynamic_cast<const Link::ProgramStopped*>(&message);
-		assert( info != nullptr);
+		auto& info = dynamic_cast<const Link::ProgramStopped&>(message);
 		const Location* loc;
-		const bool hasFile = info->GetLocation(&loc);
+		const bool hasFile = info.GetLocation(&loc);
 		if (itsType == kMainSourceType && hasFile)
 		{
 			DisplayFile(loc->GetFileName(), loc->GetLineNumber());
@@ -468,10 +466,9 @@ SourceDirector::Receive
 	else if (itsType == kMainAsmType && sender == itsLink &&
 			 message.Is(Link::kProgramStopped2))
 	{
-		auto* info = dynamic_cast<const Link::ProgramStopped2*>(&message);
-		assert( info != nullptr);
+		auto& info = dynamic_cast<const Link::ProgramStopped2&>(message);
 		const Location* loc;
-		info->GetLocation(&loc);
+		info.GetLocation(&loc);
 		if (!loc->GetFunctionName().IsEmpty() &&
 			!loc->GetMemoryAddress().IsEmpty())
 		{
@@ -504,9 +501,8 @@ SourceDirector::Receive
 	}
 	else if (sender == itsDebugMenu && message.Is(JXMenu::kItemSelected))
 	{
-		auto* selection = dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		itsCommandDir->HandleDebugMenu(itsDebugMenu, selection->GetIndex(), itsText, nullptr);
+		auto& selection = dynamic_cast<const JXMenu::ItemSelected&>(message);
+		itsCommandDir->HandleDebugMenu(itsDebugMenu, selection.GetIndex(), itsText, nullptr);
 	}
 
 	// Do not check sender == GetPrefsManager(), because that will be null
@@ -644,7 +640,7 @@ SourceDirector::DisplayDisassembly
 	if (fnName == itsCurrentFn)
 	{
 		JIndex i;
-		if (dynamic_cast<LineAddressTable*>(itsTable)->FindAddressLineNumber(addr, &i))
+		if (dynamic_cast<LineAddressTable&>(*itsTable).FindAddressLineNumber(addr, &i))
 		{
 			DisplayLine(i);
 		}
@@ -686,19 +682,19 @@ SourceDirector::DisplayDisassembly
 	const JString&		instText
 	)
 {
-	auto* table = dynamic_cast<LineAddressTable*>(itsTable);
-	table->SetLineNumbers(addrList);
+	auto& table = dynamic_cast<LineAddressTable&>(*itsTable);
+	table.SetLineNumbers(addrList);
 	itsText->GetText()->SetText(instText);
 
 	JIndex i;
 	if (!addrList->IsEmpty() &&
-		table->FindAddressLineNumber(itsAsmLocation.GetMemoryAddress(), &i))
+		table.FindAddressLineNumber(itsAsmLocation.GetMemoryAddress(), &i))
 	{
 		DisplayLine(i);
 	}
 	else
 	{
-		table->SetCurrentLine(0);
+		table.SetCurrentLine(0);
 	}
 }
 

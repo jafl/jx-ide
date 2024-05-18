@@ -31,7 +31,7 @@ jvm::ThreadNode::ThreadNode
 {
 	if (id != kRootThreadGroupID)
 	{
-		dynamic_cast<Link*>(GetLink())->ThreadCreated(this);
+		dynamic_cast<Link&>(*GetLink()).ThreadCreated(this);
 
 		Command* cmd = jnew GetThreadNameCmd(this);
 	}
@@ -108,10 +108,10 @@ jvm::ThreadNode::FindParent
 	const JUInt64 id
 	)
 {
-	auto* link = dynamic_cast<Link*>(GetLink());
+	auto& link = dynamic_cast<Link&>(*GetLink());
 
 	ThreadNode* parent;
-	if (!link->FindThread(id, &parent))
+	if (!link.FindThread(id, &parent))
 	{
 		parent = jnew ThreadNode(kGroupType, id);
 	}

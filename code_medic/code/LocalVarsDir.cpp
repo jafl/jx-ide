@@ -212,9 +212,7 @@ LocalVarsDir::Receive
 	}
 	else if (sender == itsLink && message.Is(Link::kProgramStopped))
 	{
-		const auto& info =
-			dynamic_cast<const Link::ProgramStopped&>(message);
-
+		auto& info = dynamic_cast<const Link::ProgramStopped&>(message);
 		const Location* loc;
 		if (info.GetLocation(&loc) && !(loc->GetFileName()).IsEmpty())
 		{
@@ -234,9 +232,8 @@ LocalVarsDir::Receive
 
 	else if (sender == itsLink && message.Is(Link::kSymbolsLoaded))
 	{
-		auto* info = dynamic_cast<const Link::SymbolsLoaded*>(&message);
-		assert( info != nullptr );
-		UpdateWindowTitle(info->GetProgramName());
+		auto& info = dynamic_cast<const Link::SymbolsLoaded&>(message);
+		UpdateWindowTitle(info.GetProgramName());
 	}
 
 	else if (sender == GetWindow() && message.Is(JXWindow::kDeiconified))
@@ -311,9 +308,8 @@ LocalVarsDir::Rebuild()
 		itsNeedsUpdateFlag = false;	// can't call FlushOldData() since must *update* tree
 		itsGetLocalsCmd->Send();
 
-		auto* root = dynamic_cast<VarNode*>(itsTree->GetRoot());
-		assert( root != nullptr );
-		root->SetValid(false);
+		auto& root = dynamic_cast<VarNode&>(*itsTree->GetRoot());
+		root.SetValid(false);
 	}
 	else
 	{

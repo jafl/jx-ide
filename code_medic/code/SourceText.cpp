@@ -261,9 +261,8 @@ SourceText::Receive
 	}
 	else if (sender == searchMenu && message.Is(JXMenu::kItemSelected))
 	{
-		auto* selection = dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		if (HandleCustomSearchMenuItems(selection->GetIndex()))
+		auto& selection = dynamic_cast<const JXMenu::ItemSelected&>(message);
+		if (HandleCustomSearchMenuItems(selection.GetIndex()))
 		{
 			return;
 		}

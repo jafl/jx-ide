@@ -380,20 +380,16 @@ VarNode::Receive
 
 	else if (sender == itsTypeCommand && message.Is(VarTypeCmd::kTypeInfo))
 	{
-		auto* info = dynamic_cast<const VarTypeCmd::TypeInfo*>(&message);
-		assert( info != nullptr );
-
-		SetType(info->GetType());
+		auto& info = dynamic_cast<const VarTypeCmd::TypeInfo&>(message);
+		SetType(info.GetType());
 	}
 
 	else if (sender == itsValueCommand &&
 			 message.Is(VarCmd::kValueUpdated))
 	{
-		auto* info = dynamic_cast<const VarCmd::ValueMessage*>(&message);
-		assert( info != nullptr );
-
+		auto& info = dynamic_cast<const VarCmd::ValueMessage&>(message);
 		SetValid(true);
-		Update(info->GetRootNode());
+		Update(info.GetRootNode());
 	}
 	else if (sender == itsValueCommand &&
 			 message.Is(VarCmd::kValueFailed))
@@ -405,10 +401,8 @@ VarNode::Receive
 	else if (sender == itsContentCommand &&
 			 message.Is(VarCmd::kValueUpdated))
 	{
-		auto* info = dynamic_cast<const VarCmd::ValueMessage*>(&message);
-		assert( info != nullptr );
-
-		VarNode* root = info->GetRootNode();
+		auto& info    = dynamic_cast<const VarCmd::ValueMessage&>(message);
+		VarNode* root = info.GetRootNode();
 
 		// value or pointer
 
@@ -480,21 +474,19 @@ VarNode::ShouldUpdate
 {
 	if (message.Is(Link::kProgramStopped))
 	{
-		const auto& info =
-			dynamic_cast<const Link::ProgramStopped&>(message);
-
+		auto& info = dynamic_cast<const Link::ProgramStopped&>(message);
 		const Location* loc;
-		return info.GetLocation(&loc) && !(loc->GetFileName()).IsEmpty();
+		return info.GetLocation(&loc) && !loc->GetFileName().IsEmpty();
 	}
 	else
 	{
-		return message.Is(Link::kValueChanged)      ||
-					message.Is(Link::kThreadChanged)     ||
-					message.Is(Link::kFrameChanged)      ||
-					message.Is(Link::kCoreLoaded)        ||
-					message.Is(Link::kCoreCleared)       ||
-					message.Is(Link::kAttachedToProcess) ||
-					message.Is(Link::kDetachedFromProcess);
+		return (message.Is(Link::kValueChanged)      ||
+				message.Is(Link::kThreadChanged)     ||
+				message.Is(Link::kFrameChanged)      ||
+				message.Is(Link::kCoreLoaded)        ||
+				message.Is(Link::kCoreCleared)       ||
+				message.Is(Link::kAttachedToProcess) ||
+				message.Is(Link::kDetachedFromProcess));
 	}
 }
 

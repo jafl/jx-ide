@@ -102,9 +102,8 @@ ProjectDocument*
 ProjectNode::GetProjectDoc()
 	const
 {
-	const auto* tree = dynamic_cast<const ProjectTree*>(GetTree());
-	assert( tree != nullptr );
-	return tree->GetProjectDoc();
+	auto& tree = dynamic_cast<const ProjectTree&>(*GetTree());
+	return tree.GetProjectDoc();
 }
 
 /******************************************************************************
@@ -115,7 +114,7 @@ ProjectNode::GetProjectDoc()
 ProjectNode*
 ProjectNode::StreamIn
 	(
-	std::istream&			input,
+	std::istream&		input,
 	const JFileVersion	vers,
 	ProjectNode*		parent
 	)
@@ -164,11 +163,10 @@ ProjectNode::StreamOut
 	const JSize childCount = GetChildCount();
 	for (JIndex i=1; i<=childCount; i++)
 	{
-		const auto* child = dynamic_cast<const ProjectNode*>(GetChild(i));
-		assert( child != nullptr );
+		auto& child = dynamic_cast<const ProjectNode&>(*GetChild(i));
 
 		output << JBoolToString(true) << '\n';
-		child->StreamOut(output);
+		child.StreamOut(output);
 	}
 
 	output << JBoolToString(false) << '\n';
@@ -314,10 +312,8 @@ ProjectNode::CalledByFindFile
 	const JSize count = GetChildCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		auto* child = dynamic_cast<ProjectNode*>(GetChild(i));
-		assert( child != nullptr );
-
-		if (child->CalledByFindFile(fullName, node))
+		auto& child = dynamic_cast<ProjectNode&>(*GetChild(i));
+		if (child.CalledByFindFile(fullName, node))
 		{
 			return true;
 		}
@@ -351,10 +347,8 @@ ProjectNode::BuildMakeFiles
 	const JSize count = GetChildCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		const auto* child = dynamic_cast<const ProjectNode*>(GetChild(i));
-		assert( child != nullptr );
-
-		child->BuildMakeFiles(text, invalidList, libFileList, libProjPathList);
+		auto& child = dynamic_cast<const ProjectNode&>(*GetChild(i));
+		child.BuildMakeFiles(text, invalidList, libFileList, libProjPathList);
 	}
 }
 
@@ -381,10 +375,8 @@ ProjectNode::BuildCMakeData
 	const JSize count = GetChildCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		const auto* child = dynamic_cast<const ProjectNode*>(GetChild(i));
-		assert( child != nullptr );
-
-		child->BuildCMakeData(src, hdr, invalidList);
+		auto& child = dynamic_cast<const ProjectNode&>(*GetChild(i));
+		child.BuildCMakeData(src, hdr, invalidList);
 	}
 }
 
@@ -411,10 +403,8 @@ ProjectNode::BuildQMakeData
 	const JSize count = GetChildCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		const auto* child = dynamic_cast<const ProjectNode*>(GetChild(i));
-		assert( child != nullptr );
-
-		child->BuildQMakeData(src, hdr, invalidList);
+		auto& child = dynamic_cast<const ProjectNode&>(*GetChild(i));
+		child.BuildQMakeData(src, hdr, invalidList);
 	}
 }
 
@@ -440,10 +430,8 @@ ProjectNode::ParseFiles
 	const JSize count = GetChildCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		const auto* child = dynamic_cast<const ProjectNode*>(GetChild(i));
-		assert( child != nullptr );
-
-		if (!child->ParseFiles(parser, allSuffixList, symbolList, treeList, pg))
+		auto& child = dynamic_cast<const ProjectNode&>(*GetChild(i));
+		if (!child.ParseFiles(parser, allSuffixList, symbolList, treeList, pg))
 		{
 			return false;
 		}
@@ -469,10 +457,8 @@ ProjectNode::Print
 	const JSize count = GetChildCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		const auto* child = dynamic_cast<const ProjectNode*>(GetChild(i));
-		assert( child != nullptr );
-
-		child->Print(text);
+		auto& child = dynamic_cast<const ProjectNode&>(*GetChild(i));
+		child.Print(text);
 	}
 }
 
@@ -491,10 +477,8 @@ ProjectNode::FileRenamed
 	const JSize count = GetChildCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		auto* child = dynamic_cast<ProjectNode*>(GetChild(i));
-		assert( child != nullptr );
-
-		child->FileRenamed(origFullName, newFullName);
+		auto& child = dynamic_cast<ProjectNode&>(*GetChild(i));
+		child.FileRenamed(origFullName, newFullName);
 	}
 }
 
@@ -550,7 +534,7 @@ ProjectNode::IncludedInQMakeData()
 void
 ProjectNode::CreateFilesForTemplate
 	(
-	std::istream&			input,
+	std::istream&		input,
 	const JFileVersion	vers
 	)
 	const
@@ -558,10 +542,8 @@ ProjectNode::CreateFilesForTemplate
 	const JSize count = GetChildCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		const auto* child = dynamic_cast<const ProjectNode*>(GetChild(i));
-		assert( child != nullptr );
-
-		child->CreateFilesForTemplate(input, vers);
+		auto& child = dynamic_cast<const ProjectNode&>(*GetChild(i));
+		child.CreateFilesForTemplate(input, vers);
 	}
 }
 
@@ -582,10 +564,8 @@ ProjectNode::SaveFilesInTemplate
 	const JSize count = GetChildCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		const auto* child = dynamic_cast<const ProjectNode*>(GetChild(i));
-		assert( child != nullptr );
-
-		child->SaveFilesInTemplate(output);
+		auto& child = dynamic_cast<const ProjectNode&>(*GetChild(i));
+		child.SaveFilesInTemplate(output);
 	}
 }
 

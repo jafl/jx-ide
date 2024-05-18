@@ -549,12 +549,8 @@ TreeWidget::GetSelectionData
 {
 	if (id == kSelectionDataID)
 	{
-		auto* fileData = dynamic_cast<JXFileSelection*>(data);
-		assert( fileData != nullptr );
-
 		DocumentManager* docMgr = GetDocumentManager();
-
-		auto* list = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
+		auto* list              = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
 
 		JPtrArray<Class> classList(JPtrArrayT::kForgetAll);
 		const bool hasSelection = itsTree->GetSelectedClasses(&classList);
@@ -579,7 +575,8 @@ TreeWidget::GetSelectionData
 			}
 		}
 
-		fileData->SetData(list);
+		auto& fileData = dynamic_cast<JXFileSelection&>(*data);
+		fileData.SetData(list);
 	}
 	else
 	{
@@ -825,28 +822,24 @@ TreeWidget::Receive
 
 	else if (sender == itsTree && message.Is(Tree::kFontSizeChanged))
 	{
-		auto* info = dynamic_cast<const Tree::FontSizeChanged*>(&message);
-		assert( info != nullptr );
-
+		auto& info = dynamic_cast<const Tree::FontSizeChanged&>(message);
 		JXScrollbar *hScrollbar, *vScrollbar;
 		const bool ok = GetScrollbars(&hScrollbar, &vScrollbar);
 		assert( ok );
-		vScrollbar->PrepareForScaledMaxValue(info->GetVertScaleFactor());
+		vScrollbar->PrepareForScaledMaxValue(info.GetVertScaleFactor());
 
 		SetVertStepSize(Class::GetTotalHeight(itsTree, GetFontManager()));
 	}
 
 	else if (sender == itsTree && message.Is(Tree::kClassSelected))
 	{
-		auto* selection = dynamic_cast<const Tree::ClassSelected*>(&message);
-		assert( selection != nullptr );
-		RefreshRect(selection->GetClass()->GetFrame());
+		auto& selection = dynamic_cast<const Tree::ClassSelected&>(message);
+		RefreshRect(selection.GetClass()->GetFrame());
 	}
 	else if (sender == itsTree && message.Is(Tree::kClassDeselected))
 	{
-		auto* selection = dynamic_cast<const Tree::ClassDeselected*>(&message);
-		assert( selection != nullptr );
-		RefreshRect(selection->GetClass()->GetFrame());
+		auto& selection = dynamic_cast<const Tree::ClassDeselected&>(message);
+		RefreshRect(selection.GetClass()->GetFrame());
 	}
 	else if (sender == itsTree && message.Is(Tree::kAllClassesDeselected))
 	{

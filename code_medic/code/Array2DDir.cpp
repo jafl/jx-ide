@@ -469,10 +469,9 @@ Array2DDir::Receive
 
 	else if (sender == itsRowHeader && message.Is(JXRowHeaderWidget::kNeedsToBeWidened))
 	{
-		auto* info = dynamic_cast<const JXRowHeaderWidget::NeedsToBeWidened*>(&message);
-		assert( info != nullptr );
+		auto& info = dynamic_cast<const JXRowHeaderWidget::NeedsToBeWidened&>(message);
 
-		const JCoordinate dw = info->GetDeltaWidth();
+		const JCoordinate dw = info.GetDeltaWidth();
 		itsRowHeader->AdjustSize(dw,0);
 		itsColHeader->Move(dw,0);
 		itsColHeader->AdjustSize(-dw,0);

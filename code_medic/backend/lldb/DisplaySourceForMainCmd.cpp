@@ -59,10 +59,8 @@ lldb::DisplaySourceForMainCmd::Receive
 {
 	if (sender == GetLink() && message.Is(::Link::kSymbolsLoaded))
 	{
-		auto* info = dynamic_cast<const ::Link::SymbolsLoaded*>(&message);
-		assert( info != nullptr );
-
-		if (info->Successful())
+		auto& info = dynamic_cast<const ::Link::SymbolsLoaded&>(message);
+		if (info.Successful())
 		{
 			Command::Send();
 		}
@@ -84,7 +82,7 @@ lldb::DisplaySourceForMainCmd::HandleSuccess
 	const JString& data
 	)
 {
-	SBTarget t = dynamic_cast<Link*>(GetLink())->GetDebugger()->GetSelectedTarget();
+	SBTarget t = dynamic_cast<Link&>(*GetLink()).GetDebugger()->GetSelectedTarget();
 	bool found = false;
 	if (t.IsValid())
 	{

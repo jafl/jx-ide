@@ -47,6 +47,6 @@ jvm::GetThreadCmd::HandleSuccess
 	const JString& data
 	)
 {
-	auto* link = dynamic_cast<Link*>(GetLink());
-	GetWidget()->FinishedLoading(link->GetCurrentThreadID());
+	auto& link = dynamic_cast<Link&>(*GetLink());
+	GetWidget()->FinishedLoading(link.GetCurrentThreadID());
 }

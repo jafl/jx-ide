@@ -374,13 +374,12 @@ TextEditor::Receive
 {
 	if (message.Is(JXFSDirMenu::kFileSelected))
 	{
-		auto* info = dynamic_cast<const JXFSDirMenu::FileSelected*>(&message);
-		assert( info != nullptr );
+		auto& info = dynamic_cast<const JXFSDirMenu::FileSelected&>(message);
 		bool onDisk;
 		const JString fullName = itsDoc->GetFullName(&onDisk);
 		if (onDisk)
 		{
-			(GetRunTEScriptDialog())->RunSimpleScript(info->GetFileName(), this, fullName);
+			GetRunTEScriptDialog()->RunSimpleScript(info.GetFileName(), this, fullName);
 		}
 	}
 
@@ -400,9 +399,8 @@ TextEditor::Receive
 		}
 		else if (sender == editMenu && message.Is(JXMenu::kItemSelected))
 		{
-			auto* selection = dynamic_cast<const JXMenu::ItemSelected*>(&message);
-			assert( selection != nullptr );
-			if (HandleCustomEditMenuItems(selection->GetIndex()))
+			auto& selection = dynamic_cast<const JXMenu::ItemSelected&>(message);
+			if (HandleCustomEditMenuItems(selection.GetIndex()))
 			{
 				return;
 			}
@@ -414,9 +412,8 @@ TextEditor::Receive
 		}
 		else if (sender == searchMenu && message.Is(JXMenu::kItemSelected))
 		{
-			auto* selection = dynamic_cast<const JXMenu::ItemSelected*>(&message);
-			assert( selection != nullptr );
-			if (HandleCustomSearchMenuItems(selection->GetIndex()))
+			auto& selection = dynamic_cast<const JXMenu::ItemSelected&>(message);
+			if (HandleCustomSearchMenuItems(selection.GetIndex()))
 			{
 				return;
 			}

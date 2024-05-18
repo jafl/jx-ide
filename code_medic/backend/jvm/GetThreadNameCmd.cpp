@@ -51,9 +51,8 @@ jvm::GetThreadNameCmd::Starting()
 
 	if (itsNode != nullptr)
 	{
-		auto* link = dynamic_cast<Link*>(GetLink());
-
-		const JSize length = link->GetObjectIDSize();
+		auto& link         = dynamic_cast<Link&>(*GetLink());
+		const JSize length = link.GetObjectIDSize();
 
 		auto* data = (unsigned char*) calloc(length, 1);
 		assert( data != nullptr );
@@ -61,7 +60,7 @@ jvm::GetThreadNameCmd::Starting()
 		Socket::Pack(length, itsNode->GetID(), data);
 
 		const bool isGroup = itsNode->GetType() == ThreadNode::kGroupType;
-		link->Send(this,
+		link.Send(this,
 			isGroup ? Link::kThreadGroupReferenceCmdSet : Link::kThreadReferenceCmdSet,
 			isGroup ? Link::kTGNameCmd : Link::kTNameCmd,
 			data, length);
@@ -81,9 +80,9 @@ jvm::GetThreadNameCmd::HandleSuccess
 	const JString& origData
 	)
 {
-	auto* link = dynamic_cast<Link*>(GetLink());
+	auto& link = dynamic_cast<Link&>(*GetLink());
 	const Socket::MessageReady* msg;
-	if (!link->GetLatestMessageFromJVM(&msg))
+	if (!link.GetLatestMessageFromJVM(&msg))
 	{
 		return;
 	}

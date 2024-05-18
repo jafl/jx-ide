@@ -48,16 +48,17 @@ jvm::GetSourceFileListCmd::Starting()
 {
 	::GetSourceFileListCmd::Starting();
 
-	dynamic_cast<Link*>(GetLink())->FlushClassList();
+	auto& link = dynamic_cast<Link&>(*GetLink());
+	link.FlushClassList();
 
 	JXFileListTable* table = GetFileList()->GetTable();
 	table->RemoveAllFiles();
 
-	const JPtrArray<JString>& list = dynamic_cast<Link*>(GetLink())->GetSourcePathList();
+	const JPtrArray<JString>& list = link.GetSourcePathList();
 	const JSize count              = list.GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		ScanDirectory(*(list.GetItem(i)));
+		ScanDirectory(*list.GetItem(i));
 	}
 }
 

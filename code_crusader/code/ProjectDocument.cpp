@@ -1494,16 +1494,14 @@ ProjectDocument::Receive
 	if (sender == GetPrefsManager() &&
 		 message.Is(PrefsManager::kFileTypesChanged))
 	{
-		auto* info = dynamic_cast<const PrefsManager::FileTypesChanged*>(&message);
-		assert( info != nullptr );
-
-		if (info->AnyChanged())
+		auto& info = dynamic_cast<const PrefsManager::FileTypesChanged&>(message);
+		if (info.AnyChanged())
 		{
 			itsBuildMgr->ProjectChanged();
-			itsSymbolDirector->FileTypesChanged(*info);
+			itsSymbolDirector->FileTypesChanged(info);
 			for (auto* director : *itsTreeDirectorList)
 			{
-				director->FileTypesChanged(*info);
+				director->FileTypesChanged(info);
 			}
 			UpdateSymbolDatabase();
 
@@ -1560,15 +1558,11 @@ ProjectDocument::ProcessNodeMessage
 	const Message& message
 	)
 {
-	auto* info = dynamic_cast<const JTree::NodeMessage*>(&message);
-	assert( info != nullptr );
-
-	if (info->GetNode()->GetDepth() == ProjectTable::kFileDepth)
+	auto& info = dynamic_cast<const JTree::NodeMessage&>(message);
+	if (info.GetNode()->GetDepth() == ProjectTable::kFileDepth)
 	{
-		auto* node = dynamic_cast<const ProjectNode*>(info->GetNode());
-		assert( node != nullptr );
-
-		itsBuildMgr->ProjectChanged(node);
+		auto& node = dynamic_cast<const ProjectNode&>(*info.GetNode());
+		itsBuildMgr->ProjectChanged(&node);
 
 		if (message.Is(JTree::kNodeChanged))
 		{
@@ -2173,9 +2167,8 @@ ProjectDocument::ReceiveWithFeedback
 {
 	if (sender == itsCmdMenu && message->Is(CommandMenu::kGetTargetInfo))
 	{
-		auto* info = dynamic_cast<CommandMenu::GetTargetInfo*>(message);
-		assert( info != nullptr );
-		itsFileTable->GetSelectedFileNames(info->GetFileList());
+		auto& info = dynamic_cast<CommandMenu::GetTargetInfo&>(*message);
+		itsFileTable->GetSelectedFileNames(info.GetFileList());
 	}
 	else
 	{

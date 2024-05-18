@@ -360,23 +360,19 @@ Plot2DDir::Receive
 
 	else if (sender == itsExprData && message.Is(JTableData::kRowsInserted))
 	{
-		auto* info = dynamic_cast<const JTableData::RowsInserted*>(&message);
-		assert( info != nullptr );
-		Update(info->GetFirstIndex(), info->GetLastIndex());	// only append
+		auto& info = dynamic_cast<const JTableData::RowsInserted&>(message);
+		Update(info.GetFirstIndex(), info.GetLastIndex());	// only append
 	}
 	else if (sender == itsExprData && message.Is(JTableData::kRowDuplicated))
 	{
-		auto* info = dynamic_cast<const JTableData::RowDuplicated*>(&message);
-		assert( info != nullptr );
-		Update(info->GetNewIndex(), info->GetNewIndex());
+		auto& info = dynamic_cast<const JTableData::RowDuplicated&>(message);
+		Update(info.GetNewIndex(), info.GetNewIndex());
 	}
 	else if (sender == itsExprData && message.Is(JTableData::kRowsRemoved))
 	{
-		auto* info = dynamic_cast<const JTableData::RowsRemoved*>(&message);
-		assert( info != nullptr );
-
+		auto& info = dynamic_cast<const JTableData::RowsRemoved&>(message);
 		StopListening(itsPlotWidget);
-		for (JIndex i=info->GetLastIndex(); i>=info->GetFirstIndex(); i--)
+		for (JIndex i=info.GetLastIndex(); i>=info.GetFirstIndex(); i--)
 		{
 			itsUpdateCmdList->DeleteItem(i);
 			itsPlotWidget->RemoveCurve(i);
@@ -385,9 +381,8 @@ Plot2DDir::Receive
 	}
 	else if (sender == itsExprData && message.Is(JTableData::kRectChanged))
 	{
-		auto* info = dynamic_cast<const JTableData::RectChanged*>(&message);
-		assert( info != nullptr );
-		const JRect& r = info->GetRect();
+		auto& info     = dynamic_cast<const JTableData::RectChanged&>(message);
+		const JRect& r = info.GetRect();
 		Update(r.top, r.bottom-1);
 	}
 
@@ -398,9 +393,8 @@ Plot2DDir::Receive
 
 	else if (sender == itsPlotWidget && message.Is(J2DPlotWidget::kCurveRemoved))
 	{
-		auto* info = dynamic_cast<const J2DPlotWidget::CurveRemoved*>(&message);
-		assert( info != nullptr );
-		const JIndex index = info->GetIndex();
+		auto& info         = dynamic_cast<const J2DPlotWidget::CurveRemoved&>(message);
+		const JIndex index = info.GetIndex();
 
 		StopListening(itsExprData);
 		itsUpdateCmdList->DeleteItem(index);

@@ -47,18 +47,15 @@ jvm::GetClassInfoCmd::Starting()
 {
 	Command::Starting();
 
-	auto* link = dynamic_cast<Link*>(GetLink());
-
-	const JSize length = link->GetObjectIDSize();
+	auto& link         = dynamic_cast<Link&>(*GetLink());
+	const JSize length = link.GetObjectIDSize();
 
 	auto* data = (unsigned char*) calloc(length, 1);
 	assert( data != nullptr );
 
 	Socket::Pack(length, itsID, data);
 
-	link->Send(this,
-		Link::kReferenceTypeCmdSet, Link::kRTSignatureCmd, data, length);
-
+	link.Send(this, Link::kReferenceTypeCmdSet, Link::kRTSignatureCmd, data, length);
 	free(data);
 }
 
@@ -73,9 +70,9 @@ jvm::GetClassInfoCmd::HandleSuccess
 	const JString& origData
 	)
 {
-	auto* link = dynamic_cast<Link*>(GetLink());
+	auto& link = dynamic_cast<Link&>(*GetLink());
 	const Socket::MessageReady* msg;
-	if (!link->GetLatestMessageFromJVM(&msg))
+	if (!link.GetLatestMessageFromJVM(&msg))
 	{
 		return;
 	}
@@ -85,5 +82,5 @@ jvm::GetClassInfoCmd::HandleSuccess
 	JSize count;
 	const JString sig = Socket::UnpackString(data, &count);
 
-	link->AddClass(itsID, sig);
+	link.AddClass(itsID, sig);
 }

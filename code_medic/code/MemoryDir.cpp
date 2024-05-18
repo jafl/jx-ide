@@ -314,12 +314,10 @@ MemoryDir::Receive
 	}
 	else if (sender == itsDisplayTypeMenu && message.Is(JXMenu::kItemSelected))
 	{
-		auto* selection = dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-
-		if (selection->GetIndex() != (JIndex) itsDisplayType)
+		auto& selection = dynamic_cast<const JXMenu::ItemSelected&>(message);
+		if (selection.GetIndex() != (JIndex) itsDisplayType)
 		{
-			itsDisplayType = (DisplayType) selection->GetIndex();
+			itsDisplayType = (DisplayType) selection.GetIndex();
 
 			// update all other values, too, since menu selection doesn't trigger input fields
 

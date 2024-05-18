@@ -369,14 +369,13 @@ ExecOutputDocument::Receive
 
 	else if (sender == itsProcess && message.Is(JProcess::kFinished))
 	{
-		auto* info = dynamic_cast<const JProcess::Finished*>(&message);
-		assert( info != nullptr );
-		const bool stayOpen = ProcessFinished(*info);
+		auto& info = dynamic_cast<const JProcess::Finished&>(message);
+		const bool stayOpen = ProcessFinished(info);
 
 		// let somebody else start a new process
 
 		itsClearWhenStartFlag = false;	// in case they call SetConnection() in ReceiveWithFeedback()
-		Finished msg(info->Successful(), info->GetReason() != kJChildFinished);
+		Finished msg(info.Successful(), info.GetReason() != kJChildFinished);
 		BroadcastWithFeedback(&msg);
 		itsClearWhenStartFlag = GetUseCount() == 0 && !msg.SomebodyIsWaiting();
 
@@ -487,13 +486,12 @@ ExecOutputDocument::ReceiveData
 	const Message& message
 	)
 {
-	auto* info = dynamic_cast<const JAsynchDataReceiverT::DataReady*>(&message);
-	assert( info != nullptr );
+	auto& info = dynamic_cast<const JAsynchDataReceiverT::DataReady&>(message);
 
-	TextEditor* te                   = GetTextEditor();
+	TextEditor* te                     = GetTextEditor();
 	const JXTEBase::DisplayState state = te->SaveDisplayState();
 
-	JPasteUNIXTerminalOutput(info->GetData(), te->GetText()->GetBeyondEnd(), te->GetText());
+	JPasteUNIXTerminalOutput(info.GetData(), te->GetText()->GetBeyondEnd(), te->GetText());
 	te->GetText()->ClearUndo();
 
 	if (!itsReceivedDataFlag)

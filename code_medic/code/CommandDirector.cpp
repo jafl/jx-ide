@@ -789,17 +789,16 @@ CommandDirector::Receive
 
 	if (sender == itsLink && message.Is(Link::kUserOutput))
 	{
-		auto* output = dynamic_cast<const Link::UserOutput*>(&message);
-		assert(output != nullptr);
+		auto& output = dynamic_cast<const Link::UserOutput&>(message);
 		itsCommandOutput->SetCaretLocation(
 			itsCommandOutput->GetText()->GetText().GetCharacterCount()+1);
 
 		JFont font = itsCommandOutput->GetText()->GetDefaultFont();
-		font.SetBold(output->IsFromTarget());
-		font.SetColor(output->IsError() ? JColorManager::GetDarkRedColor() : JColorManager::GetBlackColor());
+		font.SetBold(output.IsFromTarget());
+		font.SetColor(output.IsError() ? JColorManager::GetDarkRedColor() : JColorManager::GetBlackColor());
 		itsCommandOutput->SetCurrentFont(font);
-		itsCommandOutput->Paste(output->GetText());
-		if (output->GetText().GetLastCharacter() != '\n')
+		itsCommandOutput->Paste(output.GetText());
+		if (output.GetText().GetLastCharacter() != '\n')
 		{
 			itsCommandOutput->Paste(JString::newline);
 		}
@@ -835,9 +834,8 @@ CommandDirector::Receive
 
 	else if (sender == itsLink && message.Is(Link::kSymbolsLoaded))
 	{
-		auto* info = dynamic_cast<const Link::SymbolsLoaded*>(&message);
-		assert( info != nullptr );
-		UpdateWindowTitle(info->GetProgramName());
+		auto& info = dynamic_cast<const Link::SymbolsLoaded&>(message);
+		UpdateWindowTitle(info.GetProgramName());
 
 		if (itsWaitingToRunFlag)
 		{
@@ -913,9 +911,8 @@ CommandDirector::Receive
 	}
 	else if (sender == itsDebugMenu && message.Is(JXMenu::kItemSelected))
 	{
-		auto* selection = dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleDebugMenu(itsDebugMenu, selection->GetIndex(), itsCommandOutput, itsCommandInput);
+		auto& selection = dynamic_cast<const JXMenu::ItemSelected&>(message);
+		HandleDebugMenu(itsDebugMenu, selection.GetIndex(), itsCommandOutput, itsCommandInput);
 	}
 
 	else if (sender == GetPrefsManager() && message.Is(PrefsManager::kCustomCommandsChanged))
@@ -939,21 +936,18 @@ CommandDirector::Receive
 
 	else if (message.Is(GetFullPathCmd::kFileFound))
 	{
-		auto* info = dynamic_cast<const GetFullPathCmd::FileFound*>(&message);
-		assert( info != nullptr );
-		OpenSourceFile(info->GetFullName(), info->GetLineIndex());
+		auto& info = dynamic_cast<const GetFullPathCmd::FileFound&>(message);
+		OpenSourceFile(info.GetFullName(), info.GetLineIndex());
 	}
 	else if (message.Is(GetFullPathCmd::kFileNotFound))
 	{
-		auto* info = dynamic_cast<const GetFullPathCmd::FileNotFound*>(&message);
-		assert( info != nullptr );
-		ReportUnreadableSourceFile(info->GetFileName());
+		auto& info = dynamic_cast<const GetFullPathCmd::FileNotFound&>(message);
+		ReportUnreadableSourceFile(info.GetFileName());
 	}
 	else if (message.Is(GetFullPathCmd::kNewCommand))
 	{
-		auto* info = dynamic_cast<const GetFullPathCmd::NewCommand*>(&message);
-		assert( info != nullptr );
-		ListenTo(info->GetNewCommand());
+		auto& info = dynamic_cast<const GetFullPathCmd::NewCommand&>(message);
+		ListenTo(info.GetNewCommand());
 	}
 
 	else

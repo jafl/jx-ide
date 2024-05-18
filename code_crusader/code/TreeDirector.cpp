@@ -942,9 +942,7 @@ TreeDirector::ReceiveWithFeedback
 {
 	if (sender == itsCmdMenu && message->Is(CommandMenu::kGetTargetInfo))
 	{
-		auto* info = dynamic_cast<CommandMenu::GetTargetInfo*>(message);
-		assert( info != nullptr );
-
+		auto& info = dynamic_cast<CommandMenu::GetTargetInfo&>(*message);
 		JPtrArray<Class> classList(JPtrArrayT::kForgetAll);
 		if (itsTree->GetSelectedClasses(&classList))
 		{
@@ -954,7 +952,7 @@ TreeDirector::ReceiveWithFeedback
 			{
 				if (classList.GetItem(i)->GetFileName(&fullName))
 				{
-					info->AddFile(fullName);
+					info.AddFile(fullName);
 				}
 			}
 		}

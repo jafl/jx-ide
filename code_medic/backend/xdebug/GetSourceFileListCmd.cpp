@@ -51,7 +51,7 @@ xdebug::GetSourceFileListCmd::Starting()
 	JXFileListTable* table = GetFileList()->GetTable();
 	table->RemoveAllFiles();
 
-	const JPtrArray<JString>& list = dynamic_cast<Link*>(GetLink())->GetSourcePathList();
+	const JPtrArray<JString>& list = dynamic_cast<Link&>(*GetLink()).GetSourcePathList();
 	const JSize count              = list.GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{

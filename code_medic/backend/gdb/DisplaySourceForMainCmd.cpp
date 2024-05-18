@@ -72,10 +72,9 @@ gdb::DisplaySourceForMainCmd::Receive
 {
 	if (sender == GetLink() && message.Is(::Link::kSymbolsLoaded))
 	{
-		auto* info = dynamic_cast<const Link::SymbolsLoaded*>(&message);
-		assert( info != nullptr );
+		auto& info = dynamic_cast<const Link::SymbolsLoaded&>(message);
 		itsHasCoreFlag = GetLink()->HasCore();
-		if (info->Successful())
+		if (info.Successful())
 		{
 			itsNextCmdIndex = 1;
 			SetCommand(kCommand[0]);
@@ -110,6 +109,7 @@ gdb::DisplaySourceForMainCmd::HandleSuccess
 	const JString& data
 	)
 {
+	auto& link = dynamic_cast<Link&>(*GetLink());
 	if (infoPattern.Match(data))
 	{
 		const JStringMatch m = locationPattern.Match(data, JRegex::kIncludeSubmatches);
@@ -131,7 +131,7 @@ gdb::DisplaySourceForMainCmd::HandleSuccess
 			"cmdpfx",     GDB_COMMAND_PREFIX
 		};
 		const JString cmd = JGetString("RunCommand::GDBDisplaySourceForMainCmd", map, sizeof(map));
-		dynamic_cast<Link*>(GetLink())->SendWhenStopped(cmd);
+		link.SendWhenStopped(cmd);
 	}
 	else if (itsNextCmdIndex < kCommandCount)
 	{
@@ -148,7 +148,7 @@ gdb::DisplaySourceForMainCmd::HandleSuccess
 			GetSourceDir()->ClearDisplay();
 		}
 
-		dynamic_cast<Link*>(GetLink())->FirstBreakImpossible();
+		link.FirstBreakImpossible();
 
 		const JUtf8Byte* map[] =
 		{
@@ -156,6 +156,6 @@ gdb::DisplaySourceForMainCmd::HandleSuccess
 			"cmdpfx",     GDB_COMMAND_PREFIX
 		};
 		const JString cmd = JGetString("RunCommand::GDBDisplaySourceForMainCmd", map, sizeof(map));
-		dynamic_cast<Link*>(GetLink())->SendWhenStopped(cmd);
+		link.SendWhenStopped(cmd);
 	}
 }

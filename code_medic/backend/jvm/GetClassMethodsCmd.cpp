@@ -47,18 +47,15 @@ jvm::GetClassMethodsCmd::Starting()
 {
 	Command::Starting();
 
-	auto* link = dynamic_cast<Link*>(GetLink());
-
-	const JSize length = link->GetObjectIDSize();
+	auto& link         = dynamic_cast<Link&>(*GetLink());
+	const JSize length = link.GetObjectIDSize();
 
 	auto* data = (unsigned char*) calloc(length, 1);
 	assert( data != nullptr );
 
 	Socket::Pack(length, itsID, data);
 
-	link->Send(this,
-		Link::kReferenceTypeCmdSet, Link::kRTMethodsCmd, data, length);
-
+	link.Send(this, Link::kReferenceTypeCmdSet, Link::kRTMethodsCmd, data, length);
 	free(data);
 }
 
@@ -73,15 +70,15 @@ jvm::GetClassMethodsCmd::HandleSuccess
 	const JString& origData
 	)
 {
-	auto* link = dynamic_cast<Link*>(GetLink());
+	auto& link = dynamic_cast<Link&>(*GetLink());
 	const Socket::MessageReady* msg;
-	if (!link->GetLatestMessageFromJVM(&msg))
+	if (!link.GetLatestMessageFromJVM(&msg))
 	{
 		return;
 	}
 
 	const unsigned char* data = msg->GetData();
-	const JSize idLength      = link->GetMethodIDSize();
+	const JSize idLength      = link.GetMethodIDSize();
 
 	const JSize count = Socket::Unpack4(data);
 	data             += 4;
@@ -102,6 +99,6 @@ jvm::GetClassMethodsCmd::HandleSuccess
 		const JSize bits = Socket::Unpack4(data);
 		data            += 4;
 
-		link->AddMethod(itsID, methodID, name);
+		link.AddMethod(itsID, methodID, name);
 	}
 }

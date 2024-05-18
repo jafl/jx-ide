@@ -146,9 +146,8 @@ FunctionMenu::Receive
 	}
 	else if (sender == this && message.Is(JXMenu::kItemSelected))
 	{
-		auto* selection = dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleSelection(selection->GetIndex());
+		auto& selection = dynamic_cast<const JXMenu::ItemSelected&>(message);
+		HandleSelection(selection.GetIndex());
 	}
 
 	else
@@ -203,11 +202,9 @@ FunctionMenu::UpdateMenu()
 
 				// itsDoc can't be TextDocument, because Code Medic uses us
 
-				auto* textDoc = dynamic_cast<TextDocument*>(itsDoc);
-				assert( textDoc != nullptr );
-
+				auto& textDoc = dynamic_cast<TextDocument&>(*itsDoc);
 				std::ofstream output(fileName.GetBytes());
-				textDoc->GetTextEditor()->GetText()->GetText().Print(output);
+				textDoc.GetTextEditor()->GetText()->GetText().Print(output);
 			}
 		}
 		else

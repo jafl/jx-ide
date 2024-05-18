@@ -100,7 +100,7 @@ StackWidget::~StackWidget()
 bool
 StackWidget::GetStackFrame
 	(
-	const JUInt64				id,
+	const JUInt64			id,
 	const StackFrameNode**	frame
 	)
 {
@@ -108,12 +108,10 @@ StackWidget::GetStackFrame
 	const JSize count     = root->GetChildCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		auto* node = dynamic_cast<const StackFrameNode*>(root->GetChild(i));
-		assert( node != nullptr );
-
-		if (node->GetID() == id)
+		auto& node = dynamic_cast<const StackFrameNode&>(*root->GetChild(i));
+		if (node.GetID() == id)
 		{
-			*frame = node;
+			*frame = &node;
 			return true;
 		}
 	}
@@ -139,13 +137,11 @@ StackWidget::SelectFrame
 	const JSize count = root->GetChildCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		auto* node = dynamic_cast<const StackFrameNode*>(root->GetChild(i));
-		assert( node != nullptr );
-
-		if (node->GetID() == id)
+		auto& node = dynamic_cast<const StackFrameNode&>(*root->GetChild(i));
+		if (node.GetID() == id)
 		{
 			JIndex j;
-			const bool found = list->FindNode(node, &j);
+			const bool found = list->FindNode(&node, &j);
 			assert( found );
 
 			itsSelectingFrameFlag = true;
@@ -187,9 +183,8 @@ StackWidget::TableDrawCell
 			font.SetStyle(GetCellStyle(cell));
 			p.SetFont(font);
 
-			auto* argNode = dynamic_cast<const StackArgNode*>(node);
-			assert( argNode != nullptr );
-			p.String(rect, argNode->GetValue(), JPainter::HAlign::kLeft, JPainter::VAlign::kCenter);
+			auto& argNode = dynamic_cast<const StackArgNode&>(*node);
+			p.String(rect, argNode.GetValue(), JPainter::HAlign::kLeft, JPainter::VAlign::kCenter);
 		}
 	}
 }
@@ -211,10 +206,8 @@ StackWidget::GetMinCellWidth
 		const JTreeNode* node = GetTreeList()->GetNode(cell.y);
 		if (node->GetDepth() > 1)
 		{
-			auto* argNode = dynamic_cast<const StackArgNode*>(node);
-			assert( argNode != nullptr );
-
-			return GetFont().GetStringWidth(GetFontManager(), argNode->GetValue());
+			auto& argNode = dynamic_cast<const StackArgNode&>(*node);
+			return GetFont().GetStringWidth(GetFontManager(), argNode.GetValue());
 		}
 		else
 		{
@@ -283,12 +276,10 @@ StackWidget::HandleMouseDown
 				node = node->GetParent();
 			}
 
-			auto* stackNode = dynamic_cast<const StackFrameNode*>(node);
-			assert( stackNode != nullptr );
-
+			auto& stackNode = dynamic_cast<const StackFrameNode&>(*node);
 			JString fileName;
 			JIndex lineIndex;
-			if (stackNode->GetFile(&fileName, &lineIndex))
+			if (stackNode.GetFile(&fileName, &lineIndex))
 			{
 				itsCommandDir->OpenSourceFile(fileName, lineIndex);
 			}
@@ -504,10 +495,8 @@ StackWidget::Receive
 				node = node->GetParent();
 			}
 
-			auto* stackNode = dynamic_cast<const StackFrameNode*>(node);
-			assert( stackNode != nullptr );
-
-			SwitchToFrame(stackNode->GetID());
+			auto& stackNode = dynamic_cast<const StackFrameNode&>(*node);
+			SwitchToFrame(stackNode.GetID());
 		}
 
 		JXNamedTreeListWidget::Receive(sender, message);

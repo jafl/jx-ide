@@ -62,5 +62,5 @@ gdb::GetProgramNameCmd::HandleSuccess
 	// Link has to broadcast SymbolsLoaded regardless of whether or not
 	// we get what we expect from gdb.
 
-	dynamic_cast<Link*>(GetLink())->SaveProgramName(fileName);
+	dynamic_cast<Link&>(*GetLink()).SaveProgramName(fileName);
 }

@@ -47,5 +47,5 @@ gdb::PingTask::Perform
 	const Time delta
 	)
 {
-	dynamic_cast<gdb::Link*>(GetLink())->SendPing();
+	dynamic_cast<Link&>(*GetLink()).SendPing();
 }

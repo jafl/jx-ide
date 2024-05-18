@@ -66,7 +66,7 @@ jvm::Socket::open
 	if (result == 0)
 	{
 		JNetworkProtocolBase<ACE_SOCK_STREAM>::Send(kHandshake);
-		dynamic_cast<Link*>(GetLink())->ConnectionEstablished(this);
+		dynamic_cast<Link&>(*GetLink()).ConnectionEstablished(this);
 		StartTimer();
 	}
 	return result;
@@ -86,7 +86,7 @@ jvm::Socket::handle_close
 	ACE_Reactor_Mask	m
 	)
 {
-	dynamic_cast<Link*>(GetLink())->ConnectionFinished(this);
+	dynamic_cast<Link&>(*GetLink()).ConnectionFinished(this);
 	return JNetworkProtocolBase<ACE_SOCK_STREAM>::handle_close(h, m);
 }
 
@@ -130,7 +130,7 @@ jvm::Socket::handle_input
 			itsHandshakeFinishedFlag = true;
 			itsRecvData->RemoveNextItems(1, kHandshake.GetByteCount());
 
-			dynamic_cast<Link*>(GetLink())->InitDebugger();
+			dynamic_cast<Link&>(*GetLink()).InitDebugger();
 		}
 
 		while (itsHandshakeFinishedFlag && itsRecvData->GetItemCount() >= 11)

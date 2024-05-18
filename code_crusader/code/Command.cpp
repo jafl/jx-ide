@@ -616,18 +616,16 @@ Command::Receive
 {
 	if (message.Is(JProcess::kFinished))
 	{
-		auto* info = dynamic_cast<const JProcess::Finished*>(&message);
-		assert( info != nullptr );
-		const bool cancelled = info->GetReason() != kJChildFinished;
-		ProcessFinished(info->Successful() && !cancelled, cancelled);
+		auto& info           = dynamic_cast<const JProcess::Finished&>(message);
+		const bool cancelled = info.GetReason() != kJChildFinished;
+		ProcessFinished(info.Successful() && !cancelled, cancelled);
 	}
 	else if (sender == itsMakeDependCmd && message.Is(Command::kFinished))
 	{
-		auto* info = dynamic_cast<const Command::Finished*>(&message);
-		assert( info != nullptr );
+		auto& info           = dynamic_cast<const Command::Finished&>(message);
 		itsMakeDependCmd     = nullptr;
-		const bool cancelled = info->Cancelled();
-		ProcessFinished(info->Successful() && !cancelled, cancelled);
+		const bool cancelled = info.Cancelled();
+		ProcessFinished(info.Successful() && !cancelled, cancelled);
 	}
 	else
 	{
@@ -649,9 +647,8 @@ Command::ReceiveWithFeedback
 {
 	if (sender == itsOutputDoc && message->Is(CommandOutputDocument::kFinished))
 	{
-		auto* info = dynamic_cast<ExecOutputDocument::Finished*>(message);
-		assert( info != nullptr );
-		ProcessFinished(info->Successful(), info->Cancelled());
+		auto& info = dynamic_cast<ExecOutputDocument::Finished&>(*message);
+		ProcessFinished(info.Successful(), info.Cancelled());
 	}
 	else
 	{

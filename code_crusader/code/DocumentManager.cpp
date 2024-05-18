@@ -1020,9 +1020,8 @@ DocumentManager::SaveTextDocuments
 		{
 			if (IsCommandOutput(doc->GetFileType()))
 			{
-				auto* cmdDoc = dynamic_cast<CommandOutputDocument*>(doc);
-				assert( cmdDoc != nullptr );
-				if (cmdDoc->CommandRunning())
+				auto& cmdDoc = dynamic_cast<CommandOutputDocument&>(*doc);
+				if (cmdDoc.CommandRunning())
 				{
 					continue;
 				}
@@ -1076,9 +1075,8 @@ DocumentManager::CloseTextDocuments()
 			TextDocument* doc = itsTextDocuments->GetItem(i);
 			if (IsCommandOutput(doc->GetFileType()))
 			{
-				auto* cmdDoc = dynamic_cast<CommandOutputDocument*>(doc);
-				assert( cmdDoc != nullptr );
-				if (cmdDoc->CommandRunning())
+				auto& cmdDoc = dynamic_cast<CommandOutputDocument&>(*doc);
+				if (cmdDoc.CommandRunning())
 				{
 					i++;
 					continue;
@@ -1760,45 +1758,40 @@ DocumentManager::Receive
 {
 	if (sender == itsProjectDocuments && message.Is(JListT::kItemsInserted))
 	{
-		auto* info = dynamic_cast<const JListT::ItemsInserted*>(&message);
-		assert( info != nullptr );
-		if (info->Contains(1))
+		auto& info = dynamic_cast<const JListT::ItemsInserted&>(message);
+		if (info.Contains(1))
 		{
 			Broadcast(ProjectDocumentActivated(itsProjectDocuments));
 		}
 	}
 	else if (sender == itsProjectDocuments && message.Is(JListT::kItemsRemoved))
 	{
-		auto* info = dynamic_cast<const JListT::ItemsRemoved*>(&message);
-		assert( info != nullptr );
-		if (info->Contains(1))
+		auto& info = dynamic_cast<const JListT::ItemsRemoved&>(message);
+		if (info.Contains(1))
 		{
 			Broadcast(ProjectDocumentActivated(itsProjectDocuments));
 		}
 	}
 	else if (sender == itsProjectDocuments && message.Is(JListT::kItemMoved))
 	{
-		auto* info = dynamic_cast<const JListT::ItemMoved*>(&message);
-		assert( info != nullptr );
-		if (info->GetOrigIndex() == 1 || info->GetNewIndex() == 1)
+		auto& info = dynamic_cast<const JListT::ItemMoved&>(message);
+		if (info.GetOrigIndex() == 1 || info.GetNewIndex() == 1)
 		{
 			Broadcast(ProjectDocumentActivated(itsProjectDocuments));
 		}
 	}
 	else if (sender == itsProjectDocuments && message.Is(JListT::kItemsSwapped))
 	{
-		auto* info = dynamic_cast<const JListT::ItemsSwapped*>(&message);
-		assert( info != nullptr );
-		if (info->GetIndex1() == 1 || info->GetIndex2() == 1)
+		auto& info = dynamic_cast<const JListT::ItemsSwapped&>(message);
+		if (info.GetIndex1() == 1 || info.GetIndex2() == 1)
 		{
 			Broadcast(ProjectDocumentActivated(itsProjectDocuments));
 		}
 	}
 	else if (sender == itsProjectDocuments && message.Is(JListT::kItemsChanged))
 	{
-		auto* info = dynamic_cast<const JListT::ItemsChanged*>(&message);
-		assert( info != nullptr );
-		if (info->Contains(1))
+		auto& info = dynamic_cast<const JListT::ItemsChanged&>(message);
+		if (info.Contains(1))
 		{
 			Broadcast(ProjectDocumentActivated(itsProjectDocuments));
 		}

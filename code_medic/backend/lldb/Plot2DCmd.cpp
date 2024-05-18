@@ -75,7 +75,7 @@ lldb::Plot2DCmd::HandleSuccess
 	)
 {
 	SBFrame f =
-		dynamic_cast<Link*>(GetLink())->GetDebugger()->
+		dynamic_cast<Link&>(*GetLink()).GetDebugger()->
 			GetSelectedTarget().GetProcess().GetSelectedThread().GetSelectedFrame();
 
 	JArray<JFloat>* x = GetX();

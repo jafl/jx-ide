@@ -368,9 +368,8 @@ StringCompleter::Receive
 	if (sender == GetDocumentManager() &&
 		message.Is(DocumentManager::kProjectDocumentCreated))
 	{
-		auto* info = dynamic_cast<const DocumentManager::ProjectDocumentCreated*>(&message);
-		assert( info != nullptr );
-		ListenTo(info->GetProjectDocument()->GetSymbolDirector()->GetSymbolList());
+		auto& info = dynamic_cast<const DocumentManager::ProjectDocumentCreated&>(message);
+		ListenTo(info.GetProjectDocument()->GetSymbolDirector()->GetSymbolList());
 		// SymbolList guaranteed to broadcast after first scan
 	}
 	else if (sender == GetDocumentManager() &&

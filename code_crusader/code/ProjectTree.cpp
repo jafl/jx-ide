@@ -71,8 +71,7 @@ ProjectNode*
 ProjectTree::GetProjectRoot()
 	const
 {
-	auto* rootNode =
-		dynamic_cast<ProjectNode*>(const_cast<JTreeNode*>(GetRoot()));
+	auto* rootNode = dynamic_cast<ProjectNode*>(const_cast<JTreeNode*>(GetRoot()));
 	assert( rootNode != nullptr );
 	return rootNode;
 }

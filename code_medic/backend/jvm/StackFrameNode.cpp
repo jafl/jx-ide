@@ -60,10 +60,8 @@ jvm::StackFrameNode::Receive
 {
 	if (message.Is(Link::kIDResolved))
 	{
-		auto* info = dynamic_cast<const Link::IDResolved*>(&message);
-		assert( info != nullptr );
-
-		if (info->GetID() == itsClassID || info->GetID() == itsMethodID)
+		auto& info = dynamic_cast<const Link::IDResolved&>(message);
+		if (info.GetID() == itsClassID || info.GetID() == itsMethodID)
 		{
 			UpdateNodeName();	// can't stop listening, because base class might be listening, too
 		}
@@ -83,10 +81,10 @@ jvm::StackFrameNode::Receive
 bool
 jvm::StackFrameNode::UpdateNodeName()
 {
-	auto* link = dynamic_cast<Link*>(GetLink());
+	auto& link = dynamic_cast<Link&>(*GetLink());
 	JString c, m;
-	if (link->GetClassName(itsClassID, &c) &&
-		link->GetMethodName(itsClassID, itsMethodID, &m))
+	if (link.GetClassName(itsClassID, &c) &&
+		link.GetMethodName(itsClassID, itsMethodID, &m))
 	{
 		c += ".";
 		c += m;

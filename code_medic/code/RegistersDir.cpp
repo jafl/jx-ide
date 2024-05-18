@@ -221,9 +221,8 @@ RegistersDir::Receive
 
 	else if (sender == GetLink() && message.Is(Link::kSymbolsLoaded))
 	{
-		auto* info = dynamic_cast<const Link::SymbolsLoaded*>(&message);
-		assert( info != nullptr );
-		UpdateWindowTitle(info->GetProgramName());
+		auto& info = dynamic_cast<const Link::SymbolsLoaded&>(message);
+		UpdateWindowTitle(info.GetProgramName());
 	}
 
 	else

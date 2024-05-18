@@ -668,9 +668,8 @@ FileListDirector::ReceiveWithFeedback
 {
 	if (sender == itsCmdMenu && message->Is(CommandMenu::kGetTargetInfo))
 	{
-		auto* info = dynamic_cast<CommandMenu::GetTargetInfo*>(message);
-		assert( info != nullptr );
-		itsFLTable->GetSelection(info->GetFileList());
+		auto& info = dynamic_cast<CommandMenu::GetTargetInfo&>(*message);
+		itsFLTable->GetSelection(info.GetFileList());
 	}
 	else
 	{

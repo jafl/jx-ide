@@ -86,8 +86,7 @@ ManPageDocument::Create
 	// create a new one
 
 	ManPageDocument* trueDoc;
-	auto* doc =
-		jnew ManPageDocument(pageName, pageIndex, apropos, &trueDoc);
+	auto* doc = jnew ManPageDocument(pageName, pageIndex, apropos, &trueDoc);
 
 	if (doc != trueDoc)
 	{

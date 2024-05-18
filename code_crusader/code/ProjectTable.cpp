@@ -932,9 +932,8 @@ ProjectTable::EditSubprojectConfig()
 		ProjectNode* node = GetProjectNode(cell.y);
 		if (node->GetType() == kLibraryNT)
 		{
-			auto* lib = dynamic_cast<LibraryNode*>(node);
-			assert( lib != nullptr );
-			lib->EditSubprojectConfig();
+			auto& lib = dynamic_cast<LibraryNode&>(*node);
+			lib.EditSubprojectConfig();
 		}
 	}
 }
@@ -1152,11 +1151,9 @@ ProjectTable::GetImage
 	const ProjectNode* node = GetProjectNode(index);
 	if (itsMarkWritableFlag && node->GetType() == kFileNT)
 	{
-		const auto* n = dynamic_cast<const FileNodeBase*>(node);
-		assert( n != nullptr );
-
+		auto& n = dynamic_cast<const FileNodeBase&>(*node);
 		JString fullName;
-		if (n->GetFullName(&fullName) && JFileWritable(fullName))
+		if (n.GetFullName(&fullName) && JFileWritable(fullName))
 		{
 			*image = (node->IncludedInMakefile() ?
 					  GetWritableSourceFileIcon() : GetWritablePlainFileIcon());
@@ -1455,9 +1452,8 @@ ProjectTable::GetSelectionData
 		auto* list = jnew JPtrArray<JString>(JPtrArrayT::kDeleteAll);
 		GetSelectedFileNames(list);
 
-		auto* fileData = dynamic_cast<JXFileSelection*>(data);
-		assert( fileData != nullptr );
-		fileData->SetData(list);
+		auto& fileData = dynamic_cast<JXFileSelection&>(*data);
+		fileData.SetData(list);
 	}
 	else
 	{
@@ -1513,11 +1509,9 @@ ProjectTable::CopyFileToDNDList
 	)
 	const
 {
-	const auto* fNode = dynamic_cast<const FileNodeBase*>(node);
-	assert( fNode != nullptr );
-
-	auto* s = jnew JString;
-	if (fNode->GetFullName(s))
+	auto& fNode = dynamic_cast<const FileNodeBase&>(*node);
+	auto* s     = jnew JString;
+	if (fNode.GetFullName(s))
 	{
 		list->Append(s);
 	}
@@ -2277,9 +2271,8 @@ ProjectTable::CreateXInputField
 
 	if (GetDepth(cell.y) == kFileDepth)
 	{
-		auto* node = dynamic_cast<FileNodeBase*>(GetProjectNode(cell.y));
-		assert( node != nullptr );
-		inputField->GetText()->SetText(node->GetFileName());
+		auto& node = dynamic_cast<FileNodeBase&>(*GetProjectNode(cell.y));
+		inputField->GetText()->SetText(node.GetFileName());
 
 		JRect r;
 		bool ok = GetImageRect(cell.y, &r);
@@ -2381,17 +2374,15 @@ ProjectTable::ExtractInputData
 
 		if (inputField->InputValid())
 		{
-			auto* node = dynamic_cast<FileNodeBase*>(GetProjectNode(cell.y));
-			assert( node != nullptr );
-
-			const JString origName = node->GetFileName();
+			auto& node             = dynamic_cast<FileNodeBase&>(*GetProjectNode(cell.y));
+			const JString origName = node.GetFileName();
 
 			JString origFullName, newFullName;
-			const bool existed = node->GetFullName(&origFullName);
+			const bool existed = node.GetFullName(&origFullName);
 
-			node->SetFileName(inputField->GetText()->GetText());
+			node.SetFileName(inputField->GetText()->GetText());
 
-			const bool exists = node->GetFullName(&newFullName);
+			const bool exists = node.GetFullName(&newFullName);
 
 			bool success = true;
 			if (itsInputAction == kRename && existed && !newFullName.IsEmpty() &&
@@ -2439,7 +2430,7 @@ ProjectTable::ExtractInputData
 			if (success)
 			{
 				JString path;
-				if (node->GetFullName(&path) &&
+				if (node.GetFullName(&path) &&
 					!itsDoc->GetDirectories().Contains(path))
 				{
 					itsDoc->SymbolDatabaseNeedsUpdate();
@@ -2447,7 +2438,7 @@ ProjectTable::ExtractInputData
 			}
 			else
 			{
-				node->SetFileName(origName);
+				node.SetFileName(origName);
 			}
 
 			ok = true;
@@ -2573,13 +2564,11 @@ ProjectTable::WriteSetup
 		const JSize groupCount = rootNode->GetChildCount();
 		for (JIndex i=1; i<=groupCount; i++)
 		{
-			auto* child = dynamic_cast<const JNamedTreeNode*>(rootNode->GetChild(i));
-			assert( child != nullptr );
-
-			if (treeList->IsOpen(child))
+			auto& child = dynamic_cast<const JNamedTreeNode&>(*rootNode->GetChild(i));
+			if (treeList->IsOpen(&child))
 			{
 				*setOutput << ' ' << JBoolToString(true);
-				*setOutput << ' ' << child->GetName();
+				*setOutput << ' ' << child.GetName();
 			}
 		}
 

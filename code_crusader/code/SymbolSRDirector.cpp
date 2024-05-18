@@ -196,10 +196,9 @@ SymbolSRDirector::ReceiveWithFeedback
 {
 	if (sender == itsCmdMenu && message->Is(CommandMenu::kGetTargetInfo))
 	{
-		auto* info = dynamic_cast<CommandMenu::GetTargetInfo*>(message);
-		assert( info != nullptr );
-		itsSymbolTable->GetFileNamesForSelection(info->GetFileList(),
-												 info->GetLineIndexList());
+		auto& info = dynamic_cast<CommandMenu::GetTargetInfo&>(*message);
+		itsSymbolTable->GetFileNamesForSelection(info.GetFileList(),
+												 info.GetLineIndexList());
 	}
 	else
 	{

@@ -61,22 +61,22 @@ jvm::GetThreadGroupsCmd::Starting()
 		return;
 	}
 
-	auto* link = dynamic_cast<Link*>(GetLink());
+	auto& link = dynamic_cast<Link&>(*GetLink());
 	if (itsParent == nullptr)
 	{
-		link->Send(this,
+		link.Send(this,
 			Link::kVirtualMachineCmdSet, Link::kVMTopLevelThreadGroupsCmd, nullptr, 0);
 	}
 	else
 	{
-		const JSize length = link->GetObjectIDSize();
+		const JSize length = link.GetObjectIDSize();
 
 		auto* data = (unsigned char*) calloc(length, 1);
 		assert( data != nullptr );
 
 		Socket::Pack(length, itsParent->GetID(), data);
 
-		link->Send(this,
+		link.Send(this,
 			Link::kThreadGroupReferenceCmdSet, Link::kTGChildrenCmd, data, length);
 
 		free(data);
@@ -94,9 +94,9 @@ jvm::GetThreadGroupsCmd::HandleSuccess
 	const JString& origData
 	)
 {
-	auto* link = dynamic_cast<Link*>(GetLink());
+	auto& link = dynamic_cast<Link&>(*GetLink());
 	const Socket::MessageReady* msg;
-	if (!link->GetLatestMessageFromJVM(&msg))
+	if (!link.GetLatestMessageFromJVM(&msg))
 	{
 		return;
 	}
@@ -107,7 +107,7 @@ jvm::GetThreadGroupsCmd::HandleSuccess
 	}
 
 	const unsigned char* data = msg->GetData();
-	const JSize idLength      = link->GetObjectIDSize();
+	const JSize idLength      = link.GetObjectIDSize();
 
 	if (itsParent != nullptr)
 	{
@@ -120,10 +120,9 @@ jvm::GetThreadGroupsCmd::HandleSuccess
 			data            += idLength;
 
 			ThreadNode* node;
-			if (!link->FindThread(id, &node))	// might be created by ThreadStartEvent
+			if (!link.FindThread(id, &node))	// might be created by ThreadStartEvent
 			{
 				node = jnew ThreadNode(ThreadNode::kThreadType, id);
-
 				itsParent->AppendThread(node);
 			}
 		}
@@ -138,10 +137,9 @@ jvm::GetThreadGroupsCmd::HandleSuccess
 		data            += idLength;
 
 		ThreadNode* node;
-		if (!link->FindThread(id, &node))	// might be created by ThreadStartEvent
+		if (!link.FindThread(id, &node))	// might be created by ThreadStartEvent
 		{
 			node = jnew ThreadNode(ThreadNode::kGroupType, id);
-
 			if (itsParent != nullptr)
 			{
 				itsParent->AppendThread(node);

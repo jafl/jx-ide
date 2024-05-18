@@ -43,7 +43,7 @@ jvm::GetIDSizesCmd::Starting()
 {
 	Command::Starting();
 
-	dynamic_cast<Link*>(GetLink())->Send(this,
+	dynamic_cast<Link&>(*GetLink()).Send(this,
 		Link::kVirtualMachineCmdSet, Link::kVMIDSizesCmd, nullptr, 0);
 }
 
@@ -58,9 +58,9 @@ jvm::GetIDSizesCmd::HandleSuccess
 	const JString& origData
 	)
 {
-	auto* link = dynamic_cast<Link*>(GetLink());
+	auto& link = dynamic_cast<Link&>(*GetLink());
 	const Socket::MessageReady* msg;
-	if (!link->GetLatestMessageFromJVM(&msg))
+	if (!link.GetLatestMessageFromJVM(&msg))
 	{
 		return;
 	}
@@ -74,5 +74,5 @@ jvm::GetIDSizesCmd::HandleSuccess
 	const JSize refTypeIDSize = Socket::Unpack4(data+12);
 	const JSize frameIDSize   = Socket::Unpack4(data+16);
 
-	link->SetIDSizes(fieldIDSize, methodIDSize, objectIDSize, refTypeIDSize, frameIDSize);
+	link.SetIDSizes(fieldIDSize, methodIDSize, objectIDSize, refTypeIDSize, frameIDSize);
 }

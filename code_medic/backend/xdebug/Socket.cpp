@@ -54,7 +54,7 @@ xdebug::Socket::open
 	const int result = JMessageProtocol<ACE_SOCK_STREAM>::open(data);
 	if (result == 0)
 	{
-		dynamic_cast<Link*>(GetLink())->ConnectionEstablished(this);
+		dynamic_cast<Link&>(*GetLink()).ConnectionEstablished(this);
 	}
 	return result;
 }
@@ -119,6 +119,6 @@ xdebug::Socket::handle_close
 	ACE_Reactor_Mask	m
 	)
 {
-	dynamic_cast<Link*>(GetLink())->ConnectionFinished(this);
+	dynamic_cast<Link&>(*GetLink()).ConnectionFinished(this);
 	return JMessageProtocol<ACE_SOCK_STREAM>::handle_close(h, m);
 }

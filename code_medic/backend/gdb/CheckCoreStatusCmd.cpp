@@ -62,5 +62,5 @@ gdb::CheckCoreStatusCmd::HandleSuccess
 	// Link has to broadcast status of core regardless of whether or not
 	// we get what we expect from gdb.
 
-	dynamic_cast<Link*>(GetLink())->SaveCoreName(fileName);
+	dynamic_cast<Link&>(*GetLink()).SaveCoreName(fileName);
 }

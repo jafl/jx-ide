@@ -337,9 +337,8 @@ Array1DDir::Receive
 
 	else if (sender == itsTree && message.Is(JTree::kNodeChanged))
 	{
-		auto* info = dynamic_cast<const JTree::NodeChanged*>(&message);
-		assert(info != nullptr);
-		if (info->GetNode() == itsCurrentNode)
+		auto& info = dynamic_cast<const JTree::NodeChanged&>(message);
+		if (info.GetNode() == itsCurrentNode)
 		{
 			itsCurrentNode = nullptr;
 			CreateNextNode();

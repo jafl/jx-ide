@@ -43,5 +43,5 @@ gdb::GetStopLocationForLinkCmd::HandleSuccess
 	const JString& cmdData
 	)
 {
-	dynamic_cast<Link*>(GetLink())->SendProgramStopped(GetLocation());
+	dynamic_cast<Link&>(*GetLink()).SendProgramStopped(GetLocation());
 }

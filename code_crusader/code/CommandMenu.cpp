@@ -172,12 +172,11 @@ CommandMenu::Receive
 	}
 	else if (sender == this && message.Is(JXMenu::kItemSelected))
 	{
-		auto* selection = dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
+		auto& selection = dynamic_cast<const JXMenu::ItemSelected&>(message);
 
 		GetTargetInfo info;
 		BuildTargetInfo(&info);
-		HandleSelection(selection->GetIndex(), info);
+		HandleSelection(selection.GetIndex(), info);
 	}
 
 	else

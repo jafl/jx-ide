@@ -206,14 +206,10 @@ VarTreeWidget::WatchExpression()
 {
 	JTableSelectionIterator iter(&(GetTableSelection()));
 	JPoint cell;
-	JString expr;
 	while (iter.Next(&cell))
 	{
-		auto* node = dynamic_cast<VarNode*>(GetTreeList()->GetNode(cell.y));
-		assert( node != nullptr );
-
-		expr = node->GetFullName();
-		GetLink()->WatchExpression(expr);
+		auto& node = dynamic_cast<VarNode&>(*GetTreeList()->GetNode(cell.y));
+		GetLink()->WatchExpression(node.GetFullName());
 	}
 
 	ClearIncrementalSearchBuffer();
@@ -229,14 +225,10 @@ VarTreeWidget::WatchLocation()
 {
 	JTableSelectionIterator iter(&(GetTableSelection()));
 	JPoint cell;
-	JString expr;
 	while (iter.Next(&cell))
 	{
-		auto* node = dynamic_cast<VarNode*>(GetTreeList()->GetNode(cell.y));
-		assert( node != nullptr );
-
-		expr = node->GetFullName();
-		GetLink()->WatchLocation(expr);
+		auto& node = dynamic_cast<VarNode&>(*GetTreeList()->GetNode(cell.y));
+		GetLink()->WatchLocation(node.GetFullName());
 	}
 
 	ClearIncrementalSearchBuffer();
@@ -252,14 +244,10 @@ VarTreeWidget::Display1DArray()
 {
 	JTableSelectionIterator iter(&(GetTableSelection()));
 	JPoint cell;
-	JString expr;
 	while (iter.Next(&cell))
 	{
-		auto* node = dynamic_cast<VarNode*>(GetTreeList()->GetNode(cell.y));
-		assert( node != nullptr );
-
-		expr = node->GetFullName();
-		itsDir->Display1DArray(expr);
+		auto& node = dynamic_cast<VarNode&>(*GetTreeList()->GetNode(cell.y));
+		itsDir->Display1DArray(node.GetFullName());
 	}
 
 	ClearIncrementalSearchBuffer();
@@ -275,14 +263,10 @@ VarTreeWidget::Plot1DArray()
 {
 	JTableSelectionIterator iter(&(GetTableSelection()));
 	JPoint cell;
-	JString expr;
 	while (iter.Next(&cell))
 	{
-		auto* node = dynamic_cast<VarNode*>(GetTreeList()->GetNode(cell.y));
-		assert( node != nullptr );
-
-		expr = node->GetFullName();
-		itsDir->Plot1DArray(expr);
+		auto& node = dynamic_cast<VarNode&>(*GetTreeList()->GetNode(cell.y));
+		itsDir->Plot1DArray(node.GetFullName());
 	}
 
 	ClearIncrementalSearchBuffer();
@@ -298,14 +282,10 @@ VarTreeWidget::Display2DArray()
 {
 	JTableSelectionIterator iter(&(GetTableSelection()));
 	JPoint cell;
-	JString expr;
 	while (iter.Next(&cell))
 	{
-		auto* node = dynamic_cast<VarNode*>(GetTreeList()->GetNode(cell.y));
-		assert( node != nullptr );
-
-		expr = node->GetFullName();
-		itsDir->Display2DArray(expr);
+		auto& node = dynamic_cast<VarNode&>(*GetTreeList()->GetNode(cell.y));
+		itsDir->Display2DArray(node.GetFullName());
 	}
 
 	ClearIncrementalSearchBuffer();
@@ -324,16 +304,11 @@ VarTreeWidget::ExamineMemory
 {
 	JTableSelectionIterator iter(&(GetTableSelection()));
 	JPoint cell;
-	JString expr;
 	MemoryDir* dir = nullptr;
 	while (iter.Next(&cell))
 	{
-		auto* node = dynamic_cast<VarNode*>(GetTreeList()->GetNode(cell.y));
-		assert( node != nullptr );
-
-		expr = node->GetFullName();
-
-		dir = jnew MemoryDir(itsDir, expr);
+		auto& node = dynamic_cast<VarNode&>(*GetTreeList()->GetNode(cell.y));
+		dir        = jnew MemoryDir(itsDir, node.GetFullName());
 		dir->SetDisplayType(type);
 		dir->Activate();
 	}
@@ -360,10 +335,8 @@ VarTreeWidget::ReadSetup
 	const JFileVersion	vers
 	)
 {
-	auto* root = dynamic_cast<VarNode*>(itsTree->GetRoot());
-	assert( root != nullptr );
-
-	root->DeleteAllChildren();
+	auto& root = dynamic_cast<VarNode&>(*itsTree->GetRoot());
+	root.DeleteAllChildren();
 
 	JSize count;
 	input >> count;
@@ -391,15 +364,14 @@ VarTreeWidget::WriteSetup
 	)
 	const
 {
-	auto* root = dynamic_cast<VarNode*>(itsTree->GetRoot());
-	assert( root != nullptr );
+	auto& root = dynamic_cast<VarNode&>(*itsTree->GetRoot());
 
-	const JSize count = root->GetChildCount();
+	const JSize count = root.GetChildCount();
 	output << ' ' << count;
 
 	for (JIndex i=1; i<=count; i++)
 	{
-		VarNode* node = root->GetVarChild(i);
+		VarNode* node = root.GetVarChild(i);
 		output << ' ' << node->GetName();
 		output << ' ' << node->GetBase();
 	}
@@ -454,14 +426,12 @@ VarTreeWidget::IsEditable
 	)
 	const
 {
-	auto* node = dynamic_cast<const VarNode*>(GetTreeList()->GetNode(cell.y));
-	assert( node != nullptr );
-
-	return JXTreeListWidget::IsEditable(cell) &&
-				((JIndex(cell.x) == GetNodeColIndex() &&
-				  itsIsMainDisplayFlag && node->GetDepth() == 1) ||
-				 (JIndex(cell.x) == kValueColIndex &&
-				  node->ValueIsValid() && !(node->GetValue()).IsEmpty()));
+	auto& node = dynamic_cast<const VarNode&>(*GetTreeList()->GetNode(cell.y));
+	return (JXTreeListWidget::IsEditable(cell) &&
+			((JIndex(cell.x) == GetNodeColIndex() &&
+			  itsIsMainDisplayFlag && node.GetDepth() == 1) ||
+			 (JIndex(cell.x) == kValueColIndex &&
+			  node.ValueIsValid() && !node.GetValue().IsEmpty())));
 }
 
 /******************************************************************************
@@ -482,13 +452,11 @@ VarTreeWidget::TableDrawCell
 		const JPoint fakeCell(GetNodeColIndex(), cell.y);
 		HilightIfSelected(p, fakeCell, rect);
 
-		auto* node = dynamic_cast<VarNode*>(GetTreeList()->GetNode(cell.y));
-		assert( node != nullptr );
-
+		auto& node = dynamic_cast<VarNode&>(*GetTreeList()->GetNode(cell.y));
 		JFont font = GetFont();
-		font.SetStyle(node->GetFontStyle());
+		font.SetStyle(node.GetFontStyle());
 		p.SetFont(font);
-		p.String(rect, node->GetValue(), JPainter::HAlign::kLeft, JPainter::VAlign::kCenter);
+		p.String(rect, node.GetValue(), JPainter::HAlign::kLeft, JPainter::VAlign::kCenter);
 	}
 	else
 	{
@@ -510,10 +478,8 @@ VarTreeWidget::GetMinCellWidth
 {
 	if (JIndex(cell.x) > GetNodeColIndex())
 	{
-		auto* node = dynamic_cast<const VarNode*>(GetTreeList()->GetNode(cell.y));
-		assert( node != nullptr );
-
-		return kHMargin + GetFont().GetStringWidth(GetFontManager(), node->GetValue());
+		auto& node = dynamic_cast<const VarNode&>(*GetTreeList()->GetNode(cell.y));
+		return kHMargin + GetFont().GetStringWidth(GetFontManager(), node.GetValue());
 	}
 	else
 	{
@@ -579,9 +545,8 @@ VarTreeWidget::HandleMouseDown
 		}
 		else
 		{
-			const auto* varNode = dynamic_cast<const VarNode*>(node);
-			assert( varNode != nullptr );
-			const JString expr = varNode->GetFullNameWithCast();
+			auto& varNode      = dynamic_cast<const VarNode&>(*node);
+			const JString expr = varNode.GetFullNameWithCast();
 			if (itsIsMainDisplayFlag)
 			{
 				NewExpression(expr);	// avoid Activate()
@@ -740,9 +705,8 @@ VarTreeWidget::CreateXInputField
 	JXInputField* input = JXNamedTreeListWidget::CreateXInputField(cell, x,y, w,h);
 	if (JIndex(cell.x) == kValueColIndex)
 	{
-		auto* node = dynamic_cast<VarNode*>(GetTreeList()->GetNode(cell.y));
-		assert( node != nullptr );
-		input->GetText()->SetText(node->GetValue());
+		auto& node = dynamic_cast<VarNode&>(*GetTreeList()->GetNode(cell.y));
+		input->GetText()->SetText(node.GetValue());
 	}
 
 	itsOrigEditValue = input->GetText()->GetText();
@@ -768,9 +732,6 @@ VarTreeWidget::ExtractInputData
 	assert( ok );
 	const JString& text = input->GetText()->GetText();
 
-	auto* node = dynamic_cast<VarNode*>(GetTreeList()->GetNode(cell.y));
-	assert( node != nullptr );
-
 	if (JIndex(cell.x) == GetNodeColIndex() &&
 		JXNamedTreeListWidget::ExtractInputData(cell))
 	{
@@ -780,8 +741,8 @@ VarTreeWidget::ExtractInputData
 	{
 		if (text != itsOrigEditValue)
 		{
-			const JString name = node->GetFullName();
-			GetLink()->SetValue(name, text);
+			auto& node = dynamic_cast<VarNode&>(*GetTreeList()->GetNode(cell.y));
+			GetLink()->SetValue(node.GetFullName(), text);
 		}
 		return true;
 	}
@@ -867,10 +828,9 @@ VarTreeWidget::Receive
 		{
 			// refresh value column to show fake selection
 
-			auto* selection = dynamic_cast<const JTableData::RectChanged*>(&message);
-			assert( selection != nullptr );
-			JRect r = selection->GetRect();
-			r.right = kValueColIndex;
+			auto& selection = dynamic_cast<const JTableData::RectChanged&>(message);
+			JRect r         = selection.GetRect();
+			r.right         = kValueColIndex;
 			TableRefreshCellRect(r);
 		}
 
@@ -908,7 +868,7 @@ VarTreeWidget::ShouldUpdate
 	const bool update
 	)
 {
-	dynamic_cast<VarNode*>(itsTree->GetRoot())->ShouldUpdate(update);
+	dynamic_cast<VarNode&>(*itsTree->GetRoot()).ShouldUpdate(update);
 }
 
 /******************************************************************************
@@ -925,10 +885,9 @@ VarTreeWidget::FlushOldData()
 	const JSize count = root->GetChildCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		auto* child = dynamic_cast<VarNode*>(root->GetChild(i));
-		assert( child != nullptr );
-		child->DeleteAllChildren();
-		child->SetValue(JString::empty);
+		auto& child = dynamic_cast<VarNode&>(*root->GetChild(i));
+		child.DeleteAllChildren();
+		child.SetValue(JString::empty);
 	}
 }
 
@@ -1030,19 +989,18 @@ VarTreeWidget::CopySelectedItems
 		JPoint cell;
 		while (iter.Next(&cell))
 		{
-			auto* node = dynamic_cast<const VarNode*>(GetTreeList()->GetNode(cell.y));
-			assert( node != nullptr );
+			auto& node = dynamic_cast<const VarNode&>(*GetTreeList()->GetNode(cell.y));
 			if (copyValue)
 			{
-				list.Append(node->GetValue());
+				list.Append(node.GetValue());
 			}
 			else if (useFullName)
 			{
-				list.Append(node->GetFullName());
+				list.Append(node.GetFullName());
 			}
 			else
 			{
-				list.Append(node->GetName());
+				list.Append(node.GetName());
 			}
 		}
 
@@ -1068,9 +1026,8 @@ VarTreeWidget::UpdateBaseMenu
 	JPoint cell;
 	while (iter.Next(&cell))
 	{
-		auto* node = dynamic_cast<const VarNode*>(GetTreeList()->GetNode(cell.y));
-		assert( node != nullptr );
-		const JInteger b = node->GetBase();
+		auto& node       = dynamic_cast<const VarNode&>(*GetTreeList()->GetNode(cell.y));
+		const JInteger b = node.GetBase();
 
 		if (base >= 0 && b != base)
 		{
@@ -1119,8 +1076,7 @@ VarTreeWidget::HandleBaseMenu
 	JPoint cell;
 	while (iter.Next(&cell))
 	{
-		auto* node = dynamic_cast<VarNode*>(GetTreeList()->GetNode(cell.y));
-		assert( node != nullptr );
-		node->SetBase(base);
+		auto& node = dynamic_cast<VarNode&>(*GetTreeList()->GetNode(cell.y));
+		node.SetBase(base);
 	}
 }

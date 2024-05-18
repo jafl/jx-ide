@@ -165,13 +165,12 @@ TECaretInputBase::Receive
 {
 	if (sender == itsTE && message.Is(JTextEditor::kCaretLocationChanged))
 	{
-		auto* info = dynamic_cast<const JTextEditor::CaretLocationChanged*>(&message);
-		assert( info != nullptr );
+		auto& info = dynamic_cast<const JTextEditor::CaretLocationChanged&>(message);
 		if (itsOptimizeUpdateFlag)
 		{
 			GetWindow()->Update();	// avoid redrawing everything in between
 		}
-		SetValue(GetValue(*info));
+		SetValue(GetValue(info));
 		if (itsOptimizeUpdateFlag)
 		{
 			GetWindow()->Update();

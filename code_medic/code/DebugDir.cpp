@@ -116,10 +116,9 @@ DebugDir::Receive
 
 		if (message.Is(Link::kDebugOutput))
 		{
-			auto* msg = dynamic_cast<const Link::DebugOutput*>(&message);
-			assert( msg != nullptr );
+			auto& msg = dynamic_cast<const Link::DebugOutput&>(message);
 
-			const Link::DebugType type = msg->GetType();
+			const Link::DebugType type = msg.GetType();
 			if (type == Link::kCommandType)
 			{
 				itsText->SetCurrentFontColor(JColorManager::GetLightBlueColor());
@@ -136,11 +135,11 @@ DebugDir::Receive
 				itsFile << kLogPrefix.GetBytes();
 			}
 
-			itsText->Paste(msg->GetText());
+			itsText->Paste(msg.GetText());
 			itsText->SetCurrentFontColor(JColorManager::GetBlackColor());
 			itsText->Paste(JString::newline);
 
-			itsFile << msg->GetText();
+			itsFile << msg.GetText();
 			itsFile << std::endl;
 		}
 		else if (!message.Is(Link::kUserOutput))

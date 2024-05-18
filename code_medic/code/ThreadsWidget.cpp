@@ -125,13 +125,11 @@ ThreadsWidget::CalledBySelectThread
 	const JSize count = root->GetChildCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		auto* node = dynamic_cast<const ThreadNode*>(root->GetChild(i));
-		assert( node != nullptr );
-
-		if (node->GetID() == id)
+		auto& node = dynamic_cast<const ThreadNode&>(*root->GetChild(i));
+		if (node.GetID() == id)
 		{
 			JIndex j;
-			const bool found = list->FindNode(node, &j);
+			const bool found = list->FindNode(&node, &j);
 			if (found)
 			{
 				itsSelectingThreadFlag = fromUpdate;
@@ -142,7 +140,7 @@ ThreadsWidget::CalledBySelectThread
 			return true;
 		}
 
-		if (CalledBySelectThread(node, id, fromUpdate))
+		if (CalledBySelectThread(&node, id, fromUpdate))
 		{
 			return true;
 		}
@@ -202,13 +200,11 @@ ThreadsWidget::HandleMouseDown
 		if (modifiers.meta())
 		{
 			const JTreeNode* node = GetTreeList()->GetNode(cell.y);
-
-			auto* threadNode = dynamic_cast<const ThreadNode*>(node);
-			assert( threadNode != nullptr );
+			auto& threadNode      = dynamic_cast<const ThreadNode&>(*node);
 
 			JString fileName;
 			JIndex lineIndex;
-			if (threadNode->GetFile(&fileName, &lineIndex))
+			if (threadNode.GetFile(&fileName, &lineIndex))
 			{
 				itsCommandDir->OpenSourceFile(fileName, lineIndex);
 			}
@@ -424,12 +420,10 @@ ThreadsWidget::Receive
 			s.GetFirstSelectedCell(&cell))
 		{
 			const JTreeNode* node = GetTreeList()->GetNode(cell.y);
-
-			auto* threadNode = dynamic_cast<const ThreadNode*>(node);
-			assert( threadNode != nullptr );
+			auto& threadNode      = dynamic_cast<const ThreadNode&>(*node);
 
 			itsChangingThreadFlag   = true;
-			itsLastSelectedThreadID = threadNode->GetID();
+			itsLastSelectedThreadID = threadNode.GetID();
 			itsLink->SwitchToThread(itsLastSelectedThreadID);
 		}
 
@@ -579,9 +573,8 @@ ThreadsWidget::CalledBySaveOpenNodes1
 		JTreeNode* child = root->GetChild(i);
 		if (list->IsOpen(child))
 		{
-			auto* threadNode = dynamic_cast<ThreadNode*>(child);
-			assert( threadNode != nullptr );
-			itsOpenIDList->InsertSorted(threadNode->GetID());
+			auto& threadNode = dynamic_cast<ThreadNode&>(*child);
+			itsOpenIDList->InsertSorted(threadNode.GetID());
 		}
 
 		CalledBySaveOpenNodes1(child);
@@ -604,14 +597,14 @@ ThreadsWidget::RestoreOpenNodes
 	const JSize count = root->GetChildCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		auto* child = dynamic_cast<ThreadNode*>(root->GetChild(i));
+		auto& child = dynamic_cast<ThreadNode&>(*root->GetChild(i));
 		JIndex j;
-		if (itsOpenIDList->SearchSorted(child->GetID(), JListT::kAnyMatch, &j))
+		if (itsOpenIDList->SearchSorted(child.GetID(), JListT::kAnyMatch, &j))
 		{
-			list->Open(child);
+			list->Open(&child);
 		}
 
-		RestoreOpenNodes(child);
+		RestoreOpenNodes(&child);
 	}
 }
 

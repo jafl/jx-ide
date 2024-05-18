@@ -411,9 +411,8 @@ SaveNewProjectDialog::Receive
 	}
 	else if (sender == itsTemplateMenu && message.Is(JXMenu::kItemSelected))
 	{
-		auto* selection = dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		itsTemplateIndex = selection->GetIndex();
+		auto& selection = dynamic_cast<const JXMenu::ItemSelected&>(message);
+		itsTemplateIndex = selection.GetIndex();
 		UpdateMakefileMethod();
 	}
 

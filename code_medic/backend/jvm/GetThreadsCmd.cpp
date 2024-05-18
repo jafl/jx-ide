@@ -51,10 +51,10 @@ jvm::GetThreadsCmd::HandleSuccess
 	const JString& data
 	)
 {
-	auto* link = dynamic_cast<Link*>(GetLink());
-	CopyTree(link->GetThreadRoot(), itsTree->GetRoot());
+	auto& link = dynamic_cast<Link&>(*GetLink());
+	CopyTree(link.GetThreadRoot(), itsTree->GetRoot());
 
-	GetWidget()->FinishedLoading(link->GetCurrentThreadID());
+	GetWidget()->FinishedLoading(link.GetCurrentThreadID());
 }
 
 /******************************************************************************
@@ -72,19 +72,17 @@ jvm::GetThreadsCmd::CopyTree
 	const JSize count = src->GetChildCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		auto* child1 = dynamic_cast<ThreadNode*>(src->GetChild(i));
-
-		auto* child2 = jnew ThreadNode(*child1);
-
+		auto& child1 = dynamic_cast<ThreadNode&>(*src->GetChild(i));
+		auto* child2 = jnew ThreadNode(child1);
 		if (dest->IsRoot())
 		{
 			dest->Append(child2);
 		}
 		else
 		{
-			dynamic_cast<ThreadNode*>(dest)->AppendThread(child2);
+			dynamic_cast<ThreadNode&>(*dest).AppendThread(child2);
 		}
 
-		CopyTree(child1, child2);
+		CopyTree(&child1, child2);
 	}
 }

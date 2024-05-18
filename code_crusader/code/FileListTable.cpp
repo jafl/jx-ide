@@ -603,39 +603,35 @@ FileListTable::Receive
 {
 	if (sender == GetFullNameDataList() && message.Is(JListT::kItemsInserted))
 	{
-		auto* info = dynamic_cast<const JListT::ItemsInserted*>(&message);
-		assert( info != nullptr );
-		FilesAdded(*info);
+		auto& info = dynamic_cast<const JListT::ItemsInserted&>(message);
+		FilesAdded(info);
 	}
 	else if (sender == GetFullNameDataList() && message.Is(JListT::kItemsRemoved))
 	{
-		auto* info = dynamic_cast<const JListT::ItemsRemoved*>(&message);
-		assert( info != nullptr );
-		itsFileInfo->RemoveItems(*info);
+		auto& info = dynamic_cast<const JListT::ItemsRemoved&>(message);
+		itsFileInfo->RemoveItems(info);
 		if (itsFileUsage != nullptr)
 		{
-			itsFileUsage->RemoveItems(*info);
+			itsFileUsage->RemoveItems(info);
 		}
 	}
 
 	else if (sender == GetFullNameDataList() && message.Is(JListT::kItemMoved))
 	{
-		auto* info = dynamic_cast<const JListT::ItemMoved*>(&message);
-		assert( info != nullptr );
-		itsFileInfo->MoveItemToIndex(*info);
+		auto& info = dynamic_cast<const JListT::ItemMoved&>(message);
+		itsFileInfo->MoveItemToIndex(info);
 		if (itsFileUsage != nullptr)
 		{
-			itsFileUsage->MoveItemToIndex(*info);
+			itsFileUsage->MoveItemToIndex(info);
 		}
 	}
 	else if (sender == GetFullNameDataList() && message.Is(JListT::kItemsSwapped))
 	{
-		auto* info = dynamic_cast<const JListT::ItemsSwapped*>(&message);
-		assert( info != nullptr );
-		itsFileInfo->SwapItems(*info);
+		auto& info = dynamic_cast<const JListT::ItemsSwapped&>(message);
+		itsFileInfo->SwapItems(info);
 		if (itsFileUsage != nullptr)
 		{
-			itsFileUsage->SwapItems(*info);
+			itsFileUsage->SwapItems(info);
 		}
 	}
 	else if (sender == GetFullNameDataList() && message.Is(JListT::kSorted))
@@ -645,10 +641,8 @@ FileListTable::Receive
 
 	else if (sender == GetFullNameDataList() && message.Is(JListT::kItemsChanged))
 	{
-		auto* info = dynamic_cast<const JListT::ItemsChanged*>(&message);
-		assert( info != nullptr );
-
-		for (JIndex i=info->GetFirstIndex(); i<=info->GetLastIndex(); i++)
+		auto& info = dynamic_cast<const JListT::ItemsChanged&>(message);
+		for (JIndex i=info.GetFirstIndex(); i<=info.GetLastIndex(); i++)
 		{
 			UpdateFileInfo(i);
 		}

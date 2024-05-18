@@ -104,9 +104,8 @@ TEScriptMenu::Receive
 	}
 	else if (sender == this && message.Is(JXMenu::kItemSelected))
 	{
-		auto* info = dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert(info != nullptr);
-		if (HandleSelection(info->GetIndex()))
+		auto& info = dynamic_cast<const JXMenu::ItemSelected&>(message);
+		if (HandleSelection(info.GetIndex()))
 		{
 			return;
 		}

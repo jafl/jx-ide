@@ -564,11 +564,10 @@ BuildManager::Receive
 {
 	if (sender == itsMakeDependCmd && message.Is(Command::kFinished))
 	{
-		auto* info = dynamic_cast<const Command::Finished*>(&message);
-		assert( info != nullptr );
+		auto& info = dynamic_cast<const Command::Finished&>(message);
 
 		itsMakeDependCmd = nullptr;
-		if (info->Successful())
+		if (info.Successful())
 		{
 			itsModTime = itsNewModTime;
 		}

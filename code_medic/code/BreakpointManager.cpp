@@ -321,10 +321,9 @@ BreakpointManager::Receive
 	}
 	else if (sender == itsLink && message.Is(Link::kSymbolsLoaded))
 	{
-		auto* info = dynamic_cast<const Link::SymbolsLoaded*>(&message);
-		assert( info != nullptr );
+		auto& info        = dynamic_cast<const Link::SymbolsLoaded&>(message);
 		const JSize count = itsBPList->GetItemCount();
-		if (info->Successful() && itsRestoreBreakpointsFlag && count > 0)
+		if (info.Successful() && itsRestoreBreakpointsFlag && count > 0)
 		{
 			jdelete itsSavedBPList;
 			itsSavedBPList = jnew JPtrArray<Breakpoint>(JPtrArrayT::kDeleteAll);
@@ -332,7 +331,7 @@ BreakpointManager::Receive
 
 			for (JIndex i=1; i<=count; i++)
 			{
-				itsLink->SetBreakpoint(*(itsBPList->GetItem(i)));
+				itsLink->SetBreakpoint(*itsBPList->GetItem(i));
 			}
 		}
 		itsRestoreBreakpointsFlag = false;

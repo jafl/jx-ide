@@ -62,9 +62,8 @@ GetSourceFileListCmd::Receive
 	}
 	else if (sender == link && message.Is(Link::kSymbolsLoaded))
 	{
-		auto* info = dynamic_cast<const Link::SymbolsLoaded*>(&message);
-		assert( info != nullptr );
-		if (info->Successful())
+		auto& info = dynamic_cast<const Link::SymbolsLoaded&>(message);
+		if (info.Successful())
 		{
 			Command::Send();
 			itsNeedRedoOnFirstStop = true;

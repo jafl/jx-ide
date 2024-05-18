@@ -618,7 +618,7 @@ BreakpointTable::ExtractInputData
 	if (cell.x == kIgnoreCountColumn)
 	{
 		JInteger count;
-		const bool ok = dynamic_cast<JXIntegerInput*>(itsTextInput)->GetValue(&count);
+		const bool ok = dynamic_cast<JXIntegerInput&>(*itsTextInput).GetValue(&count);
 		assert( ok );
 		if (((JSize) count) != bp->GetIgnoreCount())
 		{

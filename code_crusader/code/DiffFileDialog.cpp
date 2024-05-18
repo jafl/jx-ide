@@ -690,9 +690,8 @@ DiffFileDialog::Receive
 	}
 	else if (sender == itsCVSRev1Menu && message.Is(JXMenu::kItemSelected))
 	{
-		auto* selection = dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleCVSRevMenu(itsCVSRev1Menu, selection->GetIndex(), &itsCVSRev1Cmd, itsCVSRev1Input);
+		auto& selection = dynamic_cast<const JXMenu::ItemSelected&>(message);
+		HandleCVSRevMenu(itsCVSRev1Menu, selection.GetIndex(), &itsCVSRev1Cmd, itsCVSRev1Input);
 	}
 
 	else if (sender == itsCVSRev2Menu && message.Is(JXMenu::kNeedsUpdate))
@@ -701,9 +700,8 @@ DiffFileDialog::Receive
 	}
 	else if (sender == itsCVSRev2Menu && message.Is(JXMenu::kItemSelected))
 	{
-		auto* selection = dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleCVSRevMenu(itsCVSRev2Menu, selection->GetIndex(), &itsCVSRev2Cmd, itsCVSRev2Input);
+		auto& selection = dynamic_cast<const JXMenu::ItemSelected&>(message);
+		HandleCVSRevMenu(itsCVSRev2Menu, selection.GetIndex(), &itsCVSRev2Cmd, itsCVSRev2Input);
 	}
 
 	else if (sender == itsSVNRev1Menu && message.Is(JXMenu::kNeedsUpdate))
@@ -712,9 +710,8 @@ DiffFileDialog::Receive
 	}
 	else if (sender == itsSVNRev1Menu && message.Is(JXMenu::kItemSelected))
 	{
-		auto* selection = dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleSVNRevMenu(itsSVNRev1Menu, selection->GetIndex(), &itsSVNRev1Cmd, itsSVNRev1Input);
+		auto& selection = dynamic_cast<const JXMenu::ItemSelected&>(message);
+		HandleSVNRevMenu(itsSVNRev1Menu, selection.GetIndex(), &itsSVNRev1Cmd, itsSVNRev1Input);
 	}
 
 	else if (sender == itsSVNRev2Menu && message.Is(JXMenu::kNeedsUpdate))
@@ -723,9 +720,8 @@ DiffFileDialog::Receive
 	}
 	else if (sender == itsSVNRev2Menu && message.Is(JXMenu::kItemSelected))
 	{
-		auto* selection = dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleSVNRevMenu(itsSVNRev2Menu, selection->GetIndex(), &itsSVNRev2Cmd, itsSVNRev2Input);
+		auto& selection = dynamic_cast<const JXMenu::ItemSelected&>(message);
+		HandleSVNRevMenu(itsSVNRev2Menu, selection.GetIndex(), &itsSVNRev2Cmd, itsSVNRev2Input);
 	}
 
 	else if (sender == itsGitRev1Menu && message.Is(JXMenu::kNeedsUpdate))
@@ -734,9 +730,8 @@ DiffFileDialog::Receive
 	}
 	else if (sender == itsGitRev1Menu && message.Is(JXMenu::kItemSelected))
 	{
-		auto* selection = dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleGitRevMenu(itsGitRev1Menu, selection->GetIndex(), &itsGitRev1Cmd, itsGitRev1Input);
+		auto& selection = dynamic_cast<const JXMenu::ItemSelected&>(message);
+		HandleGitRevMenu(itsGitRev1Menu, selection.GetIndex(), &itsGitRev1Cmd, itsGitRev1Input);
 	}
 
 	else if (sender == itsGitRev2Menu && message.Is(JXMenu::kNeedsUpdate))
@@ -745,9 +740,8 @@ DiffFileDialog::Receive
 	}
 	else if (sender == itsGitRev2Menu && message.Is(JXMenu::kItemSelected))
 	{
-		auto* selection = dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-		HandleGitRevMenu(itsGitRev2Menu, selection->GetIndex(), &itsGitRev2Cmd, itsGitRev2Input);
+		auto& selection = dynamic_cast<const JXMenu::ItemSelected&>(message);
+		HandleGitRevMenu(itsGitRev2Menu, selection.GetIndex(), &itsGitRev2Cmd, itsGitRev2Input);
 	}
 
 	else if (sender == itsTabGroup->GetCardEnclosure() &&

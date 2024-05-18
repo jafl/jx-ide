@@ -59,7 +59,7 @@ lldb::Array2DCmd::HandleSuccess
 	)
 {
 	SBFrame f =
-		dynamic_cast<Link*>(GetLink())->GetDebugger()->
+		dynamic_cast<Link&>(*GetLink()).GetDebugger()->
 			GetSelectedTarget().GetProcess().GetSelectedThread().GetSelectedFrame();
 	if (!f.IsValid())
 	{

@@ -330,9 +330,8 @@ jvm::Link::Receive
 {
 	if (sender == itsDebugLink && message.Is(Socket::kMessageReady))
 	{
-		auto* info = dynamic_cast<const Socket::MessageReady*>(&message);
-		assert( info != nullptr );
-		ReceiveMessageFromJVM(*info);
+		auto& info = dynamic_cast<const Socket::MessageReady&>(message);
+		ReceiveMessageFromJVM(info);
 	}
 	else if (sender == itsInputLink && message.Is(PipeT::kReadReady))
 	{
@@ -341,9 +340,8 @@ jvm::Link::Receive
 
 	else if (sender == itsProcess && message.Is(JProcess::kFinished))
 	{
-		auto* info = dynamic_cast<const JProcess::Finished*>(&message);
-		assert( info != nullptr );
-		CleanUpAfterProgramFinished(info);
+		auto& info = dynamic_cast<const JProcess::Finished&>(message);
+		CleanUpAfterProgramFinished(&info);
 
 		jdelete itsJVMDeathTask;
 		itsJVMDeathTask = nullptr;

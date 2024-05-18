@@ -49,15 +49,15 @@ jvm::GetStackCmd::Starting()
 {
 	::GetStackCmd::Starting();
 
-	auto* link         = dynamic_cast<Link*>(GetLink());
-	const JSize length = link->GetObjectIDSize();
+	auto& link         = dynamic_cast<Link&>(*GetLink());
+	const JSize length = link.GetObjectIDSize();
 	const JSize size   = length+8;
 
 	auto* data = (unsigned char*) calloc(size, 1);
 	assert( data != nullptr );
 
 	unsigned char* d = data;
-	Socket::Pack(length, link->GetCurrentThreadID(), d);
+	Socket::Pack(length, link.GetCurrentThreadID(), d);
 	d += length;
 
 	Socket::Pack4(0, d);
@@ -65,9 +65,7 @@ jvm::GetStackCmd::Starting()
 
 	Socket::Pack4(-1, d);
 
-	link->Send(this,
-		Link::kThreadReferenceCmdSet, Link::kTFramesCmd, data, size);
-
+	link.Send(this, Link::kThreadReferenceCmdSet, Link::kTFramesCmd, data, size);
 	free(data);
 }
 
@@ -82,21 +80,21 @@ jvm::GetStackCmd::HandleSuccess
 	const JString& origData
 	)
 {
-	auto* link = dynamic_cast<Link*>(GetLink());
+	auto& link = dynamic_cast<Link&>(*GetLink());
 	const Socket::MessageReady* msg;
-	if (!link->GetLatestMessageFromJVM(&msg))
+	if (!link.GetLatestMessageFromJVM(&msg))
 	{
 		return;
 	}
 
-	link->FlushFrameList();
+	link.FlushFrameList();
 
 	JTreeNode* root = GetTree()->GetRoot();
 
 	const unsigned char* data  = msg->GetData();
-	const JSize frameIDLength  = link->GetFrameIDSize();
-	const JSize classIDLength  = link->GetObjectIDSize();
-	const JSize methodIDLength = link->GetMethodIDSize();
+	const JSize frameIDLength  = link.GetFrameIDSize();
+	const JSize classIDLength  = link.GetObjectIDSize();
+	const JSize methodIDLength = link.GetMethodIDSize();
 
 	const JSize frameCount = Socket::Unpack4(data);
 	data                  += 4;
@@ -122,7 +120,7 @@ jvm::GetStackCmd::HandleSuccess
 			jnew StackFrameNode(root, id, classID, methodID, offset);
 		root->Prepend(node);
 
-		link->AddFrame(id, classID, methodID, offset);
+		link.AddFrame(id, classID, methodID, offset);
 	}
 
 	GetWidget()->FinishedLoading(0);

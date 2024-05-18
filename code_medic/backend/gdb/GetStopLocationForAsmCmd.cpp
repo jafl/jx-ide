@@ -43,5 +43,5 @@ gdb::GetStopLocationForAsmCmd::HandleSuccess
 	const JString& cmdData
 	)
 {
-	dynamic_cast<Link*>(GetLink())->SendProgramStopped2(GetLocation());
+	dynamic_cast<Link&>(*GetLink()).SendProgramStopped2(GetLocation());
 }

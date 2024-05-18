@@ -115,20 +115,17 @@ FileHistoryMenu::Receive
 	if (sender == GetDocumentManager() &&
 		message.Is(DocumentManager::kAddFileToHistory))
 	{
-		auto* info = dynamic_cast<const DocumentManager::AddFileToHistory*>(&message);
-		assert( info != nullptr );
-		if (itsDocType == info->GetFileHistoryType())
+		auto& info = dynamic_cast<const DocumentManager::AddFileToHistory&>(message);
+		if (itsDocType == info.GetFileHistoryType())
 		{
-			AddFile(info->GetFullName());
+			AddFile(info.GetFullName());
 		}
 	}
 
 	else if (sender == this && message.Is(JXMenu::kItemSelected))
 	{
-		auto* selection = dynamic_cast<const JXMenu::ItemSelected*>(&message);
-		assert( selection != nullptr );
-
-		const JString fileName = GetFile(selection->GetIndex());
+		auto& selection        = dynamic_cast<const JXMenu::ItemSelected&>(message);
+		const JString fileName = GetFile(selection.GetIndex());
 
 		bool saveReopen = ProjectDocument::WillReopenTextFiles();
 		if (GetDisplay()->GetLatestKeyModifiers().shift())
