@@ -28,8 +28,8 @@
 #include <boost/fiber/operations.hpp>
 #include <jx-af/jcore/jAssert.h>
 
-const JSize kMenuButtonWidth        = 60;
-const JSize kPauseForOutputInterval = 2;	// seconds
+const JSize kMenuButtonWidth         = 60;
+const time_t kPauseForOutputInterval = 2;	// seconds
 
 /******************************************************************************
  Constructor
