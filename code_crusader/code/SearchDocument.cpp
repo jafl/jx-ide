@@ -240,18 +240,14 @@ void
 SearchDocument::RecvFromChannel()
 {
 	JBroadcaster::Message* m;
-	JSize count = 0;
 	while (itsChannel->pop(m) == boost::fibers::channel_op_status::success)
 	{
 		Receive(nullptr, *m);
 		jdelete m;
 
-		count++;
-		if (count >= 5)		// avoid getting stuck if channel is flooded
-		{
-			boost::this_fiber::sleep_for(
-				std::chrono::nanoseconds(1));
-		}
+		// avoid getting stuck if channel is flooded
+		boost::this_fiber::sleep_for(
+			std::chrono::nanoseconds(1));
 	}
 
 	// finished
