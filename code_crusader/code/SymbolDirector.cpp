@@ -315,10 +315,11 @@ SymbolDirector::PrepareForListUpdate
 void
 SymbolDirector::ListUpdateThreadFinished
 	(
-	const JArray<JFAID_t>& deadFileList
+	const JArray<JFAID_t>&	deadFileList,
+	JProgressDisplay&		pg
 	)
 {
-	itsSymbolList->UpdateThreadFinished(deadFileList);
+	itsSymbolList->UpdateThreadFinished(deadFileList, pg);
 }
 
 /******************************************************************************
@@ -997,10 +998,9 @@ SymbolDirector::ReceiveWithFeedback
 {
 	if (sender == itsCmdMenu && message->Is(CommandMenu::kGetTargetInfo))
 	{
-		auto* info = dynamic_cast<CommandMenu::GetTargetInfo*>(message);
-		assert( info != nullptr );
-		itsSymbolTable->GetFileNamesForSelection(info->GetFileList(),
-												 info->GetLineIndexList());
+		auto& info = dynamic_cast<CommandMenu::GetTargetInfo&>(*message);
+		itsSymbolTable->GetFileNamesForSelection(info.GetFileList(),
+												 info.GetLineIndexList());
 	}
 	else
 	{

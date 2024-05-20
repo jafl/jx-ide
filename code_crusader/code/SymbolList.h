@@ -85,7 +85,7 @@ public:
 
 	void	FileTypesChanged(const PrefsManager::FileTypesChanged& info);
 	void	PrepareForUpdate(const bool reparseAll);
-	void	UpdateThreadFinished(const JArray<JFAID_t>& deadFileList);
+	void	UpdateThreadFinished(const JArray<JFAID_t>& deadFileList, JProgressDisplay& pg);
 	bool	UpdateFinished();
 
 	// called by FileListTable

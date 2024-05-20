@@ -1099,7 +1099,6 @@ T "../../JX/include/jx-af/jx" T
 T "./backend" T
 T "./code" T
 T "./shared" T
-T "/opt/homebrew/Cellar/llvm/17.0.6_1/include/" T
 F
 # C preprocessor
 T "CBCFlexLexer" "yyFlexLexer"

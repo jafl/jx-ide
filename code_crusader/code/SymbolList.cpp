@@ -617,7 +617,8 @@ SymbolList::PrepareForUpdate
 void
 SymbolList::UpdateThreadFinished
 	(
-	const JArray<JFAID_t>& deadFileList
+	const JArray<JFAID_t>&	deadFileList,
+	JProgressDisplay&		pg
 	)
 {
 	DeleteProcess();
@@ -634,6 +635,7 @@ SymbolList::UpdateThreadFinished
 		for (JIndex i=1; i<=fileCount; i++)
 		{
 			RemoveFile(deadFileList.GetItem(i));
+			pg.IncrementProgress();
 		}
 	}
 
