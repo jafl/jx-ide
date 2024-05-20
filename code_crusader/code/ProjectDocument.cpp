@@ -53,7 +53,6 @@
 #include <jx-af/jx/JXProgressIndicator.h>
 #include <jx-af/jx/JXWebBrowser.h>
 #include <jx-af/jx/JXFunctionTask.h>
-#include <jx-af/jx/JXUrgentFunctionTask.h>
 #include <jx-af/jx/JXProgressDisplay.h>
 #include <jx-af/jx/JXImage.h>
 
@@ -624,14 +623,9 @@ ProjectDocument::ProjectDocument
 		Activate();
 	}
 
-	auto* task = jnew JXUrgentFunctionTask(this, [this]()
-	{
-		UpdateSymbolDatabase();
-	},
-	"ProjectDocument::ctor::UpdateSymbolDatabase");
-	task->Go();
-
+	UpdateSymbolDatabase();
 	ListenTo(itsFileTree);
+
 	docMgr->ProjDocCreated(this);
 }
 
@@ -2217,13 +2211,17 @@ ProjectDocument::SymbolDatabaseNeedsUpdate()
 {
 	if (itsDelaySymbolUpdateTask == nullptr)
 	{
-		itsDelaySymbolUpdateTask = jnew JXUrgentFunctionTask(this, [this]()
+		itsDelaySymbolUpdateTask = jnew JXFunctionTask(kUpdateCheckInterval, [this]()
 		{
-			itsDelaySymbolUpdateTask = nullptr;
-			UpdateSymbolDatabase();
+			if (!itsIsUpdatingFlag && !CompleterUpdateRunning())
+			{
+				jdelete itsDelaySymbolUpdateTask;
+				itsDelaySymbolUpdateTask = nullptr;
+				UpdateSymbolDatabase();
+			}
 		},
 		"ProjectDocument::SymbolDatabaseNeedsUpdate");
-		itsDelaySymbolUpdateTask->Go();
+		itsDelaySymbolUpdateTask->Start();
 	}
 }
 
@@ -2237,35 +2235,42 @@ ProjectDocument::UpdateSymbolDatabase()
 {
 	if (itsIsUpdatingFlag)
 	{
+		SymbolDatabaseNeedsUpdate();
 		return;
 	}
 
-	while (CompleterUpdateRunning())
+	// don't block when a dialog triggers it
+
+	JXApplication::StartFiber([this]()
 	{
-		boost::this_fiber::sleep_for(
-			std::chrono::milliseconds(kUpdateCheckInterval));
-	}
+		while (CompleterUpdateRunning())
+		{
+			boost::this_fiber::sleep_for(
+				std::chrono::milliseconds(kUpdateCheckInterval));
+		}
 
-	SymbolUpdateStarted();
-	itsIsUpdatingFlag = true;
+		SymbolUpdateStarted();
+		itsIsUpdatingFlag = true;
 
-	itsUpdateLabel->GetText()->SetText(JString::empty);
-	itsFileTable->GetEditMenu()->Deactivate();
-	itsProjectMenu->Deactivate();
-	itsSourceMenu->Deactivate();
+		itsUpdateLabel->GetText()->SetText(JString::empty);
+		itsFileTable->GetEditMenu()->Deactivate();
+		itsProjectMenu->Deactivate();
+		itsSourceMenu->Deactivate();
 
-	if (itsAllFileDirector->GetFileListTable()->Update(
-			*itsUpdatePG, itsFileTree, *itsDirList, itsSymbolDirector,
-			*itsTreeDirectorList) >= kSymbolUpdateSaveFraction)
-	{
-		HandleFileMenu(kSaveCmd);
-	}
+		if (itsAllFileDirector->GetFileListTable()->Update(
+				*itsUpdatePG, itsFileTree, *itsDirList, itsSymbolDirector,
+				*itsTreeDirectorList) >= kSymbolUpdateSaveFraction)
+		{
+			HandleFileMenu(kSaveCmd);
+		}
 
-	assert( !itsUpdatePG->ProcessRunning() );
-	itsIsUpdatingFlag = false;
-	SymbolUpdateFinished();
+		assert( !itsUpdatePG->ProcessRunning() );
+		itsIsUpdatingFlag = false;
+		SymbolUpdateFinished();
 
-	itsFileTable->GetEditMenu()->Activate();
-	itsProjectMenu->Activate();
-	itsSourceMenu->Activate();
+		itsFileTable->GetEditMenu()->Activate();
+		itsProjectMenu->Activate();
+		itsSourceMenu->Activate();
+	},
+	"ProjectDocument::UpdateSymbolDatabase");
 }

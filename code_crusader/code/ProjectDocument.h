@@ -25,7 +25,6 @@ class JXTextButton;
 class JXToolBar;
 class JXWidgetSet;
 class JXPTPrinter;
-class JXUrgentTask;
 class JXIdleTask;
 class JXProgressIndicator;
 class ProjectTree;
@@ -178,7 +177,7 @@ private:
 
 	bool			itsIsUpdatingFlag;
 	SymbolUpdatePG*	itsUpdatePG;
-	JXUrgentTask*	itsDelaySymbolUpdateTask;
+	JXIdleTask*		itsDelaySymbolUpdateTask;
 
 	JXTextMenu*		itsFileMenu;
 	JXTextMenu*		itsProjectMenu;
