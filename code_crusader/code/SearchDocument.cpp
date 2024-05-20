@@ -262,6 +262,10 @@ SearchDocument::RecvFromChannel()
 		itsReplaceST = nullptr;
 
 		JXGetApplication()->Resume();
+		if (itsFoundFlag)
+		{
+			GetDocumentManager()->SymbolDatabasesNeedUpdate();
+		}
 	}
 
 	jdelete itsChannel;
@@ -476,7 +480,7 @@ SearchDocument::ReplaceAll
 		auto* textDoc = dynamic_cast<TextDocument*>(doc);
 		if (textDoc != nullptr)
 		{
-			(textDoc->GetWindow())->Update();
+			textDoc->GetWindow()->Update();
 
 			TextEditor* te = textDoc->GetTextEditor();
 			te->SetCaretLocation(1);
