@@ -29,7 +29,7 @@
 #include <jx-af/jcore/jAssert.h>
 
 const JSize kMenuButtonWidth         = 60;
-const time_t kPauseForOutputInterval = 2;	// seconds
+const time_t kPauseForOutputInterval = 500;	// milliseconds
 
 /******************************************************************************
  Constructor
@@ -599,8 +599,9 @@ ExecOutputDocument::ProcessFinished
 	// everything to the pipe.  When handle_input() no longer broadcasts,
 	// we know we have read everything.
 
-	const time_t t = time(nullptr);
-	while (time(nullptr) - t < kPauseForOutputInterval)
+	using namespace std::chrono;
+	const auto t = steady_clock::now();
+	while (duration_cast< milliseconds >(steady_clock::now() - t).count() < kPauseForOutputInterval)
 	{
 		do
 		{
@@ -609,7 +610,7 @@ ExecOutputDocument::ProcessFinished
 		}
 			while (itsReceivedDataFlag);
 
-		boost::this_fiber::yield();
+		boost::this_fiber::sleep_for(milliseconds(1));
 	}
 
 	const pid_t pid = itsProcess->GetPID();
