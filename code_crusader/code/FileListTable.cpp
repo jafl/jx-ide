@@ -165,10 +165,13 @@ FileListTable::Update
 		if (!deadFileNameList.IsEmpty())
 		{
 			threadPG.FixedLengthProcessBeginning(
-				deadFileNameList.GetItemCount(),
+				2 * deadFileNameList.GetItemCount(),
 				JGetString("CleaningUp::FileListTable"), false, false);
 
 			flagChannel.push(true);
+
+			RemoveFiles(deadFileNameList, &threadPG);
+			itsChangedDuringParseCount += deadFileNameList.GetItemCount();
 		}
 		else
 		{
@@ -193,21 +196,6 @@ FileListTable::Update
 		threadPG.WaitForProcessFinished(&pg);
 	}
 	t.join();
-
-	// remove non-existent files
-
-	if (!deadFileNameList.IsEmpty())
-	{
-		assert( !reparseAll );
-
-		pg.FixedLengthProcessBeginning(deadFileNameList.GetItemCount(),
-			JGetString("CleaningUp::FileListTable"), false, true);
-
-		RemoveFiles(deadFileNameList, &pg);
-
-		pg.ProcessFinished();
-		itsChangedDuringParseCount += deadFileNameList.GetItemCount();
-	}
 
 	symbolDir->ListUpdateFinished();
 	for (auto* dir : treeDirList)
