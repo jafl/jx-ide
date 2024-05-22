@@ -12,6 +12,7 @@
 
 #include "TextFileType.h"
 #include <jx-af/jcore/JPtrArray-JString.h>
+#include <atomic>
 
 class JTextEditor;
 class JXIdleTask;

@@ -13,7 +13,7 @@
 // Superclass Header
 #include <jx-af/jcore/JPtrArray.h>
 
-#include <MemberFunction.h>
+#include "MemberFunction.h"
 
 class Link;
 
