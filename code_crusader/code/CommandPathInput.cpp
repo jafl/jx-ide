@@ -9,7 +9,7 @@
 
  ******************************************************************************/
 
-#include <CommandPathInput.h>
+#include "CommandPathInput.h"
 #include <jx-af/jx/JXColorManager.h>
 #include <jx-af/jcore/jDirUtil.h>
 #include <jx-af/jcore/jAssert.h>

@@ -7,10 +7,10 @@
 
  *****************************************************************************/
 
-#include <EditCommandsDialog.h>
-#include <EditCommandsTable.h>
-#include <PrefsManager.h>
-#include <globals.h>
+#include "EditCommandsDialog.h"
+#include "EditCommandsTable.h"
+#include "PrefsManager.h"
+#include "globals.h"
 #include <jx-af/jx/JXTextButton.h>
 #include <jx-af/jx/JXStaticText.h>
 #include <jx-af/jx/JXScrollbarSet.h>

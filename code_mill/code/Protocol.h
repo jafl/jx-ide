@@ -75,6 +75,6 @@ private:
 	Protocol& operator=(const Protocol&) = delete;
 };
 
-#include <Protocol.tmpl>
+#include "Protocol.tmpl"
 
 #endif
