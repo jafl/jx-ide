@@ -4,6 +4,8 @@
 ifndef JX_ROOT
   ifneq ($(shell ls ../../JX/Makefile 2>/dev/null),)
     JX_ROOT := ../../JX
+  else ifeq ($(shell uname -o),Darwin)
+    JX_ROOT := $(shell brew --prefix)
   else
     JX_ROOT := /usr/local
   endif
