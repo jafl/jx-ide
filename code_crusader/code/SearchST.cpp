@@ -121,12 +121,17 @@ countLines
 
 	JUtf8Character c;
 	while (iter->Next(&c) && !iter->AtEnd() &&
-		   iter->GetNextCharacterIndex() < beyondEnd)
+		   iter->GetNextCharacterIndex() <= beyondEnd)
 	{
 		if (c == '\n')
 		{
 			count++;
 		}
+	}
+
+	if (iter->GetPrevCharacterIndex() == beyondEnd)
+	{
+		iter->SkipPrev();
 	}
 
 	return count;
