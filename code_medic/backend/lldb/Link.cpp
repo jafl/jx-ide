@@ -13,7 +13,6 @@
 #include "lldb/BreakpointManager.h"
 #include "lldb/WelcomeTask.h"
 #include "lldb/SymbolsLoadedTask.h"
-#include "lldb/RunBackgroundCmdTask.h"
 
 #include "lldb/Array2DCmd.h"
 #include "lldb/Plot2DCmd.h"
@@ -46,6 +45,7 @@
 #include "lldb/EventTask.h"
 #include "globals.h"
 
+#include <jx-af/jx/JXUrgentFunctionTask.h>
 #include <jx-af/jx/JXAssert.h>
 #include <jx-af/jcore/jFileUtil.h>
 #include <jx-af/jcore/jStreamUtil.h>
@@ -1649,7 +1649,11 @@ lldb::Link::SendMedicCommand
 {
 	command->Starting();
 
-	JXUrgentTask* task = jnew RunBackgroundCmdTask(command);
+	JXUrgentTask* task = jnew JXUrgentFunctionTask(this, [this, command]()
+	{
+		SendMedicCommandSync(command);
+	},
+	"lldb::Link::SendMedicCommand");
 	task->Go();
 }
 

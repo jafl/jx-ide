@@ -491,7 +491,7 @@ StackWidget::Receive
 			if (node->GetDepth() > 1)
 			{
 				itsCommandDir->DisplayExpression(
-					(GetNamedTreeList()->GetNamedNode(cell.y))->GetName());
+					GetNamedTreeList()->GetNamedNode(cell.y)->GetName());
 				node = node->GetParent();
 			}
 

@@ -861,14 +861,14 @@ CommandDirector::Receive
 		bool active = false;
 		if (itsCurrentSourceDir->IsActive())
 		{
-			(itsCurrentSourceDir->GetWindow())->Raise(false);
+			itsCurrentSourceDir->GetWindow()->Raise(false);
 			active = true;
 		}
 		if (itsCurrentAsmDir->IsActive() &&
 			(!itsCurrentAsmDir->GetWindow()->IsDocked() ||
 			 !itsCurrentSourceDir->IsActive()))
 		{
-			(itsCurrentAsmDir->GetWindow())->Raise(false);
+			itsCurrentAsmDir->GetWindow()->Raise(false);
 			active = true;
 		}
 		if (!active)

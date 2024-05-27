@@ -766,10 +766,6 @@ T
 F
 "./backend/lldb/SymbolsLoadedTask.cpp"
 T
-2 "RunBackgroundCmdTask.cpp"
-F
-"./backend/lldb/RunBackgroundCmdTask.cpp"
-T
 2 "BreakpointManager.cpp"
 F
 "./backend/lldb/BreakpointManager.cpp"

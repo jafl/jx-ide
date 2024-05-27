@@ -214,7 +214,7 @@ LocalVarsDir::Receive
 	{
 		auto& info = dynamic_cast<const Link::ProgramStopped&>(message);
 		const Location* loc;
-		if (info.GetLocation(&loc) && !(loc->GetFileName()).IsEmpty())
+		if (info.GetLocation(&loc) && !loc->GetFileName().IsEmpty())
 		{
 			Rebuild();
 		}

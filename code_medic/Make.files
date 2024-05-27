@@ -142,7 +142,6 @@
 .cpp ./backend/lldb/EventTask
 .cpp ./backend/lldb/WelcomeTask
 .cpp ./backend/lldb/SymbolsLoadedTask
-.cpp ./backend/lldb/RunBackgroundCmdTask
 .cpp ./backend/lldb/BreakpointManager
 .cpp ./backend/lldb/Array2DCmd
 .cpp ./backend/lldb/Plot2DCmd

@@ -141,7 +141,6 @@ lldb::VarNode::BuildTree
 		name.Append(">");
 	}
 
-#ifdef _J_LLDB_HAS_SBVALUE_GETSUMMARY
 	if (v.GetSummary() != nullptr)
 	{
 		if (!value.IsEmpty())
@@ -150,7 +149,6 @@ lldb::VarNode::BuildTree
 		}
 		value += v.GetSummary();
 	}
-#endif
 
 	SBError e = v.GetError();
 	if (e.Fail())
