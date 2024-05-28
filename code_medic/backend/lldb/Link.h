@@ -192,7 +192,7 @@ private:
 	void	StopDebugger();
 
 	void	ProgramStarted(const pid_t pid);
-	bool	ProgramStopped(JString* msg = nullptr);
+	bool	SendProgramStopped(JString* msg = nullptr, const bool waitingForThread = false);
 	void	CleanUpAfterProgramFinished();
 
 	void	DetachOrKill(const bool destroyTarget);

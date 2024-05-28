@@ -76,11 +76,12 @@ lldb::GetThreadsCmd::HandleSuccess
 		return;
 	}
 
-	const JIndex threadID = GetWidget()->GetLastSelectedThread();
+	JIndex threadID = GetWidget()->GetLastSelectedThread();
 
 	JTreeNode* root   = itsTree->GetRoot();
 	const JSize count = p.GetNumThreads();
 	JString fileName, name, indexStr;
+	bool foundThreadID = false;
 	for (JUnsignedOffset i=0; i<count; i++)
 	{
 		SBThread t = p.GetThreadAtIndex(i);
@@ -110,6 +111,13 @@ lldb::GetThreadsCmd::HandleSuccess
 		if (!m.IsEmpty())
 		{
 			indexStr = m.GetSubstring(1);
+
+			JUInt indexValue;
+			if (indexStr.ConvertToUInt(&indexValue) && indexValue == threadID)
+			{
+				foundThreadID = true;
+			}
+
 			while (indexStr.GetCharacterCount() < kThreadIndexWidth)
 			{
 				indexStr.Prepend("0");
@@ -125,7 +133,14 @@ lldb::GetThreadsCmd::HandleSuccess
 		root->Append(jnew ThreadNode(t.GetThreadID(), name, fileName, lineIndex));
 	}
 
-	if (threadID != p.GetSelectedThread().GetThreadID())
+	if (!foundThreadID)
+	{
+		threadID = 0;
+	}
+
+	GetWidget()->FinishedLoading(0);
+
+	if (threadID > 0 && threadID != p.GetSelectedThread().GetThreadID())
 	{
 		auto* task = jnew JXFunctionTask(50, [this, threadID]()
 		{
@@ -135,5 +150,8 @@ lldb::GetThreadsCmd::HandleSuccess
 		true);
 		task->Start();
 	}
-	GetWidget()->FinishedLoading(p.GetSelectedThread().GetThreadID());
+	else
+	{
+		GetWidget()->SelectThread(threadID > 0 ? threadID : p.GetSelectedThread().GetThreadID());
+	}
 }

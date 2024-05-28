@@ -211,9 +211,16 @@ RegistersDir::Receive
 	{
 		Update(JString::empty);
 	}
-	else if (sender == GetLink() &&
-			 (message.Is(Link::kProgramStopped) ||
-			  VarNode::ShouldUpdate(message)))
+	else if (sender == GetLink() && message.Is(Link::kProgramStopped))
+	{
+		auto& info = dynamic_cast<const Link::ProgramStopped&>(message);
+		if (!info.IsWaitingForThread())
+		{
+			itsNeedsUpdateFlag = true;
+			Update();
+		}
+	}
+	else if (sender == GetLink() && VarNode::ShouldUpdate(message))
 	{
 		itsNeedsUpdateFlag = true;
 		Update();

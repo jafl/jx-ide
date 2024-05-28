@@ -451,16 +451,20 @@ StackWidget::Receive
 	}
 	else if (sender == itsLink && message.Is(Link::kProgramStopped))
 	{
-		// This is triggered when gdb prints file:line info.
-
-		const bool wasChanging = itsChangingFrameFlag;
-		itsChangingFrameFlag       = false;
-
-		if (!wasChanging &&
-			itsGetFrameCmd->GetState() == Command::kUnassigned)
+		auto& info = dynamic_cast<const Link::ProgramStopped&>(message);
+		if (!info.IsWaitingForThread())
 		{
-			itsSmartFrameSelectFlag = true;
-			Rebuild();
+			// This is triggered when gdb prints file:line info.
+
+			const bool wasChanging = itsChangingFrameFlag;
+			itsChangingFrameFlag   = false;
+
+			if (!wasChanging &&
+				itsGetFrameCmd->GetState() == Command::kUnassigned)
+			{
+				itsSmartFrameSelectFlag = true;
+				Rebuild();
+			}
 		}
 	}
 

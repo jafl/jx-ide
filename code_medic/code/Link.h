@@ -73,7 +73,8 @@ public:
 		kWatchExpression,
 		kWatchLocation,
 		kExamineMemory,
-		kDisassembleMemory
+		kDisassembleMemory,
+		kWillWaitForThread
 	};
 
 public:
@@ -301,41 +302,41 @@ public:
 	// text from gdb
 
 	class UserOutput : public JBroadcaster::Message
+	{
+	public:
+
+		UserOutput(const JString& text, const bool error, const bool fromTarget = false)
+			:
+			JBroadcaster::Message(kUserOutput),
+			itsText(text),
+			itsFromTargetFlag(fromTarget),
+			itsErrorFlag(error)
+		{ };
+
+		const JString&
+		GetText() const
 		{
-		public:
+			return itsText;
+		}
 
-			UserOutput(const JString& text, const bool error, const bool fromTarget = false)
-				:
-				JBroadcaster::Message(kUserOutput),
-				itsText(text),
-				itsFromTargetFlag(fromTarget),
-				itsErrorFlag(error)
-				{ };
+		bool
+		IsFromTarget() const
+		{
+			return itsFromTargetFlag;
+		}
 
-			const JString&
-			GetText() const
-			{
-				return itsText;
-			}
+		bool
+		IsError() const
+		{
+			return itsErrorFlag;
+		}
 
-			bool
-			IsFromTarget() const
-			{
-				return itsFromTargetFlag;
-			}
+	private:
 
-			bool
-			IsError() const
-			{
-				return itsErrorFlag;
-			}
-
-		private:
-
-			const JString	itsText;
-			const bool		itsFromTargetFlag;
-			const bool		itsErrorFlag;
-		};
+		const JString	itsText;
+		const bool		itsFromTargetFlag;
+		const bool		itsErrorFlag;
+	};
 
 	enum DebugType
 	{
@@ -345,327 +346,337 @@ public:
 	};
 
 	class DebugOutput : public JBroadcaster::Message
+	{
+	public:
+
+		DebugOutput(const JString& text, const DebugType type)
+			:
+			JBroadcaster::Message(kDebugOutput),
+			itsText(text), itsType(type)
+		{ };
+
+		const JString&
+		GetText() const
 		{
-		public:
+			return itsText;
+		}
 
-			DebugOutput(const JString& text, const DebugType type)
-				:
-				JBroadcaster::Message(kDebugOutput),
-				itsText(text), itsType(type)
-				{ };
+		DebugType
+		GetType() const
+		{
+			return itsType;
+		}
 
-			const JString&
-			GetText() const
-			{
-				return itsText;
-			}
+	private:
 
-			DebugType
-			GetType() const
-			{
-				return itsType;
-			}
-
-		private:
-
-			const JString&	itsText;
-			const DebugType	itsType;
-		};
+		const JString&	itsText;
+		const DebugType	itsType;
+	};
 
 	// command line state
 
 	class DebuggerReadyForInput : public JBroadcaster::Message
-		{
-		public:
+	{
+	public:
 
-			DebuggerReadyForInput()
-				:
-				JBroadcaster::Message(kDebuggerReadyForInput)
-				{ };
-		};
+		DebuggerReadyForInput()
+			:
+			JBroadcaster::Message(kDebuggerReadyForInput)
+		{ };
+	};
 
 	class DebuggerBusy : public JBroadcaster::Message
-		{
-		public:
+	{
+	public:
 
-			DebuggerBusy()
-				:
-				JBroadcaster::Message(kDebuggerBusy)
-				{ };
-		};
+		DebuggerBusy()
+			:
+			JBroadcaster::Message(kDebuggerBusy)
+		{ };
+	};
 
 	class DebuggerDefiningScript : public JBroadcaster::Message
-		{
-		public:
+	{
+	public:
 
-			DebuggerDefiningScript()
-				:
-				JBroadcaster::Message(kDebuggerDefiningScript)
-				{ };
-		};
+		DebuggerDefiningScript()
+			:
+			JBroadcaster::Message(kDebuggerDefiningScript)
+		{ };
+	};
 
 	// debugger state
 
 	class DebuggerStarted : public JBroadcaster::Message
-		{
-		public:
+	{
+	public:
 
-			DebuggerStarted()
-				:
-				JBroadcaster::Message(kDebuggerStarted)
-				{ };
-		};
+		DebuggerStarted()
+			:
+			JBroadcaster::Message(kDebuggerStarted)
+		{ };
+	};
 
 	class DebuggerRestarted : public JBroadcaster::Message
-		{
-		public:
+	{
+	public:
 
-			DebuggerRestarted()
-				:
-				JBroadcaster::Message(kDebuggerRestarted)
-				{ };
-		};
+		DebuggerRestarted()
+			:
+			JBroadcaster::Message(kDebuggerRestarted)
+		{ };
+	};
 
 	class PrepareToLoadSymbols : public JBroadcaster::Message
-		{
-		public:
+	{
+	public:
 
-			PrepareToLoadSymbols()
-				:
-				JBroadcaster::Message(kPrepareToLoadSymbols)
-				{ };
-		};
+		PrepareToLoadSymbols()
+			:
+			JBroadcaster::Message(kPrepareToLoadSymbols)
+		{ };
+	};
 
 	class SymbolsLoaded : public JBroadcaster::Message
+	{
+	public:
+
+		SymbolsLoaded(const bool success, const JString& programName)
+			:
+			JBroadcaster::Message(kSymbolsLoaded),
+			itsSuccessFlag(success), itsProgramName(programName)
+		{ };
+
+		bool
+		Successful() const
 		{
-		public:
+			return itsSuccessFlag;
+		}
 
-			SymbolsLoaded(const bool success, const JString& programName)
-				:
-				JBroadcaster::Message(kSymbolsLoaded),
-				itsSuccessFlag(success), itsProgramName(programName)
-				{ };
+		const JString&
+		GetProgramName() const
+		{
+			return itsProgramName;
+		}
 
-			bool
-			Successful() const
-			{
-				return itsSuccessFlag;
-			}
+	private:
 
-			const JString&
-			GetProgramName() const
-			{
-				return itsProgramName;
-			}
-
-		private:
-
-			const bool	itsSuccessFlag;
-			const JString&	itsProgramName;
-		};
+		const bool	itsSuccessFlag;
+		const JString&	itsProgramName;
+	};
 
 	class SymbolsReloaded : public JBroadcaster::Message
-		{
-		public:
+	{
+	public:
 
-			SymbolsReloaded()
-				:
-				JBroadcaster::Message(kSymbolsReloaded)
-				{ };
-		};
+		SymbolsReloaded()
+			:
+			JBroadcaster::Message(kSymbolsReloaded)
+		{ };
+	};
 
 	class CoreLoaded : public JBroadcaster::Message
-		{
-		public:
+	{
+	public:
 
-			CoreLoaded()
-				:
-				JBroadcaster::Message(kCoreLoaded)
-				{ };
-		};
+		CoreLoaded()
+			:
+			JBroadcaster::Message(kCoreLoaded)
+		{ };
+	};
 
 	class CoreCleared : public JBroadcaster::Message
-		{
-		public:
+	{
+	public:
 
-			CoreCleared()
-				:
-				JBroadcaster::Message(kCoreCleared)
-				{ };
-		};
+		CoreCleared()
+			:
+			JBroadcaster::Message(kCoreCleared)
+		{ };
+	};
 
 	class AttachedToProcess : public JBroadcaster::Message
-		{
-		public:
+	{
+	public:
 
-			AttachedToProcess()
-				:
-				JBroadcaster::Message(kAttachedToProcess)
-				{ };
-		};
+		AttachedToProcess()
+			:
+			JBroadcaster::Message(kAttachedToProcess)
+		{ };
+	};
 
 	class DetachedFromProcess : public JBroadcaster::Message
-		{
-		public:
+	{
+	public:
 
-			DetachedFromProcess()
-				:
-				JBroadcaster::Message(kDetachedFromProcess)
-				{ };
-		};
+		DetachedFromProcess()
+			:
+			JBroadcaster::Message(kDetachedFromProcess)
+		{ };
+	};
 
 	// program state
 
 	class ProgramRunning : public JBroadcaster::Message
-		{
-		public:
+	{
+	public:
 
-			ProgramRunning()
-				:
-				JBroadcaster::Message(kProgramRunning)
-				{ };
-		};
+		ProgramRunning()
+			:
+			JBroadcaster::Message(kProgramRunning)
+		{ };
+	};
 
 	class ProgramFirstStop : public JBroadcaster::Message
-		{
-		public:
+	{
+	public:
 
-			ProgramFirstStop()
-				:
-				JBroadcaster::Message(kProgramFirstStop)
-				{ };
-		};
+		ProgramFirstStop()
+			:
+			JBroadcaster::Message(kProgramFirstStop)
+		{ };
+	};
 
 	class ProgramStoppedBase : public JBroadcaster::Message
+	{
+	public:
+
+		ProgramStoppedBase(const JUtf8Byte* type, const Location& location,
+							const bool waitingForThread)
+			:
+			JBroadcaster::Message(type),
+			itsLocation(location),
+			itsWaitingForThreadFlag(waitingForThread)
+		{ };
+
+		bool
+		GetLocation
+			(
+			const Location** loc
+			)
+			const
 		{
-		public:
-
-			ProgramStoppedBase(const JUtf8Byte* type, const Location& location)
-				:
-				JBroadcaster::Message(type),
-				itsLocation(location)
-				{ };
-
-			bool
-			GetLocation
-				(
-				const Location** loc
-				)
-				const
-			{
-				*loc = &itsLocation;
-				return (itsLocation.GetFileID()).IsValid();
-			};
-
-		private:
-
-			const Location& itsLocation;
+			*loc = &itsLocation;
+			return (itsLocation.GetFileID()).IsValid();
 		};
+
+		bool
+		IsWaitingForThread()
+			const
+		{
+			return itsWaitingForThreadFlag;
+		};
+
+	private:
+
+		const Location&	itsLocation;
+		const bool		itsWaitingForThreadFlag;
+	};
 
 	class ProgramStopped : public ProgramStoppedBase
-		{
-		public:
+	{
+	public:
 
-			ProgramStopped(const Location& location)
-				:
-				ProgramStoppedBase(kProgramStopped, location)
-				{ };
-		};
+		ProgramStopped(const Location& location, const bool waitingForThread = false)
+			:
+			ProgramStoppedBase(kProgramStopped, location, waitingForThread)
+		{ };
+	};
 
 	class ProgramStopped2 : public ProgramStoppedBase
-		{
-		public:
+	{
+	public:
 
-			ProgramStopped2(const Location& location)
-				:
-				ProgramStoppedBase(kProgramStopped2, location)
-				{ };
-		};
+		ProgramStopped2(const Location& location, const bool waitingForThread = false)
+			:
+			ProgramStoppedBase(kProgramStopped2, location, waitingForThread)
+		{ };
+	};
 
 	class ProgramFinished : public JBroadcaster::Message
-		{
-		public:
+	{
+	public:
 
-			ProgramFinished()
-				:
-				JBroadcaster::Message(kProgramFinished)
-				{ };
-		};
+		ProgramFinished()
+			:
+			JBroadcaster::Message(kProgramFinished)
+		{ };
+	};
 
 	// debugger state
 
 	class BreakpointsChanged : public JBroadcaster::Message
-		{
-		public:
+	{
+	public:
 
-			BreakpointsChanged()
-				:
-				JBroadcaster::Message(kBreakpointsChanged)
-				{ };
-		};
+		BreakpointsChanged()
+			:
+			JBroadcaster::Message(kBreakpointsChanged)
+		{ };
+	};
 
 	class FrameChanged : public JBroadcaster::Message
-		{
-		public:
+	{
+	public:
 
-			FrameChanged()
-				:
-				JBroadcaster::Message(kFrameChanged)
-				{ };
-		};
+		FrameChanged()
+			:
+			JBroadcaster::Message(kFrameChanged)
+		{ };
+	};
 
 	class ThreadChanged : public JBroadcaster::Message
-		{
-		public:
+	{
+	public:
 
-			ThreadChanged()
-				:
-				JBroadcaster::Message(kThreadChanged)
-				{ };
-		};
+		ThreadChanged()
+			:
+			JBroadcaster::Message(kThreadChanged)
+		{ };
+	};
 
 	class ValueChanged : public JBroadcaster::Message
-		{
-		public:
+	{
+	public:
 
-			ValueChanged()
-				:
-				JBroadcaster::Message(kValueChanged)
-				{ };
-		};
+		ValueChanged()
+			:
+			JBroadcaster::Message(kValueChanged)
+		{ };
+	};
 
 	class ThreadListChanged : public JBroadcaster::Message
-		{
-		public:
+	{
+	public:
 
-			ThreadListChanged()
-				:
-				JBroadcaster::Message(kThreadListChanged)
-				{ };
-		};
+		ThreadListChanged()
+			:
+			JBroadcaster::Message(kThreadListChanged)
+		{ };
+	};
 
 	// plug-in messages
 
 	class PlugInMessage : public JBroadcaster::Message
+	{
+	public:
+
+		PlugInMessage(const JString& message)
+			:
+			JBroadcaster::Message(kPlugInMessage),
+			itsMessage(message)
+		{ };
+
+		const JString&
+		GetMessage() const
 		{
-		public:
+			return itsMessage;
+		}
 
-			PlugInMessage(const JString& message)
-				:
-				JBroadcaster::Message(kPlugInMessage),
-				itsMessage(message)
-				{ };
+	private:
 
-			const JString&
-			GetMessage() const
-			{
-				return itsMessage;
-			}
-
-		private:
-
-			const JString& itsMessage;
-		};
+		const JString& itsMessage;
+	};
 };
 
 

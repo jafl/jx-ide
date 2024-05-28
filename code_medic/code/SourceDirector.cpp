@@ -440,27 +440,30 @@ SourceDirector::Receive
 			 sender == itsLink && message.Is(Link::kProgramStopped))
 	{
 		auto& info = dynamic_cast<const Link::ProgramStopped&>(message);
-		const Location* loc;
-		const bool hasFile = info.GetLocation(&loc);
-		if (itsType == kMainSourceType && hasFile)
+		if (!info.IsWaitingForThread())
 		{
-			DisplayFile(loc->GetFileName(), loc->GetLineNumber());
-		}
-		else if (itsType == kMainAsmType &&
-				 !loc->GetFunctionName().IsEmpty() &&
-				 !loc->GetMemoryAddress().IsEmpty())
-		{
-			DisplayDisassembly(*loc);
-		}
-		else if (itsType == kMainAsmType)
-		{
-			// wait for kProgramStopped2
-		}
-		else
-		{
-			ClearDisplay();
-			GetCommandDirector()->GetThreadsDir()->Activate();
-			GetCommandDirector()->GetStackDir()->Activate();
+			const Location* loc;
+			const bool hasFile = info.GetLocation(&loc);
+			if (itsType == kMainSourceType && hasFile)
+			{
+				DisplayFile(loc->GetFileName(), loc->GetLineNumber());
+			}
+			else if (itsType == kMainAsmType &&
+					 !loc->GetFunctionName().IsEmpty() &&
+					 !loc->GetMemoryAddress().IsEmpty())
+			{
+				DisplayDisassembly(*loc);
+			}
+			else if (itsType == kMainAsmType)
+			{
+				// wait for kProgramStopped2
+			}
+			else
+			{
+				ClearDisplay();
+				GetCommandDirector()->GetThreadsDir()->Activate();
+				GetCommandDirector()->GetStackDir()->Activate();
+			}
 		}
 	}
 	else if (itsType == kMainAsmType && sender == itsLink &&

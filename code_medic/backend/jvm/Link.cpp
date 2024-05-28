@@ -70,6 +70,7 @@ static const bool kFeatures[]=
 	false,	// kWatchLocation
 	false,	// kExamineMemory
 	false,	// kDisassembleMemory
+	false,	// kWillWaitForThread
 };
 
 // JBroadcaster message types

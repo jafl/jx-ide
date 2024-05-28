@@ -489,7 +489,8 @@ bool
 ThreadsWidget::ShouldRebuild()
 	const
 {
-	return itsThreadDir->IsActive() && !GetWindow()->IsIconified();
+	return (itsLink->GetFeature(Link::kWillWaitForThread) ||
+			(itsThreadDir->IsActive() && !GetWindow()->IsIconified()));
 }
 
 /******************************************************************************

@@ -476,7 +476,8 @@ VarNode::ShouldUpdate
 	{
 		auto& info = dynamic_cast<const Link::ProgramStopped&>(message);
 		const Location* loc;
-		return info.GetLocation(&loc) && !loc->GetFileName().IsEmpty();
+		return (!info.IsWaitingForThread() &&
+				info.GetLocation(&loc) && !loc->GetFileName().IsEmpty());
 	}
 	else
 	{

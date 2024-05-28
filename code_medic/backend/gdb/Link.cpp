@@ -67,6 +67,7 @@ static const bool kFeatures[]=
 	true,	// kWatchLocation
 	true,	// kExamineMemory
 	true,	// kDisassembleMemory
+	false,	// kWillWaitForThread
 };
 
 /******************************************************************************
@@ -749,9 +750,9 @@ gdb::Link::PrivateSendProgramStopped
 
 	if (location.GetFunctionName().IsEmpty() ||
 		location.GetMemoryAddress().IsEmpty())
-{
+	{
 		itsGetStopLocation2->Send();
-}
+	}
 
 	RunNextCommand();
 }

@@ -72,6 +72,7 @@ static const bool kFeatures[]=
 	true,	// kWatchLocation
 	true,	// kExamineMemory
 	true,	// kDisassembleMemory
+	true,	// kWillWaitForThread
 };
 
 static const uint32_t kEventMask = 0xFFFFFFFF;
@@ -428,7 +429,7 @@ lldb::Link::HandleEvent
 			RunNextCommand();
 
 			JString s;
-			if (ProgramStopped(&s))
+			if (SendProgramStopped(&s, true))
 			{
 //				Send("call (JXGetAssertHandler())->UnlockDisplays()");
 				msg += s;
@@ -449,14 +450,14 @@ lldb::Link::HandleEvent
 		{
 			// sync with SwitchToThread()
 			Broadcast(ThreadChanged());
-			ProgramStopped();
+			SendProgramStopped();
 		}
 		else if ((eventType & SBThread::eBroadcastBitStackChanged) ||
 				 (eventType & SBThread::eBroadcastBitSelectedFrameChanged))
 		{
 			// sync with SwitchToFrame()
 			Broadcast(FrameChanged());
-			ProgramStopped();
+			SendProgramStopped();
 		}
 	}
 	else if (SBBreakpoint::EventIsBreakpointEvent(e))
@@ -1036,7 +1037,7 @@ lldb::Link::SwitchToThread
 
 		// sync with HandleEvent()
 		Broadcast(ThreadChanged());
-		ProgramStopped();
+		SendProgramStopped();
 	}
 }
 
@@ -1058,7 +1059,7 @@ lldb::Link::SwitchToFrame
 
 		// sync with HandleEvent()
 		Broadcast(FrameChanged());
-		ProgramStopped();
+		SendProgramStopped();
 	}
 }
 
@@ -1161,7 +1162,7 @@ lldb::Link::SetExecutionPoint
 		cmd += JString(lineIndex);
 		itsDebugger->HandleCommand(cmd.GetBytes());
 
-		ProgramStopped();
+		SendProgramStopped();
 	}
 }
 
@@ -1232,7 +1233,7 @@ lldb::Link::SetExecutionPoint
 		cmd += addr;
 		itsDebugger->HandleCommand(cmd.GetBytes());
 
-		ProgramStopped();
+		SendProgramStopped();
 	}
 }
 
@@ -1695,14 +1696,15 @@ lldb::Link::ProgramStarted
 }
 
 /******************************************************************************
- ProgramStopped (private)
+ SendProgramStopped (private)
 
  *****************************************************************************/
 
 bool
-lldb::Link::ProgramStopped
+lldb::Link::SendProgramStopped
 	(
-	JString* msg
+	JString*	msg,
+	const bool	waitingForThread
 	)
 {
 	SBTarget t = itsDebugger->GetSelectedTarget();
@@ -1722,7 +1724,7 @@ lldb::Link::ProgramStopped
 
 		if (f.GetFunctionName() != nullptr)
 		{
-			location.SetFunctionName(JString(f.GetFunctionName(), JString::kNoCopy));
+			location.SetFunctionName(f.GetFunctionName());
 		}
 
 		const SBAddress addr = f.GetPCAddress();
@@ -1731,7 +1733,7 @@ lldb::Link::ProgramStopped
 			const JString a(addr.GetLoadAddress(t), JString::kBase16);
 			location.SetMemoryAddress(a);
 		}
-		Broadcast(::Link::ProgramStopped(location));
+		Broadcast(ProgramStopped(location, waitingForThread));
 
 		if (msg != nullptr && file.IsValid())
 		{
