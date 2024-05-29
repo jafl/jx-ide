@@ -1650,7 +1650,7 @@ lldb::Link::SendMedicCommand
 {
 	command->Starting();
 
-	JXUrgentTask* task = jnew JXUrgentFunctionTask(this, [this, command]()
+	JXUrgentTask* task = jnew JXUrgentFunctionTask(command, [this, command]()
 	{
 		SendMedicCommandSync(command);
 	},
