@@ -88,7 +88,7 @@ private:
 
 private:
 
-	CommandDirector*	itsDir;
+	CommandDirector*	itsCmdDir;
 	JTree*				itsTree;
 	const bool			itsIsMainDisplayFlag;
 	bool				itsWaitingForReloadFlag;

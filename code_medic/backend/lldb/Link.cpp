@@ -42,9 +42,9 @@
 #include "lldb/API/SBListener.h"
 #include "lldb/API/SBEvent.h"
 
-#include "lldb/EventTask.h"
 #include "globals.h"
 
+#include <jx-af/jx/JXFunctionTask.h>
 #include <jx-af/jx/JXUrgentFunctionTask.h>
 #include <jx-af/jx/JXAssert.h>
 #include <jx-af/jcore/jFileUtil.h>
@@ -410,7 +410,8 @@ lldb::Link::HandleEvent
 	msg += ":";
 	msg += JString(eventType);
 
-	if (SBProcess::EventIsProcessEvent(e))
+	if (SBProcess::EventIsProcessEvent(e) &&
+		(eventType & (SBProcess::eBroadcastBitStateChanged | SBProcess::eBroadcastBitInterrupt)))
 	{
 		const StateType state = SBProcess::GetStateFromEvent(e);
 		msg += "; process state: " + JString(state) + ", " + JString(SBProcess::GetRestartedFromEvent(e));
@@ -1931,7 +1932,11 @@ lldb::Link::StartDebugger
 		auto* welcomeTask = jnew WelcomeTask(msg, restart);
 		welcomeTask->Go();
 
-		itsEventTask = jnew EventTask(this);
+		itsEventTask = jnew JXFunctionTask(0, [this]()
+		{
+			HandleEvent();
+		},
+		"lldb::HandleEvent");
 		itsEventTask->Start();
 
 		return true;

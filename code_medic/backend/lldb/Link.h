@@ -25,12 +25,13 @@ using j_lldb_cookie_fn_return = long;
 using j_lldb_cookie_size      = unsigned long;
 #endif
 
+class JXFunctionTask;
+
 namespace lldb {
 
 class BreakpointManager;
 class GetStopLocationForLink;
 class GetStopLocationForAsm;
-class EventTask;
 
 class Link : public ::Link, public SBListener
 {
@@ -179,7 +180,7 @@ private:
 	JString		itsLastProgramInput;	// to avoid printing echo
 
 	BreakpointManager*	itsBPMgr;
-	EventTask*			itsEventTask;
+	JXFunctionTask*		itsEventTask;
 
 	JString	itsPrompt;			// to allow GetCommandPrompt() to return JString&
 	JString	itsCoreName;

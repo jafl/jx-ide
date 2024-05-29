@@ -650,7 +650,7 @@ DiffFileDialog::Receive
 
 	else if (sender == itsCVSChooseButton && message.Is(JXButton::kPushed))
 	{
-		if ((GetDisplay()->GetLatestKeyModifiers()).meta())
+		if (GetDisplay()->GetLatestKeyModifiers().meta())
 		{
 			ChoosePath(itsCVSFileInput);
 		}

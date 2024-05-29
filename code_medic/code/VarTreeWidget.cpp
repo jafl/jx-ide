@@ -63,7 +63,7 @@ VarTreeWidget::VarTreeWidget
 	:
 	JXNamedTreeListWidget(treeList, scrollbarSet,
 						  enclosure, hSizing, vSizing, x, y, w, h),
-	itsDir(dir),
+	itsCmdDir(dir),
 	itsTree(tree),
 	itsIsMainDisplayFlag(mainDisplay),
 	itsWaitingForReloadFlag(false),
@@ -247,7 +247,7 @@ VarTreeWidget::Display1DArray()
 	while (iter.Next(&cell))
 	{
 		auto& node = dynamic_cast<VarNode&>(*GetTreeList()->GetNode(cell.y));
-		itsDir->Display1DArray(node.GetFullName());
+		itsCmdDir->Display1DArray(node.GetFullName());
 	}
 
 	ClearIncrementalSearchBuffer();
@@ -266,7 +266,7 @@ VarTreeWidget::Plot1DArray()
 	while (iter.Next(&cell))
 	{
 		auto& node = dynamic_cast<VarNode&>(*GetTreeList()->GetNode(cell.y));
-		itsDir->Plot1DArray(node.GetFullName());
+		itsCmdDir->Plot1DArray(node.GetFullName());
 	}
 
 	ClearIncrementalSearchBuffer();
@@ -285,7 +285,7 @@ VarTreeWidget::Display2DArray()
 	while (iter.Next(&cell))
 	{
 		auto& node = dynamic_cast<VarNode&>(*GetTreeList()->GetNode(cell.y));
-		itsDir->Display2DArray(node.GetFullName());
+		itsCmdDir->Display2DArray(node.GetFullName());
 	}
 
 	ClearIncrementalSearchBuffer();
@@ -308,14 +308,14 @@ VarTreeWidget::ExamineMemory
 	while (iter.Next(&cell))
 	{
 		auto& node = dynamic_cast<VarNode&>(*GetTreeList()->GetNode(cell.y));
-		dir        = jnew MemoryDir(itsDir, node.GetFullName());
+		dir        = jnew MemoryDir(itsCmdDir, node.GetFullName());
 		dir->SetDisplayType(type);
 		dir->Activate();
 	}
 
 	if (dir == nullptr)
 	{
-		dir = jnew MemoryDir(itsDir, JString::empty);
+		dir = jnew MemoryDir(itsCmdDir, JString::empty);
 		dir->SetDisplayType(type);
 		dir->Activate();
 	}
@@ -553,7 +553,7 @@ VarTreeWidget::HandleMouseDown
 			}
 			else
 			{
-				itsDir->DisplayExpression(expr);
+				itsCmdDir->DisplayExpression(expr);
 			}
 		}
 	}

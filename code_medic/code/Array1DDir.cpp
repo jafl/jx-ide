@@ -54,7 +54,7 @@ Array1DDir::Array1DDir
 
 Array1DDir::Array1DDir
 	(
-	std::istream&			input,
+	std::istream&		input,
 	const JFileVersion	vers,
 	CommandDirector*	supervisor
 	)

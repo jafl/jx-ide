@@ -754,10 +754,6 @@ T
 F
 "./backend/lldb/Link.cpp"
 T
-2 "EventTask.cpp"
-F
-"./backend/lldb/EventTask.cpp"
-T
 2 "WelcomeTask.cpp"
 F
 "./backend/lldb/WelcomeTask.cpp"
