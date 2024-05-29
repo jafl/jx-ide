@@ -11,6 +11,7 @@
 #include <jx-af/jx/JXNamedTreeListWidget.h>
 
 class JTree;
+class JXIdleTask;
 class Link;
 class CommandDirector;
 class ThreadsDir;
@@ -71,6 +72,7 @@ private:
 	bool				itsFlushWhenRunFlag;
 	JArray<JUInt64>*	itsOpenIDList;
 	DisplayState		itsDisplayState;
+	JXIdleTask*			itsFlushStateTask;
 
 private:
 

@@ -15,6 +15,7 @@
 #include "GetThreadCmd.h"
 #include "globals.h"
 #include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXFunctionTask.h>
 #include <jx-af/jx/JXDeleteObjectTask.h>
 #include <jx-af/jcore/JTree.h>
 #include <jx-af/jcore/JNamedTreeList.h>
@@ -33,7 +34,7 @@
 ThreadsWidget::ThreadsWidget
 	(
 	CommandDirector*	commandDir,
-	ThreadsDir*		threadDir,
+	ThreadsDir*			threadDir,
 	JTree*				tree,
 	JNamedTreeList*		treeList,
 	JXScrollbarSet*		scrollbarSet,
@@ -57,7 +58,8 @@ ThreadsWidget::ThreadsWidget
 	itsChangingThreadFlag(false),
 	itsSelectingThreadFlag(false),
 	itsFlushWhenRunFlag(true),
-	itsOpenIDList(nullptr)
+	itsOpenIDList(nullptr),
+	itsFlushStateTask(nullptr)
 {
 	itsLink = GetLink();
 	ListenTo(itsLink);
@@ -87,6 +89,7 @@ ThreadsWidget::~ThreadsWidget()
 	JXDeleteObjectTask<GetThreadsCmd>::Delete(itsGetThreadsCmd);
 	jdelete itsGetCurrentThreadCmd;
 	jdelete itsOpenIDList;
+	jdelete itsFlushStateTask;
 }
 
 /******************************************************************************
@@ -350,8 +353,20 @@ ThreadsWidget::Receive
 	}
 
 	else if (sender == itsLink &&
-			 ((message.Is(Link::kProgramRunning) && itsFlushWhenRunFlag) ||
-			  message.Is(Link::kProgramFinished) ||
+			 (message.Is(Link::kProgramRunning) && itsFlushWhenRunFlag))
+	{
+		itsIsWaitingForReloadFlag = false;
+		itsFlushStateTask = jnew JXFunctionTask(itsLink->GetPauseForStepInterval(), [this]()
+		{
+			itsFlushStateTask = nullptr;
+			FlushOldData();
+		},
+		"ThreadsWidget::PauseBeforeFlushOldData",
+		true);
+		itsFlushStateTask->Start();
+	}
+	else if (sender == itsLink &&
+			 (message.Is(Link::kProgramFinished) ||
 			  message.Is(Link::kDetachedFromProcess)))
 	{
 		itsIsWaitingForReloadFlag = false;
@@ -371,6 +386,9 @@ ThreadsWidget::Receive
 
 	else if (sender == itsLink && message.Is(Link::kProgramStopped))
 	{
+		jdelete itsFlushStateTask;
+		itsFlushStateTask = nullptr;
+
 		// This is triggered when gdb prints file:line info.
 		// (It would be nice to avoid this if only the frame changed,
 		//  but we can't merely set a flag when we get kFrameChanged

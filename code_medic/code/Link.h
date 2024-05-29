@@ -80,7 +80,8 @@ public:
 public:
 
 	Link(const bool* features, const JUtf8Byte* cmdPromptKey,
-		const JUtf8Byte* scriptPromptKey, const JUtf8Byte* chooseProgInstrKey);
+		 const JUtf8Byte* scriptPromptKey, const JUtf8Byte* chooseProgInstrKey,
+		 const JSize pauseForStepInterval = 0);
 
 	~Link() override;
 
@@ -172,6 +173,8 @@ public:
 					 bool* exists, JString* fullName) const;
 	void	ClearFileNameMap();
 
+	JSize	GetPauseForStepInterval() const;
+
 	static void	NotifyUser(const JString& msg, const bool error);
 	static void	Log(const JUtf8Byte* log);
 	static void	Log(std::ostringstream& log);
@@ -245,6 +248,7 @@ private:
 	const JUtf8Byte*	itsCommandPromptKey;
 	const JUtf8Byte*	itsScriptPromptKey;
 	const JUtf8Byte*	itsChooseProgramInstructionsKey;
+	const JSize			itsPauseForStepInterval;
 
 	Command*		itsRunningCommand;
 	JIndex			itsLastCommandID;

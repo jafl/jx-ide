@@ -11,6 +11,7 @@
 #include <jx-af/jx/JXNamedTreeListWidget.h>
 
 class JTree;
+class JXIdleTask;
 class Link;
 class CommandDirector;
 class StackDir;
@@ -73,6 +74,7 @@ private:
 	bool				itsIsWaitingForReloadFlag;
 	bool				itsChangingFrameFlag;
 	bool				itsSelectingFrameFlag;
+	JXIdleTask*			itsFlushStateTask;
 
 private:
 

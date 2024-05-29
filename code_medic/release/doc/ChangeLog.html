@@ -16,11 +16,13 @@
 <h2>7.2</h2>
 
 <ul>
-	<li>When the program stops, opens both Threads and Stack Trace windows.</li>
+	<li>Threads and Stack Trace window no longer flicker when stepping through code.</li>
 
 	<li>When using lldb, it now maintains the thread you are stepping through.</li>
 
 	<li>When using gdb or lldb, it now displays the true type of every pointer.  When a variable is transferred from the Local Variables window to the main Variables window, the object is cast to this type.</li>
+
+	<li>When the program stops at a location without a source file, opens both Threads and Stack Trace windows.</li>
 
 	<li>Removed "Display as C string" menu item because lldb backend now displays string contents.</li>
 

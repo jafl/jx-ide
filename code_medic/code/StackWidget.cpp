@@ -16,6 +16,7 @@
 #include "GetFrameCmd.h"
 #include "globals.h"
 #include <jx-af/jx/JXWindow.h>
+#include <jx-af/jx/JXFunctionTask.h>
 #include <jx-af/jcore/JTree.h>
 #include <jx-af/jcore/JNamedTreeList.h>
 #include <jx-af/jcore/JTableSelection.h>
@@ -57,7 +58,8 @@ StackWidget::StackWidget
 	itsSmartFrameSelectFlag(false),
 	itsIsWaitingForReloadFlag(false),
 	itsChangingFrameFlag(false),
-	itsSelectingFrameFlag(false)
+	itsSelectingFrameFlag(false),
+	itsFlushStateTask(nullptr)
 {
 	itsLink = GetLink();
 	ListenTo(itsLink);
@@ -90,6 +92,7 @@ StackWidget::~StackWidget()
 	jdelete itsTree;
 	jdelete itsGetStackCmd;
 	jdelete itsGetFrameCmd;
+	jdelete itsFlushStateTask;
 }
 
 /******************************************************************************
@@ -430,9 +433,20 @@ StackWidget::Receive
 		Rebuild();
 	}
 
+	else if (sender == itsLink && message.Is(Link::kProgramRunning))
+	{
+		itsIsWaitingForReloadFlag = false;
+		itsFlushStateTask = jnew JXFunctionTask(itsLink->GetPauseForStepInterval(), [this]()
+		{
+			itsFlushStateTask = nullptr;
+			FlushOldData();
+		},
+		"StackWidget::PauseBeforeFlushOldData",
+		true);
+		itsFlushStateTask->Start();
+	}
 	else if (sender == itsLink &&
-			 (message.Is(Link::kProgramRunning)  ||
-			  message.Is(Link::kProgramFinished) ||
+			 (message.Is(Link::kProgramFinished) ||
 			  message.Is(Link::kDetachedFromProcess)))
 	{
 		itsIsWaitingForReloadFlag = false;
@@ -451,6 +465,9 @@ StackWidget::Receive
 	}
 	else if (sender == itsLink && message.Is(Link::kProgramStopped))
 	{
+		jdelete itsFlushStateTask;
+		itsFlushStateTask = nullptr;
+
 		auto& info = dynamic_cast<const Link::ProgramStopped&>(message);
 		if (!info.IsWaitingForThread())
 		{

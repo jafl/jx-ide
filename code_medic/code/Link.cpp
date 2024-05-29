@@ -16,6 +16,8 @@
 #include <jx-af/jcore/jFileUtil.h>
 #include <jx-af/jcore/jAssert.h>
 
+const JSize kPauseForStepInterval = 2000;	// ms
+
 // JBroadcaster message types
 
 const JUtf8Byte* Link::kUserOutput             = "UserOutput::Link";
@@ -60,13 +62,15 @@ Link::Link
 	const bool*			features,
 	const JUtf8Byte*	cmdPromptKey,
 	const JUtf8Byte*	scriptPromptKey,
-	const JUtf8Byte*	chooseProgInstrKey
+	const JUtf8Byte*	chooseProgInstrKey,
+	const Time			pauseForStepInterval
 	)
 	:
 	itsFeatures(features),
 	itsCommandPromptKey(cmdPromptKey),
 	itsScriptPromptKey(scriptPromptKey),
-	itsChooseProgramInstructionsKey(chooseProgInstrKey)
+	itsChooseProgramInstructionsKey(chooseProgInstrKey),
+	itsPauseForStepInterval(pauseForStepInterval > 0 ? pauseForStepInterval : kPauseForStepInterval)
 {
 	// commands are often owned by other objects, who can delete them more reliably
 	itsForegroundQ = jnew JPtrArray<Command>(JPtrArrayT::kForgetAll);
@@ -127,6 +131,21 @@ Link::GetChooseProgramInstructions()
 	const
 {
 	return JGetString(itsChooseProgramInstructionsKey);
+}
+
+/******************************************************************************
+ GetPauseForStepInterval
+
+	How long to wait before assuming that the program is running rather than
+	stepping.
+
+ ******************************************************************************/
+
+JSize
+Link::GetPauseForStepInterval()
+	const
+{
+	return itsPauseForStepInterval;
 }
 
 /******************************************************************************

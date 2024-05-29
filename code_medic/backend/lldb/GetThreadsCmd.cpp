@@ -56,7 +56,7 @@ lldb::GetThreadsCmd::~GetThreadsCmd()
 
  ******************************************************************************/
 
-static const JRegex threadIDPattern("^thread #([[:digit:]]+):\\s*tid = [^,]+,");
+static const JRegex threadIDPattern("^thread #([[:digit:]]+):\\s*tid\\s*=\\s*([^,]+),");
 
 void
 lldb::GetThreadsCmd::HandleSuccess
@@ -110,14 +110,13 @@ lldb::GetThreadsCmd::HandleSuccess
 		const JStringMatch m = threadIDPattern.Match(name, JRegex::kIncludeSubmatches);
 		if (!m.IsEmpty())
 		{
-			indexStr = m.GetSubstring(1);
-
-			JUInt indexValue;
-			if (indexStr.ConvertToUInt(&indexValue) && indexValue == threadID)
+			JUInt idValue;
+			if (m.GetSubstring(2).ConvertToUInt(&idValue) && idValue == threadID)
 			{
 				foundThreadID = true;
 			}
 
+			indexStr = m.GetSubstring(1);
 			while (indexStr.GetCharacterCount() < kThreadIndexWidth)
 			{
 				indexStr.Prepend("0");
