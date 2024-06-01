@@ -25,21 +25,12 @@ public:
 	void	ViewPlainDiffs(const bool silent) const override;
 	void	ViewVCSDiffs(const bool silent) const override;
 
-	bool	ParseFiles(FileListTable* parser,
-					   const JPtrArray<JString>& allSuffixList,
-					   SymbolList* symbolList, const JPtrArray<Tree>& treeList,
-					   JProgressDisplay& pg) const override;
+	void	CollectFilesForParse(const JPtrArray<JString>& allSuffixList,
+								 JPtrArray<JString>* fileList) const override;
 
 	void	CreateFilesForTemplate(std::istream& input,
 								   const JFileVersion vers) const override;
 	void	SaveFilesInTemplate(std::ostream& output) const override;
-
-private:
-
-	bool	ParseFile(const JString& fullName, FileListTable* parser,
-					  const JPtrArray<JString>& allSuffixList,
-					  SymbolList* symbolList, const JPtrArray<Tree>& treeList,
-					  JProgressDisplay& pg) const;
 };
 
 #endif

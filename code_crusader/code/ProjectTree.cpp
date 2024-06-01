@@ -146,22 +146,19 @@ ProjectTree::BuildQMakeData
 }
 
 /******************************************************************************
- ParseFiles
+ CollectFilesForParse
 
  ******************************************************************************/
 
 void
-ProjectTree::ParseFiles
+ProjectTree::CollectFilesForParse
 	(
-	FileListTable*				parser,
 	const JPtrArray<JString>&	allSuffixList,
-	SymbolList*					symbolList,
-	const JPtrArray<Tree>&		treeList,
-	JProgressDisplay&			pg
+	JPtrArray<JString>*			fileList
 	)
 	const
 {
-	GetProjectRoot()->ParseFiles(parser, allSuffixList, symbolList, treeList, pg);
+	GetProjectRoot()->CollectFilesForParse(allSuffixList, fileList);
 }
 
 /******************************************************************************

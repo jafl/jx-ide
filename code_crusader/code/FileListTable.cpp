@@ -108,15 +108,19 @@ FileListTable::Update
 		dir->PrepareForTreeUpdate(reparseAll);
 	}
 
+	JPtrArray<JString> allSuffixList(JPtrArrayT::kDeleteAll, 100);
+	GetPrefsManager()->GetAllFileSuffixes(&allSuffixList);
+
+	JPtrArray<JString> projectFileList(JPtrArrayT::kDeleteAll, 100);
+	fileTree->CollectFilesForParse(allSuffixList, &projectFileList);
+
 	boost::fibers::buffered_channel<JBroadcaster::Message*> pgChannel(kJBufferedChannelCapacity);
 	JThreadPG threadPG(&pgChannel);
 
-	JPtrArray<JString> deadFileNameList(JPtrArrayT::kDeleteAll);
-	JArray<JFAID_t> deadFileIDList;
 	boost::fibers::buffered_channel<bool> flagChannel(4);
 
-	std::thread t([this, &threadPG, &deadFileNameList, &deadFileIDList, &flagChannel,
-					fileTree, &dirList, symbolDir, &treeDirList]()
+	std::thread t([this, &threadPG, &flagChannel, &allSuffixList,
+					&projectFileList, &dirList, symbolDir, &treeDirList]()
 	{
 		JPtrArray<Tree> treeList(JPtrArrayT::kForgetAll);
 		for (auto* dir : treeDirList)
@@ -126,20 +130,40 @@ FileListTable::Update
 
 		// create array to track which files still exist
 
-		JArray<bool> fileUsage(1000);
-		itsFileUsage = &fileUsage;
-
 		const JSize origFileCount = itsFileInfo->GetItemCount();
+		JArray<bool> fileUsage(JMax(2*origFileCount, (JSize) 1000));
 		for (JIndex i=1; i<=origFileCount; i++)
 		{
 			fileUsage.AppendItem(false);
 		}
+		itsFileUsage = &fileUsage;
 
 		// process each file
 
-		ScanAll(fileTree, dirList, symbolDir->GetSymbolList(), treeList, threadPG);
+		threadPG.VariableLengthProcessBeginning(JGetString("ParsingFiles::FileListTable"), false, false);
+
+		if (!projectFileList.IsEmpty())
+		{
+			for (const auto* f : projectFileList)
+			{
+				time_t t;
+				JGetModificationTime(*f, &t);
+				ParseFile(*f, allSuffixList, t, symbolDir->GetSymbolList(), treeList);
+				threadPG.IncrementProgress();
+			}
+		}
+
+		if (!dirList.IsEmpty())
+		{
+			ScanAll(dirList, allSuffixList, symbolDir->GetSymbolList(), treeList, threadPG);
+		}
+
+		threadPG.ProcessFinished();
 
 		// collect files that no longer exist
+
+		JPtrArray<JString> deadFileNameList(JPtrArrayT::kForgetAll);
+		JArray<JFAID_t> deadFileIDList;
 
 		const JPtrArray<JString>& fileNameList = GetFullNameList();
 		if (!fileNameList.IsEmpty())
@@ -152,7 +176,7 @@ FileListTable::Update
 			{
 				if (!fileUsage.GetItem(i))
 				{
-					deadFileNameList.Append(*fileNameList.GetItem(i));
+					deadFileNameList.Append(fileNameList.GetItem(i));
 					deadFileIDList.AppendItem(itsFileInfo->GetItem(i).id);
 				}
 			}
@@ -177,6 +201,7 @@ FileListTable::Update
 		{
 			flagChannel.push(false);
 		}
+		deadFileNameList.CleanOut();
 
 		symbolDir->ListUpdateThreadFinished(deadFileIDList, threadPG);
 		for (auto* dir : treeDirList)
@@ -226,36 +251,24 @@ FileListTable::Update
 void
 FileListTable::ScanAll
 	(
-	ProjectTree*			fileTree,
-	const DirList&			dirList,
-	SymbolList*				symbolList,
-	const JPtrArray<Tree>&	treeList,
-	JProgressDisplay&		pg
+	const DirList&				dirList,
+	const JPtrArray<JString>&	allSuffixList,
+	SymbolList*					symbolList,
+	const JPtrArray<Tree>&		treeList,
+	JProgressDisplay&			pg
 	)
 {
 	const JSize dirCount = dirList.GetItemCount();
-	if (dirCount > 0 || fileTree->GetProjectRoot()->HasChildren())
+	JString fullPath;
+	bool recurse;
+	for (JIndex i=1; i<=dirCount; i++)
 	{
-		pg.VariableLengthProcessBeginning(JGetString("ParsingFiles::FileListTable"), false, false);
-
-		JPtrArray<JString> allSuffixList(JPtrArrayT::kDeleteAll);
-		GetPrefsManager()->GetAllFileSuffixes(&allSuffixList);
-
-		JString fullPath;
-		bool recurse;
-		for (JIndex i=1; i<=dirCount; i++)
+		if (dirList.GetFullPath(i, &fullPath, &recurse))
 		{
-			if (dirList.GetFullPath(i, &fullPath, &recurse))
-			{
-				ScanDirectory(fullPath, recurse,
-							  allSuffixList, symbolList,
-							  treeList, pg);
-			}
+			ScanDirectory(fullPath, recurse,
+						  allSuffixList, symbolList,
+						  treeList, pg);
 		}
-
-		fileTree->ParseFiles(this, allSuffixList, symbolList, treeList, pg);
-
-		pg.ProcessFinished();
 	}
 }
 
@@ -315,7 +328,7 @@ FileListTable::ScanDirectory
 				assert( ok );
 			}
 
-			ParseFile(trueName, allSuffixList, modTime,  symbolList, treeList, pg);
+			ParseFile(trueName, allSuffixList, modTime,  symbolList, treeList);
 		}
 
 		pg.IncrementProgress();
@@ -325,9 +338,7 @@ FileListTable::ScanDirectory
 }
 
 /******************************************************************************
- ParseFile
-
-	Not private because called by FileNode.
+ ParseFile (private)
 
 	*** This runs in the update thread.
 
@@ -340,8 +351,7 @@ FileListTable::ParseFile
 	const JPtrArray<JString>&	allSuffixList,
 	const time_t				modTime,
 	SymbolList*					symbolList,
-	const JPtrArray<Tree>&		treeList,
-	JProgressDisplay&			pg
+	const JPtrArray<Tree>&		treeList
 	)
 {
 	if (!PrefsManager::FileMatchesSuffix(fullName, allSuffixList))
@@ -683,7 +693,7 @@ FileListTable::UpdateFileInfo
 
 	info.id = GetUniqueID();
 
-	const JString& fileName = *(GetFullNameList().GetItem(index));
+	const JString& fileName = *GetFullNameList().GetItem(index);
 	const bool ok           = JGetModificationTime(fileName, &(info.modTime));
 	assert( ok );
 

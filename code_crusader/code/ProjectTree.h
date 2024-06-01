@@ -25,7 +25,7 @@ public:
 
 	ProjectTree(ProjectDocument* doc);
 	ProjectTree(std::istream& input, const JFileVersion vers,
-				  ProjectDocument* doc);
+				ProjectDocument* doc);
 
 	~ProjectTree() override;
 
@@ -40,10 +40,8 @@ public:
 						   JPtrArray<JTreeNode>* invalidList) const;
 	bool	BuildQMakeData(JString* src, JString* hdr,
 						   JPtrArray<JTreeNode>* invalidList) const;
-	void	ParseFiles(FileListTable* parser,
-					   const JPtrArray<JString>& allSuffixList,
-					   SymbolList* symbolList, const JPtrArray<Tree>& treeList,
-					   JProgressDisplay& pg) const;
+	void	CollectFilesForParse(const JPtrArray<JString>& allSuffixList,
+								 JPtrArray<JString>* fileList) const;
 	void	Print(JString* text) const;
 
 	void	StreamOut(std::ostream& output) const;

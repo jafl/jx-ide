@@ -49,13 +49,6 @@ public:
 
 	void	ReadSetup(std::istream& input, const JFileVersion vers);
 
-	// called by FileNode
-
-	void	ParseFile(const JString& fullName, const JPtrArray<JString>& allSuffixList,
-					  const time_t modTime,
-					  SymbolList* symbolList, const JPtrArray<Tree>& treeList,
-					  JProgressDisplay& pg);
-
 protected:
 
 	void	Receive(JBroadcaster* sender, const Message& message) override;
@@ -88,13 +81,16 @@ private:
 
 private:
 
-	void	ScanAll(ProjectTree* fileTree, const DirList& dirList,
+	void	ScanAll(const DirList& dirList, const JPtrArray<JString>& allSuffixList,
 					SymbolList* symbolList, const JPtrArray<Tree>& treeList,
 					JProgressDisplay& pg);
 	void	ScanDirectory(const JString& path, const bool recurse,
 						  const JPtrArray<JString>& allSuffixList,
 						  SymbolList* symbolList, const JPtrArray<Tree>& treeList,
 						  JProgressDisplay& pg);
+	void	ParseFile(const JString& fullName, const JPtrArray<JString>& allSuffixList,
+					  const time_t modTime,
+					  SymbolList* symbolList, const JPtrArray<Tree>& treeList);
 	bool	AddFile(const JString& fullName, const TextFileType fileType,
 					const time_t modTime, JFAID_t* id);
 

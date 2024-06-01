@@ -137,8 +137,7 @@ FileNodeBase::GetFullName
 	)
 	const
 {
-	auto& projTree          = dynamic_cast<const ProjectTree&>(*GetTree());
-	const JString& basePath = projTree.GetProjectDoc()->GetFilePath();
+	const JString& basePath = GetProjectTree()->GetProjectDoc()->GetFilePath();
 	return (!fileName.IsEmpty() &&
 			JConvertToAbsolutePath(fileName, basePath, fullName));
 }
@@ -412,8 +411,7 @@ FileNodeBase::FileRenamed
 	{
 		assert( type == ProjectTable::kProjectRelative );
 
-		auto& projTree          = dynamic_cast<const ProjectTree&>(*GetTree());
-		const JString& basePath = projTree.GetProjectDoc()->GetFilePath();
+		const JString& basePath = GetProjectTree()->GetProjectDoc()->GetFilePath();
 		JString s               = JConvertToRelativePath(origFullName, basePath);
 		if (itsFileName == s)
 		{

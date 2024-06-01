@@ -76,67 +76,36 @@ FileNode::OpenFile()
 }
 
 /******************************************************************************
- ParseFiles (virtual)
+ CollectFilesForParse (virtual)
 
 	*** This runs in the update thread.
 
  ******************************************************************************/
 
-bool
-FileNode::ParseFiles
+void
+FileNode::CollectFilesForParse
 	(
-	FileListTable*				parser,
 	const JPtrArray<JString>&	allSuffixList,
-	SymbolList*					symbolList,
-	const JPtrArray<Tree>&		treeList,
-	JProgressDisplay&			pg
+	JPtrArray<JString>*			fileList
 	)
 	const
 {
 	JString fullName, trueName;
-	if (GetFullName(&fullName) && JGetTrueName(fullName, &trueName))
+	if (GetFullName(&fullName) && JGetTrueName(fullName, &trueName) &&
+		PrefsManager::FileMatchesSuffix(fullName, allSuffixList))
 	{
-		if (!ParseFile(trueName, parser, allSuffixList, symbolList, treeList, pg))
-		{
-			return false;
-		}
+		fileList->Append(trueName);
 
 		const TextFileType type = GetPrefsManager()->GetFileType(trueName);
 		if (GetDocumentManager()->GetComplementFile(trueName, type, &fullName,
 													GetProjectDoc(), false) &&
-			JGetTrueName(fullName, &trueName) &&
-			!ParseFile(trueName, parser, allSuffixList, symbolList, treeList, pg))
+			JGetTrueName(fullName, &trueName))
 		{
-			return false;
+			fileList->Append(trueName);
 		}
 	}
-	return FileNodeBase::ParseFiles(parser, allSuffixList, symbolList, treeList, pg);
-}
 
-/******************************************************************************
- ParseFile (private)
-
-	*** This runs in the update thread.
-
- ******************************************************************************/
-
-bool
-FileNode::ParseFile
-	(
-	const JString&				fullName,
-	FileListTable*				parser,
-	const JPtrArray<JString>&	allSuffixList,
-	SymbolList*					symbolList,
-	const JPtrArray<Tree>&		treeList,
-	JProgressDisplay&			pg
-	)
-	const
-{
-	time_t t;
-	JGetModificationTime(fullName, &t);
-	parser->ParseFile(fullName, allSuffixList, t, symbolList, treeList, pg);
-
-	return pg.IncrementProgress();
+	FileNodeBase::CollectFilesForParse(allSuffixList, fileList);
 }
 
 /******************************************************************************
@@ -228,7 +197,7 @@ FileNode::ViewVCSDiffs
 void
 FileNode::CreateFilesForTemplate
 	(
-	std::istream&			input,
+	std::istream&		input,
 	const JFileVersion	vers
 	)
 	const
@@ -245,9 +214,7 @@ FileNode::CreateFilesForTemplate
 		JString path, name;
 		JSplitPathAndName(relName, &path, &name);
 
-		auto& projTree = dynamic_cast<const ProjectTree&>(*GetTree());
-
-		const JString& basePath = projTree.GetProjectDoc()->GetFilePath();
+		const JString& basePath = GetProjectTree()->GetProjectDoc()->GetFilePath();
 		path = JCombinePathAndName(basePath, path);
 
 		if (!JDirectoryExists(path))

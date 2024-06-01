@@ -56,10 +56,8 @@ public:
 	virtual void	BuildQMakeData(JString* src, JString* hdr,
 								   JPtrArray<JTreeNode>* invalidList) const;
 
-	virtual bool	ParseFiles(FileListTable* parser,
-							   const JPtrArray<JString>& allSuffixList,
-							   SymbolList* symbolList, const JPtrArray<Tree>& treeList,
-							   JProgressDisplay& pg) const;
+	virtual void	CollectFilesForParse(const JPtrArray<JString>& allSuffixList,
+										 JPtrArray<JString>* fileList) const;
 	virtual void	Print(JString* text) const;
 
 	virtual void	FileRenamed(const JString& origFullName, const JString& newFullName);

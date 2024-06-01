@@ -102,8 +102,7 @@ ProjectDocument*
 ProjectNode::GetProjectDoc()
 	const
 {
-	auto& tree = dynamic_cast<const ProjectTree&>(*GetTree());
-	return tree.GetProjectDoc();
+	return GetProjectTree()->GetProjectDoc();
 }
 
 /******************************************************************************
@@ -163,10 +162,8 @@ ProjectNode::StreamOut
 	const JSize childCount = GetChildCount();
 	for (JIndex i=1; i<=childCount; i++)
 	{
-		auto& child = dynamic_cast<const ProjectNode&>(*GetChild(i));
-
 		output << JBoolToString(true) << '\n';
-		child.StreamOut(output);
+		GetProjectChild(i)->StreamOut(output);
 	}
 
 	output << JBoolToString(false) << '\n';
@@ -312,8 +309,7 @@ ProjectNode::CalledByFindFile
 	const JSize count = GetChildCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		auto& child = dynamic_cast<ProjectNode&>(*GetChild(i));
-		if (child.CalledByFindFile(fullName, node))
+		if (GetProjectChild(i)->CalledByFindFile(fullName, node))
 		{
 			return true;
 		}
@@ -347,8 +343,7 @@ ProjectNode::BuildMakeFiles
 	const JSize count = GetChildCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		auto& child = dynamic_cast<const ProjectNode&>(*GetChild(i));
-		child.BuildMakeFiles(text, invalidList, libFileList, libProjPathList);
+		GetProjectChild(i)->BuildMakeFiles(text, invalidList, libFileList, libProjPathList);
 	}
 }
 
@@ -375,8 +370,7 @@ ProjectNode::BuildCMakeData
 	const JSize count = GetChildCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		auto& child = dynamic_cast<const ProjectNode&>(*GetChild(i));
-		child.BuildCMakeData(src, hdr, invalidList);
+		GetProjectChild(i)->BuildCMakeData(src, hdr, invalidList);
 	}
 }
 
@@ -403,8 +397,7 @@ ProjectNode::BuildQMakeData
 	const JSize count = GetChildCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		auto& child = dynamic_cast<const ProjectNode&>(*GetChild(i));
-		child.BuildQMakeData(src, hdr, invalidList);
+		GetProjectChild(i)->BuildQMakeData(src, hdr, invalidList);
 	}
 }
 
@@ -416,28 +409,19 @@ ProjectNode::BuildQMakeData
 
  ******************************************************************************/
 
-bool
-ProjectNode::ParseFiles
+void
+ProjectNode::CollectFilesForParse
 	(
-	FileListTable*				parser,
 	const JPtrArray<JString>&	allSuffixList,
-	SymbolList*					symbolList,
-	const JPtrArray<Tree>&		treeList,
-	JProgressDisplay&			pg
+	JPtrArray<JString>*			fileList
 	)
 	const
 {
 	const JSize count = GetChildCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		auto& child = dynamic_cast<const ProjectNode&>(*GetChild(i));
-		if (!child.ParseFiles(parser, allSuffixList, symbolList, treeList, pg))
-		{
-			return false;
-		}
+		GetProjectChild(i)->CollectFilesForParse(allSuffixList, fileList);
 	}
-
-	return true;
 }
 
 /******************************************************************************
@@ -457,8 +441,7 @@ ProjectNode::Print
 	const JSize count = GetChildCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		auto& child = dynamic_cast<const ProjectNode&>(*GetChild(i));
-		child.Print(text);
+		GetProjectChild(i)->Print(text);
 	}
 }
 
@@ -477,8 +460,7 @@ ProjectNode::FileRenamed
 	const JSize count = GetChildCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		auto& child = dynamic_cast<ProjectNode&>(*GetChild(i));
-		child.FileRenamed(origFullName, newFullName);
+		GetProjectChild(i)->FileRenamed(origFullName, newFullName);
 	}
 }
 
@@ -542,8 +524,7 @@ ProjectNode::CreateFilesForTemplate
 	const JSize count = GetChildCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		auto& child = dynamic_cast<const ProjectNode&>(*GetChild(i));
-		child.CreateFilesForTemplate(input, vers);
+		GetProjectChild(i)->CreateFilesForTemplate(input, vers);
 	}
 }
 
@@ -564,8 +545,7 @@ ProjectNode::SaveFilesInTemplate
 	const JSize count = GetChildCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		auto& child = dynamic_cast<const ProjectNode&>(*GetChild(i));
-		child.SaveFilesInTemplate(output);
+		GetProjectChild(i)->SaveFilesInTemplate(output);
 	}
 }
 
