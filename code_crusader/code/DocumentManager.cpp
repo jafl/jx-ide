@@ -24,6 +24,7 @@
 #include <jx-af/jx/JXChooseFileDialog.h>
 #include <jx-af/jx/JXSaveFileDialog.h>
 #include <jx-af/jx/JXSearchTextDialog.h>
+#include <jx-af/jx/JXUrgentFunctionTask.h>
 #include <jx-af/jcore/JRegex.h>
 #include <jx-af/jcore/JSubstitute.h>
 #include <jx-af/jcore/JLatentPG.h>
@@ -933,7 +934,12 @@ DocumentManager::PrivateOpenTextDocument
 			textDoc->RevertIfChangedByOthers(forceReload);
 			if (!lineRange.IsEmpty())
 			{
-				textDoc->SelectLines(lineRange);
+				auto* task = jnew JXUrgentFunctionTask(textDoc, [textDoc, lineRange]()
+				{
+					textDoc->SelectLines(lineRange);
+				},
+				"DocumentManager::PrivateOpenTextDocument::SelectLines");
+				task->Go();
 			}
 		}
 
