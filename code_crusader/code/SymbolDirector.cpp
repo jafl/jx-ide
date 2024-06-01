@@ -146,7 +146,7 @@ SymbolDirector::SymbolDirectorX
 	ListenTo(itsSymbolList, std::function([this](const SymbolList::UpdateFoundChanges&)
 	{
 		itsSymbolMenu->Deactivate();
-		itsSymbolTable->Hide();
+		itsSymbolTable->Deactivate();
 		CloseSymbolBrowsers();
 	}));
 
@@ -332,7 +332,7 @@ SymbolDirector::ListUpdateFinished()
 {
 	const bool changed = itsSymbolList->UpdateFinished();
 	itsSymbolMenu->Activate();
-	itsSymbolTable->Show();
+	itsSymbolTable->Activate();
 	return changed;
 }
 

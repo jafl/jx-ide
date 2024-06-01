@@ -387,7 +387,7 @@ FileListDirector::SetActiveDuringUpdate
 		menu->SetActive(active);
 	}
 
-	itsFLSet->SetVisible(active);
+	itsFLSet->SetActive(active);
 }
 
 /******************************************************************************
