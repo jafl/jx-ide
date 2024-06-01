@@ -919,7 +919,7 @@ TreeDirector::Receive
 {
 	if (sender == itsTree && message.Is(Tree::kUpdateFoundChanges))
 	{
-		itsTreeWidget->Hide();
+		itsTreeWidget->Hide();	// otherwise, might try to redraw
 	}
 
 	else

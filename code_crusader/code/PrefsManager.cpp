@@ -3204,7 +3204,7 @@ PrefsManager::FileMatchesSuffix
 	const JSize count = suffixList.GetItemCount();
 	for (JIndex i=1; i<=count; i++)
 	{
-		const JString& suffix = *(suffixList.GetItem(i));
+		const JString& suffix = *suffixList.GetItem(i);
 		if (fileName.EndsWith(suffix))
 		{
 			return true;

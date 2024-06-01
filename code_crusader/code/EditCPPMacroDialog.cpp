@@ -139,29 +139,10 @@ EditCPPMacroDialog::BuildWindow
 	colHeader->TurnOnColResizing(20);
 	itsTable->SetColTitles(colHeader);
 
-	ListenTo(itsHelpButton);
-}
-
-/******************************************************************************
- Receive (protected)
-
- ******************************************************************************/
-
-void
-EditCPPMacroDialog::Receive
-	(
-	JBroadcaster*	sender,
-	const Message&	message
-	)
-{
-	if (sender == itsHelpButton && message.Is(JXButton::kPushed))
+	ListenTo(itsHelpButton, std::function([](const JXButton::Pushed&)
 	{
-		JXGetHelpManager()->ShowSection("CTreeHelp#CPP");
-	}
-	else
-	{
-		JXModalDialogDirector::Receive(sender, message);
-	}
+		JXGetHelpManager()->ShowSection("CTreeHelp-CPP");
+	}));
 }
 
 /******************************************************************************

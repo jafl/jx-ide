@@ -210,7 +210,7 @@ as\b {
 		fullName.Prepend(itsPHPNamespace);
 	}
 
-	if (!tree->FindClass(fullName, theClass))
+	if (!tree->FindClass(fullName, theClass, false))
 	{
 		*theClass = jnew PHPClass(fullName, Class::kClassType, fileID, tree, itsFinalFlag);
 		(**theClass).SetAbstract(itsAbstractFlag);

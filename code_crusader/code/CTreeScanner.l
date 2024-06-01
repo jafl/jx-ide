@@ -223,7 +223,7 @@ using{WS}{NSID}{MS}; {
 	}
 
 	Class* c;
-	if (!tree->FindClass(fullName, &c))
+	if (!tree->FindClass(fullName, &c, false))
 	{
 		c = jnew CClass(fullName, Class::kClassType, fileID, tree);
 		c->SetTemplate(itsTemplateFlag);

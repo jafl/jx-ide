@@ -523,18 +523,7 @@ Tree::UpdateThreadFinished
 	{
 		RemoveFile(deadFileList.GetItem(i));
 	}
-}
 
-/******************************************************************************
- UpdateFinished
-
-	Rebuilds the tree.  Returns true if changes were found.
-
- ******************************************************************************/
-
-bool
-Tree::UpdateFinished()
-{
 	// restore collapsed classes
 
 	const bool forceRecalcVisible = RestoreCollapsedClasses(*itsCollapsedList);
@@ -551,7 +540,18 @@ Tree::UpdateFinished()
 	{
 		RecalcVisible();
 	}
+}
 
+/******************************************************************************
+ UpdateFinished
+
+	Rebuilds the tree.  Returns true if changes were found.
+
+ ******************************************************************************/
+
+bool
+Tree::UpdateFinished()
+{
 	if (itsChangedDuringParseFlag)
 	{
 		Broadcast(Changed());
@@ -1672,18 +1672,20 @@ bool
 Tree::FindClass
 	(
 	const JString&	fullName,
-	const Class**	theClass
+	const Class**	theClass,
+	const bool		includeGhost
 	)
 	const
 {
-	return FindClass(fullName, const_cast<Class**>(theClass));
+	return FindClass(fullName, const_cast<Class**>(theClass), includeGhost);
 }
 
 bool
 Tree::FindClass
 	(
 	const JString&	fullName,
-	Class**			theClass
+	Class**			theClass,
+	const bool		includeGhost
 	)
 	const
 {
@@ -1698,13 +1700,14 @@ Tree::FindClass
 	if (found)
 	{
 		*theClass = itsClassesByFull->GetItem(index);
-		return true;
+		if (includeGhost || !(**theClass).IsGhost())
+		{
+			return true;
+		}
 	}
-	else
-	{
-		*theClass = nullptr;
-		return false;
-	}
+
+	*theClass = nullptr;
+	return false;
 }
 
 /******************************************************************************

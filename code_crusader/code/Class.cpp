@@ -88,13 +88,12 @@ Class::Class
 	itsTree(tree),
 	itsFullName(fullName),
 	itsName(RemoveNamespace(fullName)),
-	itsFileID(fileID)
+	itsDeclType(declType),
+	itsFileID(fileID),
+	itsIsAbstractFlag(false),
+	itsIsTemplateFlag(false)
 {
 	ClassX();
-
-	itsDeclType       = declType;
-	itsIsAbstractFlag = false;
-	itsIsTemplateFlag = false;
 
 	SetCoords(0,0);
 	itsTree->AddClass(this);

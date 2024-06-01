@@ -322,7 +322,7 @@ x\" {
 	fullName.Prepend(itsPackage);
 
 	Class* c;
-	if (!tree->FindClass(fullName, &c))
+	if (!tree->FindClass(fullName, &c, false))
 	{
 		c = jnew DClass(fullName, Class::kClassType, fileID, tree, itsFinalFlag);
 		c->SetAbstract(itsAbstractFlag);

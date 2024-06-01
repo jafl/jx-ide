@@ -220,7 +220,7 @@ interface\b {
 			itsTypeName.Prepend(itsPackage);
 		}
 
-		if (!tree->FindClass(itsTypeName, &itsCurrentClass))
+		if (!tree->FindClass(itsTypeName, &itsCurrentClass, false))
 		{
 			itsCurrentClass = jnew GoClass(itsTypeName, Class::kClassType, fileID, tree,
 											isExported);

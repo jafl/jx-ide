@@ -170,7 +170,7 @@ interface\b {
 	}
 
 	Class* c;
-	if (!tree->FindClass(fullName, &c))
+	if (!tree->FindClass(fullName, &c, false))
 	{
 		c = jnew JavaClass(fullName, Class::kClassType, fileID, tree,
 							itsPublicFlag, itsFinalFlag);

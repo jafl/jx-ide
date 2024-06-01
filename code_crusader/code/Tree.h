@@ -53,8 +53,8 @@ public:
 	bool	NeedsReparseAll() const;
 	void	RebuildLayout();
 
-	bool	FindClass(const JString& fullName, Class** theClass) const;
-	bool	FindClass(const JString& fullName, const Class** theClass) const;
+	bool	FindClass(const JString& fullName, Class** theClass, const bool includeGhost = true) const;
+	bool	FindClass(const JString& fullName, const Class** theClass, const bool includeGhost = true) const;
 	bool	IsUniqueClassName(const JString& name, const Class** theClass) const;
 	bool	ClosestVisibleMatch(const JString& prefixStr, Class** theClass) const;
 	bool	FindParent(const JString& parentName, const Class* container,
