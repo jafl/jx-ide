@@ -749,17 +749,17 @@ Tree::AddClass
 		3)	All classes inheriting from (2)
 		4)  ...
 
+	*** This runs in the update thread.
+
  ******************************************************************************/
 
 void
 Tree::RebuildTree()
 {
-JIndex i;
-
 	// delete ghost classes and clear all parent-child connections
 
 	JSize classCount = itsClassesByFull->GetItemCount();
-	for (i=classCount; i>=1; i--)
+	for (JIndex i=classCount; i>=1; i--)
 	{
 		Class* theClass = itsClassesByFull->GetItem(i);
 		if (theClass->IsGhost())
@@ -782,7 +782,7 @@ JIndex i;
 	do
 	{
 		progress = false;
-		for (i=1; i<=classCount; i++)
+		for (JIndex i=1; i<=classCount; i++)
 		{
 			progress = itsClassesByFull->GetItem(i)->FindParents(false) || progress;
 		}
@@ -792,7 +792,7 @@ JIndex i;
 	// Now that no more progress is being made, allow ghosts to be created.
 	// (Inserting ghosts does not cause classes to be skipped.)
 
-	for (i=1; i<=classCount; i++)
+	for (JIndex i=1; i<=classCount; i++)
 	{
 		itsClassesByFull->GetItem(i)->FindParents(true);
 		classCount = GetItemCount();
@@ -811,6 +811,8 @@ JIndex i;
 
 	If necessary or requested, it rebuilds the list of visible classes
 	and adjusts their placement in the tree.
+
+	*** This may run in the update thread.
 
  ******************************************************************************/
 
@@ -867,10 +869,11 @@ Tree::RecalcVisible
 		}
 	}
 
-	// Now that we know which classes are visible, we can optimize the arrangement
-	// to minimize the lengths of multiple inheritance links.
+	// Now that we know which classes are visible, we can place them in the
+	// shape of a tree and optimize the arrangement to minimize the lengths
+	// of multiple inheritance links.
 
-	if (rebuildVisible || itsVisibleByGeom->IsEmpty())
+	if (rebuildVisible || itsVisibleByGeom->IsEmpty() || forcePlaceAll)
 	{
 		itsVisibleByGeom->CopyPointers(*itsVisibleByName,
 									   itsVisibleByGeom->GetCleanUpAction(), false);
@@ -891,16 +894,9 @@ Tree::RecalcVisible
 			}
 		}
 
-		// optimize further
+		// optimize further; calls PlaceAll()
 
 		MinimizeMILinks();
-	}
-
-	// place classes in the shape of a tree
-
-	if (rebuildVisible || forcePlaceAll)
-	{
-		PlaceAll();
 	}
 }
 
@@ -913,6 +909,8 @@ Tree::RecalcVisible
 	rootGeom can be nullptr.  It is only needed by MinimizeMILinks().
 	It contains information about root classes that have children
 	and is sorted by Class*.
+
+	*** This may run in the update thread.
 
  ******************************************************************************/
 
@@ -949,7 +947,12 @@ Tree::PlaceAll
 	itsWidth  += itsMarginWidth;
 	itsHeight += itsMarginWidth;
 
-	Broadcast(BoundsChanged());
+	auto* task = jnew JXUrgentFunctionTask(this, [this]()
+	{
+		Broadcast(BoundsChanged());
+	},
+	"Tree::PlaceAll::BoundsChanged");
+	task->Go();
 }
 
 /******************************************************************************
@@ -957,6 +960,8 @@ Tree::PlaceAll
 
 	Build the class tree whose root is the given class.
 	Updates y to include the height of the new subtree.
+
+	*** This may run in the update thread.
 
  ******************************************************************************/
 
@@ -991,7 +996,7 @@ Tree::PlaceClass
 		// By quantizing the y-coordinate, we simplify pagination.
 
 		JCoordinate newY = (*y+origY - h)/2;
-		newY -= (newY - origY) % h;
+		newY            -= (newY - origY) % h;
 		theClass->SetCoords(x, newY);
 	}
 	else

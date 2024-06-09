@@ -575,9 +575,9 @@ Class::FindParent
 
 	// check for any exact match
 
-	return okToSearchGhosts &&
-				itsTree->FindClass(*pInfo->name, &pInfo->parent) &&
-				pInfo->parent != this;
+	return (okToSearchGhosts &&
+			itsTree->FindClass(*pInfo->name, &pInfo->parent) &&
+			pInfo->parent != this);
 }
 
 /******************************************************************************
