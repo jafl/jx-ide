@@ -45,9 +45,9 @@ JTEST(Basic)
 
 	TestGoTree tree;
 	tree.PrepareForUpdate(false);
-	tree.ParseFile(JString("./data/tree/go/a.go", false), 1);
-	tree.ParseFile(JString("./data/tree/go/b.go", false), 2);
-	tree.ParseFile(JString("./data/tree/go/c.go", false), 3);
+	tree.ParseFile("./data/tree/go/a.go", 1);
+	tree.ParseFile("./data/tree/go/b.go", 2);
+	tree.ParseFile("./data/tree/go/c.go", 3);
 	tree.UpdateFinished(deadFileList);
 
 	const TestGoTree& constTree    = tree;

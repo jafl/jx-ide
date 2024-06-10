@@ -70,9 +70,9 @@ JTEST(jsp)
 	JStyledText* st = jnew JStyledText(false, false);
 
 	TestHTMLStyler styler;
-	styler.TestSetWordStyle(JString("/form", false), JFontStyle(true, false, 0, false, JColorManager::GetBlueColor()));
-	styler.TestSetWordStyle(JString("set", false), JFontStyle(JColorManager::GetOrangeColor()));
-	styler.TestSetWordStyle(JString("x:choose", false), JFontStyle(true, false, 0, false));
+	styler.TestSetWordStyle("/form", JFontStyle(true, false, 0, false, JColorManager::GetBlueColor()));
+	styler.TestSetWordStyle("set", JFontStyle(JColorManager::GetOrangeColor()));
+	styler.TestSetWordStyle("x:choose", JFontStyle(true, false, 0, false));
 
 	RunTest(st, &styler, "./data/styler/html/test.jsp", "./data/styler/html/styled-jsp.out");
 }

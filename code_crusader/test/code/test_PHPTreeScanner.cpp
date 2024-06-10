@@ -45,9 +45,9 @@ JTEST(Basic)
 
 	TestPHPTree tree;
 	tree.PrepareForUpdate(false);
-	tree.ParseFile(JString("./data/tree/php/A1.php", false), 1);
-	tree.ParseFile(JString("./data/tree/php/B1.php", false), 2);
-	tree.ParseFile(JString("./data/tree/php/InvalidArgumentException.php", false), 3);
+	tree.ParseFile("./data/tree/php/A1.php", 1);
+	tree.ParseFile("./data/tree/php/B1.php", 2);
+	tree.ParseFile("./data/tree/php/InvalidArgumentException.php", 3);
 	tree.UpdateFinished(deadFileList);
 
 	const TestPHPTree& constTree   = tree;

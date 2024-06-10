@@ -45,9 +45,9 @@ JTEST(Basic)
 
 	TestJavaTree tree;
 	tree.PrepareForUpdate(false);
-	tree.ParseFile(JString("./data/tree/java/AccessibilityController.java", false), 1);
-	tree.ParseFile(JString("./data/tree/java/PowerNotificationWarnings.java", false), 2);
-	tree.ParseFile(JString("./data/tree/java/PizzaStatus.java", false), 3);
+	tree.ParseFile("./data/tree/java/AccessibilityController.java", 1);
+	tree.ParseFile("./data/tree/java/PowerNotificationWarnings.java", 2);
+	tree.ParseFile("./data/tree/java/PizzaStatus.java", 3);
 	tree.UpdateFinished(deadFileList);
 
 	const TestJavaTree& constTree  = tree;
@@ -109,9 +109,9 @@ JTEST(Template)
 
 	TestJavaTree tree;
 	tree.PrepareForUpdate(false);
-	tree.ParseFile(JString("./data/tree/java/DateVerifier.java", false), 1);
-	tree.ParseFile(JString("./data/tree/java/IdVerifier.java", false), 2);
-	tree.ParseFile(JString("./data/tree/java/StartDateVerifier.java", false), 3);
+	tree.ParseFile("./data/tree/java/DateVerifier.java", 1);
+	tree.ParseFile("./data/tree/java/IdVerifier.java", 2);
+	tree.ParseFile("./data/tree/java/StartDateVerifier.java", 3);
 	tree.UpdateFinished(deadFileList);
 
 	const TestJavaTree& constTree  = tree;

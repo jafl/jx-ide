@@ -45,10 +45,10 @@ JTEST(Basic)
 
 	TestDTree tree;
 	tree.PrepareForUpdate(false);
-	tree.ParseFile(JString("./data/tree/d/a.d", false), 1);
-	tree.ParseFile(JString("./data/tree/d/b.d", false), 2);
-	tree.ParseFile(JString("./data/tree/d/c.d", false), 3);
-	tree.ParseFile(JString("./data/tree/d/d.d", false), 4);
+	tree.ParseFile("./data/tree/d/a.d", 1);
+	tree.ParseFile("./data/tree/d/b.d", 2);
+	tree.ParseFile("./data/tree/d/c.d", 3);
+	tree.ParseFile("./data/tree/d/d.d", 4);
 	tree.UpdateFinished(deadFileList);
 
 	const TestDTree& constTree     = tree;
@@ -124,7 +124,7 @@ JTEST(Alias)
 
 	TestDTree tree;
 	tree.PrepareForUpdate(false);
-	tree.ParseFile(JString("./data/tree/d/alias.d", false), 1);
+	tree.ParseFile("./data/tree/d/alias.d", 1);
 	tree.UpdateFinished(deadFileList);
 
 	const TestDTree& constTree     = tree;

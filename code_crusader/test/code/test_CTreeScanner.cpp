@@ -45,12 +45,10 @@ JTEST(Basic)
 	JArray<JFAID_t> deadFileList;
 
 	TestCTree tree;
-	tree.GetCPreprocessor()->DefineMacro(
-		JString("TEST_MACRO", false),
-		JString("CtagsUser", false));
+	tree.GetCPreprocessor()->DefineMacro("TEST_MACRO", "CtagsUser");
 
 	tree.PrepareForUpdate(false);
-	tree.ParseFile(JString("./data/tree/c/TestTree.h", false), 1);
+	tree.ParseFile("./data/tree/c/TestTree.h", 1);
 	tree.UpdateFinished(deadFileList);
 
 	const TestCTree& constTree     = tree;
@@ -93,7 +91,7 @@ JTEST(Namespace)
 
 	TestCTree tree;
 	tree.PrepareForUpdate(false);
-	tree.ParseFile(JString("./data/tree/c/namespace.h", false), 1);
+	tree.ParseFile("./data/tree/c/namespace.h", 1);
 	tree.UpdateFinished(deadFileList);
 
 	const TestCTree& constTree     = tree;
@@ -145,7 +143,7 @@ JTEST(Template)
 
 	TestCTree tree;
 	tree.PrepareForUpdate(false);
-	tree.ParseFile(JString("./data/tree/c/template.h", false), 1);
+	tree.ParseFile("./data/tree/c/template.h", 1);
 	tree.UpdateFinished(deadFileList);
 
 	const TestCTree& constTree     = tree;

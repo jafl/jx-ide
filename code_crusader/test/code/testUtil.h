@@ -46,5 +46,5 @@ RunTest
 	st->WritePrivateFormat(result);
 
 	JReadFile(JString(outputFilename), &text);
-	JAssertStringsEqual(text, JString(result.str().c_str(), false));
+	JAssertStringsEqual(text, result.str().c_str());
 }
