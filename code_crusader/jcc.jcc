@@ -1272,4 +1272,5 @@ T "./code" T
 T "./test" T
 F
 # C preprocessor
+T "TEST_MACRO" "CtagsUser"
 F

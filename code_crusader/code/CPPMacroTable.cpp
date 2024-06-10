@@ -81,7 +81,6 @@ CPPMacroTable::CPPMacroTable
 
 	JStringTableData* data = GetStringData();
 	data->AppendCols(kColCount);	// name, value
-	FitToEnclosure();				// make sure SetColWidth() won't fail
 	ListenTo(this);					// adjust value col width
 	SetColWidth(kNameColumn, kDefNameColWidth);
 
