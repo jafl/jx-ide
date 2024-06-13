@@ -180,7 +180,7 @@ CTree::ParseFile
 	// Read in the entire file and apply preprocessor.
 
 	JString fileName = origFileName;
-
+	{
 	JString buffer;
 	JReadFile(fileName, &buffer);
 	if (itsCPP->Preprocess(&buffer))
@@ -196,7 +196,7 @@ CTree::ParseFile
 		std::ofstream output(fileName.GetBytes());
 		buffer.Print(output);
 	}
-
+	}
 	// extract info about classes
 
 	JPtrArray<Class> classList(JPtrArrayT::kForgetAll);
