@@ -12,6 +12,9 @@ MAKE_INCLUDE := ${JX_ROOT}/include/jx-af/make
 include ${MAKE_INCLUDE}/jx_config
 
 APPS := code_crusader code_medic code_mill
+ifneq ($(wildcard ./system-g/.),)
+	APPS += system-g
+endif
 
 .PHONY : all
 all:

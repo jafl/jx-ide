@@ -11,6 +11,7 @@ description: |
   Code Crusader provides project management, editing, and compiling.
   Its companion, Code Medic, provides debugging.
   Code Mill helps create derived C++ classes.
+  System G provides an interface to the file system and git.
 
 grade: stable
 confinement: classic
@@ -27,6 +28,8 @@ apps:
     command: bin/code-medic
   code-mill:
     command: bin/code-mill
+  systemg:
+    command: bin/systemg
 
 parts:
   jx-ide:
@@ -34,6 +37,7 @@ parts:
     source: .
     override-pull: |
       snapcraftctl pull
+      git clone https://github.com/jafl/system-g.git
       sudo locale-gen en_US.UTF-8
       sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 100
     build-environment:
@@ -51,6 +55,7 @@ parts:
       - bin/code-medic
       - bin/code-mill
       - share/jxcb
+      - bin/systemg
     build-packages:
       - g++-10
       - make
@@ -107,3 +112,8 @@ parts:
       - libboost-fiber-dev
       - libxpm4
       - libxrender1
+      - git
+      - gitk
+      - git-gui
+      - xterm
+      - openssh-client
