@@ -109,6 +109,6 @@ fi
 make Makefiles;
 
 if [[ $1 != package ]]; then
-	touch code_crusader/image-build/* code_medic/image-build/* code_mill/image-build/*;
+	touch */image-build/*;
 	touch code_medic/backend/gdb/VarTreeParserY.cpp code_medic/backend/gdb/VarTreeParserY.hpp;
 fi
