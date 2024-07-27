@@ -12,8 +12,10 @@
 
 #include <jx-af/jcore/jTypes.h>
 
-const JFileVersion kCurrentPrefsFileVersion = 69;
+const JFileVersion kCurrentPrefsFileVersion = 70;
 
+// version 70:
+//	Added file types .mjs & .cjs
 // version 69:
 //	Added file types .jxl & .jxm
 // version 68:

@@ -1124,6 +1124,16 @@ PrefsManager::UpgradeData
 		addNewExternalSuffixes(kJXMenuEditorSuffix, sizeof(kJXMenuEditorSuffix)/sizeof(NewExternalSuffixInfo), itsFileTypeList);
 	}
 
+	if (currentVersion < 70)
+	{
+		NewSuffixInfo kJavaScriptSuffix[] =
+		{
+			{ ".mjs", false },
+			{ ".cjs", false }
+		};
+		addNewSuffixes("JavaScript", "Java", kJavaScriptFT, kJavaScriptSuffix, sizeof(kJavaScriptSuffix), itsFileTypeList, itsMacroList, *itsCRMList);
+	}
+
 	//
 	// upgrades that can be done in any order
 	//
