@@ -15,6 +15,9 @@ APPS := code_crusader code_medic code_mill
 ifneq ($(wildcard ./system-g/.),)
 	APPS += system-g
 endif
+ifneq ($(wildcard ./subversion_client/.),)
+	APPS += subversion_client
+endif
 
 .PHONY : all
 all:

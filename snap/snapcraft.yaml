@@ -12,6 +12,7 @@ description: |
   Its companion, Code Medic, provides debugging.
   Code Mill helps create derived C++ classes.
   System G provides an interface to the file system and git.
+  Subversion Client provides a simple, graphical Subversion client.
 
 grade: stable
 confinement: classic
@@ -30,6 +31,8 @@ apps:
     command: bin/code-mill
   systemg:
     command: bin/systemg
+  svn-client:
+    command: bin/svn-client
 
 parts:
   jx-ide:
@@ -38,6 +41,7 @@ parts:
     override-pull: |
       snapcraftctl pull
       git clone https://github.com/jafl/system-g.git
+      git clone https://github.com/jafl/subversion_client.git
       sudo locale-gen en_US.UTF-8
       sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 100
     build-environment:
@@ -50,12 +54,14 @@ parts:
     organize:
       bin/jcc: bin/code-crusader
       bin/medic: bin/code-medic
+      bin/nps-svn-client: bin/svn-client
     stage:
       - bin/code-crusader
       - bin/code-medic
       - bin/code-mill
       - share/jxcb
       - bin/systemg
+      - bin/svn-client
     build-packages:
       - g++-10
       - make
@@ -117,3 +123,4 @@ parts:
       - git-gui
       - xterm
       - openssh-client
+      - subversion
