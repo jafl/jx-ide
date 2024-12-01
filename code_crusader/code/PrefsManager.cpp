@@ -1634,7 +1634,7 @@ PrefsManager::ConvertHTMLSuffixesToFileTypes
 JArray<PrefsManager::FileTypeInfo>*
 PrefsManager::CreateFileTypeList()
 {
-	auto* list = jnew JArray<FileTypeInfo>(256);
+	auto* list = jnew JArray<FileTypeInfo>(8);
 	list->SetSortOrder(JListT::kSortAscending);
 	list->SetCompareFunction(CompareFileTypeSpecAndLength);
 	return list;

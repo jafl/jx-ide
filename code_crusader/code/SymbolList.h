@@ -22,7 +22,7 @@ class SymbolList : public JContainer, public CtagsUser
 {
 public:
 
-	static const JSize kBlockSize = 4096;
+	static const JSize kLgBlockSize = 12;
 
 	struct ContextNamespace
 	{

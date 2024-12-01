@@ -58,7 +58,7 @@ SymbolList::SymbolList
 	itsChangedDuringParseFlag = false;
 	itsBeganEmptyFlag         = false;
 
-	itsSymbolList = jnew JArray<SymbolInfo>(kBlockSize);
+	itsSymbolList = jnew JArray<SymbolInfo>(kLgBlockSize);
 	itsSymbolList->SetSortOrder(JListT::kSortAscending);
 	itsSymbolList->SetCompareFunction(CompareSymbols);
 
@@ -189,9 +189,7 @@ SymbolList::FindSymbol
 	// find all symbols that match
 
 	matchList->RemoveAll();
-	matchList->SetBlockSize(50);
-
-	JArray<JIndex> allMatchList(50);
+	JArray<JIndex> allMatchList;
 
 	SymbolInfo target;
 	target.name = const_cast<JString*>(&name);
@@ -438,7 +436,6 @@ SymbolList::FindAllSymbols
 	// find all symbols that match
 
 	matchList->RemoveAll();
-	matchList->SetBlockSize(50);
 
 	JString prefix;
 	for (const auto* name : list)
@@ -972,7 +969,7 @@ SymbolList::ReadSetup
 	JSize symbolCount;
 	input >> symbolCount;
 
-	itsSymbolList->SetBlockSize(symbolCount+1);		// avoid repeated realloc
+	itsSymbolList->SetMinSize(symbolCount);		// avoid repeated realloc
 
 	for (JIndex i=1; i<=symbolCount; i++)
 	{
@@ -1010,7 +1007,7 @@ SymbolList::ReadSetup
 					   fullyQualifiedFileScope, fileID, lineIndex));
 	}
 
-	itsSymbolList->SetBlockSize(kBlockSize);
+	itsSymbolList->SetMinLgSize(kLgBlockSize);
 
 	if (vers < 51)
 	{

@@ -46,7 +46,7 @@
 #include <boost/fiber/operations.hpp>
 #include <jx-af/jcore/jAssert.h>
 
-const JSize kBlockSize     = 1024;
+const JSize kLgBlockSize   = 10;
 const JSize kSleepInterval = 100;	// ms
 
 // Code Mill info
@@ -194,8 +194,8 @@ JIndex i;
 
 		// read in each class
 
-		itsClassesByFull->SetBlockSize(classCount+1);	// avoid repeated realloc
-		itsVisibleByName->SetBlockSize(classCount+1);
+		itsClassesByFull->SetMinSize(classCount);	// avoid repeated realloc
+		itsVisibleByName->SetMinSize(classCount);
 
 		for (i=1; i<=classCount; i++)
 		{
@@ -207,20 +207,20 @@ JIndex i;
 			}
 		}
 
-		itsClassesByFull->SetBlockSize(kBlockSize);
-		itsVisibleByName->SetBlockSize(kBlockSize);
+		itsClassesByFull->SetMinLgSize(kLgBlockSize);
+		itsVisibleByName->SetMinLgSize(kLgBlockSize);
 
 		if (symVers >= 18)
 		{
 			const JSize geomCount = itsVisibleByName->GetItemCount();
-			itsVisibleByGeom->SetBlockSize(geomCount+1);	// avoid repeated realloc
+			itsVisibleByGeom->SetMinSize(geomCount);	// avoid repeated realloc
 			for (i=1; i<=geomCount; i++)
 			{
 				JIndex j;
 				*symInput >> j;
 				itsVisibleByGeom->Append(itsVisibleByName->GetItem(j));
 			}
-			itsVisibleByGeom->SetBlockSize(kBlockSize);
+			itsVisibleByGeom->SetMinLgSize(kLgBlockSize);
 		}
 
 		for (i=1; i<=classCount; i++)
@@ -303,13 +303,13 @@ Tree::TreeX
 	itsDirector = director;
 	itsFontSize = JFontManager::GetDefaultFontSize();
 
-	itsClassesByFull = jnew JPtrArray<Class>(JPtrArrayT::kDeleteAll, kBlockSize);
+	itsClassesByFull = jnew JPtrArray<Class>(JPtrArrayT::kDeleteAll, kLgBlockSize);
 	itsClassesByFull->SetCompareFunction(CompareClassFullNames);
 	itsClassesByFull->SetSortOrder(JListT::kSortAscending);
 
-	itsVisibleByGeom = jnew JPtrArray<Class>(JPtrArrayT::kForgetAll, kBlockSize);
+	itsVisibleByGeom = jnew JPtrArray<Class>(JPtrArrayT::kForgetAll, kLgBlockSize);
 
-	itsVisibleByName = jnew JPtrArray<Class>(JPtrArrayT::kForgetAll, kBlockSize);
+	itsVisibleByName = jnew JPtrArray<Class>(JPtrArrayT::kForgetAll, kLgBlockSize);
 	itsVisibleByName->SetCompareFunction(CompareClassNames);
 	itsVisibleByName->SetSortOrder(JListT::kSortAscending);
 
@@ -1062,7 +1062,8 @@ Tree::MinimizeMILinks()
 	{
 		// optimize each disjoint subset of trees connected by MI
 
-		JArray<bool> marked(classCount);
+		JArray<bool> marked;
+		marked.SetMinSize(classCount);
 		for (JIndex i=1; i<=classCount; i++)
 		{
 			marked.AppendItem(false);
@@ -1095,7 +1096,8 @@ Tree::MinimizeMILinks()
 				if (rootCount > 1)
 				{
 //					std::cout << "# of roots: " << rootCount << std::endl;
-					JArray<JIndex> rootOrder(rootCount);
+					JArray<JIndex> rootOrder;
+					rootOrder.SetMinSize(rootCount);
 					if (( itsMinimizeMILinksFlag &&
 						 !ArrangeRootsDynamicProgramming(rootList, &rootOrder, threadPG)) ||
 						(!itsMinimizeMILinksFlag &&
@@ -1365,13 +1367,13 @@ Tree::ArrangeRootsDynamicProgramming
 	l1.SetCompareFunction(CompareRSContent);
 	l2.SetCompareFunction(CompareRSContent);
 
-	auto* content = jnew JArray<bool>(rootCount);
+	auto* content = jnew JArray<bool>;
 	for (JIndex i=1; i<=rootCount; i++)
 	{
 		content->AppendItem(false);
 	}
 
-	auto* order = jnew JArray<JIndex>(rootCount);
+	auto* order = jnew JArray<JIndex>;
 	list1->AppendItem(RootSubset(content, order, 0));
 
 	do
