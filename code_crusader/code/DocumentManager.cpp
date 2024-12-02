@@ -934,6 +934,8 @@ DocumentManager::PrivateOpenTextDocument
 			textDoc->RevertIfChangedByOthers(forceReload);
 			if (!lineRange.IsEmpty())
 			{
+				textDoc->SelectLines(lineRange);
+
 				auto* task = jnew JXUrgentFunctionTask(textDoc, [textDoc, lineRange]()
 				{
 					textDoc->SelectLines(lineRange);
