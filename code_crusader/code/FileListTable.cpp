@@ -54,7 +54,7 @@ FileListTable::FileListTable
 	itsChangedDuringParseCount(0),
 	itsLastUniqueID(JFAID::kMinID)
 {
-	itsFileInfo = jnew JArray<FileInfo>(10);
+	itsFileInfo = jnew JArray<FileInfo>(1024);
 
 	ListenTo(GetFullNameDataList());
 }
@@ -108,10 +108,10 @@ FileListTable::Update
 		dir->PrepareForTreeUpdate(reparseAll);
 	}
 
-	JPtrArray<JString> allSuffixList(JPtrArrayT::kDeleteAll, 7);
+	JPtrArray<JString> allSuffixList(JPtrArrayT::kDeleteAll, 100);
 	GetPrefsManager()->GetAllFileSuffixes(&allSuffixList);
 
-	JPtrArray<JString> projectFileList(JPtrArrayT::kDeleteAll, 7);
+	JPtrArray<JString> projectFileList(JPtrArrayT::kDeleteAll, 100);
 	fileTree->CollectFilesForParse(allSuffixList, &projectFileList);
 
 	boost::fibers::buffered_channel<JBroadcaster::Message*> pgChannel(kJBufferedChannelCapacity);
@@ -131,8 +131,7 @@ FileListTable::Update
 		// create array to track which files still exist
 
 		const JSize origFileCount = itsFileInfo->GetItemCount();
-		JArray<bool> fileUsage;
-		fileUsage.SetMinSize(JMax(2*origFileCount, (JSize) 1000));
+		JArray<bool> fileUsage(JMax(2*origFileCount, (JSize) 1000));
 		for (JIndex i=1; i<=origFileCount; i++)
 		{
 			fileUsage.AppendItem(false);

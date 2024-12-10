@@ -44,7 +44,7 @@ StringCompleter::StringCompleter
 	itsNeedsUpdateTask(nullptr),
 	itsUpdatingFlag(false)
 {
-	itsStringList = jnew JPtrArray<JString>(JPtrArrayT::kForgetAll, 12);
+	itsStringList = jnew JPtrArray<JString>(JPtrArrayT::kForgetAll, 4096);
 	itsStringList->SetSortOrder(JListT::kSortAscending);
 
 	itsStringList->SetCompareFunction(
@@ -270,7 +270,7 @@ StringCompleter::Complete
 		return 0;
 	}
 
-	JPtrArray<JString> matchList(JPtrArrayT::kForgetAll, 7);
+	JPtrArray<JString> matchList(JPtrArrayT::kForgetAll, 100);
 	*maxPrefix = *(itsStringList->GetItem(startIndex));
 
 	JSize matchCount   = 0;

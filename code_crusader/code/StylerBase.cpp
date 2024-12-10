@@ -64,7 +64,7 @@ StylerBase::StylerBase
 	itsFileType(fileType),
 	itsDialogTitle(editDialogTitle)
 {
-	itsTypeStyles = jnew JArray<JFontStyle>(6);
+	itsTypeStyles = jnew JArray<JFontStyle>(64);
 
 #ifndef CODE_CRUSADER_UNIT_TEST
 	itsDefColor = GetPrefsManager()->GetColor(PrefsManager::kTextColorIndex);

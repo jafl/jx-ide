@@ -43,7 +43,7 @@ AboutDialogIconTask::AboutDialogIconTask
 	:
 	JXAnimationTask(widget)
 {
-	itsImageList = jnew JPtrArray<JXImage>(JPtrArrayT::kForgetAll, 3);
+	itsImageList = jnew JPtrArray<JXImage>(JPtrArrayT::kForgetAll, kAboutIconCount);
 
 	JXImageCache* cache = widget->GetDisplay()->GetImageCache();
 	for (JIndex i=1; i<=kAboutIconCount; i++)

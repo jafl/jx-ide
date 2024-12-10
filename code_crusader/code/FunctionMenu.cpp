@@ -83,8 +83,8 @@ FunctionMenu::FunctionMenuX
 	itsTE             = te;
 	itsCaretItemIndex = 0;
 
-	itsLineIndexList = jnew JArray<JIndex>(7);
-	itsLineLangList  = jnew JArray<Language>(7);
+	itsLineIndexList = jnew JArray<JIndex>(100);
+	itsLineLangList  = jnew JArray<Language>(100);
 
 	SetEmptyMenuItems();
 	SetUpdateAction(kDisableNone);

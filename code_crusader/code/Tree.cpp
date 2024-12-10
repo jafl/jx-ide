@@ -46,7 +46,7 @@
 #include <boost/fiber/operations.hpp>
 #include <jx-af/jcore/jAssert.h>
 
-const JSize kLgBlockSize   = 10;
+const JSize kMinSize       = 1024;
 const JSize kSleepInterval = 100;	// ms
 
 // Code Mill info
@@ -207,8 +207,8 @@ JIndex i;
 			}
 		}
 
-		itsClassesByFull->SetMinLgSize(kLgBlockSize);
-		itsVisibleByName->SetMinLgSize(kLgBlockSize);
+		itsClassesByFull->SetMinSize(kMinSize);
+		itsVisibleByName->SetMinSize(kMinSize);
 
 		if (symVers >= 18)
 		{
@@ -220,7 +220,7 @@ JIndex i;
 				*symInput >> j;
 				itsVisibleByGeom->Append(itsVisibleByName->GetItem(j));
 			}
-			itsVisibleByGeom->SetMinLgSize(kLgBlockSize);
+			itsVisibleByGeom->SetMinSize(kMinSize);
 		}
 
 		for (i=1; i<=classCount; i++)
@@ -303,13 +303,13 @@ Tree::TreeX
 	itsDirector = director;
 	itsFontSize = JFontManager::GetDefaultFontSize();
 
-	itsClassesByFull = jnew JPtrArray<Class>(JPtrArrayT::kDeleteAll, kLgBlockSize);
+	itsClassesByFull = jnew JPtrArray<Class>(JPtrArrayT::kDeleteAll, kMinSize);
 	itsClassesByFull->SetCompareFunction(CompareClassFullNames);
 	itsClassesByFull->SetSortOrder(JListT::kSortAscending);
 
-	itsVisibleByGeom = jnew JPtrArray<Class>(JPtrArrayT::kForgetAll, kLgBlockSize);
+	itsVisibleByGeom = jnew JPtrArray<Class>(JPtrArrayT::kForgetAll, kMinSize);
 
-	itsVisibleByName = jnew JPtrArray<Class>(JPtrArrayT::kForgetAll, kLgBlockSize);
+	itsVisibleByName = jnew JPtrArray<Class>(JPtrArrayT::kForgetAll, kMinSize);
 	itsVisibleByName->SetCompareFunction(CompareClassNames);
 	itsVisibleByName->SetSortOrder(JListT::kSortAscending);
 
@@ -1062,8 +1062,7 @@ Tree::MinimizeMILinks()
 	{
 		// optimize each disjoint subset of trees connected by MI
 
-		JArray<bool> marked;
-		marked.SetMinSize(classCount);
+		JArray<bool> marked(classCount);
 		for (JIndex i=1; i<=classCount; i++)
 		{
 			marked.AppendItem(false);
@@ -1096,8 +1095,7 @@ Tree::MinimizeMILinks()
 				if (rootCount > 1)
 				{
 //					std::cout << "# of roots: " << rootCount << std::endl;
-					JArray<JIndex> rootOrder;
-					rootOrder.SetMinSize(rootCount);
+					JArray<JIndex> rootOrder(rootCount);
 					if (( itsMinimizeMILinksFlag &&
 						 !ArrangeRootsDynamicProgramming(rootList, &rootOrder, threadPG)) ||
 						(!itsMinimizeMILinksFlag &&
@@ -1367,13 +1365,13 @@ Tree::ArrangeRootsDynamicProgramming
 	l1.SetCompareFunction(CompareRSContent);
 	l2.SetCompareFunction(CompareRSContent);
 
-	auto* content = jnew JArray<bool>;
+	auto* content = jnew JArray<bool>(rootCount);
 	for (JIndex i=1; i<=rootCount; i++)
 	{
 		content->AppendItem(false);
 	}
 
-	auto* order = jnew JArray<JIndex>;
+	auto* order = jnew JArray<JIndex>(rootCount);
 	list1->AppendItem(RootSubset(content, order, 0));
 
 	do

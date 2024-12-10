@@ -63,7 +63,7 @@ SymbolTable::SymbolTable
 	itsSymbolList     = symbolList;
 	itsMaxStringWidth = 0;
 
-	itsVisibleList = jnew JArray<JIndex>(SymbolList::kLgBlockSize);
+	itsVisibleList = jnew JArray<JIndex>(SymbolList::kMinSize);
 
 	itsVisibleListLockedFlag = false;
 	itsNameFilter            = nullptr;
@@ -344,7 +344,7 @@ SymbolTable::SetDisplayList
 	)
 {
 	*itsVisibleList = list;
-	itsVisibleList->SetMinLgSize(SymbolList::kLgBlockSize);
+	itsVisibleList->SetMinLgSize(SymbolList::kMinSize);
 	itsVisibleListLockedFlag = true;
 	ScrollTo(0,0);
 	RebuildTable();

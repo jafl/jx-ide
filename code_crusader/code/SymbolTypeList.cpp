@@ -256,7 +256,7 @@ SymbolTypeList::CreateSymTypeList
 					 italic(false, true, 0, false),
 					 bold_gray(true, false, 0, false, JColorManager::GetGrayColor(50));
 
-	itsSymbolTypeList = jnew JArray<SymbolTypeInfo>(7);
+	itsSymbolTypeList = jnew JArray<SymbolTypeInfo>(128);
 
 	ADD_S (kUnknownST, kOtherLang, JFontStyle(JColorManager::GetGrayColor(50)))
 

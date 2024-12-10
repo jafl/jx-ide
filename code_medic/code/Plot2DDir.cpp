@@ -535,10 +535,10 @@ Plot2DDir::Update
 		}
 		else
 		{
-			auto* x = jnew JArray<JFloat>(7);
+			auto* x = jnew JArray<JFloat>(100);
 			itsXData->Append(x);
 
-			auto* y = jnew JArray<JFloat>(7);
+			auto* y = jnew JArray<JFloat>(100);
 			itsYData->Append(y);
 
 			JIndex j;

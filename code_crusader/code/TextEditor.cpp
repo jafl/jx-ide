@@ -1627,7 +1627,7 @@ TextEditor::StyledText::AdjustStylesBeforeBroadcast
 	if (text.GetCharacterCount() < DocumentManager::kMinWarnFileSize &&
 		itsDoc->GetStyler(&styler))
 	{
-		styles->SetMinLgSize(11);
+		styles->SetMinSize(2048);
 		styler->UpdateStyles(this, text, styles,
 							 recalcRange, redrawRange,
 							 deletion, itsTokenStartList);
