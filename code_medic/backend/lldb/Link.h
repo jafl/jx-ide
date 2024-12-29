@@ -25,7 +25,7 @@ using j_lldb_cookie_fn_return = long;
 using j_lldb_cookie_size      = unsigned long;
 #endif
 
-class JXFunctionTask;
+class JXIdleTask;
 
 namespace lldb {
 
@@ -180,7 +180,7 @@ private:
 	JString		itsLastProgramInput;	// to avoid printing echo
 
 	BreakpointManager*	itsBPMgr;
-	JXFunctionTask*		itsEventTask;
+	JXIdleTask*			itsEventTask;
 
 	JString	itsPrompt;			// to allow GetCommandPrompt() to return JString&
 	JString	itsCoreName;

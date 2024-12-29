@@ -21,7 +21,7 @@
 #include "Pipe.h"
 
 class JProcess;
-class JXFunctionTask;
+class JXIdleTask;
 
 namespace jvm {
 
@@ -424,12 +424,12 @@ private:
 	ThreadNode*				itsThreadRoot;
 	JUInt64					itsCurrentThreadID;
 	JPtrArray<ThreadNode>*	itsThreadList;
-	JXFunctionTask*			itsCullThreadGroupsTask;
+	JXIdleTask*				itsCullThreadGroupsTask;
 	JIndex					itsCullThreadGroupIndex;
 
 	JArray<FrameInfo>*	itsFrameList;
 
-	JXFunctionTask*	itsJVMDeathTask;
+	JXIdleTask*	itsJVMDeathTask;
 
 private:
 
