@@ -1,0 +1,77 @@
+when kill program, doesn't clear current source line marker
+
+gdb: doesn't show source line when hit first breakpoint
+
+asm for function: if blank, fill in after program is stopped
+
+accept connection or switch to gdb:  should stop listening on port
+	need simple example to submit to ACE list
+restart either xdebug or java:  unable to listen on port & crashes on exit
+	also need to fix SetProgram()
+gdb
+	enable call to UnlockDisplays(), when JXGetAssertHandler is defined
+		check every time symbols are loaded
+
+for program with threads:
+	set scheduler-locking on/off/step
+	break <location> thread <gdb thread number>
+
+CMBreakpointTable:
+	pressing return while editing the last row should save the value
+	problem is that setting breakpoint value takes time
+		so can't restart editing immediately
+
+-----
+
+java
+	selected stack frame
+		select source line
+			get code offset <-> line number for method
+			search for frame's code offset
+		show local variables
+			get list of method's variables (slot #'s)
+			get frame's value for each slot #'s
+	start JVM
+		JVMDisplaySourceForMain
+			get Methods for main-class
+			find "main"
+			get LineTable
+			get first line number, scroll to that
+	set breakpoint
+		search code index <-> line index for location
+
+	source-jar unzips to /tmp
+		display stderr from zip in cmd line window
+		delete /tmp directories when delete link or open different program
+
+	http://java.sun.com/javase/6/docs/technotes/guides/jpda/conninv.html
+	http://java.sun.com/javase/6/docs/technotes/guides/jpda/jdwp-spec.html
+	http://java.sun.com/javase/6/docs/platform/jpda/jdwp/jdwp-protocol.html
+
+	http://java.sun.com/j2se/1.5.0/docs/tooldocs/solaris/jdb.html
+
+xdebug
+	click stack trace: selection jumps back to last frame
+	temp breakpoint doesn't disappear
+
+	Enable XDSocket::StartTimer() when not debugging
+	Always update stack, even if Stack Trace window is hidden
+	Eliminate double call to get local vars
+		Preserve existing items; don't just delete all before update
+	request source from debugger instead of assuming that file:// exists
+	*set* values
+	support conditional breakpoints, etc.
+
+-----
+
+go: delve back-end
+	https://github.com/go-delve/delve/blob/master/Documentation/api/ClientHowto.md
+
+gdb test suite
+	start, choose program, set bkpt, run
+	start, run, open file, stop, set bkpt, continue
+	start with program name, set bkpt, run
+	start with core name
+	switch from core dump to running binary
+	switch from running binary to core dump
+	switch from one program to another
