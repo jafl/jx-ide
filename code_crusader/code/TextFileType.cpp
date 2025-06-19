@@ -98,6 +98,10 @@ LangIsCharacterInWord
 	{
 		return c == '@';
 	}
+	else if (type == kJavaScriptFT)
+	{
+		return c == '#';
+	}
 	else
 	{
 		return false;
