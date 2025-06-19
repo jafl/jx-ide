@@ -22,6 +22,7 @@
 #include <jx-af/jcore/JThreadPG.h>
 #include <jx-af/jcore/JDirInfo.h>
 #include <jx-af/jcore/jVCSUtil.h>
+#include <jx-af/jcore/jBuildUtil.h>
 #include <jx-af/jcore/jDirUtil.h>
 #include <boost/fiber/operations.hpp>
 #include <jx-af/jcore/jAssert.h>
@@ -306,7 +307,9 @@ FileListTable::ScanDirectory
 		// If it's a directory, recurse.
 
 		if (entry.IsDirectory() && recurse &&
-			!entry.IsLink() && !JIsVCSDirectory(entry.GetName()))
+			!entry.IsLink() &&
+			!JIsVCSDirectory(entry.GetName()) &&
+			!JIsBuildArtifactDirectory(entry.GetName()))
 		{
 			ScanDirectory(entry.GetFullName(), recurse,
 						  allSuffixList, symbolList,
