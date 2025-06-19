@@ -242,8 +242,12 @@ SearchDocument::RecvFromChannel()
 	JBroadcaster::Message* m;
 	while (itsChannel->pop(m) == boost::fibers::channel_op_status::success)
 	{
+		const JXTEBase::DisplayState state = GetTextEditor()->SaveDisplayState();
+
 		Receive(nullptr, *m);
 		jdelete m;
+
+		GetTextEditor()->RestoreDisplayState(state);
 
 		// avoid getting stuck if channel is flooded
 		boost::this_fiber::sleep_for(
