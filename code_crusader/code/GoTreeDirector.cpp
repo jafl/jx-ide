@@ -205,7 +205,7 @@ static const JUtf8Byte* kToolbarIDMap[] =
 	"CBExpandAllClasses",		"ExpandAllClasses::GoTreeDirector",
 	"CBSelectParentClass",		"SelectParentClass::GoTreeDirector",
 	"CBSelectDescendantClass",	"SelectDescendantClass::GoTreeDirector",
-	"CBCopyClassName"			"CopyClassName::GoTreeDirector",
+	"CBCopyClassName",			"CopyClassName::GoTreeDirector",
 	"CBFindFunction",			"FindFunction::GoTreeDirector",
 };
 

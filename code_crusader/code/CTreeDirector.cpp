@@ -232,7 +232,7 @@ static const JUtf8Byte* kToolbarIDMap[] =
 	"CBExpandAllClasses",		"ExpandAllClasses::CTreeDirector",
 	"CBSelectParentClass",		"SelectParentClass::CTreeDirector",
 	"CBSelectDescendantClass",	"SelectDescendantClass::CTreeDirector",
-	"CBCopyClassName"			"CopyClassName::CTreeDirector",
+	"CBCopyClassName",			"CopyClassName::CTreeDirector",
 	"CBFindFunction",			"FindFunction::CTreeDirector",
 };
 
