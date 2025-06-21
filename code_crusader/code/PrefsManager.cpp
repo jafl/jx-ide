@@ -1944,7 +1944,6 @@ PrefsManager::CompareFileTypeSpecAndLength
 #undef DialogClass
 #undef ExtractDataFn
 #undef CopyConstr
-#undef PtrCheck
 #undef Destr
 
 /******************************************************************************
@@ -2312,7 +2311,6 @@ PrefsManager::CreateDCRMRuleList()
 #undef DialogClass
 #undef ExtractDataFn
 #undef CopyConstr
-#undef PtrCheck
 #undef Destr
 
 /******************************************************************************
