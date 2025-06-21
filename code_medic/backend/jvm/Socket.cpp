@@ -339,7 +339,7 @@ jvm::Socket::Unpack2
 	JUInt32 result = 0;
 	for (int i=0; i<2; i++)
 	{
-		result |= data[i] << (8 * (1-i));
+		result |= JUInt32(data[i]) << (8 * (1-i));
 	}
 
 	return result;
@@ -377,7 +377,7 @@ jvm::Socket::Unpack4
 	JUInt32 result = 0;
 	for (int i=0; i<4; i++)
 	{
-		result |= data[i] << (8 * (3-i));
+		result |= JUInt32(data[i]) << (8 * (3-i));
 	}
 
 	return result;
@@ -415,7 +415,7 @@ jvm::Socket::Unpack8
 	JUInt64 result = 0;
 	for (int i=0; i<8; i++)
 	{
-		result |= data[i] << (8 * (7-i));
+		result |= JUInt64(data[i]) << (8 * (7-i));
 	}
 
 	return result;
