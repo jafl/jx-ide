@@ -33,8 +33,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-sonar-cache-
 
-      - name: Install sonar-scanner and build-wrapper
-        uses: sonarsource/sonarcloud-github-c-cpp@v2
+      - name: Install build-wrapper
+        uses: SonarSource/sonarqube-scan-action/install-build-wrapper@v5.3.1
 
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3
@@ -55,10 +55,13 @@ jobs:
           make reset
 
       - name: Run sonar-scanner
+        uses: SonarSource/sonarqube-scan-action@v5.3.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: sonar-scanner --define sonar.cfamily.build-wrapper-output="${{ env.BUILD_WRAPPER_OUT_DIR }}"
+        with:
+          args: >
+            --define sonar.cfamily.build-wrapper-output=${{ env.BUILD_WRAPPER_OUT_DIR }}
 
       - name: Perform CodeQL analysis
         uses: github/codeql-action/analyze@v3
