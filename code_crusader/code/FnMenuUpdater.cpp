@@ -61,6 +61,7 @@ static const JUtf8Byte* kCtagsArgs =
 	"--c#-kinds=m "
 	"--erlang-kinds=f "
 	"--sml-kinds=fc "
+	"--javascript-kinds=fm "	// for HTML guest parser
 	"--typescript-kinds=fm "
 	"--basic-kinds=f "
 	"--matlab-kinds=f "
