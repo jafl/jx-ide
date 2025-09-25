@@ -176,6 +176,7 @@ CompileDocument::ProcessFinished
 	javac:           [javac] $:#:
 	maven2:         $:[#,...]
 	maven3:         $:#:#::
+	tsc:            $(#,#):
 
  ******************************************************************************/
 
@@ -188,6 +189,7 @@ static const JRegex javacOutputRegex("^\\s+\\[.+?\\]\\s+");
 static const JRegex javacErrorRegex("^\\s+\\[.+?\\]\\s+(.+?):[0-9]+: ");
 static const JRegex maven2ErrorRegex("^(?:\\[.+?\\]\\s+)?(.+?):\\[[0-9]+,[0-9]+\\] ");
 static const JRegex maven3ErrorRegex("^(?:\\[.+?\\]\\s+)?(.+?):[0-9]+:[0-9]+::");
+static const JRegex tscErrorRegex("^(.+?)\\([0-9]+,[0-9]+\\):");
 
 static const JUtf8Byte* makeIgnoreErrorStr = "(ignored)";
 static const JUtf8Byte* gccMultilinePrefix = "   ";
@@ -272,6 +274,9 @@ CompileDocument::AppendText
 	const JStringMatch maven3Match = maven3ErrorRegex.Match(plainText, JRegex::kIncludeSubmatches);
 	const bool isMaven3Error       = !maven3Match.IsEmpty();
 
+	const JStringMatch tscMatch = tscErrorRegex.Match(plainText, JRegex::kIncludeSubmatches);
+	const bool isTscError       = !tscMatch.IsEmpty();
+
 	TextEditor* te = GetTextEditor();
 
 	if (!isJavacError && !isGCCError && !gccPrevLineMatch.IsEmpty() &&
@@ -342,6 +347,10 @@ CompileDocument::AppendText
 	else if (isMaven3Error)
 	{
 		boldRange = computeErrorRangeFromFirstSubmatch(startIndex, maven3Match);
+	}
+	else if (isTscError)
+	{
+		boldRange = computeErrorRangeFromFirstSubmatch(startIndex, tscMatch);
 	}
 
 	if (!boldRange.IsEmpty())

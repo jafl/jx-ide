@@ -1471,15 +1471,17 @@ TextEditor::GetLineIndex
 
 	flex:       "$", line #:
 	bison:      ("$", line #) error:
-	Absoft F77:  error on line # of $:
-	Maven:      $:[#,
+	Absoft F77: error on line # of $:
+	maven2:     $:[#,
+	tsc:        $(#,#):
 
  ******************************************************************************/
 
 static const JRegex flexErrorRegex("\"(.+)\", line ([0-9]+)(\\.[0-9]+)?: ");
 static const JRegex bisonErrorRegex("\\(\"(.+)\", line ([0-9]+)\\) error: ");
 static const JRegex absoftErrorRegex(" error on line ([0-9]+) of ([^:]+): ");
-static const JRegex mavenErrorRegex("(?:\\[[^]]+\\]\\s+)?([^:]+):\\[([0-9]+),");
+static const JRegex maven2ErrorRegex("(?:\\[[^]]+\\]\\s+)?([^:]+):\\[([0-9]+),");
+static const JRegex tscErrorRegex("^(.+?)\\(([0-9]+),");
 
 bool
 extractFileAndLine
@@ -1545,7 +1547,9 @@ TextEditor::IsNonstdError
 							 fileName, fileNameRange, lineIndex) ||
 		extractFileAndLine(caretIndex, startIndex, line, absoftErrorRegex, 2, 1,
 							 fileName, fileNameRange, lineIndex) ||
-		extractFileAndLine(caretIndex, startIndex, line, mavenErrorRegex, 1, 2,
+		extractFileAndLine(caretIndex, startIndex, line, maven2ErrorRegex, 1, 2,
+							 fileName, fileNameRange, lineIndex) ||
+		extractFileAndLine(caretIndex, startIndex, line, tscErrorRegex, 1, 2,
 							 fileName, fileNameRange, lineIndex);
 }
 
