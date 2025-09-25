@@ -95,9 +95,9 @@ static const FTInfo kFTInfo[] =		// index on TextFileType
 { kCSharpFT,           kCSharpLang,      "--language-force=c#"         , "FunctionsMenuTitle::CtagsUser"   },
 { kErlangFT,           kErlangLang,      "--language-force=erlang"     , "FunctionsMenuTitle::CtagsUser"   },
 { kSMLFT,              kSMLLang,         "--language-force=sml"        , "FunctionsMenuTitle::CtagsUser"   },
-{ kJavaScriptFT,       kJavaScriptLang,  "--language-force=javascript" , "FunctionsMenuTitle::CtagsUser"   },
+{ kJavaScriptFT,       kJavaScriptLang,  "--language-force=typescript" , "FunctionsMenuTitle::CtagsUser"   },
 { kAntFT,              kAntLang,         "--language-force=ant"        , "TargetsMenuTitle::CtagsUser"     },
-{ kJSPFT,              kJSPLang,         "--language-force=javascript" , "FunctionsMenuTitle::CtagsUser"   },
+{ kJSPFT,              kJSPLang,         "--language-force=typescript" , "FunctionsMenuTitle::CtagsUser"   },
 { kXMLFT,              kXMLLang,         kOtherLangCmd                 , nullptr                           },
 { kBasicFT,            kBasicLang,       "--language-force=basic"      , "FunctionsMenuTitle::CtagsUser"   },
 { kUnused1FT,          kOtherLang,       kOtherLangCmd                 , nullptr                           },
@@ -481,11 +481,14 @@ CtagsUser::ReadExtensionFlags
 		m   methods
 		p   packages
 
-	JavaScript
+	JavaScript / TypeScript
 		f   functions
+		n   namespaces
+		i   interfaces
+		g   enums
 		c   classes
 		m   methods
-		v   global variables
+		v   variables
 
 	Lex
 		c   start or exclusive condition
@@ -841,9 +844,12 @@ CtagsUser::DecodeSymbolType
 		switch (c)
 		{
 			case 'f':  return kJavaScriptFunctionST;
+			case 'n':  return kTypeScriptNamespaceST;
+			case 'i':  return kTypeScriptInterfaceST;
+			case 'g':  return kTypeScriptEnumST;
 			case 'c':  return kJavaScriptClassST;
 			case 'm':  return kJavaScriptMethodST;
-			case 'v':  return kJavaScriptGlobalVariableST;
+			case 'v':  return kJavaScriptVariableST;
 		}
 	}
 

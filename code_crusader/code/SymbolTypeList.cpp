@@ -364,10 +364,13 @@ SymbolTypeList::CreateSymTypeList
 	ADD_SI(kJavaPrototypeST, kJavaLang, italic, itsPrototypeIcon)
 	ADD_I (kJavaPackageST,   kJavaLang, itsJavaPackageIcon)
 
-	ADD_I (kJavaScriptFunctionST,       kJavaScriptLang, itsFunctionIcon)
-	ADD_SI(kJavaScriptClassST,          kJavaScriptLang, bold, itsJavaScriptClassIcon)
-	ADD_I (kJavaScriptMethodST,         kJavaScriptLang, itsFunctionIcon)
-	ADD_I (kJavaScriptGlobalVariableST, kJavaScriptLang, itsVariableIcon)
+	ADD_I (kJavaScriptFunctionST,  kJavaScriptLang, itsFunctionIcon)
+	ADD_SI(kJavaScriptClassST,     kJavaScriptLang, bold, itsJavaScriptClassIcon)
+	ADD_I (kJavaScriptMethodST,    kJavaScriptLang, itsFunctionIcon)
+	ADD_I (kJavaScriptVariableST,  kJavaScriptLang, itsVariableIcon)
+	ADD_I (kTypeScriptNamespaceST, kJavaScriptLang, itsCNamespaceIcon)
+	ADD_SI(kTypeScriptInterfaceST, kJavaScriptLang, bold_gray, itsTypeScriptInterfaceIcon)
+	ADD_I (kTypeScriptEnumST,      kJavaScriptLang, itsCEnumIcon)
 
 	ADD(kLexStateST, kLexLang)
 	ADD(kLexRegexST, kLexLang)
@@ -506,6 +509,7 @@ SymbolTypeList::CreateSymTypeList
 #include "jcc_sym_java_interface.xpm"
 #include "jcc_sym_java_package.xpm"
 #include "jcc_sym_java_script_class.xpm"
+#include "jcc_sym_type_script_interface.xpm"
 #include "jcc_sym_asm_label.xpm"
 #include "jcc_sym_python_class.xpm"
 #include "jcc_sym_php_class.xpm"
@@ -557,7 +561,8 @@ SymbolTypeList::LoadIcons
 
 	// JavaScript
 
-	itsJavaScriptClassIcon = c->GetImage(jcc_sym_java_script_class);
+	itsJavaScriptClassIcon      = c->GetImage(jcc_sym_java_script_class);
+	itsTypeScriptInterfaceIcon = c->GetImage(jcc_sym_type_script_interface);
 
 	// Assembly
 

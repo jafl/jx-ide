@@ -27,7 +27,7 @@
 
 static const JUtf8Byte* kCtagsArgs =
 	"--format=2 --excmd=number --sort=no --extras=+q "
-	"--c-kinds=+p --php-kinds=-v --ant-kinds=t --javascript-kinds=cfgmGS "
+	"--c-kinds=+p --php-kinds=-v --ant-kinds=t --typescript-kinds=cfgnim "
 	"--html-kinds=I --css-kinds= --make-kinds=tm --pod-kinds= "
 	CtagsBisonDef
 	CtagsBisonNonterminalDef
@@ -950,7 +950,7 @@ SymbolList::ReadSetup
 	{
 		ReadSetup(*input, vers);
 
-		itsReparseAllFlag = vers < 94 || (itsSymbolList->IsEmpty() && IsActive());
+		itsReparseAllFlag = vers < 100 || (itsSymbolList->IsEmpty() && IsActive());
 	}
 }
 

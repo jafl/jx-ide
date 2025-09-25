@@ -79,6 +79,7 @@ private:
 	JXImage*	itsJavaInterfaceIcon;
 	JXImage*	itsJavaPackageIcon;
 	JXImage*	itsJavaScriptClassIcon;
+	JXImage*	itsTypeScriptInterfaceIcon;
 	JXImage*	itsAssemblyLabelIcon;
 	JXImage*	itsPythonClassIcon;
 	JXImage*	itsPHPClassIcon;

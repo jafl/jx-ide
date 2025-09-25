@@ -1134,6 +1134,16 @@ PrefsManager::UpgradeData
 		addNewSuffixes("JavaScript", "Java", kJavaScriptFT, kJavaScriptSuffix, sizeof(kJavaScriptSuffix), itsFileTypeList, itsMacroList, *itsCRMList);
 	}
 
+	if (currentVersion < 71)
+	{
+		NewSuffixInfo kJavaScriptSuffix[] =
+		{
+			{ ".ts",  false },
+			{ ".mts", false }
+		};
+		addNewSuffixes("JavaScript", "Java", kJavaScriptFT, kJavaScriptSuffix, sizeof(kJavaScriptSuffix), itsFileTypeList, itsMacroList, *itsCRMList);
+	}
+
 	//
 	// upgrades that can be done in any order
 	//

@@ -228,7 +228,10 @@ public:
 		kJavaScriptFunctionST = 3200,
 		kJavaScriptClassST,
 		kJavaScriptMethodST,
-		kJavaScriptGlobalVariableST,
+		kJavaScriptVariableST,
+		kTypeScriptNamespaceST,
+		kTypeScriptInterfaceST,
+		kTypeScriptEnumST,
 
 		kAntTargetST = 3300,
 

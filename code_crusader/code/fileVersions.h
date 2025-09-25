@@ -12,8 +12,10 @@
 
 #include <jx-af/jcore/jTypes.h>
 
-const JFileVersion kCurrentPrefsFileVersion = 70;
+const JFileVersion kCurrentPrefsFileVersion = 71;
 
+// version 71:
+//	Added file types .ts & .mts
 // version 70:
 //	Added file types .mjs & .cjs
 // version 69:
@@ -176,8 +178,10 @@ const JFileVersion kCurrentPrefsFileVersion = 70;
 // version 1:
 //	Stores "local text editing" flag in kViewFileCmdID
 
-const JFileVersion kCurrentProjectFileVersion = 99;
+const JFileVersion kCurrentProjectFileVersion = 100;
 
+// version 100:
+//	Added support for TypeScript types inside JavaScript.
 // version 99:
 //	Added support for C++ attributes ([[...]]) and final keyword.
 // version 98:
