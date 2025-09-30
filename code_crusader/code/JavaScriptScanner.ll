@@ -442,7 +442,7 @@ FLOAT        ({DIGITSEQ}{EXPONENT}|{DOTDIGITS}{EXPONENT}?)
 
 <REGEX_SEARCH_STATE>{
 
-"/"[gim]* {
+"/"[gimuv]* {
 	ContinueToken();
 	start(INITIAL);
 	return ThisToken(kRegexSearch);
@@ -472,8 +472,13 @@ FLOAT        ({DIGITSEQ}{EXPONENT}|{DOTDIGITS}{EXPONENT}?)
 	start(REGEX_SEARCH_STATE);
 	}
 
+"/" {
+	matcher().less(0);
+	start(REGEX_SEARCH_STATE);
+	}
+
 \\.?    |
-[^]\\]+ {
+[^]\\/]+ {
 	ContinueToken();
 	}
 
