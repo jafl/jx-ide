@@ -178,8 +178,10 @@ const JFileVersion kCurrentPrefsFileVersion = 71;
 // version 1:
 //	Stores "local text editing" flag in kViewFileCmdID
 
-const JFileVersion kCurrentProjectFileVersion = 100;
+const JFileVersion kCurrentProjectFileVersion = 101;
 
+// version 101:
+//	Force return to parsing as JavaScript, because ctags TypeScript is not mature.
 // version 100:
 //	Added support for TypeScript types inside JavaScript.
 // version 99:
