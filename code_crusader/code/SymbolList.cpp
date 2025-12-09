@@ -100,7 +100,7 @@ SymbolList::GetSymbol
 
 	if (fullyQualifiedFileScope != nullptr)
 	{
-		*fullyQualifiedFileScope = info.fullyQualifiedFileScope;
+		*fullyQualifiedFileScope = info.fullPath != nullptr;
 	}
 
 	return *info.name;
@@ -624,10 +624,6 @@ SymbolList::UpdateThreadFinished
 {
 	DeleteProcess();
 
-	// reset to lenient search
-
-	itsSymbolList->SetCompareFunction(CompareSymbols);
-
 	// toss files that no longer exist
 
 	const JSize fileCount = deadFileList.GetItemCount();
@@ -646,31 +642,39 @@ SymbolList::UpdateThreadFinished
 	const JString* prev = nullptr;
 	for (const auto& info : *itsSymbolList)
 	{
-		if (info.fullyQualifiedFileScope)
+		if (info.fullPath != nullptr)
 		{
 			matchLength =
 				prev == nullptr ?
-					info.name->GetCharacterCount() :
-					JMin(matchLength, JString::CalcCharacterMatchLength(*prev, *info.name));
+					info.fullPath->GetCharacterCount() :
+					JMin(matchLength, JString::CalcCharacterMatchLength(*prev, *info.fullPath));
 
-			prev = info.name;
+			prev = info.fullPath;
 		}
 	}
 
-	if (matchLength > 1)
+	for (const auto& info : *itsSymbolList)
 	{
-		for (const auto& info : *itsSymbolList)
+		if (info.fullPath != nullptr)
 		{
-			if (info.fullyQualifiedFileScope)
+			*info.name = *info.fullPath;
+			info.name->Append(":");
+			info.name->Append(*info.origName);
+
+			if (matchLength > 1)
 			{
 				JStringIterator iter(info.name);
 				iter.SkipNext(matchLength);
 				iter.RemoveAllPrev();
 			}
 		}
-
-		itsSymbolList->Sort();
 	}
+
+	itsSymbolList->Sort();
+
+	// reset to lenient search
+
+	itsSymbolList->SetCompareFunction(CompareSymbols);
 }
 
 /******************************************************************************
@@ -906,27 +910,23 @@ SymbolList::ReadSymbolList
 			signature = jnew JString(" ( )");
 		}
 
-		const SymbolInfo info(name, signature, lang, type,
-							  false, fileID, lineIndex);
-		itsSymbolList->InsertSorted(info);
+		itsSymbolList->AppendItem(
+			SymbolInfo(name, signature, lang, type, fileID, lineIndex));
 
 		// add file:name
 
 		if (IsFileScope(type))
 		{
-			auto* name1 = jnew JString(fullName);
-			*name1 += ":";
-			*name1 += *name;
-
 			JString* sig1 = nullptr;
 			if (signature != nullptr)
 			{
 				sig1 = jnew JString(*signature);
 			}
 
-			const SymbolInfo info1(name1, sig1, lang, type,
-								   true, fileID, lineIndex);
-			itsSymbolList->InsertSorted(info1);
+			itsSymbolList->AppendItem(
+				SymbolInfo(jnew JString(*name), sig1, lang, type,
+						   fileID, lineIndex, jnew JString(fullName),
+						   jnew JString(*name)));
 		}
 	}
 }
@@ -951,7 +951,7 @@ SymbolList::ReadSetup
 	{
 		ReadSetup(*input, vers);
 
-		itsReparseAllFlag = vers < 101 || (itsSymbolList->IsEmpty() && IsActive());
+		itsReparseAllFlag = vers < 102 || (itsSymbolList->IsEmpty() && IsActive());
 	}
 }
 
@@ -983,10 +983,20 @@ SymbolList::ReadSetup
 		long lang, type;
 		input >> lang >> type;
 
+		JString* fullPath = nullptr;
+		JString* origName = nullptr;
+
 		bool fullyQualifiedFileScope = false;
 		if (vers >= 54)
 		{
 			input >> JBoolFromString(fullyQualifiedFileScope);
+
+			if (vers >= 102 && fullyQualifiedFileScope)
+			{
+				fullPath = jnew JString;
+				origName = jnew JString;
+				input >> *fullPath >> *origName;
+			}
 		}
 
 		JFAID_t fileID;
@@ -1008,7 +1018,7 @@ SymbolList::ReadSetup
 
 		itsSymbolList->AppendItem(
 			SymbolInfo(name, signature, (Language) lang, (Type) type,
-					   fullyQualifiedFileScope, fileID, lineIndex));
+					   fileID, lineIndex, fullPath, origName));
 	}
 
 	itsSymbolList->SetMinSize(kMinSize);
@@ -1044,17 +1054,24 @@ SymbolList::WriteSetup
 		for (JIndex i=1; i<=symbolCount; i++)
 		{
 			const SymbolInfo info = itsSymbolList->GetItem(i);
-			*symOutput << ' ' << *(info.name);
+			*symOutput << ' ' << *info.name;
 			*symOutput << ' ' << (long) info.lang;
 			*symOutput << ' ' << (long) info.type;
-			*symOutput << ' ' << JBoolToString(info.fullyQualifiedFileScope);
+
+			*symOutput << ' ' << JBoolToString(info.fullPath != nullptr);
+			if (info.fullPath != nullptr)
+			{
+				*symOutput << ' ' << *info.fullPath;
+				*symOutput << ' ' << *info.origName;
+			}
+
 			*symOutput << ' ' << info.fileID;
 			*symOutput << ' ' << info.lineIndex;
 
 			if (info.signature != nullptr)
 			{
 				*symOutput << ' ' << JBoolToString(true);
-				*symOutput << ' ' << *(info.signature);
+				*symOutput << ' ' << *info.signature;
 			}
 			else
 			{
@@ -1132,4 +1149,10 @@ SymbolList::SymbolInfo::Free()
 
 	jdelete signature;
 	signature = nullptr;
+
+	jdelete fullPath;
+	fullPath = nullptr;
+
+	jdelete origName;
+	origName = nullptr;
 }

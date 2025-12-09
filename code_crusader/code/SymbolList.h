@@ -108,23 +108,33 @@ public:		// ought to be private
 		JString*	signature;	// can be nullptr
 		Language	lang;
 		Type		type;
-		bool		fullyQualifiedFileScope;
 		JFAID_t		fileID;
 		JIndex		lineIndex;
+		JString*	fullPath;	// only used if fullyQualifiedFileScope
+		JString*	origName;	// only used if fullyQualifiedFileScope
 
 		SymbolInfo()
 			:
 			name(nullptr), signature(nullptr), lang(kOtherLang), type(kUnknownST),
-			fullyQualifiedFileScope(false),
-			fileID(JFAID::kInvalidID), lineIndex(0)
+			fileID(JFAID::kInvalidID), lineIndex(0),
+			fullPath(nullptr), origName(nullptr)
 		{ };
 
 		SymbolInfo(JString* n, JString* s, const Language l, const Type t,
-				   const bool fqfs, const JFAID_t id, const JIndex line)
+				   const JFAID_t id, const JIndex line)
 			:
 			name(n), signature(s), lang(l), type(t),
-			fullyQualifiedFileScope(fqfs),
-			fileID(id), lineIndex(line)
+			fileID(id), lineIndex(line),
+			fullPath(nullptr), origName(nullptr)
+		{ };
+
+		SymbolInfo(JString* n, JString* s, const Language l, const Type t,
+				   const JFAID_t id, const JIndex line,
+				   JString* fp, JString* on)
+			:
+			name(n), signature(s), lang(l), type(t),
+			fileID(id), lineIndex(line),
+			fullPath(fp), origName(on)
 		{ };
 
 		void Free();
