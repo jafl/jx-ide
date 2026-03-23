@@ -16,16 +16,16 @@ static const JUtf8Byte* kKeywordList[] =
 {
 	// keywords
 
-	"abstract", "arguments", "async", "await", "boolean", "break", "byte",
-	"case", "catch", "char", "class", "const", "constructor", "continue",
-	"debugger", "default", "delete", "do", "double", "else", "enum",
-	"eval", "export", "extends", "false", "final", "finally", "float",
-	"for", "function", "goto", "if", "implements", "import", "in",
-	"instanceof", "int", "interface", "label", "let", "long", "native", "new",
-	"null", "of", "package", "private", "protected", "public", "return",
-	"short", "static", "super", "switch", "synchronized", "this", "throw",
-	"throws", "transient", "true", "try", "typeof", "var", "void",
-	"volatile", "while", "with", "yield",
+	"abstract", "arguments", "as", "async", "await", "boolean", "break",
+	"byte", "case", "catch", "char", "class", "const", "constructor",
+	"continue", "debugger", "default", "delete", "do", "double", "else",
+	"enum", "eval", "export", "extends", "false", "final", "finally",
+	"float", "for", "from", "function", "goto", "if", "implements",
+	"import", "in", "instanceof", "int", "interface", "label", "let",
+	"long", "native", "new", "null", "of", "package", "private",
+	"protected", "public", "return", "short", "static", "super", "switch",
+	"synchronized", "this", "throw", "throws", "transient", "true", "try",
+	"typeof", "var", "void", "volatile", "while", "with", "yield",
 
 	// methods, classes, etc.
 

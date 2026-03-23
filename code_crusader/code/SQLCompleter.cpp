@@ -124,6 +124,7 @@ static const JUtf8Byte* kKeywordList[] =
 	"sleep", "soundex", "sounds", "space", "std", "stddev_pop",
 	"stddev_samp", "str_to_date", "strcmp", "subdate", "substr",
 	"substring", "substring_index", "subtime", "sysdate", "tan",
+	"tinytext", "text", "mediumtext", "longtext",
 	"time_format", "time_to_sec", "timediff", "timestampadd",
 	"timestampdiff", "tinyint", "to_base64", "to_days", "to_seconds",
 	"truncate", "ucase", "uncompress", "uncompressed_length", "unhex",
