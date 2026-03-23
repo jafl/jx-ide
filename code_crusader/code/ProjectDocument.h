@@ -19,12 +19,10 @@
 #include "CommandManager.h"		// for CmdList
 
 class JProcess;
-class JPTPrinter;
 class JXTextMenu;
 class JXTextButton;
 class JXToolBar;
 class JXWidgetSet;
-class JXPTPrinter;
 class JXIdleTask;
 class JXProgressIndicator;
 class ProjectTree;
@@ -162,7 +160,6 @@ private:
 	CommandManager*		itsCmdMgr;
 	BuildManager*		itsBuildMgr;
 	JXIdleTask*			itsSaveTask;
-	JString				itsPrintName;
 	mutable JString		itsDocName;					// so GetName() can return JString&
 
 	DirList*					itsDirList;
@@ -222,8 +219,6 @@ private:
 
 	void	UpdateFileMenu();
 	void	HandleFileMenu(const JIndex index);
-
-	void	Print(JPTPrinter& p) const;
 
 	void	UpdateTreeMenu();
 	void	HandleTreeMenu(const JIndex index);

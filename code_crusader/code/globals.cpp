@@ -18,8 +18,6 @@
 #include "CommandManager.h"
 #include "FnMenuUpdater.h"
 #include "SymbolTypeList.h"
-#include "PTPrinter.h"
-#include "PSPrinter.h"
 #include <jx-af/jx/JXDisplay.h>
 #include <jx-af/jx/JXWindow.h>
 #include <jx-af/jx/JXImageCache.h>
@@ -40,9 +38,6 @@ static DiffFileDialog*		theDiffFileDialog    = nullptr;	// owned by JXGetPersist
 static CommandManager*	theCmdManager        = nullptr;
 static FnMenuUpdater*	theFnMenuUpdater     = nullptr;
 static SymbolTypeList*	theSymbolTypeList    = nullptr;
-
-static PTPrinter*	thePTTextPrinter     = nullptr;
-static PSPrinter*	thePSTextPrinter     = nullptr;
 
 // owned by JXImageCache
 static JXImage* theFileIcon           = nullptr;
@@ -127,11 +122,6 @@ CreateGlobals
 
 	theSymbolTypeList = jnew SymbolTypeList(permWindow->GetDisplay());
 
-	// printers
-
-	thePTTextPrinter = jnew PTPrinter;
-	thePSTextPrinter = jnew PSPrinter(permWindow->GetDisplay());
-
 	return isNew;
 }
 
@@ -173,8 +163,6 @@ DeleteGlobals()
 		theCmdManager->JPrefObject::WritePrefs();
 		theFnMenuUpdater->JPrefObject::WritePrefs();
 		theSymbolTypeList->JPrefObject::WritePrefs();
-		thePTTextPrinter->JPrefObject::WritePrefs();
-		thePSTextPrinter->JPrefObject::WritePrefs();
 	}
 	jdelete theCmdManager;
 	theCmdManager = nullptr;
@@ -184,12 +172,6 @@ DeleteGlobals()
 
 	jdelete theSymbolTypeList;
 	theSymbolTypeList = nullptr;
-
-	jdelete thePTTextPrinter;
-	thePTTextPrinter = nullptr;
-
-	jdelete thePSTextPrinter;
-	thePSTextPrinter = nullptr;
 
 	// windows closed by JXGetPersistentWindowOwner()
 
@@ -423,30 +405,6 @@ GetSymbolTypeList()
 {
 	assert( theSymbolTypeList != nullptr );
 	return theSymbolTypeList;
-}
-
-/******************************************************************************
- GetPTTextPrinter
-
- ******************************************************************************/
-
-PTPrinter*
-GetPTTextPrinter()
-{
-	assert( thePTTextPrinter != nullptr );
-	return thePTTextPrinter;
-}
-
-/******************************************************************************
- GetPSTextPrinter
-
- ******************************************************************************/
-
-PSPrinter*
-GetPSTextPrinter()
-{
-	assert( thePSTextPrinter != nullptr );
-	return thePSTextPrinter;
 }
 
 /******************************************************************************

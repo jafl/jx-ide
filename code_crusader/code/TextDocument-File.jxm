@@ -95,7 +95,7 @@ jx_menu_editor 0
 
 1
 0
-0 "jcc_file_save_copy_as.xpm"
+0 "jcc_file_save_copy_as.png"
 "Save a copy as..."
 "Meta-Shift-S"
 'c
@@ -145,7 +145,7 @@ jx_menu_editor 0
 
 1
 0
-0 "jcc_compare_files.xpm"
+0 "jcc_compare_files.png"
 "Compare files..."
 ""
 'm
@@ -155,7 +155,7 @@ jx_menu_editor 0
 
 1
 0
-0 "jcc_compare_backup.xpm"
+0 "jcc_compare_backup.png"
 "Compare with..."
 ""
 ' 
@@ -165,7 +165,7 @@ jx_menu_editor 0
 
 1
 0
-0 "jcc_compare_vcs.xpm"
+0 "jcc_compare_vcs_as.png"
 "Compare with version control"
 ""
 'v
@@ -191,46 +191,6 @@ jx_menu_editor 0
 'f
 "ShowInFileMgr"
 "kShowInFileMgrCmd"
-1
-
-1
-0
-0 ""
-"Page setup..."
-""
-'g
-"PageSetup::JX"
-"kPTPageSetupCmd"
-0
-
-1
-0
-1 "jx_file_print.xpm"
-"Print..."
-"Ctrl-P"
-'p
-"Print::JX"
-"kPrintPTCmd"
-1
-
-1
-0
-0 ""
-"Page setup for styles..."
-""
-' 
-"PageSetupStyledText"
-"kPSPageSetupCmd"
-0
-
-1
-0
-0 "jcc_file_print_with_styles.xpm"
-"Print with styles..."
-"Ctrl-Shift-P"
-' 
-"PrintStyledText"
-"kPrintPSCmd"
 1
 
 1

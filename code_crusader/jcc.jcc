@@ -1143,33 +1143,6 @@ F
 "./code/DiffEditor.cpp"
 F
 T
-1 "printing"
-T
-2 "PSPrinter.cpp"
-F
-"./code/PSPrinter.cpp"
-T
-2 "PSPrintSetupDialog.cpp"
-F
-"./code/PSPrintSetupDialog.cpp"
-T
-2 "PSPrintSetupDialog.jxl"
-F
-"./code/PSPrintSetupDialog.jxl"
-T
-2 "PTPrinter.cpp"
-F
-"./code/PTPrinter.cpp"
-T
-2 "PTPrintSetupDialog.cpp"
-F
-"./code/PTPrintSetupDialog.cpp"
-T
-2 "PTPrintSetupDialog.jxl"
-F
-"./code/PTPrintSetupDialog.jxl"
-F
-T
 1 "misc"
 T
 2 "FileHistoryMenu.cpp"

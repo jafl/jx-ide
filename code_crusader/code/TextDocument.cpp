@@ -21,8 +21,6 @@
 #include "DiffFileDialog.h"
 #include "OKToOverwriteModifiedFileDialog.h"
 #include "StylerBase.h"
-#include "PTPrinter.h"
-#include "PSPrinter.h"
 #include "DocumentMenu.h"
 #include "CommandMenu.h"
 #include "globals.h"
@@ -191,9 +189,6 @@ TextDocument::TextDocumentX2
 	const bool setWindowSize
 	)
 {
-	itsTextEditor->SetPTPrinter(GetPTTextPrinter());
-	itsTextEditor->SetPSPrinter(GetPSTextPrinter());
-
 	// must do this after reading file
 
 	itsUpdateFileTypeFlag = true;
@@ -519,8 +514,6 @@ TextDocument::BuildWindow
 		itsToolBar->AppendButton(itsFileMenu, kSaveCopyAsCmd);
 		itsToolBar->AppendButton(itsFileMenu, kSaveAllFilesCmd);
 		itsToolBar->NewGroup();
-		itsToolBar->AppendButton(itsFileMenu, kPrintPTCmd);
-		itsToolBar->NewGroup();
 		itsToolBar->AppendButton(editMenu, undo);
 		itsToolBar->AppendButton(editMenu, redo);
 		itsToolBar->NewGroup();
@@ -829,13 +822,6 @@ TextDocument::UpdateFileMenu()
 	}
 	itsFileMenu->SetItemText(kDiffVCSCmd, *s);
 	itsFileMenu->SetItemEnabled(kDiffVCSCmd, enable);
-
-	const bool hasText = !itsTextEditor->GetText()->IsEmpty();
-	itsFileMenu->SetItemEnabled(kPrintPTCmd, hasText);
-
-	const bool isStyled = itsTextEditor->GetText()->GetStyles().GetRunCount() > 1;
-	itsFileMenu->SetItemEnabled(kPSPageSetupCmd, isStyled);
-	itsFileMenu->SetItemEnabled(kPrintPSCmd, hasText && isStyled);
 }
 
 /******************************************************************************
@@ -942,32 +928,6 @@ TextDocument::HandleFileMenu
 		const JString fullName = GetFullName(&onDisk);
 		assert( onDisk );
 		JXGetWebBrowser()->ShowFileLocation(fullName);
-	}
-
-	else if (index == kPTPageSetupCmd)
-	{
-		itsTextEditor->HandlePTPageSetup();
-	}
-	else if (index == kPrintPTCmd)
-	{
-		bool onDisk;
-		const JString fullName = GetFullName(&onDisk);
-		PTPrinter* p = GetPTTextPrinter();
-		p->SetHeaderName(fullName);
-		p->SetTabWidth(itsTextEditor->GetTabCharCount());
-		itsTextEditor->PrintPT();
-	}
-
-	else if (index == kPSPageSetupCmd)
-	{
-		itsTextEditor->HandlePSPageSetup();
-	}
-	else if (index == kPrintPSCmd)
-	{
-		bool onDisk;
-		const JString fullName = GetFullName(&onDisk);
-		GetPSTextPrinter()->SetPrintInfo(itsTextEditor, fullName);
-		itsTextEditor->PrintPS();
 	}
 
 	else if (index == kCloseCmd)

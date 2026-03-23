@@ -24,10 +24,6 @@ static const JUtf8Byte* kFileMenuStr =
 "|* %i DiffVCS::TextDocument"
 "|* %i __Compare::TextDocument %l"
 "|* %i ShowInFileMgr::TextDocument %l"
-"|* %i PageSetup::JX"
-"|* %i Print::JX %l"
-"|* %i PageSetupStyledText::TextDocument"
-"|* %i PrintStyledText::TextDocument %l"
 "|* %i CloseWindow::JX"
 "|* %i CloseAllTextFiles::TextDocument %l"
 "|* %i Quit::JX"
@@ -67,17 +63,9 @@ static const JUtf8Byte* kFileMenuStr =
 #define _H_jcc_compare_backup
 #include "jcc_compare_backup.xpm"
 #endif
-#ifndef _H_jcc_compare_vcs
-#define _H_jcc_compare_vcs
-#include "jcc_compare_vcs.xpm"
-#endif
-#ifndef _H_jx_af_image_jx_jx_file_print
-#define _H_jx_af_image_jx_jx_file_print
-#include <jx-af/image/jx/jx_file_print.xpm>
-#endif
-#ifndef _H_jcc_file_print_with_styles
-#define _H_jcc_file_print_with_styles
-#include "jcc_file_print_with_styles.xpm"
+#ifndef _H_jcc_compare_vcs_as
+#define _H_jcc_compare_vcs_as
+#include "jcc_compare_vcs_as.xpm"
 #endif
 
 static void ConfigureFileMenu(JXTextMenu* menu, const int offset = 0) {
@@ -92,9 +80,7 @@ static void ConfigureFileMenu(JXTextMenu* menu, const int offset = 0) {
 	menu->SetItemImage(kSaveAllFilesCmd + offset, jx_file_save_all);
 	menu->SetItemImage(kDiffFilesCmd + offset, jcc_compare_files);
 	menu->SetItemImage(kDiffSmartCmd + offset, jcc_compare_backup);
-	menu->SetItemImage(kDiffVCSCmd + offset, jcc_compare_vcs);
-	menu->SetItemImage(kPrintPTCmd + offset, jx_file_print);
-	menu->SetItemImage(kPrintPSCmd + offset, jcc_file_print_with_styles);
+	menu->SetItemImage(kDiffVCSCmd + offset, jcc_compare_vcs_as);
 };
 
 #endif

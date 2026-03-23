@@ -89,11 +89,6 @@ public:
 	void	FileTypeChanged(const TextFileType type);
 	void	UpdateWritable(const JString& name);
 
-	// called by PSPrinter
-
-	void	SetFontBeforePrintPS(const JSize fontSize);
-	void	ResetFontAfterPrintPS();
-
 	// called by CB*KeyHandler
 
 	TELineIndexInput*	GetLineInput();
@@ -110,9 +105,6 @@ protected:
 	void	HandleMouseUp(const JPoint& pt, const JXMouseButton button,
 						  const JXButtonStates& buttonStates,
 						  const JXKeyModifiers& modifiers) override;
-
-	JCoordinate	GetPrintHeaderHeight(JPagePrinter& p) const override;
-	void		DrawPrintHeader(JPagePrinter& p, const JCoordinate footerHeight) override;
 
 	void	Receive(JBroadcaster* sender, const Message& message) override;
 

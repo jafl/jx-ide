@@ -362,7 +362,7 @@ addNewExternalSuffixes
 void
 PrefsManager::UpgradeData
 	(
-	const bool		isNew,
+	const bool			isNew,
 	const JFileVersion	currentVersion
 	)
 {
@@ -423,12 +423,11 @@ PrefsManager::UpgradeData
 		newData << 0 << ' ' << JBoolToString(true) << ' ' << oldData.c_str();
 		SetData(kDocMgrID, newData);
 	}
-	else if (4 <= currentVersion && currentVersion <= 6)
+	else if (4 <= currentVersion)
 	{
-		if (GetData(4, &data))
+		if (IDValid(4))
 		{
 			RemoveData(4);
-			SetData(kPrintPlainTextID, data);
 		}
 	}
 

@@ -24,8 +24,6 @@ class DiffFileDialog;
 class CommandManager;
 class FnMenuUpdater;
 class SymbolTypeList;
-class PTPrinter;
-class PSPrinter;
 
 App*				GetApplication();
 DocumentManager*	GetDocumentManager();
@@ -43,9 +41,6 @@ DiffFileDialog*		GetDiffFileDialog();
 CommandManager*		GetCommandManager();
 FnMenuUpdater*		GetFnMenuUpdater();
 SymbolTypeList*		GetSymbolTypeList();
-
-PTPrinter*			GetPTTextPrinter();
-PSPrinter*			GetPSTextPrinter();
 
 const JString&		GetVersionNumberStr();
 JString				GetVersionStr();

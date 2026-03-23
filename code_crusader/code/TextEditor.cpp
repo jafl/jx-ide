@@ -38,8 +38,6 @@
 #include "CommandMenu.h"
 #include "TEScriptMenu.h"
 #include "Emulator.h"
-#include "PTPrinter.h"
-#include "PSPrinter.h"
 #include "globals.h"
 #include "sharedUtil.h"
 
@@ -1734,74 +1732,4 @@ TextEditor::ScrollForDefinition
 	)
 {
 	::ScrollForDefinition(this, lang);
-}
-
-/******************************************************************************
- Set font for PrintPS
-
- ******************************************************************************/
-
-void
-TextEditor::SetFontBeforePrintPS
-	(
-	const JSize fontSize
-	)
-{
-	JString fontName;
-	JSize size;
-	GetPrefsManager()->GetDefaultFont(&fontName, &size);
-	if (fontName != "Courier")
-	{
-		itsSavedBreakCROnlyFlag = WillBreakCROnly();
-		SetFont("Courier", fontSize, itsTabCharCount, false);
-	}
-}
-
-void
-TextEditor::ResetFontAfterPrintPS()
-{
-	JString fontName;
-	JSize fontSize;
-	GetPrefsManager()->GetDefaultFont(&fontName, &fontSize);
-	if (fontName != "Courier")
-	{
-		SetFont(fontName, fontSize, itsTabCharCount, itsSavedBreakCROnlyFlag);
-	}
-}
-
-/******************************************************************************
- Print header & footer (virtual protected)
-
- ******************************************************************************/
-
-JCoordinate
-TextEditor::GetPrintHeaderHeight
-	(
-	JPagePrinter& p
-	)
-	const
-{
-	return (GetPTTextPrinter()->WillPrintHeader() ? 4 * p.GetLineHeight() : 0);
-}
-
-void
-TextEditor::DrawPrintHeader
-	(
-	JPagePrinter&		p,
-	const JCoordinate	footerHeight
-	)
-{
-	if (GetPTTextPrinter()->WillPrintHeader())
-	{
-		JRect pageRect = p.GetPageRect();
-		p.String(pageRect, GetPSTextPrinter()->GetHeaderName());
-
-		pageRect.top += p.GetLineHeight();
-		const JString dateStr = JGetTimeStamp();
-		p.String(pageRect, dateStr);
-
-		JString pageStr(p.GetPageIndex(), 0);
-		pageStr.Prepend("Page ");
-		p.String(pageRect, pageStr, JPainter::HAlign::kRight);
-	}
 }

@@ -43,7 +43,7 @@ enum
 	kExecOutputWindSizeID,
 	kRunCommandDialogID,
 	kDockPrefID,
-	kPrintPlainTextID,
+	kUnused2ID,				// unused
 	kFindFilePrefID,
 	kSymbolDirectorID,
 	kTCLStyleID,
@@ -66,7 +66,7 @@ enum
 	kTextColorID,
 	kStaticGlobalID,
 	kEditCPPMacroDialogID,
-	kPrintStyledTextID,
+	kUnused3ID,				// unused
 	kProjectWindSizeID,
 	kJavaStyleID,
 	kTEToolBarID,

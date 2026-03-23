@@ -34,7 +34,6 @@
 #include "DiffFileDialog.h"
 #include "SearchTextDialog.h"
 #include "SaveNewProjectDialog.h"
-#include "PTPrinter.h"
 #include "DirList.h"
 #include "DocumentMenu.h"
 #include "fileVersions.h"
@@ -519,11 +518,13 @@ ProjectDocument::ProjectDocument
 
 	if (36 <= projVers && projVers < 71)
 	{
-		projInput >> itsPrintName;
+		JString printName;
+		projInput >> printName;
 	}
 	if (!useProjSetData)	// overwrite
 	{
-		*setInput >> itsPrintName;
+		JString printName;
+		*setInput >> printName;
 	}
 
 	// create file list
@@ -870,7 +871,7 @@ ProjectDocument::WriteFiles
 
 	if (setOutput != nullptr)
 	{
-		*setOutput << ' ' << itsPrintName;
+		*setOutput << ' ' << JString::empty;
 	}
 
 	writeSpace(projOutput, setOutput, symOutput);
@@ -1436,8 +1437,6 @@ ProjectDocument::BuildWindow
 		itsToolBar->AppendButton(itsFileMenu, kNewTextEditorCmd);
 		itsToolBar->AppendButton(itsFileMenu, kOpenSomethingCmd);
 		itsToolBar->NewGroup();
-		itsToolBar->AppendButton(itsFileMenu, kPrintCmd);
-		itsToolBar->NewGroup();
 		itsToolBar->AppendButton(itsProjectMenu, kSearchFilesCmd);
 
 		GetApplication()->AppendHelpMenuToToolBar(itsToolBar, helpMenu);
@@ -1573,8 +1572,6 @@ ProjectDocument::ProcessNodeMessage
 void
 ProjectDocument::UpdateFileMenu()
 {
-	const bool canPrint = itsFileTable->GetRowCount() > 0;
-	itsFileMenu->SetItemEnabled(kPrintCmd, canPrint);
 }
 
 /******************************************************************************
@@ -1628,25 +1625,6 @@ ProjectDocument::HandleFileMenu
 		SaveAsTemplate();
 	}
 
-	else if (index == kPageSetupCmd)
-	{
-		GetPTTextPrinter()->EditUserPageSetup();
-	}
-	else if (index == kPrintCmd)
-	{
-		PTPrinter* p = GetPTTextPrinter();
-		p->SetFileName(itsPrintName);
-		if (p->ConfirmUserPrintSetup())
-		{
-			bool onDisk;
-			const JString fullName = GetFullName(&onDisk);
-			p->SetHeaderName(fullName);
-
-			itsPrintName = p->GetFileName();
-			Print(*p);
-		}
-	}
-
 	else if (index == kCloseCmd)
 	{
 		Close();
@@ -1678,30 +1656,6 @@ ProjectDocument::SaveAsTemplate()
 	{
 		WriteTemplate(dlog->GetFullName());
 	}
-}
-
-/******************************************************************************
- Print (private)
-
- ******************************************************************************/
-
-void
-ProjectDocument::Print
-	(
-	JPTPrinter& p
-	)
-	const
-{
-	const JUtf8Byte* map[] =
-	{
-		"name", GetFileName().GetBytes(),
-		"path", GetFilePath().GetBytes()
-	};
-	JString s = JGetString("PrintHeader::ProjectDocument", map, sizeof(map));
-
-	itsFileTree->Print(&s);
-
-	p.Print(s);
 }
 
 /******************************************************************************

@@ -14,8 +14,6 @@ enum {
 	kRecentTextMenuCmd,
 	kSaveCmd,
 	kSaveAsTemplateCmd,
-	kPageSetupCmd,
-	kPrintCmd,
 	kCloseCmd,
 	kQuitCmd,
 };

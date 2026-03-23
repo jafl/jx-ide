@@ -14,8 +14,6 @@ static const JUtf8Byte* kFileMenuStr =
 "|* %i __RecentTextFiles::ProjectDocument %l"
 "|* %i SaveFile::ProjectDocument"
 "|* %i SaveAsTemplate::ProjectDocument %l"
-"|* %i PageSetup::JX"
-"|* %i Print::JX %l"
 "|* %i CloseWindow::JX"
 "|* %i Quit::JX"
 ;
@@ -34,10 +32,6 @@ static const JUtf8Byte* kFileMenuStr =
 #define _H_jx_af_image_jx_jx_file_save
 #include <jx-af/image/jx/jx_file_save.xpm>
 #endif
-#ifndef _H_jx_af_image_jx_jx_file_print
-#define _H_jx_af_image_jx_jx_file_print
-#include <jx-af/image/jx/jx_file_print.xpm>
-#endif
 
 static void ConfigureFileMenu(JXTextMenu* menu, const int offset = 0) {
 	if (offset == 0 && JXMenu::GetDisplayStyle() == JXMenu::kWindowsStyle) {
@@ -46,7 +40,6 @@ static void ConfigureFileMenu(JXTextMenu* menu, const int offset = 0) {
 	menu->SetItemImage(kNewTextEditorCmd + offset, jx_file_new);
 	menu->SetItemImage(kOpenSomethingCmd + offset, jx_file_open);
 	menu->SetItemImage(kSaveCmd + offset, jx_file_save);
-	menu->SetItemImage(kPrintCmd + offset, jx_file_print);
 };
 
 #endif
