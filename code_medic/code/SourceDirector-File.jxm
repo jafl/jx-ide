@@ -36,26 +36,6 @@ jx_menu_editor 0
 1
 0
 0 ""
-"Page setup..."
-""
-'g
-"PageSetup::JX"
-"kPageSetupCmd"
-0
-
-1
-0
-1 "jx_file_print.xpm"
-"Print..."
-"Ctrl-P"
-'p
-"Print::JX"
-"kPrintCmd"
-1
-
-1
-0
-0 ""
 "Close"
 "Ctrl-W"
 'c

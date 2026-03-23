@@ -887,15 +887,6 @@ SourceDirector::HandleFileMenu
 					visualIndex);
 	}
 
-	else if (index == kPageSetupCmd)
-	{
-		itsText->HandlePTPageSetup();
-	}
-	else if (index == kPrintCmd)
-	{
-		itsText->PrintPT();
-	}
-
 	else if (index == kCloseCmd)
 	{
 		if (IsMainSourceWindow())

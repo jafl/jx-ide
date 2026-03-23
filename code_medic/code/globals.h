@@ -15,7 +15,6 @@
 
 class JXPSPrinter;
 class JX2DPlotEPSPrinter;
-class JXPTPrinter;
 class CommandDirector;
 class FnMenuUpdater;
 
@@ -23,7 +22,6 @@ App*				GetApplication();
 bool				HasPrefsManager();
 PrefsManager*		GetPrefsManager();
 void				ForgetPrefsManager();
-JXPTPrinter*		GetPTPrinter();
 JXPSPrinter*		GetPSPrinter();
 JX2DPlotEPSPrinter*	GetPlotEPSPrinter();
 FnMenuUpdater*		GetFnMenuUpdater();

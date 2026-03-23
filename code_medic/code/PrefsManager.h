@@ -44,7 +44,7 @@ enum
 	kStackWindowSizeID,
 	kStackLineMaxID,
 	kFileListSetupID,
-	kPTPrinterSetupID,
+	kUnused1ID,			// unused
 	kFnMenuUpdaterID,
 	kCStyleID,
 	kTextColorID,
@@ -154,9 +154,6 @@ public:
 
 	void	ReadPrinterSetup(JX2DPlotEPSPrinter* printer);
 	void	WritePrinterSetup(JX2DPlotEPSPrinter* printer);
-
-	void	ReadPrinterSetup(JXPTPrinter* printer);
-	void	WritePrinterSetup(JXPTPrinter* printer);
 
 	void	ReadHistoryMenuSetup(JXStringHistoryMenu* menu);
 	void	WriteHistoryMenuSetup(JXStringHistoryMenu* menu);

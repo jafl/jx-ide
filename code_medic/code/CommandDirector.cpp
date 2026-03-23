@@ -1130,15 +1130,6 @@ CommandDirector::HandleFileMenu
 		SaveInNewFile();
 	}
 
-	else if (index == kPageSetupCmd)
-	{
-		itsCommandOutput->HandlePTPageSetup();
-	}
-	else if (index == kPrintCmd)
-	{
-		itsCommandOutput->PrintPT();
-	}
-
 	else if (index == kCloseCmd)
 	{
 		Deactivate();

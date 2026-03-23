@@ -11,8 +11,6 @@ enum {
 	kSaveConfigCmd,
 	kSaveCmd,
 	kSaveAsCmd,
-	kPageSetupCmd,
-	kPrintCmd,
 	kCloseCmd,
 	kQuitCmd,
 };

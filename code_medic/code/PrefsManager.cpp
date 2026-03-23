@@ -698,31 +698,6 @@ PrefsManager::WritePrinterSetup
 	SetData(kPlotEPSPrinterSetupID, data);
 }
 
-void
-PrefsManager::ReadPrinterSetup
-	(
-	JXPTPrinter* printer
-	)
-{
-	std::string data;
-	if (GetData(kPTPrinterSetupID, &data))
-	{
-		std::istringstream dataStream(data);
-		printer->ReadXPTSetup(dataStream);
-	}
-}
-
-void
-PrefsManager::WritePrinterSetup
-	(
-	JXPTPrinter* printer
-	)
-{
-	std::ostringstream data;
-	printer->WriteXPTSetup(data);
-	SetData(kPTPrinterSetupID, data);
-}
-
 /******************************************************************************
  History menu
 

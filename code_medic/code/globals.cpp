@@ -27,7 +27,6 @@
 static App*					theApplication		= nullptr;		// owned by JX
 static bool					theShutdownFlag     = false;
 static PrefsManager*		thePrefsManager		= nullptr;
-static JXPTPrinter*			theTextPrinter		= nullptr;
 static JXPSPrinter*			thePSPrinter		= nullptr;
 static JX2DPlotEPSPrinter*	thePlotEPSPrinter	= nullptr;
 static FnMenuUpdater*		theFnMenuUpdater	= nullptr;
@@ -97,9 +96,6 @@ CreateGlobals
 	auto* dockManager = jnew DockManager;
 	dockManager->JPrefObject::ReadPrefs();
 
-	theTextPrinter = jnew JXPTPrinter;
-	thePrefsManager->ReadPrinterSetup(theTextPrinter);
-
 	thePSPrinter = jnew JXPSPrinter(display);
 	thePrefsManager->ReadPrinterSetup(thePSPrinter);
 
@@ -140,13 +136,6 @@ DeleteGlobals()
 	theShutdownFlag = true;
 
 	JXGetDockManager()->JPrefObject::WritePrefs();
-
-	if (thePrefsManager != nullptr)
-	{
-		thePrefsManager->WritePrinterSetup(theTextPrinter);
-	}
-	jdelete theTextPrinter;
-	theTextPrinter = nullptr;
 
 	if (thePrefsManager != nullptr)
 	{
@@ -304,18 +293,6 @@ void
 ForgetPrefsManager()
 {
 	thePrefsManager = nullptr;
-}
-
-/******************************************************************************
- GetPTPrinter
-
- ******************************************************************************/
-
-JXPTPrinter*
-GetPTPrinter()
-{
-	assert( theTextPrinter != nullptr );
-	return theTextPrinter;
 }
 
 /******************************************************************************

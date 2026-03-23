@@ -85,7 +85,6 @@ TextDisplayBase::TextDisplayBaseX
 
 	ShouldAllowDragAndDrop(true);
 	GetText()->SetCharacterInWordFunction(::IsCharacterInWord);
-	SetPTPrinter(GetPTPrinter());
 }
 
 /******************************************************************************

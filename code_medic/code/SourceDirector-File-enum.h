@@ -8,8 +8,6 @@
 enum {
 	kOpenCmd=1,
 	kEditCmd,
-	kPageSetupCmd,
-	kPrintCmd,
 	kCloseCmd,
 	kQuitCmd,
 };
