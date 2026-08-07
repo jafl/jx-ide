@@ -49,9 +49,8 @@ KeyScriptTableBase::KeyScriptTableBase
 	ListenTo(itsRemoveRowButton);
 
 	JStringTableData* data = GetStringData();
-	data->AppendCols(2);	// macro, script
-	FitToEnclosure();		// make sure SetColWidth() won't fail
-	ListenTo(this);			// adjust script col width
+	data->AppendCols(2);			// macro, script
+	ListenTo(this);					// adjust script col width
 
 	JString fontName;
 	JSize fontSize;

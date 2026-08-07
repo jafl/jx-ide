@@ -43,7 +43,7 @@ CharActionTable::CharActionTable
 	)
 	:
 	KeyScriptTableBase(dialog, addRowButton, removeRowButton,
-						 scrollbarSet, enclosure, hSizing,vSizing, x,y, w,h)
+						scrollbarSet, enclosure, hSizing,vSizing, x,y, w,h)
 {
 	itsLoadButton = loadButton;
 	ListenTo(itsLoadButton);

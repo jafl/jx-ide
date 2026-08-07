@@ -41,9 +41,9 @@ public:
 protected:
 
 	void	HandleMouseDown(const JPoint& pt, const JXMouseButton button,
-									const JSize clickCount,
-									const JXButtonStates& buttonStates,
-									const JXKeyModifiers& modifiers) override;
+							const JSize clickCount,
+							const JXButtonStates& buttonStates,
+							const JXKeyModifiers& modifiers) override;
 
 	JXInputField*
 		CreateStringTableInput(const JPoint& cell, JXContainer* enclosure,
@@ -58,13 +58,13 @@ private:
 
 	JArray<PrefsManager::MacroSetInfo>*	itsMacroList;
 
-	mutable bool	itsOwnsMacroListFlag;	// true => delete contents of itsMacroList
+	mutable bool		itsOwnsMacroListFlag;	// true => delete contents of itsMacroList
 	const JIndex		itsFirstNewID;			// first index to use for new sets
 	JIndex				itsLastNewID;			// index of last new set created
 	JIndex				itsMacroIndex;			// index of currently displayed macro set
 
 	CharActionTable*	itsActionTable;
-	MacroTable*		itsMacroTable;
+	MacroTable*			itsMacroTable;
 
 	JXTextButton*		itsAddRowButton;
 	JXTextButton*		itsRemoveRowButton;

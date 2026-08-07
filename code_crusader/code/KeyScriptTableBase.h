@@ -28,11 +28,11 @@ public:
 public:
 
 	KeyScriptTableBase(EditMacroDialog* dialog,
-						 JXTextButton* addRowButton, JXTextButton* removeRowButton,
-						 JXScrollbarSet* scrollbarSet, JXContainer* enclosure,
-						 const HSizingOption hSizing, const VSizingOption vSizing,
-						 const JCoordinate x, const JCoordinate y,
-						 const JCoordinate w, const JCoordinate h);
+						JXTextButton* addRowButton, JXTextButton* removeRowButton,
+						JXScrollbarSet* scrollbarSet, JXContainer* enclosure,
+						const HSizingOption hSizing, const VSizingOption vSizing,
+						const JCoordinate x, const JCoordinate y,
+						const JCoordinate w, const JCoordinate h);
 
 	~KeyScriptTableBase() override;
 
@@ -46,9 +46,9 @@ protected:
 	EditMacroDialog*	GetDialog() const;
 
 	void	HandleMouseDown(const JPoint& pt, const JXMouseButton button,
-									const JSize clickCount,
-									const JXButtonStates& buttonStates,
-									const JXKeyModifiers& modifiers) override;
+							const JSize clickCount,
+							const JXButtonStates& buttonStates,
+							const JXKeyModifiers& modifiers) override;
 
 	JXInputField*
 		CreateStringTableInput(const JPoint& cell, JXContainer* enclosure,

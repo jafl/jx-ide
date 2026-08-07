@@ -17,12 +17,12 @@ class CharActionTable : public KeyScriptTableBase
 public:
 
 	CharActionTable(EditMacroDialog* dialog,
-					  JXTextButton* addRowButton, JXTextButton* removeRowButton,
-					  JXTextButton* loadButton, JXTextButton* saveButton,
-					  JXScrollbarSet* scrollbarSet, JXContainer* enclosure,
-					  const HSizingOption hSizing, const VSizingOption vSizing,
-					  const JCoordinate x, const JCoordinate y,
-					  const JCoordinate w, const JCoordinate h);
+					JXTextButton* addRowButton, JXTextButton* removeRowButton,
+					JXTextButton* loadButton, JXTextButton* saveButton,
+					JXScrollbarSet* scrollbarSet, JXContainer* enclosure,
+					const HSizingOption hSizing, const VSizingOption vSizing,
+					const JCoordinate x, const JCoordinate y,
+					const JCoordinate w, const JCoordinate h);
 
 	~CharActionTable() override;
 

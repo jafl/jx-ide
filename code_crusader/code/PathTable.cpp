@@ -106,7 +106,6 @@ PathTable::PathTable
 	SetColBorderInfo(0, JColorManager::GetBlackColor());
 	SetColWidth(kRecurseColumn, flagColWidth);
 	SetColWidth(kIconColumn,    itsFolderIcon->GetWidth() + 2*kHMarginWidth);
-	FitToEnclosure();
 
 	UpdateButtons();
 }

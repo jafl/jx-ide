@@ -344,8 +344,8 @@ MacroSetTable::SwitchDisplay()
 		itsMacroIndex = cell.y;
 
 		const PrefsManager::MacroSetInfo info = itsMacroList->GetItem(itsMacroIndex);
-		itsActionTable->SetData(*(info.action));
-		itsMacroTable->SetData(*(info.macro));
+		itsActionTable->SetData(*info.action);
+		itsMacroTable->SetData(*info.macro);
 
 		itsRemoveRowButton->Activate();
 	}
