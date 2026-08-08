@@ -172,7 +172,6 @@ private:
 
 	bool	itsAllowDNDFlag;			// buffered since Meta turns it on
 	bool	itsSmartTabFlag;
-	bool	itsSavedBreakCROnlyFlag;	// used during printing
 
 private:
 
