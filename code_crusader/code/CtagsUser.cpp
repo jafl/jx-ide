@@ -232,6 +232,7 @@ CtagsUser::StartProcess
 							 kJCreatePipe, &fromFD);
 		if (err.OK())
 		{
+			itsProcess->Ignore();	// we will delete it (in a different thread)
 			ListenTo(itsProcess);
 
 			itsCmdPipe = jnew JOutPipeStream(toFD, true);
