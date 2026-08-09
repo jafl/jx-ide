@@ -1387,10 +1387,10 @@ ProjectDocument::BuildWindow
 	ConfigureFileMenu(itsFileMenu);
 
 	jnew FileHistoryMenu(DocumentManager::kProjectFileHistory,
-						  itsFileMenu, kRecentProjectMenuCmd, menuBar);
+						 itsFileMenu, kRecentProjectMenuCmd, menuBar);
 
 	jnew FileHistoryMenu(DocumentManager::kTextFileHistory,
-						  itsFileMenu, kRecentTextMenuCmd, menuBar);
+						 itsFileMenu, kRecentTextMenuCmd, menuBar);
 
 	itsProjectMenu = menuBar->AppendTextMenu(JGetString("MenuTitle::ProjectDocument_Project"));
 	itsProjectMenu->SetMenuItems(kProjectMenuStr);
@@ -1410,7 +1410,7 @@ ProjectDocument::BuildWindow
 
 	itsCmdMenu =
 		jnew CommandMenu(this, nullptr, menuBar,
-						  JXWidget::kFixedLeft, JXWidget::kVElastic, 0,0, 10,10);
+						 JXWidget::kFixedLeft, JXWidget::kVElastic, 0,0, 10,10);
 	menuBar->AppendMenu(itsCmdMenu);
 	ListenTo(itsCmdMenu);
 
