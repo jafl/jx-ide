@@ -423,7 +423,7 @@ PrefsManager::UpgradeData
 		newData << 0 << ' ' << JBoolToString(true) << ' ' << oldData.c_str();
 		SetData(kDocMgrID, newData);
 	}
-	else if (4 <= currentVersion)
+	else if (currentVersion <= 4)
 	{
 		if (IDValid(4))
 		{
