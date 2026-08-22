@@ -1,6 +1,6 @@
 name: jx-ide
 title: JX IDE
-base: core20
+base: core26
 version: "7.1.5"
 license: LGPL-2.1-or-later
 source-code: https://github.com/jafl/jx-ide
@@ -17,7 +17,7 @@ description: |
 grade: stable
 confinement: classic
 
-architectures:
+platforms:
   - build-on: amd64
   - build-on: arm64
   - build-on: ppc64el
@@ -39,7 +39,7 @@ parts:
     plugin: autotools
     source: .
     override-pull: |
-      snapcraftctl pull
+      craftctl pull
       git clone https://github.com/jafl/system-g.git
       git clone https://github.com/jafl/subversion_client.git
       sudo locale-gen en_US.UTF-8
