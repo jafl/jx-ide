@@ -568,7 +568,7 @@ Command::ProcessFinished
 
 	if (success || itsInQueueFlag)
 	{
-		if (!itsCmdList->IsEmpty() && (itsCmdList->GetItem(1)).isMakeDepend)
+		if (!itsCmdList->IsEmpty() && itsCmdList->GetItem(1).isMakeDepend)
 		{
 			assert( !itsInQueueFlag );
 			CmdInfo info = itsCmdList->GetItem(1);
@@ -577,7 +577,7 @@ Command::ProcessFinished
 		}
 		StartProcess();		// may delete us
 	}
-	else if (!itsCmdList->IsEmpty() && (itsCmdList->GetItem(1)).isMakeDepend)
+	else if (!itsCmdList->IsEmpty() && itsCmdList->GetItem(1).isMakeDepend)
 	{
 		CmdInfo info = itsCmdList->GetItem(1);
 		info.Free(false);				// don't delete Command because it is deleting itself

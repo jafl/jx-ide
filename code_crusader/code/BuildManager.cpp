@@ -118,7 +118,7 @@ bool
 BuildManager::UpdateMakefile
 	(
 	ExecOutputDocument*	compileDoc,
-	Command**				cmd,
+	Command**			cmd,
 	const bool			force
 	)
 {
