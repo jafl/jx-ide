@@ -202,7 +202,8 @@ MacroManager::Perform
 	JUtf8Character c;
 	while (iter.Next(&c))
 	{
-		te->HandleKeyPress(c, 0, modifiers);
+		// skip char action, etc.
+		te->JXTEBase::HandleKeyPress(c, 0, modifiers);
 	}
 }
 

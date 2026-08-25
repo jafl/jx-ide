@@ -1004,7 +1004,7 @@ TextEditor::HandleKeyPress
 	const bool shiftOn   = modifiers.shift();
 
 	StringCompleter* completer = nullptr;
-	bool clearRequestCount   = true;
+	bool clearRequestCount     = true;
 
 	MacroManager* macroMgr = nullptr;
 	CaretLocation caretIndex;
